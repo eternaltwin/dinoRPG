@@ -7,7 +7,6 @@ import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
 import { RawData, WebSocket } from 'ws';
-import { sendDiscord } from '../utils/discord.js';
 import { LOGGER } from '../context.js';
 
 let activeTickets: WsTicket[] = [];

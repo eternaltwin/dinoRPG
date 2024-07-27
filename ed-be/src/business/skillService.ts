@@ -22,7 +22,6 @@ import {
 	removeAllUnlockableSkillsFromDinoz,
 	removeUnlockableSkillsFromDinoz
 } from '../dao/dinozSkillUnlockableDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
 import { getMaxXp, getRace, getRandomUpElement, reincarnateDinoz } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
@@ -34,6 +33,7 @@ import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { GLOBAL } from '../context.js';
 import { addStatusToDinoz, removeAllStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -49,21 +49,21 @@ export async function getLearnableAndUnlockableSkills(req: Request) {
 
 	const dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (dinozSkills.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`);
+		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	const dinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId);
 
 	if (!dinozRace) {
-		throw new ErrorFormator(500, `Dinoz race ${dinozSkills.raceId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz race ${dinozSkills.raceId} doesn't exist.`);
 	}
 
 	return getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, +req.params.tryNumber);
@@ -85,20 +85,20 @@ export async function learnSkill(req: Request) {
 
 	const dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (dinozSkills.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`);
+		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	const dinozRace = Object.values(raceList).find(race => race.raceId === dinozSkills.raceId);
 
 	if (!dinozRace) {
-		throw new ErrorFormator(500, `Dinoz race ${dinozSkills.raceId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz race ${dinozSkills.raceId} doesn't exist.`);
 	}
 
 	const skills = getDinozLearnableSkills(req, dinozSkills, dinozRace, dinozId, parseInt(req.body.tryNumber));
@@ -111,7 +111,7 @@ export async function learnSkill(req: Request) {
 		skillIdList.length === skills.unlockableSkills.length;
 
 	if (!isLearnableSkills && !isUnlockableSkills) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} can't learn this`);
+		throw new ExpectedError(`Dinoz ${dinozId} can't learn this`);
 	}
 
 	if (isUnlockableSkills) {
@@ -119,7 +119,7 @@ export async function learnSkill(req: Request) {
 	} else {
 		const skill = Object.values(skillList).find(skill => skill.id === skillIdList[0]);
 		if (!skill) {
-			throw new ErrorFormator(500, `Skill ${skillIdList[0]} doesn't exist.`);
+			throw new ExpectedError(`Skill ${skillIdList[0]} doesn't exist.`);
 		}
 		await applySkillEffect(dinozSkills, skill);
 		await addSkillToDinoz(dinozId, skillIdList[0]);
@@ -217,21 +217,21 @@ function getDinozLearnableSkills(
 	tryNumber: number
 ) {
 	if (dinoz.level === gameConfig.dinoz.maxLevel) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} is already at max level.`);
+		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
 	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	const level = levelList.find(level => level.id === dinoz.level);
 	if (!level) {
-		throw new ErrorFormator(500, `Level ${dinoz.level} doesn't exist.`);
+		throw new ExpectedError(`Level ${dinoz.level} doesn't exist.`);
 	}
 	const maxExperience = level.experience;
 
 	if (dinoz.experience < maxExperience) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't have enough experience`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't have enough experience`);
 	}
 
 	// Check if dinoz has 'Plan de carrière' skill or cube object
@@ -240,7 +240,7 @@ function getDinozLearnableSkills(
 		(dinoz.items.some(item => item.itemId === itemList.DINOZ_CUBE.itemId) && dinoz.level <= 10);
 
 	if (tryNumber < 1 || tryNumber > 2 || (tryNumber === 2 && !hasCubeOrPdc)) {
-		throw new ErrorFormator(500, `tryNumber ${tryNumber} is invalid`);
+		throw new ExpectedError(`tryNumber ${tryNumber} is invalid`);
 	}
 
 	const learnableElement = tryNumber === 1 ? dinoz.nextUpElementId : dinoz.nextUpAltElementId;
@@ -336,7 +336,7 @@ function getNewDinozDataFromLevelUp(
 			dinoz.nbrUpAir = dinozSkills.nbrUpAir + 1;
 			break;
 		default:
-			throw new ErrorFormator(500, `Up type is not valid !`);
+			throw new ExpectedError(`Up type is not valid !`);
 	}
 
 	// Display
@@ -411,7 +411,7 @@ function getUnlockableSkills(
 		const foundSkill = Object.values(skillList).find(skills => skills.id === skill.skillId);
 
 		if (!foundSkill) {
-			throw new ErrorFormator(500, `Skill ${skill} doesn't exist.`);
+			throw new ExpectedError(`Skill ${skill} doesn't exist.`);
 		}
 		return foundSkill;
 	});
@@ -455,7 +455,7 @@ function getElementUpChance(
 export async function unlockDoubleSkills(dinozId: number) {
 	const dinoz = await getDinozSkillsLearnableAndUnlockable(dinozId);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const allLearnableSkills = getLearnableSkills(dinoz);
 
@@ -487,7 +487,7 @@ export async function applySkillEffect(
 async function applyUSkillEffect(playerId: number, skill: SkillDetails) {
 	const player = await getPlayerUSkills(playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `This player doesn't exist.`);
+		throw new ExpectedError(`This player doesn't exist.`);
 	}
 	switch (skill.id) {
 		case Skill.LEADER:
@@ -527,17 +527,17 @@ export async function reincarnate(req: Request) {
 	const dinozId: number = +req.params.id;
 
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
+		throw new ExpectedError(`Unauthorized`);
 	}
 
 	const dinoz = await getDinozToReincarnate(dinozId);
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, `No dinoz found for reincarnation.`);
+		throw new ExpectedError(`No dinoz found for reincarnation.`);
 	}
 
 	if (!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) || dinoz.level < 40) {
-		throw new ErrorFormator(500, `Dinoz cannot reincarnate`);
+		throw new ExpectedError(`Dinoz cannot reincarnate`);
 	}
 
 	const race = getRace(dinoz);

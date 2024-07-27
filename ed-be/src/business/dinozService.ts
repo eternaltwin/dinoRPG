@@ -63,13 +63,12 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { addMoney, getPlayerCompletion, ownsDinoz, removeMoney } from '../dao/playerDao.js';
+import { addMoney, auth, getPlayerCompletion, ownsDinoz, removeMoney } from '../dao/playerDao.js';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
 import { moveFight } from './fightService.js';
@@ -87,7 +86,8 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { updateQuest } from '../dao/questsDao.js';
-import { GLOBAL } from '../context.js';
+import { ExpectedError } from '@drpg/core/utils/errorFormator';
+import translate from '../utils/translate.js';
 
 /**
  * @summary Get available action from dinoz
@@ -210,7 +210,7 @@ export async function getAvailableActions(
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.gather);
 		if (!gatherFound) {
-			throw new ErrorFormator(500, `Gather ${dinozPlace.gather} doesn't exist.`);
+			throw new ExpectedError(`Gather ${dinozPlace.gather} doesn't exist.`);
 		}
 		availableActions.push({
 			name: gatherFound.action,
@@ -229,7 +229,7 @@ export async function getAvailableActions(
 	) {
 		const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather);
 		if (!gatherFound) {
-			throw new ErrorFormator(500, `Gather ${dinozPlace.specialGather} doesn't exist.`);
+			throw new ExpectedError(`Gather ${dinozPlace.specialGather} doesn't exist.`);
 		}
 		availableActions.push({
 			name: gatherFound.action,
@@ -248,7 +248,7 @@ export async function getAvailableActions(
 
 	// Shop action: check if a shop is available where the dinoz is
 	const itinerant = await getSpecificSecret('itinerant');
-	if (!itinerant) throw new ErrorFormator(500, `No itinerant merchant place found.`);
+	if (!itinerant) throw new ExpectedError(`No itinerant merchant place found.`);
 	const itinerantShop = Object.values(shopList)
 		.filter(shop => shop.type === ShopType.ITINERANT)
 		.find(s => checkCondition(s.condition, player, dinoz.id));
@@ -327,27 +327,24 @@ export async function getAvailableActions(
  */
 export async function getDinozFiche(req: Request) {
 	const dinozId = +req.params.id;
-
-	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	// Retrieve player from dinozId
-	const playerData = await getDinozFicheRequest(dinozId, req.auth.playerId);
+	const playerData = await getDinozFicheRequest(dinozId, authed.id);
 
 	if (!playerData) {
-		throw new ErrorFormator(500, `No player found.`);
+		throw new ExpectedError(`No player found.`);
 	}
 
 	if (playerData.dinoz.length === 0) {
-		throw new ErrorFormator(500, `No dinoz found.`);
+		throw new ExpectedError(`No dinoz found.`);
 	}
 
 	const myDinoz = playerData.dinoz.find(d => d.id === dinozId);
 
 	// If player found is different from player who do the request, throw exception
 	if (!myDinoz) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player ${req.auth.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`);
 	}
 
 	// Create the answer that will be sent back
@@ -366,11 +363,11 @@ export async function getDinozSkill(req: Request) {
 	const dinozId: number = parseInt(req.params.id);
 	const dinozSkillData = await getDinozSkillRequest(dinozId);
 	if (!dinozSkillData) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	if (!dinozSkillData.player || !req.auth || dinozSkillData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozSkillData.id} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinozSkillData.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	return toSkillDetails(dinozSkillData);
@@ -383,23 +380,21 @@ export async function getDinozSkill(req: Request) {
  * @return DinozFiche
  */
 export async function buyDinoz(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	// Check if player can buy more dinoz
-	const dinozActive = await getActiveDinoz(req.auth.playerId);
+	const dinozActive = await getActiveDinoz(authed.id);
 
 	if (dinozActive.length > 0) {
 		const player = dinozActive[0].player;
 
 		if (!player) {
-			throw new ErrorFormator(500, `Missing player`);
+			throw new ExpectedError(`Missing player`);
 		}
 
 		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
 		if (dinozActive.length >= maxDinoz) {
-			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 		}
 	}
 
@@ -407,19 +402,19 @@ export async function buyDinoz(req: Request) {
 	const dinozShopData = await getDinozShopDetailsRequest(+req.params.id);
 
 	if (!dinozShopData) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist.`);
 	}
 
 	const race = getRace(dinozShopData);
 
 	// Throw error if dinoz doesn't belong to player shop
-	if (!dinozShopData.player || !req.auth || dinozShopData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to your account`);
+	if (!dinozShopData.player || dinozShopData.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${req.params.id} doesn't belong to your account`);
 	}
 
 	// Throws an exception if player doesn't have enough money to buy the dinoz
 	if (dinozShopData.player.money < race.price) {
-		throw new ErrorFormator(400, 'notEnoughMoney');
+		throw new ExpectedError(translate('notEnoughMoney', authed));
 	}
 
 	const newDinozProps = initializeDinoz(race, dinozShopData.player.id, dinozShopData.display);
@@ -428,12 +423,12 @@ export async function buyDinoz(req: Request) {
 	await removeMoney(dinozShopData.player.id, race.price);
 
 	// Delete all dinoz from dinoz shop
-	await deleteDinozInShopRequest(req.auth.playerId);
+	await deleteDinozInShopRequest(authed.id);
 
 	// Create a new dinoz that belongs to player
 	const dinozCreated = await createDinoz(newDinozProps);
 	const newDinoz: PlayerForDinozFiche = {
-		id: req.auth.playerId,
+		id: authed.id,
 		engineer: false,
 		items: [],
 		rewards: [],
@@ -461,8 +456,8 @@ export async function buyDinoz(req: Request) {
 	);
 
 	// Update player points and dinoz count
-	await updateDinozCount(req.auth.playerId, 1);
-	await updatePoints(req.auth.playerId, 1);
+	await updateDinozCount(authed.id, 1);
+	await updatePoints(authed.id, 1);
 
 	return toDinozFiche(newDinoz, dinozCreated.id);
 }
@@ -479,18 +474,20 @@ export async function setDinozName(req: Request) {
 	const regexName = /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/;
 	const name = req.body.newName;
 
+	const authed = await auth(req);
+
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist`);
+		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist`);
 	}
 
 	// If authenticated player is different from player found, throw exception
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+	if (!dinoz.player || dinoz.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
 	}
 
 	// If player can't change dinoz name, throw exception
 	if (!dinoz.canChangeName) {
-		throw new ErrorFormator(500, `Can't update dinoz name`);
+		throw new ExpectedError(`Can't update dinoz name`);
 	}
 	if (regexName.test(name)) {
 		await updateDinoz(+req.params.id, {
@@ -498,7 +495,7 @@ export async function setDinozName(req: Request) {
 			canChangeName: false
 		});
 	} else {
-		throw new ErrorFormator(400, 'OnlyLettersAndNumbers');
+		throw new ExpectedError(translate('OnlyLettersAndNumbers', authed));
 	}
 }
 
@@ -518,31 +515,31 @@ export async function setSkillState(req: Request) {
 	const dinoz = await getDinozSkillAndStatusRequest(dinozId);
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const skill = Object.values(skillList).find(skill => skill.id === skillToUpdate);
 
 	// Check if skill exist and can be activate/deactivate
 	if (!skill) {
-		throw new ErrorFormator(500, `Skill ${skillToUpdate} doesn't know exist`);
+		throw new ExpectedError(`Skill ${skillToUpdate} doesn't know exist`);
 	}
 	if (!skill.activatable) {
-		throw new ErrorFormator(500, `Skill ${skillToUpdate} cannot be activated`);
+		throw new ExpectedError(`Skill ${skillToUpdate} cannot be activated`);
 	}
 
 	// Check if dinoz belongs to player who do the request
 	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	// Check if dinoz can change his skills
 	if (!canChangeSkillState(dinoz)) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't have the right status`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't have the right status`);
 	}
 
 	// Check if dinoz knows the skill
 	if (!knowSkillId(dinoz, skillToUpdate)) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't know skill : ${skillToUpdate}`);
 	}
 
 	await setSkillStateRequest(dinozId, skillToUpdate, skillStateToUpdate);
@@ -559,31 +556,29 @@ export async function setSkillState(req: Request) {
 export async function betaMove(req: Request) {
 	//Retrieve dinozId
 	const dinozId = +req.body.dinozId;
-	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
-	}
-	const playerId = +req.auth.playerId;
-	const player = await getDinozFightDataRequest(dinozId, playerId);
+	const authed = await auth(req);
+
+	const player = await getDinozFightDataRequest(dinozId, authed.id);
 
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	if (dinoz.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named`);
+		throw new ExpectedError(`Dinoz has to be named`);
 	}
 
 	if (dinoz.unavailableReason !== null) {
-		throw new ErrorFormator(500, `Dinoz is not able to move.`);
+		throw new ExpectedError(`Dinoz is not able to move.`);
 	}
 
 	if (dinoz.leaderId) {
-		throw new ErrorFormator(400, 'notLeader');
+		throw new ExpectedError(translate('notLeader', authed));
 	}
 
 	let team = player.dinoz;
@@ -607,15 +602,15 @@ export async function betaMove(req: Request) {
 	}
 
 	if (dinoz.concentration) {
-		throw new ErrorFormator(400, 'concentration');
+		throw new ExpectedError(translate('concentration', authed));
 	}
 
 	if (team.some(d => !d.fight)) {
-		throw new ErrorFormator(400, 'missingIrma');
+		throw new ExpectedError(translate('missingIrma', authed));
 	}
 
 	if (!isAlive(dinoz)) {
-		throw new ErrorFormator(400, 'dead');
+		throw new ExpectedError(translate('dead', authed));
 	}
 
 	const dinozPlace = actualPlace(dinoz);
@@ -623,15 +618,15 @@ export async function betaMove(req: Request) {
 
 	// Check if desired and actual place exist and is adjacent to actual place
 	if (!desiredPlace) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} want to go in the void`);
+		throw new ExpectedError(`Dinoz ${dinozId} want to go in the void`);
 	}
 
 	if (dinozPlace.placeId === desiredPlace.placeId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} is already at ${dinozPlace.name}`);
+		throw new ExpectedError(`Dinoz ${dinozId} is already at ${dinozPlace.name}`);
 	}
 
 	if (!dinozPlace.borderPlace.includes(desiredPlace.placeId)) {
-		throw new ErrorFormator(500, `${dinozPlace.name} is not adjacent with ${desiredPlace.name}`);
+		throw new ExpectedError(`${dinozPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
 
 	// Check if condition to go to desired place are fullfilled for dinoz and followers
@@ -645,7 +640,7 @@ export async function betaMove(req: Request) {
 				dinoz: [member]
 			};
 			if (!canGoToThisPlace(memberToTest, desiredPlace.conditions, member.id)) {
-				throw new ErrorFormator(400, `missingStatus`);
+				throw new ExpectedError(translate('missingStatus', authed));
 			}
 		}
 	}
@@ -660,7 +655,7 @@ export async function betaMove(req: Request) {
 
 	// Marais Collant - No movement on Thursday and Saturday.
 	if ((dayOfWeek === 4 || dayOfWeek === 6) && dinozPlace.placeId === PlaceEnum.MARAIS_COLLANT) {
-		throw new ErrorFormator(400, `noMovement`);
+		throw new ExpectedError(translate('noMovement', authed));
 	}
 
 	let fight = await mouvementListener(player, team, finalPlace, dinozId);
@@ -702,16 +697,16 @@ export async function resurrectDinoz(req: Request) {
 	const dinozData = await getDinozFicheLiteRequest(dinozId);
 
 	if (!dinozData) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	// If player found is different from player who do the request, throw exception
 	if (!dinozData.player || !req.auth || dinozData.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't belong to player.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
 	if (dinozData.life > 0) {
-		throw new ErrorFormator(500, `${dinozData.name} is not dead`);
+		throw new ExpectedError(`${dinozData.name} is not dead`);
 	}
 
 	await updateDinoz(dinozId, {
@@ -745,18 +740,15 @@ export async function resurrectDinoz(req: Request) {
 
 export async function digWithDinoz(req: Request) {
 	const dinozId = +req.params.id;
-	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
-	}
-	const playerId = +req.auth.playerId;
-	const player = await getDinozFicheRequest(dinozId, playerId);
+	const authed = await auth(req);
+	const player = await getDinozFicheRequest(dinozId, authed.id);
 
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	if (
@@ -764,11 +756,11 @@ export async function digWithDinoz(req: Request) {
 			status => status.statusId === DinozStatusId.SHOVEL || status.statusId === DinozStatusId.ENHANCED_SHOVEL
 		)
 	) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot dig.`);
+		throw new ExpectedError(`Dinoz ${dinozId} cannot dig.`);
 	}
 
 	if (dinozData.placeId === PlaceEnum.MINES_DE_CORAIL) {
-		throw new ErrorFormator(400, `shovelMine`);
+		throw new ExpectedError(translate('shovelMine', authed));
 	}
 
 	const digPlace = Object.values(digTreasures).find(dig => dig.place === dinozData.placeId);
@@ -778,7 +770,7 @@ export async function digWithDinoz(req: Request) {
 	} else {
 		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(100, 500) }];
 	}
-	await rewarder(reward, [dinozData], playerId);
+	await rewarder(reward, [dinozData], authed.id);
 
 	//Broke shovel
 	if (dinozData.status.some(status => status.statusId === DinozStatusId.SHOVEL)) {
@@ -804,16 +796,16 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.params.type.toString().toLowerCase());
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
+		throw new ExpectedError(`Unauthorized`);
 	}
 	const playerId = +req.auth.playerId;
 	const player = await getDinozGatherData(dinozId, playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	const place = actualPlace(dinozData);
@@ -826,7 +818,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	);
 
 	if (!typeOfGrid) {
-		throw new ErrorFormator(500, `This type of grid doesn't exist`);
+		throw new ExpectedError(`This type of grid doesn't exist`);
 	}
 	const idOfTypeOfGrid = +typeOfGrid[1];
 
@@ -834,11 +826,11 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const gatherPlace = gatherPlaceArray.find(place => place.type === idOfTypeOfGrid);
 
 	if (!gatherPlace) {
-		throw new ErrorFormator(500, `Dinoz cannot gather at this place`);
+		throw new ExpectedError(`Dinoz cannot gather at this place`);
 	}
 
 	if (!checkCondition(gatherPlace.condition, player, dinozId)) {
-		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
+		throw new ExpectedError(`Dinoz don't have the skill to gather at this place`);
 	}
 
 	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid);
@@ -874,16 +866,16 @@ export async function gatherWithDinoz(req: Request) {
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.body.type.toString().toLowerCase());
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
+		throw new ExpectedError(`Unauthorized`);
 	}
 	const playerId = +req.auth.playerId;
 	const player = await getDinozGatherData(dinozId, playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
 	const place = actualPlace(dinozData);
@@ -895,7 +887,7 @@ export async function gatherWithDinoz(req: Request) {
 	);
 
 	if (!typeOfGrid) {
-		throw new ErrorFormator(500, `This type of grid doesn't exist`);
+		throw new ExpectedError(`This type of grid doesn't exist`);
 	}
 	const idOfTypeOfGrid = +typeOfGrid[1];
 	const playerGrid = await getCommonGatherInfo(player.id);
@@ -903,25 +895,25 @@ export async function gatherWithDinoz(req: Request) {
 	const myGrid = playerGrid.find(grid => grid.place === place.placeId && grid.type === idOfTypeOfGrid);
 
 	if (!gatherPlace) {
-		throw new ErrorFormator(500, `Dinoz cannot gather at this place`);
+		throw new ExpectedError(`Dinoz cannot gather at this place`);
 	}
 
 	if (!dinozData.gather && !gatherPlace.special) {
-		throw new ErrorFormator(500, `Dinoz don't have action to gather`);
+		throw new ExpectedError(`Dinoz don't have action to gather`);
 	}
 
 	if (!myGrid) {
-		throw new ErrorFormator(500, `You don't have generated any grid.`);
+		throw new ExpectedError(`You don't have generated any grid.`);
 	}
 
 	if (!checkCondition(gatherPlace.condition, player, dinozId)) {
-		throw new ErrorFormator(500, `Dinoz don't have the skill to gather at this place`);
+		throw new ExpectedError(`Dinoz don't have the skill to gather at this place`);
 	}
 
 	// Consume token if it's a special gather
 	if (gatherPlace.special) {
 		const playerToken = player.items.find(item => item.itemId === gatherPlace.cost.itemId);
-		if (!playerToken) throw new ErrorFormator(500, `You don't have the needed token to gather here.`);
+		if (!playerToken) throw new ExpectedError(`You don't have the needed token to gather here.`);
 		await decreaseItemQuantity(player.id, gatherPlace.cost.itemId, 1);
 
 		await createLog(LogType.ItemUsed, player.id, dinozData.id, gatherPlace.cost.itemId.toString(), '1');
@@ -931,10 +923,10 @@ export async function gatherWithDinoz(req: Request) {
 	const boxToSanitize: number[][] = req.body.box;
 	for (const element of boxToSanitize) {
 		if (!element.every(coord => typeof coord === 'number')) {
-			throw new ErrorFormator(500, `This coordinate is not correct : ${element}`);
+			throw new ExpectedError(`This coordinate is not correct : ${element}`);
 		}
 		if (element.some(coord => coord > getGridSize(myGrid) || coord < 0)) {
-			throw new ErrorFormator(500, `This coordinate is out of the grid : ${element}`);
+			throw new ExpectedError(`This coordinate is out of the grid : ${element}`);
 		}
 	}
 
@@ -942,7 +934,7 @@ export async function gatherWithDinoz(req: Request) {
 
 	// Check if number of box to open is equal or lower than the number of maximum click
 	if (boxToOpen.length > getNumberOfGatheringTries(dinozData, gatherPlace)) {
-		throw new ErrorFormator(500, `You have selected too many square`);
+		throw new ExpectedError(`You have selected too many square`);
 	}
 
 	const returnGrid = discoverBox(myGrid, player, gatherPlace, ...boxToOpen);
@@ -953,7 +945,7 @@ export async function gatherWithDinoz(req: Request) {
 		if (i.itemId === itemList.BOX_HANDLER.itemId) {
 			const completion = await getPlayerCompletion(player.id);
 			if (completion?.ranking?.completion === undefined) {
-				throw new ErrorFormator(500, `Failed to find completion.`);
+				throw new ExpectedError(`Failed to find completion.`);
 			}
 			const box = selectBox(completion.ranking.completion);
 			const boxToReward = player.items.find(items => items.itemId === box.itemId);
@@ -992,7 +984,7 @@ export async function gatherWithDinoz(req: Request) {
 
 		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
 			if (!ingredientToReward.playerId) {
-				throw new ErrorFormator(500, `Ingredient ${ingredientToReward.ingredientId} doesn't belong to any player.`);
+				throw new ExpectedError(`Ingredient ${ingredientToReward.ingredientId} doesn't belong to any player.`);
 			}
 			await increaseIngredientQuantity(ingredientToReward.playerId, ingredientToReward.ingredientId, 1);
 			// Update quantity in case multiple were obtained and the max was reached
@@ -1049,7 +1041,7 @@ export async function gatherWithDinoz(req: Request) {
 export async function getDinozToManage(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const playerId = req.auth.playerId;
@@ -1062,7 +1054,7 @@ export async function getDinozToManage(req: Request) {
 
 	// Stop if player doesn't have PDA
 	if (!hasPDA) {
-		throw new ErrorFormator(500, 'Player has no PDA');
+		throw new ExpectedError('Player has no PDA');
 	}
 
 	// Get Dinoz
@@ -1077,13 +1069,13 @@ export async function getDinozToManage(req: Request) {
 export async function updateOrders(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const order = req.body.order;
 
 	if (!order || !Array.isArray(order)) {
-		throw new ErrorFormator(500, 'Order is not an array');
+		throw new ExpectedError('Order is not an array');
 	}
 
 	const playerId = req.auth.playerId;
@@ -1096,7 +1088,7 @@ export async function updateOrders(req: Request) {
 
 	// Stop if player doesn't have PDA
 	if (!hasPDA) {
-		throw new ErrorFormator(500, 'Player has no PDA');
+		throw new ExpectedError('Player has no PDA');
 	}
 
 	// Preformat Dinoz data
@@ -1116,7 +1108,7 @@ export async function followDinoz(req: Request) {
 	const dinozId = +req.params.id;
 	const dinozToFollowId = +req.params.targetId;
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
+		throw new ExpectedError(`Unauthorized`);
 	}
 	const playerId = +req.auth.playerId;
 
@@ -1124,40 +1116,40 @@ export async function followDinoz(req: Request) {
 	const player_leader = await getDinozFicheRequest(dinozToFollowId, playerId);
 
 	if (!player_dinoz || !player_leader) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 	const dinoz = player_dinoz.dinoz.find(d => d.id === dinozId);
 	const leader = player_leader.dinoz.find(d => d.id === dinozToFollowId);
 
 	if (!dinoz || !leader) {
-		throw new ErrorFormator(500, 'No dinoz found');
+		throw new ExpectedError('No dinoz found');
 	}
 
 	if (dinoz.canChangeName || leader.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`);
+		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	//Check if leader is not at max followers
 	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id));
 	if (leader.followers.length >= max) {
-		throw new ErrorFormator(500, 'Dinoz cannot be followed by any dinoz');
+		throw new ExpectedError('Dinoz cannot be followed by any dinoz');
 	}
 
 	if (dinoz.leaderId || dinoz.followers.length > 0) {
-		throw new ErrorFormator(500, 'Dinoz is already following another dinoz.');
+		throw new ExpectedError('Dinoz is already following another dinoz.');
 	}
 
 	if (dinoz.skills.some(s => s.skillId === Skill.BRAVE) || leader.skills.some(s => s.skillId === Skill.BRAVE)) {
-		throw new ErrorFormator(500, 'Dinoz cannot follow any dinoz');
+		throw new ExpectedError('Dinoz cannot follow any dinoz');
 	}
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId, dinozToFollowId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 
 	if (dinoz.placeId !== leader.placeId) {
-		throw new ErrorFormator(500, 'Dinoz should be at the same place.');
+		throw new ExpectedError('Dinoz should be at the same place.');
 	}
 
 	// Update dinoz
@@ -1172,12 +1164,12 @@ export async function unfollowDinoz(req: Request) {
 
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 
 	// Update dinoz
@@ -1189,17 +1181,17 @@ export async function disband(req: Request) {
 
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 	const dinoz = await getFollowingDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, 'No dinoz found');
+		throw new ExpectedError('No dinoz found');
 	}
 
 	for (const d of dinoz.followers) {
@@ -1210,29 +1202,26 @@ export async function disband(req: Request) {
 export async function useIrma(req: Request) {
 	const dinozId = +req.params.id;
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
-	}
+	const authed = await auth(req);
 
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	if (!(await ownsDinoz(authed.id, dinozId))) {
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 	const dinoz = await getIrmaUsageInfo(dinozId);
 
 	if (!dinoz || !dinoz.player) {
-		throw new ErrorFormator(500, 'No dinoz found');
+		throw new ExpectedError('No dinoz found');
 	}
 
 	const team = [dinoz, ...dinoz.followers];
 
 	const irmaQuantity = dinoz.player.items.find(i => i.itemId === itemList.POTION_IRMA.itemId);
 
-	const neededIrma = team.filter(d => d.remaining === 0 && !d.fight || !d.gather).length;
+	const neededIrma = team.filter(d => (d.remaining === 0 && !d.fight) || !d.gather).length;
 
 	if ((!irmaQuantity || (irmaQuantity && irmaQuantity.quantity < neededIrma)) && neededIrma > 0) {
-		throw new ErrorFormator(400, 'notEnoughIrma');
+		throw new ExpectedError(translate('notEnoughIrma', authed));
 	}
 
 	for (const dino of team.filter(d => !d.fight || !d.gather)) {
@@ -1264,18 +1253,18 @@ export async function frozeDinoz(req: Request) {
 
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, 'No dinoz found');
+		throw new ExpectedError('No dinoz found');
 	}
 
 	if (dinoz.leaderId) {
@@ -1289,7 +1278,7 @@ export async function frozeDinoz(req: Request) {
 	}
 
 	if (dinoz.unavailableReason === UnavailableReason.frozen) {
-		throw new ErrorFormator(500, 'Dinoz already frozen');
+		throw new ExpectedError('Dinoz already frozen');
 	}
 
 	await updateDinoz(dinozId, {
@@ -1300,41 +1289,38 @@ export async function frozeDinoz(req: Request) {
 export async function unfrozeDinoz(req: Request) {
 	const dinozId = +req.params.id;
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
-	}
+	const authed = await auth(req);
 
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+	if (!(await ownsDinoz(authed.id, dinozId))) {
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 
 	const dinoz = await checkFrozenDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, 'No dinoz found');
+		throw new ExpectedError('No dinoz found');
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.frozen) {
-		throw new ErrorFormator(500, 'Dinoz is not frozen');
+		throw new ExpectedError('Dinoz is not frozen');
 	}
 
 	// Check if player can buy more dinoz
-	const dinozActive = await getActiveDinoz(req.auth.playerId);
+	const dinozActive = await getActiveDinoz(authed.id);
 
 	if (dinozActive.length > 0) {
 		const player = dinozActive[0].player;
 
 		if (!player) {
-			throw new ErrorFormator(500, `Missing player`);
+			throw new ExpectedError(`Missing player`);
 		}
 
 		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
-			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 		}
 		if (player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity + gameConfig.dinoz.leaderBonus) {
-			throw new ErrorFormator(400, 'tooManyActiveDinoz');
+			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 		}
 	}
 	await updateDinoz(dinozId, {
@@ -1348,26 +1334,26 @@ export async function restDinoz(req: Request) {
 
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	// Check if the player owns the dinoz
 	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
-		throw new ErrorFormator(500, 'Player does not own this dinoz');
+		throw new ExpectedError('Player does not own this dinoz');
 	}
 
 	const dinoz = await checkRestDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, 'No dinoz found');
+		throw new ExpectedError('No dinoz found');
 	}
 
 	if (dinoz.unavailableReason === UnavailableReason.resting && start) {
-		throw new ErrorFormator(500, `Dinoz is already resting`);
+		throw new ExpectedError(`Dinoz is already resting`);
 	}
 
 	if (dinoz.unavailableReason !== UnavailableReason.resting && !start) {
-		throw new ErrorFormator(500, `Dinoz is not resting`);
+		throw new ExpectedError(`Dinoz is not resting`);
 	}
 
 	await updateDinoz(dinozId, { unavailableReason: start ? UnavailableReason.resting : null });

@@ -1,9 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { authenticateToET, getAuthorizationUri } from '../business/oauthService.js';
 import { apiRoutes } from '../constants/index.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { postError, sendDiscord } from '../utils/discord.js';
-import { LOGGER } from '../context.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -27,10 +25,7 @@ routes.post(`${commonPath}/redirect`, async (_req: Request, res: Response) => {
 		const response = await getAuthorizationUri();
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -63,10 +58,7 @@ routes.put(`${commonPath}/authenticate/eternal-twin`, async (req: Request, res: 
 		const response = await authenticateToET(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await LOGGER.log(e.message);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 

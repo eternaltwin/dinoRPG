@@ -1399,6 +1399,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.23.2":
+  version: 7.25.0
+  resolution: "@babel/runtime@npm:7.25.0"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 10/6870e9e0e9125075b3aeba49a266f442b10820bfc693019eb6c1785c5a0edbe927e98b8238662cdcdba17842107c040386c3b69f39a0a3b217f9d00ffe685b27
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.22.15, @babel/template@npm:^7.3.3":
   version: 7.22.15
   resolution: "@babel/template@npm:7.22.15"
@@ -6517,6 +6526,8 @@ __metadata:
     express: "npm:^4.18.2"
     express-jwt: "npm:^8.4.1"
     express-validator: "npm:^7.0.1"
+    i18next: "npm:^23.12.2"
+    i18next-fs-backend: "npm:^2.3.1"
     jest: "npm:^29.7.0"
     jest-junit: "npm:^16.0.0"
     jsonwebtoken: "npm:^9.0.2"
@@ -8410,6 +8421,22 @@ __metadata:
   bin:
     husky: lib/bin.js
   checksum: 10/b754cf70fdc97c3b60fec5b80056b9c11436464953b1691bf2b5dcf0081fb6685d2c5f47abb8b2b1c49f504aabea5321fdd6496f8b755d9f6e7525a493406abb
+  languageName: node
+  linkType: hard
+
+"i18next-fs-backend@npm:^2.3.1":
+  version: 2.3.1
+  resolution: "i18next-fs-backend@npm:2.3.1"
+  checksum: 10/ebabf882c3a295887b82dd15fb84414da5e4aca4a59246db618965fbdc2be585e7c4699c9bb280940c04487cd33a568d3a972f794c079def320f15482f2dc6ca
+  languageName: node
+  linkType: hard
+
+"i18next@npm:^23.12.2":
+  version: 23.12.2
+  resolution: "i18next@npm:23.12.2"
+  dependencies:
+    "@babel/runtime": "npm:^7.23.2"
+  checksum: 10/d7a743c54b83acc1203315e547bfe830bfe825dddd7706646aec2a49cb74254bcda70645b568d1bed55ee3610ba5e6f6012fb3c13f03080c1dd0f99db2c45478
   languageName: node
   linkType: hard
 

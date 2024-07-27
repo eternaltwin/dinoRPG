@@ -14,9 +14,8 @@ import {
 	setPlayerMoney
 } from '../business/adminService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkIsAdmin } from '../utils/jwt.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -28,12 +27,10 @@ routes.get(`${commonPath}/dashboard`, checkIsAdmin, async (req: Request, res: Re
 	}
 
 	try {
-		const response: boolean = await getAdminDashBoard();
+		const response: boolean = await getAdminDashBoard(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		return res.status(e.errorCode || 500).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -64,9 +61,7 @@ routes.put(
 			await editDinoz(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -88,9 +83,7 @@ routes.put(
 			const response: string = await setPlayerMoney(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -112,9 +105,7 @@ routes.put(
 			await givePlayerEpicReward(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -132,9 +123,7 @@ routes.get(
 			const response = await listAllDinozFromPlayer(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -166,9 +155,7 @@ routes.put(
 			await editPlayer(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -186,9 +173,7 @@ routes.get(
 			const response: Partial<PlayerTypeToSend> = await listAllPlayerInformationForAdminDashboard(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -202,9 +187,7 @@ routes.get(`${commonPath}/secret/all`, checkIsAdmin, async (req: Request, res: R
 		const response: SecretData[] = await getAllSecrets();
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(e.errorCode || 500).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -221,9 +204,7 @@ routes.put(
 			const response: SecretData[] = await addSecret(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

@@ -1,557 +1,565 @@
 generator client {
-	provider        = "prisma-client-js"
-	output          = "../../prisma"
-	binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
-	previewFeatures = ["relationJoins", "nativeDistinct", "tracing", "omitApi"]
+  provider        = "prisma-client-js"
+  output          = "../../prisma"
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
+  previewFeatures = ["relationJoins", "nativeDistinct", "tracing", "omitApi"]
 }
 
 datasource db {
-	provider = "postgresql"
-	url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Concentration {
-	id    Int     @id(map: "PK_8e5d1783d48bab689b191b0d2af") @default(autoincrement())
-	dinoz Dinoz[]
+  id    Int     @id(map: "PK_8e5d1783d48bab689b191b0d2af") @default(autoincrement())
+  dinoz Dinoz[]
 
-	@@map("concentration")
+  @@map("concentration")
 }
 
 enum UnavailableReason {
-	frozen
-	sacrificed
-	selling
-	superdom
-	resting
+  frozen
+  sacrificed
+  selling
+  superdom
+  resting
+}
+
+enum Lang {
+  fr
+  en
+  de
+  es
 }
 
 model Dinoz {
-	id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
-	leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
-	leaderId           Int?                   @map("following")
-	name               String                 @db.VarChar
-	raceId             Int
-	level              Int
-	nextUpElementId    Int
-	nextUpAltElementId Int
-	placeId            Int
-	canChangeName      Boolean
-	display            String                 @db.VarChar
-	life               Int
-	maxLife            Int
-	experience         Int
-	nbrUpFire          Int
-	nbrUpWood          Int
-	nbrUpWater         Int
-	nbrUpLightning     Int
-	nbrUpAir           Int
-	seed								String							@default(dbgenerated("uuid_generate_v4()"))
-	fight              Boolean                @default(true)
-	gather             Boolean                @default(true)
-	remaining          Int                    @default(2)
-	createdDate        DateTime               @default(now()) @db.Timestamp(6)
-	updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
-	playerId           Int?
-	order              Int?
-	concentrationId    Int?
-	player             Player?                @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
-	concentration      Concentration?         @relation(fields: [concentrationId], references: [id], onUpdate: NoAction, map: "FK_693d1e839cbd13471ff3721b994")
-	unavailableReason  UnavailableReason?
-	items              DinozItem[]
-	missions           DinozMission[]
-	skills             DinozSkill[]
-	unlockableSkills   DinozSkillUnlockable[]
-	status             DinozStatus[]
-	npcs               NPC[]
-	dinozItemsToDinoz  DinozItemToDinoz[]
-	offers             Offer[]
-	followers          Dinoz[]                @relation("DinozFollowers")
-	logs               Log[]
-	catches            DinozCatch[]
+  id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
+  leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
+  leaderId           Int?                   @map("following")
+  name               String                 @db.VarChar
+  raceId             Int
+  level              Int
+  nextUpElementId    Int
+  nextUpAltElementId Int
+  placeId            Int
+  canChangeName      Boolean
+  display            String                 @db.VarChar
+  life               Int
+  maxLife            Int
+  experience         Int
+  nbrUpFire          Int
+  nbrUpWood          Int
+  nbrUpWater         Int
+  nbrUpLightning     Int
+  nbrUpAir           Int
+  seed               String                 @default(dbgenerated("uuid_generate_v4()"))
+  fight              Boolean                @default(true)
+  gather             Boolean                @default(true)
+  remaining          Int                    @default(2)
+  createdDate        DateTime               @default(now()) @db.Timestamp(6)
+  updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
+  playerId           Int?
+  order              Int?
+  concentrationId    Int?
+  player             Player?                @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
+  concentration      Concentration?         @relation(fields: [concentrationId], references: [id], onUpdate: NoAction, map: "FK_693d1e839cbd13471ff3721b994")
+  unavailableReason  UnavailableReason?
+  items              DinozItem[]
+  missions           DinozMission[]
+  skills             DinozSkill[]
+  unlockableSkills   DinozSkillUnlockable[]
+  status             DinozStatus[]
+  npcs               NPC[]
+  dinozItemsToDinoz  DinozItemToDinoz[]
+  offers             Offer[]
+  followers          Dinoz[]                @relation("DinozFollowers")
+  logs               Log[]
+  catches            DinozCatch[]
 
-	@@map("dinoz")
+  @@map("dinoz")
 }
 
 model DinozItem {
-	id               Int                @id(map: "PK_c02e01190111511642a4c3538f0") @default(autoincrement())
-	itemId           Int
-	dinozId          Int?
-	dinoz            Dinoz?             @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_37055da55534196f2248a1b5c6d")
-	dinozItemToDinoz DinozItemToDinoz[]
+  id               Int                @id(map: "PK_c02e01190111511642a4c3538f0") @default(autoincrement())
+  itemId           Int
+  dinozId          Int?
+  dinoz            Dinoz?             @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_37055da55534196f2248a1b5c6d")
+  dinozItemToDinoz DinozItemToDinoz[]
 
-	@@map("dinoz_item")
+  @@map("dinoz_item")
 }
 
 model DinozItemToDinoz {
-	dinozId     Int
-	dinozItemId Int
-	dinoz       Dinoz     @relation(fields: [dinozId], references: [id], onDelete: Cascade, map: "FK_4e81bd56b675264ba5f30a5f109")
-	dinoz_item  DinozItem @relation(fields: [dinozItemId], references: [id], onDelete: Cascade, map: "FK_e90f6271f11b3522312139ef3a9")
+  dinozId     Int
+  dinozItemId Int
+  dinoz       Dinoz     @relation(fields: [dinozId], references: [id], onDelete: Cascade, map: "FK_4e81bd56b675264ba5f30a5f109")
+  dinoz_item  DinozItem @relation(fields: [dinozItemId], references: [id], onDelete: Cascade, map: "FK_e90f6271f11b3522312139ef3a9")
 
-	@@id([dinozId, dinozItemId], map: "PK_e7161ad9702ca574280cf1a1617")
-	@@index([dinozId], map: "IDX_4e81bd56b675264ba5f30a5f10")
-	@@index([dinozItemId], map: "IDX_e90f6271f11b3522312139ef3a")
-	@@map("dinoz_items_dinoz_item")
+  @@id([dinozId, dinozItemId], map: "PK_e7161ad9702ca574280cf1a1617")
+  @@index([dinozId], map: "IDX_4e81bd56b675264ba5f30a5f10")
+  @@index([dinozItemId], map: "IDX_e90f6271f11b3522312139ef3a")
+  @@map("dinoz_items_dinoz_item")
 }
 
 model DinozMission {
-	id         Int      @id(map: "PK_dfeb1245e68d72db9a6c9402ab7") @default(autoincrement())
-	missionId  Int
-	dinozId    Int?
-	step       Int
-	isFinished Boolean?
-	progress   Int?
-	dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_f408ddb692ab5519808f24fb2b7")
+  id         Int      @id(map: "PK_dfeb1245e68d72db9a6c9402ab7") @default(autoincrement())
+  missionId  Int
+  dinozId    Int?
+  step       Int
+  isFinished Boolean?
+  progress   Int?
+  dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_f408ddb692ab5519808f24fb2b7")
 
-	@@unique([missionId, dinozId])
-	@@map("dinoz_mission")
+  @@unique([missionId, dinozId])
+  @@map("dinoz_mission")
 }
 
 model DinozSkill {
-	id      Int     @id(map: "PK_c4109fad8627da673d3614fbc01") @default(autoincrement())
-	skillId Int
-	state   Boolean @default(true)
-	dinozId Int?
-	dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_5662d0ad643e55696f10bcbc858")
+  id      Int     @id(map: "PK_c4109fad8627da673d3614fbc01") @default(autoincrement())
+  skillId Int
+  state   Boolean @default(true)
+  dinozId Int?
+  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_5662d0ad643e55696f10bcbc858")
 
-	@@unique([skillId, dinozId])
-	@@map("dinoz_skill")
+  @@unique([skillId, dinozId])
+  @@map("dinoz_skill")
 }
 
 model DinozSkillUnlockable {
-	id      Int    @id(map: "PK_f61132504207a4379a96a324e93") @default(autoincrement())
-	skillId Int
-	dinozId Int?
-	dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_db6b95479693f3e4b5948800cf8")
+  id      Int    @id(map: "PK_f61132504207a4379a96a324e93") @default(autoincrement())
+  skillId Int
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_db6b95479693f3e4b5948800cf8")
 
-	@@map("dinoz_skill_unlockable")
+  @@map("dinoz_skill_unlockable")
 }
 
 model DinozStatus {
-	id       Int    @id(map: "PK_149653f1934603aede93803c9de") @default(autoincrement())
-	statusId Int
-	dinozId  Int?
-	dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ec5230fd4ad653770e13558df7d")
+  id       Int    @id(map: "PK_149653f1934603aede93803c9de") @default(autoincrement())
+  statusId Int
+  dinozId  Int?
+  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ec5230fd4ad653770e13558df7d")
 
-	@@unique([statusId, dinozId])
-	@@map("dinoz_status")
+  @@unique([statusId, dinozId])
+  @@map("dinoz_status")
 }
 
 model ImportedDinoz {
-	id                    Int                   @id(map: "PK_ac97d6b0ae8b55980f5caaacb3d") @default(autoincrement())
-	importedId            Int
-	name                  String                @db.VarChar
-	isSacrificed          Boolean               @default(false)
-	level                 Int
-	display               String                @db.VarChar
-	life                  Int
-	maxLife               Int
-	experience            Int
-	nbrUpFire             Int
-	nbrUpWood             Int
-	nbrUpWater            Int
-	nbrUpLightning        Int
-	nbrUpAir              Int
-	createdDate           DateTime              @default(now()) @db.Timestamp(6)
-	updatedDate           DateTime              @default(now()) @updatedAt @db.Timestamp(6)
-	playerId              Int?
-	isFrozen              Boolean
-	imported_player       ImportedPlayer?       @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_b52fe496437841d0af36c9377c8")
-	imported_dinoz_skill  ImportedDinozSkill[]
-	imported_dinoz_status ImportedDinozStatus[]
+  id                    Int                   @id(map: "PK_ac97d6b0ae8b55980f5caaacb3d") @default(autoincrement())
+  importedId            Int
+  name                  String                @db.VarChar
+  isSacrificed          Boolean               @default(false)
+  level                 Int
+  display               String                @db.VarChar
+  life                  Int
+  maxLife               Int
+  experience            Int
+  nbrUpFire             Int
+  nbrUpWood             Int
+  nbrUpWater            Int
+  nbrUpLightning        Int
+  nbrUpAir              Int
+  createdDate           DateTime              @default(now()) @db.Timestamp(6)
+  updatedDate           DateTime              @default(now()) @updatedAt @db.Timestamp(6)
+  playerId              Int?
+  isFrozen              Boolean
+  imported_player       ImportedPlayer?       @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_b52fe496437841d0af36c9377c8")
+  imported_dinoz_skill  ImportedDinozSkill[]
+  imported_dinoz_status ImportedDinozStatus[]
 
-	@@map("imported_dinoz")
+  @@map("imported_dinoz")
 }
 
 model ImportedDinozSkill {
-	id             Int            @id(map: "PK_6b3eb5c2d481d86de754a07ece9") @default(autoincrement())
-	skillId        Int
-	dinozId        Int?
-	imported_dinoz ImportedDinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_6c23c77389c410949f7317585b5")
+  id             Int            @id(map: "PK_6b3eb5c2d481d86de754a07ece9") @default(autoincrement())
+  skillId        Int
+  dinozId        Int?
+  imported_dinoz ImportedDinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_6c23c77389c410949f7317585b5")
 
-	@@map("imported_dinoz_skill")
+  @@map("imported_dinoz_skill")
 }
 
 model ImportedDinozStatus {
-	id             Int            @id(map: "PK_24b93fc1ae51e002bd4affccf88") @default(autoincrement())
-	dinozId        Int?
-	statusId       Int
-	imported_dinoz ImportedDinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_edb147edc96c7814e88d8dc3544")
+  id             Int            @id(map: "PK_24b93fc1ae51e002bd4affccf88") @default(autoincrement())
+  dinozId        Int?
+  statusId       Int
+  imported_dinoz ImportedDinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_edb147edc96c7814e88d8dc3544")
 
-	@@map("imported_dinoz_status")
+  @@map("imported_dinoz_status")
 }
 
 model ImportedPlayer {
-	id                          Int                        @id(map: "PK_a754b050a93ed32ba1908d8fe84") @default(autoincrement())
-	name                        String                     @db.VarChar
-	twinId                      Int
-	money                       Int
-	createdDate                 DateTime                   @default(now()) @db.Timestamp(6)
-	updatedDate                 DateTime                   @default(now()) @updatedAt @db.Timestamp(6)
-	playerId                    Int?                       @unique(map: "REL_97b48349be6078fa1d0f0eb877")
-	imported_dinoz              ImportedDinoz[]
-	player                      Player?                    @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_97b48349be6078fa1d0f0eb8778")
-	imported_player_ingredients ImportedPlayerIngredient[]
-	imported_player_item        ImportedPlayerItem[]
-	imported_player_reward      ImportedPlayerReward[]
-	imported_player_scenario    ImportedPlayerScenario[]
+  id                          Int                        @id(map: "PK_a754b050a93ed32ba1908d8fe84") @default(autoincrement())
+  name                        String                     @db.VarChar
+  twinId                      Int
+  money                       Int
+  createdDate                 DateTime                   @default(now()) @db.Timestamp(6)
+  updatedDate                 DateTime                   @default(now()) @updatedAt @db.Timestamp(6)
+  playerId                    Int?                       @unique(map: "REL_97b48349be6078fa1d0f0eb877")
+  imported_dinoz              ImportedDinoz[]
+  player                      Player?                    @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_97b48349be6078fa1d0f0eb8778")
+  imported_player_ingredients ImportedPlayerIngredient[]
+  imported_player_item        ImportedPlayerItem[]
+  imported_player_reward      ImportedPlayerReward[]
+  imported_player_scenario    ImportedPlayerScenario[]
 
-	@@map("imported_player")
+  @@map("imported_player")
 }
 
 model ImportedPlayerIngredient {
-	id              Int             @id(map: "PK_22fed52412e1953f761a38ce27c") @default(autoincrement())
-	ingredientId    Int
-	quantity        Int
-	playerId        Int?
-	imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_18eaf3ec2ed7576bfb676c6dab5")
+  id              Int             @id(map: "PK_22fed52412e1953f761a38ce27c") @default(autoincrement())
+  ingredientId    Int
+  quantity        Int
+  playerId        Int?
+  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_18eaf3ec2ed7576bfb676c6dab5")
 
-	@@map("imported_player_ingredients")
+  @@map("imported_player_ingredients")
 }
 
 model ImportedPlayerItem {
-	id              Int             @id(map: "PK_d85684b37ac3e044d15ea95e16f") @default(autoincrement())
-	quantity        Int
-	playerId        Int?
-	itemId          Int
-	imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3df6f968a129fe0311f01d00338")
+  id              Int             @id(map: "PK_d85684b37ac3e044d15ea95e16f") @default(autoincrement())
+  quantity        Int
+  playerId        Int?
+  itemId          Int
+  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3df6f968a129fe0311f01d00338")
 
-	@@map("imported_player_item")
+  @@map("imported_player_item")
 }
 
 model ImportedPlayerReward {
-	id              Int             @id(map: "PK_c6b0c5f9aeb412ee12f0309d299") @default(autoincrement())
-	playerId        Int?
-	rewardId        Int
-	imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_63c119aab5f6d9990f2b10062c3")
+  id              Int             @id(map: "PK_c6b0c5f9aeb412ee12f0309d299") @default(autoincrement())
+  playerId        Int?
+  rewardId        Int
+  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_63c119aab5f6d9990f2b10062c3")
 
-	@@map("imported_player_reward")
+  @@map("imported_player_reward")
 }
 
 model ImportedPlayerScenario {
-	id              Int             @id(map: "PK_84a5181a8d3f0255bcf9ab904c4") @default(autoincrement())
-	questName       String          @db.VarChar
-	progression     Int
-	playerId        Int?
-	imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_24b0dbe4c862c2f651d8795f65a")
+  id              Int             @id(map: "PK_84a5181a8d3f0255bcf9ab904c4") @default(autoincrement())
+  questName       String          @db.VarChar
+  progression     Int
+  playerId        Int?
+  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_24b0dbe4c862c2f651d8795f65a")
 
-	@@map("imported_player_scenario")
+  @@map("imported_player_scenario")
 }
 
 model ImportedTwinoidAchievement {
-	id          Int      @id(map: "PK_2f068d951f9cc9764221e649206") @default(autoincrement())
-	siteId      Int
-	date        String   @db.VarChar
-	nameId      String   @db.VarChar
-	createdDate DateTime @default(now()) @db.Timestamp(6)
-	updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
-	playerId    Int?
-	requirement String   @db.VarChar
-	quantity    Int
-	player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_50282b160872353eda6276418d1")
+  id          Int      @id(map: "PK_2f068d951f9cc9764221e649206") @default(autoincrement())
+  siteId      Int
+  date        String   @db.VarChar
+  nameId      String   @db.VarChar
+  createdDate DateTime @default(now()) @db.Timestamp(6)
+  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  playerId    Int?
+  requirement String   @db.VarChar
+  quantity    Int
+  player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_50282b160872353eda6276418d1")
 
-	@@map("imported_twinoid_achievements")
+  @@map("imported_twinoid_achievements")
 }
 
 model ImportedTwinoidSite {
-	id          Int      @id(map: "PK_c5bbb1c1ff466442f1eb4c48078") @default(autoincrement())
-	siteId      Int
-	npoints     Int
-	points      Int
-	createdDate DateTime @default(now()) @db.Timestamp(6)
-	updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
-	playerId    Int?
-	player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_8035669ec1e7b5a0b09d4c76db7")
+  id          Int      @id(map: "PK_c5bbb1c1ff466442f1eb4c48078") @default(autoincrement())
+  siteId      Int
+  npoints     Int
+  points      Int
+  createdDate DateTime @default(now()) @db.Timestamp(6)
+  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  playerId    Int?
+  player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_8035669ec1e7b5a0b09d4c76db7")
 
-	@@map("imported_twinoid_site")
+  @@map("imported_twinoid_site")
 }
 
 model ImportedTwinoidStat {
-	id          Int      @id(map: "PK_8b3e084a6917445a324d12c382d") @default(autoincrement())
-	siteId      Int
-	score       Int
-	nameId      String   @db.VarChar
-	createdDate DateTime @default(now()) @db.Timestamp(6)
-	updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
-	playerId    Int?
-	player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_bcfa9706d0fd62569a7e9aeaf27")
+  id          Int      @id(map: "PK_8b3e084a6917445a324d12c382d") @default(autoincrement())
+  siteId      Int
+  score       Int
+  nameId      String   @db.VarChar
+  createdDate DateTime @default(now()) @db.Timestamp(6)
+  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  playerId    Int?
+  player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_bcfa9706d0fd62569a7e9aeaf27")
 
-	@@map("imported_twinoid_stats")
+  @@map("imported_twinoid_stats")
 }
 
 model migrations {
-	id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
-	timestamp BigInt
-	name      String @db.VarChar
+  id        Int    @id(map: "PK_8c82d7f526340ab734260ea46be") @default(autoincrement())
+  timestamp BigInt
+  name      String @db.VarChar
 }
 
 model News {
-	id           Int      @id(map: "PK_39a43dfcb6007180f04aff2357e") @default(autoincrement())
-	title        String?  @db.VarChar
-	image        Bytes?
-	frenchTitle  String?  @db.VarChar
-	frenchText   String?  @db.VarChar
-	englishTitle String?  @db.VarChar
-	englishText  String?  @db.VarChar
-	spanishTitle String?  @db.VarChar
-	spanishText  String?  @db.VarChar
-	germanTitle  String?  @db.VarChar
-	germanText   String?  @db.VarChar
-	createdDate  DateTime @default(now()) @db.Timestamp(6)
-	updatedDate  DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  id           Int      @id(map: "PK_39a43dfcb6007180f04aff2357e") @default(autoincrement())
+  title        String?  @db.VarChar
+  image        Bytes?
+  frenchTitle  String?  @db.VarChar
+  frenchText   String?  @db.VarChar
+  englishTitle String?  @db.VarChar
+  englishText  String?  @db.VarChar
+  spanishTitle String?  @db.VarChar
+  spanishText  String?  @db.VarChar
+  germanTitle  String?  @db.VarChar
+  germanText   String?  @db.VarChar
+  createdDate  DateTime @default(now()) @db.Timestamp(6)
+  updatedDate  DateTime @default(now()) @updatedAt @db.Timestamp(6)
 
-	@@map("news")
+  @@map("news")
 }
 
 model NPC {
-	id      Int    @id(map: "PK_f88acee050bfea2111b399ab49b") @default(autoincrement())
-	npcId   Int
-	step    String @db.VarChar
-	dinozId Int?
-	dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_90ce8a070feaea28d5a39295762")
+  id      Int    @id(map: "PK_f88acee050bfea2111b399ab49b") @default(autoincrement())
+  npcId   Int
+  step    String @db.VarChar
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_90ce8a070feaea28d5a39295762")
 
-	@@unique([npcId, dinozId])
-	@@map("npc")
+  @@unique([npcId, dinozId])
+  @@map("npc")
 }
 
 model Player {
-	id                          Int                          @id(map: "PK_65edadc946a7faf4b638d5e8885") @default(autoincrement())
-	hasImported                 Boolean
-	customText                  String?
-	name                        String                       @db.VarChar
-	eternalTwinId               String                       @db.VarChar
-	money                       Int
-	quetzuBought                Int
-	leader                      Boolean                      @default(false)
-	engineer                    Boolean                      @default(false)
-	cooker                      Boolean                      @default(false)
-	shopKeeper                  Boolean                      @default(false)
-	merchant                    Boolean                      @default(false)
-	priest                      Boolean                      @default(false)
-	teacher                     Boolean                      @default(false)
-	messie                      Boolean                      @default(false)
-	matelasseur                 Boolean                      @default(false)
-	labruteDone                 Boolean                      @default(false)
-	createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
-	updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
-	lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
-	role                        AdminRole                    @default(PLAYER)
-	dinoz                       Dinoz[]
-	importedPlayer              ImportedPlayer?
-	importedTwinoidAchievements ImportedTwinoidAchievement[]
-	importedTwinoidSite         ImportedTwinoidSite[]
-	importedTwinoidStats        ImportedTwinoidStat[]
-	dinozShop                   PlayerDinozShop[]
-	gathers                     PlayerGather[]
-	ingredients                 PlayerIngredient[]
-	items                       PlayerItem[]
-	quests                      PlayerQuest[]
-	rewards                     PlayerReward[]
-	ranking                     Ranking?
-	offers                      Offer[]
-	bids                        OfferBid[]
-	logs                        Log[]
-	usernameHistory             UsernameHistory[]
-	playerTracking              PlayerTracking[]
+  id                          Int                          @id(map: "PK_65edadc946a7faf4b638d5e8885") @default(autoincrement())
+  hasImported                 Boolean
+  customText                  String?
+  name                        String                       @db.VarChar
+  eternalTwinId               String                       @db.VarChar
+  money                       Int
+  quetzuBought                Int
+  leader                      Boolean                      @default(false)
+  engineer                    Boolean                      @default(false)
+  cooker                      Boolean                      @default(false)
+  shopKeeper                  Boolean                      @default(false)
+  merchant                    Boolean                      @default(false)
+  priest                      Boolean                      @default(false)
+  teacher                     Boolean                      @default(false)
+  messie                      Boolean                      @default(false)
+  matelasseur                 Boolean                      @default(false)
+  labruteDone                 Boolean                      @default(false)
+  createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
+  updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
+  role                        AdminRole                    @default(PLAYER)
+  lang                        Lang                         @default(fr)
+  dinoz                       Dinoz[]
+  importedPlayer              ImportedPlayer?
+  importedTwinoidAchievements ImportedTwinoidAchievement[]
+  importedTwinoidSite         ImportedTwinoidSite[]
+  importedTwinoidStats        ImportedTwinoidStat[]
+  dinozShop                   PlayerDinozShop[]
+  gathers                     PlayerGather[]
+  ingredients                 PlayerIngredient[]
+  items                       PlayerItem[]
+  quests                      PlayerQuest[]
+  rewards                     PlayerReward[]
+  ranking                     Ranking?
+  offers                      Offer[]
+  bids                        OfferBid[]
+  logs                        Log[]
+  usernameHistory             UsernameHistory[]
+  playerTracking              PlayerTracking[]
 
-	@@map("player")
+  @@map("player")
 }
 
 model UsernameHistory {
-	id       Int     @id @default(autoincrement())
-	playerId Int?
-	username String  @db.VarChar
-	player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id       Int     @id @default(autoincrement())
+  playerId Int?
+  username String  @db.VarChar
+  player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model PlayerDinozShop {
-	id       Int     @id(map: "PK_046dc73096360ffb3c1cca7fe72") @default(autoincrement())
-	raceId   Int
-	display  String  @db.VarChar
-	playerId Int?
-	player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_c79ab61aa32fe6e81c03a7d87d1")
+  id       Int     @id(map: "PK_046dc73096360ffb3c1cca7fe72") @default(autoincrement())
+  raceId   Int
+  display  String  @db.VarChar
+  playerId Int?
+  player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_c79ab61aa32fe6e81c03a7d87d1")
 
-	@@map("player_dinoz_shop")
+  @@map("player_dinoz_shop")
 }
 
 model PlayerGather {
-	id       Int     @id(map: "PK_aafad0867df96551953200209c7") @default(autoincrement())
-	place    Int
-	type     Int
-	grid     Int[]
-	playerId Int?
-	player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_86eed52f66f7126e4dc7a998cdf")
+  id       Int     @id(map: "PK_aafad0867df96551953200209c7") @default(autoincrement())
+  place    Int
+  type     Int
+  grid     Int[]
+  playerId Int?
+  player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_86eed52f66f7126e4dc7a998cdf")
 
-	@@map("player_gather")
+  @@map("player_gather")
 }
 
 model PlayerIngredient {
-	id           Int     @id(map: "PK_3ae5ca9730144d7456c16386869") @default(autoincrement())
-	ingredientId Int
-	quantity     Int
-	playerId     Int?
-	player       Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ad198392886a52e7f184474a0d6")
+  id           Int     @id(map: "PK_3ae5ca9730144d7456c16386869") @default(autoincrement())
+  ingredientId Int
+  quantity     Int
+  playerId     Int?
+  player       Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ad198392886a52e7f184474a0d6")
 
-	@@unique([ingredientId, playerId])
-	@@map("player_ingredient")
+  @@unique([ingredientId, playerId])
+  @@map("player_ingredient")
 }
 
 model PlayerItem {
-	id       Int     @id(map: "PK_47496d16c61f1b09af5c2399993") @default(autoincrement())
-	itemId   Int
-	quantity Int
-	playerId Int?
-	player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_21535fcb93f8613fd893b74b08b")
+  id       Int     @id(map: "PK_47496d16c61f1b09af5c2399993") @default(autoincrement())
+  itemId   Int
+  quantity Int
+  playerId Int?
+  player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_21535fcb93f8613fd893b74b08b")
 
-	@@unique([itemId, playerId])
-	@@map("player_item")
+  @@unique([itemId, playerId])
+  @@map("player_item")
 }
 
 model PlayerQuest {
-	id          Int     @id(map: "PK_8cb4cc9b423807c511f24c0faa3") @default(autoincrement())
-	questId     Int
-	progression Int
-	playerId    Int?
-	player      Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_1b5b041fab3362c845c142ca3b0")
+  id          Int     @id(map: "PK_8cb4cc9b423807c511f24c0faa3") @default(autoincrement())
+  questId     Int
+  progression Int
+  playerId    Int?
+  player      Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_1b5b041fab3362c845c142ca3b0")
 
-	@@unique([questId, playerId])
-	@@map("player_quest")
+  @@unique([questId, playerId])
+  @@map("player_quest")
 }
 
 model PlayerReward {
-	id       Int     @id(map: "PK_6602753ecef4920f197de910599") @default(autoincrement())
-	rewardId Int
-	playerId Int?
-	player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_9cf142b3a6fa3e0faec7f8debfb")
+  id       Int     @id(map: "PK_6602753ecef4920f197de910599") @default(autoincrement())
+  rewardId Int
+  playerId Int?
+  player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_9cf142b3a6fa3e0faec7f8debfb")
 
-	@@unique([rewardId, playerId])
-	@@map("player_reward")
+  @@unique([rewardId, playerId])
+  @@map("player_reward")
 }
 
 model Ranking {
-	id         Int     @id(map: "PK_bf82b8f271e50232e6a3fcb09a9") @default(autoincrement())
-	points     Int     @default(0)
-	average    Int     @default(0)
-	dinozCount Int     @default(0)
-	completion Int     @default(0)
-	playerId   Int?    @unique(map: "REL_3ac96196d0a3851989be8c52a9")
-	player     Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3ac96196d0a3851989be8c52a9a")
+  id         Int     @id(map: "PK_bf82b8f271e50232e6a3fcb09a9") @default(autoincrement())
+  points     Int     @default(0)
+  average    Int     @default(0)
+  dinozCount Int     @default(0)
+  completion Int     @default(0)
+  playerId   Int?    @unique(map: "REL_3ac96196d0a3851989be8c52a9")
+  player     Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3ac96196d0a3851989be8c52a9a")
 
-	@@map("ranking")
+  @@map("ranking")
 }
 
 model Secret {
-	key   String @id @db.VarChar
-	value String @db.VarChar
+  key   String @id @db.VarChar
+  value String @db.VarChar
 
-	@@map("secret")
+  @@map("secret")
 }
 
 model OfferItem {
-	id           Int     @id @default(autoincrement())
-	offerId      Int
-	offer        Offer   @relation(fields: [offerId], references: [id])
-	itemId       Int
-	quantity     Int
-	isIngredient Boolean
+  id           Int     @id @default(autoincrement())
+  offerId      Int
+  offer        Offer   @relation(fields: [offerId], references: [id])
+  itemId       Int
+  quantity     Int
+  isIngredient Boolean
 }
 
 model OfferBid {
-	id      Int    @id @default(autoincrement())
-	offerId Int
-	offer   Offer  @relation(fields: [offerId], references: [id])
-	userId  Int
-	user    Player @relation(fields: [userId], references: [id])
-	value   Int
+  id      Int    @id @default(autoincrement())
+  offerId Int
+  offer   Offer  @relation(fields: [offerId], references: [id])
+  userId  Int
+  user    Player @relation(fields: [userId], references: [id])
+  value   Int
 }
 
 enum OfferStatus {
-	ONGOING
-	ENDED
-	CANCELLED
+  ONGOING
+  ENDED
+  CANCELLED
 }
 
 enum AdminRole {
-	ADMIN
-	MODERATOR
-	BETA
-	PLAYER
+  ADMIN
+  MODERATOR
+  BETA
+  PLAYER
 }
 
 model Offer {
-	id       Int         @id @default(autoincrement())
-	sellerId Int
-	seller   Player      @relation(fields: [sellerId], references: [id])
-	endDate  DateTime
-	dinozId  Int?
-	dinoz    Dinoz?      @relation(fields: [dinozId], references: [id])
-	items    OfferItem[]
-	total    Int
-	bids     OfferBid[]
-	status   OfferStatus @default(ONGOING)
+  id       Int         @id @default(autoincrement())
+  sellerId Int
+  seller   Player      @relation(fields: [sellerId], references: [id])
+  endDate  DateTime
+  dinozId  Int?
+  dinoz    Dinoz?      @relation(fields: [dinozId], references: [id])
+  items    OfferItem[]
+  total    Int
+  bids     OfferBid[]
+  status   OfferStatus @default(ONGOING)
 }
 
 enum LogType {
-	ItemUsed
-	ItemBought
-	IngredientSold
-	GoldWon
-	GoldLost
-	Move
-	LevelUp
-	Fight
-	XPEarned
-	HPLost
-	Death
-	Revive
-	MissionStep
-	MissionFinished
-	MissionCanceled
-	Gather
-	CreateDinoz
-	ChangeDinozOrder
-	PlayerCreated
-	PlayerConnected
-	LBDone
-	AdminUpdateDinoz
-	AdminAddStatus
-	AdminRemoveStatus
-	AdminAddSkill
-	AdminRemoveSkill
-	AdminAddMoney
-	AdminRemoveMoney
-	AdminAddReward
-	AdminRemoveReward
-	AdminUpdatePlayer
-	AdminUpdateSecret
+  ItemUsed
+  ItemBought
+  IngredientSold
+  GoldWon
+  GoldLost
+  Move
+  LevelUp
+  Fight
+  XPEarned
+  HPLost
+  Death
+  Revive
+  MissionStep
+  MissionFinished
+  MissionCanceled
+  Gather
+  CreateDinoz
+  ChangeDinozOrder
+  PlayerCreated
+  PlayerConnected
+  LBDone
+  AdminUpdateDinoz
+  AdminAddStatus
+  AdminRemoveStatus
+  AdminAddSkill
+  AdminRemoveSkill
+  AdminAddMoney
+  AdminRemoveMoney
+  AdminAddReward
+  AdminRemoveReward
+  AdminUpdatePlayer
+  AdminUpdateSecret
 }
 
 model Log {
-	id        Int      @id @default(autoincrement())
-	player    Player   @relation(fields: [playerId], references: [id])
-	playerId  Int
-	dinoz     Dinoz?   @relation(fields: [dinozId], references: [id])
-	dinozId   Int?
-	type      LogType
-	values    String[] @default([])
-	createdAt DateTime @default(now()) @db.Timestamp(6)
+  id        Int      @id @default(autoincrement())
+  player    Player   @relation(fields: [playerId], references: [id])
+  playerId  Int
+  dinoz     Dinoz?   @relation(fields: [dinozId], references: [id])
+  dinozId   Int?
+  type      LogType
+  values    String[] @default([])
+  createdAt DateTime @default(now()) @db.Timestamp(6)
 }
 
 model DinozCatch {
-	id        Int    @id @default(autoincrement())
-	dinoz     Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade)
-	dinozId   Int?
-	monsterId String
-	hp        Int
+  id        Int    @id @default(autoincrement())
+  dinoz     Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  dinozId   Int?
+  monsterId String
+  hp        Int
 }
 
 model PlayerTracking {
-	id       Int    @id @default(autoincrement())
-	player   Player @relation(fields: [playerId], references: [id])
-	playerId Int
-	stat     String
-	quantity Int
+  id       Int    @id @default(autoincrement())
+  player   Player @relation(fields: [playerId], references: [id])
+  playerId Int
+  stat     String
+  quantity Int
 
-	@@unique([stat, playerId])
-	@@map("playerTracking")
+  @@unique([stat, playerId])
+  @@map("playerTracking")
 }

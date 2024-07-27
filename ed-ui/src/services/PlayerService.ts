@@ -97,9 +97,9 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getLBRewards(playerId: number): Promise<{ quantity: number }> {
+	getLBRewards(): Promise<{ quantity: number }> {
 		return http()
-			.get(`/player/labrute/${playerId}`)
+			.get(`/player/labrute}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

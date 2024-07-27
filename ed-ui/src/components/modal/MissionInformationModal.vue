@@ -59,7 +59,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.$emit('reload');
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

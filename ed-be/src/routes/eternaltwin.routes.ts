@@ -1,9 +1,8 @@
 import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkPlayerLB } from '../business/eternaltwinService.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -43,9 +42,7 @@ routes.get(`${commonPath}/:uuid`, [param('uuid').exists().isString()], async (re
 		const response = await checkPlayerLB(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(e.errorCode || 500).send(e.message);
+		sendError(res, err);
 	}
 });
 

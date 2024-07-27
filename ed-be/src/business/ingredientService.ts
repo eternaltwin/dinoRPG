@@ -1,7 +1,7 @@
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Request } from 'express';
 import { getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
  * Get all the ingredients from a player
@@ -10,7 +10,7 @@ import { ErrorFormator } from '../utils/errorFormator.js';
  * 				An array with all ingredients that player owns
  */
 export async function getAllIngredientsData(req: Request) {
-	if (!req.auth?.playerId) throw new ErrorFormator(500, 'No auth data');
+	if (!req.auth?.playerId) throw new ExpectedError('No auth data');
 	const allIngredientsData = await getAllIngredientsDataRequest(req.auth.playerId);
 
 	const ingredients = allIngredientsData.map(ingr => {
@@ -18,7 +18,7 @@ export async function getAllIngredientsData(req: Request) {
 			([, value]) => value.ingredientId === ingr.ingredientId
 		);
 
-		if (!ingredientFound) throw new ErrorFormator(500, 'Ingredient not found');
+		if (!ingredientFound) throw new ExpectedError('Ingredient not found');
 
 		return {
 			ingredientId: ingr.ingredientId,

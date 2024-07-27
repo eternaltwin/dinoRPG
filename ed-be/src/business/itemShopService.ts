@@ -8,13 +8,15 @@ import { shopList } from '@drpg/core/models/shop/ShopList';
 import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
 import { Request } from 'express';
 import { createLog } from '../dao/logDao.js';
-import { getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
+import { auth, getPlayerShopItemsDataRequest, getPlayerShopOneItemDataRequest, removeMoney } from '../dao/playerDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import translate from '../utils/translate.js';
+import { Player } from '@drpg/prisma';
 
 /**
  * @summary Get all items from a shop
@@ -24,7 +26,7 @@ import { decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
  */
 export async function getItemsFromShop(req: Request): Promise<ItemShopFiche[]> {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
+		throw new ExpectedError(`Unauthorized.`);
 	}
 
 	const playerId = req.auth.playerId;
@@ -33,20 +35,20 @@ export async function getItemsFromShop(req: Request): Promise<ItemShopFiche[]> {
 
 	// Throw an exception if the shop does not exist
 	if (tempShop === undefined) {
-		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
+		throw new ExpectedError(`The shop ${shopId} does not exist`);
 	}
 
 	// Get the player's data (money, shopKeeper, list of dinoz not frozen or sacrificed (placeId), list of items (quantity))
 	const playerShopData = await getPlayerShopItemsDataRequest(playerId);
 
 	if (!playerShopData) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 
 	checkDinozPlace(tempShop, playerShopData, shopId);
 
 	/*	if (tempShop.type === ShopType.ITINERANT) {
-		throw new ErrorFormator(500, `Wrong shop returned`);
+		throw new ExpectedError( `Wrong shop returned`);
 	}*/
 
 	// All checks passed, let's create the list of items with the proper values
@@ -81,37 +83,34 @@ export async function getItemsFromShop(req: Request): Promise<ItemShopFiche[]> {
  * @return void
  */
 export async function buyItem(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
-	}
-	const playerId = req.auth.playerId;
+	const authed = await auth(req);
 	const shopId = +req.params.shopId;
 	const itemId = +req.body.itemId;
 	const quantityBought = +req.body.quantity;
 
 	// Get the player's data (money, shopKeeper, list of dinoz not frozen and not sacrificed (placeId),
 	// the info about the item, and owned golden napodinos)
-	const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemId);
+	const playerShopData = await getPlayerShopOneItemDataRequest(authed.id, itemId);
 
 	if (!playerShopData) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	// Extract item data from player
 	const playerItemData = playerShopData.items.find(item => item.itemId === itemId);
 
 	// Throw an exception if somehow we have a negative or zero quantity
 	if (quantityBought <= 0) {
-		throw new ErrorFormator(400, 'wrongQuantity');
+		throw new ExpectedError(translate('wrongQuantity', authed));
 	}
 
 	const theShop: ShopFiche | undefined = Object.values(shopList).find(shop => shop.shopId === shopId);
 	// Throw an exception if the shop does not exist
 	if (!theShop) {
-		throw new ErrorFormator(500, `The shop ${shopId} does not exist`);
+		throw new ExpectedError(`The shop ${shopId} does not exist`);
 	}
 
 	/*	if (theShop.type === ShopType.ITINERANT || theShop.type === ShopType.FILOU) {
-		throw new ErrorFormator(500, `Wrong shop returned.`);
+		throw new ExpectedError( `Wrong shop returned.`);
 	}*/
 
 	checkDinozPlace(theShop, playerShopData, shopId);
@@ -120,7 +119,7 @@ export async function buyItem(req: Request) {
 	const itemSold = theShop.listItemsSold.find(item => item.id === itemId);
 	// Throw an exception if the item does not exist in the shop list of items
 	if (itemSold === undefined) {
-		throw new ErrorFormator(500, `The item ${itemId} does not exist in the shop ${shopId}`);
+		throw new ExpectedError(`The item ${itemId} does not exist in the shop ${shopId}`);
 	}
 
 	// All checks passed, now do the checks specific to normal and magic items
@@ -129,7 +128,7 @@ export async function buyItem(req: Request) {
 	const itemReference = structuredClone(Object.values(itemList).find(item => item.itemId === itemId));
 
 	if (!itemReference) {
-		throw new ErrorFormator(500, `Item ${itemId} doesn't exist.`);
+		throw new ExpectedError(`Item ${itemId} doesn't exist.`);
 	}
 
 	itemReference.price =
@@ -145,30 +144,30 @@ export async function buyItem(req: Request) {
 
 	// To avoid making this function bigger, use buyMagicItem if the shop is magical
 	if (theShop.type === ShopType.MAGICAL) {
-		await buyMagicItem(playerId, playerShopData, itemReference, quantityBought, playerItemData);
+		await buyMagicItem(authed, playerShopData, itemReference, quantityBought, playerItemData);
 	} else if (theShop.type === ShopType.FILOU) {
 		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList.TREASURE_COUPON.itemId);
 		if (!playerTreasure) {
-			await insertItem(playerId, { itemId: itemList.TREASURE_COUPON.itemId, quantity: quantityBought });
+			await insertItem(authed.id, { itemId: itemList.TREASURE_COUPON.itemId, quantity: quantityBought });
 		} else {
-			await increaseItemQuantity(playerId, itemList.TREASURE_COUPON.itemId, quantityBought);
+			await increaseItemQuantity(authed.id, itemList.TREASURE_COUPON.itemId, quantityBought);
 		}
 		await createLog(
 			LogType.ItemBought,
-			playerId,
+			authed.id,
 			undefined,
 			itemList.TREASURE_COUPON.itemId.toString(),
 			quantityBought.toString()
 		);
 
 		//Update stats
-		await setSpecificStat(StatTracking.S_BUYER, playerId, quantityBought);
+		await setSpecificStat(StatTracking.S_BUYER, authed.id, quantityBought);
 
 		const itemFromShop = shopList.FILOU.listItemsSold.find(i => i.id === itemId);
 		if (!itemFromShop) {
-			throw new ErrorFormator(500, `The item ${itemId} is not sellable for coupons!`);
+			throw new ExpectedError(`The item ${itemId} is not sellable for coupons!`);
 		}
-		await decreaseIngredientQuantity(playerId, itemReference.itemId, itemFromShop.price * quantityBought);
+		await decreaseIngredientQuantity(authed.id, itemReference.itemId, itemFromShop.price * quantityBought);
 		return {
 			itemId: itemList.TREASURE_COUPON.itemId,
 			quantity: quantityBought,
@@ -177,17 +176,17 @@ export async function buyItem(req: Request) {
 	} else {
 		// Throws an exception if player doesn't have enough money to buy the items
 		if (playerShopData.money < itemReference.price * quantityBought) {
-			throw new ErrorFormator(400, 'notEnoughMoney');
+			throw new ExpectedError(translate('notEnoughMoney', authed));
 		}
 
 		// Throws an exception if the player does not have enough storage space left
 		if (itemReference.quantity > itemReference.maxQuantity) {
-			throw new ErrorFormator(400, 'notEnoughStorage');
+			throw new ExpectedError(translate('notEnoughStorage', authed));
 		}
 
 		// All checks passed related to gold, let's update the stuff
 
-		await removeMoney(playerId, itemReference.price * quantityBought);
+		await removeMoney(authed.id, itemReference.price * quantityBought);
 	}
 
 	// Continue updating stuff that is common to normal and magic items
@@ -197,7 +196,7 @@ export async function buyItem(req: Request) {
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
 		await increaseItemQuantity(
-			playerId,
+			authed.id,
 			itemReference.itemId,
 			itemReference.quantity + quantityBought <= itemReference.maxQuantity
 				? quantityBought
@@ -206,19 +205,19 @@ export async function buyItem(req: Request) {
 	}
 	// Else create it
 	else {
-		await insertItem(playerId, { itemId: itemReference.itemId, quantity: itemReference.quantity });
+		await insertItem(authed.id, { itemId: itemReference.itemId, quantity: itemReference.quantity });
 	}
 
 	await createLog(
 		LogType.ItemBought,
-		playerId,
+		authed.id,
 		undefined,
 		itemReference.itemId.toString(),
 		itemReference.quantity.toString()
 	);
 
 	//Update stats
-	await setSpecificStat(StatTracking.S_BUYER, playerId, itemReference.quantity);
+	await setSpecificStat(StatTracking.S_BUYER, authed.id, itemReference.quantity);
 
 	return {
 		itemId: itemReference.itemId,
@@ -238,7 +237,7 @@ export async function buyItem(req: Request) {
  * @return void
  */
 async function buyMagicItem(
-	playerId: number,
+	authed: Pick<Player, 'id' | 'lang'>,
 	playerShopData: {
 		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 	},
@@ -253,16 +252,16 @@ async function buyMagicItem(
 
 	// Throws an exception if player doesn't have enough money to buy the items
 	if (playerNapoData === undefined || playerNapoData.quantity < itemSold.price * quantityBought) {
-		throw new ErrorFormator(400, 'notEnoughMoney');
+		throw new ExpectedError(translate('notEnoughMoney', authed));
 	}
 
 	// Throws an exception if the player does not have enough storage space left
 	if (itemSold.quantity > itemSold.maxQuantity) {
-		throw new ErrorFormator(400, 'notEnoughStorage');
+		throw new ExpectedError(translate('notEnoughStorage', authed));
 	}
 
 	// Set player golden napodino count
-	await decreaseItemQuantity(playerId, itemList.GOLDEN_NAPODINO.itemId, itemSold.price * quantityBought);
+	await decreaseItemQuantity(authed.id, itemList.GOLDEN_NAPODINO.itemId, itemSold.price * quantityBought);
 }
 
 // Check if player can access the shop
@@ -284,12 +283,12 @@ function checkDinozPlace(
 					dinoz.status.some(status => status.statusId === DinozStatusId.CURSED) && dinoz.placeId === theShop.placeId
 			);
 			if (!hasCursedDinozAtShop) {
-				throw new ErrorFormator(500, `You need a cursed dinoz at the location of the shop to access it`);
+				throw new ExpectedError(`You need a cursed dinoz at the location of the shop to access it`);
 			}
 		} else {
 			// Check at least one dinoz that is not frozen or sacrificed is at the location of the shop
 			if (!player.dinoz.some(dinoz => dinoz.placeId === theShop.placeId)) {
-				throw new ErrorFormator(500, `You don't have any dinoz at the shop's location ${shopId}`);
+				throw new ExpectedError(`You don't have any dinoz at the shop's location ${shopId}`);
 			}
 		}
 	}

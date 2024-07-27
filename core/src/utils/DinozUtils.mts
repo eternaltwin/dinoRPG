@@ -27,7 +27,7 @@ import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
-import { ErrorFormator } from './errorFormator.mjs';
+import { ErrorFormator, ExpectedError } from './errorFormator.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
@@ -155,7 +155,7 @@ export const toDinozFiche = (
 	const playerForCondition = structuredClone(player);
 	const dinoz = player.dinoz.find(d => d.id === activeDinoz);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Inexistant dinoz`);
+		throw new ExpectedError('Inexistant dinoz');
 	}
 	playerForCondition.dinoz = [dinoz];
 	return {
@@ -463,7 +463,7 @@ export const learnNextSphereSkill = (
 
 	const testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
 	if (!testSphereToLean) {
-		throw new ErrorFormator(400, `AlreadySphere`);
+		throw new ExpectedError('AlreadySphere');
 	}
 
 	return testSphereToLean.id;

@@ -1,18 +1,19 @@
 import { Request } from 'express';
-import { getLBPlayer, getLBResponseInformation, setPlayer } from '../dao/playerDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { auth, getLBPlayer, getLBResponseInformation, setPlayer } from '../dao/playerDao.js';
 import fetch from 'node-fetch';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import dayjs from 'dayjs';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import translate from '../utils/translate.js';
 
 export async function checkPlayerLB(req: Request) {
 	const eternalTwinID = req.params.uuid;
 	const player = await getLBPlayer(eternalTwinID);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${eternalTwinID} doesn't exist.`);
+		throw new ExpectedError(`Player ${eternalTwinID} doesn't exist.`);
 	}
 
 	if (!dayjs().isSame(player.lastLogin, 'day')) return false;
@@ -27,16 +28,16 @@ export async function checkPlayerLB(req: Request) {
 }
 
 export async function checkLB(req: Request) {
-	const playerId = +req.params.id;
-	const player = await getLBResponseInformation(playerId);
+	const authed = await auth(req);
+	const player = await getLBResponseInformation(authed.id);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
 	let LBDone = player.labruteDone;
 
 	if (LBDone) {
-		throw new ErrorFormator(400, `alreadyClaimed`);
+		throw new ExpectedError(translate(`alreadyClaimed`, authed));
 	}
 
 	const amIDone = await fetch(`https://brute.eternaltwin.org/api/user/${player.eternalTwinId}/done`);
@@ -46,27 +47,27 @@ export async function checkLB(req: Request) {
 
 	if (data !== 'true' && data !== 'false') {
 		if (data === 'No brutes found') {
-			throw new ErrorFormator(400, 'noBruteFound');
+			throw new ExpectedError(translate(`noBruteFound`, authed));
 		}
-		throw new ErrorFormator(500, data);
+		throw new ExpectedError(data);
 	}
 
 	if (!LBDone) {
-		throw new ErrorFormator(400, `needToDoAllAction`);
+		throw new ExpectedError(translate(`needToDoAllAction`, authed));
 	}
 
 	const portion = Math.ceil(player._count.dinoz / 3);
 
 	await increaseItemQuantity(
-		playerId,
+		authed.id,
 		itemList.POTION_IRMA.itemId,
 		Math.min(portion, itemList.POTION_IRMA.maxQuantity)
 	);
 
 	player.labruteDone = true;
 
-	await setPlayer(playerId, { labruteDone: true });
-	await createLog(LogType.LBDone, playerId, undefined);
+	await setPlayer(authed.id, { labruteDone: true });
+	await createLog(LogType.LBDone, authed.id, undefined);
 
 	return { quantity: portion };
 }

@@ -2,8 +2,7 @@ import { Request, Response, Router } from 'express';
 import { body, param, query, validationResult } from 'express-validator';
 import { bidOffer, cancelOffer, createOffer, getOfferList } from '../business/offerService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -27,9 +26,7 @@ routes.get(
 			const response = await getOfferList(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -54,9 +51,7 @@ routes.put(
 				message: 'Offer created'
 			});
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -73,9 +68,7 @@ routes.delete(`${commonPath}/:offerId`, [param('offerId').exists().isInt()], asy
 			message: 'Offer canceled'
 		});
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(500).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -94,9 +87,7 @@ routes.post(
 				message: 'Bid placed'
 			});
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

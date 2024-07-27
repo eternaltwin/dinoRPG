@@ -3,10 +3,9 @@ import { body, param, validationResult } from 'express-validator';
 import multer from 'multer';
 import { getNews, getNewsIllustration, postNews, updateNews } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkIsAdmin } from '../utils/jwt.js';
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -91,9 +90,7 @@ routes.put(
 			await postNews(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -132,10 +129,7 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 		const response: NewsGetResponse = await getNews(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode || 500).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -218,9 +212,7 @@ routes.put(
 			await updateNews(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -237,9 +229,7 @@ routes.get(
 			const illustration = await getNewsIllustration(req);
 			return res.status(200).contentType('image/webp').send(illustration);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

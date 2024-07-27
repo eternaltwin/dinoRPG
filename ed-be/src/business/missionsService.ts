@@ -22,45 +22,45 @@ import {
 	updateMissionStep
 } from '../dao/dinozMissionDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
 	const npcName = req.params.npc;
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, `Player is not authenticated`);
+		throw new ExpectedError(`Player is not authenticated`);
 	}
 	const playerId = +req.auth.playerId;
 	const player = await getDinozMissionsInfo(dinozId, playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const currentPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const npc = Object.values(npcList).find(npc => npc.name === npcName);
 
 	if (dinoz.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`);
+		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	if (!currentPlace) {
-		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
+		throw new ExpectedError(`Place ${dinoz.placeId} doesn't exist.`);
 	}
 
 	if (!npc) {
-		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
+		throw new ExpectedError(`NPC ${npcName} doesn't exists`);
 	}
 
 	if (!npc.missions) {
-		throw new ErrorFormator(500, `NPC ${npcName} doesn't have any missions`);
+		throw new ExpectedError(`NPC ${npcName} doesn't have any missions`);
 	}
 
 	if (currentPlace.placeId !== npc.placeId) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
+		throw new ExpectedError(`Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
 	return missionSort(npc.missions, player, dinozId);
@@ -73,39 +73,39 @@ export async function updateMission(req: Request) {
 	const playerId = req.auth?.playerId;
 
 	if (!playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const player = await getDinozMissionsInfo(dinozId, playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `No player found.`);
+		throw new ExpectedError(`No player found.`);
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	const npc = Object.values(npcList).find(npc => npc.missions?.find(mission => mission.missionId === missionId));
 	const actualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 
 	if (!actualPlace) {
-		throw new ErrorFormator(500, `Place ${dinoz.placeId} doesn't exist.`);
+		throw new ExpectedError(`Place ${dinoz.placeId} doesn't exist.`);
 	}
 
 	if (!npc) {
-		throw new ErrorFormator(500, `This mission doesn't exist`);
+		throw new ExpectedError(`This mission doesn't exist`);
 	}
 	const npcMissions = missionSort(npc.missions || [], player, dinozId);
 
 	switch (status) {
 		case 'start':
 			if (actualPlace.placeId !== npc.placeId) {
-				throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
+				throw new ExpectedError(`Dinoz ${dinozId} cannot talk to this NPC`);
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.FINISHED) {
-				throw new ErrorFormator(500, `This mission is already done`);
+				throw new ExpectedError(`This mission is already done`);
 			} else if (npcMissions.some(mission => mission.status === MissionsStatus.ONGOING)) {
-				throw new ErrorFormator(500, `A mission is already in progress`);
+				throw new ExpectedError(`A mission is already in progress`);
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
-				throw new ErrorFormator(500, `This mission is unavailable`);
+				throw new ExpectedError(`This mission is unavailable`);
 			} else {
 				await addMissionToDinoz(playerId, {
 					dinoz: { connect: { id: dinozId } },
@@ -118,17 +118,17 @@ export async function updateMission(req: Request) {
 			}
 		case 'stop':
 			if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.FINISHED) {
-				throw new ErrorFormator(500, `This mission is already done`);
+				throw new ExpectedError(`This mission is already done`);
 			} else if (!npcMissions.some(mission => mission.status === MissionsStatus.ONGOING)) {
-				throw new ErrorFormator(500, `There is no mission in progress`);
+				throw new ExpectedError(`There is no mission in progress`);
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
-				throw new ErrorFormator(500, `This mission is unavailable`);
+				throw new ExpectedError(`This mission is unavailable`);
 			} else {
 				await removeMissionFromDinoz(playerId, dinoz.id, missionId);
 				return true;
 			}
 		default:
-			throw new ErrorFormator(500, "This status don't exist");
+			throw new ExpectedError("This status don't exist");
 	}
 }
 
@@ -136,7 +136,7 @@ export async function interactMission(req: Request) {
 	const playerId = req.auth?.playerId;
 
 	if (!playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const mission = await checkMission(req);
@@ -171,7 +171,7 @@ export async function endMission(req: Request) {
 	const playerId = req.auth?.playerId;
 
 	if (!playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	await rewarder(mission.missionReference.rewards, [mission.dinoz], playerId);
@@ -185,27 +185,27 @@ async function checkMission(req: Request) {
 	const playerId = req.auth?.playerId;
 
 	if (!playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const player = await getDinozMissionsInfo(dinozId, playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `No player found.`);
+		throw new ExpectedError(`No player found.`);
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 	const dinozMission = dinoz.missions.find(mission => mission.missionId === missionId);
 
 	if (!dinozMission) {
-		throw new ErrorFormator(500, 'This mission is not started yet');
+		throw new ExpectedError('This mission is not started yet');
 	}
 	if (dinozMission.isFinished) {
-		throw new ErrorFormator(500, 'This mission is already over');
+		throw new ExpectedError('This mission is already over');
 	}
 
 	const npc = Object.values(npcList).find(
@@ -215,15 +215,15 @@ async function checkMission(req: Request) {
 		missions => missions.missionId === dinozMission.missionId
 	);
 	if (!missionReference) {
-		throw new ErrorFormator(500, 'No mission found');
+		throw new ExpectedError('No mission found');
 	}
 
 	const actualStep = missionReference.steps.find(step => step.stepId === dinozMission.step);
 	if (!actualStep) {
-		throw new ErrorFormator(500, 'No step found');
+		throw new ExpectedError('No step found');
 	}
 	if (dinoz.placeId !== actualStep.place && actualStep.place !== PlaceEnum.ANYWHERE) {
-		throw new ErrorFormator(500, 'The dinoz is not at the expected place.');
+		throw new ExpectedError('The dinoz is not at the expected place.');
 	}
 	return {
 		dinoz: dinoz,
@@ -255,7 +255,7 @@ export function getMissionAction(
 function missionSort(missions: Mission[], player: PlayerWithMissionData, activeDinoz: number) {
 	const dinoz = player.dinoz.find(d => d.id === activeDinoz);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `No active dinoz.`);
+		throw new ExpectedError(`No active dinoz.`);
 	}
 	return missions.map(missions => {
 		const missionKnown = dinoz.missions.find(element => element.missionId === missions.missionId);
@@ -296,7 +296,7 @@ export async function checkMissionFight(
 	const actualStep = getActualStep(dinoz);
 
 	if (!actualStep) {
-		throw new ErrorFormator(500, 'No mission found');
+		throw new ExpectedError('No mission found');
 	}
 
 	//Increment the progress of killing mobs
@@ -315,7 +315,7 @@ export async function checkMissionFight(
 			else if (actualStep.requirement.target.includes(opponent.name)) count++;
 		}
 		if (!dinozMission) {
-			throw new ErrorFormator(500, 'No mission found');
+			throw new ExpectedError('No mission found');
 		}
 		await updateMissionProgression(dinoz.id, dinozMission.missionId, { progress: { increment: count } });
 		await checkProgressEnd(dinoz, fight, actualStep, count);
@@ -329,7 +329,7 @@ export async function checkProgressEnd(
 	killedProgress: number
 ): Promise<void> {
 	if (!dinoz.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	if (actualStep.requirement.actionType !== ConditionEnum.KILL) return;
@@ -338,7 +338,7 @@ export async function checkProgressEnd(
 	const dinozMission = dinoz.missions.find(mission => !mission.isFinished);
 
 	if (!dinozMission) {
-		throw new ErrorFormator(500, 'No mission found');
+		throw new ExpectedError('No mission found');
 	}
 	let progress = dinozMission.progress || 0;
 	const missionId = dinozMission.missionId;
@@ -357,7 +357,7 @@ export async function checkProgressEnd(
 export async function getGlobalMissions(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const playerId = req.auth.playerId;
@@ -370,7 +370,7 @@ export async function getGlobalMissions(req: Request) {
 
 	// Stop if player doesn't have PMI
 	if (!hasPMI) {
-		throw new ErrorFormator(500, 'Player has no PMI');
+		throw new ExpectedError('Player has no PMI');
 	}
 
 	// Get player Dinoz and their missions

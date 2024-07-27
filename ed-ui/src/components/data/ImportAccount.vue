@@ -43,7 +43,7 @@ export default defineComponent({
 				this.dinozStore.setDinozList([]);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 			this.$router.go(0);

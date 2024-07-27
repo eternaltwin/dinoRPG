@@ -2,13 +2,13 @@ import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { setSpecificStat } from './trackingDao.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 //TODO
 export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) {
 	const rewardStat = Object.values(rewardList).find(r => r.id === reward.rewardId);
 	const playerId = reward.player?.connect?.id;
-	if (!rewardStat || !playerId) throw new ErrorFormator(500, `Epic reward not found`);
+	if (!rewardStat || !playerId) throw new ExpectedError(`Epic reward not found`);
 	if (rewardStat.displayed) {
 		await setSpecificStat(rewardStat.name, playerId, 1);
 	}

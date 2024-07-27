@@ -229,7 +229,7 @@ export default defineComponent({
 
 				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -246,7 +246,7 @@ export default defineComponent({
 				this.availableSkills = await DinozService.levelUp(parseInt(dinozId), tryNumber.toString());
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},

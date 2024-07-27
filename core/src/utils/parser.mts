@@ -3,7 +3,7 @@ import { Condition } from '../models/npc/NpcConditions.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { PlayerForConditionCheck } from '../constants.mjs';
 import dayjs from 'dayjs';
-import { ErrorFormator } from '../utils/errorFormator.mjs';
+import { ExpectedError } from '../utils/errorFormator.mjs';
 import prand from 'pure-rand';
 
 export function conditionParser(condition: Condition, player: PlayerForConditionCheck, activeDinoz: number): boolean {
@@ -30,7 +30,7 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 	const myDinoz = player.dinoz.find(d => d.id === activeDinoz);
 
 	if (!myDinoz) {
-		throw new ErrorFormator(500, `No dinoz ${activeDinoz} found for parser.`);
+		throw new ExpectedError(`No dinoz ${activeDinoz} found for parser.`);
 	}
 
 	if (MIN_LEVEL) {

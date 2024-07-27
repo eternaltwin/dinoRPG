@@ -7,12 +7,12 @@ import { OauthAccessToken } from '@eternaltwin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { getSpecificSecret } from '../dao/secretDao.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import urlJoin from 'url-join';
 import { AdminRole } from '@drpg/prisma';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -31,7 +31,7 @@ export async function authenticateToET(req: Request) {
 		user = await getUser(token.accessToken, config.eternaltwin.url);
 	} catch (err) {
 		console.error(err);
-		throw new ErrorFormator(500, 'An error occurred');
+		throw new ExpectedError('An error occurred');
 	}
 
 	// Check if player already exists in database
@@ -71,8 +71,7 @@ export async function authenticateToET(req: Request) {
 	if (beta) {
 		const admin = config.administrator;
 		if (!(admin === user.user.id) && player.role === AdminRole.PLAYER) {
-			throw new ErrorFormator(
-				500,
+			throw new ExpectedError(
 				`User ${user.user.id} (${user.user.display_name.current.value}), you are not allowed to enter the beta website.`
 			);
 		}

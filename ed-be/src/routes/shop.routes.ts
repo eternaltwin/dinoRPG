@@ -3,9 +3,8 @@ import { body, param, validationResult } from 'express-validator';
 import { getDinozFromDinozShop } from '../business/dinozShopService.js';
 import { buyItem, getItemsFromShop } from '../business/itemShopService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { getIngredientsFromItinerantShop, sellIngredient } from '../business/itinerantShopService.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -21,9 +20,7 @@ routes.get(`${commonPath}/dinoz`, async (req: Request, res: Response) => {
 		const listItems = await getDinozFromDinozShop(req);
 		res.status(200).send(listItems);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -40,9 +37,7 @@ routes.get(
 			const listItems = await getItemsFromShop(req);
 			res.status(200).send(listItems);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -60,9 +55,7 @@ routes.get(
 			const listIngredients = await getIngredientsFromItinerantShop(req);
 			res.status(200).send(listIngredients);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -84,9 +77,7 @@ routes.put(
 			const ret = await buyItem(req);
 			res.status(200).send(ret);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -104,9 +95,7 @@ routes.put(
 			const ret = await sellIngredient(req);
 			res.status(200).send(ret);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

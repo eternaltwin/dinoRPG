@@ -72,7 +72,7 @@ export default defineComponent({
 				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -129,7 +129,7 @@ export default defineComponent({
 			await this.getFiche();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
+			errorHandler.handle(err, this.$toast);
 			return;
 		}
 

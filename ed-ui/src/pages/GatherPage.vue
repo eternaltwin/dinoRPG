@@ -87,7 +87,7 @@ export default defineComponent({
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 				this.grid.grid = this.gatherResult.grid;
@@ -126,7 +126,7 @@ export default defineComponent({
 			this.loaded = true;
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
+			errorHandler.handle(err, this.$toast);
 			return;
 		}
 	}

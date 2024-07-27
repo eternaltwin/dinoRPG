@@ -25,6 +25,13 @@ enum UnavailableReason {
   resting
 }
 
+enum Lang {
+  fr
+  en
+  de
+  es
+}
+
 model Dinoz {
   id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
   leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
@@ -336,6 +343,7 @@ model Player {
   updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
   lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
   role                        AdminRole                    @default(PLAYER)
+  lang                        Lang                         @default(fr)
   dinoz                       Dinoz[]
   importedPlayer              ImportedPlayer?
   importedTwinoidAchievements ImportedTwinoidAchievement[]

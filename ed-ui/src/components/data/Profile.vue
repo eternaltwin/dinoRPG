@@ -100,14 +100,14 @@ export default defineComponent({
 		async goLB(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				const irma = await PlayerService.getLBRewards(parseInt(this.$route.params.id as string));
+				const irma = await PlayerService.getLBRewards();
 				EventBus.emit('isLoading', false);
 				this.$toast.open({
 					message: formatText(this.$t(`toast.labrute`, { quantity: irma.quantity })),
 					type: 'info'
 				});
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -118,7 +118,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.customText = message;
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 			this.isEditOn = false;
@@ -133,7 +133,7 @@ export default defineComponent({
 				const { position } = await PlayerService.getPosition(+this.$route.params.id);
 				this.playerPosition = position;
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 			}
 		}
 	},

@@ -272,7 +272,7 @@ export default defineComponent({
 				this.logs = await LogsService.list(page, type, userId, dinozId);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

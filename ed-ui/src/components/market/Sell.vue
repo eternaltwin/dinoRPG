@@ -270,7 +270,7 @@ export default defineComponent({
 				});
 				this.changeTab(0);
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		}
@@ -305,7 +305,7 @@ export default defineComponent({
 			// Limit to items that can be sold
 			this.items = items.filter(item => item.price && item.sellable);
 		} catch (error) {
-			errorHandler.handle(error, this.$toast, this.$t);
+			errorHandler.handle(error, this.$toast);
 			return;
 		}
 	}

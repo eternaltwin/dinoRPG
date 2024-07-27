@@ -75,7 +75,7 @@ export default defineComponent({
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (e) {
-				errorHandler.handle(e, this.$toast, this.$t);
+				errorHandler.handle(e, this.$toast);
 				return;
 			}
 		},
@@ -90,7 +90,7 @@ export default defineComponent({
 		try {
 			await this.firstLoad();
 		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
+			errorHandler.handle(err, this.$toast);
 			return;
 		}
 		EventBus.on('refreshMoney', async e => {

@@ -14,7 +14,6 @@ export async function addMultipleUnlockableSkills(skills: Prisma.DinozSkillUnloc
 	});
 }
 
-
 export async function removeAllUnlockableSkillsFromDinoz(dinozId: number) {
 	await prisma.dinozSkillUnlockable.deleteMany({
 		where: { dinozId: dinozId }

@@ -6,54 +6,53 @@ import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Request } from 'express';
 import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
 import { calculateFight, rewardFight } from './fightService.js';
 import { isAlive } from '@drpg/core/utils/DinozUtils';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { auth } from '../dao/playerDao.js';
+import translate from '../utils/translate.js';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
 	const npcName: string = req.params.npc;
 	let nextStepWanted: string = req.body.step;
 
-	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
-	}
-	const playerId = req.auth.playerId;
+	const authed = await auth(req);
 
-	let player = await getDinozNPCRequest(dinozId, playerId);
+	let player = await getDinozNPCRequest(dinozId, authed.id);
 
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinozBase = player.dinoz.find(d => d.id === dinozId);
 
 	if (!dinozBase) {
-		throw new ErrorFormator(500, `Dinoz is not here.`);
+		throw new ExpectedError(`Dinoz is not here.`);
 	}
 
 	if (dinozBase.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`);
+		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	const actualPlace = Object.values(placeList).find(place => place.placeId === dinozBase.placeId);
 	const pnj = Object.values(npcList).find(pnj => pnj.name === npcName);
 
 	if (!actualPlace) {
-		throw new ErrorFormator(500, `Place ${dinozBase.placeId} doesn't exist.`);
+		throw new ExpectedError(`Place ${dinozBase.placeId} doesn't exist.`);
 	}
 
 	if (!pnj) {
-		throw new ErrorFormator(500, `NPC ${npcName} doesn't exists`);
+		throw new ExpectedError(`NPC ${npcName} doesn't exists`);
 	}
 
 	if (req.body.stop !== true && pnj.condition && !checkCondition(pnj.condition, player, dinozId)) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
+		throw new ExpectedError(`Dinoz ${dinozId} don't meet requirement to talk to ${pnj.name}.`);
 	}
 	if (actualPlace.placeId !== pnj.placeId && !req.body.stop) {
-		throw new ErrorFormator(500, `Dinoz ${dinozId} cannot talk to this NPC`);
+		throw new ExpectedError(`Dinoz ${dinozId} cannot talk to this NPC`);
 	}
 
 	let nextStepWantedData = Object.values(pnj.data).find(
@@ -61,7 +60,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	);
 
 	if (!nextStepWantedData) {
-		throw new ErrorFormator(500, `The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
+		throw new ExpectedError(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
 	}
 
 	if (nextStepWanted === nextStepWantedData.alias) {
@@ -80,7 +79,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			const stopStep = Object.values(pnj.data).find(pnj => pnj.stepName === 'stop');
 
 			if (!stopStep) {
-				throw new ErrorFormator(500, `The step stop doesn't exist for the NPC ${npcName}`);
+				throw new ExpectedError(`The step stop doesn't exist for the NPC ${npcName}`);
 			}
 
 			await updateDinozStep(dinozId, pnj.id, 'begin');
@@ -94,7 +93,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		const actualStep = Object.values(pnj.data).find(pnj => pnj.stepName === dinozTalk?.step);
 
 		if (!actualStep) {
-			throw new ErrorFormator(500, `The step ${dinozTalk?.step} doesn't exist for the NPC ${npcName}`);
+			throw new ExpectedError(`The step ${dinozTalk?.step} doesn't exist for the NPC ${npcName}`);
 		}
 
 		// Check if dinoz can go to this step
@@ -103,17 +102,17 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
 			!actualStep.nextStep.includes(nextStepWantedData.alias || '')
 		) {
-			throw new ErrorFormator(500, `This step is not reachable.`);
+			throw new ExpectedError(`This step is not reachable.`);
 		}
 		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, player, dinozId)) {
-			throw new ErrorFormator(500, `The dinoz doesn't fullfill the conditions.`);
+			throw new ExpectedError(`The dinoz doesn't fullfill the conditions.`);
 		}
 
 		if (nextStepWantedData.target !== undefined) {
 			const nonNullNextStepWantedData = nextStepWantedData;
 			nextStepWantedData = Object.values(pnj.data).find(pnj => pnj.stepName === nonNullNextStepWantedData.target);
 			if (!nextStepWantedData) {
-				throw new ErrorFormator(500, `Invalid target.`);
+				throw new ExpectedError(`Invalid target.`);
 			}
 			// if there is an error relating to target, it's here
 			nextStepWanted = nextStepWantedData.stepName;
@@ -121,18 +120,18 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 
 		// Action
 		if (nextStepWantedData && nextStepWantedData.fight) {
-			const playerData = await getDinozFightDataRequest(dinozId, playerId);
+			const playerData = await getDinozFightDataRequest(dinozId, authed.id);
 			if (!playerData) {
-				throw new ErrorFormator(500, `No player ${playerId} found`);
+				throw new ExpectedError(`No player ${authed.id} found`);
 			}
 			const dinozData = playerData.dinoz.find(d => d.id === dinozId);
 			if (!dinozData) {
-				throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+				throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 			}
 
 			const team = [dinozData];
 			if (!isAlive(dinozData)) {
-				throw new ErrorFormator(400, 'dead');
+				throw new ExpectedError(translate('dead', authed));
 			}
 			const fightResult = calculateFight(team, playerData, dinozData.placeId, nextStepWantedData.fight);
 
@@ -141,7 +140,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			if (result.result) {
 				await updateDinozStep(dinozId, pnj.id, nextStepWanted);
 				if (nextStepWantedData.reward !== undefined) {
-					await rewarder(nextStepWantedData.reward, team, playerId);
+					await rewarder(nextStepWantedData.reward, team, authed.id);
 				}
 			}
 			return {
@@ -154,16 +153,16 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 
 		if (!nextStepWantedData) {
-			throw new ErrorFormator(500, `The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
+			throw new ExpectedError(`The step ${nextStepWanted} doesn't exist for the NPC ${npcName}`);
 		}
 
 		// Reward statement
 		if (nextStepWantedData.reward !== undefined) {
 			checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
-			await rewarder(nextStepWantedData.reward, player.dinoz, playerId);
+			await rewarder(nextStepWantedData.reward, player.dinoz, authed.id);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
-			player = await getDinozNPCRequest(dinozId, playerId);
+			player = await getDinozNPCRequest(dinozId, authed.id);
 		}
 
 		await updateDinozStep(dinozId, pnj.id, nextStepWanted);
@@ -174,7 +173,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		const condition = Object.values(pnj.data).find(data => data.stepName === possibility)?.condition;
 		// If there is a condition non-met, replace it with enmpty string
 		if (!player) {
-			throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 		}
 		return condition === undefined || checkCondition(condition, player, dinozId);
 	});

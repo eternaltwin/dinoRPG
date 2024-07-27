@@ -3,6 +3,8 @@ import { LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 import { AdminRole } from '@drpg/prisma';
+import type { Request } from 'express';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -10,6 +12,41 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	});
 
 	return player;
+}
+
+export async function auth(request: Request) {
+	const {
+		headers: { authorization }
+	} = request;
+
+	if (!authorization) {
+		throw new ExpectedError('You are not logged in');
+	}
+	if (typeof authorization !== 'string') {
+		throw new ExpectedError('Invalid authorization header');
+	}
+
+	const playerId = request.auth?.playerId;
+
+	if (!playerId) {
+		throw new ExpectedError('Invalid authorization header content');
+	}
+
+	const user = await prisma.player.findFirst({
+		where: {
+			id: +playerId
+		},
+		select: {
+			id: true,
+			lang: true
+		}
+	});
+
+	if (!user) {
+		throw new ExpectedError('User not found');
+	}
+
+	return user;
 }
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)

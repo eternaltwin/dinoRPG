@@ -2,7 +2,7 @@ import { MARKET_OFFER_DURATION, MARKET_OFFER_DURATION_DEBUG } from '@drpg/core/c
 import { OfferStatus, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function getOffers(
 	userId: number | null,
@@ -19,7 +19,7 @@ export async function getOffers(
 		where.items = { some: {} };
 	} else if (filter === 'own') {
 		if (!userId) {
-			throw new ErrorFormator(500, 'missingUser');
+			throw new ExpectedError('missingUser');
 		}
 
 		where.OR = [{ sellerId: userId }, { bids: { some: { userId } } }];

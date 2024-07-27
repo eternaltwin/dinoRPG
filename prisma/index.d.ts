@@ -229,6 +229,16 @@ export const AdminRole: {
 export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
 
 
+export const Lang: {
+  fr: 'fr',
+  en: 'en',
+  de: 'de',
+  es: 'es'
+};
+
+export type Lang = (typeof Lang)[keyof typeof Lang]
+
+
 export const OfferStatus: {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
@@ -284,6 +294,10 @@ export const UnavailableReason: typeof $Enums.UnavailableReason
 export type AdminRole = $Enums.AdminRole
 
 export const AdminRole: typeof $Enums.AdminRole
+
+export type Lang = $Enums.Lang
+
+export const Lang: typeof $Enums.Lang
 
 export type OfferStatus = $Enums.OfferStatus
 
@@ -28682,6 +28696,7 @@ export namespace Prisma {
     updatedDate: Date | null
     lastLogin: Date | null
     role: $Enums.AdminRole | null
+    lang: $Enums.Lang | null
   }
 
   export type PlayerMaxAggregateOutputType = {
@@ -28706,6 +28721,7 @@ export namespace Prisma {
     updatedDate: Date | null
     lastLogin: Date | null
     role: $Enums.AdminRole | null
+    lang: $Enums.Lang | null
   }
 
   export type PlayerCountAggregateOutputType = {
@@ -28730,6 +28746,7 @@ export namespace Prisma {
     updatedDate: number
     lastLogin: number
     role: number
+    lang: number
     _all: number
   }
 
@@ -28768,6 +28785,7 @@ export namespace Prisma {
     updatedDate?: true
     lastLogin?: true
     role?: true
+    lang?: true
   }
 
   export type PlayerMaxAggregateInputType = {
@@ -28792,6 +28810,7 @@ export namespace Prisma {
     updatedDate?: true
     lastLogin?: true
     role?: true
+    lang?: true
   }
 
   export type PlayerCountAggregateInputType = {
@@ -28816,6 +28835,7 @@ export namespace Prisma {
     updatedDate?: true
     lastLogin?: true
     role?: true
+    lang?: true
     _all?: true
   }
 
@@ -28927,6 +28947,7 @@ export namespace Prisma {
     updatedDate: Date
     lastLogin: Date
     role: $Enums.AdminRole
+    lang: $Enums.Lang
     _count: PlayerCountAggregateOutputType | null
     _avg: PlayerAvgAggregateOutputType | null
     _sum: PlayerSumAggregateOutputType | null
@@ -28970,6 +28991,7 @@ export namespace Prisma {
     updatedDate?: boolean
     lastLogin?: boolean
     role?: boolean
+    lang?: boolean
     dinoz?: boolean | Player$dinozArgs<ExtArgs>
     importedPlayer?: boolean | Player$importedPlayerArgs<ExtArgs>
     importedTwinoidAchievements?: boolean | Player$importedTwinoidAchievementsArgs<ExtArgs>
@@ -29012,6 +29034,7 @@ export namespace Prisma {
     updatedDate?: boolean
     lastLogin?: boolean
     role?: boolean
+    lang?: boolean
   }, ExtArgs["result"]["player"]>
 
   export type PlayerSelectScalar = {
@@ -29036,9 +29059,10 @@ export namespace Prisma {
     updatedDate?: boolean
     lastLogin?: boolean
     role?: boolean
+    lang?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "hasImported" | "customText" | "name" | "eternalTwinId" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "messie" | "matelasseur" | "labruteDone" | "createdDate" | "updatedDate" | "lastLogin" | "role", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "hasImported" | "customText" | "name" | "eternalTwinId" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "messie" | "matelasseur" | "labruteDone" | "createdDate" | "updatedDate" | "lastLogin" | "role" | "lang", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Player$dinozArgs<ExtArgs>
     importedPlayer?: boolean | Player$importedPlayerArgs<ExtArgs>
@@ -29104,6 +29128,7 @@ export namespace Prisma {
       updatedDate: Date
       lastLogin: Date
       role: $Enums.AdminRole
+      lang: $Enums.Lang
     }, ExtArgs["result"]["player"]>
     composites: {}
   }
@@ -29535,6 +29560,7 @@ export namespace Prisma {
     readonly updatedDate: FieldRef<"Player", 'DateTime'>
     readonly lastLogin: FieldRef<"Player", 'DateTime'>
     readonly role: FieldRef<"Player", 'AdminRole'>
+    readonly lang: FieldRef<"Player", 'Lang'>
   }
     
 
@@ -46151,7 +46177,8 @@ export namespace Prisma {
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     lastLogin: 'lastLogin',
-    role: 'role'
+    role: 'role',
+    lang: 'lang'
   };
 
   export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
@@ -46442,6 +46469,20 @@ export namespace Prisma {
    * Reference to a field of type 'AdminRole[]'
    */
   export type ListEnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Lang'
+   */
+  export type EnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang'>
+    
+
+
+  /**
+   * Reference to a field of type 'Lang[]'
+   */
+  export type ListEnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang[]'>
     
 
 
@@ -47979,6 +48020,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
+    lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dinoz?: DinozListRelationFilter
     importedPlayer?: XOR<ImportedPlayerNullableRelationFilter, ImportedPlayerWhereInput> | null
     importedTwinoidAchievements?: ImportedTwinoidAchievementListRelationFilter
@@ -48020,6 +48062,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     role?: SortOrder
+    lang?: SortOrder
     dinoz?: DinozOrderByRelationAggregateInput
     importedPlayer?: ImportedPlayerOrderByWithRelationInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementOrderByRelationAggregateInput
@@ -48064,6 +48107,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
+    lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dinoz?: DinozListRelationFilter
     importedPlayer?: XOR<ImportedPlayerNullableRelationFilter, ImportedPlayerWhereInput> | null
     importedTwinoidAchievements?: ImportedTwinoidAchievementListRelationFilter
@@ -48105,6 +48149,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     role?: SortOrder
+    lang?: SortOrder
     _count?: PlayerCountOrderByAggregateInput
     _avg?: PlayerAvgOrderByAggregateInput
     _max?: PlayerMaxOrderByAggregateInput
@@ -48137,6 +48182,7 @@ export namespace Prisma {
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     role?: EnumAdminRoleWithAggregatesFilter<"Player"> | $Enums.AdminRole
+    lang?: EnumLangWithAggregatesFilter<"Player"> | $Enums.Lang
   }
 
   export type UsernameHistoryWhereInput = {
@@ -50407,6 +50453,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -50448,6 +50495,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -50488,6 +50536,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -50529,6 +50578,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -50570,6 +50620,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
   }
 
   export type PlayerUpdateManyMutationInput = {
@@ -50593,6 +50644,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
   }
 
   export type PlayerUncheckedUpdateManyInput = {
@@ -50617,6 +50669,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
   }
 
   export type UsernameHistoryCreateInput = {
@@ -52750,6 +52803,13 @@ export namespace Prisma {
     not?: NestedEnumAdminRoleFilter<$PrismaModel> | $Enums.AdminRole
   }
 
+  export type EnumLangFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
+  }
+
   export type ImportedTwinoidAchievementListRelationFilter = {
     every?: ImportedTwinoidAchievementWhereInput
     some?: ImportedTwinoidAchievementWhereInput
@@ -52897,6 +52957,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     role?: SortOrder
+    lang?: SortOrder
   }
 
   export type PlayerAvgOrderByAggregateInput = {
@@ -52927,6 +52988,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     role?: SortOrder
+    lang?: SortOrder
   }
 
   export type PlayerMinOrderByAggregateInput = {
@@ -52951,6 +53013,7 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     role?: SortOrder
+    lang?: SortOrder
   }
 
   export type PlayerSumOrderByAggregateInput = {
@@ -52967,6 +53030,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAdminRoleFilter<$PrismaModel>
     _max?: NestedEnumAdminRoleFilter<$PrismaModel>
+  }
+
+  export type EnumLangWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangWithAggregatesFilter<$PrismaModel> | $Enums.Lang
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLangFilter<$PrismaModel>
+    _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
   export type UsernameHistoryCountOrderByAggregateInput = {
@@ -55053,6 +55126,10 @@ export namespace Prisma {
     set?: $Enums.AdminRole
   }
 
+  export type EnumLangFieldUpdateOperationsInput = {
+    set?: $Enums.Lang
+  }
+
   export type DinozUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -56140,6 +56217,13 @@ export namespace Prisma {
     not?: NestedEnumAdminRoleFilter<$PrismaModel> | $Enums.AdminRole
   }
 
+  export type NestedEnumLangFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
+  }
+
   export type NestedEnumAdminRoleWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.AdminRole | EnumAdminRoleFieldRefInput<$PrismaModel>
     in?: $Enums.AdminRole[] | ListEnumAdminRoleFieldRefInput<$PrismaModel>
@@ -56148,6 +56232,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumAdminRoleFilter<$PrismaModel>
     _max?: NestedEnumAdminRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLangWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangWithAggregatesFilter<$PrismaModel> | $Enums.Lang
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLangFilter<$PrismaModel>
+    _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
   export type NestedEnumOfferStatusFilter<$PrismaModel = never> = {
@@ -56432,6 +56526,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
@@ -56472,6 +56567,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
@@ -56942,6 +57038,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
@@ -56982,6 +57079,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -58872,6 +58970,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
@@ -58912,6 +59011,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
@@ -59089,6 +59189,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
@@ -59129,6 +59230,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -59551,6 +59653,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
@@ -59591,6 +59694,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
@@ -59646,6 +59750,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
@@ -59686,6 +59791,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
@@ -59725,6 +59831,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -59765,6 +59872,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -59820,6 +59928,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -59860,6 +59969,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -59899,6 +60009,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -59939,6 +60050,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -59994,6 +60106,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -60034,6 +60147,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -61154,6 +61268,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -61194,6 +61309,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -61249,6 +61365,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -61289,6 +61406,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -61328,6 +61446,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -61368,6 +61487,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -61423,6 +61543,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -61463,6 +61584,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -61502,6 +61624,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -61542,6 +61665,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -61597,6 +61721,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -61637,6 +61762,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -61676,6 +61802,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -61716,6 +61843,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -61771,6 +61899,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -61811,6 +61940,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -61850,6 +61980,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -61890,6 +62021,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -61945,6 +62077,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -61985,6 +62118,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -62024,6 +62158,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -62064,6 +62199,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -62119,6 +62255,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -62159,6 +62296,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -62198,6 +62336,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -62238,6 +62377,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -62293,6 +62433,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -62333,6 +62474,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -62372,6 +62514,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -62412,6 +62555,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -62467,6 +62611,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -62507,6 +62652,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -62624,6 +62770,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -62664,6 +62811,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -62749,6 +62897,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -62789,6 +62938,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -62828,6 +62978,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -62868,6 +63019,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -63053,6 +63205,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -63093,6 +63246,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -63267,6 +63421,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -63307,6 +63462,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -63448,6 +63604,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -63488,6 +63645,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
@@ -63797,6 +63955,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
@@ -63837,6 +63996,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     role?: $Enums.AdminRole
+    lang?: $Enums.Lang
     dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
     importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
@@ -63892,6 +64052,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
@@ -63932,6 +64093,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
     importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
     importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput

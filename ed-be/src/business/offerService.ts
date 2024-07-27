@@ -1,5 +1,4 @@
 import { Request } from 'express';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { addBid, deleteOffer, getOffer, getOffers, insertOffer, updateOfferStatus } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
@@ -12,12 +11,14 @@ import {
 } from '../dao/playerIngredientDao.js';
 import { OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
-import { addMoney, ownsDinoz } from '../dao/playerDao.js';
+import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { LOGGER } from '../context.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import translate from '../utils/translate.js';
 
 /**
  * Get the list of current offers
@@ -25,7 +26,7 @@ import { LOGGER } from '../context.js';
 export async function getOfferList(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'missingUser');
+		throw new ExpectedError('missingUser');
 	}
 
 	const filter = req.params.filter;
@@ -44,11 +45,7 @@ export async function getOfferList(req: Request) {
  */
 export async function createOffer(req: Request) {
 	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'missingUser');
-	}
-
-	const playerId = req.auth.playerId;
+	const authed = await auth(req);
 
 	const dinozId = req.body.dinoz ? +req.body.dinoz : null;
 	const total = +req.body.total;
@@ -63,19 +60,19 @@ export async function createOffer(req: Request) {
 
 	if (dinozId) {
 		// Check if player owns the Dinoz
-		const owns = await ownsDinoz(playerId, dinozId);
+		const owns = await ownsDinoz(authed.id, dinozId);
 
 		if (!owns) {
-			throw new ErrorFormator(500, 'invalidDinoz');
+			throw new ExpectedError('invalidDinoz');
 		}
 
-		const offers = await getOffers(playerId, 'own', playerId, null, false);
+		const offers = await getOffers(authed.id, 'own', authed.id, null, false);
 		if (offers && offers.some(o => o.dinoz?.id === dinozId)) {
-			throw new ErrorFormator(400, `dinozAlreadySelling`);
+			throw new ExpectedError(translate(`dinozAlreadySelling`, authed));
 		}
 		const dinozPlace = await getDinozPlace(dinozId);
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
-			throw new ErrorFormator(500, 'Dinoz is not at the right place to do this.');
+			throw new ExpectedError('Dinoz is not at the right place to do this.');
 		}
 	}
 
@@ -87,7 +84,7 @@ export async function createOffer(req: Request) {
 			const ingredientData = Object.entries(ingredientList).find(ing => ing[0] === ingredient.name.toLocaleUpperCase());
 
 			if (!ingredientData) {
-				throw new ErrorFormator(500, 'Ingredient not found');
+				throw new ExpectedError('Ingredient not found');
 			}
 
 			return {
@@ -100,10 +97,10 @@ export async function createOffer(req: Request) {
 			const itemData = Object.entries(itemList).find(i => i[0] === item.name.toLocaleUpperCase());
 
 			if (!itemData) {
-				throw new ErrorFormator(500, 'Ingredient not found');
+				throw new ExpectedError('Ingredient not found');
 			}
 			if (itemData[1].sellable === false) {
-				throw new ErrorFormator(500, `Item ${itemData[0]} cannot be sold`);
+				throw new ExpectedError(`Item ${itemData[0]} cannot be sold`);
 			}
 
 			return {
@@ -115,8 +112,8 @@ export async function createOffer(req: Request) {
 	);
 
 	// Get available items and ingredients
-	const availableItems = await getPlayerItems(playerId);
-	const availableIngredients = await getAllIngredientsDataRequest(playerId);
+	const availableItems = await getPlayerItems(authed.id);
+	const availableIngredients = await getAllIngredientsDataRequest(authed.id);
 	// Check if user has enough items and ingredients
 	for (const item of itemsAndIngredients) {
 		if (item.isIngredient) {
@@ -125,19 +122,19 @@ export async function createOffer(req: Request) {
 			);
 
 			if (!availableIngredient || availableIngredient.quantity < item.quantity) {
-				throw new ErrorFormator(500, 'notEnoughIngredients');
+				throw new ExpectedError('notEnoughIngredients');
 			}
 		} else {
 			const availableItem = availableItems.find(availableItem => availableItem.itemId === item.itemId);
 
 			if (!availableItem || availableItem.quantity < item.quantity) {
-				throw new ErrorFormator(500, 'notEnoughItems');
+				throw new ExpectedError('notEnoughItems');
 			}
 		}
 	}
 
 	// Insert offer
-	const offer = await insertOffer(dinozId, total, itemsAndIngredients, playerId);
+	const offer = await insertOffer(dinozId, total, itemsAndIngredients, authed.id);
 	// console.log(itemsAndIngredients);
 
 	// Set Dinoz as selling
@@ -151,9 +148,9 @@ export async function createOffer(req: Request) {
 	promises.push(
 		...itemsAndIngredients.map(item => {
 			if (item.isIngredient) {
-				return decreaseIngredientQuantity(playerId, item.itemId, item.quantity);
+				return decreaseIngredientQuantity(authed.id, item.itemId, item.quantity);
 			} else {
-				return decreaseItemQuantity(playerId, item.itemId, item.quantity);
+				return decreaseItemQuantity(authed.id, item.itemId, item.quantity);
 			}
 		})
 	);
@@ -162,7 +159,7 @@ export async function createOffer(req: Request) {
 
 	// Schedule offer expiration
 	scheduleJob(offer.endDate, () => expireOffer(offer.id));
-	LOGGER.log(`Player ${playerId} has set an offer for ${offer.total} ending at ${offer.endDate}`);
+	LOGGER.log(`Player ${authed.id} has set an offer for ${offer.total} ending at ${offer.endDate}`);
 }
 
 /**
@@ -171,7 +168,7 @@ export async function createOffer(req: Request) {
 export async function cancelOffer(req: Request) {
 	// Check if player is logged in
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'missingUser');
+		throw new ExpectedError('missingUser');
 	}
 
 	const playerId = req.auth.playerId;
@@ -182,12 +179,12 @@ export async function cancelOffer(req: Request) {
 
 	// Check if user is the seller
 	if (!offer || offer.seller.id !== playerId) {
-		throw new ErrorFormator(500, 'invalidOffer');
+		throw new ExpectedError('invalidOffer');
 	}
 
 	// Check if the offer can be cancelled
 	if (offer.status !== OfferStatus.ONGOING) {
-		throw new ErrorFormator(500, 'invalidOffer');
+		throw new ExpectedError('invalidOffer');
 	}
 
 	const { dinoz, items: itemsAndIngredients } = offer;
@@ -245,11 +242,7 @@ export async function cancelOffer(req: Request) {
  */
 export async function bidOffer(req: Request) {
 	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'missingUser');
-	}
-
-	const playerId = req.auth.playerId;
+	const authed = await auth(req);
 
 	const offerId = +req.params.offerId;
 	const value = +req.body.value;
@@ -258,48 +251,48 @@ export async function bidOffer(req: Request) {
 	const offer = await getOffer(offerId);
 
 	// Check if user is the seller
-	if (!offer || offer.seller.id === playerId) {
-		throw new ErrorFormator(400, 'invalidOffer');
+	if (!offer || offer.seller.id === authed.id) {
+		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
 	// Check if the offer can be bid on
 	if (offer.status !== OfferStatus.ONGOING) {
-		throw new ErrorFormator(400, 'invalidOffer');
+		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
 	// Get previous own bid value
-	const previousOwnBid = offer.bids.filter(bid => bid.userId === playerId).pop()?.value || 0;
+	const previousOwnBid = offer.bids.filter(bid => bid.userId === authed.id).pop()?.value || 0;
 
 	// Cancel if bid is lower or equal to previous bid
 	if (value <= previousOwnBid) {
-		throw new ErrorFormator(400, 'bidIsLower');
+		throw new ExpectedError(translate('bidIsLower', authed));
 	}
 
 	// Cancel if bid is lower than offer total
 	if (value < offer.total / 1000) {
-		throw new ErrorFormator(400, 'bidIsLower');
+		throw new ExpectedError(translate('bidIsLower', authed));
 	}
 
 	// Cancel if bid is lower than previous bid + 1
 	if (offer.bids.length && value < offer.bids[offer.bids.length - 1].value + 1) {
-		throw new ErrorFormator(400, 'bidIsLower');
+		throw new ExpectedError(translate('bidIsLower', authed));
 	}
 
 	// Check if player has enough tickets
-	const playerItems = await getPlayerItems(playerId, { itemId: itemList.TREASURE_COUPON.itemId });
+	const playerItems = await getPlayerItems(authed.id, { itemId: itemList.TREASURE_COUPON.itemId });
 	const playerTickets = playerItems[0]?.quantity || 0;
 
 	if (playerTickets < value - previousOwnBid) {
-		throw new ErrorFormator(400, 'market.notEnoughTickets');
+		throw new ExpectedError(translate('notEnoughTickets', authed));
 	}
 
 	// Add bid
-	await addBid(offerId, req.auth.playerId, value);
+	await addBid(offerId, authed.id, value);
 
 	const bidDifference = value - previousOwnBid;
 
 	// Remove bid difference from inventory
-	await decreaseItemQuantity(playerId, itemList.TREASURE_COUPON.itemId, bidDifference);
+	await decreaseItemQuantity(authed.id, itemList.TREASURE_COUPON.itemId, bidDifference);
 }
 
 /**
@@ -309,7 +302,7 @@ export const expireOffer = async (offerId: number) => {
 	const offer = await getOffer(offerId);
 
 	if (!offer) {
-		throw new ErrorFormator(500, 'Offer not found');
+		throw new ExpectedError('Offer not found');
 	}
 
 	// Separate items and ingredients
@@ -335,21 +328,18 @@ export const expireOffer = async (offerId: number) => {
 			// Update winner ranking
 			await updateDinozCount(winnerBid.userId, 1);
 			await updatePoints(winnerBid.userId, offer.dinoz.level);
-
 		}
 
 		// Add items to winner inventory
 		promises.push(...items.map(item => increaseItemQuantity(winnerBid.userId, item.itemId, item.quantity)));
 
 		// Add ingredients to winner inventory
-		promises.push(
-			...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity))
-		);
+		promises.push(...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity)));
 
 		// Send Discord notification
 		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 
-		await addMoney(offer.seller.id, winnerBid.value * 1000)
+		await addMoney(offer.seller.id, winnerBid.value * 1000);
 		// Update stats tracking
 		await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
 	} else {

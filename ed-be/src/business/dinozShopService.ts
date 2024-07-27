@@ -6,9 +6,9 @@ import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { getRandomLetter, getRandomNumber } from '../utils/index.js';
 import { getRace } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
  * @summary Get all dinoz data from regular dinoz shop
@@ -20,13 +20,13 @@ import { getRace } from '@drpg/core/utils/DinozUtils';
 // TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
+		throw new ExpectedError(`Unauthorized.`);
 	}
 	// Retrieve player with dinoz shop info
 	const playerData = await getPlayerDinozShopRequest(req.auth.playerId);
 
 	if (!playerData) {
-		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
 	}
 
 	// If nothing is found, create 15 (?) dinoz to fill the shop
@@ -50,7 +50,7 @@ export async function getDinozFromDinozShop(req: Request) {
 		const player = await getPlayerRewardsRequest(req.auth.playerId);
 
 		if (!player) {
-			throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
+			throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
 		}
 
 		player.rewards.forEach(playerReward => {

@@ -69,7 +69,7 @@ export default defineComponent({
 					});
 				}
 			} catch (e) {
-				errorHandler.handle(e, this.$toast, this.$t);
+				errorHandler.handle(e, this.$toast);
 			}
 			EventBus.emit('refreshDinoz', true);
 			this.$emit('close');
@@ -79,7 +79,7 @@ export default defineComponent({
 			try {
 				await InventoryService.useInventoryItem(2, dinozId);
 			} catch (e) {
-				errorHandler.handle(e, this.$toast, this.$t);
+				errorHandler.handle(e, this.$toast);
 			}
 			EventBus.emit('refreshDinoz', true);
 			this.$emit('close');

@@ -14,7 +14,6 @@ import {
 	setPlayer
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
 import { updateCompletion } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -23,6 +22,7 @@ import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import sanitizeHtml from 'sanitize-html';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
  * @summary Get data from player on login
@@ -31,11 +31,11 @@ import sanitizeHtml from 'sanitize-html';
  */
 export async function getCommonData(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
+		throw new ExpectedError(`Unauthorized.`);
 	}
 	const playerCommonData = await getCommonDataRequest(req.auth.playerId);
 	if (!playerCommonData) {
-		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
 	}
 
 	// Check if it's the first login of the day
@@ -108,7 +108,7 @@ export async function getAccountData(req: Request) {
 	const playerId = +req.params.id;
 	const playerInfo = await getPlayerDataRequest(playerId);
 	if (!playerInfo) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 
 	// Subscription date
@@ -121,7 +121,7 @@ export async function getAccountData(req: Request) {
 	const clan: string | undefined = undefined;
 
 	if (!playerInfo.ranking) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't have a ranking.`);
+		throw new ExpectedError(`Player ${playerId} doesn't have a ranking.`);
 	}
 
 	const infoToSend: PlayerInfo = {
@@ -153,17 +153,17 @@ export async function getAccountData(req: Request) {
  */
 export async function setCustomText(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
+		throw new ExpectedError(`Unauthorized.`);
 	}
 
 	const playerId: number = req.auth.playerId;
 	const playerProfile = await getPlayerRewardsRequest(playerId);
 	if (!playerProfile) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 	//Check if user can edit
 	if (!playerProfile.rewards.some(reward => reward.rewardId === Reward.PLUME)) {
-		throw new ErrorFormator(500, `Player ${playerId} cannot edit this field`);
+		throw new ExpectedError(`Player ${playerId} cannot edit this field`);
 	}
 
 	const sanatized = sanitizeHtml(req.body.message);
@@ -185,13 +185,13 @@ export async function searchPlayers(req: Request) {
 
 export async function getDinozList(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized.`);
+		throw new ExpectedError(`Unauthorized.`);
 	}
 
 	const playerId: number = req.auth.playerId;
 	const dinozActive = await getAllDinozFicheLite(playerId);
 	if (!dinozActive) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 
 	return dinozActive.map(dinoz => toDinozFicheLite(dinoz));

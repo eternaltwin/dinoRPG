@@ -2,20 +2,28 @@ import { Request } from 'express';
 import { getAllDinozFromAccount, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { addMoney, getAllInformationFromPlayer, getEternalTwinId, removeMoney, setPlayer } from '../dao/playerDao.js';
+import {
+	addMoney,
+	auth,
+	getAllInformationFromPlayer,
+	getEternalTwinId,
+	removeMoney,
+	setPlayer
+} from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { AdminRole } from '@drpg/prisma';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 /**
  * @summary Check if user can access the admin dashboard
  * @param req
  * @return boolean
  */
-export async function getAdminDashBoard(): Promise<boolean> {
+export async function getAdminDashBoard(req: Request): Promise<boolean> {
+	await auth(req);
 	return true;
 }
 
@@ -39,7 +47,7 @@ export async function getAdminDashBoard(): Promise<boolean> {
  */
 export async function editDinoz(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `You need to be logged in.`);
+		throw new ExpectedError(`You need to be logged in.`);
 	}
 
 	let unavailableReason;
@@ -118,7 +126,7 @@ export async function editDinoz(req: Request) {
 				}
 				break;
 			default:
-				throw new ErrorFormator(500, `You need to select an operation.`);
+				throw new ExpectedError(`You need to select an operation.`);
 		}
 	}
 
@@ -141,7 +149,7 @@ export async function editDinoz(req: Request) {
 				}
 				break;
 			default:
-				throw new ErrorFormator(500, `You need to select an operation.`);
+				throw new ExpectedError(`You need to select an operation.`);
 		}
 	}
 }
@@ -156,12 +164,12 @@ export async function editDinoz(req: Request) {
  */
 export async function setPlayerMoney(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `You need to be logged in.`);
+		throw new ExpectedError(`You need to be logged in.`);
 	}
 
 	const player = await getEternalTwinId(+req.params.id);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${req.params.id} doesn't exist.`);
+		throw new ExpectedError(`Player ${req.params.id} doesn't exist.`);
 	}
 	let newMoney = 0;
 	switch (req.body.operation) {
@@ -174,7 +182,7 @@ export async function setPlayerMoney(req: Request) {
 			newMoney = (await removeMoney(+req.params.id, +req.body.gold)).money;
 			break;
 		default:
-			throw new ErrorFormator(500, `You need to select an operation.`);
+			throw new ExpectedError(`You need to select an operation.`);
 	}
 
 	return newMoney.toString();
@@ -190,7 +198,7 @@ export async function setPlayerMoney(req: Request) {
  */
 export async function givePlayerEpicReward(req: Request): Promise<void> {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `You need to be logged in.`);
+		throw new ExpectedError(`You need to be logged in.`);
 	}
 
 	const rewardList: number[] = req.body.epicRewardId;
@@ -216,7 +224,7 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 			}
 			break;
 		default:
-			throw new ErrorFormator(500, `You need to select an operation.`);
+			throw new ExpectedError(`You need to select an operation.`);
 	}
 }
 
@@ -266,7 +274,7 @@ export async function listAllDinozFromPlayer(req: Request) {
  */
 export async function editPlayer(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `You need to be logged in.`);
+		throw new ExpectedError(`You need to be logged in.`);
 	}
 
 	let role;
@@ -397,7 +405,7 @@ export async function editPlayer(req: Request) {
 export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 	const player = await getAllInformationFromPlayer(+req.params.id);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${req.params.id} doesn't exist.`);
+		throw new ExpectedError(`Player ${req.params.id} doesn't exist.`);
 	}
 
 	const playerToSend = {
@@ -444,7 +452,7 @@ export async function getAllSecrets() {
  */
 export async function addSecret(req: Request) {
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `You need to be logged in.`);
+		throw new ExpectedError(`You need to be logged in.`);
 	}
 
 	await addNewSecret({

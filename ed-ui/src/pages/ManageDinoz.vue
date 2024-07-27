@@ -136,7 +136,7 @@ export default defineComponent({
 					})
 				);
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 			}
 		}
 	},
@@ -150,21 +150,17 @@ export default defineComponent({
 		}
 
 		// Fetch data
-		try {
-			this.dinozList = await DinozService.getDinozToManage();
+		const list = await DinozService.getDinozToManage().catch(error => errorHandler.handle(error, this.$toast, this.$t));
 
-			// Add order if null
-			this.dinozList = this.dinozList.map((dinoz, index) => {
-				if (dinoz.order === null) {
-					dinoz.order = index;
-				}
-				EventBus.emit('isLoading', false);
-				return dinoz;
-			});
-		} catch (error) {
-			errorHandler.handle(error, this.$toast, this.$t);
-			return;
-		}
+		if (!list) return;
+		// Add order if null
+		this.dinozList = list.map((dinoz, index) => {
+			if (dinoz.order === null) {
+				dinoz.order = index;
+			}
+			return dinoz;
+		});
+		EventBus.emit('isLoading', false);
 	}
 });
 </script>

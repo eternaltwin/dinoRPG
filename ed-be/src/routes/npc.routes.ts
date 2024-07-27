@@ -2,8 +2,7 @@ import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { getNpcSpeech } from '../business/npcService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -69,9 +68,7 @@ routes.put(
 			const dialogue = await getNpcSpeech(req);
 			res.status(200).send(dialogue);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

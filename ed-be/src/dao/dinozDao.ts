@@ -1,7 +1,7 @@
 import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 // Getters
 
@@ -365,6 +365,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 					id: true,
 					money: true,
 					cooker: true,
+					lang: true,
 					items: {
 						select: { id: true, itemId: true, quantity: true }
 					},
@@ -670,7 +671,7 @@ export async function getDinozGatherData(dinozId: number, playerId: number) {
 //TODO
 export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	if (!dinoz.player?.connect?.id) {
-		throw new ErrorFormator(500, 'Missing player id');
+		throw new ExpectedError('Missing player id');
 	}
 
 	const newDinoz = await prisma.dinoz.create({

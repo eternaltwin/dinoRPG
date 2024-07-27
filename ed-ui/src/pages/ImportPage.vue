@@ -63,7 +63,7 @@ export default defineComponent({
 				this.importOver = true;
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -76,7 +76,7 @@ export default defineComponent({
 				await PlayerService.requestImportTwinoid(code);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

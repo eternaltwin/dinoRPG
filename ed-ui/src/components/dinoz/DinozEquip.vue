@@ -74,7 +74,7 @@ export default defineComponent({
 				});
 				EventBus.emit('isLoading', false);
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		}

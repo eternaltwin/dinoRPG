@@ -99,7 +99,7 @@ export default defineComponent({
 				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
 				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		},
@@ -116,7 +116,7 @@ export default defineComponent({
 					type: 'success'
 				});
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		},

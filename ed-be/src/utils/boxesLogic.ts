@@ -1,5 +1,5 @@
 import { getBoxHandlerInformations } from '../dao/playerDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import gameConfig from '../config/game.config.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -7,7 +7,7 @@ import { itemProbability } from '@drpg/core/models/item/itemProbability';
 
 export async function calculatePlayerPower(playerId: number) {
 	const boxInfo = await getBoxHandlerInformations(playerId);
-	if (!boxInfo) throw new ErrorFormator(500, `Player doesn't exist`);
+	if (!boxInfo) throw new ExpectedError(`Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;
 	if (dinozCount <= 0) return dinozCount;
 	const missionTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a._count.missions, 0);
@@ -83,7 +83,7 @@ export function boxOpening(box: ItemFiche) {
 	const myBox = Object.values(itemList).find(i => i.itemId === box.itemId);
 	const myProba = itemProbability.find(b => b.boxType === myBox?.name);
 	if (!myProba) {
-		throw new ErrorFormator(500, `Special item ${box.itemId} is not implemented`);
+		throw new ExpectedError(`Special item ${box.itemId} is not implemented`);
 	}
 
 	const flattenLoto: ItemFiche[] = myProba.items.flatMap(i => {

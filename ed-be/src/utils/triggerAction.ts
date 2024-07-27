@@ -2,7 +2,7 @@ import { TriggerEnum } from '@drpg/core/models/enums/Parser';
 import { NpcAction } from '@drpg/core/models/npc/NpcAction';
 import { DinozToRewardFight, calculateFight, rewardFight } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
-import { ErrorFormator } from './errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function triggerAction(action: NpcAction, dinoz: DinozToRewardFight) {
 	let result;
@@ -11,7 +11,7 @@ export async function triggerAction(action: NpcAction, dinoz: DinozToRewardFight
 			result = false;
 			const fightingDinoz = await getDinozFightDataRequest(dinoz.id);
 			if (!fightingDinoz) {
-				throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't exist.`);
+				throw new ExpectedError(`Dinoz ${dinoz.id} doesn't exist.`);
 			}
 			const fightResult = calculateFight([fightingDinoz], dinoz.placeId, action.enemies);
 			await rewardFight([dinoz], action.enemies, fightResult, dinoz.placeId);

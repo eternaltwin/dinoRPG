@@ -18,7 +18,7 @@ import { InitStepFighter, LeaveAnimation, SkillActivateStep, StepFighter } from 
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { Item } from '@drpg/core/models/item/ItemList';
 import {
 	ASSAULT_POWER,
 	BASE_ENERGY_COST,
@@ -36,7 +36,6 @@ import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,
 	calculateDamage,
-	getAssaultValue,
 	getAttackDefense,
 	getElementalAttack,
 	getMultiElementalAttack
@@ -48,7 +47,7 @@ import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { FightStats } from '@drpg/core/models/fight/FightResult';
 import { sendJSONToDiscord } from '../discord.js';
-import { ErrorFormator } from '../errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect } from '@drpg/core/models/fight/transpiler';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
@@ -3708,7 +3707,7 @@ const attackTarget = (
 		if (stepIndex) {
 			const skillTarget = (fightData.steps[stepIndex] as SkillActivateStep).targets.find(t => t.tid === target.id);
 			if (!skillTarget)
-				throw new ErrorFormator(500, `Target ${target.id} doesn't exist in step ${fightData.steps[stepIndex]}`);
+				throw new ExpectedError(`Target ${target.id} doesn't exist in step ${fightData.steps[stepIndex]}`);
 			skillTarget.damages = damage;
 		} else {
 			fightData.steps.push({

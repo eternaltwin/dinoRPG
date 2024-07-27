@@ -62,7 +62,7 @@ export default defineComponent({
 					await DinozService.setDinozName(this.dinozData!.id!, this.name!);
 					EventBus.emit('isLoading', false);
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 

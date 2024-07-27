@@ -149,7 +149,7 @@ export default defineComponent({
 					this.playerStore.addMoney(gold.gold);
 					EventBus.emit('isLoading', false);
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 			}
@@ -175,7 +175,7 @@ export default defineComponent({
 			this.inputValues.push(...tempo);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
+			errorHandler.handle(err, this.$toast);
 			return;
 		}
 	}
@@ -189,7 +189,7 @@ export default defineComponent({
 				this.ingredientList = await IngredientShopService.getIngredientsFromIngredientsShop(this.itinerantId);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

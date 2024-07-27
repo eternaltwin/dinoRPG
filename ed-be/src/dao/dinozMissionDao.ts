@@ -1,11 +1,11 @@
 import { LogType, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export const addMissionToDinoz = async (playerId: number, data: Prisma.DinozMissionCreateInput) => {
 	if (!data.dinoz?.connect?.id) {
-		throw new ErrorFormator(500, 'Dinoz id is required');
+		throw new ExpectedError('Dinoz id is required');
 	}
 
 	await prisma.dinozMission.create({

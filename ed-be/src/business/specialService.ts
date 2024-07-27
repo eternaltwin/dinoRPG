@@ -18,40 +18,40 @@ import {
 import { getDinozConcentrationRequest, updateMultipleDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { prepareConcentration } from '../dao/playerDao.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { rewarder } from '../utils/rewarder.js';
 import { DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function concentrate(req: Request) {
 	if (!req.auth || !req.auth.playerId) {
-		throw new ErrorFormator(500, 'Unauthorized');
+		throw new ExpectedError('Unauthorized');
 	}
 	const player = await prepareConcentration(req.auth.playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
 	}
 	const dinozList = player.dinoz;
 	const dinoz = player.dinoz.find(d => d.id === parseInt(req.params.id));
 
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${req.params.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	//Check if dinoz is at Bao Bob's location
 	if (actualPlace(dinoz).placeId !== PlaceEnum.BAO_BOB) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} is not at the right place`);
+		throw new ExpectedError(`Dinoz ${dinoz.id} is not at the right place`);
 	}
 
 	//Check if dinoz doesn't already possess the key
 	if (possessStatus(dinoz, DinozStatusId.SYLVENOIRE_KEY)) {
-		throw new ErrorFormator(500, `${dinoz.name} cannot concentrate`);
+		throw new ExpectedError(`${dinoz.name} cannot concentrate`);
 	}
 
 	//check if this dinoz is not already doing this and throw an error
 	if (dinoz.concentration) {
-		throw new ErrorFormator(500, `${dinoz.name} is already doing this`);
+		throw new ExpectedError(`${dinoz.name} is already doing this`);
 	}
 
 	const concentratingDinoz = dinozList.find(d => d.concentration);
@@ -65,7 +65,7 @@ export async function concentrate(req: Request) {
 		concentration = await getConcentration(concentratingDinoz.concentration.id);
 
 		if (!concentration) {
-			throw new ErrorFormator(500, `Concentration ${concentratingDinoz.concentration.id} doesn't exist.`);
+			throw new ExpectedError(`Concentration ${concentratingDinoz.concentration.id} doesn't exist.`);
 		}
 		concentration.dinoz.push(dinoz);
 		updateConcentration(concentration.id, concentration.dinoz);
@@ -81,15 +81,15 @@ export async function concentrate(req: Request) {
 export async function cancelConcentrate(req: Request) {
 	const dinoz = await getDinozConcentrationRequest(+req.params.id);
 	if (!dinoz) {
-		throw new ErrorFormator(500, `Dinoz ${req.params.id} doesn't exist.`);
+		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist.`);
 	}
 
 	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
 	}
 
 	if (!dinoz.concentration) {
-		throw new ErrorFormator(500, `Dinoz ${dinoz.id} cannot do this.`);
+		throw new ExpectedError(`Dinoz ${dinoz.id} cannot do this.`);
 	}
 
 	const dinozToUpdate = dinoz.concentration.dinoz.findIndex(dino => dino.id === dinoz.id);
@@ -116,7 +116,7 @@ export async function mouvementListener(
 
 			const partyLeader = team.find(d => d.id === activeDinoz);
 			if (!partyLeader) {
-				throw new ErrorFormator(500, `Cannot find dinoz ${activeDinoz} in the team`);
+				throw new ExpectedError(`Cannot find dinoz ${activeDinoz} in the team`);
 			}
 			const result: FightResult = await rewardFight(
 				team,

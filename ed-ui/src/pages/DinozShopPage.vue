@@ -114,7 +114,7 @@ export default defineComponent({
 					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
 					EventBus.emit('isLoading', false);
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 
@@ -149,7 +149,7 @@ export default defineComponent({
 			this.dinozList = await DinozShopService.getDinozFromDinozShop();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
+			errorHandler.handle(err, this.$toast);
 			return;
 		}
 	}

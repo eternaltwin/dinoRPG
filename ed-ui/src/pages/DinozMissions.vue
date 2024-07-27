@@ -139,7 +139,7 @@ export default defineComponent({
 		try {
 			this.data = await MissionService.getGlobalMissions();
 		} catch (error) {
-			errorHandler.handle(error, this.$toast, this.$t);
+			errorHandler.handle(error, this.$toast);
 			return;
 		}
 		EventBus.emit('isLoading', false);

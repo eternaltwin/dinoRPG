@@ -1,6 +1,6 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export const createNews = async (allText: Prisma.NewsCreateInput) => {
 	await prisma.news.create({
@@ -47,7 +47,7 @@ export const getNewsIllus = async (id: number) => {
 		select: { image: true }
 	});
 
-	if (!news) throw new ErrorFormator(500, 'News not found');
+	if (!news) throw new ExpectedError('News not found');
 
 	return news;
 };
@@ -58,7 +58,7 @@ export const getNewsDate = async (id: number) => {
 		select: { createdDate: true }
 	});
 
-	if (!news) throw new ErrorFormator(500, 'News not found');
+	if (!news) throw new ExpectedError('News not found');
 
 	return news;
 };

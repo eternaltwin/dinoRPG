@@ -15,9 +15,9 @@ import {
 } from '../business/playerService.js';
 import { apiRoutes } from '../constants/index.js';
 import { getPlayerMoney } from '../dao/playerDao.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { checkLB } from '../business/eternaltwinService.js';
+import sendError from '../utils/sendErrors.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 const routes: Router = Router();
 
@@ -47,10 +47,7 @@ routes.get(`${commonPath}/commondata`, async (req: Request, res: Response) => {
 		const response = await getCommonData(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -63,9 +60,7 @@ routes.get(`${commonPath}/dinozList`, async (req: Request, res: Response) => {
 		const response = await getDinozList(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		//await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -78,9 +73,7 @@ routes.get(`${commonPath}/twinoStats/:id`, [param('id').exists().isNumeric()], a
 		const response = await displayTwinoidSite(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		//await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -96,9 +89,7 @@ routes.get(
 			const response = await displayTwinoidSpecificSite(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			//await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -110,20 +101,17 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 
 	try {
 		if (!req.auth?.playerId) {
-			throw new ErrorFormator(400, 'No player ID found');
+			throw new ExpectedError('No player ID found');
 		}
 		const response = await getPlayerMoney(req.auth.playerId);
 
 		if (!response) {
-			throw new ErrorFormator(400, 'No player found');
+			throw new ExpectedError('No player found');
 		}
 
 		return res.status(200).send(response.money.toString());
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -157,10 +145,7 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 		const response = await getAccountData(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -181,10 +166,7 @@ routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: 
 			const response = await importAPI(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			console.error(e.message);
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err)
 		}
 	}
 );
@@ -201,10 +183,7 @@ routes.put(
 			const response = await importTwinoidData(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			console.error(e.message);
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err)
 		}
 	}
 );*/
@@ -248,10 +227,7 @@ routes.put(`${commonPath}/customText`, [body('message').exists()], async (req: R
 		await setCustomText(req);
 		return res.status(200).send();
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -292,9 +268,7 @@ routes.get(
 			const response = await searchPlayers(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -324,7 +298,7 @@ routes.get(
  *       500:
  *         description: Error
  */
-routes.get(`${commonPath}/labrute/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
+routes.get(`${commonPath}/labrute`, [], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -333,9 +307,7 @@ routes.get(`${commonPath}/labrute/:id`, [param('id').exists().isNumeric()], asyn
 		const response = await checkLB(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(e.errorCode || 500).send(e.message);
+		sendError(res, err);
 	}
 });
 

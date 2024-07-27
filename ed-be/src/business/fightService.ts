@@ -11,9 +11,7 @@ import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { createLog } from '../dao/logDao.js';
-import { addMoney, removeMoney } from '../dao/playerDao.js';
-import { sendDiscord } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { getRandomNumber } from '../utils/index.js';
@@ -31,6 +29,8 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { mouvementListener } from './specialService.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import translate from '../utils/translate.js';
 
 /**
  * @summary Process a fight
@@ -41,33 +41,31 @@ export async function processFight(req: Request) {
 	// Date
 	const currentDate = dayjs();
 	const dayOfWeek = currentDate.day();
+	const authed = await auth(req);
 
 	const dinozId: number = +req.body.dinozId;
-	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
-	}
-	const playerId = +req.auth.playerId;
+
 	// Get Dinoz info
-	const player = await getDinozFightDataRequest(dinozId, playerId);
+	const player = await getDinozFightDataRequest(dinozId, authed.id);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ErrorFormator(500, `Player ${dinozId} doesn't exist.`);
+		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
 	}
 
 	// Marais Collant - No fights on Sunday and Wednesday
 	if ((dayOfWeek === 0 || dayOfWeek === 3) && dinozData.placeId === PlaceEnum.MARAIS_COLLANT) {
-		throw new ErrorFormator(400, `noFight`);
+		throw new ExpectedError(translate(`noFight`, authed));
 	}
 
 	if (dinozData.canChangeName) {
-		throw new ErrorFormator(500, `Dinoz has to be named.`);
+		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	if (dinozData.unavailableReason !== null) {
-		throw new ErrorFormator(500, `Dinoz is not able to fight.`);
+		throw new ExpectedError(`Dinoz is not able to fight.`);
 	}
 
 	let team = player.dinoz;
@@ -82,15 +80,15 @@ export async function processFight(req: Request) {
 	}
 
 	if (dinozData.concentration) {
-		throw new ErrorFormator(400, 'concentration');
+		throw new ExpectedError(translate(`concentration`, authed));
 	}
 
 	if (team.some(d => !d.fight)) {
-		throw new ErrorFormator(400, 'missingIrma');
+		throw new ExpectedError(translate(`missingIrma`, authed));
 	}
 
 	if (!isAlive(dinozData)) {
-		throw new ErrorFormator(400, 'dead');
+		throw new ExpectedError(translate(`dead`, authed));
 	}
 
 	let fight = await mouvementListener(player, team, dinozData.placeId, dinozId);
@@ -192,7 +190,7 @@ export async function rewardFight(
 	player: Pick<Player, 'id' | 'teacher'>
 ) {
 	if (!team.length) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const playerId = player.id;
@@ -265,7 +263,7 @@ export async function rewardFight(
 
 		const attacker = fightResult.attackers.find(a => a.dinozId === d.id);
 		if (!attacker) {
-			throw new ErrorFormator(500, `Attacker ${d.id} doesn't exist.`);
+			throw new ExpectedError(`Attacker ${d.id} doesn't exist.`);
 		}
 
 		await updateDinoz(d.id, {
@@ -415,7 +413,7 @@ export async function rewardFightCalculate(
 	player: Pick<Player, 'id' | 'teacher'>
 ) {
 	if (!team.length) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	const XP_NEWB_BONUS = [15, 10, 6.6, 4.3, 2.5];
@@ -574,7 +572,7 @@ export function generateMonsterList(
 	const specialProb = getRandomNumber(0, 100);
 	const place = Object.values(placeList).find(place => place.placeId === placeOfFight);
 	if (!place) {
-		throw new ErrorFormator(500, `This place doesn't exist.`);
+		throw new ExpectedError(`This place doesn't exist.`);
 	}
 	const events = currentEvents();
 	const monsters = Object.values(monsterList)

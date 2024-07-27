@@ -237,7 +237,7 @@ export default defineComponent({
 				this.dinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id)!;
 			} catch (err) {
 				EventBus.emit('isLoading', false);
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 

@@ -26,10 +26,8 @@ import {
 } from '../business/dinozService.js';
 import { cancelConcentrate, concentrate } from '../business/specialService.js';
 import { apiRoutes, regex } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
-import { displayPlayerGoals } from '../business/goalsService.js';
 import { reincarnate } from '../business/skillService.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -68,9 +66,7 @@ routes.get(
 			const response: DinozFiche = await getDinozFiche(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -108,9 +104,7 @@ routes.post(
 			const response: DinozFiche = await buyDinoz(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -158,9 +152,7 @@ routes.put(
 			await setDinozName(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -198,9 +190,7 @@ routes.get(
 			const response = await getDinozSkill(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -261,9 +251,7 @@ routes.put(
 			const response: boolean = await setSkillState(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode | 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -315,9 +303,7 @@ routes.put(
 			const response = await betaMove(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -334,9 +320,7 @@ routes.put(
 			const ret = await resurrectDinoz(req);
 			return res.status(200).send(ret);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -381,10 +365,7 @@ routes.get(`${commonPath}/dig/:id`, [param('id').exists().toInt().isNumeric()], 
 		const response: Rewarder = await digWithDinoz(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		await postError(e, res);
-		res.status(e.errorCode).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -421,10 +402,7 @@ routes.get(
 			const response = await getGatherGrid(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			console.error(e.message);
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -462,10 +440,7 @@ routes.put(
 			const response: GatherResult = await gatherWithDinoz(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			console.error(e.message);
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -482,10 +457,7 @@ routes.put(
 			await concentrate(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			console.error(e.message);
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -502,10 +474,7 @@ routes.post(
 			await cancelConcentrate(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			console.error(e.message);
-			//await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -520,9 +489,7 @@ routes.get(`${commonPath}/manage`, [], async (req: Request, res: Response) => {
 		const response = await getDinozToManage(req);
 		return res.status(200).send(response);
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(500).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -537,9 +504,7 @@ routes.post(`${commonPath}/manage`, [body('order').exists().isArray()], async (r
 			message: 'Orders updated'
 		});
 	} catch (err) {
-		const e = err as ErrorFormator;
-		await postError(e, res);
-		res.status(500).send(e.message);
+		sendError(res, err);
 	}
 });
 
@@ -558,9 +523,7 @@ routes.post(
 				message: 'Dinoz followed'
 			});
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -580,9 +543,7 @@ routes.post(
 				message: 'Dinoz unfollowed'
 			});
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -602,9 +563,7 @@ routes.post(
 				message: 'Dinoz unfollowed'
 			});
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -621,9 +580,7 @@ routes.post(
 			const ret = await useIrma(req);
 			return res.status(200).send(ret);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -640,9 +597,7 @@ routes.post(
 			await frozeDinoz(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -659,9 +614,7 @@ routes.post(
 			await unfrozeDinoz(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -678,9 +631,7 @@ routes.post(
 			await restDinoz(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -697,9 +648,7 @@ routes.post(
 			await reincarnate(req);
 			return res.status(200).send();
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

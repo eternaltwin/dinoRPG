@@ -63,7 +63,7 @@ export default defineComponent({
 			try {
 				this.offers = this.formatOffers(await OfferService.getList(this.filter));
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		},

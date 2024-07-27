@@ -65,7 +65,7 @@ export default defineComponent({
 			this.ingredientList = this.sortIngredientsById(unsortedIngredients);
 			EventBus.emit('isLoading', false);
 		} catch (err) {
-			errorHandler.handle(err, this.$toast, this.$t);
+			errorHandler.handle(err, this.$toast);
 			return;
 		}
 	},

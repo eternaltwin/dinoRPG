@@ -2,11 +2,12 @@ import { Request, Response, Router } from 'express';
 import { validationResult } from 'express-validator';
 
 import { apiRoutes } from '../constants/index.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { checkIsAdmin } from '../utils/jwt.js';
 import { calculateFight, generateMonsterList, rewardFightCalculate } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { sendJSONToDiscord } from '../utils/discord.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -30,11 +31,11 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 		return res.status(400).json({ errors: validationResult(req) });
 	}
 	if (!req.auth?.playerId) {
-		throw new ErrorFormator(500, `Unauthorized`);
+		throw new ExpectedError(`Unauthorized`);
 	}
 	const player = await getDinozFightDataRequest(+req.params.id, req.auth.playerId);
 	if (!player) {
-		throw new ErrorFormator(500, `Player ${+req.params.id} doesn't exist.`);
+		throw new ExpectedError(`Player ${+req.params.id} doesn't exist.`);
 	}
 	const team = player.dinoz;
 
@@ -66,9 +67,7 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 		sendJSONToDiscord('600 fight result', { fights: results });
 		return res.status(200).send();
 	} catch (err) {
-		const e = err as ErrorFormator;
-		console.error(e.message);
-		return res.status(e.errorCode || 500).send(e.message);
+		await sendError(res, err);
 	}
 });
 

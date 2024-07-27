@@ -2,9 +2,8 @@ import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -53,9 +52,7 @@ routes.get(
 			const response = await getLearnableAndUnlockableSkills(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -119,9 +116,7 @@ routes.post(
 			const response = await learnSkill(req);
 			return res.status(200).send(response.toString());
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

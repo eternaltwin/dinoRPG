@@ -2,8 +2,7 @@ import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { getPlayerPosition, getRanking } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
-import { postError } from '../utils/discord.js';
-import { ErrorFormator } from '../utils/errorFormator.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -52,9 +51,7 @@ routes.get(
 			const response = await getRanking(req);
 			return res.status(200).send(response);
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );
@@ -71,9 +68,7 @@ routes.get(
 			const position = await getPlayerPosition(req);
 			return res.status(200).send({ position });
 		} catch (err) {
-			const e = err as ErrorFormator;
-			await postError(e, res);
-			res.status(e.errorCode || 500).send(e.message);
+			sendError(res, err);
 		}
 	}
 );

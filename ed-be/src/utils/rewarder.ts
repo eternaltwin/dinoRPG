@@ -6,7 +6,7 @@ import { unlockDoubleSkills } from '../business/skillService.js';
 import { addMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } from '../dao/playerDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
-import { ErrorFormator } from './errorFormator.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
@@ -23,7 +23,7 @@ export async function rewarder(
 	playerId: number
 ) {
 	if (!team.length) {
-		throw new ErrorFormator(500, 'No player found');
+		throw new ExpectedError('No player found');
 	}
 
 	for (const dinoz of team) {
@@ -43,7 +43,7 @@ export async function rewarder(
 				case RewardEnum.MAXEXPERIENCE:
 					const level = levelList.find(level => level.id === dinoz.level);
 					if (!level) {
-						throw new ErrorFormator(500, `Level ${dinoz.level} doesn't exist.`);
+						throw new ExpectedError(`Level ${dinoz.level} doesn't exist.`);
 					}
 					const maxExp = level.experience;
 					await updateDinoz(dinoz.id, { experience: maxExp });
@@ -65,7 +65,7 @@ export async function rewarder(
 				case RewardEnum.ITEM:
 					const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
 					if (!itemRewarded) {
-						throw new ErrorFormator(500, `Item ${reward.value} doesn't exist.`);
+						throw new ExpectedError(`Item ${reward.value} doesn't exist.`);
 					}
 
 					const playerShopData = await getPlayerShopOneItemDataRequest(playerId, itemRewarded.itemId);
@@ -91,7 +91,7 @@ export async function rewarder(
 				case RewardEnum.EPIC:
 					const testRewards = await getPlayerRewardsRequest(playerId);
 					if (!testRewards) {
-						throw new ErrorFormator(500, `Player ${playerId} doesn't exist.`);
+						throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 					}
 					if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
 						await addRewardToPlayer({

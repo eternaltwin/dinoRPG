@@ -231,7 +231,7 @@ export default defineComponent({
 				// Increment bidValue
 				this.bidValue++;
 			} catch (error) {
-				errorHandler.handle(error, this.$toast, this.$t);
+				errorHandler.handle(error, this.$toast);
 				return;
 			}
 		}
