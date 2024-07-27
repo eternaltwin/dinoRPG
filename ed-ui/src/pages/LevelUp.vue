@@ -247,6 +247,10 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
+				this.$router.push({
+					name: 'DinozPage',
+					params: { id: +dinozId }
+				});
 				return;
 			}
 		},

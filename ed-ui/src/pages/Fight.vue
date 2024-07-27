@@ -3,7 +3,7 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	<div class="content">
+	<div v-if="loaded" class="content">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
 			<template #fallback> <Loading /> </template>
@@ -84,7 +84,8 @@ export default defineComponent({
 			npcSpeech: undefined as string | undefined,
 			npcName: undefined as string | undefined,
 			fightEnded: false as boolean,
-			fightTransformed: {} as preFightLoader
+			fightTransformed: {} as preFightLoader,
+			loaded: false as boolean
 		};
 	},
 	props: {
@@ -129,8 +130,20 @@ export default defineComponent({
 		}
 	},
 	created(): void {
-		if (this.sessionStore.getFightResult) {
-			this.fight = this.sessionStore.getFightResult;
+		const fightResult = this.sessionStore.getFightResult;
+		if (fightResult === undefined) {
+			this.$toast.open({
+				message: this.$t('toast.noFight'),
+				type: 'error'
+			});
+			this.$router.push({
+				name: 'DinozPage',
+				params: { id: this.dinozId }
+			});
+			return;
+		}
+		if (fightResult) {
+			this.fight = fightResult;
 			if (this.fight.result) {
 				this.npcSpeech = this.dinozStore.getNpc(this.dinozId)?.npcSpeech;
 				this.npcName = this.dinozStore.getNpc(this.dinozId)?.npcName;
@@ -139,8 +152,7 @@ export default defineComponent({
 			}
 			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
 		}
-		const fightResult = this.sessionStore.getFightResult;
-		if (!fightResult) return;
+
 		const fightSteps = fightResult.history as FightStep[];
 		const fighters = fightResult.fighters as FighterRecap[];
 		if (!fightSteps || !fighters) return;
@@ -167,10 +179,12 @@ export default defineComponent({
 		};
 
 		console.log(nexFight.filter(n => n != undefined));
+		this.loaded = true;
 		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {
 		// Comment this to replay fight with refresh
+		this.loaded = false;
 		this.sessionStore.setFightResult(undefined);
 	}
 });
