@@ -300,7 +300,6 @@ export const getRandomUpElement = (raceUpChance: UpChance, seed?: string) => {
 	} else {
 		randomNumber = Math.ceil(Math.random() * totalUpChance);
 	}
-	console.log(randomNumber);
 	let total = 0;
 
 	for (const [index, elementValue] of Object.values(raceUpChance).entries()) {
