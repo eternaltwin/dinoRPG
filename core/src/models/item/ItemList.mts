@@ -1058,7 +1058,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.FIRE
 		},
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Wood Sphere
 	WOOD_SPHERE: {
@@ -1073,7 +1073,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.WOOD
 		},
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Water Sphere
 	WATER_SPHERE: {
@@ -1088,7 +1088,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.WATER
 		},
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Lightning Sphere
 	LIGHTNING_SPHERE: {
@@ -1103,7 +1103,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.LIGHTNING
 		},
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Air Sphere
 	AIR_SPHERE: {
@@ -1118,7 +1118,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.AIR
 		},
-		price: 0 // TODO double check
+		price: 10000 // TODO double check
 	},
 	// Demon Ticket
 	DEMON_TICKET: {
