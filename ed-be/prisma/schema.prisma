@@ -575,7 +575,7 @@ model PlayerTracking {
 
 model Clan {
   id            Int               @id @default(autoincrement())
-  name          String
+  name          String            @unique
   treasureValue Int               @default(0)
   members       ClanMember[]      @relation("member")
   ingredients   ClanIngredient[]

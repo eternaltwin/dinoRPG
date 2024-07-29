@@ -22,5 +22,6 @@
   "invalidOffer": "Offre invalide",
   "bidIsLower": "Votre enchère est inférieure à la précédente.",
   "notEnoughTickets": "Vous n'avez pas assez de bons.",
-  "tooShortMessage": "Votre message est trop court."
+  "tooShortMessage": "Votre message est trop court.",
+  "existingNameClan": "Un clan portant ce nom existe déjà"
 }

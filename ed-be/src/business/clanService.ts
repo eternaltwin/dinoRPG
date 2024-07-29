@@ -105,18 +105,21 @@ export async function getClanMembers(req: Request) {
  * @returns Clan
  */
 export async function createClan(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
+	const authed = await auth(req);
+
+	const namedClan = await searchClansByNameRequest(req.body.name, 1);
+	if (namedClan.length > 0) {
+		throw new ExpectedError(translate('existingNameClan', authed));
 	}
 
 	const canCreate: boolean = await canCreateClan(req);
 	if (!canCreate) {
-		throw new ExpectedError(`Player ${req.auth.playerId} doesn't fill conditions to create a clan`);
+		throw new ExpectedError(`Player ${authed.id} doesn't fill conditions to create a clan`);
 	}
 
-	await removeMoney(req.auth.playerId, CLAN_CREATE_MONEY);
+	await removeMoney(authed.id, CLAN_CREATE_MONEY);
 
-	const clan = await createClanRequest(req.body.name, req.body.description, req.auth?.playerId);
+	const clan = await createClanRequest(req.body.name, req.body.description, authed.id);
 	return clan;
 }
 

@@ -58670,11 +58670,11 @@ export namespace Prisma {
 
   export type ClanWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    name?: string
     leaderId?: number
     AND?: ClanWhereInput | ClanWhereInput[]
     OR?: ClanWhereInput[]
     NOT?: ClanWhereInput | ClanWhereInput[]
-    name?: StringFilter<"Clan"> | string
     treasureValue?: IntFilter<"Clan"> | number
     creationDate?: DateTimeFilter<"Clan"> | Date | string
     clanWarId?: IntNullableFilter<"Clan"> | number | null
@@ -58687,7 +58687,7 @@ export namespace Prisma {
     leader?: XOR<PlayerRelationFilter, PlayerWhereInput>
     joinRequests?: ClanJoinRequestListRelationFilter
     pages?: ClanPageListRelationFilter
-  }, "id" | "leaderId">
+  }, "id" | "name" | "leaderId">
 
   export type ClanOrderByWithAggregationInput = {
     id?: SortOrder
