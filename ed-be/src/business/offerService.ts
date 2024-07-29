@@ -289,10 +289,15 @@ export async function bidOffer(req: Request) {
 	// Add bid
 	await addBid(offerId, authed.id, value);
 
-	const bidDifference = value - previousOwnBid;
 
 	// Remove bid difference from inventory
-	await decreaseItemQuantity(authed.id, itemList.TREASURE_COUPON.itemId, bidDifference);
+	await decreaseItemQuantity(authed.id, itemList.TREASURE_COUPON.itemId, value);
+
+	// Repay previous bidder
+	if (offer.bids.length > 0) {
+		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value) ? prev : current);
+		await increaseItemQuantity(max.userId, itemList.TREASURE_COUPON.itemId, max.value)
+	}
 }
 
 /**
