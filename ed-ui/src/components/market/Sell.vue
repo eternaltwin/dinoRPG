@@ -267,10 +267,6 @@ export default defineComponent({
 					message: formatText(this.$t(`toast.market.offerCreated`)),
 					type: 'success'
 				});
-				this.$toast.open({
-					message: formatText(this.$t(`toast.market.offerCancelled`)),
-					type: 'success'
-				});
 				this.changeTab(0);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
