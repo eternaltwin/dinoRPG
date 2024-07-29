@@ -457,6 +457,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPECIAL,
 			value: 'pampleboum'
 		},
+		sellable: true,
 		price: 500 // TODO double check
 	},
 	// SOS Helmet: increases armor by 1 in a fight
@@ -470,6 +471,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 50,
 		price: 150, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// Little pepper: increases next assault value by 10
@@ -483,6 +485,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 15,
 		price: 150, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// Zippo: Set dino on fire during a fight
@@ -496,6 +499,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 15,
 		price: 150, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// SOS flame: summons a flame to fight with you
@@ -509,6 +513,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 15,
 		price: 150, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
@@ -522,6 +527,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 15,
 		price: 150, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// Fuca Pill: increases attack speed by 50% during a fight
@@ -535,6 +541,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 20,
 		price: 1000,
 		priority: 3,
+		sellable: true,
 		probability: 20
 	},
 	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
@@ -548,6 +555,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 20,
 		price: 5000,
 		priority: 5,
+		sellable: true,
 		probability: 15
 	},
 	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
@@ -559,6 +567,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 20,
+		sellable: true,
 		price: 300
 	},
 	// Loris's Costume: makes an enemy attack someone else on his side during a fight
@@ -572,6 +581,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 10,
 		price: 400,
 		priority: 4,
+		sellable: true,
 		probability: 30
 	},
 	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
@@ -583,6 +593,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: true,
 		price: 1000
 	},
 	// Goblin's Costume: Disguise a dino into a gobelin
@@ -594,6 +605,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: true,
 		price: 1000
 	},
 	// Pampleboum Pit: give a bonus to an assault (%, fixed valued??)
@@ -607,6 +619,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 30,
 		price: 1234, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// Portable Love: can attack flying dinoz
@@ -620,6 +633,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 10,
 		price: 300,
 		priority: 1,
+		sellable: true,
 		probability: 70
 	},
 	// Danger Detector: protects against an attack that inflicts more than 25 hp
@@ -631,6 +645,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5,
+		sellable: true,
 		price: 4000
 	},
 	// Pirhanoz in bag: summons a pirhanoz
@@ -644,6 +659,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 10,
 		price: 1234, // TODO double check
 		priority: 1,
+		sellable: true,
 		probability: 50
 	},
 	// Devil Ointment: removes the curse from a dino, and restoring its ability
@@ -657,6 +673,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		isRare: true,
 		maxQuantity: 10, // TODO double check
 		price: 5000,
+		sellable: true,
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'ointment'
@@ -675,6 +692,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 5,
 		price: 2000,
 		priority: 1,
+		sellable: true,
 		probability: 100
 	},
 	// Abyss: plunges the combat zone into an abyss.
@@ -690,6 +708,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 5,
 		price: 2000,
 		priority: 1,
+		sellable: true,
 		probability: 100
 	},
 	// Amazon: transports the combat zone into the middle of a tropical jungle.
@@ -705,6 +724,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 5,
 		price: 2000,
 		priority: 1,
+		sellable: true,
 		probability: 100
 	},
 	// St Elma's Fire: surrounds the combat zone with a powerful magnetic field.
@@ -720,6 +740,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 5,
 		price: 2000,
 		priority: 1,
+		sellable: true,
 		probability: 100
 	},
 	// Uvavu: plunges the combat zone into the middle of a devastating storm.
@@ -735,6 +756,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 5,
 		price: 2000,
 		priority: 1,
+		sellable: true,
 		probability: 100
 	},
 	// Strong Tea: allows you to cancel the effects of beer on the opposing team.
@@ -748,6 +770,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		maxQuantity: 10,
 		price: 2000,
 		priority: 1,
+		sellable: true,
 		probability: 60
 	},
 	// Temporal Stabiliser: ??
@@ -759,6 +782,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 10,
+		sellable: true,
 		price: 3000
 	},
 	// Elixir: heals 200, Chen's shop
@@ -774,6 +798,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.HEAL,
 			value: 200
 		},
+		sellable: true,
 		price: 1234 // TODO double check
 	},
 
@@ -1058,6 +1083,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.FIRE
 		},
+		sellable: true,
 		price: 10000 // TODO double check
 	},
 	// Wood Sphere
@@ -1073,6 +1099,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.WOOD
 		},
+		sellable: true,
 		price: 10000 // TODO double check
 	},
 	// Water Sphere
@@ -1088,6 +1115,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.WATER
 		},
+		sellable: true,
 		price: 10000 // TODO double check
 	},
 	// Lightning Sphere
@@ -1103,6 +1131,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.LIGHTNING
 		},
+		sellable: true,
 		price: 10000 // TODO double check
 	},
 	// Air Sphere
@@ -1118,6 +1147,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.AIR
 		},
+		sellable: true,
 		price: 10000 // TODO double check
 	},
 	// Demon Ticket
@@ -1162,6 +1192,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.MOUEFFE
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1177,6 +1208,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.MOUEFFE
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1192,6 +1224,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.PIGMOU
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1207,6 +1240,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.PIGMOU
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1222,6 +1256,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.WINKS
 		},
+		sellable: true,
 		maxQuantity: 8, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1237,6 +1272,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.WINKS
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1252,6 +1288,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.PLANAILLE
 		},
+		sellable: true,
 		maxQuantity: 8, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1267,6 +1304,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.PLANAILLE
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1282,6 +1320,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.CASTIVORE
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1297,6 +1336,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.CASTIVORE
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1312,6 +1352,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.ROCKY
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1327,6 +1368,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.ROCKY
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1342,6 +1384,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.PTEROZ
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1357,6 +1400,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.PTEROZ
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1372,6 +1416,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.NUAGOZ
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1387,6 +1432,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.NUAGOZ
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1402,6 +1448,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SIRAIN
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1417,6 +1464,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SIRAIN
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1432,6 +1480,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.HIPPOCLAMP
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1447,6 +1496,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.HIPPOCLAMP
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1462,6 +1512,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.GORILLOZ
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1477,6 +1528,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.GORILLOZ
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1492,6 +1544,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.WANWAN
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1507,6 +1560,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.WANWAN
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1522,6 +1576,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.WANWAN
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1537,6 +1592,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SANTAZ
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1552,6 +1608,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SANTAZ
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1567,6 +1624,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.FEROSS
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1582,6 +1640,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.FEROSS
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1597,6 +1656,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.FEROSS
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1612,6 +1672,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.KABUKI
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1627,6 +1688,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.KABUKI
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1642,6 +1704,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.MAHAMUTI
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1657,6 +1720,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.MAHAMUTI
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1672,6 +1736,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SOUFFLET
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1687,6 +1752,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SOUFFLET
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000 // TODO double check
 	},
@@ -1702,6 +1768,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.TOUFUFU
 		},
+		sellable: true,
 		maxQuantity: 10, // yes it's 2 in game
 		price: 30000
 	},
@@ -1717,6 +1784,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.TOUFUFU
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1732,6 +1800,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.QUETZU
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1747,6 +1816,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.QUETZU
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1762,6 +1832,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SMOG
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1777,6 +1848,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SMOG
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1792,6 +1864,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SMOG
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1807,6 +1880,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SMOG
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1822,6 +1896,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.SMOG
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1837,6 +1912,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.TRICERAGNON
 		},
+		sellable: true,
 		maxQuantity: 10,
 		price: 30000
 	},
@@ -1852,6 +1928,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.EGG,
 			race: raceList.TRICERAGNON
 		},
+		sellable: true,
 		maxQuantity: 10, // TODO double check
 		price: 30000 // TODO double check
 	},
@@ -1867,6 +1944,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPECIAL,
 			value: 'rice'
 		},
+		sellable: true,
 		maxQuantity: 25,
 		price: 5000
 	},
@@ -1927,6 +2005,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: true,
 		price: 5000
 	},
 	// Tickets to use at the Christmas grid event
@@ -1938,6 +2017,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: true,
 		price: 5000 // TODO double check
 	},
 	// Tickets to use at ??
@@ -1949,6 +2029,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 36,
+		sellable: true,
 		price: 5000 // TODO double check
 	},
 	// Error
@@ -1971,6 +2052,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
 		isRare: false,
+		sellable: true,
 		maxQuantity: 999, // TODO double check
 		price: 10000 // TODO double check
 	},
@@ -1982,6 +2064,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		canBeUsedNow: false, // disabled for now
 		itemType: ItemType.CLASSIC,
 		isRare: false,
+		sellable: true,
 		maxQuantity: 5000,
 		price: 5000
 	},
@@ -2117,6 +2200,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			race: raceList.Santaz
 		},
 		isRare: false,
+		sellable: true,
 		maxQuantity: 999, // TODO double check
 		price: 10000 // TODO double check
 	},
@@ -2129,6 +2213,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		itemType: ItemType.CLASSIC,
 		isRare: false,
 		maxQuantity: 5000,
+		sellable: true,
 		price: 5000
 	},
 	// Quest item
@@ -2275,6 +2360,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 			category: ItemEffect.SPHERE,
 			value: ElementType.VOID
 		},
+		sellable: true,
 		price: 10000 // TODO double check
 	},
 	// Handler Box

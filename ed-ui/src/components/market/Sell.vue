@@ -138,6 +138,8 @@ import { MARKET_MIN_VALUE, MARKET_MAX_ITEMS } from '@drpg/core/constants';
 import { OfferService } from '../../services/OfferService.js';
 import DZInput from '../common/DZInput.vue';
 import { formatText } from '../../utils/formatText.js';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -199,6 +201,7 @@ export default defineComponent({
 				}
 			}
 
+			console.log(this.selectedItems);
 			this.selectedItems[name].count = newCount;
 
 			// Update total value
@@ -297,13 +300,26 @@ export default defineComponent({
 			this.dinoz = currentDinoz;
 
 			// Fetch ingredients
-			this.ingredients = await IngredientsService.getAllIngredients();
+			const ingredients = await IngredientsService.getAllIngredients();
+			this.ingredients = ingredients.map(i => {
+				return {
+					...ingredientList[i.name.toUpperCase()],
+					quantity: i.quantity
+				};
+			});
 
 			// Fetch items
 			const items = await InventoryService.getAllItemsData();
 
 			// Limit to items that can be sold
-			this.items = items.filter(item => item.price && item.sellable);
+			this.items = items
+				.map(i => {
+					return {
+						...itemList[i.name.toUpperCase()],
+						quantity: i.quantity
+					};
+				})
+				.filter(item => item.price && item.sellable);
 		} catch (error) {
 			errorHandler.handle(error, this.$toast);
 			return;

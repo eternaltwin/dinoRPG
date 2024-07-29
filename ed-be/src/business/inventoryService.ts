@@ -8,7 +8,7 @@ import {
 	updateDinoz
 } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
@@ -67,7 +67,7 @@ export async function getAllItemsData(req: Request) {
 	}
 
 	// All checks passed, let's create a list of the items owned by the player
-	const allItemsDataReply: ItemFiche[] = playerInventoryData.items?.map(i => {
+	const allItemsDataReply: ItemFicheDTO[] = playerInventoryData.items?.map(i => {
 		// Look for the item constant with the same id to get its information (maxQuantity, canBeEquipped, etc.)
 		const theItem = Object.values(itemList).find(item => item.itemId === i.itemId);
 
@@ -77,20 +77,13 @@ export async function getAllItemsData(req: Request) {
 
 		// Push a new item object with its properties accordingly to the player's unique skills and data
 		return {
-			name: itemNameList[theItem.itemId],
+			name: theItem.name,
 			price: theItem.price,
-			itemId: theItem.itemId,
 			quantity: playerInventoryData ? i.quantity : 0,
 			maxQuantity:
 				playerInventoryData.shopKeeper && theItem.itemType !== ItemType.MAGICAL
 					? Math.round(theItem.maxQuantity * 1.5)
-					: theItem.maxQuantity,
-			canBeUsedNow: theItem.canBeUsedNow,
-			canBeEquipped: theItem.canBeEquipped,
-			effect: theItem.effect,
-			itemType: theItem.itemType,
-			isRare: theItem.isRare,
-			sellable: theItem.sellable ?? true
+					: theItem.maxQuantity
 		};
 	});
 

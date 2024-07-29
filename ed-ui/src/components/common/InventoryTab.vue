@@ -94,6 +94,7 @@ import { dinozStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -184,7 +185,13 @@ export default defineComponent({
 			}
 		},
 		async resfreshInventory(): Promise<void> {
-			this.allItemsData = await InventoryService.getAllItemsData();
+			const items = await InventoryService.getAllItemsData();
+			this.allItemsData = items.map(i => {
+				return {
+					...itemList[i.name.toUpperCase()],
+					quantity: i.quantity
+				};
+			});
 			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
 		}
 	},

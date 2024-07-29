@@ -3,7 +3,7 @@ import { ItemEffects } from './ItemEffects.mjs';
 import { Item } from './ItemList.mjs';
 
 export interface ItemFiche {
-	name?: string;
+	name: string;
 	itemId: Item;
 	quantity?: number;
 	maxQuantity: number;
@@ -15,5 +15,12 @@ export interface ItemFiche {
 	effect?: ItemEffects;
 	priority?: number;
 	probability?: number;
-	sellable?: boolean;
+	sellable: boolean;
+}
+
+export interface ItemFicheDTO {
+	name: string;
+	price: number;
+	quantity: number;
+	maxQuantity: number;
 }
