@@ -7,6 +7,7 @@ export const playerStore = defineStore('playerStore', {
 		money: 0,
 		playerId: undefined,
 		playerName: '',
+		clanId: undefined,
 		playerOptions: {
 			hasPDA: false,
 			hasPMI: false,
@@ -19,6 +20,7 @@ export const playerStore = defineStore('playerStore', {
 		getMoney: (state: StorePlayer) => state.money,
 		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
 		getPlayerOptions: (state: StorePlayer) => state.playerOptions,
+		getClanId: (state: StorePlayer) => state.clanId,
 		isPriest: (state: StorePlayer) => state.priest
 	},
 	actions: {
@@ -42,6 +44,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setPriest(priest: boolean): void {
 			this.priest = priest;
+		},
+		setClanId(clanId: number | undefined): void {
+			this.clanId = clanId;
 		}
 	},
 	persist: {

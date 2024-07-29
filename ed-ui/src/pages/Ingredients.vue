@@ -11,6 +11,7 @@
 			<tr>
 				<th class="icon"></th>
 				<th class="name">{{ $t('ingredients.tname') }}</th>
+				<th v-if="isClan" class="clan">{{ $t('ingredients.tname') }}</th>
 				<th class="stock">{{ $t('ingredients.tstock') }}</th>
 			</tr>
 
@@ -29,6 +30,15 @@
 				</td>
 				<td class="name">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
 				<td class="stock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
+				<td v-if="isClan" class="stock">
+					<DZInput
+						type="number"
+						:value="giveAway[index].quantity"
+						@input="giveAway[index].quantity = +$event.target.value"
+						:max="ingredient.quantity"
+						min="0"
+					/>
+				</td>
 				<td class="stock" v-else>--</td>
 
 				<template #content>
@@ -38,40 +48,93 @@
 			</Tippy>
 		</tbody>
 	</table>
+	<DZButton v-if="isClan" @click="giveToClan()">{{ $t(`clan.ingredients.giveAway`) }}</DZButton>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
-import { IngredientsService } from '../services/index.js';
+import { ClanService, IngredientsService } from '../services/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
+import { playerStore } from '../store/index.js';
+import DZInput from '../components/common/DZInput.vue';
+import DZButton from '../components/common/DZButton.vue';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 export default defineComponent({
 	name: 'Ingredients',
 	components: {
+		DZButton,
+		DZInput,
 		TitleHeader
 	},
 	data() {
 		return {
-			ingredientList: [] as Array<IngredientFiche>
+			ingredientList: [] as Array<IngredientFiche>,
+			playerStore: playerStore(),
+			bidValue: 0,
+			giveAway: [] as Array<IngredientFiche>
 		};
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		try {
-			const unsortedIngredients = await IngredientsService.getAllIngredients();
-			this.ingredientList = this.sortIngredientsById(unsortedIngredients);
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err, this.$toast);
-			return;
-		}
+		await this.load();
 	},
 	methods: {
+		async load() {
+			EventBus.emit('isLoading', true);
+			try {
+				const unsortedIngredients = await IngredientsService.getAllIngredients();
+				this.ingredientList = this.sortIngredientsById(unsortedIngredients);
+				this.giveAway = this.ingredientList.map(ingredient => {
+					return { ...ingredient, quantity: 0 };
+				});
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+		},
 		sortIngredientsById(ingredients: Array<IngredientFiche>): Array<IngredientFiche> {
 			return ingredients.sort((a, b) => a.ingredientId - b.ingredientId);
+		},
+		async giveToClan() {
+			const gold = this.giveAway
+				.filter(a => (a.quantity ?? 0) > 0)
+				.reduce(
+					(acc, cur) =>
+						acc +
+						(Object.values(ingredientList).find(a => a.ingredientId === cur.ingredientId)?.price ?? 0) *
+							(cur.quantity ?? 0),
+					0
+				);
+			const res = confirm(this.$t(`ingredients.giveAway.confirm`, { gold: gold }));
+			if (res) {
+				try {
+					await ClanService.giveIngredient(
+						this.playerStore.getClanId!,
+						this.giveAway
+							.filter(a => a.quantity && a.quantity > 0)
+							.map(i => {
+								return { itemId: i.ingredientId, quantity: i.quantity! };
+							})
+					);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast, this.$t);
+					return;
+				}
+				await this.load();
+			}
+		}
+	},
+	computed: {
+		isClan(): boolean {
+			if (this.playerStore.getClanId) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
 });

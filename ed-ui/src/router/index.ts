@@ -130,13 +130,89 @@ const router = createRouter({
 					path: '/dojo/tournament/:id?',
 					name: 'DojoTournament',
 					component: () => import('../pages/dojo/DojoTournament.vue')
+				},
+				{
+					path: '/clans',
+					name: 'ClansList',
+					component: () => import('../pages/ClansList.vue')
+				},
+				{
+					path: '/clan/:id',
+					component: () => import('../pages/Clan.vue'),
+					children: [
+						{
+							path: '',
+							name: 'Clan',
+							component: () => import('../components/clans/ClanPages.vue')
+						},
+						{
+							path: 'page',
+							component: () => import('../components/clans/ClanPages.vue'),
+							children: [
+								{
+									path: '',
+									name: 'ClanHomePage',
+									component: () => import('../components/clans/ClanPage.vue')
+								},
+								{
+									path: ':pageId',
+									name: 'ClanPage',
+									component: () => import('../components/clans/ClanPage.vue')
+								}
+							]
+						},
+						{
+							path: 'createPage',
+							name: 'ClanCreatePage',
+							component: () => import('../components/clans/ClanCreatePage.vue')
+						},
+						{
+							path: 'editPage/:pageId',
+							name: 'ClanEditPage',
+							component: () => import('../components/clans/ClanCreatePage.vue')
+						},
+						{
+							path: 'members',
+							name: 'ClanMembers',
+							component: () => import('../components/clans/ClanMembers.vue')
+						},
+						{
+							path: 'member/:memberId',
+							name: 'ClanMemberEdit',
+							component: () => import('../components/clans/ClanMemberEdit.vue')
+						},
+						{
+							path: 'treasure',
+							name: 'ClanTreasure',
+							component: () => import('../components/clans/ClanTreasure.vue')
+						},
+						{
+							path: 'war',
+							name: 'ClanWar',
+							component: () => import('../components/clans/ClanWar.vue')
+						},
+						{
+							path: 'discussion',
+							name: 'ClanDiscussion',
+							component: () => import('../components/clans/ClanDiscussion.vue')
+						},
+						{
+							path: 'history',
+							name: 'ClanHistory',
+							component: () => import('../components/clans/ClanHistory.vue')
+						},
+						{
+							path: 'parameters',
+							name: 'ClanParameters',
+							component: () => import('../components/clans/ClanParameters.vue')
+						}
+					]
+				},
+				{
+					path: '/createclan',
+					name: 'CreateClan',
+					component: () => import('../pages/Clan/CreateClan.vue')
 				}
-				// Import are not available
-				/*{
-					path: '/import',
-					name: 'ImportPage',
-					component: ImportPage
-				}*/
 			]
 		},
 		{

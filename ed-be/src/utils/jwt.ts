@@ -9,7 +9,13 @@ const jwtConfig = () => {
 	const config = loadConfig() as Config;
 	const secret: string = config.jwt.secretKey;
 	return expressJwt.expressjwt({ secret, algorithms: ['HS256'] }).unless({
-		path: [/\/api\/v1\/oauth*/, /\/api-docs*/, /\/api\/v1\/news\/\d+\/illustration/, /\/api\/v1\/eternaltwin*/]
+		path: [
+			/\/api\/v1\/oauth*/,
+			/\/api-docs*/,
+			/\/api\/v1\/news\/\d+\/illustration/,
+			/\/api\/v1\/clan\/\d+\/banner/,
+			/\/api\/v1\/eternaltwin*/
+		]
 	});
 };
 

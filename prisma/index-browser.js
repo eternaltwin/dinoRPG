@@ -351,7 +351,9 @@ exports.Prisma.PlayerScalarFieldEnum = {
   updatedDate: 'updatedDate',
   lastLogin: 'lastLogin',
   role: 'role',
-  lang: 'lang'
+  lang: 'lang',
+  clanMemberId: 'clanMemberId',
+  leaderOfId: 'leaderOfId'
 };
 
 exports.Prisma.UsernameHistoryScalarFieldEnum = {
@@ -461,6 +463,71 @@ exports.Prisma.PlayerTrackingScalarFieldEnum = {
   playerId: 'playerId',
   stat: 'stat',
   quantity: 'quantity'
+};
+
+exports.Prisma.ClanScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  treasureValue: 'treasureValue',
+  creationDate: 'creationDate',
+  clanWarId: 'clanWarId',
+  leaderId: 'leaderId',
+  banner: 'banner'
+};
+
+exports.Prisma.ClanJoinRequestScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  playerId: 'playerId',
+  date: 'date'
+};
+
+exports.Prisma.ClanWarScalarFieldEnum = {
+  id: 'id',
+  dateStart: 'dateStart',
+  dateEnd: 'dateEnd'
+};
+
+exports.Prisma.ClanIngredientScalarFieldEnum = {
+  id: 'id',
+  ingredientId: 'ingredientId',
+  quantity: 'quantity',
+  clanId: 'clanId'
+};
+
+exports.Prisma.ClanMessageScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  date: 'date',
+  authorId: 'authorId',
+  content: 'content'
+};
+
+exports.Prisma.ClanHistoryScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  date: 'date',
+  authorId: 'authorId',
+  type: 'type'
+};
+
+exports.Prisma.ClanMemberScalarFieldEnum = {
+  id: 'id',
+  clanId: 'clanId',
+  donation: 'donation',
+  playerId: 'playerId',
+  rights: 'rights',
+  dateJoin: 'dateJoin',
+  nickname: 'nickname'
+};
+
+exports.Prisma.ClanPageScalarFieldEnum = {
+  id: 'id',
+  home: 'home',
+  public: 'public',
+  name: 'name',
+  content: 'content',
+  clanId: 'clanId'
 };
 
 exports.Prisma.SortOrder = {
@@ -578,7 +645,15 @@ exports.Prisma.ModelName = {
   Offer: 'Offer',
   Log: 'Log',
   DinozCatch: 'DinozCatch',
-  PlayerTracking: 'PlayerTracking'
+  PlayerTracking: 'PlayerTracking',
+  Clan: 'Clan',
+  ClanJoinRequest: 'ClanJoinRequest',
+  ClanWar: 'ClanWar',
+  ClanIngredient: 'ClanIngredient',
+  ClanMessage: 'ClanMessage',
+  ClanHistory: 'ClanHistory',
+  ClanMember: 'ClanMember',
+  ClanPage: 'ClanPage'
 };
 
 /**

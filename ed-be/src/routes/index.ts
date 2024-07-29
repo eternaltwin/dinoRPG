@@ -19,6 +19,7 @@ import logRoutes from './log.routes.js';
 import eternaltwinRoutes from './eternaltwin.routes.js';
 import webSocketRoutes from './websockets.routes.js';
 import testingRoutes from './testing.routes.js';
+import clanRoutes from './clan.routes.js';
 import { jwtConfig } from '../utils/index.js';
 
 export default function initRoutes(app: Express, config: Config) {
@@ -41,6 +42,7 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(logRoutes);
 	app.use(eternaltwinRoutes);
 	app.use(webSocketRoutes);
+	app.use(clanRoutes);
 	if (!config.isProduction) {
 		app.use(testingRoutes);
 	}

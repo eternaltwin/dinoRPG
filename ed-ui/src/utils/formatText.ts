@@ -72,3 +72,7 @@ export function formatText(text: string): string {
 	formattedText = formattedText.replace(/:xp:/g, helpers.computeImageHtml('xp'));
 	return formattedText;
 }
+
+export function formatNumber(num: number, separator: string): string {
+	return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+}

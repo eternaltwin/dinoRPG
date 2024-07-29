@@ -7,6 +7,7 @@ import {
 	// importTwinoidData
 } from '../business/importService.js';
 import {
+	canCreateClan,
 	getAccountData,
 	getCommonData,
 	getDinozList,
@@ -110,6 +111,38 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 		}
 
 		return res.status(200).send(response.money.toString());
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+/**
+ * @openapi
+ * /api/v1/player/canCreateClan:
+ *   get:
+ *     summary: Get if player can create clan
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Eternaltwin
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
+routes.get(`${commonPath}/canCreateClan`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await canCreateClan(req);
+		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
 	}

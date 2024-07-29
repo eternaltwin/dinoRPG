@@ -5,6 +5,7 @@ export interface StorePlayer {
 	playerId?: number;
 	playerName: string;
 	playerOptions: PlayerOptions;
+	clanId: number | undefined;
 	admin: boolean;
 	priest: boolean;
 }

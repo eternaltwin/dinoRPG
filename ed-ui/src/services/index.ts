@@ -11,3 +11,4 @@ export * from './NewsService.js';
 export * from './NPCService.js';
 export * from './OauthService.js';
 export * from './PlayerService.js';
+export * from './ClanService.js';

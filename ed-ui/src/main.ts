@@ -9,6 +9,7 @@ import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 import { initI18n } from './i18n/index.js';
 import ToastPlugin from 'vue-toast-notification';
 import Loading from './components/utils/Loading.vue';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -32,6 +33,7 @@ const vueToastProps = {
 const app = createApp(App);
 const pnia = createPinia().use(piniaPluginPersistedstate);
 app.use(pnia);
+app.use(CKEditor);
 app.use(await initI18n());
 app.use(router);
 app.mixin(mixin);

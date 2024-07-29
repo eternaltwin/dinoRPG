@@ -7,6 +7,7 @@ export interface PlayerCommonData {
 	dinozCount: number;
 	id: number;
 	name: string;
+	clanId: number | undefined;
 	playerOptions: PlayerOptions;
 	admin: boolean;
 	priest: boolean;

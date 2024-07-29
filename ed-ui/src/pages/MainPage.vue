@@ -64,6 +64,7 @@ export default defineComponent({
 				this.playerStore.setMoney(commonData.money);
 				this.dinozStore.setDinozList(commonData.dinoz);
 				this.dinozStore.setDinozCount(commonData.dinozCount);
+				this.playerStore.setClanId(commonData.clanId);
 				this.playerStore.setPriest(commonData.priest);
 
 				if (!this.playerStore.getPlayerId) {

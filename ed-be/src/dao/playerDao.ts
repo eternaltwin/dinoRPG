@@ -3,6 +3,7 @@ import { LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 import { AdminRole } from '@drpg/prisma';
+import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import type { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
@@ -227,6 +228,7 @@ export async function getCommonDataRequest(playerId: number) {
 			engineer: true,
 			priest: true,
 			lastLogin: true,
+			ClanMember: { select: { clanId: true } },
 			dinoz: {
 				select: {
 					id: true,
@@ -390,6 +392,16 @@ export async function getPlayerDataRequest(playerId: number) {
 				select: {
 					stat: true,
 					quantity: true
+				}
+			},
+			ClanMember: {
+				select: {
+					clan: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
 				}
 			}
 		}
@@ -795,4 +807,49 @@ export async function archiveOldUsername(playerId: number, username: string) {
 			username: username
 		}
 	});
+}
+
+export async function getCanCreateClanRequest(playerId: number) {
+	const player = await prisma.player.count({
+		where: {
+			id: playerId,
+			money: {
+				gte: CLAN_CREATE_MONEY
+			},
+			ranking: {
+				points: {
+					gte: CLAN_CREATE_RANKING_POINTS
+				}
+			},
+			ClanMember: null
+		}
+	});
+
+	return player > 0;
+}
+
+export async function getCanJoinClanRequest(playerId: number) {
+	const player = await prisma.player.count({
+		where: {
+			id: playerId,
+			money: {
+				gte: CLAN_JOIN_MONEY
+			},
+			ClanJoinRequest: null,
+			ClanMember: null
+		}
+	});
+
+	return player > 0;
+}
+
+export async function isPlayerLeaderOfClanRequest(playerId: number, clanId: number) {
+	const player = await prisma.clan.count({
+		where: {
+			id: clanId,
+			leaderId: playerId
+		}
+	});
+
+	return player > 0;
 }

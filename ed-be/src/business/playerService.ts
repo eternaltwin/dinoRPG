@@ -11,7 +11,11 @@ import {
 	getPlayerDataRequest,
 	getPlayerRewardsRequest,
 	searchPlayersByName,
-	setPlayer
+	setPlayer,
+	getCanCreateClanRequest,
+	getCanJoinClanRequest,
+	isPlayerLeaderOfClanRequest,
+	auth
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
@@ -23,6 +27,7 @@ import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import sanitizeHtml from 'sanitize-html';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import translate from '../utils/translate.js';
 
 /**
  * @summary Get data from player on login
@@ -84,6 +89,7 @@ export async function getCommonData(req: Request) {
 		}),
 		id: playerCommonData.id,
 		name: playerCommonData.name,
+		clanId: playerCommonData.ClanMember?.clanId,
 		playerOptions: {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PDA),
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI)
@@ -118,7 +124,12 @@ export async function getAccountData(req: Request) {
 	const subscribe = `${date[1]} ${month} ${date[2]}`;
 
 	// Clan TODO
-	const clan: string | undefined = undefined;
+	const clan:
+		| {
+				id: number;
+				name: string;
+		  }
+		| undefined = playerInfo.ClanMember?.clan;
 
 	if (!playerInfo.ranking) {
 		throw new ExpectedError(`Player ${playerId} doesn't have a ranking.`);
@@ -152,23 +163,29 @@ export async function getAccountData(req: Request) {
  * @return void
  */
 export async function setCustomText(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const playerId: number = req.auth.playerId;
-	const playerProfile = await getPlayerRewardsRequest(playerId);
+	const playerProfile = await getPlayerRewardsRequest(authed.id);
 	if (!playerProfile) {
-		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	//Check if user can edit
 	if (!playerProfile.rewards.some(reward => reward.rewardId === Reward.PLUME)) {
-		throw new ExpectedError(`Player ${playerId} cannot edit this field`);
+		throw new ExpectedError(`Player ${authed.id} cannot edit this field`);
 	}
 
-	const sanatized = sanitizeHtml(req.body.message);
+	const sanatized = sanitizeHtml(req.body.message, {
+		allowedTags: ['b', 'i', 'em', 'strong', 'a'],
+		allowedAttributes: {
+			a: ['href']
+		}
+	});
 
-	await setPlayer(playerId, { customText: sanatized });
+	if (sanatized.length <= 2) {
+		throw new ExpectedError(translate('tooShortMessage', authed));
+	}
+
+	await setPlayer(authed.id, { customText: sanatized });
 }
 
 /**
@@ -195,4 +212,47 @@ export async function getDinozList(req: Request) {
 	}
 
 	return dinozActive.map(dinoz => toDinozFicheLite(dinoz));
+}
+
+/**
+ * @summary Get if player fills conditions to create a new clan
+ * @param req
+ * @return boolean
+ */
+export async function canCreateClan(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`Unauthorized.`);
+	}
+
+	const canCreateClan = await getCanCreateClanRequest(req.auth.playerId);
+	return canCreateClan;
+}
+
+/**
+ * @summary Get if player fills conditions to create a new clan
+ * @param req
+ * @return boolean
+ */
+export async function canJoinClan(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`Unauthorized.`);
+	}
+
+	const canJoinClan = await getCanJoinClanRequest(req.auth.playerId);
+	return canJoinClan;
+}
+
+/**
+ * @summary Get if player fills conditions to create a new clan
+ * @param req.auth.playerId player id
+ * @param req.params.id clan id
+ * @return boolean
+ */
+export async function isPlayerLeaderOfClan(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`Unauthorized.`);
+	}
+
+	const isPlayerLeaderOfClan = await isPlayerLeaderOfClanRequest(req.auth.playerId, Number(req.params.id));
+	return isPlayerLeaderOfClan;
 }

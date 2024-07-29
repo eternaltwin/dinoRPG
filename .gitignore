@@ -45,6 +45,7 @@ etwin.toml
 config_development.toml
 .env.development
 eternaltwin.local.toml
+Eternaltwin/eternaltwin.local.toml
 
 # Prisma
 prisma/*.js

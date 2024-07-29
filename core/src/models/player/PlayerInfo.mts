@@ -5,7 +5,12 @@ export interface PlayerInfo {
 	dinozCount: number;
 	pointCount: number;
 	subscribeAt: string;
-	clan?: string;
+	clan?:
+		| {
+				id: number;
+				name: string;
+		  }
+		| undefined;
 	playerName: string;
 	dinoz: DinozPublicFiche[];
 	epicRewards: number[];

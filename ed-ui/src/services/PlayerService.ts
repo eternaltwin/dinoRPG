@@ -102,6 +102,12 @@ export const PlayerService = {
 			.get(`/player/labrute}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	getCanCreateClan(): Promise<boolean> {
+		return http()
+			.get(`/player/canCreateClan`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
 interface PlayerSearch {

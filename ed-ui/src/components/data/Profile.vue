@@ -29,7 +29,7 @@
 				{{ $t(`myAccount.clan`) }}
 			</dt>
 			<dd v-if="accountData.clan">
-				{{ accountData.clan }}
+				<a @click="goToClan(accountData.clan.id)">{{ accountData.clan.name }}</a>
 			</dd>
 			<dt>
 				{{ $t(`myAccount.completion`) }}
@@ -127,6 +127,9 @@ export default defineComponent({
 			e.preventDefault();
 			goTo(this.$router, 'Ranking');
 		},
+		goToClan(id: number) {
+			this.$router.push({ name: 'Clan', params: { id } });
+		},
 		async fetchPlayerPosition() {
 			// Fetch player position
 			try {
@@ -212,6 +215,8 @@ export default defineComponent({
 			a {
 				color: white;
 				font-weight: normal;
+				text-decoration: underline;
+				cursor: pointer;
 			}
 		}
 	}

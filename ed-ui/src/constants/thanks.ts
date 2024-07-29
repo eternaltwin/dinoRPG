@@ -4,7 +4,8 @@ export const developers = [
 	'Sylvain "Jahaa" Hunault',
 	'Franck "Zen" Demoute',
 	'Thibault "Gerardufoin" Duval',
-	'Matthieu "Matthieu8360" Bonjour'
+	'Matthieu "Matthieu8360" Bonjour',
+	'Augustin "Augustin" Janvier'
 ];
 
 export const helpers = [

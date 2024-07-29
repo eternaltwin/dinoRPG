@@ -104,7 +104,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		) {
 			await updateDinozStep(dinozId, pnj.id, 'begin');
 			const beginStep = Object.values(pnj.data).find(pnj => pnj.initialStep);
-			if (!beginStep) throw new ExpectedError(`Begin step did not exist for NPC ${pnj.name}`)
+			if (!beginStep) throw new ExpectedError(`Begin step did not exist for NPC ${pnj.name}`);
 			return {
 				name: npcName,
 				speech: beginStep.stepName,

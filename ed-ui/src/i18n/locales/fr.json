@@ -2443,7 +2443,10 @@
 		"dojo": "Dino-RPG [ Dojo ]",
 		"guide": "Dino-RPG [ Guide du Jeu ]",
 		"itinerant": "Dino-RPG [ Marchand Ambulant ]",
-		"faq": "Dino-RPG [ FAQ ]"
+		"faq": "Dino-RPG [ FAQ ]",
+		"clan": "Dino-RPG [ Clan : ",
+		"clansList": "Dino-RPG [ Liste des Clans ]",
+		"createClan": "Dino-RPG [ Créer un Clan ]"
 	},
 	"gather": {
 		"action": {
@@ -3745,6 +3748,153 @@
 			"next": "Page suivante"
 		}
 	},
+	"clan": {
+		"ingredients": {
+			"price": "{price} :gold:",
+			"help": "Votre trésor d'une valeur de **{value}** :gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
+			"giveAway": "Donner au clan."
+		},
+
+		"header": {
+			"title": "Clan: {name}",
+			"infos": "Informations sur le clan",
+			"creation_date": "Créé le {date}"
+		},
+		"tabs": {
+			"pages": "Pages du Clan",
+			"members": "Liste des membres",
+			"treasure": "Trésor du Clan",
+			"war": "Infos de guerre",
+			"discussion": "Fil de discussion",
+			"history": "Historique du Clan",
+			"parameters": "Paramètres"
+		},
+		"icons": {
+			"members": "Nombre de membres",
+			"gold": "Valeur du trésor",
+			"rank": "Rang",
+			"crown": "Chef du Clan"
+		}
+	},
+	"clansList": {
+		"title": "Clans",
+		"th": {
+			"name": "Clan",
+			"leader": "Créateur",
+			"members": "Membres",
+			"date": "Date de création"
+		},
+		"disclaimer": {
+			"text": "Les Clans sont des groupes de joueurs qui combattent ensemble dans l'univers de Dinoland.",
+			"see_help": "En savoir plus sur les Clans",
+			"see_ranking": "Voir le classement des meilleurs Clans"
+		},
+		"cannot_create_info": "Créer un clan coûte {money} :gold:, et nécessite d'avoir {points} points au classement.",
+		"button": {
+			"search": "Rechercher",
+			"create": "Créer un clan"
+		}
+	},
+	"clansMembers": {
+		"th": {
+			"name": "Nom",
+			"donation": "Dons",
+			"stats": "Stats",
+			"actions": "Actions"
+		},
+		"edit": {
+			"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",
+			"right": {
+				"MEMBER_EDIT": "Peut changer les droits et surnoms des membres",
+				"PAGE_MANAGE": "Peut gérer les pages du Clan",
+				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
+				"MEMBER_EXCLUDE": "Peut renvoyer des membres",
+				"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
+				"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan"
+			},
+			"nickname": "Surnom du joueur :",
+			"save": "Enregistrer"
+		},
+		"request": {
+			"title": "Adhésions en attente",
+			"line": "souhaite rejoindre le Clan !",
+			"accept": "Accepter",
+			"deny": "Refuser",
+			"maximum": "Le clan est plein, vous ne pouvez pas accepter de nouvelles demandes."
+		},
+		"action": {
+			"edit": "Editer",
+			"exclude": "Exclure",
+			"leave": "Quitter le clan"
+		},
+		"stat": {
+			"last_login": "Dernière connexion le {date}."
+		}
+	},
+	"clanPages": {
+		"button": {
+			"join_clan": "Rejoindre le clan",
+			"delete": "Supprimer la page",
+			"create": "Créer une page",
+			"edit": "Modifier la page"
+		},
+		"tip": {
+			"join_clan": "Rejoindre ce clan vous coûtera {money} :gold:. Cette somme vous sera rendue en cas de refus."
+		},
+		"request": {
+			"info": "Vous avez une demande d'adhésion en attente auprès du clan ",
+			"cancel": "Annuler la demande."
+		},
+		"creation": {
+			"new": "Nouvelle page de clan",
+			"edit": "Modification d'une page de clan",
+			"title": "Titre",
+			"content": "Contenu",
+			"public": "Page publique",
+			"action": {
+				"create": "Créer",
+				"edit": "Modifier",
+				"cancel": "Annuler"
+			}
+		}
+	},
+	"clanDiscussion": {
+		"action": {
+			"create": "Nouveau message",
+			"refresh": "Rafraîchir"
+		},
+		"pagination": {
+			"page": "Page",
+			"go_to": "Aller à la page"
+		}
+	},
+	"clanHistory": {
+		"type": {
+			"CLAN_CREATED": "Création du clan.",
+			"PLAYER_JOIN": "Un joueur a rejoint le clan.",
+			"PLAYER_LEAVE": "Ce joueur a décidé de quitter le clan.",
+			"PLAYER_EXCLUSION": "Ce joueur a été exclu du clan.",
+			"UNKNOWN": "Evénement inconnu."
+		}
+	},
+	"clanSettings": {
+		"action": {
+			"delete": "Supprimer le clan",
+			"save": "Sauvegarder"
+		},
+		"banner": {
+			"title": "Changer l'URL de la bannière du clan :",
+			"info": "La bannière a un ratio de 448px de large sur 100px de long."
+		}
+	},
+	"createClan": {
+		"title": "Créer un Clan",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera ",
+		"clan_name": "Nom du Clan",
+		"clan_description": "Description du Clan",
+		"create_button": "Créer le Clan",
+		"go_back_button": "Retour à la liste"
+	},
 	"fight": {
 		"pageName": "Combat !",
 		"win": "Vous **remportez** ce combat !",
@@ -3836,6 +3986,10 @@
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
 		"tname": "Ingrédients",
+		"giveAway": {
+			"button": "Donner au clan",
+			"confirm": "Désirez-vous donner vos ingrédients pour un total de {gold} or ?"
+		},
 		"tstock": "Stock",
 		"tquantity": "Quantité",
 		"name": {

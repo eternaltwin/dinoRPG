@@ -19,7 +19,7 @@ export enum StatTracking {
 	SEEK = 'fouill', //OK
 	MARKET = 'market', //OK
 	S_BUYER = 'sbuyer', //OK
-	CLANS = 'clans',
+	CLANS = 'clans', //OK
 	BEAUTY = 'beauty',
 	GDC_ATK = 'gdcatt',
 	GDC_DEF = 'gdcdef',

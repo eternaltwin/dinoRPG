@@ -12,9 +12,9 @@
 		<li>
 			<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
 		</li>
-		<!--		<li>-->
-		<!--			<a @click="goToPage('')">{{ $t('rightMenu.clans') }}</a>-->
-		<!--		</li>-->
+		<li>
+			<a @click="goToPage('ClansList')">{{ $t('rightMenu.clans') }}</a>
+		</li>
 		<li>
 			<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
 		</li>

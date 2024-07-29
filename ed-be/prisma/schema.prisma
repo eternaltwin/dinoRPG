@@ -361,6 +361,13 @@ model Player {
   logs                        Log[]
   usernameHistory             UsernameHistory[]
   playerTracking              PlayerTracking[]
+  ClanMember                  ClanMember?
+  clanMemberId                Int?                         @unique
+  ClanMessage                 ClanMessage[]
+  ClanHistory                 ClanHistory[]
+  leaderOf                    Clan?                        @relation("leader")
+  leaderOfId                  Int?
+  ClanJoinRequest             ClanJoinRequest?             @relation("clanRequest")
 
   @@map("player")
 }
@@ -562,4 +569,96 @@ model PlayerTracking {
 
   @@unique([stat, playerId])
   @@map("playerTracking")
+}
+
+// CLANS - IN PROGRESS
+
+model Clan {
+  id            Int               @id @default(autoincrement())
+  name          String
+  treasureValue Int               @default(0)
+  members       ClanMember[]      @relation("member")
+  ingredients   ClanIngredient[]
+  creationDate  DateTime          @default(now()) @db.Timestamp(6)
+  discussion    ClanMessage[]
+  history       ClanHistory[]
+  war           ClanWar?          @relation(fields: [clanWarId], references: [id])
+  clanWarId     Int?
+  leader        Player            @relation("leader", fields: [leaderId], references: [id])
+  leaderId      Int               @unique
+  banner        Bytes?
+  joinRequests  ClanJoinRequest[]
+  pages         ClanPage[]
+}
+
+model ClanJoinRequest {
+  id       Int      @id @default(autoincrement())
+  clan     Clan     @relation(fields: [clanId], references: [id])
+  clanId   Int
+  player   Player   @relation("clanRequest", fields: [playerId], references: [id])
+  playerId Int      @unique
+  date     DateTime @default(now()) @db.Timestamp(6)
+}
+
+model ClanWar {
+  id        Int       @id @default(autoincrement())
+  clans     Clan[]
+  dateStart DateTime  @default(now()) @db.Timestamp(6)
+  dateEnd   DateTime?
+}
+
+model ClanIngredient {
+  id           Int   @id @default(autoincrement())
+  ingredientId Int
+  quantity     Int
+  clanId       Int?
+  clan         Clan? @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([ingredientId, clanId])
+  @@map("clan_ingredient")
+}
+
+model ClanMessage {
+  id       Int      @id @default(autoincrement())
+  clanId   Int
+  clan     Clan?    @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  date     DateTime @default(now()) @db.Timestamp(6)
+  author   Player   @relation(fields: [authorId], references: [id])
+  authorId Int
+  content  String
+
+  @@unique([id, clanId])
+  @@map("clan_messages")
+}
+
+model ClanHistory {
+  id       Int      @id @default(autoincrement())
+  clanId   Int
+  clan     Clan?    @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  date     DateTime @default(now()) @db.Timestamp(6)
+  author   Player   @relation(fields: [authorId], references: [id])
+  authorId Int
+  type     String   @default("CLAN_CREATED")
+}
+
+model ClanMember {
+  id       Int      @id @default(autoincrement())
+  clan     Clan     @relation("member", fields: [clanId], references: [id])
+  clanId   Int
+  donation Int      @default(0)
+  player   Player   @relation(fields: [playerId], references: [id])
+  playerId Int      @unique
+  rights   String[] @default([])
+  dateJoin DateTime @default(now()) @db.Timestamp(6)
+  nickname String?
+}
+
+model ClanPage {
+  id      Int     @id @default(autoincrement())
+  home    Boolean
+  public  Boolean
+  name    String
+  content String  @default("")
+  Clan    Clan    @relation(fields: [clanId], references: [id])
+  clanId  Int
 }

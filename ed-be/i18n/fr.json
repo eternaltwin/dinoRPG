@@ -21,5 +21,6 @@
   "notEnoughStorage": "Vous n'avez pas assez de place.",
   "invalidOffer": "Offre invalide",
   "bidIsLower": "Votre enchère est inférieure à la précédente.",
-  "notEnoughTickets": "Vous n'avez pas assez de bons."
+  "notEnoughTickets": "Vous n'avez pas assez de bons.",
+  "tooShortMessage": "Votre message est trop court."
 }

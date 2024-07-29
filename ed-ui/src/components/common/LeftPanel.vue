@@ -24,7 +24,9 @@
 			></a>
 			<a
 				id="menu_clan"
+				@click="goToPlayerClan()"
 				class="iconclan"
+				:class="{ disabled: !clanId }"
 				v-tippy="{
 					content: formatContent($t('layout.clanButton')),
 					theme: 'small'
@@ -79,7 +81,8 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			dinozStore: dinozStore(),
-			money: undefined as number | undefined
+			money: undefined as number | undefined,
+			clanId: undefined as number | undefined
 		};
 	},
 	components: {
@@ -109,6 +112,20 @@ export default defineComponent({
 				name: 'DinozPage',
 				params: { id: this.currentDinozId() }
 			});
+		},
+		goToPageWithId(pageName: string, _id: number) {
+			this.$router.push({
+				name: pageName,
+				params: { id: _id }
+			});
+		},
+		goToPlayerClan() {
+			if (this.clanId) {
+				this.$router.push({
+					name: 'Clan',
+					params: { id: this.clanId }
+				});
+			}
 		},
 		isDevEnv(): boolean {
 			return import.meta.env.MODE === 'development';
@@ -162,10 +179,14 @@ export default defineComponent({
 		// Watch current dinoz id in store. Each time current dinoz id will change, the selected dinoz will be updated
 		currentDinozId: function (dinozId: number) {
 			this.currentDinozId = dinozId;
+		},
+		'playerStore.getClanId': function (clanId: number) {
+			this.clanId = clanId;
 		}
 	},
 	mounted(): void {
 		this.money = this.playerStore.getMoney;
+		this.clanId = this.playerStore.getClanId;
 	}
 });
 </script>
@@ -279,6 +300,13 @@ export default defineComponent({
 
 				&:hover {
 					background-image: url('../../assets/icons/act_castle2.webp');
+				}
+
+				&.disabled {
+					filter: grayscale(100%);
+					&:hover {
+						cursor: auto;
+					}
 				}
 			}
 

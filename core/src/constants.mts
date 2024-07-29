@@ -15,6 +15,12 @@ export const MARKET_MAX_ITEMS = 5;
 export const MARKET_OFFER_DURATION = 2 * 24 * 60 * 60 * 1000; // 48h
 export const MARKET_OFFER_DURATION_DEBUG = 2 * 60 * 1000; // 2min
 
+/* Clan related constants */
+export const CLAN_MAX_MEMBERS_AMOUNT = 5;
+export const CLAN_JOIN_MONEY = 1000;
+export const CLAN_CREATE_MONEY = 20000;
+export const CLAN_CREATE_RANKING_POINTS = 15;
+
 export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 	items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 	rewards: Pick<PlayerReward, 'rewardId'>[];

@@ -18,7 +18,8 @@ export const apiRoutes = {
 	offerRoutes: '/api/v1/offer',
 	webSocketRoute: '/api/v1/websockets',
 	testingRoute: '/api/v1/testing',
-	eternalTwinRoute: '/api/v1/eternaltwin'
+	eternalTwinRoute: '/api/v1/eternaltwin',
+	clanRoutes: '/api/v1/clan'
 };
 
 export const regex = {

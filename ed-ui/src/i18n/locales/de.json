@@ -5,7 +5,7 @@
 		"news": "Neuigkeiten",
 		"gazette": "Gazette",
 		"ranking": "Rangliste",
-		"clans": "Clans",
+		"clans": "Klane",
 		"ingredients": "Zutaten",
 		"account": "Mein Konto",
 		"forum": "Forum",
@@ -2391,8 +2391,8 @@
 		"details": "Details",
 		"players": "Joueurs",
 		"average": "Moyenne",
-		"clans": "Clans",
-		"completion": "Complétion"
+		"completion": "Complétion",
+		"clans": "Klane"
 	},
 	"layout": {
 		"fx": "Status",
@@ -2401,7 +2401,7 @@
 		"level": "Diese Stufe spiegelt die Stärke deines Dinoz wider.",
 		"slot": "Dieser Platz ist leer, wähle einen Gegenstand aus dem Inventar, den du ausrüsten möchtest. &&///Die ausgerüsteten Gegenstände können von deinem Dinoz im Kampf benutzt werden.//",
 		"shopButton": "Zum Shop",
-		"clanButton": "Mein Clan",
+		"clanButton": "Mein Klan",
 		"dojoButton": "Mein Dojo"
 	},
 	"popup": {
@@ -2453,7 +2453,9 @@
 		"dojo": "Dino-RPG [ Dojo ]",
 		"guide": "Dino-RPG [ Spieleführer ]",
 		"itinerant": "Dino-RPG [ Der Fliegende Händler ]",
-		"faq": "Dino-RPG [ FAQ ]"
+		"faq": "Dino-RPG [ FAQ ]",
+		"clan": "Dino-RPG [ Klan : ",
+		"clansList": "Dino-RPG [ Liste der Klane ]"
 	},
 	"gather": {
 		"action": {
@@ -3754,6 +3756,147 @@
 			"previous": "Page précedente",
 			"next": "Page suivante"
 		}
+	},
+	"clansList": {
+		"title": "Klane",
+		"th": {
+			"name": "Klan",
+			"leader": "Anführer",
+			"members": "Mitglieder",
+			"date": "Erstellungsdatum"
+		},
+		"disclaimer": {
+			"text": "Klane sind Gruppen von Spielern, die im Dinoland-Universum gemeinsam kämpfen.",
+			"see_help": "Mehr über Klane erfahren",
+			"see_ranking": "Rangliste der besten Klane ansehen"
+		},
+		"cannot_create_info": "Creating a clan costs {money} :gold:, and requires you to have {points} ranking points.",
+		"button": {
+			"search": "Search",
+			"create": "Create clan"
+		}
+	},
+	"clan": {
+		"header": {
+			"title": "Clan: {name}",
+			"infos": "Clan information",
+			"creation_date": "Created the {date}"
+		},
+		"tabs": {
+			"pages": "Clan pages",
+			"members": "Members list",
+			"treasure": "Clan treasure",
+			"war": "War informations",
+			"discussion": "Discussion thread",
+			"history": "Clan history",
+			"parameters": "Settings"
+		},
+		"icons": {
+			"members": "Number of members",
+			"gold": "Treasure value",
+			"rank": "Rank",
+			"crown": "Clan leader"
+		}
+	},
+	"clansMembers": {
+		"th": {
+			"name": "Name",
+			"donation": "Donations",
+			"stats": "Stats",
+			"actions": "Actions"
+		},
+		"edit": {
+			"disclaimer": "This page allows you to edit the rights of clan member <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
+			"right": {
+				"MEMBER_EDIT": "Can edit rights and surname of other members",
+				"PAGE_MANAGE": "Can manage clan pages",
+				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Can accept or deny joining requests",
+				"MEMBER_EXCLUDE": "Can exclude members",
+				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
+				"CLAN_EDIT_BANNER": "Can change the clan banner"
+			},
+			"nickname": "Player's nickname :",
+			"save": "Save"
+		},
+		"request": {
+			"title": "Waiting requests",
+			"line": "would like to join the clan !",
+			"accept": "Accept",
+			"deny": "Deny",
+			"maximum": "Clan is full, you cannot accept more requests."
+		},
+		"action": {
+			"edit": "Edit",
+			"exclude": "Exclude",
+			"leave": "Leave the clan"
+		},
+		"stat": {
+			"last_login": "Last connexion the {date}."
+		}
+	},
+	"clanPages": {
+		"button": {
+			"join_clan": "Join clan",
+			"delete": "Delete page",
+			"create": "Create new page",
+			"edit": "Edit page"
+		},
+		"tip": {
+			"join_clan": "Joining this clan will cost you {money} :gold:. This amount will be given back in case of deny."
+		},
+		"request": {
+			"info": "You have a waiting request for joining the clan ",
+			"cancel": "Cancel request."
+		},
+		"creation": {
+			"new": "New clan page",
+			"edit": "Edition of clan page",
+			"title": "Title",
+			"content": "Content",
+			"public": "Public page",
+			"action": {
+				"create": "Create",
+				"edit": "Edit",
+				"cancel": "Cancel"
+			}
+		}
+	},
+	"clanDiscussion": {
+		"action": {
+			"create": "New message",
+			"refresh": "Refresh"
+		},
+		"pagination": {
+			"page": "Page",
+			"go_to": "Go to page"
+		}
+	},
+	"clanHistory": {
+		"type": {
+			"CLAN_CREATED": "Clan has been created.",
+			"PLAYER_JOIN": "A player has joined the clan.",
+			"PLAYER_LEAVE": "This player decided to leave the clan.",
+			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
+			"UNKNOWN": "Unknown event."
+		}
+	},
+	"clanSettings": {
+		"action": {
+			"delete": "Delete clan",
+			"save": "Save"
+		},
+		"banner": {
+			"title": "Edit clan banner URL :",
+			"info": "Clan banner has a ratio of 448px large by 100px long."
+		}
+	},
+	"createClan": {
+		"title": "Create a clan",
+		"information": "Please fill in informations below in order to create your clan. The clan creation will cost you ",
+		"clan_name": "Clan name",
+		"clan_description": "Clan description",
+		"create_button": "Create clan",
+		"go_back_button": "Back to list"
 	},
 	"fight": {
 		"pageName": "Kampf!",
