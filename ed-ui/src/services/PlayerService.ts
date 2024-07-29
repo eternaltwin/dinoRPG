@@ -99,7 +99,7 @@ export const PlayerService = {
 	},
 	getLBRewards(): Promise<{ quantity: number }> {
 		return http()
-			.get(`/player/labrute}`)
+			.get(`/player/labrute`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
