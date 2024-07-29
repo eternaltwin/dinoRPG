@@ -58,6 +58,13 @@ export async function createOffer(req: Request) {
 		count: number;
 	}[];
 
+	const offers = await getOffers(authed.id, 'own', authed.id, null, false);
+
+
+	if (offers.length > 0) {
+		throw new ExpectedError(translate('alreadyOffer', authed))
+	}
+
 	if (dinozId) {
 		// Check if player owns the Dinoz
 		const owns = await ownsDinoz(authed.id, dinozId);
@@ -66,10 +73,6 @@ export async function createOffer(req: Request) {
 			throw new ExpectedError('invalidDinoz');
 		}
 
-		const offers = await getOffers(authed.id, 'own', authed.id, null, false);
-		if (offers && offers.some(o => o.dinoz?.id === dinozId)) {
-			throw new ExpectedError(translate(`dinozAlreadySelling`, authed));
-		}
 		const dinozPlace = await getDinozPlace(dinozId);
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ExpectedError('Dinoz is not at the right place to do this.');
