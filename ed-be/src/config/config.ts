@@ -92,6 +92,11 @@ export interface Config {
 	readonly port: number;
 
 	/**
+	 * Port used to bind the WSS server.
+	 */
+	readonly wssPort: number;
+
+	/**
 	 * Absolute URL to website root, as visible externally.
 	 */
 	readonly selfUrl: URL;
@@ -190,6 +195,7 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const isProduction: boolean = env.NODE_ENV === 'production';
 	const port = readPort(env.PORT);
+	const wssPort = readPort(env.WSS_PORT);
 	const selfUrl = readSelfUrl(env.SELF_URL);
 
 	const eternaltwinUrl: string = env.ETERNALTWIN_URL ?? env.ETWIN_URL ?? 'http://localhost:50320/';
@@ -240,6 +246,7 @@ export function config(env: Record<string, string | undefined>): Config {
 	return {
 		isProduction,
 		port,
+		wssPort,
 		selfUrl,
 		eternaltwin,
 		discordNotifications,

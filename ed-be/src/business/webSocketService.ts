@@ -71,6 +71,7 @@ function doSpecificVerificationsForWsAuthent(_req: Request) {
  * @param req -> The request incoming
  */
 export function connectUserToChannel(ws: WebSocketCustom, req: IncomingMessage) {
+	console.log('héhé')
 	const ticketUuid = req.url?.split('?ticket=')[1];
 
 	const ticket = checkTicketValidity(req, ticketUuid);
@@ -181,7 +182,7 @@ function sendMessageToPeopleInChannel(
 		return;
 	}
 
-	LOGGER.log(`Message sent to channel ${channel[0]}: ${message}`);
+	LOGGER.info(`Message sent to channel ${channel[0]}: ${message}`);
 
 	const usersInChannel = channel[1].filter(user => user.connectionId !== wsId);
 

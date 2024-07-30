@@ -14,7 +14,8 @@ const jwtConfig = () => {
 			/\/api-docs*/,
 			/\/api\/v1\/news\/\d+\/illustration/,
 			/\/api\/v1\/clan\/\d+\/banner/,
-			/\/api\/v1\/eternaltwin*/
+			/\/api\/v1\/eternaltwin*/,
+			/\/api\/ws*/
 		]
 	});
 };

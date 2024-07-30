@@ -14,6 +14,18 @@ import initRoutes from './routes/index.js';
 import lockMiddleware from './middleware/lock.js';
 import './i18n.js';
 
+import {
+	checkIfClientsAreAlive,
+	connectUserToChannel,
+	disconnectUser,
+	processIncomingMessage,
+	setConnectionToAlive
+} from './business/webSocketService.js';
+import { RawData, WebSocketServer } from 'ws';
+import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
+import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
+import http, { IncomingMessage } from 'http';
+
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
 	namespace Express {
@@ -32,7 +44,7 @@ export function main(cx: ServerContext) {
 	cx.logger.log(`Server started`);
 
 	const app = express();
-	const { port } = cx.config;
+	const { port, wssPort } = cx.config;
 
 	app.use(cors());
 	app.use(bodyParser.json());
@@ -43,6 +55,31 @@ export function main(cx: ServerContext) {
 	);
 	app.use(lockMiddleware);
 	app.use(readyCheck);
+
+
+
+
+	const wss = new WebSocketServer({ port: wssPort});
+
+	wss.on('connection', (ws: WebSocketCustom, req: IncomingMessage) => {
+		try {
+			connectUserToChannel(ws, req);
+		} catch (err) {
+			ws.close();
+		}
+
+		ws.on('message', (data: RawData) => processIncomingMessage(wss as WebSocketServerCustom, ws.id, data));
+
+		ws.on('close', () => disconnectUser(ws));
+
+		ws.on('pong', () => setConnectionToAlive(ws));
+
+		ws.on('error', console.error);
+	});
+
+	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
+
+	wss.on('close', () => clearInterval(interval));
 
 	app.listen(port, () => {
 		cx.logger.info(`Server listening on port ${port}`);
@@ -60,6 +97,7 @@ export function main(cx: ServerContext) {
 			cx.discord.sendError(error);
 		});*/
 	});
+
 
 	resetDinozShopAtMidnight().start();
 	healRestingDinoz().start();

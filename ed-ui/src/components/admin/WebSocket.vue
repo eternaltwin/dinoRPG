@@ -1,7 +1,8 @@
 <template>
 	<button @click="getWsTicket()">Test connection</button>
 	<button @click="sendMessage()">Send message</button>
-	<input type="text" placeholder="Message to send" v-model="message" @keyup.enter="sendMessage()" />
+	<input type="text" placeholder="Message to send" v-model="message" @keyup.enter="sendMessage()" /><br />
+	{{ webSocket.readyState }}
 </template>
 
 <script lang="ts">
@@ -20,9 +21,14 @@ export default defineComponent({
 	methods: {
 		async getWsTicket(): Promise<void> {
 			const ticket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
-			this.webSocket = new WebSocket(`ws://${document.location.host}?ticket=${ticket}`);
+			if (import.meta.env.MODE === 'development') {
+				this.webSocket = new WebSocket(`ws://localhost:8082?ticket=${ticket}`);
+			} else {
+				this.webSocket = new WebSocket(`ws://${document.location.host}?ticket=${ticket}`);
+			}
 		},
 		sendMessage(): void {
+			console.log(this.message);
 			this.webSocket.send(this.message);
 		},
 		async getDinozData(): Promise<void> {
