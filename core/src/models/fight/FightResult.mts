@@ -36,6 +36,7 @@ export interface FighterRecap {
 	startingHp: number;
 	energy: number;
 	maxEnergy: number;
+	energyRecovery: number;
 	dark?: boolean;
 	size?: number;
 }

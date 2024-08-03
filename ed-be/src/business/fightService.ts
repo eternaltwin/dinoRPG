@@ -379,6 +379,7 @@ export async function rewardFight(
 			startingHp: f.startingHp,
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
+			energyRecovery: f.energyRecovery,
 			dark: f.type === 'boss' ? Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined : undefined,
 			size: f.type === 'boss' ? Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined : undefined
 		};

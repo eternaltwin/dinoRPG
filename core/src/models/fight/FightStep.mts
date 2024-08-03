@@ -186,6 +186,15 @@ export interface ReviveStep {
 	fighter: StepFighter;
 }
 
+// Describes that a new turn started, which fighter's turn it is and the time elapsed since the previous turn
+// The main goal is to tell the front and which fighters regenerated energy, and remove some of the "energy recovered" steps
+// in the fight history
+export interface NewTurn {
+	action: 'newTurn';
+	fighter: StepFighter;
+	delta: number;
+}
+
 export type FightStep =
 	| ArriveStep
 	| LeaveStep
@@ -218,4 +227,5 @@ export type FightStep =
 	| DisabledItemsStep
 	| StealGoldStep
 	| CursedStep
-	| ReviveStep;
+	| ReviveStep
+	| NewTurn;

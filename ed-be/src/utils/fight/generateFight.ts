@@ -499,7 +499,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				maxHp: f.maxHp,
 				startingHp: f.startingHp,
 				energy: f.energy,
-				maxEnergy: f.maxEnergy
+				maxEnergy: f.maxEnergy,
+				energyRecovery: f.stats.special.energyRecovery ?? 1
 			};
 		})
 	};

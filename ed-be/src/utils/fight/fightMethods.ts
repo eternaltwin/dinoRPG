@@ -333,7 +333,7 @@ export const updateStat = (
 	stats[stat] += value;
 };
 
-export const setEnergy = (fighter: DetailedFighter, new_energy: number, fightData: DetailedFight) => {
+export const setEnergy = (fighter: DetailedFighter, new_energy: number) => {
 	let delta = 0;
 	if (new_energy > fighter.maxEnergy) {
 		delta = fighter.maxEnergy - fighter.energy;
@@ -345,19 +345,6 @@ export const setEnergy = (fighter: DetailedFighter, new_energy: number, fightDat
 		delta = new_energy - fighter.energy;
 		fighter.energy = new_energy;
 	}
-	if (delta > 0) {
-		fightData.steps.push({
-			action: 'gainEnergy',
-			fighter: stepFighter(fighter),
-			energy: fighter.energy
-		});
-	}
-	// else if (delta < 0) {
-	// 	fightData.steps.push({
-	// 		action: 'reduceEnergy',
-	// 		fighter: stepFighter(fighter)
-	// 	});
-	// }
 };
 
 export const setMaxEnergy = (fighter: DetailedFighter, new_max: number) => {
@@ -1311,7 +1298,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.CRAMPE_CHRONIQUE: {
-				setEnergy(fighter, fighter.energy - 10, fightData);
+				setEnergy(fighter, fighter.energy - 10);
 				fighter.stats.special.energyRecovery *= 0.85;
 
 				// Add reduce energy step
@@ -1495,7 +1482,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		}
 
 		// Consume energy
-		setEnergy(fighter, fighter.energy - event.energy, fightData);
+		setEnergy(fighter, fighter.energy - event.energy);
 	} else {
 		// Event is an item
 
@@ -3256,7 +3243,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	}
 
 	// Consume energy
-	setEnergy(fighter, fighter.energy - skill.energy, fightData);
+	setEnergy(fighter, fighter.energy - skill.energy);
 
 	if (fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
@@ -3747,7 +3734,8 @@ const attackTarget = (
 		break;
 	}
 
-	setEnergy(attacker, attacker.energy - totalEnergyCost, fightData);
+	// Consume the energy at the end
+	setEnergy(attacker, attacker.energy - totalEnergyCost);
 
 	// Update stats
 	elements.forEach(e => {
@@ -3989,8 +3977,8 @@ const checkAfterAttackEffects = (
 			// TODO announce the skill
 			const energyStolen = target.energy;
 
-			setEnergy(target, 0, fightData);
-			setEnergy(attacker, attacker.energy + energyStolen, fightData);
+			setEnergy(target, 0);
+			setEnergy(attacker, attacker.energy + energyStolen);
 		}
 	}
 
@@ -4418,9 +4406,15 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Recover energy for all fighters except the current one
 	getFighters(fightData).forEach(f => {
 		if (f.id === attacker.id) return;
-		setEnergy(f, f.energy + (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR, fightData);
+		setEnergy(f, f.energy + (f.stats.special.energyRecovery ?? 1) * deltaTime * ENERGY_RECOVERY_BASE_FACTOR);
 	});
 
+	// Log a new turn
+	fightData.steps.push({
+		action: 'newTurn',
+		fighter: stepFighter(attacker),
+		delta: deltaTime
+	});
 	if (deltaTime > 0) {
 		// Handle statuses
 		getFighters(fightData).forEach(fighter => {
@@ -4558,7 +4552,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Fighter attacks opponent
 	launchAssault(fightData, attacker, true);
 	// Remove an extra 4 energy for the assault
-	setEnergy(attacker, attacker.energy - 4, fightData);
+	setEnergy(attacker, attacker.energy - 4);
 
 	endTurnChecks(fightData, attacker);
 };
