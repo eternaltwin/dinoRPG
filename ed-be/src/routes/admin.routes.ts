@@ -11,6 +11,8 @@ import {
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
 	listAllPlayerInformationForAdminDashboard,
+	modifyPlayerItems,
+	modifyPlayerIngredients,
 	setPlayerMoney
 } from '../business/adminService.js';
 import { apiRoutes } from '../constants/index.js';
@@ -108,6 +110,56 @@ routes.put(
 			sendError(res, err);
 		}
 	}
+);
+
+routes.put(
+    `${commonPath}/:id/items`,
+    [
+        param('id').exists().toInt().isNumeric(),
+        body('operation').exists().isString().isIn(['increase', 'decrease']),
+        body('items').isArray().custom((items: any[]) => {
+            return items.every(item => typeof item.id === 'number' && item.id > 0 && typeof item.quantity === 'number' && item.quantity > 0);
+        }),
+    ],
+    checkIsAdmin,
+    async (req: Request, res: Response) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            await modifyPlayerItems(req);
+            return res.status(200).send('Items modified successfully');
+        } catch (err) {
+            sendError(res, err);
+        }
+    }
+);
+
+routes.put(
+    `${commonPath}/:id/ingredients`,
+    [
+        param('id').exists().toInt().isNumeric(),
+        body('operation').exists().isString().isIn(['increase', 'decrease']),
+        body('ingredients').isArray().custom((ingredients: any[]) => {
+            return ingredients.every(ing => typeof ing.id === 'number' && ing.id > 0 && typeof ing.quantity === 'number' && ing.quantity > 0);
+        }),
+    ],
+    checkIsAdmin,
+    async (req: Request, res: Response) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
+        try {
+            await modifyPlayerIngredients(req);
+            return res.status(200).send('Ingredients modified successfully');
+        } catch (err) {
+            sendError(res, err);
+        }
+    }
 );
 
 routes.get(

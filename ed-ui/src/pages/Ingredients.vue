@@ -11,8 +11,8 @@
 			<tr>
 				<th class="icon"></th>
 				<th class="name">{{ $t('ingredients.tname') }}</th>
-				<th v-if="isClan" class="clan">{{ $t('ingredients.tname') }}</th>
 				<th class="stock">{{ $t('ingredients.tstock') }}</th>
+				<th v-if="isClan" class="clan"></th>
 			</tr>
 
 			<Tippy

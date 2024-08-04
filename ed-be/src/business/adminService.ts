@@ -12,6 +12,8 @@ import {
 } from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
+import { increaseItemQuantity, decreaseItemQuantity } from '../dao/playerItemDao.js';
+import { increaseIngredientQuantity, decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { AdminRole } from '@drpg/prisma';
@@ -228,6 +230,72 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 	}
 }
 
+
+/**
+ * @summary Add, remove, or modify item quantities for a player
+ * @param req
+ * @param req.params.id {number} PlayerId
+ * @param req.body.operation {string} Operation to be realized (increase, decrease)
+ * @param req.body.items {Array<{id: number, quantity: number}>} List of items and their quantities
+ * @return void
+ */
+export async function modifyPlayerItems(req: Request): Promise<void> {
+    if (!req.auth?.playerId) {
+        throw new ExpectedError(`You need to be logged in.`);
+    }
+
+    const items: Array<{ id: number, quantity: number }> = req.body.items;
+    switch (req.body.operation) {
+        case 'increase':
+            for (const item of items) {
+                await increaseItemQuantity(+req.params.id, item.id, item.quantity);
+                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, item.id, item.quantity);
+            }
+            break;
+        case 'decrease':
+            for (const item of items) {
+                await decreaseItemQuantity(+req.params.id, item.id, item.quantity);
+                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, item.id, item.quantity);
+            }
+            break;
+        default:
+            throw new ExpectedError(`You need to select a valid operation.`);
+    }
+}
+
+/**
+ * @summary Add, remove, or modify item quantities for a player
+ * @param req
+ * @param req.params.id {number} PlayerId
+ * @param req.body.operation {string} Operation to be realized (increase, decrease)
+ * @param req.body.ingredients {Array<{id: number, quantity: number}>} List of ingredients and their quantities
+ * @return void
+ */
+export async function modifyPlayerIngredients(req: Request): Promise<void> {
+    if (!req.auth?.playerId) {
+        throw new ExpectedError(`You need to be logged in.`);
+    }
+
+    const ingredients: Array<{ id: number, quantity: number }> = req.body.ingredients;
+    switch (req.body.operation) {
+        case 'increase':
+            for (const ing of ingredients) {
+                await increaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
+                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
+            }
+            break;
+        case 'decrease':
+            for (const ing of ingredients) {
+                await decreaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
+                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
+            }
+            break;
+        default:
+            throw new ExpectedError(`You need to select a valid operation.`);
+    }
+}
+
+
 /**
  * @summary List all dinoz from a player
  * @param req
@@ -427,10 +495,17 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		matelasseur: player.matelasseur,
 		createdDate: player.createdDate,
 		rewards: player.rewards.map(reward => reward.rewardId),
+		items: player.items.map(item => ({
+			itemId: item.itemId,
+			quantity: item.quantity
+		})),
+		ingredients: player.ingredients.map(ing => ({
+			ingredientId: ing.ingredientId,
+			quantity: ing.quantity
+	})),
 		role: player.role
 	};
-
-	return playerToSend;
+	return playerToSend;	
 }
 
 /**

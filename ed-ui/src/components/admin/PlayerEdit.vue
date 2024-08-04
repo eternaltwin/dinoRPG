@@ -115,6 +115,103 @@
 			</div>
 		</fieldset>
 		<fieldset>
+			<legend>Items</legend>
+			<div class="items">
+				<template v-for="(item, index) in player.items" :key="index">
+					<Tippy theme="normal">
+						<img :src="getImgURL('item', `item_${itemNameList[item.itemId]}`)" :alt="itemNameList[item.itemId]" />
+						<template #content>
+							<h1 v-html="formatContent($t(`item.name.${itemNameList[item.itemId]}`))" />
+							<p v-html="formatContent($t(`item.description.${itemNameList[item.itemId]}`))" />
+							<br />
+							<p>ItemId: {{ item.itemId }}</p>
+							<p>Quantity: {{ item.quantity }}</p>
+						</template>
+					</Tippy>
+				</template>
+			</div>
+			<div class="items">
+				<div>
+					<label class="title" for="itemId">Item ID:</label>
+					<input type="number" id="itemId" v-model="playerFields.selectedItem" min="1" />
+				</div>
+				<div>
+					<label class="title" for="itemQuantity">Quantity:</label>
+					<input type="number" id="itemQuantity" v-model="playerFields.itemQuantity" min="1" />
+				</div>
+				<div class="itemOperations">
+					<input
+						class="radio"
+						type="radio"
+						id="increase"
+						value="increase"
+						name="itemOperation"
+						v-model="playerFields.itemOperation"
+					/>
+					<label class="radio" for="increase">Increase</label>
+					<input
+						class="radio"
+						type="radio"
+						id="decrease"
+						value="decrease"
+						name="itemOperation"
+						v-model="playerFields.itemOperation"
+					/>
+					<label class="radio" for="decrease">Decrease</label>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
+			<legend>Ingredients</legend>
+			<div class="ingredients">
+				<template v-for="(ing, index) in player.ingredients" :key="index">
+					<Tippy theme="normal">
+						<img
+							:src="getImgURL('ingredients', `${ingredientNameList[ing.ingredientId]}`)"
+							:alt="ingredientNameList[ing.ingredientId]"
+						/>
+						<template #content>
+							<h1 v-html="formatContent($t(`ingredients.name.${ingredientNameList[ing.ingredientId]}`))" />
+							<p v-html="formatContent($t(`ingredients.description.${ingredientNameList[ing.ingredientId]}`))" />
+							<br />
+							<p>ItemId: {{ ing.ingredientId }}</p>
+							<p>Quantity: {{ ing.quantity }}</p>
+						</template>
+					</Tippy>
+				</template>
+			</div>
+			<div class="ingredients">
+				<div>
+					<label class="title" for="ingredientId">Ingredient ID:</label>
+					<input type="number" id="ingredientId" v-model="playerFields.selectedIngredient" min="1" />
+				</div>
+				<div>
+					<label class="title" for="ingredientQuantity">Quantity:</label>
+					<input type="number" id="ingredientQuantity" v-model="playerFields.ingredientQuantity" min="1" />
+				</div>
+				<div class="ingredientOperations">
+					<input
+						class="radio"
+						type="radio"
+						id="increase"
+						value="increase"
+						name="ingOperation"
+						v-model="playerFields.ingOperation"
+					/>
+					<label class="radio" for="increase">Increase</label>
+					<input
+						class="radio"
+						type="radio"
+						id="decrease"
+						value="decrease"
+						name="ingOperation"
+						v-model="playerFields.ingOperation"
+					/>
+					<label class="radio" for="decrease">Decrease</label>
+				</div>
+			</div>
+		</fieldset>
+		<fieldset>
 			<legend>U Skills</legend>
 			<div>
 				<label class="title" for="playerLeader">Leader :</label>
@@ -215,6 +312,8 @@
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '../../services/index.js';
 import { epicList } from '../../constants/index.js';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
+import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { Player } from '@drpg/core/models/player/Player';
 import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 
@@ -223,10 +322,20 @@ export default defineComponent({
 	data() {
 		return {
 			playerFields: {
-				rewards: []
+				rewards: [],
+				items: [],
+				selectedItem: undefined as number | undefined,
+				itemQuantity: 1,
+				itemOperation: '',
+				ingredients: [],
+				selectedIngredient: undefined as number | undefined,
+				ingredientQuantity: 1,
+				ingOperation: ''
 			} as PlayerEdit,
 			epicList: epicList,
 			epicListFiltered: {} as Array<string>,
+			itemNameList: itemNameList,
+			ingredientNameList: ingredientNameList,
 			player: {} as Player
 		};
 	},
@@ -279,10 +388,45 @@ export default defineComponent({
 					this.playerFields.epicOperation
 				);
 			}
+
+			if (
+				this.playerFields.selectedItem !== undefined &&
+				this.playerFields.itemQuantity !== undefined &&
+				this.playerFields.itemOperation
+			) {
+				await AdminService.modifyPlayerItems(
+					this.player.id,
+					this.playerFields.selectedItem,
+					this.playerFields.itemQuantity,
+					this.playerFields.itemOperation
+				);
+			}
+
+			if (
+				this.playerFields.selectedIngredient !== undefined &&
+				this.playerFields.ingredientQuantity !== undefined &&
+				this.playerFields.ingOperation
+			) {
+				await AdminService.modifyPlayerIngredients(
+					this.player.id,
+					this.playerFields.selectedIngredient,
+					this.playerFields.ingredientQuantity,
+					this.playerFields.ingOperation
+				);
+			}
+
 			this.player = await AdminService.getplayerInformation(this.player.id);
 
 			this.playerFields.rewards = [];
 			this.filterEpicList(this.playerFields.epicOperation!);
+
+			this.playerFields.selectedItem = undefined;
+			this.playerFields.itemQuantity = 1;
+			this.playerFields.itemOperation = '';
+
+			this.playerFields.selectedIngredient = undefined;
+			this.playerFields.ingredientQuantity = 1;
+			this.playerFields.ingOperation = '';
 		},
 		filterEpicList(operation: string): void {
 			if (operation === 'add') {
@@ -295,19 +439,30 @@ export default defineComponent({
 				);
 			}
 		},
+		sortItemsById(): void {
+			this.player.items.sort((a, b) => a.itemId - b.itemId);
+		},
+		sortIngredientsById(): void {
+			this.player.ingredients.sort((a, b) => a.ingredientId - b.ingredientId);
+		},
 		mountedPlayer(): void {
 			this.player = this.playerProp;
+			this.sortItemsById();
+			this.sortIngredientsById();
 		}
 	},
 	mounted(): void {
 		this.mountedPlayer();
-
+		this.sortItemsById();
+		this.sortIngredientsById();
 		this.playerFields.epicOperation = 'add';
 		this.filterEpicList(this.playerFields.epicOperation);
 	},
 	watch: {
 		playerProp(): void {
 			this.mountedPlayer();
+			this.sortItemsById();
+			this.sortIngredientsById();
 		}
 	}
 });
@@ -385,6 +540,8 @@ form {
 .hasImported,
 .money,
 .rewards,
+.items,
+.ingredients,
 .uSkills {
 	align-items: center;
 	display: flex;
