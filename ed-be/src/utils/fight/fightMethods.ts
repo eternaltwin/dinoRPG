@@ -3632,6 +3632,7 @@ const attackTarget = (
 		}
 
 		// Check for special statuses: flying, intangible, dazzled
+		let noDamage = false;
 		// FLYING
 		if (
 			isAssault &&
@@ -3642,7 +3643,7 @@ const attackTarget = (
 			// Attacker can't hit flying opponent
 			!attacker.canHitFlying
 		) {
-			damage = 0;
+			noDamage = true;
 
 			// Probably useless
 			// // Add miss step
@@ -3659,14 +3660,15 @@ const attackTarget = (
 				damage = 1;
 				break_intangible = true;
 			} else {
-				damage = 0;
+				noDamage = true;
 			}
 		}
 
 		// DAZZLED
 		if (hasStatus(attacker, Status.DAZZLED)) {
 			if (randomBetweenMaxExcluded(0, 3) === 0) {
-				damage = 0;
+				noDamage =  true;
+				evasion = true;
 			}
 			// 	// Probably useless
 			// 	fightData.steps.push({
@@ -3683,7 +3685,12 @@ const attackTarget = (
 				fighter: stepFighter(attacker)
 			});
 			updateStat(fightData, attacker, 'evasions', 1);
+		}
+
+		if (isDodged || isSuperDodged || noDamage) {
 			damage = 0;
+			// Difference with MT code, if the assault is dodged (due to flying or dodge) or the skill is super dodged, then intangible is not cancelled
+			break_intangible = false;
 		}
 
 		// Apply and log damage
