@@ -29,6 +29,24 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
+	modifyPlayerItems(id: number, itemId: number, quantity: number, operation: string): Promise<void> {
+		return http()
+			.put(`/admin/${id}/items`, {
+				operation: operation,
+				items: [{ id: itemId, quantity: quantity }]
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	modifyPlayerIngredients(id: number, ingredientId: number, quantity: number, operation: string): Promise<void> {
+		return http()
+			.put(`/admin/${id}/ingredients`, {
+				operation: operation,
+				ingredients: [{ id: ingredientId, quantity: quantity }]
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
 	getplayerInformation(id: number): Promise<PlayerTypeToSend> {
 		return http()
 			.get(`/admin/playerinfo/${id}`)

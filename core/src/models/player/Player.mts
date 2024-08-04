@@ -17,6 +17,8 @@ export interface Player {
 	messie: boolean;
 	matelasseur: boolean;
 	rewards: number[];
+	items: { itemId: number; quantity: number; }[];
+	ingredients: { ingredientId: number; quantity: number; }[];
 	customText: string | null;
 	role: AdminRole;
 }
