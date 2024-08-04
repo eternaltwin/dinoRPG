@@ -2054,7 +2054,7 @@
 			"Brave": "Der Dinoz kann nicht mehr Teil einer Gruppe sein. Erhöht die maximalen Lebenspunkte um 50, das Feuerelement um 6 und die Geschwindigkeit des Dinoz um 15%.",
 			"Planificateur": "Ermöglicht es dem Dinoz, ein zusätzliches Feld freizulegen.",
 			"HeritageFaroe": "Erhöht die Stärke von Holzangriffen um 12 und die Rüstung um 1.",
-			"PrintempsPrecoce": "Alle Verbündeten erhalten Lebenspunkte zurück, die (bestenfalls) dem Holzelement des Wirkers entsprechen.",
+			"PrintempsPrecoce": "Alle anderen Dinoz der Gruppe erhalten maximal so viele Lebenspunkte zurück wie der Dinoz Holzelementepunkte besitzt.",
 			"EspritGorilloz": "Ruft einen Gorillo-Geist herbei, um im Kampf zu helfen.",
 			"GardeForestier": "Erhöht die Holzabwehr aller Dinoz in der Gruppe um 3.",
 			"Fouille": "Ermöglicht es dem Dinoz, an bestimmten Orten nach Artefakten zu suchen.",

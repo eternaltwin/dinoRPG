@@ -2054,7 +2054,7 @@
 			"Brave": "Le dinoz ne pourra plus faire partie d'un groupe. Augmente les PV max de 50, l'élément feu de 6 et la vitesse du dinoz de 15%.",
 			"Planificateur": "Permet au dinoz de chercher une case supplémentaire",
 			"HeritageFaroe": "Augmente la puissance des assauts bois de 12 et l'armure de 1",
-			"PrintempsPrecoce": "Tous les dinozs de l'équipe récupèrent des PV équivalents (au mieux) à la valeur de l'élément bois du lanceur.",
+			"PrintempsPrecoce": "Tous les autres Dinoz du Groupe regagnent jusqu'à autant de points de vie que l'élément Bois du Dinoz",
 			"EspritGorilloz": "Appelle un esprit Gorilloz pour aider à combattre",
 			"GardeForestier": "Augmente de 3 la défense bois de tous les dinozs du groupe",
 			"Fouille": "Permet au dinoz de chercher des artefacts à certains endroits",
