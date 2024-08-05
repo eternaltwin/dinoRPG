@@ -155,6 +155,8 @@ const parser = new XFLParser();
 //parser.parse('./resources/smonster/LIBRARY/Symbol 2655.xml', '_p1', undefined, 1); // grizor Grizor
 //parser.parse('./resources/smonster/LIBRARY/Symbol 2725.xml', '_p1', undefined, 1); // morg2 Morg transmuté
 //parser.parse('./resources/smonster/LIBRARY/Symbol 2697.xml', '_sub', undefined, 1); // morg2 beam
+//parser.parse('./resources/smonster/LIBRARY/Symbol 2749.xml', '_p1', undefined, 1); // grizor2 Grizorg transmuté
+//parser.parse('./resources/smonster/LIBRARY/Symbol 2774.xml', '_p1', undefined, 1); // grizor3 Grizorg ultime
 //parser.parse('./resources/smonster/LIBRARY/Symbol 2950.xml', '_p1', undefined, 1); // taurus Taurus
 //parser.parse('./resources/smonster/LIBRARY/Symbol 2908.xml', '_sub', undefined, 1); // Taurus tail
 
