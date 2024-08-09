@@ -15,6 +15,7 @@ import { cactus } from './cactus/cactus.js';
 import { chima } from './chima/chima.js';
 import { cobra } from './cobra/cobra.js';
 import { coq } from './coq/coq.js';
+import { cranit } from './cranit/cranit.js';
 import { cyclo } from './cyclo/cyclo.js';
 import { cyclo2 } from './cyclo2/cyclo2.js';
 import { doro } from './doro/doro.js';
@@ -64,6 +65,7 @@ import { pteroz } from './pteroz/pteroz.js';
 import { rapaca } from './rapaca/rapaca.js';
 import { rasca } from './rasca/rasca.js';
 import { rocky } from './rocky/rocky.js';
+import { roking } from './roking/roking.js';
 import { ronciv } from './ronciv/ronciv.js';
 import { scorp } from './scorp/scorp.js';
 import { serpe } from './serpe/serpe.js';
@@ -163,6 +165,8 @@ export const monsters = {
 	chima: chima,
 	groule: groule,
 	behemu: behemu,
-	serpe: serpe
+	serpe: serpe,
+	roking: roking,
+	cranit: cranit
 };
 export const error = bad.small;
