@@ -3540,6 +3540,22 @@ const attackTarget = (
 		};
 	}
 
+	// TODO: combo counter seems to work weirdly
+	// Abort if fighter has exceeded combo
+	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
+		fightData.steps.push({
+			action: 'tired',
+			fighter: stepFighter(attacker)
+		});
+		return {
+			attacker: attacker,
+			target: target,
+			isAssault: isAssault,
+			evasion: false,
+			hpLost: 0
+		};
+	}
+
 	// Store as previous target
 	attacker.previousTarget = target.id;
 
@@ -3583,6 +3599,7 @@ const attackTarget = (
 	// TODO: rework multiple attackers (part of whistle rework)
 	// for (const attacker of attackers) {
 	// }
+	// TODO: combo counter seems to work weirdly
 	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
 		// Increment the attacker's combo counter
 		// If we arrive here, the comboCounter is already at 1 due to turn initialization
@@ -3730,7 +3747,7 @@ const attackTarget = (
 
 		// Check for combo
 		if (canCombo) {
-			if (Math.random() < attacker.stats.special.multihit - 1) {
+			if (Math.random() < (attacker.stats.special.multihit - 1)) {
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
 				energyCost++;
 				updateStat(fightData, attacker, 'multiHits', 1);
@@ -4513,9 +4530,13 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	fightData.lastFighterId = attacker.id;
 	attacker.comboCounter++;
 
+	// TODO: combo counter seems to work weirdly
 	// Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
-		// TODO log history tired
+		fightData.steps.push({
+			action: 'tired',
+			fighter: stepFighter(attacker)
+		});
 		endTurnChecks(fightData, attacker);
 		return;
 	}
