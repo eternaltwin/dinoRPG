@@ -125,7 +125,10 @@ const monsterList = [
 	'fullgd',
 	'rhubar',
 	'stroa',
-	'scorpu'
+	'scorpu',
+	'sangsa',
+	'saboss',
+	'sangs2'
 ];
 let currentAnim = undefined;
 
