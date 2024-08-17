@@ -102,6 +102,11 @@ export interface Config {
 	readonly selfUrl: URL;
 
 	/**
+	 * True if you want to use HTTPS for localhost
+	 */
+	readonly useHttps: boolean
+
+	/**
 	 * Configuration for the Eternaltwin client.
 	 */
 	readonly eternaltwin: EternaltwinConfig;
@@ -146,7 +151,7 @@ export function readPort(envPort: string | undefined): number {
 			return numPort;
 		}
 	}
-	return 50380;
+	return 8081;
 }
 
 /**
@@ -187,6 +192,14 @@ export function readExpiration(expiration: string | undefined): number {
 	return 2592000;
 }
 
+export function readBoolean(envVariable: string | undefined): boolean {
+	if (typeof envVariable === 'string') {
+		return JSON.parse(envVariable);
+	}
+	return false;
+}
+
+
 /**
  * Read the provided environment recorded and build a config object.
  */
@@ -197,6 +210,7 @@ export function config(env: Record<string, string | undefined>): Config {
 	const port = readPort(env.PORT);
 	const wssPort = readPort(env.WSS_PORT);
 	const selfUrl = readSelfUrl(env.SELF_URL);
+	const useHttps = readBoolean(env.USE_HTTPS);
 
 	const eternaltwinUrl: string = env.ETERNALTWIN_URL ?? env.ETWIN_URL ?? 'http://localhost:50320/';
 	const eternaltwinClientRef: string = env.ETERNALTWIN_CLIENT_REF ?? env.ETWIN_CLIENT_ID ?? 'dinorpg@clients';
@@ -248,6 +262,7 @@ export function config(env: Record<string, string | undefined>): Config {
 		port,
 		wssPort,
 		selfUrl,
+		useHttps,
 		eternaltwin,
 		discordNotifications,
 		discordLogs,

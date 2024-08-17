@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import mkcert from 'vite-plugin-mkcert'
 
 const STATIC_DIR = 'public';
 
 export default defineConfig(() => {
   return {
     plugins: [
-      vue()
+      vue(),
+      mkcert()
     ],
     publicDir: STATIC_DIR,
     resolve: {
@@ -18,7 +20,8 @@ export default defineConfig(() => {
       },
     },
     server: {
-      port: 8080
+      port: 8080,
+      https: true
     },
     define: {
       ['import.meta.env.VERSION']: JSON.stringify(require('./package.json').version)

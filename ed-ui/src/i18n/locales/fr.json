@@ -3754,7 +3754,6 @@
 			"help": "Votre trésor d'une valeur de **{value}** :gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
 			"giveAway": "Donner au clan."
 		},
-
 		"header": {
 			"title": "Clan: {name}",
 			"infos": "Informations sur le clan",
@@ -3774,6 +3773,10 @@
 			"gold": "Valeur du trésor",
 			"rank": "Rang",
 			"crown": "Chef du Clan"
+		},
+		"forum": {
+			"connectionFailed": "Une erreur s'est produite lors de la connexion au chat du clan !",
+			"connectionFailed2": "Actualise la page ou réessaye plus tard !"
 		}
 	},
 	"clansList": {

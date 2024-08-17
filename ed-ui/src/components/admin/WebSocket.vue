@@ -22,9 +22,9 @@ export default defineComponent({
 		async getWsTicket(): Promise<void> {
 			const ticket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
 			if (import.meta.env.MODE === 'development') {
-				this.webSocket = new WebSocket(`ws://localhost:8082?ticket=${ticket}`);
+				this.webSocket = new WebSocket(`wss://localhost:8081?ticket=${ticket}`);
 			} else {
-				this.webSocket = new WebSocket(`ws://${document.location.host}?ticket=${ticket}`);
+				this.webSocket = new WebSocket(`wss://${document.location.host}?ticket=${ticket}`);
 			}
 		},
 		sendMessage(): void {
@@ -38,6 +38,7 @@ export default defineComponent({
 	}
 });
 </script>
+
 <style lang="scss" scoped>
 input[type='text'],
 input[type='number'],
