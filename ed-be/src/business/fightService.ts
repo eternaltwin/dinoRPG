@@ -450,7 +450,7 @@ export async function rewardFightCalculate(
 
 		for (const f of monsters) {
 			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
-			let monsterXp = Math.round(f.xp ?? 10 * factor * cur);
+			let monsterXp = f.xp ?? 10 * factor * cur;
 			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
 			// newbie bonus
 			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
