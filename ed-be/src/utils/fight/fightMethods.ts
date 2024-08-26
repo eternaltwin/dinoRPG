@@ -3540,8 +3540,8 @@ const attackTarget = (
 		};
 	}
 
-	// TODO: combo counter seems to work weirdly
-	// Abort if fighter has exceeded combo
+	// Note: combo counter seems to work weirdly, or may be note...
+	// Fighter passes its turn if it has reached max combo at this step
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
 		fightData.steps.push({
 			action: 'tired',
@@ -3599,10 +3599,10 @@ const attackTarget = (
 	// TODO: rework multiple attackers (part of whistle rework)
 	// for (const attacker of attackers) {
 	// }
-	// TODO: combo counter seems to work weirdly
+	// NOTE: combo counter seems to work weirdly, or may be not
 	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
 		// Increment the attacker's combo counter
-		// If we arrive here, the comboCounter is already at 1 due to turn initialization
+		// Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
 		// Note: this would prevent infinite counter too...
 		attacker.comboCounter++;
 
@@ -4530,7 +4530,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	fightData.lastFighterId = attacker.id;
 	attacker.comboCounter++;
 
-	// TODO: combo counter seems to work weirdly
+	// Note: combo counter seems to work weirdly, or may be not
 	// Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
 		fightData.steps.push({
