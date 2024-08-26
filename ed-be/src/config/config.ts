@@ -92,11 +92,6 @@ export interface Config {
 	readonly port: number;
 
 	/**
-	 * Port used to bind the WSS server.
-	 */
-	readonly wssPort: number;
-
-	/**
 	 * Absolute URL to website root, as visible externally.
 	 */
 	readonly selfUrl: URL;
@@ -208,7 +203,6 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const isProduction: boolean = env.NODE_ENV === 'production';
 	const port = readPort(env.PORT);
-	const wssPort = readPort(env.WSS_PORT);
 	const selfUrl = readSelfUrl(env.SELF_URL);
 	const useHttps = readBoolean(env.USE_HTTPS);
 
@@ -260,7 +254,6 @@ export function config(env: Record<string, string | undefined>): Config {
 	return {
 		isProduction,
 		port,
-		wssPort,
 		selfUrl,
 		useHttps,
 		eternaltwin,

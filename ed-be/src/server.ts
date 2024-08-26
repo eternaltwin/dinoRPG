@@ -46,7 +46,7 @@ export function main(cx: ServerContext) {
 	cx.logger.log(`Server started`);
 
 	const app = express();
-	const { port, wssPort, useHttps } = cx.config;
+	const { port, useHttps } = cx.config;
 
 	app.use(cors());
 	app.use(bodyParser.json());
@@ -121,6 +121,7 @@ function handleWsEvents(wss: WebSocketServer) {
 
 		ws.on('error', console.error);
 	});
+	
 	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
 
 	wss.on('close', () => clearInterval(interval));
