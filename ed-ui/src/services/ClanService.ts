@@ -141,12 +141,6 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	createClanMessage(content: string, clanId: number) {
-		return http()
-			.post(`/clan/message`, { content: content, clanId: clanId })
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
 	deleteClanMessage(id: number) {
 		return http()
 			.delete(`/clan/message/${id}`)

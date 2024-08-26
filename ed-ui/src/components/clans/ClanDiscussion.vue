@@ -109,16 +109,6 @@ export default defineComponent({
 			this.webSocket.send(this.newMessage);
 			this.newMessage = '';
 		},
-		async createClanMessage(content: string) {
-			EventBus.emit('isLoading', true);
-			try {
-				this.messages = await ClanService.createClanMessage(content, Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err as Error, this.$toast);
-				return;
-			}
-		},
 		async deleteMessage(msg) {
 			if (!this.canDeleteMessage(msg)) {
 				return;

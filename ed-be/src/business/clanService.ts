@@ -2,7 +2,6 @@ import { Request } from 'express';
 import {
 	acceptPlayerJoinRequest,
 	clanJoinRequest,
-	createClanMessageRequest,
 	createClanPageRequest,
 	createClanRequest,
 	deleteClanMessageRequest,
@@ -527,29 +526,6 @@ export async function getClanMessages(req: Request) {
 
 	const messages = await getClanMessagesRequest(req.auth.playerId, Number(req.params.id), Number(req.params.page));
 	return messages;
-}
-
-/**
- * Create clan message
- * @param req
- * @param req.body.clanId {number} clan id
- * @param req.body.content {string} message content
- * @returns Clan
- */
-export async function createClanMessage(req: Request) {
-	const authed = await auth(req);
-	const sanatized = sanitizeHtml(req.body.content, {
-		allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-		allowedAttributes: {
-			a: ['href']
-		}
-	});
-
-	if (sanatized.length <= 2) {
-		throw new ExpectedError(translate('tooShortMessage', authed));
-	}
-	const message = await createClanMessageRequest(Number(req.body.clanId), authed.id, sanatized);
-	return message;
 }
 
 /**
