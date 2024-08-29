@@ -5,6 +5,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_RODEUR: Mission[] = [
 	// Missions 49 to 50
@@ -39,7 +40,8 @@ export const M_RODEUR: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.PIRA.name],
-					value: 30
+					value: 30,
+					zone: MapZone.ILES
 				},
 				displayedAction: 'killPira',
 				displayedText: 'killPira'

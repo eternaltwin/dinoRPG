@@ -5,6 +5,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_HULOT: Mission[] = [
 	// Missions 44 to 48
@@ -34,7 +35,8 @@ export const M_HULOT: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 6
+					value: 6,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killAny',
 				displayedText: 'killAny'
@@ -175,7 +177,8 @@ export const M_HULOT: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.BAT.name],
-					value: 1
+					value: 1,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killFauve',
 				displayedText: 'killFauve'
@@ -278,7 +281,8 @@ export const M_HULOT: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name],
-					value: 4
+					value: 4,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killKorgon',
 				displayedText: 'killKorgon'
@@ -299,7 +303,8 @@ export const M_HULOT: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.BAT.name],
-					value: 5
+					value: 5,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killBat',
 				displayedText: 'killBat'
@@ -443,7 +448,8 @@ export const M_HULOT: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.COQDUR.name],
-					value: 2
+					value: 2,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killCoqAcharne',
 				displayedText: 'killCoqAcharne'

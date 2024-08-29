@@ -5,6 +5,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_GARDIEN: Mission[] = [
 	// Missions 37 to 43
@@ -173,7 +174,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
-					value: 8
+					value: 8,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killKorRonc',
 				displayedText: 'killKorRonc'
@@ -302,7 +304,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
-					value: 2
+					value: 2,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killKorRonc',
 				displayedText: 'killKorRonc'
@@ -313,7 +316,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
-					value: 3
+					value: 3,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killKorRonc',
 				displayedText: 'killKorRonc'
@@ -324,7 +328,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
-					value: 3
+					value: 3,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killKorRonc',
 				displayedText: 'killKorRonc'
@@ -335,7 +340,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
-					value: 6
+					value: 6,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killKorRonc',
 				displayedText: 'killKorRonc'
@@ -386,7 +392,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 3
+					value: 3,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killAny',
 				displayedText: 'killAny'
@@ -407,7 +414,8 @@ export const M_GARDIEN: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 6
+					value: 6,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killAny',
 				displayedText: 'killAny'

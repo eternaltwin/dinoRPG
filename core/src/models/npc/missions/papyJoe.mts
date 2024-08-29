@@ -5,6 +5,7 @@ import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_PAPY_JOE: Mission[] = [
 	// Missions 1 to 10
@@ -127,7 +128,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOUPIGNON.name, monsterList.WOLF.name],
-					value: 6
+					value: 6,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killGoupi',
 				displayedText: 'killGoupi'
@@ -167,7 +169,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
-					value: 2
+					value: 2,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killWolf',
 				displayedText: 'killWolf'
@@ -178,7 +181,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
-					value: 2
+					value: 2,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killWolf',
 				displayedText: 'killWolf'
@@ -189,7 +193,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
-					value: 2
+					value: 2,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killWolf',
 				displayedText: 'killWolf'
@@ -200,7 +205,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.WOLF.name],
-					value: 2
+					value: 2,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killWolf',
 				displayedText: 'killWolf'
@@ -332,7 +338,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOUPIGNON.name],
-					value: 15
+					value: 15,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killGoupi',
 				displayedText: 'killGoupi'
@@ -417,7 +424,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GLUON.name],
-					value: 1
+					value: 1,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killGluon',
 				displayedText: 'killGluon'
@@ -460,7 +468,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GREEN_GIANT.name],
-					value: 12
+					value: 12,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killGvert',
 				displayedText: 'killGvert'
@@ -503,7 +512,8 @@ export const M_PAPY_JOE: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.COQDUR.name],
-					value: 20
+					value: 20,
+					zone: MapZone.DINOLAND
 				},
 				displayedAction: 'killCoq',
 				displayedText: 'killCoq'

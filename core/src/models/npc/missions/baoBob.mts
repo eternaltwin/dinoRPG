@@ -5,6 +5,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_BAO_BOB: Mission[] = [
 	// Missions 12 to 21
@@ -24,7 +25,8 @@ export const M_BAO_BOB: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.PIRA.name],
-					value: 6
+					value: 6,
+					zone: MapZone.ILES
 				},
 				displayedAction: 'killPira'
 			},
@@ -164,7 +166,8 @@ export const M_BAO_BOB: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KAZKA.name],
-					value: 6
+					value: 6,
+					zone: MapZone.ILES
 				},
 				displayedAction: 'killKazka',
 				displayedText: 'killKazka'
@@ -204,7 +207,8 @@ export const M_BAO_BOB: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANGUIL.name],
-					value: 10
+					value: 10,
+					zone: MapZone.ILES
 				},
 				displayedAction: 'killAnguil',
 				displayedText: 'killAnguil'
@@ -284,7 +288,8 @@ export const M_BAO_BOB: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 30
+					value: 30,
+					zone: MapZone.ILES
 				},
 				displayedAction: 'killAll',
 				displayedText: 'killAll'

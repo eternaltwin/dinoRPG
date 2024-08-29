@@ -5,6 +5,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_DIANKORGSEY: Mission[] = [
 	// Missions 22 to 25
@@ -99,7 +100,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name],
-					value: 10
+					value: 10,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'kill_south_korgon',
 				displayedText: 'kill_south_korgon'
@@ -160,7 +162,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 6
+					value: 6,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killany',
 				displayedText: 'killany'
@@ -250,7 +253,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name],
-					value: 3
+					value: 3,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killambush_korgons',
 				displayedText: 'killambush_korgons'
@@ -283,7 +287,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.KORGON.name, monsterList.RONCIV.name],
-					value: 8
+					value: 8,
+					zone: MapZone.JUNGLE
 				},
 				displayedAction: 'killalliedK',
 				displayedText: 'killalliedK'

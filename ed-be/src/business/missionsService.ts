@@ -7,7 +7,7 @@ import { Mission } from '@drpg/core/models/missions/mission';
 import { MissionID } from '@drpg/core/models/missions/missionList';
 import { MissionStep } from '@drpg/core/models/missions/missionSteps';
 import { npcList } from '@drpg/core/models/npc/NpcList';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { placeList, PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
@@ -24,6 +24,7 @@ import {
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { MapZone } from '@drpg/core/models/enums/MapZone';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
@@ -304,6 +305,7 @@ export async function checkMissionFight(
 		(dinoz.placeId === actualStep.place || actualStep.place === PlaceEnum.ANYWHERE) &&
 		fight.result &&
 		actualStep.requirement.actionType === ConditionEnum.KILL &&
+		PlacesByMap[actualStep.requirement.zone]?.includes(dinoz.placeId) &&
 		(actualStep.requirement.target.includes(monsterList.ANY.name) ||
 			actualStep.requirement.target.filter(value => fight.fighters.map(a => a.name).includes(value)).length > 0)
 	) {

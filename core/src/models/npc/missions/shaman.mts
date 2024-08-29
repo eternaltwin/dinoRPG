@@ -5,6 +5,7 @@ import { monsterList } from '../../fight/MonsterList.mjs';
 import { itemList } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
+import { MapZone } from '../../enums/MapZone.mjs';
 
 export const M_SHAMAN_MOU: Mission[] = [
 	//Missions 26 to 36
@@ -84,7 +85,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.BARCHE.name],
-					value: 1
+					value: 1,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killBarche',
 				displayedText: 'killBarche'
@@ -115,7 +117,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 6
+					value: 6,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killAny',
 				displayedText: 'killAny'
@@ -136,7 +139,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 6
+					value: 6,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killAny',
 				displayedText: 'killAny'
@@ -186,7 +190,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.FLAM.name],
-					value: 3
+					value: 3,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killFlam',
 				displayedText: 'killFlam'
@@ -227,7 +232,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.FLAM.name],
-					value: 5
+					value: 5,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killFlam',
 				displayedText: 'killFlam'
@@ -441,7 +447,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 15
+					value: 15,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedText: 'killAny',
 				displayedAction: 'killAny'
@@ -472,7 +479,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.ANY.name],
-					value: 5
+					value: 5,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedText: 'killAny',
 				displayedAction: 'killAny'
@@ -548,7 +556,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
-					value: 4
+					value: 4,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedText: 'killGob',
 				displayedAction: 'killGob'
@@ -600,7 +609,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
-					value: 6
+					value: 6,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killGob',
 				displayedText: 'killGob'
@@ -725,7 +735,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
-					value: 1
+					value: 1,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedText: 'killGob',
 				displayedAction: 'killGob'
@@ -756,7 +767,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
-					value: 3
+					value: 3,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedText: 'killGoblin',
 				displayedAction: 'killGoblin'
@@ -777,7 +789,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				requirement: {
 					actionType: ConditionEnum.KILL,
 					target: [monsterList.GOBLIN.name],
-					value: 3
+					value: 3,
+					zone: MapZone.GTOUTCHAUD
 				},
 				displayedAction: 'killGob',
 				displayedText: 'killGob'
