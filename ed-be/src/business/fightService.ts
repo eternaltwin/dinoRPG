@@ -303,7 +303,7 @@ export async function rewardFight(
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
 
-	let gold = (getRandomNumber(0, 10) + 35) * 10;
+	let gold = (getRandomNumber(0, 10) + 28) * 10;
 
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 
