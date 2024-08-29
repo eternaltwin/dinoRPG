@@ -154,10 +154,6 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.DISBAND]);
 	}
 
-	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
-		availableActions.push(actionList[Action.REST]);
-	}
-
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
 		// REINCARNATION
@@ -169,6 +165,10 @@ export async function getAvailableActions(
 			availableActions.push(actionList[Action.REINCARNATION]);
 		}
 		return availableActions;
+	}
+
+	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
+		availableActions.push(actionList[Action.REST]);
 	}
 
 	if (dinoz.concentration) {
