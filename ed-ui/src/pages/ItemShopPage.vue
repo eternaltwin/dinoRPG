@@ -455,7 +455,7 @@ export default defineComponent({
 				...realItem,
 				price: item.price,
 				quantity: item.quantity ?? 0
-			};
+			} as ItemFiche;
 		},
 		resolveIngredient(item: ItemShopFiche): IngredientFiche {
 			const realItem = Object.values(ingredientList).find(i => i.ingredientId === item.id);
@@ -463,13 +463,17 @@ export default defineComponent({
 				...realItem,
 				price: item.price,
 				quantity: item.quantity ?? 0
-			};
+			} as IngredientFiche;
 		},
 		selectItem(itemId: number) {
 			this.selectedItem = this.fullItems.find(i => i.id === itemId);
+			if (this.selectedItem?.type === ItemShopType.ITEM) {
+				this.selectedItem.itemType = this.itemList.find(i => i.itemId === itemId)?.itemType;
+			}
 		},
 		async loadPage() {
 			EventBus.emit('isLoading', true);
+			this.selectedItem = undefined;
 			// Get shop and its items to display
 			try {
 				this.fullItems = await ItemShopService.getItemFromItemShop(this.actualShop?.shopId ?? 0);

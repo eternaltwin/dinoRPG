@@ -13,6 +13,7 @@ import { getSpecificSecret } from '../dao/secretDao.js';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { ItemShopType } from '@drpg/core/models/shop/ShopFiche';
 
 /**
  * @summary Get all ingredients from itinerant shop
@@ -130,9 +131,11 @@ export async function sellIngredient(req: Request) {
 	// Search if all ingredient are valids
 	const mappedIngredient = ingredients.map(i => {
 		const playerQuantity = player.ingredients.find(ing => ing.ingredientId === i.itemId);
-		if (!playerQuantity) throw new ExpectedError(`Player doesn't have this item in stock.`);
+		const itemToMap = itinerantShop.listItemsSold.find(a => a.id === i.itemId);
+		if (!playerQuantity || !itemToMap) throw new ExpectedError(`Player doesn't have this item in stock.`);
+
 		return {
-			...itinerantShop?.listItemsSold.find(a => a.id === i.itemId),
+			...itemToMap,
 			quantity: i.quantity,
 			playerQuantity: playerQuantity.quantity
 		};

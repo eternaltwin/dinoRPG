@@ -7,7 +7,7 @@ export type missionRequirement =
 			actionType: ConditionEnum.KILL;
 			target: string[];
 			value: number;
-			zone: MapZone
+			zone: MapZone;
 	  }
 	| {
 			actionType: ConditionEnum.KILL_BOSS;
