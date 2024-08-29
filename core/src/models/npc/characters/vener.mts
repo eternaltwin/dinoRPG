@@ -23,7 +23,7 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 		nextStep: ['fight_win'],
 		fight: [bossList.VENERABLE],
 		condition: {
-			[ConditionEnum.STATUS]: DinozStatusId.VENERABLE
+			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VENERABLE }
 		},
 		reward: [
 			{
@@ -103,7 +103,7 @@ export const VENERABLE: Readonly<Record<string, NpcData>> = {
 		stepName: 'fight2',
 		nextStep: [],
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.VENERABLE }
+			[ConditionEnum.STATUS]: DinozStatusId.VENERABLE
 		}
 	},
 	force: {

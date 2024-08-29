@@ -3684,7 +3684,7 @@ const attackTarget = (
 		// DAZZLED
 		if (hasStatus(attacker, Status.DAZZLED)) {
 			if (randomBetweenMaxExcluded(0, 3) === 0) {
-				noDamage =  true;
+				noDamage = true;
 				evasion = true;
 			}
 			// 	// Probably useless
@@ -3747,7 +3747,7 @@ const attackTarget = (
 
 		// Check for combo
 		if (canCombo) {
-			if (Math.random() < (attacker.stats.special.multihit - 1)) {
+			if (Math.random() < attacker.stats.special.multihit - 1) {
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
 				energyCost++;
 				updateStat(fightData, attacker, 'multiHits', 1);

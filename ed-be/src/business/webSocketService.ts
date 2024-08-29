@@ -71,7 +71,7 @@ function doSpecificVerificationsForWsAuthent(_req: Request) {
  * @param req -> The request incoming
  */
 export function connectUserToChannel(ws: WebSocketCustom, req: IncomingMessage) {
-	console.log('héhé')
+	console.log('héhé');
 	const ticketUuid = req.url?.split('?ticket=')[1];
 
 	const ticket = checkTicketValidity(req, ticketUuid);

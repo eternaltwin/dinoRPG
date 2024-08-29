@@ -189,7 +189,8 @@ export default defineComponent({
 			this.allItemsData = items.map(i => {
 				return {
 					...itemList[i.name.toUpperCase()],
-					quantity: i.quantity
+					quantity: i.quantity,
+					maxQuantity: i.maxQuantity
 				};
 			});
 			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);

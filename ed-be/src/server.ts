@@ -56,10 +56,7 @@ export function main(cx: ServerContext) {
 	app.use(lockMiddleware);
 	app.use(readyCheck);
 
-
-
-
-	const wss = new WebSocketServer({ port: wssPort});
+	const wss = new WebSocketServer({ port: wssPort });
 
 	wss.on('connection', (ws: WebSocketCustom, req: IncomingMessage) => {
 		try {
@@ -97,7 +94,6 @@ export function main(cx: ServerContext) {
 			cx.discord.sendError(error);
 		});*/
 	});
-
 
 	resetDinozShopAtMidnight().start();
 	healRestingDinoz().start();
