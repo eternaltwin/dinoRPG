@@ -148,40 +148,6 @@ routes.get(`${commonPath}/canCreateClan`, async (req: Request, res: Response) =>
 	}
 });
 
-/**
- * @openapi
- * /api/v1/player/{playerId}:
- *   get:
- *     summary: Get the public data from a specific account
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Player
- *     produces:
- *       - application/json
- *     parameters:
- *       - in: path
- *         name: playerId
- *         type: string
- *         required: true
- *         description: Numeric ID of the player to watch.
- *     responses:
- *       200:
- *         description: Returns a public player fiche.
- */
-routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	try {
-		const response = await getAccountData(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
-	}
-});
-
 // Import are not available
 /*routes.put(
 	`${commonPath}/importAPI`,
@@ -308,7 +274,7 @@ routes.get(
 
 /**
  * @openapi
- * /api/v1/player/labrute/:id:
+ * /api/v1/player/labrute/:
  *   get:
  *     summary: Check if the player is eligible to drpg rewards from LB
  *     security:
@@ -338,6 +304,41 @@ routes.get(`${commonPath}/labrute`, [], async (req: Request, res: Response) => {
 
 	try {
 		const response = await checkLB(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+
+/**
+ * @openapi
+ * /api/v1/player/{playerId}:
+ *   get:
+ *     summary: Get the public data from a specific account
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Player
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: playerId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the player to watch.
+ *     responses:
+ *       200:
+ *         description: Returns a public player fiche.
+ */
+routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getAccountData(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
