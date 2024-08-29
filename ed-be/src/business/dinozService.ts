@@ -768,7 +768,7 @@ export async function digWithDinoz(req: Request) {
 	if (digPlace && digPlace.condition && checkCondition(digPlace?.condition, player, dinozId)) {
 		reward = digPlace.reward;
 	} else {
-		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(100, 500) }];
+		reward = [{ rewardType: RewardEnum.GOLD, value: getRandomNumber(0, 125) }];
 	}
 	await rewarder(reward, [dinozData], authed.id);
 
