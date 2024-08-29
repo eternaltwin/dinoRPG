@@ -16,6 +16,7 @@ export interface ItemFiche {
 	priority?: number;
 	probability?: number;
 	sellable: boolean;
+	display: string;
 }
 
 export interface ItemFicheDTO {

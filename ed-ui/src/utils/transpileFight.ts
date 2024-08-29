@@ -64,7 +64,7 @@ export function resolveItemName(itemId: number, t: TFunction) {
 export function resolveItemImagePath(itemId: number) {
 	const item = Object.values(itemList).find(item => item.itemId === itemId);
 	if (!item) return 'inconnu';
-	return item.name;
+	return item.display;
 }
 
 export function getSkillEnergy(skillId: number) {
@@ -248,7 +248,7 @@ export function transpileFight(
 					action: DinoAction.OBJECT,
 					fid: step.fighter.id,
 					name: resolveItemName(step.itemId, t),
-					item: 'inconnu' // TODO: use resolveItemImage(step.itemId) but not ready yet
+					item: resolveItemImagePath(step.itemId)
 				});
 				break;
 			case 'leave':
