@@ -121,7 +121,7 @@ function handleWsEvents(wss: WebSocketServer) {
 
 		ws.on('error', console.error);
 	});
-	
+
 	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
 
 	wss.on('close', () => clearInterval(interval));

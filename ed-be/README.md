@@ -11,8 +11,15 @@ Ce service va alors faire toutes les vérifications nécessaires à la connexion
 Une fois que le back s'est assuré que toutes les données sont valides, il va retourner un ticket au client. Celui-ci a une durée de vie de 5 minutes.
 Ce ticket va alors pouvoir être utilisé pour établir une connexion sécurisée via WebSocket. Il suffit de l'envoyer avec un paramètre de requête nommé "ticket". Un exemple d'implémentation de connexion côté client donnerait ça :
 
-```new WebSocket('ws://{urlDuServeur}?ticket={leTicketFournitParLeBack}')```
+```new WebSocket('wss://{urlDuServeur}?ticket={leTicketFournitParLeBack}')```
 
 Grâce à ce ticket, la connexion bi-directionnelle va être établie et le serveur va réaliser plusieurs actions :
  - Il va donner un identifiant unique à la connexion. Ainsi, chaque requête faite par le client n'aura pas besoin d'envoyer ni de header d'authentification ni de ticket de nouveau, la connexion sera automatiquement reconnue.
  - Il va placer le joueur dans un channel spécifique. De cette façon, si le joueur envoie un message sur le forum de son clan, alors le message ne sera pas envoyé aux joueurs présents sur le forum d'un autre clan.
+
+## Utilisation des WebSockets en local
+
+Afin d'avoir un comportement cohérent entre le local et la prod et ne pas se retrouver avec des comportements non prévus, la connexion aux WebSockets est toujours sécurisée. Ce qui veut dire que le protocole de communication est toujours `wss` et non `ws`. En local, cette connexion n'est pas possible en l'état car l'environnement de développement est non sécurisé par défaut, il faut faire quelques ajustements pour utiliser les WebSockets :
+    - Dans le fichier `.env` du dossier `ed-be`, faire passer la variable d'environnement `USE_HTTPS` à true.
+    - Dans le fichier `.env.development` du dossier `ed-be`, faire passer la  variable d'environnement `USE_HTTPS` à true.
+    - Générer un certificat pour `localhost` qui sera placé dans le dossier `ed-be`. Nommer le fichier contenant la clef `localhost-key.pem` et le fichier contenant le certificat `localhost.pem` et les placer à la racine du dossier `ed-be`. Ces fichiers ne seront pas commités car ils sont présents dans le .gitignore.

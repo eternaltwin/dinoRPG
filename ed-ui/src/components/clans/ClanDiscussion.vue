@@ -134,8 +134,8 @@ export default defineComponent({
 				}
 
 				this.webSocket.onmessage = (message: MessageEvent) => this.updateMessages(message);
-
-				this.isConnectionOk = true;
+				this.webSocket.onerror = () => (this.isConnectionOk = false);
+				this.webSocket.onopen = (() => this.isConnectionOk = true);
 
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -169,13 +169,11 @@ export default defineComponent({
 			this.messages.unshift(message);
 		}
 	},
-	mounted(): void {
+	async mounted(): Promise<void> {
 		this.hasAccess = this.playerStore.clanId == Number(this.$route.params.id);
 		if (!this.hasAccess) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
-	},
-	async created(): Promise<void> {
 		await this.getClanMessages();
 	}
 });
