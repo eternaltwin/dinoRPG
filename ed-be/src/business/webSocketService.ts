@@ -10,8 +10,13 @@ import { RawData, WebSocket } from 'ws';
 import { LOGGER } from '../context.js';
 import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
 import { getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
-import { createClanMessageRequest } from '../dao/clansDao.js';
+import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { WsMessageRequest } from '@drpg/core/models/webSocket/WsMessageRequest';
+import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
+import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
+import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponseDeletion';
+import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -164,12 +169,20 @@ async function getChannelName(ticket: WsTicket): Promise<string> {
  * @param wsId -> The connection identifier
  * @param message -> The message sent by a user
  */
-export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: string, message: RawData): Promise<void> {
+export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: string, bufferedMessage: RawData): Promise<void> {
 	const channel = getChannelDetailsFromConnectionId(wsId);
 
-	const dataSaved = await saveMessageInDatabase(channel, wsId, message);
+	const message: WsMessageRequest = JSON.parse(bufferedMessage.toString());
 
-	sendMessageToPeopleInChannel(wss, channel, dataSaved);
+	if (message.action === WsMessageAction.CREATE) {
+		const dataSaved = await saveMessageInDatabase(channel, wsId, message.message);
+		const msgResponse: WsMsgResponseCreation = { action: WsMessageAction.CREATE, payload: dataSaved };
+		sendMessageToPeopleInChannel(wss, channel, msgResponse);
+	} else if (message.action === WsMessageAction.DELETE) {
+		deleteMessage(channel, wsId, message.msgId);
+		const msgResponse: WsMsgResponseDeletion = { action: WsMessageAction.DELETE, msgId: message.msgId };
+		sendMessageToPeopleInChannel(wss, channel, msgResponse);
+	}
 }
 
 /**
@@ -184,16 +197,21 @@ function getChannelDetailsFromConnectionId(wsId: string): [string, ChannelData[]
 	);
 }
 
-async function saveMessageInDatabase(channel: [string, ChannelData[]] | undefined, wsId: string, message: RawData): Promise<CreateClanMessage> {
-	if (channel === undefined) {
-		throw new Error('The channel cannot be undefined');
-	}
+async function saveMessageInDatabase(channel: [string, ChannelData[]] | undefined, wsId: string, message: string): Promise<CreateClanMessage> {
+	if (channel === undefined) throw new Error('The channel cannot be undefined');
 
 	const wsData = channel[1].filter(user => user.connectionId === wsId);
-
 	const playerInfos = await getClanIdAndNameFromPlayerId(wsData[0].playerId);
 
 	return await createClanMessageRequest(playerInfos.ClanMember!.clan.id, wsData[0].playerId, message.toString());
+}
+
+async function deleteMessage(channel: [string, ChannelData[]] | undefined, wsId: string, msgId: number) {
+	if (channel === undefined) throw new Error('The channel cannot be undefined');
+
+	const wsData = channel[1].filter(user => user.connectionId === wsId);
+
+	deleteClanMessageRequest(msgId, wsData[0].playerId);
 }
 
 /**
@@ -207,13 +225,11 @@ async function saveMessageInDatabase(channel: [string, ChannelData[]] | undefine
 function sendMessageToPeopleInChannel(
 	wss: WebSocketServerCustom,
 	channel: [string, ChannelData[]] | undefined,
-	message: CreateClanMessage
+	message: WsMsgResponse
 ): void {
-	if (channel === undefined) {
-		return;
-	}
+	if (channel === undefined) throw new Error('The channel cannot be undefined');
 
-	LOGGER.info(`Message sent to channel ${channel[0]}: ${message.content}`);
+	// LOGGER.info(`Message sent to channel ${channel[0]}: ${message.payload}`);
 
 	wss.clients.forEach(client => {
 		const sendMessageToClient = channel[1].some(user => user.connectionId === client.id);

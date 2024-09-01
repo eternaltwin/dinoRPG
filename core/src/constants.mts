@@ -32,16 +32,3 @@ export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 		skills: Pick<DinozSkill, 'skillId'>[];
 	})[];
 };
-
-/*
-	Pick<Dinoz, 'level' | 'placeId' | 'life'> & {
-	status: Pick<DinozStatus, 'statusId'>[];
-	missions: Pick<DinozMission, 'missionId' | 'isFinished'>[];
-	items: Pick<DinozItem, 'itemId'>[];
-	skills: Pick<DinozSkill, 'skillId'>[];
-	player: {
-		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
-		rewards: Pick<PlayerReward, 'rewardId'>[];
-		quest?: Pick<PlayerQuest, 'questId' | 'progression'>
-	} | null;
-};*/

@@ -4,7 +4,6 @@ import {
 	clanJoinRequest,
 	createClanPageRequest,
 	createClanRequest,
-	deleteClanMessageRequest,
 	deleteClanPageRequest,
 	deleteClanRequest,
 	denyPlayerJoinRequest,
@@ -43,7 +42,6 @@ import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
-import sanitizeHtml from 'sanitize-html';
 
 /**
  * Get all the clans
@@ -526,21 +524,6 @@ export async function getClanMessages(req: Request) {
 
 	const messages = await getClanMessagesRequest(req.auth.playerId, Number(req.params.id), Number(req.params.page));
 	return messages;
-}
-
-/**
- * Delete clan message
- * @param req
- * @param req.params.id {number} clan message id
- * @returns Clan
- */
-export async function deleteClanMessage(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-
-	const message = await deleteClanMessageRequest(Number(req.params.id), req.auth.playerId);
-	return message;
 }
 
 /**

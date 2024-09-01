@@ -670,8 +670,8 @@ export async function createClanMessageRequest(clanId: number, authorId: number,
 	});
 }
 
-export async function deleteClanMessageRequest(id: number, playerId: number) {
-	const message = await prisma.clanMessage.delete({
+export async function deleteClanMessageRequest(id: number, playerId: number): Promise<void> {
+	await prisma.clanMessage.delete({
 		where: {
 			id,
 			OR: [
@@ -686,8 +686,6 @@ export async function deleteClanMessageRequest(id: number, playerId: number) {
 			]
 		}
 	});
-
-	return message;
 }
 
 export async function getClanHistoryRequest(playerId: number, clanId: number, page: number) {

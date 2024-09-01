@@ -67,6 +67,10 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { WebSocketService } from '../../services/WebSocketService';
 import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { WsMsgRequestCreation } from '@drpg/core/models/webSocket/WsMsgRequestCreation';
+import { WsMsgRequestDeletion } from '@drpg/core/models/webSocket/WsMsgRequestDeletion';
+import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
+import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
 
 export default defineComponent({
 	name: 'ClanDiscussion',
@@ -86,17 +90,17 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		isLeader(msg): boolean {
-			return msg.author.id == msg.clan.leaderId;
+		isLeader(msg: CreateClanMessage): boolean {
+			return msg.author.id == msg.clan!.leaderId;
 		},
-		isSelf(msg): boolean {
+		isSelf(msg: CreateClanMessage): boolean {
 			return msg.author.id == this.playerStore.playerId;
 		},
 		dateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		},
-		canDeleteMessage(msg): boolean {
-			return msg.author.id == this.playerStore.playerId || msg.clan.leaderId == this.playerStore.playerId;
+		canDeleteMessage(msg: CreateClanMessage): boolean {
+			return msg.author.id == this.playerStore.playerId || msg.clan!.leaderId == this.playerStore.playerId;
 		},
 		goToPlayer(id: number) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
@@ -106,18 +110,18 @@ export default defineComponent({
 				return;
 			}
 			this.page = 1;
-			this.webSocket.send(this.newMessage);
+			const payload: WsMsgRequestCreation = { action: WsMessageAction.CREATE, message: this.newMessage };
+			this.webSocket.send(JSON.stringify(payload));
 			this.newMessage = '';
 		},
-		async deleteMessage(msg) {
-			if (!this.canDeleteMessage(msg)) {
-				return;
-			}
+		async deleteMessage(msg: CreateClanMessage) {
+			if (!this.canDeleteMessage(msg)) return;
+
 			const res: boolean = confirm(this.$t('popup.confirm'));
-			if (res) {
-				await this.deleteClanMessage(msg.id);
-				await this.getClanMessages();
-			}
+			if (!res) return;
+
+			const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };
+			this.webSocket.send(JSON.stringify(payload));
 		},
 		async getClanMessages() {
 			EventBus.emit('isLoading', true);
@@ -133,9 +137,9 @@ export default defineComponent({
 					this.webSocket = new WebSocket(`wss://${document.location.host}?ticket=${wsTicket}`);
 				}
 
-				this.webSocket.onmessage = (message: MessageEvent) => this.updateMessages(message);
+				this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);
 				this.webSocket.onerror = () => (this.isConnectionOk = false);
-				this.webSocket.onopen = (() => this.isConnectionOk = true);
+				this.webSocket.onopen = () => (this.isConnectionOk = true);
 
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -154,19 +158,20 @@ export default defineComponent({
 				await this.getClanMessages();
 			}
 		},
-		async deleteClanMessage(id: number) {
-			EventBus.emit('isLoading', true);
-			try {
-				this.messages = await ClanService.deleteClanMessage(id);
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err as Error, this.$toast);
-				return;
+		handleWsAction(message: MessageEvent<WsMsgResponse>) {
+			const msgData = JSON.parse(message.data.toString());
+
+			if (msgData.action === WsMessageAction.CREATE) {
+				this.updateMessages(msgData.payload);
+			} else if (msgData.action === WsMessageAction.DELETE) {
+				this.removeMsgFromMessages(msgData.msgId)
 			}
 		},
-		updateMessages(messageEvent: MessageEvent) {
-			const message: CreateClanMessage = JSON.parse(messageEvent.data);
+		updateMessages(message: CreateClanMessage) {
 			this.messages.unshift(message);
+		},
+		removeMsgFromMessages(msgId: number) {
+			this.messages = this.messages.filter(message => message.id !== msgId);
 		}
 	},
 	async mounted(): Promise<void> {

@@ -19,7 +19,6 @@ import {
 	getClanPage,
 	createClanPage,
 	getClanMessages,
-	deleteClanMessage,
 	getClanHistory,
 	excludeClanMember,
 	getJoinRequest,
@@ -828,39 +827,6 @@ routes.get(
 		}
 		try {
 			const response = await getClanMessages(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
-	}
-);
-
-/**
- * @openapi
- * /api/v1/clan/message/{id}:
- *   delete:
- *     summary: Delete clan message by id
- *     security:
- *       - bearerAuth: []
- *     tags:
- *       - Clans
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Successfully deleted
- *       500:
- *         description: Error
- */
-routes.delete(
-	`${commonPath}/message/:id`,
-	[param('id').exists().toInt().isNumeric()],
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-		try {
-			const response = await deleteClanMessage(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
