@@ -42,6 +42,7 @@ import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 
 /**
  * Get all the clans
@@ -671,4 +672,18 @@ export async function getClanTreasureDetails(req: Request) {
 	return treasure.map(i => {
 		return { itemId: i.ingredientId, quantity: i.quantity } as ShopDTO;
 	});
+}
+
+export async function checkMessageCanBeDeleted(msgId: number, playerId: number): Promise<void> {
+	const messageData = await getDataForMessageDeletion(msgId);
+
+	if (messageData === null || messageData.clan === null) throw new Error('The data got cannot be null.');
+	
+	const isPlayerInClan = messageData.clan.members.some(player => player.id === playerId);
+	if (!isPlayerInClan) throw new Error("You're trying to delete a message from an other clan.");
+
+	const isDeletingOwnMessage = messageData.authorId === playerId;
+	const isLeaderFromClan = messageData.clan.leaderId === playerId;
+
+	if (!isDeletingOwnMessage && !isLeaderFromClan) throw new Error("You're not able to delete this message.");
 }

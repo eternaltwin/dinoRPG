@@ -105,7 +105,7 @@ export default defineComponent({
 		goToPlayer(id: number) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
 		},
-		async createNewMessage() {
+		async createNewMessage(): Promise<void> {
 			if (!this.hasAccess || !this.newMessage) {
 				return;
 			}
@@ -114,7 +114,7 @@ export default defineComponent({
 			this.webSocket.send(JSON.stringify(payload));
 			this.newMessage = '';
 		},
-		async deleteMessage(msg: CreateClanMessage) {
+		async deleteMessage(msg: CreateClanMessage): Promise<void> {
 			if (!this.canDeleteMessage(msg)) return;
 
 			const res: boolean = confirm(this.$t('popup.confirm'));
@@ -123,30 +123,22 @@ export default defineComponent({
 			const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };
 			this.webSocket.send(JSON.stringify(payload));
 		},
-		async getClanMessages() {
-			EventBus.emit('isLoading', true);
-			try {
-				this.messages = await ClanService.getClanMessages(Number(this.$route.params.id), this.page);
-				const messagesCount = await ClanService.getClanMessagesCount(Number(this.$route.params.id));
-				this.maxPage = Math.floor((messagesCount.count + 19) / 20);
-
-				const wsTicket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
-				if (import.meta.env.MODE === 'development') {
-					this.webSocket = new WebSocket(`wss://localhost:8081?ticket=${wsTicket}`);
-				} else {
-					this.webSocket = new WebSocket(`wss://${document.location.host}?ticket=${wsTicket}`);
-				}
-
-				this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);
-				this.webSocket.onerror = () => (this.isConnectionOk = false);
-				this.webSocket.onopen = () => (this.isConnectionOk = true);
-
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				this.isConnectionOk = false;
-				errorHandler.handle(err as Error, this.$toast);
-				return;
+		async getClanMessages(): Promise<void> {
+			this.messages = await ClanService.getClanMessages(Number(this.$route.params.id), this.page);
+			const messagesCount = await ClanService.getClanMessagesCount(Number(this.$route.params.id));
+			this.maxPage = Math.floor((messagesCount.count + 19) / 20);
+		},
+		async connectToWs(): Promise<void> {
+			const wsTicket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
+			if (import.meta.env.MODE === 'development') {
+				this.webSocket = new WebSocket(`wss://localhost:8081?ticket=${wsTicket}`);
+			} else {
+				this.webSocket = new WebSocket(`wss://${document.location.host}?ticket=${wsTicket}`);
 			}
+
+			this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);
+			this.webSocket.onerror = () => (this.isConnectionOk = false);
+			this.webSocket.onopen = () => (this.isConnectionOk = true);
 		},
 		async changePage(n: number) {
 			this.page += n;
@@ -158,16 +150,20 @@ export default defineComponent({
 				await this.getClanMessages();
 			}
 		},
-		handleWsAction(message: MessageEvent<WsMsgResponse>) {
+		handleWsAction(message: MessageEvent<WsMsgResponse>): void {
 			const msgData = JSON.parse(message.data.toString());
 
 			if (msgData.action === WsMessageAction.CREATE) {
 				this.updateMessages(msgData.payload);
 			} else if (msgData.action === WsMessageAction.DELETE) {
-				this.removeMsgFromMessages(msgData.msgId)
+				this.removeMsgFromMessages(msgData.msgId);
 			}
 		},
-		updateMessages(message: CreateClanMessage) {
+		updateMessages(message: CreateClanMessage): void {
+			if (this.page !== 1) {
+				return;
+			}
+
 			this.messages.unshift(message);
 		},
 		removeMsgFromMessages(msgId: number) {
@@ -179,7 +175,17 @@ export default defineComponent({
 		if (!this.hasAccess) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
-		await this.getClanMessages();
+		EventBus.emit('isLoading', true);
+		try {
+			await this.getClanMessages();
+			await this.connectToWs();
+
+			EventBus.emit('isLoading', false);
+		} catch (err) {
+			this.isConnectionOk = false;
+			errorHandler.handle(err as Error, this.$toast);
+			return;
+		}
 	}
 });
 </script>

@@ -17,6 +17,8 @@ import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
 import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
 import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponseDeletion';
 import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
+import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
+import { checkMessageCanBeDeleted } from './clanService.js';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -179,6 +181,10 @@ export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: s
 		const msgResponse: WsMsgResponseCreation = { action: WsMessageAction.CREATE, payload: dataSaved };
 		sendMessageToPeopleInChannel(wss, channel, msgResponse);
 	} else if (message.action === WsMessageAction.DELETE) {
+		// TODO: Vérifier que les vérifications fonctionnent bien
+		// + Changer le format du channel.
+		const playerId = channel![1].filter(user => user.connectionId === wsId)[0].playerId;
+		checkMessageCanBeDeleted(message.msgId, playerId);
 		deleteMessage(channel, wsId, message.msgId);
 		const msgResponse: WsMsgResponseDeletion = { action: WsMessageAction.DELETE, msgId: message.msgId };
 		sendMessageToPeopleInChannel(wss, channel, msgResponse);
