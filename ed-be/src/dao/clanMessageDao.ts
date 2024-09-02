@@ -11,7 +11,7 @@ export async function getDataForMessageDeletion(msgId: number) {
                     leaderId: true,
                     members: {
                         select: {
-                            id: true
+                            playerId: true
                         }
                     }
                 }

@@ -7,7 +7,6 @@ import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
 import { RawData, WebSocket } from 'ws';
-import { LOGGER } from '../context.js';
 import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
 import { getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
 import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
@@ -17,8 +16,10 @@ import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
 import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
 import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponseDeletion';
 import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
-import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 import { checkMessageCanBeDeleted } from './clanService.js';
+import { isJson } from '../utils/helpers/ValidatorHelper.js';
+import { assert } from 'console';
+import { WsMessage } from '@drpg/core/models/webSocket/WsMessage';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -174,18 +175,17 @@ async function getChannelName(ticket: WsTicket): Promise<string> {
 export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: string, bufferedMessage: RawData): Promise<void> {
 	const channel = getChannelDetailsFromConnectionId(wsId);
 
-	const message: WsMessageRequest = JSON.parse(bufferedMessage.toString());
+	const message: WsMessageRequest = getMessageFromString(bufferedMessage);
 
 	if (message.action === WsMessageAction.CREATE) {
 		const dataSaved = await saveMessageInDatabase(channel, wsId, message.message);
 		const msgResponse: WsMsgResponseCreation = { action: WsMessageAction.CREATE, payload: dataSaved };
 		sendMessageToPeopleInChannel(wss, channel, msgResponse);
 	} else if (message.action === WsMessageAction.DELETE) {
-		// TODO: Vérifier que les vérifications fonctionnent bien
-		// + Changer le format du channel.
+		// TODO: Changer le format du channel.
 		const playerId = channel![1].filter(user => user.connectionId === wsId)[0].playerId;
-		checkMessageCanBeDeleted(message.msgId, playerId);
-		deleteMessage(channel, wsId, message.msgId);
+		await checkMessageCanBeDeleted(message.msgId, playerId);
+		await deleteMessage(channel, wsId, message.msgId);
 		const msgResponse: WsMsgResponseDeletion = { action: WsMessageAction.DELETE, msgId: message.msgId };
 		sendMessageToPeopleInChannel(wss, channel, msgResponse);
 	}
@@ -201,6 +201,12 @@ function getChannelDetailsFromConnectionId(wsId: string): [string, ChannelData[]
 	return [...channels.entries()].find(([_chanKey, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
+}
+
+function getMessageFromString(message: RawData): WsMessageRequest {
+	if (!isJson(message.toString())) throw new Error('The data sent is not a valid JSON object.');
+
+	return JSON.parse(message.toString());
 }
 
 async function saveMessageInDatabase(channel: [string, ChannelData[]] | undefined, wsId: string, message: string): Promise<CreateClanMessage> {

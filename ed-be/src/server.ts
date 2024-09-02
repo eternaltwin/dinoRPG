@@ -113,13 +113,21 @@ function handleWsEvents(wss: WebSocketServer) {
 			ws.close();
 		}
 
-		ws.on('message', (data: RawData) => processIncomingMessage(wss as WebSocketServerCustom, ws.id, data));
+		ws.on('message', async (data: RawData) => {
+			try {
+				await processIncomingMessage(wss as WebSocketServerCustom, ws.id, data);
+			} catch(err) {
+				console.error(err);
+				disconnectUser(ws);
+				ws.close();
+			}
+		});
 
 		ws.on('close', () => disconnectUser(ws));
 
 		ws.on('pong', () => setConnectionToAlive(ws));
 
-		ws.on('error', console.error);
+		ws.on('error', () => disconnectUser(ws));
 	});
 
 	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
