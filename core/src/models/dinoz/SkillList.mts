@@ -347,6 +347,7 @@ export enum Skill {
 	M_AIR_BLADE = 99945, // noted as "rapaca" in MT's code, Rapacarapace's skill
 	M_FEBREZ = 99948,
 	M_GRIZOU = 99949, // noted as "grizou" in MT's code, used by various monsters and bosses
+	M_TOWER_GUARDIAN = 99950,
 	// SPECIAL SKILLS
 	CATCH = 999999
 }
@@ -5131,6 +5132,21 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 1,
 		probability: 100,
 		visualEffect: SkillVisualEffect.ANIM
+	},
+	[Skill.M_TOWER_GUARDIAN]: {
+		id: Skill.M_TOWER_GUARDIAN,
+		name: 'TwrGrd',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.VOID],
+		activatable: false,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		effects: {
+			[Stat.INITIATIVE]: -30,
+			[Stat.SPEED]: 3,
+		}
 	},
 	[Skill.CATCH]: {
 		id: Skill.CATCH,

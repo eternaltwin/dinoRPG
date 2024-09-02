@@ -26,6 +26,24 @@ function getRandomLetter(maxLetter: string): string {
 }
 
 /**
+ * @summary Returns a random string of a given size.
+ * 
+ * @param length {number}
+ * @return string
+ */
+function generateString(length: number): string {
+	let result = '';
+	const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	const charactersLength = characters.length;
+	let counter = 0;
+	while (counter < length) {
+		result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		counter += 1;
+	}
+	return result;
+}
+
+/**
  * @summary Return the letter that corresponds to the provided index
  * 			The letter will be part of '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
  * @return string
@@ -50,4 +68,4 @@ export function fromBase62(s: string) {
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export { getRandomNumber, getRandomLetter, getLetter, sleep };
+export { getRandomNumber, getRandomLetter, generateString, getLetter, sleep };

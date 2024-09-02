@@ -47,7 +47,7 @@ import {
 	getMultiElementalAttack
 } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
-import randomBetween, { randomBetweenMaxExcluded } from './randomBetween.js';
+import {randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -55,6 +55,7 @@ import { FightStats } from '@drpg/core/models/fight/FightResult';
 import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect } from '@drpg/core/models/fight/transpiler';
+import seedrandom from 'seedrandom';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -101,6 +102,7 @@ export const getOpponents = (fightData: DetailedFight, fighter: DetailedFighter,
 const chooseRandomOpponentForAssault = (
 	attacker: DetailedFighter,
 	opponents: DetailedFighter[],
+	rng: seedrandom.PRNG,
 	power?: [ElementType, number][]
 ) => {
 	// The attacker can hit flying units if it is itself flying or it has the capacity to.
@@ -136,7 +138,7 @@ const chooseRandomOpponentForAssault = (
 	if (opponents_have_rock) {
 		// Filter based on the fighters with the ROCK skill: if the opposing team has the rock skill,
 		// then one chance out of 2 to target only the rock fighters
-		if (randomBetweenMaxExcluded(0, 2) === 0) {
+		if (randomBetweenMaxExcludedSeeded(rng, 0, 2) === 0) {
 			filtered_opponents = filtered_opponents.filter(opponent => opponent.hasRock);
 		}
 	}
@@ -198,15 +200,15 @@ const chooseRandomOpponentForAssault = (
 	}
 
 	// If there are multiple opponents available, pick a random one
-	const random = randomBetween(0, filtered_opponents.length - 1);
+	const random = randomBetweenSeeded(rng, 0, filtered_opponents.length - 1);
 
 	return filtered_opponents[random];
 };
 
 /// Choose a random opponent from a list
 /// No filtering is applied
-export const chooseRandomOpponent = (opponents: DetailedFighter[]) => {
-	const random = randomBetween(0, opponents.length - 1);
+export const chooseRandomOpponent = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
+	const random = randomBetweenSeeded(rng, 0, opponents.length - 1);
 
 	return opponents[random];
 };
@@ -218,7 +220,7 @@ export const getLimitedRandomOpponent = (
 ) => {
 	const opponents = getOpponents(fightData, fighter, limitTypes);
 
-	return chooseRandomOpponent(opponents);
+	return chooseRandomOpponent(opponents, fightData.rng);
 };
 
 export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFighter) => {
@@ -231,7 +233,7 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 		throw new Error('No opponent found');
 	}
 
-	const randomOpponent = chooseRandomOpponent(opponents);
+	const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
 
 	if (!randomOpponent) {
 		sendJSONToDiscord(
@@ -250,7 +252,7 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 		return null;
 	}
 
-	const randomOpponent = chooseRandomOpponentForAssault(fighter, opponents);
+	const randomOpponent = chooseRandomOpponentForAssault(fighter, opponents, fightData.rng);
 
 	if (!randomOpponent) {
 		sendJSONToDiscord(
@@ -442,7 +444,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			return bPriority - aPriority;
 		}
 
-		return Math.random() > 0.5 ? 1 : -1;
+		return fightData.rng() > 0.5 ? 1 : -1;
 	});
 
 	// Go through each event and roll the dice
@@ -455,7 +457,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			if (fighter.energy < event.energy) continue;
 		}
 
-		if (randomBetween(1, 100) < (event.probability ?? 0)) {
+		if (randomBetweenSeeded(fightData.rng, 1, 100) < (event.probability ?? 0)) {
 			return event;
 		}
 	}
@@ -463,7 +465,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	return null;
 };
 
-const randomlyGetSkill = (fighter: DetailedFighter) => {
+const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No skill if NO_SKILL
 	if (hasStatus(fighter, Status.NO_SKILL)) return null;
 
@@ -482,7 +484,7 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 			return bPriority - aPriority;
 		}
 
-		return Math.random() > 0.5 ? 1 : -1;
+		return fightData.rng() > 0.5 ? 1 : -1;
 	});
 
 	// Go through each event and roll the dice
@@ -499,7 +501,7 @@ const randomlyGetSkill = (fighter: DetailedFighter) => {
 			probability *= 2;
 		}
 
-		if (randomBetween(1, 100) < probability) {
+		if (randomBetweenSeeded(fightData.rng, 1, 100) < probability) {
 			// Check if NO_INVOCATION
 			if (skill.type === SkillType.I && hasStatus(fighter, Status.NO_INVOCATION)) {
 				return null;
@@ -836,7 +838,7 @@ const attackAllOpponents = (
 	// Reduce the list of impacted of opponents to a random count only if a specific count is impacted
 	if (count) {
 		while (targets.length > count) {
-			const random_index = Math.round(Math.random() * targets.length);
+			const random_index = Math.round(fightData.rng() * targets.length);
 			targets.splice(random_index, 1);
 		}
 	}
@@ -887,13 +889,14 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 		fighter.attacker ? 0 : 1,
 		monsterData,
 		fightData.place,
-		true
+		true,
+		fightData.rng
 	);
 
 	monster.master = fighter.id;
 
 	// Adjust time
-	monster.time = fighter.time + randomBetweenMaxExcluded(0, TIME_BASE) * TIME_FACTOR;
+	monster.time = fighter.time + randomBetweenMaxExcludedSeeded(fightData.rng, 0, TIME_BASE) * TIME_FACTOR;
 
 	// Add monster to fighters
 	fightData.fighters.push(monster);
@@ -1130,10 +1133,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.DIETE_CHROMATIQUE: {
 				// Pick a random opponent (no filtering is applied intentionally)
 				const opponents = getOpponents(fightData, fighter);
-				const opponent = opponents[randomBetween(0, opponents.length - 1)];
+				const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
 
 				// Lock that opponent to a random element
-				opponent.element = opponent.elements[Math.round(Math.random() * opponent.elements.length)];
+				opponent.element = opponent.elements[Math.round(fightData.rng() * opponent.elements.length)];
 				addStatus(fightData, opponent, Status.LOCKED, StatusLength.MEDIUM);
 				break;
 			}
@@ -1205,7 +1208,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					if (f.id === fighter.id) return;
 
 					// Heal 1-wood HP
-					heal(fightData, f, randomBetween(1, fighter.stats.base[ElementType.WOOD]));
+					heal(fightData, f, randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]));
 				});
 				break;
 			}
@@ -1388,10 +1391,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.M_ELEMENTAL: {
 				// Lock into a random element
-				let randomElement = randomBetween(1, 6) as ElementType;
+				let randomElement = randomBetweenSeeded(fightData.rng, 1, 6) as ElementType;
 
 				while (fighter.element === randomElement) {
-					randomElement = randomBetween(1, 6) as ElementType;
+					randomElement = randomBetweenSeeded(fightData.rng, 1, 6) as ElementType;
 				}
 
 				fighter.element = randomElement;
@@ -1467,7 +1470,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Get random ally
-				const ally = tangibleAllies[randomBetween(0, tangibleAllies.length - 1)];
+				const ally = tangibleAllies[randomBetweenSeeded(fightData.rng, 0, tangibleAllies.length - 1)];
 
 				// Add status
 				addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.MEDIUM);
@@ -1492,7 +1495,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Get random ally
-				const ally = nonFlyingAllies[randomBetween(0, nonFlyingAllies.length - 1)];
+				const ally = nonFlyingAllies[randomBetweenSeeded(fightData.rng, 0, nonFlyingAllies.length - 1)];
 
 				// Add status
 				addStatus(fightData, ally, Status.FLYING);
@@ -1537,7 +1540,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				if (hpDelta < 0) hpDelta = 0;
 
 				// Less chance to heal if lost HP is less than 20. Sure to heal if lost HP is 20+
-				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) !== 0) {
+				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
 					return cancel();
 				}
 
@@ -1672,7 +1675,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponentsWithoutAttacker = opponents.filter(opponent => opponent.id !== opponentAttacker.id);
 
 				// Get random opponent defender
-				const opponentDefender = opponentsWithoutAttacker[randomBetween(0, opponentsWithoutAttacker.length - 1)];
+				const opponentDefender = opponentsWithoutAttacker[randomBetweenSeeded(fightData.rng, 0, opponentsWithoutAttacker.length - 1)];
 
 				// Add moveTo step
 				fightData.steps.push({
@@ -1766,7 +1769,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				if (hpDelta < 0) hpDelta = 0;
 
 				// Less chance to heal if lost HP is less than 50. Sure to heal if lost HP is 50+
-				if (fighter.hp === fighter.startingHp || randomBetween(0, hpDelta) !== 0) {
+				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
 					return cancel();
 				}
 
@@ -1800,7 +1803,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			if (opponent.skills.some(skill => skill.id === event.id)) return;
 
 			// 20% chance to copy the skill
-			const random = Math.random();
+			const random = fightData.rng();
 
 			if (random < 0.2) {
 				// Add skillActivate step
@@ -1945,7 +1948,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.ASLEEP: {
-				fighter.time = fightData.time + randomBetween(0, TIME_BASE * TIME_FACTOR);
+				fighter.time = fightData.time + randomBetweenSeeded(fightData.rng, 0, TIME_BASE * TIME_FACTOR);
 				break;
 			}
 			case Status.TORCHED: {
@@ -2117,7 +2120,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 
 			// Get random opponent
-			const opponent = chooseRandomOpponent(opponents);
+			const opponent = chooseRandomOpponent(opponents, fightData.rng);
 
 			// Prevent if some opponent has CUZCUSSIAN_MASK
 			const opponentWithMask = getOpponents(fightData, fighter).find(opponent =>
@@ -2212,7 +2215,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			heal(fightData, fighter, randomBetween(1, 20));
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20));
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
@@ -2540,7 +2543,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 
 			// Get random opponent
-			const monster = opponents[randomBetween(0, opponents.length - 1)];
+			const monster = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
 
 			// Attack opponent
 			const hit = launchAssault(fightData, fighter, true, undefined, [[0 as ElementType, 0]], monster);
@@ -2945,7 +2948,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 				// Random if same level
 				if (SkillLevel[skill.id] === SkillLevel[acc.id]) {
-					return randomBetween(0, 1) ? skill : acc;
+					return randomBetweenSeeded(fightData.rng, 0, 1) ? skill : acc;
 				}
 
 				return acc;
@@ -3131,7 +3134,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 
 			// Get random opponent
-			const opponent = opponents[randomBetween(0, opponents.length - 1)];
+			const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
 
 			// Add leave step
 			fightData.steps.push({
@@ -3283,7 +3286,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Check if fighter is not dead
 			if (hit && hit.target && hit.hpLost > 0) {
 				const opponent = hit.target;
-				const goldStolen = (randomBetween(0, 5) + 8) * 10;
+				const goldStolen = (randomBetweenSeeded(fightData.rng, 0, 5) + 8) * 10;
 				fighter.goldStolen = {
 					...fighter.goldStolen,
 					[opponent.id]: (fighter.goldStolen?.[opponent.id] ?? 0) + goldStolen
@@ -3392,7 +3395,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			if (opponent.skills.some(s => s.id === skill.id)) return;
 
 			// 20% chance to copy the skill
-			const random = Math.random();
+			const random = fightData.rng();
 
 			if (random < 0.2) {
 				// Add skillActivate step
@@ -3420,7 +3423,7 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	// No counter attack if opponent is dead
 	if (opponent.hp <= 0) return false;
 
-	const random = Math.random();
+	const random = fightData.rng();
 	const countered = random < opponent.stats.special.counter - 1;
 
 	// Counter stat
@@ -3445,16 +3448,6 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 		hp: damage,
 		fx
 	});
-};
-
-const miss = (fighter: DetailedFighter) => {
-	// No miss if not DAZZLED
-	if (!hasStatus(fighter, Status.DAZZLED)) return false;
-
-	const random = Math.random();
-
-	// 30% chance to miss
-	return random < 0.3;
 };
 
 const poison = (
@@ -3742,7 +3735,7 @@ const attackTarget = (
 		attacker.comboCounter++;
 
 		// Get damage
-		let damage = calculateDamage(attacker, target, attack, defense, isAssault);
+		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, isAssault);
 
 		// Apply defensive effects
 		damage = checkDefensiveEffects(
@@ -3757,7 +3750,7 @@ const attackTarget = (
 
 		// Check for assault dodge
 		let isDodged = false;
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && Math.random() < target.stats.special.evasion - 1) {
+		if (isAssault && !hasStatus(target, Status.PETRIFIED) && fightData.rng() < target.stats.special.evasion - 1) {
 			isDodged = true;
 		}
 
@@ -3771,7 +3764,7 @@ const attackTarget = (
 				hasStatus(target, Status.FLYING) ||
 				hasStatus(target, Status.STUNNED)
 			) &&
-			Math.random() < target.stats.special.superEvasion - 1
+			fightData.rng() < target.stats.special.superEvasion - 1
 		) {
 			isSuperDodged = true;
 		}
@@ -3804,8 +3797,8 @@ const attackTarget = (
 
 		// DAZZLED
 		if (hasStatus(attacker, Status.DAZZLED)) {
-			if (randomBetweenMaxExcluded(0, 3) === 0) {
-				noDamage = true;
+			if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 3) === 0) {
+				noDamage =  true;
 				evasion = true;
 			}
 		}
@@ -3857,7 +3850,7 @@ const attackTarget = (
 
 		// Check for combo
 		if (canCombo) {
-			if (Math.random() < attacker.stats.special.multihit - 1) {
+			if (fightData.rng() < (attacker.stats.special.multihit - 1)) {
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
 				energyCost++;
 				updateStat(fightData, attacker, 'multiHits', 1);
@@ -3948,7 +3941,7 @@ const checkDefensiveEffects = (
 		// Opponent has FORME_VAPOREUSE
 		target.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
 		// 6% chance
-		randomBetween(0, 99) < 6
+		randomBetweenSeeded(fightData.rng, 0, 99) < 6
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -3964,7 +3957,7 @@ const checkDefensiveEffects = (
 		isCloseCombat &&
 		target.skills.find(s => s.id === Skill.CUIRASSE) &&
 		// 5 % chance
-		randomBetween(0, 99) < 5
+		randomBetweenSeeded(fightData.rng, 0, 99) < 5
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -4035,7 +4028,7 @@ const checkDefensiveEffects = (
 	if (target.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
 		if (elements.find(e => e === target.element)) {
 			// Take 29 + 0-3 damage if the attack contains the element of the opposing fighter
-			const random = randomBetween(0, 3);
+			const random = randomBetweenSeeded(fightData.rng, 0, 3);
 
 			damage = 29 + random;
 		} else {
@@ -4120,7 +4113,7 @@ const checkAfterAttackEffects = (
 	// 30% chance to steal all energy from target if fighter has Skill.QI_GONG and landed a hit with an assault
 	if (isCloseCombat && damage > 0 && attacker.skills.some(skill => skill.id === Skill.QI_GONG)) {
 		// 30% Chance to deplete energy
-		if (Math.random() < 0.3) {
+		if (fightData.rng() < 0.3) {
 			// TODO announce the skill
 			const energyStolen = target.energy;
 
@@ -4171,7 +4164,7 @@ const checkAfterDefenseEffects = (
 		damage > 0 &&
 		target.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
 		// 1/2 chance
-		randomBetween(0, 1) === 0
+		randomBetweenSeeded(fightData.rng, 0, 1) === 0
 	) {
 		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
@@ -4191,7 +4184,7 @@ const checkAfterDefenseEffects = (
 
 	// Electrocution (Anguilloz)
 	if (isCloseCombat && damage > 0 && target.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
-		loseHp(fightData, attacker, randomBetween(1, 3), LifeEffect.Lightning);
+		loseHp(fightData, attacker, randomBetweenSeeded(fightData.rng, 1, 3), LifeEffect.Lightning);
 	}
 
 	// Worm (or any absorb?): heal the damage absorbed
@@ -4214,7 +4207,7 @@ const checkAfterDefenseEffects = (
 		damage > 0 &&
 		target.skills.some(skill => skill.id === Skill.M_CONTAMINATION) &&
 		// 1/5 chance
-		randomBetween(0, 4) === 0
+		randomBetweenSeeded(fightData.rng, 0, 4) === 0
 	) {
 		// TODO announce the skill
 		poison(fightData, attacker, target, Skill.M_CONTAMINATION, StatusLength.SHORT);
@@ -4434,8 +4427,6 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	if (!hasStatus(attacker, Status.LOCKED)) {
 		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
 	}
-
-	// TODO add energy logging here
 };
 
 export const playFighterTurn = (fightData: DetailedFight) => {
@@ -4676,7 +4667,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 	// Skill activation
 	// Unless specified, pick a random skill by default.
-	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(attacker);
+	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(fightData, attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
 		if (activateSkill(fightData, possibleSkill)) {

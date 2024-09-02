@@ -18,6 +18,8 @@ import { getAssaultValue } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { DetailedFight } from './generateFight.js';
+import seedrandom from 'seedrandom';
+import { randomBetweenSeeded } from './randomBetween.js';
 
 interface Team {
 	dinozList: DinozToGetFighter[];
@@ -35,7 +37,8 @@ export const initializeDinoz = (
 	teamIndex: number,
 	dinoz: DinozToGetFighter,
 	place: PlaceEnum,
-	bossFight: boolean
+	bossFight: boolean,
+	random: seedrandom.PRNG
 ) => {
 	// Costume
 	let costume: MonsterFiche | undefined = undefined;
@@ -188,7 +191,7 @@ export const initializeDinoz = (
 		hasRock: false
 	};
 
-	handleSkills(team, fighter, place);
+	handleSkills(random, team, fighter, place);
 	handleDinozStatuses(fighter, dinozStatus);
 
 	// Order skills by priority, random if equal
@@ -200,7 +203,7 @@ export const initializeDinoz = (
 			return bPriority - aPriority;
 		}
 
-		return Math.random() > 0.5 ? 1 : -1;
+		return random() > 0.5 ? 1 : -1;
 	});
 
 	// Time
@@ -215,7 +218,7 @@ export const initializeDinoz = (
 	// Deduct the time from the fighter's initial time
 	fighter.time -= initiative * TIME_FACTOR;
 	// Add a random amount of time between 0 and 10 to randomize the first fighter
-	fighter.time += Math.round(Math.random() * TIME_BASE) * TIME_FACTOR;
+	fighter.time += Math.round(random() * TIME_BASE) * TIME_FACTOR;
 
 	// Energy
 	setMaxEnergy(fighter, fighter.stats.special.energy ?? 100);
@@ -235,7 +238,7 @@ export const initializeDinoz = (
 		if (b.value !== a.value) {
 			return b.value - a.value;
 		}
-		return Math.random() > 0.5 ? 1 : -1;
+		return random() > 0.5 ? 1 : -1;
 	});
 
 	// SPECIALISTE
@@ -328,7 +331,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		if (b.value !== a.value) {
 			return b.value - a.value;
 		}
-		return Math.random() > 0.5 ? 1 : -1;
+		return fightData.rng() > 0.5 ? 1 : -1;
 	});
 	clone.elements = elements.map(element => element.element);
 	clone.element = clone.elements[0];
@@ -346,7 +349,8 @@ export const initializeMonster = (
 	teamIndex: number,
 	monster: MonsterFiche,
 	place: PlaceEnum,
-	is_reinforcement: boolean
+	is_reinforcement: boolean,
+	random: seedrandom.PRNG
 ): DetailedFighter => {
 	memory.existingMonsters++;
 
@@ -470,7 +474,7 @@ export const initializeMonster = (
 		items: [],
 		itemsUsed: [],
 		// Add a random amount of time between 0 and 10 to randomize the first fighter
-		time: Math.round(Math.random() * TIME_BASE) * TIME_FACTOR,
+		time: Math.round(random() * TIME_BASE) * TIME_FACTOR,
 		skills,
 		status,
 		activeSkills: [],
@@ -520,7 +524,7 @@ export const initializeMonster = (
 		if (b.value !== a.value) {
 			return b.value - a.value;
 		}
-		return Math.random() > 0.5 ? 1 : -1;
+		return random() > 0.5 ? 1 : -1;
 	});
 
 	// Filter out elements with 0 value
@@ -538,7 +542,7 @@ export const initializeMonster = (
 	}
 
 	// Skills only after the elements have been handled
-	handleSkills(team, fighter, place);
+	handleSkills(random, team, fighter, place);
 
 	// SPECIALISTE
 	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {
@@ -571,7 +575,7 @@ const handleDinozStatuses = (fighter: DetailedFighter, statuses: DinozStatusId[]
 	}
 };
 
-const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceEnum) => {
+const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: DetailedFighter, place: PlaceEnum) => {
 	const fighterHas = fighter.skills.reduce(
 		(acc, skill) => {
 			acc[skill.id as Skill] = true;
@@ -671,7 +675,7 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 
 	// 50% chance to get positive / negative time
 	if (fighterHas[Skill.DOUBLE_FACE]) {
-		fighter.time += (Math.random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
+		fighter.time += (random() > 0.5 ? TIME_BASE : -TIME_BASE) * TIME_FACTOR;
 	}
 
 	if (fighterHas[Skill.ROUGE]) {
@@ -770,6 +774,22 @@ const handleSkills = (team: Team | null, fighter: DetailedFighter, place: PlaceE
 		fighter.canSurvive = true;
 	}
 
+	// MONSTER
+	if (fighterHas[Skill.M_TOWER_GUARDIAN]) {
+		fighter.stats.base[ElementType.FIRE] = 10;
+		fighter.stats.base[ElementType.WOOD] = 10;
+		fighter.stats.base[ElementType.WATER] = 10;
+		fighter.stats.base[ElementType.LIGHTNING] = 10;
+		fighter.stats.base[ElementType.AIR] = 10;
+		fighter.stats.base[ElementType.VOID] = 10;
+		fighter.canHitFlying = true;
+		fighter.canHitIntangible = true;
+		const randomElement = randomBetweenSeeded(random, 1, 6) as ElementType;
+		// Lock to a single element
+		fighter.elements = [randomElement];
+		fighter.element = randomElement;
+	}
+
 	// TODO: handle other skills
 };
 
@@ -821,7 +841,7 @@ const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType,
 	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 4) % elementWheel.length]] += 0.5 * bonus;
 };
 
-const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighter[] => {
+const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedrandom.PRNG): DetailedFighter[] => {
 	const fighters: DetailedFighter[] = [];
 
 	const memory = {
@@ -838,7 +858,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		// Dinoz
 		fighters.push(
 			...dinozList.map(dinoz => {
-				const fighter = initializeDinoz(team, index, dinoz, place, bossFight);
+				const fighter = initializeDinoz(team, index, dinoz, place, bossFight, random);
 
 				// Catches
 				for (let i = 0; i < dinoz.catches.length; i++) {
@@ -862,7 +882,8 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 						index,
 						{ ...monsterList[dinozCatch.monsterId as Monster] },
 						place,
-						true
+						true,
+						random
 					);
 					monster.startingHp = dinozCatch.hp;
 					monster.hp = dinozCatch.hp;
@@ -878,7 +899,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum): DetailedFighte
 		);
 
 		// Monsters
-		fighters.push(...monsters.map(monster => initializeMonster(memory, team, index, monster, place, false)));
+		fighters.push(...monsters.map(monster => initializeMonster(memory, team, index, monster, place, false, random)));
 	});
 
 	// Handle team wide modifiers

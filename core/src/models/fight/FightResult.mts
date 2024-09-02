@@ -72,6 +72,8 @@ export type FightStats = {
 };
 
 export interface FightProcessResult {
+	// Seed used for the fight
+	seed: string;
 	// true: attackers won, false: defenders won
 	winner: boolean;
 	// List of attackers
