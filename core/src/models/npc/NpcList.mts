@@ -78,10 +78,13 @@ export const npcList: Record<string, Npc> = {
 		name: 'mmex',
 		id: 5,
 		placeId: PlaceEnum.FORCEBRUT,
-		data: MMEX,
 		condition: {
-			[ConditionEnum.ACTIVE]: false
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_FISH },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.PAPY_JOE_DOG }
+			]
 		},
+		data: MMEX,
 		missions: M_MMEX,
 		flashvars: undefined
 	},

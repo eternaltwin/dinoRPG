@@ -176,7 +176,8 @@ exports.Prisma.DinozMissionScalarFieldEnum = {
   dinozId: 'dinozId',
   step: 'step',
   isFinished: 'isFinished',
-  progress: 'progress'
+  progress: 'progress',
+  checkTimeMission: 'checkTimeMission'
 };
 
 exports.Prisma.DinozSkillScalarFieldEnum = {

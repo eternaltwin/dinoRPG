@@ -5,6 +5,7 @@ import {
 	getGlobalMissions,
 	getMissionsList,
 	interactMission,
+	launchFight,
 	updateMission
 } from '../business/missionsService.js';
 import { apiRoutes } from '../constants/index.js';
@@ -168,6 +169,62 @@ routes.put(
 			sendError(res, err);
 		}
 	}
+);
+
+/**
+ * @openapi
+ * /api/v1/missions/fight/{dinozId}:
+ *   put:
+ *     summary: Update the status of the selected mission
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Missions
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: dinozId
+ *         type: string
+ *         required: true
+ *         description: Numeric ID of the dinoz.
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - missionId
+ *             - task
+ *           properties:
+ *             missionId:
+ *               type: number
+ *               description: ID of the mission
+ *             task:
+ *               type: string
+ *               description: Task to do
+ *     responses:
+ *       200:
+ *         description: Returns void.
+ */
+routes.put(
+    `${commonPath}/fight/:dinozId`,
+    [
+        param('dinozId').exists().toInt().isNumeric(),
+        body('missionId').exists().toInt().isNumeric(),
+        body('task').exists().isString()
+    ],
+    async (req: Request, res: Response) => {
+        if (!validationResult(req).isEmpty()) {
+            return res.status(400).json({ errors: validationResult(req) });
+        }
+
+        try {
+            const response = await launchFight(req);
+            return res.status(200).send(response);
+        } catch (err) {
+            sendError(res, err);
+        }
+    }
 );
 
 /**

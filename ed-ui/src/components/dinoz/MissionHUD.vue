@@ -12,6 +12,13 @@
 					})
 				}}
 			</template>
+			<template v-if="missionDetail.actionType === MissionEnum.LAUNCH_FIGHT">
+				{{
+					$t(`missions.actions.${missionDetail.action ?? missionDetail.actionType}`, {
+						npc: $t(`missions.npc.${missionDetail.target}`)
+					})
+				}}
+			</template>
 			<template v-else-if="missionDetail.actionType === MissionEnum.GOTO">
 				{{
 					$t(`missions.actions.${missionDetail.actionType}`, { place: $t(`missions.place.${missionDetail.target}`) })
@@ -34,6 +41,15 @@
 						progress: missionDetail.progress,
 						target: missionDetail.value,
 						targetName: $t(`missions.target.${missionDetail.target.join(':')}`)
+					})
+				}}
+			</template>
+			<template v-else-if="missionDetail.actionType === MissionEnum.HOUR">
+				{{
+					$t(`missions.actions.${missionDetail.action}`, {
+						progress: missionDetail.progress ? missionDetail.progress : 0,
+						value: missionDetail.value,
+						target: missionDetail.target
 					})
 				}}
 			</template>

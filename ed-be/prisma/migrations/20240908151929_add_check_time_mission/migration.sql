@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "dinoz_mission" ADD COLUMN     "checkTimeMission" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP;

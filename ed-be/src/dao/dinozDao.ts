@@ -260,7 +260,8 @@ export async function getDinozMissionsInfo(dinozId: number, playerId: number) {
 							missionId: true,
 							step: true,
 							isFinished: true,
-							progress: true
+							progress: true,
+							checkTimeMission: true
 						}
 					}
 				},

@@ -111,13 +111,14 @@ model DinozItemToDinoz {
 }
 
 model DinozMission {
-  id         Int      @id(map: "PK_dfeb1245e68d72db9a6c9402ab7") @default(autoincrement())
-  missionId  Int
-  dinozId    Int?
-  step       Int
-  isFinished Boolean?
-  progress   Int?
-  dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_f408ddb692ab5519808f24fb2b7")
+  id               Int      @id(map: "PK_dfeb1245e68d72db9a6c9402ab7") @default(autoincrement())
+  missionId        Int
+  dinozId          Int?
+  step             Int
+  isFinished       Boolean?
+  progress         Int?
+  checkTimeMission DateTime @default(now()) @db.Timestamp(6)
+  dinoz            Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_f408ddb692ab5519808f24fb2b7")
 
   @@unique([missionId, dinozId])
   @@map("dinoz_mission")

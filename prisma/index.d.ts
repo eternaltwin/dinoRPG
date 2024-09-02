@@ -10507,6 +10507,7 @@ export namespace Prisma {
     step: number | null
     isFinished: boolean | null
     progress: number | null
+    checkTimeMission: Date | null
   }
 
   export type DinozMissionMaxAggregateOutputType = {
@@ -10516,6 +10517,7 @@ export namespace Prisma {
     step: number | null
     isFinished: boolean | null
     progress: number | null
+    checkTimeMission: Date | null
   }
 
   export type DinozMissionCountAggregateOutputType = {
@@ -10525,6 +10527,7 @@ export namespace Prisma {
     step: number
     isFinished: number
     progress: number
+    checkTimeMission: number
     _all: number
   }
 
@@ -10552,6 +10555,7 @@ export namespace Prisma {
     step?: true
     isFinished?: true
     progress?: true
+    checkTimeMission?: true
   }
 
   export type DinozMissionMaxAggregateInputType = {
@@ -10561,6 +10565,7 @@ export namespace Prisma {
     step?: true
     isFinished?: true
     progress?: true
+    checkTimeMission?: true
   }
 
   export type DinozMissionCountAggregateInputType = {
@@ -10570,6 +10575,7 @@ export namespace Prisma {
     step?: true
     isFinished?: true
     progress?: true
+    checkTimeMission?: true
     _all?: true
   }
 
@@ -10666,6 +10672,7 @@ export namespace Prisma {
     step: number
     isFinished: boolean | null
     progress: number | null
+    checkTimeMission: Date
     _count: DinozMissionCountAggregateOutputType | null
     _avg: DinozMissionAvgAggregateOutputType | null
     _sum: DinozMissionSumAggregateOutputType | null
@@ -10694,6 +10701,7 @@ export namespace Prisma {
     step?: boolean
     isFinished?: boolean
     progress?: boolean
+    checkTimeMission?: boolean
     dinoz?: boolean | DinozMission$dinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozMission"]>
 
@@ -10704,6 +10712,7 @@ export namespace Prisma {
     step?: boolean
     isFinished?: boolean
     progress?: boolean
+    checkTimeMission?: boolean
     dinoz?: boolean | DinozMission$dinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozMission"]>
 
@@ -10714,9 +10723,10 @@ export namespace Prisma {
     step?: boolean
     isFinished?: boolean
     progress?: boolean
+    checkTimeMission?: boolean
   }
 
-  export type DinozMissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "missionId" | "dinozId" | "step" | "isFinished" | "progress", ExtArgs["result"]["dinozMission"]>
+  export type DinozMissionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "missionId" | "dinozId" | "step" | "isFinished" | "progress" | "checkTimeMission", ExtArgs["result"]["dinozMission"]>
   export type DinozMissionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozMission$dinozArgs<ExtArgs>
   }
@@ -10736,6 +10746,7 @@ export namespace Prisma {
       step: number
       isFinished: boolean | null
       progress: number | null
+      checkTimeMission: Date
     }, ExtArgs["result"]["dinozMission"]>
     composites: {}
   }
@@ -11136,6 +11147,7 @@ export namespace Prisma {
     readonly step: FieldRef<"DinozMission", 'Int'>
     readonly isFinished: FieldRef<"DinozMission", 'Boolean'>
     readonly progress: FieldRef<"DinozMission", 'Int'>
+    readonly checkTimeMission: FieldRef<"DinozMission", 'DateTime'>
   }
     
 
@@ -56763,7 +56775,8 @@ export namespace Prisma {
     dinozId: 'dinozId',
     step: 'step',
     isFinished: 'isFinished',
-    progress: 'progress'
+    progress: 'progress',
+    checkTimeMission: 'checkTimeMission'
   };
 
   export type DinozMissionScalarFieldEnum = (typeof DinozMissionScalarFieldEnum)[keyof typeof DinozMissionScalarFieldEnum]
@@ -57820,6 +57833,7 @@ export namespace Prisma {
     step?: IntFilter<"DinozMission"> | number
     isFinished?: BoolNullableFilter<"DinozMission"> | boolean | null
     progress?: IntNullableFilter<"DinozMission"> | number | null
+    checkTimeMission?: DateTimeFilter<"DinozMission"> | Date | string
     dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
   }
 
@@ -57830,6 +57844,7 @@ export namespace Prisma {
     step?: SortOrder
     isFinished?: SortOrderInput | SortOrder
     progress?: SortOrderInput | SortOrder
+    checkTimeMission?: SortOrder
     dinoz?: DinozOrderByWithRelationInput
   }
 
@@ -57844,6 +57859,7 @@ export namespace Prisma {
     step?: IntFilter<"DinozMission"> | number
     isFinished?: BoolNullableFilter<"DinozMission"> | boolean | null
     progress?: IntNullableFilter<"DinozMission"> | number | null
+    checkTimeMission?: DateTimeFilter<"DinozMission"> | Date | string
     dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
   }, "id" | "missionId_dinozId">
 
@@ -57854,6 +57870,7 @@ export namespace Prisma {
     step?: SortOrder
     isFinished?: SortOrderInput | SortOrder
     progress?: SortOrderInput | SortOrder
+    checkTimeMission?: SortOrder
     _count?: DinozMissionCountOrderByAggregateInput
     _avg?: DinozMissionAvgOrderByAggregateInput
     _max?: DinozMissionMaxOrderByAggregateInput
@@ -57871,6 +57888,7 @@ export namespace Prisma {
     step?: IntWithAggregatesFilter<"DinozMission"> | number
     isFinished?: BoolNullableWithAggregatesFilter<"DinozMission"> | boolean | null
     progress?: IntNullableWithAggregatesFilter<"DinozMission"> | number | null
+    checkTimeMission?: DateTimeWithAggregatesFilter<"DinozMission"> | Date | string
   }
 
   export type DinozSkillWhereInput = {
@@ -60905,6 +60923,7 @@ export namespace Prisma {
     step: number
     isFinished?: boolean | null
     progress?: number | null
+    checkTimeMission?: Date | string
     dinoz?: DinozCreateNestedOneWithoutMissionsInput
   }
 
@@ -60915,6 +60934,7 @@ export namespace Prisma {
     step: number
     isFinished?: boolean | null
     progress?: number | null
+    checkTimeMission?: Date | string
   }
 
   export type DinozMissionUpdateInput = {
@@ -60922,6 +60942,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
     dinoz?: DinozUpdateOneWithoutMissionsNestedInput
   }
 
@@ -60932,6 +60953,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozMissionCreateManyInput = {
@@ -60941,6 +60963,7 @@ export namespace Prisma {
     step: number
     isFinished?: boolean | null
     progress?: number | null
+    checkTimeMission?: Date | string
   }
 
   export type DinozMissionUpdateManyMutationInput = {
@@ -60948,6 +60971,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozMissionUncheckedUpdateManyInput = {
@@ -60957,6 +60981,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozSkillCreateInput = {
@@ -64002,6 +64027,7 @@ export namespace Prisma {
     step?: SortOrder
     isFinished?: SortOrder
     progress?: SortOrder
+    checkTimeMission?: SortOrder
   }
 
   export type DinozMissionAvgOrderByAggregateInput = {
@@ -64019,6 +64045,7 @@ export namespace Prisma {
     step?: SortOrder
     isFinished?: SortOrder
     progress?: SortOrder
+    checkTimeMission?: SortOrder
   }
 
   export type DinozMissionMinOrderByAggregateInput = {
@@ -64028,6 +64055,7 @@ export namespace Prisma {
     step?: SortOrder
     isFinished?: SortOrder
     progress?: SortOrder
+    checkTimeMission?: SortOrder
   }
 
   export type DinozMissionSumOrderByAggregateInput = {
@@ -70123,6 +70151,7 @@ export namespace Prisma {
     step: number
     isFinished?: boolean | null
     progress?: number | null
+    checkTimeMission?: Date | string
   }
 
   export type DinozMissionUncheckedCreateWithoutDinozInput = {
@@ -70131,6 +70160,7 @@ export namespace Prisma {
     step: number
     isFinished?: boolean | null
     progress?: number | null
+    checkTimeMission?: Date | string
   }
 
   export type DinozMissionCreateOrConnectWithoutDinozInput = {
@@ -70710,6 +70740,7 @@ export namespace Prisma {
     step?: IntFilter<"DinozMission"> | number
     isFinished?: BoolNullableFilter<"DinozMission"> | boolean | null
     progress?: IntNullableFilter<"DinozMission"> | number | null
+    checkTimeMission?: DateTimeFilter<"DinozMission"> | Date | string
   }
 
   export type DinozSkillUpsertWithWhereUniqueWithoutDinozInput = {
@@ -81314,6 +81345,7 @@ export namespace Prisma {
     step: number
     isFinished?: boolean | null
     progress?: number | null
+    checkTimeMission?: Date | string
   }
 
   export type DinozSkillCreateManyDinozInput = {
@@ -81424,6 +81456,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozMissionUncheckedUpdateWithoutDinozInput = {
@@ -81432,6 +81465,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozMissionUncheckedUpdateManyWithoutDinozInput = {
@@ -81440,6 +81474,7 @@ export namespace Prisma {
     step?: IntFieldUpdateOperationsInput | number
     isFinished?: NullableBoolFieldUpdateOperationsInput | boolean | null
     progress?: NullableIntFieldUpdateOperationsInput | number | null
+    checkTimeMission?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozSkillUpdateWithoutDinozInput = {

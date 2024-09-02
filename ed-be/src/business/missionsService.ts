@@ -13,18 +13,21 @@ import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUti
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, DinozMission } from '@drpg/prisma';
 import { Request } from 'express';
-import { PlayerWithMissionData, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
+import { PlayerWithMissionData, getDinozFightDataRequest, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
 import {
 	addMissionToDinoz,
 	finishMission,
 	removeMissionFromDinoz,
 	updateMissionProgression,
-	updateMissionStep
+	updateMissionStep,
+	updateTimeMission
 } from '../dao/dinozMissionDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { specialActionsList } from '@drpg/core/models/missions/specialActionsList';
+import { calculateFight, rewardFight } from './fightService.js';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
@@ -139,21 +142,20 @@ export async function interactMission(req: Request) {
 	if (!playerId) {
 		throw new ExpectedError('No player found');
 	}
-
 	const mission = await checkMission(req);
 
 	const task = mission.actualStep.requirement.actionType;
 
 	switch (task) {
 		case ConditionEnum.TALKTO:
-			await updateMissionStep(
+		case ConditionEnum.DO:
+			const now = new Date();
+			await updateTimeMission(
 				playerId,
 				[mission.dinoz.id],
 				mission.dinozMission.missionId,
-				mission.actualStep.stepId + 1
-			);
-			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
-		case ConditionEnum.DO:
+				now
+			)
 			await updateMissionStep(
 				playerId,
 				[mission.dinoz.id],
@@ -165,6 +167,71 @@ export async function interactMission(req: Request) {
 			return 'error';
 	}
 }
+
+export async function launchFight(req: Request) {
+    const playerId = req.auth?.playerId;
+    if (!playerId) {
+        throw new ExpectedError('No player found');
+    }
+    const mission = await checkMission(req);
+	const task = mission.actualStep.requirement.actionType
+
+    const dinozId = mission.dinoz.id;
+    const playerData = await getDinozFightDataRequest(dinozId, playerId);
+    if (!playerData) {
+        throw new ExpectedError(`No player ${playerId} found`);
+    }
+    const dinozData = playerData.dinoz.find(d => d.id === dinozId);
+    if (!dinozData) {
+        throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+    }
+	const team = [dinozData];
+    const specialFight = Object.values(specialActionsList).find(s => s.opponents === mission.actualStep.requirement.target);
+	
+	// Ajouter les alliés à la team ??? => Ex. mission 4 Mme X <actfight act="Les Neutraliser" allies="gang1:gang2:gang3" monsters="borg">
+	switch(task) {
+		case ConditionEnum.LAUNCH_FIGHT:
+			if (specialFight?.opponents) {
+				const fightResult = calculateFight(team, playerData, dinozData.placeId, specialFight.opponents);
+				const result: FightResult = await rewardFight(
+					team,
+					specialFight.opponents,
+					fightResult,
+					dinozData.placeId,
+					playerData
+				);
+				if (fightResult.winner) {
+					await rewarder(specialFight.reward, team, playerData.id);
+					await updateMissionStep(
+						playerId,
+						[mission.dinoz.id],
+						mission.dinozMission.missionId,
+						mission.actualStep.stepId + 1
+					);
+					const now = new Date();
+					await updateTimeMission(
+						playerId,
+						[mission.dinoz.id],
+						mission.dinozMission.missionId,
+						now
+					)
+				}
+				if (specialFight.startText) {
+					result.startText = specialFight.startText;
+				}
+				if (specialFight.endText) {
+					result.endText = specialFight.endText;
+				}
+				return {
+					service: [ServiceEnum.FIGHT],
+					fight: result
+				};
+			} else {
+				throw new ExpectedError('No special fight found for this mission');
+			}
+	}
+}
+
 
 export async function endMission(req: Request) {
 	const mission = await checkMission(req);
@@ -236,7 +303,7 @@ async function checkMission(req: Request) {
 
 export function getMissionAction(
 	dinoz: Pick<Dinoz, 'placeId'> & {
-		missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
+		missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished' | 'checkTimeMission'>[];
 	}
 ) {
 	const actualStep = getActualStep(dinoz);
@@ -247,7 +314,8 @@ export function getMissionAction(
 
 	if (
 		(dinoz.placeId === actualStep.place || actualStep.place === PlaceEnum.ANYWHERE) &&
-		!actualStep.displayedAction.includes('kill')
+		!actualStep.displayedAction.includes('kill') &&
+		!actualStep.displayedAction.includes('wait')
 	) {
 		return actualStep.displayedAction;
 	} else return;

@@ -90,6 +90,14 @@ export enum Monster {
 	SNOW_GROMSTER = 'SNOW_GROMSTER',
 	CHIMCHEREE = 'CHIMCHEREE',
 	LAPOUF = 'LAPOUF',
+	// MONSTRES SPECIAUX MADAME X
+	MERCH1 = 'MERCH1',
+	MERCH2 = 'MERCH2',
+	GANG1 = 'GANG1',
+	GANG2 = 'GANG2',
+	GANG3 = 'GANG3',
+	SUSPC = 'SUSPC',
+	SUSPC1 = 'SUSPC1',
 	ANY = 'ANY'
 }
 
@@ -653,7 +661,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 1, odds: 1 }
 		],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL]
+		skills: [Skill.M_STEAL],
+		display: 'brig1'
 	},
 	[Monster.BRIG2_ALL]: {
 		id: Monster.BRIG2_ALL,
@@ -708,7 +717,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 3, odds: 1 }
 		],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL]
+		skills: [Skill.M_STEAL],
+		display: 'brig2'
 	},
 	[Monster.BRIG3_ALL]: {
 		id: Monster.BRIG3_ALL,
@@ -761,7 +771,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			{ quantity: 2, odds: 1 }
 		],
 		canBeCaptured: true,
-		skills: [Skill.M_STEAL]
+		skills: [Skill.M_STEAL],
+		display: 'brig3'
 	},
 	[Monster.GROPI]: {
 		id: Monster.GROPI,
@@ -2054,6 +2065,152 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.OBSERVATOIRE
 		],
 		canBeCaptured: true
+	},
+	[Monster.MERCH1]: {
+		id: Monster.MERCH1,
+		name: 'merch1',
+		level: 5,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		balanced: true,
+		hp: 30,
+		odds: 100,
+		xp: 7,
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig3'
+	},
+	[Monster.MERCH2]: {
+		id: Monster.MERCH2,
+		name: 'merch2',
+		level: 5,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 2,
+		bonus_defense: 2,
+		balanced: true,
+		hp: 30,
+		xp: 6,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig2'
+	},
+	[Monster.GANG1]: {
+		id: Monster.GANG1,
+		name: 'gang1',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 10,
+		balanced: true,
+		hp: 100,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig3'
+	},
+	[Monster.GANG2]: {
+		id: Monster.GANG2,
+		name: 'gang2',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 1,
+		balanced: true,
+		hp: 100,
+		odds: 100,
+		skills: [],
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig3'
+	},
+	[Monster.GANG3]: {
+		id: Monster.GANG3,
+		name: 'gang3',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 10,
+		bonus_defense: 1,
+		balanced: true,
+		hp: 100,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig3'
+	},
+	[Monster.SUSPC]: {
+		id: Monster.SUSPC,
+		name: 'suspc',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 3,
+		balanced: true,
+		hp: 40,
+		xpBonus: 4,
+		odds: 100,
+		skills: [],
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig1'
+	},
+	[Monster.SUSPC1]: {
+		id: Monster.SUSPC1,
+		name: 'suspc1',
+		level: 10,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 3,
+		bonus_defense: 3,
+		balanced: true,
+		hp: 40,
+		xpBonus: 4,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		display: 'brig2'
 	},
 	[Monster.ANY]: {
 		id: Monster.ANY,

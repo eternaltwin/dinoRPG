@@ -125,6 +125,8 @@ import DZFollow from '../../components/dinoz/DZFollow.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
+import { MissionStep } from '@drpg/core/models/missions/missionSteps';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -137,6 +139,7 @@ export default defineComponent({
 			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
 				.missionHUD,
 			npcName: undefined as string | undefined,
+			missionStep: undefined as MissionStep[] | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
 			dinozStore: dinozStore(),
@@ -256,7 +259,8 @@ export default defineComponent({
 							this.$route.params.id.toString(),
 							this.dinoz.missionId!
 						);
-					} else {
+					} else if (this.mission && this.mission.actionType !== ConditionEnum.LAUNCH_FIGHT) {
+						EventBus.emit('isLoading', true);
 						try {
 							this.npcName = action.prop as string;
 							this.NPCModal = await MissionService.interactMission(
@@ -266,6 +270,54 @@ export default defineComponent({
 							);
 						} catch (e) {
 							errorHandler.handle(e, this.$toast);
+						}
+						EventBus.emit('isLoading', false);
+					} else {
+						EventBus.emit('isLoading', true);
+						try {
+							const missionStep = await MissionService.launchFight(
+								this.$route.params.id.toString(),
+								this.dinoz.missionId!,
+								action.prop as string
+							);
+							if (missionStep.service) {
+								for (const service of missionStep.service) {
+									switch (service) {
+										case ServiceEnum.FIGHT:
+											this.sessionStore.setFightResult(missionStep.fight);
+											// eslint-disable-next-line no-case-declarations
+											const dinozList = this.dinozStore.getDinozList;
+											if (!dinozList) {
+												this.$toast.open({
+													message: formatText(this.$t(`toast.missingData`)),
+													type: 'error'
+												});
+												return;
+											}
+
+											this.dinozStore.setDinozList(
+												dinozList.map(dinoz => {
+													if (dinoz.id === +this.$route.params.id || dinoz.leaderId === +this.$route.params.id) {
+														dinoz.life -= missionStep.fight!.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+													}
+													return dinoz;
+												})
+											);
+
+											this.$router.push({
+												name: 'Fight',
+												params: { dinozId: this.$route.params.id.toString() }
+											});
+											break;
+										default:
+											break;
+									}
+								}
+							}
+						} catch (e) {
+							errorHandler.handle(e, this.$toast);
+						} finally {
+							EventBus.emit('isLoading', false);
 						}
 					}
 					break;

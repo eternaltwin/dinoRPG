@@ -14,11 +14,22 @@ export type missionRequirement =
 			target: MonsterFiche[];
 	  }
 	| {
+			actionType: ConditionEnum.LAUNCH_FIGHT;
+			target: MonsterFiche[];
+			action?: string;
+  	  }
+	| {
+			actionType: ConditionEnum.HOUR;
+			value: number;
+			target: string;
+			action?: string;
+  	  }
+	| {
 			actionType: ConditionEnum.TALKTO;
 			target: string;
 			action?: string;
 	  }
 	| {
-			actionType: Exclude<ConditionEnum, ConditionEnum.KILL | ConditionEnum.KILL_BOSS | ConditionEnum.TALKTO>;
+			actionType: Exclude<ConditionEnum, ConditionEnum.KILL | ConditionEnum.KILL_BOSS | ConditionEnum.TALKTO | ConditionEnum.LAUNCH_FIGHT | ConditionEnum.HOUR>;
 			target: string;
 	  };

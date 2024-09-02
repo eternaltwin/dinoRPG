@@ -8,7 +8,7 @@ import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 
 export function getHUDObjective(
 	dinoz: Pick<Dinoz, 'placeId'> & {
-		missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
+		missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished' | 'checkTimeMission'>[];
 	}
 ) {
 	const actualStep = getActualStep(dinoz);
@@ -20,7 +20,7 @@ export function getHUDObjective(
 	const dinozActualPlace = Object.values(placeList).find(place => place.placeId === dinoz.placeId);
 	const HUD: MissionHUD = actualStep.requirement;
 
-	if (HUD.actionType === ConditionEnum.KILL) {
+	if (HUD.actionType === ConditionEnum.KILL || HUD.actionType === ConditionEnum.HOUR) {
 		HUD.progress = actualStep.progress;
 	}
 
@@ -56,12 +56,18 @@ export type DinozToGetActualStep = Parameters<typeof getActualStep>[0];
  * @returns The mission step or undefined if the dinoz has no mission
  */
 export function getActualStep(dinoz: {
-	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished'>[];
+	missions: Pick<DinozMission, 'missionId' | 'step' | 'progress' | 'isFinished' | 'checkTimeMission'>[];
 }): MissionStep | undefined {
 	const missionDinoz = dinoz.missions.find(mission => !mission.isFinished);
 	if (!missionDinoz) {
 		return;
 	}
+
+	const missionStartTime = missionDinoz.checkTimeMission;
+	if (!missionStartTime) {
+		return;
+	}
+
 	const npc = Object.values(npcList).find(
 		npc => npc.missions?.find(mission => mission.missionId === missionDinoz.missionId)
 	);

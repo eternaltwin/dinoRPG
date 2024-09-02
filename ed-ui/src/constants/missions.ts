@@ -55,5 +55,11 @@ export const missionsList: Record<number, string> = {
 	48: 'bckpck',
 	//RODEUR
 	49: 'rodriz',
-	50: 'rodlif'
+	50: 'rodlif',
+	// MME X
+	51: 'mmex1',
+	52: 'mmex2',
+	53: 'mmex3',
+	54: 'mmex4',
+	55: 'mmex5'
 };

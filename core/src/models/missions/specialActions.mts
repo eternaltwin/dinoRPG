@@ -3,9 +3,11 @@ import { Rewarder } from '../reward/Rewarder.mjs';
 import { MonsterFiche } from '../fight/MonsterFiche.mjs';
 
 export interface SpecialActions {
+	name?: string;
 	place: number;
 	condition: Condition;
-	opponents?: MonsterFiche[];
+	allies?: MonsterFiche[];
+	opponents: MonsterFiche[];
 	reward: Rewarder[];
 	startText?: FightText;
 	endText?: FightText;
