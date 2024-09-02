@@ -4,6 +4,7 @@ import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter
 import { Item } from '@drpg/core/models/item/ItemList';
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from './fightConstants.js';
 import { hasStatus } from './fightMethods.js';
+import seedrandom from 'seedrandom';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -147,6 +148,7 @@ export const getAttackDefense = (
 // - global factor
 // - balance if both fighters need balanced damage
 export const calculateDamage = (
+	random: seedrandom.PRNG,
 	attacker: DetailedFighter,
 	target: DetailedFighter,
 	attack: number,
@@ -154,7 +156,7 @@ export const calculateDamage = (
 	isCloseCombat: boolean
 ) => {
 	// Apply random factor
-	const random_attack_bonus = (Math.random() * attack) / 3;
+	const random_attack_bonus = (random() * attack) / 3;
 	attack += random_attack_bonus;
 
 	// Apply global factor

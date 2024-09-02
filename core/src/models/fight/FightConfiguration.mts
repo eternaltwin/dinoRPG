@@ -23,8 +23,8 @@ export type DinozToGetFighter = Pick<
 };
 
 export interface FightConfiguration {
-	// Seed (optional, only to replay a fight)
-	seed?: number;
+	// Seed
+	seed: string;
 
 	// Flags
 	canUseEquipment: boolean;

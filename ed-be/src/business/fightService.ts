@@ -14,7 +14,7 @@ import { createLog } from '../dao/logDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
-import { getRandomNumber } from '../utils/index.js';
+import { generateString, getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
@@ -31,6 +31,7 @@ import { mouvementListener } from './specialService.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import seedrandom from 'seedrandom';
 
 /**
  * @summary Process a fight
@@ -136,12 +137,30 @@ export async function moveFight(
 	return result;
 }
 
+/**
+ * @summary Calculates a fight against monsters
+ * If a seed is provided, the fight will be played using said seed. If not a seed will be generated.
+ * Rules are:
+ * - objects (including magic) can be used and will be consumed, (not the magic ones)
+ * - capture is authorized
+ * - the balance item is enabled,
+ * - stats are disabled
+ * 
+ * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
+ * 
+ * @returns FightProcessResult
+ *  */ 
+// 
 export function calculateFight(
 	team: DinozToGetFighter[],
 	player: Pick<Player, 'cooker'>,
 	place: PlaceEnum,
-	monsters?: MonsterFiche[]
+	monsters?: MonsterFiche[],
+	seed?: string,
 ): FightProcessResult {
+	let rng_seed = seed ?? generateString(20)
+	let rng = seedrandom(rng_seed);
+
 	const fighters = getFighters(
 		{
 			dinozList: team,
@@ -151,10 +170,13 @@ export function calculateFight(
 			dinozList: [],
 			monsterList: monsters ?? []
 		},
-		place
+		place,
+		rng
 	);
 
 	const fightConfiguration: FightConfiguration = {
+		seed: rng_seed,
+
 		// Flags
 		canUseEquipment: true,
 		canUsePermanentEquipmentOnly: false,
@@ -175,7 +197,7 @@ export function calculateFight(
 		place
 	};
 
-	return generateFight(fightConfiguration, place);
+	return generateFight(fightConfiguration, place, rng);
 }
 
 export type DinozToRewardFight = Parameters<typeof rewardFight>[0][number];

@@ -19,11 +19,14 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
-import randomBetween from './randomBetween.js';
+import randomBetween, { randomBetweenSeeded } from './randomBetween.js';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
+import seedrandom from 'seedrandom';
 
 export type DetailedFight = {
+	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
+	rng: seedrandom.PRNG,
 	place: PlaceEnum;
 	loser: 'attackers' | 'defenders' | null;
 	steps: FightStep[];
@@ -67,15 +70,16 @@ const orderFighters = (fightData: DetailedFight) => {
 
 		// Random if times are equal
 		if (a.time === b.time) {
-			return Math.random() > 0.5 ? 1 : -1;
+			return fightData.rng() > 0.5 ? 1 : -1;
 		}
 		// Lowest time first
 		return a.time - b.time;
 	});
 };
 
-const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProcessResult => {
+const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedrandom.PRNG): FightProcessResult => {
 	const fightData: DetailedFight = {
+		rng,
 		loser: null,
 		steps: [] as FightStep[],
 		initialDinozList: [...config.initialDinozList],
@@ -291,7 +295,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		// JOKER
 		if (fighter.skills.some(skill => skill.id === Skill.JOKER)) {
 			// 50% chance to get 25% / -25% speed
-			fighter.stats.speed.global *= Math.random() > 0.5 ? 1.25 : 0.75;
+			fighter.stats.speed.global *= fightData.rng() > 0.5 ? 1.25 : 0.75;
 
 			// Add skill step
 			fightData.steps.push({
@@ -405,7 +409,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 
 		if (fighter.skills.some(skill => skill.id === Skill.MEDECINE)) {
 			// Heal 1-4HP
-			heal(fightData, fighter, randomBetween(1, 4));
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 4));
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.BRANCARDIER)) {
@@ -416,7 +420,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 
 			if (allies.length) {
 				// Get random ally
-				const ally = allies[Math.floor(Math.random() * allies.length)];
+				const ally = allies[Math.floor(fightData.rng() * allies.length)];
 
 				// Heal 2-6HP
 				heal(fightData, ally, randomBetween(2, 6));
@@ -481,6 +485,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 		}));
 
 	return {
+		seed: config.seed,
 		winner,
 		attackers: attackersResults,
 		defenders: defendersResults,

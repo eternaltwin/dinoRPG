@@ -4,8 +4,9 @@ import { Boss } from '@drpg/core/models/fight/BossList';
 import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { Monster } from '@drpg/core/models/fight/MonsterList';
 import { TIME_FACTOR } from './fightConstants.js';
-import randomBetween from './randomBetween.js';
+import { randomBetweenSeeded } from './randomBetween.js';
 import { createStatus } from './fightMethods.js';
+import seedrandom from 'seedrandom';
 
 const worm = (monster: DetailedFighter) => {
 	monster.stats.special.armor += 1;
@@ -16,25 +17,6 @@ const worm = (monster: DetailedFighter) => {
 const sentinel = (monster: DetailedFighter) => {
 	monster.stats.special.counter *= 1.9;
 	monster.status.push(createStatus(Status.NO_ASSAULT));
-};
-
-const elemental = (monster: DetailedFighter) => {
-	monster.time += 30 * TIME_FACTOR;
-	monster.stats.speed.global *= 3;
-	monster.stats.base[ElementType.FIRE] = 10;
-	monster.stats.base[ElementType.WOOD] = 10;
-	monster.stats.base[ElementType.WATER] = 10;
-	monster.stats.base[ElementType.LIGHTNING] = 10;
-	monster.stats.base[ElementType.AIR] = 10;
-	monster.stats.base[ElementType.VOID] = 10;
-	monster.canHitFlying = true;
-	monster.canHitIntangible = true;
-
-	const randomElement = randomBetween(1, 6) as ElementType;
-
-	// Lock to a single element
-	monster.elements = [randomElement];
-	monster.element = randomElement;
 };
 
 const stinger = (monster: DetailedFighter) => {
@@ -242,9 +224,6 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	[Boss.PR_IGOR]: monster => {
 		monster.stats.special.evasion *= 1.25;
 		monster.stats.speed.global *= 3;
-	},
-	[Boss.TOWER_GUARDIAN]: monster => {
-		elemental(monster);
 	},
 	[Boss.YAKUZI]: monster => {
 		monster.stats.special.multihit *= 1.25;
