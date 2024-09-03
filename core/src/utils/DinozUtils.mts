@@ -395,6 +395,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 	const fullDisplay = [...display];
 	fullDisplay[1] = '0';
 
+
+	//TODO use upchance
 	let fire = 0;
 	let water = 0;
 	let wood = 0;
@@ -435,6 +437,7 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 		nbrUpAir: race.nbrAir + air,
 		display: fullDisplay.toString().replaceAll(',', ''),
 		maxLife: 100,
+		placeId: PlaceEnum.DINOVILLE,
 		life: 1
 	};
 };

@@ -917,6 +917,9 @@ export async function getDinozToReincarnate(dinozId: number) {
 			skills: {
 				select: { skillId: true }
 			},
+			status: {
+				select: { statusId: true }
+			},
 			display: true,
 			id: true,
 			raceId: true,
