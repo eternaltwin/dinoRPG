@@ -188,7 +188,7 @@ export default defineComponent({
 			const items = await InventoryService.getAllItemsData();
 			this.allItemsData = items.map(i => {
 				return {
-					...itemList[i.name.toUpperCase()],
+					...itemList[i.id],
 					maxQuantity: i.maxQuantity,
 					quanity: i.quantity
 				};

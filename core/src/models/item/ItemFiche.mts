@@ -19,7 +19,7 @@ export interface ItemFiche {
 }
 
 export interface ItemFicheDTO {
-	name: string;
+	id: number;
 	price: number;
 	quantity: number;
 	maxQuantity: number;

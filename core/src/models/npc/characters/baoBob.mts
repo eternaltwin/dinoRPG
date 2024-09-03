@@ -3,7 +3,7 @@ import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { Item, itemList } from '../../item/ItemList.mjs';
 
 export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -158,7 +158,7 @@ export const BOB_STAR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.MAGIC_STAR.itemId,
+				value: itemList[Item.MAGIC_STAR].itemId,
 				quantity: 1
 			},
 			{

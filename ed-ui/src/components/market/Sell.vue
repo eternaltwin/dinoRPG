@@ -311,7 +311,7 @@ export default defineComponent({
 			this.items = items
 				.map(i => {
 					return {
-						...itemList[i.name.toUpperCase()],
+						...itemList[i.id],
 						quantity: i.quantity
 					};
 				})

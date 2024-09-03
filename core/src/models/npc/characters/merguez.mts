@@ -1,5 +1,5 @@
 import { RewardEnum } from '../../enums/Parser.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { itemList, Item } from '../../item/ItemList.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
 
@@ -18,7 +18,7 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.GOBLIN_MERGUEZ.itemId,
+				value: itemList[Item.GOBLIN_MERGUEZ].itemId,
 				quantity: 5
 			}
 		],
@@ -49,7 +49,7 @@ export const MERGUEZ_STAR: Readonly<Record<string, NpcData>> = {
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.MAGIC_STAR.itemId,
+				value: itemList[Item.MAGIC_STAR].itemId,
 				quantity: 1
 			},
 			{

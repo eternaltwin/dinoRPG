@@ -303,7 +303,7 @@ import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat'
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 
@@ -428,11 +428,11 @@ export default defineComponent({
 				}
 
 				// Remove torchDamage stat if last lighter was unequipped
-				if (event === 'unequip' && item === itemList.ZIPPO.itemId) {
+				if (event === 'unequip' && item === itemList[Item.ZIPPO].itemId) {
 					if (this.dinozData.items?.filter(i => i === item).length === 1) {
 						this.specialStats = this.specialStats.filter(stat => stat?.name !== SpecialStat.TORCH_DAMAGE);
 					}
-				} else if (event === 'equip' && item === itemList.ZIPPO.itemId) {
+				} else if (event === 'equip' && item === itemList[Item.ZIPPO].itemId) {
 					// Add torchDamage stat if lighter was equipped and no other lighter was equipped
 					if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
 						const torchDamage = getSpecialStat(

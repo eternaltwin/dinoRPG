@@ -4,7 +4,7 @@ import { GatherType } from '../enums/GatherType.mjs';
 import { ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { ingredientList } from '../ingredient/ingredientList.mjs';
-import { itemList } from '../item/ItemList.mjs';
+import { Item, itemList } from '../item/ItemList.mjs';
 import { GatherData } from './gatherData.mjs';
 
 export const gatherList: Record<GatherType, GatherData> = {
@@ -572,12 +572,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		minimumClick: 3,
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.POSSESS_OBJECT]: itemList.CANDLE_CARD.itemId },
+				{ [ConditionEnum.POSSESS_OBJECT]: itemList[Item.CANDLE_CARD].itemId },
 				{ [ConditionEnum.PLACE_IS]: PlaceEnum.PORT_DE_PRECHE }
 			]
 		},
 		cost: {
-			...itemList.CANDLE_CARD,
+			...itemList[Item.CANDLE_CARD],
 			quantity: 1
 		},
 		apparence: 'ANNIV',
@@ -664,32 +664,32 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD1000.itemId,
+				ingredientId: itemList[Item.GOLD1000].itemId,
 				startQuantity: 10
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD2000.itemId,
+				ingredientId: itemList[Item.GOLD2000].itemId,
 				startQuantity: 8
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD3000.itemId,
+				ingredientId: itemList[Item.GOLD3000].itemId,
 				startQuantity: 5
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD20000.itemId,
+				ingredientId: itemList[Item.GOLD20000].itemId,
 				startQuantity: 2
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.TICTAC_TICKET.itemId,
+				ingredientId: itemList[Item.TICTAC_TICKET].itemId,
 				startQuantity: 1
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.SMOG_EGG_ANNIVERSARY.itemId,
+				ingredientId: itemList[Item.SMOG_EGG_ANNIVERSARY].itemId,
 				startQuantity: 2
 			}
 		]
@@ -705,7 +705,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 		apparence: 'XMAS',
 		items: [],
 		cost: {
-			...itemList.CHRISTMAS_TICKET,
+			...itemList[Item.CHRISTMAS_TICKET],
 			quantity: 1
 		}
 	},
@@ -720,7 +720,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 		apparence: 'TICTAC',
 		items: [],
 		cost: {
-			...itemList.TICTAC_TICKET,
+			...itemList[Item.TICTAC_TICKET],
 			quantity: 1
 		}
 	},
@@ -735,7 +735,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 		apparence: 'LABO',
 		items: [],
 		cost: {
-			...itemList.TICTAC_TICKET,
+			...itemList[Item.TICTAC_TICKET],
 			quantity: 1
 		}
 	},
@@ -750,7 +750,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 		apparence: 'LABO',
 		items: [],
 		cost: {
-			...itemList.TICTAC_TICKET,
+			...itemList[Item.TICTAC_TICKET],
 			quantity: 1
 		}
 	},
@@ -763,7 +763,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 		minimumClick: 1,
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.POSSESS_OBJECT]: itemList.DAILY_TICKET.itemId },
+				{ [ConditionEnum.POSSESS_OBJECT]: itemList[Item.DAILY_TICKET].itemId },
 				{ [ConditionEnum.PLACE_IS]: PlaceEnum.UNIVERSITE }
 			]
 		},
@@ -771,32 +771,32 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD2500.itemId,
+				ingredientId: itemList[Item.GOLD2500].itemId,
 				startQuantity: 12
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD5000.itemId,
+				ingredientId: itemList[Item.GOLD5000].itemId,
 				startQuantity: 8
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD10000.itemId,
+				ingredientId: itemList[Item.GOLD10000].itemId,
 				startQuantity: 4
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.GOLD20000.itemId,
+				ingredientId: itemList[Item.GOLD20000].itemId,
 				startQuantity: 2
 			},
 			{
 				type: 'item',
-				ingredientId: itemList.BOX_HANDLER.itemId,
+				ingredientId: itemList[Item.BOX_HANDLER].itemId,
 				startQuantity: 10
 			}
 		],
 		cost: {
-			...itemList.DAILY_TICKET,
+			...itemList[Item.DAILY_TICKET],
 			quantity: 1
 		}
 	}

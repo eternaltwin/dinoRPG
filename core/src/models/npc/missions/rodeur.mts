@@ -2,7 +2,7 @@ import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { itemList, Item } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { MapZone } from '../../enums/MapZone.mjs';
@@ -15,7 +15,7 @@ export const M_RODEUR: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.AMNESIC_RICE.itemId,
+				value: itemList[Item.AMNESIC_RICE].itemId,
 				quantity: 1
 			},
 			{

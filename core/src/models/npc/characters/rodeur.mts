@@ -1,7 +1,7 @@
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { Item, itemList } from '../../item/ItemList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
 
 export const RODEUR: Readonly<Record<string, NpcData>> = {
@@ -105,7 +105,7 @@ export const RODEUR3: Readonly<Record<string, NpcData>> = {
 			{
 				rewardType: RewardEnum.ITEM,
 				quantity: 1,
-				value: itemList.TIK_BRACELET.itemId
+				value: itemList[Item.TIK_BRACELET].itemId
 			},
 			{
 				rewardType: RewardEnum.EPIC,

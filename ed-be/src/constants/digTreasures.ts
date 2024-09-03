@@ -3,7 +3,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum, Operator, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 
 export const digTreasures: Readonly<Record<string, DigData>> = {
 	BASALT: {
@@ -81,7 +81,7 @@ export const digTreasures: Readonly<Record<string, DigData>> = {
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.MAGIC_STAR.itemId,
+				value: itemList[Item.MAGIC_STAR].itemId,
 				quantity: 1
 			}
 		],

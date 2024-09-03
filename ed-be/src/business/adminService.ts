@@ -230,7 +230,6 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 	}
 }
 
-
 /**
  * @summary Add, remove, or modify item quantities for a player
  * @param req
@@ -240,27 +239,41 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
  * @return void
  */
 export async function modifyPlayerItems(req: Request): Promise<void> {
-    if (!req.auth?.playerId) {
-        throw new ExpectedError(`You need to be logged in.`);
-    }
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`You need to be logged in.`);
+	}
 
-    const items: Array<{ id: number, quantity: number }> = req.body.items;
-    switch (req.body.operation) {
-        case 'increase':
-            for (const item of items) {
-                await increaseItemQuantity(+req.params.id, item.id, item.quantity);
-                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, item.id, item.quantity);
-            }
-            break;
-        case 'decrease':
-            for (const item of items) {
-                await decreaseItemQuantity(+req.params.id, item.id, item.quantity);
-                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, item.id, item.quantity);
-            }
-            break;
-        default:
-            throw new ExpectedError(`You need to select a valid operation.`);
-    }
+	const items: Array<{ id: number; quantity: number }> = req.body.items;
+	switch (req.body.operation) {
+		case 'increase':
+			for (const item of items) {
+				await increaseItemQuantity(+req.params.id, item.id, item.quantity);
+				await createLog(
+					LogType.AdminUpdatePlayer,
+					req.auth.playerId,
+					undefined,
+					+req.params.id,
+					item.id,
+					item.quantity
+				);
+			}
+			break;
+		case 'decrease':
+			for (const item of items) {
+				await decreaseItemQuantity(+req.params.id, item.id, item.quantity);
+				await createLog(
+					LogType.AdminUpdatePlayer,
+					req.auth.playerId,
+					undefined,
+					+req.params.id,
+					item.id,
+					item.quantity
+				);
+			}
+			break;
+		default:
+			throw new ExpectedError(`You need to select a valid operation.`);
+	}
 }
 
 /**
@@ -272,29 +285,28 @@ export async function modifyPlayerItems(req: Request): Promise<void> {
  * @return void
  */
 export async function modifyPlayerIngredients(req: Request): Promise<void> {
-    if (!req.auth?.playerId) {
-        throw new ExpectedError(`You need to be logged in.`);
-    }
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`You need to be logged in.`);
+	}
 
-    const ingredients: Array<{ id: number, quantity: number }> = req.body.ingredients;
-    switch (req.body.operation) {
-        case 'increase':
-            for (const ing of ingredients) {
-                await increaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
-                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
-            }
-            break;
-        case 'decrease':
-            for (const ing of ingredients) {
-                await decreaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
-                await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
-            }
-            break;
-        default:
-            throw new ExpectedError(`You need to select a valid operation.`);
-    }
+	const ingredients: Array<{ id: number; quantity: number }> = req.body.ingredients;
+	switch (req.body.operation) {
+		case 'increase':
+			for (const ing of ingredients) {
+				await increaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
+				await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
+			}
+			break;
+		case 'decrease':
+			for (const ing of ingredients) {
+				await decreaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
+				await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
+			}
+			break;
+		default:
+			throw new ExpectedError(`You need to select a valid operation.`);
+	}
 }
-
 
 /**
  * @summary List all dinoz from a player
@@ -502,10 +514,10 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		ingredients: player.ingredients.map(ing => ({
 			ingredientId: ing.ingredientId,
 			quantity: ing.quantity
-	})),
+		})),
 		role: player.role
 	};
-	return playerToSend;	
+	return playerToSend;
 }
 
 /**

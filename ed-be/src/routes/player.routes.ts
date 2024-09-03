@@ -310,7 +310,6 @@ routes.get(`${commonPath}/labrute`, [], async (req: Request, res: Response) => {
 	}
 });
 
-
 /**
  * @openapi
  * /api/v1/player/{playerId}:

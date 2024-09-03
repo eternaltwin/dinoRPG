@@ -1,7 +1,7 @@
 import { ConditionEnum, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { itemList, Item } from '../../item/ItemList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
 
 export const ALIEN_0: Readonly<Record<string, NpcData>> = {
@@ -88,13 +88,13 @@ export const ALIEN_8: Readonly<Record<string, NpcData>> = {
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.MAGIC_STAR.itemId,
+				value: itemList[Item.MAGIC_STAR].itemId,
 				quantity: 7,
 				reverse: true
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.GOLDEN_NAPODINO.itemId,
+				value: itemList[Item.GOLDEN_NAPODINO].itemId,
 				quantity: 1
 			},
 			{

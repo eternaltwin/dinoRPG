@@ -1,6 +1,6 @@
 import { ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
-import { itemList } from '../item/ItemList.mjs';
+import { itemList, Item } from '../item/ItemList.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { ALPHA } from './characters/alpha.mjs';
 import { ARCHISAGE } from './characters/archisage.mjs';
@@ -155,7 +155,7 @@ export const npcList: Record<string, Npc> = {
 			[Operator.NOT]: {
 				[Operator.AND]: [
 					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '='] },
-					{ [ConditionEnum.EQUIP]: itemList.CLOUD_BURGER.itemId }
+					{ [ConditionEnum.EQUIP]: itemList[Item.CLOUD_BURGER].itemId }
 				]
 			}
 		},
@@ -458,7 +458,7 @@ export const npcList: Record<string, Npc> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '='] },
-				{ [ConditionEnum.EQUIP]: itemList.CLOUD_BURGER.itemId }
+				{ [ConditionEnum.EQUIP]: itemList[Item.CLOUD_BURGER].itemId }
 			]
 		},
 		display: 'merguez',
@@ -473,7 +473,7 @@ export const npcList: Record<string, Npc> = {
 		condition: {
 			[Operator.AND]: [
 				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-				{ [ConditionEnum.EQUIP]: itemList.LITTLE_PEPPER.itemId }
+				{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
 			]
 		},
 		display: 'skully',
@@ -489,7 +489,7 @@ export const npcList: Record<string, Npc> = {
 			[Operator.NOT]: {
 				[Operator.AND]: [
 					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-					{ [ConditionEnum.EQUIP]: itemList.LITTLE_PEPPER.itemId }
+					{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
 				]
 			}
 		},

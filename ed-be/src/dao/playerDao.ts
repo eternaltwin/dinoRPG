@@ -1,4 +1,4 @@
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
@@ -674,7 +674,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
 					quantity: true
 				},
 				where: {
-					itemId: { in: [itemId, itemList.GOLDEN_NAPODINO.itemId, itemList.TREASURE_COUPON.itemId] }
+					itemId: { in: [itemId, itemList[Item.GOLDEN_NAPODINO].itemId, itemList[Item.TREASURE_COUPON].itemId] }
 				}
 			},
 			dinoz: {

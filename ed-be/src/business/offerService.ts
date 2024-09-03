@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { addBid, deleteOffer, getOffer, getOffers, insertOffer, updateOfferStatus } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { getDinozPlace, updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
 import {
@@ -229,7 +229,7 @@ export async function cancelOffer(req: Request) {
 	// Add tickets to inventory
 	ticketPromises.push(
 		...Object.entries(bids).map(([userId, value]) =>
-			increaseItemQuantity(+userId, itemList.TREASURE_COUPON.itemId, value)
+			increaseItemQuantity(+userId, itemList[Item.TREASURE_COUPON].itemId, value)
 		)
 	);
 
@@ -281,7 +281,7 @@ export async function bidOffer(req: Request) {
 	}
 
 	// Check if player has enough tickets
-	const playerItems = await getPlayerItems(authed.id, { itemId: itemList.TREASURE_COUPON.itemId });
+	const playerItems = await getPlayerItems(authed.id, { itemId: itemList[Item.TREASURE_COUPON].itemId });
 	const playerTickets = playerItems[0]?.quantity || 0;
 
 	if (playerTickets < value - previousOwnBid) {
@@ -292,12 +292,12 @@ export async function bidOffer(req: Request) {
 	await addBid(offerId, authed.id, value);
 
 	// Remove bid difference from inventory
-	await decreaseItemQuantity(authed.id, itemList.TREASURE_COUPON.itemId, value);
+	await decreaseItemQuantity(authed.id, itemList[Item.TREASURE_COUPON].itemId, value);
 
 	// Repay previous bidder
 	if (offer.bids.length > 0) {
 		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
-		await increaseItemQuantity(max.userId, itemList.TREASURE_COUPON.itemId, max.value);
+		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
 	}
 }
 

@@ -2,7 +2,7 @@ import { Request } from 'express';
 import { auth, getLBPlayer, getLBResponseInformation, setPlayer } from '../dao/playerDao.js';
 import fetch from 'node-fetch';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import dayjs from 'dayjs';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
@@ -60,8 +60,8 @@ export async function checkLB(req: Request) {
 
 	await increaseItemQuantity(
 		authed.id,
-		itemList.POTION_IRMA.itemId,
-		Math.min(portion, itemList.POTION_IRMA.maxQuantity)
+		itemList[Item.POTION_IRMA].itemId,
+		Math.min(portion, itemList[Item.POTION_IRMA].maxQuantity)
 	);
 
 	player.labruteDone = true;

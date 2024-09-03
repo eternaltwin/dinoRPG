@@ -6,7 +6,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTree } from '@drpg/core/models/enums/SkillTree';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { Dinoz, DinozItem, DinozSkill, DinozSkillUnlockable, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
@@ -237,7 +237,7 @@ function getDinozLearnableSkills(
 	// Check if dinoz has 'Plan de carrière' skill or cube object
 	const hasCubeOrPdc =
 		dinoz.skills.some(skill => skill.skillId === skillList[Skill.PLAN_DE_CARRIERE].id) ||
-		(dinoz.items.some(item => item.itemId === itemList.DINOZ_CUBE.itemId) && dinoz.level <= 10);
+		(dinoz.items.some(item => item.itemId === itemList[Item.DINOZ_CUBE].itemId) && dinoz.level <= 10);
 
 	if (tryNumber < 1 || tryNumber > 2 || (tryNumber === 2 && !hasCubeOrPdc)) {
 		throw new ExpectedError(`tryNumber ${tryNumber} is invalid`);

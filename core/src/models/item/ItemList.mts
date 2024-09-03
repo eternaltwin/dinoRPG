@@ -319,9 +319,9 @@ export type ItemName = (typeof itemNames)[number];
 
 // Note:
 // Price is for the players' market. If 0 the item cannot be sold.
-export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
+export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	// Irma's Potion: new action
-	POTION_IRMA: {
+	[Item.POTION_IRMA]: {
 		itemId: 1,
 		name: 'potion_irma',
 		canBeEquipped: false,
@@ -337,7 +337,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Angel potion: resurrects a dino
-	POTION_ANGEL: {
+	[Item.POTION_ANGEL]: {
 		itemId: 2,
 		name: 'potion_angel',
 		canBeEquipped: false,
@@ -353,7 +353,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Cloud burger: heals 10
-	CLOUD_BURGER: {
+	[Item.CLOUD_BURGER]: {
 		itemId: 3,
 		name: 'cloud_burger',
 		canBeEquipped: true,
@@ -371,7 +371,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Authentic hot bread: heals 100
-	HOT_BREAD: {
+	[Item.HOT_BREAD]: {
 		itemId: 4,
 		name: 'hot_bread',
 		canBeEquipped: false,
@@ -387,7 +387,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Meat pie: heals 30
-	MEAT_PIE: {
+	[Item.MEAT_PIE]: {
 		itemId: 5,
 		name: 'meat_pie',
 		canBeEquipped: false,
@@ -403,7 +403,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Fight ration: heals up to 20 during a fight
-	FIGHT_RATION: {
+	[Item.FIGHT_RATION]: {
 		itemId: 6,
 		name: 'fight_ration',
 		canBeEquipped: true,
@@ -417,7 +417,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Surviving ration: heals between 10 and 40 during a fight
-	SURVIVING_RATION: {
+	[Item.SURVIVING_RATION]: {
 		itemId: 7,
 		name: 'surviving_ration',
 		canBeEquipped: true,
@@ -431,7 +431,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Goblin's Merguez: heals ?? during a fight
-	GOBLIN_MERGUEZ: {
+	[Item.GOBLIN_MERGUEZ]: {
 		itemId: 8,
 		name: 'goblin_merguez',
 		canBeEquipped: true,
@@ -445,7 +445,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false
 	},
 	// Pampleboum: heals 15
-	PAMPLEBOUM: {
+	[Item.PAMPLEBOUM]: {
 		itemId: 9,
 		name: 'pampleboum',
 		canBeEquipped: false,
@@ -461,7 +461,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 500 // TODO double check
 	},
 	// SOS Helmet: increases armor by 1 in a fight
-	SOS_HELMET: {
+	[Item.SOS_HELMET]: {
 		itemId: 10,
 		name: 'sos_helmet',
 		canBeEquipped: true,
@@ -475,7 +475,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 50
 	},
 	// Little pepper: increases next assault value by 10
-	LITTLE_PEPPER: {
+	[Item.LITTLE_PEPPER]: {
 		itemId: 11,
 		name: 'little_pepper',
 		canBeEquipped: true,
@@ -489,7 +489,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 50
 	},
 	// Zippo: Set dino on fire during a fight
-	ZIPPO: {
+	[Item.ZIPPO]: {
 		itemId: 12,
 		name: 'zippo',
 		canBeEquipped: true,
@@ -503,7 +503,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 50
 	},
 	// SOS flame: summons a flame to fight with you
-	SOS_FLAME: {
+	[Item.SOS_FLAME]: {
 		itemId: 13,
 		name: 'sos_flame',
 		canBeEquipped: true,
@@ -517,7 +517,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 50
 	},
 	// Refrigerated Shield: Increases fire defense by 20 during a fight
-	REFRIGERATED_SHIELD: {
+	[Item.REFRIGERATED_SHIELD]: {
 		itemId: 14,
 		name: 'refrigerated_shield',
 		canBeEquipped: true,
@@ -531,7 +531,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 50
 	},
 	// Fuca Pill: increases attack speed by 50% during a fight
-	FUCA_PILL: {
+	[Item.FUCA_PILL]: {
 		itemId: 15,
 		name: 'fuca_pill',
 		canBeEquipped: true,
@@ -545,7 +545,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 20
 	},
 	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
-	MONOCHROMATIC: {
+	[Item.MONOCHROMATIC]: {
 		itemId: 16,
 		name: 'monochromatic',
 		canBeEquipped: true,
@@ -559,7 +559,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 15
 	},
 	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
-	POISONITE_SHOT: {
+	[Item.POISONITE_SHOT]: {
 		itemId: 17,
 		name: 'poisonite_shot',
 		canBeEquipped: true,
@@ -571,7 +571,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 300
 	},
 	// Loris's Costume: makes an enemy attack someone else on his side during a fight
-	LORIS_COSTUME: {
+	[Item.LORIS_COSTUME]: {
 		itemId: 18,
 		name: 'loris_costume',
 		canBeEquipped: true,
@@ -585,7 +585,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 30
 	},
 	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
-	VEGETOX_COSTUME: {
+	[Item.VEGETOX_COSTUME]: {
 		itemId: 19,
 		name: 'vegetox_costume',
 		canBeEquipped: true,
@@ -597,7 +597,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 1000
 	},
 	// Goblin's Costume: Disguise a dino into a gobelin
-	GOBLIN_COSTUME: {
+	[Item.GOBLIN_COSTUME]: {
 		itemId: 20,
 		name: 'goblin_costume',
 		canBeEquipped: true,
@@ -609,7 +609,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 1000
 	},
 	// Pampleboum Pit: give a bonus to an assault (%, fixed valued??)
-	PAMPLEBOUM_PIT: {
+	[Item.PAMPLEBOUM_PIT]: {
 		itemId: 21,
 		name: 'pampleboum_pit',
 		canBeEquipped: true,
@@ -623,7 +623,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 50
 	},
 	// Portable Love: can attack flying dinoz
-	PORTABLE_LOVE: {
+	[Item.PORTABLE_LOVE]: {
 		itemId: 22,
 		name: 'portable_love',
 		canBeEquipped: true,
@@ -637,7 +637,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 70
 	},
 	// Danger Detector: protects against an attack that inflicts more than 25 hp
-	DANGER_DETECTOR: {
+	[Item.DANGER_DETECTOR]: {
 		itemId: 23,
 		name: 'danger_detector',
 		canBeEquipped: true,
@@ -649,7 +649,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 4000
 	},
 	// Pirhanoz in bag: summons a pirhanoz
-	PIRHANOZ_IN_BAG: {
+	[Item.PIRHANOZ_IN_BAG]: {
 		itemId: 24,
 		name: 'pirhanoz_in_bag',
 		canBeEquipped: true,
@@ -664,7 +664,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 	// Devil Ointment: removes the curse from a dino, and restoring its ability
 	// to gain XP during fights.
-	DEVIL_OINTMENT: {
+	[Item.DEVIL_OINTMENT]: {
 		itemId: 25,
 		name: 'devil_ointment',
 		canBeEquipped: false,
@@ -682,7 +682,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Land of Ashes (Ember): turns the combat zone into a suffocating furnace.
 	// All Dinoz with a Fire element of less than 10 points will no longer use elements
 	// A or E for the next three turns.
-	LAND_OF_ASHES: {
+	[Item.LAND_OF_ASHES]: {
 		itemId: 26,
 		name: 'land_of_ashes',
 		canBeEquipped: true,
@@ -698,7 +698,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Abyss: plunges the combat zone into an abyss.
 	// All Dinoz with a Water element of less than 10 points will see the strength
 	// of their attacks and assaults drop by 25% for the next three turns.
-	ABYSS: {
+	[Item.ABYSS]: {
 		itemId: 27,
 		name: 'abyss',
 		canBeEquipped: true,
@@ -714,7 +714,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Amazon: transports the combat zone into the middle of a tropical jungle.
 	// All Dinoz with a Wood element of less than 10 points will sleep for the
 	// next three turns unless they are subjected to an attack which causes them to lose 10 HP.
-	AMAZON: {
+	[Item.AMAZON]: {
 		itemId: 28,
 		name: 'amazon',
 		canBeEquipped: true,
@@ -730,7 +730,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// St Elma's Fire: surrounds the combat zone with a powerful magnetic field.
 	// All Dinoz with a Lightning element of less than 10 points will lose 5% of
 	// their HP for the next three turns.
-	ST_ELMAS_FIRE: {
+	[Item.ST_ELMAS_FIRE]: {
 		itemId: 29,
 		name: 'st_elmas_fire',
 		canBeEquipped: true,
@@ -746,7 +746,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Uvavu: plunges the combat zone into the middle of a devastating storm.
 	// All Dinoz with an Air element of less than 10 points will lose 50% of
 	// their speed for the next three turns.
-	UVAVU: {
+	[Item.UVAVU]: {
 		itemId: 30,
 		name: 'uvavu',
 		canBeEquipped: true,
@@ -760,7 +760,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 100
 	},
 	// Strong Tea: allows you to cancel the effects of beer on the opposing team.
-	STRONG_TEA: {
+	[Item.STRONG_TEA]: {
 		itemId: 31,
 		name: 'strong_tea',
 		canBeEquipped: true,
@@ -774,7 +774,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		probability: 60
 	},
 	// Temporal Stabiliser: ??
-	TEMPORAL_STABILISER: {
+	[Item.TEMPORAL_STABILISER]: {
 		itemId: 32,
 		name: 'temporal_stabiliser',
 		canBeEquipped: true,
@@ -786,7 +786,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 3000
 	},
 	// Elixir: heals 200, Chen's shop
-	ELIXIR: {
+	[Item.ELIXIR]: {
 		itemId: 33,
 		name: 'elixir',
 		canBeEquipped: false,
@@ -803,7 +803,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 
 	// Elixir of Life: quest item to heal the Venerable Dragon
-	ELIXIR_OF_LIFE: {
+	[Item.ELIXIR_OF_LIFE]: {
 		itemId: 34,
 		name: 'elixir_of_life',
 		canBeEquipped: false, // TODO double check
@@ -815,7 +815,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 1234 // TODO double check
 	},
 	// Banishement: prevents a dinoz from calling reinforcements during a battle
-	BANISHMENT: {
+	[Item.BANISHMENT]: {
 		itemId: 35,
 		name: 'banishement',
 		canBeEquipped: true,
@@ -827,7 +827,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 3 // TODO double check
 	},
 	// Battering Ram: dinoz attacks castle twice if victorious
-	BATTERING_RAM: {
+	[Item.BATTERING_RAM]: {
 		itemId: 36,
 		name: 'battering_ram',
 		canBeEquipped: true,
@@ -839,7 +839,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5 // TODO double check
 	},
 	// Ember (braise): increases fire assault of all fighters by 30%
-	EMBER: {
+	[Item.EMBER]: {
 		itemId: 37,
 		name: 'ember',
 		canBeEquipped: true,
@@ -851,7 +851,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5 // TODO double check
 	},
 	// Scale: an enemy dinoz will be killed if your dinoz dies during a fight
-	SCALE: {
+	[Item.SCALE]: {
 		itemId: 38,
 		name: 'scale',
 		canBeEquipped: true,
@@ -863,7 +863,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 7 // TODO double check
 	},
 	// Beer: prevents all dinoz from healing during a fight
-	BEER: {
+	[Item.BEER]: {
 		itemId: 39,
 		name: 'beer',
 		canBeEquipped: true,
@@ -875,7 +875,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 3 // TODO double check
 	},
 	// Encyclopedia: increases experience gain by 15%
-	ENCYCLOPEDIA: {
+	[Item.ENCYCLOPEDIA]: {
 		itemId: 40,
 		name: 'encyclopedia',
 		canBeEquipped: true,
@@ -887,7 +887,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 6 // TODO double check
 	},
 	// Antichromatic: cancels the effect of monochromatics used by the enemy
-	ANTICHROMATIC: {
+	[Item.ANTICHROMATIC]: {
 		itemId: 41,
 		name: 'antichromatic',
 		canBeEquipped: true,
@@ -899,7 +899,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 4 // TODO double check
 	},
 	// Antidote: permanently immunize against poisons
-	ANTIDOTE: {
+	[Item.ANTIDOTE]: {
 		itemId: 42,
 		name: 'antidote',
 		canBeEquipped: true,
@@ -911,7 +911,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5 // TODO double check
 	},
 	// Time Manipulator (Temporary Manipulator?): prevents all dinoz from using E skills in a fight
-	TIME_MANIPULATOR: {
+	[Item.TIME_MANIPULATOR]: {
 		itemId: 43,
 		name: 'time_manipulator',
 		canBeEquipped: true,
@@ -924,7 +924,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 	// Dimensional Powder (Parallel Dimension?): if the dinoz HP falls below 10%, it will be engulfed in a black hole
 	// and leave the fight
-	DIMENSIONAL_POWDER: {
+	[Item.DIMENSIONAL_POWDER]: {
 		itemId: 44,
 		name: 'dimensional_powder',
 		canBeEquipped: true,
@@ -936,7 +936,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 6 // TODO double check
 	},
 	// Sorcerer's Stick: reduces the hp of a random (enemy?) dinoz by 30% (It replaces an attack)
-	SORCERERS_STICK: {
+	[Item.SORCERERS_STICK]: {
 		itemId: 45,
 		name: 'sorcerers_stick',
 		canBeEquipped: true,
@@ -949,7 +949,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 	// Friendly Whistle: when the dinoz launches an assault on another dinoz, the other friendly dinoz (without whistle) will
 	// attack it too
-	FRIENDLY_WHISTLE: {
+	[Item.FRIENDLY_WHISTLE]: {
 		itemId: 46,
 		name: 'friendly_whistle',
 		canBeEquipped: true,
@@ -962,7 +962,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 	// Dinoz Cube: allows the dinoz to redraw from the element grid when it levels up until level 10. Like Career Plan
 	// (Does not cumulate though with Career Plan though)
-	DINOZ_CUBE: {
+	[Item.DINOZ_CUBE]: {
 		itemId: 47,
 		name: 'dinoz_cube',
 		canBeEquipped: true,
@@ -974,7 +974,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 9 // TODO double check
 	},
 	// Temporal Reduction: reduces initiative bonuses and penalties by 50% on the equipped dinoz
-	TEMPORAL_REDUCTION: {
+	[Item.TEMPORAL_REDUCTION]: {
 		itemId: 48,
 		name: 'temporal_reduction',
 		canBeEquipped: true,
@@ -986,7 +986,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5 // TODO double check
 	},
 	// Tear of Life: gives clones 10% of the life of the casting Dinoz
-	TEAR_OF_LIFE: {
+	[Item.TEAR_OF_LIFE]: {
 		itemId: 49,
 		name: 'tear_of_life',
 		canBeEquipped: true,
@@ -998,7 +998,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 6 // TODO double check
 	},
 	// Cuzcussian Mask: makes the wearer's teammates immune to Hypnosis
-	CUZCUSSIAN_MASK: {
+	[Item.CUZCUSSIAN_MASK]: {
 		itemId: 50,
 		name: 'cuzcussian_mask',
 		canBeEquipped: true,
@@ -1010,7 +1010,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 8 // TODO double check
 	},
 	// Anti-grave Suit: makes the wearer's teammates immune to Black Hole
-	ANTI_GRAVE_SUIT: {
+	[Item.ANTI_GRAVE_SUIT]: {
 		itemId: 51,
 		name: 'anti_grave_suit',
 		canBeEquipped: true,
@@ -1022,7 +1022,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 6 // TODO double check
 	},
 	// Enchanted Steroid: makes the equipped dinoz immune to penalties to max endurance
-	ENCHANTED_STEROID: {
+	[Item.ENCHANTED_STEROID]: {
 		itemId: 52,
 		name: 'enchanted_steroid',
 		canBeEquipped: true,
@@ -1034,7 +1034,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 6 // TODO double check
 	},
 	// Curse Locker: restricts a random enemy to using their weakest element for 3 turns
-	CURSE_LOCKER: {
+	[Item.CURSE_LOCKER]: {
 		itemId: 53,
 		name: 'curse_locker',
 		canBeEquipped: true,
@@ -1047,7 +1047,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	},
 	// Fear Factor (Trouillomètre): a dinoz with the Brave skill but which carries this\
 	// object can now form groups with dinoz with the same key element as they do
-	FEAR_FACTOR: {
+	[Item.FEAR_FACTOR]: {
 		itemId: 54,
 		name: 'fear_factor',
 		canBeEquipped: true,
@@ -1059,7 +1059,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 8 // TODO double check
 	},
 	// Life Stealer: when the wearer's hp falls below 20, it steals 30 hp to a random enemy
-	LIFE_STEALER: {
+	[Item.LIFE_STEALER]: {
 		itemId: 55,
 		name: 'life_stealer',
 		canBeEquipped: true,
@@ -1071,7 +1071,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0 // TODO double check
 	},
 	// Fire Sphere
-	FIRE_SPHERE: {
+	[Item.FIRE_SPHERE]: {
 		itemId: 56,
 		name: 'fire_sphere',
 		canBeEquipped: false,
@@ -1087,7 +1087,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Wood Sphere
-	WOOD_SPHERE: {
+	[Item.WOOD_SPHERE]: {
 		itemId: 57,
 		name: 'wood_sphere',
 		canBeEquipped: false,
@@ -1103,7 +1103,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Water Sphere
-	WATER_SPHERE: {
+	[Item.WATER_SPHERE]: {
 		itemId: 58,
 		name: 'water_sphere',
 		canBeEquipped: false,
@@ -1119,7 +1119,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Lightning Sphere
-	LIGHTNING_SPHERE: {
+	[Item.LIGHTNING_SPHERE]: {
 		itemId: 59,
 		name: 'lightning_sphere',
 		canBeEquipped: false,
@@ -1135,7 +1135,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Air Sphere
-	AIR_SPHERE: {
+	[Item.AIR_SPHERE]: {
 		itemId: 60,
 		name: 'air_sphere',
 		canBeEquipped: false,
@@ -1151,7 +1151,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Demon Ticket
-	DEMON_TICKET: {
+	[Item.DEMON_TICKET]: {
 		itemId: 61,
 		name: 'demon_ticket',
 		canBeEquipped: false,
@@ -1163,7 +1163,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Treasure Coupon
-	TREASURE_COUPON: {
+	[Item.TREASURE_COUPON]: {
 		itemId: 62,
 		name: 'treasure_coupon',
 		canBeEquipped: false,
@@ -1181,7 +1181,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 	// Some of those eggs may not exist, yet they should be added for consistency
 	// The order matches the order in constants/race.ts
 	// Moueffe Egg
-	MOUEFFE_EGG: {
+	[Item.MOUEFFE_EGG]: {
 		itemId: 63,
 		name: 'moueffe_egg',
 		canBeEquipped: false,
@@ -1197,7 +1197,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Moueffe Egg
-	MOUEFFE_EGG_RARE: {
+	[Item.MOUEFFE_EGG_RARE]: {
 		itemId: 64,
 		name: 'moueffe_egg_rare',
 		canBeEquipped: false,
@@ -1213,7 +1213,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Pigmou Egg
-	PIGMOU_EGG: {
+	[Item.PIGMOU_EGG]: {
 		itemId: 65,
 		name: 'pigmou_egg',
 		canBeEquipped: false,
@@ -1229,7 +1229,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Pigmou Egg
-	PIGMOU_EGG_RARE: {
+	[Item.PIGMOU_EGG_RARE]: {
 		itemId: 66,
 		name: 'pigmou_egg_rare',
 		canBeEquipped: false,
@@ -1245,7 +1245,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Winks Egg
-	WINKS_EGG: {
+	[Item.WINKS_EGG]: {
 		itemId: 67,
 		name: 'winks_egg',
 		canBeEquipped: false,
@@ -1261,7 +1261,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Winks Egg
-	WINKS_EGG_RARE: {
+	[Item.WINKS_EGG_RARE]: {
 		itemId: 68,
 		name: 'winks_egg_rare',
 		canBeEquipped: false,
@@ -1277,7 +1277,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Planaille Egg
-	PLANAILLE_EGG: {
+	[Item.PLANAILLE_EGG]: {
 		itemId: 69,
 		name: 'planaille_egg',
 		canBeEquipped: false,
@@ -1293,7 +1293,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Planaille Egg
-	PLANAILLE_EGG_RARE: {
+	[Item.PLANAILLE_EGG_RARE]: {
 		itemId: 70,
 		name: 'planaille_egg_rare',
 		canBeEquipped: false,
@@ -1309,7 +1309,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Castivore Egg
-	CASTIVORE_EGG: {
+	[Item.CASTIVORE_EGG]: {
 		itemId: 71,
 		name: 'castivore_egg',
 		canBeEquipped: false,
@@ -1325,7 +1325,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Castivore Egg
-	CASTIVORE_EGG_RARE: {
+	[Item.CASTIVORE_EGG_RARE]: {
 		itemId: 72,
 		name: 'castivore_egg_rare',
 		canBeEquipped: false,
@@ -1341,7 +1341,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rocky Egg
-	ROCKY_EGG: {
+	[Item.ROCKY_EGG]: {
 		itemId: 73,
 		name: 'rocky_egg',
 		canBeEquipped: false,
@@ -1357,7 +1357,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Rocky Egg
-	ROCKY_EGG_RARE: {
+	[Item.ROCKY_EGG_RARE]: {
 		itemId: 74,
 		name: 'rocky_egg_rare',
 		canBeEquipped: false,
@@ -1373,7 +1373,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Pteroz Egg
-	PTEROZ_EGG: {
+	[Item.PTEROZ_EGG]: {
 		itemId: 75,
 		name: 'pteroz_egg',
 		canBeEquipped: false,
@@ -1389,7 +1389,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Pteroz Egg
-	PTEROZ_EGG_RARE: {
+	[Item.PTEROZ_EGG_RARE]: {
 		itemId: 76,
 		name: 'pteroz_egg_rare',
 		canBeEquipped: false,
@@ -1405,7 +1405,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Nuagoz Egg
-	NUAGOZ_EGG: {
+	[Item.NUAGOZ_EGG]: {
 		itemId: 77,
 		name: 'nuagoz_egg',
 		canBeEquipped: false,
@@ -1421,7 +1421,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Nuagoz Egg
-	NUAGOZ_EGG_RARE: {
+	[Item.NUAGOZ_EGG_RARE]: {
 		itemId: 78,
 		name: 'nuagoz_egg_rare',
 		canBeEquipped: false,
@@ -1437,7 +1437,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Sirain Egg
-	SIRAIN_EGG: {
+	[Item.SIRAIN_EGG]: {
 		itemId: 79,
 		name: 'sirain_egg',
 		canBeEquipped: false,
@@ -1453,7 +1453,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Sirain Egg
-	SIRAIN_EGG_RARE: {
+	[Item.SIRAIN_EGG_RARE]: {
 		itemId: 80,
 		name: 'sirain_egg_rare',
 		canBeEquipped: false,
@@ -1469,7 +1469,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Hippoclamp Egg
-	HIPPOCLAMP_EGG: {
+	[Item.HIPPOCLAMP_EGG]: {
 		itemId: 81,
 		name: 'hippoclamp_egg',
 		canBeEquipped: false,
@@ -1485,7 +1485,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Hippoclamp Egg
-	HIPPOCLAMP_EGG_RARE: {
+	[Item.HIPPOCLAMP_EGG_RARE]: {
 		itemId: 82,
 		name: 'hippoclamp_egg_rare',
 		canBeEquipped: false,
@@ -1501,7 +1501,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Gorilloz Egg
-	GORILLOZ_EGG: {
+	[Item.GORILLOZ_EGG]: {
 		itemId: 83,
 		name: 'gorilloz_egg',
 		canBeEquipped: false,
@@ -1517,7 +1517,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Gorilloz Egg
-	GORILLOZ_EGG_RARE: {
+	[Item.GORILLOZ_EGG_RARE]: {
 		itemId: 84,
 		name: 'gorilloz_egg_rare',
 		canBeEquipped: false,
@@ -1533,7 +1533,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Wanwan Egg
-	WANWAN_EGG: {
+	[Item.WANWAN_EGG]: {
 		itemId: 85,
 		name: 'wanwan_egg',
 		canBeEquipped: false,
@@ -1549,7 +1549,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Wanwan Egg
-	WANWAN_EGG_RARE: {
+	[Item.WANWAN_EGG_RARE]: {
 		itemId: 86,
 		name: 'wanwan_egg_rare',
 		canBeEquipped: false,
@@ -1565,7 +1565,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Wanwan Baby
-	WANWAN_BABY_RARE: {
+	[Item.WANWAN_BABY_RARE]: {
 		itemId: 87,
 		name: 'wanwan_baby_rare',
 		canBeEquipped: false,
@@ -1581,7 +1581,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Santaz Egg
-	SANTAZ_EGG: {
+	[Item.SANTAZ_EGG]: {
 		itemId: 88,
 		name: 'santaz_egg',
 		canBeEquipped: false,
@@ -1597,7 +1597,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Santaz Egg
-	SANTAZ_EGG_RARE: {
+	[Item.SANTAZ_EGG_RARE]: {
 		itemId: 89,
 		name: 'santaz_egg_rare',
 		canBeEquipped: false,
@@ -1613,7 +1613,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Feross Egg
-	FEROSS_EGG: {
+	[Item.FEROSS_EGG]: {
 		itemId: 90,
 		name: 'feross_egg',
 		canBeEquipped: false,
@@ -1629,7 +1629,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Feross Egg
-	FEROSS_EGG_RARE: {
+	[Item.FEROSS_EGG_RARE]: {
 		itemId: 91,
 		name: 'feross_egg_rare',
 		canBeEquipped: false,
@@ -1645,7 +1645,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Christmas Feross Egg
-	FEROSS_EGG_CHRISTMAS: {
+	[Item.FEROSS_EGG_CHRISTMAS]: {
 		itemId: 92,
 		name: 'feross_egg_christmas',
 		canBeEquipped: false,
@@ -1661,7 +1661,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Kabuki Egg
-	KABUKI_EGG: {
+	[Item.KABUKI_EGG]: {
 		itemId: 93,
 		name: 'kabuki_egg',
 		canBeEquipped: false,
@@ -1677,7 +1677,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Kabuki Egg
-	RARE_KABUKI_EGG: {
+	[Item.RARE_KABUKI_EGG]: {
 		itemId: 94,
 		name: 'kabuki_egg_rare',
 		canBeEquipped: false,
@@ -1693,7 +1693,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Mahamuti Egg
-	MAHAMUTI_EGG: {
+	[Item.MAHAMUTI_EGG]: {
 		itemId: 95,
 		name: 'mahamuti_egg',
 		canBeEquipped: false,
@@ -1709,7 +1709,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Mahamuti Egg
-	RARE_MAHAMUTI_EGG: {
+	[Item.RARE_MAHAMUTI_EGG]: {
 		itemId: 96,
 		name: 'mahamuti_egg_rare',
 		canBeEquipped: false,
@@ -1725,7 +1725,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Soufflet Egg
-	SOUFFLET_EGG: {
+	[Item.SOUFFLET_EGG]: {
 		itemId: 97,
 		name: 'souffet_egg',
 		canBeEquipped: false,
@@ -1741,7 +1741,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Soufflet Egg
-	SOUFFLET_EGG_RARE: {
+	[Item.SOUFFLET_EGG_RARE]: {
 		itemId: 98,
 		name: 'soufflet_egg_rare',
 		canBeEquipped: false,
@@ -1757,7 +1757,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Toufufu Baby
-	TOUFUFU_BABY: {
+	[Item.TOUFUFU_BABY]: {
 		itemId: 99,
 		name: 'toufufu_baby',
 		canBeEquipped: false,
@@ -1773,7 +1773,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Toufufu Baby
-	TOUFUFU_BABY_RARE: {
+	[Item.TOUFUFU_BABY_RARE]: {
 		itemId: 100,
 		name: 'toufufu_baby_rare',
 		canBeEquipped: false,
@@ -1789,7 +1789,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Quetzu Egg
-	QUETZU_EGG: {
+	[Item.QUETZU_EGG]: {
 		itemId: 101,
 		name: 'quetzu_egg',
 		canBeEquipped: false,
@@ -1805,7 +1805,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Rare Quetzu Egg
-	QUETZU_EGG_RARE: {
+	[Item.QUETZU_EGG_RARE]: {
 		itemId: 102,
 		name: 'quetzu_egg_rare',
 		canBeEquipped: false,
@@ -1821,7 +1821,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Smog Egg
-	SMOG_EGG: {
+	[Item.SMOG_EGG]: {
 		itemId: 103,
 		name: 'smog_egg',
 		canBeEquipped: false,
@@ -1837,7 +1837,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Smog Rare Egg
-	SMOG_EGG_RARE: {
+	[Item.SMOG_EGG_RARE]: {
 		itemId: 144,
 		name: 'smog_egg_rare',
 		canBeEquipped: false,
@@ -1853,7 +1853,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Anniversary Smog Egg
-	SMOG_EGG_ANNIVERSARY: {
+	[Item.SMOG_EGG_ANNIVERSARY]: {
 		itemId: 104,
 		name: 'smog_egg_anniversary',
 		canBeEquipped: false,
@@ -1869,7 +1869,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Christmas Blue Smog Egg
-	SMOG_EGG_CHRISTMAS_BLUE: {
+	[Item.SMOG_EGG_CHRISTMAS_BLUE]: {
 		itemId: 105,
 		name: 'smog_egg_christmas_blue',
 		canBeEquipped: false,
@@ -1885,7 +1885,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Christmas Blue Smog Egg
-	SMOG_EGG_CHRISTMAS_GREEN: {
+	[Item.SMOG_EGG_CHRISTMAS_GREEN]: {
 		itemId: 106,
 		name: 'smog_egg_christmas_green',
 		canBeEquipped: false,
@@ -1901,7 +1901,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Triceragnon Baby
-	TRICERAGNON_BABY: {
+	[Item.TRICERAGNON_BABY]: {
 		itemId: 107,
 		name: 'triceragnon_baby',
 		canBeEquipped: false,
@@ -1917,7 +1917,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000
 	},
 	// Rare Triceragnon Baby
-	TRICERAGNON_EGG_BABY: {
+	[Item.TRICERAGNON_EGG_BABY]: {
 		itemId: 108,
 		name: 'triceragnon_baby_rare',
 		canBeEquipped: false,
@@ -1933,7 +1933,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 30000 // TODO double check
 	},
 	// Amnesic Rice
-	AMNESIC_RICE: {
+	[Item.AMNESIC_RICE]: {
 		itemId: 109,
 		name: 'amnesic_rice',
 		canBeEquipped: false,
@@ -1949,7 +1949,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000
 	},
 	// Tik Bracelet: heals 10 to the wearer each day
-	TIK_BRACELET: {
+	[Item.TIK_BRACELET]: {
 		itemId: 110,
 		name: 'tik_bracelet',
 		canBeEquipped: true,
@@ -1961,7 +1961,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Magic Star: used for the Strange Creature quest
-	MAGIC_STAR: {
+	[Item.MAGIC_STAR]: {
 		itemId: 111,
 		name: 'magic_star',
 		canBeEquipped: false,
@@ -1973,7 +1973,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Golden Napodino: currency at the Magic Shop
-	GOLDEN_NAPODINO: {
+	[Item.GOLDEN_NAPODINO]: {
 		itemId: 112,
 		name: 'golden_napodino',
 		canBeEquipped: true,
@@ -1985,7 +1985,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Brings a little bamboo with you in each fight
-	BAMBOO_FRIEND: {
+	[Item.BAMBOO_FRIEND]: {
 		itemId: 113,
 		name: 'bamboo_friend',
 		canBeEquipped: true,
@@ -1997,7 +1997,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0 // TODO double check
 	},
 	// Anniversary tickets
-	CANDLE_CARD: {
+	[Item.CANDLE_CARD]: {
 		itemId: 114,
 		name: 'candle_card',
 		canBeEquipped: false,
@@ -2009,7 +2009,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000
 	},
 	// Tickets to use at the Christmas grid event
-	CHRISTMAS_TICKET: {
+	[Item.CHRISTMAS_TICKET]: {
 		itemId: 115,
 		name: 'christmas_ticket',
 		canBeEquipped: false,
@@ -2021,7 +2021,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000 // TODO double check
 	},
 	// Tickets to use at ??
-	TICTAC_TICKET: {
+	[Item.TICTAC_TICKET]: {
 		itemId: 116,
 		name: 'tictac_ticket',
 		canBeEquipped: false,
@@ -2033,7 +2033,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000 // TODO double check
 	},
 	// Error
-	DOUBLE_NOT_USED: {
+	[Item.DOUBLE_NOT_USED]: {
 		itemId: 117,
 		name: 'anniversary_ticket',
 		canBeEquipped: false,
@@ -2045,7 +2045,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0 // TODO double check
 	},
 	// Use to obtain ??, obtained during Easter event
-	EASTER_EGG: {
+	[Item.EASTER_EGG]: {
 		itemId: 118,
 		name: 'easter_egg',
 		canBeEquipped: false,
@@ -2057,7 +2057,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Ticket for Batide day
-	FIRE_CRACKER: {
+	[Item.FIRE_CRACKER]: {
 		itemId: 119,
 		name: 'fire_cracker',
 		canBeEquipped: false,
@@ -2069,7 +2069,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000
 	},
 	// Like an irma potion, would be obtained daily from the monthly subscription
-	SPECIAL_IRMA_POTION: {
+	[Item.SPECIAL_IRMA_POTION]: {
 		itemId: 120,
 		name: 'special_potion_irma',
 		canBeEquipped: false,
@@ -2081,7 +2081,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0 // TODO double check
 	},
 	//Used for special gather
-	GOLD100: {
+	[Item.GOLD100]: {
 		itemId: 121,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2093,7 +2093,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 100 // TODO double check
 	},
 	//Used for special gather
-	GOLD500: {
+	[Item.GOLD500]: {
 		itemId: 122,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2105,7 +2105,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 500 // TODO double check
 	},
 	//Used for special gather
-	GOLD1000: {
+	[Item.GOLD1000]: {
 		itemId: 123,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2117,7 +2117,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 1000 // TODO double check
 	},
 	//Used for special gather
-	GOLD2000: {
+	[Item.GOLD2000]: {
 		itemId: 124,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2129,7 +2129,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 2000 // TODO double check
 	},
 	//Used for special gather
-	GOLD2500: {
+	[Item.GOLD2500]: {
 		itemId: 125,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2141,7 +2141,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 2500 // TODO double check
 	},
 	//Used for special gather
-	GOLD3000: {
+	[Item.GOLD3000]: {
 		itemId: 126,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2153,7 +2153,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 3000 // TODO double check
 	},
 	//Used for special gather
-	GOLD5000: {
+	[Item.GOLD5000]: {
 		itemId: 127,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2165,7 +2165,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000 // TODO double check
 	},
 	//Used for special gather
-	GOLD10000: {
+	[Item.GOLD10000]: {
 		itemId: 128,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2177,7 +2177,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	//Used for special gather
-	GOLD20000: {
+	[Item.GOLD20000]: {
 		itemId: 129,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2189,7 +2189,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 20000 // TODO double check
 	},
 	// Use to obtain Santaz or Trice, obtained during Christmas event
-	CHRISTMAS_EGG: {
+	[Item.CHRISTMAS_EGG]: {
 		itemId: 130,
 		name: 'christmas_egg',
 		canBeEquipped: false,
@@ -2205,7 +2205,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Ticket for Batide day
-	GODFATHER_TICKET: {
+	[Item.GODFATHER_TICKET]: {
 		itemId: 131,
 		name: 'godfather_ticket',
 		canBeEquipped: false,
@@ -2217,7 +2217,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 5000
 	},
 	// Quest item
-	SAGE_POINT: {
+	[Item.SAGE_POINT]: {
 		itemId: 132,
 		name: 'sage_point',
 		canBeEquipped: false,
@@ -2229,7 +2229,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_A: {
+	[Item.FRAGMENT_A]: {
 		itemId: 133,
 		name: 'fragment_a',
 		canBeEquipped: false,
@@ -2241,7 +2241,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_B: {
+	[Item.FRAGMENT_B]: {
 		itemId: 134,
 		name: 'fragment_b',
 		canBeEquipped: false,
@@ -2253,7 +2253,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_C: {
+	[Item.FRAGMENT_C]: {
 		itemId: 135,
 		name: 'fragment_c',
 		canBeEquipped: false,
@@ -2265,7 +2265,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_D: {
+	[Item.FRAGMENT_D]: {
 		itemId: 136,
 		name: 'fragment_d',
 		canBeEquipped: false,
@@ -2277,7 +2277,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_E: {
+	[Item.FRAGMENT_E]: {
 		itemId: 137,
 		name: 'fragment_e',
 		canBeEquipped: false,
@@ -2289,7 +2289,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_F: {
+	[Item.FRAGMENT_F]: {
 		itemId: 138,
 		name: 'fragment_f',
 		canBeEquipped: false,
@@ -2301,7 +2301,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	FRAGMENT_G: {
+	[Item.FRAGMENT_G]: {
 		itemId: 139,
 		name: 'fragment_g',
 		canBeEquipped: false,
@@ -2313,7 +2313,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	STEPPE_METAL: {
+	[Item.STEPPE_METAL]: {
 		itemId: 140,
 		name: 'steppe_metal',
 		canBeEquipped: false,
@@ -2325,7 +2325,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	ICE_SHRED: {
+	[Item.ICE_SHRED]: {
 		itemId: 141,
 		name: 'ice_shred',
 		canBeEquipped: false,
@@ -2337,7 +2337,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Quest item
-	BATTERY: {
+	[Item.BATTERY]: {
 		itemId: 142,
 		name: 'battery',
 		canBeEquipped: false,
@@ -2348,7 +2348,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		sellable: false,
 		price: 0
 	},
-	VOID_SPHERE: {
+	[Item.VOID_SPHERE]: {
 		itemId: 143,
 		name: 'void_sphere',
 		canBeEquipped: false,
@@ -2364,7 +2364,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 10000 // TODO double check
 	},
 	// Handler Box
-	BOX_HANDLER: {
+	[Item.BOX_HANDLER]: {
 		itemId: 992,
 		name: 'gold',
 		canBeEquipped: false,
@@ -2376,7 +2376,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Common Box
-	BOX_COMMON: {
+	[Item.BOX_COMMON]: {
 		name: boxType.COMMON,
 		itemId: 993,
 		canBeEquipped: false,
@@ -2392,7 +2392,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		}
 	},
 	// Rare Box
-	BOX_RARE: {
+	[Item.BOX_RARE]: {
 		name: boxType.RARE,
 		itemId: 994,
 		canBeEquipped: false,
@@ -2408,7 +2408,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		}
 	},
 	// Epic Box
-	BOX_EPIC: {
+	[Item.BOX_EPIC]: {
 		name: boxType.EPIC,
 		itemId: 995,
 		canBeEquipped: false,
@@ -2424,7 +2424,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		}
 	},
 	// Legendary Box
-	BOX_LEGENDARY: {
+	[Item.BOX_LEGENDARY]: {
 		name: boxType.LEGENDARY,
 		itemId: 996,
 		canBeEquipped: false,
@@ -2440,7 +2440,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		}
 	},
 	// Daily ticket
-	DAILY_TICKET: {
+	[Item.DAILY_TICKET]: {
 		itemId: 997,
 		name: 'daily_ticket',
 		canBeEquipped: false,
@@ -2452,7 +2452,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 0
 	},
 	// Empty item
-	EMPTY: {
+	[Item.EMPTY]: {
 		itemId: 998,
 		name: 'empty',
 		canBeEquipped: false,
@@ -2464,7 +2464,7 @@ export const itemList: Readonly<Record<ItemName, ItemFiche>> = {
 		price: 1234 // TODO double check
 	},
 	// Undefined item
-	UNDEFINED: {
+	[Item.UNDEFINED]: {
 		itemId: 999,
 		name: 'undefined',
 		canBeEquipped: false,

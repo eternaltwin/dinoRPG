@@ -5,7 +5,7 @@ import { bossList } from '@drpg/core/models/fight/BossList';
 import { SpecialActions } from '@drpg/core/models/missions/specialActions';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 
 export const specialActions: Record<string, SpecialActions> = {
 	ENTER_TOWER: {
@@ -49,7 +49,7 @@ export const specialActions: Record<string, SpecialActions> = {
 		reward: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.MAGIC_STAR.itemId,
+				value: itemList[Item.MAGIC_STAR].itemId,
 				quantity: 1
 			},
 			{

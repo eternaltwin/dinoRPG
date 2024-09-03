@@ -1,7 +1,7 @@
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { ShopType } from '../enums/ShopType.mjs';
 import { ItemShopType, ShopFiche } from './ShopFiche.mjs';
-import { itemList } from '../item/ItemList.mjs';
+import { Item, itemList } from '../item/ItemList.mjs';
 import { ConditionEnum } from '../enums/Parser.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { ingredientList } from '../ingredient/ingredientList.mjs';
@@ -17,37 +17,37 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		listItemsSold: [
 			// Irma's potion sold for 900 gold
 			{
-				id: itemList.POTION_IRMA.itemId,
+				id: itemList[Item.POTION_IRMA].itemId,
 				price: 900,
 				type: ItemShopType.ITEM
 			},
 			// Angel's potion sold for 2000 gold
 			{
-				id: itemList.POTION_ANGEL.itemId,
+				id: itemList[Item.POTION_ANGEL].itemId,
 				price: 2000,
 				type: ItemShopType.ITEM
 			},
 			// Cloud burger sold for 700 gold
 			{
-				id: itemList.CLOUD_BURGER.itemId,
+				id: itemList[Item.CLOUD_BURGER].itemId,
 				price: 700,
 				type: ItemShopType.ITEM
 			},
 			// Meat pie sold for 2000 gold
 			{
-				id: itemList.MEAT_PIE.itemId,
+				id: itemList[Item.MEAT_PIE].itemId,
 				price: 2000,
 				type: ItemShopType.ITEM
 			},
 			// Authentic hot bread sold for 6000 gold
 			{
-				id: itemList.HOT_BREAD.itemId,
+				id: itemList[Item.HOT_BREAD].itemId,
 				price: 6000,
 				type: ItemShopType.ITEM
 			},
 			// Fighting ration sold for 1000 gold
 			{
-				id: itemList.FIGHT_RATION.itemId,
+				id: itemList[Item.FIGHT_RATION].itemId,
 				price: 1000,
 				type: ItemShopType.ITEM
 			}
@@ -61,27 +61,27 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.REFRIGERATED_SHIELD.itemId,
+				id: itemList[Item.REFRIGERATED_SHIELD].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ZIPPO.itemId,
+				id: itemList[Item.ZIPPO].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.LITTLE_PEPPER.itemId,
+				id: itemList[Item.LITTLE_PEPPER].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.SOS_FLAME.itemId,
+				id: itemList[Item.SOS_FLAME].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.SOS_HELMET.itemId,
+				id: itemList[Item.SOS_HELMET].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			}
@@ -95,108 +95,108 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.MAGICAL,
 		listItemsSold: [
 			{
-				id: itemList.BANISHMENT.itemId,
+				id: itemList[Item.BANISHMENT].itemId,
 				price: 3,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.BATTERING_RAM.itemId,
+				id: itemList[Item.BATTERING_RAM].itemId,
 				price: 3,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.EMBER.itemId,
+				id: itemList[Item.EMBER].itemId,
 				price: 5,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.SCALE.itemId,
+				id: itemList[Item.SCALE].itemId,
 				price: 7,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.BEER.itemId,
+				id: itemList[Item.BEER].itemId,
 				price: 3,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ENCYCLOPEDIA.itemId,
+				id: itemList[Item.ENCYCLOPEDIA].itemId,
 				price: 6,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ANTICHROMATIC.itemId,
+				id: itemList[Item.ANTICHROMATIC].itemId,
 				price: 4,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ANTIDOTE.itemId,
+				id: itemList[Item.ANTIDOTE].itemId,
 				price: 5,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.TIME_MANIPULATOR.itemId,
+				id: itemList[Item.TIME_MANIPULATOR].itemId,
 				price: 5,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.DIMENSIONAL_POWDER.itemId,
+				id: itemList[Item.DIMENSIONAL_POWDER].itemId,
 				price: 6,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.SORCERERS_STICK.itemId,
+				id: itemList[Item.SORCERERS_STICK].itemId,
 				price: 7,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.FRIENDLY_WHISTLE.itemId,
+				id: itemList[Item.FRIENDLY_WHISTLE].itemId,
 				price: 8,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.DINOZ_CUBE.itemId,
+				id: itemList[Item.DINOZ_CUBE].itemId,
 				price: 9,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.TEMPORAL_REDUCTION.itemId,
+				id: itemList[Item.TEMPORAL_REDUCTION].itemId,
 				price: 5,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.TEAR_OF_LIFE.itemId,
+				id: itemList[Item.TEAR_OF_LIFE].itemId,
 				price: 6,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.CUZCUSSIAN_MASK.itemId,
+				id: itemList[Item.CUZCUSSIAN_MASK].itemId,
 				price: 8,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ANTI_GRAVE_SUIT.itemId,
+				id: itemList[Item.ANTI_GRAVE_SUIT].itemId,
 				price: 6,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ENCHANTED_STEROID.itemId,
+				id: itemList[Item.ENCHANTED_STEROID].itemId,
 				price: 6,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.CURSE_LOCKER.itemId,
+				id: itemList[Item.CURSE_LOCKER].itemId,
 				price: 4,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.FEAR_FACTOR.itemId,
+				id: itemList[Item.FEAR_FACTOR].itemId,
 				price: 8,
 				type: ItemShopType.ITEM
 			}
 		],
 		condition: {
-			[ConditionEnum.POSSESS_OBJECT]: itemList.GOLDEN_NAPODINO.itemId
+			[ConditionEnum.POSSESS_OBJECT]: itemList[Item.GOLDEN_NAPODINO].itemId
 		}
 	},
 	// Cursed Shop, only accessible by cursed dinoz
@@ -207,12 +207,12 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CURSED,
 		listItemsSold: [
 			{
-				id: itemList.DEVIL_OINTMENT.itemId,
+				id: itemList[Item.DEVIL_OINTMENT].itemId,
 				price: 6000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.PIRHANOZ_IN_BAG.itemId,
+				id: itemList[Item.PIRHANOZ_IN_BAG].itemId,
 				price: 1200,
 				type: ItemShopType.ITEM
 			}
@@ -229,7 +229,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.PAMPLEBOUM.itemId,
+				id: itemList[Item.PAMPLEBOUM].itemId,
 				price: 1800,
 				type: ItemShopType.ITEM
 			}
@@ -246,12 +246,12 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.PORTABLE_LOVE.itemId,
+				id: itemList[Item.PORTABLE_LOVE].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.POISONITE_SHOT.itemId,
+				id: itemList[Item.POISONITE_SHOT].itemId,
 				price: 900,
 				type: ItemShopType.ITEM
 			}
@@ -265,12 +265,12 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.FUCA_PILL.itemId,
+				id: itemList[Item.FUCA_PILL].itemId,
 				price: 1000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.MONOCHROMATIC.itemId,
+				id: itemList[Item.MONOCHROMATIC].itemId,
 				price: 15000,
 				type: ItemShopType.ITEM
 			}
@@ -284,12 +284,12 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.POISONITE_SHOT.itemId,
+				id: itemList[Item.POISONITE_SHOT].itemId,
 				price: 300,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.FUCA_PILL.itemId,
+				id: itemList[Item.FUCA_PILL].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			}
@@ -303,12 +303,12 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.LORIS_COSTUME.itemId,
+				id: itemList[Item.LORIS_COSTUME].itemId,
 				price: 400,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.PORTABLE_LOVE.itemId,
+				id: itemList[Item.PORTABLE_LOVE].itemId,
 				price: 900,
 				type: ItemShopType.ITEM
 			}
@@ -322,27 +322,27 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.PORTABLE_LOVE.itemId,
+				id: itemList[Item.PORTABLE_LOVE].itemId,
 				price: 320,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.POISONITE_SHOT.itemId,
+				id: itemList[Item.POISONITE_SHOT].itemId,
 				price: 320,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.LORIS_COSTUME.itemId,
+				id: itemList[Item.LORIS_COSTUME].itemId,
 				price: 450,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.FUCA_PILL.itemId,
+				id: itemList[Item.FUCA_PILL].itemId,
 				price: 1100,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.MONOCHROMATIC.itemId,
+				id: itemList[Item.MONOCHROMATIC].itemId,
 				price: 5200,
 				type: ItemShopType.ITEM
 			}
@@ -356,22 +356,22 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.VEGETOX_COSTUME.itemId,
+				id: itemList[Item.VEGETOX_COSTUME].itemId,
 				price: 1000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.GOBLIN_COSTUME.itemId,
+				id: itemList[Item.GOBLIN_COSTUME].itemId,
 				price: 1000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.DANGER_DETECTOR.itemId,
+				id: itemList[Item.DANGER_DETECTOR].itemId,
 				price: 2000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.SURVIVING_RATION.itemId,
+				id: itemList[Item.SURVIVING_RATION].itemId,
 				price: 2500,
 				type: ItemShopType.ITEM
 			}
@@ -385,37 +385,37 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.CLASSIC,
 		listItemsSold: [
 			{
-				id: itemList.LAND_OF_ASHES.itemId,
+				id: itemList[Item.LAND_OF_ASHES].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ABYSS.itemId,
+				id: itemList[Item.ABYSS].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.AMAZON.itemId,
+				id: itemList[Item.AMAZON].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.ST_ELMAS_FIRE.itemId,
+				id: itemList[Item.ST_ELMAS_FIRE].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.UVAVU.itemId,
+				id: itemList[Item.UVAVU].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.STRONG_TEA.itemId,
+				id: itemList[Item.STRONG_TEA].itemId,
 				price: 3000,
 				type: ItemShopType.ITEM
 			},
 			{
-				id: itemList.TEMPORAL_STABILISER.itemId,
+				id: itemList[Item.TEMPORAL_STABILISER].itemId,
 				price: 4000,
 				type: ItemShopType.ITEM
 			}

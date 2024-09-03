@@ -1,108 +1,108 @@
 import { BoxOpening, boxType } from './boxOpening.mjs';
-import { itemList } from './ItemList.mjs';
+import { Item, itemList } from './ItemList.mjs';
 
 export const itemProbability: BoxOpening[] = [
 	{
 		boxType: boxType.COMMON,
 		items: [
 			{
-				item: itemList.FEROSS_EGG,
+				item: itemList[Item.FEROSS_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.MOUEFFE_EGG,
+				item: itemList[Item.MOUEFFE_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.PIGMOU_EGG,
+				item: itemList[Item.PIGMOU_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.WINKS_EGG,
+				item: itemList[Item.WINKS_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.PLANAILLE_EGG,
+				item: itemList[Item.PLANAILLE_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.CASTIVORE_EGG,
+				item: itemList[Item.CASTIVORE_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.NUAGOZ_EGG,
+				item: itemList[Item.NUAGOZ_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.SIRAIN_EGG,
+				item: itemList[Item.SIRAIN_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.GORILLOZ_EGG,
+				item: itemList[Item.GORILLOZ_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.WANWAN_EGG,
+				item: itemList[Item.WANWAN_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.FIRE_SPHERE,
+				item: itemList[Item.FIRE_SPHERE],
 				probability: 1
 			},
 			{
-				item: itemList.WOOD_SPHERE,
+				item: itemList[Item.WOOD_SPHERE],
 				probability: 1
 			},
 			{
-				item: itemList.WATER_SPHERE,
+				item: itemList[Item.WATER_SPHERE],
 				probability: 1
 			},
 			{
-				item: itemList.LIGHTNING_SPHERE,
+				item: itemList[Item.LIGHTNING_SPHERE],
 				probability: 1
 			},
 			{
-				item: itemList.AIR_SPHERE,
+				item: itemList[Item.AIR_SPHERE],
 				probability: 1
 			},
 			{
-				item: itemList.AMNESIC_RICE,
+				item: itemList[Item.AMNESIC_RICE],
 				probability: 25 //49
 			},
 			{
-				item: itemList.MONOCHROMATIC,
+				item: itemList[Item.MONOCHROMATIC],
 				probability: 11 //60
 			},
 			{
-				item: itemList.FUCA_PILL,
+				item: itemList[Item.FUCA_PILL],
 				probability: 5 //65
 			},
 			{
-				item: itemList.HOT_BREAD,
+				item: itemList[Item.HOT_BREAD],
 				probability: 10 //75
 			},
 			{
-				item: itemList.ELIXIR,
+				item: itemList[Item.ELIXIR],
 				probability: 10 //85
 			},
 			{
-				item: itemList.BOX_RARE,
+				item: itemList[Item.BOX_RARE],
 				probability: 5 //90
 			},
 			{
-				item: itemList.BOX_EPIC,
+				item: itemList[Item.BOX_EPIC],
 				probability: 2 //92
 			},
 			{
-				item: itemList.DAILY_TICKET,
+				item: itemList[Item.DAILY_TICKET],
 				probability: 2 //94
 			},
 			{
-				item: itemList.VOID_SPHERE,
+				item: itemList[Item.VOID_SPHERE],
 				probability: 3 //97
 			},
 			{
-				item: itemList.TIK_BRACELET,
+				item: itemList[Item.TIK_BRACELET],
 				probability: 3 //100
 			}
 		]
@@ -111,123 +111,123 @@ export const itemProbability: BoxOpening[] = [
 		boxType: boxType.RARE,
 		items: [
 			{
-				item: itemList.FEROSS_EGG,
+				item: itemList[Item.FEROSS_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.MOUEFFE_EGG,
+				item: itemList[Item.MOUEFFE_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.PIGMOU_EGG,
+				item: itemList[Item.PIGMOU_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.WINKS_EGG,
+				item: itemList[Item.WINKS_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.PLANAILLE_EGG,
+				item: itemList[Item.PLANAILLE_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.CASTIVORE_EGG,
+				item: itemList[Item.CASTIVORE_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.NUAGOZ_EGG,
+				item: itemList[Item.NUAGOZ_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.SIRAIN_EGG,
+				item: itemList[Item.SIRAIN_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.GORILLOZ_EGG,
+				item: itemList[Item.GORILLOZ_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.WANWAN_EGG,
+				item: itemList[Item.WANWAN_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.MOUEFFE_EGG_RARE,
+				item: itemList[Item.MOUEFFE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.WINKS_EGG_RARE,
+				item: itemList[Item.WINKS_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.WANWAN_BABY_RARE,
+				item: itemList[Item.WANWAN_BABY_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.ROCKY_EGG,
+				item: itemList[Item.ROCKY_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.PTEROZ_EGG,
+				item: itemList[Item.PTEROZ_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.HIPPOCLAMP_EGG,
+				item: itemList[Item.HIPPOCLAMP_EGG],
 				probability: 2 //20
 			},
 			{
-				item: itemList.FIRE_SPHERE,
+				item: itemList[Item.FIRE_SPHERE],
 				probability: 2
 			},
 			{
-				item: itemList.WOOD_SPHERE,
+				item: itemList[Item.WOOD_SPHERE],
 				probability: 2
 			},
 			{
-				item: itemList.WATER_SPHERE,
+				item: itemList[Item.WATER_SPHERE],
 				probability: 2
 			},
 			{
-				item: itemList.LIGHTNING_SPHERE,
+				item: itemList[Item.LIGHTNING_SPHERE],
 				probability: 2
 			},
 			{
-				item: itemList.AIR_SPHERE,
+				item: itemList[Item.AIR_SPHERE],
 				probability: 2 //30
 			},
 			{
-				item: itemList.AMNESIC_RICE,
+				item: itemList[Item.AMNESIC_RICE],
 				probability: 20 //50
 			},
 			{
-				item: itemList.MONOCHROMATIC,
+				item: itemList[Item.MONOCHROMATIC],
 				probability: 15 //65
 			},
 			{
-				item: itemList.FUCA_PILL,
+				item: itemList[Item.FUCA_PILL],
 				probability: 5 //70
 			},
 			{
-				item: itemList.ELIXIR,
+				item: itemList[Item.ELIXIR],
 				probability: 12 //82
 			},
 			{
-				item: itemList.BOX_LEGENDARY,
+				item: itemList[Item.BOX_LEGENDARY],
 				probability: 1 //83
 			},
 			{
-				item: itemList.BOX_EPIC,
+				item: itemList[Item.BOX_EPIC],
 				probability: 2 //85
 			},
 			{
-				item: itemList.DAILY_TICKET,
+				item: itemList[Item.DAILY_TICKET],
 				probability: 3 //88
 			},
 			{
-				item: itemList.VOID_SPHERE,
+				item: itemList[Item.VOID_SPHERE],
 				probability: 6 //94
 			},
 			{
-				item: itemList.TIK_BRACELET,
+				item: itemList[Item.TIK_BRACELET],
 				probability: 6 //100
 			}
 		]
@@ -236,135 +236,135 @@ export const itemProbability: BoxOpening[] = [
 		boxType: boxType.EPIC,
 		items: [
 			{
-				item: itemList.FEROSS_EGG,
+				item: itemList[Item.FEROSS_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.FEROSS_EGG_RARE,
+				item: itemList[Item.FEROSS_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.MOUEFFE_EGG_RARE,
+				item: itemList[Item.MOUEFFE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.PIGMOU_EGG_RARE,
+				item: itemList[Item.PIGMOU_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.WINKS_EGG_RARE,
+				item: itemList[Item.WINKS_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.PLANAILLE_EGG_RARE,
+				item: itemList[Item.PLANAILLE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.CASTIVORE_EGG_RARE,
+				item: itemList[Item.CASTIVORE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.NUAGOZ_EGG_RARE,
+				item: itemList[Item.NUAGOZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SANTAZ_EGG_RARE,
+				item: itemList[Item.SANTAZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.GORILLOZ_EGG_RARE,
+				item: itemList[Item.GORILLOZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.WANWAN_BABY_RARE,
+				item: itemList[Item.WANWAN_BABY_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.ROCKY_EGG_RARE,
+				item: itemList[Item.ROCKY_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.PTEROZ_EGG_RARE,
+				item: itemList[Item.PTEROZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.HIPPOCLAMP_EGG_RARE,
+				item: itemList[Item.HIPPOCLAMP_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SANTAZ_EGG,
+				item: itemList[Item.SANTAZ_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.KABUKI_EGG,
+				item: itemList[Item.KABUKI_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.MAHAMUTI_EGG,
+				item: itemList[Item.MAHAMUTI_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.SOUFFLET_EGG,
+				item: itemList[Item.SOUFFLET_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.TOUFUFU_BABY,
+				item: itemList[Item.TOUFUFU_BABY],
 				probability: 1
 			},
 			{
-				item: itemList.QUETZU_EGG,
+				item: itemList[Item.QUETZU_EGG],
 				probability: 1 //20
 			},
 			{
-				item: itemList.FIRE_SPHERE,
+				item: itemList[Item.FIRE_SPHERE],
 				probability: 3
 			},
 			{
-				item: itemList.WOOD_SPHERE,
+				item: itemList[Item.WOOD_SPHERE],
 				probability: 3
 			},
 			{
-				item: itemList.WATER_SPHERE,
+				item: itemList[Item.WATER_SPHERE],
 				probability: 3
 			},
 			{
-				item: itemList.LIGHTNING_SPHERE,
+				item: itemList[Item.LIGHTNING_SPHERE],
 				probability: 3
 			},
 			{
-				item: itemList.AIR_SPHERE,
+				item: itemList[Item.AIR_SPHERE],
 				probability: 3 //30
 			},
 			{
-				item: itemList.AMNESIC_RICE,
+				item: itemList[Item.AMNESIC_RICE],
 				probability: 15 //45
 			},
 			{
-				item: itemList.MONOCHROMATIC,
+				item: itemList[Item.MONOCHROMATIC],
 				probability: 10 //55
 			},
 			{
-				item: itemList.ELIXIR,
+				item: itemList[Item.ELIXIR],
 				probability: 5 //60
 			},
 			{
-				item: itemList.BOX_LEGENDARY,
+				item: itemList[Item.BOX_LEGENDARY],
 				probability: 3 //63
 			},
 			{
-				item: itemList.BOX_EPIC,
+				item: itemList[Item.BOX_EPIC],
 				probability: 2 //65
 			},
 			{
-				item: itemList.VOID_SPHERE,
+				item: itemList[Item.VOID_SPHERE],
 				probability: 15 //80
 			},
 			{
-				item: itemList.TIK_BRACELET,
+				item: itemList[Item.TIK_BRACELET],
 				probability: 10 //90
 			},
 			{
-				item: itemList.GOLDEN_NAPODINO,
+				item: itemList[Item.GOLDEN_NAPODINO],
 				probability: 10 //100
 			}
 		]
@@ -373,159 +373,159 @@ export const itemProbability: BoxOpening[] = [
 		boxType: boxType.LEGENDARY,
 		items: [
 			{
-				item: itemList.FEROSS_EGG,
+				item: itemList[Item.FEROSS_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.FEROSS_EGG_RARE,
+				item: itemList[Item.FEROSS_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.MOUEFFE_EGG_RARE,
+				item: itemList[Item.MOUEFFE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.PIGMOU_EGG_RARE,
+				item: itemList[Item.PIGMOU_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.WINKS_EGG_RARE,
+				item: itemList[Item.WINKS_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.PLANAILLE_EGG_RARE,
+				item: itemList[Item.PLANAILLE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.CASTIVORE_EGG_RARE,
+				item: itemList[Item.CASTIVORE_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.NUAGOZ_EGG_RARE,
+				item: itemList[Item.NUAGOZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SANTAZ_EGG_RARE,
+				item: itemList[Item.SANTAZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.GORILLOZ_EGG_RARE,
+				item: itemList[Item.GORILLOZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.WANWAN_BABY_RARE,
+				item: itemList[Item.WANWAN_BABY_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.ROCKY_EGG_RARE,
+				item: itemList[Item.ROCKY_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.PTEROZ_EGG_RARE,
+				item: itemList[Item.PTEROZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.HIPPOCLAMP_EGG_RARE,
+				item: itemList[Item.HIPPOCLAMP_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SANTAZ_EGG_RARE,
+				item: itemList[Item.SANTAZ_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SANTAZ_EGG,
+				item: itemList[Item.SANTAZ_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.RARE_KABUKI_EGG,
+				item: itemList[Item.RARE_KABUKI_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.KABUKI_EGG,
+				item: itemList[Item.KABUKI_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.RARE_MAHAMUTI_EGG,
+				item: itemList[Item.RARE_MAHAMUTI_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.MAHAMUTI_EGG,
+				item: itemList[Item.MAHAMUTI_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.SOUFFLET_EGG_RARE,
+				item: itemList[Item.SOUFFLET_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SOUFFLET_EGG,
+				item: itemList[Item.SOUFFLET_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.TOUFUFU_BABY_RARE,
+				item: itemList[Item.TOUFUFU_BABY_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.TOUFUFU_BABY,
+				item: itemList[Item.TOUFUFU_BABY],
 				probability: 1
 			},
 			{
-				item: itemList.QUETZU_EGG,
+				item: itemList[Item.QUETZU_EGG],
 				probability: 1
 			},
 			{
-				item: itemList.QUETZU_EGG_RARE,
+				item: itemList[Item.QUETZU_EGG_RARE],
 				probability: 1
 			},
 			{
-				item: itemList.SMOG_EGG,
+				item: itemList[Item.SMOG_EGG],
 				probability: 2
 			},
 			{
-				item: itemList.SMOG_EGG_CHRISTMAS_BLUE,
+				item: itemList[Item.SMOG_EGG_CHRISTMAS_BLUE],
 				probability: 1
 			},
 			{
-				item: itemList.TRICERAGNON_BABY,
+				item: itemList[Item.TRICERAGNON_BABY],
 				probability: 2
 			},
 			{
-				item: itemList.TRICERAGNON_EGG_BABY,
+				item: itemList[Item.TRICERAGNON_EGG_BABY],
 				probability: 1 //33
 			},
 			{
-				item: itemList.FIRE_SPHERE,
+				item: itemList[Item.FIRE_SPHERE],
 				probability: 5
 			},
 			{
-				item: itemList.WOOD_SPHERE,
+				item: itemList[Item.WOOD_SPHERE],
 				probability: 5
 			},
 			{
-				item: itemList.WATER_SPHERE,
+				item: itemList[Item.WATER_SPHERE],
 				probability: 5
 			},
 			{
-				item: itemList.LIGHTNING_SPHERE,
+				item: itemList[Item.LIGHTNING_SPHERE],
 				probability: 5
 			},
 			{
-				item: itemList.AIR_SPHERE,
+				item: itemList[Item.AIR_SPHERE],
 				probability: 5 //58
 			},
 			{
-				item: itemList.BOX_LEGENDARY,
+				item: itemList[Item.BOX_LEGENDARY],
 				probability: 2 //60
 			},
 			{
-				item: itemList.VOID_SPHERE,
+				item: itemList[Item.VOID_SPHERE],
 				probability: 15 //75
 			},
 			{
-				item: itemList.TIK_BRACELET,
+				item: itemList[Item.TIK_BRACELET],
 				probability: 15 //90
 			},
 			{
-				item: itemList.GOLDEN_NAPODINO,
+				item: itemList[Item.GOLDEN_NAPODINO],
 				probability: 10 //100
 			}
 		]

@@ -450,9 +450,8 @@ export default defineComponent({
 			}
 		},
 		resolveItem(item: ItemShopFiche): ItemFiche {
-			const realItem = Object.values(itemList).find(i => i.itemId === item.id);
 			return {
-				...realItem,
+				...itemList[item.id],
 				price: item.price,
 				quantity: item.quantity ?? 0
 			} as ItemFiche;

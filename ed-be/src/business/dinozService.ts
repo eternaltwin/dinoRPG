@@ -6,7 +6,7 @@ import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { gatherList } from '@drpg/core/models/gather/gatherList';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { shopList } from '@drpg/core/models/shop/ShopList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
@@ -725,7 +725,7 @@ export async function resurrectDinoz(req: Request) {
 	const starQuest = dinozData.player.quests.find(q => q.questId === Scenario.STAR && q.progression === 7);
 	if (starQuest && dinozData.placeId === PlaceEnum.JUNGLE_SAUVAGE) {
 		await updateQuest(dinozData.player.id, Scenario.STAR, 8);
-		await increaseItemQuantity(dinozData.player.id, itemList.MAGIC_STAR.itemId, 1);
+		await increaseItemQuantity(dinozData.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
 		return {
 			category: ItemEffect.QUEST,
 			value: 'resurrect_star_found'
@@ -942,7 +942,7 @@ export async function gatherWithDinoz(req: Request) {
 
 	for (const [index, i] of returnGrid.rewards.item.entries()) {
 		const itemToReward = player.items.find(items => items.itemId === i.itemId);
-		if (i.itemId === itemList.BOX_HANDLER.itemId) {
+		if (i.itemId === itemList[Item.BOX_HANDLER].itemId) {
 			const completion = await getPlayerCompletion(player.id);
 			if (completion?.ranking?.completion === undefined) {
 				throw new ExpectedError(`Failed to find completion.`);
@@ -957,15 +957,15 @@ export async function gatherWithDinoz(req: Request) {
 			returnGrid.rewards.item[index] = box;
 		} else {
 			const goldItems = [
-				itemList.GOLD100.itemId,
-				itemList.GOLD500.itemId,
-				itemList.GOLD1000.itemId,
-				itemList.GOLD2000.itemId,
-				itemList.GOLD2500.itemId,
-				itemList.GOLD3000.itemId,
-				itemList.GOLD5000.itemId,
-				itemList.GOLD10000.itemId,
-				itemList.GOLD20000.itemId
+				itemList[Item.GOLD100].itemId,
+				itemList[Item.GOLD500].itemId,
+				itemList[Item.GOLD1000].itemId,
+				itemList[Item.GOLD2000].itemId,
+				itemList[Item.GOLD2500].itemId,
+				itemList[Item.GOLD3000].itemId,
+				itemList[Item.GOLD5000].itemId,
+				itemList[Item.GOLD10000].itemId,
+				itemList[Item.GOLD20000].itemId
 			];
 			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
 				await increaseItemQuantity(player.id, i.itemId, 1);
@@ -1216,7 +1216,7 @@ export async function useIrma(req: Request) {
 
 	const team = [dinoz, ...dinoz.followers];
 
-	const irmaQuantity = dinoz.player.items.find(i => i.itemId === itemList.POTION_IRMA.itemId);
+	const irmaQuantity = dinoz.player.items.find(i => i.itemId === itemList[Item.POTION_IRMA].itemId);
 
 	const neededIrma = team.filter(d => d.remaining === 0 && (!d.fight || !d.gather)).length;
 
@@ -1240,7 +1240,7 @@ export async function useIrma(req: Request) {
 	}
 
 	if (neededIrma > 0) {
-		await decreaseItemQuantity(dinoz.player.id, itemList.POTION_IRMA.itemId, neededIrma);
+		await decreaseItemQuantity(dinoz.player.id, itemList[Item.POTION_IRMA].itemId, neededIrma);
 	}
 	return {
 		category: ItemEffect.ACTION,

@@ -2,7 +2,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { ItemShopFiche, ItemShopType, ShopFiche } from '@drpg/core/models/shop/ShopFiche';
 import { shopList } from '@drpg/core/models/shop/ShopList';
 import { Dinoz, DinozStatus, LogType, PlayerItem } from '@drpg/prisma';
@@ -146,17 +146,17 @@ export async function buyItem(req: Request) {
 	if (theShop.type === ShopType.MAGICAL) {
 		await buyMagicItem(authed, playerShopData, itemReference, quantityBought, playerItemData);
 	} else if (theShop.type === ShopType.FILOU) {
-		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList.TREASURE_COUPON.itemId);
+		const playerTreasure = playerShopData.items.find(item => item.itemId === itemList[Item.TREASURE_COUPON].itemId);
 		if (!playerTreasure) {
-			await insertItem(authed.id, { itemId: itemList.TREASURE_COUPON.itemId, quantity: quantityBought });
+			await insertItem(authed.id, { itemId: itemList[Item.TREASURE_COUPON].itemId, quantity: quantityBought });
 		} else {
-			await increaseItemQuantity(authed.id, itemList.TREASURE_COUPON.itemId, quantityBought);
+			await increaseItemQuantity(authed.id, itemList[Item.TREASURE_COUPON].itemId, quantityBought);
 		}
 		await createLog(
 			LogType.ItemBought,
 			authed.id,
 			undefined,
-			itemList.TREASURE_COUPON.itemId.toString(),
+			itemList[Item.TREASURE_COUPON].itemId.toString(),
 			quantityBought.toString()
 		);
 
@@ -169,7 +169,7 @@ export async function buyItem(req: Request) {
 		}
 		await decreaseIngredientQuantity(authed.id, itemReference.itemId, itemFromShop.price * quantityBought);
 		return {
-			itemId: itemList.TREASURE_COUPON.itemId,
+			itemId: itemList[Item.TREASURE_COUPON].itemId,
 			quantity: quantityBought,
 			gold: quantityBought
 		};
@@ -246,7 +246,7 @@ async function buyMagicItem(
 	playerItemData: Pick<PlayerItem, 'quantity'> | undefined
 ) {
 	// Get the number of golden napodinos owned by the player
-	const playerNapoData = playerShopData.items.find(item => item.itemId === itemList.GOLDEN_NAPODINO.itemId);
+	const playerNapoData = playerShopData.items.find(item => item.itemId === itemList[Item.GOLDEN_NAPODINO].itemId);
 
 	itemSold.quantity = playerItemData ? quantityBought + playerItemData.quantity : quantityBought;
 
@@ -261,7 +261,7 @@ async function buyMagicItem(
 	}
 
 	// Set player golden napodino count
-	await decreaseItemQuantity(authed.id, itemList.GOLDEN_NAPODINO.itemId, itemSold.price * quantityBought);
+	await decreaseItemQuantity(authed.id, itemList[Item.GOLDEN_NAPODINO].itemId, itemSold.price * quantityBought);
 }
 
 // Check if player can access the shop

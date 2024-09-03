@@ -1,5 +1,5 @@
 import { RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { itemList, Item } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { placeList } from '../../place/PlaceList.mjs';
@@ -35,7 +35,7 @@ export const M_MMEX: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.FIGHT_RATION.itemId,
+				value: itemList[Item.FIGHT_RATION].itemId,
 				quantity: 1
 			}
 		],

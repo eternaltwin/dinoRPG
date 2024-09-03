@@ -1,7 +1,7 @@
 import { getBoxHandlerInformations } from '../dao/playerDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import gameConfig from '../config/game.config.js';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemProbability } from '@drpg/core/models/item/itemProbability';
 
@@ -54,13 +54,13 @@ export function selectBox(completion: number) {
 	const randomBonus = randomNumberWithMedian(0, 20, 6);
 	const fullCompletion = randomBonus + completion;
 	if (fullCompletion < 45) {
-		return itemList.BOX_COMMON;
+		return itemList[Item.BOX_COMMON];
 	} else if (fullCompletion < 75) {
-		return itemList.BOX_RARE;
+		return itemList[Item.BOX_RARE];
 	} else if (fullCompletion < 95) {
-		return itemList.BOX_EPIC;
+		return itemList[Item.BOX_EPIC];
 	} else {
-		return itemList.BOX_LEGENDARY;
+		return itemList[Item.BOX_LEGENDARY];
 	}
 }
 

@@ -2,7 +2,7 @@ import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { itemList, Item } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { MapZone } from '../../enums/MapZone.mjs';
@@ -15,7 +15,7 @@ export const M_GARDIEN: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.PAMPLEBOUM.itemId,
+				value: itemList[Item.PAMPLEBOUM].itemId,
 				quantity: 3
 			},
 			{
@@ -99,7 +99,7 @@ export const M_GARDIEN: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.PAMPLEBOUM.itemId,
+				value: itemList[Item.PAMPLEBOUM].itemId,
 				quantity: 1
 			},
 			{
@@ -159,7 +159,7 @@ export const M_GARDIEN: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.PAMPLEBOUM.itemId,
+				value: itemList[Item.PAMPLEBOUM].itemId,
 				quantity: 3
 			},
 			{
@@ -212,7 +212,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.PAMPLEBOUM.itemId,
+				value: itemList[Item.PAMPLEBOUM].itemId,
 				quantity: 1
 			}
 		],
@@ -283,7 +283,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.PAMPLEBOUM.itemId,
+				value: itemList[Item.PAMPLEBOUM].itemId,
 				quantity: 4
 			}
 		],
@@ -371,7 +371,7 @@ export const M_GARDIEN: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.PAMPLEBOUM.itemId,
+				value: itemList[Item.PAMPLEBOUM].itemId,
 				quantity: 2
 			}
 		],

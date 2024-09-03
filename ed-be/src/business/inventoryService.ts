@@ -20,7 +20,7 @@ import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.j
 import { applySkillEffect } from './skillService.js';
 import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
@@ -77,7 +77,7 @@ export async function getAllItemsData(req: Request) {
 
 		// Push a new item object with its properties accordingly to the player's unique skills and data
 		return {
-			name: theItem.name,
+			id: theItem.itemId,
 			price: theItem.price,
 			quantity: playerInventoryData ? i.quantity : 0,
 			maxQuantity:
@@ -125,10 +125,10 @@ export async function useItem(req: Request) {
 		if (
 			(dayOfWeek === 4 || dayOfWeek === 6) &&
 			dinoz.placeId === PlaceEnum.MARAIS_COLLANT &&
-			itemId === itemList.MEAT_PIE.itemId
+			itemId === itemList[Item.MEAT_PIE].itemId
 		) {
 			await updateQuest(dinoz.player.id, Scenario.STAR, 4);
-			await increaseItemQuantity(dinoz.player.id, itemList.MAGIC_STAR.itemId, 1);
+			await increaseItemQuantity(dinoz.player.id, itemList[Item.MAGIC_STAR].itemId, 1);
 			const initialLife = dinoz.life;
 			await updateDinoz(dinoz.id, heal(dinoz, 30 * (dinoz.player.cooker ? 1.1 : 1)));
 			const lifeHealed = Math.max(0, dinoz.life - initialLife);
@@ -248,117 +248,117 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 
 	// Each rare egg has a different hatching
 	switch (item.itemId) {
-		case itemList.MOUEFFE_EGG_RARE.itemId:
+		case itemList[Item.MOUEFFE_EGG_RARE].itemId:
 			// Suit
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.PIGMOU_EGG_RARE.itemId:
+		case itemList[Item.PIGMOU_EGG_RARE].itemId:
 			// Body tatoo
 			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
 			break;
-		case itemList.WINKS_EGG_RARE.itemId:
+		case itemList[Item.WINKS_EGG_RARE].itemId:
 			// Fore-head horn thingy
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.PLANAILLE_EGG_RARE.itemId:
+		case itemList[Item.PLANAILLE_EGG_RARE].itemId:
 			// More hair and big eyes
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.CASTIVORE_EGG_RARE.itemId:
+		case itemList[Item.CASTIVORE_EGG_RARE].itemId:
 			// Bow-tie
 			randomDisplay = generateDinozDisplay(race, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
 			break;
-		case itemList.ROCKY_EGG_RARE.itemId:
+		case itemList[Item.ROCKY_EGG_RARE].itemId:
 			// Just color palette, no other graphical rare stuff in swf
 			randomDisplay = generateDinozDisplay(race, '1', '0', '0');
 			break;
-		case itemList.PTEROZ_EGG_RARE.itemId:
+		case itemList[Item.PTEROZ_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or remove. Currently placeholder.
 			// Note: there does not seem to be a rare thingy for the pteroz in the swf
 			// Color palette has no effect
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.NUAGOZ_EGG_RARE.itemId:
+		case itemList[Item.NUAGOZ_EGG_RARE].itemId:
 			// Just color palette
 			randomDisplay = generateDinozDisplay(race, '1', '0', '0');
 			break;
-		case itemList.SIRAIN_EGG_RARE.itemId:
+		case itemList[Item.SIRAIN_EGG_RARE].itemId:
 			// Scarf & tatoo
 			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
 			break;
-		case itemList.HIPPOCLAMP_EGG_RARE.itemId:
+		case itemList[Item.HIPPOCLAMP_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or remove. Currently placeholder.
 			// Note: there does not seem to be a rare thingy for the hippoclamp in the swf
 			// Color palette has no effect
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.GORILLOZ_EGG_RARE.itemId:
+		case itemList[Item.GORILLOZ_EGG_RARE].itemId:
 			// Elvis Presley hairstyle
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.WANWAN_EGG_RARE.itemId:
+		case itemList[Item.WANWAN_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or just use the baby rare. Currently placeholder
 			// Note: there does not seem to be another rare thingy for the wanwan in the swf
 			// Note 2: Could go for color palette 1 and rare 1, instead of 2,1
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.WANWAN_BABY_RARE.itemId:
+		case itemList[Item.WANWAN_BABY_RARE].itemId:
 			// Naruto 9-tail style
 			randomDisplay = generateDinozDisplay(race, '2', '1', '0');
 			break;
-		case itemList.SANTAZ_EGG_RARE.itemId:
+		case itemList[Item.SANTAZ_EGG_RARE].itemId:
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.FEROSS_EGG_RARE.itemId:
+		case itemList[Item.FEROSS_EGG_RARE].itemId:
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.FEROSS_EGG_CHRISTMAS.itemId:
+		case itemList[Item.FEROSS_EGG_CHRISTMAS].itemId:
 			randomDisplay = generateDinozDisplay(race, '2', '2', '0');
 			break;
-		case itemList.RARE_KABUKI_EGG.itemId:
+		case itemList[Item.RARE_KABUKI_EGG].itemId:
 			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
 			break;
-		case itemList.RARE_MAHAMUTI_EGG.itemId:
+		case itemList[Item.RARE_MAHAMUTI_EGG].itemId:
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.SOUFFLET_EGG_RARE.itemId:
+		case itemList[Item.SOUFFLET_EGG_RARE].itemId:
 			// TODO: does not exist in MT's code: remove or check swf. Currently a placeholder
 			// Note: there does not seem to be a rare thingy for the hippoclamp in the swf
 			// Color palette has no effect
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.TOUFUFU_BABY_RARE.itemId:
+		case itemList[Item.TOUFUFU_BABY_RARE].itemId:
 			randomDisplay = generateDinozDisplay(race, '0', '1', '0');
 			break;
-		case itemList.QUETZU_EGG_RARE.itemId:
+		case itemList[Item.QUETZU_EGG_RARE].itemId:
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
 		// Classic smog egg can get color palette to 0 or 1
-		case itemList.SMOG_EGG.itemId:
+		case itemList[Item.SMOG_EGG].itemId:
 			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 2) === 0 ? '1' : '0', '0', '0');
 			break;
-		case itemList.SMOG_EGG_RARE.itemId:
+		case itemList[Item.SMOG_EGG_RARE].itemId:
 			// TODO: does not exist in MT's code: invent or just use the anniversary format. Currently placeholder
 			randomDisplay = generateDinozDisplay(race, '0', '2', '0');
 			break;
-		case itemList.SMOG_EGG_ANNIVERSARY.itemId:
+		case itemList[Item.SMOG_EGG_ANNIVERSARY].itemId:
 			// Wings and goggles
 			randomDisplay = generateDinozDisplay(race, '0', '2', '0');
 			break;
-		case itemList.SMOG_EGG_CHRISTMAS_BLUE.itemId:
+		case itemList[Item.SMOG_EGG_CHRISTMAS_BLUE].itemId:
 			// Elf-like boots
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.SMOG_EGG_CHRISTMAS_GREEN.itemId:
+		case itemList[Item.SMOG_EGG_CHRISTMAS_GREEN].itemId:
 			// Ear-warmer
 			randomDisplay = generateDinozDisplay(race, '1', '3', '0');
 			break;
-		case itemList.TRICERAGNON_EGG_BABY.itemId:
+		case itemList[Item.TRICERAGNON_EGG_BABY].itemId:
 			// Note: does not exist in MT's code, but does in the swf
 			// Saddle and motorbike handles
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
-		case itemList.CHRISTMAS_EGG.itemId:
+		case itemList[Item.CHRISTMAS_EGG].itemId:
 			if (getRandomNumber(0, 3) === 0) {
 				race = raceList.TRICERAGNON;
 				randomDisplay = generateDinozDisplay(race, '0', '0', '0');
@@ -438,9 +438,9 @@ async function useSpecialItem(
 		case 'pampleboum':
 			const healed = heal(dinoz, 15 * (dinoz.player.cooker ? 1.1 : 1));
 			await updateDinoz(dinoz.id, healed);
-			const pamp = dinoz.player.items.find(item => item.itemId === itemList.PAMPLEBOUM_PIT.itemId);
-			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList.PAMPLEBOUM_PIT.itemId, quantity: 1 });
-			else await increaseItemQuantity(dinoz.player.id, itemList.PAMPLEBOUM_PIT.itemId, 1);
+			const pamp = dinoz.player.items.find(item => item.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
+			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList[Item.PAMPLEBOUM_PIT].itemId, quantity: 1 });
+			else await increaseItemQuantity(dinoz.player.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
 
 			//Update stats
 			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, healed.life);

@@ -2,7 +2,7 @@ import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { PlaceEnum } from '../../enums/PlaceEnum.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
-import { itemList } from '../../item/ItemList.mjs';
+import { itemList, Item } from '../../item/ItemList.mjs';
 import { Mission } from '../../missions/mission.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { MapZone } from '../../enums/MapZone.mjs';
@@ -273,7 +273,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.SOS_FLAME.itemId,
+				value: itemList[Item.SOS_FLAME].itemId,
 				quantity: 1
 			}
 		],
@@ -426,7 +426,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.HOT_BREAD.itemId,
+				value: itemList[Item.HOT_BREAD].itemId,
 				quantity: 1
 			}
 		],
@@ -534,7 +534,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.POTION_ANGEL.itemId,
+				value: itemList[Item.POTION_ANGEL].itemId,
 				quantity: 1
 			}
 		],
@@ -713,7 +713,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.LITTLE_PEPPER.itemId,
+				value: itemList[Item.LITTLE_PEPPER].itemId,
 				quantity: 1
 			}
 		],
@@ -844,7 +844,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.CLOUD_BURGER.itemId,
+				value: itemList[Item.CLOUD_BURGER].itemId,
 				quantity: 1
 			}
 		],
@@ -888,7 +888,7 @@ export const M_SHAMAN_MOU: Mission[] = [
 			},
 			{
 				rewardType: RewardEnum.ITEM,
-				value: itemList.HOT_BREAD.itemId,
+				value: itemList[Item.HOT_BREAD].itemId,
 				quantity: 1
 			}
 		],

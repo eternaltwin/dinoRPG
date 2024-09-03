@@ -3,7 +3,7 @@ import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
-import { itemList } from '../models/item/ItemList.mjs';
+import { Item, itemList } from '../models/item/ItemList.mjs';
 
 export enum SpecialStat {
 	HP_REGEN = 'hpRegen',
@@ -80,7 +80,7 @@ export const getSpecialStat = (
 	if (stat === SpecialStat.TORCH_DAMAGE) {
 		// Return null if no lighter in inventory and no torch skill
 		if (
-			!dinoz.items?.some(item => item === itemList.ZIPPO.itemId) &&
+			!dinoz.items?.some(item => item === itemList[Item.ZIPPO].itemId) &&
 			!skills.some(skill => skill.id === Skill.TORCHE)
 		) {
 			return null;
