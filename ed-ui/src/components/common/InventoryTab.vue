@@ -187,10 +187,11 @@ export default defineComponent({
 		async resfreshInventory(): Promise<void> {
 			const items = await InventoryService.getAllItemsData();
 			this.allItemsData = items.map(i => {
-				const item = itemList[i.name.toUpperCase()];
-				item.quantity = i.quantity;
-				item.maxQuantity = i.maxQuantity;
-				return item;
+				return {
+					...itemList[i.name.toUpperCase()],
+					maxQuantity: i.maxQuantity,
+					quanity: i.quantity
+				};
 			});
 			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
 		}
