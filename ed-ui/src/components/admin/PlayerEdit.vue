@@ -304,6 +304,43 @@
 				</div>
 			</div>
 		</fieldset>
+		<fieldset>
+			<legend>Quests</legend>
+			<div class="quests">
+				<template v-for="(quest, index) in player.quests" :key="index">
+					<label class="title" for="selectedQuestId">Quest ID :</label>
+					<select id="questIdSelect" v-model="quest.questId" @change="updateProgression(quest)">
+						<option v-for="questID in player.quests" :key="questID.questId" :value="questID.questId">
+							{{ quest.questId }}
+						</option>
+					</select>
+					<input type="number" id="selectedQuestId" v-model="playerFields.selectedQuestId" />
+					<label class="title" for="progressionInput">Progression :</label>
+					<input type="text" disabled v-model="quest.progression" />
+					<input type="number" id="progressionInput" v-model="playerFields.progressionQuest" />
+				</template>
+				<div class="questOperations">
+					<input
+						class="radio"
+						type="radio"
+						id="increase"
+						value="increase"
+						name="questOperation"
+						v-model="playerFields.questOperation"
+					/>
+					<label class="radio" for="increase">Increase</label>
+					<input
+						class="radio"
+						type="radio"
+						id="decrease"
+						value="decrease"
+						name="questOperation"
+						v-model="playerFields.questOperation"
+					/>
+					<label class="radio" for="decrease">Decrease</label>
+				</div>
+			</div>
+		</fieldset>
 		<input type="submit" />
 	</form>
 </template>
@@ -330,7 +367,11 @@ export default defineComponent({
 				ingredients: [],
 				selectedIngredient: undefined as number | undefined,
 				ingredientQuantity: 1,
-				ingOperation: ''
+				ingOperation: '',
+				quests: [],
+				selectedQuestId: undefined as number | undefined,
+				progressionQuest: undefined as number | undefined,
+				questOperation: ''
 			} as PlayerEdit,
 			epicList: epicList,
 			epicListFiltered: {} as Array<string>,
@@ -415,6 +456,19 @@ export default defineComponent({
 				);
 			}
 
+			if (
+				this.playerFields.selectedQuestId !== undefined &&
+				this.playerFields.progressionQuest !== undefined &&
+				this.playerFields.questOperation
+			) {
+				await AdminService.updateQuest(
+					this.player.id,
+					this.playerFields.selectedQuestId,
+					this.playerFields.progressionQuest,
+					this.playerFields.questOperation
+				);
+			}
+
 			this.player = await AdminService.getplayerInformation(this.player.id);
 
 			this.playerFields.rewards = [];
@@ -423,10 +477,16 @@ export default defineComponent({
 			this.playerFields.selectedItem = undefined;
 			this.playerFields.itemQuantity = 1;
 			this.playerFields.itemOperation = '';
+			this.sortItemsById();
 
 			this.playerFields.selectedIngredient = undefined;
 			this.playerFields.ingredientQuantity = 1;
 			this.playerFields.ingOperation = '';
+			this.sortIngredientsById();
+
+			this.playerFields.selectedQuestId = undefined;
+			this.playerFields.progressionQuest = undefined;
+			this.playerFields.questOperation = '';
 		},
 		filterEpicList(operation: string): void {
 			if (operation === 'add') {
@@ -439,16 +499,31 @@ export default defineComponent({
 				);
 			}
 		},
+		filterQuestList(operation: string): void {
+			if (operation === 'update') {
+				this.questListFiltered = this.player.quests.find(q => q.questId === parseInt(quest.questId));
+			} else {
+				this.questListFiltered = Object.keys(epicList.imgName).filter(epicRewardId =>
+					this.player.rewards.includes(parseInt(epicRewardId))
+				);
+			}
+		},
 		sortItemsById(): void {
 			this.player.items.sort((a, b) => a.itemId - b.itemId);
 		},
 		sortIngredientsById(): void {
 			this.player.ingredients.sort((a, b) => a.ingredientId - b.ingredientId);
 		},
+		updateProgression(quest: unknown) {
+			const selectedQuestId = this.player.quests.find(q => q.questId === parseInt(quest.questId));
+			if (selectedQuestId) {
+				quest.progression = selectedQuestId.progression;
+			} else {
+				quest.progression = '';
+			}
+		},
 		mountedPlayer(): void {
 			this.player = this.playerProp;
-			this.sortItemsById();
-			this.sortIngredientsById();
 		}
 	},
 	mounted(): void {
@@ -461,8 +536,6 @@ export default defineComponent({
 	watch: {
 		playerProp(): void {
 			this.mountedPlayer();
-			this.sortItemsById();
-			this.sortIngredientsById();
 		}
 	}
 });
@@ -542,7 +615,8 @@ form {
 .rewards,
 .items,
 .ingredients,
-.uSkills {
+.uSkills,
+.quests {
 	align-items: center;
 	display: flex;
 	flex-direction: row;

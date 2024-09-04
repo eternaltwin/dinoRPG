@@ -4,6 +4,7 @@ export interface PlayerEdit {
 	rewards?: string[];
 	items?: string[];
 	ingredients?: string[];
+	quests?: string[];
 	selectedItem?: number;
 	selectedIngredient?: number;
 	itemQuantity: number;
@@ -11,6 +12,9 @@ export interface PlayerEdit {
 	epicOperation?: string;
 	itemOperation?: string;
 	ingOperation?: string;
+	selectedQuestId?: number;
+	progressionQuest?: number;
+	questOperation?: string;
 	money?: number;
 	operation?: string;
 	quetzuBought?: number;

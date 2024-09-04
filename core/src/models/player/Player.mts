@@ -19,6 +19,7 @@ export interface Player {
 	rewards: number[];
 	items: { itemId: number; quantity: number }[];
 	ingredients: { ingredientId: number; quantity: number }[];
+	quests: { questId: number; progression: number }[];
 	customText: string | null;
 	role: AdminRole;
 }

@@ -47,6 +47,15 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
+	updateQuest(id: number, questId: number, progression: number, operation: string): Promise<void> {
+		return http()
+			.put(`/admin/${id}/quests`, {
+				operation: operation,
+				quests: [{ questId: questId, progression: progression }]
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
 	getplayerInformation(id: number): Promise<PlayerTypeToSend> {
 		return http()
 			.get(`/admin/playerinfo/${id}`)

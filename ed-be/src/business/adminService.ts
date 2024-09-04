@@ -14,6 +14,7 @@ import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/player
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 import { increaseItemQuantity, decreaseItemQuantity } from '../dao/playerItemDao.js';
 import { increaseIngredientQuantity, decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
+import { increaseQuestProgression, decreaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { AdminRole } from '@drpg/prisma';
@@ -277,7 +278,7 @@ export async function modifyPlayerItems(req: Request): Promise<void> {
 }
 
 /**
- * @summary Add, remove, or modify item quantities for a player
+ * @summary Add, remove, or modify ingredients quantities for a player
  * @param req
  * @param req.params.id {number} PlayerId
  * @param req.body.operation {string} Operation to be realized (increase, decrease)
@@ -301,6 +302,43 @@ export async function modifyPlayerIngredients(req: Request): Promise<void> {
 			for (const ing of ingredients) {
 				await decreaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
 				await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, ing.id, ing.quantity);
+			}
+			break;
+		default:
+			throw new ExpectedError(`You need to select a valid operation.`);
+	}
+}
+
+/**
+ * @summary Update quest progression for a player
+ * @param req
+ * @param req.params.id {number} PlayerId
+ * @param req.body.questId {number} Quest ID to be updated
+ * @param req.body.progression {number} New progression value for the quest
+ * @return void
+ */
+export async function updatePlayerQuestProgression(req: Request): Promise<void> {
+    if (!req.auth?.playerId) {
+        throw new ExpectedError(`You need to be logged in.`);
+    }
+
+    const playerId = +req.params.id;
+	const quests: Array<{ questId: number; progression: number }> = req.body.quests;
+    // Validate questId and progression
+    if (quests === undefined) {
+        throw new ExpectedError(`Quest ID and progression are required.`);
+    }
+	switch (req.body.operation) {
+		case 'increase':
+			for (const q of quests) {
+				await increaseQuestProgression(+req.params.id, q.questId, q.progression);
+				await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, q.questId, q.progression);
+			}
+			break;
+		case 'decrease':
+			for (const q of quests) {
+				await decreaseQuestProgression(+req.params.id, q.questId, q.progression);
+				await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, q.questId, q.progression);
 			}
 			break;
 		default:
@@ -514,6 +552,10 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		ingredients: player.ingredients.map(ing => ({
 			ingredientId: ing.ingredientId,
 			quantity: ing.quantity
+		})),
+		quests: player.quests.map(q => ({
+			questId: q.questId,
+			progression: q.progression
 		})),
 		role: player.role
 	};

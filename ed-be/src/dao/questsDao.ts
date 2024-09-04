@@ -18,3 +18,29 @@ export async function updateQuest(playerId: number, questId: number, step: numbe
 		data: { progression: step }
 	});
 }
+
+export async function increaseQuestProgression(playerId: number, questId: number, step: number) {
+	return prisma.playerQuest.update({
+		where: {
+			questId_playerId: { questId, playerId }
+		},
+		data: {
+			progression: {
+				increment: step
+			}
+		}
+	});
+}
+
+export async function decreaseQuestProgression(playerId: number, questId: number, step: number) {
+	return prisma.playerQuest.update({
+		where: {
+			questId_playerId: { questId, playerId }
+		},
+		data: {
+			progression: {
+				decrement: step
+			}
+		}
+	});
+}

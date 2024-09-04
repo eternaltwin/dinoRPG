@@ -13,6 +13,7 @@ import {
 	listAllPlayerInformationForAdminDashboard,
 	modifyPlayerItems,
 	modifyPlayerIngredients,
+	updatePlayerQuestProgression,
 	setPlayerMoney
 } from '../business/adminService.js';
 import { apiRoutes } from '../constants/index.js';
@@ -164,6 +165,35 @@ routes.put(
 		try {
 			await modifyPlayerIngredients(req);
 			return res.status(200).send('Ingredients modified successfully');
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/:id/quests`,
+	[
+		param('id').exists().toInt().isNumeric(),
+		body('operation').exists().isString().isIn(['increase', 'decrease']),
+		body('quests')
+			.isArray()
+			.custom((quests: any[]) => {
+				return quests.every(
+					q => q.questId && q.questId > 0 && q.progression && q.progression > 0
+				);
+			})
+	],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
+		}
+
+		try {
+			await updatePlayerQuestProgression(req);
+			return res.status(200).send('Progression quest modified successfuly');
 		} catch (err) {
 			sendError(res, err);
 		}
