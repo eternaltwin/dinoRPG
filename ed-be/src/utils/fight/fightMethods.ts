@@ -1605,8 +1605,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Set element
 				fighter.element = bestElement;
 
-				// Lock element
-				addStatus(fightData, fighter, Status.LOCKED);
+				// Set the element list to only the best element
+				fighter.elements = [bestElement];
 				break;
 			}
 			case Item.FUCA_PILL: {
