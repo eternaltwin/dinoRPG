@@ -6,6 +6,7 @@ import { wsTicketMaxTime } from '../constants/index.js';
 import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
+import { ChannelInfos } from '@drpg/core/models/webSocket/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
 import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
 import { getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
@@ -18,8 +19,6 @@ import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponse
 import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
 import { checkMessageCanBeDeleted } from './clanService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
-import { assert } from 'console';
-import { WsMessage } from '@drpg/core/models/webSocket/WsMessage';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -166,7 +165,7 @@ async function getChannelName(ticket: WsTicket): Promise<string> {
 }
 
 /**
- * When a message is received by the server, this one is sent to other users in the same channel.
+ * When a message is received by the server, we do some actions like a regular service.
  *
  * @param wss -> The WebSocket server
  * @param wsId -> The connection identifier
@@ -182,8 +181,7 @@ export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: s
 		const msgResponse: WsMsgResponseCreation = { action: WsMessageAction.CREATE, payload: dataSaved };
 		sendMessageToPeopleInChannel(wss, channel, msgResponse);
 	} else if (message.action === WsMessageAction.DELETE) {
-		// TODO: Changer le format du channel.
-		const playerId = channel![1].filter(user => user.connectionId === wsId)[0].playerId;
+		const playerId = getPlayerWsDataFromChannelData(channel, wsId).playerId;
 		await checkMessageCanBeDeleted(message.msgId, playerId);
 		await deleteMessage(channel, wsId, message.msgId);
 		const msgResponse: WsMsgResponseDeletion = { action: WsMessageAction.DELETE, msgId: message.msgId };
@@ -197,33 +195,60 @@ export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: s
  * @param wsId -> Connection identifier
  * @returns -> The channel wanted and players connected in this channel
  */
-function getChannelDetailsFromConnectionId(wsId: string): [string, ChannelData[]] | undefined {
-	return [...channels.entries()].find(([_chanKey, chanValue]) =>
+function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
+	const channelData: [string, ChannelData[]] | undefined = [...channels.entries()].find(([_chanKey, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
+
+	if (channelData === undefined) throw new Error('The channel cannot be undefined');
+	
+	const channelInfos: ChannelInfos = {
+		channelName: channelData[0],
+		members: channelData[1]
+	}
+
+	return channelInfos;
 }
 
+/**
+ * Get text message from row data
+ * 
+ * @param message -> The message we want to get
+ * @returns -> The message converted to string
+ */
 function getMessageFromString(message: RawData): WsMessageRequest {
 	if (!isJson(message.toString())) throw new Error('The data sent is not a valid JSON object.');
 
 	return JSON.parse(message.toString());
 }
 
-async function saveMessageInDatabase(channel: [string, ChannelData[]] | undefined, wsId: string, message: string): Promise<CreateClanMessage> {
-	if (channel === undefined) throw new Error('The channel cannot be undefined');
+async function saveMessageInDatabase(channel: ChannelInfos, wsId: string, message: string): Promise<CreateClanMessage> {
+	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
 
-	const wsData = channel[1].filter(user => user.connectionId === wsId);
-	const playerInfos = await getClanIdAndNameFromPlayerId(wsData[0].playerId);
+	const playerInfos = await getClanIdAndNameFromPlayerId(wsData.playerId);
 
-	return await createClanMessageRequest(playerInfos.ClanMember!.clan.id, wsData[0].playerId, message.toString());
+	return await createClanMessageRequest(playerInfos.ClanMember!.clan.id, wsData.playerId, message.toString());
 }
 
-async function deleteMessage(channel: [string, ChannelData[]] | undefined, wsId: string, msgId: number) {
-	if (channel === undefined) throw new Error('The channel cannot be undefined');
+async function deleteMessage(channel: ChannelInfos, wsId: string, msgId: number) {
+	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
 
-	const wsData = channel[1].filter(user => user.connectionId === wsId);
+	deleteClanMessageRequest(msgId, wsData.playerId);
+}
 
-	deleteClanMessageRequest(msgId, wsData[0].playerId);
+/**
+ * Extract player infos from all player connected to a channel
+ * 
+ * @param channel -> All channel data
+ * @param wsId -> The connection identifier we want to retrieve data
+ * @returns -> The player data
+ */
+function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): ChannelData {
+	const channelData = channel.members.find(user => user.connectionId === wsId);
+
+	if (channelData === undefined) throw new Error('Ws data cannot be undefined');
+
+	return channelData;
 }
 
 /**
@@ -231,20 +256,15 @@ async function deleteMessage(channel: [string, ChannelData[]] | undefined, wsId:
  *
  * @param wss -> The WebSocketServer
  * @param channel -> The channel into we want to send a message
- * @param wsId -> The connection identifier
  * @param message -> The message we want to send
  */
 function sendMessageToPeopleInChannel(
 	wss: WebSocketServerCustom,
-	channel: [string, ChannelData[]] | undefined,
+	channel: ChannelInfos,
 	message: WsMsgResponse
 ): void {
-	if (channel === undefined) throw new Error('The channel cannot be undefined');
-
-	// LOGGER.info(`Message sent to channel ${channel[0]}: ${message.payload}`);
-
 	wss.clients.forEach(client => {
-		const sendMessageToClient = channel[1].some(user => user.connectionId === client.id);
+		const sendMessageToClient = channel.members.some(user => user.connectionId === client.id);
 		if (!sendMessageToClient || client.readyState !== WebSocket.OPEN) {
 			return;
 		}
@@ -261,10 +281,6 @@ function sendMessageToPeopleInChannel(
 export function disconnectUser(ws: WebSocketCustom): void {
 	const channel = getChannelDetailsFromConnectionId(ws.id);
 
-	if (channel === undefined) {
-		return;
-	}
-
 	removeUserFromChannel(channel, ws.id);
 }
 
@@ -274,13 +290,13 @@ export function disconnectUser(ws: WebSocketCustom): void {
  * @param channel -> The channel that the player is leaving
  * @param wsId -> The connection identifier
  */
-function removeUserFromChannel(channel: [string, ChannelData[]], wsId: string) {
-	const usersInChannel = channel[1].filter(user => user.connectionId !== wsId);
+function removeUserFromChannel(channel: ChannelInfos, wsId: string) {
+	const usersInChannel = channel.members.filter(user => user.connectionId !== wsId);
 
 	if (usersInChannel.length === 0) {
-		channels.delete(channel[0]);
+		channels.delete(channel.channelName);
 	} else {
-		channels.set(channel[0], usersInChannel);
+		channels.set(channel.channelName, usersInChannel);
 	}
 }
 
