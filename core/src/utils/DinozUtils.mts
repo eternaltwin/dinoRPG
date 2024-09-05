@@ -403,16 +403,16 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 	let lightning = 0;
 	let air = 0;
 	for (let i = 0; i < 5; i++) {
-		const element = Math.ceil(Math.random() * 5);
+		const element = getRandomUpElement(race.upChance);
 		switch (element) {
 			case 1:
 				fire++;
 				break;
 			case 2:
-				water++;
+				wood++;
 				break;
 			case 3:
-				wood++;
+				water++;
 				break;
 			case 4:
 				lightning++;
