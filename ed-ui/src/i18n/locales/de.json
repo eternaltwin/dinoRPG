@@ -5,7 +5,7 @@
 		"news": "Neuigkeiten",
 		"gazette": "Zeitung",
 		"ranking": "Rangliste",
-		"clans": "Klane",
+		"clans": "Clans",
 		"ingredients": "Zutaten",
 		"account": "Mein Konto",
 		"forum": "Forum",
@@ -15,7 +15,7 @@
 		"faq": "FAQ"
 	},
 	"toast": {
-		"dinozAlreadySelling": "Votre dinoz est déjà en vente.",
+		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
 		"DinozIsDead": "Dein Dinoz ist tot und kann nicht geheilt werden.",
 		"AlreadyAtMaxHealth": "Dein Dinoz könnte nicht gepflegter sein.",
 		"DinozNotDead": "Dein Dinoz lebt bereits.",
@@ -70,7 +70,7 @@
 	"alpha": {
 		"login": "Bei Eternal-Twin anmelden",
 		"homepage": {
-			"part1": "Die Alpha-Version von DinoRPG ist nun öffentlich verfügbar. Nehmt euch vor den Gupignons in Acht.",
+			"part1": "Die Alpha-Version von DinoRPG ist nun öffentlich zugänglich. Nehmt euch also vor den knurrenden Kloppignons in Acht!",
 			"part2": "Alles Weitere findet ihr auf"
 		},
 		"issue": "Bitte meldet gefundene Fehler unter ",
@@ -176,7 +176,7 @@
 			"rest": "Ausruhen",
 			"stop_rest": "Ausruhen einstellen",
 			"itinerant_shop": "Der fliegende Händler",
-			"reincarnation": "Réincarnation"
+			"reincarnation": "Reinkarnation"
 		}
 	},
 	"button": {
@@ -188,7 +188,7 @@
 		"chose": "Auswählen",
 		"generator": "Dinoz-Generator",
 		"sortDinoz": "Meine Dinoz verwalten",
-		"dinozMissions": "Missions de mes Dinoz"
+		"dinozMissions": "Missionen meiner Dinoz"
 	},
 	"chooseDinoz": {
 		"information": "Bevor du diesen Dinoz steuern kannst, musst du es zunächst einen Namen geben.",
@@ -468,7 +468,7 @@
 			"air_sphere": "Eine Elementarsphäre ermöglicht es deinem Dinoz, direkt eine der Sphärenfähigkeiten zu erlernen!",
 			"void_sphere": "Eine Elementarsphäre ermöglicht es deinem Dinoz, direkt eine der Sphärenfähigkeiten zu erlernen!",
 			"demon_ticket": "Dämonengutscheine erhältst du, indem du in der Dämonischen Boutique einen oder mehrere Dinoz opferst. Sobald du genügend Dämonengutscheine zusammen hast, kannst du sie gegen einen Dämonen-Dinoz eintauschen.",
-			"treasure_coupon": "Ein Schatzgutschein entspricht 1.000 Goldmünzen inkl. MwSt. und damit kann auf dem Marktplatz geboten werden. Bei Benutzung wird er in Münzen umgetauscht.",
+			"treasure_coupon": "Ein Schatzbrief entspricht 1.000 Goldmünzen inkl. MwSt. und damit kann auf dem Marktplatz geboten werden. Bei Benutzung wird er in Münzen umgetauscht.",
 			"moueffe_egg": "Dieses seltsame Ei ist kurz davor, sich in einen wunderschönen Dinoz zu verwandeln!",
 			"moueffe_egg_rare": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
 			"pigmou_egg": "Dieses seltsame Ei ist kurz davor, sich in einen wunderschönen Dinoz zu verwandeln!",
@@ -493,7 +493,7 @@
 			"gorilloz_egg_rare": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
 			"wanwan_egg": "Dieses seltsame Ei ist kurz davor, sich in einen wunderschönen Dinoz zu verwandeln!",
 			"wanwan_egg_rare": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
-			"wanwan_baby_rare": "TODO",
+			"wanwan_baby_rare": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
 			"santaz_egg": "Dieses seltsame Ei ist kurz davor, sich in einen wunderschönen Dinoz zu verwandeln!",
 			"santaz_egg_rare": "Dieses Santas-Ei ist nicht wie die anderen. Wie wird es wohl aussehen?",
 			"feross_egg": "Dieses seltsame Ei ist kurz davor, sich in einen wunderschönen Dinoz zu verwandeln!",
@@ -513,8 +513,8 @@
 			"smog_egg_anniversary": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
 			"smog_egg_christmas_blue": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
 			"smog_egg_christmas_green": "Dieses Smog-Ei ist nicht wie die anderen und stammt geradewegs aus der Mannschaft vom Weihnachtsmann. Es wirkt so, als könnte es nicht nur Geschenke austeilen!",
-			"triceragnon_baby": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
-			"triceragnon_baby_rare": "TODO",
+			"triceragnon_baby": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
+			"triceragnon_baby_rare": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
 			"amnesic_rice": "Diese sehr seltene Reissorte macht vergesslich. Wenn er davon isst, vergisst dein Dinoz seinen Namen und verliert auch alle seine seit dem letzten Stufenaufstieg gesammelten Erfahrungspunkte.",
 			"tik_bracelet": "Dieses Stück Caushemesh-Technologie stellt dem Dinoz, der es trägt, täglich **bis zu 10 Lebenspunkte** wieder her.",
 			"magic_star": "Diese geheimnisvollen Sterne sind über ganz Dinoland verstreut. Wirst du es schaffen, alle 7 zu finden?",
@@ -842,10 +842,10 @@
 			"hippo": "Seltsamer Dinoz",
 			"rocky": "Seltsamer Felsen",
 			"vener": "Der Ehrwürdige",
-			"alien_0": "Être Etrange",
-			"alien_1": "Être Etrange",
-			"alien_8": "Être Etrange",
-			"alien_all": "Être Etrange",
+			"alien_0": "Seltsames Wesen",
+			"alien_1": "Seltsames Wesen",
+			"alien_8": "Seltsames Wesen",
+			"alien_all": "Seltsames Wesen",
 			"merguez_star": "Vendeur de merguez",
 			"skully_star": "Skully",
 			"skully": "Skully",
@@ -888,7 +888,7 @@
 				"water_fight": "Combattre",
 				"fire_fight": "Combattre",
 				"back": "Zurück",
-				"dinoville": "Le Royaume de Dinoville",
+				"dinoville": "Das Dinoville-Königreich",
 				"atlante": "Les Iles Atlantéinées",
 				"gtc": "Der Große Immerhitzus",
 				"gant": "Le Gant des Zors",
@@ -982,10 +982,10 @@
 		"mineur": {
 			"speech": {
 				"begin": "Pling! Pling! Pling! Ufff, diese Korallen sind härter als Stein. Wusstest du das?",
-				"thanks": "Du bist sympathisch! Schau wieder vorbei, sollte deine Schaufel wieder kaputtgehen und ich werde sie dir reparieren.",
+				"thanks": "Du machst einen netten Eindruck! Schau wieder vorbei, sollte deine Schaufel wieder kaputtgehen und ich werde sie dir reparieren.",
 				"yes": "Ach, echt? Das wusstest du schon? Hier, ich leihe dir eine alte Schaufel, damit du auch graben kannst. Sie ist in einem sehr schlechten Zustand, also wird sie bei der ersten Benutzung kaputtgehen, aber sie ist auch mein Glücksbringer und du wirst mit ihr die größten Schätze des Dinolandes finden! Na, wie sagt man?",
 				"nothing": "Und, gefällt dir meine Schaufel? Wie sagt man?",
-				"repair": "Ach, du bist's? Du hast also einfach meine Schaufel zerstört, was? Rühr dich nicht vom Fleck... und fertig, ich hab' sie dir wieder repariert! Hey! Hast du nicht etwas vergessen?",
+				"repair": "Ach, du bist's? Du hast also einfach meine Schaufel geschrottet, hm? Rühr dich nicht vom Fleck... und fertig, ich hab' sie dir wieder repariert! Hey! Hast du nicht etwas vergessen?",
 				"nothing2": "Und? Wie gefällt dir meine Schaufel mit diesem ergonomischen Stiel? Wie sagt man noch gleich?",
 				"repair2": "Ach, du bist's? Du hast also einfach meine Schaufel geschrottet, hm? Rühr dich nicht vom Fleck... und fertig, ich hab' sie dir wieder repariert! Hey! Hast du nicht etwas vergessen?",
 				"no": "Pfff, ja, das Graben ist sehr, sehr anstrengend. Darum braucht man für diesen Job auch kräftige Jungs wie mich.",
@@ -1032,7 +1032,7 @@
 			"playerChoice": {
 				"question": "J'ai une question à vous poser...",
 				"nothing": "Rien du tout",
-				"missions": "Oui je veux bien",
+				"missions": "Ja, das möchte ich",
 				"no": "Non merci",
 				"quest2": "Et ma question ?",
 				"quest3": "Et ma question ?",
@@ -1195,7 +1195,7 @@
 				"where": "Die umliegenden Gewässer sind von zahlreichen Tiefseeskorpen bewohnt. Man muss nur wissen wie man sie zu sich ruft.",
 				"call": "(soupir)... Du benötigst in der Tat einen besonderen Gegenstand: eine Tiefseeskorp-Lockpfeife. Das ist eine kleine Flöte, die unter Wasser die Wellenbewegungen des großen schwarzen unheilvollen Hais aus den pestartigen Tiefen imitiert. Er ist die Leibspeise der Tiefseeskorpen. Ils se précipitent alors et vous pouvez en utiliser un pour vous rendre au Dôme.",
 				"appeau": "Oui. Die Tiefseeskorp-Lockflöte ist wird aus den hohlen Gräten von alten Tiefseeskorpen geschnitzt. Mais plus ils sont vieux, plus ils ont mauvais caractère et ils deviennent alors très dangereux...",
-				"old": "Ich bin da mit einem Fischer vom Predigerhafen befreundet. Wenn du keine Angst vor Gefahr hast, könnte ich ihn bitten, dass er dich auf die Jagd auf riesige alte Tiefseeskorpen mitnimmt... Allez le voir de ma part, il s'appelle Jovébozé.",
+				"old": "Ich bin da mit einem Fischer vom Predigerhafen befreundet. Wenn du keine Angst vor Gefahr hast, könnte ich ihn bitten, dass er dich auf die Jagd auf riesige alte Tiefseeskorpen mitnimmt... Schau bei ihm in meinem Namen vorbei. Er heißt Jové Bozé.",
 				"thanks": "Je vous souhaite un bon séjour sur les Iles Atlantéinées."
 			},
 			"playerChoice": {
@@ -1212,8 +1212,8 @@
 				"begin": "Ol'a el chti ga ! Té vi laté du viou Rasca ?",
 				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
 				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
-				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... Als ihr euch nähert, seht ihr ungefähr ein Dutzend Meter vom Boot entfernt etwas im Wasser. Es sieht aus wie ein riesiger Tiefseeskorp! Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
-				"attack_win": "Bien entendu, Jovébozé n'a rien compris a vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Seit dem Kampf mit dem Tiefseeskorp hat er kein Wort von sich gegeben, aber er beobachtet dich aus dem Augenwinkel und sieht zufrieden aus. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Er überreicht dir eine Tiefseeskorp-Lockflöte, die er für dich geschnitzt hat..."
+				"go": "Jové Bozé nimmt dich aufs Meer hinaus zu einem Ort, den andere Boote zu meiden scheinen... Als ihr euch nähert, seht ihr ungefähr ein Dutzend Meter vom Boot entfernt etwas im Wasser. Es sieht aus wie ein riesiger Tiefseeskorp! Wenn ihr euch weiter nähert und falls der Atlantinische Wächter recht hatte, werdet ihr sicherlich angegriffen werden... Jetzt muss man schnell handeln!!!",
+				"attack_win": "Selbstverständlich hatte Jové Bozé nichts von deinen Anweisungen verstanden... Nach deinem ehrenhaften Kampf, nimmt er dich zurück zum Predigerhafen mit. Seit dem Kampf mit dem Tiefseeskorp hat er kein Wort von sich gegeben, aber er beobachtet dich aus dem Augenwinkel und sieht zufrieden aus. Als ihr euch verabschiedet, schüttelt er dir herzlich die Hand als Zeichen seiner Ermutigung zu weiteren Abenteuern. Dabei überreicht dir eine Tiefseeskorp-Lockflöte, die er für dich geschnitzt hat..."
 			},
 			"playerChoice": {
 				"sry": "... pardon ?!?",
@@ -1289,7 +1289,7 @@
 				"myst": "Je l'ignore encore... Mais... Mais je suis convaincu qu'il y a des choses fabuleuses qui se cachent dans cette jungle ! Il faut juste oser y entrer... Séquence peur bleue.",
 				"flora": "Ces arbres millénaires cachent aux yeux des hommes leurs plus beaux atours ! Mais pour qui sait regarder, c'est un ravissement pour les sens. Senteurs exotiques, fleurs multicolores, végétation luxuriante... La Jungle de Grumhel, \"Une Aventure au pays de Mère Nature\", séquence Exploration !",
 				"whynot": "Disons qu'il existe quelques plantes peu engageantes aussi... Comme la \"Toxicae Virulente Noire\" ou la \"Sauvagine Géante Dévoreuse de Foie\"...",
-				"fauna": "Zwischen Brombeerfressern, Korgonen und Jägerflattern ist der Grumhel-Dschungel voller unvorstellbarer Gefahren! A la fois Terre hostile et Terre Promise, cette partie de Dinoland ne se laissera pas si facilement apprivoiser...",
+				"fauna": "Zwischen Dornenschlingern, Korgonen und Jägerflattern ist der Grumhel-Dschungel voller unvorstellbarer Gefahren! Dieser Teil des Dinolandes, der feindliches und gelobtes Land zugleich ist, lässt sich nicht so leicht zähmen...",
 				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Il serait plus prudent, je pense, de planifier d'abord une mission de reconnaissance. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
 				"explore": "Ca serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
 				"other": "Oserez-vous plonger dans les mystères insondables de la Jungle de Grumhel ?",
@@ -1494,7 +1494,7 @@
 			"speech": {
 				"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
 				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
-				"give": "L'Être Etrange court dans une sorte petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
+				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
 			},
 			"playerChoice": {
 				"ok": "...",
@@ -1570,9 +1570,9 @@
 			"help": "Willkommen im Dinoz-Gehege! Hier kannst du **jeden Tag** unterschiedliche Dinoz begutachten, die zur Adoption freigegeben sind. Suche dir einen aus, der am besten zu dir passt!"
 		},
 		"confirm": {
-			"classic": "Désirez-vous acheter {quantity} {item} pour un total de {value} or ?",
-			"filou": "Désirez-vous acheter {quantity} bons pour un total de {sold} {item} ?",
-			"magic": "Désirez-vous acheter {item} pour un total de {sold} napodinos ?"
+			"classic": "Möchtest du {quantity} {item} für einen Gesamtpreis von {value} Gold kaufen?",
+			"filou": "Möchtest du {quantity} Schatzbriefe für einen Gesamtpreis von {sold} {item} kaufen?",
+			"magic": "Möchtest du {item} für einen Gesamtpreis von {sold} Napodinos kaufen?"
 		},
 		"item": {
 			"help": "Klicke ein Gegenstand in der Liste links an, um mehr darüber zu erfahren...",
@@ -1637,28 +1637,28 @@
 				"dimanche": "Der Fliegende Händler hat heute seinen freien Tag und du müsstest dich bis morgen gedulden, um deine Zutaten verkaufen zu können. Natürlich wird der Fliegende Händler bis dahin weitergezogen sein und man müsste zunächst seinen Aufenthaltsort finden, wenn man Zutaten zu verkaufen hat."
 			},
 			"filou": {
-				"name": "Homme Louche",
-				"description": "C'est assez cher, mais a priori, il n'existe pas d'autre façon d'en avoir facilement..."
+				"name": "Zwielichtige Gestalt",
+				"description": "Es ist recht teuer, aber derzeit gibt es keine Möglichkeit, es einfacher in die Finger zu kriegen..."
 			}
 		}
 	},
 	"skill": {
 		"energy": {
 			"0": "**Energieverbrauch:** kein.",
-			"5": "**Consommation d'énergie :** faible.",
+			"5": "**Energieverbrauch:** gering.",
 			"10": "**Energieverbrauch:** gering.",
 			"20": "**Energieverbrauch:** normal.",
-			"25": "**Consommation d'énergie :** normale.",
-			"30": "**Consommation d'énergie :** normale.",
-			"35": "**Consommation d'énergie :** normale.",
-			"40": "**Consommation d'énergie :** normale.",
-			"45": "**Consommation d'énergie :** normale.",
+			"25": "**Energieverbrauch:** normal.",
+			"30": "**Energieverbrauch:** normal.",
+			"35": "**Energieverbrauch:** normal.",
+			"40": "**Energieverbrauch:** normal.",
+			"45": "**Energieverbrauch:** normal.",
 			"50": "**Energieverbrauch:** hoch.",
-			"55": "**Consommation d'énergie :** forte.",
-			"60": "**Consommation d'énergie :** forte.",
-			"65": "**Consommation d'énergie :** forte.",
+			"55": "**Energieverbrauch:** hoch.",
+			"60": "**Energieverbrauch:** hoch.",
+			"65": "**Energieverbrauch:** hoch.",
 			"75": "**Energieverbrauch:** sehr hoch.",
-			"80": "**Consommation d'énergie :** très forte."
+			"80": "**Energieverbrauch:** sehr hoch."
 		},
 		"name": {
 			"GriffesEnflammees": "Brennende Klauen",
@@ -1814,7 +1814,7 @@
 			"Cueillette": "Pflücker",
 			"Specialiste": "Spezialist",
 			"TalonDAchille": "Achillesferse",
-			"OeilDeLynx": "Luchsauge",
+			"OeilDeLynx": "Adlerauge",
 			"NuageToxique": "Toxische Wolke",
 			"HaleineFetive": "Fauliger Atem",
 			"Mistral": "Mistral",
@@ -2276,7 +2276,7 @@
 			"65": "Cuzcous' Fluch",
 			"63": "Dämon",
 			"3": "Laterne",
-			"13": "Wasserlilienblatt",
+			"13": "Seerosenblatt",
 			"4": "Glücksbringerschaufel",
 			"5": "Verbesserte Schaufel",
 			"6": "Kaputte Schaufel",
@@ -2361,7 +2361,7 @@
 			"35": "Diese Bronzemedaille zeichnet deinen Dinoz dafür aus, dass er die 10te Etappe des Rohkraft-Turniers erreicht hat.",
 			"36": "Diese Silbermedaille zeichnet deinen Dinoz dafür aus, dass er die 20te Etappe des Rohkraft-Turniers erreicht hat.",
 			"37": "Diese Goldmedaille zeichnet deinen Dinoz dafür aus, dass er die 30te Etappe des Rohkraft-Turniers erreicht hat.",
-			"38": "Mit dieser Diamantmedaille werden legendäre Dinoz ausgezeichnet, die das Kraftprotz-Turnier abgeschlossen haben.",
+			"38": "Mit dieser Diamantmedaille werden legendäre Dinoz ausgezeichnet, die das Rohkraft-Turnier abgeschlossen haben.",
 			"49": "Dieses Stück ermöglicht dem Dinoz, der es besitzt, Zugang zu einem Teil der Dunklen Welt zu erhalten.",
 			"53": "Dein Dinoz wurde in reinem Äther gebadet und kann sich nun in einem neuen Fähigkeitenbaum weiterentwickeln!",
 			"56": "Dient dazu, den Negativen Magnetit-Splitter von König Rocky zu erhalten. (Nur einmal erhältlich!)",
@@ -2381,8 +2381,8 @@
 		"details": "Details",
 		"players": "Joueurs",
 		"average": "Durchschnitt",
-		"completion": "Completion",
-		"clans": "Klane"
+		"clans": "Klane",
+		"completion": "Completion"
 	},
 	"layout": {
 		"fx": "Status",
@@ -2391,16 +2391,16 @@
 		"level": "Diese Stufe spiegelt die Stärke deines Dinoz wider.",
 		"slot": "Dieser Platz ist leer, wähle einen Gegenstand aus dem Inventar, den du ausrüsten möchtest. &&///Die ausgerüsteten Gegenstände können von deinem Dinoz im Kampf benutzt werden.//",
 		"shopButton": "Zum Shop",
-		"clanButton": "Mein Klan",
+		"clanButton": "Mein Clan",
 		"dojoButton": "Mein Dojo"
 	},
 	"popup": {
 		"confirm": "Diese Aktion bestätigen?",
 		"shop": {
-			"buyMaxConfirm_part1": "Voulez-vous vraiment acheter ",
-			"buyMaxConfirm_part2": " exemplaire(s) de cet objet pour un total de ",
-			"buyMaxConfirm_part3a": " pièces ?",
-			"buyMaxConfirm_part3b": " napodinos d'or ?"
+			"buyMaxConfirm_part1": "Möchtest du wirklich ",
+			"buyMaxConfirm_part2": " Stück von diesem Gegenstand für einen Gesamtpreis von ",
+			"buyMaxConfirm_part3a": " Goldmünzen kaufen?",
+			"buyMaxConfirm_part3b": " Gold-Napodinoz kaufen?"
 		}
 	},
 	"tooltip": {
@@ -2446,7 +2446,7 @@
 		"faq": "Dino-RPG [ FAQ ]",
 		"clan": "Dino-RPG [ Klan : ",
 		"clansList": "Dino-RPG [ Liste der Klane ]",
-		"createClan": "Dino-RPG [ Créer un Clan ]"
+		"createClan": "Dino-RPG [ Klan gründen ]"
 	},
 	"gather": {
 		"action": {
@@ -2478,7 +2478,7 @@
 		"disclaimer": "Klicke auf {number} Feld(er) auf dem Raster, um nach {search} zu suchen"
 	},
 	"missions": {
-		"header": "Liste des Missions",
+		"header": "Liste der Missionen",
 		"headers": {
 			"title": "Titel",
 			"status": "Status"
@@ -2527,7 +2527,7 @@
 			"rivals": "Korgonen des Nordens, Korgonen des Südens",
 			"kfood": "Holz-Steak",
 			"poison": "Korgonische Rivalitäten",
-			"init1": "Bewährungsprobe",
+			"init1": "Die Bewährungsprobe",
 			"init2": "Die Archelöwenscheuche",
 			"burn": "Feuer!",
 			"barbec": "Das durchgeknallte Grillevent",
@@ -2539,12 +2539,12 @@
 			"hiero": "Hieroglyphen",
 			"pigeon": "Brieftaube",
 			"unmute": "Der Wächter des Waldes",
-			"orchid": "Brennerhandschuh",
-			"licens": "Erlaubnis zum Trimmen",
-			"king": "Der König des Jungles",
-			"wishes": "Faites vos voeux",
-			"newplt": "Ein Hebel für den Wald",
-			"gshop": "Monnaie de singe",
+			"orchid": "Der grüne Daumen",
+			"licens": "Lizenz zum Stutzen",
+			"king": "Der König des Dschungels",
+			"wishes": "Wünsch dir was",
+			"newplt": "Ein Wagenheber für den Wald",
+			"gshop": "Ein Apfel und ein Ei",
 			"seqact": "Die äußerst gefährliche Route",
 			"toxic": "Allergien",
 			"map": "Kartografie",
@@ -2565,7 +2565,7 @@
 			"lettre": "Ähm... Dieses Mal wirst du für mich, Papy Joe, arbeiten... Ich bräuchte dich, damit du für mich DRINGEND diesen Brief zu einer bestimmten Person in Dinoville bringst. Vor allem muss es sehr schnell erledigt werden!",
 			"kilglu": "Ein seltsames Monster ist in letzter Zeit im Königreich von Dinoville aufgetaucht. Es ist ziemlich zäh und kann je nach Lage in einem Kampf großen Schaden anrichten. Könntest du eines von ihnen erledigen und es mir dann bringen, damit ich es untersuchen kann?",
 			"kilgnt": "Ich weiß nicht, ob es dir aufgefallen ist, aber das Königreich von Dinoville wird von enormen Grünen Riesen bevölkert, die sich nicht nur von Gemüse zu ernähren scheinen! Könntest du so schnell wie möglich ein gutes Dutzend von ihnen umbringen? Es handelt sich um einen Befehl des Königs, deshalb musst du dich beeilen!",
-			"kilcoq": "Ähm... Ich habe für nächsten Monat eine weitere Golfpartie mit dem König eingeplant und stell dir vor, er möchte, dass man ihm weiterhin von deinen Heldentaten erzählt... Was hältst du davon auf die Schnelle ein paar Harthühner zu töten? Du wirst gut belohnt werden!",
+			"kilcoq": "Ähm... Ich habe für nächsten Monat eine weitere Golfpartie mit dem König eingeplant und stell dir vor: Er möchte, dass man ihm weiterhin von deinen Heldentaten erzählt... Was hältst du davon, auf die Schnelle ein paar Harthühner zu töten? Du wirst gut belohnt werden!",
 			"kilpir": "Bald hat die kleine Sophie, die auf der Waïkiki-Insel wohnt, Geburtstag. Ihr Lieblingsgericht ist Piranhsel vom Klebrigen Sumpf. Könntest du ihr von mir welche bringen?",
 			"troc": "Es gibt einen großen Markt auf den Inseln, auf dem alles Mögliche getauscht werden kann. Ich würde gerne diese Banane gegen einen Kleiderständer tauschen. Könntest du das übernehmen?",
 			"kilksk": "Mich hat ein dringender Hilferuf aus der Unterwasserkuppel erreicht. Die Atlantiner sind beunruhigt, weil eine große Anzahl Kazkadinen aus den Tiefen ihre Stätten heimgesucht haben. Könntest du mit deinem Dinoz hingehen und ein wenig aufräumen? Pass aber auf, dass du keinen elektrischen Schlag abbekommst.",
@@ -2580,7 +2580,7 @@
 			"rivals": "Während die Korgonen in diesem Teil des Dschungels noch fast umgänglich sind, gibt es im Süden, am Rande des Düsteren Pfades welche, die alles andere als freundlich sind. Ich bin davon überzeugt, dass uns die hiesigen Korgonen weitaus mehr schätzen würden, wenn du mir einen Beweis bringen könntest, dass du die Korgonen im Süden besiegt hast!",
 			"kfood": "Es gibt hier irgendwo in Grumhel eine seltene Baumart, die die Korgonen abgöttisch lieben: Die Aschfarbene Fikoia! Ich weiß nicht, wo man sie findet, aber wenn du mir was davon mitbringst, werde ich dich fürstlich dafür entlohnen!",
 			"poison": "Die Aschfarbene Fikoia, die du entdeckst hast, wird ziemlich schnell zu einem strategischen Punkt für die Korgonen aus dem Süden werden... Jetzt muss schnell gehandelt werden! Wir werden ein paar Äste dieses Baumes „präparieren“, um die Korgonen davon abzuhalten, sie zu fressen... Wir wissen natürlich Bescheid, welche Äste man besser nicht anfassen sollte... Hihihi!",
-			"init1": "Yo... Also, was das Strategiehandbuch angeht, das musst du erstmal übersetzen... zu den Aschpuckruinen. Das kriegst du schon hin.",
+			"init1": "Yo... Also, was das Strategiehandbuch angeht: Das musst du erstmal übersetzen... in den Aschpuckruinen. Das wirst du schon hinkriegen.",
 			"init2": "Ha, diese Merguez hatten's echt in sich! Wie ich sehe, hast du echt was drauf! Tue mir noch einen letzten kleinen Gefallen und ich überlasse dir mein Strategiehandbuch. Die Gegend um den Großen Immerhitzus ist ein idealer Lebensraum für Archelöwen jeglicher Größe... Wild, nicht ein Tropfen Feuchtigkeit und immerzu am Ausbrechen! Nichtsdestotrotz müssen wir sie von uns Fernhalten, wenn wir nicht als Mittagessen enden wollen... Ich möchte, dass du mir eine Art Vogelscheuche für Archelöwen anfertigst! Hierzu bräuchte ich Geschärfte Klauen.",
 			"burn": "Wie du sicherlich schon bemerkt hast, ist die Gegend hier von einer unwahrscheinlich großen Anzahl an Flämmchen bevölkert... Auch wenn ihr Dasein für das große kosmische Gleichgewicht vonnöten ist, wächst ihre Anzahl viel zu schnell und muss wieder unter Kontrolle gebracht werden! Du musst schnell handeln! Begib dich zum Tunnel unter dem Ast, indem du am Krater entlangläufst. Ihre Präsenz dort unten ist wirklich kritisch geworden!",
 			"barbec": "Dieser Merguez-Verkäufer in den Aschpuckruinen benutzt einen speziellen Brennstoff, der für die zahlreichen Flämmchen in der Region verantwortlich ist... Dagegen muss etwas getan werden! Allerdings können wir diesen armen Teufel nicht daran hindern, seine Arbeit zu machen, also werden eine unauffälligere Lösung finden müssen. Du kannst schon mal damit anfangen, ein paar Zutaten einzusammeln: Einen getrockneten Ast, eine Drachenschuppe und ein Stück gelben Basalt. Zermahle alles, vermische es gut und schmeiß es dann in den Grill!",
@@ -2591,13 +2591,13 @@
 			"ritual": "Die schamanische Gesellschaft, in der ich meine Studien gemacht habe, verlangt von mir jedes Jahr ein Ritual als Zeichen dieser Ausbildung. Es ist offensichtlich, dass ich Besseres zu tun habe, als mich um diese Eseleien zu kümmern! Könntest du das vielleicht für mich erledigen? Die Anleitung dazu ist in meinem Briefkasten. Fühl dich wie zu Hause.",
 			"hiero": "Ich habe gehört, dass es in den Höhlen im Westen - die, die in den Grumhel-Dschungel führen - Hieroglyphen gibt, die für meine mystischen Recherchen äußerst wichtig wären! Geh doch bitte dahin und mache eine Kopie für mich. Um in die Höhlen vordringen zu können, wirst du etwas brauchen, um dich in der Dunkelheit nicht zu verlieren!",
 			"pigeon": "Die kürzlichen Entdeckungen in den Höhlen sind eine unerwartete Gelegenheit, meine Theorien diesem alten Witzbold von der Universität, Professor Eugen zu beweisen! Stell dir das mal vor, antike Schriften, die von unserer AKTUELLEN Epoche sprechen!! Wir dürfen nicht eine Sekunde verlieren! Bring ihm diesen Brief!",
-			"unmute": "Le parchemin qui vous est tombé dessus comporte ce message : _« Trouvez 1 mesure d'eau filante, puis 1 mesure d'eau croupie, puis 1 mesure d'eau pure et enfin 1 mesure d'eau Bouillonnante. » _A peine avez-vous fini de lire ce message qu'une petite gourde vide tombe à son tour du feuillage sur votre tête ! Poc !",
-			"orchid": "Un parchemin pendouille à une branche. Vous pouvez y lire : _« Partez arroser l'Orchidée Quidée plantée à l'Aurée de la Jungle »._ Quelque chose dans les feuillages vous jette alors une gourde vide. Poc !",
-			"licens": "Un parchemin (que vous n'aviez pas remarqué jusque là) est ficelé à une racine. Vous pouvez y lire : _« Les Korgons et les Roncivores du Sud dépassent de loin les quotas de coupe de bois que j'ai autorisé dans la Jungle de Grumhel. Allez réguler leur travail. »",
-			"king": "Un message est inscrit sur un bout de tissu accroché à une branche : _« Nous entretenons depuis des années une légende parlant d'un Roi de la Jungle pour éloigner les éventuels touristes. Rendez-vous aux Collines Hantées pour entretenir ce mythe... »",
-			"wishes": "Partez jeter une pièce dans le gouffre des Chutes Mutantes pour faire le voeu de réduire la population Korgon et Roncivore dans la jungle. Vous pouvez lire, gravé sur une branche : _« On raconte que les Chutes au sud auraient des propriétés magiques... »_ Une pièce de cuivre roule alors le long d'une branche et vient buter contre votre pied.",
-			"newplt": "Eine lange Stoffrolle ist um den alten Baum gewickelt: _„Unsere Bemühungen, den Wald um den Großen Immerhitzus herum zu vergrößern, sind vor Kurzem von einem gewaltigen Erdrutsch nahe der Aschpuckruinen zunichtegemacht worden. Prenez ce cric pour vous aider à dégager les plantes des amas rocheux. »_ Aussitôt, un lourd cric en fer s'écrase juste à côté de vous.",
-			"gshop": "Un écriteau de bois et un petit seau en fer blanc sont pendus à une branche :_« Déposez de l'or dans le seau pour votre ration quotidienne. »_",
+			"unmute": "Der Pergamentfetzen, der auf dich fiel, enthält folgende Nachricht: „//Finde 1 Einheit fließendes Wasser, dann 1 Einheit modriges Wasser, dann 1 Einheit reines Wasser und schließlich 1 Einheit brühendes Wasser//“. Kaum hast du die Nachricht zu Ende gelesen, fällt dir aus dem Blätterwerk eine kleine leere Feldflasche auf den Kopf! Plonk!",
+			"orchid": "Ein Pergamentfetzen baumelt an einem Ast. Darauf ist zu lesen: „//Gehe und gieße die Orchidee Hidäe, die am Dschungelrand wächst//“. Etwas im Blättergeflecht wirft daraufhin mit einer Feldflasche nach dir. Plonk!",
+			"licens": "Ein Pergamentfetzen (den du bisher nicht bemerkt hattest) ist an eine Wurzel gebunden. Darauf steht: „//Die Korgonen und die Dornenschlinger aus dem Süden übertreffen bei weitem die Holzfällquoten, die ich für den Grumhel-Dschungel vorgesehen habe. Gehe hin und weise sie zurecht//“.",
+			"king": "Eine Nachricht ist auf einem Stück Stoff geschrieben, das an einem Ast hängt: „//Wir verbreiten seit Jahren eine Legende, die von einem König des Dschungels erzählt, um uns mögliche Touristen vom Hals zu halten. Begebe dich zu den Verwunschenen Hügeln, um diesen Mythos aufrechtzuerhalten//“.",
+			"wishes": "Auf einem Ast eingraviert steht: „//Man erzählt sich, dass die Sturzfluten im Süden magische Eigenschaften hätten... Gehe hin und wirf eine Münze in den Abgrund der Mutierenden Sturzfluten, um dir zu wünschen, dass die Population der Korgonen und Dornenschlinger im Dschungel abnimmt//“. Eine Kupfermünze rollt daraufhin einen Ast entlang und fällt dir auf den Fuß.",
+			"newplt": "Eine lange Stoffrolle ist um den alten Baum gewickelt: „//Unsere Bemühungen, den Wald um den Großen Immerhitzus herum zu vergrößern, sind vor Kurzem von einem gewaltigen Erdrutsch nahe der Aschpuckruinen zunichtegemacht worden. Nimm diesen Wagenheber: Er wird dir dabei helfen, die Pflanzen vom Steingeröll zu befreien//“. Sogleich schmettert ein massiver Wagenheber aus Eisen genau neben dir auf.",
+			"gshop": "Ein hölzernes Hinweisschild und ein kleiner Eimer aus Weißblech hängen an einem Ast: „//Lege für deine tägliche Ration etwas Gold in den Eimer//“.",
 			"seqact": "Um in den Dschungel vorzudringen, müsstest du zunächst einen Ort durchqueren, der sich Düsterer Pfad nennt... Es handelt sich um eine gefährliche Route, die nach Norden führt! Könntest du da ein wenig für mich aufräumen?",
 			"toxic": "Also ich bin ja allergisch gegen bestimmte Dschungelpflanzen... aber momentan habe ich keine Ahnung gegen welche! Könntest du mir vielleicht ein paar verdächtige Pflanzen herbringen, damit ich sie testen kann?",
 			"map": "Eine gute Karte ist scheinbar nie verkehrt. Das Problem ist nur, dass es für den Grumhel-Dschungel keine gibt! Könntest du in den Norden gehen und ein paar Notizen für mich machen? Im Osten sind Hügel. Das könnte ein guter Ort sein, um sich einen Überblick zu verschaffen!",
@@ -2627,7 +2627,7 @@
 			"leaves": "Bodenspuren",
 			"fiquoia": "Aschfarbene Fikoia",
 			"hide": "Die Fikoia verstecken",
-			"inscriptions": "Examiner les inscriptions",
+			"inscriptions": "Die Inschriften untersuchen",
 			"dictionnaire": "Aschpuckisches Wörterbuch",
 			"inscriptions_decrypt": "Die Inschriften entschlüsseln",
 			"claw": "Klauen einsammeln",
@@ -2658,22 +2658,22 @@
 			"hieroglyphes": "Die Hieroglyphen kopieren",
 			"foundArcheo": "Den Archäologen aufsuchen",
 			"fwater": "Wasser aus dem Jumin-Fluss",
-			"mwater": "Schwimmend überqueren",
-			"pwater": "Reines Wasser",
-			"bwater": "Wasserkanone",
+			"mwater": "Trübes Wasser",
+			"pwater": "Erfrischendes Wasser",
+			"bwater": "Kochendes Wasser",
 			"racine": "Flascheninhalt auf die Wurzeln schütten",
-			"pickwater": "Zum Wasserfall zurückkehren",
-			"worchid": "Arroser l'Orchidée",
-			"yell": "Pousser le cri du Roi de la Jungle",
-			"pickorchid": "Cueillir l'Orchidée",
-			"plantorchid": "Planter l'Orchidée",
-			"tosscoin": "Jeter une pièce",
-			"liftrock": "Soulever les rochers",
-			"bucket": "Examiner le seau",
+			"pickwater": "Feldflasche füllen",
+			"worchid": "Die Orchidee gießen",
+			"yell": "Den Schrei des Dschungelkönigs nachmachen",
+			"pickorchid": "Die Orchidee pflücken",
+			"plantorchid": "Die Orchidee einpflanzen",
+			"tosscoin": "Die Münze hineinwerfen",
+			"liftrock": "Die Felsen heben",
+			"bucket": "Den Eimer untersuchen",
 			"pickfigo": "Furunkulöse Figonizie",
 			"pickpuru": "Schwarze Eitrisse",
-			"moinemedecinCoral": "Ramener le corail au moine",
-			"moineChutes": "Ramener les ingrédients aux Chutes",
+			"moinemedecinCoral": "Die Koralle zurück zum Mönch bringen",
+			"moineChutes": "Zutaten zurück zu den Sturzfluten bringen",
 			"pickvisqueuse": "Schlammige Pechziehlie",
 			"pickherbs": "Die Pflanzen einpacken",
 			"pickCoral": "Korallenstück",
@@ -2681,7 +2681,7 @@
 			"pickWings": "Flügel sammeln",
 			"pickMedecine": "Kiste mit Gegenmittel",
 			"returnColline": "Zu den Verwunschenen Hügeln zurückkehren",
-			"findPickPoint": "Trouver un point élevé",
+			"findPickPoint": "Einen Aussichtspunkt suchen",
 			"drawMap": "Eine Karte zeichnen",
 			"findBat": "Finde den Jägerflatter wieder",
 			"catchBat": "Sich dem Sog nähern",
@@ -2736,7 +2736,7 @@
 			"tree": "Seltsamer Baum",
 			"dian": "Dian Korgsey",
 			"shaman": "Mission abschließen",
-			"forgeron": "Feomathar",
+			"forgeron": "Schmiedin",
 			"garde": "Schmiedenwächter",
 			"artisan": "Schmiedenhandwerker",
 			"eclaireur": "Schmiedenspäher",
@@ -2779,16 +2779,16 @@
 			"pwater": "Erfrischendes Wasser",
 			"bwater": "Kochendes Wasser",
 			"racine": "Flascheninhalt auf die Wurzeln schütten",
-			"pickwater": "Wasser mitnehmen",
-			"worchid": "Arroser l'Orchidée",
-			"yell": "Pousser le cri du Roi de la Jungle",
-			"pickorchid": "Cueillir l'Orchidée",
-			"plantorchid": "Planter l'Orchidée",
-			"tosscoin": "Jeter une pièce",
-			"liftrock": "Soulever les rochers",
-			"bucket": "Examiner le seau",
-			"talkingorchide": "Orchidée Quidée parlante",
-			"benevole": "Bénévole «Paix Verte»",
+			"pickwater": "Feldflasche füllen",
+			"worchid": "Die Orchidee gießen",
+			"yell": "Den Schrei des Dschungelkönigs nachmachen",
+			"pickorchid": "Die Orchidee pflücken",
+			"plantorchid": "Die Orchidee einpflanzen",
+			"tosscoin": "Die Münze hineinwerfen",
+			"liftrock": "Die Felsen heben",
+			"bucket": "Den Eimer untersuchen",
+			"talkingorchide": "Sprechende Orchidee Hidäe",
+			"benevole": "Freiwilliger des „Grünen Friedens“",
 			"arbre": "Mission abschließen",
 			"pickfigo": "Furunkulöse Figonizie",
 			"pickpuru": "Schwarze Eitrisse",
@@ -2824,7 +2824,7 @@
 			"colesc": "zu den Zerklüfteten Hügeln",
 			"fountj": "zum Jungbrunnen",
 			"universite": "zur Universität",
-			"marais": "zum Klebrigen Sumpf",
+			"marais": "au Marais Collant",
 			"ilewkk": "zur Waïkiki-Insel",
 			"bob": "zu Bao Bob",
 			"fosslv": "zur Lavagrube",
@@ -2933,7 +2933,7 @@
 				"papyjoe": "Diese bezaubernde Madame Seyche hat mich für deine Arbeit gelobt. Du hast dir deine Belohnung wahrlich verdient!"
 			},
 			"kbook": {
-				"kbook": "Du erhältst \"100 Arten einen Korgonen zu kochen\", Text und Bilder von Gorak, dem Einäugigen.",
+				"kbook": "Du erhältst „100 Arten einen Korgonen zu kochen“, Text und Bilder von Gorak, dem Einäugigen.",
 				"mmeSeyche": "Ooooohhhh, danke, Kindchen! Jetzt kann ich verschiedene Korgonenrezepte ausprobieren! Komm doch ab und zu für eine Kostprobe vorbei!",
 				"papyjoe": "Madame Seyche hat sich dank dir bei mir revanchiert, indem sie mir ein Stück gegrillten Korgonen zukommen ließ. Eine wahre Delikatesse!"
 			},
@@ -2954,7 +2954,7 @@
 				"amoureux": "Pfff... Ich bin auf dem Weg zum Jungbrunnen. Wenn du willst, tausche ich deinen fliegenden Drachen gegen diesen nagelneuen Verlobungsring... der ist noch unbenutzt...",
 				"bijoutier": "Was?!? Ja was sehe ich denn da?!? Dieser Ring ist Teil einer alten königlichen Sammlung! Ich tausche ihn gegen das Wertvollste, was ich auf der ganzen Welt besitze: Meine Villa auf der Totem-Insel! Also dann, hier sind die Schlüssel. Ablehnen ist keine Option!",
 				"touriste": "Ich habe die SCHNAUZE VOLL von diesem Sumpf voller Sch... !!! Das ist jetzt schon das dritte Mal, dass unser Campingwagen stecken bleibt! Die Idee war voll für'n A... URLAUB IN EINEM SUMPF zu machen!!! Wie? Eine Villa auf der Totem-Insel? Ok, geht klar, ich tausch meinen Campingwagen gegen die Villa!",
-				"artiste": "Wuuuunderbar! !! Ich bin sehrrr zufrieden! Siehst du diese Gesichter? Die Komposition ist einfach vir-tu-os! Was soll das heißen: „Sieht nach nichts aus.“? Ach, du hast ja nicht die leiseste Ahnung von Kunst. Von DER Kunst! Und überhaupt, mein Kunstwerk ist gut und gern einen Campingwagen wert. Voilà, der Tausch ist vollzogen!",
+				"artiste": "Wuuuunderbar!!! Ich bin seeeehr zufrieden! Siehst du diese Gesichter? Die Komposition ist einfach vir-tu-os! Was soll das heißen: „Sieht nach nichts aus“? Ach, du hast ja nicht die leiseste Ahnung von Kunst. Von DER Kunst! Und überhaupt, mein Kunstwerk ist gut und gern einen Campingwagen wert. Voilà, der Tausch ist vollzogen!",
 				"dame": "Ich habe gehört, du suchst einen Kleiderständer? Ich tausche ihn gegen was auch immer du möchtest... Was ist denn das? Gesichter? Sieht ja nach nichts aus... aber gut, das wird ja nicht viel wert sein, denn dieser Herr Picassi ist völlig unbekannt. Geht in Ordnung, nimm dafür diesen Kleiderständer!",
 				"bob": "Hast du meinen Kleiderständer auftreiben können? Ich hoffe, dass dieser kleine Ausflug dir beigebracht hat, dass selbst die größten Reichtümer vergänglich sind!"
 			},
@@ -2965,7 +2965,7 @@
 				"marchand": "Hmm? Du sagst, Herr Bao hätte dich geschickt? Und du brauchst Essig? Hier, ich habe hier diesen gereiften Chateau Rôhkrafté, der perfekt zum Kochen geeignet sein müsste.",
 				"pecheur": "Du suchst den Kumpanen von Herrn Bao? Mir ist, als wäre er nach Dinoville gegangen, um Madame Seyche zu besuchen.",
 				"mmeseyche": "Ooohh, dieser kleine, putzige Dinoz! Wie? Du bist auf der Suche nach einem Kumpanen von Herrn Bao? Er ist zum guten alten Papy Joe aufgebrochen. Es schien, als hätten sie sich ein paar Männergeschichten zu erzählen!",
-				"adam": "Hmmm! Aalos in Essig! Meine Leibspeise! Verzeih, dass ich nicht am Predigerhafen auf dich gewartet habe. Ich werde dem lieben Bob ausrichten, dass er dich anständig belohnen soll!",
+				"adam": "Mmmh! Aalos in Essig! Meine Leibspeise! Verzeih, dass ich nicht am Predigerhafen auf dich gewartet habe. Ich werde dem lieben Bob ausrichten, dass er dich anständig belohnen soll!",
 				"bob": "Du warst also wegen der einen Mission so ziemlich überall, was? Adam hat mir alles erzählt. Hier, für dich."
 			},
 			"bigpch": {
@@ -3105,44 +3105,44 @@
 				"shaman": "Ich hätte eines meiner Mojos darauf verwettet, dass es sich hierbei um eine bahnbrechende Entdeckung handelt! Dumm gelaufen... Wie dem auch sei. Danke für den Botengang und entschuldige das Durcheinander!"
 			},
 			"unmute": {
-				"fwater": "Vous remplissez la gourde du vieil arbre avec un peu d'eau du Fleuve Jumin. Voila pour l'eau filante !",
-				"mwater": "Vous ajoutez dans la gourde du vieil arbre un peu d'eau du Marais Collant. Elle sent vraiment mauvais...",
-				"pwater": "Vous ajoutez dans la gourde du vieil arbre de l'eau claire de la Fontaine et vous en profitez pour vous y rafraîchir.",
-				"bwater": "Vous complétez le contenu de la gourde avec un peu de l'eau bouillonnante qui inonde les Gorges. C'est chaud !",
-				"racine": "Les feuillages du vieil arbre s'agitent brusquement dans tous les sens et une lumière apaisante emplit la jungle tout autour de vous...",
-				"garde": "Le vieil arbre se penche vers vous dans un bruissement... Il secoue alors lentement son feuillage, faisant tomber quelques beaux fruits à vos pieds."
+				"fwater": "Du füllst das Fläschchen des alten Baumes mit ein wenig Wasser aus dem Jumin-Fluss auf. Na bitte: fließendes Wasser!",
+				"mwater": "Du gibst in die Feldflasche des alten Baumes etwas Wasser aus dem Klebrigen Sumpf dazu. Es riecht wirklich übel...",
+				"pwater": "Du fügst der Flasche des alten Baumes klares Brunnenwasser hinzu und nutzt dabei die Gelegenheit, um dich zu erfrischen.",
+				"bwater": "Du vervollständigst den Inhalt des Behälters mit ein wenig kochendem Wasser aus den Schluchten. Es ist heiß!",
+				"racine": "Das Blattwerk des alten Baumes raschelt lebhaft umher und ein beruhigendes Licht erfüllt den Dschungel um dich herum...",
+				"garde": "Der alte Baum beugt sich knarzend zu dir herab... Er schüttelt langsam sein Laubwerk und lässt ein paar schöne Früchte vor deine Füße fallen."
 			},
 			"orchid": {
-				"pickwater": "Vous remplissez la gourde d'eau du Fleuve Jumin.",
-				"worchid": "Vous versez tout le contenu de la gourde sur une magnifique fleur qui doit être l'Orchidée Quidée. Aussitôt, celle-ci s'illumine de mille feux et de jolis gouttelettes de rosées perlent sur ses feuilles gracieuses.",
-				"talkingorchide": "Quoi ?! Qu'est-ce que tu r'gardes comme ça ? T'as jamais vu une Orchidée pousser ?! T'as rien à faire ailleurs ? Allez du vent, laisse moi, tu m'fais de l'ombre !!",
-				"garde": "Vous déposez la gourde vide au pied de l'arbre. Un gros fruit se décroche des branches supérieures et tombe à côté de vous avec un bruit mat."
+				"pickwater": "Du füllst die Feldflasche mit Wasser aus dem Jumin-Fluss auf.",
+				"worchid": "Du gießt den gesamten Inhalt deiner Feldflasche auf eine wunderschöne Blume, bei der es sich bestimmt um die Orchidee Hidäe handeln muss. Diese erstrahlt sofort in tausenden Farben, während hübsche Tautröpfchen von ihren anmutigen Blättern kullern.",
+				"talkingorchide": "Was ist?! Was gibt's da zu glotzen, hä? Noch nie 'ne Orchidee wachsen sehen?! Hast nix Anderes zu tun, wa? Los, zieh Leine, lass mich in Ruhe und geh mir aus der Sonne!!",
+				"garde": "Du stellst die leere Feldflasche am Fuße des Baumes ab. Eine große Frucht löst sich daraufhin von der Baumkrone und schlägt mit einem dumpfen Geräusch direkt neben dir auf."
 			},
 			"licens": {
-				"garde": "Quelques fruits tombent de l'arbre autour de vous..."
+				"garde": "Vom Baum fallen einige Früchte um dich herum..."
 			},
 			"king": {
-				"yell": "Vous poussez un cri particulièrement ridicule, qui n'effraierait probablement même pas un Korgon... Il va falloir trouver mieux !",
-				"talkingorchide": "Encore là l'empaffé de la jungle ?! Qu'est-ce qu'il a l'autre à m'regarder comme ça ?",
-				"pickorchid": "Sans ménagement, vous arrachez l'orchidée et vous l'emmenez avec vous. Celle-ci crie, vous insulte copieusement et se débat autant qu'elle peut...",
-				"plantorchid": "Vous replantez d'un coup sec l'Orchidée Quidée qui ne manque pas de vous hurler dessus. Tandis que vous vous éloignez, vous pouvez encore entendre celle-ci crier des atrocités à votre égard... Voilà qui fera bien l'affaire pour effrayer les touristes !",
-				"garde": "Un fruit tombe à côté de vous. Tandis que vous vous penchez pour le ramasser, une grosse bourse pleine d'or tombée de nulle part s'écrase droit sur votre tête ! SCHLING !"
+				"yell": "Du gibst einen ganz besonders lächerlichen Schrei von dir, der wahrscheinlich nicht mal einen Korgonen erschrecken würde... Da musst du dir schon was Besseres einfallen lassen!",
+				"talkingorchide": "Schon wieder dieser Trottel aus dem Dschungel?! Was gafft der mich wieder so an?",
+				"pickorchid": "Schonungslos reißt du die Orchidee aus und nimmst sie mit dir. Sie kreischt, überhäuft dich mit Beschimpfungen und sträubt sich so gut sie kann...",
+				"plantorchid": "Du pflanzt die Orchidee Hidäe kurzerhand wieder ein. Diese lässt es sich nicht entgehen, dich dabei anzubrüllen. Während du schon den Rückzug angetreten hast, kannst du aus der Ferne noch hören, wie sie dich des Völkermordes bezichtigt... Auf alle Fälle dürfte das reichen, um Touristen abzuschrecken!",
+				"garde": "Eine Frucht fällt unweit von dir zu Boden. Als du dich bückst, um sie aufzuheben, knallt dir wie aus dem Nichts ein dicker Beutel voller Goldmünzen an den Kopf! AUTSCH!"
 			},
 			"wishes": {
-				"tosscoin": "Vous jetez une pièce au coeur des chutes et vous attendez quelques minutes... Evidemment rien ne se produit et vous décidez d'aller exaucer le voeu de réduire la population des monstres par vous même.",
-				"garde": "Quelques fruits tombent de l'arbre autour de vous..."
+				"tosscoin": "Du wirfst eine Münze ins Innere der Sturzfluten und wartest ein paar Minuten ab... Allem Anschein nach tut sich jedoch nichts, woraufhin du beschließt, den Wunsch, die Monsterpopulationen zu verringern, selbst zu erfüllen.",
+				"garde": "Ein paar Früchte fallen dir aus der Baumkrone direkt vor die Füße..."
 			},
 			"newplt": {
-				"benevole1": "Bonjour ! Toi aussi tu viens pour aider à déblayer toute cette roche ? Pour le moment, j'ai un gros problème sur les bras... Des monstres en tous genres viennent régulièrement m'empêcher de travailler... Tu peux faire quelque chose ?",
-				"liftrock1": "Vous installez le cric puis commencez à soulever et pousser les rochers tombés sur la forêt... Mais tandis que vous pensiez être enfin au calme, un grognement inquiétant se fait entendre derrière vous...",
-				"benevole2": "Il ne faut plus perdre une seconde, continuons !",
-				"liftrock2": "L'opération vous occupe encore plusieurs heures, même avec le cric, mais vous parvenez tout de même à dégager de nombreux arbres et plantes ensevelies sous les rochers.",
-				"benevole3": "Je vais rester ici pour arroser les plantes survivantes. Vas faire un rapport pour moi auprès du Gardien de la Forêt !",
-				"garde": "Deux gros fruits se décrochent et tombe dans un buisson près de vous..."
+				"benevole1": "Tagchen! Kommst du auch, um dabei zu helfen, dieses Geröll aus dem Weg zu räumen? Momentan hab' ich da ein großes Problem an der Backe... Dauernd kommen alle möglichen Monster her und hindern mich am Arbeiten... Kannst du da was gegen tun?",
+				"liftrock1": "Du bringst den Wagenheber in Position und beginnst damit, die auf den Wald gefallenen Felsen anzuheben und wegzuschieben... Doch gerade als du dir denkst, endlich Ruhe zu haben, hörst du hinter dir ein beunruhigendes Fauchen...",
+				"benevole2": "Wir dürfen keine Sekunde mehr verlieren. Weiter geht's!",
+				"liftrock2": "Die ganze Prozedur hält dich trotz Wagenheber noch mehrere Stunden auf Trab. Nichtsdestotrotz gelingt es dir, zahlreiche unter dem Geröll begrabene Bäume und Pflanzen freizulegen.",
+				"benevole3": "Ich bleibe hier und gieße die überlebenden Pflanzen. Du kannst dann zum Wächter des Waldes gehen und von mir Bericht erstatten!",
+				"garde": "Zwei große Früchte lösen sich und fallen in das Gebüsch neben dir..."
 			},
 			"gshop": {
-				"bucket": "Vous trouvez une petite branche fleurie dans le seau...",
-				"garde": "Le texte de l'écriteau en bois a changé ! Il est écrit : « Conservez cette branche fleurie en gage de notre gratitude. »"
+				"bucket": "Du findest im Eimer einen kleinen blühenden Zweig...",
+				"garde": "Der Text auf dem hölzernen Hinweisschild hat sich geändert! Dort steht nun: „//Bewahre diesen Blumenzweig als Zeichen unserer Dankbarkeit auf//“."
 			},
 			"seqact": {
 				"auree": "Da ist kein Geknurre mehr zu hören... Das ist doch ein gutes Zeichen, oder?"
@@ -3212,7 +3212,7 @@
 			"cobra": "Cobrazeros",
 			"goblin": "Goblin",
 			"bat": "Jägerflatter",
-			"ronciv": "Brombeerfresser",
+			"ronciv": "Dornenschlinger",
 			"gardien": "Baumkronwächter",
 			"any": "Monster"
 		}
@@ -3262,7 +3262,7 @@
 			"38": "Odyssey",
 			"35": "CroqueMotel",
 			"36": "MotionBall 2",
-			"37": "Inconnu",
+			"37": "Unbekannt",
 			"41": "Mush",
 			"42": "Studio Quiz",
 			"43": "Naturalchimie 2",
@@ -3291,7 +3291,7 @@
 		"void": "Erhält +1 :neutre: Leere",
 		"level": "St.",
 		"learn": "Erlernen",
-		"unlock1": "Débloquer ",
+		"unlock1": "",
 		"confirmSkill": "Möchtest du {skill} zum Aufstieg auf Stufe {level} nehmen?",
 		"confirmUnlock": "Möchtest du {quantity} Fähigkeiten freischalten?",
 		"unlock2": " weitere Fähigkeiten freischalten",
@@ -3519,13 +3519,13 @@
 			"import": "Os D'importasaurus"
 		},
 		"description": {
-			"perle": "Die Perle aus dem Brunnen erlaubt allen deinen Dinoz, sich jeden Tag am Jungbrunnen erholen.",
+			"perle": "Die Perle aus dem Brunnen ermöglicht allen deinen Dinoz, sich jeden Tag am Jungbrunnen erholen.",
 			"pteroz": "Die Trophäe der Pteros ist eine Belohnung für Spieler, die den seltsamen Ptero besiegt haben. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Pteros zur Verfügung.",
 			"hippo": "Die Trophäe der Hippoklampen ist eine Belohnung für Spieler, die den wilden Hippoklampen besiegt haben. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Hippoklampen zur Verfügung.",
-			"rocky": "Le Trophée des Rockys récompense les joueurs ayant vaincu le Rocky endormi, et donne accès aux Rockys parmi les Dinoz disponibles dans la Boutique.",
+			"rocky": "Die Trophäe der Rockys ist eine Belohnung für Spieler, die den schlafenden Rocky besiegt haben. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Rockys zur Verfügung.",
 			"quetzu": "Die Trophäe der Quetzus wurde dir von Mandragore nach dem Sieg über den Erzdorogon Grizorg verliehen. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Quetzus zur Verfügung.",
 			"labowi": "Die Trophäe der Smogs wurde dir von Professor Henderson während dem Zwischenfall im korrupten Labor verliehen. Leider konnte während der Mission nur ein Smog entstehen.",
-			"tour": "Ce maillot jaune vous récompense pour votre magnifique Tour de Dinoland ! Vous faites désormais partie des grands explorateurs de Dinoland.",
+			"tour": "Dieses gelbe Trikot ist die Belohnung für deine großartige Teilnahme an der „Tour de Dinoland“. Du gehörst nun zu den großen Entdeckern des Dinolandes!",
 			"vener": "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
 			"taurus": "Du hast Baobob dabei geholfen, den höllischen Taurus, einen mächtigen Möffen zurück in die Dunkle Welt zu befördern. Vous n'êtes pas prêt de le revoir, votre courage commence déjà à traverser les frontières de Dinoland.",
 			"belius": "Du hast den höllischen Belius, einen mächtigen Santas vertrieben. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de dinoz démons dans la boutique démoniaque.",
@@ -3757,7 +3757,7 @@
 		"header": {
 			"title": "Clan: {name}",
 			"infos": "Clan information",
-			"creation_date": "Created the {date}"
+			"creation_date": "Gegründet am {date}"
 		},
 		"tabs": {
 			"pages": "Clan pages",
@@ -3766,20 +3766,20 @@
 			"war": "War informations",
 			"discussion": "Discussion thread",
 			"history": "Clan history",
-			"parameters": "Settings"
+			"parameters": "Einstellungen"
 		},
 		"icons": {
 			"members": "Number of members",
 			"gold": "Treasure value",
 			"rank": "Rank",
-			"crown": "Clan leader"
+			"crown": "Klananführer"
 		}
 	},
 	"clansList": {
 		"title": "Klane",
 		"th": {
 			"name": "Klan",
-			"leader": "Anführer",
+			"leader": "Gründer",
 			"members": "Mitglieder",
 			"date": "Erstellungsdatum"
 		},
@@ -3791,7 +3791,7 @@
 		"cannot_create_info": "Creating a clan costs {money} :gold:, and requires you to have {points} ranking points.",
 		"button": {
 			"search": "Search",
-			"create": "Create clan"
+			"create": "Klan gründen"
 		}
 	},
 	"clansMembers": {
@@ -3834,7 +3834,7 @@
 		"button": {
 			"join_clan": "Join clan",
 			"delete": "Delete page",
-			"create": "Create new page",
+			"create": "Seite erstellen",
 			"edit": "Edit page"
 		},
 		"tip": {
@@ -3851,7 +3851,7 @@
 			"content": "Content",
 			"public": "Public page",
 			"action": {
-				"create": "Create",
+				"create": "Gründen",
 				"edit": "Edit",
 				"cancel": "Cancel"
 			}
@@ -3859,7 +3859,7 @@
 	},
 	"clanDiscussion": {
 		"action": {
-			"create": "New message",
+			"create": "Neue Nachricht",
 			"refresh": "Refresh"
 		},
 		"pagination": {
@@ -3869,7 +3869,7 @@
 	},
 	"clanHistory": {
 		"type": {
-			"CLAN_CREATED": "Clan has been created.",
+			"CLAN_CREATED": "Klan wurde gegründet.",
 			"PLAYER_JOIN": "A player has joined the clan.",
 			"PLAYER_LEAVE": "This player decided to leave the clan.",
 			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
@@ -3887,12 +3887,12 @@
 		}
 	},
 	"createClan": {
-		"title": "Create a clan",
-		"information": "Please fill in informations below in order to create your clan. The clan creation will cost you ",
-		"clan_name": "Clan name",
-		"clan_description": "Clan description",
-		"create_button": "Create clan",
-		"go_back_button": "Back to list"
+		"title": "Klan gründen",
+		"information": "Fülle bitte die Felder weiter unten aus, um deinen Klan zu gründen. Die Kosten für die Gründung des Klans belaufen sich auf ",
+		"clan_name": "Name des Klans",
+		"clan_description": "Klanbeschreibung",
+		"create_button": "Klan gründen",
+		"go_back_button": "Zurück zur Liste"
 	},
 	"fight": {
 		"pageName": "Kampf!",
@@ -3927,7 +3927,7 @@
 			"cobra": "Cobrazero",
 			"goblin": "Goblin",
 			"bat": "Jägerflatter",
-			"ronciv": "Brombeerfresser",
+			"ronciv": "Dornenschlinger",
 			"gardien": "Baumkronwächter",
 			"grdien": "Baumkronwächter",
 			"rkrgns": "Korgonenverstärkung",
@@ -4071,16 +4071,16 @@
 		"elements": "Eléments"
 	},
 	"dinozMissions": {
-		"title": "Missions de mes Dinoz",
+		"title": "Missionen meiner Dinoz",
 		"disclaimer": "Ce module de gestion est accessible grâce à votre **Petit Missionnaire Illustré** : très pratique pour suivre les missions de vos Dinoz !",
 		"dinoz": "Dinoz",
-		"missions": "Missions",
-		"see": "Voir",
-		"total": "Total",
+		"missions": "Missionen",
+		"see": "Anzeigen",
+		"total": "Gesamt",
 		"missionsFrom": "Missionen von „{npc}“"
 	},
 	"market": {
-		"title": "Marché des Eleveurs",
+		"title": "Züchtermarkt",
 		"disclaimer": "Willkommen beim Züchtermarkt! Hier können Dinoz gekauft und verkauft werden, sowie Zutaten und einige seltene Gegenstände aus ganz Dinoland!",
 		"allOffers": "Alle Angebote",
 		"myTransactions": "Meine Transaktionen",
@@ -4099,7 +4099,7 @@
 		"by": "par",
 		"details": "Details",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
-		"currency": "Die **Schatzgutscheine**, die zum Handeln auf dem Züchtermarkt benötigt werden, können bei der **Dinoländischen Bank** in einem Verhältnis von **1** :ticket: **= 1000** :gold: erworben werden.",
+		"currency": "Die **Schatzbriefe**, die zum Handeln auf dem Züchtermarkt benötigt werden, können bei der **Dinoländischen Bank** in einem Verhältnis von **1** :ticket: **= 1000** :gold: erworben werden.",
 		"back": "Zurück",
 		"bid": "Bieten",
 		"detail": "Details zeigen",
@@ -4145,7 +4145,7 @@
 		"HPLost": "**{player} ({playerId})** lost **{hpLost}HP**.",
 		"Death": "**{player} ({playerId})**'s dinoz **{dinoz} ({dinozId})** died.",
 		"Revive": "**{player} ({playerId})** revived dinoz **{dinoz} ({dinozId})**.",
-		"MissionStep": "**{player} ({playerId})** advanced **{mission}** to **step {step}** with dinoz **{dinoz} ({dinozId})**.",
+		"MissionStep": "**{player} ({playerId})** erreicht mit dem Dinoz **{dinoz} ({dinozId})** in der Mission **„{mission}“ den Abschnitt {step}** .",
 		"MissionFinished": "**{player} ({playerId})** finished **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
@@ -4385,60 +4385,60 @@
 		}
 	},
 	"faq": {
-		"intro": "Vous pouvez trouver ici toutes les réponses à vos questions sur le jeu. Essayez toutefois de ne pas trop utiliser cette section, car de nombreux secrets sont plus amusants si vous les découvrez par vous-même en cherchant un peu.",
+		"intro": "Hier findest du Antworten auf all deine Fragen zum Spiel. Versuche jedoch nach Möglichkeit, diesen Abschnitt nicht zu häufig zu nutzen, da zahlreiche Geheimnisse auf eigene Faust zu entdecken, mehr Spaß macht.",
 		"search": "Suche",
-		"qa": "Questions / Réponses :",
+		"qa": "Fragen / Antworten:",
 		"faq1": {
-			"question": "Pourquoi les deux dernières missions de Papy Joe ne se débloquent pas ?",
-			"answer": "La mission 'Les Géants' se débloquera quand votre Dinoz aura atteint le niveau 11 et 'L'exploit du mois' quand il sera au niveau 18."
+			"question": "Warum werden die letzten beiden Missionen von Papy Joe nicht freigeschaltet?",
+			"answer": "Die Mission „Die Riesen“ wird freigeschaltet, sobald dein Dinoz die Stufe 11 erreicht hat, während „Heldentat des Monats“ ab Stufe 18 freigeschaltet wird."
 		},
 		"faq2": {
-			"question": "Où se trouve le chien de Mme Ducraft ?",
-			"answer": "Le Chien de Mme Ducraft se trouve au Port de Prêche, accessible depuis la Fontaine de Jouvence. La fontaine de Jouvence est accessible depuis Dinoville, Forcebrut, ou Chez Papy Joe."
+			"question": "Wo kann man den Hund von Jacqueline Ducraft finden?",
+			"answer": "Der Hund von Jacqueline Ducraft befindet sich am Predigerhafen, der über den Jungbrunnen erreicht werden kann. Zum Jungbrunnen gelangt man von Dinoville, Rohkraft oder Papy Joe aus."
 		},
 		"faq3": {
-			"question": "Comment avoir plus de 18 Dinoz ?",
-			"answer": "La compétence U Leader :bois: permet d’avoir 3 dinoz de plus sur votre compte. && Il en va de même pour Messie :air: sur le nouvel arbre de compétences 50+. && && Les compétences U (unique) ne fonctionnent qu'une seule fois par compte. && Après, il est possible d’en avoir beaucoup plus en congelant certains de vos dinoz."
+			"question": "Wie erhält man mehr als 18 Dinoz?",
+			"answer": "Die U-Fähigkeit „Anführer“ :bois: ermöglicht es, drei zusätzliche Dinoz zu besitzen.&&Das Gleiche gilt für „Messias“ :air: im neuen Fähigkeitenbaum für Stufe 50+.&&Fähigkeiten des Typs „U“ (ungewöhnlich) wirken nur einmalig pro Konto.&& &&Darüber hinaus gibt es die Möglichkeit, bestimmte Dinoz einzufrieren, um noch mehr von ihnen zu besitzen."
 		},
 		"faq4": {
-			"question": "Comment obtenir la Perle de la Fontaine ?",
-			"answer": "Il vous faudra la Bouée. && A partir du Port de Prêche, accédez à l'Îles Waïkiki (Îles Atantéinées), puis accédez aux chutes Mutantes (accessibles depuis le Dôme Soulaflotte, Chez Bao Bob, et depuis le Marais Collant). && && Discutez avec Maître Hydargol, et suivez ses instructions. Si vous menez à bien la mission qu'il vous donnera, vous obtiendrez la Perle de la Fontaine."
+			"question": "Wie erhält man die Perle aus dem Brunnen?",
+			"answer": "Hierzu wird die Boje benötigt.&&Reise vom Predigerhafen aus zu der Waïkiki-Insel (Atlantinische Inseln), um dann die Mutierenden Sturzfluten zu erreichen (über den Klebrigen Sumpf, das Haus von Bao Bob oder von der Unterwasserkuppel aus).&& &&Spreche nun mit Meister Hydargol und folge seinen Anweisungen. Wenn du die Mission, die er dir gibt, erfolgreich abschließt, erhältst du die Perle aus dem Brunnen."
 		},
 		"faq5": {
-			"question": "Comment enlever une compétence à un Dinoz ?",
-			"answer": "Erlernte Fähigkeiten können nicht wieder entfernt werden, aber einige von ihnen können mithilfe des 130-Lektionen-Strategiehandbuches deaktiviert werden, das du erhältst, sobald du die zweite Mission vom Lässigen Schamanen: „Die Archelöwenscheuche“ abgeschlossen hast. && && En règle générale, il faut éviter de choisir des attaques (compétences A) dans les éléments mineurs de votre dinoz. && Ex : Canon à eau est déconseillé pour un pigmou."
+			"question": "Wie kann ein Dinoz eine Fähigkeit verlernen?",
+			"answer": "Erlernte Fähigkeiten können nicht wieder entfernt werden, aber einige von ihnen können mithilfe des Handbuchs „Strategie in 130 Lektionen“ deaktiviert werden. Du erhältst es, sobald du die zweite Mission vom Lässigen Schamanen: „Die Archelöwenscheuche“ abgeschlossen hast.&& &&Als Faustregel sollte vermieden werden, Angriffe (Fähigkeiten des Typs „A“) schwächerer Elemente eines Dinoz aktiviert zu lassen. Zum Beispiel wäre Wasserkannone für ein Färkel nicht empfehlenswert."
 		},
 		"faq6": {
-			"question": "Comment obtenir la Lanterne ?",
-			"answer": "Tout d'abord, vous devez avoir le Gant des Zors afin d'accéder à la forêt de Grumhel par les Îles Atlateinnées. && && Allez sur les Collines Hantées et parlez à L'Homme Bizarre. Ignorez-le et combattez un monstre. && La Lanterne permet d'aller aux Gorges Profondes et faire la mission Hiéroglyphes du Shaman Mou."
+			"question": "Wie erhält man die Laterne?",
+			"answer": "Um den Grumhel-Wald über die Atlantinischen Inseln betreten zu können, benötigst du zunächst den Handschuh der Zors.&& &&Gehe dann zu den Verwunschenen Hügeln und sprich mit dem Sonderbaren Mann. Ignoriere ihn und kämpfe gegen ein Monster.&&Mit der Laterne können dann die Tiefen Schluchten betreten und beim Lässigen Schamanen die Mission „Hieroglyphen“ abgeschlossen werden."
 		},
 		"faq7": {
-			"question": "Comment obtenir le Gant des Zors ? Comment accéder à la forêt de Gruhmel ?",
-			"answer": "Zunächst einmal benötigst du eine Boje, Kletterausrüstung, eine Schaufel und eine Tiefseeskorp-Lockflöte. && Avec la Pelle, creusez aux Pentes de Basalte (Mont Tout Chaud), au Marais Collant (Îles Atlantéinées) et à la Fontaine de Jouvence (Royaume de Dinoville). Du solltest versuchen, die Status „Sumpfschlamm“, „Basaltsplitter“ und „Reines Wasser“ zu erhalten. && && Allez ensuite au Dôme Soulaflotte parler à l'Archisage, et donnez-lui vos objets récoltés. Après avoir combattu l'Elemental de bois, vous obtiendrez le Gant des Zors. Rendez-vous maintenant aux Chutes Mutantes. && && J'ignore si vous devez déjà avoir la Perle de la Fontaine, mais c'est préférable. Parlez à Maître Hydargol et acceptez de lui prêter le Gant des Zors. Vous obtiendrez une Feuille de Nénuphar. A présent, vous pouvez accéder à la forêt de Grumhel à partir des Chutes Mutantes."
+			"question": "Wie erhält man den Handschuh der Zors? Wie kann man den Grumhel-Wald betreten?",
+			"answer": "Zunächst benötigst du eine Boje, Kletterausrüstung, eine Schaufel und eine Tiefseeskorp-Lockflöte.&& &&Grabe mit der Schaufel auf den Basalthängen (Der Große Immerhitzus), am Klebrigen Sumpf (Atlantinische Inseln) und beim Jungbrunnen (Dinoville-Königreich). Dabei solltest du die Status „Sumpfschlamm“, „Basaltsplitter“ und „Reines Wasser“ erhalten.&& &&Gehe als nächstes zur Unterwasserkuppel, um mit dem Erzweisen zu sprechen und ihm die gesammelten Dinge zu geben. Nach dem Kampf mit dem Erdelementar, erhältst du den Handschuh der Zors.&& &&Gehe nun zu den Mutierenden Sturzfluten. Es ist nicht sicher, ob hierzu die Perle aus dem Brunnen benötigt wird, aber es wäre von Vorteil. Sprich mit Meister Hydargol und erlaube ihm, sich den Handschuh der Zors auszuleihen. Du erhältst ein Seerosenblatt. Von nun an, kannst du den Grumhel-Wald von den Mutierenden Sturzfluten aus betreten."
 		},
 		"faq8": {
-			"question": "Où se trouve le marché des îles Atlantéinées où je dois échanger une banane contre un porte-manteau (deuxième mission de Bao Bob, 'Le troc des îles Atlantéinées' ?",
-			"answer": "Cette mission se fait par étape. Vous devrez vous rendre au Mines de Corail, puis aux Iles Waikiki, puis au Chutes Mutantes, puis au Marais Collant, à nouveau aux Mines de Corail et enfin chez M. Bao Bob. && && Dans chacun de ces lieux, vous devez discuter avec un personnage et effectuer l'échange qu'il vous propose."
+			"question": "Wo findet man den Markt der Atlantinischen Inseln, wo ich eine Banane gegen einen Kleiderständer tauschen muss? (zweite Mission von Bao Bob, „Der Atlantinische Tauschhandel“)",
+			"answer": "Diese Mission ist in Abschnitte unterteilt. Du musst zu den Korallenminen gehen, dann zu der Waïkiki-Insel, dann zu den Mutierenden Sturzfluten, dann zum Klebrigen Sumpf, dann zurück zu den Korallenminen und anschließend zum Haus von Bao Bob.&& &&An jedem dieser Orte musst du mit einer Person sprechen und den jeweiligen Tauschhandel vollziehen."
 		},
 		"faq9": {
 			"question": "Que choisir au jeu du Pile-ou-face face à Yakuzi ?",
 			"answer": "Peu importe le choix, le premier pari sera forcément perdu alors que le second sera forcément gagné."
 		},
 		"faq10": {
-			"question": "Comment fonctionne la Perle de Fontaine ?",
-			"answer": "Tout Dinoz qui se trouve à la Fontaine de Jouvence à minuit gagnera 5 :pv: par jour lors de votre connexion quotidienne. L’effet n’est pas cumulatif."
+			"question": "Wie funktioniert die Perle aus dem Brunnen?",
+			"answer": "Alle Dinoz, die sich um Mitternacht am Jungbrunnen befinden, erhalten beim täglichen Einloggen 5 :pv:. Der Effekt ist nicht kumulativ."
 		},
 		"faq11": {
-			"question": "Où se trouve le dictionnaire demandé dans la première mission du Shaman mou, 'La mise à l'épreuve' ?",
+			"question": "Wo findet man das Wörterbuch, das in der ersten Mission „Die Bewährungsprobe“ vom Lässigen Schamanen benötigt wird?",
 			"answer": "Das Wörterbuch ist an der Universität."
 		},
 		"faq12": {
-			"question": "Est-ce que je peux faire combattre mes dinoz ensemble ?",
-			"answer": "Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible. && && Sélectionnez l'action 'Faire suivre' : vos dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois dinoz, la limite peut passer à cinq si le dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme."
+			"question": "Ist es möglich, meine Dinoz gemeinsam kämpfen zu lassen?",
+			"answer": "Sie können zwar nicht gegeneinander Kämpfen, aber dafür Seite an Seite. Um deine Dinoz zu gruppieren, müssen sie sich am selben Ort befinden und je über eine Aktion verfügen. Nutze die Aktion „Folgen“ und wähle dann einen Dinoz aus: Deine Dinoz agieren nun als Gruppe.&& &&Es können bis zu drei Dinoz eine Gruppe bilden, aber die Begrenzung kann auf fünf erhöht werden, falls der Gruppenführer über die Fähigkeiten „Sympathisch“ und „Charisma“ verfügt."
 		},
 		"faq13": {
-			"question": "J'ai fini les missions de Papy Joe, comment puis-je en avoir d'autres ?",
-			"answer": "Aux îles Atlantéinées, M. Bao Bob (Chez Bao Bob) vous proposera une nouvelle liste de missions. Aux Mont Tout Chaud, c'est le Shaman mou (Fosselave) qui a besoin de vos services."
+			"question": "Ich habe die Missionen von Papy Joe abgeschlossen. Wo gibt es weitere?",
+			"answer": "Auf den Atlantinischen Inseln kann Herr Bao Bob (Haus von Bao Bob) dir neue Missionen anbieten. Auf dem Großen Immerhitzus ist es der Lässige Schamane (Lavagrube), der deine Dienste benötigt."
 		},
 		"faq14": {
 			"question": "Comment accéder aux Steppes Magnétiques ?",
@@ -4453,60 +4453,60 @@
 			"answer": "Pour créer un clan : avoir 20.000:gold: et 15 points minimum. && && Pour adhérer à un clan : avoir 1.000:gold: et 4 points minimum."
 		},
 		"faq17": {
-			"question": "Où utiliser la pelle pour creuser ?",
-			"answer": "Une fois la Pelle obtenue, et sachant qu'après chaque utilisation il faudra retourner la faire réparer aux Mines de Corail, il existe 4 endroits où creuser : && && 1) Au Marais Collant. && && 2) A la Fontaine de Jouvence. && && 3) Aux Pentes de Basaltes. && && 4) Aux Ruines Ashpouk."
+			"question": "Wo sollte man mit der Schaufel graben?",
+			"answer": "Sobald du die Schaufel erhalten hast und unter Berücksichtigung, dass du nach jeder Benutzung zu den Korallenminen zurückkehren müssen wirst, um sie reparieren zu lassen, sollte man an vier Orten graben:&& &&1. Im Klebrigen Sumpf.&&2. Beim Jungbrunnen.&&3. Auf den Basalthängen.&&4. In den Aschpuckruinen."
 		},
 		"faq18": {
-			"question": "Où trouver le colis disparu ?",
-			"answer": "Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins. && && Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer. && && Retourner valider la Mission à Fosselave."
+			"question": "Wo findet man das verschwundene Paket?",
+			"answer": "Sprich zunächst bei den Schmieden des Großen Immerhitzus mit dem Boten, der das Paket verloren hat. Für diesen musst du zu den Basalthängen hinuntersteigen und vier Goblins töten. Steige anschließend wieder zum Tunnel unter dem Ast hinauf und töte sechs weitere.&& &&Kehre nun zur Lavagrube zurück, um die Mission abzuschließen."
 		},
 		"faq19": {
-			"question": "Comment accéder au Dome Soulaflotte ?",
-			"answer": "Mit der Tiefseeskorp-Lockföte aus den Mutierenden Sturzfluten. && && Pour obtenir l'appeau, il vous faudra la Bouée et un dinoz assez fort. Rendez-vous aux Îles Atlantéinées à partir du Port de Prêche, et allez aux Chutes Mutantes. Parlez au Garde Atlante, il vous parlera d'un ami pêcheur se trouvant au Port de Prêche. Retournez donc au Port de Prêche et parlez à Jovébozé. && && Letzteres führt zu einem Kampf gegen einen Tiefseeskorp, und wenn du gewinnst, erwartet dich als Belohnung eine Tiefseeskorp-Lockflöte."
+			"question": "Wie erreicht man die Unterwasserkuppel?",
+			"answer": "Von den Mutierenden Sturzfluten aus mithilfe der Tiefseeskorp-Lockflöte.&& &&Um die Lockflöte zu erhalten, benötigst du die Boje und einen recht starken Dinoz. Schwimme vom Predigerhafen aus zu den Atlantinischen Inseln und reise dann zu den Mutierenden Sturzfluten. Sprich mit dem Atlantinischen Wächter, der dir von einem befreundeten Fischer vom Predigerhafen erzählen sollte. Kehre also nun zum Predigerhafen zurück und sprich mit Jové Bozé.&& &&Er wird dich zu einem Kampf mit einem Tiefseeskorp mitnehmen und wenn es dir gelingt, diesen zu besiegen, wird der Fischer dir eine Tiefseeskorp-Lockflöte schenken."
 		},
 		"faq20": {
 			"question": "Où trouver les Etoiles Magiques ?",
 			"answer": "Suivez bien les instructions données par l'Être Étrange que vous rencontrerez aléatoirement à la Fontaine de Jouvence. && && Indices supplémentaires && && Première étoile : la Capitale n'est autre que Dinoville. Il vous faudra une nouvelle action pour combattre le Megaloup. && Deuxième étoile : le Graisseux enthousiaste est le Vendeur de Merguez qui se trouve aux Ruines Ashpouk. && Troisième étoile : l'énigme parle d'elle-même. && Quatrième étoile : l'appel... la Pelle... && Cinquième étoile : le capsicum est un végétal connu plus fréquemment sous le nom de poivron. && Sixième étoile : l'Homme-dieu est Bao Bob. && Septième étoile : Saru veut dire 'singe'. Attention, vous devez déjà être dans la Jungle Sauvage avant d'y laisser mourir votre dinoz."
 		},
 		"faq21": {
-			"question": "Comment fait on pour avoir une relique ?",
-			"answer": "Pour avoir une relique, il faut creuser aux Ruines Ashpouk (Grand Tout Chaud) et se rendre ensuite à l'université pour authentifier la relique. && && Pour l'obtenir, il faut d'abord : la Bouée , le Matériel d'escalade et la Pelle. Niveaux minimum pour la Bouée et le Matériel d'Escalade : 5 et 6. && && La relique permet d'accéder au tournoi de Forcebrut."
+			"question": "Wie erhält man ein uraltes Relikt?",
+			"answer": "Für das Relikt benötigst du zunächst die Boje, Kletterausrüstung und die Schaufel. Die Mindeststufen für die Boje und Kletterausrüstung sind 5 und 6.&& &&Um das Relikt zu finden, musst du in den Aschpuckruinen (Der Große Immerhitzus) graben und dann zur Universität gehen, um es identifizieren zu lassen. Nun gewährt das Aschpucken-Totem Zugang zum Rohkraft-Turnier."
 		},
 		"faq22": {
-			"question": "Comment accéder à la forêt de Grumhel à partir des Gorges Profondes ou comment accéder à la seconde partie de la forêt de Grumhel ?",
-			"answer": "Il vous faudra le Gant des Zors, une Feuille de Nénufar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). A partir de là, rendez-vous aux Montagnes hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. A partir de là, accédez aux Gorges Profondes (action Se déplacer). A partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Pour rallier les deux parties, faites les missions de Dian Korgsey, et obtenez les Palmes de Korgon. A présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa."
+			"question": "Wie gelangt man durch die Tiefen Schluchten zum Grumhel-Wald und wie erreicht man den zweiten Teil des Grumhel-Waldes?",
+			"answer": "Hierzu benötigst du den Handschuh der Zors, das Seerosenblatt und die Boje.&& &&Finde dich bei den Mutierenden Sturzfluten ein und betritt den Grumhel-Wald („Am Wasserfall vorbeigehen“ auf der Karte). Reise weiter zu den Verwunschenen Hügeln. Sprich mit dem Sonderbaren Mann und ignoriere ihn. Er wird dir von einem schrecklichen Monster erzählen und verlangt von dir, es zu bekämpfen. Tritt also den Kampf mit einem Korgonen-Witzbold an. Falls du ihn besiegen solltest (was sehr wahrscheinlich ist), wird der Sonderbare Mann geflohen sein und seine Laterne hinterlassen haben.&& &&Verlasse nun den Grumhel-Wald und reise durch die Atlantinischen Inseln und das Dinoland zum Großen Immerhitzus, zum Tunnel unter dem Ast. Gehe von dort aus in die Tiefen Schluchten hinein (Bewegungsaktion). Verlasse anschließend die Tiefen Schluchten Richtung Korgonenlager (Bewegungsaktion) und du erreichst den zweiten Teil des Grumhel-Waldes.&& &&Um nun eine Verbindung zwischen den zwei Bereichen herzustellen, musst du die Missionen von Dian Korgsey abschließen und die Korgonenflossen erhalten. Dann wird es dir möglich sein, dich zwischen dem Korgonenlager und dem Jumin-Fluss fortzubewegen."
 		},
 		"faq23": {
-			"question": "Comment obtenir la Pelle (Creuser) ?",
-			"answer": "Il vous faudra tout d'abord la Bouée. A partir du port de Prêche, accédez aux Îles Atlantéinées, puis déplacez-vous aux Mines de Corail. Parlez au Mineur Coralien, et répondez-lui oui. && Il vous donnera la pelle, mais à chaque fois que vous creuserez, elle se cassera, et vous devrez revenir le voir pour qu'il vous la répare."
+			"question": "Wie erhält man eine Schaufel (zum Graben)?",
+			"answer": "Hierfür benötigst du zunächst die Boje.&& &&Vom Predigerhafen aus erreichst du die Atlantinischen Inseln, um dort zu den Korallenminen zu gelangen. Sprich mit dem Korallenschürfer und stimme ihm zu.&&Er wird dir daraufhin die Schaufel geben, allerdings wird sie jedes Mal, wenn du damit gräbst, kaputtgehen und du musst dann zu ihm zurückkehren, um sie reparieren zu lassen."
 		},
 		"faq24": {
-			"question": "Dinoz sombres et Trophées Hippoclamp, Pteroz et Rocky",
-			"answer": "L'Hippoclamp Sombre se trouve sur l'île Waïkiki, accessible depuis le Port de Prêche grâce à la Bouée. Le vaincre vous rapportera le Trophée des Hippoclamps. Et il faut au minimum être au niveau 8 pour le voir. && && Der Dunkle Dinoz ist bei den Basalthängen zu finden, die von den Zerklüfteten Hügeln aus mithilfe von Kletterausrüstung erreicht werden können. Vous obtiendrez le Trophée des Pteroz en le battant. && && Le Rocky se trouve à Forcebrut. Il n'est pas visible avant le niveau 13 et difficile à vaincre avant le niveau 15 mais vous rapportera le Trophée des Rocky. && && Les Trophées sont des objets épiques visibles sur votre compte. Ils vous permettent d'acheter dans l'Enclos le dinoz correspondant au Trophée : hippoclamp si vous avez le Trophée Hippoclamp, etc."
+			"question": "Was hat es mit den dunklen Dinoz und den Trophäen der Hippoklampen, Pteros und Rockys auf sich?",
+			"answer": "Der Dunkle Hippoklamp befindet sich auf der Waïkiki-Insel, die man mithilfe der Boje vom Predigerhafen aus erreichen kann. Solltest du ihn besiegen, erhältst du die Trophäe der Hippoklampen. Dein Dinoz muss mindestens Stufe 8 sein, um ihn sehen zu können.&& &&Der Dunkle Ptero befindet sich auf den Basalthängen, die man mithilfe der Kletterausrüstung von den Zerklüfteten Hügeln aus erreichen kann. Solltest du ihn besiegen, erhältst du die Trophäe der Pteros.&& &&Der Dunkle Rocky befindet sich in Rohkraft. Er ist vor Stufe 15 schwer zu besiegen, aber solltest du es schaffen, erhältst du die Trophäe der Rockys. Dein Dinoz muss mindestens Stufe 13 sein, um ihn zu sehen.&& &&Tropäen sind epische Belohnungen, die im Konto-Profil angezeigt werden. Sie ermöglichen es, im Dinoz-Gehege den ihnen entsprechenden Dinoz zu kaufen: Einen Hippoklampen, wenn du die Trophäe der Hippoklampen hast usw."
 		},
 		"faq25": {
-			"question": "Comment fait-on pour congeler un dinoz ?",
-			"answer": "Rendez vous aux Gorges Profondes puis parlez avec le Spéléléologue. Il vous proposera de congeler votre dinoz. && Ceci vous permettra d'élever un dinoz supplémentaire à la place. && && Il vous faudra bien évidemment la lanterne pour accéder aux gorges."
+			"question": "Wie kann man einen Dinoz einfrieren?",
+			"answer": "Hierzu benötigst du die Laterne.&& &&Reise zu den Tiefen Schluchten und sprich mit dem Höhöhöhlenforscher. Er wird dir anbieten, deinen Dinoz einzufrieren. An seiner statt wirst du einen zusätzlichen Dinoz hochzüchten können."
 		},
 		"faq26": {
-			"question": "Comment obtenir un Kabuki ?",
+			"question": "Wie erhält man einen Kabuki?",
 			"answer": "Pour obtenir ce précieux dinoz, il vous faudra l'aura Kabuki, qui s'obtient grâce à la quête de Yakuzi ! && && Dans un premier temps, vous aurez besoin de rencontrer Yakuzi au Port de Prêche (rencontre aléatoire), et d'accepter ses deux paris. && Il disparaitra ensuite, et vous pourrez de nouveau le rencontrer, tout d'abord aux Forges, ensuite aux Gorges Profondes. && Lors de cette dernière rencontre, vous obtiendrez un parchemin, que vous devrez faire traduire à l'Université par un professeur. && Ce dernier vous apprendra qu'il faudra lui donner plusieurs ingrédients pour avancer dans votre quête. && Une fois ces ingrédients donnés, et après un délai d'attente de quelques jours, vous devrez vous rendre aux Mines de Corail (il se peut que vous deviez attendre un peu, le temps qu'un onglet apparaisse, comme pour une étape de mission). && Pour terminer cette quête, vous devrez poursuivre votre assaillant sur l'Ile du Totem, qui n'est pas accessible avant. && && Vous obtiendrez aisni un Oeuf de Kabuki, et l'aura kabuki, qui vous permettra de vous rendre sur ce lieu aussi souvent que vous le voudrez."
 		},
 		"faq27": {
-			"question": "Comment vendre son Dinoz ?",
-			"answer": "Mit dieser Silbermedaille wird dein Dinoz dafür belohnt, dass er den 2. Ensuite, allez à la Place du Marché, cliquez sur Marché des Eleveurs, et sur Vendre. && ATTENTION : cette opération est irréversible."
+			"question": "Wie kann man seine Dinoz verkaufen?",
+			"answer": "Um Dinoz verkaufen zu können, musst du mindestens zwei von ihnen besitzen (man kann nicht ohne Dinoz sein). Damit kannst du dann zum Marktplatz (im Dinoland) gehen, auf den Züchtermarkt klicken und dann auf „verkaufen“.&& &&ACHTUNG: Dieser Vorgang ist unumkehrbar."
 		},
 		"faq28": {
-			"question": "Anguilloz au vinaigre",
-			"answer": "Trouver le bon lieu...c'est ça qui est difficile et qui nous fait tourner en rond hein ? && && Allez, un petit coup de main : && && -> Il faut aller à Dinoville."
+			"question": "Wo muss man bei der Mission „Aalos in Essig“ hin?",
+			"answer": "Den richtigen Ort finden... das ist daran die Schwierigkeit, die einen im Kreis laufen lässt, was?&& &&Hier ist eine kleine Hilfe:&&-> Du musst nach Dinoville."
 		},
 		"faq29": {
-			"question": "Comment récupérer la vie de mon Dinoz ?",
-			"answer": "Il y a 4 possibilités : && && En achetant et en utilisant les objets de santé disponibles dans le magasin. && En utilisant l'option de repos. && Lorsque le Dinoz est à la Fontaine de Jouvence avec la Perle de Jouvence à minuit. && En équipant l'un de vos Dinoz du Bracelet Tik et en attendant minuit."
+			"question": "Wie stellt man Dinoz die Lebenspunkte wieder her?",
+			"answer": "Es gibt vier Möglichkeiten:&& &&In Geschäften verfügbare Gesundheitsgegenstände kaufen und benutzen.&&Die Aktion: „Ausruhen“ verwenden (erscheint nur, wenn ein Dinoz weniger als 50% seiner Lebenspunkte hat).&&Dinoz über Mitternacht am Jungbrunnen lassen, wenn man die Perle aus dem Brunnen besitzt.&&Dinoz mit dem Tik-Armband ausrüsten und bis Mitternacht warten."
 		},
 		"faq30": {
-			"question": "Où dois-je redémarrer lorsque mon Dinoz est mort ?",
-			"answer": "Si vous n'utilisez pas de Potion d'Ange, vous redémarrez à Dinoville avec 1 point de vie et vous perdez la moitié de votre Expérience. && && Si vous utilisez une Potion d'Ange, vous redémarrez là où vous êtes avec 1 point de vie."
+			"question": "Wo kann man neu starten, wenn ein Dinoz stirbt?",
+			"answer": "Wenn du einen Engelstrank verwendest, startet der Dinoz mit 1 Lebenspunkt in Dinoville und verliert die Hälfte seiner Erfahrung.&& &&Wenn du einen Engelstrank verwendest, startet der Dinoz mit 1 Lebenspunkt dort, wo er sich befindet."
 		}
 	},
 	"achievements": {
@@ -4551,8 +4551,8 @@
 		}
 	},
 	"quest": {
-		"fight_megawolf": "Au moment où vous approchez, un immense loup apparait !",
-		"fight_star_found": "À la fin du combat, vous apercevez un objet brillant : il s'agit d'une des 7 étoiles magiques !",
+		"fight_megawolf": "Als du dich gerade näherst, erscheint ein riesiger Wolf!",
+		"fight_star_found": "Am Ende des Kampfes fällt dir ein gleißender Gegenstand auf. Es ist einer der sieben magischen Sterne!",
 		"eat_star_found": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelquechose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
 		"dig_star_found": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
 		"resurrect_star_found": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
