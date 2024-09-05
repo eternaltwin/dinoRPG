@@ -86,7 +86,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { updateQuest } from '../dao/questsDao.js';
-import { ExpectedError } from '@drpg/core/utils/errorFormator';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 
 /**
