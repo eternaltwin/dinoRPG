@@ -1,6 +1,6 @@
 {
   "name": "ed-ui",
-  "version": "0.13.3",
+  "version": "0.13.4",
   "private": true,
   "scripts": {
     "serve": "concurrently -k -n \"vite,deps\" -p \"[{name}]\" \"yarn run serve:app\" \"yarn run serve:deps\"",
