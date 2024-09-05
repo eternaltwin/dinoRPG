@@ -1,6 +1,7 @@
 {
   "tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
-  "notEnoughMoney": "Vous n'avez pas assez d'or",
+  "notEnoughMoney": "Vous n'avez pas assez d'or.",
+  "notEnoughNapo": "Vous n'avez pas assez de Napodino.",
   "OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 16 lettres et chiffres peuvent être utilisés.",
   "notLeader": "Ce dinoz n'est pas le leader de son groupe.",
   "concentration": "Votre dinoz se concentre et ne peut rien faire d'autre actuellement.",

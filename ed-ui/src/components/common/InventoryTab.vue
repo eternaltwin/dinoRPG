@@ -190,7 +190,7 @@ export default defineComponent({
 				return {
 					...itemList[i.id],
 					maxQuantity: i.maxQuantity,
-					quanity: i.quantity
+					quantity: i.quantity
 				};
 			});
 			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);

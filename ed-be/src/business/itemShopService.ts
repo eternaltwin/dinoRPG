@@ -252,7 +252,7 @@ async function buyMagicItem(
 
 	// Throws an exception if player doesn't have enough money to buy the items
 	if (playerNapoData === undefined || playerNapoData.quantity < itemSold.price * quantityBought) {
-		throw new ExpectedError(translate('notEnoughMoney', authed));
+		throw new ExpectedError(translate('notEnoughNapo', authed));
 	}
 
 	// Throws an exception if the player does not have enough storage space left
