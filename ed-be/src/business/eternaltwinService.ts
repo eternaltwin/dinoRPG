@@ -18,7 +18,7 @@ export async function checkPlayerLB(req: Request) {
 
 	if (!dayjs().isSame(player.lastLogin, 'day')) return false;
 
-	if (player.dinoz.length < 0) return false;
+	if (player.dinoz.length < 1) return false;
 
 	const remainingAction = player.dinoz.reduce((partialSum, a) => partialSum + a.remaining, 0);
 
