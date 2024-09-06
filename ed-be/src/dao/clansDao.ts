@@ -5,6 +5,7 @@ import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { setSpecificStat } from './trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 
 export async function getAllClansRequest(page: number) {
 	const clans = await prisma.clan.findMany({
@@ -643,21 +644,34 @@ export async function getClanMessagesCountRequest(clanId: number) {
 	return messagesCount;
 }
 
-export async function createClanMessageRequest(clanId: number, authorId: number, content: string) {
-	const message = await prisma.clanMessage.create({
+export async function createClanMessageRequest(clanId: number, authorId: number, content: string): Promise<CreateClanMessage> {
+	return await prisma.clanMessage.create({
 		data: {
 			clan: { connect: { id: clanId } },
 			author: { connect: { id: authorId } },
 			content
 		},
-		select: { id: true }
+		select: { 
+			id: true,
+			date: true,
+			content: true,
+			author: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
+			clan: {
+				select: {
+					leaderId: true
+				}
+			}
+		}
 	});
-
-	return message;
 }
 
-export async function deleteClanMessageRequest(id: number, playerId: number) {
-	const message = await prisma.clanMessage.delete({
+export async function deleteClanMessageRequest(id: number, playerId: number): Promise<void> {
+	await prisma.clanMessage.delete({
 		where: {
 			id,
 			OR: [
@@ -672,8 +686,6 @@ export async function deleteClanMessageRequest(id: number, playerId: number) {
 			]
 		}
 	});
-
-	return message;
 }
 
 export async function getClanHistoryRequest(playerId: number, clanId: number, page: number) {

@@ -12,6 +12,8 @@ import { GLOBAL, ServerContext } from './context.js';
 import { readyCheck } from './middleware/readyCheck.js';
 import initRoutes from './routes/index.js';
 import lockMiddleware from './middleware/lock.js';
+import fs from 'fs';
+import https from 'https';
 import './i18n.js';
 
 import {
@@ -24,7 +26,7 @@ import {
 import { RawData, WebSocketServer } from 'ws';
 import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
-import http, { IncomingMessage } from 'http';
+import { IncomingMessage } from 'http';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -44,7 +46,7 @@ export function main(cx: ServerContext) {
 	cx.logger.log(`Server started`);
 
 	const app = express();
-	const { port, wssPort } = cx.config;
+	const { port, useHttps, certificatePath, privateKeyPath } = cx.config;
 
 	app.use(cors());
 	app.use(bodyParser.json());
@@ -56,45 +58,34 @@ export function main(cx: ServerContext) {
 	app.use(lockMiddleware);
 	app.use(readyCheck);
 
-	const wss = new WebSocketServer({ port: wssPort });
+	if (useHttps) {
+		const key = fs.readFileSync(privateKeyPath, 'utf-8');
+		const cert = fs.readFileSync(certificatePath, 'utf-8');
+		const server = https.createServer({ key, cert }, app).listen(port, () => 
+			cx.logger.info(`Server listening on port ${port}`)
+		);
+		const wss = new WebSocketServer({ server });
 
-	wss.on('connection', (ws: WebSocketCustom, req: IncomingMessage) => {
-		try {
-			connectUserToChannel(ws, req);
-		} catch (err) {
-			ws.close();
-		}
+		handleWsEvents(wss);
+	} else {
+		app.listen(port, () => {
+			cx.logger.info(`Server listening on port ${port}`);
 
-		ws.on('message', (data: RawData) => processIncomingMessage(wss as WebSocketServerCustom, ws.id, data));
+			/*// Trigger daily job
+			dailyJob(cx.prisma)().catch((error: Error) => {
+				cx.discord.sendError(error);
+			});
 
-		ws.on('close', () => disconnectUser(ws));
+			// Initialize daily scheduler
+			schedule.scheduleJob('0 0 * * *', dailyJob(cx.prisma));
 
-		ws.on('pong', () => setConnectionToAlive(ws));
-
-		ws.on('error', console.error);
-	});
-
-	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
-
-	wss.on('close', () => clearInterval(interval));
-
-	app.listen(port, () => {
-		cx.logger.info(`Server listening on port ${port}`);
-
-		/*// Trigger daily job
-		dailyJob(cx.prisma)().catch((error: Error) => {
-			cx.discord.sendError(error);
+			// Start worker queue
+			startJob(cx.prisma).catch((error: Error) => {
+				cx.discord.sendError(error);
+			});*/
 		});
-
-		// Initialize daily scheduler
-		schedule.scheduleJob('0 0 * * *', dailyJob(cx.prisma));
-
-		// Start worker queue
-		startJob(cx.prisma).catch((error: Error) => {
-			cx.discord.sendError(error);
-		});*/
-	});
-
+	}
+	
 	resetDinozShopAtMidnight().start();
 	healRestingDinoz().start();
 	healDinozFount().start();
@@ -112,4 +103,34 @@ export function mainWrapper() {
 	// Note: We don't dispose the global context since the server is expected to
 	// run forever
 	main(GLOBAL);
+}
+
+function handleWsEvents(wss: WebSocketServer) {
+	wss.on('connection', async (ws: WebSocketCustom, req: IncomingMessage) => {
+		try {
+			await connectUserToChannel(ws, req);
+		} catch (err) {
+			ws.close();
+		}
+
+		ws.on('message', async (data: RawData) => {
+			try {
+				await processIncomingMessage(wss as WebSocketServerCustom, ws.id, data);
+			} catch(err) {
+				console.error(err);
+				disconnectUser(ws);
+				ws.close();
+			}
+		});
+
+		ws.on('close', () => disconnectUser(ws));
+
+		ws.on('pong', () => setConnectionToAlive(ws));
+
+		ws.on('error', () => disconnectUser(ws));
+	});
+
+	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
+
+	wss.on('close', () => clearInterval(interval));
 }

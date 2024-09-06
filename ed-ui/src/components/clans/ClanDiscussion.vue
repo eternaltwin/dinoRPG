@@ -1,17 +1,12 @@
 <template>
 	<div class="new-message-container" v-if="hasAccess">
-		<ckeditor :editor="editor" v-model="newMessage"></ckeditor>
+		<ckeditor v-if="isConnectionOk" :editor="editor" v-model="newMessage"></ckeditor>
+		<div v-if="isConnectionOk === false" class="msg-error">
+			<p>{{ $t('clan.forum.connectionFailed') }}</p>
+			<p>{{ $t('clan.forum.connectionFailed2') }}</p>
+		</div>
 		<div class="button-land">
-			<button
-				@click="getClanMessages()"
-				v-tippy="{
-					content: $t('clanDiscussion.action.refresh'),
-					theme: 'small'
-				}"
-			>
-				<img src="\src\assets\design\refresh.svg" alt="refresh" />
-			</button>
-			<a class="button" @click="CreateNewMessage()">{{ $t('clanDiscussion.action.create') }}</a>
+			<a class="button" @click="createNewMessage()">{{ $t('clanDiscussion.action.create') }}</a>
 		</div>
 	</div>
 
@@ -25,19 +20,19 @@
 							<img
 								src="\src\assets\icons\crown.png"
 								alt="rank"
-								v-if="IsLeader(msg)"
+								v-if="isLeader(msg)"
 								v-tippy="{
 									content: $t('clan.icons.crown'),
 									theme: 'small'
 								}"
 							/>
-							<div class="msg-author" :class="{ self: IsSelf(msg) }" @click="goToPlayer(msg.author.id)">
+							<div class="msg-author" :class="{ self: isSelf(msg) }" @click="goToPlayer(msg.author.id)">
 								{{ msg.author.name }}
 							</div>
 						</div>
-						<div class="msg-date">{{ DateToString(msg.date) }}</div>
+						<div class="msg-date">{{ dateToString(msg.date) }}</div>
 					</div>
-					<button v-if="CanDeleteMessage(msg)" @click="DeleteMessage(msg)">X</button>
+					<button v-if="canDeleteMessage(msg)" @click="deleteMessage(msg)">X</button>
 				</div>
 				<p class="msg-content" style="white-space: pre-line" v-html="msg.content" />
 			</div>
@@ -65,73 +60,85 @@
 import { defineComponent } from 'vue';
 
 import { playerStore } from '../../store/index.js';
-import { ClanMessage } from '@drpg/prisma';
 import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/index.js';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { WebSocketService } from '../../services/WebSocketService';
+import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
+import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { WsMsgRequestCreation } from '@drpg/core/models/webSocket/WsMsgRequestCreation';
+import { WsMsgRequestDeletion } from '@drpg/core/models/webSocket/WsMsgRequestDeletion';
+import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
+import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
 
 export default defineComponent({
 	name: 'ClanDiscussion',
 	components: {},
 	data() {
 		return {
+			webSocket: {} as WebSocket,
 			playerStore: playerStore(),
 			hasAccess: false as boolean,
-			messages: [] as ClanMessage[],
+			messages: [] as CreateClanMessage[],
 			newMessage: '' as string,
 			page: 1 as number,
 			maxPage: 1 as number,
 			pageSelector: 1 as number,
+			isConnectionOk: undefined as boolean | undefined,
 			editor: ClassicEditor
 		};
 	},
 	methods: {
-		IsLeader(msg): boolean {
-			return msg.author.id == msg.clan.leaderId;
+		isLeader(msg: CreateClanMessage): boolean {
+			return msg.author.id == msg.clan!.leaderId;
 		},
-		IsSelf(msg): boolean {
+		isSelf(msg: CreateClanMessage): boolean {
 			return msg.author.id == this.playerStore.playerId;
 		},
-		DateToString(date: Date): string {
+		dateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		},
-		CanDeleteMessage(msg): boolean {
-			return msg.author.id == this.playerStore.playerId || msg.clan.leaderId == this.playerStore.playerId;
+		canDeleteMessage(msg: CreateClanMessage): boolean {
+			return msg.author.id == this.playerStore.playerId || msg.clan!.leaderId == this.playerStore.playerId;
 		},
 		goToPlayer(id: number) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
 		},
-		async CreateNewMessage() {
-			if (!this.hasAccess || !this.newMessage || this.newMessage == '') {
+		async createNewMessage(): Promise<void> {
+			if (!this.hasAccess || !this.newMessage) {
 				return;
 			}
 			this.page = 1;
-			await this.createClanMessage(this.newMessage);
+			const payload: WsMsgRequestCreation = { action: WsMessageAction.CREATE, message: this.newMessage };
+			this.webSocket.send(JSON.stringify(payload));
 			this.newMessage = '';
-			this.getClanMessages();
 		},
-		async DeleteMessage(msg) {
-			if (!this.CanDeleteMessage(msg)) {
-				return;
-			}
+		async deleteMessage(msg: CreateClanMessage): Promise<void> {
+			if (!this.canDeleteMessage(msg)) return;
+
 			const res: boolean = confirm(this.$t('popup.confirm'));
-			if (res) {
-				await this.deleteClanMessage(msg.id);
-				await this.getClanMessages();
-			}
+			if (!res) return;
+
+			const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };
+			this.webSocket.send(JSON.stringify(payload));
 		},
-		async getClanMessages() {
-			EventBus.emit('isLoading', true);
-			try {
-				this.messages = await ClanService.getClanMessages(Number(this.$route.params.id), this.page);
-				const messagesCount = await ClanService.getClanMessagesCount(Number(this.$route.params.id));
-				this.maxPage = Math.floor((messagesCount.count + 19) / 20);
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
-				return;
+		async getClanMessages(): Promise<void> {
+			this.messages = await ClanService.getClanMessages(Number(this.$route.params.id), this.page);
+			const messagesCount = await ClanService.getClanMessagesCount(Number(this.$route.params.id));
+			this.maxPage = Math.floor((messagesCount.count + 19) / 20);
+		},
+		async connectToWs(): Promise<void> {
+			const wsTicket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
+			if (import.meta.env.MODE === 'development') {
+				this.webSocket = new WebSocket(`wss://localhost:8081?ticket=${wsTicket}`);
+			} else {
+				this.webSocket = new WebSocket(`wss://${document.location.host}?ticket=${wsTicket}`);
 			}
+
+			this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);
+			this.webSocket.onerror = () => (this.isConnectionOk = false);
+			this.webSocket.onopen = () => (this.isConnectionOk = true);
 		},
 		async changePage(n: number) {
 			this.page += n;
@@ -143,35 +150,42 @@ export default defineComponent({
 				await this.getClanMessages();
 			}
 		},
-		async createClanMessage(content: string) {
-			EventBus.emit('isLoading', true);
-			try {
-				this.messages = await ClanService.createClanMessage(content, Number(this.$route.params.id));
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
-				return;
+		handleWsAction(message: MessageEvent<WsMsgResponse>): void {
+			const msgData = JSON.parse(message.data.toString());
+
+			if (msgData.action === WsMessageAction.CREATE) {
+				this.updateMessages(msgData.payload);
+			} else if (msgData.action === WsMessageAction.DELETE) {
+				this.removeMsgFromMessages(msgData.msgId);
 			}
 		},
-		async deleteClanMessage(id: number) {
-			EventBus.emit('isLoading', true);
-			try {
-				this.messages = await ClanService.deleteClanMessage(id);
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+		updateMessages(message: CreateClanMessage): void {
+			if (this.page !== 1) {
 				return;
 			}
+
+			this.messages.unshift(message);
+		},
+		removeMsgFromMessages(msgId: number) {
+			this.messages = this.messages.filter(message => message.id !== msgId);
 		}
 	},
-	mounted(): void {
+	async mounted(): Promise<void> {
 		this.hasAccess = this.playerStore.clanId == Number(this.$route.params.id);
 		if (!this.hasAccess) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
-	},
-	async created(): Promise<void> {
-		await this.getClanMessages();
+		EventBus.emit('isLoading', true);
+		try {
+			await this.getClanMessages();
+			await this.connectToWs();
+
+			EventBus.emit('isLoading', false);
+		} catch (err) {
+			this.isConnectionOk = false;
+			errorHandler.handle(err as Error, this.$toast);
+			return;
+		}
 	}
 });
 </script>
@@ -325,5 +339,9 @@ textarea {
 			cursor: pointer;
 		}
 	}
+}
+
+.msg-error {
+	color: #e75c32;
 }
 </style>

@@ -92,14 +92,14 @@ export interface Config {
 	readonly port: number;
 
 	/**
-	 * Port used to bind the WSS server.
-	 */
-	readonly wssPort: number;
-
-	/**
 	 * Absolute URL to website root, as visible externally.
 	 */
 	readonly selfUrl: URL;
+
+	/**
+	 * True if you want to use HTTPS for localhost
+	 */
+	readonly useHttps: boolean
 
 	/**
 	 * Configuration for the Eternaltwin client.
@@ -130,6 +130,16 @@ export interface Config {
 	 * Salt for secret seed
 	 */
 	readonly salt: string;
+
+	/**
+	 * The path where the certificate is stored
+	 */
+	readonly certificatePath: string;
+
+	/**
+	 * The path where the certificate private key is stored
+	 */
+	readonly privateKeyPath: string;
 }
 
 /**
@@ -146,7 +156,7 @@ export function readPort(envPort: string | undefined): number {
 			return numPort;
 		}
 	}
-	return 50380;
+	return 8081;
 }
 
 /**
@@ -187,6 +197,14 @@ export function readExpiration(expiration: string | undefined): number {
 	return 2592000;
 }
 
+export function readBoolean(envVariable: string | undefined): boolean {
+	if (typeof envVariable === 'string') {
+		return JSON.parse(envVariable);
+	}
+	return false;
+}
+
+
 /**
  * Read the provided environment recorded and build a config object.
  */
@@ -195,8 +213,8 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const isProduction: boolean = env.NODE_ENV === 'production';
 	const port = readPort(env.PORT);
-	const wssPort = readPort(env.WSS_PORT);
 	const selfUrl = readSelfUrl(env.SELF_URL);
+	const useHttps = readBoolean(env.USE_HTTPS);
 
 	const eternaltwinUrl: string = env.ETERNALTWIN_URL ?? env.ETWIN_URL ?? 'http://localhost:50320/';
 	const eternaltwinClientRef: string = env.ETERNALTWIN_CLIENT_REF ?? env.ETWIN_CLIENT_ID ?? 'dinorpg@clients';
@@ -243,17 +261,22 @@ export function config(env: Record<string, string | undefined>): Config {
 
 	const salt = env.SALT ?? 'eb989f16-94a4-47ab-a4bb-151c3f529fac';
 
+	const certificatePath = env.CERTIFICATE_PATH ?? './localhost.pem';
+	const privateKeyPath = env.PRIVATE_KEY_PATH ?? './localhost-key.pem';
+
 	return {
 		isProduction,
 		port,
-		wssPort,
 		selfUrl,
+		useHttps,
 		eternaltwin,
 		discordNotifications,
 		discordLogs,
 		jwt,
 		administrator,
-		salt
+		salt,
+		certificatePath,
+		privateKeyPath
 	};
 }
 

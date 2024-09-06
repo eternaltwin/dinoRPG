@@ -2,10 +2,8 @@ import { Request } from 'express';
 import {
 	acceptPlayerJoinRequest,
 	clanJoinRequest,
-	createClanMessageRequest,
 	createClanPageRequest,
 	createClanRequest,
-	deleteClanMessageRequest,
 	deleteClanPageRequest,
 	deleteClanRequest,
 	denyPlayerJoinRequest,
@@ -44,7 +42,7 @@ import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
-import sanitizeHtml from 'sanitize-html';
+import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 
 /**
  * Get all the clans
@@ -530,44 +528,6 @@ export async function getClanMessages(req: Request) {
 }
 
 /**
- * Create clan message
- * @param req
- * @param req.body.clanId {number} clan id
- * @param req.body.content {string} message content
- * @returns Clan
- */
-export async function createClanMessage(req: Request) {
-	const authed = await auth(req);
-	const sanatized = sanitizeHtml(req.body.content, {
-		allowedTags: ['b', 'i', 'em', 'strong', 'a'],
-		allowedAttributes: {
-			a: ['href']
-		}
-	});
-
-	if (sanatized.length <= 2) {
-		throw new ExpectedError(translate('tooShortMessage', authed));
-	}
-	const message = await createClanMessageRequest(Number(req.body.clanId), authed.id, sanatized);
-	return message;
-}
-
-/**
- * Delete clan message
- * @param req
- * @param req.params.id {number} clan message id
- * @returns Clan
- */
-export async function deleteClanMessage(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-
-	const message = await deleteClanMessageRequest(Number(req.params.id), req.auth.playerId);
-	return message;
-}
-
-/**
  * Get clan history by clan id
  * @param req
  * @param req.params.id {number} clan id
@@ -712,4 +672,18 @@ export async function getClanTreasureDetails(req: Request) {
 	return treasure.map(i => {
 		return { itemId: i.ingredientId, quantity: i.quantity } as ShopDTO;
 	});
+}
+
+export async function checkMessageCanBeDeleted(msgId: number, playerId: number): Promise<void> {
+	const messageData = await getDataForMessageDeletion(msgId);
+
+	if (messageData === null || messageData.clan === null) throw new Error('The data got cannot be null.');
+	
+	const isPlayerInClan = messageData.clan.members.some(player => player.playerId === playerId);
+	if (!isPlayerInClan) throw new Error("You're trying to delete a message from an other clan.");
+
+	const isDeletingOwnMessage = messageData.authorId === playerId;
+	const isLeaderFromClan = messageData.clan.leaderId === playerId;
+
+	if (!isDeletingOwnMessage && !isLeaderFromClan) throw new Error("You're not able to delete this message.");
 }

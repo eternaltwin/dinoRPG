@@ -6,8 +6,19 @@ import { wsTicketMaxTime } from '../constants/index.js';
 import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
+import { ChannelInfos } from '@drpg/core/models/webSocket/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
-import { LOGGER } from '../context.js';
+import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
+import { getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
+import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
+import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { WsMsgRequest } from '@drpg/core/models/webSocket/WsMsgRequest';
+import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
+import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
+import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponseDeletion';
+import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
+import { checkMessageCanBeDeleted } from './clanService.js';
+import { isJson } from '../utils/helpers/ValidatorHelper.js';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -15,13 +26,12 @@ const channels = new Map<string, ChannelData[]>();
 export async function authenticate(req: Request) {
 	doGenericVerificationsForWsAuthent(req);
 
-	doSpecificVerificationsForWsAuthent(req);
+	await doSpecificVerificationsForWsAuthent(req);
 
 	const uuid = randomUUID();
-
 	activeTickets.push({
 		uuid: uuid,
-		channel: req.body.channel + 'nomDuClan' + req.auth!.playerId, // TODO: Do a specific channel for each clan
+		channel: req.body.channel, 
 		userAgent: req.headers['user-agent']!,
 		ipAddress: getIpAddressFromRequest(req)!,
 		playerId: req.auth!.playerId!,
@@ -58,10 +68,15 @@ function doGenericVerificationsForWsAuthent(req: Request) {
  * For example, if the player tries to access his clan forum, we must check
  * that the player has a clan and etc...
  *
- * @param _req -> Express request
+ * @param req -> Express request
  */
-function doSpecificVerificationsForWsAuthent(_req: Request) {
-	// TODO: Do here specific verifications about channels.
+async function doSpecificVerificationsForWsAuthent(req: Request): Promise<void> {
+	if (req.body.channel === WsChannel.CLAN_FORUM) {
+		const clanForPlayer = await getClanIdAndNameFromPlayerId(req.auth!.playerId as number);
+		if (clanForPlayer.ClanMember === null) {
+			throw new Error(`The player ${req.auth!.playerId} is not in a clan.`);
+		}
+	}
 }
 
 /**
@@ -70,8 +85,7 @@ function doSpecificVerificationsForWsAuthent(_req: Request) {
  * @param ws -> The WebSocket connection
  * @param req -> The request incoming
  */
-export function connectUserToChannel(ws: WebSocketCustom, req: IncomingMessage) {
-	console.log('héhé');
+export async function connectUserToChannel(ws: WebSocketCustom, req: IncomingMessage) {
 	const ticketUuid = req.url?.split('?ticket=')[1];
 
 	const ticket = checkTicketValidity(req, ticketUuid);
@@ -82,7 +96,7 @@ export function connectUserToChannel(ws: WebSocketCustom, req: IncomingMessage) 
 	// Remove the ticket in order to not use it twice
 	activeTickets = activeTickets.filter(ticket => ticket.uuid !== ticketUuid);
 
-	putUserInChannel(ticket, ws.id);
+	await putUserInChannel(ticket, ws.id);
 }
 
 /**
@@ -129,27 +143,50 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param ticket -> The ticket linked to the user
  * @param wsId -> Connection identifier
  */
-function putUserInChannel(ticket: WsTicket, wsId: string): void {
-	const channel = channels.get(ticket.channel);
+async function putUserInChannel(ticket: WsTicket, wsId: string): Promise<void> {
+	let channelName = await getChannelName(ticket);
+
+	const channel = channels.get(channelName);
 
 	if (channel !== undefined) {
 		channel.push({ connectionId: wsId, playerId: ticket.playerId });
 	} else {
-		channels.set(ticket.channel, [{ connectionId: wsId, playerId: ticket.playerId }]);
+		channels.set(channelName, [{ connectionId: wsId, playerId: ticket.playerId }]);
 	}
 }
 
+async function getChannelName(ticket: WsTicket): Promise<string> {
+	if (ticket.channel === WsChannel.CLAN_FORUM) {
+		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
+		return `${ticket.channel}.${playerData.ClanMember!.clan.name}`;
+	}
+
+	throw new Error(`The channel name is not correct. Ticket channel : ${ticket.channel}`)
+}
+
 /**
- * When a message is received by the server, this one is sent to other users in the same channel.
+ * When a message is received by the server, we do some actions like a regular service.
  *
  * @param wss -> The WebSocket server
  * @param wsId -> The connection identifier
  * @param message -> The message sent by a user
  */
-export function processIncomingMessage(wss: WebSocketServerCustom, wsId: string, message: RawData): void {
+export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: string, bufferedMessage: RawData): Promise<void> {
 	const channel = getChannelDetailsFromConnectionId(wsId);
 
-	sendMessageToPeopleInChannel(wss, channel, wsId, message);
+	const message: WsMsgRequest = getMessageFromString(bufferedMessage);
+
+	if (message.action === WsMessageAction.CREATE) {
+		const dataSaved = await saveMessageInDatabase(channel, wsId, message.message);
+		const msgResponse: WsMsgResponseCreation = { action: WsMessageAction.CREATE, payload: dataSaved };
+		sendMessageToPeopleInChannel(wss, channel, msgResponse);
+	} else if (message.action === WsMessageAction.DELETE) {
+		const playerId = getPlayerWsDataFromChannelData(channel, wsId).playerId;
+		await checkMessageCanBeDeleted(message.msgId, playerId);
+		await deleteMessage(channel, wsId, message.msgId);
+		const msgResponse: WsMsgResponseDeletion = { action: WsMessageAction.DELETE, msgId: message.msgId };
+		sendMessageToPeopleInChannel(wss, channel, msgResponse);
+	}
 }
 
 /**
@@ -158,10 +195,60 @@ export function processIncomingMessage(wss: WebSocketServerCustom, wsId: string,
  * @param wsId -> Connection identifier
  * @returns -> The channel wanted and players connected in this channel
  */
-function getChannelDetailsFromConnectionId(wsId: string): [string, ChannelData[]] | undefined {
-	return [...channels.entries()].find(([_chanKey, chanValue]) =>
+function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
+	const channelData: [string, ChannelData[]] | undefined = [...channels.entries()].find(([_chanKey, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
+
+	if (channelData === undefined) throw new Error('The channel cannot be undefined');
+	
+	const channelInfos: ChannelInfos = {
+		channelName: channelData[0],
+		members: channelData[1]
+	}
+
+	return channelInfos;
+}
+
+/**
+ * Get text message from row data
+ * 
+ * @param message -> The message we want to get
+ * @returns -> The message converted to string
+ */
+function getMessageFromString(message: RawData): WsMsgRequest {
+	if (!isJson(message.toString())) throw new Error('The data sent is not a valid JSON object.');
+
+	return JSON.parse(message.toString());
+}
+
+async function saveMessageInDatabase(channel: ChannelInfos, wsId: string, message: string): Promise<CreateClanMessage> {
+	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
+
+	const playerInfos = await getClanIdAndNameFromPlayerId(wsData.playerId);
+
+	return await createClanMessageRequest(playerInfos.ClanMember!.clan.id, wsData.playerId, message.toString());
+}
+
+async function deleteMessage(channel: ChannelInfos, wsId: string, msgId: number) {
+	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
+
+	deleteClanMessageRequest(msgId, wsData.playerId);
+}
+
+/**
+ * Extract player infos from all player connected to a channel
+ * 
+ * @param channel -> All channel data
+ * @param wsId -> The connection identifier we want to retrieve data
+ * @returns -> The player data
+ */
+function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): ChannelData {
+	const channelData = channel.members.find(user => user.connectionId === wsId);
+
+	if (channelData === undefined) throw new Error('Ws data cannot be undefined');
+
+	return channelData;
 }
 
 /**
@@ -169,28 +256,20 @@ function getChannelDetailsFromConnectionId(wsId: string): [string, ChannelData[]
  *
  * @param wss -> The WebSocketServer
  * @param channel -> The channel into we want to send a message
- * @param wsId -> The connection identifier
  * @param message -> The message we want to send
  */
 function sendMessageToPeopleInChannel(
 	wss: WebSocketServerCustom,
-	channel: [string, ChannelData[]] | undefined,
-	wsId: string,
-	message: RawData
+	channel: ChannelInfos,
+	message: WsMsgResponse
 ): void {
-	if (channel === undefined) {
-		return;
-	}
-
-	LOGGER.info(`Message sent to channel ${channel[0]}: ${message}`);
-
-	const usersInChannel = channel[1].filter(user => user.connectionId !== wsId);
-
 	wss.clients.forEach(client => {
-		const sendMessageToClient = usersInChannel.some(user => user.connectionId === client.id);
-		if (sendMessageToClient && client.readyState === WebSocket.OPEN) {
-			client.send(message, { binary: false });
+		const sendMessageToClient = channel.members.some(user => user.connectionId === client.id);
+		if (!sendMessageToClient || client.readyState !== WebSocket.OPEN) {
+			return;
 		}
+		
+		client.send(Buffer.from(JSON.stringify(message)), { binary: false });
 	});
 }
 
@@ -202,10 +281,6 @@ function sendMessageToPeopleInChannel(
 export function disconnectUser(ws: WebSocketCustom): void {
 	const channel = getChannelDetailsFromConnectionId(ws.id);
 
-	if (channel === undefined) {
-		return;
-	}
-
 	removeUserFromChannel(channel, ws.id);
 }
 
@@ -215,13 +290,13 @@ export function disconnectUser(ws: WebSocketCustom): void {
  * @param channel -> The channel that the player is leaving
  * @param wsId -> The connection identifier
  */
-function removeUserFromChannel(channel: [string, ChannelData[]], wsId: string) {
-	const usersInChannel = channel[1].filter(user => user.connectionId !== wsId);
+function removeUserFromChannel(channel: ChannelInfos, wsId: string) {
+	const usersInChannel = channel.members.filter(user => user.connectionId !== wsId);
 
 	if (usersInChannel.length === 0) {
-		channels.delete(channel[0]);
+		channels.delete(channel.channelName);
 	} else {
-		channels.set(channel[0], usersInChannel);
+		channels.set(channel.channelName, usersInChannel);
 	}
 }
 

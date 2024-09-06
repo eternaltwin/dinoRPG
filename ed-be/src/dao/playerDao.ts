@@ -853,3 +853,23 @@ export async function isPlayerLeaderOfClanRequest(playerId: number, clanId: numb
 
 	return player > 0;
 }
+
+export async function getClanIdAndNameFromPlayerId(playerId: number) {
+	return await prisma.player.findUniqueOrThrow({
+		select: {
+			ClanMember: { 
+				select: { 
+					clan: {
+						select: { 
+							id: true,
+							name: true
+						}
+					} 
+				} 
+			},
+		},
+		where: {
+			id: playerId
+		}
+	})
+}

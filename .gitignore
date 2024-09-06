@@ -46,6 +46,8 @@ config_development.toml
 .env.development
 eternaltwin.local.toml
 Eternaltwin/eternaltwin.local.toml
+ed-be/localhost.pem
+ed-be/localhost-key.pem
 
 # Prisma
 prisma/*.js
