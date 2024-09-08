@@ -888,26 +888,6 @@ export async function getAllResting() {
 	return list.filter(d => d.life < Math.round(d.maxLife / 2));
 }
 
-export async function getAllRestingAtFount() {
-	return await prisma.dinoz.findMany({
-		where: {
-			placeId: 7, //Fontaine de jouvance
-			player: {
-				rewards: {
-					some: {
-						rewardId: 1 //Perle
-					}
-				}
-			}
-		},
-		select: {
-			id: true,
-			life: true,
-			maxLife: true
-		}
-	});
-}
-
 export async function getDinozToReincarnate(dinozId: number) {
 	return await prisma.dinoz.findUnique({
 		where: {

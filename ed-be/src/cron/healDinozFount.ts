@@ -1,5 +1,5 @@
 import cron from 'cron';
-import { getAllRestingAtFount, updateDinoz } from '../dao/dinozDao.js';
+import { prisma } from '../prisma.js';
 import dayjs from 'dayjs';
 import { LOGGER } from '../context.js';
 
@@ -9,16 +9,28 @@ const healDinozFount = () => {
 
 	return new CronJob('0 0 * * *', async () => {
 		const startTime = dayjs();
+		const lifeIncrement = 5;
+
 		try {
-			const dinozList = await getAllRestingAtFount();
-			for (const dinoz of dinozList) {
-				if (dinoz.life < dinoz.maxLife) {
-					await updateDinoz(dinoz.id, { life: Math.min(Math.round(dinoz.life + 5), dinoz.maxLife) });
-				}
-			}
+			const fount = await prisma.$executeRaw`
+				UPDATE dinoz
+				SET life = LEAST(
+					life + ${lifeIncrement},
+					"maxLife"
+				)
+				WHERE "placeId" = 7 -- Fontaine de Jouvence
+				AND life < "maxLife"
+				AND EXISTS (
+					SELECT 1
+					FROM player p
+					JOIN player_reward pr ON pr."playerId" = p.id
+					WHERE pr."rewardId" = 1 -- Perle
+					AND p.id = dinoz."playerId"
+				);
+			`;
+
 			const endTime = dayjs();
-			LOGGER.log(`Healed ${dinozList.length} dinoz at fount. Operation ended in ${endTime.diff(startTime)}ms.`);
-			// await heal
+			LOGGER.log(`Healed ${fount} dinoz at fount. Operation ended in ${endTime.diff(startTime)}ms.`);
 		} catch (err) {
 			console.error(`Cannot heal resting dinoz: ${err}`);
 		}
