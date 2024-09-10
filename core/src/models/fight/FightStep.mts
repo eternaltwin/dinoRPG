@@ -79,6 +79,11 @@ export interface SurviveStep {
 	action: 'survive';
 	dinoz: StepFighter;
 }
+export interface SkillAnnounceStep {
+	action: 'skillAnnounce';
+	fid: number;
+	skill: Skill;
+};
 export interface SkillActivateStep {
 	action: 'skillActivate';
 	fid: number;
@@ -204,6 +209,7 @@ export type FightStep =
 	| CounterStep
 	| MoveBackStep
 	| SurviveStep
+	| SkillAnnounceStep
 	| SkillActivateStep
 	| SkillExpireStep
 	| LooseHpStep

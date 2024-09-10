@@ -104,6 +104,10 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				dinoz: getFighterName(fightStep.dinoz, t)
 			});
+		case 'skillAnnounce':
+			return t(`fight.step.skillAnnounce`, {
+				dinoz: getFighterName(fightStep.fid, t),
+				skill: t(`skill.name.${skillList[fightStep.skill].name}`)});
 		case 'skillActivate':
 			if (fightStep.targets.length) {
 				return t(`fight.step.skillActivate-targets`, {
@@ -169,7 +173,10 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t)
 			});
-			return '';
+		case 'tired':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t)
+			});
 		default:
 			return JSON.stringify(fightStep);
 	}

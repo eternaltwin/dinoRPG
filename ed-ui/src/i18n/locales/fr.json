@@ -1967,7 +1967,8 @@
 			"Flight": "Envol",
 			"Capture": "Capture",
 			"Venerable": "Vénérable",
-			"Renforts": "Renforts"
+			"Renforts": "Renforts",
+			"Resistance": "Résistance"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les assauts de Feu de 7",
@@ -3975,6 +3976,7 @@
 			"death": "**{fighter}** a succombé à ses blessures !",
 			"counter": "**{fighter}** a contré **{opponent}**.",
 			"survive": "**{dinoz}** a survécu à l'attaque.",
+			"skillAnnounce": "**{dinoz}** utilise **{skill}**", 
 			"skillActivate": "**{dinoz}** a utilisé **{skill}** (-{energy} energy).",
 			"skillActivate-targets": "**{dinoz}** a utlisé **{skill}** sur **{targets}** et leur a respectivement infligé **{damages}**  {elements} (-{energy} energy).",
 			"skillExpire": "**{dinoz}**'s **{skill}** a expiré.",
@@ -3985,7 +3987,8 @@
 			"itemUse": "**{fighter}** a utilisé **{item}**.",
 			"hypnotize": "**{fighter}** a changé de camp.",
 			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie.",
-			"newTurn": "C'est au tour de **{fighter}**."
+			"newTurn": "C'est au tour de **{fighter}**.",
+			"tired": "**{fighter}** est fatigué et passe son tour."
 		}
 	},
 	"ingredients": {

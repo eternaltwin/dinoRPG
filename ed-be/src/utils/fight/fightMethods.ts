@@ -14,7 +14,7 @@ import {
 	Status,
 	StatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
-import { InitStepFighter, LeaveAnimation, SkillActivateStep, StepFighter } from '@drpg/core/models/fight/FightStep';
+import { FightStep, InitStepFighter, LeaveAnimation, SkillActivateStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
@@ -778,7 +778,7 @@ const attackSingleOpponent = (
 	fighter: DetailedFighter,
 	element_attack: [ElementType, number][],
 	skill: Skill, // TODO rework for item too
-	stepIndex: number,
+	step: FightStep,
 	target?: DetailedFighter
 ) => {
 	// Unless specified, pick random opponent by default
@@ -798,9 +798,9 @@ const attackSingleOpponent = (
 	}
 
 	// Add target
-	(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: realOpponent.id });
+	(step as SkillActivateStep).targets.push({ tid: realOpponent.id });
 
-	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, stepIndex);
+	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, step);
 
 	if (protector && protector.hp > 0) {
 		// Add moveBack step
@@ -820,7 +820,7 @@ const attackAllOpponents = (
 	fighter: DetailedFighter,
 	element_attack: [ElementType, number][],
 	skill: Skill, // TODO rework for item too
-	stepIndex: number,
+	step: FightStep,
 	opponents?: DetailedFighter[],
 	count?: number
 ) => {
@@ -850,9 +850,9 @@ const attackAllOpponents = (
 		}
 
 		// Add target
-		(fightData.steps[stepIndex] as SkillActivateStep).targets.push({ tid: realTarget.id });
+		(step as SkillActivateStep).targets.push({ tid: realTarget.id });
 
-		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, stepIndex);
+		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, step);
 
 		if (protector && protector.hp > 0) {
 			// Add moveBack step
@@ -1015,15 +1015,18 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 	// If event is a skill
 	if ('id' in event) {
-		const step: SkillActivateStep = {
+		const activate_step: SkillActivateStep = {
 			action: 'skillActivate',
 			fid: fighter.id,
 			skill: event.id,
 			targets: []
 		};
 
-		// Add skillActivate step, capture the index
-		const stepIndex = fightData.steps.push(step) - 1;
+		// Add skillAnnounce step, capture the index
+		fightData.steps.push({action: 'skillAnnounce',
+			fid: fighter.id,
+			skill: event.id
+		});
 
 		switch (event.id) {
 			// AIR Vanilla
@@ -1032,7 +1035,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.AIGUILLON: {
-				attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 3), event.id, stepIndex);
+				attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 3), event.id, activate_step);
 				break;
 			}
 			// FIRE
@@ -1043,7 +1046,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 				break;
 			case Skill.BRASERO: {
-				attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 3), event.id, stepIndex);
+				attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 3), event.id, activate_step);
 				break;
 			}
 			case Skill.COLERE: {
@@ -1074,7 +1077,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// WATER
 			case Skill.DOUCHE_ECOSSAISE: {
-				attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 2), event.id, stepIndex);
+				attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 2), event.id, activate_step);
 				break;
 			}
 			case Skill.CLONE_AQUEUX: {
@@ -1145,7 +1148,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push({ tid: opponent.id });
+				activate_step.targets.push({ tid: opponent.id });
 
 				if (!hasStatus(opponent, Status.FLYING)) {
 					// Increase the opponent's time
@@ -1244,7 +1247,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push({ tid: opponent.id });
+				activate_step.targets.push({ tid: opponent.id });
 
 				// Reduce max energy by 30%
 				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
@@ -1277,7 +1280,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push({ tid: opponent.id });
+				activate_step.targets.push({ tid: opponent.id });
 
 				// Disable invocations
 				addStatus(fightData, opponent, Status.NO_INVOCATION);
@@ -1292,7 +1295,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push({ tid: opponent.id });
+				activate_step.targets.push({ tid: opponent.id });
 
 				addStatus(fightData, opponent, Status.DAZZLED, StatusLength.MEDIUM);
 				break;
@@ -1313,7 +1316,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getRandomOpponent(fightData, fighter);
 
 				// Add target
-				step.targets.push({ tid: opponent.id });
+				activate_step.targets.push({ tid: opponent.id });
 
 				// Check if NO_DODGE
 				if (hasStatus(opponent, Status.NO_DODGE)) {
@@ -1452,7 +1455,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.M_FASTER: {
 				getAllies(fightData, fighter).forEach(ally => {
 					// Add to targets
-					step.targets.push({ tid: ally.id });
+					activate_step.targets.push({ tid: ally.id });
 
 					ally.time -= 5 * TIME_FACTOR;
 					fighter.time += 3 * TIME_FACTOR;
@@ -1480,6 +1483,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				return false;
 		}
+
+		// Add step
+		fightData.steps.push(activate_step);
 
 		// Consume energy
 		setEnergy(fighter, fighter.energy - event.energy);
@@ -1964,7 +1970,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
-	const step: SkillActivateStep = {
+	const activate_step: SkillActivateStep = {
 		action: 'skillActivate',
 		fid: fighter.id,
 		skill: skill.id,
@@ -1972,7 +1978,11 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	};
 
 	// Add skillActivate step
-	const stepIndex = fightData.steps.push(step) - 1;
+	fightData.steps.push({
+		action: 'skillAnnounce',
+		fid: fighter.id,
+		skill: skill.id,
+	});
 
 	// Cancel method to use if the skil ends up not being triggered
 	const cancel = () => {
@@ -1985,10 +1995,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	switch (skill.id) {
 		// AIR
 		case Skill.MISTRAL:
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 3), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 3), skill.id, activate_step);
 			break;
 		case Skill.DISQUE_VACUUM:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 12), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 12), skill.id, activate_step);
 			break;
 		case Skill.ENVOL: {
 			// Attack opponent
@@ -2006,7 +2016,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				removeStatus(fightData, opponent, Status.FLYING);
 			});
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, activate_step);
 			break;
 		}
 		case Skill.ATTAQUE_PLONGEANTE: {
@@ -2060,7 +2070,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.AIR, 0),
 				skill.id,
-				stepIndex,
+				activate_step,
 				opponent
 			);
 
@@ -2117,10 +2127,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 		// FIRE Vanila
 		case Skill.SOUFFLE_ARDENT:
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 5), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 5), skill.id, activate_step);
 			break;
 		case Skill.METEORES:
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 10), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 10), skill.id, activate_step);
 			break;
 		case Skill.CREPUSCULE_FLAMBOYANT:
 			attackAllOpponents(
@@ -2131,14 +2141,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.LIGHTNING, 6]
 				]),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		case Skill.BOULE_DE_FEU:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 7), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 7), skill.id, activate_step);
 			break;
 		case Skill.COULEE_DE_LAVE:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 12), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 12), skill.id, activate_step);
 			break;
 		case Skill.PAUME_CHALUMEAU: {
 			// Increase time of the attacker
@@ -2186,7 +2196,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.LIGHTNING, 10),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		case Skill.AUBE_FEUILLUE: {
@@ -2243,7 +2253,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.LIGHTNING, 10),
 				skill.id,
-				stepIndex,
+				activate_step,
 				undefined,
 				3
 			);
@@ -2252,7 +2262,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 		// WATER
 		case Skill.CANON_A_EAU:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 6), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 6), skill.id, activate_step);
 			break;
 		case Skill.COUP_SOURNOIS: {
 			// Get random opponent
@@ -2277,7 +2287,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.WATER, 5),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 
 			if (result.target && !result.evasion) {
@@ -2316,7 +2326,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			opponent.time += 25 * TIME_FACTOR;
 			break;
@@ -2326,7 +2336,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Petrify opponent
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
@@ -2339,7 +2349,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.RAYON_KAAR_SHER: {
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 7), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 7), skill.id, activate_step);
 
 			// Remove mud wall of all opponents
 			getOpponents(fightData, fighter).forEach(opponent => {
@@ -2357,7 +2367,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.DELUGE: {
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 10), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 10), skill.id, activate_step);
 			// Increase time of all opponents by 8
 			const opponents = getOpponents(fightData, fighter);
 			opponents.forEach(opponent => {
@@ -2366,10 +2376,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WOOD, 10), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WOOD, 10), skill.id, activate_step);
 			break;
 		case Skill.LANCEUR_DE_GLAND:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WOOD, 5), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WOOD, 5), skill.id, activate_step);
 			break;
 		case Skill.MUR_DE_BOUE: {
 			// Add 30 HP mud wall
@@ -2387,7 +2397,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.VOID, 30]
 				],
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		case Skill.M_VENERABLE:
@@ -2399,7 +2409,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.AIR, 50]
 				],
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		case Skill.M_GRIZOU: {
@@ -2408,15 +2418,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				[[ElementType.VOID, fighter.stats.base[ElementType.VOID]]],
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		}
 		case Skill.M_WORM_2:
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.VOID, 5), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.VOID, 5), skill.id, activate_step);
 			break;
 		case Skill.M_AIR_BLADE: {
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 25), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 25), skill.id, activate_step);
 			break;
 		}
 		// RACE
@@ -2429,7 +2439,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.WOOD, 3]
 				]),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		// Other
@@ -2475,7 +2485,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.WOOD, 4]
 				]),
 				skill.id,
-				stepIndex,
+				activate_step,
 				opponents
 			);
 			break;
@@ -2501,7 +2511,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.WOOD, 10]
 				]),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		}
@@ -2513,7 +2523,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 20), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 20), skill.id, activate_step);
 			break;
 		}
 		case Skill.ARMURE_DIFRIT: {
@@ -2538,7 +2548,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 30), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 30), skill.id, activate_step);
 			break;
 		}
 		case Skill.BALEINE_BLANCHE: {
@@ -2563,7 +2573,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 20), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 20), skill.id, activate_step);
 			break;
 		}
 		case Skill.ONDINE: {
@@ -2574,7 +2584,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 30), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.WATER, 30), skill.id, activate_step);
 			break;
 		}
 		case Skill.LOUP_GAROU: {
@@ -2585,7 +2595,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WOOD, 30), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.WOOD, 30), skill.id, activate_step);
 			break;
 		}
 		case Skill.BENEDICTION_DES_FEES: {
@@ -2629,7 +2639,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.LIGHTNING, 20),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		}
@@ -2669,7 +2679,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 20), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 20), skill.id, activate_step);
 			break;
 		}
 		case Skill.FUJIN: {
@@ -2703,7 +2713,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			fighter.invocations -= 1;
 
-			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 30), skill.id, stepIndex);
+			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 30), skill.id, activate_step);
 			break;
 		}
 		case Skill.BOUDDHA: {
@@ -2775,7 +2785,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fighter,
 				getElementalAttack(fighter, ElementType.LIGHTNING, 40),
 				skill.id,
-				stepIndex
+				activate_step
 			);
 			break;
 		}
@@ -2827,7 +2837,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Remove wood sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2861,7 +2871,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Reduce energy recovery by 25%
 			opponent.stats.special.energyRecovery *= 0.75;
@@ -2887,7 +2897,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Remove water sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2916,7 +2926,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Remove lightning sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2936,7 +2946,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Remove air sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -2974,7 +2984,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Add target
-			step.targets.push({ tid: opponent.id });
+			activate_step.targets.push({ tid: opponent.id });
 
 			// Remove fire sphere skills
 			opponent.skills = opponent.skills.filter(
@@ -3058,7 +3068,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				power = 40;
 			}
 
-			attackAllOpponents(fightData, fighter, [[ElementType.VOID, power]], skill.id, stepIndex, opponents);
+			attackAllOpponents(fightData, fighter, [[ElementType.VOID, power]], skill.id, activate_step, opponents);
 			break;
 		}
 
@@ -3176,7 +3186,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_ELEMENTAL_DISCIPLE: {
-			attackAllOpponents(fightData, fighter, [[ElementType.LIGHTNING, 200]], skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, [[ElementType.LIGHTNING, 200]], skill.id, activate_step);
 
 			fighter.escaped = true;
 
@@ -3211,7 +3221,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_DEMYOM_ATTACK: {
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, fighter.element, 8), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, fighter.element, 8), skill.id, activate_step);
 
 			// Change element
 			fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
@@ -3225,7 +3235,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get non flying opponents
 			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, Status.FLYING));
 
-			attackAllOpponents(fightData, fighter, [[ElementType.VOID, 60]], skill.id, stepIndex, opponents);
+			attackAllOpponents(fightData, fighter, [[ElementType.VOID, 60]], skill.id, activate_step, opponents);
 			break;
 		}
 		case Skill.M_TORNADO: {
@@ -3234,13 +3244,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				removeStatus(fightData, opponent, Status.FLYING);
 			});
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 40), skill.id, stepIndex);
+			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 40), skill.id, activate_step);
 			break;
 		}
 		default:
 			console.warn('Unknown skill', skill.id);
 			return cancel();
 	}
+
+	// Add step
+	fightData.steps.push(activate_step);
 
 	// Consume energy
 	setEnergy(fighter, fighter.energy - skill.energy);
@@ -3261,10 +3274,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			if (random < 0.2) {
 				// Add skillActivate step
 				fightData.steps.push({
-					action: 'skillActivate',
+					action: 'skillAnnounce',
 					fid: opponent.id,
 					skill: Skill.SHARIGNAN,
-					targets: []
 				});
 
 				// Add skill to opponent
@@ -3523,7 +3535,7 @@ const attackTarget = (
 	isAssault?: boolean,
 	power?: [ElementType, number][],
 	skill?: Skill,
-	stepIndex?: number
+	step?: FightStep
 ) => {
 	// Unless specified, the attack is considered not an assault and cannot combo by default
 	isAssault = isAssault ?? false;
@@ -3610,7 +3622,7 @@ const attackTarget = (
 		let damage = calculateDamage(attacker, target, attack, defense, isAssault);
 
 		// Apply defensive effects
-		checkDefensiveEffects(
+		damage = checkDefensiveEffects(
 			fightData,
 			attacker,
 			target,
@@ -3691,10 +3703,10 @@ const attackTarget = (
 		totalDamage += damage;
 
 		// Update skill step or add hit step
-		if (stepIndex) {
-			const skillTarget = (fightData.steps[stepIndex] as SkillActivateStep).targets.find(t => t.tid === target.id);
+		if (step) {
+			const skillTarget = (step as SkillActivateStep).targets.find(t => t.tid === target.id);
 			if (!skillTarget)
-				throw new ExpectedError(`Target ${target.id} doesn't exist in step ${fightData.steps[stepIndex]}`);
+				throw new ExpectedError(`Target ${target.id} doesn't exist in step ${step}`);
 			skillTarget.damages = evasion ? null : damage; // If the attack was evaded, mark the damage as null
 		} else {
 			fightData.steps.push({
@@ -3816,7 +3828,11 @@ const checkDefensiveEffects = (
 		// 6% chance
 		randomBetween(0, 99) < 6
 	) {
-		// TODO announce skill
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.FORME_VAPOREUSE,
+		});
 		// Add INTANGIBLE
 		addStatus(fightData, target, Status.INTANGIBLE, StatusLength.SHORT);
 	}
@@ -3828,7 +3844,11 @@ const checkDefensiveEffects = (
 		// 5 % chance
 		randomBetween(0, 99) < 5
 	) {
-		// TODO announce skill
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.CUIRASSE,
+		});
 		// Reduce damage by 5
 		damage = Math.max(damage - 5, 0);
 
@@ -3843,6 +3863,11 @@ const checkDefensiveEffects = (
 	// Check for mud wall
 	if (target.mudWall) {
 		// TODO announce skill only the first time it tanks damage
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id, // Different fighter id?
+			skill: Skill.MUR_DE_BOUE,
+		});
 		target.mudWall -= damage;
 
 		// If negative, the overflow damage goes through the mud wall
@@ -3866,18 +3891,16 @@ const checkDefensiveEffects = (
 	}
 
 	// M_RESISTANCE
+	// Cancels any non assault attacks
 	if (!isCloseCombat && target.skills.find(s => s.id === Skill.M_RESISTANCE)) {
-		// TODO annouce skill
 		// 0 damage if skill
 		damage = 0;
 
-		// Add skill step ???
-		// fightData.steps.push({
-		// 	action: 'skillActivate',
-		// 	fid: target.id,
-		// 	skill,
-		// 	targets: []
-		// });
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.M_RESISTANCE,
+		});
 	}
 
 	// M_PROTECTION
@@ -3916,6 +3939,8 @@ const checkDefensiveEffects = (
 			damage = 0;
 		}
 	}
+
+	return damage;
 };
 
 const checkAfterAttackEffects = (

@@ -297,7 +297,7 @@ export function transpileFight(
 				break;
 			case 'setCostume':
 				break;
-			case 'skillActivate':
+			case 'skillAnnounce':
 				myFighter = fighters.find(f => f.id === step.fid);
 				if (!myFighter) {
 					console.warn(`Cannot find fighter ${step.fid}`);
@@ -309,6 +309,13 @@ export function transpileFight(
 					fid: step.fid,
 					message: resolveSkillName(step.skill, t)
 				});
+				break;
+			case 'skillActivate':
+				myFighter = fighters.find(f => f.id === step.fid);
+				if (!myFighter) {
+					console.warn(`Cannot find fighter ${step.fid}`);
+					return;
+				}
 				if (step.targets.length > 0) {
 					history.push({
 						action: DinoAction.SKILL,
