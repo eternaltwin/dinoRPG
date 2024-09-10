@@ -46,7 +46,7 @@ export interface HitStep {
 	action: 'hit';
 	fighter: StepFighter;
 	target: StepFighter;
-	damage: number;
+	damage: number | null;
 	elements: ElementType[];
 	skill?: Skill;
 }
@@ -54,10 +54,6 @@ export interface AttemptHitStep {
 	action: 'attemptHit';
 	fighter: StepFighter;
 	target: StepFighter;
-}
-export interface EvadeStep {
-	action: 'evade';
-	fighter: StepFighter;
 }
 export interface DeathStep {
 	action: 'death';
@@ -89,7 +85,7 @@ export interface SkillActivateStep {
 	skill: Skill;
 	targets: {
 		tid: number;
-		damages?: number;
+		damages?: number | null;
 	}[];
 }
 export interface SkillExpireStep {
@@ -162,10 +158,6 @@ export interface LoseSphereStep {
 	fighter: StepFighter;
 	element: ElementType;
 }
-export interface MissStep {
-	action: 'miss';
-	fighter: StepFighter;
-}
 export interface DisabledItemsStep {
 	action: 'disabledItems';
 	fighter: StepFighter;
@@ -207,7 +199,6 @@ export type FightStep =
 	| ResistStep
 	| HitStep
 	| AttemptHitStep
-	| EvadeStep
 	| DeathStep
 	| MoveStep
 	| CounterStep
@@ -229,7 +220,6 @@ export type FightStep =
 	| GainEnergyStep
 	| ReduceEnergyStep
 	| LoseSphereStep
-	| MissStep
 	| DisabledItemsStep
 	| StealGoldStep
 	| CursedStep

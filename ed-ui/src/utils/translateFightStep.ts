@@ -37,7 +37,7 @@ const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 				name = `${fighter.name} (${t('fight.clone')})`;
 				break;
 			default:
-				name = t(`fight.monster.${fighter.name}`);
+				name = `${t(`fight.monster.${fighter.name}`)} (${fighter.id})`;
 				break;
 		}
 		attacker = fighter.attacker;
@@ -62,21 +62,19 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 				dinoz: getFighterName(fightStep.dinoz, t)
 			});
 		case 'hit': {
-			if (fightStep.skill) {
-				return t(`fight.step.hit-skill`, {
+			if (fightStep.damage === null) {
+				return t(`fight.step.hit-dodge`, {
+					fighter: getFighterName(fightStep.fighter, t),
+					target: getFighterName(fightStep.target, t)
+				});
+			} else {
+				return t('fight.step.hit', {
 					fighter: getFighterName(fightStep.fighter, t),
 					damage: fightStep.damage,
 					target: getFighterName(fightStep.target, t),
-					skill: t(`skill.name.${skillList[fightStep.skill].name}`),
 					elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
 				});
 			}
-			return t('fight.step.hit', {
-				fighter: getFighterName(fightStep.fighter, t),
-				damage: fightStep.damage,
-				target: getFighterName(fightStep.target, t),
-				elements: fightStep.elements.map(element => `:${ElementNames[element]}:`).join(', ')
-			});
 		}
 		case 'moveTo':
 			return t(`fight.step.${fightStep.action}`, {
@@ -93,10 +91,6 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 				target: getFighterName(fightStep.target, t)
 			});
 		}
-		case 'evade':
-			return t(`fight.step.${fightStep.action}`, {
-				fighter: getFighterName(fightStep.fighter, t)
-			});
 		case 'death':
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t)
@@ -116,7 +110,9 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					dinoz: getFighterName(fightStep.fid, t),
 					skill: t(`skill.name.${skillList[fightStep.skill].name}`),
 					energy: getSkillEnergy(fightStep.skill),
-					targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', ')
+					targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
+					damages: fightStep.targets.map(target => target.damages ?? 0).join(', '),
+					elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
 				});
 			}
 			return t(`fight.step.${fightStep.action}`, {
@@ -169,6 +165,11 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 				fighter: getFighterName(fightStep.fighter, t),
 				energy: fightStep.energy
 			});
+		case 'newTurn':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t)
+			});
+			return '';
 		default:
 			return JSON.stringify(fightStep);
 	}

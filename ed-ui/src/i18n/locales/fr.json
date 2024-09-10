@@ -3965,6 +3965,7 @@
 			"arrive": "**{name}** est arrivé !",
 			"resist": "**{dinoz}** a résisté et réduis les dégats.",
 			"hit": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}**.",
+			"hit-dodge": "**{target}** a esquivé l'attaque de **{fighter}**.",
 			"hit-skill": "**{fighter}** a infligé **{damage}** {elements} dégats à **{target}** avec **{skill}**.",
 			"poison": "**{dinoz}** a infligé **{damage} poison** dégats à **{target}**.",
 			"moveTo": "**{fighter}** déplacé à **{target}**.",
@@ -3975,7 +3976,7 @@
 			"counter": "**{fighter}** a contré **{opponent}**.",
 			"survive": "**{dinoz}** a survécu à l'attaque.",
 			"skillActivate": "**{dinoz}** a utilisé **{skill}** (-{energy} energy).",
-			"skillActivate-targets": "**{dinoz}** a utlisé **{skill}** sur **{targets}** (-{energy} energy).",
+			"skillActivate-targets": "**{dinoz}** a utlisé **{skill}** sur **{targets}** et leur a respectivement infligé **{damages}**  {elements} (-{energy} energy).",
 			"skillExpire": "**{dinoz}**'s **{skill}** a expiré.",
 			"looseHp": "**{fighter}** a perdu **{hp} HP**.",
 			"heal": "**{fighter}** s'est soigné de **{hp} HP**.",
@@ -3983,7 +3984,8 @@
 			"removeStatus": "**{fighter}** n'a plus le statut **{status}**.",
 			"itemUse": "**{fighter}** a utilisé **{item}**.",
 			"hypnotize": "**{fighter}** a changé de camp.",
-			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie."
+			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie.",
+			"newTurn": "C'est au tour de **{fighter}**."
 		}
 	},
 	"ingredients": {

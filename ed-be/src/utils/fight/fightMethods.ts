@@ -3609,13 +3609,6 @@ const attackTarget = (
 		// Get damage
 		let damage = calculateDamage(attacker, target, attack, defense, isAssault);
 
-		// // Add attempt step
-		// fightData.steps.push({
-		// 	action: 'attemptHit',
-		// 	fighter: stepFighter(attacker),
-		// 	target: stepFighter(realOpponent)
-		// });
-
 		// Apply defensive effects
 		checkDefensiveEffects(
 			fightData,
@@ -3661,13 +3654,6 @@ const attackTarget = (
 			!attacker.canHitFlying
 		) {
 			noDamage = true;
-
-			// Probably useless
-			// // Add miss step
-			// fightData.steps.push({
-			// 	action: 'miss',
-			// 	fighter: stepFighter(attacker)
-			// });
 		}
 
 		// INTANGIBLE
@@ -3687,20 +3673,10 @@ const attackTarget = (
 				noDamage = true;
 				evasion = true;
 			}
-			// 	// Probably useless
-			// 	fightData.steps.push({
-			// 		action: 'miss',
-			// 		fighter: stepFighter(attacker)
-			// 	});
 		}
 
 		if (isDodged || isSuperDodged) {
 			evasion = true;
-			// Add miss step (useful?)
-			fightData.steps.push({
-				action: 'miss',
-				fighter: stepFighter(attacker)
-			});
 			updateStat(fightData, attacker, 'evasions', 1);
 		}
 
@@ -3719,13 +3695,13 @@ const attackTarget = (
 			const skillTarget = (fightData.steps[stepIndex] as SkillActivateStep).targets.find(t => t.tid === target.id);
 			if (!skillTarget)
 				throw new ExpectedError(`Target ${target.id} doesn't exist in step ${fightData.steps[stepIndex]}`);
-			skillTarget.damages = damage;
+			skillTarget.damages = evasion ? null : damage; // If the attack was evaded, mark the damage as null
 		} else {
 			fightData.steps.push({
 				action: 'hit',
 				fighter: stepFighter(attacker),
 				target: stepFighter(target),
-				damage: damage,
+				damage: evasion ? null : damage, // If the attack was evaded, mark the damage as null
 				elements: elements,
 				skill
 			});

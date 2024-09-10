@@ -177,7 +177,7 @@ export type transpiled =
 			action: DinoAction.DAMAGES;
 			fid: number;
 			tid: number;
-			damages: number;
+			damages: number | null;
 			lifeFx?: {
 				fx: LifeEffect;
 				amount?: number;
@@ -211,7 +211,7 @@ export type transpiled =
 				fid: number;
 				targets?: {
 					id: number;
-					life?: number;
+					life?: number | null;
 				}[];
 				fx?: string;
 				anim?: string;

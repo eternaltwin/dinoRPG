@@ -207,8 +207,6 @@ export function transpileFight(
 				break;
 			case 'endHypnosis':
 				break;
-			case 'evade':
-				break;
 			case 'expireEnvironment':
 				break;
 			case 'gainEnergy':
@@ -265,8 +263,6 @@ export function transpileFight(
 				break;
 			case 'loseSphere':
 				break;
-			case 'miss':
-				break;
 			case 'moveBack':
 				history.push({
 					action: DinoAction.RETURN,
@@ -320,7 +316,7 @@ export function transpileFight(
 						details: {
 							fid: step.fid,
 							targets: step.targets.map(t => {
-								return { id: t.tid, life: t.damages ?? 0 };
+								return { id: t.tid, life: t.damages };
 							}),
 							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
 							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
