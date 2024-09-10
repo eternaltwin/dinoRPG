@@ -32,20 +32,6 @@ export default defineConfig(({ mode }) => {
 		build: {
 			target: 'esnext'
 		},
-		css: {
-			preprocessorOptions: {
-				scss: { additionalData: `@import "./src/css/_mixins.scss";` }
-			}
-		},
-		server: {
-			port: 8080
-		},
-		define: {
-			['import.meta.env.VERSION']: JSON.stringify(require('./package.json').version)
-		},
-		build: {
-			target: 'esnext'
-		},
 		assetsInclude: '**/*.swf'
 	};
 });
