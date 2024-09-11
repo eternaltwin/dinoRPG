@@ -678,7 +678,7 @@ export async function checkMessageCanBeDeleted(msgId: number, playerId: number):
 	const messageData = await getDataForMessageDeletion(msgId);
 
 	if (messageData === null || messageData.clan === null) throw new Error('The data got cannot be null.');
-	
+
 	const isPlayerInClan = messageData.clan.members.some(player => player.playerId === playerId);
 	if (!isPlayerInClan) throw new Error("You're trying to delete a message from an other clan.");
 

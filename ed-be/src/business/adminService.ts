@@ -318,16 +318,16 @@ export async function modifyPlayerIngredients(req: Request): Promise<void> {
  * @return void
  */
 export async function updatePlayerQuestProgression(req: Request): Promise<void> {
-    if (!req.auth?.playerId) {
-        throw new ExpectedError(`You need to be logged in.`);
-    }
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`You need to be logged in.`);
+	}
 
-    const playerId = +req.params.id;
+	const playerId = +req.params.id;
 	const quests: Array<{ questId: number; progression: number }> = req.body.quests;
-    // Validate questId and progression
-    if (quests === undefined) {
-        throw new ExpectedError(`Quest ID and progression are required.`);
-    }
+	// Validate questId and progression
+	if (quests === undefined) {
+		throw new ExpectedError(`Quest ID and progression are required.`);
+	}
 	switch (req.body.operation) {
 		case 'increase':
 			for (const q of quests) {
@@ -338,7 +338,14 @@ export async function updatePlayerQuestProgression(req: Request): Promise<void> 
 		case 'decrease':
 			for (const q of quests) {
 				await decreaseQuestProgression(+req.params.id, q.questId, q.progression);
-				await createLog(LogType.AdminUpdatePlayer, req.auth.playerId, undefined, +req.params.id, q.questId, q.progression);
+				await createLog(
+					LogType.AdminUpdatePlayer,
+					req.auth.playerId,
+					undefined,
+					+req.params.id,
+					q.questId,
+					q.progression
+				);
 			}
 			break;
 		default:

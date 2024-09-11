@@ -19,13 +19,17 @@
 				theme="normal"
 				tag="img"
 				v-for="item in rewardList.item"
-				:key="item.itemId"
-				:src="getImgURL('item', `item_${item.name?.toLowerCase()}`)"
+				:key="item.id"
+				:src="getImgURL('item', `item_${itemList[item.id].name.toLowerCase()}`)"
 				:alt="item.name?.toLowerCase()"
 			>
 				<template #content>
-					<h1 v-html="formatContent($t(`item.name.${item.name?.toLowerCase()}`))" />
-					<p v-html="formatContent($t(`item.description.${item.name?.toLowerCase()}`, { quantity: item.price }))" />
+					<h1 v-html="formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`))" />
+					<p
+						v-html="
+							formatContent($t(`item.description.${itemList[item.id].name.toLowerCase()}`, { quantity: item.price }))
+						"
+					/>
 				</template>
 			</Tippy>
 			<a class="button" @click="$emit('close')">
@@ -39,6 +43,7 @@
 import { defineComponent, PropType } from 'vue';
 import { GatherRewards } from '@drpg/core/models/gather/gatherRewards';
 import { playerStore } from '../../store/index.js';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'GatherRewardModal',
@@ -49,20 +54,28 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			rewardList: {} as GatherRewards
+			rewardList: {} as GatherRewards,
+			itemList: itemList
 		};
 	},
 	mounted() {
 		this.rewardList = this.rewards;
-		let index = 0;
 		for (const item of this.rewardList.item) {
-			if (item.name?.includes('gold')) {
-				this.rewardList.item[index].name = 'gold';
+			const goldId = [
+				Item.GOLD100,
+				Item.GOLD500,
+				Item.GOLD1000,
+				Item.GOLD2000,
+				Item.GOLD2500,
+				Item.GOLD3000,
+				Item.GOLD5000,
+				Item.GOLD10000,
+				Item.GOLD20000
+			];
+			if (goldId.includes(item.id)) {
 				this.playerStore.addMoney(item.price);
 			}
-			index++;
 		}
-		this.rewardList.item.map(i => i.name?.toLowerCase());
 	}
 });
 </script>

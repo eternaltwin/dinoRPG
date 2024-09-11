@@ -9,6 +9,6 @@ export const isJson = (str: string): boolean => {
 	} catch (err) {
 		return false;
 	}
-}
+};
 
 export { allValuesAreNumber };

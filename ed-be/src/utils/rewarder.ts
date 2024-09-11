@@ -74,14 +74,19 @@ export async function rewarder(
 						if (reward.reverse) {
 							await decreaseItemQuantity(playerId, itemRewarded.itemId, reward.quantity);
 						} else {
-							const quantityLimitedByMaxQuantity = (playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity) - playerItemData.quantity;
+							const quantityLimitedByMaxQuantity =
+								(playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity) -
+								playerItemData.quantity;
 
 							if (quantityLimitedByMaxQuantity <= 0) break;
 
 							await increaseItemQuantity(
 								playerId,
 								itemRewarded.itemId,
-								Math.min(playerItemData.quantity + reward.quantity, (playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity)) - playerItemData.quantity
+								Math.min(
+									playerItemData.quantity + reward.quantity,
+									playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity
+								) - playerItemData.quantity
 							);
 						}
 					} else {

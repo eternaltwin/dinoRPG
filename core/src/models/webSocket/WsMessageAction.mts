@@ -1,4 +1,4 @@
 export enum WsMessageAction {
-    CREATE = 'CREATE',
-    DELETE = 'DELETE'
+	CREATE = 'CREATE',
+	DELETE = 'DELETE'
 }

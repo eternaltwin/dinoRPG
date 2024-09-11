@@ -75,7 +75,7 @@ export function main(cx: ServerContext) {
 			cx.discord.sendError(error);
 		});*/
 	});
-	
+
 	resetDinozShopAtMidnight().start();
 	healRestingDinoz().start();
 	healDinozFount().start();
@@ -106,7 +106,7 @@ function handleWsEvents(wss: WebSocketServer) {
 		ws.on('message', async (data: RawData) => {
 			try {
 				await processIncomingMessage(wss as WebSocketServerCustom, ws.id, data);
-			} catch(err) {
+			} catch (err) {
 				console.error(err);
 				disconnectUser(ws);
 				ws.close();

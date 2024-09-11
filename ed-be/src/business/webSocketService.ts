@@ -31,7 +31,7 @@ export async function authenticate(req: Request) {
 	const uuid = randomUUID();
 	activeTickets.push({
 		uuid: uuid,
-		channel: req.body.channel, 
+		channel: req.body.channel,
 		userAgent: req.headers['user-agent']!,
 		ipAddress: getIpAddressFromRequest(req)!,
 		playerId: req.auth!.playerId!,
@@ -161,7 +161,7 @@ async function getChannelName(ticket: WsTicket): Promise<string> {
 		return `${ticket.channel}.${playerData.ClanMember!.clan.name}`;
 	}
 
-	throw new Error(`The channel name is not correct. Ticket channel : ${ticket.channel}`)
+	throw new Error(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
 }
 
 /**
@@ -171,7 +171,11 @@ async function getChannelName(ticket: WsTicket): Promise<string> {
  * @param wsId -> The connection identifier
  * @param message -> The message sent by a user
  */
-export async function processIncomingMessage(wss: WebSocketServerCustom, wsId: string, bufferedMessage: RawData): Promise<void> {
+export async function processIncomingMessage(
+	wss: WebSocketServerCustom,
+	wsId: string,
+	bufferedMessage: RawData
+): Promise<void> {
 	const channel = getChannelDetailsFromConnectionId(wsId);
 
 	const message: WsMsgRequest = getMessageFromString(bufferedMessage);
@@ -201,18 +205,18 @@ function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 	);
 
 	if (channelData === undefined) throw new Error('The channel cannot be undefined');
-	
+
 	const channelInfos: ChannelInfos = {
 		channelName: channelData[0],
 		members: channelData[1]
-	}
+	};
 
 	return channelInfos;
 }
 
 /**
  * Get text message from row data
- * 
+ *
  * @param message -> The message we want to get
  * @returns -> The message converted to string
  */
@@ -238,7 +242,7 @@ async function deleteMessage(channel: ChannelInfos, wsId: string, msgId: number)
 
 /**
  * Extract player infos from all player connected to a channel
- * 
+ *
  * @param channel -> All channel data
  * @param wsId -> The connection identifier we want to retrieve data
  * @returns -> The player data
@@ -258,17 +262,13 @@ function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): Ch
  * @param channel -> The channel into we want to send a message
  * @param message -> The message we want to send
  */
-function sendMessageToPeopleInChannel(
-	wss: WebSocketServerCustom,
-	channel: ChannelInfos,
-	message: WsMsgResponse
-): void {
+function sendMessageToPeopleInChannel(wss: WebSocketServerCustom, channel: ChannelInfos, message: WsMsgResponse): void {
 	wss.clients.forEach(client => {
 		const sendMessageToClient = channel.members.some(user => user.connectionId === client.id);
 		if (!sendMessageToClient || client.readyState !== WebSocket.OPEN) {
 			return;
 		}
-		
+
 		client.send(Buffer.from(JSON.stringify(message)), { binary: false });
 	});
 }

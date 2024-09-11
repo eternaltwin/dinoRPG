@@ -179,9 +179,7 @@ routes.put(
 		body('quests')
 			.isArray()
 			.custom((quests: any[]) => {
-				return quests.every(
-					q => q.questId && q.questId > 0 && q.progression && q.progression > 0
-				);
+				return quests.every(q => q.questId && q.questId > 0 && q.progression && q.progression > 0);
 			})
 	],
 	checkIsAdmin,

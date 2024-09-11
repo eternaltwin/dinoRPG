@@ -205,10 +205,10 @@ export async function useItem(req: Request) {
 			break;
 		case ItemEffect.SPECIAL:
 			const itemWon = await useSpecialItem(dinoz, item);
-			const itemName = Object.entries(itemList).find(itema => itema[1].itemId === item.itemId);
+			const itemName = itemList[item.itemId as Item];
 			feedback = {
 				category: ItemEffect.SPECIAL,
-				value: itemName ? itemName[0].toLowerCase() : '',
+				value: itemName.name.toLowerCase(),
 				effect: itemWon ?? ''
 			};
 			break;
@@ -453,8 +453,8 @@ async function useSpecialItem(
 			const newItem = dinoz.player.items.find(item => item.itemId === boxOpened.itemId);
 			if (!newItem) await insertItem(dinoz.player.id, { itemId: boxOpened.itemId, quantity: 1 });
 			else await increaseItemQuantity(dinoz.player.id, boxOpened.itemId, 1);
-			const wonItem = Object.entries(itemList).find(item => item[1].itemId === boxOpened.itemId);
-			return wonItem ? wonItem[0].toLowerCase() : '';
+			const wonItem = itemList[boxOpened.itemId as Item];
+			return wonItem.name.toLowerCase();
 		default:
 			throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 	}

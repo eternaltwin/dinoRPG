@@ -395,7 +395,6 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 	const fullDisplay = [...display];
 	fullDisplay[1] = '0';
 
-
 	//TODO use upchance
 	let fire = 0;
 	let water = 0;

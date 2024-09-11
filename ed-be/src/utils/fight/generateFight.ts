@@ -275,7 +275,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 				fightData.steps.push({
 					action: 'skillAnnounce',
 					fid: fighter.id,
-					skill: Skill.CLEPTOMANE,
+					skill: Skill.CLEPTOMANE
 					// targets: [{ tid: opponent.id }]
 				});
 
@@ -297,7 +297,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum): FightProce
 			fightData.steps.push({
 				action: 'skillAnnounce',
 				fid: fighter.id,
-				skill: Skill.JOKER,
+				skill: Skill.JOKER
 			});
 		}
 

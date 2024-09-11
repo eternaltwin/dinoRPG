@@ -644,14 +644,18 @@ export async function getClanMessagesCountRequest(clanId: number) {
 	return messagesCount;
 }
 
-export async function createClanMessageRequest(clanId: number, authorId: number, content: string): Promise<CreateClanMessage> {
+export async function createClanMessageRequest(
+	clanId: number,
+	authorId: number,
+	content: string
+): Promise<CreateClanMessage> {
 	return await prisma.clanMessage.create({
 		data: {
 			clan: { connect: { id: clanId } },
 			author: { connect: { id: authorId } },
 			content
 		},
-		select: { 
+		select: {
 			id: true,
 			date: true,
 			content: true,
