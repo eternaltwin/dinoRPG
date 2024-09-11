@@ -83,7 +83,7 @@ export interface SkillAnnounceStep {
 	action: 'skillAnnounce';
 	fid: number;
 	skill: Skill;
-};
+}
 export interface SkillActivateStep {
 	action: 'skillActivate';
 	fid: number;

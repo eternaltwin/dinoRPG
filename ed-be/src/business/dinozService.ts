@@ -941,8 +941,8 @@ export async function gatherWithDinoz(req: Request) {
 	await updateGrid(player.id, dinozId, myGrid.id, saveGrid(myGrid, ...boxToOpen));
 
 	for (const [index, i] of returnGrid.rewards.item.entries()) {
-		const itemToReward = player.items.find(items => items.itemId === i.itemId);
-		if (i.itemId === itemList[Item.BOX_HANDLER].itemId) {
+		const itemToReward = player.items.find(items => items.itemId === i.id);
+		if (i.id === itemList[Item.BOX_HANDLER].itemId) {
 			const completion = await getPlayerCompletion(player.id);
 			if (completion?.ranking?.completion === undefined) {
 				throw new ExpectedError(`Failed to find completion.`);
@@ -954,7 +954,7 @@ export async function gatherWithDinoz(req: Request) {
 			} else {
 				player.items.push(await insertItem(player.id, { itemId: box.itemId, quantity: 1 }));
 			}
-			returnGrid.rewards.item[index] = box;
+			returnGrid.rewards.item[index] = { id: box.itemId, price: box.price, quantity: 1, maxQuantity: box.maxQuantity };
 		} else {
 			const goldItems = [
 				itemList[Item.GOLD100].itemId,
@@ -967,14 +967,14 @@ export async function gatherWithDinoz(req: Request) {
 				itemList[Item.GOLD10000].itemId,
 				itemList[Item.GOLD20000].itemId
 			];
-			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.itemId)) {
-				await increaseItemQuantity(player.id, i.itemId, 1);
+			if (itemToReward && itemToReward.quantity < i.maxQuantity && !goldItems.includes(i.id)) {
+				await increaseItemQuantity(player.id, i.id, 1);
 				// Update quantity in case multiple were obtained and the max was reached
 				itemToReward.quantity += 1;
-			} else if (goldItems.includes(i.itemId)) {
+			} else if (goldItems.includes(i.id)) {
 				await addMoney(player.id, i.price);
 			} else {
-				player.items.push(await insertItem(player.id, { itemId: i.itemId, quantity: 1 }));
+				player.items.push(await insertItem(player.id, { itemId: i.id, quantity: 1 }));
 			}
 		}
 	}

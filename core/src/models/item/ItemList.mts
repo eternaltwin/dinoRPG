@@ -467,7 +467,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		price: 500, // TODO double check
-		display: 'fruit' 
+		display: 'fruit'
 	},
 	// SOS Helmet: increases armor by 1 in a fight
 	[Item.SOS_HELMET]: {
@@ -1341,7 +1341,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'winks2'
 	},
 	// Planaille Egg
@@ -1511,7 +1511,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'nuago2'
 	},
 	// Sirain Egg
@@ -1613,7 +1613,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'goegg1'
 	},
 	// Wanwan Egg
@@ -1647,7 +1647,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'wan1'
 	},
 	// Rare Wanwan Baby
@@ -1681,7 +1681,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'stzegg'
 	},
 	// Rare Santaz Egg
@@ -1698,7 +1698,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'stzegg2'
 	},
 	// Feross Egg
@@ -1715,7 +1715,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'feregg'
 	},
 	// Rare Feross Egg
@@ -1732,7 +1732,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'feregg2'
 	},
 	// Christmas Feross Egg
@@ -1749,7 +1749,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'feregg3'
 	},
 	// Kabuki Egg
@@ -1766,7 +1766,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'kabegg'
 	},
 	// Rare Kabuki Egg
@@ -1783,7 +1783,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'kabegg2'
 	},
 	// Mahamuti Egg
@@ -1800,7 +1800,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'mamegg'
 	},
 	// Rare Mahamuti Egg
@@ -1817,7 +1817,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'mamegg2'
 	},
 	// Soufflet Egg
@@ -1834,7 +1834,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'soufle'
 	},
 	// Rare Soufflet Egg
@@ -1868,7 +1868,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10, // yes it's 2 in game
-		price: 30000, 
+		price: 30000,
 		display: 'tufufu'
 	},
 	// Rare Toufufu Baby
@@ -1885,7 +1885,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'tufeg2'
 	},
 	// Quetzu Egg
@@ -1919,7 +1919,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'quetzu'
 	},
 	// Smog Egg
@@ -1936,7 +1936,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'smegg2'
 	},
 	// Smog Rare Egg
@@ -1953,7 +1953,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'smegg3'
 	},
 	// Anniversary Smog Egg
@@ -1970,7 +1970,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'smegg3'
 	},
 	// Christmas Blue Smog Egg
@@ -1987,7 +1987,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'smegg'
 	},
 	// Christmas Blue Smog Egg
@@ -2004,7 +2004,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'smegg4'
 	},
 	// Triceragnon Baby
@@ -2021,7 +2021,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		},
 		sellable: true,
 		maxQuantity: 10,
-		price: 30000, 
+		price: 30000,
 		display: 'triceg'
 	},
 	// Rare Triceragnon Baby
@@ -2345,7 +2345,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: true,
-		price: 5000, 
+		price: 5000,
 		display: 'ptix'
 	},
 	// Quest item
@@ -2358,7 +2358,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'ptsage'
 	},
 	// Quest item
@@ -2371,7 +2371,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedaa'
 	},
 	// Quest item
@@ -2384,7 +2384,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedab'
 	},
 	// Quest item
@@ -2397,7 +2397,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedac'
 	},
 	// Quest item
@@ -2410,7 +2410,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedad'
 	},
 	// Quest item
@@ -2423,7 +2423,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedae'
 	},
 	// Quest item
@@ -2436,7 +2436,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedaf'
 	},
 	// Quest item
@@ -2449,7 +2449,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'fmedag'
 	},
 	// Quest item
@@ -2462,7 +2462,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'metal'
 	},
 	// Quest item
@@ -2475,7 +2475,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'icepie'
 	},
 	// Quest item
@@ -2488,7 +2488,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: 'pile'
 	},
 	[Item.VOID_SPHERE]: {
@@ -2517,7 +2517,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 9999,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: ''
 	},
 	// Common Box
@@ -2534,7 +2534,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
-		}, 
+		},
 		display: ''
 	},
 	// Rare Box
@@ -2551,7 +2551,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
-		}, 
+		},
 		display: ''
 	},
 	// Epic Box
@@ -2568,7 +2568,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
-		}, 
+		},
 		display: ''
 	},
 	// Legendary Box
@@ -2585,7 +2585,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		effect: {
 			category: ItemEffect.SPECIAL,
 			value: 'box'
-		}, 
+		},
 		display: ''
 	},
 	// Daily ticket
@@ -2598,7 +2598,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		isRare: false,
 		maxQuantity: 5000,
 		sellable: false,
-		price: 0, 
+		price: 0,
 		display: ''
 	},
 	// Empty item
@@ -2625,6 +2625,6 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		maxQuantity: 123,
 		sellable: false,
 		price: 1234, // TODO double check
-		display: '' 
+		display: ''
 	}
 };

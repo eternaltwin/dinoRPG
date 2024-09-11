@@ -536,7 +536,11 @@ export async function reincarnate(req: Request) {
 		throw new ExpectedError(`No dinoz found for reincarnation.`);
 	}
 
-	if (!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) || dinoz.level < 40 || dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)) {
+	if (
+		!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) ||
+		dinoz.level < 40 ||
+		dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)
+	) {
 		throw new ExpectedError(`Dinoz cannot reincarnate`);
 	}
 
@@ -546,7 +550,7 @@ export async function reincarnate(req: Request) {
 	await removeAllSkillFromDinoz(dinoz.id);
 	if (race.skillId && race.skillId.length > 0) {
 		for (const skill of race.skillId) {
-			await addSkillToDinoz(dinoz.id, skill)
+			await addSkillToDinoz(dinoz.id, skill);
 		}
 	}
 	await removeAllStatusFromDinoz(dinoz.id);

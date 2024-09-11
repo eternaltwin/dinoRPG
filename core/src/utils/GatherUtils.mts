@@ -5,7 +5,7 @@ import { GatherType } from '../models/enums/GatherType.mjs';
 import { PlayerForConditionCheck } from '../constants.mjs';
 import { GatherRewards } from '../models/gather/gatherRewards.mjs';
 import { GatherResultGrid } from '../models/gather/gatherResultGrid.mjs';
-import { itemList } from '../models/item/ItemList.mjs';
+import { Item, itemList } from '../models/item/ItemList.mjs';
 import { ingredientList } from '../models/ingredient/ingredientList.mjs';
 import { checkCondition } from './checkCondition.mjs';
 
@@ -78,11 +78,8 @@ export const discoverBox = (
 		flatReturnGrid[box[i][0] * gridInformation.size + box[i][1]] = -1;
 
 		if (itemCheck) {
-			const item = Object.entries(itemList).find(items => items[1].itemId === ingredientId);
-			if (item) {
-				item[1].name = item[0].toLowerCase();
-				item[1] ? rewards.item.push(item[1]) : 0;
-			}
+			const item = itemList[ingredientId as Item];
+			rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
 		} else {
 			const ingredient = Object.entries(ingredientList).find(
 				ingredients => ingredients[1].ingredientId === ingredientId

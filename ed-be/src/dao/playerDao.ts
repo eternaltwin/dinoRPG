@@ -857,19 +857,19 @@ export async function isPlayerLeaderOfClanRequest(playerId: number, clanId: numb
 export async function getClanIdAndNameFromPlayerId(playerId: number) {
 	return await prisma.player.findUniqueOrThrow({
 		select: {
-			ClanMember: { 
-				select: { 
+			ClanMember: {
+				select: {
 					clan: {
-						select: { 
+						select: {
 							id: true,
 							name: true
 						}
-					} 
-				} 
-			},
+					}
+				}
+			}
 		},
 		where: {
 			id: playerId
 		}
-	})
+	});
 }

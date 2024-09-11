@@ -194,7 +194,6 @@ export function readBoolean(envVariable: string | undefined): boolean {
 	return false;
 }
 
-
 /**
  * Read the provided environment recorded and build a config object.
  */

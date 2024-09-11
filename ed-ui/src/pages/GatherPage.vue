@@ -12,7 +12,7 @@
 	</div>
 	<div
 		class="container"
-		v-if="loaded"
+		v-if="grid && loaded"
 		:style="{
 			height: `${grid.grid.length * 34}px`,
 			width: `${grid.grid.length * 34}px`
@@ -20,7 +20,7 @@
 	>
 		<img class="bgimg" :src="getImgURL('gather/background', grid.gatherType)" />
 		<div class="grid">
-			<div class="row" v-for="(row, rowNumber) in grid.grid" :key="row">
+			<div class="row" v-for="(row, rowNumber) in grid.grid" :key="rowNumber">
 				<div
 					v-for="(box, boxNumber) in row"
 					:key="box"
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<GatherRewardModal v-if="gatherOver" :rewards="gatherResult.rewards" @close="returnToDinoz()" />
+		<GatherRewardModal v-if="gatherOver && gatherResult" :rewards="gatherResult.rewards" @close="returnToDinoz()" />
 	</div>
 </template>
 
