@@ -24,9 +24,12 @@ export const initializeGatherGrid = (playerId: number, placeId: number, gridInfo
 	// Generate a list of ingredient
 	gridInformation.items.forEach(ingredient => {
 		const buffer = new Array(ingredient.startQuantity);
-		let ingredientId = ingredient.ingredientId;
-		if (ingredient.type === 'item') ingredientId += 1000;
-		buffer.fill(ingredientId);
+		for (let i = 0; i < ingredient.ingredientId.length; i++) {
+			let ingredientId = ingredient.ingredientId[Math.floor(Math.random() * ingredient.ingredientId.length)];
+			if (ingredient.type === 'item') ingredientId += 1000;
+			buffer[i] = ingredientId;
+		}
+
 		grid.splice(ingredientCount, ingredient.startQuantity, ...buffer);
 		ingredientCount += ingredient.startQuantity;
 	});
@@ -85,7 +88,7 @@ export const discoverBox = (
 				ingredients => ingredients[1].ingredientId === ingredientId
 			);
 			if (ingredient) {
-				const gridIngredient = gridInformation.items.find(ing => ing.ingredientId === ingredient[1].ingredientId);
+				const gridIngredient = gridInformation.items.find(ing => ing.ingredientId[0] === ingredient[1].ingredientId);
 				if (!gridIngredient) throw new Error('Ingredient not found in gridInformation.items');
 				const condition = gridIngredient.condition;
 				ingredient[1].name = ingredient[0].toLowerCase();
