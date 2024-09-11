@@ -107,7 +107,8 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 		case 'skillAnnounce':
 			return t(`fight.step.skillAnnounce`, {
 				dinoz: getFighterName(fightStep.fid, t),
-				skill: t(`skill.name.${skillList[fightStep.skill].name}`)});
+				skill: t(`skill.name.${skillList[fightStep.skill].name}`)
+			});
 		case 'skillActivate':
 			if (fightStep.targets.length) {
 				return t(`fight.step.skillActivate-targets`, {
