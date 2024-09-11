@@ -1,6 +1,8 @@
 <template>
 	<div class="new-message-container" v-if="hasAccess">
-		<ckeditor v-if="isConnectionOk" :editor="editor" v-model="newMessage"></ckeditor>
+		<div v-if="isConnectionOk">
+			<Ckeditor :editor="editor" v-model="newMessage" />
+		</div>
 		<div v-if="isConnectionOk === false" class="msg-error">
 			<p>{{ $t('clan.forum.connectionFailed') }}</p>
 			<p>{{ $t('clan.forum.connectionFailed2') }}</p>
@@ -131,13 +133,14 @@ export default defineComponent({
 		async connectToWs(): Promise<void> {
 			const wsTicket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
 			if (import.meta.env.MODE === 'development') {
-				this.webSocket = new WebSocket(`wss://localhost:8081?ticket=${wsTicket}`);
+				this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${wsTicket}`);
 			} else {
-				this.webSocket = new WebSocket(`wss://${document.location.host}?ticket=${wsTicket}`);
+				this.webSocket = new WebSocket(`wss://${document.location.host}/ws?ticket=${wsTicket}`);
 			}
 
 			this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);
 			this.webSocket.onerror = () => (this.isConnectionOk = false);
+			this.webSocket.onclose = () => (this.isConnectionOk = false);
 			this.webSocket.onopen = () => (this.isConnectionOk = true);
 		},
 		async changePage(n: number) {
@@ -175,7 +178,9 @@ export default defineComponent({
 		if (!this.hasAccess) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
+
 		EventBus.emit('isLoading', true);
+
 		try {
 			await this.getClanMessages();
 			await this.connectToWs();

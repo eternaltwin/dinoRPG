@@ -2,8 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import urlJoin from 'url-join';
 import { localStore } from '../store/index.js';
 
-const protocol = import.meta.env.VITE_USE_HTTPS === 'true' ? 'https://' : 'http://';
-const API_SERVER = new URL(`${protocol}${import.meta.env.VITE_API_URL}`);
+const API_SERVER = new URL(import.meta.env.VITE_API_URL);
 export const API_BASE = urlJoin(API_SERVER.toString(), 'api/v1');
 
 export const http = function (): AxiosInstance {

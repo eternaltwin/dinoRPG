@@ -1,4 +1,4 @@
-import express = require('express');
+import express from 'express';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -12,8 +12,6 @@ import { GLOBAL, ServerContext } from './context.js';
 import { readyCheck } from './middleware/readyCheck.js';
 import initRoutes from './routes/index.js';
 import lockMiddleware from './middleware/lock.js';
-import fs from 'fs';
-import https from 'https';
 import './i18n.js';
 
 import {
@@ -46,7 +44,7 @@ export function main(cx: ServerContext) {
 	cx.logger.log(`Server started`);
 
 	const app = express();
-	const { port, useHttps, certificatePath, privateKeyPath } = cx.config;
+	const { port, wssPort } = cx.config;
 
 	app.use(cors());
 	app.use(bodyParser.json());
@@ -58,33 +56,25 @@ export function main(cx: ServerContext) {
 	app.use(lockMiddleware);
 	app.use(readyCheck);
 
-	if (useHttps) {
-		const key = fs.readFileSync(privateKeyPath, 'utf-8');
-		const cert = fs.readFileSync(certificatePath, 'utf-8');
-		const server = https.createServer({ key, cert }, app).listen(port, () => 
-			cx.logger.info(`Server listening on port ${port}`)
-		);
-		const wss = new WebSocketServer({ server });
+	app.listen(port, () => {
+		cx.logger.info(`Server listening on port ${port}`);
 
+		const wss = new WebSocketServer({ port: wssPort });
 		handleWsEvents(wss);
-	} else {
-		app.listen(port, () => {
-			cx.logger.info(`Server listening on port ${port}`);
 
-			/*// Trigger daily job
-			dailyJob(cx.prisma)().catch((error: Error) => {
-				cx.discord.sendError(error);
-			});
-
-			// Initialize daily scheduler
-			schedule.scheduleJob('0 0 * * *', dailyJob(cx.prisma));
-
-			// Start worker queue
-			startJob(cx.prisma).catch((error: Error) => {
-				cx.discord.sendError(error);
-			});*/
+		/*// Trigger daily job
+		dailyJob(cx.prisma)().catch((error: Error) => {
+			cx.discord.sendError(error);
 		});
-	}
+
+		// Initialize daily scheduler
+		schedule.scheduleJob('0 0 * * *', dailyJob(cx.prisma));
+
+		// Start worker queue
+		startJob(cx.prisma).catch((error: Error) => {
+			cx.discord.sendError(error);
+		});*/
+	});
 	
 	resetDinozShopAtMidnight().start();
 	healRestingDinoz().start();
@@ -123,7 +113,13 @@ function handleWsEvents(wss: WebSocketServer) {
 			}
 		});
 
-		ws.on('close', () => disconnectUser(ws));
+		ws.on('close', () => {
+			try {
+				disconnectUser(ws);
+			} catch (err) {
+				console.error('Cannot close ws connection.', err);
+			}
+		});
 
 		ws.on('pong', () => setConnectionToAlive(ws));
 
