@@ -493,7 +493,7 @@
 			"gorilloz_egg_rare": "TODO",
 			"wanwan_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dinoz.",
 			"wanwan_egg_rare": "TODO",
-			"wanwan_baby_rare": "TODO",
+			"wanwan_baby_rare": "Este huevo es muy extraño... El Dino que tenga dentro debe ser excepcional.",
 			"santaz_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dinoz.",
 			"santaz_egg_rare": "TODO",
 			"feross_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dinoz.",
@@ -504,7 +504,7 @@
 			"mahamuti_egg": "A través del hielo, se ve una forma extraña, ¿una bola de pelo con cuernos...?",
 			"mahamuti_egg_rare": "TODO",
 			"souffet_egg": "Este huevo de Visper está a punto de eclosionar, ¿qué aspecto tendrá?",
-			"soufflet_egg_rare": "TODO",
+			"soufflet_egg_rare": "Este huevo está a punto de abrirse, ¿cómo será la criatura que lleva dentro?",
 			"toufufu_baby": "Este bebé Toufufu ya empieza a agitarse, ¡tiene muchas ganas de desahogarse en el campo de batalla!",
 			"toufufu_baby_rare": "TODO",
 			"quetzu_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dinoz.",
@@ -514,7 +514,7 @@
 			"smog_egg_christmas_blue": "TODO",
 			"smog_egg_christmas_green": "TODO",
 			"triceragnon_baby": "TODO",
-			"triceragnon_baby_rare": "TODO",
+			"triceragnon_baby_rare": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
 			"amnesic_rice": "Esta variedad muy rara de Arroz vuelve amnésicos a los Dinos. Si come este arroz, tu Dino perderá su nombre, así como su experiencia acumulada desde su último nivel...",
 			"tik_bracelet": "Este objeto perteneciente a la tecnología de Caushemesh, ¡puede dar cada día hasta 10 puntos de vida al Dino que lo lleve!",
 			"magic_star": "Estas misteriosas estrellas están repartidas por todo el mundo de Dinoland. ¿Puedes encontrar las 7?",
@@ -1353,7 +1353,7 @@
 				"caush": "¿Caushemesh?",
 				"ether": "¿El éter?",
 				"next": "Y...",
-				"more": "...",
+				"more": "¿De veras?",
 				"missions": "Acepta una misión."
 			}
 		},
@@ -1363,7 +1363,7 @@
 				"next": "Bueno, bueno, yo cumplo con mis promesas. Aquí tienes una recompensa para convencerte de la superioridad de la tecnología de Caushemesh. Solo tengo un ejemplar, así que haz buen uso de él... Se trata de un Brazalete de Tik que podrás equipar en tu Dino."
 			},
 			"playerChoice": {
-				"next": "..."
+				"next": "(cara de asombro)"
 			}
 		},
 		"spelele": {
@@ -1540,7 +1540,7 @@
 				"star": "Félicitations ! ¡Gracias a Calaveri, has recuperado la 5ª estrella mágica! Plus que deux !"
 			},
 			"playerChoice": {
-				"ok": "...",
+				"ok": "Si quieres te lo doy.",
 				"star": "¿Mmm?"
 			}
 		},
@@ -3248,7 +3248,7 @@
 			"2": "DinoRPG",
 			"3": "DinoRPG",
 			"5": "DinoRPG",
-			"6": "Hordes",
+			"6": "",
 			"7": "Die2Nite",
 			"9": "Kingdom",
 			"10": "Moverse",
@@ -3265,7 +3265,7 @@
 			"37": "Inconnu",
 			"41": "Zancadilla",
 			"42": "Studio Quiz",
-			"43": "Naturalchimie 2",
+			"43": "Naturalquimia 2",
 			"45": "DinoRPG",
 			"57": "AlphaBounce",
 			"64": "KadoKado",
@@ -3310,7 +3310,7 @@
 			"hippo": "Trofeo de los Hippoclamp",
 			"rocky": "Trofeo de los Rokkys",
 			"quetzu": "Trofeo de los Quetzu",
-			"labowi": "Trophée des Smogs",
+			"labowi": "Trofeo de los Smogs",
 			"tour": "Vuelta al mundo de Dinoland",
 			"vener": "El ojo del Venerable",
 			"taurus": "Taurus el Magnífico",
@@ -3773,6 +3773,10 @@
 			"gold": "Treasure value",
 			"rank": "Rank",
 			"crown": "Clan leader"
+		},
+		"forum": {
+			"connectionFailed": "¡Se produjo un error al conectarse al chat del clan!",
+			"connectionFailed2": "¡Actualiza la página o vuelve a intentarlo más tarde!"
 		}
 	},
 	"clansList": {

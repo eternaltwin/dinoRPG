@@ -3291,7 +3291,7 @@
 		"void": "Erhält +1 :neutre: Leere",
 		"level": "St.",
 		"learn": "Erlernen",
-		"unlock1": "",
+		"unlock1": "Débloquer ",
 		"confirmSkill": "Möchtest du {skill} zum Aufstieg auf Stufe {level} nehmen?",
 		"confirmUnlock": "Möchtest du {quantity} Fähigkeiten freischalten?",
 		"unlock2": " weitere Fähigkeiten freischalten",
@@ -3773,6 +3773,10 @@
 			"gold": "Treasure value",
 			"rank": "Rank",
 			"crown": "Klananführer"
+		},
+		"forum": {
+			"connectionFailed": "Une erreur s'est produite lors de la connexion au chat du clan !",
+			"connectionFailed2": "Actualise la page ou réessaye plus tard !"
 		}
 	},
 	"clansList": {
