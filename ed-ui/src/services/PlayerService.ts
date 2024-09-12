@@ -7,6 +7,7 @@ import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
+import { Player } from '@drpg/core/models/player/Player';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<PlayerCommonData> {
@@ -106,6 +107,12 @@ export const PlayerService = {
 	getCanCreateClan(): Promise<boolean> {
 		return http()
 			.get(`/player/canCreateClan`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getPlayerMenuInfos(playerId: number): Promise<Pick<Player, 'id' | 'name' | 'eternalTwinId' | 'customText'>> {
+		return http()
+			.get(`/player/smallMenu/${playerId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

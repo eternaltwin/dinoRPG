@@ -15,7 +15,8 @@ import {
 	getCanCreateClanRequest,
 	getCanJoinClanRequest,
 	isPlayerLeaderOfClanRequest,
-	auth
+	auth,
+	getToolTipInfos
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
@@ -255,4 +256,13 @@ export async function isPlayerLeaderOfClan(req: Request) {
 
 	const isPlayerLeaderOfClan = await isPlayerLeaderOfClanRequest(req.auth.playerId, Number(req.params.id));
 	return isPlayerLeaderOfClan;
+}
+
+export async function playerToolTip(req: Request) {
+	const player = await getToolTipInfos(+req.params.id);
+
+	if (!player) {
+		throw new ExpectedError(`Missing player.`);
+	}
+	return player;
 }

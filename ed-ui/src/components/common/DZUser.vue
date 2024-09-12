@@ -1,16 +1,25 @@
 <template>
 	<div class="user-container">
-		<span class="user-component" @click="toggleMenu">
+		<span
+			:class="{
+				'user-component': true,
+				me: me,
+				friend: friend
+			}"
+			@click="toggleMenu"
+			v-click-outside="leave"
+		>
 			<img src="../../assets/design/small_member.webp" :alt="user.name" />
 			<span>{{ user.name }}</span>
 		</span>
-		<PlayerMenu v-if="seePlayer" @account-click="handleAccountClick" :playerId="user.id" :playerName="user.name" />
+		<PlayerMenu v-if="seePlayer" :playerId="user.id" />
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import PlayerMenu from './PlayerMenu.vue';
+import { Player } from '@drpg/core/models/player/Player';
 
 export default defineComponent({
 	name: 'DZUser',
@@ -19,8 +28,16 @@ export default defineComponent({
 	},
 	props: {
 		user: {
-			type: Object,
+			type: Object as PropType<Pick<Player, 'id' | 'name'>>,
 			required: true
+		},
+		me: {
+			type: Boolean,
+			default: false
+		},
+		friend: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -32,8 +49,8 @@ export default defineComponent({
 		toggleMenu() {
 			this.seePlayer = !this.seePlayer;
 		},
-		handleAccountClick(playerId: number) {
-			this.$router.push({ name: 'MyAccount', params: { id: playerId } });
+		leave() {
+			this.seePlayer = false;
 		}
 	}
 });
@@ -65,6 +82,25 @@ export default defineComponent({
 
 	img {
 		margin-right: 4px;
+	}
+}
+.me {
+	background-color: #7a261b;
+	&:hover {
+		background-color: #7c3d34;
+	}
+	& > * {
+		-webkit-animation: brightness 3s infinite;
+	}
+}
+
+@-webkit-keyframes brightness {
+	0%,
+	100% {
+		-webkit-filter: brightness(80%);
+	}
+	50% {
+		-webkit-filter: brightness(120%);
 	}
 }
 </style>

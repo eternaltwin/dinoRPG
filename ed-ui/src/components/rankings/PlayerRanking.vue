@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper">
-		<table>
+		<table v-on-click-outside="(selectedPlayer = undefined)">
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
@@ -19,16 +19,16 @@
 					:key="ranking.player.id"
 					class="select"
 					:class="{
-						even: (index + 1) % 2 === 0,
-						me: ranking.player.id === me
+						even: (index + 1) % 2 === 0
 					}"
-					@click="togglemenu(ranking.player.id, ranking.player.name)"
+					@click="selectedPlayer = ranking.player.id"
+					v-click-outside="leave"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}
 					</td>
 					<td class="other">
-						{{ ranking.player.name }}
+						<DZUser :user="ranking.player" :me="ranking.player.id === me" :friend="false" />
 					</td>
 					<td class="other">
 						{{ ranking.dinozCount }}
@@ -40,13 +40,7 @@
 						{{ ranking.average }}
 					</td>
 				</tr>
-				<PlayerMenu
-					v-if="seePlayer"
-					:isRanking="true"
-					@account-click="goToAccount"
-					:playerId="selectedPlayerId"
-					:playerName="selectedPlayerName"
-				/>
+				<PlayerMenu v-if="seePlayer && selectedPlayer" :playerId="selectedPlayer" />
 			</tbody>
 			<tr class="select" @click="changePage(1)" :class="{ hidden: rankings.length < 20 }">
 				<td class="pos" colspan="5" style="text-align: center">
@@ -65,10 +59,12 @@ import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { playerStore } from '../../store/index.js';
 import PlayerMenu from '../common/PlayerMenu.vue';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'PlayerRanking',
 	components: {
+		DZUser,
 		PlayerMenu
 	},
 	data() {
@@ -77,18 +73,15 @@ export default defineComponent({
 			page: 1 as number,
 			me: playerStore().getPlayerId,
 			seePlayer: false,
-			selectedPlayerId: null as number | null,
-			selectedPlayerName: ''
+			selectedPlayer: undefined as undefined | number
 		};
 	},
 	props: {
 		sort: String
 	},
 	methods: {
-		togglemenu(playerId: number, playerName: string) {
-			this.seePlayer = !this.seePlayer;
-			this.selectedPlayerId = playerId;
-			this.selectedPlayerName = playerName;
+		leave() {
+			this.seePlayer = false;
 		},
 		goToAccount(playerId: number) {
 			this.$router.push({ name: 'MyAccount', params: { id: playerId } });
@@ -102,6 +95,7 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
+			console.log(this.rankings);
 		},
 		changePage(i: number) {
 			this.page += i;
@@ -204,18 +198,5 @@ export default defineComponent({
 }
 .hidden {
 	display: none !important;
-}
-.me > * {
-	-webkit-animation: brightness 3s infinite;
-}
-
-@-webkit-keyframes brightness {
-	0%,
-	100% {
-		-webkit-filter: brightness(80%);
-	}
-	50% {
-		-webkit-filter: brightness(120%);
-	}
 }
 </style>

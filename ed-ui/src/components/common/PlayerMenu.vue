@@ -1,26 +1,22 @@
 <template>
-	<div :class="['player-menu', { 'player-menu-ranking': isRanking }]">
-		<p>
-			{{ $t('playerMenu.title') }} <span>{{ playerName }}</span>
+	<div class="player-menu" v-if="loadedPlayer">
+		<p class="playerLink" @click="goToPlayerPage()">
+			{{ $t('playerMenu.title') }} <span>{{ loadedPlayer.name }}</span>
 		</p>
 		<span class="dashed"></span>
 		<div class="grid-menu">
-			<div class="dinorpg" @click="handleAccountClick">
-				<img :src="getImgURL('icons', 'small_home')" alt="accountProfile" />
-				<p>{{ $t('playerMenu.gridMenu.pDRPG') }}</p>
-			</div>
-			<div class="eternaltwin">
-				<img :src="getImgURL('icons', 'small_eternaltwin')" alt="eternaltwinProfile" />
-				<p>{{ $t('playerMenu.gridMenu.pEternal') }}</p>
-			</div>
-			<div class="contact">
-				<img :src="getImgURL('icons', 'addContact')" alt="addContact" />
-				<p>{{ $t('playerMenu.gridMenu.addContact') }}</p>
-			</div>
-			<div class="message">
-				<img :src="getImgURL('icons', 'mail')" alt="sendMessage" />
-				<p>{{ $t('playerMenu.gridMenu.sendMSG') }}</p>
-			</div>
+			<a class="link-block" :href="`https://eternaltwin.org/users/${loadedPlayer.eternalTwinId}`" target="_blank">
+				<img :src="getImgURL('icons', 'small_eternaltwin')" alt="eternaltwinProfile" /><br />
+				{{ $t('playerMenu.gridMenu.pEternal') }}
+			</a>
+			<a class="link-block">
+				<img :src="getImgURL('icons', 'mail')" alt="sendMessage" /><br />
+				{{ $t('playerMenu.gridMenu.sendMSG') }}
+			</a>
+			<a class="link-block">
+				<img :src="getImgURL('icons', 'addContact')" alt="addContact" /><br />
+				{{ $t('playerMenu.gridMenu.addContact') }}
+			</a>
 		</div>
 		<div class="report">
 			<p>{{ $t('playerMenu.report.signal') }}</p>
@@ -29,8 +25,7 @@
 		<span class="dashed"></span>
 		<div class="profil">
 			<div class="profil-info">
-				<img :src="getImgURL('design', 'pigmou_01')" alt="profil" />
-				<div></div>
+				<div class="player-desc" v-html="loadedPlayer.customText"></div>
 			</div>
 			<p class="contact">{{ $t('playerMenu.contact') }}</p>
 		</div>
@@ -39,26 +34,38 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Player } from '@drpg/core/models/player/Player';
+import { PlayerService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'PlayerMenu',
+	data() {
+		return {
+			loadedPlayer: undefined as undefined | Pick<Player, 'id' | 'name' | 'eternalTwinId' | 'customText'>
+		};
+	},
 	props: {
-		isRanking: {
-			type: Boolean,
-			default: false
-		},
 		playerId: {
 			type: Number,
-			required: true
-		},
-		playerName: {
-			type: String,
 			required: true
 		}
 	},
 	methods: {
-		handleAccountClick() {
-			this.$emit('account-click', this.playerId);
+		leave() {
+			this.$emit('leavePlayerMenu');
+		},
+		goToPlayerPage() {
+			if (!this.loadedPlayer) return;
+			this.$router.push({ name: 'MyAccount', params: { id: this.loadedPlayer.id } });
+		}
+	},
+	async mounted() {
+		try {
+			this.loadedPlayer = await PlayerService.getPlayerMenuInfos(this.playerId);
+		} catch (e) {
+			errorHandler.handle(e, this.$toast);
+			return;
 		}
 	}
 });
@@ -66,45 +73,35 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .player-menu {
-	background-color: #c2381a;
-	border-top: 1px solid #ff9200;
+	background-color: #bc683c;
+	font-size: 10px;
+	font-weight: 700;
+	border: 1px solid #845a45;
 	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 	border-radius: 4px;
-	color: white;
+	color: #f1e8e6;
 	padding: 10px;
 	position: absolute;
 	top: 100%;
 	left: 0;
-	width: 300px;
+	width: 245px;
 	height: auto;
 	z-index: 1000;
 	.grid-menu {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		display: flex;
+		flex-wrap: wrap;
 		gap: 10px;
 		margin-top: 7px;
-		& div {
-			background-color: #e04b2b;
-			border-radius: 4px;
-			padding: 8px;
-			text-align: center;
-			cursor: pointer;
-			transition: background-color 0.3s;
-			& img {
-				width: 16px;
-				height: 16px;
-			}
-		}
-		& div:hover {
-			background-color: #ff9200;
-		}
+		justify-content: center;
 	}
 	.report {
-		padding: 8px;
 		text-align: right;
-		color: white;
+		color: #f1e8e6;
 		cursor: pointer;
 		transition: background-color 0.3s;
+		font-size: 9px;
+		display: flex;
+		flex-direction: column;
 		& p {
 			cursor: pointer;
 			transition: color 0.3s;
@@ -117,7 +114,6 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		gap: 10px;
-		margin-top: 10px;
 		.profil-info {
 			display: flex;
 			justify-content: space-between;
@@ -143,29 +139,62 @@ export default defineComponent({
 		display: block;
 	}
 }
-.player-menu-ranking {
-	border: 2px solid #f3d6b1;
-	background-color: #ecbd84;
-	color: #710;
-	position: absolute;
-	top: 90px;
-	left: 196px;
-	.grid-menu {
-		& div {
-			background-color: #c88f44;
-		}
-		& div:hover {
-			background-color: #ecbd84;
-		}
+
+.link-block {
+	background-color: #79432b;
+	font-size: 10px;
+	cursor: pointer;
+	border-radius: 4px;
+	color: #f1e8e6;
+	display: inline-block;
+	height: 50px;
+	margin: 0 1px 1px 0;
+	overflow: hidden;
+	padding: 5px 0;
+	text-align: center;
+	text-decoration: none;
+	width: 72px;
+	& img {
+		vertical-align: center;
+		width: 16px;
+		height: 16px;
 	}
-	.report {
-		color: #710;
-		& p:hover {
-			color: #fffdba;
-		}
+	&:hover {
+		background-color: #8c5a42;
+		color: #f9e0c6;
 	}
-	.dashed {
-		border-top: 1px dashed #710;
+}
+
+.playerLink {
+	cursor: pointer;
+	margin: 0 -10px;
+	padding: 1px 10px;
+	text-decoration: none;
+	font-size: 10px;
+	&:hover {
+		background-color: #79432b;
+	}
+}
+.player-desc {
+	background-color: #79432b;
+	border-radius: 4px;
+	color: #fce3bb;
+	font-weight: 400;
+	font-size: 10px;
+	margin-top: 10px;
+	padding: 5px;
+	word-break: break-word;
+	&::before {
+		border-bottom: 5px solid #79432b;
+		border-left: 5px solid transparent;
+		border-right: 5px solid transparent;
+		content: ' ';
+		display: inline-block;
+		height: 0;
+		left: 32px;
+		margin-top: -9px;
+		position: absolute;
+		width: 0;
 	}
 }
 </style>
