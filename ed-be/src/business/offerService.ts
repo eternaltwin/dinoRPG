@@ -96,10 +96,10 @@ export async function createOffer(req: Request) {
 			};
 		}),
 		...items.map(item => {
-			const itemData = Object.entries(itemList).find(i => i[0] === item.name.toLocaleUpperCase());
+			const itemData = Object.entries(itemList).find(i => i[1].name === item.name.toLowerCase());
 
 			if (!itemData) {
-				throw new ExpectedError('Ingredient not found');
+				throw new ExpectedError('Item not found');
 			}
 			if (itemData[1].sellable === false) {
 				throw new ExpectedError(`Item ${itemData[0]} cannot be sold`);
