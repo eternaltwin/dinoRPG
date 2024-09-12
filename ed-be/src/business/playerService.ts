@@ -16,7 +16,9 @@ import {
 	getCanJoinClanRequest,
 	isPlayerLeaderOfClanRequest,
 	auth,
-	getToolTipInfos
+	getToolTipInfos,
+	checkBeforeDeletion,
+	resetUser
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
@@ -29,6 +31,7 @@ import { LogType } from '@drpg/prisma';
 import sanitizeHtml from 'sanitize-html';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { OfferStatus } from '@drpg/prisma';
 
 /**
  * @summary Get data from player on login
@@ -265,4 +268,27 @@ export async function playerToolTip(req: Request) {
 		throw new ExpectedError(`Missing player.`);
 	}
 	return player;
+}
+
+export async function resetAccount(req: Request) {
+	if (!req.auth?.playerId) {
+		throw new ExpectedError(`Unauthorized.`);
+	}
+
+	const playerToDelete = await checkBeforeDeletion(req.auth.playerId);
+
+	//Check if sell of bids are ongoing
+	if (
+		playerToDelete &&
+		(playerToDelete.bids.length > 0 || playerToDelete.offers.filter(b => b.status !== OfferStatus.ENDED).length > 0)
+	) {
+		throw new ExpectedError(`bidsOngoing`);
+	}
+
+	//Check if part of a clan
+	if (playerToDelete && playerToDelete.ClanMember) {
+		throw new ExpectedError(`inClan`);
+	}
+
+	await resetUser(req.auth.playerId);
 }
