@@ -66,49 +66,83 @@ export async function auth(request: Request) {
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
 export async function resetUser(playerId: number) {
-	// Delete all the player's dinoz
-	await prisma.dinoz.deleteMany({
-		where: {
-			playerId
-		}
-	});
+	// Regroupement des requêtes dans une seule transaction
+	await prisma.$transaction([
+		// Suppression des dinoz
+		prisma.dinoz.deleteMany({
+			where: { playerId }
+		}),
 
-	// Delete player dinoz shop
-	await prisma.playerDinozShop.deleteMany({
-		where: {
-			playerId
-		}
-	});
+		// Suppression des données importées
+		prisma.importedPlayer.deleteMany({
+			where: { playerId }
+		}),
+		prisma.importedTwinoidAchievement.deleteMany({
+			where: { playerId }
+		}),
+		prisma.importedTwinoidSite.deleteMany({
+			where: { playerId }
+		}),
+		prisma.importedTwinoidStat.deleteMany({
+			where: { playerId }
+		}),
 
-	// Delete player ingredients
-	await prisma.playerIngredient.deleteMany({
-		where: {
-			playerId
-		}
-	});
+		// Suppression des shops et autres données associées au joueur
+		prisma.playerDinozShop.deleteMany({
+			where: { playerId }
+		}),
+		prisma.playerGather.deleteMany({
+			where: { playerId }
+		}),
+		prisma.playerIngredient.deleteMany({
+			where: { playerId }
+		}),
+		prisma.playerItem.deleteMany({
+			where: { playerId }
+		}),
+		prisma.playerQuest.deleteMany({
+			where: { playerId }
+		}),
+		prisma.playerReward.deleteMany({
+			where: { playerId }
+		}),
+		prisma.ranking.deleteMany({
+			where: { playerId }
+		}),
+		prisma.usernameHistory.deleteMany({
+			where: { playerId }
+		}),
+		prisma.playerTracking.deleteMany({
+			where: { playerId }
+		}),
+		prisma.clanJoinRequest.deleteMany({
+			where: { playerId }
+		}),
 
-	// Delete player items
-	await prisma.playerItem.deleteMany({
-		where: {
-			playerId
-		}
-	});
-
-	// Delete player quests
-	await prisma.playerQuest.deleteMany({
-		where: {
-			playerId
-		}
-	});
-
-	// Delete player rewards
-	await prisma.playerReward.deleteMany({
-		where: {
-			playerId
-		}
-	});
+		// Mise à jour du joueur
+		prisma.player.update({
+			where: { id: playerId },
+			data: {
+				eternalTwinId: 'DELETED',
+				name: `$user${playerId}`
+			}
+		})
+	]);
 }
 
+export async function checkBeforeDeletion(playerId: number) {
+	const player = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			offers: true,
+			bids: true,
+			ClanMember: true
+		}
+	});
+	return player;
+}
 // Getters
 
 export async function getRolePlayer(role: AdminRole) {

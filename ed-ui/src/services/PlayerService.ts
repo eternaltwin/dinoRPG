@@ -115,6 +115,12 @@ export const PlayerService = {
 			.get(`/player/smallMenu/${playerId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	resetAccount(): Promise<void> {
+		return http()
+			.delete(`/player`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
 interface PlayerSearch {

@@ -3222,6 +3222,13 @@
 		"title": "Joueur :",
 		"labrute": "La Brute",
 		"profil": "Profil EternalDinoRPG",
+		"options": {
+			"title": "Options du compte",
+			"fight": "Afficher les combats",
+			"todo": "Non disponible",
+			"reset": "Supprimer le compte",
+			"retour": "Retour"
+		},
 		"twinoidgoals": {
 			"name": "Statistiques EternalDinoRPG",
 			"points": "points",

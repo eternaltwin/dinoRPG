@@ -1,53 +1,89 @@
-<template class="profil">
-	<div class="profil">
-		<h3>
-			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-			{{ $t(`myAccount.profil`) }}
-			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-		</h3>
-		<dl>
-			<dt>
-				{{ $t(`myAccount.dinoz`) }}
-			</dt>
-			<dd>
-				{{ accountData.dinozCount }}
-			</dd>
-			<dt>
-				{{ $t(`myAccount.ranking`) }}
-			</dt>
-			<dd>
-				<a v-if="playerPosition" href="/ranking" @click="goToRankingPage">{{ playerPosition }}</a>
-				({{ accountData.pointCount }} points)
-			</dd>
-			<dt>
-				{{ $t(`myAccount.inscription`) }}
-			</dt>
-			<dd>
-				{{ accountData.subscribeAt }}
-			</dd>
-			<dt v-if="accountData.clan">
-				{{ $t(`myAccount.clan`) }}
-			</dt>
-			<dd v-if="accountData.clan">
-				<a @click="goToClan(accountData.clan.id)">{{ accountData.clan.name }}</a>
-			</dd>
-			<dt>
-				{{ $t(`myAccount.completion`) }}
-			</dt>
-			<dd>{{ accountData.completion.toFixed(2) }} %</dd>
-		</dl>
-		<div class="profilContent" v-if="!isEditOn">
-			<div v-html="customText" class="contentTexte" />
+<template>
+	<transition name="fade">
+		<!--		<div class="profil" :style="{ display: option ? 'none' : '' }">-->
+		<div class="profil" v-if="!option">
+			<h3>
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				{{ $t(`myAccount.profil`) }}
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			</h3>
+			<dl>
+				<dt>
+					{{ $t(`myAccount.dinoz`) }}
+				</dt>
+				<dd>
+					{{ accountData.dinozCount }}
+				</dd>
+				<dt>
+					{{ $t(`myAccount.ranking`) }}
+				</dt>
+				<dd>
+					<a v-if="playerPosition" href="/ranking" @click="goToRankingPage">{{ playerPosition }}</a>
+					({{ accountData.pointCount }} points)
+				</dd>
+				<dt>
+					{{ $t(`myAccount.inscription`) }}
+				</dt>
+				<dd>
+					{{ accountData.subscribeAt }}
+				</dd>
+				<dt v-if="accountData.clan">
+					{{ $t(`myAccount.clan`) }}
+				</dt>
+				<dd v-if="accountData.clan">
+					<a @click="goToClan(accountData.clan.id)">{{ accountData.clan.name }}</a>
+				</dd>
+				<dt>
+					{{ $t(`myAccount.completion`) }}
+				</dt>
+				<dd>{{ accountData.completion.toFixed(2) }} %</dd>
+			</dl>
+			<div class="profilContent" v-if="!isEditOn">
+				<div v-html="customText" class="contentTexte" />
+			</div>
+			<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
+			<div class="buttonLand" v-if="isMyAccount()">
+				<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
+				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
+				<DZButton @click="option = true">{{ $t(`myAccount.editAccount`) }}</DZButton>
+				<DZButton v-if="hasPDA()">{{ $t(`myAccount.quest`) }}</DZButton>
+				<DZButton @click="goLB()">{{ $t(`myAccount.labrute`) }}</DZButton>
+			</div>
 		</div>
-		<textarea v-if="isEditOn" v-model="customTextEdit" class="editTexte" />
-		<div class="buttonLand" v-if="isMyAccount()">
-			<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
-			<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
-			<DZButton>{{ $t(`myAccount.editAccount`) }}</DZButton>
-			<DZButton v-if="hasPDA()">{{ $t(`myAccount.quest`) }}</DZButton>
-			<DZButton @click="goLB()">{{ $t(`myAccount.labrute`) }}</DZButton>
+		<div class="profil" v-else>
+			<h3>
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				{{ $t(`myAccount.options.title`) }}
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			</h3>
+			<dl>
+				<dt>
+					{{ $t(`myAccount.options.todo`) }}
+				</dt>
+				<dd></dd>
+				<dt>
+					{{ $t(`myAccount.options.todo`) }}
+				</dt>
+				<dd></dd>
+				<dt>
+					{{ $t(`myAccount.options.todo`) }}
+				</dt>
+				<dd></dd>
+				<dt>
+					{{ $t(`myAccount.options.todo`) }}
+				</dt>
+				<dd></dd>
+				<dt>
+					{{ $t(`myAccount.options.todo`) }}
+				</dt>
+				<dd></dd>
+			</dl>
+			<div class="buttonLand" v-if="isMyAccount()">
+				<DZButton @click="resetAccount()">{{ $t(`myAccount.options.reset`) }}</DZButton>
+				<DZButton @click="option = false">{{ $t(`myAccount.options.retour`) }}</DZButton>
+			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script lang="ts">
@@ -56,7 +92,7 @@ import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { playerStore } from '../../store/index.js';
+import { dinozStore, localStore, playerStore } from '../../store/index.js';
 import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -67,12 +103,13 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			openPopinImport: false as boolean,
 			isEditOn: false as boolean,
 			customText: this.accountData?.customText as string | null,
 			customTextEdit: this.accountData?.customText as string | null,
-			channel: import.meta.env.VITE_API_RELEASE_CHANNEL as string,
-			playerPosition: null as number | null
+			playerPosition: null as number | null,
+			option: false as boolean,
+			localStore: localStore(),
+			dinozStore: dinozStore()
 		};
 	},
 	components: {
@@ -88,14 +125,26 @@ export default defineComponent({
 		hasPlume(): boolean {
 			return this.accountData!.epicRewards.includes(Reward.PLUME);
 		},
+		async resetAccount() {
+			const res: boolean = confirm(this.$t('popup.confirm'));
+			if (res) {
+				try {
+					await PlayerService.resetAccount();
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+				this.localStore.setJwt(undefined);
+				this.dinozStore.$reset();
+				this.playerStore.$reset();
+				this.$router.go(0);
+			}
+		},
 		hasPDA(): boolean {
 			return this.accountData!.epicRewards.includes(Reward.PDA);
 		},
 		isMyAccount(): boolean {
 			return this.playerStore.getPlayerId === parseInt(this.$route.params.id as string);
-		},
-		closePopin(): void {
-			this.openPopinImport = false;
 		},
 		async goLB(): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -169,7 +218,6 @@ export default defineComponent({
 		url('../../assets/design/info_footer.webp') no-repeat,
 		url('../../assets/design/info_center.webp') repeat-y;
 	background-position-y: top, bottom;
-	height: auto;
 	width: 305px;
 	margin-bottom: 10px;
 	margin-top: 9px;
@@ -199,7 +247,7 @@ export default defineComponent({
 		dt {
 			float: left;
 			position: relative;
-			width: 85px;
+			width: 135px;
 			height: 19px;
 			font-weight: bold;
 			font-size: 9pt;
@@ -315,5 +363,15 @@ export default defineComponent({
 		color: white !important;
 		background-color: #b0dd00 !important;
 	}
+}
+
+.fade-enter-active {
+	transition: all 1s 0.2s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	transform: rotateY(-180deg);
+	opacity: 0;
 }
 </style>
