@@ -10,6 +10,7 @@ import { initI18n } from './i18n/index.js';
 import ToastPlugin from 'vue-toast-notification';
 import Loading from './components/utils/Loading.vue';
 import CKEditor from '@ckeditor/ckeditor5-vue';
+import clickOutside from './directives/clickOutside.js';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -39,6 +40,7 @@ app.use(router);
 app.mixin(mixin);
 app.use(VueTippy, vueTippyProps);
 app.use(ToastPlugin, vueToastProps);
+app.directive('clickOutside', clickOutside);
 
 app.component('Loading', Loading);
 

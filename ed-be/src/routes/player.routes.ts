@@ -11,6 +11,7 @@ import {
 	getAccountData,
 	getCommonData,
 	getDinozList,
+	playerToolTip,
 	searchPlayers,
 	setCustomText
 } from '../business/playerService.js';
@@ -304,6 +305,44 @@ routes.get(`${commonPath}/labrute`, [], async (req: Request, res: Response) => {
 
 	try {
 		const response = await checkLB(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+/**
+ * @openapi
+ * /api/v1/player/smallMenu/:id:
+ *   get:
+ *     summary: Get informations for tooltip player menu
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Eternaltwin
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         required: true
+ *         description: drpg id of the player
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
+routes.get(`${commonPath}/smallMenu/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await playerToolTip(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

@@ -15,6 +15,20 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	return player;
 }
 
+export async function getToolTipInfos(playerid: number) {
+	return await prisma.player.findUnique({
+		where: {
+			id: playerid
+		},
+		select: {
+			id: true,
+			eternalTwinId: true,
+			name: true,
+			customText: true
+		}
+	});
+}
+
 export async function auth(request: Request) {
 	const {
 		headers: { authorization }
