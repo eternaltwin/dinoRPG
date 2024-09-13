@@ -3,7 +3,7 @@ import { Condition } from '../models/npc/NpcConditions.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { PlayerForConditionCheck } from '../constants.mjs';
 import dayjs from 'dayjs';
-import { ExpectedError } from '../utils/errorFormator.mjs';
+import { ExpectedError } from '../utils/ExpectedError.mjs';
 import prand from 'pure-rand';
 
 export function conditionParser(condition: Condition, player: PlayerForConditionCheck, activeDinoz: number): boolean {

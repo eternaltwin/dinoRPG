@@ -23,15 +23,7 @@ import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import {
-	backpackSlot,
-	heal,
-	initializeDinoz,
-	learnNextSphereSkill,
-	resurrect,
-	useRice
-} from '@drpg/core/utils/DinozUtils';
+import { backpackSlot, initializeDinoz, learnNextSphereSkill, useRice } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -515,3 +507,26 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		return { itemId: item.itemId };
 	});
 }
+
+export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: number) => {
+	const lifeMissing = dinoz.maxLife - dinoz.life; // Calculer la quantité de points de vie manquants
+	const lifeHealed = Math.min(lifeToAdd, lifeMissing); // Utiliser le plus petit des deux nombres
+	if (lifeHealed === 0) throw new ExpectedError('AlreadyAtMaxHealth');
+	if (dinoz.life === 0) throw new ExpectedError('DinozIsDead');
+	dinoz.life += Math.round(lifeHealed);
+	return {
+		id: dinoz.id,
+		life: dinoz.life
+	};
+};
+
+export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
+	if (dinoz.life > 0) {
+		throw new ExpectedError('DinozNotDead');
+	}
+	dinoz.life = 1;
+	return {
+		id: dinoz.id,
+		life: dinoz.life
+	};
+};

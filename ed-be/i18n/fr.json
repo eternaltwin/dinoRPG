@@ -27,5 +27,8 @@
   "existingNameClan": "Un clan portant ce nom existe déjà.",
   "alreadyOffer": "Vous avez déjà une vente en cours.",
   "bidsOngoing": "Vous avez encore des enchères en cours",
-  "inClan": "Vous appartenez toujours à un clan."
+  "inClan": "Vous appartenez toujours à un clan.",
+  "AlreadyAtMaxHealth": "Votre dinoz a déjà sa vie au maximum.",
+  "DinozIsDead": "Votre dinoz est mort.",
+  "DinozNotDead": "Votre dinoz n'est pas mort."
 }
