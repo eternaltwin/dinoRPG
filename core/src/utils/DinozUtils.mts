@@ -27,7 +27,7 @@ import { DinozFicheLite } from '../models/dinoz/DinozFicheLite.mjs';
 import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
-import { ErrorFormator, ExpectedError } from './errorFormator.mjs';
+import { ExpectedError } from './ExpectedError.mjs';
 import { PlaceEnum } from '../models/enums/PlaceEnum.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
@@ -352,17 +352,6 @@ export const getNumberOfGatheringTries = (
 	return gridData.minimumClick + click;
 };
 
-export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
-	if (dinoz.life > 0) {
-		throw new ErrorFormator(400, 'DinozNotDead');
-	}
-	dinoz.life = 1;
-	return {
-		id: dinoz.id,
-		life: dinoz.life
-	};
-};
-
 export const initializeDinoz = (
 	race: DinozRace,
 	playerId: number,
@@ -476,18 +465,6 @@ export const useRice = (dinoz: Pick<Dinoz, 'id'>) => {
 		name: '?',
 		experience: 0,
 		canChangeName: true
-	};
-};
-
-export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: number) => {
-	const lifeMissing = dinoz.maxLife - dinoz.life; // Calculer la quantité de points de vie manquants
-	const lifeHealed = Math.min(lifeToAdd, lifeMissing); // Utiliser le plus petit des deux nombres
-	if (lifeHealed === 0) throw new ErrorFormator(400, 'AlreadyAtMaxHealth');
-	if (dinoz.life === 0) throw new ErrorFormator(400, 'DinozIsDead');
-	dinoz.life += Math.round(lifeHealed);
-	return {
-		id: dinoz.id,
-		life: dinoz.life
 	};
 };
 
