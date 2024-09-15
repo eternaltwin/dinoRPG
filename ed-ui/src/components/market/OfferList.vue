@@ -15,9 +15,17 @@
 			<th>{{ $t('market.details') }}</th>
 			<th class="bid-action-header"></th>
 		</tr>
-
-		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
+		<OfferLine v-for="offer in paginatedOffers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
 	</DZTable>
+	<tr class="pagination-controls">
+		<button @click="previousPage" :disabled="currentPage === 1">
+			<img class="left" src="/src/assets/button/button-back-arrow.webp" />
+		</button>
+		<span>{{ currentPage }} / {{ totalPages }}</span>
+		<button @click="nextPage" :disabled="currentPage === totalPages">
+			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
+		</button>
+	</tr>
 	<DZDisclaimer help content="market.currency" />
 </template>
 
@@ -42,7 +50,9 @@ export default defineComponent({
 		return {
 			now: Math.ceil(new Date().getTime() / 1000),
 			offers: [] as OfferFromGetOffers[],
-			filter: 'all'
+			filter: 'all',
+			currentPage: 1,
+			offersPerPage: 10
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
@@ -62,6 +72,7 @@ export default defineComponent({
 			// Fetch data
 			try {
 				this.offers = this.formatOffers(await OfferService.getList(this.filter));
+				this.currentPage = 1;
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
@@ -74,11 +85,30 @@ export default defineComponent({
 		},
 		updateOffer(offer: OfferFromGetOffers) {
 			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));
+		},
+		previousPage() {
+			if (this.currentPage > 1) {
+				this.currentPage--;
+			}
+		},
+		nextPage() {
+			if (this.currentPage < this.totalPages) {
+				this.currentPage++;
+			}
+		}
+	},
+	computed: {
+		paginatedOffers() {
+			const start = (this.currentPage - 1) * this.offersPerPage;
+			const end = start + this.offersPerPage;
+			return this.offers.slice(start, end);
+		},
+		totalPages() {
+			return Math.ceil(this.offers.length / this.offersPerPage);
 		}
 	},
 	async mounted() {
 		await this.fetchOffers();
-
 		// Update time every second
 		setInterval(() => {
 			this.now = Math.ceil(new Date().getTime() / 1000);
@@ -88,15 +118,43 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+select {
+	background-color: #bc683c;
+	border: none;
+	color: #fce3bc;
+	font-weight: bold;
+}
 .dinoz-header {
 	width: 50px;
 }
-
 .items-header {
 	width: 187px;
 }
-
 .bid-action-header {
 	width: 80px;
+}
+.pagination-controls {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	button {
+		background-color: transparent;
+		margin: 0 10px;
+		padding: 5px 10px;
+		border: none;
+		cursor: pointer;
+		&:disabled {
+			cursor: not-allowed;
+		}
+		.left,
+		.right {
+			height: auto;
+			width: 10px;
+		}
+		.right {
+			transform: rotate(180deg);
+		}
+	}
 }
 </style>
