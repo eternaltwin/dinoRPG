@@ -16,9 +16,17 @@
 			<th></th>
 			<th></th>
 		</tr>
-
-		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" />
+		<OfferLine v-for="offer in paginatedOffers" :key="offer.id" :offer="offer" :now="now" />
 	</DZTable>
+	<tr class="pagination-controls">
+		<button @click="previousPage" :disabled="currentPage === 1">
+			<img class="left" src="/src/assets/button/button-back-arrow.webp" />
+		</button>
+		<span>{{ currentPage }} / {{ totalPages }}</span>
+		<button @click="nextPage" :disabled="currentPage === totalPages">
+			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
+		</button>
+	</tr>
 </template>
 
 <script lang="ts">
@@ -42,26 +50,31 @@ export default defineComponent({
 		return {
 			now: Math.ceil(new Date().getTime() / 1000),
 			offers: [] as EnhancedOffer[],
-			filter: 'all'
+			filter: 'all',
+			currentPage: 1,
+			offersPerPage: 10
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
 	methods: {
 		// Transform endDate to Date type and add item names
 		formatOffers(offers: OfferFromGetOffers[]): EnhancedOffer[] {
-			return offers.map(offer => ({
-				...offer,
-				endDate: new Date(offer.endDate),
-				items: offer.items.map(item => ({
-					...item,
-					name: item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]
+			return offers
+				.map(offer => ({
+					...offer,
+					endDate: new Date(offer.endDate),
+					items: offer.items.map(item => ({
+						...item,
+						name: item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]
+					}))
 				}))
-			}));
+				.sort((a, b) => b.endDate.getTime() - a.endDate.getTime()); // Sort by endDate (descending)
 		},
 		async fetchOffers() {
 			// Fetch data
 			try {
 				this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true));
+				this.currentPage = 1;
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
@@ -69,8 +82,27 @@ export default defineComponent({
 		},
 		async changeFilter(event: Event) {
 			this.filter = (event.target as HTMLSelectElement).value;
-
 			await this.fetchOffers();
+		},
+		previousPage() {
+			if (this.currentPage > 1) {
+				this.currentPage--;
+			}
+		},
+		nextPage() {
+			if (this.currentPage < this.totalPages) {
+				this.currentPage++;
+			}
+		}
+	},
+	computed: {
+		paginatedOffers() {
+			const start = (this.currentPage - 1) * this.offersPerPage;
+			const end = start + this.offersPerPage;
+			return this.offers.slice(start, end);
+		},
+		totalPages() {
+			return Math.ceil(this.offers.length / this.offersPerPage);
 		}
 	},
 	async mounted() {
@@ -85,11 +117,40 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+select {
+	background-color: #bc683c;
+	border: none;
+	color: #fce3bc;
+	font-weight: bold;
+}
 .dinoz-header {
 	width: 50px;
 }
-
 .items-header {
 	width: 187px;
+}
+.pagination-controls {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	button {
+		background-color: transparent;
+		margin: 0 10px;
+		padding: 5px 10px;
+		border: none;
+		cursor: pointer;
+		&:disabled {
+			cursor: not-allowed;
+		}
+		.left,
+		.right {
+			height: auto;
+			width: 10px;
+		}
+		.right {
+			transform: rotate(180deg);
+		}
+	}
 }
 </style>

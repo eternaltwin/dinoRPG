@@ -251,13 +251,12 @@ export default defineComponent({
 }
 .dinoz {
 	position: relative;
-
 	&.has-dinoz {
 		&:before {
 			content: attr(data-dinoz-level);
 			display: block;
 			position: absolute;
-			top: -6px;
+			top: 0px;
 			left: -4px;
 			border: 1px solid #ffee92;
 			background-color: #c2381a;
@@ -266,32 +265,26 @@ export default defineComponent({
 		}
 	}
 }
-
 .dinoz-details {
 	.race {
 		font-variant: small-caps;
 	}
-
 	.status {
 		list-style-type: none;
 		margin-left: 12px;
-
 		li {
 			display: inline-block;
-
 			&:not(:last-child) {
 				margin-right: 1px;
 			}
 		}
 	}
-
 	.stats {
 		list-style-type: none;
 		margin-left: 4px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-around;
-
 		li {
 			position: relative;
 			display: inline-flex;
@@ -304,11 +297,9 @@ export default defineComponent({
 			letter-spacing: -0.2pt;
 			z-index: 2;
 			padding-right: 4px;
-
 			&:not(:last-child) {
 				margin-right: 2px;
 			}
-
 			&::before {
 				content: '';
 				position: absolute;
@@ -320,30 +311,24 @@ export default defineComponent({
 				border-radius: 10px;
 				z-index: -1;
 			}
-
 			& > img {
 				width: 22px;
 			}
-
 			span {
 				margin-left: 2px;
 			}
 		}
 	}
-
 	.skills {
 		list-style-type: none;
 		margin-left: 12px;
 		height: 150px;
 		overflow: scroll;
-
 		li {
 			font-size: 9pt;
-
 			img {
 				margin-right: 2px;
 			}
-
 			span {
 				color: #710;
 			}
@@ -354,7 +339,6 @@ export default defineComponent({
 .items {
 	display: flex;
 	align-items: center;
-
 	& > div {
 		display: flex;
 		flex-direction: column;
@@ -362,48 +346,38 @@ export default defineComponent({
 		background-color: #bc683c;
 		margin: 1px;
 		padding: 1px;
-
 		img {
 			border: 1px solid #6e3d23;
 		}
-
 		span {
 			color: #ffee92;
 			font-size: 7pt;
 		}
 	}
 }
-
 .bid {
 	color: #52646b;
-
 	p {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-
 		&:first-letter {
 			font-size: inherit;
 		}
-
 		& > span:last-child {
 			text-align: right;
 		}
-
 		.user {
 			margin-left: 5px;
 		}
-
 		.bid-value {
 			font-weight: bold;
-
 			& + img {
 				margin-left: 3px;
 				margin-right: 3px;
 			}
 		}
 	}
-
 	.time {
 		display: flex;
 		align-items: center;
@@ -413,7 +387,6 @@ export default defineComponent({
 		margin-bottom: 3px;
 		padding-right: 4px;
 		border-radius: 7px;
-
 		img {
 			margin-right: 5px;
 		}
@@ -422,16 +395,13 @@ export default defineComponent({
 
 .bid-action {
 	text-align: center;
-
 	input {
 		display: inline-block;
 		margin-bottom: 5px;
 	}
-
 	:deep(a span) {
 		display: flex;
 		align-items: center;
-
 		img {
 			margin-left: 3px;
 		}

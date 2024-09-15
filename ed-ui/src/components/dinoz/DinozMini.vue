@@ -11,7 +11,7 @@ export default defineComponent({
 	props: {
 		display: { type: String, required: true },
 		width: { type: Number, default: 45 },
-		height: { type: Number, default: 45 },
+		height: { type: Number, default: 50 },
 		flip: { type: Boolean, default: false }
 	},
 	data() {
