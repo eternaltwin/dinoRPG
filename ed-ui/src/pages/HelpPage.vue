@@ -26,7 +26,7 @@
 				<h3 class="titleSection">{{ section.name }}</h3>
 				<ul v-if="section.texts" class="textContent">
 					<li v-for="(text, i) in section.texts" :key="i">
-						<p v-html="formatContent(text)"></p>
+						<p v-html="formatContent(text)" />
 					</li>
 				</ul>
 				<img
@@ -38,7 +38,7 @@
 				<ul v-if="section.listItems" class="listItemsContent">
 					<li v-for="(item, i) in section.listItems" :key="i">
 						<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
-						<span v-html="formatContent(item.text)"></span>
+						<span v-html="formatContent(item.text)" />
 					</li>
 				</ul>
 			</div>
@@ -451,7 +451,8 @@ export default defineComponent({
 								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions3') },
 								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions4') },
 								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions5') },
-								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions6') }
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions6') },
+								{ imageUrl: { path: 'design', name: 'info_button' }, text: this.$t('guide.text.questions7') }
 							]
 						}
 					],
@@ -537,6 +538,7 @@ export default defineComponent({
 			color: rgb(142, 62, 38);
 			cursor: pointer;
 			font-variant: small-caps;
+			font-weight: bold;
 			list-style: none;
 			margin-top: 6px;
 			margin-left: 6px;
@@ -558,6 +560,12 @@ export default defineComponent({
 .showContent {
 	.content {
 		margin-top: 20px;
+		:deep(strong) {
+			color: rgb(142, 62, 38);
+		}
+		:deep(i) {
+			color: rgb(142, 62, 38);
+		}
 		.sectionContent {
 			margin-top: 15px;
 			margin-left: 10px;
