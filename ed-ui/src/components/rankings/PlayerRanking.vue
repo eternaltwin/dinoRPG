@@ -58,7 +58,7 @@ import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { playerStore } from '../../store/index.js';
-import PlayerMenu from '../common/PlayerMenu.vue';
+import PlayerMenu from '../modal/PlayerMenu.vue';
 import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({

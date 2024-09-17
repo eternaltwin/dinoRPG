@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import PlayerMenu from './PlayerMenu.vue';
+import PlayerMenu from '../modal/PlayerMenu.vue';
 import { Player } from '@drpg/core/models/player/Player';
 
 export default defineComponent({

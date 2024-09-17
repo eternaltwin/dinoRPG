@@ -45,6 +45,18 @@
 	src: url('../assets/font/128_Verdana.woff');
 }
 
+html {
+	font-size: 10px;
+}
+
+.bold {
+	font-weight: 700;
+}
+
+.white {
+	color: white !important;
+}
+
 #menu {
 	position: absolute;
     z-index: 2;

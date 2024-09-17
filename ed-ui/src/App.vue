@@ -1,9 +1,12 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.default')" />
+	<div id="dynamic">
+		<Report />
+		<Spinner />
+		<ErrorMessage />
+	</div>
 	<RouterView />
-	<Spinner />
 	<FooterComp />
-	<ErrorMessage />
 	<Toast />
 	<div class="impact verdana"></div>
 </template>
@@ -15,6 +18,7 @@ import FooterComp from './components/utils/Footer.vue';
 import Spinner from './components/utils/Spinner.vue';
 import ErrorMessage from './components/utils/ErrorMessage.vue';
 import Toast from './components/utils/Toast.vue';
+import Report from './components/modal/ReportModal.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -23,7 +27,8 @@ export default defineComponent({
 		FooterComp,
 		Spinner,
 		ErrorMessage,
-		Toast
+		Toast,
+		Report
 	}
 });
 </script>
@@ -36,5 +41,15 @@ export default defineComponent({
 .verdana {
 	font-family: 'Verdana';
 	display: none;
+}
+#dynamic {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	align-items: center;
+	position: absolute;
+	height: 100%;
+	flex-direction: column;
+	gap: 74px;
 }
 </style>

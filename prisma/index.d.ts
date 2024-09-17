@@ -243,6 +243,11 @@ export type ClanMember = $Result.DefaultSelection<Prisma.$ClanMemberPayload>
  * 
  */
 export type ClanPage = $Result.DefaultSelection<Prisma.$ClanPagePayload>
+/**
+ * Model Moderation
+ * 
+ */
+export type Moderation = $Result.DefaultSelection<Prisma.$ModerationPayload>
 
 /**
  * Enums
@@ -325,6 +330,17 @@ export const LogType: {
 
 export type LogType = (typeof LogType)[keyof typeof LogType]
 
+
+export const ModerationReason: {
+  multi: 'multi',
+  dinozName: 'dinozName',
+  accountName: 'accountName',
+  avatar: 'avatar',
+  customText: 'customText'
+};
+
+export type ModerationReason = (typeof ModerationReason)[keyof typeof ModerationReason]
+
 }
 
 export type UnavailableReason = $Enums.UnavailableReason
@@ -346,6 +362,10 @@ export const OfferStatus: typeof $Enums.OfferStatus
 export type LogType = $Enums.LogType
 
 export const LogType: typeof $Enums.LogType
+
+export type ModerationReason = $Enums.ModerationReason
+
+export const ModerationReason: typeof $Enums.ModerationReason
 
 /**
  * ##  Prisma Client ʲˢ
@@ -930,6 +950,16 @@ export class PrismaClient<
     * ```
     */
   get clanPage(): Prisma.ClanPageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.moderation`: Exposes CRUD operations for the **Moderation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Moderations
+    * const moderations = await prisma.moderation.findMany()
+    * ```
+    */
+  get moderation(): Prisma.ModerationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1452,7 +1482,8 @@ export namespace Prisma {
     ClanMessage: 'ClanMessage',
     ClanHistory: 'ClanHistory',
     ClanMember: 'ClanMember',
-    ClanPage: 'ClanPage'
+    ClanPage: 'ClanPage',
+    Moderation: 'Moderation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1468,7 +1499,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "importedDinoz" | "importedDinozSkill" | "importedDinozStatus" | "importedPlayer" | "importedPlayerIngredient" | "importedPlayerItem" | "importedPlayerReward" | "importedPlayerScenario" | "importedTwinoidAchievement" | "importedTwinoidSite" | "importedTwinoidStat" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "importedDinoz" | "importedDinozSkill" | "importedDinozStatus" | "importedPlayer" | "importedPlayerIngredient" | "importedPlayerItem" | "importedPlayerReward" | "importedPlayerScenario" | "importedTwinoidAchievement" | "importedTwinoidSite" | "importedTwinoidStat" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4692,6 +4723,76 @@ export namespace Prisma {
           }
         }
       }
+      Moderation: {
+        payload: Prisma.$ModerationPayload<ExtArgs>
+        fields: Prisma.ModerationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ModerationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ModerationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>
+          }
+          findFirst: {
+            args: Prisma.ModerationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ModerationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>
+          }
+          findMany: {
+            args: Prisma.ModerationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>[]
+          }
+          create: {
+            args: Prisma.ModerationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>
+          }
+          createMany: {
+            args: Prisma.ModerationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ModerationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>[]
+          }
+          delete: {
+            args: Prisma.ModerationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>
+          }
+          update: {
+            args: Prisma.ModerationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ModerationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ModerationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ModerationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModerationPayload>
+          }
+          aggregate: {
+            args: Prisma.ModerationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateModeration>
+          }
+          groupBy: {
+            args: Prisma.ModerationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ModerationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ModerationCountArgs<ExtArgs>
+            result: $Utils.Optional<ModerationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4822,6 +4923,7 @@ export namespace Prisma {
     clanHistory?: ClanHistoryOmit
     clanMember?: ClanMemberOmit
     clanPage?: ClanPageOmit
+    moderation?: ModerationOmit
   }
 
   /* Types for Logging */
@@ -4957,6 +5059,7 @@ export namespace Prisma {
     followers: number
     logs: number
     catches: number
+    Moderation: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4971,6 +5074,7 @@ export namespace Prisma {
     followers?: boolean | DinozCountOutputTypeCountFollowersArgs
     logs?: boolean | DinozCountOutputTypeCountLogsArgs
     catches?: boolean | DinozCountOutputTypeCountCatchesArgs
+    Moderation?: boolean | DinozCountOutputTypeCountModerationArgs
   }
 
   // Custom InputTypes
@@ -5059,6 +5163,13 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountCatchesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozCatchWhereInput
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountModerationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModerationWhereInput
   }
 
 
@@ -5222,6 +5333,8 @@ export namespace Prisma {
     playerTracking: number
     ClanMessage: number
     ClanHistory: number
+    reportedCases: number
+    targetedCases: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5242,6 +5355,8 @@ export namespace Prisma {
     playerTracking?: boolean | PlayerCountOutputTypeCountPlayerTrackingArgs
     ClanMessage?: boolean | PlayerCountOutputTypeCountClanMessageArgs
     ClanHistory?: boolean | PlayerCountOutputTypeCountClanHistoryArgs
+    reportedCases?: boolean | PlayerCountOutputTypeCountReportedCasesArgs
+    targetedCases?: boolean | PlayerCountOutputTypeCountTargetedCasesArgs
   }
 
   // Custom InputTypes
@@ -5372,6 +5487,20 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountClanHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ClanHistoryWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountReportedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModerationWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountTargetedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModerationWhereInput
   }
 
 
@@ -6986,6 +7115,7 @@ export namespace Prisma {
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
+    Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -7070,6 +7200,7 @@ export namespace Prisma {
     followers?: boolean | Dinoz$followersArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
+    Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7095,6 +7226,7 @@ export namespace Prisma {
       followers: Prisma.$DinozPayload<ExtArgs>[]
       logs: Prisma.$LogPayload<ExtArgs>[]
       catches: Prisma.$DinozCatchPayload<ExtArgs>[]
+      Moderation: Prisma.$ModerationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7503,6 +7635,7 @@ export namespace Prisma {
     followers<T extends Dinoz$followersArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$followersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Moderation<T extends Dinoz$ModerationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$ModerationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8245,6 +8378,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.Moderation
+   */
+  export type Dinoz$ModerationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    where?: ModerationWhereInput
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    cursor?: ModerationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
   }
 
   /**
@@ -29859,6 +30016,8 @@ export namespace Prisma {
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanJoinRequest?: boolean | Player$ClanJoinRequestArgs<ExtArgs>
+    reportedCases?: boolean | Player$reportedCasesArgs<ExtArgs>
+    targetedCases?: boolean | Player$targetedCasesArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -29940,6 +30099,8 @@ export namespace Prisma {
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanJoinRequest?: boolean | Player$ClanJoinRequestArgs<ExtArgs>
+    reportedCases?: boolean | Player$reportedCasesArgs<ExtArgs>
+    targetedCases?: boolean | Player$targetedCasesArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -29969,6 +30130,8 @@ export namespace Prisma {
       ClanHistory: Prisma.$ClanHistoryPayload<ExtArgs>[]
       leaderOf: Prisma.$ClanPayload<ExtArgs> | null
       ClanJoinRequest: Prisma.$ClanJoinRequestPayload<ExtArgs> | null
+      reportedCases: Prisma.$ModerationPayload<ExtArgs>[]
+      targetedCases: Prisma.$ModerationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -30381,6 +30544,8 @@ export namespace Prisma {
     ClanHistory<T extends Player$ClanHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     leaderOf<T extends Player$leaderOfArgs<ExtArgs> = {}>(args?: Subset<T, Player$leaderOfArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     ClanJoinRequest<T extends Player$ClanJoinRequestArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanJoinRequestArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    reportedCases<T extends Player$reportedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$reportedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    targetedCases<T extends Player$targetedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$targetedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31297,6 +31462,54 @@ export namespace Prisma {
      */
     include?: ClanJoinRequestInclude<ExtArgs> | null
     where?: ClanJoinRequestWhereInput
+  }
+
+  /**
+   * Player.reportedCases
+   */
+  export type Player$reportedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    where?: ModerationWhereInput
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    cursor?: ModerationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
+  }
+
+  /**
+   * Player.targetedCases
+   */
+  export type Player$targetedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    where?: ModerationWhereInput
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    cursor?: ModerationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
   }
 
   /**
@@ -55377,6 +55590,1094 @@ export namespace Prisma {
 
 
   /**
+   * Model Moderation
+   */
+
+  export type AggregateModeration = {
+    _count: ModerationCountAggregateOutputType | null
+    _avg: ModerationAvgAggregateOutputType | null
+    _sum: ModerationSumAggregateOutputType | null
+    _min: ModerationMinAggregateOutputType | null
+    _max: ModerationMaxAggregateOutputType | null
+  }
+
+  export type ModerationAvgAggregateOutputType = {
+    id: number | null
+    reporterId: number | null
+    targetId: number | null
+    dinozId: number | null
+  }
+
+  export type ModerationSumAggregateOutputType = {
+    id: number | null
+    reporterId: number | null
+    targetId: number | null
+    dinozId: number | null
+  }
+
+  export type ModerationMinAggregateOutputType = {
+    id: number | null
+    reporterId: number | null
+    targetId: number | null
+    dinozId: number | null
+    reason: $Enums.ModerationReason | null
+    comment: string | null
+    sorted: boolean | null
+  }
+
+  export type ModerationMaxAggregateOutputType = {
+    id: number | null
+    reporterId: number | null
+    targetId: number | null
+    dinozId: number | null
+    reason: $Enums.ModerationReason | null
+    comment: string | null
+    sorted: boolean | null
+  }
+
+  export type ModerationCountAggregateOutputType = {
+    id: number
+    reporterId: number
+    targetId: number
+    dinozId: number
+    reason: number
+    comment: number
+    sorted: number
+    _all: number
+  }
+
+
+  export type ModerationAvgAggregateInputType = {
+    id?: true
+    reporterId?: true
+    targetId?: true
+    dinozId?: true
+  }
+
+  export type ModerationSumAggregateInputType = {
+    id?: true
+    reporterId?: true
+    targetId?: true
+    dinozId?: true
+  }
+
+  export type ModerationMinAggregateInputType = {
+    id?: true
+    reporterId?: true
+    targetId?: true
+    dinozId?: true
+    reason?: true
+    comment?: true
+    sorted?: true
+  }
+
+  export type ModerationMaxAggregateInputType = {
+    id?: true
+    reporterId?: true
+    targetId?: true
+    dinozId?: true
+    reason?: true
+    comment?: true
+    sorted?: true
+  }
+
+  export type ModerationCountAggregateInputType = {
+    id?: true
+    reporterId?: true
+    targetId?: true
+    dinozId?: true
+    reason?: true
+    comment?: true
+    sorted?: true
+    _all?: true
+  }
+
+  export type ModerationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Moderation to aggregate.
+     */
+    where?: ModerationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Moderations to fetch.
+     */
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ModerationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Moderations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Moderations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Moderations
+    **/
+    _count?: true | ModerationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ModerationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ModerationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ModerationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ModerationMaxAggregateInputType
+  }
+
+  export type GetModerationAggregateType<T extends ModerationAggregateArgs> = {
+        [P in keyof T & keyof AggregateModeration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateModeration[P]>
+      : GetScalarType<T[P], AggregateModeration[P]>
+  }
+
+
+
+
+  export type ModerationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModerationWhereInput
+    orderBy?: ModerationOrderByWithAggregationInput | ModerationOrderByWithAggregationInput[]
+    by: ModerationScalarFieldEnum[] | ModerationScalarFieldEnum
+    having?: ModerationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ModerationCountAggregateInputType | true
+    _avg?: ModerationAvgAggregateInputType
+    _sum?: ModerationSumAggregateInputType
+    _min?: ModerationMinAggregateInputType
+    _max?: ModerationMaxAggregateInputType
+  }
+
+  export type ModerationGroupByOutputType = {
+    id: number
+    reporterId: number
+    targetId: number
+    dinozId: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted: boolean
+    _count: ModerationCountAggregateOutputType | null
+    _avg: ModerationAvgAggregateOutputType | null
+    _sum: ModerationSumAggregateOutputType | null
+    _min: ModerationMinAggregateOutputType | null
+    _max: ModerationMaxAggregateOutputType | null
+  }
+
+  type GetModerationGroupByPayload<T extends ModerationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ModerationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ModerationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ModerationGroupByOutputType[P]>
+            : GetScalarType<T[P], ModerationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ModerationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reporterId?: boolean
+    targetId?: boolean
+    dinozId?: boolean
+    reason?: boolean
+    comment?: boolean
+    sorted?: boolean
+    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    target?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
+  }, ExtArgs["result"]["moderation"]>
+
+  export type ModerationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reporterId?: boolean
+    targetId?: boolean
+    dinozId?: boolean
+    reason?: boolean
+    comment?: boolean
+    sorted?: boolean
+    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    target?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
+  }, ExtArgs["result"]["moderation"]>
+
+  export type ModerationSelectScalar = {
+    id?: boolean
+    reporterId?: boolean
+    targetId?: boolean
+    dinozId?: boolean
+    reason?: boolean
+    comment?: boolean
+    sorted?: boolean
+  }
+
+  export type ModerationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reporterId" | "targetId" | "dinozId" | "reason" | "comment" | "sorted", ExtArgs["result"]["moderation"]>
+  export type ModerationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    target?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
+  }
+  export type ModerationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    target?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
+  }
+
+  export type $ModerationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Moderation"
+    objects: {
+      reporter: Prisma.$PlayerPayload<ExtArgs>
+      target: Prisma.$PlayerPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      reporterId: number
+      targetId: number
+      dinozId: number | null
+      reason: $Enums.ModerationReason
+      comment: string
+      sorted: boolean
+    }, ExtArgs["result"]["moderation"]>
+    composites: {}
+  }
+
+  type ModerationGetPayload<S extends boolean | null | undefined | ModerationDefaultArgs> = $Result.GetResult<Prisma.$ModerationPayload, S>
+
+  type ModerationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ModerationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: ModerationCountAggregateInputType | true
+    }
+
+  export interface ModerationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Moderation'], meta: { name: 'Moderation' } }
+    /**
+     * Find zero or one Moderation that matches the filter.
+     * @param {ModerationFindUniqueArgs} args - Arguments to find a Moderation
+     * @example
+     * // Get one Moderation
+     * const moderation = await prisma.moderation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ModerationFindUniqueArgs>(args: SelectSubset<T, ModerationFindUniqueArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Moderation that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ModerationFindUniqueOrThrowArgs} args - Arguments to find a Moderation
+     * @example
+     * // Get one Moderation
+     * const moderation = await prisma.moderation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ModerationFindUniqueOrThrowArgs>(args: SelectSubset<T, ModerationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Moderation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationFindFirstArgs} args - Arguments to find a Moderation
+     * @example
+     * // Get one Moderation
+     * const moderation = await prisma.moderation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ModerationFindFirstArgs>(args?: SelectSubset<T, ModerationFindFirstArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Moderation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationFindFirstOrThrowArgs} args - Arguments to find a Moderation
+     * @example
+     * // Get one Moderation
+     * const moderation = await prisma.moderation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ModerationFindFirstOrThrowArgs>(args?: SelectSubset<T, ModerationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Moderations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Moderations
+     * const moderations = await prisma.moderation.findMany()
+     * 
+     * // Get first 10 Moderations
+     * const moderations = await prisma.moderation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const moderationWithIdOnly = await prisma.moderation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ModerationFindManyArgs>(args?: SelectSubset<T, ModerationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Moderation.
+     * @param {ModerationCreateArgs} args - Arguments to create a Moderation.
+     * @example
+     * // Create one Moderation
+     * const Moderation = await prisma.moderation.create({
+     *   data: {
+     *     // ... data to create a Moderation
+     *   }
+     * })
+     * 
+     */
+    create<T extends ModerationCreateArgs>(args: SelectSubset<T, ModerationCreateArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Moderations.
+     * @param {ModerationCreateManyArgs} args - Arguments to create many Moderations.
+     * @example
+     * // Create many Moderations
+     * const moderation = await prisma.moderation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ModerationCreateManyArgs>(args?: SelectSubset<T, ModerationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Moderations and returns the data saved in the database.
+     * @param {ModerationCreateManyAndReturnArgs} args - Arguments to create many Moderations.
+     * @example
+     * // Create many Moderations
+     * const moderation = await prisma.moderation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Moderations and only return the `id`
+     * const moderationWithIdOnly = await prisma.moderation.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ModerationCreateManyAndReturnArgs>(args?: SelectSubset<T, ModerationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Moderation.
+     * @param {ModerationDeleteArgs} args - Arguments to delete one Moderation.
+     * @example
+     * // Delete one Moderation
+     * const Moderation = await prisma.moderation.delete({
+     *   where: {
+     *     // ... filter to delete one Moderation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ModerationDeleteArgs>(args: SelectSubset<T, ModerationDeleteArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Moderation.
+     * @param {ModerationUpdateArgs} args - Arguments to update one Moderation.
+     * @example
+     * // Update one Moderation
+     * const moderation = await prisma.moderation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ModerationUpdateArgs>(args: SelectSubset<T, ModerationUpdateArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Moderations.
+     * @param {ModerationDeleteManyArgs} args - Arguments to filter Moderations to delete.
+     * @example
+     * // Delete a few Moderations
+     * const { count } = await prisma.moderation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ModerationDeleteManyArgs>(args?: SelectSubset<T, ModerationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Moderations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Moderations
+     * const moderation = await prisma.moderation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ModerationUpdateManyArgs>(args: SelectSubset<T, ModerationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Moderation.
+     * @param {ModerationUpsertArgs} args - Arguments to update or create a Moderation.
+     * @example
+     * // Update or create a Moderation
+     * const moderation = await prisma.moderation.upsert({
+     *   create: {
+     *     // ... data to create a Moderation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Moderation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ModerationUpsertArgs>(args: SelectSubset<T, ModerationUpsertArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Moderations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationCountArgs} args - Arguments to filter Moderations to count.
+     * @example
+     * // Count the number of Moderations
+     * const count = await prisma.moderation.count({
+     *   where: {
+     *     // ... the filter for the Moderations we want to count
+     *   }
+     * })
+    **/
+    count<T extends ModerationCountArgs>(
+      args?: Subset<T, ModerationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ModerationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Moderation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ModerationAggregateArgs>(args: Subset<T, ModerationAggregateArgs>): Prisma.PrismaPromise<GetModerationAggregateType<T>>
+
+    /**
+     * Group by Moderation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModerationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ModerationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ModerationGroupByArgs['orderBy'] }
+        : { orderBy?: ModerationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ModerationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetModerationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Moderation model
+   */
+  readonly fields: ModerationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Moderation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ModerationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    reporter<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    target<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    dinoz<T extends Moderation$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Moderation$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Moderation model
+   */ 
+  interface ModerationFieldRefs {
+    readonly id: FieldRef<"Moderation", 'Int'>
+    readonly reporterId: FieldRef<"Moderation", 'Int'>
+    readonly targetId: FieldRef<"Moderation", 'Int'>
+    readonly dinozId: FieldRef<"Moderation", 'Int'>
+    readonly reason: FieldRef<"Moderation", 'ModerationReason'>
+    readonly comment: FieldRef<"Moderation", 'String'>
+    readonly sorted: FieldRef<"Moderation", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Moderation findUnique
+   */
+  export type ModerationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * Filter, which Moderation to fetch.
+     */
+    where: ModerationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation findUniqueOrThrow
+   */
+  export type ModerationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * Filter, which Moderation to fetch.
+     */
+    where: ModerationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation findFirst
+   */
+  export type ModerationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * Filter, which Moderation to fetch.
+     */
+    where?: ModerationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Moderations to fetch.
+     */
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Moderations.
+     */
+    cursor?: ModerationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Moderations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Moderations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Moderations.
+     */
+    distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation findFirstOrThrow
+   */
+  export type ModerationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * Filter, which Moderation to fetch.
+     */
+    where?: ModerationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Moderations to fetch.
+     */
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Moderations.
+     */
+    cursor?: ModerationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Moderations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Moderations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Moderations.
+     */
+    distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation findMany
+   */
+  export type ModerationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * Filter, which Moderations to fetch.
+     */
+    where?: ModerationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Moderations to fetch.
+     */
+    orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Moderations.
+     */
+    cursor?: ModerationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Moderations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Moderations.
+     */
+    skip?: number
+    distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation create
+   */
+  export type ModerationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Moderation.
+     */
+    data: XOR<ModerationCreateInput, ModerationUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation createMany
+   */
+  export type ModerationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Moderations.
+     */
+    data: ModerationCreateManyInput | ModerationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Moderation createManyAndReturn
+   */
+  export type ModerationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Moderations.
+     */
+    data: ModerationCreateManyInput | ModerationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Moderation update
+   */
+  export type ModerationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Moderation.
+     */
+    data: XOR<ModerationUpdateInput, ModerationUncheckedUpdateInput>
+    /**
+     * Choose, which Moderation to update.
+     */
+    where: ModerationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation updateMany
+   */
+  export type ModerationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Moderations.
+     */
+    data: XOR<ModerationUpdateManyMutationInput, ModerationUncheckedUpdateManyInput>
+    /**
+     * Filter which Moderations to update
+     */
+    where?: ModerationWhereInput
+  }
+
+  /**
+   * Moderation upsert
+   */
+  export type ModerationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Moderation to update in case it exists.
+     */
+    where: ModerationWhereUniqueInput
+    /**
+     * In case the Moderation found by the `where` argument doesn't exist, create a new Moderation with this data.
+     */
+    create: XOR<ModerationCreateInput, ModerationUncheckedCreateInput>
+    /**
+     * In case the Moderation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ModerationUpdateInput, ModerationUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation delete
+   */
+  export type ModerationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    /**
+     * Filter which Moderation to delete.
+     */
+    where: ModerationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Moderation deleteMany
+   */
+  export type ModerationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Moderations to delete
+     */
+    where?: ModerationWhereInput
+  }
+
+  /**
+   * Moderation.dinoz
+   */
+  export type Moderation$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+  /**
+   * Moderation without action
+   */
+  export type ModerationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -55942,6 +57243,19 @@ export namespace Prisma {
   export type ClanPageScalarFieldEnum = (typeof ClanPageScalarFieldEnum)[keyof typeof ClanPageScalarFieldEnum]
 
 
+  export const ModerationScalarFieldEnum: {
+    id: 'id',
+    reporterId: 'reporterId',
+    targetId: 'targetId',
+    dinozId: 'dinozId',
+    reason: 'reason',
+    comment: 'comment',
+    sorted: 'sorted'
+  };
+
+  export type ModerationScalarFieldEnum = (typeof ModerationScalarFieldEnum)[keyof typeof ModerationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -56119,6 +57433,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'ModerationReason'
+   */
+  export type EnumModerationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationReason'>
+    
+
+
+  /**
+   * Reference to a field of type 'ModerationReason[]'
+   */
+  export type ListEnumModerationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationReason[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -56218,6 +57546,7 @@ export namespace Prisma {
     followers?: DinozListRelationFilter
     logs?: LogListRelationFilter
     catches?: DinozCatchListRelationFilter
+    Moderation?: ModerationListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -56263,6 +57592,7 @@ export namespace Prisma {
     followers?: DinozOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
     catches?: DinozCatchOrderByRelationAggregateInput
+    Moderation?: ModerationOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -56311,6 +57641,7 @@ export namespace Prisma {
     followers?: DinozListRelationFilter
     logs?: LogListRelationFilter
     catches?: DinozCatchListRelationFilter
+    Moderation?: ModerationListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -57649,6 +58980,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryListRelationFilter
     leaderOf?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
     ClanJoinRequest?: XOR<ClanJoinRequestNullableRelationFilter, ClanJoinRequestWhereInput> | null
+    reportedCases?: ModerationListRelationFilter
+    targetedCases?: ModerationListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -57698,6 +59031,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryOrderByRelationAggregateInput
     leaderOf?: ClanOrderByWithRelationInput
     ClanJoinRequest?: ClanJoinRequestOrderByWithRelationInput
+    reportedCases?: ModerationOrderByRelationAggregateInput
+    targetedCases?: ModerationOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -57750,6 +59085,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryListRelationFilter
     leaderOf?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
     ClanJoinRequest?: XOR<ClanJoinRequestNullableRelationFilter, ClanJoinRequestWhereInput> | null
+    reportedCases?: ModerationListRelationFilter
+    targetedCases?: ModerationListRelationFilter
   }, "id" | "clanMemberId">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -59125,6 +60462,79 @@ export namespace Prisma {
     clanId?: IntWithAggregatesFilter<"ClanPage"> | number
   }
 
+  export type ModerationWhereInput = {
+    AND?: ModerationWhereInput | ModerationWhereInput[]
+    OR?: ModerationWhereInput[]
+    NOT?: ModerationWhereInput | ModerationWhereInput[]
+    id?: IntFilter<"Moderation"> | number
+    reporterId?: IntFilter<"Moderation"> | number
+    targetId?: IntFilter<"Moderation"> | number
+    dinozId?: IntNullableFilter<"Moderation"> | number | null
+    reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
+    comment?: StringFilter<"Moderation"> | string
+    sorted?: BoolFilter<"Moderation"> | boolean
+    reporter?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    target?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }
+
+  export type ModerationOrderByWithRelationInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    sorted?: SortOrder
+    reporter?: PlayerOrderByWithRelationInput
+    target?: PlayerOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type ModerationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ModerationWhereInput | ModerationWhereInput[]
+    OR?: ModerationWhereInput[]
+    NOT?: ModerationWhereInput | ModerationWhereInput[]
+    reporterId?: IntFilter<"Moderation"> | number
+    targetId?: IntFilter<"Moderation"> | number
+    dinozId?: IntNullableFilter<"Moderation"> | number | null
+    reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
+    comment?: StringFilter<"Moderation"> | string
+    sorted?: BoolFilter<"Moderation"> | boolean
+    reporter?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    target?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }, "id">
+
+  export type ModerationOrderByWithAggregationInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    sorted?: SortOrder
+    _count?: ModerationCountOrderByAggregateInput
+    _avg?: ModerationAvgOrderByAggregateInput
+    _max?: ModerationMaxOrderByAggregateInput
+    _min?: ModerationMinOrderByAggregateInput
+    _sum?: ModerationSumOrderByAggregateInput
+  }
+
+  export type ModerationScalarWhereWithAggregatesInput = {
+    AND?: ModerationScalarWhereWithAggregatesInput | ModerationScalarWhereWithAggregatesInput[]
+    OR?: ModerationScalarWhereWithAggregatesInput[]
+    NOT?: ModerationScalarWhereWithAggregatesInput | ModerationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Moderation"> | number
+    reporterId?: IntWithAggregatesFilter<"Moderation"> | number
+    targetId?: IntWithAggregatesFilter<"Moderation"> | number
+    dinozId?: IntNullableWithAggregatesFilter<"Moderation"> | number | null
+    reason?: EnumModerationReasonWithAggregatesFilter<"Moderation"> | $Enums.ModerationReason
+    comment?: StringWithAggregatesFilter<"Moderation"> | string
+    sorted?: BoolWithAggregatesFilter<"Moderation"> | boolean
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -59194,6 +60604,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -59236,6 +60647,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -59277,6 +60689,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -59319,6 +60732,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -60603,6 +62017,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -60652,6 +62068,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUpdateInput = {
@@ -60700,6 +62118,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -60749,6 +62169,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -61990,6 +63412,70 @@ export namespace Prisma {
     clanId?: IntFieldUpdateOperationsInput | number
   }
 
+  export type ModerationCreateInput = {
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    target: PlayerCreateNestedOneWithoutTargetedCasesInput
+    dinoz?: DinozCreateNestedOneWithoutModerationInput
+  }
+
+  export type ModerationUncheckedCreateInput = {
+    id?: number
+    reporterId: number
+    targetId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
+  export type ModerationUpdateInput = {
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
+    dinoz?: DinozUpdateOneWithoutModerationNestedInput
+  }
+
+  export type ModerationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ModerationCreateManyInput = {
+    id?: number
+    reporterId: number
+    targetId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
+  export type ModerationUpdateManyMutationInput = {
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ModerationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -62171,6 +63657,12 @@ export namespace Prisma {
     none?: DinozCatchWhereInput
   }
 
+  export type ModerationListRelationFilter = {
+    every?: ModerationWhereInput
+    some?: ModerationWhereInput
+    none?: ModerationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -62213,6 +63705,10 @@ export namespace Prisma {
   }
 
   export type DinozCatchOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ModerationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -64683,6 +66179,67 @@ export namespace Prisma {
     clanId?: SortOrder
   }
 
+  export type EnumModerationReasonFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationReason | EnumModerationReasonFieldRefInput<$PrismaModel>
+    in?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    not?: NestedEnumModerationReasonFilter<$PrismaModel> | $Enums.ModerationReason
+  }
+
+  export type ModerationCountOrderByAggregateInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    sorted?: SortOrder
+  }
+
+  export type ModerationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type ModerationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    sorted?: SortOrder
+  }
+
+  export type ModerationMinOrderByAggregateInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    sorted?: SortOrder
+  }
+
+  export type ModerationSumOrderByAggregateInput = {
+    id?: SortOrder
+    reporterId?: SortOrder
+    targetId?: SortOrder
+    dinozId?: SortOrder
+  }
+
+  export type EnumModerationReasonWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationReason | EnumModerationReasonFieldRefInput<$PrismaModel>
+    in?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    not?: NestedEnumModerationReasonWithAggregatesFilter<$PrismaModel> | $Enums.ModerationReason
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumModerationReasonFilter<$PrismaModel>
+    _max?: NestedEnumModerationReasonFilter<$PrismaModel>
+  }
+
   export type DinozCreateNestedManyWithoutConcentrationInput = {
     create?: XOR<DinozCreateWithoutConcentrationInput, DinozUncheckedCreateWithoutConcentrationInput> | DinozCreateWithoutConcentrationInput[] | DinozUncheckedCreateWithoutConcentrationInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutConcentrationInput | DinozCreateOrConnectWithoutConcentrationInput[]
@@ -64828,6 +66385,13 @@ export namespace Prisma {
     connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
   }
 
+  export type ModerationCreateNestedManyWithoutDinozInput = {
+    create?: XOR<ModerationCreateWithoutDinozInput, ModerationUncheckedCreateWithoutDinozInput> | ModerationCreateWithoutDinozInput[] | ModerationUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutDinozInput | ModerationCreateOrConnectWithoutDinozInput[]
+    createMany?: ModerationCreateManyDinozInputEnvelope
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -64903,6 +66467,13 @@ export namespace Prisma {
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
     createMany?: DinozCatchCreateManyDinozInputEnvelope
     connect?: DinozCatchWhereUniqueInput | DinozCatchWhereUniqueInput[]
+  }
+
+  export type ModerationUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<ModerationCreateWithoutDinozInput, ModerationUncheckedCreateWithoutDinozInput> | ModerationCreateWithoutDinozInput[] | ModerationUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutDinozInput | ModerationCreateOrConnectWithoutDinozInput[]
+    createMany?: ModerationCreateManyDinozInputEnvelope
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -65113,6 +66684,20 @@ export namespace Prisma {
     deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
   }
 
+  export type ModerationUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<ModerationCreateWithoutDinozInput, ModerationUncheckedCreateWithoutDinozInput> | ModerationCreateWithoutDinozInput[] | ModerationUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutDinozInput | ModerationCreateOrConnectWithoutDinozInput[]
+    upsert?: ModerationUpsertWithWhereUniqueWithoutDinozInput | ModerationUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: ModerationCreateManyDinozInputEnvelope
+    set?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    disconnect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    delete?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    update?: ModerationUpdateWithWhereUniqueWithoutDinozInput | ModerationUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: ModerationUpdateManyWithWhereWithoutDinozInput | ModerationUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -65265,6 +66850,20 @@ export namespace Prisma {
     update?: DinozCatchUpdateWithWhereUniqueWithoutDinozInput | DinozCatchUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: DinozCatchUpdateManyWithWhereWithoutDinozInput | DinozCatchUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: DinozCatchScalarWhereInput | DinozCatchScalarWhereInput[]
+  }
+
+  export type ModerationUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<ModerationCreateWithoutDinozInput, ModerationUncheckedCreateWithoutDinozInput> | ModerationCreateWithoutDinozInput[] | ModerationUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutDinozInput | ModerationCreateOrConnectWithoutDinozInput[]
+    upsert?: ModerationUpsertWithWhereUniqueWithoutDinozInput | ModerationUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: ModerationCreateManyDinozInputEnvelope
+    set?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    disconnect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    delete?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    update?: ModerationUpdateWithWhereUniqueWithoutDinozInput | ModerationUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: ModerationUpdateManyWithWhereWithoutDinozInput | ModerationUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -66072,6 +67671,20 @@ export namespace Prisma {
     connect?: ClanJoinRequestWhereUniqueInput
   }
 
+  export type ModerationCreateNestedManyWithoutReporterInput = {
+    create?: XOR<ModerationCreateWithoutReporterInput, ModerationUncheckedCreateWithoutReporterInput> | ModerationCreateWithoutReporterInput[] | ModerationUncheckedCreateWithoutReporterInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutReporterInput | ModerationCreateOrConnectWithoutReporterInput[]
+    createMany?: ModerationCreateManyReporterInputEnvelope
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+  }
+
+  export type ModerationCreateNestedManyWithoutTargetInput = {
+    create?: XOR<ModerationCreateWithoutTargetInput, ModerationUncheckedCreateWithoutTargetInput> | ModerationCreateWithoutTargetInput[] | ModerationUncheckedCreateWithoutTargetInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutTargetInput | ModerationCreateOrConnectWithoutTargetInput[]
+    createMany?: ModerationCreateManyTargetInputEnvelope
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -66219,6 +67832,20 @@ export namespace Prisma {
     create?: XOR<ClanJoinRequestCreateWithoutPlayerInput, ClanJoinRequestUncheckedCreateWithoutPlayerInput>
     connectOrCreate?: ClanJoinRequestCreateOrConnectWithoutPlayerInput
     connect?: ClanJoinRequestWhereUniqueInput
+  }
+
+  export type ModerationUncheckedCreateNestedManyWithoutReporterInput = {
+    create?: XOR<ModerationCreateWithoutReporterInput, ModerationUncheckedCreateWithoutReporterInput> | ModerationCreateWithoutReporterInput[] | ModerationUncheckedCreateWithoutReporterInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutReporterInput | ModerationCreateOrConnectWithoutReporterInput[]
+    createMany?: ModerationCreateManyReporterInputEnvelope
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+  }
+
+  export type ModerationUncheckedCreateNestedManyWithoutTargetInput = {
+    create?: XOR<ModerationCreateWithoutTargetInput, ModerationUncheckedCreateWithoutTargetInput> | ModerationCreateWithoutTargetInput[] | ModerationUncheckedCreateWithoutTargetInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutTargetInput | ModerationCreateOrConnectWithoutTargetInput[]
+    createMany?: ModerationCreateManyTargetInputEnvelope
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -66517,6 +68144,34 @@ export namespace Prisma {
     update?: XOR<XOR<ClanJoinRequestUpdateToOneWithWhereWithoutPlayerInput, ClanJoinRequestUpdateWithoutPlayerInput>, ClanJoinRequestUncheckedUpdateWithoutPlayerInput>
   }
 
+  export type ModerationUpdateManyWithoutReporterNestedInput = {
+    create?: XOR<ModerationCreateWithoutReporterInput, ModerationUncheckedCreateWithoutReporterInput> | ModerationCreateWithoutReporterInput[] | ModerationUncheckedCreateWithoutReporterInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutReporterInput | ModerationCreateOrConnectWithoutReporterInput[]
+    upsert?: ModerationUpsertWithWhereUniqueWithoutReporterInput | ModerationUpsertWithWhereUniqueWithoutReporterInput[]
+    createMany?: ModerationCreateManyReporterInputEnvelope
+    set?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    disconnect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    delete?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    update?: ModerationUpdateWithWhereUniqueWithoutReporterInput | ModerationUpdateWithWhereUniqueWithoutReporterInput[]
+    updateMany?: ModerationUpdateManyWithWhereWithoutReporterInput | ModerationUpdateManyWithWhereWithoutReporterInput[]
+    deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+  }
+
+  export type ModerationUpdateManyWithoutTargetNestedInput = {
+    create?: XOR<ModerationCreateWithoutTargetInput, ModerationUncheckedCreateWithoutTargetInput> | ModerationCreateWithoutTargetInput[] | ModerationUncheckedCreateWithoutTargetInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutTargetInput | ModerationCreateOrConnectWithoutTargetInput[]
+    upsert?: ModerationUpsertWithWhereUniqueWithoutTargetInput | ModerationUpsertWithWhereUniqueWithoutTargetInput[]
+    createMany?: ModerationCreateManyTargetInputEnvelope
+    set?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    disconnect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    delete?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    update?: ModerationUpdateWithWhereUniqueWithoutTargetInput | ModerationUpdateWithWhereUniqueWithoutTargetInput[]
+    updateMany?: ModerationUpdateManyWithWhereWithoutTargetInput | ModerationUpdateManyWithWhereWithoutTargetInput[]
+    deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -66803,6 +68458,34 @@ export namespace Prisma {
     delete?: ClanJoinRequestWhereInput | boolean
     connect?: ClanJoinRequestWhereUniqueInput
     update?: XOR<XOR<ClanJoinRequestUpdateToOneWithWhereWithoutPlayerInput, ClanJoinRequestUpdateWithoutPlayerInput>, ClanJoinRequestUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type ModerationUncheckedUpdateManyWithoutReporterNestedInput = {
+    create?: XOR<ModerationCreateWithoutReporterInput, ModerationUncheckedCreateWithoutReporterInput> | ModerationCreateWithoutReporterInput[] | ModerationUncheckedCreateWithoutReporterInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutReporterInput | ModerationCreateOrConnectWithoutReporterInput[]
+    upsert?: ModerationUpsertWithWhereUniqueWithoutReporterInput | ModerationUpsertWithWhereUniqueWithoutReporterInput[]
+    createMany?: ModerationCreateManyReporterInputEnvelope
+    set?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    disconnect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    delete?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    update?: ModerationUpdateWithWhereUniqueWithoutReporterInput | ModerationUpdateWithWhereUniqueWithoutReporterInput[]
+    updateMany?: ModerationUpdateManyWithWhereWithoutReporterInput | ModerationUpdateManyWithWhereWithoutReporterInput[]
+    deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+  }
+
+  export type ModerationUncheckedUpdateManyWithoutTargetNestedInput = {
+    create?: XOR<ModerationCreateWithoutTargetInput, ModerationUncheckedCreateWithoutTargetInput> | ModerationCreateWithoutTargetInput[] | ModerationUncheckedCreateWithoutTargetInput[]
+    connectOrCreate?: ModerationCreateOrConnectWithoutTargetInput | ModerationCreateOrConnectWithoutTargetInput[]
+    upsert?: ModerationUpsertWithWhereUniqueWithoutTargetInput | ModerationUpsertWithWhereUniqueWithoutTargetInput[]
+    createMany?: ModerationCreateManyTargetInputEnvelope
+    set?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    disconnect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    delete?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+    update?: ModerationUpdateWithWhereUniqueWithoutTargetInput | ModerationUpdateWithWhereUniqueWithoutTargetInput[]
+    updateMany?: ModerationUpdateManyWithWhereWithoutTargetInput | ModerationUpdateManyWithWhereWithoutTargetInput[]
+    deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutUsernameHistoryInput = {
@@ -67658,6 +69341,54 @@ export namespace Prisma {
     update?: XOR<XOR<ClanUpdateToOneWithWhereWithoutPagesInput, ClanUpdateWithoutPagesInput>, ClanUncheckedUpdateWithoutPagesInput>
   }
 
+  export type PlayerCreateNestedOneWithoutReportedCasesInput = {
+    create?: XOR<PlayerCreateWithoutReportedCasesInput, PlayerUncheckedCreateWithoutReportedCasesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutReportedCasesInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerCreateNestedOneWithoutTargetedCasesInput = {
+    create?: XOR<PlayerCreateWithoutTargetedCasesInput, PlayerUncheckedCreateWithoutTargetedCasesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutTargetedCasesInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutModerationInput = {
+    create?: XOR<DinozCreateWithoutModerationInput, DinozUncheckedCreateWithoutModerationInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutModerationInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type EnumModerationReasonFieldUpdateOperationsInput = {
+    set?: $Enums.ModerationReason
+  }
+
+  export type PlayerUpdateOneRequiredWithoutReportedCasesNestedInput = {
+    create?: XOR<PlayerCreateWithoutReportedCasesInput, PlayerUncheckedCreateWithoutReportedCasesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutReportedCasesInput
+    upsert?: PlayerUpsertWithoutReportedCasesInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutReportedCasesInput, PlayerUpdateWithoutReportedCasesInput>, PlayerUncheckedUpdateWithoutReportedCasesInput>
+  }
+
+  export type PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput = {
+    create?: XOR<PlayerCreateWithoutTargetedCasesInput, PlayerUncheckedCreateWithoutTargetedCasesInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutTargetedCasesInput
+    upsert?: PlayerUpsertWithoutTargetedCasesInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutTargetedCasesInput, PlayerUpdateWithoutTargetedCasesInput>, PlayerUncheckedUpdateWithoutTargetedCasesInput>
+  }
+
+  export type DinozUpdateOneWithoutModerationNestedInput = {
+    create?: XOR<DinozCreateWithoutModerationInput, DinozUncheckedCreateWithoutModerationInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutModerationInput
+    upsert?: DinozUpsertWithoutModerationInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutModerationInput, DinozUpdateWithoutModerationInput>, DinozUncheckedUpdateWithoutModerationInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -68001,6 +69732,23 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumModerationReasonFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationReason | EnumModerationReasonFieldRefInput<$PrismaModel>
+    in?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    not?: NestedEnumModerationReasonFilter<$PrismaModel> | $Enums.ModerationReason
+  }
+
+  export type NestedEnumModerationReasonWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationReason | EnumModerationReasonFieldRefInput<$PrismaModel>
+    in?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    notIn?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
+    not?: NestedEnumModerationReasonWithAggregatesFilter<$PrismaModel> | $Enums.ModerationReason
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumModerationReasonFilter<$PrismaModel>
+    _max?: NestedEnumModerationReasonFilter<$PrismaModel>
+  }
+
   export type DinozCreateWithoutConcentrationInput = {
     name: string
     raceId: number
@@ -68039,6 +69787,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
@@ -68080,6 +69829,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -68180,6 +69930,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutFollowersInput = {
@@ -68221,6 +69972,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutFollowersInput = {
@@ -68273,6 +70025,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -68321,6 +70075,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -68552,6 +70308,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLeaderInput = {
@@ -68593,6 +70350,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLeaderInput = {
@@ -68651,6 +70409,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ModerationCreateWithoutDinozInput = {
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    target: PlayerCreateNestedOneWithoutTargetedCasesInput
+  }
+
+  export type ModerationUncheckedCreateWithoutDinozInput = {
+    id?: number
+    reporterId: number
+    targetId: number
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
+  export type ModerationCreateOrConnectWithoutDinozInput = {
+    where: ModerationWhereUniqueInput
+    create: XOR<ModerationCreateWithoutDinozInput, ModerationUncheckedCreateWithoutDinozInput>
+  }
+
+  export type ModerationCreateManyDinozInputEnvelope = {
+    data: ModerationCreateManyDinozInput | ModerationCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DinozUpsertWithoutFollowersInput = {
     update: XOR<DinozUpdateWithoutFollowersInput, DinozUncheckedUpdateWithoutFollowersInput>
     create: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
@@ -68700,6 +70485,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutFollowersInput = {
@@ -68741,6 +70527,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -68799,6 +70586,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -68847,6 +70636,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -69145,6 +70936,35 @@ export namespace Prisma {
     hp?: IntFilter<"DinozCatch"> | number
   }
 
+  export type ModerationUpsertWithWhereUniqueWithoutDinozInput = {
+    where: ModerationWhereUniqueInput
+    update: XOR<ModerationUpdateWithoutDinozInput, ModerationUncheckedUpdateWithoutDinozInput>
+    create: XOR<ModerationCreateWithoutDinozInput, ModerationUncheckedCreateWithoutDinozInput>
+  }
+
+  export type ModerationUpdateWithWhereUniqueWithoutDinozInput = {
+    where: ModerationWhereUniqueInput
+    data: XOR<ModerationUpdateWithoutDinozInput, ModerationUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type ModerationUpdateManyWithWhereWithoutDinozInput = {
+    where: ModerationScalarWhereInput
+    data: XOR<ModerationUpdateManyMutationInput, ModerationUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type ModerationScalarWhereInput = {
+    AND?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+    OR?: ModerationScalarWhereInput[]
+    NOT?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+    id?: IntFilter<"Moderation"> | number
+    reporterId?: IntFilter<"Moderation"> | number
+    targetId?: IntFilter<"Moderation"> | number
+    dinozId?: IntNullableFilter<"Moderation"> | number | null
+    reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
+    comment?: StringFilter<"Moderation"> | string
+    sorted?: BoolFilter<"Moderation"> | boolean
+  }
+
   export type DinozCreateWithoutItemsInput = {
     name: string
     raceId: number
@@ -69183,6 +71003,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -69224,6 +71045,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -69298,6 +71120,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -69339,6 +71162,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -69395,6 +71219,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -69436,6 +71261,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -69508,6 +71334,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -69549,6 +71376,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -69611,6 +71439,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -69652,6 +71481,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -69708,6 +71538,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -69749,6 +71580,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -69789,6 +71621,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -69830,6 +71663,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -69886,6 +71720,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -69927,6 +71762,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -69967,6 +71803,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -70008,6 +71845,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -70064,6 +71902,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -70105,6 +71944,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -70145,6 +71985,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -70186,6 +72027,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -70242,6 +72084,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -70283,6 +72126,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ImportedPlayerCreateWithoutImported_dinozInput = {
@@ -70745,6 +72589,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -70793,6 +72639,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -70978,6 +72826,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -71026,6 +72876,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -71456,6 +73308,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -71504,6 +73358,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -71567,6 +73423,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -71615,6 +73473,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -71662,6 +73522,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -71710,6 +73572,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -71773,6 +73637,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -71821,6 +73687,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -71868,6 +73736,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -71916,6 +73786,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -71979,6 +73851,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -72027,6 +73901,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -72067,6 +73943,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
@@ -72108,6 +73985,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -72164,6 +74042,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
@@ -72205,6 +74084,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutPlayerInput = {
@@ -72245,6 +74125,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
@@ -72286,6 +74167,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -72792,6 +74674,60 @@ export namespace Prisma {
   export type ClanJoinRequestCreateOrConnectWithoutPlayerInput = {
     where: ClanJoinRequestWhereUniqueInput
     create: XOR<ClanJoinRequestCreateWithoutPlayerInput, ClanJoinRequestUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type ModerationCreateWithoutReporterInput = {
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+    target: PlayerCreateNestedOneWithoutTargetedCasesInput
+    dinoz?: DinozCreateNestedOneWithoutModerationInput
+  }
+
+  export type ModerationUncheckedCreateWithoutReporterInput = {
+    id?: number
+    targetId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
+  export type ModerationCreateOrConnectWithoutReporterInput = {
+    where: ModerationWhereUniqueInput
+    create: XOR<ModerationCreateWithoutReporterInput, ModerationUncheckedCreateWithoutReporterInput>
+  }
+
+  export type ModerationCreateManyReporterInputEnvelope = {
+    data: ModerationCreateManyReporterInput | ModerationCreateManyReporterInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ModerationCreateWithoutTargetInput = {
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    dinoz?: DinozCreateNestedOneWithoutModerationInput
+  }
+
+  export type ModerationUncheckedCreateWithoutTargetInput = {
+    id?: number
+    reporterId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
+  export type ModerationCreateOrConnectWithoutTargetInput = {
+    where: ModerationWhereUniqueInput
+    create: XOR<ModerationCreateWithoutTargetInput, ModerationUncheckedCreateWithoutTargetInput>
+  }
+
+  export type ModerationCreateManyTargetInputEnvelope = {
+    data: ModerationCreateManyTargetInput | ModerationCreateManyTargetInput[]
+    skipDuplicates?: boolean
   }
 
   export type DinozUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -73372,6 +75308,38 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ModerationUpsertWithWhereUniqueWithoutReporterInput = {
+    where: ModerationWhereUniqueInput
+    update: XOR<ModerationUpdateWithoutReporterInput, ModerationUncheckedUpdateWithoutReporterInput>
+    create: XOR<ModerationCreateWithoutReporterInput, ModerationUncheckedCreateWithoutReporterInput>
+  }
+
+  export type ModerationUpdateWithWhereUniqueWithoutReporterInput = {
+    where: ModerationWhereUniqueInput
+    data: XOR<ModerationUpdateWithoutReporterInput, ModerationUncheckedUpdateWithoutReporterInput>
+  }
+
+  export type ModerationUpdateManyWithWhereWithoutReporterInput = {
+    where: ModerationScalarWhereInput
+    data: XOR<ModerationUpdateManyMutationInput, ModerationUncheckedUpdateManyWithoutReporterInput>
+  }
+
+  export type ModerationUpsertWithWhereUniqueWithoutTargetInput = {
+    where: ModerationWhereUniqueInput
+    update: XOR<ModerationUpdateWithoutTargetInput, ModerationUncheckedUpdateWithoutTargetInput>
+    create: XOR<ModerationCreateWithoutTargetInput, ModerationUncheckedCreateWithoutTargetInput>
+  }
+
+  export type ModerationUpdateWithWhereUniqueWithoutTargetInput = {
+    where: ModerationWhereUniqueInput
+    data: XOR<ModerationUpdateWithoutTargetInput, ModerationUncheckedUpdateWithoutTargetInput>
+  }
+
+  export type ModerationUpdateManyWithWhereWithoutTargetInput = {
+    where: ModerationScalarWhereInput
+    data: XOR<ModerationUpdateManyMutationInput, ModerationUncheckedUpdateManyWithoutTargetInput>
+  }
+
   export type PlayerCreateWithoutUsernameHistoryInput = {
     hasImported: boolean
     customText?: string | null
@@ -73417,6 +75385,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -73465,6 +75435,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -73528,6 +75500,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -73576,6 +75550,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -73623,6 +75599,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -73671,6 +75649,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -73734,6 +75714,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -73782,6 +75764,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -73829,6 +75813,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -73877,6 +75863,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -73940,6 +75928,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -73988,6 +75978,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -74035,6 +76027,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -74083,6 +76077,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -74146,6 +76142,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -74194,6 +76192,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -74241,6 +76241,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -74289,6 +76291,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -74352,6 +76356,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -74400,6 +76406,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -74447,6 +76455,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -74495,6 +76505,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -74558,6 +76570,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -74606,6 +76620,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -74653,6 +76669,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -74701,6 +76719,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -74764,6 +76784,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -74812,6 +76834,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -74859,6 +76883,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -74907,6 +76933,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -74970,6 +76998,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -75018,6 +77048,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -75143,6 +77175,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -75191,6 +77225,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -75284,6 +77320,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -75332,6 +77370,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerCreateWithoutOffersInput = {
@@ -75379,6 +77419,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -75427,6 +77469,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -75472,6 +77516,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutOffersInput = {
@@ -75513,6 +77558,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutOffersInput = {
@@ -75620,6 +77666,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -75668,6 +77716,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type DinozUpsertWithoutOffersInput = {
@@ -75719,6 +77769,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutOffersInput = {
@@ -75760,6 +77811,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
@@ -75850,6 +77902,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -75898,6 +77952,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -75943,6 +77999,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLogsInput = {
@@ -75984,6 +78041,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLogsInput = {
@@ -76047,6 +78105,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -76095,6 +78155,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type DinozUpsertWithoutLogsInput = {
@@ -76146,6 +78208,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLogsInput = {
@@ -76187,6 +78250,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -76227,6 +78291,7 @@ export namespace Prisma {
     offers?: OfferCreateNestedManyWithoutDinozInput
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutCatchesInput = {
@@ -76268,6 +78333,7 @@ export namespace Prisma {
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutCatchesInput = {
@@ -76324,6 +78390,7 @@ export namespace Prisma {
     offers?: OfferUpdateManyWithoutDinozNestedInput
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutCatchesInput = {
@@ -76365,6 +78432,7 @@ export namespace Prisma {
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerCreateWithoutPlayerTrackingInput = {
@@ -76412,6 +78480,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -76460,6 +78530,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -76523,6 +78595,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -76571,6 +78645,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ClanMemberCreateWithoutClanInput = {
@@ -76728,6 +78804,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -76776,6 +78854,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -76994,6 +79074,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -77042,6 +79124,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput = {
@@ -77177,6 +79261,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -77225,6 +79311,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -77328,6 +79416,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -77376,6 +79466,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -77599,6 +79691,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -77647,6 +79741,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -77750,6 +79846,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -77798,6 +79896,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ClanCreateWithoutHistoryInput = {
@@ -77879,6 +79979,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -77927,6 +80029,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -78030,6 +80134,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -78078,6 +80184,8 @@ export namespace Prisma {
     ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ClanCreateWithoutMembersInput = {
@@ -78159,6 +80267,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -78207,6 +80317,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -78310,6 +80422,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -78358,6 +80472,8 @@ export namespace Prisma {
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -78434,6 +80550,616 @@ export namespace Prisma {
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
   }
 
+  export type PlayerCreateWithoutReportedCasesInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+  }
+
+  export type PlayerUncheckedCreateWithoutReportedCasesInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+  }
+
+  export type PlayerCreateOrConnectWithoutReportedCasesInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutReportedCasesInput, PlayerUncheckedCreateWithoutReportedCasesInput>
+  }
+
+  export type PlayerCreateWithoutTargetedCasesInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+  }
+
+  export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+  }
+
+  export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutTargetedCasesInput, PlayerUncheckedCreateWithoutTargetedCasesInput>
+  }
+
+  export type DinozCreateWithoutModerationInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    player?: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutModerationInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId?: number | null
+    order?: number | null
+    concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutModerationInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutModerationInput, DinozUncheckedCreateWithoutModerationInput>
+  }
+
+  export type PlayerUpsertWithoutReportedCasesInput = {
+    update: XOR<PlayerUpdateWithoutReportedCasesInput, PlayerUncheckedUpdateWithoutReportedCasesInput>
+    create: XOR<PlayerCreateWithoutReportedCasesInput, PlayerUncheckedCreateWithoutReportedCasesInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutReportedCasesInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutReportedCasesInput, PlayerUncheckedUpdateWithoutReportedCasesInput>
+  }
+
+  export type PlayerUpdateWithoutReportedCasesInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+  }
+
+  export type PlayerUpsertWithoutTargetedCasesInput = {
+    update: XOR<PlayerUpdateWithoutTargetedCasesInput, PlayerUncheckedUpdateWithoutTargetedCasesInput>
+    create: XOR<PlayerCreateWithoutTargetedCasesInput, PlayerUncheckedCreateWithoutTargetedCasesInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutTargetedCasesInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutTargetedCasesInput, PlayerUncheckedUpdateWithoutTargetedCasesInput>
+  }
+
+  export type PlayerUpdateWithoutTargetedCasesInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+  }
+
+  export type DinozUpsertWithoutModerationInput = {
+    update: XOR<DinozUpdateWithoutModerationInput, DinozUncheckedUpdateWithoutModerationInput>
+    create: XOR<DinozCreateWithoutModerationInput, DinozUncheckedCreateWithoutModerationInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutModerationInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutModerationInput, DinozUncheckedUpdateWithoutModerationInput>
+  }
+
+  export type DinozUpdateWithoutModerationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    player?: PlayerUpdateOneWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutModerationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
   export type DinozCreateManyConcentrationInput = {
     id?: number
     leaderId?: number | null
@@ -78502,6 +81228,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
@@ -78543,6 +81270,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
@@ -78664,6 +81392,15 @@ export namespace Prisma {
     id?: number
     monsterId: string
     hp: number
+  }
+
+  export type ModerationCreateManyDinozInput = {
+    id?: number
+    reporterId: number
+    targetId: number
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -78844,6 +81581,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLeaderInput = {
@@ -78885,6 +81623,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
@@ -78955,6 +81694,32 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     monsterId?: StringFieldUpdateOperationsInput | string
     hp?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ModerationUpdateWithoutDinozInput = {
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
+  }
+
+  export type ModerationUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ModerationUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -79324,6 +82089,24 @@ export namespace Prisma {
     type?: string
   }
 
+  export type ModerationCreateManyReporterInput = {
+    id?: number
+    targetId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
+  export type ModerationCreateManyTargetInput = {
+    id?: number
+    reporterId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: boolean
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
     raceId?: IntFieldUpdateOperationsInput | number
@@ -79362,6 +82145,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
@@ -79403,6 +82187,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -79757,6 +82542,58 @@ export namespace Prisma {
     clanId?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ModerationUpdateWithoutReporterInput = {
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+    target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
+    dinoz?: DinozUpdateOneWithoutModerationNestedInput
+  }
+
+  export type ModerationUncheckedUpdateWithoutReporterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ModerationUncheckedUpdateManyWithoutReporterInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ModerationUpdateWithoutTargetInput = {
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    dinoz?: DinozUpdateOneWithoutModerationNestedInput
+  }
+
+  export type ModerationUncheckedUpdateWithoutTargetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type ModerationUncheckedUpdateManyWithoutTargetInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OfferItemCreateManyOfferInput = {
@@ -80247,6 +83084,10 @@ export namespace Prisma {
      * @deprecated Use ClanPageDefaultArgs instead
      */
     export type ClanPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanPageDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ModerationDefaultArgs instead
+     */
+    export type ModerationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModerationDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

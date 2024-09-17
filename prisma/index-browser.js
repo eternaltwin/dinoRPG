@@ -530,6 +530,16 @@ exports.Prisma.ClanPageScalarFieldEnum = {
   clanId: 'clanId'
 };
 
+exports.Prisma.ModerationScalarFieldEnum = {
+  id: 'id',
+  reporterId: 'reporterId',
+  targetId: 'targetId',
+  dinozId: 'dinozId',
+  reason: 'reason',
+  comment: 'comment',
+  sorted: 'sorted'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -607,6 +617,14 @@ exports.LogType = exports.$Enums.LogType = {
   AdminUpdateSecret: 'AdminUpdateSecret'
 };
 
+exports.ModerationReason = exports.$Enums.ModerationReason = {
+  multi: 'multi',
+  dinozName: 'dinozName',
+  accountName: 'accountName',
+  avatar: 'avatar',
+  customText: 'customText'
+};
+
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
   Dinoz: 'Dinoz',
@@ -653,7 +671,8 @@ exports.Prisma.ModelName = {
   ClanMessage: 'ClanMessage',
   ClanHistory: 'ClanHistory',
   ClanMember: 'ClanMember',
-  ClanPage: 'ClanPage'
+  ClanPage: 'ClanPage',
+  Moderation: 'Moderation'
 };
 
 /**
