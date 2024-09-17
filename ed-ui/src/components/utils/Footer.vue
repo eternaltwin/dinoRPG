@@ -203,8 +203,8 @@ $link-color: #c54508;
 
 footer {
 	margin: auto 0 0 0;
-	font-size: 0.875rem;
-	line-height: 1.15rem;
+	font-size: 1.4rem;
+	line-height: 1.6rem;
 	min-width: 100%;
 	color: $text-color;
 
@@ -270,7 +270,7 @@ footer {
 		flex: 1 1 40%;
 	}
 	& ul {
-		font-size: 0.65rem;
+		font-size: 1rem;
 	}
 }
 
