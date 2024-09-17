@@ -19,7 +19,7 @@
 			</a>
 		</div>
 		<div class="report">
-			<p>{{ $t('playerMenu.report.signal') }}</p>
+			<p @click="report()">{{ $t('playerMenu.report.signal') }}</p>
 			<p>{{ $t('playerMenu.report.block') }}</p>
 		</div>
 		<span class="dashed"></span>
@@ -37,6 +37,7 @@ import { defineComponent } from 'vue';
 import { Player } from '@drpg/core/models/player/Player';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'PlayerMenu',
@@ -58,6 +59,10 @@ export default defineComponent({
 		goToPlayerPage() {
 			if (!this.loadedPlayer) return;
 			this.$router.push({ name: 'MyAccount', params: { id: this.loadedPlayer.id } });
+		},
+		report() {
+			if (!this.loadedPlayer) return;
+			EventBus.emit('report', this.loadedPlayer.id);
 		}
 	},
 	async mounted() {

@@ -3,6 +3,7 @@ import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -150,6 +151,12 @@ export const AdminService = {
 				key: key,
 				value: value
 			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getAllModeration(page: number): Promise<Array<ModerationType>> {
+		return http()
+			.get(`/admin/moderation/${page}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

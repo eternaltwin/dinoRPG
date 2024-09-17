@@ -12,6 +12,7 @@ type Events = {
 	refreshDinoz: boolean;
 	refreshMoney: boolean;
 	refreshInventory: boolean;
+	report: number | undefined;
 	equipItem: Array<DinozItems>;
 };
 

@@ -32,6 +32,14 @@ enum Lang {
   es
 }
 
+enum ModerationReason {
+  multi
+  dinozName
+  accountName
+  avatar
+  customText
+}
+
 model Dinoz {
   id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
   leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
@@ -75,6 +83,7 @@ model Dinoz {
   followers          Dinoz[]                @relation("DinozFollowers")
   logs               Log[]
   catches            DinozCatch[]
+  Moderation         Moderation[]
 
   @@map("dinoz")
 }
@@ -368,6 +377,8 @@ model Player {
   leaderOf                    Clan?                        @relation("leader")
   leaderOfId                  Int?
   ClanJoinRequest             ClanJoinRequest?             @relation("clanRequest")
+  reportedCases               Moderation[]                 @relation("ReporterRelation")
+  targetedCases               Moderation[]                 @relation("TargetRelation")
 
   @@map("player")
 }
@@ -661,4 +672,17 @@ model ClanPage {
   content String  @default("")
   Clan    Clan    @relation(fields: [clanId], references: [id])
   clanId  Int
+}
+
+model Moderation {
+  id         Int              @id @default(autoincrement())
+  reporterId Int
+  reporter   Player           @relation("ReporterRelation", fields: [reporterId], references: [id])
+  targetId   Int
+  target     Player           @relation("TargetRelation", fields: [targetId], references: [id])
+  dinozId    Int?
+  dinoz      Dinoz?           @relation(fields: [dinozId], references: [id])
+  reason     ModerationReason
+  comment    String
+  sorted     Boolean          @default(false)
 }

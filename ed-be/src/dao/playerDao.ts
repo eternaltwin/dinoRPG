@@ -130,6 +130,24 @@ export async function resetUser(playerId: number) {
 	]);
 }
 
+export async function getPlayerInfoToReport(playerId: number) {
+	return await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			name: true,
+			id: true,
+			customText: true,
+			dinoz: {
+				select: {
+					name: true,
+					id: true
+				}
+			}
+		}
+	});
+}
 export async function checkBeforeDeletion(playerId: number) {
 	const player = await prisma.player.findUnique({
 		where: {

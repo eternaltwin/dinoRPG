@@ -4572,5 +4572,23 @@
 		"eat_star_found": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelquechose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
 		"dig_star_found": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
 		"resurrect_star_found": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
+	},
+	"report": {
+		"header": "Reporter du contenu innaproprié",
+		"player": "Êtes vous sur de vouloir reporter ce joueur à la modération ?",
+		"specify": "Merci de spécifier la raison de votre complainte",
+		"reason": {
+			"customText": "Description innapropriée",
+			"avatar": "Avatar innaproprié",
+			"accountName": "Nom de joueur innaproprié",
+			"dinozName": "Nom de dinoz annaproprié",
+			"multi": "Ce joueur utilise plusieurs comptes"
+		},
+		"arguments": "Précisez en quoi vous trouver cela innaproprié.",
+		"report": "Reporter le contenu",
+		"cancel": "Annuler",
+		"error": "Vous devez spécifier une raison et une explication à votre complainte.",
+		"errorDinoz": "Vous devez spécifier un dinoz à reporter",
+		"success": "Plainte envoyée avec succès."
 	}
 }

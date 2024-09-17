@@ -19,7 +19,8 @@ export const apiRoutes = {
 	webSocketRoute: '/api/v1/websockets',
 	testingRoute: '/api/v1/testing',
 	eternalTwinRoute: '/api/v1/eternaltwin',
-	clanRoutes: '/api/v1/clan'
+	clanRoutes: '/api/v1/clan',
+	moderation: '/api/v1/moderation'
 };
 
 export const regex = {
