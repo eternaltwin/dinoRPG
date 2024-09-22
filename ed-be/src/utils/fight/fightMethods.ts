@@ -55,7 +55,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { FightStats } from '@drpg/core/models/fight/FightResult';
 import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { LifeEffect } from '@drpg/core/models/fight/transpiler';
+import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
@@ -787,7 +787,7 @@ const attackSingleOpponent = (
 	fighter: DetailedFighter,
 	element_attack: [ElementType, number][],
 	skill: Skill, // TODO rework for item too
-	step: FightStep,
+	activate_step: FightStep,
 	target?: DetailedFighter
 ) => {
 	// Unless specified, pick random opponent by default
@@ -807,9 +807,9 @@ const attackSingleOpponent = (
 	}
 
 	// Add target
-	(step as SkillActivateStep).targets.push({ tid: realOpponent.id });
+	(activate_step as SkillActivateStep).targets.push({ tid: realOpponent.id });
 
-	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, step);
+	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, activate_step);
 
 	if (protector && protector.hp > 0) {
 		// Add moveBack step
@@ -818,6 +818,9 @@ const attackSingleOpponent = (
 			fid: realOpponent.id
 		});
 	}
+
+	// Add step
+	fightData.steps.push(activate_step);
 
 	return result;
 };
@@ -829,7 +832,7 @@ const attackAllOpponents = (
 	fighter: DetailedFighter,
 	element_attack: [ElementType, number][],
 	skill: Skill, // TODO rework for item too
-	step: FightStep,
+	activate_step: FightStep,
 	opponents?: DetailedFighter[],
 	count?: number
 ) => {
@@ -859,9 +862,9 @@ const attackAllOpponents = (
 		}
 
 		// Add target
-		(step as SkillActivateStep).targets.push({ tid: realTarget.id });
+		(activate_step as SkillActivateStep).targets.push({ tid: realTarget.id });
 
-		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, step);
+		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, activate_step);
 
 		if (protector && protector.hp > 0) {
 			// Add moveBack step
@@ -871,6 +874,9 @@ const attackAllOpponents = (
 			});
 		}
 	});
+
+	// Add step
+	fightData.steps.push(activate_step);
 };
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
@@ -1070,6 +1076,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.COLERE: {
 				fighter.nextAssaultMultiplier *= 1.25;
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			// LIGHTNING
@@ -1085,9 +1093,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.FOCUS: {
 				fighter.nextAssaultBonus += fighter.stats.base[ElementType.LIGHTNING];
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.PUREE_SALVATRICE: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				// Remove all the bad status of the group
 				getAllies(fightData, fighter).forEach(fighter => {
 					removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
@@ -1142,6 +1154,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.HYPERVENTILATION: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
+
 				const opponents = getOpponents(fightData, fighter);
 
 				opponents.forEach(opponent => {
@@ -1178,15 +1193,28 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				if (!hasStatus(opponent, Status.FLYING)) {
 					// Increase the opponent's time
 					opponent.time += 15 * TIME_FACTOR;
+					// Add fx for loss of init
+					fightData.steps.push({
+						action: 'notify',
+						fids: [opponent.id],
+						notification: NotificationList.InitDown,
+					});
 				}
+
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.RESISTANCE_A_LA_MAGIE: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				// Remove all bad status
 				removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 				break;
 			}
 			case Skill.ETAT_PRIMAL: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				getFighters(fightData).forEach(f => {
 					// Remove team bad status
 					if (f.attacker === fighter.attacker) {
@@ -1199,6 +1227,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.GROSSE_BEIGNE: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				fighter.nextAssaultMultiplier *= 2;
 				break;
 			}
@@ -1209,8 +1239,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					if (f.id === fighter.id) return;
 
 					// Heal 1-wood HP
-					heal(fightData, f, randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]));
+					heal(fightData, f, randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]), activate_step);
 				});
+
+				// Add step
+				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.ESPRIT_GORILLOZ: {
@@ -1264,6 +1297,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					fightData.protectedFighters.push(lowestHpAlly.id);
 				}
 
+
+				// Add fx for shielded target
+				fightData.steps.push({
+					action: 'notify',
+					fids: [lowestHpAlly.id],
+					notification: NotificationList.InitDown,
+				});
 				// Protect lowest HP ally
 				fighter.protecting = lowestHpAlly.id;
 				break;
@@ -1289,12 +1329,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					action: 'reduceEnergy',
 					fighter: stepFighter(opponent)
 				});
+				// TODO need step to add endurance off effect
 				break;
 			}
 			case Skill.BERSERK: {
 				// Remove all skills and events
 				fighter.skills = [];
 				fighter.items = [];
+
+				// TODO need step to add blink effect (or tie it to berzerk)
 
 				fighter.allAssaultMultiplier = 2;
 
@@ -1308,11 +1351,20 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				activate_step.targets.push({ tid: opponent.id });
 
 				// Disable invocations
+				// TODO: see if this can be done differently as this may mess up with display
 				addStatus(fightData, opponent, Status.NO_INVOCATION);
+
+				// Add step for fx
+				fightData.steps.push({
+					action: 'notify',
+					fids: [opponent.id],
+					notification: NotificationList.Silence,
+				});
 				break;
 			}
 			case Skill.THERAPIE_DE_GROUPE: {
 				addStatus(fightData, fighter, Status.COPY_HEAL);
+				// TODO any fx?
 				break;
 			}
 			case Skill.MORSURE_DU_SOLEIL: {
@@ -1333,6 +1385,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push({
 					action: 'reduceEnergy',
 					fighter: stepFighter(fighter)
+				});
+				// Add step for fx
+				fightData.steps.push({
+					action: 'notify',
+					fids: [fighter.id],
+					notification: NotificationList.Down,
 				});
 				break;
 			}
@@ -1362,6 +1420,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				clones.forEach(clone => {
+					// TODO add effect
 					// Change team
 					clone.attacker = !clone.attacker;
 				});
@@ -1379,7 +1438,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					return cancel();
 				}
 
-				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1));
+				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), activate_step);
+
+				// Add step
+				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.M_IMMATERIAL: {
@@ -1509,8 +1571,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				return false;
 		}
 
-		// Add step
-		fightData.steps.push(activate_step);
+		// Not working well to add the activate step for all skills at this point
+		// // Add step
+		// fightData.steps.push(activate_step);
 
 		// Consume energy
 		setEnergy(fighter, fighter.energy - event.energy);
@@ -1532,7 +1595,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 10 HP
-				heal(fightData, fighter, 10, true);
+				heal(fightData, fighter, 10, undefined, true);
 				break;
 			}
 			case Item.FIGHT_RATION: {
@@ -1546,7 +1609,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 20 HP
-				heal(fightData, fighter, 20, true);
+				heal(fightData, fighter, 20, undefined, true);
 				break;
 			}
 			case Item.SOS_HELMET: {
@@ -1775,7 +1838,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 40 HP
-				heal(fightData, fighter, 40, true);
+				heal(fightData, fighter, 40, undefined, true);
 				break;
 			}
 			default:
@@ -2230,7 +2293,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20));
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), activate_step);
+
+			// Add step
+			fightData.steps.push(activate_step);
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
@@ -2266,8 +2332,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Heal each fighter of the caster's group
 			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 2 + fighter.stats.base[ElementType.WOOD] * 2;
 			getAllies(fightData, fighter).forEach(ally => {
-				heal(fightData, ally, hpHealed);
+				heal(fightData, ally, hpHealed, activate_step);
 			});
+			// Add step for fx
+			fightData.steps.push(activate_step);
 			break;
 		}
 		case Skill.DANSE_FOUDROYANTE: {
@@ -3369,7 +3437,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_DEMYOM_HEAL: {
-			heal(fightData, fighter, 50);
+			heal(fightData, fighter, 50, activate_step);
+			// Add step
+			fightData.steps.push(activate_step);
 			break;
 		}
 		case Skill.M_GROTOX: {
@@ -3393,8 +3463,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			return cancel();
 	}
 
-	// Add step
-	fightData.steps.push(activate_step);
+
+	// Not working well to add the activate step for all skills at this point
+	// // Add step
+	// fightData.steps.push(activate_step);
 
 	// Consume energy
 	setEnergy(fighter, fighter.energy - skill.energy);
@@ -3572,7 +3644,7 @@ const poison = (
 };
 
 // Helper method to heal a fighter
-export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number, isItem?: boolean) => {
+export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number, step?: FightStep, isItem?: boolean) => {
 	// No heal if fighter is dead
 	if (fighter.hp <= 0) return;
 
@@ -3600,14 +3672,21 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 
 	const healAmount = fighter.hp - hpBeforeHeal;
 
-	if (healAmount <= 0) return;
+	// if (healAmount <= 0) return;
 
-	// Add heal step
-	fightData.steps.push({
-		action: 'heal',
-		fighter: stepFighter(fighter),
-		hp: healAmount
-	});
+	// Add heal step or use provided step
+	if (step) {
+		(step as SkillActivateStep).targets.push({
+			tid: fighter.id,
+			damages: healAmount,
+		});
+	} else {
+		fightData.steps.push({
+			action: 'heal',
+			fighter: stepFighter(fighter),
+			hp: healAmount
+		});
+	}
 
 	// Heal stats
 	updateStat(fightData, fighter, 'hpHealed', healAmount);
@@ -4302,15 +4381,15 @@ export const checkDeaths = (fightData: DetailedFight) => {
 			// Phoenix Feather
 			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
 				// Add skillActivate step
-				fightData.steps.push({
+				let res_step: SkillActivateStep =  {
 					action: 'skillActivate',
 					fid: fighter.id,
 					skill: Skill.PLUMES_DE_PHOENIX,
 					targets: []
-				});
+				};
 
 				// Heal to 12 HP
-				heal(fightData, fighter, 12 - fighter.hp);
+				heal(fightData, fighter, 12 - fighter.hp, res_step);
 
 				// Increase other fighters time by 10 * speed
 				getFighters(fightData).forEach(f => {

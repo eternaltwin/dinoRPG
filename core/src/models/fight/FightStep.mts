@@ -2,7 +2,7 @@ import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { Status, FighterType } from './DetailedFighter.mjs';
-import { LifeEffect } from './transpiler.mjs';
+import { LifeEffect, NotificationList } from './transpiler.mjs';
 
 export interface StepFighter {
 	id: number;
@@ -97,6 +97,11 @@ export interface SkillExpireStep {
 	action: 'skillExpire';
 	dinoz: StepFighter;
 	skill: Skill;
+}
+export interface NotifyStep {
+	action: 'notify';
+	fids: number[];
+	notification: NotificationList;
 }
 export interface LooseHpStep {
 	action: 'looseHp';
@@ -212,6 +217,7 @@ export type FightStep =
 	| SkillAnnounceStep
 	| SkillActivateStep
 	| SkillExpireStep
+	| NotifyStep
 	| LooseHpStep
 	| HealStep
 	| AddStatusStep

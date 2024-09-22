@@ -151,6 +151,28 @@ export enum StatusEffect {
 	Stun
 }
 
+export enum NotificationList {
+	Slow,
+	Quick,
+	Silence,
+	Sharingan,
+	NoUse,
+	Down,
+	Up,
+	Fire,
+	Wood,
+	Water,
+	Thunder,
+	Air,
+	InitUp,
+	InitDown,
+	Snake,
+	Strong,
+	Shield,
+	MonoElt,
+	Todo
+}
+
 export type transpiled =
 	| {
 			action: DinoAction.ADD;
@@ -226,6 +248,11 @@ export type transpiled =
 				ok?: boolean;
 			};
 	  }
+	| {
+			action: DinoAction.NOTIFY;
+			fids: number[];
+			notification: NotificationList;
+	}
 	| {
 			action: DinoAction.OBJECT;
 			fid: number;

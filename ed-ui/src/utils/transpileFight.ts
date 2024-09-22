@@ -317,6 +317,19 @@ export function transpileFight(
 					return;
 				}
 				if (step.targets.length > 0) {
+					const skill = Object.values(skillList).find(skill => skill.id === step.skill);
+					let type: number | undefined;
+					if (!skill) {
+						console.warn(`Cannot find skill ${step.skill}`);
+					} else {
+						if (skill.auraType) {
+							type = skill.auraType;
+						} else if (skill.healingType) {
+							type = skill.healingType;
+						} else if (skill.snowType) {
+							type = skill.snowType;
+						}
+					}
 					history.push({
 						action: DinoAction.SKILL,
 						skill: resolveSkillEffect(step.skill),
@@ -326,7 +339,7 @@ export function transpileFight(
 								return { id: t.tid, life: t.damages };
 							}),
 							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
-							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
+							type: type,
 							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
 						}
 					});
@@ -356,6 +369,14 @@ export function transpileFight(
 				break;
 			case 'skillExpire':
 				break;
+			case 'notify': {
+				history.push({
+					action: DinoAction.NOTIFY,
+					fids: step.fids,
+					notification: step.notification
+				});
+				break;
+			}
 			case 'stealGold':
 				break;
 			case 'survive':

@@ -66,5 +66,7 @@ export interface SkillDetails {
 	visualEffect?: number;
 	color?: string;
 	auraType?: number;
+	healingType?: number;
+	snowType?: number;
 	fx?: string;
 }
