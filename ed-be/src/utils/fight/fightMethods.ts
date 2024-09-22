@@ -31,6 +31,7 @@ import {
 	CYCLE,
 	DEFAULT_MAX_ENERGY,
 	ENERGY_RECOVERY_BASE_FACTOR,
+	FIGHT_INFINITE,
 	MAXIMUM_COMBO_COUNT,
 	MAXIMUM_MAX_ENERGY,
 	MINIMUM_ENERGY_TO_ACT,
@@ -1871,7 +1872,7 @@ export const addStatus = (
 			break;
 		}
 		case Status.ASLEEP: {
-			fighter.time += Infinity;
+			fighter.time += FIGHT_INFINITE;
 			break;
 		}
 		case Status.TORCHED: {
@@ -1888,7 +1889,7 @@ export const addStatus = (
 		}
 		case Status.PETRIFIED: {
 			fighter.stats.special.armor += 5;
-			fighter.time += Infinity;
+			fighter.time += FIGHT_INFINITE;
 			break;
 		}
 		case Status.SHIELDED: {
@@ -1902,6 +1903,9 @@ export const addStatus = (
 			fighter.stats.assaultBonus[ElementType.WATER] += 3;
 			fighter.stats.assaultBonus[ElementType.WOOD] += 3;
 			break;
+		}
+		case Status.STUNNED: {
+			fighter.time += FIGHT_INFINITE;
 		}
 		default: {
 			break;
@@ -1965,7 +1969,11 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 			}
 			case Status.PETRIFIED: {
 				fighter.stats.special.armor -= 5;
-				fighter.time = fightData.time;
+				fighter.time -= FIGHT_INFINITE;
+				// Make sure the fighter's time is not in the past
+				if (fighter.time < fightData.time) {
+					fighter.time = fightData.time;
+				}
 				break;
 			}
 			case Status.SHIELDED: {
@@ -1979,6 +1987,13 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				fighter.stats.assaultBonus[ElementType.WATER] -= 3;
 				fighter.stats.assaultBonus[ElementType.WOOD] -= 3;
 				break;
+			}
+			case Status.STUNNED: {
+				fighter.time += FIGHT_INFINITE;
+				// Make sure the fighter's time is not in the past
+				if (fighter.time < fightData.time) {
+					fighter.time = fightData.time;
+				}
 			}
 			default: {
 				break;
