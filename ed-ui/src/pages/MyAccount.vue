@@ -22,7 +22,7 @@
 				</div>
 			</div>
 			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
-			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />
+			<!--			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />-->
 		</div>
 	</div>
 </template>
@@ -117,7 +117,8 @@ export default defineComponent({
 	width: 620px;
 	justify-content: space-between;
 	gap: 10px;
-	flex-wrap: wrap;
+	flex-direction: column;
+	//flex-wrap: wrap;
 	margin-top: 30px;
 	height: 100%;
 	.mandragore {
@@ -128,8 +129,12 @@ export default defineComponent({
 }
 .filler {
 	display: flex;
-	gap: 20px;
-	height: 180px;
-	width: 550px;
+	gap: 15px;
+	height: 200px;
+	width: 540px;
+	img {
+		object-fit: scale-down;
+		width: 75%;
+	}
 }
 </style>

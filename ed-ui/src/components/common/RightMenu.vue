@@ -121,22 +121,23 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .rightMenu {
-	left: 550px;
-	position: absolute;
-	padding-bottom: 10px;
-	padding-right: 10px;
-	height: auto;
-	width: auto;
-	top: -25px;
-	padding-left: 15px;
-	padding-top: 15px;
-	padding-bottom: 20px;
+	//left: 550px;
+	//position: absolute;
+	//padding-bottom: 10px;
+	//padding-right: 10px;
+	margin-top: 90px;
+	height: fit-content;
+	width: fit-content;
+	padding: 15px;
+	//padding-left: 15px;
+	//padding-top: 15px;
+	//padding-bottom: 20px;
 	background:
 		url('../../assets/design/sideMenu_header.webp') no-repeat,
 		url('../../assets/design/sideMenu_footer.webp') no-repeat,
 		url('../../assets/design/sideMenu_bg.webp') repeat-y;
 	background-position-y: top, bottom;
-	display: block;
+	//display: block;
 	list-style: none;
 
 	li {

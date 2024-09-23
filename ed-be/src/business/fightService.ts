@@ -145,20 +145,20 @@ export async function moveFight(
  * - capture is authorized
  * - the balance item is enabled,
  * - stats are disabled
- * 
+ *
  * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
- * 
+ *
  * @returns FightProcessResult
- *  */ 
-// 
+ *  */
+//
 export function calculateFight(
 	team: DinozToGetFighter[],
 	player: Pick<Player, 'cooker'>,
 	place: PlaceEnum,
 	monsters?: MonsterFiche[],
-	seed?: string,
+	seed?: string
 ): FightProcessResult {
-	let rng_seed = seed ?? generateString(20)
+	let rng_seed = seed ?? generateString(20);
 	let rng = seedrandom(rng_seed);
 
 	const fighters = getFighters(

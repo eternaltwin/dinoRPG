@@ -219,10 +219,10 @@ export default defineComponent({
 }
 #accountList {
 	float: left;
-	position: relative;
+	//position: relative;
 	padding-left: 60px;
 	padding-top: 35px;
-	width: 145px;
+	//width: 145px;
 	display: flex;
 	flex-direction: column;
 	.namePlace {
@@ -333,6 +333,7 @@ export default defineComponent({
 	.img-wrapper {
 		height: 109px;
 		overflow: hidden;
+		width: 140px;
 
 		img {
 			width: 100%;

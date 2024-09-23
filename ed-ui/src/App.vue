@@ -48,7 +48,6 @@ export default defineComponent({
 	width: 100%;
 	align-items: center;
 	position: absolute;
-	height: 100%;
 	flex-direction: column;
 	gap: 74px;
 }

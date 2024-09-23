@@ -72,8 +72,8 @@ export default defineComponent({
 	width: 180px;
 	height: 40px;
 	position: absolute;
-	top: 198px;
-	left: 10px;
+	margin-top: 198px;
+	margin-left: 10px;
 	.bars {
 		position: absolute;
 		margin-left: 69px;

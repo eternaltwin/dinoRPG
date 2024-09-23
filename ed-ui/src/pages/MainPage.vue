@@ -1,35 +1,27 @@
 <template>
 	<div class="dinorpg">
-		<table id="layout">
-			<tbody>
-				<tr>
-					<td id="left"><div></div></td>
-					<td id="center">
-						<a @click="goToNews()" class="linkHome"></a>
-						<div id="centerHeader" v-if="loaded">
-							<div id="menu"></div>
-							<LeftPanel />
-							<div id="centerContent">
-								<Router-view />
-								<RightMenu />
-							</div>
-						</div>
-					</td>
-					<td id="right">
-						<div></div>
-					</td>
-				</tr>
-				<tr>
-					<td><div></div></td>
-					<td>
-						<div class="skyfootercore"></div>
-					</td>
-					<td>
-						<div class="skyfooterright"></div>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+		<div id="layout">
+			<div class="left"><div></div></div>
+			<div class="center">
+				<a @click="goToNews()" class="linkHome"></a>
+				<div id="centerHeader" v-if="loaded">
+					<!--					<div id="menu"></div>-->
+					<LeftPanel />
+					<div id="centerContent">
+						<Router-view />
+					</div>
+					<RightMenu />
+				</div>
+			</div>
+			<div class="right">
+				<div></div>
+			</div>
+		</div>
+		<div id="prefoot">
+			<div class="left"><div></div></div>
+			<div class="footCenter center"><div></div></div>
+			<div class="footRight right"><div></div></div>
+		</div>
 	</div>
 </template>
 
@@ -104,14 +96,75 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-a.linkHome {
-	position: absolute;
-	width: 500px;
-	height: 80px;
-	z-index: 10;
-	margin-top: 25px;
-	margin-left: 240px;
-	background-color: transparent;
-	cursor: pointer;
+#layout {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-grow: 3;
+	background-image: url('../assets/background/bg_ciel3.webp');
+	background-color: white;
+	background-repeat: no-repeat;
+}
+
+#prefoot {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	flex-grow: 3;
+	//background-image: url('../assets/background/bg_ciel3.webp');
+	background-color: white;
+	background-repeat: no-repeat;
+}
+
+.left {
+	flex-grow: 1;
+}
+.right {
+	background-image: url('../assets/background/core_right_bg.webp');
+	background-position: left 77px;
+	background-repeat: repeat-y;
+	flex-grow: 1;
+	div {
+		height: 88px;
+		background-image: url('../assets/background/core_right_header3.webp');
+		background-repeat: no-repeat;
+		background-position: left top;
+	}
+}
+
+.center {
+	width: 900px;
+	background-image: url('../assets/background/sky_core_bg.webp');
+	background-repeat: repeat-y;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	a.linkHome {
+		/*position: absolute;
+		width: 500px;
+		height: 80px;
+		z-index: 10;
+		margin-top: 25px;
+		margin-left: 240px;
+		background-color: transparent;*/
+		cursor: pointer;
+	}
+
+	#centerHeader {
+		padding: 1px;
+		background-image: url('../assets/background/core_center_header3.webp');
+		background-repeat: no-repeat;
+		min-height: 100vh;
+		width: 100%;
+		display: flex;
+	}
+}
+.footCenter {
+	background-image: url('../assets/background/core_center_footer.webp');
+}
+.footRight {
+	div {
+		background-image: url('../assets/background/core_right_footer.webp');
+	}
 }
 </style>

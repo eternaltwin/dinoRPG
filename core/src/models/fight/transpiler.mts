@@ -252,7 +252,7 @@ export type transpiled =
 			action: DinoAction.NOTIFY;
 			fids: number[];
 			notification: NotificationList;
-	}
+	  }
 	| {
 			action: DinoAction.OBJECT;
 			fid: number;

@@ -48,7 +48,7 @@ import {
 	getMultiElementalAttack
 } from './getDamage.js';
 import { cloneDinoz, initializeMonster } from './getFighters.js';
-import {randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
+import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -1197,7 +1197,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					fightData.steps.push({
 						action: 'notify',
 						fids: [opponent.id],
-						notification: NotificationList.InitDown,
+						notification: NotificationList.InitDown
 					});
 				}
 
@@ -1239,7 +1239,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					if (f.id === fighter.id) return;
 
 					// Heal 1-wood HP
-					heal(fightData, f, randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]), activate_step);
+					heal(
+						fightData,
+						f,
+						randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
+						activate_step
+					);
 				});
 
 				// Add step
@@ -1297,12 +1302,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					fightData.protectedFighters.push(lowestHpAlly.id);
 				}
 
-
 				// Add fx for shielded target
 				fightData.steps.push({
 					action: 'notify',
 					fids: [lowestHpAlly.id],
-					notification: NotificationList.InitDown,
+					notification: NotificationList.InitDown
 				});
 				// Protect lowest HP ally
 				fighter.protecting = lowestHpAlly.id;
@@ -1358,7 +1362,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push({
 					action: 'notify',
 					fids: [opponent.id],
-					notification: NotificationList.Silence,
+					notification: NotificationList.Silence
 				});
 				break;
 			}
@@ -1390,7 +1394,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push({
 					action: 'notify',
 					fids: [fighter.id],
-					notification: NotificationList.Down,
+					notification: NotificationList.Down
 				});
 				break;
 			}
@@ -1739,7 +1743,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponentsWithoutAttacker = opponents.filter(opponent => opponent.id !== opponentAttacker.id);
 
 				// Get random opponent defender
-				const opponentDefender = opponentsWithoutAttacker[randomBetweenSeeded(fightData.rng, 0, opponentsWithoutAttacker.length - 1)];
+				const opponentDefender =
+					opponentsWithoutAttacker[randomBetweenSeeded(fightData.rng, 0, opponentsWithoutAttacker.length - 1)];
 
 				// Add moveTo step
 				fightData.steps.push({
@@ -3463,7 +3468,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			return cancel();
 	}
 
-
 	// Not working well to add the activate step for all skills at this point
 	// // Add step
 	// fightData.steps.push(activate_step);
@@ -3644,7 +3648,13 @@ const poison = (
 };
 
 // Helper method to heal a fighter
-export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: number, step?: FightStep, isItem?: boolean) => {
+export const heal = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	hp: number,
+	step?: FightStep,
+	isItem?: boolean
+) => {
 	// No heal if fighter is dead
 	if (fighter.hp <= 0) return;
 
@@ -3678,7 +3688,7 @@ export const heal = (fightData: DetailedFight, fighter: DetailedFighter, hp: num
 	if (step) {
 		(step as SkillActivateStep).targets.push({
 			tid: fighter.id,
-			damages: healAmount,
+			damages: healAmount
 		});
 	} else {
 		fightData.steps.push({
@@ -3892,7 +3902,7 @@ const attackTarget = (
 		// DAZZLED
 		if (hasStatus(attacker, Status.DAZZLED)) {
 			if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 3) === 0) {
-				noDamage =  true;
+				noDamage = true;
 				evasion = true;
 			}
 		}
@@ -3944,7 +3954,7 @@ const attackTarget = (
 
 		// Check for combo
 		if (canCombo) {
-			if (fightData.rng() < (attacker.stats.special.multihit - 1)) {
+			if (fightData.rng() < attacker.stats.special.multihit - 1) {
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
 				energyCost++;
 				updateStat(fightData, attacker, 'multiHits', 1);
@@ -4381,7 +4391,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 			// Phoenix Feather
 			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
 				// Add skillActivate step
-				let res_step: SkillActivateStep =  {
+				let res_step: SkillActivateStep = {
 					action: 'skillActivate',
 					fid: fighter.id,
 					skill: Skill.PLUMES_DE_PHOENIX,

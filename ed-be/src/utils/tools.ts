@@ -27,7 +27,7 @@ function getRandomLetter(maxLetter: string): string {
 
 /**
  * @summary Returns a random string of a given size.
- * 
+ *
  * @param length {number}
  * @return string
  */

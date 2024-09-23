@@ -18,7 +18,11 @@ const weightedRandom = <T extends { odds: number }>(items: T[], totalOdds: numbe
 	return items[i];
 };
 
-export const weightedRandomSeeded = <T extends { odds: number }>(rnd: seedrandom.PRNG, items: T[], totalOdds: number) => {
+export const weightedRandomSeeded = <T extends { odds: number }>(
+	rnd: seedrandom.PRNG,
+	items: T[],
+	totalOdds: number
+) => {
 	let i = 0;
 	const weights: number[] = [];
 	for (i = 0; i < items.length; i++) {

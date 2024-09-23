@@ -26,7 +26,7 @@ import seedrandom from 'seedrandom';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
-	rng: seedrandom.PRNG,
+	rng: seedrandom.PRNG;
 	place: PlaceEnum;
 	loser: 'attackers' | 'defenders' | null;
 	steps: FightStep[];

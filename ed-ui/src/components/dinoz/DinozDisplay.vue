@@ -100,10 +100,10 @@ export default defineComponent({
 	width: 200px;
 	height: 165px;
 	position: absolute;
-	top: 30px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	margin-top: 40px;
 }
 .left {
 	position: absolute;
@@ -118,12 +118,11 @@ export default defineComponent({
 }
 .title {
 	position: absolute;
-	top: -6.5px;
+	margin-top: 62px;
 	background: url('../../assets/background/name_box.webp') no-repeat;
 	width: 222px;
 	height: 33px;
 	margin-left: 240px;
-	margin-top: 69px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

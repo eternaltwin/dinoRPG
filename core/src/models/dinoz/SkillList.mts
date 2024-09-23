@@ -617,7 +617,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 1,
 		probability: 5,
 		visualEffect: SkillVisualEffect.HEAL,
-		healingType: 1,
+		healingType: 1
 	},
 	[Skill.KAMIKAZE]: {
 		id: Skill.KAMIKAZE,
@@ -1434,7 +1434,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 2,
 		probability: 10,
-		visualEffect: SkillVisualEffect.HEAL,
+		visualEffect: SkillVisualEffect.HEAL
 	},
 	[Skill.CHARISME]: {
 		id: Skill.CHARISME,
@@ -3053,7 +3053,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 3,
 		probability: 10,
-		visualEffect: SkillVisualEffect.HEAL,
+		visualEffect: SkillVisualEffect.HEAL
 	},
 	[Skill.BRANCARDIER]: {
 		id: Skill.BRANCARDIER,
@@ -4202,7 +4202,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 10,
+		probability: 10
 	},
 	[Skill.MAINS_COLLANTES]: {
 		id: Skill.MAINS_COLLANTES,
@@ -5146,7 +5146,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.INITIATIVE]: -30,
-			[Stat.SPEED]: 3,
+			[Stat.SPEED]: 3
 		}
 	},
 	[Skill.CATCH]: {
