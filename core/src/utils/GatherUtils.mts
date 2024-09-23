@@ -24,7 +24,7 @@ export const initializeGatherGrid = (playerId: number, placeId: number, gridInfo
 	// Generate a list of ingredient
 	gridInformation.items.forEach(ingredient => {
 		const buffer = new Array(ingredient.startQuantity);
-		for (let i = 0; i < ingredient.ingredientId.length; i++) {
+		for (let i = 0; i < ingredient.startQuantity; i++) {
 			let ingredientId = ingredient.ingredientId[Math.floor(Math.random() * ingredient.ingredientId.length)];
 			if (ingredient.type === 'item') ingredientId += 1000;
 			buffer[i] = ingredientId;
