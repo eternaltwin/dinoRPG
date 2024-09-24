@@ -51,7 +51,8 @@
     "sass": "^1.60.0",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
-    "vite-plugin-mkcert": "^1.17.6"
+    "vite-plugin-mkcert": "^1.17.6",
+    "vite-plugin-vue-devtools": "^7.4.6"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
