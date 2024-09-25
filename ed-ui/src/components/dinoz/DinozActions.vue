@@ -26,75 +26,51 @@
 			:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
 			timer
 		></DZDisclaimer>
-		<ul>
-			<table class="action_button">
-				<tbody>
-					<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
-					<Tippy
-						tag="tr"
-						theme="normal"
-						v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW)"
-						:key="action"
-						:id="action.imgName"
-						@click="launch(action)"
-					>
-						<td class="icon">
-							<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
-						</td>
-						<td v-if="action.name === 'shop'" class="label">
-							{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}
-						</td>
-						<td v-else-if="action.name === 'npc'" class="label">
-							{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}
-						</td>
-						<td
-							v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
-							class="label"
-						>
-							{{ $t(`missions.actions.terminate`) }}
-						</td>
-						<td v-else-if="action.name === 'mission'" class="label">
-							{{ $t(`missions.npc.${action.prop}`) }}
-						</td>
-						<td v-else-if="action.name !== 'npc' && action.name !== 'shop'" class="label">
-							{{ $t(`action.name.${action.name}`) }}
-						</td>
-						<template #content>
-							<h1
-								v-if="action.name === 'shop'"
-								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))"
-							/>
-							<h1
-								v-else-if="action.name === 'npc'"
-								v-html="formatContent($t(`npc.name.${npcDisplayName(action.prop)}`))"
-							/>
-							<h1
-								v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
-								v-html="formatContent($t(`missions.actions.terminate`))"
-							/>
-							<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
-							<h1
-								v-else-if="action.name !== 'npc' && action.name !== 'shop'"
-								v-html="formatContent($t(`action.name.${action.name}`))"
-							/>
-							<p
-								v-if="action.name === 'shop'"
-								v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
-							/>
-							<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
-							<p
-								v-else-if="action.name === 'mission'"
-								v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
-							/>
-							<p
-								v-else-if="action.name !== 'npc' && action.name !== 'shop'"
-								v-html="formatContent($t(`action.description.${action.name}`))"
-							/>
-						</template>
-					</Tippy>
-				</tbody>
-			</table>
-		</ul>
+		<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
+		<Tippy
+			tag="div"
+			theme="normal"
+			class="action"
+			v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW)"
+			:key="action"
+			:id="action.imgName"
+			@click="launch(action)"
+		>
+			<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
+			<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}</p>
+			<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}</p>
+			<p v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION">
+				{{ $t(`missions.actions.terminate`) }}
+			</p>
+			<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>
+			<p v-else>{{ $t(`action.name.${action.name}`) }}</p>
+			<template #content>
+				<h1 v-if="action.name === 'shop'" v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))" />
+				<h1 v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.name.${npcDisplayName(action.prop)}`))" />
+				<h1
+					v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
+					v-html="formatContent($t(`missions.actions.terminate`))"
+				/>
+				<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
+				<h1
+					v-else-if="action.name !== 'npc' && action.name !== 'shop'"
+					v-html="formatContent($t(`action.name.${action.name}`))"
+				/>
+				<p
+					v-if="action.name === 'shop'"
+					v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
+				/>
+				<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
+				<p
+					v-else-if="action.name === 'mission'"
+					v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
+				/>
+				<p
+					v-else-if="action.name !== 'npc' && action.name !== 'shop'"
+					v-html="formatContent($t(`action.description.${action.name}`))"
+				/>
+			</template>
+		</Tippy>
 		<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
 	</div>
 </template>
@@ -575,6 +551,47 @@ export default defineComponent({
 	min-height: 90px;
 	color: white;
 	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+	.action {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 0.5rem;
+		margin-left: 5px;
+		margin-right: 5px;
+		border-radius: 7px;
+		font-size: 11pt;
+		font-variant: small-caps;
+		line-height: 10.5pt;
+		font-weight: 700;
+		&:hover {
+			background-color: #9a4029;
+			cursor: pointer;
+			img {
+				outline: 1px solid white;
+			}
+		}
+
+		&.dinoz-to-follow {
+			padding: 2px;
+			.icon {
+				text-align: right;
+				padding-top: 6px;
+				padding-bottom: 6px;
+			}
+
+			&:hover {
+				td {
+					&.icon {
+						outline: none;
+						background-color: #9a4029;
+					}
+				}
+			}
+		}
+	}
 	.actions_top {
 		width: 185px;
 		height: 28px;
@@ -588,70 +605,6 @@ export default defineComponent({
 			text-transform: uppercase;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
 			font-weight: bold;
-		}
-	}
-	.action_button {
-		position: relative;
-		left: 5px;
-		border-collapse: collapse;
-		border-spacing: 0;
-		margin-bottom: 2px;
-		width: 175px;
-		tr {
-			&:hover,
-			&.hover {
-				td {
-					&.icon {
-						outline: 1px solid white;
-					}
-					&.label {
-						background-color: #9a4029;
-					}
-				}
-			}
-
-			&.dinoz-to-follow {
-				padding: 2px;
-				.icon {
-					text-align: right;
-					padding-top: 6px;
-					padding-bottom: 6px;
-				}
-
-				&:hover {
-					td {
-						&.icon {
-							outline: none;
-							background-color: #9a4029;
-						}
-					}
-				}
-			}
-		}
-
-		td {
-			margin: 0;
-			padding: 0 0 2px;
-			text-align: left;
-			cursor: pointer;
-
-			&.label {
-				padding-left: 4px;
-				padding-right: 4px;
-				font-weight: bold;
-				color: white;
-				font-size: 11pt;
-				font-variant: small-caps;
-				line-height: 10.5pt;
-				border-top-right-radius: 7px;
-				border-bottom-right-radius: 7px;
-			}
-
-			&.icon {
-				width: 32px;
-				font-size: 0;
-				line-height: 0;
-			}
 		}
 	}
 }

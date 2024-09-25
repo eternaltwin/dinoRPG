@@ -219,10 +219,9 @@ export default defineComponent({
 }
 #accountList {
 	float: left;
-	//position: relative;
 	padding-left: 60px;
 	padding-top: 35px;
-	//width: 145px;
+	max-width: min-content;
 	display: flex;
 	flex-direction: column;
 	.namePlace {
