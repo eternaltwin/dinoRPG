@@ -3,11 +3,10 @@
 		<div id="layout">
 			<div class="left"><div></div></div>
 			<div class="center">
-				<a @click="goToNews()" class="linkHome"></a>
 				<div id="centerHeader" v-if="loaded">
-					<!--					<div id="menu"></div>-->
 					<LeftPanel />
 					<div id="centerContent">
+						<a @click="goToNews()" class="linkHome"></a>
 						<Router-view />
 					</div>
 					<RightMenu />
@@ -140,13 +139,10 @@ export default defineComponent({
 	align-items: center;
 	flex-direction: column;
 	a.linkHome {
-		/*position: absolute;
-		width: 500px;
-		height: 80px;
+		width: 100%;
+		height: 91px;
 		z-index: 10;
-		margin-top: 25px;
-		margin-left: 240px;
-		background-color: transparent;*/
+		background-color: transparent;
 		cursor: pointer;
 	}
 

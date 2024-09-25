@@ -208,10 +208,11 @@ table {
 #centerContent {
 	//display: flex;
 	//flex-wrap: nowrap;
-	padding-top: 100px;
 	margin-left: 30px;
 	width: 100%;
 	max-width: 540px;
+	display: flex;
+	flex-direction: column;
 }
 
 a {
