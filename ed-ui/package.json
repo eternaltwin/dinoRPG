@@ -10,7 +10,11 @@
     "build:deps": "tsc --project ./tsconfig.deps.json --noEmit",
     "preview": "vite preview",
     "lint:test": "eslint --ext .ts,vue --ignore-path .gitignore .",
-    "lint:fix": "eslint --ext .ts,vue --ignore-path .gitignore . --fix"
+    "lint:fix": "eslint --ext .ts,vue --ignore-path .gitignore . --fix",
+    "release": "release-it"
+  },
+  "release-it": {
+    "git": false
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^42.0.2",

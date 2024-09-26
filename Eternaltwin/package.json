@@ -1,9 +1,13 @@
 {
   "name": "eternal-twin",
-  "version": "0.0.1",
+  "version": "0.13.9",
   "private": true,
   "scripts": {
-    "etwin": "etwin"
+    "etwin": "etwin",
+    "release": "release-it"
+  },
+  "release-it": {
+    "git": false
   },
   "devDependencies": {
     "@eternaltwin/cli": "^0.14.3"

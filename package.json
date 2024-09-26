@@ -1,6 +1,7 @@
 {
   "name": "@eternaltwin/dinorpg-monorepo",
   "private": true,
+  "version": "0.13.9",
   "licenses": [
     {
       "type": "AGPL-3.0-or-later",
@@ -10,7 +11,34 @@
   "engines": {
     "node": ">=18"
   },
+  "release-it": {
+    "git": {
+      "requireCleanWorkingDir": false,
+      "commitMessage": "version: ${version}",
+      "tagAnnotation": "Release ${version}",
+      "tagName": "${version}"
+    },
+    "npm": {
+      "publish": false
+    },
+    "plugins": {
+      "@release-it/bumper": {
+        "in": [
+          "package.json"
+        ],
+        "out": [
+          "ed-be/package.json",
+          "ed-ui/package.json",
+          "core/package.json",
+          "prisma/package.json",
+          "Eternaltwin/package.json",
+          "dinoAnimation/package.json"
+        ]
+      }
+    }
+  },
   "scripts": {
+    "release": "release-it",
     "start:back": "cd ed-be && yarn run serve",
     "start:front": "cd ed-ui && yarn run serve",
     "serve": "concurrently -k -n \"back,front\" -p \"[{name}]\" -c \"blue,green,orange\" \"yarn run start:back\" \"yarn run start:front\"",
@@ -46,9 +74,11 @@
   },
   "packageManager": "yarn@4.2.2",
   "devDependencies": {
+    "@release-it/bumper": "^6.0.1",
     "concurrently": "^8.2.2",
     "husky": "^8.0.3",
     "prettier": "^3.0.3",
+    "release-it": "^17.6.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.2.2"
   }

@@ -1,9 +1,13 @@
 {
   "name": "@drpg/core",
-  "version": "1.0.0",
+  "version": "0.13.9",
   "scripts": {
     "build": "tsc --build ./tsconfig.json",
-    "prettier": "prettier --config .prettierrc 'src/**/*.mts' --write"
+    "prettier": "prettier --config .prettierrc 'src/**/*.mts' --write",
+    "release": "release-it"
+  },
+  "release-it": {
+    "git": false
   },
   "devDependencies": {
     "@stylistic/eslint-plugin-ts": "^1.4.0",

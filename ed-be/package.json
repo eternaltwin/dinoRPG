@@ -1,6 +1,6 @@
 {
   "name": "ed-be",
-  "version": "1.0.0",
+  "version": "0.13.9",
   "description": "EternalDino API",
   "scripts": {
     "serve": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
@@ -13,7 +13,11 @@
     "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
     "db:migrate:manual": "prisma migrate dev --create-only",
     "migration": "prisma migrate deploy",
-    "seed": "node --loader ts-node/esm prisma/seed.ts"
+    "seed": "node --loader ts-node/esm prisma/seed.ts",
+    "release": "release-it"
+  },
+  "release-it": {
+    "git": false
   },
   "author": "Jolujolu",
   "license": "ISC",
