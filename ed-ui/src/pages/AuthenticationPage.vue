@@ -1,5 +1,9 @@
 <template>
-	<p v-if="!isCodePresent" class="sign" @click="getRedirectUri()">
+	<p
+		v-if="!isCodePresent"
+		class="sign inherit ml-[10px] text-5xl font-bold no-underline cursor-pointer p-[10px]"
+		@click="getRedirectUri()"
+	>
 		{{ $t('alpha.login') }}
 	</p>
 </template>
