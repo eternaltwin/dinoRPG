@@ -409,8 +409,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.MEDECINE)) {
-			// Heal 1-4HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 4), undefined, LifeEffect.Heal);
+			// Heal 1-3HP
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 3), undefined, LifeEffect.Heal);
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.BRANCARDIER)) {
@@ -423,8 +423,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				// Get random ally
 				const ally = allies[Math.floor(fightData.rng() * allies.length)];
 
-				// Heal 2-6HP
-				heal(fightData, ally, randomBetween(2, 6));
+				// Heal 1-5HP
+				heal(fightData, ally, randomBetweenSeeded(fightData.rng, 1, 5), undefined, LifeEffect.Heal);
 			}
 		}
 

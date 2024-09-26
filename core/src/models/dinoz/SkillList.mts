@@ -6,6 +6,7 @@ import { SkillType } from '../enums/SkillType.mjs';
 import { SkillDetails } from './SkillDetails.mjs';
 import { raceList } from './RaceList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
+import { GotoEffect } from '../fight/transpiler.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -2959,7 +2960,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 10
+		probability: 10,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFFFFFF,
+			col2: 0xFFFF00,
+		}
 	},
 	[Skill.EMBUCHE]: {
 		id: Skill.EMBUCHE,

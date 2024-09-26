@@ -2355,7 +2355,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fightData.steps.push({
 					action: 'moveTo',
 					fid: fighter.id,
-					tid: opponent.id
+					tid: opponent.id,
+					skill: Skill.DANSE_FOUDROYANTE,
 				});
 
 				// Fighter attacks opponent

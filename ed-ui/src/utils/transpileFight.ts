@@ -18,6 +18,7 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
+import { effect } from 'vue';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -272,11 +273,22 @@ export function transpileFight(
 				});
 				break;
 			case 'moveTo':
-				history.push({
-					action: DinoAction.GOTO,
-					fid: step.fid,
-					tid: step.tid
-				});
+				if (step.skill) {
+					const skill = Object.values(skillList).find(skill => skill.id === step.skill);
+					history.push({
+						action: DinoAction.GOTO,
+						fid: step.fid,
+						tid: step.tid,
+						effect: skill?.gotoEffect,
+						shadeColor: skill?.shadeColor,
+					})
+				} else {
+					history.push({
+						action: DinoAction.GOTO,
+						fid: step.fid,
+						tid: step.tid
+					});
+				}
 				break;
 			case 'reduceEnergy':
 				break;
@@ -318,8 +330,8 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fid}`);
 					return;
 				}
+				const skill = Object.values(skillList).find(skill => skill.id === step.skill);
 				if (step.targets.length > 0) {
-					const skill = Object.values(skillList).find(skill => skill.id === step.skill);
 					let type: number | undefined;
 					if (!skill) {
 						console.warn(`Cannot find skill ${step.skill}`);
@@ -340,9 +352,9 @@ export function transpileFight(
 							targets: step.targets.map(t => {
 								return { id: t.tid, life: t.damages };
 							}),
-							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
+							color: skill?.color,
 							type: type,
-							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
+							fx: skill?.fx
 						}
 					});
 				} else {
@@ -352,9 +364,9 @@ export function transpileFight(
 						details: {
 							fid: step.fid,
 							targets: [{ id: step.fid }],
-							color: Object.values(skillList).find(skill => skill.id === step.skill)?.color,
-							type: Object.values(skillList).find(skill => skill.id === step.skill)?.auraType,
-							fx: Object.values(skillList).find(skill => skill.id === step.skill)?.fx
+							color: skill?.color,
+							type: skill?.auraType,
+							fx: skill?.fx
 						}
 					});
 				}

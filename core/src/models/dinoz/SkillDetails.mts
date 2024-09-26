@@ -5,6 +5,7 @@ import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
 import { Skill } from './SkillList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
+import { GotoEffect } from '../fight/transpiler.mjs';
 
 type OtherAssaults<T> = Exclude<
 	Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT,
@@ -63,7 +64,12 @@ export interface SkillDetails {
 	globalEffects?: SkillEffects;
 	priority?: number;
 	probability?: number;
-	visualEffect?: SkillVisualEffect; // Effect for Skill steps
+	visualEffect?: SkillVisualEffect; // Effect for Skill "activate" steps
+	gotoEffect?: GotoEffect, // Effect for Skill "go to" steps
+	shadeColor?: {
+		col1?: number;
+		col2?: number;
+	};
 	color?: string;
 	auraType?: number;
 	healingType?: number;
