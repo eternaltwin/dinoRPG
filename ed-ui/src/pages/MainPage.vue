@@ -1,25 +1,34 @@
 <template>
 	<div class="dinorpg">
-		<div id="layout">
-			<div class="left"><div></div></div>
-			<div class="center">
-				<div id="centerHeader" v-if="loaded">
+		<div id="layout" class="flex flex-grow-3 min-h-screen w-full justify-around bg-white bg-no-repeat">
+			<!-- Section Left -->
+			<div class="flex-grow"></div>
+			<!-- Section Center -->
+			<div class="center flex flex-col w-[900px] items-center bg-repeat-y bg-contain md:bg-auto">
+				<div id="centerHeader" class="flex w-full min-h-screen p-px bg-no-repeat bg-contain md:bg-auto" v-if="loaded">
 					<LeftPanel />
-					<div id="centerContent">
-						<a @click="goToNews()" class="linkHome"></a>
+					<div
+						id="centerContent"
+						class="flex flex-col w-full lg:max-w-[540px] mt-[-20px] md:mt-[10px] ml-[80px] md:ml-[40px] lg:ml-[30px]"
+					>
+						<a @click="goToNews()" class="linkHome w-full h-[120px] z-1 cursor-pointer"></a>
 						<Router-view />
 					</div>
 					<RightMenu />
 				</div>
 			</div>
-			<div class="right">
-				<div></div>
-			</div>
+			<!-- Section Right -->
+			<div class="right relative flex-grow hidden md:block bg-repeat-y"></div>
 		</div>
-		<div id="prefoot">
-			<div class="left"><div></div></div>
-			<div class="footCenter center"><div></div></div>
-			<div class="footRight right"><div></div></div>
+		<div id="prefoot" class="flex w-full h-[100px] justify-between">
+			<!-- Section Left -->
+			<div class="flex-grow"></div>
+			<!-- Section Center -->
+			<div
+				class="footCenter flex w-full sm:w-[900px] h-full items-center bg-top-center bg-contain sm:bg-cover bg-no-repeat"
+			></div>
+			<!-- Section Right -->
+			<div class="footRight flex-grow"></div>
 		</div>
 	</div>
 </template>
@@ -97,71 +106,41 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 #layout {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	flex-grow: 3;
 	background-image: url('../assets/background/bg_ciel3.webp');
-	background-color: white;
-	background-repeat: no-repeat;
 }
-
-#prefoot {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	flex-grow: 3;
-	//background-image: url('../assets/background/bg_ciel3.webp');
-	background-color: white;
-	background-repeat: no-repeat;
-}
-
-.left {
-	flex-grow: 1;
+.center {
+	background-image: url('../assets/background/sky_core_bg.webp');
+	#centerHeader {
+		background-image: url('../assets/background/core_center_header3.webp');
+	}
 }
 .right {
 	background-image: url('../assets/background/core_right_bg.webp');
-	background-position: left 77px;
-	background-repeat: repeat-y;
-	flex-grow: 1;
-	div {
-		height: 88px;
+	&::before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		min-height: 100px;
 		background-image: url('../assets/background/core_right_header3.webp');
 		background-repeat: no-repeat;
 		background-position: left top;
-	}
-}
-
-.center {
-	width: 900px;
-	background-image: url('../assets/background/sky_core_bg.webp');
-	background-repeat: repeat-y;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	a.linkHome {
-		width: 100%;
-		height: 91px;
-		z-index: 10;
-		background-color: transparent;
-		cursor: pointer;
-	}
-
-	#centerHeader {
-		padding: 1px;
-		background-image: url('../assets/background/core_center_header3.webp');
-		background-repeat: no-repeat;
-		min-height: 100vh;
-		width: 100%;
-		display: flex;
 	}
 }
 .footCenter {
 	background-image: url('../assets/background/core_center_footer.webp');
 }
 .footRight {
-	div {
+	&::before {
+		content: '';
+		display: block;
+		width: 100%;
+		min-height: 100px;
 		background-image: url('../assets/background/core_right_footer.webp');
+		background-repeat: no-repeat;
+		background-position: left top;
 	}
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<DZDisclaimer help content="market.historyView.lastOffers" />
-	<div class="df jcsb">
+	<div class="flex justify-between">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
 		<select :placeholder="$t('market.filter')" @change="changeFilter">
 			<option value="all">{{ $t('market.all') }}</option>

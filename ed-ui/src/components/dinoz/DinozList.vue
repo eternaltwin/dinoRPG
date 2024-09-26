@@ -1,5 +1,5 @@
 <template>
-	<ul>
+	<ul class="my-[5px] p-[2px] list-none border-2" style="border-color: #d69e68">
 		<li
 			v-for="(dinoz, index) in dinozList"
 			:key="index"
@@ -9,16 +9,17 @@
 				light: true,
 				group: getLeaderGroup(dinoz)
 			}"
+			class="hover:bg-[#9a4029]"
 		>
 			<a @click="goToDinozPage(dinoz.id)">
-				<span class="icon">
+				<span class="relative w-[40px] h-[10px] float-right">
 					<span class="tinyBar">
-						<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
+						<span class="life block h-[2px] bg-[yellow]" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
 					</span>
 					<span class="tinyBar">
-						<span class="xp" :style="getBarWidth(dinoz.experience, dinoz.maxExperience)"></span>
+						<span class="block h-[1px] bg-[#ff54e4]" :style="getBarWidth(dinoz.experience, dinoz.maxExperience)"></span>
 					</span>
-					<div class="icons">
+					<div class="icons flex mt-[5px]">
 						<img
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
@@ -142,135 +143,93 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-ul {
-	list-style: none;
-	font-size: 0pt;
-	line-height: 0pt;
-	margin-bottom: 1px;
-	padding: 2px;
-	border: 1px solid #d69e68;
-
-	li {
-		a {
-			border: 1px solid #fbdca5;
-			padding: 2px;
+li {
+	a {
+		border: 1px solid #fbdca5;
+		padding: 2px;
+		display: block;
+		font-size: 10pt;
+		line-height: 11pt;
+		text-decoration: none;
+		cursor: pointer;
+		em {
+			font-variant: normal;
+			font-weight: normal;
+			color: #cf8a51;
+			font-size: 8pt;
+			line-height: 8pt;
 			display: block;
-			font-size: 10pt;
-			line-height: 11pt;
-			text-decoration: none;
-			cursor: pointer;
-
-			em {
-				font-variant: normal;
-				font-weight: normal;
-				color: #cf8a51;
-				font-size: 8pt;
-				line-height: 8pt;
-				display: block;
-				float: left;
-				position: relative;
-				width: 87px;
-			}
-
-			span.name {
-				display: flex;
-				align-items: center;
-				float: left;
-				position: relative;
-				width: 87px;
-				white-space: nowrap;
-				overflow: hidden;
-				font-weight: bold;
-				font-variant: small-caps;
-
-				img {
-					width: 10px;
-					margin-left: 3px;
-				}
-			}
-
-			.icon {
-				position: relative;
-				width: 40px;
-				height: 10px;
-				font-size: 0pt;
-				line-height: 0pt;
-				.icons {
-					overflow: hidden;
-					display: flex;
-					gap: 2px;
-					margin-top: 4px;
-					flex-wrap: wrap-reverse;
-					img {
-						object-fit: contain;
-					}
-				}
+			float: left;
+			position: relative;
+			width: 87px;
+		}
+		span.name {
+			color: #bc683c;
+			display: flex;
+			align-items: center;
+			float: left;
+			position: relative;
+			width: 87px;
+			white-space: nowrap;
+			overflow: hidden;
+			font-weight: bold;
+			font-variant: small-caps;
+			img {
+				width: 10px;
+				margin-left: 3px;
 			}
 		}
-
-		&.light {
+		.icons {
+			overflow: hidden;
+			gap: 2px;
+			flex-wrap: wrap-reverse;
+			img {
+				object-fit: contain;
+			}
+		}
+	}
+	&.light {
+		a {
+			height: 48px;
+			.tinyBar {
+				margin-top: 4px;
+				display: block;
+				height: 2px;
+				width: 36px;
+				border: 1px solid #bc683c;
+				background-color: black;
+			}
+		}
+		&.dead {
+			color: #a52323;
+			background-color: #a9a9a9;
+			span {
+				text-decoration: line-through;
+			}
+		}
+		&.off {
+			opacity: 0.3;
+		}
+		&.selected {
+			background-color: #e6b479;
+			color: black;
+			border-color: black;
 			a {
-				height: 48px;
-
-				.icon {
-					float: right;
-
-					.tinyBar {
-						margin-top: 4px;
-						display: block;
-						height: 2px;
-						width: 36px;
-						border: 1px solid #bc683c;
-						background-color: black;
-						.life {
-							display: block;
-							height: 2px;
-							background-color: yellow;
-						}
-						.xp {
-							display: block;
-							height: 2px;
-							background-color: #ff54e4;
-						}
-					}
-				}
-			}
-
-			&.dead {
-				color: #a52323;
-				background-color: #a9a9a9;
-				span {
-					text-decoration: line-through;
-				}
-			}
-
-			&.off {
-				opacity: 0.3;
-			}
-
-			&.selected {
 				background-color: #e6b479;
 				color: black;
 				border-color: black;
-				a {
-					background-color: #e6b479;
-					color: black;
-					border-color: black;
-				}
-				span {
-					color: black;
-				}
 			}
-
-			em {
-				width: 90px;
-				font-size: 7.5pt;
+			span {
+				color: black;
 			}
 		}
-
-		&.group {
-			background-color: #f2ca8e;
+		em {
+			width: 90px;
+			font-size: 7.5pt;
 		}
+	}
+	&.group {
+		background-color: #f2ca8e;
 	}
 }
 </style>

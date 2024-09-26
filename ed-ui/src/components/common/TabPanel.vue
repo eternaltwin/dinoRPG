@@ -60,7 +60,6 @@ export default defineComponent({
 		url('../../assets/background/banniere_right.webp') no-repeat,
 		url('../../assets/background/banniere_middle.webp') repeat-x;
 	background-position-x: left;
-
 	.tabs {
 		margin-top: 15px;
 		margin-left: 1px;

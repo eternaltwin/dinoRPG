@@ -1,8 +1,25 @@
 <template>
-	<div id="accountList">
-		<div class="money" v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }">
+	<!-- Bouton Panel (visible seulement sur mobile) -->
+	<button
+		class="absolute top-[30px] left-0 bg-[#bc693cd7] py-4 px-6 rounded-r-lg text-white transition-transform duration-300 visible md:invisible z-50 md:z-30"
+		:class="{ 'translate-x-[210px]': isPanelOpen }"
+		@click="togglePanel"
+	>
+		<span class="text-3xl" v-if="!isPanelOpen">☰</span>
+		<span class="text-3xl" v-else>✖</span>
+	</button>
+	<!-- Menu latéral -->
+	<div
+		id="accountList"
+		class="absolute left-0 md:relative flex flex-col w-[200px] md:w-[220px] pl-[15px] pr-[15px] pt-[15px] md:pl-[60px] md:pr-0 md:pt-[35px] transition-transform duration-300 transform -translate-x-full md:translate-x-0 z-50 md:z-30 bg-cover bg-[url('./assets/design/tabsBg.webp')] md:bg-none"
+		:class="{ 'translate-x-0': isPanelOpen }"
+	>
+		<div
+			class="money w-[137px] h-[31px] m-[10px] mb-[28px] pt-[5px] pl-[15px] text-[#ffee92] text-left cursor-help"
+			v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }"
+		>
 			{{ beautifulMoney }}
-			<img :src="getImgURL('icons', 'small_gold')" alt="or" />
+			<img class="relative" :src="getImgURL('icons', 'small_gold')" alt="or" />
 		</div>
 		<div class="iconMenu">
 			<a
@@ -34,8 +51,7 @@
 			></a>
 			<!--			<a
 				id="menu_dojo"
-				@click="goToPage('DojoHome')"
-				class="icondojo"
+				class="icondojo disabled"
 				v-tippy="{
 					content: formatContent($t('layout.dojoButton')),
 					theme: 'small'
@@ -51,18 +67,23 @@
 				}"
 			></a>
 		</div>
-		<div class="place" v-if="place" @click="goToDinozPage()">
-			<div class="img-wrapper">
-				<img :src="getPlaceImage(place)" :alt="$t(`place.name.${place}`)" />
+		<div class="place mb-[8px] p-[2px] bg-[#fbdca5] cursor-pointer" v-if="place" @click="goToDinozPage()">
+			<div class="h-[109px] w-[140px]">
+				<img
+					class="border ml-[14px] md:ml-0 w-full h-auto"
+					style="border-color: #9a4029"
+					:src="getPlaceImage(place)"
+					:alt="$t(`place.name.${place}`)"
+				/>
 			</div>
-			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
+			<p class="text-[#bc683c] text-center italic">{{ $t(`place.name.${place}`) }}</p>
 		</div>
 		<DinozList :currentDinozId="currentDinozId()" :key="dinozStore"></DinozList>
-		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
+		<a v-if="hasPDA" class="overviewButton flex h-[20px]" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
 		</a>
-		<a v-if="hasPMI" class="overviewButton" @click="goToPage('DinozMissions')">
+		<a v-if="hasPMI" class="overviewButton flex h-[20px]" @click="goToPage('DinozMissions')">
 			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
 			<span>{{ $t('button.dinozMissions') }}</span>
 		</a>
@@ -91,13 +112,17 @@ export default defineComponent({
 			playerStore: playerStore(),
 			dinozStore: dinozStore(),
 			money: undefined as number | undefined,
-			clanId: undefined as number | undefined
+			clanId: undefined as number | undefined,
+			isPanelOpen: false
 		};
 	},
 	components: {
 		DinozList
 	},
 	methods: {
+		togglePanel() {
+			this.isPanelOpen = !this.isPanelOpen; // Bascule entre ouvert et fermé
+		},
 		changeTimezone(date: Date, ianatz: string) {
 			const invdate = new Date(
 				date.toLocaleString('en-US', {
@@ -208,7 +233,6 @@ export default defineComponent({
 	color: #8e3e26;
 	font-variant: small-caps;
 	font-weight: bold;
-	display: flex;
 	align-items: center;
 	margin-bottom: 1px;
 	padding-top: 1px;
@@ -230,40 +254,12 @@ export default defineComponent({
 	}
 }
 #accountList {
-	float: left;
-	padding-left: 60px;
-	padding-top: 35px;
-	max-width: min-content;
-	display: flex;
-	flex-direction: column;
-	.namePlace {
-		text-align: center;
-		font-size: 9pt;
-		text-transform: none;
-		letter-spacing: 0pt;
-		color: #8e3a20;
-	}
 	.money {
-		margin: 10px;
-		width: 137px;
-		height: 25px;
-		margin-bottom: 34px;
-		padding: 0px;
-		padding-top: 6px;
 		margin-left: -5px;
-		text-align: center;
-		font-size: 10pt !important;
-		color: #ffee92;
-		border: 0px;
-		background-color: transparent;
+		font-size: 10pt;
 		background-image: url('../../assets/background/goldbox2.webp');
 		background-repeat: no-repeat;
-		cursor: help;
 		font-weight: bold;
-
-		img {
-			vertical-align: -5%;
-		}
 	}
 	.iconMenu {
 		width: 143px;
@@ -272,47 +268,39 @@ export default defineComponent({
 		&:hover {
 			cursor: pointer;
 		}
-
 		a {
 			display: block;
 			background-repeat: no-repeat;
 			border-radius: 0px;
-
 			&.iconor {
 				margin-right: 5px;
 				background-image: url('../../assets/icons/act_shop.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
-
 				&:hover {
 					background-image: url('../../assets/icons/act_shop2.webp');
 				}
 			}
-
 			&.iconboutik {
 				margin-right: 5px;
 				background-image: url('../../assets/icons/act_boutique.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
-
 				&:hover {
 					background-image: url('../../assets/icons/act_boutique2.webp');
 				}
 			}
-
 			&.iconclan {
 				margin-right: 5px;
 				background-image: url('../../assets/icons/act_castle.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
-
 				&:hover {
 					background-image: url('../../assets/icons/act_castle2.webp');
 				}
-
 				&.disabled {
 					filter: grayscale(100%);
 					&:hover {
@@ -320,15 +308,19 @@ export default defineComponent({
 					}
 				}
 			}
-
 			&.icondojo {
 				background-image: url('../../assets/icons/act_dojo.webp');
 				width: 32px;
 				height: 32px;
 				float: left;
-
 				&:hover {
 					background-image: url('../../assets/icons/act_dojo2.webp');
+				}
+				&.disabled {
+					filter: grayscale(100%);
+					&:hover {
+						cursor: auto;
+					}
 				}
 			}
 			&.iconcine {
@@ -341,37 +333,6 @@ export default defineComponent({
 					filter: brightness(1.5);
 				}
 			}
-		}
-	}
-}
-
-.place {
-	padding: 2px;
-	background-color: #fbdca5;
-	margin-bottom: 8px;
-	cursor: pointer;
-
-	.img-wrapper {
-		height: 109px;
-		overflow: hidden;
-		width: 140px;
-
-		img {
-			width: 100%;
-			border: 1px solid #9a4029;
-			box-sizing: border-box;
-		}
-	}
-
-	.place-name {
-		color: #bc683c;
-		text-align: center;
-		font-size: 9pt;
-		font-style: italic;
-
-		&:first-letter {
-			font-weight: normal;
-			font-size: 9pt;
 		}
 	}
 }

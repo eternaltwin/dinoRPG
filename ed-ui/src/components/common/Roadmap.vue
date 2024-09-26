@@ -1,70 +1,99 @@
 <template>
-	<div class="roadmap">
-		<h3>{{ $t('roadmap.title') }}</h3>
-		<ul class="timeline">
-			<li @click="showTable(1)">
+	<div class="relative bottom-0 mt-[15px] -ml-[25px] sm:ml-0">
+		<h3 class="my-[15px] font-bold text-3xl text-[#9a4029] underline" style="font-variant: small-caps">
+			{{ $t('roadmap.title') }}
+		</h3>
+		<ul
+			class="flex flex-col sm:flex-row min-h-[530px] sm:min-h-[85px] ml-0 my-[10px] pl-[110px] list-none bg-[url('./assets/background/underDevTimelineVertical.webp')] sm:bg-[url('./assets/background/underDevTimeline.webp')] bg-no-repeat"
+		>
+			<li
+				@click="showTable(1)"
+				class="flex flex-col gap-[10px] items-center w-full sm:w-[106px] text-[#9a4029] text-center -ml-[80px] sm:ml-0 mt-[105px] sm:my-2 pr-[9px] pt-[30px] sm:pt-[15px] cursor-pointer"
+			>
 				<a>
-					<small>{{ $t('roadmap.small') }}</small>
-					<strong>
-						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('roadmap.strong.title1') }}</span>
+					<small
+						class="block h-[17px] -mt-[15px] mb-[5px] text-black text-base font-bold uppercase"
+						style="border-bottom: 1px dashed #9a4029"
+						>{{ $t('roadmap.small') }}</small
+					>
+					<strong class="block text-[12px] text-[#9a4029] leading-7">
+						<img class="relative" :src="getImgURL('icons', 'r_world')" alt="world" />
+						<span class="ml-[5px]">{{ $t('roadmap.strong.title1') }}</span>
 					</strong>
 				</a>
 			</li>
-			<li @click="showTable(2)">
+			<li
+				@click="showTable(2)"
+				class="flex flex-col items-center w-full sm:w-[106px] text-center -ml-[80px] sm:ml-0 mt-[50px] sm:my-2 pr-[9px] pt-[30px] sm:pt-[15px] cursor-pointer"
+			>
 				<a>
-					<small>{{ $t('roadmap.small') }}</small>
-					<strong>
-						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('roadmap.strong.title2') }}</span>
+					<small
+						class="block h-[20px] -mt-[15px] mb-[5px] text-black text-base font-bold uppercase"
+						style="border-bottom: 1px dashed #9a4029"
+						>{{ $t('roadmap.small') }}</small
+					>
+					<strong class="block text-[12px] text-[#9a4029] leading-7">
+						<img class="relative" :src="getImgURL('icons', 'r_world')" alt="world" />
+						<span class="ml-[5px]">{{ $t('roadmap.strong.title2') }}</span>
 					</strong>
 				</a>
 			</li>
-			<li @click="showTable(3)">
+			<li
+				@click="showTable(3)"
+				class="flex flex-col items-center w-full sm:w-[106px] text-center -ml-[80px] sm:ml-0 mt-[50px] sm:my-2 pr-[9px] pt-[30px] sm:pt-[15px] cursor-pointer"
+			>
 				<a>
-					<small>{{ $t('roadmap.small') }}</small>
-					<strong>
-						<img :src="getImgURL('icons', 'r_world')" alt="world" />
-						<span>{{ $t('roadmap.strong.title3') }}</span>
+					<small
+						class="block h-[20px] -mt-[15px] mb-[5px] text-black text-base font-bold uppercase"
+						style="border-bottom: 1px dashed #9a4029"
+						>{{ $t('roadmap.small') }}</small
+					>
+					<strong class="block text-[12px] text-[#9a4029] leading-7">
+						<img class="relative" :src="getImgURL('icons', 'r_world')" alt="world" />
+						<span class="ml-[5px]">{{ $t('roadmap.strong.title3') }}</span>
 					</strong>
 				</a>
 			</li>
 		</ul>
-		<table class="futur" :style="{ display: showFuturTable ? 'table' : 'none' }">
-			<tbody>
-				<tr>
-					<td class="futurHeader">
-						<div class="futurTitle">
-							<img :src="getImgURL('icons', 'small_sage')" :alt="small_sage" />
-							<span>{{ $t('roadmap.futurTitle') }}</span>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="futurDesc">
-						<div class="futurInfo">
-							<ul>
-								<li v-for="(item, index) in futurInfoList" :key="index">
-									<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
-									<span v-html="formatContent(item.text)" />
-								</li>
-							</ul>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td class="futurFooter"></td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="timehelp">
+		<div
+			class="relative w-full -ml-[10px] sm:ml-[40px] md:ml-[80px] lg:ml-[120px]"
+			:style="{ display: showFuturTable ? 'block' : 'none' }"
+		>
+			<div class="futur-header bg-no-repeat bg-contain h-[33px]">
+				<div class="relative uppercase text-[12px] text-[#ffee92] ml-[45px] sm:ml-[80px]">
+					<img class="mr-[5px]" :src="getImgURL('icons', 'small_sage')" alt="smallsage" />
+					<span>{{ $t('roadmap.futurTitle') }}</span>
+				</div>
+			</div>
+			<div class="futur-desc bg-repeat-y bg-contain max-w-[347px]">
+				<div class="text-[#67220d] block text-[14px] mt-[-16px]">
+					<ul class="flex flex-col list-none mt-[4px]">
+						<li v-for="(item, index) in futurInfoList" :key="index" class="mt-[4px] ml-[10px]">
+							<img
+								class="relative"
+								v-if="item.imageUrl"
+								:src="getImgURL(item.imageUrl.path, item.imageUrl.name)"
+								alt="Image"
+							/>
+							<span v-html="formatContent(item.text)" class="ml-[16px]" />
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="futur-footer"></div>
+		</div>
+		<div
+			class="w-full my-[10px] -ml-[10px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] bg-[#bc683c] bg-[url('./assets/icons/small_missAct.webp')] bg-no-repeat"
+			style="background-position: 5px 8px"
+		>
 			<p>{{ $t('roadmap.help') }}</p>
 		</div>
-		<div class="disclaimer">
+		<div class="mx-auto -ml-[10px] sm:ml-0 p-[5px] text-lg text-[#bc683c] italic">
 			<p>{{ $t('roadmap.disclaimer') }}</p>
 		</div>
 	</div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue';
 
@@ -82,7 +111,6 @@ export default defineComponent({
 			this.updateFuturInfo(tableIndex);
 		},
 		updateFuturInfo(tableIndex: number) {
-			// You can add logic here to update the futurInfoList based on the clicked link
 			switch (tableIndex) {
 				case 1:
 					this.futurInfoList = [
@@ -109,137 +137,24 @@ export default defineComponent({
 	}
 });
 </script>
+
 <style lang="scss" scoped>
-.roadmap {
-	position: relative;
-	bottom: 0px;
-	margin-top: 50px;
-	max-width: 520px;
-	& h3 {
-		color: #9a4029;
-		font-variant: small-caps;
-		font-size: 13pt;
-		margin-top: 10px;
-	}
-	.timeline {
-		list-style: none;
-		margin-bottom: 10px;
-		margin-top: 5px;
-		height: 74px;
-		background-image: url('../../assets/background/underDevTimeline.webp');
+.futur-header {
+	background-image: url('../../assets/background/maj_bg_header.webp');
+}
+.futur-desc {
+	background-image: url('../../assets/background/maj_bg.webp');
+}
+.futur-footer {
+	&::before {
+		content: '';
+		display: block;
+		background-image: url('../../assets/background/maj_bg_footer.webp');
+		min-height: 20px;
+		background-size: contain;
 		background-repeat: no-repeat;
-		padding-left: 108px;
-		& li {
-			float: left;
-			position: relative;
-			width: 103px;
-			height: 56px;
-			padding-right: 3px;
-			text-align: center;
-			overflow: hidden;
-			cursor: pointer;
-			padding-top: 18px;
-			color: #9a4029;
-			& a:hover {
-				background-color: transparent;
-			}
-			& small {
-				display: block;
-				margin-top: -8px;
-				margin-bottom: 4px;
-				padding-bottom: 2px;
-				padding-left: 1px;
-				width: 100px;
-				height: 14px;
-				color: black;
-				font-size: 7.5pt;
-				font-weight: bold;
-				text-transform: uppercase;
-				border-bottom: 1px dashed #9a4029;
-			}
-			& strong {
-				color: #9a4029;
-				display: block;
-				font-size: 9pt;
-				line-height: 11pt;
-				font-weight: bold;
-				font-variant: small-caps;
-				& span {
-					margin-left: 5px;
-				}
-			}
-		}
-	}
-	.futur {
-		border-collapse: collapse;
-		display: none;
-		width: 520px;
-		& tbody {
-			& tr {
-				.futurHeader {
-					background-image: url('../../assets/background/maj_bg_header.webp');
-					background-repeat: no-repeat;
-					background-position: top center;
-					height: 29px;
-					.futurTitle {
-						text-transform: uppercase;
-						font-size: 12px;
-						color: #ffee92;
-						text-align: center;
-						margin-top: -4px;
-					}
-				}
-				.futurDesc {
-					background-image: url('../../assets/background/maj_bg.webp');
-					background-repeat: repeat-y;
-					background-position: top center;
-					.futurInfo {
-						color: #67220d;
-						display: block;
-						font-size: 14px;
-						& ul {
-							display: block;
-							list-style: none;
-							margin-top: 4px;
-							margin-left: 40px;
-							& li {
-								margin-top: 4px;
-								margin-left: 80px;
-								margin-right: 100px;
-								& span {
-									margin-left: 5px;
-								}
-							}
-						}
-					}
-				}
-				.futurFooter {
-					background-image: url('../../assets/background/maj_bg_footer.webp');
-					background-repeat: no-repeat;
-					height: 17px;
-					background-position: top center;
-				}
-			}
-		}
-	}
-	.timehelp {
-		margin-top: 10px;
-		margin-bottom: 10px;
-		padding: 5px;
-		padding-left: 20px;
-		color: #fce3bc;
-		font-size: 10pt;
-		background-color: #bc683c;
-		background-image: url('../../assets/icons/small_missAct.webp');
-		background-position: 5px 8px;
-		background-repeat: no-repeat;
-	}
-	.disclaimer {
-		font-size: 10px;
-		font-style: italic;
-		color: #bc683c;
-		margin: auto;
-		padding: 5px;
+		background-position: left top;
+		max-width: 347px;
 	}
 }
 </style>

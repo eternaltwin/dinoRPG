@@ -1,13 +1,17 @@
 <template>
-	<div class="wrapper">
+	<div class="wrapper -ml-[50px] sm:ml-0">
 		<table v-on-click-outside="(selectedPlayer = undefined)">
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
 					<th class="player">{{ $t('ranking.th.player') }}</th>
 					<th class="dinoz">Dinoz</th>
-					<th class="points">{{ $t('ranking.th.points') }}</th>
-					<th class="points">{{ $t('tabs.average') }}</th>
+					<th class="points average-column" :class="{ hiddenOnMobile: tabSelected === 2 }">
+						{{ $t('ranking.th.points') }}
+					</th>
+					<th class="points average-column" :class="{ hiddenOnMobile: tabSelected === 1 }">
+						{{ $t('tabs.average') }}
+					</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
 					<td class="pos" colspan="5" style="text-align: center">
@@ -33,10 +37,10 @@
 					<td class="other">
 						{{ ranking.dinozCount }}
 					</td>
-					<td class="other">
+					<td class="other average-column" :class="{ hiddenOnMobile: tabSelected === 2 }">
 						{{ ranking.points }}
 					</td>
-					<td class="other">
+					<td class="other average-column" :class="{ hiddenOnMobile: tabSelected === 1 }">
 						{{ ranking.average }}
 					</td>
 				</tr>
@@ -77,7 +81,11 @@ export default defineComponent({
 		};
 	},
 	props: {
-		sort: String
+		sort: String,
+		tabSelected: {
+			type: Number,
+			required: true
+		}
 	},
 	methods: {
 		leave() {
@@ -110,13 +118,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .wrapper {
-	margin: 5px;
 	position: relative;
 	table {
 		width: 100%;
 		margin-top: 10px;
-		margin-bottom: 5px;
-		margin-bottom: 10px;
+		margin-bottom: 15px;
 		border: 2px solid #f3d6b1;
 		background-color: #ecbd84;
 		border-collapse: separate;
@@ -144,10 +150,10 @@ export default defineComponent({
 				background-position: left bottom;
 				max-width: 222px;
 				&.pos {
-					width: 5em;
+					width: 4em;
 				}
 				&.player {
-					max-width: 150px;
+					max-width: 130px;
 				}
 				&.dinoz {
 					max-width: 15px;
@@ -198,5 +204,10 @@ export default defineComponent({
 }
 .hidden {
 	display: none !important;
+}
+@media (max-width: 490px) {
+	.average-column.hiddenOnMobile {
+		display: none;
+	}
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
-	<div class="wrapper">
+	<div class="wrapper -ml-[50px] sm:ml-0">
 		<table>
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
 					<th class="player">{{ $t('ranking.th.player') }}</th>
-					<th class="dinoz">Dinoz</th>
-					<th class="points">{{ $t('ranking.th.points') }}</th>
+					<th class="dinoz dinoz-column">Dinoz</th>
+					<th class="points points-column">{{ $t('ranking.th.points') }}</th>
 					<th class="points">{{ $t('tabs.completion') }}</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
@@ -19,24 +19,26 @@
 					:key="ranking.player.id"
 					class="select"
 					:class="(index + 1) % 2 === 0 ? 'even' : ''"
-					@click="goToAccount(ranking.player.id)"
+					@click="selectedPlayer = ranking.player.id"
+					v-click-outside="leave"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}
 					</td>
 					<td class="other">
-						{{ ranking.player.name }}
+						<DZUser :user="ranking.player" :me="ranking.player.id === me" :friend="false" />
 					</td>
-					<td class="other">
+					<td class="other dinoz-column">
 						{{ ranking.dinozCount }}
 					</td>
-					<td class="other">
+					<td class="other points-column">
 						{{ ranking.points }}
 					</td>
 					<td class="other">
 						{{ ranking.completion }}
 					</td>
 				</tr>
+				<PlayerMenu v-if="seePlayer && selectedPlayer" :playerId="selectedPlayer" />
 			</tbody>
 			<tr class="select" @click="changePage(1)" :class="{ hidden: rankings.length < 20 }">
 				<td class="pos" colspan="5" style="text-align: center">
@@ -53,16 +55,35 @@ import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
+import { playerStore } from '../../store/index.js';
+import DZUser from '../common/DZUser.vue';
+import PlayerMenu from '../modal/PlayerMenu.vue';
 
 export default defineComponent({
 	name: 'CompletionRanking',
+	components: {
+		DZUser,
+		PlayerMenu
+	},
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
-			page: 1 as number
+			page: 1 as number,
+			me: playerStore().getPlayerId,
+			seePlayer: false,
+			selectedPlayer: undefined as undefined | number
 		};
 	},
+	props: {
+		tabSelected: {
+			type: Number,
+			required: true
+		}
+	},
 	methods: {
+		leave() {
+			this.seePlayer = false;
+		},
 		goToAccount(paramId: number): void {
 			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
 		},
@@ -89,7 +110,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .wrapper {
-	margin: 5px;
 	table {
 		width: 100%;
 		margin-top: 10px;
@@ -125,13 +145,13 @@ export default defineComponent({
 					width: 5em;
 				}
 				&.player {
-					max-width: 150px;
+					max-width: 100px;
 				}
 				&.dinoz {
 					max-width: 15px;
 				}
 				&.points {
-					max-width: 15px;
+					max-width: 20px;
 				}
 			}
 			td {
@@ -176,5 +196,11 @@ export default defineComponent({
 }
 .hidden {
 	display: none !important;
+}
+@media (max-width: 490px) {
+	.dinoz-column,
+	.points-column {
+		display: none;
+	}
 }
 </style>

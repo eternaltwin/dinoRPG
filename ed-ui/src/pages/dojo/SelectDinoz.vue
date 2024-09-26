@@ -19,7 +19,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="df jcc mt-1" v-if="selectedDinoz.length">
+	<div class="flex justify-center mt-1" v-if="selectedDinoz.length">
 		<DZButton @click="validate">{{ $t('selectDinoz.validate') }}</DZButton>
 	</div>
 </template>

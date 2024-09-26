@@ -111,12 +111,13 @@ export default defineComponent({
 <style lang="scss" scoped>
 .container {
 	width: 50%;
-	height: 100%;
+	height: 90%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
 	cursor: pointer;
+	margin-top: 10px;
 }
 
 .box {

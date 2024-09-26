@@ -13,11 +13,6 @@ export default defineConfig(({ mode }) => {
 		resolve: {
 			extensions: ['.js', '.ts', '.json', '.vue']
 		},
-		css: {
-			preprocessorOptions: {
-				scss: { additionalData: `@import "./src/css/_mixins.scss";` }
-			}
-		},
 		server: {
 			port: 8080,
 			https: env.VITE_USE_HTTPS === 'true'

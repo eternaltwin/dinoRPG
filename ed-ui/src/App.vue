@@ -19,7 +19,6 @@ import Spinner from './components/utils/Spinner.vue';
 import ErrorMessage from './components/utils/ErrorMessage.vue';
 import Toast from './components/utils/Toast.vue';
 import Report from './components/modal/ReportModal.vue';
-import './index.css';
 
 export default defineComponent({
 	name: 'App',

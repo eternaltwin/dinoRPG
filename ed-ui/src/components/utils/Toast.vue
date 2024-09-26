@@ -47,6 +47,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import 'vue-toast-notification/dist/theme-bootstrap.css';
 .snackbar {
 	opacity: 1;
 	min-width: 250px; /* Set a default minimum width */
@@ -68,7 +69,6 @@ export default defineComponent({
 		inset 0 0 4px 1px #8d3e17;
 	cursor: pointer;
 }
-
 .v-enter-active {
 	transition:
 		opacity 0.5s ease,
@@ -81,7 +81,6 @@ export default defineComponent({
 		opacity 0.5s ease,
 		bottom 0.5s ease;
 }
-
 .v-enter-from {
 	bottom: 0;
 	opacity: 0;

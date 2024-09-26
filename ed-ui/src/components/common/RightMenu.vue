@@ -1,48 +1,66 @@
 <template>
-	<ul class="rightMenu">
-		<li class="time-wrapper">
-			<div class="time">{{ time }}</div>
-		</li>
-		<!--		<li>-->
-		<!--			<a @click="goToPage('News')">{{ $t('rightMenu.news') }}</a>-->
-		<!--		</li>-->
-		<!--		<li>-->
-		<!--			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>-->
-		<!--		</li>-->
-		<li>
-			<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
-		</li>
-		<li>
-			<a @click="goToPage('ClansList')">{{ $t('rightMenu.clans') }}</a>
-		</li>
-		<li>
-			<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
-		</li>
-		<li v-if="getPlayerId">
-			<a @click="goToMyAccount('MyAccount', getPlayerId)">{{ $t('rightMenu.account') }}</a>
-		</li>
-		<li>
-			<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
-		</li>
-		<li>
-			<a @click="goToPage('FAQ')">{{ $t('rightMenu.faq') }}</a>
-		</li>
-		<li>
-			<p>{{ dinozCount }} Dinoz</p>
-		</li>
-		<li>
-			<LocaleChange />
-		</li>
-		<li v-if="isAdmin">
-			<a @click="goToPage('Admin')">Admin</a>
-		</li>
-		<li>
-			<a @click="logOff()">{{ $t('rightMenu.logout') }}</a>
-		</li>
-		<li @click="goToPage('Help')" class="guide">
-			{{ $t('rightMenu.guide') }}
-		</li>
-	</ul>
+	<div>
+		<!-- Bouton Panel (visible seulement sur mobile/tablette) -->
+		<button
+			class="absolute top-[90px] left-0 bg-[#bc693cd7] py-4 px-6 rounded-r-lg text-white transition-transform duration-300 visible lg:invisible z-40"
+			:class="{ 'translate-x-[130px]': isPanelOpen }"
+			@click="togglePanel"
+		>
+			<span class="text-3xl" v-if="!isPanelOpen">☰</span>
+			<span class="text-3xl" v-else>✖</span>
+		</button>
+		<!-- Menu latéral -->
+		<ul
+			class="rightMenu absolute left-0 lg:relative w-[130px] mt-[90px] p-[15px] list-none transition-transform duration-300 transform -translate-x-full lg:translate-x-0 z-40"
+			:class="{ 'translate-x-0': isPanelOpen }"
+		>
+			<li class="mb-[5px]">
+				<div
+					class="inline w-[80px] h-[20px] pl-[20px] pb-[2px] ml-[3px] text-2xl bg-[url('./assets/design/small_chrono.webp')] bg-no-repeat"
+				>
+					{{ time }}
+				</div>
+			</li>
+			<!--		<li>-->
+			<!--			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>-->
+			<!--		</li>-->
+			<li>
+				<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
+			</li>
+			<li>
+				<a @click="goToPage('ClansList')">{{ $t('rightMenu.clans') }}</a>
+			</li>
+			<li>
+				<a @click="goToPage('Ingredients')">{{ $t('rightMenu.ingredients') }}</a>
+			</li>
+			<li v-if="getPlayerId">
+				<a @click="goToMyAccount('MyAccount', getPlayerId)">{{ $t('rightMenu.account') }}</a>
+			</li>
+			<li>
+				<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
+				<a @click="goToPage('FAQ')">{{ $t('rightMenu.faq') }}</a>
+			</li>
+			<li>
+				<p>{{ dinozCount }} Dinoz</p>
+			</li>
+			<li>
+				<LocaleChange />
+			</li>
+			<li v-if="isAdmin">
+				<a @click="goToPage('Admin')">Admin</a>
+			</li>
+			<li>
+				<a @click="logOff()">{{ $t('rightMenu.logout') }}</a>
+			</li>
+			<li
+				@click="goToPage('Help')"
+				class="guide max-w-[95px] h-[55px] ml-[2px] pt-[28px] font-bold text-[#fff1ad] text-xl text-center cursor-pointer bg-no-repeat bg-[url('./assets/design/button_help.gif')]"
+			>
+				{{ $t('rightMenu.guide') }}
+			</li>
+		</ul>
+	</div>
+			<li>
 </template>
 
 <script lang="ts">
@@ -57,7 +75,8 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
 			localStore: localStore(),
-			time: '' as string
+			time: '' as string,
+			isPanelOpen: false
 		};
 	},
 	components: {
@@ -75,6 +94,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		togglePanel() {
+			this.isPanelOpen = !this.isPanelOpen; // Bascule entre ouvert et fermé
+		},
 		goToMyAccount(page: string, paramId: number): void {
 			this.$router.push({ name: page, params: { id: paramId } });
 		},
@@ -108,33 +130,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .rightMenu {
-	//left: 550px;
-	//position: absolute;
-	//padding-bottom: 10px;
-	//padding-right: 10px;
-	margin-top: 90px;
-	height: fit-content;
-	width: fit-content;
-	padding: 15px;
-	//padding-left: 15px;
-	//padding-top: 15px;
-	//padding-bottom: 20px;
 	background:
 		url('../../assets/design/sideMenu_header.webp') no-repeat,
 		url('../../assets/design/sideMenu_footer.webp') no-repeat,
 		url('../../assets/design/sideMenu_bg.webp') repeat-y;
 	background-position-y: top, bottom;
-	//display: block;
-	list-style: none;
-
-	li {
-		width: 100px;
-	}
-
 	a {
 		text-decoration: none;
-		border-collapse: collapse;
-		border-spacing: 0px 0px;
 		color: rgb(142, 62, 38);
 		display: block;
 		font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -143,29 +145,15 @@ export default defineComponent({
 		font-weight: 700;
 		height: 20px;
 		line-height: 14.6667px;
-		list-style-image: none;
-		list-style-position: outside;
-		list-style-type: none;
-		margin-bottom: 0px;
-		margin-left: 0px;
-		margin-right: 10px;
-		margin-top: 0px;
-		padding-bottom: 0px;
 		padding-left: 5px;
-		padding-right: 0px;
-		padding-top: 0px;
 		text-align: left;
+		&:hover {
+			background-color: #9a4029;
+			color: #fce3bc;
+			cursor: pointer;
+		}
 	}
-
-	a:hover {
-		background-color: #9a4029;
-		color: #fce3bc;
-		cursor: pointer;
-	}
-
 	p {
-		border-collapse: collapse;
-		border-spacing: 0px 0px;
 		color: rgb(142, 62, 38);
 		display: block;
 		font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -174,52 +162,12 @@ export default defineComponent({
 		font-weight: 700;
 		height: 20px;
 		line-height: 14.6667px;
-		list-style-image: none;
-		list-style-position: outside;
-		list-style-type: none;
-		margin-bottom: 0px;
-		margin-left: 0px;
-		margin-right: 10px;
-		margin-top: 0px;
-		padding-bottom: 0px;
 		padding-left: 5px;
-		padding-right: 0px;
-		padding-top: 0px;
 		text-align: left;
 	}
 }
-
-.time-wrapper {
-	margin-bottom: 4px;
-
-	.time {
-		display: inline;
-		width: 70px;
-		height: 16px;
-		padding-left: 20px;
-		padding-bottom: 2px;
-		font-size: 10pt;
-		background-image: url('../../assets/design/small_chrono.webp');
-		background-repeat: no-repeat;
-		margin-left: 3px;
-		line-height: 12px;
-	}
-}
-
 .guide {
-	background-image: url('../../assets/design/button_help.gif');
-	color: #fff1ad;
 	font-variant: small-caps;
-	font-weight: bold;
-	text-align: center;
-	height: 23px;
-	width: 95px !important;
-	margin-left: 2.5px;
-	padding-top: 27px;
-	background-repeat: no-repeat;
-	font-size: 10pt;
-	cursor: pointer;
-
 	&:hover {
 		color: white;
 		background-image: url('../../assets/design/button_help_hover.gif');

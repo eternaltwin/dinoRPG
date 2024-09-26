@@ -6,7 +6,7 @@
 			<tr>
 				<td>{{ $t('market.dinoz') }}</td>
 				<td>
-					<div class="df aic">
+					<div class="flex items-center">
 						<input type="checkbox" :checked="sellDinoz" id="sell-dinoz" @change="toggleSellDinoz" />
 						<label v-if="dinoz" for="sell-dinoz">
 							{{ $t('market.sellView.sellYourDinoz') }}
@@ -19,7 +19,7 @@
 			<tr>
 				<td>{{ $t('market.sellView.itemsAndIngredients') }}</td>
 				<td>
-					<div class="df fww">
+					<div class="flex flex-wrap">
 						<div v-for="ingredient in ingredients" :key="ingredient.name" class="item">
 							<Tippy
 								tag="img"

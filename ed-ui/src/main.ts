@@ -1,7 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router/index.js';
-import './css/main.scss';
 import { plugin as VueTippy } from 'vue-tippy';
 import { mixin } from './mixin/mixin.js';
 import { createPinia } from 'pinia';
@@ -11,6 +10,7 @@ import ToastPlugin from 'vue-toast-notification';
 import Loading from './components/utils/Loading.vue';
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import clickOutside from './directives/clickOutside.js';
+import './index.css';
 
 const vueTippyProps = {
 	directive: 'tippy',

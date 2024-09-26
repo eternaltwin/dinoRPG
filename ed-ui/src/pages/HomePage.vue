@@ -2,11 +2,11 @@
 	<div id="nav" class="flex flex-col items-center">
 		<div class="flex w-full">
 			<!-- Section Left -->
-			<div class="left flex-grow bg-left-homepage bg-left-top bg-repeat-x hidden md:block"></div>
+			<div class="left flex-grow bg-left-top bg-repeat-x hidden md:block"></div>
 			<!-- Section Center -->
 			<div class="flex flex-col items-center w-full max-w-[1008px] px-0 mx-0 sm:w-full">
 				<div
-					class="w-full h-[510px] bg-center-homepage-small bg-center bg-no-repeat sm:bg-center-homepage-large bg-cover"
+					class="center w-full h-[510px] bg-[url('./assets/background/sky_headerbg.webp')] bg-center bg-no-repeat sm:bg-[url('./assets/background/sky_headerbg_02.webp')] bg-cover"
 				></div>
 				<div class="mt-[-8rem] flex justify-center">
 					<AuthenticationPage :autoLog="autoLog"></AuthenticationPage>
@@ -38,7 +38,7 @@
 				</div>
 			</div>
 			<!-- Section Right -->
-			<div class="right flex-grow bg-right-homepage bg-right-top bg-repeat-x hidden md:block"></div>
+			<div class="right flex-grow bg-right-top bg-repeat-x hidden md:block"></div>
 		</div>
 	</div>
 </template>
@@ -228,10 +228,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.left,
+.right {
+	background-image: url('../assets/background/bg_ciel.webp');
+}
 .box {
 	margin: 1em 1em 1em;
 	padding: 1em 1.5em;
-	@include corner-bezel(18.5px);
+	border-radius: 18.5px;
 	box-shadow: inset 0 0 2.1em 1.2em #b4e0ff;
 }
 p {

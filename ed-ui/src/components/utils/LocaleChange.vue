@@ -1,11 +1,11 @@
 <template>
-	<ol>
+	<ol class="flex p-0 py-[5px]">
 		<a
 			v-for="(lang, i) in langs"
 			:key="`Lang${i}`"
 			@click="switchLocale(lang.short)"
 			:class="[$i18n.locale === lang.short ? 'selected' : '', lang.short]"
-			class="flag"
+			class="flag w-[16px] h-[11px] p-[2px] mx-auto cursor-pointer"
 		></a>
 	</ol>
 </template>
@@ -35,19 +35,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-ol {
-	display: flex;
-	padding: 0;
-	padding-right: 10px;
-	padding-bottom: 5px;
-}
 .flag {
-	width: 12px;
-	height: 7px;
-	margin: 0.1em auto;
-	padding: 2px;
-	cursor: pointer;
-
 	&:not(.selected):hover {
 		outline: #c87560 solid 3px;
 	}

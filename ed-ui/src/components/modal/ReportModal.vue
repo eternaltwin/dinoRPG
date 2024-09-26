@@ -5,7 +5,7 @@
 			<div class="modal-content">
 				<p class="small bold">{{ $t(`report.player`) }}</p>
 				<p class="small">
-					<span class="white">
+					<span class="text-white">
 						{{ $t(`report.specify`) }}
 					</span>
 					<template v-for="moderation in ModerationReasonFront" :key="moderation">
@@ -21,7 +21,7 @@
 					</select>
 				</p>
 				<p class="small">
-					<span class="white">
+					<span class="text-white">
 						{{ $t(`report.arguments`) }}
 					</span>
 					<textarea id="reportedArgument" v-model="reportedArgument" class="editTexte" />

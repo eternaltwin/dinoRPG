@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.ranking')}`"></TitleHeader>
-	<div class="section">
+	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.ranking`) }}</h3>
 		</div>
@@ -24,24 +24,33 @@
 			<a href="#" @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
 		</li>
 	</ul>
-	<div class="disclaimer" v-if="tabSelected === 1">
+	<div
+		class="disclaimer my-[10px] -ml-[50px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
+		v-if="tabSelected === 1"
+	>
 		{{ $t('ranking.disclaimer.classic') }}
 	</div>
-	<div class="disclaimer" v-if="tabSelected === 2">
+	<div
+		class="disclaimer my-[10px] -ml-[50px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
+		v-if="tabSelected === 2"
+	>
 		{{ $t('ranking.disclaimer.average') }}
 	</div>
-	<div class="disclaimer" v-if="tabSelected === 3">
+	<div
+		class="disclaimer my-[10px] -ml-[50px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
+		v-if="tabSelected === 3"
+	>
 		{{ $t('ranking.disclaimer.completion') }}
 	</div>
 	<div class="disclaimer" v-if="tabSelected === 5">
 		{{ $t('ranking.disclaimer.pantheon') }}
 	</div>
-	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
-	<PlayerRanking sort="average" v-if="tabSelected === 2" />
-	<CompletionRanking v-if="tabSelected === 3" />
+	<PlayerRanking sort="classic" :tab-selected="tabSelected" v-if="tabSelected === 1" />
+	<PlayerRanking sort="average" :tab-selected="tabSelected" v-if="tabSelected === 2" />
+	<CompletionRanking :tab-selected="tabSelected" v-if="tabSelected === 3" />
 	<Pantheon v-if="tabSelected === 5" />
 	<input
-		class="search"
+		class="search -ml-[50px] sm:ml-0 placeholder:text-[#fce3bc]"
 		type="text"
 		placeholder="Search Player"
 		v-model="searchValue"
@@ -124,30 +133,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px;
-	padding-left: 5px;
-	padding-left: 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
 .search {
 	background-image: url('../assets/background/form_field.webp');
 	background-repeat: no-repeat;
 	border: none;
+	outline: none;
 	color: #fce3bc;
-	height: 20px;
+	height: 22px;
 	padding-left: 8px;
 	padding-right: 8px;
 	padding-top: 2px;
-	width: 185px;
+	width: 200px;
 }
-.search::placeholder {
-	color: #fce3bc;
+.tabs {
+	background-color: transparent !important;
 }
 </style>

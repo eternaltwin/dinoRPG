@@ -1,27 +1,36 @@
 <template>
 	<div
-		:class="news.hide ? 'bloc hide' : 'bloc'"
+		:class="news.hide ? 'bloc max-h-[76px] overflow-hidden' : 'bloc'"
+		class="w-full bg-repeat-y bg-cover cursor-pointer mb-[10px] mr-[11px] -ml-[25px] sm:ml-0 border border-[#ffee92] transition-[max-height] duration-900 ease-out p-[10px]"
 		v-for="news in displayedBatch"
 		:key="news.id"
 		@click="news.hide = !news.hide"
 	>
-		<div class="newsTitle">
-			<img class="newsImg" :src="getImgURL('background', 'news_image')" alt="Logo News" />
-			<div class="newsContent">
-				<h1>{{ news.title }}</h1>
-				<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
+		<div class="grid mb-[10px]" style="grid-template-columns: 0.5fr 3fr">
+			<img class="w-[57px] h-[57px] pr-[15px]" :src="getImgURL('background', 'news_image')" alt="Logo News" />
+			<div class="newsContent flex flex-col text-[#ffee92]">
+				<h1 class="h-auto mb-[5px] font-bold text-5xl">{{ news.title }}</h1>
+				<span class="mb-[6px] opacity-70 text-xl">{{ '' + formatCreatedDate(news.createdDate) }}</span>
 			</div>
 		</div>
-		<img :src="`${API_BASE}/news/${news.id}/illustration`" />
-		<p v-html="formatContent(news.text)" />
-		<div class="newsFooter">
-			<a class="counter">
+		<img class="block mx-auto mb-[20px]" :src="`${API_BASE}/news/${news.id}/illustration`" />
+		<div class="news-content flex flex-col text-white">
+			<p v-html="formatContent(news.text)" />
+		</div>
+		<div class="flex mt-[15px]">
+			<a class="flex gap-[5px] font-extrabold text-xl text-[#ffee92] cursor-pointer">
 				<img :src="getImgURL('icons', 'miniIcon_off')" alt="icon" />
 				0
 			</a>
 		</div>
 	</div>
-	<a v-if="displayedBatch.length % 10 === 0" class="overload" @click="overload(page + 1)"> {{ $t('news.overload') }}</a>
+	<a
+		v-if="displayedBatch.length % 10 === 0"
+		class="overload block m-[10px] p-[2px] -ml-[25px] sm:ml-0 text-[#9a4029] text-center cursor-pointer"
+		@click="overload(page + 1)"
+	>
+		{{ $t('news.overload') }}</a
+	>
 	<Roadmap></Roadmap>
 </template>
 
@@ -122,85 +131,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.hide {
-	max-height: 50px !important;
-	overflow: hidden;
-	p {
-		display: none;
-	}
-}
-.overload {
-	display: block;
-	text-align: center;
-	margin: 10px;
-	padding: 2px;
-	cursor: pointer;
-}
 .bloc {
 	background-image: url('../../assets/background/bloc_news.webp');
-	background-repeat: repeat-y;
-	cursor: pointer;
-	margin-bottom: 10px;
-	margin-right: 11px;
-	border: 1px solid #ffee92;
 	outline: 1px solid #92471f;
-	transition: max-height 0.9s ease-out;
-	padding: 10px;
-	.newsTitle {
-		display: grid;
-		grid-template-columns: 0.5fr 3fr;
-		margin-bottom: 10px;
-		.newsImg {
-			height: 57px;
-			width: 48px;
-			padding-right: 15px !important;
-		}
-		.newsContent {
-			color: #ffee92;
-			display: flex;
-			flex-direction: column;
-			& h1 {
-				height: auto;
-				max-height: none;
-				text-align: left;
-				margin-bottom: 5px;
-				font-size: 20pt;
-				font-weight: bold;
-				line-height: 1em;
-				opacity: 0.8;
-				background: transparent;
-			}
-			& span {
-				font-size: 7.5pt;
-				margin-bottom: 6px;
-				opacity: 0.7;
-			}
-		}
-	}
-	.newsFooter {
-		display: flex;
-		margin-top: 15px;
-		.counter {
-			color: #ffee92;
-			cursor: pointer;
-			display: flex;
-			gap: 5px;
-			padding: 0px;
-			font-size: 11pt;
-			font-weight: bold;
-		}
-	}
-	img {
-		max-width: 100%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 20px;
-	}
-
-	p {
-		color: white;
-		background: transparent;
-	}
 }
 </style>

@@ -594,6 +594,8 @@ export default defineComponent({
 				position: relative;
 				width: 32px;
 				height: 32px;
+				margin-left: 1.2px;
+				margin-top: 1px;
 				border: 1px solid #b37047;
 				border-radius: 0px;
 				-webkit-border-radius: 0px;
