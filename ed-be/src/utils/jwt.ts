@@ -2,11 +2,12 @@ import { Request, Response } from 'express';
 import expressJwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
 import { getEternalTwinId, getRolePlayer } from '../dao/playerDao.js';
-import { Config, loadConfig } from '../config/config.js';
+import { Config } from '../config/config.js';
 import { AdminRole } from '@drpg/prisma';
+import { GLOBAL } from '../context.js';
 
 const jwtConfig = () => {
-	const config = loadConfig() as Config;
+	const config = GLOBAL.config;
 	const secret: string = config.jwt.secretKey;
 	return expressJwt.expressjwt({ secret, algorithms: ['HS256'] }).unless({
 		path: [
@@ -21,7 +22,7 @@ const jwtConfig = () => {
 };
 
 const forgeJWT = async (playerId: number): Promise<string> => {
-	const config: Config = loadConfig();
+	const config = GLOBAL.config;
 	const exp: number = Math.round(Date.now() / 1000) + config.jwt.expiration;
 	const isAdmin: boolean = await isPlayerAdmin(playerId, config);
 	return jsonwebtoken.sign(

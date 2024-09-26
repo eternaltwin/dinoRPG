@@ -1,4 +1,4 @@
-import { loadConfig } from '../config/config.js';
+import { GLOBAL } from '../context.js';
 
 const gameConfig: GameConfig = {
 	development: {
@@ -51,6 +51,6 @@ interface GameConfig {
 	};
 }
 
-const env = loadConfig().isProduction ? 'production' : 'development';
+const env = GLOBAL.config.isProduction ? 'production' : 'development';
 
 export default gameConfig[env];

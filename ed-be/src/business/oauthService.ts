@@ -1,7 +1,6 @@
 import { Request } from 'express';
 import { archiveOldUsername, createPlayer, getPlayerId, setPlayer } from '../dao/playerDao.js';
 import { forgeJWT } from '../utils/index.js';
-import { Config, loadConfig } from '../config/config.js';
 import { RfcOauthClient } from '@eternaltwin/oauth-client-http/rfc-oauth-client';
 import { OauthAccessToken } from '@eternaltwin/core/oauth/oauth-access-token';
 import fetch from 'node-fetch';
@@ -13,6 +12,7 @@ import { LogType } from '@drpg/prisma';
 import urlJoin from 'url-join';
 import { AdminRole } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { GLOBAL } from '../context.js';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -24,7 +24,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 export async function authenticateToET(req: Request) {
 	let token: OauthAccessToken;
 	let user: User;
-	const config: Config = loadConfig();
+	const config = GLOBAL.config;
 
 	try {
 		token = await getAuthorizationToken(req.body.code);
@@ -117,7 +117,7 @@ export async function getAuthorizationUri() {
 }
 
 function getRfcOauthClient() {
-	const config = loadConfig();
+	const config = GLOBAL.config;
 
 	return new RfcOauthClient({
 		authorizationEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/authorize')),

@@ -88,15 +88,16 @@ export const discoverBox = (
 				ingredients => ingredients[1].ingredientId === ingredientId
 			);
 			if (ingredient) {
-				const gridIngredient = gridInformation.items.filter(ing => ing.ingredientId.includes(ingredient[1].ingredientId));
+				const gridIngredient = gridInformation.items.filter(ing =>
+					ing.ingredientId.includes(ingredient[1].ingredientId)
+				);
 				if (gridIngredient.length < 1) throw new Error('Ingredient not found in gridInformation.items');
 				for (const possibleGater of gridIngredient) {
 					if (checkCondition(possibleGater.condition, player, player.dinoz[0].id)) {
 						ingredient[1].name = ingredient[0].toLowerCase();
-						rewards.ingredients.push(ingredient[1])
+						rewards.ingredients.push(ingredient[1]);
 					}
 				}
-
 			}
 		}
 	}
@@ -106,7 +107,7 @@ export const discoverBox = (
 	for (let i = 0; i < flatReturnGrid.length; i += gridInformation.size) {
 		returnGrid.push(flatReturnGrid.slice(i, i + gridInformation.size));
 	}
-	console.log(rewards)
+	console.log(rewards);
 
 	return {
 		grid: returnGrid,
