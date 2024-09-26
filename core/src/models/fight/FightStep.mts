@@ -113,6 +113,7 @@ export interface HealStep {
 	action: 'heal';
 	fighter: StepFighter;
 	hp: number;
+	fx: LifeEffect;
 }
 export interface AddStatusStep {
 	action: 'addStatus';

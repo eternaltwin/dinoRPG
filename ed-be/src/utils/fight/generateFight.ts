@@ -23,6 +23,7 @@ import randomBetween, { randomBetweenSeeded } from './randomBetween.js';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import seedrandom from 'seedrandom';
+import { LifeEffect } from '@drpg/core/models/fight/transpiler';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -404,12 +405,12 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		if (fighter.skills.some(skill => skill.id === Skill.PREMIERS_SOINS)) {
 			// Heal 1HP
-			heal(fightData, fighter, 1);
+			heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.MEDECINE)) {
 			// Heal 1-4HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 4));
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 4), undefined, LifeEffect.Heal);
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.BRANCARDIER)) {

@@ -63,7 +63,7 @@ export interface SkillDetails {
 	globalEffects?: SkillEffects;
 	priority?: number;
 	probability?: number;
-	visualEffect?: number;
+	visualEffect?: SkillVisualEffect; // Effect for Skill steps
 	color?: string;
 	auraType?: number;
 	healingType?: number;

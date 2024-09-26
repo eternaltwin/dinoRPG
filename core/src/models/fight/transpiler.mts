@@ -1,3 +1,5 @@
+import { SkillVisualEffect } from "../enums/SkillVisualEffect.mjs";
+
 export type preFightLoader = {
 	bg?: string;
 	history?: transpiled[];
@@ -228,7 +230,7 @@ export type transpiled =
 	  }
 	| {
 			action: DinoAction.SKILL;
-			skill: number;
+			skill: SkillVisualEffect;
 			details: {
 				fid: number;
 				targets?: {
@@ -282,6 +284,11 @@ export type transpiled =
 			action: DinoAction.REGEN;
 			fid: number;
 			amount: number;
+			lifeFx: {
+				fx: LifeEffect;
+				amount?: number;
+				size?:number;
+			};
 	  }
 	| {
 			action: DinoAction.NOSTATUS;

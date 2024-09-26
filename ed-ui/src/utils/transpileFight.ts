@@ -17,6 +17,7 @@ import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { FightText } from '@drpg/core/models/missions/specialActions';
+import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -77,8 +78,8 @@ export function resolveMonsterName(monster: string, t: TFunction) {
 	return t(`fight.monster.${monster}`);
 }
 
-export function resolveSkillEffect(skillId: number) {
-	return Object.values(skillList).find(skill => skill.id === skillId)?.visualEffect ?? 0;
+export function resolveSkillVisualEffect(skillId: number) {
+	return Object.values(skillList).find(skill => skill.id === skillId)?.visualEffect ?? SkillVisualEffect.TODO; // Default to TODO
 }
 
 export function resolveStatus(status: Status) {
@@ -227,7 +228,8 @@ export function transpileFight(
 				history.push({
 					action: DinoAction.REGEN,
 					fid: step.fighter.id,
-					amount: step.hp
+					amount: step.hp,
+					lifeFx: { fx: step.fx },
 				});
 				break;
 			case 'hit':
@@ -332,7 +334,7 @@ export function transpileFight(
 					}
 					history.push({
 						action: DinoAction.SKILL,
-						skill: resolveSkillEffect(step.skill),
+						skill: resolveSkillVisualEffect(step.skill),
 						details: {
 							fid: step.fid,
 							targets: step.targets.map(t => {
@@ -346,7 +348,7 @@ export function transpileFight(
 				} else {
 					history.push({
 						action: DinoAction.SKILL,
-						skill: resolveSkillEffect(step.skill),
+						skill: resolveSkillVisualEffect(step.skill),
 						details: {
 							fid: step.fid,
 							targets: [{ id: step.fid }],

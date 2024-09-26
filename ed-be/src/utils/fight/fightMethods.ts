@@ -1367,8 +1367,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.THERAPIE_DE_GROUPE: {
+				// TODO the effect needs to start next turn
 				addStatus(fightData, fighter, Status.COPY_HEAL);
-				// TODO any fx?
 				break;
 			}
 			case Skill.MORSURE_DU_SOLEIL: {
@@ -1442,10 +1442,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					return cancel();
 				}
 
-				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), activate_step);
-
-				// Add step
-				fightData.steps.push(activate_step);
+				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), undefined, LifeEffect.Heal);
 				break;
 			}
 			case Skill.M_IMMATERIAL: {
@@ -1506,9 +1503,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.M_HEAL_GROUP: {
+				// TODO remove announcement of skill
 				getAllies(fightData, fighter).forEach(ally => {
 					// Heal 1 HP
-					heal(fightData, ally, 1);
+					heal(fightData, ally, 1, undefined, LifeEffect.Heal);
 				});
 
 				// Get dead allies
@@ -1518,14 +1516,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				deadAllies.forEach(ally => {
 					// Reset HP to 0 in case it was negative
 					ally.hp = 0;
+					// TODO swap for resurrect method
+					heal(fightData, ally, 1, undefined, LifeEffect.Heal);
 
-					heal(fightData, ally, 1);
-
-					// Add revive step
-					fightData.steps.push({
-						action: 'revive',
-						fighter: stepFighter(ally)
-					});
+					// Probably useless
+					// // Add revive step
+					// fightData.steps.push({
+					// 	action: 'revive',
+					// 	fighter: stepFighter(ally)
+					// });
 				});
 				break;
 			}
@@ -1599,7 +1598,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 10 HP
-				heal(fightData, fighter, 10, undefined, true);
+				heal(fightData, fighter, 10, undefined, LifeEffect.Object, true);
 				break;
 			}
 			case Item.FIGHT_RATION: {
@@ -1613,7 +1612,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 20 HP
-				heal(fightData, fighter, 20, undefined, true);
+				heal(fightData, fighter, 20, undefined, LifeEffect.Object, true);
 				break;
 			}
 			case Item.SOS_HELMET: {
@@ -1660,7 +1659,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				];
 				const total = data.reduce((acc, item) => acc + item.odds, 0);
 				const item = weightedRandom(data, total); // { id: X, odds: Y }
-				heal(fightData, fighter, 1 + item.hp);
+				heal(fightData, fighter, 1 + item.hp, undefined, LifeEffect.Normal, true);
 				break;
 			}
 			case Item.PORTABLE_LOVE: {
@@ -1843,7 +1842,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Heal 40 HP
-				heal(fightData, fighter, 40, undefined, true);
+				heal(fightData, fighter, 40, undefined, LifeEffect.Object, true);
 				break;
 			}
 			default:
@@ -2298,10 +2297,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), activate_step);
-
-			// Add step
-			fightData.steps.push(activate_step);
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), undefined, LifeEffect.Heal);
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
@@ -3305,7 +3301,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const hit = launchAssault(fightData, fighter, true, Skill.M_ABSORPTION, [[ElementType.VOID, 10]]);
 
 			if (hit) {
-				heal(fightData, fighter, hit.hpLost);
+				heal(fightData, fighter, hit.hpLost, undefined, LifeEffect.Heal);
 			}
 			break;
 		}
@@ -3442,9 +3438,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.M_DEMYOM_HEAL: {
-			heal(fightData, fighter, 50, activate_step);
-			// Add step
-			fightData.steps.push(activate_step);
+			// TODO cancel announcement
+			heal(fightData, fighter, 50, undefined, LifeEffect.Heal);
 			break;
 		}
 		case Skill.M_GROTOX: {
@@ -3653,12 +3648,14 @@ export const heal = (
 	fighter: DetailedFighter,
 	hp: number,
 	step?: FightStep,
-	isItem?: boolean
+	fx?: LifeEffect,
+	isItem?: boolean,
 ) => {
 	// No heal if fighter is dead
 	if (fighter.hp <= 0) return;
 
 	// No heal if BEER
+	// TODO add fx for no healing
 	if (hasStatus(fighter, Status.BEER)) return;
 
 	const hpBeforeHeal = fighter.hp;
@@ -3682,7 +3679,7 @@ export const heal = (
 
 	const healAmount = fighter.hp - hpBeforeHeal;
 
-	// if (healAmount <= 0) return;
+	const lifeFx = fx ?? LifeEffect.Heal;
 
 	// Add heal step or use provided step
 	if (step) {
@@ -3694,7 +3691,8 @@ export const heal = (
 		fightData.steps.push({
 			action: 'heal',
 			fighter: stepFighter(fighter),
-			hp: healAmount
+			hp: healAmount,
+			fx: lifeFx,
 		});
 	}
 
@@ -3708,7 +3706,7 @@ export const heal = (
 
 	opponentsWhoCanCopyHeal.forEach(opponent => {
 		// Heal opponent
-		heal(fightData, opponent, healAmount);
+		heal(fightData, opponent, healAmount, undefined, LifeEffect.Heal);
 
 		removeStatus(fightData, opponent, Status.COPY_HEAL);
 	});
@@ -4242,8 +4240,10 @@ const checkAfterDefenseEffects = (
 	isDodged: boolean
 ) => {
 	// Objet: voleur de vie
+	// TODO
 
 	// Objet: costume
+	// TODO
 
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible,
 	// Torch: close combat and hit landed
@@ -4293,7 +4293,7 @@ const checkAfterDefenseEffects = (
 
 	// Worm (or any absorb?): heal the damage absorbed
 	if (target.absorbed && target.skills.find(skill => skill.id === Skill.M_WORM)) {
-		heal(fightData, target, target.absorbed);
+		heal(fightData, target, target.absorbed, undefined, LifeEffect.Water);
 	}
 
 	// Vol d'or
@@ -4399,7 +4399,9 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				};
 
 				// Heal to 12 HP
+				// TODO swap for resurrect method
 				heal(fightData, fighter, 12 - fighter.hp, res_step);
+				// TODO add heal affect?
 
 				// Increase other fighters time by 10 * speed
 				getFighters(fightData).forEach(f => {
@@ -4407,6 +4409,8 @@ export const checkDeaths = (fightData: DetailedFight) => {
 						f.time += 10 * TIME_FACTOR * fighter.stats.speed.global;
 					}
 				});
+
+				// TODO add init up notification for resurrected fighter
 			}
 
 			// Reset stolen gold
@@ -4476,7 +4480,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 					});
 				} else {
 					// Heal boss
-					heal(fightData, fighter, 50);
+					heal(fightData, fighter, 50, undefined, LifeEffect.Heal);
 				}
 			}
 
@@ -4703,7 +4707,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 							}
 							case Status.HEALING: {
 								// Heal 1 HP
-								heal(fightData, fighter, 1);
+								heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
 								break;
 							}
 							case Status.TORCHED: {
