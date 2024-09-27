@@ -2221,7 +2221,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
-		probability: 15
+		probability: 15,
+		visualEffect: SkillVisualEffect.SWAMP
 	},
 	[Skill.SUMO]: {
 		id: Skill.SUMO,

@@ -1117,6 +1117,18 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				);
 				break;
 			}
+			case Skill.MARECAGE: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
+
+				const opponents = getOpponents(fightData, fighter);
+
+				// Slow opponents
+				opponents.forEach(opponent => {
+					addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
+				});
+				break;
+			}
 			case Skill.CLONE_AQUEUX: {
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
@@ -2450,15 +2462,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
 			}
-			break;
-		}
-		case Skill.MARECAGE: {
-			const opponents = getOpponents(fightData, fighter);
-
-			// Slow opponents
-			opponents.forEach(opponent => {
-				addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
-			});
 			break;
 		}
 		case Skill.MOIGNONS_LIQUIDES: {
