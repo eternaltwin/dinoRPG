@@ -7,6 +7,7 @@ import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { sessionStore } from '../store/index.js';
 import { getSkillEnergy } from '../utils/transpileFight.js';
+import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
 
 export type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
@@ -111,14 +112,26 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			});
 		case 'skillActivate':
 			if (fightStep.targets.length) {
-				return t(`fight.step.skillActivate-targets`, {
-					dinoz: getFighterName(fightStep.fid, t),
-					skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-					energy: getSkillEnergy(fightStep.skill),
-					targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
-					damages: fightStep.targets.map(target => target.damages ?? 0).join(', '),
-					elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
-				});
+				if (skillList[fightStep.skill].visualEffect == SkillVisualEffect.HEAL) {
+					return t(`fight.step.skillActivate-heal-targets`, {
+						dinoz: getFighterName(fightStep.fid, t),
+						skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+						energy: getSkillEnergy(fightStep.skill),
+						targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
+						heals: fightStep.targets.map(target => target.damages ?? 0).join(', '),
+						elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
+					});
+				}
+				else {
+					return t(`fight.step.skillActivate-hit-targets`, {
+						dinoz: getFighterName(fightStep.fid, t),
+						skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+						energy: getSkillEnergy(fightStep.skill),
+						targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
+						damages: fightStep.targets.map(target => target.damages ?? 0).join(', '),
+						elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
+					});
+				}
 			}
 			return t(`fight.step.${fightStep.action}`, {
 				dinoz: getFighterName(fightStep.fid, t),

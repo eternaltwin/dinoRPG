@@ -3975,7 +3975,7 @@
 			"counter": "**{fighter}** countered **{opponent}**.",
 			"survive": "**{dinoz}** survived the attack.",
 			"skillActivate": "**{dinoz}** used **{skill}** (-{energy} energy).",
-			"skillActivate-targets": "**{dinoz}** used **{skill}** on **{targets}** (-{energy} energy).",
+			"skillActivate-hit-targets": "**{dinoz}** used **{skill}** on **{targets}** (-{energy} energy).",
 			"skillExpire": "**{dinoz}**'s **{skill}** expired.",
 			"looseHp": "**{fighter}** lost **{hp} HP**.",
 			"heal": "**{fighter}** healed **{hp} HP**.",
