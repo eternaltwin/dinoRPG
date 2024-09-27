@@ -3713,8 +3713,13 @@ export const heal = (
 	});
 };
 
+/**
+ * Sort elements based on medium ennemies defense
+ * The way this is written means that the method should be called after the fight data has been constructed
+ * @param fightData Data about the fight to know about all the opponents
+ * @param fighter The fighter to update the element wheel. The element order and first element of this fighter will be updated.
+ */
 export const applyStrategy = (fightData: DetailedFight, fighter: DetailedFighter) => {
-	// Sort elements based on medium ennemies defense
 
 	// Subtract the fighter assault for each element
 	const defenses = [
@@ -3736,10 +3741,12 @@ export const applyStrategy = (fightData: DetailedFight, fighter: DetailedFighter
 	defenses.sort((a, b) => a.defense - b.defense);
 
 	// Apply order to fighter elements
-	// Note: filter out elements that are not in the fighter's element wheel
+	// Note: filter out elements that are not in the fighter's element wheel, this is so that strategy does not mess up with Specialist and other skills
 	fighter.elements = defenses
 		.filter(defense => fighter.elements.includes(defense.element))
 		.map(defense => defense.element);
+	// Update the first element of the fighter
+	fighter.element = fighter.elements[0];
 };
 
 /// Determines the attack power of the attacker, the defense of the target, the damage inflicted.
