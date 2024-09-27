@@ -84,7 +84,7 @@ export enum EmoteBehaviour {
 
 export enum AuraFxType {
 	Spiral, // Note: in MT's code corresponds to SFAura([...],[...], 0)
-	Line, // Note: in MT's code corresponds to SFAura([...], [...], 1)
+	Line, // Note: in MT's code corresponds to SFAura([...], [...], 1 / 2 / 3)
 	Burst, // Note: in MT's code corresponds to SFAura2([...], [...], null, 0)
 	Detonate, // Note: in MT's code corresponds to SFAura2([...], [...], null, 1)
 	Light // Note: in MT's code corresponds to SFAura2([...], [...], null, 1)
