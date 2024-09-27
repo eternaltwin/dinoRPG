@@ -6,7 +6,7 @@ import { SkillType } from '../enums/SkillType.mjs';
 import { SkillDetails } from './SkillDetails.mjs';
 import { raceList } from './RaceList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
-import { GotoEffect } from '../fight/transpiler.mjs';
+import { AuraFxType, GotoEffect, SkillFxType } from '../fight/transpiler.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -390,7 +390,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 20,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFF0000',
-		auraType: 0
+		fxType: AuraFxType.Spiral
 	},
 	[Skill.FORCE]: {
 		id: Skill.FORCE,
@@ -425,7 +425,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 1,
 		probability: 25,
 		visualEffect: SkillVisualEffect.SHOWER,
-		auraType: 0
+		fxType: SkillFxType.Fire
 	},
 	[Skill.SOUFFLE_ARDENT]: {
 		id: Skill.SOUFFLE_ARDENT,
@@ -539,7 +539,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFF0000',
-		auraType: 3
+		fxType: AuraFxType.Detonate
 	},
 	[Skill.PROPULSION_DIVINE]: {
 		id: Skill.PROPULSION_DIVINE,
@@ -617,8 +617,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5,
-		visualEffect: SkillVisualEffect.HEAL,
-		healingType: 1
 	},
 	[Skill.KAMIKAZE]: {
 		id: Skill.KAMIKAZE,
@@ -1348,7 +1346,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xAAFF00',
-		auraType: 1
+		fxType: AuraFxType.Line
 	},
 	[Skill.DETECTIVE]: {
 		id: Skill.DETECTIVE,
@@ -1467,7 +1465,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 50,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xAAFF00',
-		auraType: 1
+		fxType: AuraFxType.Line
 	},
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
@@ -1524,7 +1522,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0x00FF00',
-		auraType: 2
+		fxType: AuraFxType.Burst
 	},
 	[Skill.ESPRIT_GORILLOZ]: {
 		id: Skill.ESPRIT_GORILLOZ,
@@ -2028,7 +2026,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 1,
 		probability: 40,
 		visualEffect: SkillVisualEffect.SHOWER,
-		auraType: 2
+		fxType: SkillFxType.Water
 	},
 	[Skill.COUP_SOURNOIS]: {
 		id: Skill.COUP_SOURNOIS,
@@ -2998,7 +2996,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 15,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFFFF00',
-		auraType: 1
+		fxType: AuraFxType.Line
 	},
 	[Skill.AURA_HERMETIQUE]: {
 		id: Skill.AURA_HERMETIQUE,
@@ -3804,7 +3802,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 5,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0x0000FF',
-		auraType: 4
+		fxType: AuraFxType.Light
 	},
 	[Skill.SECOUSSE]: {
 		id: Skill.SECOUSSE,
@@ -4273,7 +4271,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 5,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFFFF00',
-		auraType: 1
+		fxType: AuraFxType.Line
 	},
 	[Skill.COQUE]: {
 		id: Skill.COQUE,

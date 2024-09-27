@@ -82,7 +82,7 @@ export enum EmoteBehaviour {
 	Grow
 }
 
-export enum AuraType {
+export enum AuraFxType {
 	Spiral,
 	Line,
 	Burst,
@@ -90,19 +90,19 @@ export enum AuraType {
 	Light
 }
 
-export enum GotoEffect {
-	Normal,
-	Special,
-	Over,
-	Todo
-}
-
-export enum SkillType {
+export enum SkillFxType {
 	Fire,
 	Wood,
 	Water,
 	Lightning,
 	Air
+}
+
+export enum GotoEffect {
+	Normal,
+	Special,
+	Over,
+	Todo
 }
 
 export enum DamagesEffect {
@@ -239,7 +239,7 @@ export type transpiled =
 				}[];
 				fx?: string;
 				anim?: string;
-				type?: SkillType | AuraType;
+				type?: SkillFxType | AuraFxType;
 				speed?: number;
 				power?: number;
 				radius?: number;

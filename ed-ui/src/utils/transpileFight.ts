@@ -332,31 +332,23 @@ export function transpileFight(
 				// eslint-disable-next-line no-case-declarations
 				const skill = Object.values(skillList).find(skill => skill.id === step.skill);
 				if (step.targets.length > 0) {
-					let type: number | undefined;
 					if (!skill) {
 						console.warn(`Cannot find skill ${step.skill}`);
 					} else {
-						if (skill.auraType) {
-							type = skill.auraType;
-						} else if (skill.healingType) {
-							type = skill.healingType;
-						} else if (skill.snowType) {
-							type = skill.snowType;
-						}
+						history.push({
+							action: DinoAction.SKILL,
+							skill: resolveSkillVisualEffect(step.skill),
+							details: {
+								fid: step.fid,
+								targets: step.targets.map(t => {
+									return { id: t.tid, life: t.damages };
+								}),
+								color: skill?.color,
+								type: skill.fxType,
+								fx: skill?.fx
+							}
+						});
 					}
-					history.push({
-						action: DinoAction.SKILL,
-						skill: resolveSkillVisualEffect(step.skill),
-						details: {
-							fid: step.fid,
-							targets: step.targets.map(t => {
-								return { id: t.tid, life: t.damages };
-							}),
-							color: skill?.color,
-							type: type,
-							fx: skill?.fx
-						}
-					});
 				} else {
 					history.push({
 						action: DinoAction.SKILL,
@@ -365,7 +357,7 @@ export function transpileFight(
 							fid: step.fid,
 							targets: [{ id: step.fid }],
 							color: skill?.color,
-							type: skill?.auraType,
+							type: skill?.fxType,
 							fx: skill?.fx
 						}
 					});
