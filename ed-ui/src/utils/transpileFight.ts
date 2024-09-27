@@ -18,7 +18,6 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
-import { effect } from 'vue';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -230,7 +229,7 @@ export function transpileFight(
 					action: DinoAction.REGEN,
 					fid: step.fighter.id,
 					amount: step.hp,
-					lifeFx: { fx: step.fx },
+					lifeFx: { fx: step.fx }
 				});
 				break;
 			case 'hit':
@@ -280,8 +279,8 @@ export function transpileFight(
 						fid: step.fid,
 						tid: step.tid,
 						effect: skill?.gotoEffect,
-						shadeColor: skill?.shadeColor,
-					})
+						shadeColor: skill?.shadeColor
+					});
 				} else {
 					history.push({
 						action: DinoAction.GOTO,
@@ -330,6 +329,7 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fid}`);
 					return;
 				}
+				// eslint-disable-next-line no-case-declarations
 				const skill = Object.values(skillList).find(skill => skill.id === step.skill);
 				if (step.targets.length > 0) {
 					let type: number | undefined;
