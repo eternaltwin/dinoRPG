@@ -1619,7 +1619,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: true,
 		hp: 30,
 		odds: 100,
-		skills: [Skill.M_UNTOUCHABLE, Skill.M_INITIATIVE_RESET],
+		skills: [Skill.M_UNTOUCHABLE, Skill.M_INITIATIVE_RESET], // TODO missing skill to summon other mouktiz
 		zones: [MapZone.ILEMONSTRE],
 		canBeCaptured: true
 	},

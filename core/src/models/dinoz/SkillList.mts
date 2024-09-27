@@ -339,9 +339,9 @@ export enum Skill {
 	M_UNTOUCHABLE = 99936,
 	M_VEGETOX_DEFENDER = 99937, // noted as "mugard" in MT's code
 	M_INFINITE_REINFORCEMENTS = 99938,
-	M_FASTER = 99939,
-	M_DEMYOM_ATTACK = 99940, // noted as "kuzbos" in MT's code, Gardien Demyon's pffensive skill
-	M_DEMYOM_HEAL = 99941, // noted as "kuzbos" in MT's code, Gardien Demyon's healing skill
+	M_FASTER = 99939, // noted as "frutox" in MT's code, Frutox Guard skill
+	M_DEMYOM_ATTACK = 99940, // noted as "cuzbos" in MT's code, Gardien Demyon's offensive skill
+	M_DEMYOM_HEAL = 99941, // noted as "cuzbos" in MT's code, Gardien Demyon's healing skill
 	M_GROTOX = 99942, // noted as "grotox" in MT's code, Grotox's skill
 	M_FRUKOPTER_FLIGHT = 99943,
 	M_TORNADO = 99944,
@@ -4207,7 +4207,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0x0000FF',
+		fxType: AuraFxType.Light
 	},
 	[Skill.MAINS_COLLANTES]: {
 		id: Skill.MAINS_COLLANTES,
@@ -4999,7 +5002,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 50
+		probability: 50,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFFFFFF',
+		fxType: AuraFxType.Line
 	},
 	[Skill.M_VEGETOX_DEFENDER]: {
 		id: Skill.M_VEGETOX_DEFENDER,
@@ -5023,6 +5029,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
+	// Note: name on MT's code is frutox
 	[Skill.M_FASTER]: {
 		id: Skill.M_FASTER,
 		name: 'Faster',
@@ -5034,7 +5041,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 60
+		probability: 60,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFFCC3A',
+		fxType: AuraFxType.Line
 	},
 	[Skill.M_DEMYOM_ATTACK]: {
 		id: Skill.M_DEMYOM_ATTACK,
