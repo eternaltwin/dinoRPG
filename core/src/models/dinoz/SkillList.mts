@@ -631,7 +631,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5,
-		lifeEffect: LifeEffect.Explode,
+		lifeEffect: {fx: LifeEffect.Explode},
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
 			col1: 0xFF8800,
@@ -2047,7 +2047,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 7
+		probability: 7,
+		lifeEffect: {
+			fx: LifeEffect.Normal,
+			size: 1
+		},
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0x00CCFF,
+			col2: 0x000044,
+		}
 	},
 	[Skill.APPRENTI_PECHEUR]: {
 		id: Skill.APPRENTI_PECHEUR,
@@ -2185,7 +2194,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 2
+		probability: 2,
+		lifeEffect: {
+			fx: LifeEffect.Normal,
+			size: 2
+		},
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFF0000,
+			col2: 0x0000FF,
+		}
 	},
 	[Skill.ENTRAINEMENT_SOUS_MARIN]: {
 		id: Skill.ENTRAINEMENT_SOUS_MARIN,

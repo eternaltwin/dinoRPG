@@ -65,7 +65,11 @@ export interface SkillDetails {
 	priority?: number;
 	probability?: number;
 	visualEffect?: SkillVisualEffect; // Effect for Skill "activate" steps
-	lifeEffect?: LifeEffect, // Effect for Skill with assault effect
+	lifeEffect?: {  // Effect for Skill with assault effect
+		fx: LifeEffect,
+		amount?: number,
+		size?: number,
+	},
 	gotoEffect?: GotoEffect, // Effect for Skill "go to" steps
 	shadeColor?: {
 		col1?: number;
