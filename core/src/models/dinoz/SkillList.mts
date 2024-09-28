@@ -6,7 +6,7 @@ import { SkillType } from '../enums/SkillType.mjs';
 import { SkillDetails } from './SkillDetails.mjs';
 import { raceList } from './RaceList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
-import { AuraFxType, GotoEffect, SkillFxType } from '../fight/transpiler.mjs';
+import { AuraFxType, GotoEffect, LifeEffect, SkillFxType } from '../fight/transpiler.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -630,7 +630,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 5
+		probability: 5,
+		lifeEffect: LifeEffect.Explode,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFF8800,
+			col2: 0x880000
+		}
 	},
 	[Skill.CHASSEUR_DE_GEANT]: {
 		id: Skill.CHASSEUR_DE_GEANT,
@@ -732,7 +738,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 15
+		probability: 15,
+		gotoEffect: GotoEffect.Normal
 	},
 	[Skill.COEUR_DU_PHOENIX]: {
 		id: Skill.COEUR_DU_PHOENIX,

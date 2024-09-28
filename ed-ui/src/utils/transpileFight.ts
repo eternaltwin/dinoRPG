@@ -233,13 +233,23 @@ export function transpileFight(
 				});
 				break;
 			case 'hit':
+				// Determine the effect of the hit: by default it is based on the element
+				// But it can be overridden by a special effect associated to the skill
+				// eslint-disable-next-line no-case-declarations
+				let hitFx = convertElementToLifeEffect(step.elements[0]);
+				if (step.skill) {
+					const hit_skill = Object.values(skillList).find(skill => skill.id === step.skill);
+					if (hit_skill && hit_skill.lifeEffect) {
+						hitFx = hit_skill.lifeEffect;
+					}
+				}
 				history.push({
 					action: DinoAction.DAMAGES,
 					fid: step.fighter.id,
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: {
-						fx: convertElementToLifeEffect(step.elements[0])
+						fx: hitFx
 					}
 				});
 				break;

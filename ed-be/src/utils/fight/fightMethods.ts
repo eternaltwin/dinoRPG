@@ -754,7 +754,8 @@ const launchAssault = (
 		fightData.steps.push({
 			action: 'moveTo',
 			fid: attacker.id,
-			tid: realTarget.id
+			tid: realTarget.id,
+			skill
 		});
 	}
 
@@ -2296,12 +2297,18 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Increase time of the attacker
 			fighter.time += 15 * TIME_FACTOR;
 			// This skill cannot combo but is an assault
-			launchAssault(fightData, fighter, false, skill.id, getElementalAttack(fighter, ElementType.FIRE, 10));
+			launchAssault(fightData, fighter, false, Skill.PAUME_CHALUMEAU, getElementalAttack(fighter, ElementType.FIRE, 10));
+			// Add fx for loss of init
+			fightData.steps.push({
+				action: 'notify',
+				fids: [fighter.id],
+				notification: NotificationList.InitDown
+			});
 			break;
 		}
 		case Skill.KAMIKAZE: {
 			// This skill cannot combo but is an assault
-			launchAssault(fightData, fighter, false, skill.id, getElementalAttack(fighter, ElementType.FIRE, 15));
+			launchAssault(fightData, fighter, false, Skill.KAMIKAZE, getElementalAttack(fighter, ElementType.FIRE, 15));
 
 			// Loose 50% HP
 			loseHp(fightData, fighter, Math.round(fighter.hp / 2), LifeEffect.Fire);
