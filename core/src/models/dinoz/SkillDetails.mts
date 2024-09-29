@@ -5,7 +5,7 @@ import { SkillTree } from '../enums/SkillTree.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
 import { Skill } from './SkillList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
-import { AuraFxType, SkillFxType, GotoEffect, LifeEffect } from '../fight/transpiler.mjs';
+import { AuraFxType, SkillFxType, GotoEffect, LifeEffect, DamagesEffect } from '../fight/transpiler.mjs';
 
 type OtherAssaults<T> = Exclude<
 	Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT,
@@ -75,6 +75,7 @@ export interface SkillDetails {
 		col1?: number;
 		col2?: number;
 	};
+	damageEffect?: DamagesEffect,
 	color?: string;
 	fxType?: AuraFxType | SkillFxType | number; // Used for Aura, Skill, Healing or Snow effects
 	fx?: string;

@@ -236,11 +236,15 @@ export function transpileFight(
 				// Determine the effect of the hit: by default it is based on the element
 				// But it can be overridden by a special effect associated to the skill
 				// eslint-disable-next-line no-case-declarations
-				let hitFx = {fx: convertElementToLifeEffect(step.elements[0])};
+				let hitFx = { fx: convertElementToLifeEffect(step.elements[0]) };
+				let damageFx;
 				if (step.skill) {
 					const hit_skill = Object.values(skillList).find(skill => skill.id === step.skill);
 					if (hit_skill && hit_skill.lifeEffect) {
 						hitFx = hit_skill.lifeEffect;
+					}
+					if (hit_skill && hit_skill.damageEffect) {
+						damageFx = hit_skill.damageEffect;
 					}
 				}
 				history.push({
@@ -248,7 +252,8 @@ export function transpileFight(
 					fid: step.fighter.id,
 					tid: step.target.id,
 					damages: step.damage,
-					lifeFx:  hitFx
+					lifeFx: hitFx,
+					effect: damageFx,
 				});
 				break;
 			case 'itemUse':

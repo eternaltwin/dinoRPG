@@ -2,7 +2,7 @@ import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { Status, FighterType } from './DetailedFighter.mjs';
-import { LifeEffect, NotificationList } from './transpiler.mjs';
+import { DamagesEffect, LifeEffect, NotificationList } from './transpiler.mjs';
 
 export interface StepFighter {
 	id: number;

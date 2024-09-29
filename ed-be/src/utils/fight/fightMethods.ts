@@ -2148,7 +2148,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.AIR];
 
 			// Attack opponent
-			launchAssault(fightData, fighter, true, skill.id);
+			launchAssault(fightData, fighter, true, Skill.ATTAQUE_PLONGEANTE);
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
@@ -3827,7 +3827,7 @@ const attackTarget = (
 
 	// If the power is not defined, default to a basic assault
 	if (!power) {
-		// Basically this is default basic assault
+		// This is default basic assault
 		power = getElementalAttack(
 			attacker,
 			attacker.element,

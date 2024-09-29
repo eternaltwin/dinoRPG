@@ -6,7 +6,7 @@ import { SkillType } from '../enums/SkillType.mjs';
 import { SkillDetails } from './SkillDetails.mjs';
 import { raceList } from './RaceList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
-import { AuraFxType, GotoEffect, LifeEffect, SkillFxType } from '../fight/transpiler.mjs';
+import { AuraFxType, DamagesEffect, GotoEffect, LifeEffect, SkillFxType } from '../fight/transpiler.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -3681,7 +3681,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
-		probability: 20
+		probability: 20,
+		lifeEffect: {
+			fx: LifeEffect.Air
+		},
+		gotoEffect: GotoEffect.Over,
+		damageEffect: DamagesEffect.Drop
 	},
 	[Skill.FURTIVITE]: {
 		id: Skill.FURTIVITE,
