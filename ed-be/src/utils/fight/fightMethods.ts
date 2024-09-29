@@ -2165,11 +2165,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fighter.nextAssaultMultiplier *= 2;
 
 			// Attack opponent
-			const hit = launchAssault(fightData, fighter, true, skill.id);
+			const hit = launchAssault(fightData, fighter, true, Skill.PAUME_EJECTABLE);
 
 			if (hit && hit.hpLost > 0) {
 				// Increase time
 				fighter.time += 15 * TIME_FACTOR;
+				// Add fx for loss of init
+				fightData.steps.push({
+					action: 'notify',
+					fids: [fighter.id],
+					notification: NotificationList.InitDown
+				});
 			}
 			break;
 		}

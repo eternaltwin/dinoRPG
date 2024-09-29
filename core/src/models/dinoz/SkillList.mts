@@ -3791,7 +3791,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
-		probability: 15
+		probability: 15,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFFFFFF,
+			col2: 0x00FFFF
+		},
+		damageEffect: DamagesEffect.Eject
 	},
 	[Skill.VENT_VIF]: {
 		id: Skill.VENT_VIF,
