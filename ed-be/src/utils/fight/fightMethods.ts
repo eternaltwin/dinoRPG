@@ -3262,7 +3262,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				tid: target.id
 			});
 
-			attackTarget(fightData, fighter, target, true, undefined, skill.id);
+			attackTarget(fightData, fighter, target, true, undefined, Skill.BIGMAGNON);
 
 			// Cancel FLYING and INTANGIBLE
 			removeStatus(fightData, target, Status.FLYING, Status.INTANGIBLE);
