@@ -256,7 +256,7 @@ export enum Skill {
 	SOUFFLE_DE_VIE = 51406,
 	TOTEM_ANCESTRAL_AEROPORTE = 51407,
 	FUJIN = 51408,
-	MEDITATION_TRANCHANTE = 51501,
+	MEDITATION_TRANSCENDANTALE = 51501,
 	DJINN = 51502,
 	HADES = 51503,
 	FORME_ETHERALE = 51601,
@@ -3968,9 +3968,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 4,
 		probability: 10
 	},
-	[Skill.MEDITATION_TRANCHANTE]: {
-		id: Skill.MEDITATION_TRANCHANTE,
-		name: 'MeditationTranchante',
+	[Skill.MEDITATION_TRANSCENDANTALE]: {
+		id: Skill.MEDITATION_TRANSCENDANTALE,
+		name: 'MeditationTranscendantale',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
