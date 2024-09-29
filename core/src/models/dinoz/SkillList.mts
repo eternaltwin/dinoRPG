@@ -3748,7 +3748,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.CLOUD,
+		color: '0x008800'
 	},
 	[Skill.OEIL_DE_LYNX]: {
 		id: Skill.OEIL_DE_LYNX,

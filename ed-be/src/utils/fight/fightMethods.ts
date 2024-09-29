@@ -2152,6 +2152,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
+			// Add step for fx
+			fightData.steps.push(activate_step);
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Poison
 				poison(fightData, opponent, fighter, Skill.NUAGE_TOXIQUE, StatusLength.MEDIUM);
