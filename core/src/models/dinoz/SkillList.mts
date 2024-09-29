@@ -4490,7 +4490,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 2,
 		probability: 20,
-		visualEffect: SkillVisualEffect.CHARGE
+		visualEffect: SkillVisualEffect.CHARGE,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFFFF00,
+			col2: 0xFF0000
+		}
 	},
 	[Skill.FORCE_DES_TENEBRES]: {
 		id: Skill.FORCE_DES_TENEBRES,

@@ -789,11 +789,22 @@ const attackSingleOpponent = (
 	element_attack: [ElementType, number][],
 	skill: Skill, // TODO rework for item too
 	activate_step: FightStep,
-	target?: DetailedFighter
+	target?: DetailedFighter,
+	goto?: boolean
 ) => {
 	// Unless specified, pick random opponent by default
 	const opponent = target ?? getRandomOpponent(fightData, fighter);
 	let realOpponent = opponent;
+
+	if (goto) {
+		// Add moveTo step
+		fightData.steps.push({
+			action: 'moveTo',
+			fid: fighter.id,
+			tid: realOpponent.id,
+			skill,
+		});
+	}
 
 	// Check if a dinoz is protecting the opponent and replace the target with the protector
 	const protector = getOpponents(fightData, opponent).find(o => o.protecting === opponent.id);
@@ -812,6 +823,17 @@ const attackSingleOpponent = (
 
 	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, activate_step);
 
+	// Add step
+	fightData.steps.push(activate_step);
+
+	if (goto) {
+		// Add moveTo step
+		fightData.steps.push({
+			action: 'moveBack',
+			fid: fighter.id,
+		});
+	}
+
 	if (protector && protector.hp > 0) {
 		// Add moveBack step
 		fightData.steps.push({
@@ -819,9 +841,6 @@ const attackSingleOpponent = (
 			fid: realOpponent.id
 		});
 	}
-
-	// Add step
-	fightData.steps.push(activate_step);
 
 	return result;
 };
@@ -867,6 +886,7 @@ const attackAllOpponents = (
 
 		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, activate_step);
 
+		// TODO this moveBack should be after the activate step
 		if (protector && protector.hp > 0) {
 			// Add moveBack step
 			fightData.steps.push({
@@ -2632,7 +2652,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					[ElementType.WOOD, 3]
 				]),
 				skill.id,
-				activate_step
+				activate_step,
+				undefined,
+				true
 			);
 			break;
 		// Other
