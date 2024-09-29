@@ -3284,19 +3284,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get non flying opponents
 			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, Status.FLYING));
 
-			// Get dinoz best element
-			const bestElement = fighter.elements.reduce((acc, element) => {
-				if (fighter.stats.base[element] > fighter.stats.base[acc]) {
-					return element;
-				}
-
-				return acc;
-			}, ElementType.FIRE);
-			let power = fighter.stats.base[bestElement] * 5;
+			// Use a minimum power of 40
+			let power = fighter.stats.base[fighter.elements[0]] * 5;
 			if (power < 40) {
 				power = 40;
 			}
 
+			// Use power to launch a custom VOID attack on all opponents (except flying)
 			attackAllOpponents(fightData, fighter, [[ElementType.VOID, power]], skill.id, activate_step, opponents);
 			break;
 		}
@@ -4094,13 +4088,6 @@ const checkDefensiveEffects = (
 		});
 		// Reduce damage by 5
 		damage = Math.max(damage - 5, 0);
-
-		// TODO add CUIRASSE effect post skill/hit
-		// // Add resist step
-		// fightData.steps.push({
-		// 	action: 'resist',
-		// 	dinoz: stepFighter(opponent)
-		// });
 	}
 
 	// Check for mud wall
