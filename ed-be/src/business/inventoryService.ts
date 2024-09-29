@@ -22,7 +22,7 @@ import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { backpackSlot, initializeDinoz, learnNextSphereSkill, useRice } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { createLog } from '../dao/logDao.js';
@@ -475,7 +475,20 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		throw new ExpectedError(`Item n°${itemToEquip.itemId} cannot be equiped`);
 	}
 
-	//TODO: check if it's a magical item, if yes look if there isn't already one equiped
+	if (equip) {
+		let magicalItemsEquipped = 0;
+		dinoz.items.forEach(item => {
+			if (itemList[item.id as Item].itemType === ItemType.MAGICAL) {
+				magicalItemsEquipped++;
+			}
+		});
+
+		const magicalItemsLimit = dinoz.skills.find(skill => skill.skillId === Skill.NAPOMAGICIEN) ? 2 : 1;
+
+		if (magicalItemsEquipped >= magicalItemsLimit) {
+			throw new ExpectedError(`Dinoz ${dinoz.id} has reached the limit (${magicalItemsEquipped}) of magical items it can equip`);
+		}
+	}
 
 	const playerItem = dinoz.player.items.find(item => item.itemId === itemId)?.quantity ?? 0;
 
