@@ -63,7 +63,7 @@ export interface MoveStep {
 	action: 'moveTo';
 	fid: number;
 	tid: number;
-	skill?: Skill,
+	skill?: Skill;
 	sameSpace?: boolean;
 	countered?: boolean;
 }

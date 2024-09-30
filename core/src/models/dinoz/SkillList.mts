@@ -616,7 +616,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 5,
+		probability: 5
 	},
 	[Skill.KAMIKAZE]: {
 		id: Skill.KAMIKAZE,
@@ -631,10 +631,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 1,
 		probability: 5,
-		lifeEffect: {fx: LifeEffect.Explode},
+		lifeEffect: { fx: LifeEffect.Explode },
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFF8800,
+			col1: 0xff8800,
 			col2: 0x880000
 		}
 	},
@@ -2054,8 +2054,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		},
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0x00CCFF,
-			col2: 0x000044,
+			col1: 0x00ccff,
+			col2: 0x000044
 		}
 	},
 	[Skill.APPRENTI_PECHEUR]: {
@@ -2201,8 +2201,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		},
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFF0000,
-			col2: 0x0000FF,
+			col1: 0xff0000,
+			col2: 0x0000ff
 		}
 	},
 	[Skill.ENTRAINEMENT_SOUS_MARIN]: {
@@ -2987,8 +2987,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFFFFFF,
-			col2: 0xFFFF00,
+			col1: 0xffffff,
+			col2: 0xffff00
 		}
 	},
 	[Skill.EMBUCHE]: {
@@ -3794,8 +3794,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 15,
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFFFFFF,
-			col2: 0x00FFFF
+			col1: 0xffffff,
+			col2: 0x00ffff
 		},
 		damageEffect: DamagesEffect.Eject
 	},
@@ -4493,8 +4493,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		visualEffect: SkillVisualEffect.CHARGE,
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFFFF00,
-			col2: 0xFF0000
+			col1: 0xffff00,
+			col2: 0xff0000
 		}
 	},
 	[Skill.FORCE_DES_TENEBRES]: {

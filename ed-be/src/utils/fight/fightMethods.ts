@@ -802,7 +802,7 @@ const attackSingleOpponent = (
 			action: 'moveTo',
 			fid: fighter.id,
 			tid: realOpponent.id,
-			skill,
+			skill
 		});
 	}
 
@@ -830,7 +830,7 @@ const attackSingleOpponent = (
 		// Add moveTo step
 		fightData.steps.push({
 			action: 'moveBack',
-			fid: fighter.id,
+			fid: fighter.id
 		});
 	}
 
@@ -1464,6 +1464,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.FRENESIE_COLLECTIVE: {
+				// Add step for fx
+				fightData.steps.push(activate_step);
+				// TODO add speed effect on all allies
 				getAllies(fightData, fighter).forEach(ally => {
 					addStatus(fightData, ally, Status.QUICKENED, StatusLength.MEDIUM);
 				});
@@ -2325,7 +2328,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Increase time of the attacker
 			fighter.time += 15 * TIME_FACTOR;
 			// This skill cannot combo but is an assault
-			launchAssault(fightData, fighter, false, Skill.PAUME_CHALUMEAU, getElementalAttack(fighter, ElementType.FIRE, 10));
+			launchAssault(
+				fightData,
+				fighter,
+				false,
+				Skill.PAUME_CHALUMEAU,
+				getElementalAttack(fighter, ElementType.FIRE, 10)
+			);
 			// Add fx for loss of init
 			fightData.steps.push({
 				action: 'notify',
@@ -2403,7 +2412,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					action: 'moveTo',
 					fid: fighter.id,
 					tid: opponent.id,
-					skill: Skill.DANSE_FOUDROYANTE,
+					skill: Skill.DANSE_FOUDROYANTE
 				});
 
 				// Fighter attacks opponent
@@ -3684,7 +3693,7 @@ export const heal = (
 	hp: number,
 	step?: FightStep,
 	fx?: LifeEffect,
-	isItem?: boolean,
+	isItem?: boolean
 ) => {
 	// No heal if fighter is dead
 	if (fighter.hp <= 0) return;
@@ -3727,7 +3736,7 @@ export const heal = (
 			action: 'heal',
 			fighter: stepFighter(fighter),
 			hp: healAmount,
-			fx: lifeFx,
+			fx: lifeFx
 		});
 	}
 
@@ -3754,7 +3763,6 @@ export const heal = (
  * @param fighter The fighter to update the element wheel. The element order and first element of this fighter will be updated.
  */
 export const applyStrategy = (fightData: DetailedFight, fighter: DetailedFighter) => {
-
 	// Subtract the fighter assault for each element
 	const defenses = [
 		{ element: ElementType.FIRE, defense: -fighter.stats.base[ElementType.FIRE] * 5 },

@@ -237,6 +237,7 @@ export function transpileFight(
 				// But it can be overridden by a special effect associated to the skill
 				// eslint-disable-next-line no-case-declarations
 				let hitFx = { fx: convertElementToLifeEffect(step.elements[0]) };
+				// eslint-disable-next-line no-case-declarations
 				let damageFx;
 				if (step.skill) {
 					const hit_skill = Object.values(skillList).find(skill => skill.id === step.skill);
@@ -253,7 +254,7 @@ export function transpileFight(
 					tid: step.target.id,
 					damages: step.damage,
 					lifeFx: hitFx,
-					effect: damageFx,
+					effect: damageFx
 				});
 				break;
 			case 'itemUse':

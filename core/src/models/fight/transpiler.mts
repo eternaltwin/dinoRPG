@@ -1,4 +1,4 @@
-import { SkillVisualEffect } from "../enums/SkillVisualEffect.mjs";
+import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
 
 export type preFightLoader = {
 	bg?: string;
@@ -287,7 +287,7 @@ export type transpiled =
 			lifeFx: {
 				fx: LifeEffect;
 				amount?: number;
-				size?:number;
+				size?: number;
 			};
 	  }
 	| {

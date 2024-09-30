@@ -65,17 +65,18 @@ export interface SkillDetails {
 	priority?: number;
 	probability?: number;
 	visualEffect?: SkillVisualEffect; // Effect for Skill "activate" steps
-	lifeEffect?: {  // Effect for Skill with assault effect
-		fx: LifeEffect,
-		amount?: number,
-		size?: number,
-	},
-	gotoEffect?: GotoEffect, // Effect for Skill "go to" steps
+	lifeEffect?: {
+		// Effect for Skill with assault effect
+		fx: LifeEffect;
+		amount?: number;
+		size?: number;
+	};
+	gotoEffect?: GotoEffect; // Effect for Skill "go to" steps
 	shadeColor?: {
 		col1?: number;
 		col2?: number;
 	};
-	damageEffect?: DamagesEffect,
+	damageEffect?: DamagesEffect;
 	color?: string;
 	fxType?: AuraFxType | SkillFxType | number; // Used for Aura, Skill, Healing or Snow effects
 	fx?: string;

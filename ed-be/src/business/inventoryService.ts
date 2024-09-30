@@ -486,7 +486,9 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		const magicalItemsLimit = dinoz.skills.find(skill => skill.skillId === Skill.NAPOMAGICIEN) ? 2 : 1;
 
 		if (magicalItemsEquipped >= magicalItemsLimit) {
-			throw new ExpectedError(`Dinoz ${dinoz.id} has reached the limit (${magicalItemsEquipped}) of magical items it can equip`);
+			throw new ExpectedError(
+				`Dinoz ${dinoz.id} has reached the limit (${magicalItemsEquipped}) of magical items it can equip`
+			);
 		}
 	}
 
