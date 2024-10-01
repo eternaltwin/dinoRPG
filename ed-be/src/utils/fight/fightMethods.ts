@@ -2520,6 +2520,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.MOIGNONS_LIQUIDES: {
 			const opponent = getRandomOpponent(fightData, fighter);
 
+			// TODO simplify history: there is 3 steps added here just for the visual effects
 			// Add target
 			activate_step.targets.push({ tid: opponent.id });
 			// Add 2 steps for fx
