@@ -1235,7 +1235,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		visualEffect: SkillVisualEffect.PROJECTILE
+		priority: 3,
+		probability: 15,
+		visualEffect: SkillVisualEffect.PROJECTILE,
+		fx: 'gland'
 	},
 	[Skill.VIGNES]: {
 		id: Skill.VIGNES,
