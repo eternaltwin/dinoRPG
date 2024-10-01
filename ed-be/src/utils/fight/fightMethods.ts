@@ -2522,8 +2522,18 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			// Add target
 			activate_step.targets.push({ tid: opponent.id });
+			// Add 2 steps for fx
+			fightData.steps.push(activate_step);
+			loseHp(fightData, opponent, 0, LifeEffect.Water);
 
 			opponent.time += 25 * TIME_FACTOR;
+
+			// Add fx for gain of init
+			fightData.steps.push({
+				action: 'notify',
+				fids: [opponent.id],
+				notification: NotificationList.InitDown
+			});
 			break;
 		}
 		case Skill.PETRIFICATION: {
