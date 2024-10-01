@@ -751,7 +751,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [11207],
 		isBaseSkill: false,
-		isSphereSkill: true,
+		isSphereSkill: true
 	},
 	[Skill.BOUDDHA]: {
 		id: Skill.BOUDDHA,

@@ -1492,7 +1492,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// TODO add speed effect on all allies
 				getAllies(fightData, fighter).forEach(ally => {
 					addStatus(fightData, ally, Status.QUICKENED, StatusLength.MEDIUM);
-					activate_step.targets.push({tid: ally.id})
+					activate_step.targets.push({ tid: ally.id });
 				});
 				break;
 			}
