@@ -27,7 +27,7 @@ import { getMaxXp, getRace, getRandomUpElement, reincarnateDinoz } from '@drpg/c
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { SkillType } from '@drpg/core/models/enums/SkillType';
-import { getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
+import { auth, getPlayerUSkills, setPlayer } from '../dao/playerDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { GLOBAL } from '../context.js';
@@ -80,6 +80,7 @@ export async function getLearnableAndUnlockableSkills(req: Request) {
  * @returns New max experience value
  */
 export async function learnSkill(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const skillIdList = req.body.skillIdList as number[];
 
@@ -121,7 +122,7 @@ export async function learnSkill(req: Request) {
 		if (!skill) {
 			throw new ExpectedError(`Skill ${skillIdList[0]} doesn't exist.`);
 		}
-		await applySkillEffect(dinozSkills, skill);
+		await applySkillEffect(dinozSkills, skill, authed.id);
 		await addSkillToDinoz(dinozId, skillIdList[0]);
 		if (skill.type === SkillType.U) {
 			await applyUSkillEffect(dinozSkills.player.id, skill);
@@ -477,10 +478,14 @@ export async function unlockDoubleSkills(dinozId: number) {
 
 export async function applySkillEffect(
 	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
-	skill: SkillDetails
+	skill: SkillDetails,
+	playerId: number
 ) {
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);
+	}
+	if (playerId && skill.type === SkillType.U) {
+		await applyUSkillEffect(playerId, skill);
 	}
 }
 

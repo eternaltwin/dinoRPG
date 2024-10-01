@@ -181,7 +181,7 @@ export async function useItem(req: Request) {
 				throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`);
 			}
 
-			await applySkillEffect(dinoz, skill);
+			await applySkillEffect(dinoz, skill, dinoz.player.id);
 			await addSkillToDinoz(dinozId, skillToLearn);
 			feedback = {
 				category: ItemEffect.SPHERE,

@@ -214,7 +214,7 @@ export const getSpecialStat = (
 			}
 			if (base_stat > 0 && !isAddition) {
 				// For multipliers, add 1 to the final value so it shows as "x 1.20" (for example)
-				finalValue += 1
+				finalValue += 1;
 			}
 
 			details.push({
