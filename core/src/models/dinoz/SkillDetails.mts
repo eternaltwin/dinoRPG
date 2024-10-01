@@ -65,6 +65,9 @@ export interface SkillDetails {
 	priority?: number;
 	probability?: number;
 	visualEffect?: SkillVisualEffect; // Effect for Skill "activate" steps
+	color?: string; // Color for skill "activate" step
+	VisualEffectBis?: SkillVisualEffect;  // Second effect for Skill "activate" steps
+	colorBis?: string; // Color for 2nd skill "activate" step
 	lifeEffect?: {
 		// Effect for Skill with assault effect
 		fx: LifeEffect;
@@ -77,7 +80,6 @@ export interface SkillDetails {
 		col2?: number;
 	};
 	damageEffect?: DamagesEffect;
-	color?: string;
 	fxType?: AuraFxType | SkillFxType | number; // Used for Aura, Skill, Healing or Snow effects
 	fx?: string;
 }

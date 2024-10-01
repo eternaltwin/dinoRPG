@@ -348,17 +348,32 @@ export function transpileFight(
 				if (step.targets.length > 0) {
 					if (!skill) {
 						console.warn(`Cannot find skill ${step.skill}`);
-					} else {
+					}
+					history.push({
+						action: DinoAction.SKILL,
+						skill: resolveSkillVisualEffect(step.skill),
+						details: {
+							fid: step.fid,
+							targets: step.targets.map(t => {
+								return { id: t.tid, life: t.damages };
+							}),
+							color: skill?.color,
+							type: skill?.fxType,
+							fx: skill?.fx
+						}
+					});
+					// Play a second effect if specified
+					if (skill?.VisualEffectBis) {
 						history.push({
 							action: DinoAction.SKILL,
-							skill: resolveSkillVisualEffect(step.skill),
+							skill: skill.VisualEffectBis,
 							details: {
 								fid: step.fid,
 								targets: step.targets.map(t => {
-									return { id: t.tid, life: t.damages };
+									return { id: t.tid };
 								}),
 								color: skill?.color,
-								type: skill.fxType,
+								type: skill?.fxType,
 								fx: skill?.fx
 							}
 						});
