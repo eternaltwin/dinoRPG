@@ -23,7 +23,7 @@ export type SkillEffects = {
 	[Stat.MULTIHIT]?: ['x', number];
 	[Stat.MAX_FOLLOWERS]?: number;
 	[Stat.ENERGY]?: ['x', number];
-	[Stat.ENERGY_RECOVERY]?: number;
+	[Stat.ENERGY_RECOVERY]?: ['x', number];
 	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
 	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
 	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;

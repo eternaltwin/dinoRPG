@@ -3308,7 +3308,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY_RECOVERY]: 0.2
+			[Stat.ENERGY_RECOVERY]: ['x', 1.2]
 		}
 	},
 	[Skill.JAUNE]: {
@@ -4040,7 +4040,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY_RECOVERY]: 0.25
+			[Stat.ENERGY_RECOVERY]: ['x', 1.25]
 		}
 	},
 	[Skill.BLANC]: {
@@ -4094,7 +4094,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ENERGY_RECOVERY]: -0.15
+			[Stat.ENERGY_RECOVERY]: ['x', 0.85]
 		}
 	},
 	[Skill.SOUFFLE_DANGE]: {
@@ -4511,7 +4511,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.ENERGY]: ['x', 1.25],
-			[Stat.ENERGY_RECOVERY]: 0.25
+			[Stat.ENERGY_RECOVERY]: ['x', 1.25]
 		}
 	},
 	[Skill.BIGMAGNON]: {

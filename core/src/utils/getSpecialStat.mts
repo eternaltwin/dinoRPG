@@ -71,6 +71,7 @@ export const getSpecialStat = (
 		return {
 			name: 'bubbleRate',
 			percent: true,
+			multiplier: false,
 			// Clamp value between 30% and 100%
 			value: (value < 0.3 ? 0.3 : value) + 1
 		};
@@ -95,6 +96,7 @@ export const getSpecialStat = (
 					type: 'base',
 					name: 'base',
 					percent: false,
+					multiplier: false,
 					elements: ['fire'],
 					value: dinoz.nbrUpFire || 1
 				}
@@ -118,6 +120,7 @@ export const getSpecialStat = (
 					type: 'base',
 					name: 'base',
 					percent: false,
+					multiplier: false,
 					elements: ['water'],
 					value: dinoz.nbrUpWater || 0
 				}
@@ -126,11 +129,13 @@ export const getSpecialStat = (
 	}
 
 	let value = BaseStats[stat];
+	let base_stat = value;
 	let multiplier = 1;
 	let details: {
 		type: 'skill' | 'status' | 'base';
 		name: string;
 		percent: boolean;
+		multiplier: boolean;
 		elements: string[];
 		value: number;
 	}[] = [];
@@ -143,6 +148,7 @@ export const getSpecialStat = (
 			type: 'base',
 			name: 'base',
 			percent,
+			multiplier: false,
 			elements: [],
 			value: percent ? value * 100 : value
 		});
@@ -164,6 +170,7 @@ export const getSpecialStat = (
 						type: 'status',
 						name: DinozStatusId.CUSCOUZ_MALEDICTION.toString(),
 						percent: false,
+						multiplier: false,
 						elements: [],
 						value: -3
 					});
@@ -180,12 +187,13 @@ export const getSpecialStat = (
 		if (!skill.effects) return;
 
 		const effect = skill.effects[stat];
+		const isAddition = typeof effect === 'number';
 
 		if (effect) {
 			let effectValue = 0;
 
 			// Flat value
-			if (typeof effect === 'number') {
+			if (isAddition) {
 				effectValue = effect;
 				value += effect;
 			} else {
@@ -196,17 +204,31 @@ export const getSpecialStat = (
 
 			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
 
+			let finalValue;
+			if (percent) {
+				// Multiply by 100 for a percent
+				finalValue = Math.round(effectValue * 100);
+			} else {
+				// Other use the effect value
+				finalValue = effectValue;
+			}
+			if (base_stat > 0 && !isAddition) {
+				// For multipliers, add 1 to the final value so it shows as "x 1.20" (for example)
+				finalValue += 1
+			}
+
 			details.push({
 				type: 'skill',
 				name: skill.name,
 				percent,
+				multiplier: !isAddition,
 				elements: skill.element.map(
 					el =>
 						Object.entries(ElementType)
 							.find(([, value]) => value === el)?.[0]
 							.toLocaleLowerCase() || ''
 				),
-				value: percent ? Math.round(effectValue * 100) : effectValue
+				value: finalValue
 			});
 		}
 	});
@@ -218,12 +240,13 @@ export const getSpecialStat = (
 			type: 'skill',
 			name: skillList[Skill.PRETRE].name,
 			percent: false,
+			multiplier: false,
 			elements: [],
 			value: 1
 		});
 	}
 
-	// Order details by by value type (multiplier last) (base first)
+	// Order details by value type (multiplier last) (base first)
 	details = details.sort((a, b) => {
 		if (a.type === b.type) {
 			return a.percent === b.percent ? 0 : a.percent ? 1 : -1;
@@ -235,8 +258,7 @@ export const getSpecialStat = (
 	return {
 		name: stat,
 		percent,
-		// Use full value for floats (percent) and rounded value for integers
-		value: percent ? +(value * multiplier) : Math.round(+(value * multiplier)),
+		value: +(value * multiplier),
 		details
 	};
 };

@@ -261,7 +261,7 @@
 									</span>
 								</span>
 								<span v-else>
-									{{ detail.percent ? '' : detail.value < 0 ? '-' : '+' }}
+									{{ detail.percent ? '' : detail.multiplier ? 'x' : detail.value < 0 ? '-' : '+' }}
 									{{ Math.abs(detail.value).toFixed(2) }}
 									{{ detail.percent ? '%' : '' }}
 								</span>
