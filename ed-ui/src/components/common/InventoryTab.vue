@@ -138,6 +138,7 @@ export default defineComponent({
 						await this.refreshDinozList();
 					} else if (toast.category === ItemEffect.GOLD) {
 						EventBus.emit('refreshMoney', true);
+						EventBus.emit('isLoading', false);
 					} else {
 						EventBus.emit('refreshDinoz', true);
 					}
