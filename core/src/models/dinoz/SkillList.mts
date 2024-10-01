@@ -752,9 +752,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [11207],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		effects: {
-			[Stat.HP_REGEN]: ['x', 1.15]
-		}
 	},
 	[Skill.BOUDDHA]: {
 		id: Skill.BOUDDHA,
