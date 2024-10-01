@@ -1101,6 +1101,29 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
+			case Skill.DETONATION: {
+				// The fighter will not suicide with the skill, it just loses its roll
+				if (fighter.hp > 5) {
+					// Add step for fx
+					fightData.steps.push(activate_step);
+					loseHp(fightData, fighter, 5, LifeEffect.Burn);
+					// Increase the time of all other fighters to make it look like the caster "gained" time
+					getFighters(fightData).forEach(f => {
+						if (f.id !== fighter.id) {
+							f.time += 15 * TIME_FACTOR;
+						}
+					});
+					// Add fx for gain of init
+					fightData.steps.push({
+						action: 'notify',
+						fids: [fighter.id],
+						notification: NotificationList.InitUp
+					});
+				} else {
+					return cancel();
+				}
+				break;
+			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
 				addStatus(fightData, fighter, Status.SHIELDED);
@@ -2358,21 +2381,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
-			break;
-		}
-		case Skill.DETONATION: {
-			// The fighter will not suicide with the skill, it just loses its roll
-			if (fighter.hp > 5) {
-				loseHp(fightData, fighter, 5, LifeEffect.Burn);
-				// Increase the time of all other fighters to make it look like the caster "gained" time
-				getFighters(fightData).forEach(f => {
-					if (f.id !== fighter.id) {
-						f.time += 15 * TIME_FACTOR;
-					}
-				});
-			} else {
-				return cancel();
-			}
 			break;
 		}
 
