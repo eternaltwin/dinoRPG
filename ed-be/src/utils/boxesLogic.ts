@@ -106,7 +106,7 @@ export function boxOpening(box: ItemFiche) {
 			{ quantity: 5, odds: 3 }
 		];
 		const total = couponsOdds.reduce((acc, item) => acc + item.odds, 0);
-		return { item: myItem, quantity: weightedRandom(couponsOdds, total).quantity };
+		return { item: itemList[Item.TREASURE_COUPON], quantity: weightedRandom(couponsOdds, total).quantity };
 	}
 
 	return { item: myItem, quantity: 1 };
