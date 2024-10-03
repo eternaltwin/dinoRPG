@@ -51,10 +51,10 @@
 						<img :src="getImgURL('ingredients', item.name)" :alt="item.name" @click="selectItem(item.ingredientId)" />
 						<template #content>
 							<h2 v-html="formatContent($t(`ingredients.name.${item.name}`))" />
-							<p>
+							<div>
 								{{ item.price }} -> 1
 								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
-							</p>
+							</div>
 						</template>
 					</Tippy>
 				</template>
