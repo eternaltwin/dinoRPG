@@ -67,7 +67,11 @@ export const itemProbability: BoxOpening[] = [
 			},
 			{
 				item: itemList[Item.AMNESIC_RICE],
-				probability: 25 //49
+				probability: 2
+			},
+			{
+				item: itemList[Item.COUPONS_TREASURE_HANDLER],
+				probability: 23
 			},
 			{
 				item: itemList[Item.MONOCHROMATIC],
@@ -196,7 +200,11 @@ export const itemProbability: BoxOpening[] = [
 			},
 			{
 				item: itemList[Item.AMNESIC_RICE],
-				probability: 20 //50
+				probability: 2 //50
+			},
+			{
+				item: itemList[Item.COUPONS_TREASURE_HANDLER],
+				probability: 18
 			},
 			{
 				item: itemList[Item.MONOCHROMATIC],
@@ -337,7 +345,11 @@ export const itemProbability: BoxOpening[] = [
 			},
 			{
 				item: itemList[Item.AMNESIC_RICE],
-				probability: 15 //45
+				probability: 2
+			},
+			{
+				item: itemList[Item.COUPONS_TREASURE_HANDLER],
+				probability: 13
 			},
 			{
 				item: itemList[Item.MONOCHROMATIC],

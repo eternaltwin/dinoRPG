@@ -150,6 +150,7 @@ export enum Item {
 	BATTERY = 142,
 	VOID_SPHERE = 143,
 	SMOG_EGG_RARE = 144,
+	COUPONS_TREASURE_HANDLER = 991,
 	BOX_HANDLER = 992,
 	BOX_COMMON = 993,
 	BOX_RARE = 994,
@@ -2506,6 +2507,23 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		sellable: true,
 		price: 10000, // TODO double check
 		display: 'void_sphere'
+	},
+	// Handler Box for coupons treasure
+	[Item.COUPONS_TREASURE_HANDLER]: {
+		itemId: 991,
+		name: 'coupons',
+		canBeEquipped: false,
+		canBeUsedNow: false,
+		itemType: ItemType.CLASSIC,
+		isRare: false,
+		maxQuantity: 9999,
+		sellable: false,
+		price: 0,
+		effect: {
+			category: ItemEffect.SPECIAL,
+			value: 'box'
+		},
+		display: ''
 	},
 	// Handler Box
 	[Item.BOX_HANDLER]: {

@@ -4,6 +4,7 @@ import gameConfig from '../config/game.config.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemProbability } from '@drpg/core/models/item/itemProbability';
+import weightedRandom from './fight/weightedRandom.js';
 
 export async function calculatePlayerPower(playerId: number) {
 	const boxInfo = await getBoxHandlerInformations(playerId);
@@ -94,6 +95,19 @@ export function boxOpening(box: ItemFiche) {
 		[flattenLoto[i], flattenLoto[j]] = [flattenLoto[j], flattenLoto[i]];
 	}
 
-	const myRandom = Math.round(Math.random() * (flattenLoto.length - 1));
-	return flattenLoto[myRandom];
+	const myItem = flattenLoto[Math.round(Math.random() * (flattenLoto.length - 1))];
+
+	if (myItem.itemId === Item.COUPONS_TREASURE_HANDLER) {
+		const couponsOdds = [
+			{ quantity: 1, odds: 2 },
+			{ quantity: 2, odds: 3 },
+			{ quantity: 3, odds: 5 },
+			{ quantity: 4, odds: 3 },
+			{ quantity: 5, odds: 3 }
+		];
+		const total = couponsOdds.reduce((acc, item) => acc + item.odds, 0);
+		return { item: myItem, quantity: weightedRandom(couponsOdds, total).quantity };
+	}
+
+	return { item: myItem, quantity: 1 };
 }
