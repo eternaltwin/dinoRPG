@@ -550,8 +550,8 @@ export default defineComponent({
 	}
 	.image {
 		position: absolute;
-		top: 80px;
-		right: 0;
+		top: 370px;
+		right: 390px;
 		& img {
 			height: 365px;
 		}

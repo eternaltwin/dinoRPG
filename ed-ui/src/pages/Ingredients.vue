@@ -1,12 +1,12 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.ingredients')" />
-	<div class="section">
+	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
 		<div class="titlePage">{{ $t(`rightMenu.ingredients`) }}</div>
 	</div>
-	<div class="disclaimer">
+	<div class="disclaimer -ml-[50px] sm:ml-0">
 		{{ $t('ingredients.disclaimer') }}
 	</div>
-	<table>
+	<table class="-ml-[50px] sm:ml-0">
 		<tbody>
 			<tr>
 				<th class="icon"></th>

@@ -1,5 +1,6 @@
 <template>
 	<a
+		class="-ml-[50px] sm:ml-0"
 		:class="{
 			'button-component': true,
 			[size]: true,

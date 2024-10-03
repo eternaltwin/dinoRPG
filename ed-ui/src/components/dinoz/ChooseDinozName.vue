@@ -1,13 +1,17 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`"></TitleHeader>
-	<div class="section">
+	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
 		<div class="titlePage">
 			<h3>{{ $t(`chooseDinoz.pageName`) }}</h3>
 		</div>
 	</div>
-	<div id="chooseDinozName">
-		<div class="disclaimer">{{ $t('chooseDinoz.information') }}</div>
-		<div class="dinoz_display">
+	<div id="chooseDinozName" class="flex flex-col">
+		<div
+			class="my-[10px] mt-[5px] -ml-[40px] sm:ml-0 pt-[5px] pr-[5px] pb-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
+		>
+			{{ $t('chooseDinoz.information') }}
+		</div>
+		<div class="dinoz_display relative w-[175px] h-[130px]">
 			<Suspense>
 				<DinozWithoutFlash
 					:display="dinozData.display"
@@ -18,10 +22,22 @@
 				<template #fallback> <Loading /> </template>
 			</Suspense>
 		</div>
-		<div class="naming">
-			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
-			<input type="text" v-model="name" />
-			<a class="button" @click="nameDinoz()">{{ $t('button.name') }}</a>
+		<div
+			class="naming relative top-[-110px] left-[190px] grid w-[310px] h-[70px]"
+			style="grid-template-columns: repeat(4, 110px)"
+		>
+			<p
+				class="name w-[95px] pt-[7px] font-bold text-[#ffee92] text-[8.5pt] text-center bg-[#e4aa69] rounded-[10px]"
+				style="font-variant: normal"
+			>
+				{{ $t('chooseDinoz.nomDuDinoz') }}
+			</p>
+			<input
+				class="w-[200px] h-[25px] mt-[5px] px-[8px] pt-[2px] font-bold text-[#ffee92] text-[9pt] border-none outline-none bg-[url('./assets/design/form_field.webp')] bg-no-repeat bg-transparent"
+				type="text"
+				v-model="name"
+			/>
+			<a class="button row-[2]" @click="nameDinoz()">{{ $t('button.name') }}</a>
 		</div>
 	</div>
 </template>
@@ -90,62 +106,35 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.naming {
-	position: relative;
-	top: -110px;
-	left: 190px;
-	width: 310px;
-	height: 60px;
-	display: grid;
-	grid-template-columns: repeat(4, 110px);
-}
-.name {
-	width: 95px;
-	text-align: center;
-	font-variant: normal;
-	font-weight: bold;
-	font-size: 8pt;
-	color: #ffee92;
-	background-color: #e4aa69;
-	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	grid-column: 1;
-	grid-row: 1;
-}
-input {
-	width: 184px;
-	height: 20px;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-top: 2px;
-	color: #ffee92;
-	font-size: 9pt;
-	font-weight: bold;
-	border: none;
-	background-image: url('../../assets/design/form_field.webp');
-	background-repeat: no-repeat;
-	background-color: transparent;
-	grid-column: 2 / 4;
-	grid-row: 1;
-}
-.button {
-	grid-row: 2;
-	grid-column: 1 / 2;
-}
-.dinoz_display {
-	position: relative;
-	height: 130px;
-	width: 175px;
-}
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-	flex-grow: 2;
+@media (max-width: 586px) {
+	.naming {
+		position: initial;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 4px;
+		margin-top: 50px;
+		margin-left: -30px;
+		width: 250px;
+	}
+	.name {
+		padding: 5px;
+	}
+	input {
+		min-height: 25px;
+		padding-top: 0;
+	}
+	.button {
+		min-height: 28px;
+	}
+	.dinoz_display {
+		margin-left: -50px;
+	}
+	#chooseDinozName {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+	}
 }
 </style>

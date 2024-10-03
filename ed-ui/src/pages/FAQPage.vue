@@ -1,31 +1,20 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.faq')}`" />
-	<div class="section">
+	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.faq`) }}</h3>
 		</div>
 	</div>
-	<div class="intro">
+	<div class="intro -ml-[40px] sm:ml-0">
 		<span><img :src="getImgURL('icons', 'small_question')" /></span>
 		<p>{{ $t(`faq.intro`) }}</p>
 	</div>
-	<div class="search">
-		<form @submit.prevent="searchQuestion">
-			<table>
-				<tbody>
-					<tr>
-						<td>
-							<input class="field" name="search" v-model="searchQuery" />
-						</td>
-						<td>
-							<input type="submit" class="button" :value="$t(`faq.search`)" />
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</form>
-	</div>
-	<div class="faq">
+	<form class="search flex flex-col items-center sm:flex-row -ml-[40px] sm:ml-0" @submit.prevent="searchQuestion">
+		<input class="field" name="search" v-model="searchQuery" />
+		<input type="submit" class="button" :value="$t(`faq.search`)" />
+	</form>
+
+	<div class="faq -ml-[50px] sm:ml-0">
 		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
 		<dl class="results">
 			<template v-for="pair in filteredPairs" :key="pair.id">
@@ -120,9 +109,11 @@ export default defineComponent({
 	font-size: 10pt;
 	gap: 6px;
 	padding: 5px;
+	width: 100%;
 }
 .search {
 	margin-top: 10px;
+	width: 100%;
 	.field {
 		align-self: center;
 		background-color: transparent;
@@ -147,6 +138,7 @@ export default defineComponent({
 }
 .faq {
 	margin-top: 20px;
+	width: 100%;
 	.titleSection {
 		background-color: #bc683c;
 		color: #fff1ad;
