@@ -23,7 +23,7 @@
 			<div class="row" v-for="(row, rowNumber) in grid.grid" :key="rowNumber">
 				<div
 					v-for="(box, boxNumber) in row"
-					:key="box"
+					:key="boxNumber"
 					@click="selectBox(rowNumber, boxNumber)"
 					:class="[
 						{
