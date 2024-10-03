@@ -107,7 +107,6 @@ export const discoverBox = (
 	for (let i = 0; i < flatReturnGrid.length; i += gridInformation.size) {
 		returnGrid.push(flatReturnGrid.slice(i, i + gridInformation.size));
 	}
-	console.log(rewards);
 
 	return {
 		grid: returnGrid,

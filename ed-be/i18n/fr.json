@@ -31,5 +31,6 @@
   "AlreadyAtMaxHealth": "Votre dinoz a déjà sa vie au maximum.",
   "DinozIsDead": "Votre dinoz est mort.",
   "DinozNotDead": "Votre dinoz n'est pas mort.",
-  "tooManyMagicItemEquiped": "Votre dinoz ne peut pas équiper plus d'objets magiques."
+  "tooManyMagicItemEquiped": "Votre dinoz ne peut pas équiper plus d'objets magiques.",
+  "maxQuantityInventory": "Vous avez déjà trop de cette objet dans votre inventaire"
 }
