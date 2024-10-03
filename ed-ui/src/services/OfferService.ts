@@ -2,16 +2,29 @@ import { http } from '../utils/index.js';
 import { Offer } from '@drpg/core/returnTypes/Offer';
 
 export const OfferService = {
-	getList(filter: string, sellerId: number | null = null, bidderId: number | null = null, expired: boolean = false) {
+	getList(
+		filter: string,
+		sellerId: number | null = null,
+		bidderId: number | null = null,
+		expired: boolean = false,
+		page: number
+	) {
 		return http()
 			.get(`/offer/list/${filter}`, {
 				params: {
 					sellerId,
 					bidderId,
-					expired
+					expired,
+					page
 				}
 			})
 			.then(res => Promise.resolve<Offer[]>(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getTotal(): Promise<string> {
+		return http()
+			.get('/offer/getTotal')
+			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
 	createOffer(

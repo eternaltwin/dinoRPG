@@ -33,9 +33,10 @@ export async function getOfferList(req: Request) {
 	const sellerId = req.query.sellerId ? +req.query.sellerId : null;
 	const bidderId = req.query.bidderId ? +req.query.bidderId : null;
 	const expired = req.query.expired ? req.query.expired === 'true' : false;
+	const page = req.query.page ? +req.query.page : 1;
 
 	// Get filtered offers
-	const offers = await getOffers(req.auth.playerId, filter, sellerId, bidderId, expired);
+	const offers = await getOffers(req.auth.playerId, filter, sellerId, bidderId, expired, page);
 
 	return offers;
 }
@@ -58,7 +59,7 @@ export async function createOffer(req: Request) {
 		count: number;
 	}[];
 
-	const offers = await getOffers(authed.id, 'own', authed.id, null, false);
+	const offers = await getOffers(authed.id, 'own', authed.id, null, false, 1);
 
 	if (offers.length > 0) {
 		throw new ExpectedError(translate('alreadyOffer', authed));
@@ -376,7 +377,7 @@ export const expireOffer = async (offerId: number) => {
  * Schedule offers expiration
  */
 export const scheduleOffersExpiration = async () => {
-	const ongoingOffers = await getOffers(null, 'all', null, null, false);
+	const ongoingOffers = await getOffers(null, 'all', null, null, false, 1);
 
 	// Process outdated offers immediately
 	const outdatedOffers = ongoingOffers.filter(offer => offer.endDate <= new Date());

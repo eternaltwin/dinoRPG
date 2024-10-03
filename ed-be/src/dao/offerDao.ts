@@ -9,9 +9,11 @@ export async function getOffers(
 	filter: string,
 	sellerId: number | null,
 	bidderId: number | null,
-	expired: boolean
+	expired: boolean,
+	page: number
 ): Promise<OfferFromGetOffers[]> {
 	const where: Prisma.OfferWhereInput = {};
+	const pageSize = 10;
 
 	if (filter === 'dinoz') {
 		where.dinoz = { isNot: null };
@@ -41,6 +43,8 @@ export async function getOffers(
 
 	const offers = await prisma.offer.findMany({
 		where,
+		skip: (page - 1) * pageSize,
+		take: pageSize,
 		include: {
 			seller: { select: { id: true, name: true } },
 			dinoz: {
@@ -71,6 +75,10 @@ export async function getOffers(
 	});
 
 	return offers;
+}
+
+export async function totalOffers() {
+	return await prisma.offer.count({});
 }
 
 export async function insertOffer(

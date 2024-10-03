@@ -16,7 +16,7 @@
 			<th></th>
 			<th></th>
 		</tr>
-		<OfferLine v-for="offer in paginatedOffers" :key="offer.id" :offer="offer" :now="now" />
+		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" />
 	</DZTable>
 	<tr class="pagination-controls">
 		<button @click="previousPage" :disabled="currentPage === 1">
@@ -52,7 +52,9 @@ export default defineComponent({
 			offers: [] as EnhancedOffer[],
 			filter: 'all',
 			currentPage: 1,
-			offersPerPage: 10
+			offersPerPage: 10,
+			totalOffer: 0,
+			totalPages: 0
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
@@ -73,7 +75,7 @@ export default defineComponent({
 		async fetchOffers() {
 			// Fetch data
 			try {
-				this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true));
+				this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true, this.currentPage));
 				this.currentPage = 1;
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
@@ -84,29 +86,41 @@ export default defineComponent({
 			this.filter = (event.target as HTMLSelectElement).value;
 			await this.fetchOffers();
 		},
-		previousPage() {
+		async previousPage() {
 			if (this.currentPage > 1) {
-				this.currentPage--;
+				try {
+					this.currentPage--;
+					this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true, this.currentPage));
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
+					return;
+				}
 			}
 		},
-		nextPage() {
+		async nextPage() {
 			if (this.currentPage < this.totalPages) {
-				this.currentPage++;
+				try {
+					this.currentPage++;
+					this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true, this.currentPage));
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
+					return;
+				}
 			}
-		}
-	},
-	computed: {
-		paginatedOffers() {
-			const start = (this.currentPage - 1) * this.offersPerPage;
-			const end = start + this.offersPerPage;
-			return this.offers.slice(start, end);
 		},
-		totalPages() {
-			return Math.ceil(this.offers.length / this.offersPerPage);
+		async totalOffers() {
+			try {
+				this.totalOffer = parseInt(await OfferService.getTotal());
+			} catch (error) {
+				errorHandler.handle(error, this.$toast);
+				return;
+			}
 		}
 	},
 	async mounted() {
+		await this.totalOffers();
 		await this.fetchOffers();
+		this.totalPages = Math.ceil(this.totalOffer / this.offersPerPage);
 
 		// Update time every second
 		setInterval(() => {
