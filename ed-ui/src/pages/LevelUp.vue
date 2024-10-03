@@ -293,10 +293,10 @@ export default defineComponent({
 	display: flex;
 	width: 362px;
 	justify-content: center;
-	margin: auto;
 	color: #fce3bc;
 	text-align: center;
 	background-color: #854b25;
+	align-self: center;
 }
 .hidden {
 	display: none;

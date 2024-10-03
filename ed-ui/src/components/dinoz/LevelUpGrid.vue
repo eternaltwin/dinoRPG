@@ -116,7 +116,6 @@ export default defineComponent({
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	margin-top: 6px;
 	cursor: pointer;
 }
 
