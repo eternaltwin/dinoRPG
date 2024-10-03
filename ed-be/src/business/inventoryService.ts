@@ -475,20 +475,18 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		throw new ExpectedError(`Item n°${itemToEquip.itemId} cannot be equiped`);
 	}
 
-	if (equip) {
+	if (equip && itemToEquip.itemType === ItemType.MAGICAL) {
 		let magicalItemsEquipped = 0;
 		dinoz.items.forEach(item => {
-			if (itemList[item.id as Item].itemType === ItemType.MAGICAL) {
+			if (itemList[item.itemId as Item].itemType === ItemType.MAGICAL) {
 				magicalItemsEquipped++;
 			}
 		});
 
-		const magicalItemsLimit = dinoz.skills.find(skill => skill.skillId === Skill.NAPOMAGICIEN) ? 2 : 1;
+		const magicalItemsLimit = dinoz.skills.some(skill => skill.skillId === Skill.NAPOMAGICIEN) ? 2 : 1;
 
 		if (magicalItemsEquipped >= magicalItemsLimit) {
-			throw new ExpectedError(
-				`Dinoz ${dinoz.id} has reached the limit (${magicalItemsEquipped}) of magical items it can equip`
-			);
+			throw new ExpectedError(translate('tooManyMagicItemEquiped', authed));
 		}
 	}
 

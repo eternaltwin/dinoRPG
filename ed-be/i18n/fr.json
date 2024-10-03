@@ -30,5 +30,6 @@
   "inClan": "Vous appartenez toujours à un clan.",
   "AlreadyAtMaxHealth": "Votre dinoz a déjà sa vie au maximum.",
   "DinozIsDead": "Votre dinoz est mort.",
-  "DinozNotDead": "Votre dinoz n'est pas mort."
+  "DinozNotDead": "Votre dinoz n'est pas mort.",
+  "tooManyMagicItemEquiped": "Votre dinoz ne peut pas équiper plus d'objets magiques."
 }
