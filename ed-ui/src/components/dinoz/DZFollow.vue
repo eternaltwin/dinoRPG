@@ -1,29 +1,25 @@
 <template>
-	<Tippy tag="tr" id="act_follow" theme="normal" @click="displayFollow()">
-		<td class="icon">
-			<img :src="getImgURL('icons', 'act_follow')" alt="act_follow" />
-		</td>
-		<td class="label">
+	<Tippy class="action" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
+		<img :src="getImgURL('icons', 'act_follow')" alt="act_follow" />
+		<p>
 			{{ $t(`action.name.follow`) }}
-		</td>
+		</p>
 		<template #content>
 			<h1 v-html="formatContent($t(`action.name.follow`))" />
 			<p v-html="formatContent($t(`action.description.follow`))" />
 		</template>
 	</Tippy>
-	<tr
+	<div
 		v-for="dinozToFollow in dinozAvailableToFollow"
 		:key="dinozToFollow"
 		class="dinoz-to-follow"
 		@click="followDinoz(dinozToFollow.id)"
 	>
-		<td class="icon">
+		<p>
 			<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
-		</td>
-		<td class="label">
 			{{ dinozToFollow.name }}
-		</td>
-	</tr>
+		</p>
+	</div>
 </template>
 
 <script lang="ts">
@@ -102,68 +98,35 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.action_button {
-	position: relative;
-	left: 5px;
-	border-collapse: collapse;
-	border-spacing: 0;
-	margin-bottom: 2px;
-	width: 175px;
-	tr {
-		&:hover,
-		&.hover {
-			td {
-				&.icon {
-					outline: 1px solid white;
-				}
-				&.label {
-					background-color: #9a4029;
-				}
-			}
-		}
-
-		&.dinoz-to-follow {
-			padding: 2px;
-			.icon {
-				text-align: right;
-				padding-top: 6px;
-				padding-bottom: 6px;
-			}
-
-			&:hover {
-				td {
-					&.icon {
-						outline: none;
-						background-color: #9a4029;
-					}
-				}
-			}
+.action {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	margin-left: 5px;
+	margin-right: 5px;
+	border-radius: 7px;
+	font-size: 11pt;
+	font-variant: small-caps;
+	line-height: 10.5pt;
+	font-weight: 700;
+	&:hover {
+		background-color: #9a4029;
+		cursor: pointer;
+		img {
+			outline: 1px solid white;
 		}
 	}
+}
+.dinoz-to-follow {
+	padding-left: 7px;
+	padding-top: 2px;
+	padding-bottom: 2px;
 
-	td {
-		margin: 0;
-		padding: 0 0 2px;
-		text-align: left;
+	&:hover {
+		outline: none;
+		background-color: #9a4029;
 		cursor: pointer;
-
-		&.label {
-			padding-left: 4px;
-			padding-right: 4px;
-			font-weight: bold;
-			color: white;
-			font-size: 11pt;
-			font-variant: small-caps;
-			line-height: 10.5pt;
-			border-top-right-radius: 7px;
-			border-bottom-right-radius: 7px;
-		}
-
-		&.icon {
-			width: 32px;
-			font-size: 0;
-			line-height: 0;
-		}
 	}
 }
 </style>

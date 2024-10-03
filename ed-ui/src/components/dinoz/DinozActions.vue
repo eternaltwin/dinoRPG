@@ -573,24 +573,6 @@ export default defineComponent({
 				outline: 1px solid white;
 			}
 		}
-
-		&.dinoz-to-follow {
-			padding: 2px;
-			.icon {
-				text-align: right;
-				padding-top: 6px;
-				padding-bottom: 6px;
-			}
-
-			&:hover {
-				td {
-					&.icon {
-						outline: none;
-						background-color: #9a4029;
-					}
-				}
-			}
-		}
 	}
 	.actions_top {
 		width: 185px;
