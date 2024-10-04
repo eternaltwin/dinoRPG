@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<footer>
 		<div class="wrapper">
@@ -25,7 +26,7 @@
 									d="M54.4,21.9c-1.3-4-4.6-6.9-8.5-8c-3.4-1.3-7.1-1.7-10.7-0.9c-3.3,0.7-6.1,2.3-8.4,4.5    c1.4,0.8,3,1.5,4.7,1.9c-2.2,2.2-3.7,4.8-4.4,7.6c1.2,0,2.5-0.1,3.7-0.4c0,0.5,0.1,1.1,0.2,1.6c1.4,6.3,7.4,10.4,13.7,9.5    c-1,2-2,4.7-1.8,5.4c0.2,0.8,2.4-1,2.9-1.6c0.6-0.9,1.2-2.8,1.4-4.4c0.5-0.2,0.9-0.4,1.4-0.6c-0.4,1.6-0.6,3.3-0.4,3.8    c0.3,0.7,2.2-1.3,2.6-2c0.4-0.8,0.6-2.4,0.7-3.8c2.3-2.3,3.6-5.4,3.6-8.7c0.6-0.4,1.2-0.9,1.5-1.4c1.6-2,1.9-3.6,1.9-3.6    S56.4,21,54.4,21.9 M51.5,21.9c-0.6-0.1-2.4-2.5-2.9-3.5c-0.1-0.3-0.6-1.3-0.3-1.3c0.8-0.1,2.8,1.8,3.3,2.8    C51.8,20.3,52,22.1,51.5,21.9"
 								/>
 								<path
-									class="shadow piou"
+									class="piou shadow"
 									d="M52.4,33.3c-1,1-2,1.1-3.1,0.8c-9-2.5-15.6-9.9-15.6-18.5c0-0.6,0-1.1,0.1-1.7c0,0,0,0,0,0    c-0.2-0.2-0.1,0.6-0.8,0.8c-2.1,0.6-4.7,1.9-6.1,2.8c1.4,0.8,3,1.5,4.7,1.9c0.8,0.5,1.6,0.4,0.3,1.6c-3.5,3.2-4.6,6-4.6,6    c1.2,0,2.4-0.1,3.6-0.4c0,0.5,0.1,1.1,0.2,1.6c1.2,5.7,6.3,9.6,11.9,9.6c0.6,0,1.2,0,1.8-0.1c-1,2-2,4.7-1.8,5.4    c0,0.1,0.1,0.2,0.3,0.2c0.7,0,2.2-1.3,2.6-1.8c0.6-0.9,1.2-2.8,1.4-4.4c0.5-0.2,0.9-0.4,1.4-0.6c-0.4,1.6-0.6,3.3-0.4,3.8    c0.1,0.1,0.1,0.2,0.2,0.2c0.6,0,2-1.6,2.3-2.2c0.4-0.7,0.6-2.2,0.6-3.5c0,0,0,0,0,0c0-0.1,0-0.2,0-0.3    C51.8,34,52.1,33.6,52.4,33.3z M49.4,34.2c0.1,0,0.2,0,0.3,0.1C49.6,34.2,49.5,34.2,49.4,34.2z"
 								/>
 							</g>
@@ -200,19 +201,16 @@ $box-bg-color: #fffcf4;
 $box-border-color: #bd7e49;
 $text-color: #701000;
 $link-color: #c54508;
-
 footer {
 	margin: auto 0 0 0;
 	font-size: 1.4rem;
 	line-height: 1.6rem;
 	min-width: 100%;
 	color: $text-color;
-
 	p:not(.box) {
 		margin: 0;
 		padding: 0;
 	}
-
 	a,
 	button {
 		color: $link-color;
@@ -223,32 +221,27 @@ footer {
 			color: $text-color;
 		}
 	}
-
 	h3 {
 		font-size: 1em;
 		margin: 0 0 0.25em 0;
 	}
-
 	ul {
 		padding: 0;
 		margin: 0;
 		list-style-type: none;
 	}
 }
-
 .wrapper {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: stretch;
-
 	padding: 3.9rem 1.35rem 6rem;
 	background-image: url('../../assets/background/sky_footer_blue.webp');
 	background-repeat: repeat-x;
 	background-position: bottom center;
 }
-
 .box {
 	position: relative;
 	display: flex;
@@ -258,14 +251,12 @@ footer {
 	flex: 1 0 90%;
 	min-width: 152px;
 	order: 1;
-
 	margin: 7px 4px;
 	padding: 1.4em;
 	background: $box-bg-color;
 	border-radius: 4px;
 	border: 1px solid $box-border-color;
 	border-bottom-width: 4px;
-
 	&.small {
 		flex: 1 1 40%;
 	}
@@ -273,12 +264,10 @@ footer {
 		font-size: 1rem;
 	}
 }
-
 .box.description {
 	order: 0;
 	padding-top: 2.2em;
 }
-
 .etwin-logo {
 	// position and colorate the etwin logo
 	position: absolute;
@@ -287,7 +276,6 @@ footer {
 	top: 0;
 	left: 50%;
 	transform: translate(-50%, -60%);
-
 	.contour {
 		fill: $box-border-color;
 	}
@@ -298,38 +286,26 @@ footer {
 		fill: lighten($box-border-color, 39%);
 	}
 }
-
 .status {
 	margin-top: 1em;
 	border-top: 2px solid $box-border-color;
 	padding-top: 1em;
 	width: 100%;
-
 	a {
 		text-decoration: none;
 	}
-
 	svg {
 		height: 0.9em;
 		margin-right: 0.3em;
 	}
 }
-
 .versionId {
 	flex-direction: row;
-
 	span {
 		margin-right: 1.6em;
 	}
 }
-
 @media only screen and (min-width: 768px) {
-	//desktop breakpoint
-
-	footer {
-		// font-size: 1rem;
-	}
-
 	.box {
 		order: initial;
 		min-width: 0;

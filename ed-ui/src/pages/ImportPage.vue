@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div id="dataCollector" v-if="!importData">
 		<p class="disclaimer" v-html="formatText($t(`import.disclaimer`))" />

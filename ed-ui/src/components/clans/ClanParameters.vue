@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div v-if="hasAccess" class="wrapper">
 		<div class="banner-panel" v-if="hasBannerEditRight">

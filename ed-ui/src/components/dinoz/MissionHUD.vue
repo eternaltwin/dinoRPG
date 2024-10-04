@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<Tippy theme="normal" tag="div" v-if="missionId" class="mission" @click="getInformation(mission)">
 		<p class="dinozName">{{ dinozName }}</p>

@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.dinozMissions')" />
 	<div class="section">

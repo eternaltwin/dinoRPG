@@ -12,7 +12,7 @@
 			<fieldset>
 				<legend>Secret Keys</legend>
 				<div>
-					<label for="secretKey" class="title">{{ newSecret.key }}</label>
+					<label for="secretKey" class="mt-[5px] font-bold uppercase">{{ newSecret.key }}</label>
 					<input id="secretKey" type="text" v-model="newSecret.value" />
 				</div>
 			</fieldset>
@@ -115,10 +115,5 @@ select {
 	border: 1px solid #c88f44;
 	background-color: #f3ca92;
 	color: #710;
-}
-.title {
-	text-transform: uppercase;
-	font-weight: bold;
-	margin-top: 5px;
 }
 </style>

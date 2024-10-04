@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="wrapper">
 		<div class="disclaimer" v-if="clanMember?.player?.name">

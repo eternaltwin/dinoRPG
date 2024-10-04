@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div>
 		<a @click="displayMe = !displayMe" class="asyncDinoz" v-if="shop && !displayMe">{{ $t(`alpha.shop`) }}</a>

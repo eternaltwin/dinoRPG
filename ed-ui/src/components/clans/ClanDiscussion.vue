@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="new-message-container" v-if="hasAccess">
 		<div v-if="isConnectionOk">

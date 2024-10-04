@@ -1,8 +1,17 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="container" ref="grid">
+	<div class="mt-[10px] flex h-[90%] w-1/2 cursor-pointer flex-wrap items-center justify-center" ref="grid">
 		<template v-for="(cell, index) in levelUpGrid" :key="index">
-			<div class="box" :class="isSelected(index) && isSpinning ? 'active' : ''">
-				<img :src="getImgURL('elements', `elem_${cell}`)" :alt="cell" :id="index" />
+			<div
+				class="relative m-[0.15em] size-[30px] rounded-[4px]"
+				style="
+					border: 2px solid #cb8354;
+					background: linear-gradient(180deg, #4f250d 0%, #a75532 10%, #cb8354 100%);
+					box-shadow: 1px 3px 1px #622c0d;
+				"
+				:class="isSelected(index) && isSpinning ? 'active' : ''"
+			>
+				<img class="mt-[5px]" :src="getImgURL('elements', `elem_${cell}`)" :alt="cell" :id="index" />
 				<div class="effect" v-if="isSelected(index) && isSpinOver">
 					<div></div>
 					<div></div>
@@ -109,36 +118,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.container {
-	width: 50%;
-	height: 90%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-wrap: wrap;
-	cursor: pointer;
-	margin-top: 10px;
-}
-
-.box {
-	position: relative;
-	width: 30px;
-	height: 30px;
-	margin: 0.15em;
-	border: 2px solid #cb8354;
-	border-radius: 4px;
-	background: linear-gradient(180deg, #4f250d 0%, #a75532 10%, #cb8354 100%);
-	box-shadow: 1px 3px 1px #622c0d;
-	img {
-		margin-top: 5px;
-	}
-}
-
 .active {
 	position: relative;
 	z-index: 10;
 	transform-style: preserve-3d;
-
 	&:after {
 		content: '';
 		display: block;
@@ -176,7 +159,6 @@ export default defineComponent({
 	opacity: 1;
 	width: 100px;
 	height: 50px;
-
 	div {
 		position: absolute;
 		width: 100px;
@@ -185,12 +167,10 @@ export default defineComponent({
 		background: radial-gradient(circle, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.2) 100%);
 		border-radius: 50%;
 		filter: blur(10px);
-
 		animation-duration: 6s;
 		animation-timing-function: cubic-bezier(0.25, 0, 0.75, 1);
 		animation-iteration-count: infinite;
 		animation-direction: alternate;
-
 		&:nth-child(1) {
 			animation-name: glow1;
 			animation-duration: 8s;
@@ -217,7 +197,6 @@ export default defineComponent({
 		}
 	}
 }
-
 @keyframes glow1 {
 	from {
 		transform: rotate(65deg) scale(1.6, 0.3);
@@ -226,7 +205,6 @@ export default defineComponent({
 		transform: rotate(245deg) scale(1.6, 0.3);
 	}
 }
-
 @keyframes glow2 {
 	from {
 		transform: rotate(125deg) scale(1.3, 0.3);
@@ -235,7 +213,6 @@ export default defineComponent({
 		transform: rotate(305deg) scale(1.3, 0.3);
 	}
 }
-
 @keyframes glow3 {
 	from {
 		transform: rotate(15deg) scale(1.5, 0.3);
@@ -244,7 +221,6 @@ export default defineComponent({
 		transform: rotate(195deg) scale(1.5, 0.3);
 	}
 }
-
 @keyframes rev-glow1 {
 	from {
 		transform: rotate(105deg) scale(1.6, 0.3);
@@ -253,7 +229,6 @@ export default defineComponent({
 		transform: rotate(-75deg) scale(1.6, 0.3);
 	}
 }
-
 @keyframes rev-glow2 {
 	from {
 		transform: rotate(40deg) scale(1.3, 0.3);
@@ -262,7 +237,6 @@ export default defineComponent({
 		transform: rotate(-140deg) scale(1.3, 0.3);
 	}
 }
-
 @keyframes rev-glow3 {
 	from {
 		transform: rotate(170deg) scale(1.5, 0.3);

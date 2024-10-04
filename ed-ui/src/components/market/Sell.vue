@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<DZDisclaimer help content="market.sellView.disclaimer" />
 	<h4>{{ $t('market.sellView.prepareYourOffer') }}</h4>

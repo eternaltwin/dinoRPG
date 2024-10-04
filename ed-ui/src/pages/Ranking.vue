@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.ranking')}`"></TitleHeader>
-	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
+	<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.ranking`) }}</h3>
 		</div>
@@ -24,24 +24,14 @@
 			<a href="#" @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
 		</li>
 	</ul>
-	<div
-		class="disclaimer my-[10px] -ml-[50px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
-		v-if="tabSelected === 1"
-	>
-		{{ $t('ranking.disclaimer.classic') }}
-	</div>
-	<div
-		class="disclaimer my-[10px] -ml-[50px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
-		v-if="tabSelected === 2"
-	>
-		{{ $t('ranking.disclaimer.average') }}
-	</div>
-	<div
-		class="disclaimer my-[10px] -ml-[50px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
+	<DZDisclaimer v-if="tabSelected === 1" help :content="$t('ranking.disclaimer.classic')" class="ml-[-50px] sm:ml-0" />
+	<DZDisclaimer v-if="tabSelected === 2" help :content="$t('ranking.disclaimer.average')" class="ml-[-50px] sm:ml-0" />
+	<DZDisclaimer
 		v-if="tabSelected === 3"
-	>
-		{{ $t('ranking.disclaimer.completion') }}
-	</div>
+		help
+		:content="$t('ranking.disclaimer.completion')"
+		class="ml-[-50px] sm:ml-0"
+	/>
 	<div class="disclaimer" v-if="tabSelected === 5">
 		{{ $t('ranking.disclaimer.pantheon') }}
 	</div>
@@ -50,7 +40,7 @@
 	<CompletionRanking :tab-selected="tabSelected" v-if="tabSelected === 3" />
 	<Pantheon v-if="tabSelected === 5" />
 	<input
-		class="search -ml-[50px] sm:ml-0 placeholder:text-[#fce3bc]"
+		class="ml-[-50px] h-[22px] w-[200px] border-none bg-[url('./assets/background/form_field.webp')] bg-no-repeat px-2.5 pt-0.5 text-[#fce3bc] outline-none placeholder:text-[#fce3bc] sm:ml-0"
 		type="text"
 		placeholder="Search Player"
 		v-model="searchValue"
@@ -61,7 +51,7 @@
 			{{ players.name }}
 		</option>
 	</datalist>
-	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
+	<div v-if="displayErrorMessage" class="text-red-500">This player doesn't exist</div>
 </template>
 
 <script lang="ts">
@@ -70,6 +60,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import PlayerRanking from '../components/rankings/PlayerRanking.vue';
 import CompletionRanking from '../components/rankings/CompletionRanking.vue';
 import { PlayerService } from '../services/index.js';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import Pantheon from '../components/rankings/Pantheon.vue';
 
 interface PlayerSearch {
@@ -83,6 +74,7 @@ export default defineComponent({
 		CompletionRanking,
 		TitleHeader,
 		PlayerRanking,
+		DZDisclaimer
 		Pantheon
 	},
 	data() {
@@ -133,18 +125,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.search {
-	background-image: url('../assets/background/form_field.webp');
-	background-repeat: no-repeat;
-	border: none;
-	outline: none;
-	color: #fce3bc;
-	height: 22px;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-top: 2px;
-	width: 200px;
-}
 .tabs {
 	background-color: transparent !important;
 }

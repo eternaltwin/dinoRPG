@@ -1,9 +1,10 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.selectDinoz')" />
 	<div class="section">
 		<div class="titlePage">{{ $t(`selectDinoz.selectChampions`) }}</div>
 	</div>
-	<p class="subtitle">{{ $t('selectDinoz.selectTeam') }}</p>
+	<p class="text-center font-bold uppercase">{{ $t('selectDinoz.selectTeam') }}</p>
 	<DZDisclaimer :content="$t('selectDinoz.disclaimer')" />
 	<div class="wrapper">
 		<div
@@ -19,7 +20,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex justify-center mt-1" v-if="selectedDinoz.length">
+	<div class="mt-1 flex justify-center" v-if="selectedDinoz.length">
 		<DZButton @click="validate">{{ $t('selectDinoz.validate') }}</DZButton>
 	</div>
 </template>
@@ -92,12 +93,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.subtitle {
-	text-transform: uppercase;
-	font-weight: bold;
-	text-align: center;
-}
-
 .wrapper {
 	display: flex;
 	flex-wrap: wrap;

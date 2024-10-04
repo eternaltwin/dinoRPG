@@ -1,31 +1,31 @@
 <template>
-	<div id="enclos" class="-ml-[30px] sm:ml-0 -mt-[7%] sm:mt-0">
+	<div id="enclos" class="ml-[-30px] mt-[-7%] sm:ml-0 sm:mt-0">
 		<TitleHeader :title="$t('pageTitle.dinozShop')" />
 		<div class="section">
 			<div class="titlePage">Enclos des dinoz</div>
 		</div>
 		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
-		<div class="flex flex-col w-full gap-[30px] -ml-[12px]">
+		<div class="ml-[-17px] flex w-full flex-col gap-[30px]">
 			<div
-				class="flex h-auto sm:h-[110px] lg:h-[90px] ml-[25px] gap-[25px] sm:gap-[55px] md:gap-[5px] p-1 items-start bg-[#bc683c] sm:bg-transparent sm:bg-[url('./assets/design/shop_dinoz_bg.webp')] bg-contain lg:bg-auto bg-no-repeat"
+				class="ml-[25px] flex h-auto items-start gap-[25px] bg-[#bc683c] bg-contain bg-no-repeat p-1 sm:h-[110px] sm:gap-[55px] sm:bg-transparent sm:bg-[url('./assets/design/shop_dinoz_bg.webp')] md:gap-[5px] lg:h-[90px] lg:bg-auto"
 				:id="'detail_' + index"
 				v-for="(dinoz, index) in dinozList"
 				:key="dinoz.id"
 			>
 				<Suspense>
 					<DinozWithoutFlash
-						class="relative left-[-60px] sm:left-[-35px] bottom-[30px] sm:bottom-[70px] w-[150px] sm:w-[190px]"
+						class="relative bottom-[30px] left-[-65px] w-[150px] sm:bottom-[70px] sm:left-[-35px] sm:w-[190px]"
 						:display="dinoz.display"
 						:life="1"
 						:flip="-1"
 					></DinozWithoutFlash>
 					<template #fallback>
-						<div class="flex mt-[5px] justify-center items-center"><Loading /></div>
+						<div class="mt-[5px] flex items-center justify-center"><Loading /></div>
 					</template>
 				</Suspense>
-				<div class="flex flex-col gap-[15px] sm:gap-[8px] w-2/3 mt-[2px] -ml-[90px] md:-ml-[45px]">
+				<div class="ml-[-90px] mt-[2px] flex w-2/3 flex-col gap-[15px] sm:gap-[8px] md:ml-[-45px]">
 					<div
-						class="h-auto sm:h-[18px] bg-[#9a4029] mb-[1px] pl-[10px] text-[10pt] text-[#ffee92] rounded-[10px] cursor-help"
+						class="mb-px h-auto cursor-help rounded-[10px] bg-[#9a4029] pl-[10px] text-[10pt] text-[#ffee92] sm:h-[18px]"
 					>
 						<Tippy theme="normal">
 							<strong>Race :</strong>
@@ -52,11 +52,11 @@
 						<Tippy
 							theme="normal"
 							tag="div"
-							class="h-auto sm:h-[18px] bg-[#9a4029] -mt-[5px] pl-[10px] text-[10pt] text-[#ffee92] rounded-[10px] cursor-help"
+							class="mt-[-5px] h-auto cursor-help rounded-[10px] bg-[#9a4029] pl-[10px] text-[10pt] text-[#ffee92] sm:h-[18px]"
 							v-for="skillId in raceList[dinoz.race].skillId"
 							:key="skillId"
 						>
-							<img class="-mt-[2px]" :src="getImgURL('icons', 'small_follow')" alt="follow" />
+							<img class="mt-[-2px]" :src="getImgURL('icons', 'small_follow')" alt="follow" />
 							{{ $t(`skill.name.${skillList[skillId].name}`) }}
 							<template #content>
 								<h1>
@@ -69,9 +69,9 @@
 						</Tippy>
 					</template>
 				</div>
-				<div class="flex flex-col sm:w-1/4 p-1 gap-[10px]">
-					<div class="w-[90px] h-[18px] pl-[17px] text-[10pt] bg-[#9a4029] rounded-[10px]">
-						<span class="text-[#ffee92] font-bold"
+				<div class="flex flex-col gap-[10px] p-1 sm:w-1/4">
+					<div class="h-[18px] w-[90px] rounded-[10px] bg-[#9a4029] pl-[17px] text-[10pt]">
+						<span class="font-bold text-[#ffee92]"
 							>{{ utils.beautifulNumber(raceList[dinoz.race].price.toString()) }}
 							<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
 						</span>
@@ -128,21 +128,15 @@ export default defineComponent({
 					errorHandler.handle(err, this.$toast);
 					return;
 				}
-
 				// Update player's money
 				const newMoney = (this.playerStore.getMoney! - this.raceList[dinoz.race].price) as number;
 				this.playerStore.setMoney(newMoney);
-
 				const dinozStore = this.dinozStore.getDinozList;
-
 				dinozStore!.push(dinozCreated);
-
 				// Update dinoz list
 				this.dinozStore.setDinozList(dinozStore!);
-
 				// Update dinoz count
 				this.dinozStore.setDinozCount(this.dinozStore.getDinozCount! + 1);
-
 				// Go to dinoz page
 				await this.$router.push({
 					name: 'DinozPage',

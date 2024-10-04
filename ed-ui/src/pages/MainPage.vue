@@ -1,34 +1,44 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="dinorpg">
-		<div id="layout" class="flex flex-grow-3 min-h-screen w-full justify-around bg-white bg-no-repeat">
+		<div
+			id="layout"
+			class="grow-3 flex min-h-screen w-full justify-around bg-white bg-[url('./assets/background/bg_ciel3.webp')] bg-no-repeat"
+		>
 			<!-- Section Left -->
-			<div class="flex-grow"></div>
+			<div class="grow"></div>
 			<!-- Section Center -->
-			<div class="center flex flex-col w-[900px] items-center bg-repeat-y bg-contain md:bg-auto">
-				<div id="centerHeader" class="flex w-full min-h-screen p-px bg-no-repeat bg-contain md:bg-auto" v-if="loaded">
+			<div
+				class="center flex w-[900px] flex-col items-center bg-[url('./assets/background/sky_core_bg.webp')] bg-contain bg-repeat-y md:bg-auto"
+			>
+				<div
+					id="centerHeader"
+					class="flex min-h-screen w-full bg-[url('./assets/background/core_center_header3.webp')] bg-contain bg-no-repeat p-px md:bg-auto"
+					v-if="loaded"
+				>
 					<LeftPanel />
 					<div
 						id="centerContent"
-						class="flex flex-col w-full lg:max-w-[540px] mt-[-20px] md:mt-[10px] ml-[80px] md:ml-[40px] lg:ml-[30px]"
+						class="ml-[80px] mt-[-20px] flex w-full flex-col md:ml-[40px] md:mt-[10px] lg:ml-[30px] lg:max-w-[540px]"
 					>
-						<a @click="goToNews()" class="linkHome w-full h-[120px] z-1 cursor-pointer"></a>
+						<a @click="goToNews()" class="linkHome z-1 h-[120px] w-full cursor-pointer"></a>
 						<Router-view />
 					</div>
 					<RightMenu />
 				</div>
 			</div>
 			<!-- Section Right -->
-			<div class="right relative flex-grow hidden md:block bg-repeat-y"></div>
+			<div class="right relative hidden grow bg-repeat-y md:block"></div>
 		</div>
-		<div id="prefoot" class="flex w-full h-[100px] justify-between">
+		<div id="prefoot" class="flex h-[100px] w-full justify-between">
 			<!-- Section Left -->
-			<div class="flex-grow"></div>
+			<div class="grow"></div>
 			<!-- Section Center -->
 			<div
-				class="footCenter flex w-full sm:w-[900px] h-full items-center bg-top-center bg-contain sm:bg-cover bg-no-repeat"
+				class="bg-top-center flex size-full items-center bg-[url('./assets/background/core_center_footer.webp')] bg-contain bg-no-repeat sm:w-[900px] sm:bg-cover"
 			></div>
 			<!-- Section Right -->
-			<div class="footRight flex-grow"></div>
+			<div class="footRight grow"></div>
 		</div>
 	</div>
 </template>
@@ -105,15 +115,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#layout {
-	background-image: url('../assets/background/bg_ciel3.webp');
-}
-.center {
-	background-image: url('../assets/background/sky_core_bg.webp');
-	#centerHeader {
-		background-image: url('../assets/background/core_center_header3.webp');
-	}
-}
 .right {
 	background-image: url('../assets/background/core_right_bg.webp');
 	&::before {
@@ -128,9 +129,6 @@ export default defineComponent({
 		background-repeat: no-repeat;
 		background-position: left top;
 	}
-}
-.footCenter {
-	background-image: url('../assets/background/core_center_footer.webp');
 }
 .footRight {
 	&::before {

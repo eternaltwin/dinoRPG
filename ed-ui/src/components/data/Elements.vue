@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<ul class="elements">
 		<li
@@ -73,7 +74,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 span {
 	font-size: 10pt !important;
-
 	&.max {
 		color: yellow;
 	}

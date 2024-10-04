@@ -1,3 +1,5 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
+<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
 	<a
 		class="-ml-[50px] sm:ml-0"

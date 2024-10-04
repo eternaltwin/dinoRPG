@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<dialog ref="dialogRef">
 		<div class="modal-title">{{ $t(`report.header`) }}</div>

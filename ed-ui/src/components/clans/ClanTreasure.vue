@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<DZDisclaimer help :content="$t('clan.ingredients.help', { value: treasureValue })" />
 	<div class="wrapper">

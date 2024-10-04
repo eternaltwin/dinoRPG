@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div v-if="hasAccess" class="wrapper">
 		<div class="history-container" v-for="evt in history" :key="evt.id">

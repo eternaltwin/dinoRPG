@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<Transition>
 		<div v-if="text" class="modal-background">

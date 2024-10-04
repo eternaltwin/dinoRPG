@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="wrapper">
 		<div class="requests-container" v-if="joinRequestsList && joinRequestsList.length > 0 && selfMember">

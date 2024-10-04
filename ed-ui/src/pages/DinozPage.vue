@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div v-if="nameChoosen === false">
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />

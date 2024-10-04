@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="shop" v-if="actualShop">
 		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`" />

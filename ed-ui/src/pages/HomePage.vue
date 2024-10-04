@@ -1,19 +1,23 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div id="nav" class="flex flex-col items-center">
 		<div class="flex w-full">
 			<!-- Section Left -->
-			<div class="left flex-grow bg-left-top bg-repeat-x hidden md:block"></div>
+			<div class="hidden grow bg-[url('./assets/background/bg_ciel.webp')] bg-left-top bg-repeat-x md:block"></div>
 			<!-- Section Center -->
-			<div class="flex flex-col items-center w-full max-w-[1008px] px-0 mx-0 sm:w-full">
+			<div class="mx-0 flex w-full max-w-[1008px] flex-col items-center px-0 sm:w-full">
 				<div
-					class="center w-full h-[510px] bg-[url('./assets/background/sky_headerbg.webp')] bg-center bg-no-repeat sm:bg-[url('./assets/background/sky_headerbg_02.webp')] bg-cover"
+					class="h-[510px] w-full bg-[url('./assets/background/sky_headerbg.webp')] bg-cover bg-center bg-no-repeat sm:bg-[url('./assets/background/sky_headerbg_02.webp')]"
 				></div>
-				<div class="mt-[-8rem] flex justify-center">
+				<div class="-mt-32 flex justify-center">
 					<AuthenticationPage :autoLog="autoLog"></AuthenticationPage>
 				</div>
-				<div class="flex flex-col items-center max-w-[1280px] mx-3 my-4">
-					<div class="box relative max-w-[640px] bg-[#52b6ff]">
-						<p class="text-justify text-[15px] leading-relaxed font-[trebuchet ms] text-[#016390]">
+				<div class="mx-3 my-4 flex max-w-screen-xl flex-col items-center">
+					<div
+						class="relative m-4 max-w-screen-sm rounded-[18.5px] bg-[#52b6ff] p-4 px-6 shadow-inner"
+						style="box-shadow: inset 0 0 2.1em 1.2em #b4e0ff"
+					>
+						<p class="font-[trebuchet ms] text-justify text-[15px] leading-relaxed text-[#016390]">
 							{{ $t('alpha.homepage.part1') }}<br /><br />
 							{{ $t('alpha.homepage.part2') }}
 							<a
@@ -38,7 +42,7 @@
 				</div>
 			</div>
 			<!-- Section Right -->
-			<div class="right flex-grow bg-right-top bg-repeat-x hidden md:block"></div>
+			<div class="hidden grow bg-[url('./assets/background/bg_ciel.webp')] bg-right-top bg-repeat-x md:block"></div>
 		</div>
 	</div>
 </template>
@@ -228,15 +232,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.left,
-.right {
-	background-image: url('../assets/background/bg_ciel.webp');
-}
 .box {
 	margin: 1em 1em 1em;
 	padding: 1em 1.5em;
-	border-radius: 18.5px;
-	box-shadow: inset 0 0 2.1em 1.2em #b4e0ff;
 }
 p {
 	text-align: justify;

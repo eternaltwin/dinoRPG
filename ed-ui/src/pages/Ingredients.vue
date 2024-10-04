@@ -1,18 +1,16 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.ingredients')" />
-	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
+	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">{{ $t(`rightMenu.ingredients`) }}</div>
 	</div>
-	<div class="disclaimer -ml-[50px] sm:ml-0">
-		{{ $t('ingredients.disclaimer') }}
-	</div>
-	<table class="-ml-[50px] sm:ml-0">
+	<DZDisclaimer help :content="$t('ingredients.disclaimer')" class="ml-[-50px] sm:ml-0" />
+	<table class="ml-[-50px] sm:ml-0">
 		<tbody>
 			<tr>
-				<th class="icon"></th>
-				<th class="name">{{ $t('ingredients.tname') }}</th>
-				<th class="stock">{{ $t('ingredients.tstock') }}</th>
-				<th v-if="isClan" class="clan"></th>
+				<th class="w-[32px]"></th>
+				<th class="px-1 pb-2">{{ $t('ingredients.tname') }}</th>
+				<th class="px-1 pb-2">{{ $t('ingredients.tstock') }}</th>
+				<th v-if="isClan" class="px-1 pb-2"></th>
 			</tr>
 
 			<Tippy
@@ -25,12 +23,14 @@
 					even: (index + 1) % 2 == 0
 				}"
 			>
-				<td class="icon">
+				<td class="w-[32px]">
 					<img :src="getImgURL('ingredients', ingredient.name)" :alt="ingredient.name" />
 				</td>
-				<td class="name">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
-				<td class="stock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
-				<td v-if="isClan" class="stock">
+				<td class="px-5 py-0.5">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
+				<td class="w-[60px] px-2.5 py-0.5" v-if="ingredient.quantity !== 0">
+					{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}
+				</td>
+				<td v-if="isClan" class="w-[60px] px-2.5 py-0.5">
 					<DZInput
 						type="number"
 						:value="giveAway[index].quantity"
@@ -39,7 +39,7 @@
 						min="0"
 					/>
 				</td>
-				<td class="stock" v-else>--</td>
+				<td class="w-[60px] px-2.5 py-0.5" v-else>--</td>
 
 				<template #content>
 					<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name}`))" />
@@ -61,6 +61,7 @@ import { errorHandler } from '../utils/index.js';
 import { playerStore } from '../store/index.js';
 import DZInput from '../components/common/DZInput.vue';
 import DZButton from '../components/common/DZButton.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 export default defineComponent({
@@ -68,7 +69,8 @@ export default defineComponent({
 	components: {
 		DZButton,
 		DZInput,
-		TitleHeader
+		TitleHeader,
+		DZDisclaimer
 	},
 	data() {
 		return {
@@ -141,18 +143,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
 table {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	background-color: #ecbd84;
@@ -161,6 +153,7 @@ table {
 	tr {
 		display: table-row;
 		cursor: help;
+		width: 100%;
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -176,22 +169,6 @@ table {
 			background-color: #c64e36;
 			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
-			max-width: 222px;
-			&.name {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-				max-width: 200px;
-			}
-			&.icon {
-				width: 32px;
-			}
-			&.stock {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-				max-width: 15px;
-			}
 		}
 		td {
 			font-size: 16px;
@@ -201,14 +178,6 @@ table {
 			border: 1px solid #c88f44;
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
-			&.name {
-				padding: 1px 5px;
-				max-width: 222px;
-			}
-			&.stock {
-				padding: 1px 5px;
-				width: 52px;
-			}
 		}
 		&.full td {
 			background-image: url('../assets/background/table_cell_hover.webp') !important;

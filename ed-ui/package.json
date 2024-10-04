@@ -49,6 +49,7 @@
     "concurrently": "^8.2.2",
     "eslint": "^8.36.0",
     "eslint-plugin-prettier": "^5.0.1",
+    "eslint-plugin-tailwindcss": "^3.17.4",
     "eslint-plugin-vue": "^9.18.1",
     "file-loader": "^6.2.0",
     "lint-staged": "^15.0.2",

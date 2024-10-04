@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<DZDisclaimer help content="market.historyView.lastOffers" />
 	<div class="flex justify-between">

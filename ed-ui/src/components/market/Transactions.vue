@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div v-if="ownOffer">
 		<h4>{{ $t('market.transactionView.yourOngoingOffer') }}</h4>

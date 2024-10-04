@@ -5,7 +5,7 @@
     "node": true
 	},
 	"plugins": ["@typescript-eslint"],
-	"extends": ["plugin:vue/vue3-essential", "eslint:recommended", "@vue/typescript/recommended", "@vue/prettier"],
+	"extends": ["plugin:vue/vue3-essential", "eslint:recommended", "@vue/typescript/recommended", "@vue/prettier", "plugin:tailwindcss/recommended"],
 	"parserOptions": {
 		"ecmaVersion": 2022
 	},

@@ -1,6 +1,14 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="search">
-		<input type="text" placeholder="Search Player" v-model="searchValue" list="players" @keyup.enter="getPlayer()" />
+		<input
+			class="placeholder:text-[#710]"
+			type="text"
+			placeholder="Search Player"
+			v-model="searchValue"
+			list="players"
+			@keyup.enter="getPlayer()"
+		/>
 		<datalist id="players">
 			<option v-for="(players, index) in playerList" :key="index">
 				{{ players.name }}

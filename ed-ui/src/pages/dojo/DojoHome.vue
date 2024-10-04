@@ -1,11 +1,12 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.dojo')" />
 	<div class="section">
 		<div class="titlePage">{{ $t(`dojo.welcome`) }}</div>
 	</div>
 	<div class="wrapper">
-		<div class="header df">
-			<div class="header-text df jcsb">
+		<div class="header flex">
+			<div class="header-text flex justify-between">
 				<p class="ttu">{{ $t('dojo.reputation') }} : 0 {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} : 0%</p>
 				<p>{{ $t('dojo.ranking') }} : 29</p>
 			</div>

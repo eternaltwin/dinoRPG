@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div v-if="isError" class="modal-background">
 		<div class="modal-box">

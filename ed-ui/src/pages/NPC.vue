@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.npc')}${$t(`npc.name.${npcName}`)}]`"></TitleHeader>
 	<div class="section">

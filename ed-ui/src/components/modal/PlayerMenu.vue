@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="player-menu" v-if="loadedPlayer">
 		<p class="playerLink" @click="goToPlayerPage()">
@@ -88,8 +89,8 @@ export default defineComponent({
 	padding: 10px;
 	position: absolute;
 	top: 100%;
-	left: 0;
-	width: 245px;
+	left: -12px;
+	width: 261px;
 	height: auto;
 	z-index: 1000;
 	.grid-menu {
@@ -97,7 +98,7 @@ export default defineComponent({
 		flex-wrap: wrap;
 		gap: 10px;
 		margin-top: 7px;
-		justify-content: center;
+		margin-bottom: 7px;
 	}
 	.report {
 		text-align: right;
@@ -152,7 +153,7 @@ export default defineComponent({
 	border-radius: 4px;
 	color: #f1e8e6;
 	display: inline-block;
-	height: 50px;
+	height: 55px;
 	margin: 0 1px 1px 0;
 	overflow: hidden;
 	padding: 5px 0;

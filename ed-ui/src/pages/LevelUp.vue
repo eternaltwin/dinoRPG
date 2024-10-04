@@ -1,15 +1,14 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"></TitleHeader>
 	<div style="width: auto">
-		<div class="section">
+		<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
 			<div class="titlePage">
-				<h3>{{ $t(`levelup.title`) }} {{ dinozData.name }}</h3>
+				<h3 class="truncate">{{ $t(`levelup.title`) }} {{ dinozData.name }}</h3>
 			</div>
 		</div>
 	</div>
-	<div class="disclaimer">
-		{{ $t('levelup.disclaimer') }}
-	</div>
+	<DZDisclaimer help :content="$t('levelup.disclaimer')" class="ml-[-40px] sm:ml-0" />
 	<div class="wrapper border" v-if="availableSkills">
 		<LevelUpGrid
 			v-if="availableSkills.upChance && availableSkills.element"
@@ -33,7 +32,7 @@
 			</Suspense>
 		</div>
 	</div>
-	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
+	<div class="slide-bottom ml-[-40px] sm:ml-0" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
 		<div class="result" v-if="ElementType[availableSkills.element]">
 			{{ dinozData.name }}
 			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
@@ -57,7 +56,7 @@
 			/>
 			{{ $t(`levelup.helper`) }}
 		</div>
-		<div class="select">
+		<div class="m-[5px]">
 			<table>
 				<tbody>
 					<tr>
@@ -161,6 +160,7 @@ import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -168,7 +168,8 @@ export default defineComponent({
 		LevelUpGrid,
 		TitleHeader,
 		Elements,
-		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue'))
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue')),
+		DZDisclaimer
 	},
 	data() {
 		return {
@@ -414,92 +415,89 @@ export default defineComponent({
 		font-weight: normal;
 	}
 }
-.select {
-	margin: 5px;
-	table {
-		width: 100%;
-		margin-top: 10px;
-		margin-bottom: 5px;
-		margin-bottom: 10px;
-		border: 2px solid #bc683c;
-		background-color: #ecbd84;
-		border-collapse: separate;
-		border-spacing: 1px;
-		tr {
-			display: table-row;
-			th {
-				font-size: 8pt;
-				letter-spacing: 0pt;
-				text-shadow: 1px 1px 0px #356847;
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-				height: 41px;
-				vertical-align: bottom;
-				color: #fffdba;
-				text-transform: uppercase;
+table {
+	width: 100%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	margin-bottom: 10px;
+	border: 2px solid #bc683c;
+	background-color: #ecbd84;
+	border-collapse: separate;
+	border-spacing: 1px;
+	tr {
+		display: table-row;
+		th {
+			font-size: 8pt;
+			letter-spacing: 0pt;
+			text-shadow: 1px 1px 0px #356847;
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-bottom: 8px;
+			height: 41px;
+			vertical-align: bottom;
+			color: #fffdba;
+			text-transform: uppercase;
+			font-weight: bold;
+			letter-spacing: 1pt;
+			text-align: left;
+			white-space: nowrap;
+			border: 1px solid #356847;
+			background-color: #c64e36;
+			background-image: url('../assets/background/table_header.webp');
+			background-position: left bottom;
+			&.name {
+				width: 330px;
+			}
+			&.type {
+				max-width: 30px;
+			}
+		}
+		td {
+			font-size: 9pt;
+			padding-right: 5px;
+			padding-top: 1px;
+			padding-bottom: 1px;
+			color: #710 !important;
+			background-color: #f3ca92;
+			border: 1px solid #c88f44;
+			&.name {
+				background-image: url('../assets/background/table_cell.webp');
+				background-position: 0px 0px;
+				//padding-left: 15px;
+				max-width: 337px;
+				p {
+					padding-top: 4px;
+				}
+				img {
+					float: left;
+					position: relative;
+					margin-right: 5px;
+					vertical-align: bottom;
+				}
+			}
+			&.type {
 				font-weight: bold;
-				letter-spacing: 1pt;
-				text-align: left;
-				white-space: nowrap;
-				border: 1px solid #356847;
-				background-color: #c64e36;
-				background-image: url('../assets/background/table_header.webp');
-				background-position: left bottom;
-				&.name {
-					width: 330px;
-				}
-				&.type {
-					max-width: 30px;
-				}
+				text-align: center;
+				color: #bc683c;
+				background-image: url('../assets/background/table_cell.webp');
+				background-position: -10px 0px;
+				max-width: 4px;
 			}
+			&.learn {
+				font-weight: bold;
+				text-align: center;
+				color: #bc683c;
+				background-image: url('../assets/background/table_cell.webp');
+				background-position: -10px 0px;
+				text-decoration: underline;
+				background-repeat: no-repeat;
+			}
+		}
+		&:hover {
 			td {
-				font-size: 9pt;
-				padding-right: 5px;
-				padding-top: 1px;
-				padding-bottom: 1px;
-				color: #710 !important;
-				background-color: #f3ca92;
-				border: 1px solid #c88f44;
-				&.name {
-					background-image: url('../assets/background/table_cell.webp');
-					background-position: 0px 0px;
-					//padding-left: 15px;
-					max-width: 337px;
-					p {
-						padding-top: 4px;
-					}
-					img {
-						float: left;
-						position: relative;
-						margin-right: 5px;
-						vertical-align: bottom;
-					}
-				}
-				&.type {
-					font-weight: bold;
-					text-align: center;
-					color: #bc683c;
-					background-image: url('../assets/background/table_cell.webp');
-					background-position: -10px 0px;
-					max-width: 4px;
-				}
-				&.learn {
-					font-weight: bold;
-					text-align: center;
-					color: #bc683c;
-					background-image: url('../assets/background/table_cell.webp');
-					background-position: -10px 0px;
-					text-decoration: underline;
-					background-repeat: no-repeat;
-				}
-			}
-			&:hover {
-				td {
-					outline: 1px solid #9a4029;
-					color: white !important;
-					cursor: pointer;
-				}
+				outline: 1px solid #9a4029;
+				color: white !important;
+				cursor: pointer;
 			}
 		}
 	}

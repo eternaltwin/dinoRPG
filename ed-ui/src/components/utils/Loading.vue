@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <script lang="ts">
 import { defineComponent } from 'vue';
 
@@ -7,20 +8,16 @@ export default defineComponent({
 </script>
 
 <template>
-	<div class="spinner"></div>
+	<div class="spinner size-[56px] rounded-[50%]"></div>
 </template>
 
 <style scoped lang="scss">
 .spinner {
-	width: 56px;
-	height: 56px;
-	border-radius: 50%;
 	border: 9px solid;
 	border-color: #edd2ba;
 	border-right-color: #ffb347;
 	animation: spinner-d3wgkg 1.4s infinite linear;
 }
-
 @keyframes spinner-d3wgkg {
 	to {
 		transform: rotate(1turn);

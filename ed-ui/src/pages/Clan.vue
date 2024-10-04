@@ -1,9 +1,8 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.clan')}${clan.name} ]`"></TitleHeader>
-	<div class="newsSection">
-		<div class="section">
-			<div class="titlePage">{{ $t('clan.header.title', { name: clan.name }) }}</div>
-		</div>
+	<div class="section">
+		<div class="titlePage">{{ $t('clan.header.title', { name: clan.name }) }}</div>
 	</div>
 	<div class="wrapper">
 		<div class="filler">

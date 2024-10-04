@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="details">
 		<p class="wrapperMenu" @click="hidden = !hidden">

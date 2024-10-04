@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.createClan')"></TitleHeader>
 	<div class="section">
@@ -7,10 +8,12 @@
 	</div>
 	<div id="chooseClanName">
 		<div class="disclaimer">
-			<img :src="getImgURL('icons', 'small_question')" alt="question_mark" style="margin-right: 2px" />
-			{{ $t('createClan.information') }}
-			<strong>{{ creationCost }}</strong>
-			<img :src="getImgURL('icons', 'small_gold')" alt="question_mark" style="margin-left: 3px" />
+			<span>
+				<img :src="getImgURL('icons', 'small_question')" alt="question_mark" style="margin-right: 2px" />
+				{{ $t('createClan.information') }}
+				<strong>{{ creationCost }}</strong>
+				<img :src="getImgURL('icons', 'small_gold')" alt="question_mark" style="margin-left: 3px" />
+			</span>
 		</div>
 
 		<div class="middle-content">
@@ -81,15 +84,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-	flex-grow: 2;
 	strong {
 		color: #ffee92;
 	}

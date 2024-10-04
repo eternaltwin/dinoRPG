@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="page">
 		<p style="white-space: pre-line">{{ page.content }}</p>

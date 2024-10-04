@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<label for="news">Select a news to edit : </label>
 	<select id="news" v-model="newsEdit" @change="newSelect = true">

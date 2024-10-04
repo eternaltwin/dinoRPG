@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<ul style="list-style: none">
 		<Tippy v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">

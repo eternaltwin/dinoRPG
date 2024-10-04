@@ -1,7 +1,8 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<p
 		v-if="!isCodePresent"
-		class="sign inherit ml-[10px] text-5xl font-bold no-underline cursor-pointer p-[10px]"
+		class="sign inherit ml-[10px] cursor-pointer p-[10px] text-5xl font-bold no-underline"
 		@click="getRedirectUri()"
 	>
 		{{ $t('alpha.login') }}

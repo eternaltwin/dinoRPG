@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.clansList')"></TitleHeader>
 	<div class="section">
@@ -6,9 +7,11 @@
 		</div>
 	</div>
 	<div class="disclaimer">
-		<img :src="getImgURL('icons', 'small_question')" alt="info_button" style="margin-right: 2px" />
-		{{ $t(`clansList.disclaimer.text`) }} <a @click="goToHelp()">{{ $t(`clansList.disclaimer.see_help`) }}</a> &
-		<a>{{ $t(`clansList.disclaimer.see_ranking`) }}</a>
+		<span>
+			<img :src="getImgURL('icons', 'small_question')" alt="info_button" style="margin-right: 2px" />
+			{{ $t(`clansList.disclaimer.text`) }} <a @click="goToHelp()">{{ $t(`clansList.disclaimer.see_help`) }}</a> &
+			<a>{{ $t(`clansList.disclaimer.see_ranking`) }}</a>
+		</span>
 	</div>
 	<div class="disclaimer" v-if="joinRequest">
 		<p>

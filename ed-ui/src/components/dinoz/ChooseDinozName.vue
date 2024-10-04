@@ -1,17 +1,19 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
+<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`"></TitleHeader>
-	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
+	<div class="section -ml-[25px] -mt-[25px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`chooseDinoz.pageName`) }}</h3>
 		</div>
 	</div>
 	<div id="chooseDinozName" class="flex flex-col">
 		<div
-			class="my-[10px] mt-[5px] -ml-[40px] sm:ml-0 pt-[5px] pr-[5px] pb-[5px] pl-[20px] text-[#fce3bc] text-[10pt] bg-[#bc683c]"
+			class="my-[10px] -ml-[40px] mt-[5px] bg-[#bc683c] py-[5px] pl-[20px] pr-[5px] text-[10pt] text-[#fce3bc] sm:ml-0"
 		>
 			{{ $t('chooseDinoz.information') }}
 		</div>
-		<div class="dinoz_display relative w-[175px] h-[130px]">
+		<div class="dinoz_display relative h-[130px] w-[175px]">
 			<Suspense>
 				<DinozWithoutFlash
 					:display="dinozData.display"
@@ -23,17 +25,17 @@
 			</Suspense>
 		</div>
 		<div
-			class="naming relative top-[-110px] left-[190px] grid w-[310px] h-[70px]"
+			class="naming relative left-[190px] top-[-110px] grid h-[70px] w-[310px]"
 			style="grid-template-columns: repeat(4, 110px)"
 		>
 			<p
-				class="name w-[95px] pt-[7px] font-bold text-[#ffee92] text-[8.5pt] text-center bg-[#e4aa69] rounded-[10px]"
+				class="name w-[95px] rounded-[10px] bg-[#e4aa69] pt-[7px] text-center text-[8.5pt] font-bold text-[#ffee92]"
 				style="font-variant: normal"
 			>
 				{{ $t('chooseDinoz.nomDuDinoz') }}
 			</p>
 			<input
-				class="w-[200px] h-[25px] mt-[5px] px-[8px] pt-[2px] font-bold text-[#ffee92] text-[9pt] border-none outline-none bg-[url('./assets/design/form_field.webp')] bg-no-repeat bg-transparent"
+				class="mt-[5px] h-[25px] w-[200px] border-none bg-transparent bg-[url('./assets/design/form_field.webp')] bg-no-repeat px-[8px] pt-[2px] text-[9pt] font-bold text-[#ffee92] outline-none"
 				type="text"
 				v-model="name"
 			/>

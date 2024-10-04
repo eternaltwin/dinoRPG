@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template class="twinoid-goals">
 	<div class="profil">
 		<div class="headProfil">

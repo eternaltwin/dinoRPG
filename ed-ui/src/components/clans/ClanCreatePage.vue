@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="page">
 		<div>{{ editMode ? $t('clanPages.creation.edit') : $t('clanPages.creation.new') }}</div>

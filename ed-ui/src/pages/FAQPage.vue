@@ -1,22 +1,26 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.faq')}`" />
-	<div class="section -mt-[25px] sm:mt-0 -ml-[25px] sm:ml-0">
+	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.faq`) }}</h3>
 		</div>
 	</div>
-	<div class="intro -ml-[40px] sm:ml-0">
-		<span><img :src="getImgURL('icons', 'small_question')" /></span>
-		<p>{{ $t(`faq.intro`) }}</p>
-	</div>
-	<form class="search flex flex-col items-center sm:flex-row -ml-[40px] sm:ml-0" @submit.prevent="searchQuestion">
-		<input class="field" name="search" v-model="searchQuery" />
+	<DZDisclaimer help :content="$t(`faq.intro`)" class="ml-[-40px] sm:ml-0" />
+	<form
+		class="ml-[-40px] mt-[10px] flex w-full flex-col items-center sm:ml-0 sm:flex-row"
+		@submit.prevent="searchQuestion"
+	>
+		<input
+			class="h-[22px] w-[184px] self-center border-none bg-transparent bg-[url('./assets/background/form_field.webp')] bg-no-repeat px-[8px] pt-[2px] text-[9pt] font-bold text-[#fce3bc]"
+			name="search"
+			v-model="searchQuery"
+		/>
 		<input type="submit" class="button" :value="$t(`faq.search`)" />
 	</form>
 
-	<div class="faq -ml-[50px] sm:ml-0">
-		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
-		<dl class="results">
+	<div class="ml-[-50px] mt-[20px] w-full sm:ml-0">
+		<h3 class="mb-[10px] bg-[#bc683c] pl-[10px] text-[#fff1ad]">{{ $t('faq.qa') }}</h3>
+		<dl class="mt-[10px] flex flex-col gap-[10px]">
 			<template v-for="pair in filteredPairs" :key="pair.id">
 				<dt @click="toggleCollapse(pair.id)">
 					<span><img :src="getImgURL('icons', 'small_follow')" /></span>
@@ -30,6 +34,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 interface FaqPair {
 	id: number;
@@ -41,7 +46,8 @@ interface FaqPair {
 export default defineComponent({
 	name: 'FAQ',
 	components: {
-		TitleHeader
+		TitleHeader,
+		DZDisclaimer
 	},
 	data() {
 		const faqPairs = ref<FaqPair[]>([
@@ -101,78 +107,27 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.intro {
-	align-items: first baseline;
-	background-color: #bc683c;
-	color: #fce3bc;
+dt {
+	color: #8e3e26;
+	cursor: pointer;
 	display: flex;
-	font-size: 10pt;
+	font-variant: small-caps;
+	font-weight: bold;
 	gap: 6px;
-	padding: 5px;
-	width: 100%;
-}
-.search {
 	margin-top: 10px;
-	width: 100%;
-	.field {
-		align-self: center;
-		background-color: transparent;
-		background-image: url('../assets/background/form_field.webp');
-		background-repeat: no-repeat;
-		border: none;
-		color: #fce3bc;
-		font-size: 9pt;
-		font-weight: bold;
-		height: 22px;
-		padding-left: 8px;
-		padding-right: 8px;
-		padding-top: 2px;
-		width: 184px;
-	}
-	.button {
-		border: none;
-		height: 28px;
-		margin-left: 8px;
-		width: 145px;
+	padding-left: 20px;
+	&:hover {
+		background-color: #8e3e26;
+		color: #fff1ad;
 	}
 }
-.faq {
-	margin-top: 20px;
-	width: 100%;
-	.titleSection {
-		background-color: #bc683c;
-		color: #fff1ad;
-		margin-bottom: 10px;
-		padding-left: 10px;
-	}
-	.results {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		margin-top: 10px;
-		& dt {
-			color: #8e3e26;
-			cursor: pointer;
-			display: flex;
-			font-variant: small-caps;
-			font-weight: bold;
-			gap: 6px;
-			margin-top: 10px;
-			padding-left: 20px;
-			&:hover {
-				background-color: #8e3e26;
-				color: #fff1ad;
-			}
-		}
-		& dd {
-			background-color: #f3ca92;
-			border: 1px solid #fcf9d1;
-			display: block;
-			margin-inline-start: 40px;
-			outline: 2px solid #f8d39c;
-			padding: 5px;
-			width: 90%;
-		}
-	}
+dd {
+	background-color: #f3ca92;
+	border: 1px solid #fcf9d1;
+	display: block;
+	margin-inline-start: 40px;
+	outline: 2px solid #f8d39c;
+	padding: 5px;
+	width: 90%;
 }
 </style>

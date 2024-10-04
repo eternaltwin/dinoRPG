@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<ol class="flex p-0 py-[5px]">
 		<a
@@ -5,7 +6,7 @@
 			:key="`Lang${i}`"
 			@click="switchLocale(lang.short)"
 			:class="[$i18n.locale === lang.short ? 'selected' : '', lang.short]"
-			class="flag w-[16px] h-[11px] p-[2px] mx-auto cursor-pointer"
+			class="flag mx-auto h-[11px] w-[16px] cursor-pointer p-[2px]"
 		></a>
 	</ol>
 </template>

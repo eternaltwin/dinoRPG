@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<Tippy class="action" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
 		<img :src="getImgURL('icons', 'act_follow')" alt="act_follow" />

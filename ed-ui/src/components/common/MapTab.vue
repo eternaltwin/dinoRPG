@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div class="boxMap">
 		<WorldMap :dinozData="dinozData" :key="dinozData" />

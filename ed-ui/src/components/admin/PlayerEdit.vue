@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<form @submit.prevent="sendUpdate()">
 		<fieldset>

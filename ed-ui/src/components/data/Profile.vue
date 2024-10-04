@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<transition name="fade">
 		<!--		<div class="profil" :style="{ display: option ? 'none' : '' }">-->

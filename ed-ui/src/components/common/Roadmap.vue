@@ -1,22 +1,24 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
+<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
-	<div class="relative bottom-0 mt-[15px] -ml-[25px] sm:ml-0">
-		<h3 class="my-[15px] font-bold text-3xl text-[#9a4029] underline" style="font-variant: small-caps">
+	<div class="relative bottom-0 -ml-[25px] mt-[15px] sm:ml-0">
+		<h3 class="my-[15px] text-3xl font-bold text-[#9a4029] underline" style="font-variant: small-caps">
 			{{ $t('roadmap.title') }}
 		</h3>
 		<ul
-			class="flex flex-col sm:flex-row min-h-[530px] sm:min-h-[85px] ml-0 my-[10px] pl-[110px] list-none bg-[url('./assets/background/underDevTimelineVertical.webp')] sm:bg-[url('./assets/background/underDevTimeline.webp')] bg-no-repeat"
+			class="my-[10px] ml-0 flex min-h-[530px] list-none flex-col bg-[url('./assets/background/underDevTimelineVertical.webp')] bg-no-repeat pl-[110px] sm:min-h-[85px] sm:flex-row sm:bg-[url('./assets/background/underDevTimeline.webp')]"
 		>
 			<li
 				@click="showTable(1)"
-				class="flex flex-col gap-[10px] items-center w-full sm:w-[106px] text-[#9a4029] text-center -ml-[80px] sm:ml-0 mt-[105px] sm:my-2 pr-[9px] pt-[30px] sm:pt-[15px] cursor-pointer"
+				class="-ml-[80px] mt-[100px] flex w-full cursor-pointer flex-col items-center gap-[10px] pr-[9px] pt-[30px] text-center text-[#9a4029] sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
 			>
 				<a>
 					<small
-						class="block h-[17px] -mt-[15px] mb-[5px] text-black text-base font-bold uppercase"
+						class="-mt-[15px] mb-[5px] block h-[17px] text-base font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
-					<strong class="block text-[12px] text-[#9a4029] leading-7">
+					<strong class="block text-[12px] leading-7 text-[#9a4029]">
 						<img class="relative" :src="getImgURL('icons', 'r_world')" alt="world" />
 						<span class="ml-[5px]">{{ $t('roadmap.strong.title1') }}</span>
 					</strong>
@@ -24,15 +26,15 @@
 			</li>
 			<li
 				@click="showTable(2)"
-				class="flex flex-col items-center w-full sm:w-[106px] text-center -ml-[80px] sm:ml-0 mt-[50px] sm:my-2 pr-[9px] pt-[30px] sm:pt-[15px] cursor-pointer"
+				class="-ml-[80px] mt-[35px] flex w-full cursor-pointer flex-col items-center pr-[9px] pt-[30px] text-center sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
 			>
 				<a>
 					<small
-						class="block h-[20px] -mt-[15px] mb-[5px] text-black text-base font-bold uppercase"
+						class="-mt-[15px] mb-[5px] block h-[20px] text-base font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
-					<strong class="block text-[12px] text-[#9a4029] leading-7">
+					<strong class="block text-[12px] leading-7 text-[#9a4029]">
 						<img class="relative" :src="getImgURL('icons', 'r_world')" alt="world" />
 						<span class="ml-[5px]">{{ $t('roadmap.strong.title2') }}</span>
 					</strong>
@@ -40,15 +42,15 @@
 			</li>
 			<li
 				@click="showTable(3)"
-				class="flex flex-col items-center w-full sm:w-[106px] text-center -ml-[80px] sm:ml-0 mt-[50px] sm:my-2 pr-[9px] pt-[30px] sm:pt-[15px] cursor-pointer"
+				class="-ml-[80px] mt-[30px] flex w-full cursor-pointer flex-col items-center pr-[9px] pt-[30px] text-center sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
 			>
 				<a>
 					<small
-						class="block h-[20px] -mt-[15px] mb-[5px] text-black text-base font-bold uppercase"
+						class="-mt-[15px] mb-[5px] block h-[20px] text-base font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
-					<strong class="block text-[12px] text-[#9a4029] leading-7">
+					<strong class="block text-[12px] leading-7 text-[#9a4029]">
 						<img class="relative" :src="getImgURL('icons', 'r_world')" alt="world" />
 						<span class="ml-[5px]">{{ $t('roadmap.strong.title3') }}</span>
 					</strong>
@@ -56,19 +58,19 @@
 			</li>
 		</ul>
 		<div
-			class="relative w-full -ml-[10px] sm:ml-[40px] md:ml-[80px] lg:ml-[120px]"
+			class="relative -ml-[10px] w-full sm:ml-[40px] md:ml-[80px] lg:ml-[120px]"
 			:style="{ display: showFuturTable ? 'block' : 'none' }"
 		>
-			<div class="futur-header bg-no-repeat bg-contain h-[33px]">
-				<div class="relative uppercase text-[12px] text-[#ffee92] ml-[45px] sm:ml-[80px]">
+			<div class="h-[33px] bg-[url('./assets/background/maj_bg_header.webp')] bg-contain bg-no-repeat">
+				<div class="relative ml-[45px] text-[12px] uppercase text-[#ffee92] sm:ml-[80px]">
 					<img class="mr-[5px]" :src="getImgURL('icons', 'small_sage')" alt="smallsage" />
 					<span>{{ $t('roadmap.futurTitle') }}</span>
 				</div>
 			</div>
-			<div class="futur-desc bg-repeat-y bg-contain max-w-[347px]">
-				<div class="text-[#67220d] block text-[14px] mt-[-16px]">
-					<ul class="flex flex-col list-none mt-[4px]">
-						<li v-for="(item, index) in futurInfoList" :key="index" class="mt-[4px] ml-[10px]">
+			<div class="max-w-[347px] bg-[url('./assets/background/maj_bg.webp')] bg-contain bg-repeat-y">
+				<div class="mt-[-16px] block text-[14px] text-[#67220d]">
+					<ul class="mt-[4px] flex list-none flex-col">
+						<li v-for="(item, index) in futurInfoList" :key="index" class="ml-[10px] mt-[4px]">
 							<img
 								class="relative"
 								v-if="item.imageUrl"
@@ -83,12 +85,12 @@
 			<div class="futur-footer"></div>
 		</div>
 		<div
-			class="w-full my-[10px] -ml-[10px] sm:ml-0 p-[5px] pl-[20px] text-[#fce3bc] bg-[#bc683c] bg-[url('./assets/icons/small_missAct.webp')] bg-no-repeat"
+			class="my-[10px] -ml-[10px] w-full bg-[#bc683c] bg-[url('./assets/icons/small_missAct.webp')] bg-no-repeat p-[5px] pl-[20px] text-[#fce3bc] sm:ml-0"
 			style="background-position: 5px 8px"
 		>
 			<p>{{ $t('roadmap.help') }}</p>
 		</div>
-		<div class="mx-auto -ml-[10px] sm:ml-0 p-[5px] text-lg text-[#bc683c] italic">
+		<div class="mx-auto -ml-[10px] p-[5px] text-lg italic text-[#bc683c] sm:ml-0">
 			<p>{{ $t('roadmap.disclaimer') }}</p>
 		</div>
 	</div>
@@ -139,12 +141,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.futur-header {
-	background-image: url('../../assets/background/maj_bg_header.webp');
-}
-.futur-desc {
-	background-image: url('../../assets/background/maj_bg.webp');
-}
 .futur-footer {
 	&::before {
 		content: '';
