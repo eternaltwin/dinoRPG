@@ -1,31 +1,36 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.guide')}`" />
-	<div class="section">
+	<div class="section ml-[-35px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.guide`) }}</h3>
 		</div>
 	</div>
-	<div class="intro">
-		<div class="menu">
-			<ul class="list">
-				<li v-for="(item, index) in items" :key="index" @click="showContent(item)">
+	<div class="ml-[-35px] flex flex-wrap sm:ml-0 sm:flex-nowrap sm:justify-center">
+		<div class="min-w-[210px] rounded-md bg-[#e09b6244]">
+			<ul class="ml-1 mt-1 cursor-pointer p-1 font-bold text-[#8e3e26]" style="font-variant: small-caps">
+				<li
+					class="hover:bg-[#8e3e26] hover:text-[#fce3bc]"
+					v-for="(item, index) in items"
+					:key="index"
+					@click="showContent(item)"
+				>
 					<img v-if="item.nameImageUrl" :src="getImgURL(item.nameImageUrl.path, item.nameImageUrl.name)" alt="Image" />
 					{{ item.name }}
 				</li>
 			</ul>
 		</div>
-		<div class="image">
-			<img :src="getImgURL('design', 'rocky_01')" />
+		<div class="hidden justify-center sm:block">
+			<img class="size-[250px] lg:size-[350px]" :src="getImgURL('design', 'rocky_01')" />
 		</div>
 	</div>
-	<div class="showContent">
-		<div v-if="selectedItem" class="content">
+	<div class="showContent ml-[-25px] sm:ml-0">
+		<div v-if="selectedItem" class="custom-deep ml-[-20px] mt-[20px] flex w-full flex-col flex-wrap sm:ml-0">
 			<h2 class="titlePage">{{ selectedItem.name }}</h2>
-			<img :src="getImgURL('design', 'title_h1')" />
-			<div v-for="(section, index) in selectedItem.contentSections" :key="index" class="sectionContent">
-				<h3 class="titleSection">{{ section.name }}</h3>
-				<ul v-if="section.texts" class="textContent">
+			<img class="size-full" :src="getImgURL('design', 'title_h1')" />
+			<div v-for="(section, index) in selectedItem.contentSections" :key="index" class="ml-[10px] mt-[15px] w-[98%]">
+				<h3 class="mb-[10px] rounded-[2px] bg-[#8e3e26] text-[#fff1ad]">{{ section.name }}</h3>
+				<ul v-if="section.texts" class="mt-[10px] flex flex-col gap-[10px] sm:ml-0">
 					<li v-for="(text, i) in section.texts" :key="i">
 						<p v-html="formatContent(text)" />
 					</li>
@@ -34,27 +39,34 @@
 					v-if="section.ImageUrl"
 					:src="getImgURL(section.ImageUrl.path, section.ImageUrl.name)"
 					alt="Image"
-					class="imageContent"
+					class="my-[10px] h-auto w-full"
 				/>
-				<ul v-if="section.listItems" class="listItemsContent">
-					<li v-for="(item, i) in section.listItems" :key="i">
-						<img v-if="item.imageUrl" :src="getImgURL(item.imageUrl.path, item.imageUrl.name)" alt="Image" />
+				<ul v-if="section.listItems" class="mt-[12px]">
+					<li class="mt-[10px] sm:ml-[10px]" v-for="(item, i) in section.listItems" :key="i">
+						<img
+							class="mr-2"
+							v-if="item.imageUrl"
+							:src="getImgURL(item.imageUrl.path, item.imageUrl.name)"
+							alt="Image"
+						/>
 						<span v-html="formatContent(item.text)" />
 					</li>
 				</ul>
 			</div>
-			<button @click="showPrevItem" v-if="selectedItem.prevItem !== undefined" class="next">
-				<img :src="getImgURL('icons', 'small_page_down')" />
-				{{ items[selectedItem.prevItem].name }}
-			</button>
-			<button @click="showNextItem" v-if="selectedItem.nextItem !== undefined" class="next">
-				<img :src="getImgURL('icons', 'small_page_up')" />
-				{{ items[selectedItem.nextItem].name }}
-			</button>
-			<button @click="goToPage('News')" class="next">
-				<img :src="getImgURL('icons', 'small_delete')" />
-				{{ $t(`guide.text.stop`) }}
-			</button>
+			<div class="mt-[10px] flex flex-col justify-between sm:flex-row">
+				<a @click="showPrevItem" v-if="selectedItem.prevItem !== undefined" class="button">
+					<img :src="getImgURL('icons', 'small_page_down')" />
+					{{ items[selectedItem.prevItem].name }}
+				</a>
+				<a @click="showNextItem" v-if="selectedItem.nextItem !== undefined" class="button">
+					<img :src="getImgURL('icons', 'small_page_up')" />
+					{{ items[selectedItem.nextItem].name }}
+				</a>
+				<a @click="goToPage('News')" class="button">
+					<img :src="getImgURL('icons', 'small_delete')" />
+					{{ $t(`guide.text.stop`) }}
+				</a>
+			</div>
 		</div>
 	</div>
 </template>
@@ -528,96 +540,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.intro {
-	display: flex;
-	margin-left: 10px;
-	.menu {
-		background-color: #e09b6244;
-		border-radius: 5px;
-		width: 220px;
-		.list {
-			color: rgb(142, 62, 38);
-			cursor: pointer;
-			font-variant: small-caps;
-			font-weight: bold;
-			list-style: none;
-			margin-top: 6px;
-			margin-left: 6px;
-			& li:hover {
-				color: #fce3bc;
-				background-color: rgb(142, 62, 38);
-			}
-		}
+.custom-deep {
+	:deep(strong) {
+		color: #8e3e26;
 	}
-	.image {
-		position: absolute;
-		top: 370px;
-		right: 390px;
-		& img {
-			height: 365px;
-		}
-	}
-}
-.showContent {
-	.content {
-		margin-top: 20px;
-		:deep(strong) {
-			color: rgb(142, 62, 38);
-		}
-		:deep(i) {
-			color: rgb(142, 62, 38);
-		}
-		.sectionContent {
-			margin-top: 15px;
-			margin-left: 10px;
-			.titleSection {
-				background-color: rgb(142, 62, 38);
-				border-radius: 2px;
-				color: #fff1ad;
-				margin-bottom: 10px;
-			}
-			.textContent {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-				list-style: none;
-			}
-			.imageContent {
-				margin-bottom: 10px;
-				margin-top: 10px;
-			}
-			.listItemsContent {
-				list-style: none;
-				margin-top: 12px;
-				& li {
-					margin-top: 10px;
-					margin-left: 10px;
-					& img {
-						margin-right: 8px;
-					}
-				}
-			}
-		}
-		.next {
-			background-image: url('../assets/button/button.webp');
-			border: none;
-			color: #fff1ad;
-			font-variant: small-caps;
-			font-weight: bold;
-			text-align: center;
-			height: 28px;
-			width: 145px !important;
-			background-repeat: no-repeat;
-			font-size: 7pt;
-			margin-left: 10px;
-			margin-right: 10px;
-			margin-top: 20px;
-			cursor: pointer;
-			&:hover {
-				color: white;
-				background-image: url('../assets/button/button_hover.webp');
-			}
-		}
+	:deep(i) {
+		color: #8e3e26;
 	}
 }
 </style>

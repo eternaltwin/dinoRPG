@@ -1,6 +1,5 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<ul class="elements">
+	<ul>
 		<li
 			:class="getMaxElement() === fire ? 'max' : ''"
 			v-tippy="{
@@ -72,16 +71,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-span {
-	font-size: 10pt !important;
-	&.max {
-		color: yellow;
-	}
-}
-.elements {
-	list-style: none;
-	height: 23px;
 
+ul {
 	li {
 		float: left;
 		position: relative;
@@ -97,13 +88,10 @@ span {
 		background-position: 7px 5px;
 		background-repeat: no-repeat;
 		cursor: help;
-
 		&.max {
 			color: yellow;
 		}
-
 		img {
-			margin-right: -3px;
 			vertical-align: -30%;
 		}
 	}

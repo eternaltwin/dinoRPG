@@ -1,7 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
-<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
-	<div class="relative bottom-0 -ml-[25px] mt-[15px] sm:ml-0">
+	<div class="relative bottom-0 ml-[-25px] mt-[15px] sm:ml-0">
 		<h3 class="my-[15px] text-3xl font-bold text-[#9a4029] underline" style="font-variant: small-caps">
 			{{ $t('roadmap.title') }}
 		</h3>
@@ -10,11 +9,11 @@
 		>
 			<li
 				@click="showTable(1)"
-				class="-ml-[80px] mt-[100px] flex w-full cursor-pointer flex-col items-center gap-[10px] pr-[9px] pt-[30px] text-center text-[#9a4029] sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
+				class="ml-[-80px] mt-[100px] flex w-full cursor-pointer flex-col items-center gap-[10px] pr-[9px] pt-[30px] text-center text-[#9a4029] sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
 			>
 				<a>
 					<small
-						class="-mt-[15px] mb-[5px] block h-[17px] text-base font-bold uppercase text-black"
+						class="mb-[5px] mt-[-15px] block h-[17px] text-base font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
@@ -26,11 +25,11 @@
 			</li>
 			<li
 				@click="showTable(2)"
-				class="-ml-[80px] mt-[35px] flex w-full cursor-pointer flex-col items-center pr-[9px] pt-[30px] text-center sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
+				class="ml-[-80px] mt-[35px] flex w-full cursor-pointer flex-col items-center pr-[9px] pt-[30px] text-center sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
 			>
 				<a>
 					<small
-						class="-mt-[15px] mb-[5px] block h-[20px] text-base font-bold uppercase text-black"
+						class="mb-[5px] mt-[-15px] block h-[20px] text-base font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
@@ -42,11 +41,11 @@
 			</li>
 			<li
 				@click="showTable(3)"
-				class="-ml-[80px] mt-[30px] flex w-full cursor-pointer flex-col items-center pr-[9px] pt-[30px] text-center sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
+				class="ml-[-80px] mt-[30px] flex w-full cursor-pointer flex-col items-center pr-[9px] pt-[30px] text-center sm:my-2 sm:ml-0 sm:w-[106px] sm:pt-[15px]"
 			>
 				<a>
 					<small
-						class="-mt-[15px] mb-[5px] block h-[20px] text-base font-bold uppercase text-black"
+						class="mb-[5px] mt-[-15px] block h-[20px] text-base font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
@@ -58,7 +57,7 @@
 			</li>
 		</ul>
 		<div
-			class="relative -ml-[10px] w-full sm:ml-[40px] md:ml-[80px] lg:ml-[120px]"
+			class="relative ml-[-10px] w-full sm:ml-[40px] md:ml-[80px] lg:ml-[120px]"
 			:style="{ display: showFuturTable ? 'block' : 'none' }"
 		>
 			<div class="h-[33px] bg-[url('./assets/background/maj_bg_header.webp')] bg-contain bg-no-repeat">
@@ -85,12 +84,12 @@
 			<div class="futur-footer"></div>
 		</div>
 		<div
-			class="my-[10px] -ml-[10px] w-full bg-[#bc683c] bg-[url('./assets/icons/small_missAct.webp')] bg-no-repeat p-[5px] pl-[20px] text-[#fce3bc] sm:ml-0"
+			class="my-[10px] ml-[-10px] w-full bg-[#bc683c] bg-[url('./assets/icons/small_missAct.webp')] bg-no-repeat p-[5px] pl-[20px] text-[#fce3bc] sm:ml-0"
 			style="background-position: 5px 8px"
 		>
 			<p>{{ $t('roadmap.help') }}</p>
 		</div>
-		<div class="mx-auto -ml-[10px] p-[5px] text-lg italic text-[#bc683c] sm:ml-0">
+		<div class="mx-auto ml-[-10px] p-[5px] text-lg italic text-[#bc683c] sm:ml-0">
 			<p>{{ $t('roadmap.disclaimer') }}</p>
 		</div>
 	</div>

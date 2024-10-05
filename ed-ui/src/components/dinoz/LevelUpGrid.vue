@@ -1,6 +1,9 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="mt-[10px] flex h-[90%] w-1/2 cursor-pointer flex-wrap items-center justify-center" ref="grid">
+	<div
+		class="mt-[10px] flex h-[90%] w-full cursor-pointer flex-wrap items-center justify-center self-center sm:w-1/2"
+		ref="grid"
+	>
 		<template v-for="(cell, index) in levelUpGrid" :key="index">
 			<div
 				class="relative m-[0.15em] size-[30px] rounded-[4px]"

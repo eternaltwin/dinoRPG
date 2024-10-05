@@ -1,88 +1,97 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.clansList')"></TitleHeader>
-	<div class="section">
+	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t('clansList.title') }}</h3>
 		</div>
 	</div>
-	<div class="disclaimer">
+	<div class="disclaimer ml-[-40px] sm:ml-0">
 		<span>
 			<img :src="getImgURL('icons', 'small_question')" alt="info_button" style="margin-right: 2px" />
-			{{ $t(`clansList.disclaimer.text`) }} <a @click="goToHelp()">{{ $t(`clansList.disclaimer.see_help`) }}</a> &
-			<a>{{ $t(`clansList.disclaimer.see_ranking`) }}</a>
+			{{ $t(`clansList.disclaimer.text`) }}
+			<a class="cursor-pointer text-[#fff192] underline" @click="goToHelp()">{{
+				$t(`clansList.disclaimer.see_help`)
+			}}</a>
+			&
+			<a class="cursor-pointer text-[#fff192] underline">{{ $t(`clansList.disclaimer.see_ranking`) }}</a>
 		</span>
 	</div>
-	<div class="disclaimer" v-if="joinRequest">
-		<p>
-			{{ $t('clanPages.request.info') }}
-			<a @click="goToClan(joinRequest.clan.id)" class="clan-name">{{ joinRequest.clan.name }}</a
-			>.
-		</p>
-		<p>
-			<a @click="cancelRequest(joinRequest)">{{ $t('clanPages.request.cancel') }}</a>
-		</p>
+	<div class="disclaimer ml-[-40px] sm:ml-0" v-if="joinRequest">
+		<span>
+			<p>
+				{{ $t('clanPages.request.info') }}
+				<a class="cursor-pointer text-[#fff192] underline" @click="goToClan(joinRequest.clan.id)">{{
+					joinRequest.clan.name
+				}}</a
+				>.
+			</p>
+			<p>
+				<a class="cursor-pointer text-[#fff192] underline" @click="cancelRequest(joinRequest)">{{
+					$t('clanPages.request.cancel')
+				}}</a>
+			</p>
+		</span>
 	</div>
-	<div class="wrapper">
-		<table>
-			<tbody>
-				<tr>
-					<th class="name">{{ $t('clansList.th.name') }}</th>
-					<th class="leader">{{ $t('clansList.th.leader') }}</th>
-					<th class="members">{{ $t('clansList.th.members') }}</th>
-					<th class="date">{{ $t('clansList.th.date') }}</th>
-				</tr>
-				<tr class="select" @click="changePage(-1)" v-if="page > 1">
-					<td class="pos" colspan="5" style="text-align: center">
-						{{ $t('ranking.page.previous') }}
-					</td>
-				</tr>
-				<tr
-					v-for="clan in clansList"
-					:key="clan.id"
-					class="select"
-					:class="(clan.id + 1) % 2 === 0 ? 'even' : ''"
-					@click="goToClan(clan.id)"
+	<table class="ml-[-45px] sm:ml-0">
+		<tbody>
+			<tr>
+				<th>{{ $t('clansList.th.name') }}</th>
+				<th>{{ $t('clansList.th.leader') }}</th>
+				<th>{{ $t('clansList.th.members') }}</th>
+				<th class="hidden pt-[14px] sm:block">{{ $t('clansList.th.date') }}</th>
+			</tr>
+			<tr @click="changePage(-1)" v-if="page > 1">
+				<td
+					class="bg-[url('./assets/background/table_cell_even.webp')] pl-[1.2em]"
+					colspan="5"
+					style="text-align: center"
 				>
-					<td class="name">
-						{{ clan.name }}
-					</td>
-					<td class="leader other">
-						{{ clan.leader.name }}
-					</td>
-					<td class="members other">
-						{{ clan.members.length }}
-					</td>
-					<td class="date other">
-						{{ dateToString(clan.creationDate) }}
-					</td>
-				</tr>
-			</tbody>
-			<tr class="select" @click="changePage(1)" :class="{ hidden: clansList.length < 20 }">
-				<td class="pos" colspan="5" style="text-align: center">
-					{{ $t('ranking.page.next') }}
+					{{ $t('ranking.page.previous') }}
 				</td>
 			</tr>
-		</table>
-		<div class="bottom-elements">
-			<input type="text" class="bottom-element" v-model="searchClanName" />
-			<a class="button bottom-element" @click="search()">
-				{{ $t('clansList.button.search') }}
+			<tr v-for="clan in clansList" :key="clan.id" @click="goToClan(clan.id)">
+				<td class="bg-[url('./assets/background/table_cell_even.webp')] pl-[1.2em]">
+					{{ clan.name }}
+				</td>
+				<td class="bg-[url('./assets/background/table_cell_even.webp')] bg-[-10px] pl-[1.2em]">
+					{{ clan.leader.name }}
+				</td>
+				<td class="bg-[url('./assets/background/table_cell_even.webp')] bg-[-10px] pl-[1.2em]">
+					{{ clan.members.length }}
+				</td>
+				<td class="hidden bg-[url('./assets/background/table_cell_even.webp')] bg-[-10px] pl-[1.2em] sm:block">
+					{{ dateToString(clan.creationDate) }}
+				</td>
+			</tr>
+		</tbody>
+		<tr @click="changePage(1)" v-if="clansList.length >= 20">
+			<td
+				class="bg-[url('./assets/background/table_cell_even.webp')] pl-[1.2em]"
+				colspan="5"
+				style="text-align: center"
+			>
+				{{ $t('ranking.page.next') }}
+			</td>
+		</tr>
+	</table>
+	<div class="ml-[-40px] flex flex-col items-center justify-between sm:ml-0 sm:flex-row">
+		<input type="text" class="m-0" v-model="searchClanName" />
+		<a class="button" @click="search()">
+			{{ $t('clansList.button.search') }}
+		</a>
+		<a v-if="!alreadyHasClan && canCreateClan" class="button" @click="goToCreateClanPage()">
+			{{ $t('clansList.button.create') }}</a
+		>
+		<div
+			v-if="!alreadyHasClan && !canCreateClan"
+			v-tippy="{
+				content: cannotCreateText,
+				theme: 'small'
+			}"
+		>
+			<a class="button" :class="{ 'cursor-not-allowed grayscale': !canCreateClan }">
+				{{ $t('clansList.button.create') }}
 			</a>
-			<a v-if="!alreadyHasClan && canCreateClan" class="button bottom-element" @click="goToCreateClanPage()">
-				{{ $t('clansList.button.create') }}</a
-			>
-			<div
-				v-if="!alreadyHasClan && !canCreateClan"
-				v-tippy="{
-					content: cannotCreateText,
-					theme: 'small'
-				}"
-			>
-				<a class="button bottom-element disabled">
-					{{ $t('clansList.button.create') }}
-				</a>
-			</div>
 		</div>
 	</div>
 </template>
@@ -210,115 +219,61 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-	margin: 5px;
-	width: 530px;
-	table {
+table {
+	min-width: 100%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	margin-bottom: 10px;
+	border: 2px solid #f3d6b1;
+	background-color: #ecbd84;
+	border-collapse: separate;
+	border-spacing: 1px;
+	tr {
+		display: table-row;
+		cursor: help;
 		width: 100%;
-		margin-top: 10px;
-		margin-bottom: 5px;
-		margin-bottom: 10px;
-		border: 2px solid #f3d6b1;
-		background-color: #ecbd84;
-		border-collapse: separate;
-		border-spacing: 1px;
-		tr {
-			display: table-row;
-			th {
-				font-size: 8pt;
-				letter-spacing: 0pt;
-				text-shadow: 1px 1px 0px #356847;
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-				height: 41px;
-				vertical-align: bottom;
-				color: #fffdba;
-				text-transform: uppercase;
-				font-weight: bold;
-				letter-spacing: 1pt;
-				text-align: left;
-				white-space: nowrap;
-				border: 1px solid #356847;
-				background-color: #c64e36;
-				background-image: url('../assets/background/table_header.webp');
-				background-position: left bottom;
-				max-width: 222px;
-				&.name {
-					width: 40%;
-				}
-				&.leader {
-					width: 20%;
-				}
-				&.members {
-					width: 10%;
-				}
-				&.date {
-					width: 30%;
-				}
-			}
+		th {
+			font-size: 8pt;
+			letter-spacing: 0pt;
+			text-shadow: 1px 1px 0px #356847;
+			padding-left: 4px;
+			padding-right: 4px;
+			padding-bottom: 8px;
+			height: 41px;
+			vertical-align: bottom;
+			color: #fffdba;
+			text-transform: uppercase;
+			font-weight: bold;
+			letter-spacing: 1pt;
+			text-align: left;
+			white-space: nowrap;
+			border: 1px solid #356847;
+			background-color: #c64e36;
+			background-image: url('../assets/background/table_header.webp');
+			background-position: left bottom;
+		}
+		td {
+			font-size: 9pt;
+			padding-right: 5px;
+			padding-top: 1px;
+			padding-bottom: 1px;
+			color: #710;
+			background-color: #f3ca92;
+			border: 1px solid #c88f44;
+			cursor: pointer;
+		}
+		&:hover {
 			td {
-				font-size: 9pt;
-				padding-right: 5px;
-				padding-top: 1px;
-				padding-bottom: 1px;
-				color: #710;
-				background-color: #f3ca92;
-				border: 1px solid #c88f44;
-				cursor: pointer;
-				&.name {
-					background-image: url('../assets/background/table_cell.webp');
-					background-position: 0px 0px;
-					padding-left: 1.2em;
-				}
-				&.pos {
-					background-image: url('../assets/background/table_cell.webp');
-					background-position: 0px 0px;
-					padding-left: 1.2em;
-				}
-				&.other {
-					padding-left: 1em;
-					background-image: url('../assets/background/table_cell.webp');
-					background-position: -10px 0px;
-					max-width: 4px;
-				}
-			}
-			&.even {
-				td.name {
-					background-image: url('../assets/background/table_cell_even.webp');
-					background-position: 0px 0px;
-				}
-				td.other {
-					background-image: url('../assets/background/table_cell_even.webp');
-					background-position: -10px 0px;
-				}
-			}
-			&.select:hover {
-				td {
-					color: white;
-					border-color: #9a4029;
-				}
-			}
-		}
-	}
-	.bottom-elements {
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		.bottom-element {
-			margin: auto 0;
-		}
-		.disabled {
-			filter: grayscale(100%);
-			&:hover {
-				cursor: auto;
+				background-image: url('../assets/background/table_cell.webp');
+				color: white;
+				border-color: #9a4029;
 			}
 		}
 	}
 }
 input {
-	width: 184px;
-	height: 20px;
+	width: 200px;
+	height: 25px;
 	padding-left: 8px;
 	padding-right: 8px;
 	padding-top: 2px;
@@ -329,25 +284,6 @@ input {
 	background-image: url('../assets/design/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
-}
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px;
-	padding-left: 5px;
-	padding-left: 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-	a {
-		color: #fff192;
-		cursor: pointer;
-		text-decoration: underline;
-	}
-}
-.hidden {
-	display: none !important;
+	outline: none;
 }
 </style>

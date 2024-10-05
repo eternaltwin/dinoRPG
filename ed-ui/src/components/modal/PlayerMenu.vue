@@ -1,21 +1,25 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="player-menu" v-if="loadedPlayer">
-		<p class="playerLink" @click="goToPlayerPage()">
+	<div class="player-menu ml-[-44px] sm:ml-0" v-if="loadedPlayer">
+		<p class="cursor-pointer p-px hover:bg-[#79432b]" @click="goToPlayerPage()">
 			{{ $t('playerMenu.title') }} <span>{{ loadedPlayer.name }}</span>
 		</p>
-		<span class="dashed"></span>
-		<div class="grid-menu">
+		<span class="mt-[2px] block" style="border-top: 1px dashed #ff9200"></span>
+		<div class="my-[7px] flex flex-wrap gap-[10px]">
 			<a class="link-block" :href="`https://eternaltwin.org/users/${loadedPlayer.eternalTwinId}`" target="_blank">
-				<img :src="getImgURL('icons', 'small_eternaltwin')" alt="eternaltwinProfile" /><br />
+				<img
+					class="size-[16px] align-middle"
+					:src="getImgURL('icons', 'small_eternaltwin')"
+					alt="eternaltwinProfile"
+				/><br />
 				{{ $t('playerMenu.gridMenu.pEternal') }}
 			</a>
 			<a class="link-block">
-				<img :src="getImgURL('icons', 'mail')" alt="sendMessage" /><br />
+				<img class="size-[16px] align-middle" :src="getImgURL('icons', 'mail')" alt="sendMessage" /><br />
 				{{ $t('playerMenu.gridMenu.sendMSG') }}
 			</a>
 			<a class="link-block">
-				<img :src="getImgURL('icons', 'addContact')" alt="addContact" /><br />
+				<img class="size-[16px] align-middle" :src="getImgURL('icons', 'addContact')" alt="addContact" /><br />
 				{{ $t('playerMenu.gridMenu.addContact') }}
 			</a>
 		</div>
@@ -23,12 +27,12 @@
 			<p @click="report()">{{ $t('playerMenu.report.signal') }}</p>
 			<p>{{ $t('playerMenu.report.block') }}</p>
 		</div>
-		<span class="dashed"></span>
-		<div class="profil">
-			<div class="profil-info">
+		<span class="mt-[2px] block" style="border-top: 1px dashed #ff9200"></span>
+		<div class="flex flex-col gap-[10px]">
+			<div class="flex justify-between">
 				<div class="player-desc" v-html="loadedPlayer.customText"></div>
 			</div>
-			<p class="contact">{{ $t('playerMenu.contact') }}</p>
+			<p class="rounded border border-gray-300 bg-white p-1 text-[#c2381a]">{{ $t('playerMenu.contact') }}</p>
 		</div>
 	</div>
 </template>
@@ -93,13 +97,6 @@ export default defineComponent({
 	width: 261px;
 	height: auto;
 	z-index: 1000;
-	.grid-menu {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px;
-		margin-top: 7px;
-		margin-bottom: 7px;
-	}
 	.report {
 		text-align: right;
 		color: #f1e8e6;
@@ -116,36 +113,7 @@ export default defineComponent({
 			color: #ff9200;
 		}
 	}
-	.profil {
-		display: flex;
-		flex-direction: column;
-		gap: 10px;
-		.profil-info {
-			display: flex;
-			justify-content: space-between;
-			& img {
-				width: 50px;
-				height: 50px;
-				border-radius: 50%;
-				position: relative;
-				left: 10px;
-			}
-		}
-		.contact {
-			background-color: #fff;
-			color: #c2381a;
-			padding: 4px;
-			border: 1px solid #ccc;
-			border-radius: 4px;
-		}
-	}
-	.dashed {
-		border-top: 1px dashed #ff9200;
-		margin-top: 2px;
-		display: block;
-	}
 }
-
 .link-block {
 	background-color: #79432b;
 	font-size: 10px;
@@ -160,25 +128,9 @@ export default defineComponent({
 	text-align: center;
 	text-decoration: none;
 	width: 72px;
-	& img {
-		vertical-align: center;
-		width: 16px;
-		height: 16px;
-	}
 	&:hover {
 		background-color: #8c5a42;
 		color: #f9e0c6;
-	}
-}
-
-.playerLink {
-	cursor: pointer;
-	margin: 0 -10px;
-	padding: 1px 10px;
-	text-decoration: none;
-	font-size: 10px;
-	&:hover {
-		background-color: #79432b;
 	}
 }
 .player-desc {
@@ -194,7 +146,7 @@ export default defineComponent({
 		border-bottom: 5px solid #79432b;
 		border-left: 5px solid transparent;
 		border-right: 5px solid transparent;
-		content: ' ';
+		content: '';
 		display: inline-block;
 		height: 0;
 		left: 32px;

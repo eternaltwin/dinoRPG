@@ -2,27 +2,28 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"></TitleHeader>
 	<div style="width: auto">
-		<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
+		<div class="section mb-[40px] ml-[-25px] mt-[-25px] flex justify-between sm:my-0 sm:ml-0">
 			<div class="titlePage">
-				<h3 class="truncate">{{ $t(`levelup.title`) }} {{ dinozData.name }}</h3>
+				<h3>{{ $t(`levelup.title`) }} {{ dinozData.name }}</h3>
 			</div>
 		</div>
 	</div>
 	<DZDisclaimer help :content="$t('levelup.disclaimer')" class="ml-[-40px] sm:ml-0" />
-	<div class="wrapper border" v-if="availableSkills">
+	<div
+		class="ml-[-40px] flex h-auto w-[210px] flex-col justify-center self-center bg-[#854b25] text-center sm:ml-0 sm:w-[362px] sm:flex-row"
+		style="border: 1px solid #874b2e; outline: 3px solid #f1c98e"
+		v-if="availableSkills"
+	>
 		<LevelUpGrid
 			v-if="availableSkills.upChance && availableSkills.element"
 			:grid="availableSkills.upChance"
 			:element="availableSkills.element"
 			@spinOver="spinOver"
 		/>
-		<div class="dinozWrapper">
+		<div class="size-[211px] bg-[#d99b73]">
 			<Suspense>
 				<DinozWithoutFlash
-					:style="{
-						position: `relative`,
-						top: `45px`
-					}"
+					class="relative sm:top-[45px]"
 					:display="dinozData.display"
 					:life="dinozData.life / dinozData.maxLife"
 					:flip="1"
@@ -32,8 +33,11 @@
 			</Suspense>
 		</div>
 	</div>
-	<div class="slide-bottom ml-[-40px] sm:ml-0" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
-		<div class="result" v-if="ElementType[availableSkills.element]">
+	<div class="slide-bottom ml-[-55px] sm:ml-0" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
+		<div
+			class="m-auto mb-[15px] mt-[10px] max-w-[330px] rounded-[10px] bg-[#bc683c] p-2 text-center text-[10pt] text-[#fce3bc]"
+			v-if="ElementType[availableSkills.element]"
+		>
 			{{ dinozData.name }}
 			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
 			<Elements
@@ -52,85 +56,102 @@
 						: availableSkills.nbrUpLightning
 				"
 				:air="ElementType[availableSkills.element] === 'air' ? availableSkills.nbrUpAir + 1 : availableSkills.nbrUpAir"
-				class="elements"
+				class="my-[10px] pl-[32px] sm:pl-[58px]"
+				style="border-bottom: 1px solid #cd8a4e"
 			/>
 			{{ $t(`levelup.helper`) }}
 		</div>
-		<div class="m-[5px]">
-			<table>
-				<tbody>
-					<tr>
-						<th class="name">{{ $t('details.th.comp') }}</th>
-						<th class="type">{{ $t('details.th.type') }}</th>
-						<th class="type">{{ $t('levelup.level') }}</th>
-						<th class="type"></th>
-					</tr>
-					<tr v-for="skill in availableSkills.learnableSkills" :key="skill" @click="learnSkill(skill.skillId)">
-						<td class="name">
-							<div class="skillName">
+		<div class="m-0 flex w-full flex-col sm:m-[5px]">
+			<div class="flex border-b border-[#bc683c]">
+				<div class="header name-header">{{ $t('details.th.comp') }}</div>
+				<div class="header hidden sm:block">{{ $t('details.th.type') }}</div>
+				<div class="header hidden sm:block">{{ $t('levelup.level') }}</div>
+				<div class="header"></div>
+			</div>
+			<div
+				v-for="skill in availableSkills.learnableSkills"
+				:key="skill"
+				class="data flex cursor-pointer border-b border-[#c88f44]"
+				@click="learnSkill(skill.skillId)"
+			>
+				<div class="name flex-1">
+					<div class="flex flex-wrap items-baseline pl-4 text-left text-[12pt]">
+						<img
+							v-for="element in skill.element"
+							:key="element"
+							:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+							alt="elementUp"
+							class="relative float-left mr-[5px] align-bottom"
+						/>
+						<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
+					</div>
+					<p class="mb-[6px] ml-[10px] mt-[-5px] pt-[7px] text-[9pt] italic leading-[10pt]">
+						{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
+					</p>
+				</div>
+				<Tippy
+					theme="normal"
+					tag="div"
+					class="type hidden flex-1 bg-[url('./assets/background/table_cell.webp')] bg-[-10px] text-center sm:block"
+				>
+					{{ skill.type }}
+					<template #content>
+						<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
+						<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
+					</template>
+				</Tippy>
+				<div class="hidden flex-1 bg-[url('./assets/background/table_cell.webp')] bg-[-10px] text-center sm:block">
+					{{ String(skill.skillId)[2] }}
+				</div>
+				<div class="learn flex-1">
+					<img :src="getImgURL('icons', 'small_right')" alt="right" />{{ $t('levelup.learn') }}
+				</div>
+			</div>
+			<template v-if="availableSkills.unlockableSkills">
+				<div v-if="availableSkills.unlockableSkills.length > 0" class="data flex cursor-pointer" @click="unlockSkill()">
+					<div class="name flex-1">
+						<div class="flex items-baseline pl-4 text-left text-[12pt]">
+							<img class="mr-[5px]" :src="getImgURL('icons', 'small_right')" alt="right" />
+							{{ $t(`levelup.unlock1`) }}
+							{{ availableSkills.unlockableSkills.length }}
+							{{ $t(`levelup.unlock2`) }}
+							<Tippy
+								tag="img"
+								:src="getImgURL('icons', `help${getLanguage()}`)"
+								theme="normal"
+								class="ml-[5px] cursor-help hover:outline hover:outline-1 hover:outline-white"
+								style="border: 1px solid #bc683c"
+							>
+								<template #content>
+									<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
+									<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
+								</template>
+							</Tippy>
+						</div>
+						<ul class="block pl-[20px]">
+							<Tippy
+								tag="li"
+								theme="small"
+								v-for="(skill, index) in (availableSkills as DinozSkillOwnAndUnlockable).unlockableSkills"
+								:key="index"
+								class="relative float-left mr-[8px] px-[4px] pt-[7px] text-[9pt] font-normal"
+							>
 								<img
+									class="mt-[-2px]"
 									v-for="element in skill.element"
 									:key="element"
 									:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
 									alt="elementUp"
 								/>
-								<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
-							</div>
-							<p class="desc">
-								{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
-							</p>
-						</td>
-						<Tippy theme="normal" tag="td" class="type">
-							{{ skill.type }}
-							<template #content>
-								<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
-								<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
-							</template>
-						</Tippy>
-						<td class="type">
-							{{ String(skill.skillId)[2] }}
-						</td>
-						<td class="learn"><img :src="getImgURL('icons', 'small_right')" alt="right" />{{ $t('levelup.learn') }}</td>
-					</tr>
-					<template v-if="availableSkills.unlockableSkills">
-						<tr v-if="availableSkills.unlockableSkills.length > 0" @click="unlockSkill()">
-							<td class="name" colspan="4">
-								<div class="skillName">
-									<img :src="getImgURL('icons', 'small_right')" alt="right" />
-									{{ $t(`levelup.unlock1`) }}
-									{{ availableSkills.unlockableSkills.length }}
-									{{ $t(`levelup.unlock2`) }}
-									<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
-										<template #content>
-											<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
-											<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
-										</template>
-									</Tippy>
-								</div>
-								<ul class="unlock">
-									<Tippy
-										tag="li"
-										theme="small"
-										v-for="(skill, index) in (availableSkills as DinozSkillOwnAndUnlockable).unlockableSkills"
-										:key="index"
-									>
-										<img
-											v-for="element in skill.element"
-											:key="element"
-											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
-											alt="elementUp"
-										/>
-										{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
-										<template #content>
-											{{ $t(`levelup.unlock`) }}
-										</template>
-									</Tippy>
-								</ul>
-							</td>
-						</tr>
-					</template>
-				</tbody>
-			</table>
+								{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
+								<template #content>
+									{{ $t(`levelup.unlock`) }}
+								</template>
+							</Tippy>
+						</ul>
+					</div>
+				</div>
+			</template>
 		</div>
 		<a
 			class="button"
@@ -270,38 +291,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	border-radius: 5px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
-.border {
-	border: 1px solid #874b2e;
-	outline: 3px solid #f1c98e;
-}
-.dinozWrapper {
-	background-color: #d99b73;
-	height: 211px;
-	width: 195px;
-}
-.wrapper {
-	display: flex;
-	width: 362px;
-	justify-content: center;
-	color: #fce3bc;
-	text-align: center;
-	background-color: #854b25;
-	align-self: center;
-}
-.hidden {
-	display: none;
-}
 @keyframes bounce-in-top {
 	0% {
 		transform: translateY(-200px);
@@ -350,156 +339,73 @@ export default defineComponent({
 	animation-timing-function: ease-in-out;
 	animation-delay: 1s;
 }
-.skillName {
-	font-size: 12pt;
-	text-align: left;
-	padding-left: 15px;
-	display: flex;
-	align-items: baseline;
-	img {
-		height: fit-content;
-	}
-}
-.help {
-	border: 1px solid #bc683c;
-	cursor: help;
-	margin-left: 5px;
-	&:hover {
-		outline: 1px solid white;
-	}
-}
-.result {
-	width: 330px;
-	margin: auto;
-	margin-top: 5px;
-	margin-bottom: 15px;
-	padding: 5px;
-	padding-left: 5px;
-	color: #fce3bc;
-	text-align: center;
-	background-color: #bc683c;
-	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	font-size: 10pt;
-}
-.desc {
+.header {
+	width: 25%;
+	font-weight: bold;
+	padding: 10px;
 	font-size: 9pt;
-	line-height: 10pt;
-	margin-left: 15px;
-	margin-top: -5px;
-	margin-bottom: 6px;
-	font-style: italic;
+	text-shadow: 1px 1px 0px #356847;
+	height: 41px;
+	color: #fffdba;
+	text-transform: uppercase;
+	letter-spacing: 2pt;
+	text-align: left;
+	white-space: nowrap;
+	border: 1px solid #356847;
+	background-image: url('../assets/background/table_header.webp');
+	background-position: left bottom;
 }
-.elements {
-	margin-bottom: 5px;
-	margin-top: 5px;
-	padding-left: 58px;
-	padding-bottom: 4px;
-	border-bottom: 1px solid #cd8a4e;
+.name-header {
+	width: 50%;
 }
-.unlock {
-	list-style: none;
-	padding-left: 20px;
-	display: block;
-	img {
-		margin-top: -7px;
-	}
-	li {
-		float: left;
-		position: relative;
-		margin-right: 8px;
-		padding-left: 4px;
-		padding-right: 4px;
-		padding-top: 7px;
-		font-size: 9pt;
-		font-weight: normal;
+.data {
+	font-size: 10pt;
+	padding-right: 5px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	color: #710 !important;
+	background-color: #f3ca92;
+	border: 1px solid #c88f44;
+	height: auto;
+	&:hover {
+		border: 2px solid #9a4029;
+		color: white !important;
+		cursor: pointer;
 	}
 }
-table {
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 5px;
-	margin-bottom: 10px;
-	border: 2px solid #bc683c;
-	background-color: #ecbd84;
-	border-collapse: separate;
-	border-spacing: 1px;
-	tr {
-		display: table-row;
-		th {
-			font-size: 8pt;
-			letter-spacing: 0pt;
-			text-shadow: 1px 1px 0px #356847;
-			padding-left: 4px;
-			padding-right: 4px;
-			padding-bottom: 8px;
-			height: 41px;
-			vertical-align: bottom;
-			color: #fffdba;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1pt;
-			text-align: left;
-			white-space: nowrap;
-			border: 1px solid #356847;
-			background-color: #c64e36;
-			background-image: url('../assets/background/table_header.webp');
-			background-position: left bottom;
-			&.name {
-				width: 330px;
-			}
-			&.type {
-				max-width: 30px;
-			}
-		}
-		td {
-			font-size: 9pt;
-			padding-right: 5px;
-			padding-top: 1px;
-			padding-bottom: 1px;
-			color: #710 !important;
-			background-color: #f3ca92;
-			border: 1px solid #c88f44;
-			&.name {
-				background-image: url('../assets/background/table_cell.webp');
-				background-position: 0px 0px;
-				//padding-left: 15px;
-				max-width: 337px;
-				p {
-					padding-top: 4px;
-				}
-				img {
-					float: left;
-					position: relative;
-					margin-right: 5px;
-					vertical-align: bottom;
-				}
-			}
-			&.type {
-				font-weight: bold;
-				text-align: center;
-				color: #bc683c;
-				background-image: url('../assets/background/table_cell.webp');
-				background-position: -10px 0px;
-				max-width: 4px;
-			}
-			&.learn {
-				font-weight: bold;
-				text-align: center;
-				color: #bc683c;
-				background-image: url('../assets/background/table_cell.webp');
-				background-position: -10px 0px;
-				text-decoration: underline;
-				background-repeat: no-repeat;
-			}
-		}
-		&:hover {
-			td {
-				outline: 1px solid #9a4029;
-				color: white !important;
-				cursor: pointer;
-			}
-		}
+.name {
+	flex: 2;
+	background-image: url('../assets/background/table_cell.webp');
+	background-repeat: no-repeat;
+	background-size: cover;
+	height: auto;
+}
+.learn {
+	font-weight: bold;
+	text-align: center;
+	color: #710;
+	background-image: url('../assets/background/table_cell.webp');
+	background-position: -10px 0px;
+	text-decoration: underline;
+	background-repeat: no-repeat;
+}
+@media (max-width: 640px) {
+	.header {
+		flex-basis: 100%;
+	}
+	.name {
+		flex-basis: 60%;
+	}
+	.type,
+	.learn {
+		flex-basis: 20%;
+	}
+}
+@media (max-width: 520px) {
+	.header,
+	.name,
+	.learn {
+		flex-basis: 100%;
 	}
 }
 </style>

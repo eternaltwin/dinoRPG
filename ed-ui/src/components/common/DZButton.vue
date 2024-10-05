@@ -1,8 +1,7 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
-<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
 	<a
-		class="-ml-[50px] sm:ml-0"
+		class="ml-[-50px] sm:ml-0"
 		:class="{
 			'button-component': true,
 			[size]: true,
@@ -45,7 +44,6 @@ export default defineComponent({
 	line-height: 7pt;
 	cursor: pointer;
 	text-decoration: none;
-
 	&.small {
 		border-color: #c5482c;
 		border-style: double;
@@ -53,13 +51,11 @@ export default defineComponent({
 		background-color: #c5482c;
 		color: #ffee92;
 		padding: 2px 4px;
-
 		&:hover {
 			background-color: #ffee92;
 			color: #c5482c;
 		}
 	}
-
 	&.normal {
 		min-width: 95px;
 		height: 28px;
@@ -71,13 +67,11 @@ export default defineComponent({
 			left top,
 			right top,
 			center top;
-
 		&:hover {
 			background-image: url('../../assets/button/button-hover-left.webp'),
 				url('../../assets/button/button-hover-right.webp'), url('../../assets/button/button-hover-middle.webp');
 			color: white;
 		}
-
 		.content {
 			padding: 4px 8px;
 
@@ -85,7 +79,6 @@ export default defineComponent({
 				color: white;
 			}
 		}
-
 		&.back {
 			margin-left: 15px;
 

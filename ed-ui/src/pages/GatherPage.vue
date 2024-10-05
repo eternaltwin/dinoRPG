@@ -2,7 +2,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`" />
 	<div style="width: auto">
-		<div class="section">
+		<div class="section ml-[-30px] mt-[-30px] sm:ml-0 sm:mt-0">
 			<div class="titlePage">
 				<h3>{{ $t(`gather.action.${gatherType}`) }}</h3>
 			</div>
@@ -11,17 +11,19 @@
 	<DZDisclaimer
 		help
 		:content="$t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) })"
+		class="ml-[-50px] sm:ml-0"
 	/>
 	<div
-		class="container"
+		class="custom-border relative left-[-50px] m-0 overflow-hidden sm:left-0 sm:m-[15px]"
 		v-if="grid && loaded"
+		style=""
 		:style="{
 			height: `${grid.grid.length * 34}px`,
 			width: `${grid.grid.length * 34}px`
 		}"
 	>
-		<img class="bgimg" :src="getImgURL('gather/background', grid.gatherType)" />
-		<div class="grid">
+		<img class="absolute left-0 top-0 size-full" :src="getImgURL('gather/background', grid.gatherType)" />
+		<div class="relative flex size-full flex-col" style="box-shadow: inset 0 4px 0 #720d00">
 			<div class="row" v-for="(row, rowNumber) in grid.grid" :key="rowNumber">
 				<div
 					v-for="(box, boxNumber) in row"
@@ -142,34 +144,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.bgimg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-.grid {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100%;
-	box-shadow: inset 0 4px 0 #720d00;
-}
-.container {
-	position: relative;
-	margin: 15px;
-	overflow: hidden;
+.custom-border {
 	border: 10px solid transparent;
 	border-image: url('../assets/gather/border.webp') 30 stretch;
 }
-
 .row {
 	display: flex;
 	flex-direction: row;
 	flex-grow: 1;
-
 	// TILES DESIGN
 	div {
 		position: relative;
@@ -182,9 +164,8 @@ export default defineComponent({
 		box-shadow: 0 4px 0 #720d00;
 		box-sizing: border-box;
 		cursor: pointer;
-		height: 34px;
-		width: 34px;
-
+		height: 31px;
+		width: 31px;
 		&::after {
 			// creates a pseudo-element to display the bg-images
 			position: absolute;
@@ -193,10 +174,9 @@ export default defineComponent({
 			content: '';
 			display: block;
 			opacity: 30%;
-			width: 34px;
-			height: 34px;
+			width: 31px;
+			height: 31px;
 		}
-
 		&:hover {
 			outline: 1px solid #994400;
 			box-shadow:
@@ -207,13 +187,11 @@ export default defineComponent({
 			text-align: center;
 			color: white;
 		}
-
 		&.open {
 			visibility: hidden;
 		}
 	}
 }
-
 // ATLERNING TILE COLOR
 .row:nth-child(odd) div:nth-child(even),
 .row:nth-child(even) div:nth-child(odd) {
@@ -223,7 +201,6 @@ export default defineComponent({
 .row:nth-child(even) div:nth-child(even) {
 	background-image: url('../assets/gather/dark.webp');
 }
-
 .fish::after {
 	background-image: url('../assets/gather/overlay/fish.webp');
 	background-size: 238px;
@@ -244,17 +221,14 @@ export default defineComponent({
 	background-image: url('../assets/gather/overlay/seek.webp');
 	background-size: 340px;
 }
-
 .anniv::after {
 	background-image: url('../assets/gather/overlay/anniv.webp');
 	background-size: 340px;
 }
-
 .daily::after {
 	background-image: url('../assets/gather/overlay/daily.webp');
 	background-size: 199px;
 }
-
 // TILES BG POSITION - INDEXED TO TILE SIZE: 34px (will break if tiles are not exactly this size)
 // BG Y OFFSET
 @for $i from 1 through 12 {
@@ -262,7 +236,6 @@ export default defineComponent({
 		background-position-y: ($i - 1) * -34px;
 	}
 }
-
 // BG X OFFSET
 @for $i from 1 through 12 {
 	.row div:nth-child(#{$i}).overlay::after {
@@ -270,6 +243,6 @@ export default defineComponent({
 	}
 }
 .selected {
-	border: 1px solid #ffee92 !important;
+	border: 0.5px solid #ffee92 !important;
 }
 </style>

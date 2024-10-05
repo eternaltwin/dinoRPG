@@ -5,7 +5,7 @@
 			<h3>{{ $t(`rightMenu.faq`) }}</h3>
 		</div>
 	</div>
-	<DZDisclaimer help :content="$t(`faq.intro`)" class="ml-[-40px] sm:ml-0" />
+	<DZDisclaimer help :content="$t(`faq.intro`)" class="ml-[-45px] sm:ml-0" />
 	<form
 		class="ml-[-40px] mt-[10px] flex w-full flex-col items-center sm:ml-0 sm:flex-row"
 		@submit.prevent="searchQuestion"

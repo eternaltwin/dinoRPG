@@ -1,15 +1,14 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
-<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`"></TitleHeader>
-	<div class="section -ml-[25px] -mt-[25px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`chooseDinoz.pageName`) }}</h3>
 		</div>
 	</div>
 	<div id="chooseDinozName" class="flex flex-col">
 		<div
-			class="my-[10px] -ml-[40px] mt-[5px] bg-[#bc683c] py-[5px] pl-[20px] pr-[5px] text-[10pt] text-[#fce3bc] sm:ml-0"
+			class="my-[10px] ml-[-40px] mt-[5px] bg-[#bc683c] py-[5px] pl-[20px] pr-[5px] text-[10pt] text-[#fce3bc] sm:ml-0"
 		>
 			{{ $t('chooseDinoz.information') }}
 		</div>

@@ -12,7 +12,7 @@
 			class="hover:bg-[#9a4029]"
 		>
 			<a
-				class="block h-[48px] cursor-pointer p-1 text-[10pt] leading-[11pt]"
+				class="block h-[52px] cursor-pointer p-1 text-[10pt] leading-[11pt]"
 				style="border: 1px solid #fbdca5"
 				@click="goToDinozPage(dinoz.id)"
 			>

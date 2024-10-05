@@ -1,9 +1,8 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
-<!-- eslint-disable tailwindcss/enforces-negative-arbitrary-values -->
 <template>
 	<div
 		:class="news.hide ? 'max-h-[76px] overflow-hidden' : ''"
-		class="duration-900 z-50 -ml-[25px] mb-[10px] mr-[11px] w-full cursor-pointer border border-[#ffee92] bg-[url('./assets/background/bloc_news.webp')] bg-cover bg-repeat-y p-[10px] transition-[max-height] ease-out sm:ml-0"
+		class="duration-900 z-40 mb-[10px] ml-[-25px] mr-[11px] w-full cursor-pointer border border-[#ffee92] bg-[url('./assets/background/bloc_news.webp')] bg-cover bg-repeat-y p-[10px] transition-[max-height] ease-out sm:ml-0"
 		style="outline: 1px solid #92471f"
 		v-for="news in displayedBatch"
 		:key="news.id"
@@ -29,7 +28,7 @@
 	</div>
 	<a
 		v-if="displayedBatch.length % 10 === 0"
-		class="overload m-[10px] -ml-[25px] block cursor-pointer p-[2px] text-center text-[#9a4029] sm:ml-0"
+		class="overload m-[10px] ml-[-25px] block cursor-pointer p-[2px] text-center text-[#9a4029] sm:ml-0"
 		@click="overload(page + 1)"
 	>
 		{{ $t('news.overload') }}</a
