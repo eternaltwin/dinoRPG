@@ -1,12 +1,12 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<DZDisclaimer help content="market.sellView.disclaimer" />
-	<h4>{{ $t('market.sellView.prepareYourOffer') }}</h4>
-	<table>
+	<DZDisclaimer help content="market.sellView.disclaimer" class="ml-[-45px] sm:ml-0" />
+	<h4 class="ml-[-45px] sm:ml-0">{{ $t('market.sellView.prepareYourOffer') }}</h4>
+	<table class="mb-[10px] ml-[-45px] sm:ml-0">
 		<tbody>
 			<tr>
-				<td>{{ $t('market.dinoz') }}</td>
-				<td>
+				<td class="w-1/4 sm:w-1/3">{{ $t('market.dinoz') }}</td>
+				<td class="w-3/4 sm:w-2/3">
 					<div class="flex items-center">
 						<input type="checkbox" :checked="sellDinoz" id="sell-dinoz" @change="toggleSellDinoz" />
 						<label v-if="dinoz" for="sell-dinoz">
@@ -21,10 +21,11 @@
 				<td>{{ $t('market.sellView.itemsAndIngredients') }}</td>
 				<td>
 					<div class="flex flex-wrap">
-						<div v-for="ingredient in ingredients" :key="ingredient.name" class="item">
+						<div v-for="ingredient in ingredients" :key="ingredient.name" class="mr-[10px] flex">
 							<Tippy
 								tag="img"
 								theme="normal"
+								class="size-[32px] bg-[#bc683c] p-px"
 								:src="getImgURL('ingredients', ingredient.name)"
 								:alt="$t(`ingredients.name.${ingredient.name}`)"
 							>
@@ -58,10 +59,11 @@
 								</Tippy>
 							</div>
 						</div>
-						<div v-for="item in items" :key="item.name" class="item">
+						<div v-for="item in items" :key="item.name" class="mr-[10px] flex">
 							<Tippy
 								tag="img"
 								theme="normal"
+								class="size-[32px] bg-[#bc683c] p-px"
 								:src="getImgURL('item', `item_${item.name}`)"
 								:alt="$t(`item.name.${item.name}`)"
 							>
@@ -112,7 +114,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td class="empty" />
+				<td />
 				<td>
 					<DZButton @click="createOffer">{{ $t('market.sellView.create') }}</DZButton>
 				</td>
@@ -143,7 +145,7 @@ import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
-	name: 'OfferList',
+	name: 'Sell',
 	props: {
 		changeTab: { type: Function, required: true }
 	},
@@ -333,15 +335,12 @@ h4 {
 	padding: 2px 4px;
 	font-weight: normal;
 }
-
 table {
-	width: 100%;
+	min-width: 100%;
 	table-layout: fixed;
-
 	td {
 		font-size: 9pt;
 		padding: 2px 4px;
-
 		&:first-child {
 			background-color: #ecbd84;
 			color: #f8efa4;
@@ -349,59 +348,39 @@ table {
 			padding: 4px 8px;
 			text-align: center;
 			width: 230px;
-
-			&.empty {
-				background-color: transparent;
-			}
 		}
-
 		input[type='checkbox'] {
 			margin-right: 5px;
 		}
-
 		label {
 			cursor: pointer;
 			user-select: none;
 		}
-
-		.item {
+		.count {
 			display: flex;
-			margin-right: 10px;
-
-			& > img {
-				background-color: #bc683c;
-				padding: 1px;
-			}
-
-			.count {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				background-color: #bc683c;
-				padding: 1px;
-				color: #ffee92;
-				box-sizing: border-box;
-				height: 34px;
-				width: 34px;
-				outline: 1px solid #ebd18b;
-				outline-offset: -2px;
-				margin-left: -1px;
+			justify-content: center;
+			align-items: center;
+			background-color: #bc683c;
+			padding: 1px;
+			color: #ffee92;
+			box-sizing: border-box;
+			height: 34px;
+			width: 34px;
+			outline: 1px solid #ebd18b;
+			outline-offset: -2px;
+			margin-left: -1px;
+			user-select: none;
+		}
+		.change-count {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			img {
+				cursor: pointer;
 				user-select: none;
-			}
-
-			.change-count {
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-
-				img {
-					cursor: pointer;
-					user-select: none;
-
-					&:hover {
-						outline: 1px solid white;
-						outline-offset: -1px;
-					}
+				&:hover {
+					outline: 1px solid white;
+					outline-offset: -1px;
 				}
 			}
 		}

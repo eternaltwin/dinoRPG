@@ -1,11 +1,11 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div v-if="ownOffer">
+	<div v-if="ownOffer" class="ml-[-45px] sm:ml-0">
 		<h4>{{ $t('market.transactionView.yourOngoingOffer') }}</h4>
 		<table>
 			<tr>
-				<td>{{ $t('market.transactionView.bid') }}</td>
-				<td>
+				<td class="w-1/4 sm:w-1/3">{{ $t('market.transactionView.bid') }}</td>
+				<td class="w-3/4 sm:w-2/3">
 					<p v-if="ownOffer.bids.length" class="bid">
 						<span>{{ ownOffer.bids[0].value }}</span>
 						<img :src="getImgURL('icons', 'ticket', true)" />
@@ -32,17 +32,17 @@
 			</tr>
 		</table>
 		<DZTable>
-			<OfferLine :offer="ownOffer" :now="now" />
+			<OfferLine :offer="ownOffer" :now="now" :tab="tab" />
 		</DZTable>
 	</div>
-	<DZDisclaimer v-else help content="market.transactionView.noOnGoingOffer" />
-	<div v-if="offers.length">
+	<DZDisclaimer v-else help content="market.transactionView.noOnGoingOffer" class="ml-[-45px] sm:ml-0" />
+	<div v-if="offers.length" class="ml-[-45px] sm:ml-0">
 		<h4>{{ $t('market.transactionView.yourActiveBids') }}</h4>
 		<DZTable>
 			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
 		</DZTable>
 	</div>
-	<DZDisclaimer v-else help content="market.transactionView.noActiveBid" />
+	<DZDisclaimer v-else help content="market.transactionView.noActiveBid" class="ml-[-45px] sm:ml-0" />
 </template>
 
 <script lang="ts">
@@ -62,7 +62,14 @@ import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameL
 import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
-	name: 'OfferList',
+	name: 'Transactions',
+	props: {
+		tab: {
+			type: Number,
+			default: 1,
+			required: true
+		}
+	},
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -144,15 +151,12 @@ h4 {
 	padding: 2px 4px;
 	font-weight: normal;
 }
-
 table {
-	width: 100%;
+	min-width: 100%;
 	table-layout: fixed;
-
 	td {
 		font-size: 9pt;
 		padding: 2px 4px;
-
 		&:first-child {
 			background-color: #ecbd84;
 			color: #f8efa4;
@@ -162,22 +166,18 @@ table {
 			width: 230px;
 			vertical-align: middle;
 		}
-
 		.bid {
 			display: flex;
 			align-items: center;
 			margin-bottom: 5px;
-
 			img {
 				margin-right: 5px;
 				margin-left: 5px;
 			}
-
 			.user {
 				margin-left: 5px;
 			}
 		}
-
 		.time {
 			display: inline-flex;
 			align-items: center;
@@ -187,22 +187,18 @@ table {
 			margin-bottom: 3px;
 			padding-right: 4px;
 			border-radius: 7px;
-
 			img {
 				margin-right: 5px;
 			}
 		}
 	}
 }
-
 :deep(.dinoz) {
 	width: 50px;
 }
-
 :deep(.items-td) {
 	width: 187px;
 }
-
 :deep(.bid-action) {
 	width: 80px;
 }

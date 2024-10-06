@@ -1,7 +1,6 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<DZDisclaimer help content="market.historyView.lastOffers" />
-	<div class="flex justify-between">
+	<DZDisclaimer help content="market.historyView.lastOffers" class="ml-[-45px] sm:ml-0" />
+	<div class="flex justify-around sm:justify-between">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
 		<select :placeholder="$t('market.filter')" @change="changeFilter">
 			<option value="all">{{ $t('market.all') }}</option>
@@ -10,22 +9,21 @@
 			<option value="own">{{ $t('market.historyView.yourBids') }}</option>
 		</select>
 	</div>
-	<DZTable>
+	<DZTable class="ml-[-45px] sm:ml-0">
 		<tr>
-			<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
-			<th class="items-header">{{ $t('market.items') }}</th>
-			<th></th>
+			<th class="w-[50px]">{{ $t('market.dinoz') }}</th>
+			<th class="w-[187px]">{{ $t('market.items') }}</th>
 			<th></th>
 		</tr>
-		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" />
+		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :tab="tab" />
 	</DZTable>
-	<tr class="pagination-controls">
+	<tr class="ml-[-45px] mt-[10px] flex items-center justify-center sm:ml-0">
 		<button @click="previousPage" :disabled="currentPage === 1">
-			<img class="left" src="/src/assets/button/button-back-arrow.webp" />
+			<img class="w-[10px]" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
 		<span>{{ currentPage }} / {{ totalPages }}</span>
 		<button @click="nextPage" :disabled="currentPage === totalPages">
-			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
+			<img class="w-[10px] rotate-180" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
 	</tr>
 </template>
@@ -45,7 +43,12 @@ import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameL
 export default defineComponent({
 	name: 'OfferHistory',
 	props: {
-		changeTab: { type: Function, required: true }
+		changeTab: { type: Function, required: true },
+		tab: {
+			type: Number,
+			default: 3,
+			required: true
+		}
 	},
 	data() {
 		return {
@@ -138,34 +141,14 @@ select {
 	color: #fce3bc;
 	font-weight: bold;
 }
-.dinoz-header {
-	width: 50px;
-}
-.items-header {
-	width: 187px;
-}
-.pagination-controls {
-	margin-top: 10px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	button {
-		background-color: transparent;
-		margin: 0 10px;
-		padding: 5px 10px;
-		border: none;
-		cursor: pointer;
-		&:disabled {
-			cursor: not-allowed;
-		}
-		.left,
-		.right {
-			height: auto;
-			width: 10px;
-		}
-		.right {
-			transform: rotate(180deg);
-		}
+button {
+	background-color: transparent;
+	margin: 0 10px;
+	padding: 5px 10px;
+	border: none;
+	cursor: pointer;
+	&:disabled {
+		cursor: not-allowed;
 	}
 }
 </style>

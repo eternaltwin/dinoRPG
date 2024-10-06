@@ -16,17 +16,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 table {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	background-color: #ecbd84;
 	border-collapse: separate;
 	border-spacing: 1px;
-
 	:deep(tr) {
 		display: table-row;
 		cursor: help;
-
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -46,7 +44,6 @@ table {
 			padding-right: 4px;
 			padding-bottom: 8px;
 		}
-
 		td {
 			font-size: 9pt;
 			font-family: 'Trebuchet MS', Arial, sans-serif;

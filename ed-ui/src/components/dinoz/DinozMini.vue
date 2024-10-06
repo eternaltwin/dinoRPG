@@ -11,7 +11,7 @@ export default defineComponent({
 	props: {
 		display: { type: String, required: true },
 		width: { type: Number, default: 45 },
-		height: { type: Number, default: 50 },
+		height: { type: Number, default: 65 },
 		flip: { type: Boolean, default: false }
 	},
 	data() {
@@ -60,15 +60,14 @@ export default defineComponent({
 		margin-left: v-bind('styleVars.maxMargin');
 	}
 }
-
 div {
 	width: v-bind('styleVars.width');
 	height: v-bind('styleVars.height');
 	overflow: hidden;
-
 	:deep(.DinoRPG-Animation) {
 		display: flex;
 		margin-left: 0;
+		margin-top: 10px;
 		animation-name: play;
 		animation-duration: v-bind('styleVars.animationLength');
 		animation-timing-function: steps(v-bind('imageCount'));

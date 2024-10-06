@@ -10,7 +10,7 @@
 				'has-dinoz': !!offer.dinoz
 			}"
 		>
-			<DinozMini :display="offer.dinoz.display" />
+			<DinozMini :display="offer.dinoz.display" class="mb-[-10px]" />
 			<DZButton size="small" @click="details = !details">
 				{{ $t('market.detail') }}
 			</DZButton>
@@ -79,7 +79,7 @@
 				</span>
 			</p>
 		</td>
-		<td class="bid-action">
+		<td v-if="tab === 0" class="bid-action">
 			<div v-if="!isExpired() && !ownOffer()">
 				<DZInput type="number" :value="bidValue" @input="bidValue = +$event.target.value" />
 				<DZButton size="small" @click="bid">
@@ -160,6 +160,11 @@ export default defineComponent({
 		},
 		now: {
 			type: Number,
+			required: true
+		},
+		tab: {
+			type: Number,
+			default: 0,
 			required: true
 		}
 	},
@@ -258,7 +263,7 @@ export default defineComponent({
 			display: block;
 			position: absolute;
 			top: 0px;
-			left: -4px;
+			left: -2px;
 			border: 1px solid #ffee92;
 			background-color: #c2381a;
 			color: #ffee92;

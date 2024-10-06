@@ -1,10 +1,9 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.market')" />
-	<div class="section">
+	<div class="section ml-[-25px] mt-[-35px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">{{ $t(`market.title`) }}</div>
 	</div>
-	<div class="tabPanel">
+	<div class="relative ml-[-45px] text-white sm:ml-0">
 		<ul class="tabs">
 			<li :class="tab === 0 ? 'active' : ''">
 				<a href="#" @click="changeTab(0)">{{ $t('market.allOffers') }}</a>
@@ -20,10 +19,10 @@
 			</li>
 		</ul>
 	</div>
-	<OfferList v-if="tab === 0" :changeTab="changeTab" />
-	<Transactions v-if="tab === 1" />
+	<OfferList v-if="tab === 0" :changeTab="changeTab" :tab="tab" />
+	<Transactions v-if="tab === 1" :tab="tab" />
 	<Sell v-if="tab === 2" :changeTab="changeTab" />
-	<OfferHistory v-if="tab === 3" :changeTab="changeTab" />
+	<OfferHistory v-if="tab === 3" :changeTab="changeTab" :tab="tab" />
 	<DZButton back @click="goBackToDinozPage">{{ $t('market.back') }}</DZButton>
 </template>
 
@@ -52,7 +51,7 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			dinozStore: dinozStore(),
-			tab: 0
+			tab: 0 as number
 		};
 	},
 	methods: {
@@ -96,32 +95,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.tabPanel {
-	position: relative;
-	color: white;
-
-	.tabs {
-		padding-top: 4px;
-		background-color: transparent;
-		text-shadow: 1px 1px 0px #9a4029;
-		border-bottom: 3px solid #bc683c;
-
-		:hover {
-			color: white;
-		}
-
-		li.active {
-			margin-top: 1px;
-			text-shadow: 1px 1px 0px #9a4029;
-			a {
-				background-color: #d69e68;
-				line-height: 16pt;
-				color: white;
-				border-left-color: #ffe7aa;
-				border-top-color: #ffe7aa;
-				border-bottom: 1px solid #d69e68;
-			}
-		}
+ul {
+	background-color: transparent;
+}
+.active {
+	margin-top: 1px;
+	text-shadow: 1px 1px 0px #9a4029;
+	a {
+		background-color: #d69e68;
+		line-height: 16pt;
+		color: white;
+		border-left-color: #ffe7aa;
+		border-top-color: #ffe7aa;
+		border-bottom: 1px solid #d69e68;
 	}
 }
 </style>

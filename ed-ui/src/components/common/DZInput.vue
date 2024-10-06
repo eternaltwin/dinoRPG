@@ -13,11 +13,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 input {
-	width: 64px;
-	height: 20px;
+	width: 80px;
+	height: 25px;
 	padding-left: 8px;
 	padding-right: 8px;
-	padding-top: 2px;
 	color: #ffee92;
 	font-size: 9pt;
 	font-weight: bold;
@@ -25,6 +24,7 @@ input {
 	background-image: url('../../assets/design/form_field_small.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
+	outline: none;
 	&:focus {
 		background-image: url('../../assets/design/form_field_small_hover.webp');
 	}

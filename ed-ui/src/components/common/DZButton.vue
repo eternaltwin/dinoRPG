@@ -1,7 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<a
-		class="ml-[-50px] sm:ml-0"
 		:class="{
 			'button-component': true,
 			[size]: true,
@@ -74,14 +73,12 @@ export default defineComponent({
 		}
 		.content {
 			padding: 4px 8px;
-
 			&:first-letter {
 				color: white;
 			}
 		}
 		&.back {
 			margin-left: 15px;
-
 			img {
 				position: absolute;
 				left: -15px;
