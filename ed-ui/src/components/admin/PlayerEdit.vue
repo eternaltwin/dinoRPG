@@ -1,8 +1,8 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<form @submit.prevent="sendUpdate()">
+	<form class="ml-[-50px] mt-[30px] sm:ml-0 sm:mt-[20px]" @submit.prevent="sendUpdate()">
 		<fieldset>
-			<legend>Player details</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">Player details</legend>
 			<div>
 				<label class="title" for="playerName">Player :</label>
 				<input type="text" id="playerName" v-model="player.name" disabled />
@@ -190,7 +190,7 @@
 					<label class="title" for="ingredientQuantity">Quantity:</label>
 					<input type="number" id="ingredientQuantity" v-model="playerFields.ingredientQuantity" min="1" />
 				</div>
-				<div class="ingredientOperations">
+				<div>
 					<input
 						class="radio"
 						type="radio"
@@ -320,7 +320,7 @@
 					<input type="text" disabled v-model="quest.progression" />
 					<input type="number" id="progressionInput" v-model="playerFields.progressionQuest" />
 				</template>
-				<div class="questOperations">
+				<div>
 					<input
 						class="radio"
 						type="radio"
@@ -544,8 +544,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form {
-	width: 100%;
-	margin-top: 20px;
+	min-width: 100%;
 	margin-bottom: 10px;
 	background-color: #ecbd84;
 	border-spacing: 2px;
@@ -554,10 +553,9 @@ form {
 		border: 2px solid #bc683c;
 		margin: 15px 0;
 		padding: 20px;
-		width: 90%;
+		width: 100%;
 	}
 	legend {
-		font-size: 13pt;
 		text-shadow: 1px 1px 0px #356847;
 		padding-left: 8px;
 		padding-right: 8px;
@@ -606,11 +604,6 @@ form {
 		border-radius: 5px;
 	}
 }
-.radio {
-	padding-right: 10px;
-	margin-left: 3px;
-	margin-top: 3px;
-}
 .hasImported,
 .money,
 .rewards,
@@ -624,10 +617,5 @@ form {
 	flex-wrap: wrap;
 	gap: 5px;
 	margin-bottom: 5px;
-}
-.title {
-	text-transform: uppercase;
-	font-weight: bold;
-	margin-top: 5px;
 }
 </style>

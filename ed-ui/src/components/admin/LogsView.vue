@@ -1,20 +1,22 @@
 <template>
-	<select v-model="type">
-		<option value="null">All</option>
-		<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
-	</select>
-	<input type="number" v-model="userId" placeholder="userId" />
-	<input type="number" v-model="dinozId" placeholder="dinozId" />
-	<table>
-		<tbody>
-			<tr v-for="log in logs" :key="log.id">
-				<td>[{{ formatDate(log.createdAt as unknown as string) }}]</td>
-				<td v-html="formatContent($t(`logs.${log.type}`, getLogPropsForTranslation($t, log)))" />
-			</tr>
-		</tbody>
-	</table>
-	<button @click="page--" :disabled="page <= 1">Previous</button>
-	<button @click="page++" :disabled="logs.length < 100">Next</button>
+	<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+		<select v-model="type">
+			<option value="null">All</option>
+			<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
+		</select>
+		<input type="number" v-model="userId" placeholder="userId" />
+		<input type="number" v-model="dinozId" placeholder="dinozId" />
+		<table>
+			<tbody>
+				<tr v-for="log in logs" :key="log.id">
+					<td>[{{ formatDate(log.createdAt as unknown as string) }}]</td>
+					<td v-html="formatContent($t(`logs.${log.type}`, getLogPropsForTranslation($t, log)))" />
+				</tr>
+			</tbody>
+		</table>
+		<button @click="page--" :disabled="page <= 1">Previous</button>
+		<button @click="page++" :disabled="logs.length < 100">Next</button>
+	</div>
 </template>
 
 <script lang="ts">
@@ -320,11 +322,9 @@ button {
 table td {
 	font-family: monospace;
 	font-size: 12px;
-
 	&:first-child {
 		width: 106px;
 	}
-
 	:deep(strong) {
 		color: inherit;
 	}

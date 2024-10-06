@@ -1,16 +1,18 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<label for="news">Select a news to edit : </label>
-	<select id="news" v-model="newsEdit" @change="newSelect = true">
-		<template v-for="(news, index) in batchNews" :key="index">
-			<option :value="news">{{ news.title }}</option>
-		</template></select
-	><br />
-	<label for="createNews">Or type the name to create a news : </label>
-	<input id="createNews" v-model="newsEdit.title" type="text" />
-	<form @submit.prevent="submit()" v-if="newsEdit.title">
+	<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+		<label for="news">Select a news to edit : </label>
+		<select id="news" v-model="newsEdit" @change="newSelect = true">
+			<template v-for="(news, index) in batchNews" :key="index">
+				<option :value="news">{{ news.title }}</option>
+			</template></select
+		><br />
+		<label for="createNews">Or type the name to create a news : </label>
+		<input id="createNews" v-model="newsEdit.title" type="text" />
+	</div>
+	<form class="ml-[-50px] sm:ml-0" @submit.prevent="submit()" v-if="newsEdit.title">
 		<fieldset>
-			<legend>Title News</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">Title News</legend>
 			<div>
 				<label for="frenchTitle" class="title">French Title :</label>
 				<textarea id="frenchTitle" v-model="newsEdit.frenchTitle" />
@@ -29,7 +31,7 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>Text News</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">Text News</legend>
 			<div>
 				<label for="frenchText" class="title">French Text :</label>
 				<textarea id="frenchText" v-model="newsEdit.frenchText" />
@@ -48,14 +50,14 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>File News</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">File News</legend>
 			<div>
-				<input type="file" ref="file" @change="upfile" />
+				<input class="w-full" type="file" ref="file" @change="upfile" />
 				<img
 					v-if="filePreviewUrl"
 					:src="filePreviewUrl"
 					alt="File Preview"
-					style="max-width: 300px; max-height: 300px"
+					class="ml-[-15px] max-h-[150px] max-w-[150px] sm:max-h-[300px] sm:max-w-[300px]"
 				/>
 			</div>
 		</fieldset>
@@ -161,7 +163,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 20px;
 	margin-bottom: 10px;
 	background-color: #ecbd84;
@@ -174,7 +176,6 @@ form {
 		width: 90%;
 	}
 	legend {
-		font-size: 13pt;
 		text-shadow: 1px 1px 0px #356847;
 		padding-left: 8px;
 		padding-right: 8px;
@@ -214,6 +215,7 @@ form {
 	input[type='submit'],
 	input[type='file'] {
 		margin-top: 20px;
+		margin-bottom: 20px;
 		background-color: #c64e36;
 		color: #fffdba;
 		border: none;
@@ -230,10 +232,5 @@ select {
 	border: 1px solid #c88f44;
 	background-color: #f3ca92;
 	color: #710;
-}
-.title {
-	text-transform: uppercase;
-	font-weight: bold;
-	margin-top: 5px;
 }
 </style>

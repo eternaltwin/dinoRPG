@@ -1,6 +1,5 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="search">
+	<div class="ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<input
 			class="placeholder:text-[#710]"
 			type="text"
@@ -16,9 +15,9 @@
 		</datalist>
 		<input type="submit" @click="getPlayer()" />
 	</div>
-	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
+	<div v-if="displayErrorMessage" class="text-red-500">This player doesn't exist</div>
 	<ul class="tabs" style="margin-top: 10px">
-		<li>
+		<li class="ml-[-45px] sm:ml-0">
 			<a href="#" :class="tabSelected === 1 ? 'active' : ''" @click="setTab(1)"> Player Edit </a>
 		</li>
 		<li>
@@ -42,7 +41,7 @@
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
-		<form>
+		<form class="ml-[-40px] mt-[50px] sm:ml-0 sm:mt-0">
 			<select name="dinoz" v-model="selectedDinoz">
 				<template v-for="(dinoz, index) in dinozList" :key="index">
 					<option :value="dinoz">{{ dinoz.name }}</option>
@@ -155,8 +154,8 @@ export default defineComponent({
 	color: #710;
 	padding: 4px;
 }
-.red {
-	color: red;
+ul {
+	background-color: transparent;
 }
 input[type='text'],
 select {

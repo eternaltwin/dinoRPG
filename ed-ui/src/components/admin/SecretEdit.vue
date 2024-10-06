@@ -1,16 +1,18 @@
 <template>
 	<template v-if="allSecrets">
-		<label for="secret">Select a secret to edit : </label>
-		<select id="secret" v-model="newSecret" @change="newSelect = true">
-			<template v-for="(secret, index) in allSecrets" :key="index">
-				<option :value="secret">{{ secret.key }}</option>
-			</template></select
-		><br />
-		<label for="createSecret">Or type the name to create a secret : </label>
-		<input id="createSecret" v-model="newSecret.key" type="text" />
-		<form @submit.prevent="sendToServer()" v-if="newSecret.key">
+		<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+			<label for="secret">Select a secret to edit : </label>
+			<select id="secret" v-model="newSecret" @change="newSelect = true">
+				<template v-for="(secret, index) in allSecrets" :key="index">
+					<option :value="secret">{{ secret.key }}</option>
+				</template></select
+			><br />
+			<label for="createSecret">Or type the name to create a secret : </label>
+			<input id="createSecret" v-model="newSecret.key" type="text" />
+		</div>
+		<form class="ml-[-50px] sm:ml-0" @submit.prevent="sendToServer()" v-if="newSecret.key">
 			<fieldset>
-				<legend>Secret Keys</legend>
+				<legend class="text-[10pt] sm:text-[13pt]">Secret Keys</legend>
 				<div>
 					<label for="secretKey" class="mt-[5px] font-bold uppercase">{{ newSecret.key }}</label>
 					<input id="secretKey" type="text" v-model="newSecret.value" />
@@ -47,7 +49,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 20px;
 	margin-bottom: 10px;
 	background-color: #ecbd84;
@@ -60,7 +62,6 @@ form {
 		width: 90%;
 	}
 	legend {
-		font-size: 13pt;
 		text-shadow: 1px 1px 0px #356847;
 		padding-left: 8px;
 		padding-right: 8px;

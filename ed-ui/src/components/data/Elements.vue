@@ -71,7 +71,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
 ul {
 	li {
 		float: left;

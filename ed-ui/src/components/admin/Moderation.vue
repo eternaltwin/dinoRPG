@@ -1,40 +1,42 @@
 <template>
-	<table>
-		<tr>
-			<th>Reporter</th>
-			<th>Reason</th>
-			<th>Target</th>
-			<th>Comment</th>
-			<th>Display</th>
-			<th>Action</th>
-		</tr>
-		<template v-for="mod in moderationLogs" :key="mod.id">
+	<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+		<table class="min-w-full">
 			<tr>
-				<td><DZUser :user="mod.reporter" /></td>
-				<td>{{ $t(`report.reason.${mod.reason}`) }}</td>
-				<td><DZUser :user="mod.target" /></td>
-				<td>
-					<DZButton
-						v-tippy="{
-							content: mod.comment,
-							theme: 'small'
-						}"
-						>Voir</DZButton
-					>
-				</td>
-				<td>
-					<DZButton
-						v-tippy="{
-							content: getDisplay(mod.id),
-							theme: 'small'
-						}"
-						>Voir</DZButton
-					>
-				</td>
-				<td><DZButton>TODO</DZButton></td>
+				<th>Reporter</th>
+				<th>Reason</th>
+				<th>Target</th>
+				<th>Comment</th>
+				<th>Display</th>
+				<th>Action</th>
 			</tr>
-		</template>
-	</table>
+			<template v-for="mod in moderationLogs" :key="mod.id">
+				<tr>
+					<td><DZUser :user="mod.reporter" /></td>
+					<td>{{ $t(`report.reason.${mod.reason}`) }}</td>
+					<td><DZUser :user="mod.target" /></td>
+					<td>
+						<DZButton
+							v-tippy="{
+								content: mod.comment,
+								theme: 'small'
+							}"
+							>Voir</DZButton
+						>
+					</td>
+					<td>
+						<DZButton
+							v-tippy="{
+								content: getDisplay(mod.id),
+								theme: 'small'
+							}"
+							>Voir</DZButton
+						>
+					</td>
+					<td><DZButton>TODO</DZButton></td>
+				</tr>
+			</template>
+		</table>
+	</div>
 </template>
 
 <script lang="ts">
@@ -87,7 +89,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 /* Style de base pour le tableau */
 table {
-	width: 100%;
 	border-collapse: collapse; /* Supprime les espaces entre les cellules */
 	margin: 20px 0;
 	text-align: left;

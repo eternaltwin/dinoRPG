@@ -1,8 +1,8 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<form @submit.prevent="dinozUpdate()">
+	<form class="ml-[-50px] mt-[30px] sm:ml-0 sm:mt-[20px]" @submit.prevent="dinozUpdate()">
 		<fieldset>
-			<legend>Dinoz Details</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">Dinoz Details</legend>
 			<div>
 				<label class="title" for="dinozName">Name :</label>
 				<input id="dinozName" type="text" v-model="dinoz.name" disabled />
@@ -45,7 +45,7 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>Dinoz Statuses</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">Dinoz Statuses</legend>
 			<div>
 				<label class="title" for="dinozUnavailableReason">Unavailable Reason :</label>
 				<input id="dinozUnavailableReason" type="text" v-model="dinoz.unavailableReason" disabled />
@@ -121,7 +121,7 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>Dinoz Skills</legend>
+			<legend class="text-[10pt] sm:text-[13pt]">Dinoz Skills</legend>
 			<div class="skills">
 				<template v-for="skillId in dinoz.skills" :key="skillId">
 					<div class="skills" />
@@ -300,7 +300,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 20px;
 	margin-bottom: 10px;
 	background-color: #ecbd84;
@@ -313,7 +313,6 @@ form {
 		width: 90%;
 	}
 	legend {
-		font-size: 13pt;
 		text-shadow: 1px 1px 0px #356847;
 		padding-left: 8px;
 		padding-right: 8px;
@@ -362,11 +361,6 @@ form {
 		border-radius: 5px;
 	}
 }
-.radio {
-	padding-right: 10px;
-	margin-left: 3px;
-	margin-top: 3px;
-}
 .canChangeName,
 .unavailableReason,
 .statuses,
@@ -377,10 +371,5 @@ form {
 	flex-wrap: wrap;
 	gap: 5px;
 	margin-bottom: 5px;
-}
-.title {
-	text-transform: uppercase;
-	font-weight: bold;
-	margin-top: 5px;
 }
 </style>

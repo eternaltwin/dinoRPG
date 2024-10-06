@@ -3,7 +3,7 @@
 	<!-- Bouton Panel (visible seulement sur mobile) -->
 	<button
 		class="visible absolute left-0 top-[30px] z-50 rounded-r-lg bg-[#bc693cd7] px-6 py-4 text-white transition-transform duration-300 md:invisible md:z-30"
-		:class="{ 'translate-x-[210px]': isPanelOpen }"
+		:class="{ 'translate-x-[200px]': isPanelOpen }"
 		@click="togglePanel"
 	>
 		<span class="text-3xl" v-if="!isPanelOpen">☰</span>

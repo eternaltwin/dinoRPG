@@ -1,24 +1,28 @@
 <template>
-	<select v-model="type">
-		<option value="null">All</option>
-		<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
-	</select>
-	<input type="datetime-local" v-model="fromDate" placeholder="fromDate" />
-	<input type="datetime-local" v-model="toDate" placeholder="toDate" />
-	<button @click="reload" :disabled="!logs.length">Reload</button>
-	<div v-if="type !== 'null' && type !== null">
-		<Line v-if="loaded" :data="chartData" :options="chartOptions" :width="400" :height="400" />
+	<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+		<select v-model="type">
+			<option value="null">All</option>
+			<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
+		</select>
+		<input type="datetime-local" v-model="fromDate" placeholder="fromDate" />
+		<input type="datetime-local" v-model="toDate" placeholder="toDate" />
+		<button @click="reload" :disabled="!logs.length">Reload</button>
 	</div>
-	<table>
-		<tbody>
-			<tr v-for="(log, index) in paginatedLogs" :key="index">
-				<td>[{{ formatDate(log.createdAt as unknown as string) }}]</td>
-				<td v-html="formatContent($t(`logs.${log.type}`, getLogPropsForTranslation($t, log)))" />
-			</tr>
-		</tbody>
-	</table>
-	<button @click="page--" :disabled="page <= 1">Previous</button>
-	<button @click="page++" :disabled="logs.length < 100">Next</button>
+	<div class="relative mt-[30px] h-auto w-[80vw] md:w-[60vw] lg:w-[40vw]" v-if="type !== 'null' && type !== null">
+		<Line class="ml-[-50px] w-full sm:ml-0" v-if="loaded" :data="chartData" :options="chartOptions" />
+	</div>
+	<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+		<table>
+			<tbody>
+				<tr v-for="(log, index) in paginatedLogs" :key="index">
+					<td>[{{ formatDate(log.createdAt as unknown as string) }}]</td>
+					<td v-html="formatContent($t(`logs.${log.type}`, getLogPropsForTranslation($t, log)))" />
+				</tr>
+			</tbody>
+		</table>
+		<button @click="page--" :disabled="page <= 1">Previous</button>
+		<button @click="page++" :disabled="logs.length < 100">Next</button>
+	</div>
 </template>
 
 <script lang="ts">
@@ -422,11 +426,9 @@ button {
 table td {
 	font-family: monospace;
 	font-size: 12px;
-
 	&:first-child {
 		width: 106px;
 	}
-
 	:deep(strong) {
 		color: inherit;
 	}
