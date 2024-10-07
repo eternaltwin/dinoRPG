@@ -1,32 +1,38 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.manageDinoz')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`manageDinoz.title`) }}</div>
+	<div class="section ml-[-35px] mt-[-30px] sm:ml-0 sm:mt-0">
+		<h3 class="titlePage">{{ $t(`manageDinoz.title`) }}</h3>
 	</div>
-	<DZDisclaimer :content="$t('manageDinoz.disclaimer')" />
-	<table>
+	<DZDisclaimer help :content="$t('manageDinoz.disclaimer')" class="ml-[-45px] sm:ml-0" />
+	<table class="ml-[-45px] sm:ml-0">
 		<tbody>
 			<tr>
-				<th class="dinoz" colspan="3">{{ $t('manageDinoz.dinoz') }}</th>
-				<th class="elements">{{ $t('manageDinoz.elements') }}</th>
-				<th class="order"></th>
+				<th colspan="3">{{ $t('manageDinoz.dinoz') }}</th>
+				<th>{{ $t('manageDinoz.elements') }}</th>
+				<th class="w-[18px]"></th>
 			</tr>
 
 			<tr v-for="dinoz in dinozList as ManagePageData" :key="dinoz.id">
-				<td class="dinoz">
+				<td class="w-[50px] text-center">
 					<DinozMini :display="dinoz.display" />
 				</td>
-				<td class="level">{{ dinoz.level }}</td>
+				<td class="text-center">{{ dinoz.level }}</td>
 				<Tippy tag="td" theme="small">
 					<span>{{ dinoz.name }}</span>
-					<div class="life-full">
-						<div class="life" :style="{ width: `${(dinoz.life / dinoz.maxLife) * 100}%` }" />
+					<div class="m-[2px] h-[4px] w-[70px] overflow-hidden bg-[#8c492f]" style="border: 1px solid #8c492f">
+						<div
+							class="box-border h-[4px] bg-[#f9e94c]"
+							style="border-right: 1px solid white"
+							:style="{ width: `${(dinoz.life / dinoz.maxLife) * 100}%` }"
+						/>
 					</div>
-					<div class="experience-full">
-						<div class="experience" :style="{ width: `${(dinoz.experience / getMaxXp(dinoz)) * 100}%` }" />
+					<div class="m-[2px] h-[4px] w-[70px] overflow-hidden bg-[#8c492f]" style="border: 1px solid #8c492f">
+						<div
+							class="box-border h-[4px] bg-[#c487ea]"
+							style="border-right: 1px solid white"
+							:style="{ width: `${(dinoz.experience / getMaxXp(dinoz)) * 100}%` }"
+						/>
 					</div>
-
 					<template #content>
 						<img
 							v-for="status in dinoz.status"
@@ -36,7 +42,7 @@
 						/>
 					</template>
 				</Tippy>
-				<td class="elements">
+				<td>
 					<Elements
 						:fire="dinoz.nbrUpFire"
 						:wood="dinoz.nbrUpWood"
@@ -45,12 +51,20 @@
 						:air="dinoz.nbrUpAir"
 					/>
 				</td>
-				<td class="order">
-					<div class="up" @click="changeOrder(dinoz, -1)">
-						<img :src="getImgURL('icons', 'small_equip')" alt="arrow_up" />
+				<td>
+					<div
+						class="m-px flex size-4 h-[20px] w-full cursor-pointer items-center justify-center bg-[#bb5e46] text-center hover:border-yellow-500 hover:bg-[#f9e5b7]"
+						style="border: 1px solid #f9e5b7"
+						@click="changeOrder(dinoz, -1)"
+					>
+						<img class="w-[10px]" :src="getImgURL('icons', 'small_equip')" alt="arrow_up" />
 					</div>
-					<div class="down" @click="changeOrder(dinoz, 1)">
-						<img :src="getImgURL('icons', 'small_equip')" alt="arrow_down" />
+					<div
+						class="m-px flex size-4 h-[20px] w-full cursor-pointer items-center justify-center bg-[#bb5e46] text-center hover:border-yellow-500 hover:bg-[#f9e5b7]"
+						style="border: 1px solid #f9e5b7"
+						@click="changeOrder(dinoz, 1)"
+					>
+						<img class="w-[10px] rotate-180" :src="getImgURL('icons', 'small_equip')" alt="arrow_down" />
 					</div>
 				</td>
 			</tr>
@@ -168,17 +182,15 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 table {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	background-color: #ecbd84;
 	border-collapse: separate;
 	border-spacing: 1px;
-
 	tr {
 		display: table-row;
 		cursor: help;
-
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -197,12 +209,7 @@ table {
 			padding-left: 4px;
 			padding-right: 4px;
 			padding-bottom: 8px;
-
-			&.order {
-				width: 18px;
-			}
 		}
-
 		td {
 			font-size: 9pt;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -212,75 +219,6 @@ table {
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
 			padding: 2px 4px;
-
-			&.dinoz {
-				width: 50px;
-				text-align: center;
-			}
-
-			&.level {
-				text-align: center;
-			}
-
-			.life-full {
-				width: 70px;
-				height: 4px;
-				background-color: #8c492f;
-				border: 1px solid #8c492f;
-				overflow: hidden;
-				margin: 2px;
-
-				.life {
-					height: 4px;
-					background-color: #f9e94c;
-					border-right: 1px solid white;
-					box-sizing: border-box;
-				}
-			}
-
-			.experience-full {
-				width: 70px;
-				height: 4px;
-				background-color: #8c492f;
-				border: 1px solid #8c492f;
-				overflow: hidden;
-				margin: 2px;
-
-				.experience {
-					height: 4px;
-					background-color: #c487ea;
-					border-right: 1px solid white;
-					box-sizing: border-box;
-				}
-			}
-
-			&.order {
-				& > div {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-					border: 1px solid #f9e5b7;
-					background-color: #bb5e46;
-					margin: 1px;
-					text-align: center;
-					cursor: pointer;
-					width: 16px;
-					height: 16px;
-
-					&:hover {
-						border: 1px solid yellow;
-						background-color: #f9e5b7;
-					}
-
-					img {
-						width: 10px;
-					}
-
-					&.down img {
-						transform: rotate(180deg);
-					}
-				}
-			}
 		}
 	}
 }
