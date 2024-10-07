@@ -1,10 +1,10 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.missions')}`"></TitleHeader>
-	<div class="section">
+	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage" v-html="formatContent($t(`missions.header`))" />
 	</div>
-	<table>
+	<table class="ml-[-45px] sm:ml-0">
 		<tbody>
 			<tr>
 				<th class="name">{{ $t('missions.headers.title') }}</th>
@@ -117,23 +117,12 @@ export default defineComponent({
 	border: 1px solid #bc683c;
 	cursor: help;
 	margin-left: 5px;
-
 	&:hover {
 		outline: 1px solid white;
 	}
 }
-
-.section {
-	height: 45px;
-	margin-left: -15px;
-	margin-bottom: 20px;
-	background-image: url('../assets/design/title_h1.webp');
-	background-position: left bottom;
-	background-repeat: no-repeat;
-}
-
 table {
-	width: 100%;
+	min-width: 100%;
 	margin-bottom: 10px;
 	border: 2px solid #f3d6b1;
 	background-color: #ecbd84;
@@ -161,16 +150,10 @@ table {
 			background-color: #c64e36;
 			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
-
-			//&.name {
-			//	width: 200px;
-			//}
-
 			&.status {
 				min-width: 70px;
 			}
 		}
-
 		td {
 			font-size: 10pt;
 			padding-right: 5px;
@@ -179,16 +162,13 @@ table {
 			color: #710;
 			background-color: #f3ca92;
 			border: 1px solid #c88f44;
-
 			&.name {
 				background-image: url('../assets/background/table_cell.webp');
 				background-position: 0px 0px;
 				padding-left: 15px;
-
 				p {
 					padding-top: 4px;
 				}
-
 				img {
 					float: left;
 					position: relative;
@@ -196,7 +176,6 @@ table {
 					vertical-align: bottom;
 				}
 			}
-
 			&.status {
 				font-weight: bold;
 				text-align: center;
@@ -205,25 +184,21 @@ table {
 				background-position: -10px 0px;
 				max-width: 4px;
 			}
-
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
 		}
-
 		&.available {
 			cursor: pointer;
 			text-decoration: underline;
 			text-decoration-color: #710;
 			font-style: normal;
 		}
-
 		&.available:hover {
 			td {
 				color: white;
 				border-color: #9a4029;
 			}
 		}
-
 		&.unavailable {
 			font-style: normal;
 
@@ -234,7 +209,6 @@ table {
 				font-style: italic;
 			}
 		}
-
 		&.ongoing {
 			td {
 				background-image: url('../assets/background/table_cell_hover.webp');

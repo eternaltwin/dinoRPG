@@ -1,22 +1,17 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`" />
-	<div style="width: auto">
-		<div class="section ml-[-30px] mt-[-30px] sm:ml-0 sm:mt-0">
-			<div class="titlePage">
-				<h3>{{ $t(`gather.action.${gatherType}`) }}</h3>
-			</div>
-		</div>
+	<div class="section ml-[-35px] mt-[-30px] sm:ml-0 sm:mt-0">
+		<h3 class="titlePage">{{ $t(`gather.action.${gatherType}`) }}</h3>
 	</div>
 	<DZDisclaimer
 		help
 		:content="$t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) })"
-		class="ml-[-50px] sm:ml-0"
+		class="ml-[-40px] sm:ml-0"
 	/>
 	<div
-		class="custom-border relative left-[-50px] m-0 overflow-hidden sm:left-0 sm:m-[15px]"
+		class="custom-border relative left-[35px] ml-[-93px] w-full overflow-hidden sm:left-0 sm:m-[15px]"
 		v-if="grid && loaded"
-		style=""
 		:style="{
 			height: `${grid.grid.length * 34}px`,
 			width: `${grid.grid.length * 34}px`

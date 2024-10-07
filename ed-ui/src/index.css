@@ -125,7 +125,7 @@
         @apply w-full h-[50px] -ml-[15px] mb-[20px] bg-[url("./assets/design/title_h1.webp")] bg-contain bg-left-bottom bg-no-repeat;
     }
 	.disclaimer {
-		@apply flex items-center rounded-lg m-[10px] p-[5px] text-[#fce3bc] text-[10pt] bg-[#bc683c] bg-[5px_8px] bg-no-repeat;
+		@apply flex min-w-full items-center rounded-lg m-[10px] p-[5px] text-[#fce3bc] text-[10pt] bg-[#bc683c] bg-[5px_8px] bg-no-repeat;
 	}
 	.title {
 		@apply mt-[5px] font-bold uppercase;
