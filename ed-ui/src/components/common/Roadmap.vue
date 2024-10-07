@@ -60,9 +60,9 @@
 			class="relative ml-[-10px] w-full sm:ml-[40px] md:ml-[80px] lg:ml-[120px]"
 			:style="{ display: showFuturTable ? 'block' : 'none' }"
 		>
-			<div class="h-[33px] bg-[url('./assets/background/maj_bg_header.webp')] bg-contain bg-no-repeat">
-				<div class="relative ml-[45px] text-[12px] uppercase text-[#ffee92] sm:ml-[80px]">
-					<img class="mr-[5px]" :src="getImgURL('icons', 'small_sage')" alt="smallsage" />
+			<div class="h-[30px] max-w-[347px] bg-[url('./assets/background/maj_bg_header.webp')] bg-cover bg-no-repeat">
+				<div class="relative text-center text-[12px] uppercase text-[#ffee92]">
+					<img class="mr-[10px]" :src="getImgURL('icons', 'small_sage')" alt="smallsage" />
 					<span>{{ $t('roadmap.futurTitle') }}</span>
 				</div>
 			</div>

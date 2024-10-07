@@ -1,9 +1,9 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.market')" />
-	<div class="section ml-[-25px] mt-[-35px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-30px] mt-[-35px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">{{ $t(`market.title`) }}</div>
 	</div>
-	<div class="relative ml-[-45px] text-white sm:ml-0">
+	<div class="relative ml-[-48px] text-white sm:ml-0">
 		<ul class="tabs">
 			<li :class="tab === 0 ? 'active' : ''">
 				<a href="#" @click="changeTab(0)">{{ $t('market.allOffers') }}</a>

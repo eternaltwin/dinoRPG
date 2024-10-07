@@ -3,22 +3,34 @@
 	<div v-if="nameChoosen === false">
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</div>
-	<div class="dinoz" v-if="nameChoosen === true">
-		<Suspense
-			><DinozDisplay v-if="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
-		></Suspense>
+	<div
+		class="ml-[-45px] mt-[-20px] min-h-[265px] min-w-full bg-none bg-contain bg-no-repeat sm:ml-0 sm:mt-0 sm:bg-[url('./assets/background/dinoz_bg_cut.webp')]"
+		v-if="nameChoosen === true"
+	>
+		<Suspense>
+			<DinozDisplay v-if="isReady" :dinozData="dinozData" />
+		</Suspense>
 	</div>
-	<div class="dinozPanels" v-if="nameChoosen === true">
-		<DinozActions
-			v-if="isReady"
-			:updateActions="updateActions"
-			:dinoz="dinozData"
-			@continueMission="continueMission()"
-			@endMission="getFiche()"
-			:key="dinozData"
+	<div
+		class="flex flex-col flex-wrap gap-[20px] bg-none bg-repeat-y sm:relative sm:top-[18px] sm:flex-row sm:gap-0 sm:bg-[url('./assets/design/dinoz_panels_bg.webp')]"
+		v-if="nameChoosen === true"
+	>
+		<div
+			class="relative top-[-10px] h-[24px] w-full rotate-180 bg-none bg-contain bg-no-repeat sm:bg-[url('./assets/design/dinoz_footer.webp')]"
+			style="background-position: top right"
 		/>
-		<TabPanel v-if="isReady" :dinozData="dinozData" :key="dinozData" />
-		<div class="footer" />
+		<div class="flex flex-col items-center justify-center gap-[20px] sm:block sm:gap-0">
+			<DinozActions
+				v-if="isReady"
+				:updateActions="updateActions"
+				:dinoz="dinozData"
+				@continueMission="continueMission()"
+				@endMission="getFiche()"
+				:key="dinozData"
+			/>
+			<TabPanel v-if="isReady" :dinozData="dinozData" :key="dinozData" />
+		</div>
+		<div class="h-[24px] w-full bg-none bg-contain bg-no-repeat sm:bg-[url('./assets/design/dinoz_footer.webp')]" />
 	</div>
 </template>
 
@@ -152,32 +164,3 @@ export default defineComponent({
 	}
 });
 </script>
-
-<style lang="scss" scoped>
-.dinozPanels {
-	background-image: url('../assets/design/dinoz_panels_bg.webp');
-	background-repeat: repeat-y;
-	display: flex;
-	flex-wrap: wrap;
-	position: relative;
-	top: -11px;
-
-	// For futur implementation of header div
-	// .header {
-	// 	flex-grow: 100%;
-	// 	height: 24px;
-	// 	width: 100%;
-	// 	background-image: url(../../assets/design/dinoz_footer.webp);
-	// }
-	.footer {
-		height: 24px;
-		width: 100%;
-		background-image: url('../assets/design/dinoz_footer.webp');
-	}
-}
-.dinoz {
-	background-image: url('../assets/background/dinoz_bg_cut.webp');
-	background-repeat: no-repeat;
-	min-height: 265px;
-}
-</style>

@@ -3,8 +3,8 @@
 	<div>
 		<!-- Bouton Panel (visible seulement sur mobile/tablette) -->
 		<button
-			class="visible absolute right-0 top-[30px] z-40 rounded-l-lg bg-[#bc693cd7] px-6 py-4 text-white transition-transform duration-300 lg:invisible"
-			:class="{ 'translate-x-[-130px]': isPanelOpen }"
+			class="visible absolute left-0 top-[90px] z-40 rounded-r-lg bg-[#bc693cd7] px-6 py-4 text-white transition-transform duration-300 lg:invisible"
+			:class="{ 'translate-x-[130px]': isPanelOpen }"
 			@click="togglePanel"
 		>
 			<span class="text-3xl" v-if="!isPanelOpen">☰</span>
@@ -12,8 +12,8 @@
 		</button>
 		<!-- Menu latéral -->
 		<ul
-			class="rightMenu absolute right-[-270px] z-40 w-[130px] -translate-x-full list-none p-[15px] transition-transform duration-300 lg:relative lg:right-0 lg:mt-[90px] lg:translate-x-0"
-			:class="{ 'translate-x-[-270px]': isPanelOpen }"
+			class="rightMenu absolute left-0 z-40 mt-[90px] w-[130px] -translate-x-full list-none p-[15px] transition-transform duration-300 lg:relative lg:translate-x-0"
+			:class="{ 'translate-x-0': isPanelOpen }"
 		>
 			<li class="mb-[5px]">
 				<div

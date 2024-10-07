@@ -1,11 +1,11 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.npc')}${$t(`npc.name.${npcName}`)}]`"></TitleHeader>
-	<div class="section ml-[-30px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-30px] mt-[-35px] sm:ml-0 sm:mt-0">
 		<div class="titlePage" v-html="formatContent($t(`npc.header.character`))" />
 		<div class="subTitlePage" v-html="formatContent($t(`npc.name.${npcName}`))" />
 	</div>
 	<div
-		class="ml-[-40px] flex min-w-full cursor-pointer flex-col bg-[url('./assets/background/dialog_bg_pix.webp')] bg-contain bg-repeat-y sm:ml-0"
+		class="ml-[-45px] flex min-w-full cursor-pointer flex-col bg-[url('./assets/background/dialog_bg_pix.webp')] bg-contain bg-repeat-y sm:ml-0"
 	>
 		<div class="min-h-[40px] min-w-full bg-[url('./assets/background/dialog_bg_header.webp')] bg-cover bg-no-repeat">
 			<p class="ml-[15px] pt-[15px] font-bold text-[#693118]" style="font-variant: small-caps">

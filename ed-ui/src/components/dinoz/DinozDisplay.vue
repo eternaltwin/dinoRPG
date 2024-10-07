@@ -1,12 +1,27 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
-	<a class="left" @click="goToDinozPage(-1)" />
-	<div class="title">
-		{{ dinozData.name }}
+	<div class="ml-[-20px] flex min-w-full items-center justify-center sm:ml-0 sm:block">
+		<a
+			class="h-[21px] w-[15px] cursor-pointer bg-transparent bg-[url('./assets/icons/left.webp')] sm:absolute sm:ml-[205px] sm:mt-[69px]"
+			@click="goToDinozPage(-1)"
+		/>
+		<div
+			class="flex h-[33px] w-[222px] items-center justify-center bg-[url('./assets/background/name_box.webp')] bg-no-repeat text-[15pt] font-bold uppercase tracking-wider text-[#fce3bc] sm:absolute sm:ml-[240px] sm:mt-[62px]"
+			style="
+				text-shadow:
+					-1px -1px 0px #68361b,
+					1px 1px 0px #ddad8c;
+			"
+		>
+			{{ dinozData.name }}
+		</div>
+		<a
+			class="h-[21px] w-[15px] cursor-pointer bg-transparent bg-[url('./assets/icons/right.webp')] sm:absolute sm:ml-[490px] sm:mt-[69px]"
+			@click="goToDinozPage(1)"
+		/>
 	</div>
-	<a class="right" @click="goToDinozPage(1)" />
-	<Tippy theme="normal" tag="div" id="dinozVisual">
+
+	<Tippy theme="normal" tag="div" class="ml-[-20px] flex min-w-full items-center justify-center sm:ml-0 sm:block">
 		<Suspense>
 			<DinozWithoutFlash
 				:display="dinozData.display"
@@ -15,8 +30,10 @@
 				:race="dinozData.race.raceId"
 				:key="dinozData.life || dinozData.display"
 				:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
+				class="absolute mt-[180px] h-[165px] w-[200px] bg-[url('./assets/background/dinoz_bg_cut.webp')] bg-cover bg-no-repeat sm:mt-[40px] sm:bg-none"
+				style="background-position: 0px 25px"
 			/>
-			<template #fallback> <Loading /> </template>
+			<template #fallback> <Loading class="absolute mt-[130px] sm:ml-[80px]" /> </template>
 		</Suspense>
 		<template #content>
 			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
@@ -95,57 +112,3 @@ export default defineComponent({
 	}
 });
 </script>
-
-<style lang="scss" scoped>
-#dinozVisual {
-	width: 200px;
-	height: 165px;
-	position: absolute;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 40px;
-}
-.left {
-	position: absolute;
-	margin-left: 205px;
-	margin-top: 69px;
-	background-image: url('../../assets/icons/left.webp');
-	background-color: transparent;
-	width: 15px;
-	height: 21px;
-	border-radius: 0px;
-	cursor: pointer;
-}
-.title {
-	position: absolute;
-	margin-top: 62px;
-	background: url('../../assets/background/name_box.webp') no-repeat;
-	width: 222px;
-	height: 33px;
-	margin-left: 240px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 15pt;
-	font-weight: bold;
-	text-transform: uppercase;
-	letter-spacing: 1pt;
-	color: #fce3bc;
-	text-shadow:
-		-1px -1px 0px #68361b,
-		1px 1px 0px #ddad8c;
-}
-
-.right {
-	position: absolute;
-	margin-left: 490px;
-	margin-top: 69px;
-	background-image: url('../../assets/icons/right.webp');
-	background-color: transparent;
-	width: 15px;
-	height: 21px;
-	border-radius: 0px;
-	cursor: pointer;
-}
-</style>

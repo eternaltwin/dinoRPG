@@ -1,17 +1,19 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="elements_div">
-		<div class="elements_top">
-			<p>{{ $t('layout.elements') }}</p>
+	<div class="ml-[-210px] mt-[-20px] flex min-w-full items-center justify-center sm:ml-0 sm:mt-0 sm:block">
+		<div class="elements_div sm:absolute">
+			<div class="elements_top">
+				<p>{{ $t('layout.elements') }}</p>
+			</div>
+			<Elements
+				:fire="dinozData.nbrUpFire"
+				:wood="dinozData.nbrUpWood"
+				:water="dinozData.nbrUpWater"
+				:lightning="dinozData.nbrUpLightning"
+				:air="dinozData.nbrUpAir"
+				class="elements_content"
+			/>
 		</div>
-		<Elements
-			:fire="dinozData.nbrUpFire"
-			:wood="dinozData.nbrUpWood"
-			:water="dinozData.nbrUpWater"
-			:lightning="dinozData.nbrUpLightning"
-			:air="dinozData.nbrUpAir"
-			class="elements_content"
-		/>
 	</div>
 </template>
 
@@ -33,7 +35,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .elements_div {
-	position: absolute;
 	margin-left: 192px;
 	margin-top: 198px;
 	background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
@@ -76,6 +77,7 @@ export default defineComponent({
 		}
 	}
 	.elements_top {
+		position: relative;
 		width: 223px;
 		height: 28px;
 		background: url('../../assets/background/box_header.webp') no-repeat;

@@ -17,7 +17,7 @@
 		</td>
 		<td v-else />
 		<td class="items-td">
-			<div class="items">
+			<div class="items flex-col sm:flex-row">
 				<div v-for="item in offer.items" :key="item.itemId">
 					<Tippy
 						tag="img"

@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="tabPanel">
+	<div class="tabPanel -mt-px ml-[-95px] w-[315px] sm:ml-0 sm:mt-0 sm:bg-transparent">
 		<ul class="tabs">
 			<li :class="tabSelected === 1 ? 'active' : ''">
 				<a href="#" @click="sessionStore.setTab(1)">{{ $t('tabs.map') }}</a>
@@ -53,13 +53,13 @@ export default defineComponent({
 	left: 16px;
 	top: -14px;
 	position: relative;
-	width: 315px;
 	padding-bottom: 15px;
 	color: white;
 	background:
 		url('../../assets/background/banniere_left.webp') no-repeat,
 		url('../../assets/background/banniere_right.webp') no-repeat,
 		url('../../assets/background/banniere_middle.webp') repeat-x;
+	background-color: #d19860;
 	background-position-x: left;
 	.tabs {
 		margin-top: 15px;

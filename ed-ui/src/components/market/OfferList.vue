@@ -1,5 +1,5 @@
 <template>
-	<DZDisclaimer help content="market.disclaimer" class="ml-[-45px] sm:ml-0" />
+	<DZDisclaimer help content="market.disclaimer" class="ml-[-48px] sm:ml-0" />
 	<div class="flex justify-around sm:justify-between">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
 		<select :placeholder="$t('market.filter')" @change="changeFilter">
@@ -8,7 +8,7 @@
 			<option value="items">{{ $t('market.items') }}</option>
 		</select>
 	</div>
-	<DZTable class="ml-[-45px] sm:ml-0">
+	<DZTable class="ml-[-50px] sm:ml-0">
 		<tr>
 			<th class="w-[50px]">{{ $t('market.dinoz') }}</th>
 			<th class="w-[187px]">{{ $t('market.items') }}</th>
@@ -24,7 +24,7 @@
 			:tab="tab"
 		/>
 	</DZTable>
-	<tr class="ml-[-45px] mt-[10px] flex items-center justify-center sm:ml-0">
+	<tr class="ml-[-48px] mt-[10px] flex items-center justify-center sm:ml-0">
 		<button @click="previousPage" :disabled="currentPage === 1">
 			<img class="w-[10px]" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
@@ -33,7 +33,7 @@
 			<img class="w-[10px] rotate-180" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
 	</tr>
-	<DZDisclaimer help content="market.currency" class="ml-[-45px] sm:ml-0" />
+	<DZDisclaimer help content="market.currency" class="ml-[-48px] sm:ml-0" />
 </template>
 
 <script lang="ts">

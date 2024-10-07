@@ -1,4 +1,3 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<!-- Bouton Panel (visible seulement sur mobile) -->
 	<button
@@ -43,7 +42,7 @@
 			<a
 				id="menu_clan"
 				@click="goToPlayerClan()"
-				class="iconClan float-left mr-[5px] block size-[32px] cursor-auto bg-[url('./assets/icons/act_castle.webp')] hover:bg-[url('./assets/icons/act_castle2.webp')]"
+				class="float-left mr-[5px] block size-[32px] cursor-pointer bg-[url('./assets/icons/act_castle.webp')] hover:bg-[url('./assets/icons/act_castle2.webp')] disabled:grayscale disabled:hover:cursor-auto"
 				:class="{ disabled: !clanId }"
 				v-tippy="{
 					content: formatContent($t('layout.clanButton')),
@@ -52,7 +51,7 @@
 			></a>
 			<!--			<a
 				id="menu_dojo"
-				class="iconDojo disabled float-left block size-[32px] bg-[url('./assets/icons/act_dojo.webp')] hover:bg-[url('./assets/icons/act_dojo2.webp')]"
+				class="disabled:grayscale disabled:hover:cursor-auto disabled float-left block size-[32px] bg-[url('./assets/icons/act_dojo.webp')] hover:bg-[url('./assets/icons/act_dojo2.webp')]"
 				v-tippy="{
 					content: formatContent($t('layout.dojoButton')),
 					theme: 'small'
@@ -61,7 +60,7 @@
 			<a
 				id="menu_cine"
 				@click="goToCine()"
-				class="iconcine"
+				class="float-left size-[32px] bg-[url('./assets/icons/act_historique.webp')] hover:brightness-150"
 				v-tippy="{
 					content: formatContent($t('layout.cine')),
 					theme: 'small'
@@ -238,34 +237,3 @@ export default defineComponent({
 	}
 });
 </script>
-
-<style lang="scss" scoped>
-#accountList {
-	.iconClan {
-		&.disabled {
-			filter: grayscale(100%);
-			&:hover {
-				cursor: auto;
-			}
-		}
-	}
-	.iconDojo {
-		&.disabled {
-			filter: grayscale(100%);
-			&:hover {
-				cursor: auto;
-			}
-			&.iconcine {
-				background-image: url('../../assets/icons/act_historique.webp');
-				width: 32px;
-				height: 32px;
-				float: left;
-
-				&:hover {
-					filter: brightness(1.5);
-				}
-			}
-		}
-	}
-}
-</style>

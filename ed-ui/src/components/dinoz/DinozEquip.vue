@@ -1,28 +1,30 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="equip">
-		<ul>
-			<li v-for="item in items" :key="item">
-				<Tippy
-					@click="unequip(item)"
-					theme="normal"
-					tag="img"
-					v-if="item"
-					:src="getImgURL('item', `item_${itemNameList[item]}`)"
-					:alt="itemNameList[item]"
-				>
-					<template #content>
-						<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
-						<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
-					</template>
-				</Tippy>
-				<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
-					<template #content>
-						<p v-html="formatContent($t(`item.empty`))" />
-					</template>
-				</Tippy>
-			</li>
-		</ul>
+	<div class="ml-[-420px] mt-[-99px] flex min-w-full items-center justify-center sm:ml-0 sm:mt-0 sm:block">
+		<div class="equip sm:absolute">
+			<ul>
+				<li v-for="item in items" :key="item">
+					<Tippy
+						@click="unequip(item)"
+						theme="normal"
+						tag="img"
+						v-if="item"
+						:src="getImgURL('item', `item_${itemNameList[item]}`)"
+						:alt="itemNameList[item]"
+					>
+						<template #content>
+							<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
+							<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
+						</template>
+					</Tippy>
+					<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
+						<template #content>
+							<p v-html="formatContent($t(`item.empty`))" />
+						</template>
+					</Tippy>
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>
 
@@ -109,7 +111,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .equip {
-	position: absolute;
 	margin-left: 420px;
 	margin-top: 101px;
 	font-size: 0pt;

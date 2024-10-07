@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="actions">
+	<div class="actions ml-[-85px] mt-[-21px] min-h-[95px] sm:ml-0 sm:mt-0 sm:bg-transparent">
 		<Resurect :enabled="resurect" @close="resurect = false" />
 		<NPCModal v-if="NPCModal" :text="NPCModal" :npcName="npcName" @close="continueMission()" />
 		<div class="actions_top">
@@ -23,6 +23,7 @@
 			</template>
 		</Tippy>
 		<DZDisclaimer
+			class="m-0 mt-4"
 			v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST)"
 			:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
 			timer
@@ -72,7 +73,7 @@
 				/>
 			</template>
 		</Tippy>
-		<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
+		<DZDisclaimer timer v-if="isSelling()" class="m-0 mt-4" :content="$t('toast.isSelling')" />
 	</div>
 </template>
 
@@ -544,12 +545,12 @@ export default defineComponent({
 		url('../../assets/background/banniere_middle.webp') repeat-x,
 		url('../../assets/background/banniere_right.webp') no-repeat;
 	background-position-x: left, center, right;
+	background-color: #d19860;
 	float: left;
 	left: 12px;
 	top: -14px;
 	position: relative;
 	width: 185px;
-	min-height: 90px;
 	color: white;
 	position: relative;
 	display: flex;

@@ -1,45 +1,58 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="dinozBars" v-if="dinozData">
+	<div class="ml-[-30px] mt-[-195px] flex min-w-full items-center justify-center sm:ml-0 sm:mt-0 sm:block">
 		<div
-			class="level"
-			v-tippy="{
-				content: formatContent($t('layout.level')),
-				theme: 'small'
-			}"
+			class="ml-[10px] mt-[198px] h-[40px] w-[180px] bg-[url('./assets/background/stats_box.webp')] bg-no-repeat sm:absolute"
+			v-if="dinozData"
 		>
-			<div class="over">{{ dinozData.level }}</div>
-		</div>
-		<div class="bars">
-			<div class="life">
-				<div class="bar">
-					<img
-						v-if="dinozData.life <= Math.round(dinozData.maxLife * 0.1)"
-						:src="getImgURL('bar', 'bar_warning')"
-						alt="life"
-						style="width: 98px; height: 11px"
-					/>
-					<img
-						v-else
-						:src="getImgURL('bar', 'bar_life')"
-						alt="life"
-						:style="getBarSize(dinozData.life, dinozData.maxLife)"
-					/>
-				</div>
+			<div
+				class="absolute mt-[2px] text-center text-[17pt] font-bold text-[#faf1c5]"
+				style="text-shadow: -1px -2px 0px #581a10"
+				v-tippy="{
+					content: formatContent($t('layout.level')),
+					theme: 'small'
+				}"
+			>
+				<div class="absolute w-[40px] cursor-help">{{ dinozData.level }}</div>
 			</div>
-			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
-			<div class="xp">
-				<div class="bar">
-					<img
-						:src="getImgURL('bar', 'bar_xp')"
-						alt="xp"
-						:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
-					/>
+			<div class="absolute ml-[69px] mt-[7px] w-[100px] text-[8pt] leading-[11pt] text-white">
+				<div id="life">
+					<div class="absolute h-[11px] w-[98px] cursor-help text-[0pt] leading-[0pt]">
+						<img
+							v-if="dinozData.life <= Math.round(dinozData.maxLife * 0.1)"
+							:src="getImgURL('bar', 'bar_warning')"
+							alt="life"
+							style="width: 98px; height: 11px"
+						/>
+						<img
+							v-else
+							:src="getImgURL('bar', 'bar_life')"
+							alt="life"
+							:style="getBarSize(dinozData.life, dinozData.maxLife)"
+						/>
+					</div>
 				</div>
-			</div>
-			<div class="xptext">
-				{{ dinozData.experience > dinozData.maxExperience ? dinozData.maxExperience : dinozData.experience }} /
-				{{ dinozData.maxExperience }}
+				<div
+					class="absolute -mt-px w-[98px] text-center text-[9pt] font-bold text-[#fef4d4]"
+					style="text-shadow: 1px 1px 0px #8f5203"
+				>
+					{{ dinozData.life }} / {{ dinozData.maxLife }}
+				</div>
+				<div id="xp">
+					<div class="absolute mt-[15px] h-[11px] w-[98px] cursor-help text-[0pt] leading-[0pt]">
+						<img
+							:src="getImgURL('bar', 'bar_xp')"
+							alt="xp"
+							:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
+						/>
+					</div>
+				</div>
+				<div
+					class="absolute mt-[14px] w-[98px] text-center text-[9pt] font-bold text-[#fbd7ff]"
+					style="text-shadow: 1px 1px 0px #812b56"
+				>
+					{{ dinozData.experience > dinozData.maxExperience ? dinozData.maxExperience : dinozData.experience }} /
+					{{ dinozData.maxExperience }}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -67,75 +80,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.dinozBars {
-	background: url('../../assets/background/stats_box.webp') no-repeat;
-	width: 180px;
-	height: 40px;
-	position: absolute;
-	margin-top: 198px;
-	margin-left: 10px;
-	.bars {
-		position: absolute;
-		margin-left: 69px;
-		margin-top: 7px;
-		width: 100px;
-		font-size: 8pt;
-		line-height: 11pt;
-		color: white;
-
-		.lifetext {
-			font-size: 11px;
-			margin-top: -1px;
-			position: absolute;
-			font-weight: bold;
-			width: 98px;
-			text-align: center;
-			color: #fef4d4;
-			text-shadow: 1px 1px 0px #8f5203;
-		}
-
-		.xptext {
-			position: absolute;
-			font-size: 11px;
-			margin-top: 14px;
-			font-weight: bold;
-			width: 98px;
-			text-align: center;
-			color: #fbd7ff;
-			text-shadow: 1px 1px 0px #812b56;
-		}
-	}
-
-	.bar {
-		cursor: help;
-		position: absolute;
-		width: 98px;
-		height: 11px;
-		font-size: 0pt;
-		line-height: 0pt;
-	}
-
-	.xp {
-		.bar {
-			margin-top: 15px;
-		}
-	}
-	.level {
-		position: absolute;
-		margin-top: 7px;
-		font-weight: bold;
-		text-align: center;
-		font-size: 17pt;
-		color: #faf1c5;
-		text-shadow: -1px -2px 0px #581a10;
-
-		.over {
-			cursor: help;
-			position: absolute;
-			width: 40px;
-			letter-spacing: -2pt;
-		}
-	}
-}
-</style>
+<style lang="scss" scoped></style>

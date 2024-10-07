@@ -1,19 +1,21 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="fx">
-		<div class="fx_top">
-			<p>{{ $t('layout.fx') }}</p>
-		</div>
-		<div class="fx_content">
-			<template v-for="(status, index) in dinozStatus" :key="index">
-				<Tippy theme="normal" v-if="statusList.displayed[status]">
-					<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
-					<template #content>
-						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
-						<p v-html="formatContent($t(`status.description.${status}`))"></p>
-					</template>
-				</Tippy>
-			</template>
+	<div class="ml-[-210px] mt-[-99px] flex min-w-full items-center justify-center sm:ml-0 sm:mt-0 sm:block">
+		<div class="fx sm:absolute">
+			<div class="fx_top">
+				<p>{{ $t('layout.fx') }}</p>
+			</div>
+			<div class="fx_content">
+				<template v-for="(status, index) in dinozStatus" :key="index">
+					<Tippy theme="normal" v-if="statusList.displayed[status]">
+						<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
+						<template #content>
+							<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
+							<p v-html="formatContent($t(`status.description.${status}`))"></p>
+						</template>
+					</Tippy>
+				</template>
+			</div>
 		</div>
 	</div>
 </template>
@@ -37,7 +39,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .fx {
-	position: absolute;
 	margin-left: 192px;
 	margin-top: 101px;
 	width: 223px;
@@ -49,6 +50,7 @@ export default defineComponent({
 	background-size: auto;
 	box-shadow: inset 0 0 1px 2px #d3a76a;
 	.fx_top {
+		position: relative;
 		width: 223px;
 		height: 28px;
 		background: url('../../assets/background/box_header.webp') no-repeat;
@@ -66,7 +68,7 @@ export default defineComponent({
 	}
 	.fx_content {
 		height: 77px;
-		margin-top: -13px;
+		margin-top: -5px;
 		padding-left: 2px;
 		border-style: hidden solid solid solid;
 		border-width: 0 1px 1px 1px;

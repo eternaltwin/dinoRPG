@@ -1,11 +1,11 @@
 <template>
-	<div id="enclos" class="ml-[-30px] mt-[-7%] sm:ml-0 sm:mt-0">
+	<div id="enclos" class="ml-[-32px] mt-[-7%] sm:ml-0 sm:mt-0">
 		<TitleHeader :title="$t('pageTitle.dinozShop')" />
 		<div class="section">
 			<div class="titlePage">Enclos des dinoz</div>
 		</div>
-		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
-		<div class="ml-[-17px] flex w-full flex-col gap-[30px]">
+		<DZDisclaimer help :content="$t('shop.dinoz.help')" class="ml-[-10px] sm:ml-0" />
+		<div class="ml-[-17px] mt-[50px] flex w-full flex-col gap-[30px]">
 			<div
 				class="ml-[25px] flex h-auto items-start gap-[25px] bg-[#bc683c] bg-contain bg-no-repeat p-1 sm:h-[110px] sm:gap-[55px] sm:bg-transparent sm:bg-[url('./assets/design/shop_dinoz_bg.webp')] md:gap-[5px] lg:h-[90px] lg:bg-auto"
 				:id="'detail_' + index"
@@ -14,7 +14,7 @@
 			>
 				<Suspense>
 					<DinozWithoutFlash
-						class="relative bottom-[30px] left-[-65px] w-[150px] sm:bottom-[70px] sm:left-[-35px] sm:w-[190px]"
+						class="relative bottom-[10px] left-[-65px] w-[150px] sm:bottom-[70px] sm:left-[-35px] sm:w-[190px]"
 						:display="dinoz.display"
 						:life="1"
 						:flip="-1"
