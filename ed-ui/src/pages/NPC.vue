@@ -1,27 +1,40 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.npc')}${$t(`npc.name.${npcName}`)}]`"></TitleHeader>
-	<div class="section">
+	<div class="section ml-[-30px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage" v-html="formatContent($t(`npc.header.character`))" />
 		<div class="subTitlePage" v-html="formatContent($t(`npc.name.${npcName}`))" />
 	</div>
-	<div class="box">
-		<div class="headerBox">
-			<div class="name">{{ $t(`npc.name.${npcName}`) }} :</div>
+	<div
+		class="ml-[-40px] flex min-w-full cursor-pointer flex-col bg-[url('./assets/background/dialog_bg_pix.webp')] bg-contain bg-repeat-y sm:ml-0"
+	>
+		<div class="min-h-[40px] min-w-full bg-[url('./assets/background/dialog_bg_header.webp')] bg-cover bg-no-repeat">
+			<p class="ml-[15px] pt-[15px] font-bold text-[#693118]" style="font-variant: small-caps">
+				{{ $t(`npc.name.${npcName}`) }} :
+			</p>
 		</div>
-		<div class="footer">
-			<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
-			<a class="button" @click="stop()">
-				<span v-html="formatContent($t(`npc.stop`))" />
-			</a>
+		<div class="flex flex-col-reverse justify-around px-[15px] sm:flex-row">
 			<span
-				class="dialog"
+				class="text-[10pt] italic text-[#fff3b3]"
 				v-if="npcSpeech.speech"
 				v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
 			/>
+			<div class="flex flex-col items-center justify-center gap-6">
+				<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
+				<a class="button" @click="stop()">
+					<span v-html="formatContent($t(`npc.stop`))" />
+				</a>
+			</div>
 		</div>
+		<div
+			class="h-[40px] min-w-full overflow-hidden bg-[url('./assets/background/dialog_bg_footer.webp')] bg-contain bg-no-repeat"
+			style="background-position: bottom left"
+		></div>
 	</div>
-	<ul id="answer" v-if="loaded && npcSpeech.playerChoice.length > 0">
+	<ul
+		class="ml-[-35px] mt-[10px] min-w-full cursor-pointer bg-[#9a4029] py-[5px] sm:ml-0"
+		style="border: 1px solid white; outline: 1px solid black"
+		v-if="loaded && npcSpeech.playerChoice.length > 0"
+	>
 		<li v-for="choice in npcSpeech.playerChoice" :key="choice">
 			<a v-html="formatContent($t(`npc.${npcName}.playerChoice.${choice}`))" @click="choiseStep(choice)" />
 		</li>
@@ -162,101 +175,26 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.section {
-	height: 45px;
-	margin-left: -15px;
-	margin-bottom: 20px;
-	background-image: url('../assets/design/title_h1.webp');
-	background-position: left bottom;
+li a {
+	display: block;
+	padding-left: 20px;
+	color: #fdd58a;
+	font-family: Verdana, sans-serif;
+	text-decoration: none;
+	font-size: 10pt;
+	line-height: 12pt;
+	background-image: url('../assets/button/dot.webp');
+	background-position: 13px 8px;
 	background-repeat: no-repeat;
-}
-.box {
+	border-radius: 0px;
 	cursor: pointer;
-	background-repeat: repeat-y;
-	background-image: url('../assets/background/dialog_bg_pix.webp');
-	.headerBox {
-		background-image: url('../assets/background/dialog_bg_header.webp');
-		background-repeat: no-repeat;
-		height: 30px;
-		.name {
-			margin-left: 15px;
-			padding-top: 15px;
-			font-variant: small-caps;
-			font-weight: bold;
-			font-size: 10pt;
-			color: #693118;
-		}
+	font-variant: small-caps;
+	&:first-letter {
+		font-size: 115%;
 	}
-	.footer {
-		min-height: 148px;
-		padding: 1px;
-		background-image: url('../assets/background/dialog_bg_footer.webp');
-		background-repeat: no-repeat;
-		background-position: bottom left;
-		overflow: hidden;
-		.button {
-			position: absolute;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			margin-left: 419px;
-			margin-top: 107px;
-			padding: 0;
-			font-size: 9pt;
-			line-height: 7pt;
-			width: 96px;
-			height: 28px;
-			background-image: url('../assets/button/button_small.webp');
-			&:hover {
-				background-image: url('../assets/button/button_small_hover.webp');
-			}
-
-			span {
-				padding: 4px 6px;
-			}
-		}
-		.dialog {
-			width: 390px;
-			float: left;
-			position: relative;
-			margin-bottom: 10px;
-			margin-left: 10px;
-			color: #fff3b3;
-			font-size: 10pt;
-			font-style: italic;
-			overflow: hidden;
-		}
-	}
-}
-#answer {
-	list-style: none;
-	margin: 10px;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	background-color: #9a4029;
-	border: 1px solid white;
-	outline: 1px solid black;
-	li a {
-		display: block;
-		padding-left: 20px;
-		color: #fdd58a;
-		font-family: Verdana, sans-serif;
-		text-decoration: none;
-		font-size: 10pt;
-		line-height: 12pt;
-		background-image: url('../assets/button/dot.webp');
-		background-position: 13px 8px;
-		background-repeat: no-repeat;
-		border-radius: 0px;
-		cursor: pointer;
-		font-variant: small-caps;
-		&:first-letter {
-			font-size: 115%;
-		}
-		&:hover {
-			color: #9a4029;
-			background-color: #fdd58a;
-		}
+	&:hover {
+		color: #9a4029;
+		background-color: #fdd58a;
 	}
 }
 </style>
