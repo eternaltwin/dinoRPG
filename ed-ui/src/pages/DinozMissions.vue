@@ -1,21 +1,20 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.dinozMissions')" />
-	<div class="section">
+	<div class="section ml-[-35px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">{{ $t(`dinozMissions.title`) }}</div>
 	</div>
-	<div class="disclaimer" v-html="formatContent($t('dinozMissions.disclaimer'))" />
-	<table>
+	<DZDisclaimer help :content="$t('dinozMissions.disclaimer')" class="ml-[-45px] sm:ml-0" />
+	<table class="ml-[-45px] sm:ml-0">
 		<tbody>
 			<tr>
-				<th class="dinoz">{{ $t('dinozMissions.dinoz') }}</th>
-				<th class="missions">{{ $t('dinozMissions.missions') }}</th>
-				<th class="see" />
+				<th class="px-[4px] pb-[8px]">{{ $t('dinozMissions.dinoz') }}</th>
+				<th class="px-[4px] pb-[8px]">{{ $t('dinozMissions.missions') }}</th>
+				<th />
 			</tr>
-
 			<tr v-for="dinoz in data as MissionsPageData" :key="dinoz.id">
-				<td class="dinoz">{{ dinoz.name }}</td>
-				<td class="missions">
+				<td class="px-1 py-0.5" style="font-variant: small-caps">{{ dinoz.name }}</td>
+				<td class="px-1 py-0.5 text-[9pt] font-bold">
 					<ul>
 						<Tippy tag="li" theme="normal" v-for="mission in dinoz.missions" :key="mission.npc">
 							<img :src="getImgURL('design', 'info_button')" alt="info_button" />
@@ -25,7 +24,7 @@
 							</span>
 							<template #content>
 								<h1 v-html="formatContent($t('dinozMissions.missionsFrom', { npc: mission.npc }))"></h1>
-								<ul class="missions-summary">
+								<ul id="missions-summary">
 									<li v-for="innerMission in mission.missions" :key="innerMission.id">
 										{{
 											void (rewards = npcMissions
@@ -80,15 +79,19 @@
 							<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 							<span>
 								{{ $t('dinozMissions.total') }}
-								<span class="total">
+								<span class="text-[#ea0000]">
 									{{ dinoz.missions.reduce((acc, mission) => acc + mission.missions.length, 0) }}/{{ totalMissions }}
 								</span>
 							</span>
 						</li>
 					</ul>
 				</td>
-				<td class="see">
-					<router-link :to="{ name: 'DinozPage', params: { id: dinoz.id } }" class="see-button">
+				<td>
+					<router-link
+						:to="{ name: 'DinozPage', params: { id: dinoz.id } }"
+						class="ml-2 border-double border-[#c85d3f] bg-[#c85d3f] bg-clip-padding px-1 py-0 text-[9pt] text-[#f3ca92] no-underline hover:bg-[#f3ca92] hover:text-[#c85d3f]"
+						style="font-variant: small-caps"
+					>
 						{{ $t('dinozMissions.see') }}
 					</router-link>
 				</td>
@@ -109,11 +112,13 @@ import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../utils/errorHandler.js';
 import { formatText } from '../utils/formatText.js';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'DinozMissions',
 	components: {
-		TitleHeader
+		TitleHeader,
+		DZDisclaimer
 	},
 	data() {
 		return {
@@ -149,29 +154,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
-
 table {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	background-color: #ecbd84;
 	border-collapse: separate;
 	border-spacing: 1px;
-
 	tr {
 		display: table-row;
 		cursor: help;
-
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -187,20 +179,7 @@ table {
 			background-color: #c64e36;
 			background-image: url('../assets/background/table_header.webp');
 			background-position: left bottom;
-
-			&.dinoz {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
-
-			&.missions {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
 		}
-
 		td {
 			font-size: 16px;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -209,86 +188,45 @@ table {
 			border: 1px solid #c88f44;
 			background-image: url('../assets/background/table_cell.webp');
 			background-position: -10px 0px;
-
-			&.dinoz {
-				padding: 1px 5px;
-				font-variant: small-caps;
-			}
-
-			&.missions {
-				font-size: 9pt;
-				padding: 1px 5px;
-				font-weight: bold;
-
-				ul {
-					list-style-type: none;
-					background-color: #f4d9a8;
-					border-radius: 5px;
-					margin: 4px 8px;
-					padding: 4px 8px;
-
-					img {
-						padding-right: 8px;
-						padding-left: 4px;
-					}
-
-					.total {
-						color: #ea0000;
-					}
-				}
-			}
-
-			.see-button {
-				margin-left: 8px;
-				border-color: #c85d3f;
-				border-style: double;
-				background-color: #c85d3f;
-				color: #f3ca92;
-				background-clip: padding-box;
-				font-variant: small-caps;
-				font-size: 9pt;
-				padding: 0px 4px;
-				text-decoration: none;
-
-				&:hover {
-					background-color: #f3ca92;
-					color: #c85d3f;
+			ul {
+				list-style-type: none;
+				background-color: #f4d9a8;
+				border-radius: 5px;
+				margin: 4px 8px;
+				padding: 4px 8px;
+				img {
+					padding-right: 8px;
+					padding-left: 4px;
 				}
 			}
 		}
 	}
 }
-
-.missions-summary {
-	list-style-type: none;
+#missions-summary {
 	color: white;
 	margin-left: 4px;
-
 	li {
 		img {
 			width: 7px;
 			margin-right: 8px;
 			margin-left: 4px;
+			margin-top: 10px;
 		}
-
 		span {
 			font-size: 9pt;
 		}
-
 		table {
-			width: auto;
+			min-width: 90%;
 			margin: 2px 0;
 			margin-left: 18px;
-
 			td {
 				padding: 0px 2px;
-
 				img {
 					width: 8px;
 				}
-
 				.item + img {
 					width: 24px;
+					margin-top: 0;
 				}
 			}
 		}
