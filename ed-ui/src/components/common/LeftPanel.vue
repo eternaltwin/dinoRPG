@@ -32,12 +32,21 @@
 					theme: 'small'
 				}"
 			></a>
-			<a
+			<!--			<a
 				id="menu_dojo"
 				@click="goToPage('DojoHome')"
 				class="icondojo"
 				v-tippy="{
 					content: formatContent($t('layout.dojoButton')),
+					theme: 'small'
+				}"
+			></a>-->
+			<a
+				id="menu_cine"
+				@click="goToCine()"
+				class="iconcine"
+				v-tippy="{
+					content: formatContent($t('layout.cine')),
 					theme: 'small'
 				}"
 			></a>
@@ -100,6 +109,9 @@ export default defineComponent({
 		},
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
+		},
+		goToCine() {
+			window.open('https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/', '_blank');
 		},
 		goToPageWithParam(pageName: string, param: string) {
 			this.$router.push({
@@ -317,6 +329,16 @@ export default defineComponent({
 
 				&:hover {
 					background-image: url('../../assets/icons/act_dojo2.webp');
+				}
+			}
+			&.iconcine {
+				background-image: url('../../assets/icons/act_historique.webp');
+				width: 32px;
+				height: 32px;
+				float: left;
+
+				&:hover {
+					filter: brightness(1.5);
 				}
 			}
 		}

@@ -2393,7 +2393,8 @@
 		"slot": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre dinoz en combat.//",
 		"shopButton": "Accéder à la boutique",
 		"clanButton": "Mon clan",
-		"dojoButton": "Mon dojo"
+		"dojoButton": "Mon dojo",
+		"cine": "Aller au cinema Paradino"
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
