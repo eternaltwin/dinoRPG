@@ -1,5 +1,5 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
-<template class="twinoid-goals">
+<template>
 	<div class="profil">
 		<div class="headProfil">
 			<img :src="getImgURL('design', 'ugoals_crown')" alt="info_button" />
@@ -223,13 +223,12 @@ export default defineComponent({
 		url('../../assets/design/info_footer.webp') no-repeat,
 		url('../../assets/design/info_center.webp') repeat-y;
 	background-position-y: top, bottom;
-	height: auto;
 	width: 305px;
 	margin-bottom: 10px;
 	margin-top: 9px;
 	.headProfil {
 		position: relative;
-		top: -15px;
+		top: -20px;
 		left: 80px;
 	}
 	h3 {

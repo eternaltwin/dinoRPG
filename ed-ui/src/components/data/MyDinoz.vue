@@ -1,6 +1,8 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<ul style="list-style: none">
+	<ul
+		class="ml-[-65px] flex min-w-full flex-wrap items-center justify-center sm:ml-0 md:ml-[-38px] lg:ml-0 lg:items-start lg:justify-around"
+	>
 		<Tippy v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
 			<li class="dinozList">
 				<Suspense>
@@ -27,6 +29,15 @@
 			</template>
 		</Tippy>
 	</ul>
+	<div class="hidden lg:block">
+		<img class="relative ml-[540px] mt-[-200px] w-1/4" :src="getImgURL('design', 'mandragore')" alt="Mandragore" />
+	</div>
+	<div class="hidden md:block lg:hidden">
+		<img class="relative ml-[-100px] mt-[-200px] w-1/6 -scale-x-100" :src="getImgURL('design', 'zenit')" alt="Zenit" />
+	</div>
+	<div class="ml-[-65px] flex items-center justify-center md:hidden">
+		<img class="w-1/2" :src="getImgURL('design', 'bao_hp')" alt="Bao" />
+	</div>
 </template>
 
 <script lang="ts">
@@ -117,7 +128,7 @@ export default defineComponent({
 	float: left;
 	position: relative;
 	width: 170px;
-	height: 175px;
+	height: 190px;
 	background-color: #fbdba8;
 	margin-bottom: 10px;
 	margin-right: 3px;
@@ -135,7 +146,7 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #52646b;
 	background-color: transparent;
-	margin-top: -25px;
+	margin-top: -15px;
 }
 .dinozInfo {
 	text-align: center;
@@ -143,6 +154,7 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #bc683c;
 	width: 170px;
+	margin-top: 5px;
 }
 .link:hover {
 	text-decoration: underline;

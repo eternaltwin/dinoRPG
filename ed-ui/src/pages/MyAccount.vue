@@ -1,31 +1,31 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.account')}`"></TitleHeader>
-	<div style="width: auto">
-		<div class="section">
-			<div class="titlePage">
-				<h3>{{ $t(`myAccount.title`) }} {{ accountData.playerName }}</h3>
-			</div>
-		</div>
-		<div class="wrapper" v-if="dataLoaded">
-			<div class="filler">
-				<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" class="dinoz" />
-				<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" class="dinoz" />
-				<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
-			</div>
-			<div style="display: flex; width: 100%; max-height: 100%">
-				<div style="width: 50%">
-					<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
-				</div>
-				<div style="width: 50%; display: flex; flex-direction: column">
-					<Profile :accountData="accountData" :key="accountData"></Profile>
-					<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
-				</div>
-			</div>
-			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
-			<!--			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />-->
+	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+		<div class="titlePage">
+			<h3>{{ $t(`myAccount.title`) }} {{ accountData.playerName }}</h3>
 		</div>
 	</div>
+	<div
+		class="mb-10 ml-[-65px] flex min-w-full flex-wrap items-center justify-center sm:ml-0 lg:items-start lg:justify-between"
+		v-if="dataLoaded"
+	>
+		<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" />
+		<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" />
+		<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" />
+	</div>
+	<div
+		class="mb-10 ml-[-65px] flex min-w-full flex-col items-center justify-center gap-x-10 sm:ml-0 lg:flex-row lg:flex-nowrap lg:items-start lg:justify-between"
+	>
+		<div>
+			<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
+		</div>
+		<div>
+			<Profile :accountData="accountData" :key="accountData"></Profile>
+			<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
+		</div>
+	</div>
+	<MyDinoz :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
 </template>
 
 <script lang="ts">
@@ -92,50 +92,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.smallbutton {
-	display: inline-block;
-	background-image: url('../assets/design/button_small.webp');
-	font-size: 9pt;
-	width: 80px;
-	padding-top: 5px;
-	padding-right: 5px;
-	color: white;
-	font-weight: normal;
-	font-variant: small-caps;
-	height: 24px;
-	margin-top: 3px;
-	margin-bottom: 2px;
-	padding-left: 10px;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-	&:hover {
-		background-image: url('../assets/design/button_small_hover.webp');
-	}
-}
-.wrapper {
-	display: flex;
-	width: 620px;
-	justify-content: space-between;
-	gap: 10px;
-	flex-direction: column;
-	//flex-wrap: wrap;
-	margin-top: 30px;
-	height: 100%;
-	.mandragore {
-		position: absolute;
-		right: -180px;
-		bottom: 0;
-	}
-}
-.filler {
-	display: flex;
-	gap: 15px;
-	height: 200px;
-	width: 540px;
-	img {
-		object-fit: scale-down;
-		width: 75%;
-	}
+img {
+	object-fit: scale-down;
+	width: 25%;
 }
 </style>

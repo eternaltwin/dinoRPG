@@ -55,7 +55,7 @@
 			</li>
 			<li
 				@click="goToPage('Help')"
-				class="ml-[2px] h-[55px] max-w-[95px] cursor-pointer bg-[url('./assets/design/button_help.gif')] bg-no-repeat pt-[28px] text-center text-xl font-bold text-[#fff1ad] hover:bg-[url('./assets/design/button_help_hover.gif')] hover:text-white"
+				class="ml-[2px] h-[55px] max-w-[95px] cursor-pointer bg-[url('./assets/button/button_help.gif')] bg-no-repeat pt-[28px] text-center text-xl font-bold text-[#fff1ad] hover:bg-[url('./assets/button/button_help_hover.gif')] hover:text-white"
 				style="font-variant: small-caps"
 			>
 				{{ $t('rightMenu.guide') }}
