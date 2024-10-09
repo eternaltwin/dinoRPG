@@ -30,7 +30,7 @@ export async function getActiveDinoz(playerId: number) {
 }
 
 export async function getDinozForAnnounce(dinozId: number) {
-	return await prisma.dinoz.findUnique({
+	return await prisma.dinoz.findUniqueOrThrow({
 		where: {
 			id: dinozId
 		},
