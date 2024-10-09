@@ -1,6 +1,6 @@
 {
 	"name": "@drpg/dino-animation",
-	"version": "0.13.11",
+	"version": "0.13.12",
 	"description": "Recreate DinoRPG multiple flash players using PixiJS",
 	"type": "module",
 	"exports": {
