@@ -74,7 +74,7 @@ export default defineComponent({
 		CompletionRanking,
 		TitleHeader,
 		PlayerRanking,
-		DZDisclaimer
+		DZDisclaimer,
 		Pantheon
 	},
 	data() {

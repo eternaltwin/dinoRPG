@@ -8,7 +8,6 @@
 	</div>
 	<div
 		class="mb-10 ml-[-65px] flex min-w-full flex-wrap items-center justify-center sm:ml-0 lg:items-start lg:justify-between"
-		v-if="dataLoaded"
 	>
 		<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" />
 		<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" />
@@ -17,15 +16,15 @@
 	<div
 		class="mb-10 ml-[-65px] flex min-w-full flex-col items-center justify-center gap-x-10 sm:ml-0 lg:flex-row lg:flex-nowrap lg:items-start lg:justify-between"
 	>
-		<div>
+		<div v-if="dataLoaded">
 			<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
 		</div>
-		<div>
+		<div v-if="dataLoaded">
 			<Profile :accountData="accountData" :key="accountData"></Profile>
 			<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
 		</div>
 	</div>
-	<MyDinoz :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
+	<MyDinoz v-if="dataLoaded" :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
 </template>
 
 <script lang="ts">

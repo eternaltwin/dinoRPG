@@ -42,8 +42,8 @@
 			<a
 				id="menu_clan"
 				@click="goToPlayerClan()"
-				class="float-left mr-[5px] block size-[32px] cursor-pointer bg-[url('./assets/icons/act_castle.webp')] hover:bg-[url('./assets/icons/act_castle2.webp')] disabled:grayscale disabled:hover:cursor-auto"
-				:class="{ disabled: !clanId }"
+				class="float-left mr-[5px] block size-[32px] cursor-pointer bg-[url('./assets/icons/act_castle.webp')] hover:bg-[url('./assets/icons/act_castle2.webp')]"
+				:class="{ 'cursor-auto grayscale': !clanId }"
 				v-tippy="{
 					content: formatContent($t('layout.clanButton')),
 					theme: 'small'

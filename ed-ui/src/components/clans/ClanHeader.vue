@@ -1,14 +1,13 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="header">
-		<h3>
+	<div class="clan-header bg-cover sm:bg-contain">
+		<h3 class="mt-[-5px] sm:mt-0">
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" style="margin-right: 10px" />
 			{{ $t('clan.header.infos') }}
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" style="margin-left: 10px" />
 		</h3>
-
-		<div class="top-info">
-			<div class="top-info-element">
+		<div class="mt-[5px] flex gap-3 text-[14px] sm:ml-[45px] sm:mt-[10px] md:mt-[5px] lg:mt-0">
+			<div class="flex items-center gap-1 rounded-lg bg-[#bc683c] p-1 text-white">
 				<img
 					:src="getImgURL('design', 'small_member')"
 					alt="members"
@@ -17,9 +16,9 @@
 						theme: 'small'
 					}"
 				/>
-				{{ clan?.members?.length }}/{{ maxMembers }}
+				{{ clan?.members?.length }} / {{ maxMembers }}
 			</div>
-			<div class="top-info-element">
+			<div class="flex items-center gap-1 rounded-lg bg-[#bc683c] p-1 text-white">
 				<img
 					:src="getImgURL('icons', 'small_gold')"
 					alt="gold"
@@ -30,7 +29,8 @@
 				/>
 				{{ moneyLint(clan?.treasureValue ?? 0) }}
 			</div>
-			<div class="top-info-element">
+			<!-- CDC
+				<div class="flex items-center gap-1 rounded-lg bg-[#bc683c] p-1 text-white">
 				<img
 					src="\src\assets\icons\crown.png"
 					alt="rank"
@@ -40,13 +40,17 @@
 					}"
 				/>
 				Bronze
-			</div>
+			</div>-->
 		</div>
-		<div class="banner" v-if="clan && clan.id > 0">
-			<img class="banner-img" :src="`${API_BASE}/clan/${clan.id}/banner`" alt="Clan banner" />
+		<div
+			class="mx-auto sm:max-w-[600px] md:max-w-[570px] lg:max-w-[448px]"
+			style="border: 2px solid #fff798"
+			v-if="clan && clan.id > 0"
+		>
+			<img class="h-auto w-full" :src="`${API_BASE}/clan/${clan.id}/banner`" alt="Clan banner" />
 		</div>
-		<div class="bottom-info">
-			<p class="creation-date">{{ $t('clan.header.creation_date', { date: DateToString(clan?.creationDate) }) }}</p>
+		<div class="bottom-info flex">
+			<p class="text-[12px]">{{ $t('clan.header.creation_date', { date: DateToString(clan?.creationDate) }) }}</p>
 			<div class="leader-name">
 				<img
 					src="\src\assets\icons\crown.png"
@@ -96,81 +100,46 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.header {
+.clan-header {
 	background:
 		url('/src/assets/design/clan_banner_header.webp') no-repeat,
 		url('/src/assets/design/clan_banner_footer.webp') no-repeat,
 		url('/src/assets/design/clan_banner_center.webp') repeat-y;
 	background-position-y: top, bottom;
-	background-size: 550px;
-	height: auto;
-	max-height: 600px;
-	overflow: hidden;
-	margin-bottom: 10px;
+	background-size: contain;
+	min-width: 100%;
+	margin-bottom: 20px;
 	h3 {
 		display: flex;
 		justify-content: center;
-		padding-top: 3px;
-		font-family: Arial, sans-serif;
+		padding-top: 1px;
 		font-size: 10pt;
 		font-style: normal;
 		font-variant-caps: small-caps;
 		font-weight: 400;
 		text-align: center;
-		color: #ffee92; //!important;
+		color: #ffee92;
 		text-shadow: 1px 1px 1px #383522;
 		img {
 			height: 7px;
 			width: 7px;
-			padding-top: 5px;
+			margin-top: 5px;
 		}
 	}
 }
-
-.banner {
-	width: 448px;
-	height: 100px;
-	margin-left: auto;
-	margin-right: auto;
-	border: 1px solid #fff798;
-	.banner-img {
-		width: 100%;
-		height: 100%;
-	}
-}
-
-.top-info {
-	margin-left: 65px;
-	display: flex;
-	padding-top: 5px;
-	padding-bottom: 1px;
-	font-size: 14px;
-	.top-info-element {
-		background-color: #bc683c;
-		color: white;
-		padding: 0 2px;
-		margin-right: 15px;
-	}
-}
-
 .bottom-info {
-	margin: 0 65px;
-	display: flex;
+	margin: 0 45px;
 	justify-content: space-between;
 	color: #fff798;
 	padding-top: 1px;
 	padding-bottom: 15px;
 	font-size: 14px;
-	.creation-date {
-		font-size: 12px;
-	}
 	.leader-name {
 		display: flex;
 		gap: 4px;
 		align-items: center;
 		span {
 			color: #fff798;
-			font-family: Arial, sans-serif;
 			font-size: 10pt;
 			font-style: normal;
 			font-variant-caps: small-caps;

@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="new-message-container" v-if="hasAccess">
+	<div class="new-message-container mx-auto w-[95%]" v-if="hasAccess">
 		<div v-if="isConnectionOk">
 			<Ckeditor :editor="editor" v-model="newMessage" />
 		</div>
@@ -201,6 +201,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
 }
 .button-land {
 	display: flex;
@@ -213,8 +214,8 @@ export default defineComponent({
 	flex-direction: column;
 	gap: 8px;
 	padding-bottom: 16px;
+	width: 100%;
 }
-
 .msg {
 	margin: 0 10px;
 	background-color: #d8b68a;
@@ -224,7 +225,7 @@ export default defineComponent({
 		display: flex;
 		justify-content: space-between;
 		gap: 4px;
-		height: 30px;
+		height: 40px;
 		.msg-info {
 			width: 100%;
 			display: flex;
@@ -251,14 +252,15 @@ export default defineComponent({
 				font-size: 10px;
 			}
 		}
-
 		button {
 			float: right;
-			height: 18px;
+			height: 20px;
+			width: 20px;
 			font-size: 10px;
 			background-color: #e75c32;
 			color: #e0c49f;
 			border-color: #e0c49f;
+			cursor: pointer;
 			&:hover {
 				cursor: pointer;
 			}
@@ -269,12 +271,10 @@ export default defineComponent({
 		color: rgb(50, 50, 50);
 	}
 }
-
 .new-message-container {
 	padding: 10px 0;
 	display: flex;
 	gap: 16px;
-	margin: 0 16px;
 	flex-direction: column;
 	a {
 		width: 170px;
@@ -294,7 +294,6 @@ export default defineComponent({
 		}
 	}
 }
-
 textarea {
 	padding-left: 8px;
 	padding-right: 8px;
@@ -307,7 +306,6 @@ textarea {
 	background-color: #bc683c;
 	resize: vertical;
 }
-
 .switch-page-container {
 	display: flex;
 	padding: 8px 16px;
@@ -346,7 +344,6 @@ textarea {
 		}
 	}
 }
-
 .msg-error {
 	color: #e75c32;
 }

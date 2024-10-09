@@ -62,7 +62,6 @@
 			</li>
 		</ul>
 	</div>
-			<li>
 </template>
 
 <script lang="ts">

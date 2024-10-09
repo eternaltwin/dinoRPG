@@ -1,19 +1,19 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="page">
-		<div>{{ editMode ? $t('clanPages.creation.edit') : $t('clanPages.creation.new') }}</div>
-		<div class="box">
-			<div class="middle-content">
-				<div class="grid">
-					<p>{{ $t('clanPages.creation.title') }}</p>
-					<input class="name" type="text" v-model="page.name" />
-
-					<p>{{ $t('clanPages.creation.content') }}</p>
-					<textarea class="content" type="text" v-model="page.content"></textarea>
-
-					<p>{{ $t('clanPages.creation.public') }}</p>
-					<input class="public" type="checkbox" v-model="page.public" :disabled="page.home" />
-				</div>
+	<div class="w-full p-3">
+		<div class="mb-[10px]">{{ editMode ? $t('clanPages.creation.edit') : $t('clanPages.creation.new') }}</div>
+		<div class="mb-[20px] flex flex-col gap-6">
+			<div class="flex flex-wrap gap-3">
+				<p>{{ $t('clanPages.creation.title') }}</p>
+				<input class="name" type="text" v-model="page.name" />
+			</div>
+			<div class="flex flex-wrap gap-3">
+				<p>{{ $t('clanPages.creation.content') }}</p>
+				<textarea class="content" type="text" v-model="page.content"></textarea>
+			</div>
+			<div class="flex flex-wrap">
+				<p>{{ $t('clanPages.creation.public') }}</p>
+				<input class="public" type="checkbox" v-model="page.public" :disabled="page.home" />
 			</div>
 		</div>
 		<a class="button" @click="createClanPage()" v-if="!editMode">{{ $t('clanPages.creation.action.create') }}</a>
@@ -101,55 +101,40 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.page {
-	padding: 10px;
+p {
+	font-variant: normal;
+	font-weight: bold;
+	font-size: 8pt;
+	color: #ffee92;
+	width: 150px;
+	text-align: center;
+	background-color: #e4aa69;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
 }
-
-.grid {
-	display: inline-grid;
-	column-gap: 5px;
-	row-gap: 5px;
-
-	p {
-		grid-column: 1;
-		font-variant: normal;
-		font-weight: bold;
-		font-size: 8pt;
-		color: #ffee92;
-		width: 150px;
-		text-align: center;
-		background-color: #e4aa69;
-		border-radius: 10px;
-		-webkit-border-radius: 10px;
-	}
-
-	input {
-		grid-column: 2;
-		padding-left: 8px;
-		padding-right: 8px;
-		color: #ffee92;
-		font-size: 9pt;
-		font-weight: bold;
-		border: none;
-		width: 184px;
-		height: 20px;
-		background-image: url('../../assets/design/form_field.webp');
-		background-repeat: no-repeat;
-		background-color: transparent;
-	}
-
-	textarea {
-		grid-column: 2;
-		padding-left: 8px;
-		padding-right: 8px;
-		color: #ffee92;
-		font-size: 9pt;
-		font-weight: bold;
-		border: none;
-		height: 100px;
-		width: 300px;
-		background-color: #bc683c;
-		resize: vertical;
-	}
+input {
+	padding-left: 8px;
+	padding-right: 8px;
+	color: #ffee92;
+	font-size: 9pt;
+	font-weight: bold;
+	border: none;
+	width: 200px;
+	height: 25px;
+	background-image: url('../../assets/design/form_field.webp');
+	background-repeat: no-repeat;
+	background-color: transparent;
+}
+textarea {
+	padding-left: 8px;
+	padding-right: 8px;
+	color: #ffee92;
+	font-size: 9pt;
+	font-weight: bold;
+	border: none;
+	min-height: 150px;
+	width: 280px;
+	background-color: #bc683c;
+	resize: vertical;
 }
 </style>

@@ -1,4 +1,3 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="$t('pageTitle.createClan')"></TitleHeader>
 	<div class="section ml-[-25px] mt-[-30px] sm:ml-[-7px] sm:mt-0">
@@ -18,7 +17,7 @@
 		<div class="ml-[-50px] flex w-full flex-col items-start gap-5 sm:ml-[-7px]">
 			<div class="flex flex-wrap gap-5 lg:flex-nowrap">
 				<p>{{ $t('createClan.clan_name') }}</p>
-				<input class="name" type="text" v-model="name" />
+				<input type="text" v-model="name" />
 			</div>
 			<div class="flex flex-wrap gap-5 lg:flex-nowrap">
 				<p>{{ $t('createClan.clan_description') }}</p>
@@ -42,7 +41,6 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/errorHandler.js';
@@ -109,6 +107,7 @@ input {
 	background-image: url('../../assets/design/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
+	outline: none;
 }
 textarea {
 	padding-left: 8px;
