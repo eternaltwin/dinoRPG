@@ -1,5 +1,13 @@
 import { Request } from 'express';
-import { addBid, deleteOffer, getOffer, getOffers, insertOffer, updateOfferStatus } from '../dao/offerDao.js';
+import {
+	addBid,
+	deleteOffer,
+	extendTimer,
+	getOffer,
+	getOffers,
+	insertOffer,
+	updateOfferStatus
+} from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { getDinozPlace, updateDinoz } from '../dao/dinozDao.js';
@@ -300,6 +308,9 @@ export async function bidOffer(req: Request) {
 		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
 		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
 	}
+
+	// Add 30s to offer
+	await extendTimer(offer);
 }
 
 /**

@@ -1,5 +1,5 @@
-import { MARKET_OFFER_DURATION } from '@drpg/core/constants';
-import { OfferStatus, Prisma } from '@drpg/prisma';
+import { MARKET_OFFER_DURATION, MARKET_OFFER_DURATION_DEBUG } from '@drpg/core/constants';
+import { OfferStatus, Prisma, Offer } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -166,5 +166,16 @@ export async function updateOfferStatus(offerId: number, status: OfferStatus) {
 		data: {
 			status
 		}
+	});
+}
+
+export async function extendTimer(offer: Pick<Offer, 'id' | 'endDate'>) {
+	// Ajoute 30 secondes à l'endDate
+	const newEndDate = new Date(offer.endDate.getTime() + 30 * 1000);
+
+	// Met à jour l'endDate avec la nouvelle date
+	await prisma.offer.update({
+		where: { id: offer.id },
+		data: { endDate: newEndDate }
 	});
 }

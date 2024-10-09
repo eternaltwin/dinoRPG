@@ -13,7 +13,7 @@ export async function checkAnnounce(type: PantheonMotif, id: number, rewardId?: 
 			const dinoz = await getDinozForAnnounce(id);
 			const raceAtThisLevel = pantheon
 				.filter(p => p.dinoz?.raceId === dinoz.raceId)
-				.filter(p => p.indicator === dinoz.level)
+				.filter(p => p.indicator === dinoz.level);
 			if (raceAtThisLevel.length <= 4) {
 				DISCORD.sendNotification(
 					translateAll('announce.dinoz', {
