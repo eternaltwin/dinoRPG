@@ -115,13 +115,33 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .rightMenu {
+	//left: 550px;
+	//position: absolute;
+	//padding-bottom: 10px;
+	//padding-right: 10px;
+	margin-top: 90px;
+	height: fit-content;
+	width: fit-content;
+	padding: 15px;
+	//padding-left: 15px;
+	//padding-top: 15px;
+	//padding-bottom: 20px;
 	background:
 		url('../../assets/design/sideMenu_header.webp') no-repeat,
 		url('../../assets/design/sideMenu_footer.webp') no-repeat,
 		url('../../assets/design/sideMenu_bg.webp') repeat-y;
 	background-position-y: top, bottom;
+	//display: block;
+	list-style: none;
+
+	li {
+		width: 100px;
+	}
+
 	a {
 		text-decoration: none;
+		border-collapse: collapse;
+		border-spacing: 0px 0px;
 		color: rgb(142, 62, 38);
 		display: block;
 		font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -130,7 +150,9 @@ export default defineComponent({
 		font-weight: 700;
 		height: 20px;
 		line-height: 14.6667px;
-		padding-left: 5px;
+		list-style: none outside none;
+		margin: 0px 10px 0px 0px;
+		padding: 0 0px 0px 5px;
 		text-align: left;
 	}
 
