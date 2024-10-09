@@ -243,6 +243,22 @@ export async function getPlayerUSkills(playerId: number) {
 	return player;
 }
 
+export async function getPlayerForAnnounce(playerId: number) {
+	return await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			name: true,
+			id: true,
+			rewards: {
+				select: {
+					rewardId: true
+				}
+			}
+		}
+	});
+}
 export async function getEternalTwinId(playerId: number) {
 	const player = await prisma.player.findFirst({
 		where: {

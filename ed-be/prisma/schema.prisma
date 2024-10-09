@@ -32,6 +32,11 @@ enum Lang {
   es
 }
 
+enum PantheonMotif {
+  race
+  epic
+}
+
 enum ModerationReason {
   multi
   dinozName
@@ -66,10 +71,10 @@ model Dinoz {
   remaining          Int                    @default(2)
   createdDate        DateTime               @default(now()) @db.Timestamp(6)
   updatedDate        DateTime               @default(now()) @updatedAt @db.Timestamp(6)
-  playerId           Int?
+  playerId           Int
   order              Int?
   concentrationId    Int?
-  player             Player?                @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
+  player             Player                 @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
   concentration      Concentration?         @relation(fields: [concentrationId], references: [id], onUpdate: NoAction, map: "FK_693d1e839cbd13471ff3721b994")
   unavailableReason  UnavailableReason?
   items              DinozItem[]
@@ -84,6 +89,7 @@ model Dinoz {
   logs               Log[]
   catches            DinozCatch[]
   Moderation         Moderation[]
+  Pantheon           Pantheon[]
 
   @@map("dinoz")
 }
@@ -379,6 +385,7 @@ model Player {
   ClanJoinRequest             ClanJoinRequest?             @relation("clanRequest")
   reportedCases               Moderation[]                 @relation("ReporterRelation")
   targetedCases               Moderation[]                 @relation("TargetRelation")
+  Pantheon                    Pantheon[]
 
   @@map("player")
 }
@@ -580,6 +587,17 @@ model PlayerTracking {
 
   @@unique([stat, playerId])
   @@map("playerTracking")
+}
+
+model Pantheon {
+  id        Int           @id @default(autoincrement())
+  player    Player        @relation(fields: [playerId], references: [id])
+  playerId  Int
+  motif     PantheonMotif
+  dinoz     Dinoz?        @relation(fields: [dinozId], references: [id])
+  dinozId   Int?
+  date      DateTime      @default(now()) @db.Timestamp(6)
+  indicator Int?
 }
 
 // CLANS - IN PROGRESS

@@ -24,19 +24,6 @@
 		<li>
 			<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
 		</li>
-		<!--		<li>-->
-		<!--			<a v-if="isDevEnv()" href="http://localhost:8081/api-docs" target="_blank" class="smallbutton" @click="jwt()"-->
-		<!--				>API</a-->
-		<!--			>-->
-		<!--			<a-->
-		<!--				v-if="!isDevEnv()"-->
-		<!--				href="https://dinorpg.eternaltwin.org/api-docs"-->
-		<!--				target="_blank"-->
-		<!--				class="smallbutton"-->
-		<!--				@click="jwt()"-->
-		<!--				>API</a-->
-		<!--			>-->
-		<!--		</li>-->
 		<li>
 			<a @click="goToPage('FAQ')">{{ $t('rightMenu.faq') }}</a>
 		</li>

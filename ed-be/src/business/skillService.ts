@@ -34,6 +34,8 @@ import { GLOBAL } from '../context.js';
 import { addStatusToDinoz, removeAllStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { checkAnnounce } from '../utils/announcer.js';
+import { PantheonMotif } from '@drpg/prisma';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -158,6 +160,10 @@ export async function learnSkill(req: Request) {
 	const newDinozData = getNewDinozDataFromLevelUp(dinozId, parseInt(req.body.tryNumber), dinozSkills, dinozRace);
 
 	await updateDinoz(newDinozData.id, newDinozData);
+
+	if (newDinozData.level % 10 === 0) {
+		checkAnnounce(PantheonMotif.race, newDinozData.id);
+	}
 
 	// Update player points
 	await updatePoints(dinozSkills.player.id, 1);

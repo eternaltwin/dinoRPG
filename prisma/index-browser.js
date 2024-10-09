@@ -465,6 +465,15 @@ exports.Prisma.PlayerTrackingScalarFieldEnum = {
   quantity: 'quantity'
 };
 
+exports.Prisma.PantheonScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  motif: 'motif',
+  dinozId: 'dinozId',
+  date: 'date',
+  indicator: 'indicator'
+};
+
 exports.Prisma.ClanScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -617,6 +626,11 @@ exports.LogType = exports.$Enums.LogType = {
   AdminUpdateSecret: 'AdminUpdateSecret'
 };
 
+exports.PantheonMotif = exports.$Enums.PantheonMotif = {
+  race: 'race',
+  epic: 'epic'
+};
+
 exports.ModerationReason = exports.$Enums.ModerationReason = {
   multi: 'multi',
   dinozName: 'dinozName',
@@ -664,6 +678,7 @@ exports.Prisma.ModelName = {
   Log: 'Log',
   DinozCatch: 'DinozCatch',
   PlayerTracking: 'PlayerTracking',
+  Pantheon: 'Pantheon',
   Clan: 'Clan',
   ClanJoinRequest: 'ClanJoinRequest',
   ClanWar: 'ClanWar',

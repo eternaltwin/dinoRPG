@@ -25,5 +25,8 @@
   "notEnoughTickets": "You don't have enough tickets.",
   "tooShortMessage": "Your message is too short.",
   "existingNameClan": "An existing clan already have this name.",
-  "alreadyOffer": "You already have an offer ongoing."
+  "alreadyOffer": "You already have an offer ongoing.",
+  "announce": {
+    "dinoz": "Congrats to {{player}} for their {{dinoz}} who is the first {{race}} to reach level {{level}}!"
+  }
 }

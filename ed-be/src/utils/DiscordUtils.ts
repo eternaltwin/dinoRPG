@@ -32,18 +32,22 @@ function formatEmbedTitle(title: string) {
 export interface DiscordClient {
 	sendError(error: Error, res?: Response): void;
 	sendMessage(message: string): Promise<void>;
+	sendNotification(message: string): Promise<void>;
 }
 
 export const NOOP_DISCORD_CLIENT: DiscordClient = {
 	sendError() {},
 	sendMessage() {
 		return Promise.resolve();
+	},
+	sendNotification() {
+		return Promise.resolve();
 	}
 };
 
 export interface NetworkDiscordClientOptions {
-	tournamentWebhookId: string;
-	tournamentWebhookToken: string;
+	notificationWebhookId: string;
+	notificationWebhookToken: string;
 	logWebhookId: string;
 	logWebhookToken: string;
 	timeout?: number;
@@ -57,9 +61,9 @@ export class NetworkDiscordClient implements DiscordClient {
 	readonly #server: URL;
 
 	/**
-	 * Client used to send tournament notifications
+	 * Client used to send player's notifications
 	 */
-	readonly #tournamentClient: WebhookClient;
+	readonly #notificationClient: WebhookClient;
 
 	/**
 	 * Client used to send logs
@@ -77,10 +81,10 @@ export class NetworkDiscordClient implements DiscordClient {
 				timeout: options.timeout ?? DEFAULT_TIMEOUT
 			}
 		};
-		this.#tournamentClient = new WebhookClient(
+		this.#notificationClient = new WebhookClient(
 			{
-				id: options.tournamentWebhookId,
-				token: options.tournamentWebhookToken
+				id: options.notificationWebhookId,
+				token: options.notificationWebhookToken
 			},
 			clientOptions
 		);
@@ -154,5 +158,15 @@ ${error.stack}
 			content = SEND_MESSAGE_PREFIX + short + SEND_MESSAGE_SUFFIX_TRUNCATED;
 		}
 		await this.#logClient.send({ content });
+	}
+
+	public async sendNotification(message: string) {
+		let content = SEND_MESSAGE_PREFIX + message + SEND_MESSAGE_SUFFIX;
+		if (content.length > MAX_CONTENT_LENGTH) {
+			const shortLen = MAX_CONTENT_LENGTH - SEND_MESSAGE_PREFIX.length - SEND_MESSAGE_SUFFIX_TRUNCATED.length;
+			const short = message.substring(0, shortLen);
+			content = SEND_MESSAGE_PREFIX + short + SEND_MESSAGE_SUFFIX_TRUNCATED;
+		}
+		await this.#notificationClient.send({ content });
 	}
 }

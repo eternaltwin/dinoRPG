@@ -204,6 +204,11 @@ export type DinozCatch = $Result.DefaultSelection<Prisma.$DinozCatchPayload>
  */
 export type PlayerTracking = $Result.DefaultSelection<Prisma.$PlayerTrackingPayload>
 /**
+ * Model Pantheon
+ * 
+ */
+export type Pantheon = $Result.DefaultSelection<Prisma.$PantheonPayload>
+/**
  * Model Clan
  * 
  */
@@ -331,6 +336,14 @@ export const LogType: {
 export type LogType = (typeof LogType)[keyof typeof LogType]
 
 
+export const PantheonMotif: {
+  race: 'race',
+  epic: 'epic'
+};
+
+export type PantheonMotif = (typeof PantheonMotif)[keyof typeof PantheonMotif]
+
+
 export const ModerationReason: {
   multi: 'multi',
   dinozName: 'dinozName',
@@ -362,6 +375,10 @@ export const OfferStatus: typeof $Enums.OfferStatus
 export type LogType = $Enums.LogType
 
 export const LogType: typeof $Enums.LogType
+
+export type PantheonMotif = $Enums.PantheonMotif
+
+export const PantheonMotif: typeof $Enums.PantheonMotif
 
 export type ModerationReason = $Enums.ModerationReason
 
@@ -870,6 +887,16 @@ export class PrismaClient<
     * ```
     */
   get playerTracking(): Prisma.PlayerTrackingDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pantheon`: Exposes CRUD operations for the **Pantheon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Pantheons
+    * const pantheons = await prisma.pantheon.findMany()
+    * ```
+    */
+  get pantheon(): Prisma.PantheonDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.clan`: Exposes CRUD operations for the **Clan** model.
@@ -1475,6 +1502,7 @@ export namespace Prisma {
     Log: 'Log',
     DinozCatch: 'DinozCatch',
     PlayerTracking: 'PlayerTracking',
+    Pantheon: 'Pantheon',
     Clan: 'Clan',
     ClanJoinRequest: 'ClanJoinRequest',
     ClanWar: 'ClanWar',
@@ -1499,7 +1527,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "importedDinoz" | "importedDinozSkill" | "importedDinozStatus" | "importedPlayer" | "importedPlayerIngredient" | "importedPlayerItem" | "importedPlayerReward" | "importedPlayerScenario" | "importedTwinoidAchievement" | "importedTwinoidSite" | "importedTwinoidStat" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "importedDinoz" | "importedDinozSkill" | "importedDinozStatus" | "importedPlayer" | "importedPlayerIngredient" | "importedPlayerItem" | "importedPlayerReward" | "importedPlayerScenario" | "importedTwinoidAchievement" | "importedTwinoidSite" | "importedTwinoidStat" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4163,6 +4191,76 @@ export namespace Prisma {
           }
         }
       }
+      Pantheon: {
+        payload: Prisma.$PantheonPayload<ExtArgs>
+        fields: Prisma.PantheonFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PantheonFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PantheonFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>
+          }
+          findFirst: {
+            args: Prisma.PantheonFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PantheonFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>
+          }
+          findMany: {
+            args: Prisma.PantheonFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>[]
+          }
+          create: {
+            args: Prisma.PantheonCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>
+          }
+          createMany: {
+            args: Prisma.PantheonCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PantheonCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>[]
+          }
+          delete: {
+            args: Prisma.PantheonDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>
+          }
+          update: {
+            args: Prisma.PantheonUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>
+          }
+          deleteMany: {
+            args: Prisma.PantheonDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PantheonUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PantheonUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PantheonPayload>
+          }
+          aggregate: {
+            args: Prisma.PantheonAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePantheon>
+          }
+          groupBy: {
+            args: Prisma.PantheonGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PantheonGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PantheonCountArgs<ExtArgs>
+            result: $Utils.Optional<PantheonCountAggregateOutputType> | number
+          }
+        }
+      }
       Clan: {
         payload: Prisma.$ClanPayload<ExtArgs>
         fields: Prisma.ClanFieldRefs
@@ -4915,6 +5013,7 @@ export namespace Prisma {
     log?: LogOmit
     dinozCatch?: DinozCatchOmit
     playerTracking?: PlayerTrackingOmit
+    pantheon?: PantheonOmit
     clan?: ClanOmit
     clanJoinRequest?: ClanJoinRequestOmit
     clanWar?: ClanWarOmit
@@ -5060,6 +5159,7 @@ export namespace Prisma {
     logs: number
     catches: number
     Moderation: number
+    Pantheon: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5075,6 +5175,7 @@ export namespace Prisma {
     logs?: boolean | DinozCountOutputTypeCountLogsArgs
     catches?: boolean | DinozCountOutputTypeCountCatchesArgs
     Moderation?: boolean | DinozCountOutputTypeCountModerationArgs
+    Pantheon?: boolean | DinozCountOutputTypeCountPantheonArgs
   }
 
   // Custom InputTypes
@@ -5170,6 +5271,13 @@ export namespace Prisma {
    */
   export type DinozCountOutputTypeCountModerationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ModerationWhereInput
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountPantheonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PantheonWhereInput
   }
 
 
@@ -5335,6 +5443,7 @@ export namespace Prisma {
     ClanHistory: number
     reportedCases: number
     targetedCases: number
+    Pantheon: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5357,6 +5466,7 @@ export namespace Prisma {
     ClanHistory?: boolean | PlayerCountOutputTypeCountClanHistoryArgs
     reportedCases?: boolean | PlayerCountOutputTypeCountReportedCasesArgs
     targetedCases?: boolean | PlayerCountOutputTypeCountTargetedCasesArgs
+    Pantheon?: boolean | PlayerCountOutputTypeCountPantheonArgs
   }
 
   // Custom InputTypes
@@ -5501,6 +5611,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountTargetedCasesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ModerationWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountPantheonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PantheonWhereInput
   }
 
 
@@ -7047,7 +7164,7 @@ export namespace Prisma {
     remaining: number
     createdDate: Date
     updatedDate: Date
-    playerId: number | null
+    playerId: number
     order: number | null
     concentrationId: number | null
     unavailableReason: $Enums.UnavailableReason | null
@@ -7102,7 +7219,7 @@ export namespace Prisma {
     concentrationId?: boolean
     unavailableReason?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
-    player?: boolean | Dinoz$playerArgs<ExtArgs>
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
     missions?: boolean | Dinoz$missionsArgs<ExtArgs>
@@ -7116,6 +7233,7 @@ export namespace Prisma {
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
+    Pantheon?: boolean | Dinoz$PantheonArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -7149,7 +7267,7 @@ export namespace Prisma {
     concentrationId?: boolean
     unavailableReason?: boolean
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
-    player?: boolean | Dinoz$playerArgs<ExtArgs>
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -7187,7 +7305,7 @@ export namespace Prisma {
   export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "seed" | "fight" | "gather" | "remaining" | "createdDate" | "updatedDate" | "playerId" | "order" | "concentrationId" | "unavailableReason", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
-    player?: boolean | Dinoz$playerArgs<ExtArgs>
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     items?: boolean | Dinoz$itemsArgs<ExtArgs>
     missions?: boolean | Dinoz$missionsArgs<ExtArgs>
@@ -7201,11 +7319,12 @@ export namespace Prisma {
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
+    Pantheon?: boolean | Dinoz$PantheonArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
-    player?: boolean | Dinoz$playerArgs<ExtArgs>
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
   }
 
@@ -7213,7 +7332,7 @@ export namespace Prisma {
     name: "Dinoz"
     objects: {
       leader: Prisma.$DinozPayload<ExtArgs> | null
-      player: Prisma.$PlayerPayload<ExtArgs> | null
+      player: Prisma.$PlayerPayload<ExtArgs>
       concentration: Prisma.$ConcentrationPayload<ExtArgs> | null
       items: Prisma.$DinozItemPayload<ExtArgs>[]
       missions: Prisma.$DinozMissionPayload<ExtArgs>[]
@@ -7227,6 +7346,7 @@ export namespace Prisma {
       logs: Prisma.$LogPayload<ExtArgs>[]
       catches: Prisma.$DinozCatchPayload<ExtArgs>[]
       Moderation: Prisma.$ModerationPayload<ExtArgs>[]
+      Pantheon: Prisma.$PantheonPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7253,7 +7373,7 @@ export namespace Prisma {
       remaining: number
       createdDate: Date
       updatedDate: Date
-      playerId: number | null
+      playerId: number
       order: number | null
       concentrationId: number | null
       unavailableReason: $Enums.UnavailableReason | null
@@ -7622,7 +7742,7 @@ export namespace Prisma {
   export interface Prisma__DinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     leader<T extends Dinoz$leaderArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$leaderArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    player<T extends Dinoz$playerArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     concentration<T extends Dinoz$concentrationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$concentrationArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     items<T extends Dinoz$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     missions<T extends Dinoz$missionsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$missionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -7636,6 +7756,7 @@ export namespace Prisma {
     logs<T extends Dinoz$logsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     catches<T extends Dinoz$catchesArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$catchesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     Moderation<T extends Dinoz$ModerationArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$ModerationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Pantheon<T extends Dinoz$PantheonArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$PantheonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8079,25 +8200,6 @@ export namespace Prisma {
   }
 
   /**
-   * Dinoz.player
-   */
-  export type Dinoz$playerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Player
-     */
-    select?: PlayerSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Player
-     */
-    omit?: PlayerOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PlayerInclude<ExtArgs> | null
-    where?: PlayerWhereInput
-  }
-
-  /**
    * Dinoz.concentration
    */
   export type Dinoz$concentrationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8402,6 +8504,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.Pantheon
+   */
+  export type Dinoz$PantheonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    where?: PantheonWhereInput
+    orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
+    cursor?: PantheonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
   }
 
   /**
@@ -30018,6 +30144,7 @@ export namespace Prisma {
     ClanJoinRequest?: boolean | Player$ClanJoinRequestArgs<ExtArgs>
     reportedCases?: boolean | Player$reportedCasesArgs<ExtArgs>
     targetedCases?: boolean | Player$targetedCasesArgs<ExtArgs>
+    Pantheon?: boolean | Player$PantheonArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -30101,6 +30228,7 @@ export namespace Prisma {
     ClanJoinRequest?: boolean | Player$ClanJoinRequestArgs<ExtArgs>
     reportedCases?: boolean | Player$reportedCasesArgs<ExtArgs>
     targetedCases?: boolean | Player$targetedCasesArgs<ExtArgs>
+    Pantheon?: boolean | Player$PantheonArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -30132,6 +30260,7 @@ export namespace Prisma {
       ClanJoinRequest: Prisma.$ClanJoinRequestPayload<ExtArgs> | null
       reportedCases: Prisma.$ModerationPayload<ExtArgs>[]
       targetedCases: Prisma.$ModerationPayload<ExtArgs>[]
+      Pantheon: Prisma.$PantheonPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -30546,6 +30675,7 @@ export namespace Prisma {
     ClanJoinRequest<T extends Player$ClanJoinRequestArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanJoinRequestArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     reportedCases<T extends Player$reportedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$reportedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     targetedCases<T extends Player$targetedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$targetedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    Pantheon<T extends Player$PantheonArgs<ExtArgs> = {}>(args?: Subset<T, Player$PantheonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31510,6 +31640,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
+  }
+
+  /**
+   * Player.Pantheon
+   */
+  export type Player$PantheonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    where?: PantheonWhereInput
+    orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
+    cursor?: PantheonWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
   }
 
   /**
@@ -47055,6 +47209,1076 @@ export namespace Prisma {
 
 
   /**
+   * Model Pantheon
+   */
+
+  export type AggregatePantheon = {
+    _count: PantheonCountAggregateOutputType | null
+    _avg: PantheonAvgAggregateOutputType | null
+    _sum: PantheonSumAggregateOutputType | null
+    _min: PantheonMinAggregateOutputType | null
+    _max: PantheonMaxAggregateOutputType | null
+  }
+
+  export type PantheonAvgAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    dinozId: number | null
+    indicator: number | null
+  }
+
+  export type PantheonSumAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    dinozId: number | null
+    indicator: number | null
+  }
+
+  export type PantheonMinAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    motif: $Enums.PantheonMotif | null
+    dinozId: number | null
+    date: Date | null
+    indicator: number | null
+  }
+
+  export type PantheonMaxAggregateOutputType = {
+    id: number | null
+    playerId: number | null
+    motif: $Enums.PantheonMotif | null
+    dinozId: number | null
+    date: Date | null
+    indicator: number | null
+  }
+
+  export type PantheonCountAggregateOutputType = {
+    id: number
+    playerId: number
+    motif: number
+    dinozId: number
+    date: number
+    indicator: number
+    _all: number
+  }
+
+
+  export type PantheonAvgAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+    indicator?: true
+  }
+
+  export type PantheonSumAggregateInputType = {
+    id?: true
+    playerId?: true
+    dinozId?: true
+    indicator?: true
+  }
+
+  export type PantheonMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    motif?: true
+    dinozId?: true
+    date?: true
+    indicator?: true
+  }
+
+  export type PantheonMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    motif?: true
+    dinozId?: true
+    date?: true
+    indicator?: true
+  }
+
+  export type PantheonCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    motif?: true
+    dinozId?: true
+    date?: true
+    indicator?: true
+    _all?: true
+  }
+
+  export type PantheonAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pantheon to aggregate.
+     */
+    where?: PantheonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pantheons to fetch.
+     */
+    orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PantheonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pantheons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pantheons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Pantheons
+    **/
+    _count?: true | PantheonCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PantheonAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PantheonSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PantheonMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PantheonMaxAggregateInputType
+  }
+
+  export type GetPantheonAggregateType<T extends PantheonAggregateArgs> = {
+        [P in keyof T & keyof AggregatePantheon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePantheon[P]>
+      : GetScalarType<T[P], AggregatePantheon[P]>
+  }
+
+
+
+
+  export type PantheonGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PantheonWhereInput
+    orderBy?: PantheonOrderByWithAggregationInput | PantheonOrderByWithAggregationInput[]
+    by: PantheonScalarFieldEnum[] | PantheonScalarFieldEnum
+    having?: PantheonScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PantheonCountAggregateInputType | true
+    _avg?: PantheonAvgAggregateInputType
+    _sum?: PantheonSumAggregateInputType
+    _min?: PantheonMinAggregateInputType
+    _max?: PantheonMaxAggregateInputType
+  }
+
+  export type PantheonGroupByOutputType = {
+    id: number
+    playerId: number
+    motif: $Enums.PantheonMotif
+    dinozId: number | null
+    date: Date
+    indicator: number | null
+    _count: PantheonCountAggregateOutputType | null
+    _avg: PantheonAvgAggregateOutputType | null
+    _sum: PantheonSumAggregateOutputType | null
+    _min: PantheonMinAggregateOutputType | null
+    _max: PantheonMaxAggregateOutputType | null
+  }
+
+  type GetPantheonGroupByPayload<T extends PantheonGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PantheonGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PantheonGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PantheonGroupByOutputType[P]>
+            : GetScalarType<T[P], PantheonGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PantheonSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    motif?: boolean
+    dinozId?: boolean
+    date?: boolean
+    indicator?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
+  }, ExtArgs["result"]["pantheon"]>
+
+  export type PantheonSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    motif?: boolean
+    dinozId?: boolean
+    date?: boolean
+    indicator?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
+  }, ExtArgs["result"]["pantheon"]>
+
+  export type PantheonSelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    motif?: boolean
+    dinozId?: boolean
+    date?: boolean
+    indicator?: boolean
+  }
+
+  export type PantheonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "motif" | "dinozId" | "date" | "indicator", ExtArgs["result"]["pantheon"]>
+  export type PantheonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
+  }
+  export type PantheonIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
+  }
+
+  export type $PantheonPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Pantheon"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      playerId: number
+      motif: $Enums.PantheonMotif
+      dinozId: number | null
+      date: Date
+      indicator: number | null
+    }, ExtArgs["result"]["pantheon"]>
+    composites: {}
+  }
+
+  type PantheonGetPayload<S extends boolean | null | undefined | PantheonDefaultArgs> = $Result.GetResult<Prisma.$PantheonPayload, S>
+
+  type PantheonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PantheonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: PantheonCountAggregateInputType | true
+    }
+
+  export interface PantheonDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Pantheon'], meta: { name: 'Pantheon' } }
+    /**
+     * Find zero or one Pantheon that matches the filter.
+     * @param {PantheonFindUniqueArgs} args - Arguments to find a Pantheon
+     * @example
+     * // Get one Pantheon
+     * const pantheon = await prisma.pantheon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PantheonFindUniqueArgs>(args: SelectSubset<T, PantheonFindUniqueArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Pantheon that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PantheonFindUniqueOrThrowArgs} args - Arguments to find a Pantheon
+     * @example
+     * // Get one Pantheon
+     * const pantheon = await prisma.pantheon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PantheonFindUniqueOrThrowArgs>(args: SelectSubset<T, PantheonFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Pantheon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonFindFirstArgs} args - Arguments to find a Pantheon
+     * @example
+     * // Get one Pantheon
+     * const pantheon = await prisma.pantheon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PantheonFindFirstArgs>(args?: SelectSubset<T, PantheonFindFirstArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Pantheon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonFindFirstOrThrowArgs} args - Arguments to find a Pantheon
+     * @example
+     * // Get one Pantheon
+     * const pantheon = await prisma.pantheon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PantheonFindFirstOrThrowArgs>(args?: SelectSubset<T, PantheonFindFirstOrThrowArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Pantheons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Pantheons
+     * const pantheons = await prisma.pantheon.findMany()
+     * 
+     * // Get first 10 Pantheons
+     * const pantheons = await prisma.pantheon.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pantheonWithIdOnly = await prisma.pantheon.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PantheonFindManyArgs>(args?: SelectSubset<T, PantheonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Pantheon.
+     * @param {PantheonCreateArgs} args - Arguments to create a Pantheon.
+     * @example
+     * // Create one Pantheon
+     * const Pantheon = await prisma.pantheon.create({
+     *   data: {
+     *     // ... data to create a Pantheon
+     *   }
+     * })
+     * 
+     */
+    create<T extends PantheonCreateArgs>(args: SelectSubset<T, PantheonCreateArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Pantheons.
+     * @param {PantheonCreateManyArgs} args - Arguments to create many Pantheons.
+     * @example
+     * // Create many Pantheons
+     * const pantheon = await prisma.pantheon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PantheonCreateManyArgs>(args?: SelectSubset<T, PantheonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Pantheons and returns the data saved in the database.
+     * @param {PantheonCreateManyAndReturnArgs} args - Arguments to create many Pantheons.
+     * @example
+     * // Create many Pantheons
+     * const pantheon = await prisma.pantheon.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Pantheons and only return the `id`
+     * const pantheonWithIdOnly = await prisma.pantheon.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PantheonCreateManyAndReturnArgs>(args?: SelectSubset<T, PantheonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Pantheon.
+     * @param {PantheonDeleteArgs} args - Arguments to delete one Pantheon.
+     * @example
+     * // Delete one Pantheon
+     * const Pantheon = await prisma.pantheon.delete({
+     *   where: {
+     *     // ... filter to delete one Pantheon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PantheonDeleteArgs>(args: SelectSubset<T, PantheonDeleteArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Pantheon.
+     * @param {PantheonUpdateArgs} args - Arguments to update one Pantheon.
+     * @example
+     * // Update one Pantheon
+     * const pantheon = await prisma.pantheon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PantheonUpdateArgs>(args: SelectSubset<T, PantheonUpdateArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Pantheons.
+     * @param {PantheonDeleteManyArgs} args - Arguments to filter Pantheons to delete.
+     * @example
+     * // Delete a few Pantheons
+     * const { count } = await prisma.pantheon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PantheonDeleteManyArgs>(args?: SelectSubset<T, PantheonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Pantheons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Pantheons
+     * const pantheon = await prisma.pantheon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PantheonUpdateManyArgs>(args: SelectSubset<T, PantheonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Pantheon.
+     * @param {PantheonUpsertArgs} args - Arguments to update or create a Pantheon.
+     * @example
+     * // Update or create a Pantheon
+     * const pantheon = await prisma.pantheon.upsert({
+     *   create: {
+     *     // ... data to create a Pantheon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Pantheon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PantheonUpsertArgs>(args: SelectSubset<T, PantheonUpsertArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Pantheons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonCountArgs} args - Arguments to filter Pantheons to count.
+     * @example
+     * // Count the number of Pantheons
+     * const count = await prisma.pantheon.count({
+     *   where: {
+     *     // ... the filter for the Pantheons we want to count
+     *   }
+     * })
+    **/
+    count<T extends PantheonCountArgs>(
+      args?: Subset<T, PantheonCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PantheonCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Pantheon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PantheonAggregateArgs>(args: Subset<T, PantheonAggregateArgs>): Prisma.PrismaPromise<GetPantheonAggregateType<T>>
+
+    /**
+     * Group by Pantheon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PantheonGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PantheonGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PantheonGroupByArgs['orderBy'] }
+        : { orderBy?: PantheonGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PantheonGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPantheonGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Pantheon model
+   */
+  readonly fields: PantheonFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Pantheon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PantheonClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    dinoz<T extends Pantheon$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Pantheon$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Pantheon model
+   */ 
+  interface PantheonFieldRefs {
+    readonly id: FieldRef<"Pantheon", 'Int'>
+    readonly playerId: FieldRef<"Pantheon", 'Int'>
+    readonly motif: FieldRef<"Pantheon", 'PantheonMotif'>
+    readonly dinozId: FieldRef<"Pantheon", 'Int'>
+    readonly date: FieldRef<"Pantheon", 'DateTime'>
+    readonly indicator: FieldRef<"Pantheon", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Pantheon findUnique
+   */
+  export type PantheonFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * Filter, which Pantheon to fetch.
+     */
+    where: PantheonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon findUniqueOrThrow
+   */
+  export type PantheonFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * Filter, which Pantheon to fetch.
+     */
+    where: PantheonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon findFirst
+   */
+  export type PantheonFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * Filter, which Pantheon to fetch.
+     */
+    where?: PantheonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pantheons to fetch.
+     */
+    orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pantheons.
+     */
+    cursor?: PantheonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pantheons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pantheons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pantheons.
+     */
+    distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon findFirstOrThrow
+   */
+  export type PantheonFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * Filter, which Pantheon to fetch.
+     */
+    where?: PantheonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pantheons to fetch.
+     */
+    orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Pantheons.
+     */
+    cursor?: PantheonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pantheons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pantheons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Pantheons.
+     */
+    distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon findMany
+   */
+  export type PantheonFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * Filter, which Pantheons to fetch.
+     */
+    where?: PantheonWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Pantheons to fetch.
+     */
+    orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Pantheons.
+     */
+    cursor?: PantheonWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Pantheons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Pantheons.
+     */
+    skip?: number
+    distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon create
+   */
+  export type PantheonCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Pantheon.
+     */
+    data: XOR<PantheonCreateInput, PantheonUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon createMany
+   */
+  export type PantheonCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Pantheons.
+     */
+    data: PantheonCreateManyInput | PantheonCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Pantheon createManyAndReturn
+   */
+  export type PantheonCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * The data used to create many Pantheons.
+     */
+    data: PantheonCreateManyInput | PantheonCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Pantheon update
+   */
+  export type PantheonUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Pantheon.
+     */
+    data: XOR<PantheonUpdateInput, PantheonUncheckedUpdateInput>
+    /**
+     * Choose, which Pantheon to update.
+     */
+    where: PantheonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon updateMany
+   */
+  export type PantheonUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Pantheons.
+     */
+    data: XOR<PantheonUpdateManyMutationInput, PantheonUncheckedUpdateManyInput>
+    /**
+     * Filter which Pantheons to update
+     */
+    where?: PantheonWhereInput
+  }
+
+  /**
+   * Pantheon upsert
+   */
+  export type PantheonUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Pantheon to update in case it exists.
+     */
+    where: PantheonWhereUniqueInput
+    /**
+     * In case the Pantheon found by the `where` argument doesn't exist, create a new Pantheon with this data.
+     */
+    create: XOR<PantheonCreateInput, PantheonUncheckedCreateInput>
+    /**
+     * In case the Pantheon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PantheonUpdateInput, PantheonUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon delete
+   */
+  export type PantheonDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+    /**
+     * Filter which Pantheon to delete.
+     */
+    where: PantheonWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Pantheon deleteMany
+   */
+  export type PantheonDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Pantheons to delete
+     */
+    where?: PantheonWhereInput
+  }
+
+  /**
+   * Pantheon.dinoz
+   */
+  export type Pantheon$dinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dinoz
+     */
+    select?: DinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dinoz
+     */
+    omit?: DinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DinozInclude<ExtArgs> | null
+    where?: DinozWhereInput
+  }
+
+  /**
+   * Pantheon without action
+   */
+  export type PantheonDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Pantheon
+     */
+    select?: PantheonSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Pantheon
+     */
+    omit?: PantheonOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PantheonInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Clan
    */
 
@@ -57154,6 +58378,18 @@ export namespace Prisma {
   export type PlayerTrackingScalarFieldEnum = (typeof PlayerTrackingScalarFieldEnum)[keyof typeof PlayerTrackingScalarFieldEnum]
 
 
+  export const PantheonScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    motif: 'motif',
+    dinozId: 'dinozId',
+    date: 'date',
+    indicator: 'indicator'
+  };
+
+  export type PantheonScalarFieldEnum = (typeof PantheonScalarFieldEnum)[keyof typeof PantheonScalarFieldEnum]
+
+
   export const ClanScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -57433,6 +58669,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'PantheonMotif'
+   */
+  export type EnumPantheonMotifFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PantheonMotif'>
+    
+
+
+  /**
+   * Reference to a field of type 'PantheonMotif[]'
+   */
+  export type ListEnumPantheonMotifFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PantheonMotif[]'>
+    
+
+
+  /**
    * Reference to a field of type 'ModerationReason'
    */
   export type EnumModerationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationReason'>
@@ -57528,12 +58778,12 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
-    playerId?: IntNullableFilter<"Dinoz"> | number | null
+    playerId?: IntFilter<"Dinoz"> | number
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
     concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
     items?: DinozItemListRelationFilter
     missions?: DinozMissionListRelationFilter
@@ -57547,6 +58797,7 @@ export namespace Prisma {
     logs?: LogListRelationFilter
     catches?: DinozCatchListRelationFilter
     Moderation?: ModerationListRelationFilter
+    Pantheon?: PantheonListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -57574,7 +58825,7 @@ export namespace Prisma {
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
-    playerId?: SortOrderInput | SortOrder
+    playerId?: SortOrder
     order?: SortOrderInput | SortOrder
     concentrationId?: SortOrderInput | SortOrder
     unavailableReason?: SortOrderInput | SortOrder
@@ -57593,6 +58844,7 @@ export namespace Prisma {
     logs?: LogOrderByRelationAggregateInput
     catches?: DinozCatchOrderByRelationAggregateInput
     Moderation?: ModerationOrderByRelationAggregateInput
+    Pantheon?: PantheonOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -57623,12 +58875,12 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
-    playerId?: IntNullableFilter<"Dinoz"> | number | null
+    playerId?: IntFilter<"Dinoz"> | number
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
     concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
     items?: DinozItemListRelationFilter
     missions?: DinozMissionListRelationFilter
@@ -57642,6 +58894,7 @@ export namespace Prisma {
     logs?: LogListRelationFilter
     catches?: DinozCatchListRelationFilter
     Moderation?: ModerationListRelationFilter
+    Pantheon?: PantheonListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -57669,7 +58922,7 @@ export namespace Prisma {
     remaining?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
-    playerId?: SortOrderInput | SortOrder
+    playerId?: SortOrder
     order?: SortOrderInput | SortOrder
     concentrationId?: SortOrderInput | SortOrder
     unavailableReason?: SortOrderInput | SortOrder
@@ -57708,7 +58961,7 @@ export namespace Prisma {
     remaining?: IntWithAggregatesFilter<"Dinoz"> | number
     createdDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Dinoz"> | Date | string
-    playerId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
+    playerId?: IntWithAggregatesFilter<"Dinoz"> | number
     order?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableWithAggregatesFilter<"Dinoz"> | number | null
     unavailableReason?: EnumUnavailableReasonNullableWithAggregatesFilter<"Dinoz"> | $Enums.UnavailableReason | null
@@ -58982,6 +60235,7 @@ export namespace Prisma {
     ClanJoinRequest?: XOR<ClanJoinRequestNullableRelationFilter, ClanJoinRequestWhereInput> | null
     reportedCases?: ModerationListRelationFilter
     targetedCases?: ModerationListRelationFilter
+    Pantheon?: PantheonListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -59033,6 +60287,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestOrderByWithRelationInput
     reportedCases?: ModerationOrderByRelationAggregateInput
     targetedCases?: ModerationOrderByRelationAggregateInput
+    Pantheon?: PantheonOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -59087,6 +60342,7 @@ export namespace Prisma {
     ClanJoinRequest?: XOR<ClanJoinRequestNullableRelationFilter, ClanJoinRequestWhereInput> | null
     reportedCases?: ModerationListRelationFilter
     targetedCases?: ModerationListRelationFilter
+    Pantheon?: PantheonListRelationFilter
   }, "id" | "clanMemberId">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -59966,6 +61222,71 @@ export namespace Prisma {
     quantity?: IntWithAggregatesFilter<"PlayerTracking"> | number
   }
 
+  export type PantheonWhereInput = {
+    AND?: PantheonWhereInput | PantheonWhereInput[]
+    OR?: PantheonWhereInput[]
+    NOT?: PantheonWhereInput | PantheonWhereInput[]
+    id?: IntFilter<"Pantheon"> | number
+    playerId?: IntFilter<"Pantheon"> | number
+    motif?: EnumPantheonMotifFilter<"Pantheon"> | $Enums.PantheonMotif
+    dinozId?: IntNullableFilter<"Pantheon"> | number | null
+    date?: DateTimeFilter<"Pantheon"> | Date | string
+    indicator?: IntNullableFilter<"Pantheon"> | number | null
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }
+
+  export type PantheonOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    motif?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    date?: SortOrder
+    indicator?: SortOrderInput | SortOrder
+    player?: PlayerOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type PantheonWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: PantheonWhereInput | PantheonWhereInput[]
+    OR?: PantheonWhereInput[]
+    NOT?: PantheonWhereInput | PantheonWhereInput[]
+    playerId?: IntFilter<"Pantheon"> | number
+    motif?: EnumPantheonMotifFilter<"Pantheon"> | $Enums.PantheonMotif
+    dinozId?: IntNullableFilter<"Pantheon"> | number | null
+    date?: DateTimeFilter<"Pantheon"> | Date | string
+    indicator?: IntNullableFilter<"Pantheon"> | number | null
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+  }, "id">
+
+  export type PantheonOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    motif?: SortOrder
+    dinozId?: SortOrderInput | SortOrder
+    date?: SortOrder
+    indicator?: SortOrderInput | SortOrder
+    _count?: PantheonCountOrderByAggregateInput
+    _avg?: PantheonAvgOrderByAggregateInput
+    _max?: PantheonMaxOrderByAggregateInput
+    _min?: PantheonMinOrderByAggregateInput
+    _sum?: PantheonSumOrderByAggregateInput
+  }
+
+  export type PantheonScalarWhereWithAggregatesInput = {
+    AND?: PantheonScalarWhereWithAggregatesInput | PantheonScalarWhereWithAggregatesInput[]
+    OR?: PantheonScalarWhereWithAggregatesInput[]
+    NOT?: PantheonScalarWhereWithAggregatesInput | PantheonScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Pantheon"> | number
+    playerId?: IntWithAggregatesFilter<"Pantheon"> | number
+    motif?: EnumPantheonMotifWithAggregatesFilter<"Pantheon"> | $Enums.PantheonMotif
+    dinozId?: IntNullableWithAggregatesFilter<"Pantheon"> | number | null
+    date?: DateTimeWithAggregatesFilter<"Pantheon"> | Date | string
+    indicator?: IntNullableWithAggregatesFilter<"Pantheon"> | number | null
+  }
+
   export type ClanWhereInput = {
     AND?: ClanWhereInput | ClanWhereInput[]
     OR?: ClanWhereInput[]
@@ -60591,7 +61912,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -60605,6 +61926,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -60632,7 +61954,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -60648,6 +61970,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -60676,7 +61999,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -60690,6 +62013,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -60717,7 +62041,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -60733,6 +62057,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -60760,7 +62085,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -60818,7 +62143,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -62019,6 +63344,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -62070,6 +63396,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -62120,6 +63447,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -62171,6 +63499,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -62965,6 +64294,64 @@ export namespace Prisma {
     quantity?: IntFieldUpdateOperationsInput | number
   }
 
+  export type PantheonCreateInput = {
+    motif: $Enums.PantheonMotif
+    date?: Date | string
+    indicator?: number | null
+    player: PlayerCreateNestedOneWithoutPantheonInput
+    dinoz?: DinozCreateNestedOneWithoutPantheonInput
+  }
+
+  export type PantheonUncheckedCreateInput = {
+    id?: number
+    playerId: number
+    motif: $Enums.PantheonMotif
+    dinozId?: number | null
+    date?: Date | string
+    indicator?: number | null
+  }
+
+  export type PantheonUpdateInput = {
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+    player?: PlayerUpdateOneRequiredWithoutPantheonNestedInput
+    dinoz?: DinozUpdateOneWithoutPantheonNestedInput
+  }
+
+  export type PantheonUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PantheonCreateManyInput = {
+    id?: number
+    playerId: number
+    motif: $Enums.PantheonMotif
+    dinozId?: number | null
+    date?: Date | string
+    indicator?: number | null
+  }
+
+  export type PantheonUpdateManyMutationInput = {
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PantheonUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type ClanCreateInput = {
     name: string
     treasureValue?: number
@@ -63587,9 +64974,9 @@ export namespace Prisma {
     isNot?: DinozWhereInput | null
   }
 
-  export type PlayerNullableRelationFilter = {
-    is?: PlayerWhereInput | null
-    isNot?: PlayerWhereInput | null
+  export type PlayerRelationFilter = {
+    is?: PlayerWhereInput
+    isNot?: PlayerWhereInput
   }
 
   export type ConcentrationNullableRelationFilter = {
@@ -63663,6 +65050,12 @@ export namespace Prisma {
     none?: ModerationWhereInput
   }
 
+  export type PantheonListRelationFilter = {
+    every?: PantheonWhereInput
+    some?: PantheonWhereInput
+    none?: PantheonWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -63709,6 +65102,10 @@ export namespace Prisma {
   }
 
   export type ModerationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PantheonOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -64336,6 +65733,11 @@ export namespace Prisma {
     every?: ImportedDinozWhereInput
     some?: ImportedDinozWhereInput
     none?: ImportedDinozWhereInput
+  }
+
+  export type PlayerNullableRelationFilter = {
+    is?: PlayerWhereInput | null
+    isNot?: PlayerWhereInput | null
   }
 
   export type ImportedPlayerIngredientListRelationFilter = {
@@ -65554,11 +66956,6 @@ export namespace Prisma {
     quantity?: SortOrder
   }
 
-  export type PlayerRelationFilter = {
-    is?: PlayerWhereInput
-    isNot?: PlayerWhereInput
-  }
-
   export type OfferBidCountOrderByAggregateInput = {
     id?: SortOrder
     offerId?: SortOrder
@@ -65793,6 +67190,64 @@ export namespace Prisma {
     id?: SortOrder
     playerId?: SortOrder
     quantity?: SortOrder
+  }
+
+  export type EnumPantheonMotifFilter<$PrismaModel = never> = {
+    equals?: $Enums.PantheonMotif | EnumPantheonMotifFieldRefInput<$PrismaModel>
+    in?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    not?: NestedEnumPantheonMotifFilter<$PrismaModel> | $Enums.PantheonMotif
+  }
+
+  export type PantheonCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    motif?: SortOrder
+    dinozId?: SortOrder
+    date?: SortOrder
+    indicator?: SortOrder
+  }
+
+  export type PantheonAvgOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+    indicator?: SortOrder
+  }
+
+  export type PantheonMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    motif?: SortOrder
+    dinozId?: SortOrder
+    date?: SortOrder
+    indicator?: SortOrder
+  }
+
+  export type PantheonMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    motif?: SortOrder
+    dinozId?: SortOrder
+    date?: SortOrder
+    indicator?: SortOrder
+  }
+
+  export type PantheonSumOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    dinozId?: SortOrder
+    indicator?: SortOrder
+  }
+
+  export type EnumPantheonMotifWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PantheonMotif | EnumPantheonMotifFieldRefInput<$PrismaModel>
+    in?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    not?: NestedEnumPantheonMotifWithAggregatesFilter<$PrismaModel> | $Enums.PantheonMotif
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPantheonMotifFilter<$PrismaModel>
+    _max?: NestedEnumPantheonMotifFilter<$PrismaModel>
   }
 
   export type ClanMemberListRelationFilter = {
@@ -66392,6 +67847,13 @@ export namespace Prisma {
     connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
   }
 
+  export type PantheonCreateNestedManyWithoutDinozInput = {
+    create?: XOR<PantheonCreateWithoutDinozInput, PantheonUncheckedCreateWithoutDinozInput> | PantheonCreateWithoutDinozInput[] | PantheonUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutDinozInput | PantheonCreateOrConnectWithoutDinozInput[]
+    createMany?: PantheonCreateManyDinozInputEnvelope
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -66476,6 +67938,13 @@ export namespace Prisma {
     connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
   }
 
+  export type PantheonUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<PantheonCreateWithoutDinozInput, PantheonUncheckedCreateWithoutDinozInput> | PantheonCreateWithoutDinozInput[] | PantheonUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutDinozInput | PantheonCreateOrConnectWithoutDinozInput[]
+    createMany?: PantheonCreateManyDinozInputEnvelope
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -66510,12 +67979,10 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutFollowersInput, DinozUpdateWithoutFollowersInput>, DinozUncheckedUpdateWithoutFollowersInput>
   }
 
-  export type PlayerUpdateOneWithoutDinozNestedInput = {
+  export type PlayerUpdateOneRequiredWithoutDinozNestedInput = {
     create?: XOR<PlayerCreateWithoutDinozInput, PlayerUncheckedCreateWithoutDinozInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutDinozInput
     upsert?: PlayerUpsertWithoutDinozInput
-    disconnect?: PlayerWhereInput | boolean
-    delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDinozInput, PlayerUpdateWithoutDinozInput>, PlayerUncheckedUpdateWithoutDinozInput>
   }
@@ -66698,6 +68165,20 @@ export namespace Prisma {
     deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
   }
 
+  export type PantheonUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<PantheonCreateWithoutDinozInput, PantheonUncheckedCreateWithoutDinozInput> | PantheonCreateWithoutDinozInput[] | PantheonUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutDinozInput | PantheonCreateOrConnectWithoutDinozInput[]
+    upsert?: PantheonUpsertWithWhereUniqueWithoutDinozInput | PantheonUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: PantheonCreateManyDinozInputEnvelope
+    set?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    disconnect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    delete?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    update?: PantheonUpdateWithWhereUniqueWithoutDinozInput | PantheonUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: PantheonUpdateManyWithWhereWithoutDinozInput | PantheonUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: PantheonScalarWhereInput | PantheonScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutDinozInput, DinozItemUncheckedCreateWithoutDinozInput> | DinozItemCreateWithoutDinozInput[] | DinozItemUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutDinozInput | DinozItemCreateOrConnectWithoutDinozInput[]
@@ -66864,6 +68345,20 @@ export namespace Prisma {
     update?: ModerationUpdateWithWhereUniqueWithoutDinozInput | ModerationUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: ModerationUpdateManyWithWhereWithoutDinozInput | ModerationUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+  }
+
+  export type PantheonUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<PantheonCreateWithoutDinozInput, PantheonUncheckedCreateWithoutDinozInput> | PantheonCreateWithoutDinozInput[] | PantheonUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutDinozInput | PantheonCreateOrConnectWithoutDinozInput[]
+    upsert?: PantheonUpsertWithWhereUniqueWithoutDinozInput | PantheonUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: PantheonCreateManyDinozInputEnvelope
+    set?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    disconnect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    delete?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    update?: PantheonUpdateWithWhereUniqueWithoutDinozInput | PantheonUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: PantheonUpdateManyWithWhereWithoutDinozInput | PantheonUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: PantheonScalarWhereInput | PantheonScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -67685,6 +69180,13 @@ export namespace Prisma {
     connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
   }
 
+  export type PantheonCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PantheonCreateWithoutPlayerInput, PantheonUncheckedCreateWithoutPlayerInput> | PantheonCreateWithoutPlayerInput[] | PantheonUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutPlayerInput | PantheonCreateOrConnectWithoutPlayerInput[]
+    createMany?: PantheonCreateManyPlayerInputEnvelope
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -67846,6 +69348,13 @@ export namespace Prisma {
     connectOrCreate?: ModerationCreateOrConnectWithoutTargetInput | ModerationCreateOrConnectWithoutTargetInput[]
     createMany?: ModerationCreateManyTargetInputEnvelope
     connect?: ModerationWhereUniqueInput | ModerationWhereUniqueInput[]
+  }
+
+  export type PantheonUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<PantheonCreateWithoutPlayerInput, PantheonUncheckedCreateWithoutPlayerInput> | PantheonCreateWithoutPlayerInput[] | PantheonUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutPlayerInput | PantheonCreateOrConnectWithoutPlayerInput[]
+    createMany?: PantheonCreateManyPlayerInputEnvelope
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -68172,6 +69681,20 @@ export namespace Prisma {
     deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
   }
 
+  export type PantheonUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PantheonCreateWithoutPlayerInput, PantheonUncheckedCreateWithoutPlayerInput> | PantheonCreateWithoutPlayerInput[] | PantheonUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutPlayerInput | PantheonCreateOrConnectWithoutPlayerInput[]
+    upsert?: PantheonUpsertWithWhereUniqueWithoutPlayerInput | PantheonUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PantheonCreateManyPlayerInputEnvelope
+    set?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    disconnect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    delete?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    update?: PantheonUpdateWithWhereUniqueWithoutPlayerInput | PantheonUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PantheonUpdateManyWithWhereWithoutPlayerInput | PantheonUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PantheonScalarWhereInput | PantheonScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -68486,6 +70009,20 @@ export namespace Prisma {
     update?: ModerationUpdateWithWhereUniqueWithoutTargetInput | ModerationUpdateWithWhereUniqueWithoutTargetInput[]
     updateMany?: ModerationUpdateManyWithWhereWithoutTargetInput | ModerationUpdateManyWithWhereWithoutTargetInput[]
     deleteMany?: ModerationScalarWhereInput | ModerationScalarWhereInput[]
+  }
+
+  export type PantheonUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<PantheonCreateWithoutPlayerInput, PantheonUncheckedCreateWithoutPlayerInput> | PantheonCreateWithoutPlayerInput[] | PantheonUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: PantheonCreateOrConnectWithoutPlayerInput | PantheonCreateOrConnectWithoutPlayerInput[]
+    upsert?: PantheonUpsertWithWhereUniqueWithoutPlayerInput | PantheonUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: PantheonCreateManyPlayerInputEnvelope
+    set?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    disconnect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    delete?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    connect?: PantheonWhereUniqueInput | PantheonWhereUniqueInput[]
+    update?: PantheonUpdateWithWhereUniqueWithoutPlayerInput | PantheonUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: PantheonUpdateManyWithWhereWithoutPlayerInput | PantheonUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: PantheonScalarWhereInput | PantheonScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutUsernameHistoryInput = {
@@ -68856,6 +70393,40 @@ export namespace Prisma {
     upsert?: PlayerUpsertWithoutPlayerTrackingInput
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutPlayerTrackingInput, PlayerUpdateWithoutPlayerTrackingInput>, PlayerUncheckedUpdateWithoutPlayerTrackingInput>
+  }
+
+  export type PlayerCreateNestedOneWithoutPantheonInput = {
+    create?: XOR<PlayerCreateWithoutPantheonInput, PlayerUncheckedCreateWithoutPantheonInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutPantheonInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutPantheonInput = {
+    create?: XOR<DinozCreateWithoutPantheonInput, DinozUncheckedCreateWithoutPantheonInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutPantheonInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type EnumPantheonMotifFieldUpdateOperationsInput = {
+    set?: $Enums.PantheonMotif
+  }
+
+  export type PlayerUpdateOneRequiredWithoutPantheonNestedInput = {
+    create?: XOR<PlayerCreateWithoutPantheonInput, PlayerUncheckedCreateWithoutPantheonInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutPantheonInput
+    upsert?: PlayerUpsertWithoutPantheonInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutPantheonInput, PlayerUpdateWithoutPantheonInput>, PlayerUncheckedUpdateWithoutPantheonInput>
+  }
+
+  export type DinozUpdateOneWithoutPantheonNestedInput = {
+    create?: XOR<DinozCreateWithoutPantheonInput, DinozUncheckedCreateWithoutPantheonInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutPantheonInput
+    upsert?: DinozUpsertWithoutPantheonInput
+    disconnect?: DinozWhereInput | boolean
+    delete?: DinozWhereInput | boolean
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutPantheonInput, DinozUpdateWithoutPantheonInput>, DinozUncheckedUpdateWithoutPantheonInput>
   }
 
   export type ClanMemberCreateNestedManyWithoutClanInput = {
@@ -69707,6 +71278,23 @@ export namespace Prisma {
     _max?: NestedEnumLogTypeFilter<$PrismaModel>
   }
 
+  export type NestedEnumPantheonMotifFilter<$PrismaModel = never> = {
+    equals?: $Enums.PantheonMotif | EnumPantheonMotifFieldRefInput<$PrismaModel>
+    in?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    not?: NestedEnumPantheonMotifFilter<$PrismaModel> | $Enums.PantheonMotif
+  }
+
+  export type NestedEnumPantheonMotifWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.PantheonMotif | EnumPantheonMotifFieldRefInput<$PrismaModel>
+    in?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    notIn?: $Enums.PantheonMotif[] | ListEnumPantheonMotifFieldRefInput<$PrismaModel>
+    not?: NestedEnumPantheonMotifWithAggregatesFilter<$PrismaModel> | $Enums.PantheonMotif
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumPantheonMotifFilter<$PrismaModel>
+    _max?: NestedEnumPantheonMotifFilter<$PrismaModel>
+  }
+
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -69775,7 +71363,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
     skills?: DinozSkillCreateNestedManyWithoutDinozInput
@@ -69788,6 +71376,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
@@ -69815,7 +71404,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
@@ -69830,6 +71419,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -69886,7 +71476,7 @@ export namespace Prisma {
     remaining?: IntFilter<"Dinoz"> | number
     createdDate?: DateTimeFilter<"Dinoz"> | Date | string
     updatedDate?: DateTimeFilter<"Dinoz"> | Date | string
-    playerId?: IntNullableFilter<"Dinoz"> | number | null
+    playerId?: IntFilter<"Dinoz"> | number
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
@@ -69918,7 +71508,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -69931,6 +71521,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutFollowersInput = {
@@ -69958,7 +71549,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -69973,6 +71564,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutFollowersInput = {
@@ -70027,6 +71619,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -70077,6 +71670,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -70295,7 +71889,7 @@ export namespace Prisma {
     updatedDate?: Date | string
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -70309,6 +71903,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLeaderInput = {
@@ -70335,7 +71930,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -70351,6 +71946,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLeaderInput = {
@@ -70436,6 +72032,31 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PantheonCreateWithoutDinozInput = {
+    motif: $Enums.PantheonMotif
+    date?: Date | string
+    indicator?: number | null
+    player: PlayerCreateNestedOneWithoutPantheonInput
+  }
+
+  export type PantheonUncheckedCreateWithoutDinozInput = {
+    id?: number
+    playerId: number
+    motif: $Enums.PantheonMotif
+    date?: Date | string
+    indicator?: number | null
+  }
+
+  export type PantheonCreateOrConnectWithoutDinozInput = {
+    where: PantheonWhereUniqueInput
+    create: XOR<PantheonCreateWithoutDinozInput, PantheonUncheckedCreateWithoutDinozInput>
+  }
+
+  export type PantheonCreateManyDinozInputEnvelope = {
+    data: PantheonCreateManyDinozInput | PantheonCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DinozUpsertWithoutFollowersInput = {
     update: XOR<DinozUpdateWithoutFollowersInput, DinozUncheckedUpdateWithoutFollowersInput>
     create: XOR<DinozCreateWithoutFollowersInput, DinozUncheckedCreateWithoutFollowersInput>
@@ -70473,7 +72094,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -70486,6 +72107,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutFollowersInput = {
@@ -70513,7 +72135,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -70528,6 +72150,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -70588,6 +72211,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -70638,6 +72262,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -70965,6 +72590,34 @@ export namespace Prisma {
     sorted?: BoolFilter<"Moderation"> | boolean
   }
 
+  export type PantheonUpsertWithWhereUniqueWithoutDinozInput = {
+    where: PantheonWhereUniqueInput
+    update: XOR<PantheonUpdateWithoutDinozInput, PantheonUncheckedUpdateWithoutDinozInput>
+    create: XOR<PantheonCreateWithoutDinozInput, PantheonUncheckedCreateWithoutDinozInput>
+  }
+
+  export type PantheonUpdateWithWhereUniqueWithoutDinozInput = {
+    where: PantheonWhereUniqueInput
+    data: XOR<PantheonUpdateWithoutDinozInput, PantheonUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type PantheonUpdateManyWithWhereWithoutDinozInput = {
+    where: PantheonScalarWhereInput
+    data: XOR<PantheonUpdateManyMutationInput, PantheonUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type PantheonScalarWhereInput = {
+    AND?: PantheonScalarWhereInput | PantheonScalarWhereInput[]
+    OR?: PantheonScalarWhereInput[]
+    NOT?: PantheonScalarWhereInput | PantheonScalarWhereInput[]
+    id?: IntFilter<"Pantheon"> | number
+    playerId?: IntFilter<"Pantheon"> | number
+    motif?: EnumPantheonMotifFilter<"Pantheon"> | $Enums.PantheonMotif
+    dinozId?: IntNullableFilter<"Pantheon"> | number | null
+    date?: DateTimeFilter<"Pantheon"> | Date | string
+    indicator?: IntNullableFilter<"Pantheon"> | number | null
+  }
+
   export type DinozCreateWithoutItemsInput = {
     name: string
     raceId: number
@@ -70991,7 +72644,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
     skills?: DinozSkillCreateNestedManyWithoutDinozInput
@@ -71004,6 +72657,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -71031,7 +72685,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -71046,6 +72700,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -71108,7 +72763,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUpdateManyWithoutDinozNestedInput
@@ -71121,6 +72776,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -71148,7 +72804,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -71163,6 +72819,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -71207,7 +72864,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -71220,6 +72877,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -71247,7 +72905,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -71262,6 +72920,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -71322,7 +72981,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -71335,6 +72994,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -71362,7 +73022,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -71377,6 +73037,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -71427,7 +73088,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     skills?: DinozSkillCreateNestedManyWithoutDinozInput
@@ -71440,6 +73101,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -71467,7 +73129,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -71482,6 +73144,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -71526,7 +73189,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUpdateManyWithoutDinozNestedInput
@@ -71539,6 +73202,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -71566,7 +73230,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -71581,6 +73245,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -71609,7 +73274,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -71622,6 +73287,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -71649,7 +73315,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -71664,6 +73330,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -71708,7 +73375,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -71721,6 +73388,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -71748,7 +73416,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -71763,6 +73431,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -71791,7 +73460,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -71804,6 +73473,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -71831,7 +73501,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -71846,6 +73516,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -71890,7 +73561,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -71903,6 +73574,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -71930,7 +73602,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -71945,6 +73617,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -71973,7 +73646,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -71986,6 +73659,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -72013,7 +73687,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -72028,6 +73702,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -72072,7 +73747,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -72085,6 +73760,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -72112,7 +73788,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -72127,6 +73803,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ImportedPlayerCreateWithoutImported_dinozInput = {
@@ -72591,6 +74268,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -72641,6 +74319,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -72828,6 +74507,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -72878,6 +74558,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -73310,6 +74991,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -73360,6 +75042,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -73425,6 +75108,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -73475,6 +75159,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -73524,6 +75209,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -73574,6 +75260,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -73639,6 +75326,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -73689,6 +75377,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -73738,6 +75427,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -73788,6 +75478,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -73853,6 +75544,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -73903,6 +75595,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -73931,7 +75624,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -73944,6 +75637,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
@@ -73971,7 +75665,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -73986,6 +75680,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -74030,7 +75725,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -74043,6 +75738,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
@@ -74070,7 +75766,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -74085,6 +75781,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutPlayerInput = {
@@ -74126,6 +75823,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
@@ -74168,6 +75866,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -74727,6 +76426,31 @@ export namespace Prisma {
 
   export type ModerationCreateManyTargetInputEnvelope = {
     data: ModerationCreateManyTargetInput | ModerationCreateManyTargetInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PantheonCreateWithoutPlayerInput = {
+    motif: $Enums.PantheonMotif
+    date?: Date | string
+    indicator?: number | null
+    dinoz?: DinozCreateNestedOneWithoutPantheonInput
+  }
+
+  export type PantheonUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    motif: $Enums.PantheonMotif
+    dinozId?: number | null
+    date?: Date | string
+    indicator?: number | null
+  }
+
+  export type PantheonCreateOrConnectWithoutPlayerInput = {
+    where: PantheonWhereUniqueInput
+    create: XOR<PantheonCreateWithoutPlayerInput, PantheonUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PantheonCreateManyPlayerInputEnvelope = {
+    data: PantheonCreateManyPlayerInput | PantheonCreateManyPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -75340,6 +77064,22 @@ export namespace Prisma {
     data: XOR<ModerationUpdateManyMutationInput, ModerationUncheckedUpdateManyWithoutTargetInput>
   }
 
+  export type PantheonUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: PantheonWhereUniqueInput
+    update: XOR<PantheonUpdateWithoutPlayerInput, PantheonUncheckedUpdateWithoutPlayerInput>
+    create: XOR<PantheonCreateWithoutPlayerInput, PantheonUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type PantheonUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: PantheonWhereUniqueInput
+    data: XOR<PantheonUpdateWithoutPlayerInput, PantheonUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type PantheonUpdateManyWithWhereWithoutPlayerInput = {
+    where: PantheonScalarWhereInput
+    data: XOR<PantheonUpdateManyMutationInput, PantheonUncheckedUpdateManyWithoutPlayerInput>
+  }
+
   export type PlayerCreateWithoutUsernameHistoryInput = {
     hasImported: boolean
     customText?: string | null
@@ -75387,6 +77127,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -75437,6 +77178,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -75502,6 +77244,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -75552,6 +77295,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -75601,6 +77345,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -75651,6 +77396,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -75716,6 +77462,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -75766,6 +77513,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -75815,6 +77563,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -75865,6 +77614,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -75930,6 +77680,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -75980,6 +77731,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -76029,6 +77781,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -76079,6 +77832,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -76144,6 +77898,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -76194,6 +77949,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -76243,6 +77999,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -76293,6 +78050,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -76358,6 +78116,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -76408,6 +78167,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -76457,6 +78217,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -76507,6 +78268,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -76572,6 +78334,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -76622,6 +78385,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -76671,6 +78435,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -76721,6 +78486,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -76786,6 +78552,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -76836,6 +78603,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -76885,6 +78653,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -76935,6 +78704,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -77000,6 +78770,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -77050,6 +78821,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -77177,6 +78949,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -77227,6 +79000,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -77322,6 +79096,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -77372,6 +79147,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutOffersInput = {
@@ -77421,6 +79197,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -77471,6 +79248,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -77504,7 +79282,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -77517,6 +79295,7 @@ export namespace Prisma {
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutOffersInput = {
@@ -77544,7 +79323,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -77559,6 +79338,7 @@ export namespace Prisma {
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutOffersInput = {
@@ -77668,6 +79448,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -77718,6 +79499,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutOffersInput = {
@@ -77757,7 +79539,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -77770,6 +79552,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutOffersInput = {
@@ -77797,7 +79580,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -77812,6 +79595,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type OfferItemUpsertWithWhereUniqueWithoutOfferInput = {
@@ -77904,6 +79688,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -77954,6 +79739,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -77987,7 +79773,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -78000,6 +79786,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLogsInput = {
@@ -78027,7 +79814,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -78042,6 +79829,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLogsInput = {
@@ -78107,6 +79895,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -78157,6 +79946,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutLogsInput = {
@@ -78196,7 +79986,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -78209,6 +79999,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLogsInput = {
@@ -78236,7 +80027,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -78251,6 +80042,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -78279,7 +80071,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -78292,6 +80084,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutCatchesInput = {
@@ -78319,7 +80112,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -78334,6 +80127,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutCatchesInput = {
@@ -78378,7 +80172,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -78391,6 +80185,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutCatchesInput = {
@@ -78418,7 +80213,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -78433,6 +80228,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerCreateWithoutPlayerTrackingInput = {
@@ -78482,6 +80278,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -78532,6 +80329,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -78597,6 +80395,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -78647,6 +80446,411 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerCreateWithoutPantheonInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+  }
+
+  export type PlayerUncheckedCreateWithoutPantheonInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+  }
+
+  export type PlayerCreateOrConnectWithoutPantheonInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutPantheonInput, PlayerUncheckedCreateWithoutPantheonInput>
+  }
+
+  export type DinozCreateWithoutPantheonInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutPantheonInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    seed?: string
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    playerId: number
+    order?: number | null
+    concentrationId?: number | null
+    unavailableReason?: $Enums.UnavailableReason | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutPantheonInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutPantheonInput, DinozUncheckedCreateWithoutPantheonInput>
+  }
+
+  export type PlayerUpsertWithoutPantheonInput = {
+    update: XOR<PlayerUpdateWithoutPantheonInput, PlayerUncheckedUpdateWithoutPantheonInput>
+    create: XOR<PlayerCreateWithoutPantheonInput, PlayerUncheckedCreateWithoutPantheonInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutPantheonInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutPantheonInput, PlayerUncheckedUpdateWithoutPantheonInput>
+  }
+
+  export type PlayerUpdateWithoutPantheonInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutPantheonInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+  }
+
+  export type DinozUpsertWithoutPantheonInput = {
+    update: XOR<DinozUpdateWithoutPantheonInput, DinozUncheckedUpdateWithoutPantheonInput>
+    create: XOR<DinozCreateWithoutPantheonInput, DinozUncheckedCreateWithoutPantheonInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutPantheonInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutPantheonInput, DinozUncheckedUpdateWithoutPantheonInput>
+  }
+
+  export type DinozUpdateWithoutPantheonInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutPantheonInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    seed?: StringFieldUpdateOperationsInput | string
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    playerId?: IntFieldUpdateOperationsInput | number
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ClanMemberCreateWithoutClanInput = {
@@ -78806,6 +81010,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -78856,6 +81061,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -79076,6 +81282,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -79126,6 +81333,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput = {
@@ -79263,6 +81471,7 @@ export namespace Prisma {
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -79313,6 +81522,7 @@ export namespace Prisma {
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -79418,6 +81628,7 @@ export namespace Prisma {
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -79468,6 +81679,7 @@ export namespace Prisma {
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -79693,6 +81905,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -79743,6 +81956,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -79848,6 +82062,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -79898,6 +82113,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutHistoryInput = {
@@ -79981,6 +82197,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -80031,6 +82248,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -80136,6 +82354,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -80186,6 +82405,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutMembersInput = {
@@ -80269,6 +82489,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -80319,6 +82540,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -80424,6 +82646,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -80474,6 +82697,7 @@ export namespace Prisma {
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -80597,6 +82821,7 @@ export namespace Prisma {
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -80647,6 +82872,7 @@ export namespace Prisma {
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -80701,6 +82927,7 @@ export namespace Prisma {
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -80751,6 +82978,7 @@ export namespace Prisma {
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
     ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
     reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -80784,7 +83012,7 @@ export namespace Prisma {
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
     leader?: DinozCreateNestedOneWithoutFollowersInput
-    player?: PlayerCreateNestedOneWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
     concentration?: ConcentrationCreateNestedOneWithoutDinozInput
     items?: DinozItemCreateNestedManyWithoutDinozInput
     missions?: DinozMissionCreateNestedManyWithoutDinozInput
@@ -80797,6 +83025,7 @@ export namespace Prisma {
     followers?: DinozCreateNestedManyWithoutLeaderInput
     logs?: LogCreateNestedManyWithoutDinozInput
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutModerationInput = {
@@ -80824,7 +83053,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -80839,6 +83068,7 @@ export namespace Prisma {
     followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutModerationInput = {
@@ -80904,6 +83134,7 @@ export namespace Prisma {
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -80954,6 +83185,7 @@ export namespace Prisma {
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -81014,6 +83246,7 @@ export namespace Prisma {
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -81064,6 +83297,7 @@ export namespace Prisma {
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
     ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
     reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutModerationInput = {
@@ -81103,7 +83337,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -81116,6 +83350,7 @@ export namespace Prisma {
     followers?: DinozUpdateManyWithoutLeaderNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutModerationInput = {
@@ -81143,7 +83378,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -81158,6 +83393,7 @@ export namespace Prisma {
     followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -81185,7 +83421,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
   }
@@ -81216,7 +83452,7 @@ export namespace Prisma {
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     leader?: DinozUpdateOneWithoutFollowersNestedInput
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
     skills?: DinozSkillUpdateManyWithoutDinozNestedInput
@@ -81229,6 +83465,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
@@ -81256,7 +83493,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
@@ -81271,6 +83508,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
@@ -81298,7 +83536,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
   }
@@ -81374,7 +83612,7 @@ export namespace Prisma {
     remaining?: number
     createdDate?: Date | string
     updatedDate?: Date | string
-    playerId?: number | null
+    playerId: number
     order?: number | null
     concentrationId?: number | null
     unavailableReason?: $Enums.UnavailableReason | null
@@ -81401,6 +83639,14 @@ export namespace Prisma {
     reason: $Enums.ModerationReason
     comment: string
     sorted?: boolean
+  }
+
+  export type PantheonCreateManyDinozInput = {
+    id?: number
+    playerId: number
+    motif: $Enums.PantheonMotif
+    date?: Date | string
+    indicator?: number | null
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -81568,7 +83814,7 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     order?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
-    player?: PlayerUpdateOneWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
     concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
     items?: DinozItemUpdateManyWithoutDinozNestedInput
     missions?: DinozMissionUpdateManyWithoutDinozNestedInput
@@ -81582,6 +83828,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLeaderInput = {
@@ -81608,7 +83855,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -81624,6 +83871,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
@@ -81650,7 +83898,7 @@ export namespace Prisma {
     remaining?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    playerId?: NullableIntFieldUpdateOperationsInput | number | null
+    playerId?: IntFieldUpdateOperationsInput | number
     order?: NullableIntFieldUpdateOperationsInput | number | null
     concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
@@ -81720,6 +83968,29 @@ export namespace Prisma {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
     sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PantheonUpdateWithoutDinozInput = {
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+    player?: PlayerUpdateOneRequiredWithoutPantheonNestedInput
+  }
+
+  export type PantheonUncheckedUpdateWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PantheonUncheckedUpdateManyWithoutDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    playerId?: IntFieldUpdateOperationsInput | number
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -82107,6 +84378,14 @@ export namespace Prisma {
     sorted?: boolean
   }
 
+  export type PantheonCreateManyPlayerInput = {
+    id?: number
+    motif: $Enums.PantheonMotif
+    dinozId?: number | null
+    date?: Date | string
+    indicator?: number | null
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
     raceId?: IntFieldUpdateOperationsInput | number
@@ -82146,6 +84425,7 @@ export namespace Prisma {
     logs?: LogUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
@@ -82188,6 +84468,7 @@ export namespace Prisma {
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -82594,6 +84875,29 @@ export namespace Prisma {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
     sorted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type PantheonUpdateWithoutPlayerInput = {
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUpdateOneWithoutPantheonNestedInput
+  }
+
+  export type PantheonUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PantheonUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    motif?: EnumPantheonMotifFieldUpdateOperationsInput | $Enums.PantheonMotif
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    indicator?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type OfferItemCreateManyOfferInput = {
@@ -83052,6 +85356,10 @@ export namespace Prisma {
      * @deprecated Use PlayerTrackingDefaultArgs instead
      */
     export type PlayerTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerTrackingDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PantheonDefaultArgs instead
+     */
+    export type PantheonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PantheonDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ClanDefaultArgs instead
      */

@@ -14,6 +14,8 @@ import { Dinoz, DinozStatus, LogType } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
 import { createQuest, updateQuest } from '../dao/questsDao.js';
+import { checkAnnounce } from './announcer.js';
+import { PantheonMotif } from '@drpg/prisma';
 
 export async function rewarder(
 	rewards: Rewarder[],
@@ -103,6 +105,7 @@ export async function rewarder(
 							rewardId: reward.value,
 							player: { connect: { id: playerId } }
 						});
+						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
 					}
 					break;
 				case RewardEnum.SCENARIO:

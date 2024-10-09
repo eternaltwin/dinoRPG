@@ -20,7 +20,8 @@ export const apiRoutes = {
 	testingRoute: '/api/v1/testing',
 	eternalTwinRoute: '/api/v1/eternaltwin',
 	clanRoutes: '/api/v1/clan',
-	moderation: '/api/v1/moderation'
+	moderation: '/api/v1/moderation',
+	pantheon: '/api/v1/pantheon'
 };
 
 export const regex = {

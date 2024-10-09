@@ -2383,7 +2383,8 @@
 		"players": "Joueurs",
 		"average": "Moyenne",
 		"clans": "Clans",
-		"completion": "Complétion"
+		"completion": "Complétion",
+		"pantheon": "Pantheon"
 	},
 	"layout": {
 		"fx": "Statuts",
@@ -3750,11 +3751,25 @@
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
 			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
-			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu."
+			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu.",
+			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels dinoz sont parvenus les premiers à accomplir des hauts faits."
 		},
 		"page": {
 			"previous": "Page précedente",
 			"next": "Page suivante"
+		},
+		"pantheon": {
+			"dinozPantheon": "Pantheon des dinoz",
+			"playerPantheon": "Pantheon des joueurs",
+			"allRaces": "Toutes races confondues",
+			"allLevel": "Tout niveaux confondus",
+			"dinozName": "Nom du dinoz: ",
+			"masterName": "Maître: ",
+			"dinozLevel": "Niveau du dinoz: ",
+			"date": "Date d'entrée: ",
+			"pickEpic": "Choisir une récompense",
+			"dinoz": "Dinoz",
+			"detail": "Détails"
 		}
 	},
 	"clan": {

@@ -20,6 +20,9 @@
 		<li :class="tabSelected === 4 ? 'active' : ''">
 			<a href="#" @click="setTab(3)">{{ $t('tabs.clans') }}</a>
 		</li>
+		<li :class="tabSelected === 5 ? 'active' : ''">
+			<a href="#" @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
+		</li>
 	</ul>
 	<div class="disclaimer" v-if="tabSelected === 1">
 		{{ $t('ranking.disclaimer.classic') }}
@@ -30,9 +33,13 @@
 	<div class="disclaimer" v-if="tabSelected === 3">
 		{{ $t('ranking.disclaimer.completion') }}
 	</div>
+	<div class="disclaimer" v-if="tabSelected === 5">
+		{{ $t('ranking.disclaimer.pantheon') }}
+	</div>
 	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" v-if="tabSelected === 2" />
 	<CompletionRanking v-if="tabSelected === 3" />
+	<Pantheon v-if="tabSelected === 5" />
 	<input
 		class="search"
 		type="text"
@@ -54,6 +61,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import PlayerRanking from '../components/rankings/PlayerRanking.vue';
 import CompletionRanking from '../components/rankings/CompletionRanking.vue';
 import { PlayerService } from '../services/index.js';
+import Pantheon from '../components/rankings/Pantheon.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -65,7 +73,8 @@ export default defineComponent({
 	components: {
 		CompletionRanking,
 		TitleHeader,
-		PlayerRanking
+		PlayerRanking,
+		Pantheon
 	},
 	data() {
 		return {
