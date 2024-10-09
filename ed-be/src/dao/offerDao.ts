@@ -71,6 +71,9 @@ export async function getOffers(
 				},
 				orderBy: { value: 'asc' }
 			}
+		},
+		orderBy: {
+			id : 'desc'
 		}
 	});
 
