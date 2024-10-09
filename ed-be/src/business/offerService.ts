@@ -19,7 +19,7 @@ import {
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
 import { OfferStatus, UnavailableReason } from '@drpg/prisma';
-import { scheduleJob } from 'node-schedule';
+import { scheduleJob, scheduledJobs } from 'node-schedule';
 import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -179,7 +179,7 @@ export async function createOffer(req: Request) {
 	await Promise.all(promises);
 
 	// Schedule offer expiration
-	scheduleJob(offer.endDate, () => expireOffer(offer.id));
+	scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
 	LOGGER.log(`Player ${authed.id} has set an offer for ${offer.total} ending at ${offer.endDate}`);
 }
 
@@ -320,7 +320,10 @@ export async function bidOffer(req: Request) {
 	}
 
 	// Add 30s to offer
-	await extendTimer(offer);
+	const rescheduled = await extendTimer(offer);
+	const job = scheduledJobs[offerId.toString()];
+	job.cancel();
+	job.schedule(rescheduled.endDate);
 }
 
 /**
@@ -414,6 +417,6 @@ export const scheduleOffersExpiration = async () => {
 	remainingOffers.forEach(offer => {
 		LOGGER.log(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
 
-		scheduleJob(offer.endDate, () => expireOffer(offer.id));
+		scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
 	});
 };

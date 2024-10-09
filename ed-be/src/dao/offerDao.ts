@@ -97,8 +97,8 @@ export async function insertOffer(
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
-			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
-			endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
+			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
 			dinozId,
 			items: {
 				create: itemsAndIngredient
@@ -203,7 +203,7 @@ export async function extendTimer(offer: Pick<Offer, 'id' | 'endDate'>) {
 	const newEndDate = new Date(offer.endDate.getTime() + 30 * 1000);
 
 	// Met à jour l'endDate avec la nouvelle date
-	await prisma.offer.update({
+	return await prisma.offer.update({
 		where: { id: offer.id },
 		data: { endDate: newEndDate }
 	});
