@@ -512,16 +512,17 @@ enum AdminRole {
 }
 
 model Offer {
-  id       Int         @id @default(autoincrement())
-  sellerId Int
-  seller   Player      @relation(fields: [sellerId], references: [id])
-  endDate  DateTime
-  dinozId  Int?
-  dinoz    Dinoz?      @relation(fields: [dinozId], references: [id])
-  items    OfferItem[]
-  total    Int
-  bids     OfferBid[]
-  status   OfferStatus @default(ONGOING)
+  id           Int         @id @default(autoincrement())
+  sellerId     Int
+  seller       Player      @relation(fields: [sellerId], references: [id])
+  endDate      DateTime
+  dinozId      Int?
+  dinoz        Dinoz?      @relation(fields: [dinozId], references: [id])
+  items        OfferItem[]
+  total        Int
+  bids         OfferBid[]
+  status       OfferStatus @default(ONGOING)
+  dinozDetails String?
 }
 
 enum LogType {

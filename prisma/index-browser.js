@@ -439,7 +439,8 @@ exports.Prisma.OfferScalarFieldEnum = {
   endDate: 'endDate',
   dinozId: 'dinozId',
   total: 'total',
-  status: 'status'
+  status: 'status',
+  dinozDetails: 'dinozDetails'
 };
 
 exports.Prisma.LogScalarFieldEnum = {

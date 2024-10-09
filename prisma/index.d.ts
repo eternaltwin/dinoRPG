@@ -42998,6 +42998,7 @@ export namespace Prisma {
     dinozId: number | null
     total: number | null
     status: $Enums.OfferStatus | null
+    dinozDetails: string | null
   }
 
   export type OfferMaxAggregateOutputType = {
@@ -43007,6 +43008,7 @@ export namespace Prisma {
     dinozId: number | null
     total: number | null
     status: $Enums.OfferStatus | null
+    dinozDetails: string | null
   }
 
   export type OfferCountAggregateOutputType = {
@@ -43016,6 +43018,7 @@ export namespace Prisma {
     dinozId: number
     total: number
     status: number
+    dinozDetails: number
     _all: number
   }
 
@@ -43041,6 +43044,7 @@ export namespace Prisma {
     dinozId?: true
     total?: true
     status?: true
+    dinozDetails?: true
   }
 
   export type OfferMaxAggregateInputType = {
@@ -43050,6 +43054,7 @@ export namespace Prisma {
     dinozId?: true
     total?: true
     status?: true
+    dinozDetails?: true
   }
 
   export type OfferCountAggregateInputType = {
@@ -43059,6 +43064,7 @@ export namespace Prisma {
     dinozId?: true
     total?: true
     status?: true
+    dinozDetails?: true
     _all?: true
   }
 
@@ -43155,6 +43161,7 @@ export namespace Prisma {
     dinozId: number | null
     total: number
     status: $Enums.OfferStatus
+    dinozDetails: string | null
     _count: OfferCountAggregateOutputType | null
     _avg: OfferAvgAggregateOutputType | null
     _sum: OfferSumAggregateOutputType | null
@@ -43183,6 +43190,7 @@ export namespace Prisma {
     dinozId?: boolean
     total?: boolean
     status?: boolean
+    dinozDetails?: boolean
     seller?: boolean | PlayerDefaultArgs<ExtArgs>
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
     items?: boolean | Offer$itemsArgs<ExtArgs>
@@ -43197,6 +43205,7 @@ export namespace Prisma {
     dinozId?: boolean
     total?: boolean
     status?: boolean
+    dinozDetails?: boolean
     seller?: boolean | PlayerDefaultArgs<ExtArgs>
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
   }, ExtArgs["result"]["offer"]>
@@ -43208,9 +43217,10 @@ export namespace Prisma {
     dinozId?: boolean
     total?: boolean
     status?: boolean
+    dinozDetails?: boolean
   }
 
-  export type OfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sellerId" | "endDate" | "dinozId" | "total" | "status", ExtArgs["result"]["offer"]>
+  export type OfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "sellerId" | "endDate" | "dinozId" | "total" | "status" | "dinozDetails", ExtArgs["result"]["offer"]>
   export type OfferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     seller?: boolean | PlayerDefaultArgs<ExtArgs>
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
@@ -43238,6 +43248,7 @@ export namespace Prisma {
       dinozId: number | null
       total: number
       status: $Enums.OfferStatus
+      dinozDetails: string | null
     }, ExtArgs["result"]["offer"]>
     composites: {}
   }
@@ -43641,6 +43652,7 @@ export namespace Prisma {
     readonly dinozId: FieldRef<"Offer", 'Int'>
     readonly total: FieldRef<"Offer", 'Int'>
     readonly status: FieldRef<"Offer", 'OfferStatus'>
+    readonly dinozDetails: FieldRef<"Offer", 'String'>
   }
     
 
@@ -58340,7 +58352,8 @@ export namespace Prisma {
     endDate: 'endDate',
     dinozId: 'dinozId',
     total: 'total',
-    status: 'status'
+    status: 'status',
+    dinozDetails: 'dinozDetails'
   };
 
   export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
@@ -60991,6 +61004,7 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Offer"> | number | null
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
+    dinozDetails?: StringNullableFilter<"Offer"> | string | null
     seller?: XOR<PlayerRelationFilter, PlayerWhereInput>
     dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
     items?: OfferItemListRelationFilter
@@ -61004,6 +61018,7 @@ export namespace Prisma {
     dinozId?: SortOrderInput | SortOrder
     total?: SortOrder
     status?: SortOrder
+    dinozDetails?: SortOrderInput | SortOrder
     seller?: PlayerOrderByWithRelationInput
     dinoz?: DinozOrderByWithRelationInput
     items?: OfferItemOrderByRelationAggregateInput
@@ -61020,6 +61035,7 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Offer"> | number | null
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
+    dinozDetails?: StringNullableFilter<"Offer"> | string | null
     seller?: XOR<PlayerRelationFilter, PlayerWhereInput>
     dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
     items?: OfferItemListRelationFilter
@@ -61033,6 +61049,7 @@ export namespace Prisma {
     dinozId?: SortOrderInput | SortOrder
     total?: SortOrder
     status?: SortOrder
+    dinozDetails?: SortOrderInput | SortOrder
     _count?: OfferCountOrderByAggregateInput
     _avg?: OfferAvgOrderByAggregateInput
     _max?: OfferMaxOrderByAggregateInput
@@ -61050,6 +61067,7 @@ export namespace Prisma {
     dinozId?: IntNullableWithAggregatesFilter<"Offer"> | number | null
     total?: IntWithAggregatesFilter<"Offer"> | number
     status?: EnumOfferStatusWithAggregatesFilter<"Offer"> | $Enums.OfferStatus
+    dinozDetails?: StringNullableWithAggregatesFilter<"Offer"> | string | null
   }
 
   export type LogWhereInput = {
@@ -64084,6 +64102,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     seller: PlayerCreateNestedOneWithoutOffersInput
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
@@ -64097,6 +64116,7 @@ export namespace Prisma {
     dinozId?: number | null
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -64105,6 +64125,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
@@ -64118,6 +64139,7 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -64129,12 +64151,14 @@ export namespace Prisma {
     dinozId?: number | null
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
   }
 
   export type OfferUpdateManyMutationInput = {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OfferUncheckedUpdateManyInput = {
@@ -64144,6 +64168,7 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type LogCreateInput = {
@@ -67015,6 +67040,7 @@ export namespace Prisma {
     dinozId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    dinozDetails?: SortOrder
   }
 
   export type OfferAvgOrderByAggregateInput = {
@@ -67031,6 +67057,7 @@ export namespace Prisma {
     dinozId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    dinozDetails?: SortOrder
   }
 
   export type OfferMinOrderByAggregateInput = {
@@ -67040,6 +67067,7 @@ export namespace Prisma {
     dinozId?: SortOrder
     total?: SortOrder
     status?: SortOrder
+    dinozDetails?: SortOrder
   }
 
   export type OfferSumOrderByAggregateInput = {
@@ -71839,6 +71867,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     seller: PlayerCreateNestedOneWithoutOffersInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
@@ -71850,6 +71879,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -72489,6 +72519,7 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Offer"> | number | null
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
+    dinozDetails?: StringNullableFilter<"Offer"> | string | null
   }
 
   export type DinozUpsertWithWhereUniqueWithoutLeaderInput = {
@@ -76146,6 +76177,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
@@ -76157,6 +76189,7 @@ export namespace Prisma {
     dinozId?: number | null
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -78828,6 +78861,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     seller: PlayerCreateNestedOneWithoutOffersInput
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
@@ -78840,6 +78874,7 @@ export namespace Prisma {
     dinozId?: number | null
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
   }
 
@@ -78863,6 +78898,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
@@ -78875,6 +78911,7 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
   }
 
@@ -78882,6 +78919,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     seller: PlayerCreateNestedOneWithoutOffersInput
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
@@ -78894,6 +78932,7 @@ export namespace Prisma {
     dinozId?: number | null
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
 
@@ -79023,6 +79062,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
@@ -79035,6 +79075,7 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
 
@@ -83586,6 +83627,7 @@ export namespace Prisma {
     endDate: Date | string
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
   }
 
   export type DinozCreateManyLeaderInput = {
@@ -83766,6 +83808,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
@@ -83777,6 +83820,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -83787,6 +83831,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DinozUpdateWithoutLeaderInput = {
@@ -84319,6 +84364,7 @@ export namespace Prisma {
     dinozId?: number | null
     total: number
     status?: $Enums.OfferStatus
+    dinozDetails?: string | null
   }
 
   export type OfferBidCreateManyUserInput = {
@@ -84691,6 +84737,7 @@ export namespace Prisma {
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
@@ -84702,6 +84749,7 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -84712,6 +84760,7 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
+    dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type OfferBidUpdateWithoutUserInput = {

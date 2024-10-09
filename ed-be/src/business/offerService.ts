@@ -6,6 +6,7 @@ import {
 	getOffer,
 	getOffers,
 	insertOffer,
+	updateOfferDinoz,
 	updateOfferStatus
 } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
@@ -46,6 +47,15 @@ export async function getOfferList(req: Request) {
 	// Get filtered offers
 	const offers = await getOffers(req.auth.playerId, filter, sellerId, bidderId, expired, page);
 
+	if (expired) {
+		offers.map(o => {
+			if (o.dinozDetails) {
+				o.dinoz = JSON.parse(o.dinozDetails);
+			} else {
+				o.dinoz = null;
+			}
+		});
+	}
 	return offers;
 }
 
@@ -346,6 +356,8 @@ export const expireOffer = async (offerId: number) => {
 			// Update winner ranking
 			await updateDinozCount(winnerBid.userId, 1);
 			await updatePoints(winnerBid.userId, offer.dinoz.level);
+
+			await updateOfferDinoz(offerId, JSON.stringify(offer.dinoz));
 		}
 
 		// Add items to winner inventory

@@ -73,7 +73,7 @@ export async function getOffers(
 			}
 		},
 		orderBy: {
-			id : 'desc'
+			id: 'desc'
 		}
 	});
 
@@ -97,8 +97,8 @@ export async function insertOffer(
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
-			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
-			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
+			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
 			dinozId,
 			items: {
 				create: itemsAndIngredient
@@ -139,7 +139,22 @@ export async function getOffer(offerId: number) {
 		},
 		include: {
 			seller: { select: { id: true, name: true } },
-			dinoz: { select: { id: true, name: true, level: true } },
+			dinoz: {
+				select: {
+					id: true,
+					name: true,
+					level: true,
+					raceId: true,
+					nbrUpAir: true,
+					nbrUpFire: true,
+					nbrUpLightning: true,
+					nbrUpWater: true,
+					nbrUpWood: true,
+					display: true,
+					status: { select: { statusId: true } },
+					skills: { select: { skillId: true } }
+				}
+			},
 			items: { select: { itemId: true, quantity: true, isIngredient: true } },
 			bids: {
 				select: { userId: true, value: true },
@@ -168,6 +183,17 @@ export async function updateOfferStatus(offerId: number, status: OfferStatus) {
 		},
 		data: {
 			status
+		}
+	});
+}
+
+export async function updateOfferDinoz(offerId: number, dinozDetail: string) {
+	await prisma.offer.update({
+		where: {
+			id: offerId
+		},
+		data: {
+			dinozDetails: dinozDetail
 		}
 	});
 }
