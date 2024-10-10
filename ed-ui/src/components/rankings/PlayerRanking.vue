@@ -180,6 +180,7 @@ table {
 				background-image: url('../../assets/background/table_cell.webp');
 				background-position: -10px 0px;
 				max-width: 4px;
+				padding-top: 4px;
 			}
 		}
 		&.even {

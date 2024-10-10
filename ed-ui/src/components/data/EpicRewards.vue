@@ -52,6 +52,7 @@ export default defineComponent({
 	min-height: 46px;
 	h3 {
 		display: flex;
+		align-items: center;
 		justify-content: space-evenly;
 		padding-top: 3px;
 		font-family: Arial, sans-serif;
@@ -65,7 +66,6 @@ export default defineComponent({
 		img {
 			height: 7px;
 			width: 7px;
-			padding-top: 5px;
 		}
 	}
 	dl {

@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<form class="ml-[-50px] mt-[30px] sm:ml-0 sm:mt-[20px]" @submit.prevent="dinozUpdate()">
+	<form class="ml-[-50px] mt-[45px] sm:ml-0 sm:mt-[20px]" @submit.prevent="dinozUpdate()">
 		<fieldset>
 			<legend class="text-[10pt] sm:text-[13pt]">Dinoz Details</legend>
 			<div>

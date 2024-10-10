@@ -14,7 +14,7 @@
 		<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" />
 	</div>
 	<div
-		class="mb-10 ml-[-65px] flex min-w-full flex-col items-center justify-center gap-x-10 sm:ml-0 lg:flex-row lg:flex-nowrap lg:items-start lg:justify-between"
+		class="mb-10 ml-[-65px] flex min-w-full flex-col items-center justify-center gap-x-10 overflow-x-hidden sm:ml-0 sm:overflow-visible lg:flex-row lg:flex-nowrap lg:items-start lg:justify-between"
 	>
 		<div v-if="dataLoaded">
 			<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>

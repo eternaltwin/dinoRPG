@@ -1,8 +1,8 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="shop" v-if="actualShop">
+	<div class="ml-[-45px] sm:ml-0" v-if="actualShop">
 		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`" />
-		<div class="section">
+		<div class="section mb-[40px] ml-[15px] mt-[-30px] sm:ml-0 sm:mt-0">
 			<div class="titlePage" style="undefined" width="520" height="27" v-html="formatContent($t(`shop.item.title`))" />
 			<div
 				class="subTitlePage"
@@ -11,290 +11,306 @@
 				v-html="formatContent($t(`shop.item.${actualShop.name}.name`))"
 			/>
 		</div>
-		<div class="shopDesc">
-			<div class="contain">
-				<div class="art art_shop">
+		<div
+			class="shopDesc bg-[#bc683c] bg-cover bg-no-repeat sm:bg-transparent sm:bg-[url('./assets/background/desc_shop.webp')] lg:bg-contain"
+		>
+			<div class="mt-[30px] p-[15px] lg:mt-[10px]">
+				<div class="art">
 					<img :src="getImgURL('shop', `shop_${actualShop.name}`)" :alt="actualShop.name" />
 				</div>
 				<p v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
 				<div class="clear"></div>
 			</div>
 		</div>
-		<div class="bg bg2">
-			<div class="list">
-				<template v-if="itemList.length > 0">
-					<Tippy theme="small" class="name" v-for="(item, index) in itemList" :id="item.name" :key="index" tag="a">
-						<img :src="getImgURL('item', `item_${item.name}`)" :alt="item.name" @click="selectItem(item.itemId)" />
+		<div class="min-w-full bg-no-repeat sm:h-[304px] sm:bg-[url('./assets/design/shop_bg2.webp')]">
+			<div
+				class="flex min-w-full flex-col items-center justify-center gap-[30px] sm:flex-row sm:items-start sm:justify-start sm:bg-none"
+			>
+				<div
+					class="mt-[20px] h-[304px] w-[160px] bg-[url('./assets/design/bg_shop_mobile.webp')] bg-no-repeat sm:mt-0 sm:bg-none"
+				>
+					<div class="list relative ml-[13px] mt-[10px] sm:ml-[20px] sm:mt-[19px] sm:w-[140px]">
+						<template v-if="itemList.length > 0">
+							<Tippy theme="small" class="name" v-for="(item, index) in itemList" :id="item.name" :key="index" tag="a">
+								<img :src="getImgURL('item', `item_${item.name}`)" :alt="item.name" @click="selectItem(item.itemId)" />
+								<template #content>
+									<h2 v-html="formatContent($t(`item.name.${item.name}`))" />
+									<p v-if="item.itemType === 'magical'">
+										{{ formatContent($t(`shop.item.price`)) }}
+										<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+										{{ formatContent($t(`item.name.golden_napodino`)) }}
+										x {{ item.price }}
+									</p>
+									<p v-else>
+										{{ item.price }}
+										<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
+									</p>
+								</template>
+							</Tippy>
+						</template>
+						<template v-else>
+							<Tippy
+								theme="small"
+								class="name"
+								v-for="(item, index) in ingredientList"
+								:id="item.name"
+								:key="index"
+								tag="a"
+							>
+								<img
+									:src="getImgURL('ingredients', item.name)"
+									:alt="item.name"
+									@click="selectItem(item.ingredientId)"
+								/>
+								<template #content>
+									<h2 v-html="formatContent($t(`ingredients.name.${item.name}`))" />
+									<div>
+										{{ item.price }} -> 1
+										<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+									</div>
+								</template>
+							</Tippy>
+						</template>
+					</div>
+				</div>
+				<div class="ml-[-20px] mt-[-100px] bg-[#bc683c] p-2 sm:ml-0 sm:mt-0 sm:bg-transparent sm:p-0">
+					<div class="details relative">
+						<div v-if="!selectedItem" id="shop_guide">
+							<p v-html="formatContent($t('shop.item.help'))" />
+							<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
+						</div>
+						<div
+							v-if="selectedItem && selectedItem.type === ItemShopType.ITEM"
+							id="item_"
+							class="item"
+							style="display: block"
+						>
+							<Tippy theme="small" tag="div" class="stock" v-if="!isFull(selectedItem)" @click="popinConfirmChoice(true)">
+						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
 						<template #content>
-							<h2 v-html="formatContent($t(`item.name.${item.name}`))" />
-							<p v-if="item.itemType === 'magical'">
+							<div
+								v-html="
+									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
+									selectedItem.quantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+									resolveItem(selectedItem).maxQuantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+								"
+							/>
+							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
+						</template>
+					</Tippy>
+					<Tippy
+								theme="small"
+								tag="div"
+								class="stock"
+								:class="{
+									full: true
+								}"
+								v-else
+							>
+								{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
+								<template #content>
+									<div
+										v-html="
+											formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
+											selectedItem.quantity +
+											formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+											resolveItem(selectedItem).maxQuantity +
+											formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+										"
+									/>
+									<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
+								</template>
+							</Tippy>
+							<div class="type">
+								<Tippy
+									theme="small"
+									tag="img"
+									v-if="resolveItem(selectedItem).canBeUsedNow"
+									:src="getImgURL('icons', 'small_use')"
+									alt="use"
+								>
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.use'))" />
+									</template>
+								</Tippy>
+								<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.useOff'))" />
+									</template>
+								</Tippy>
+								<Tippy
+									theme="small"
+									tag="img"
+									v-if="resolveItem(selectedItem).canBeEquipped"
+									:src="getImgURL('icons', 'small_equip')"
+									alt="equip"
+								>
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.equip'))" />
+									</template>
+								</Tippy>
+								<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.equipOff'))" />
+									</template>
+								</Tippy>
+							</div>
+							<div class="infos">
+								<label for="field_1">{{ $t('shop.item.quantity') }}</label>
+								<input type="number" v-model="selectedQuantity" />
+								<a
+									class="button"
+									v-if="isSelectedQuantityValid(parseFloat(selectedQuantity), resolveItem(selectedItem))"
+									@click="popinConfirmChoice(false)"
+								>
+									{{ $t(`shop.item.buy`) }}
+								</a>
+								<Tippy theme="small" tag="a" class="button disabled" v-else>
+									<template #content>
+										<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
+										<div v-html="formatContent($t('tooltip.shop.invalidQuantity_foot'))" />
+									</template>
+									{{ $t(`shop.item.buy`) }}
+								</Tippy>
+							</div>
+							<div class="header">
+								<img
+									class="icon"
+									:src="getImgURL('item', `item_${resolveItem(selectedItem).name}`)"
+									:alt="resolveItem(selectedItem).name"
+								/>
+								<div class="name">
+									{{ $t(`item.name.${resolveItem(selectedItem).name}`) }}
+								</div>
+								<div v-if="selectedItem.itemType !== 'magical'" class="value">
+									<span class="money">
+										{{ resolveItem(selectedItem).price }}
+										<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
+									</span>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div v-if="selectedItem.itemType === 'magical'" class="objValue">
 								{{ formatContent($t(`shop.item.price`)) }}
 								<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
 								{{ formatContent($t(`item.name.golden_napodino`)) }}
-								x {{ item.price }}
-							</p>
-							<p v-else>
-								{{ item.price }}
-								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-							</p>
-						</template>
-					</Tippy>
-				</template>
-				<template v-else>
-					<Tippy
-						theme="small"
-						class="name"
-						v-for="(item, index) in ingredientList"
-						:id="item.name"
-						:key="index"
-						tag="a"
-					>
-						<img :src="getImgURL('ingredients', item.name)" :alt="item.name" @click="selectItem(item.ingredientId)" />
-						<template #content>
-							<h2 v-html="formatContent($t(`ingredients.name.${item.name}`))" />
-							<div>
-								{{ item.price }} -> 1
-								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+								x {{ selectedItem.price }}
 							</div>
-						</template>
-					</Tippy>
-				</template>
-			</div>
-			<div class="details">
-				<div v-if="!selectedItem" id="shop_guide">
-					<p v-html="formatContent($t('shop.item.help'))" />
-					<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
-				</div>
-				<div
-					v-if="selectedItem && selectedItem.type === ItemShopType.ITEM"
-					id="item_"
-					class="item"
-					style="display: block"
-				>
-					<Tippy theme="small" tag="div" class="stock" v-if="!isFull(selectedItem)" @click="popinConfirmChoice(true)">
-						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
-						<template #content>
+							<div class="desc" v-html="formatContent($t(`item.description.${resolveItem(selectedItem).name}`))" />
+						</div>
+						<div
+							v-if="selectedItem && selectedItem.type === ItemShopType.INGREDIENT"
+							id="ingredient_"
+							class="item"
+							style="display: block"
+						>
+							<Tippy
+								theme="small"
+								tag="div"
+								class="stock"
+								:class="{
+									full: isFull(selectedItem)
+								}"
+								:key="selectedItem.quantity"
+								@click="popinConfirmChoice(true)"
+							>
+								{{ resolveIngredient(selectedItem).quantity }} / {{ resolveIngredient(selectedItem).maxQuantity }}
+								<template #content>
+									<div
+										v-html="
+											formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
+											selectedItem.quantity +
+											formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+											selectedItem.maxQuantity +
+											formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+										"
+									/>
+									<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
+								</template>
+							</Tippy>
+							<div class="type">
+								<Tippy
+									theme="small"
+									tag="img"
+									v-if="selectedItem.canBeUsedNow"
+									:src="getImgURL('icons', 'small_use')"
+									alt="use"
+								>
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.use'))" />
+									</template>
+								</Tippy>
+								<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.useOff'))" />
+									</template>
+								</Tippy>
+								<Tippy
+									theme="small"
+									tag="img"
+									v-if="selectedItem.canBeEquipped"
+									:src="getImgURL('icons', 'small_equip')"
+									alt="equip"
+								>
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.equip'))" />
+									</template>
+								</Tippy>
+								<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
+									<template #content>
+										<p v-html="formatContent($t('tooltip.item.equipOff'))" />
+									</template>
+								</Tippy>
+							</div>
+							<div class="infos">
+								<label for="field_1">{{ $t('shop.item.quantity') }}</label>
+								<input type="number" v-model="selectedQuantity" />
+								<a
+									class="button"
+									v-if="selectedQuantity > 0 && selectedQuantity * selectedItem.price <= selectedItem.quantity"
+									@click="popinConfirmChoice(false)"
+								>
+									{{ $t(`shop.item.buy`) }}
+								</a>
+								<Tippy theme="small" tag="a" class="button disabled" v-else>
+									<template #content>
+										<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
+										<div v-html="formatContent($t('tooltip.shop.invalidQuantity_foot'))" />
+									</template>
+									{{ $t(`shop.item.buy`) }}
+								</Tippy>
+							</div>
+							<div class="header">
+								<img
+									class="icon"
+									:src="getImgURL('ingredients', resolveIngredient(selectedItem).name)"
+									:alt="resolveIngredient(selectedItem).name"
+								/>
+								<div class="name">
+									{{ $t(`ingredients.name.${resolveIngredient(selectedItem).name}`) }}
+								</div>
+								<div v-if="selectedItem.itemType !== 'magical'" class="value">
+									<span class="money">
+										{{ resolveItem(selectedItem).price }} -> 1
+										<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+									</span>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<div v-if="selectedItem.itemType === 'magical'" class="objValue">
+								{{ formatContent($t(`shop.item.price`)) }}
+								<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+								{{ formatContent($t(`item.name.golden_napodino`)) }}
+								x {{ selectedItem.price }}
+							</div>
 							<div
-								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveItem(selectedItem).maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
-								"
+								class="desc"
+								v-html="formatContent($t(`ingredients.description.${resolveIngredient(selectedItem).name}`))"
 							/>
-							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
-						</template>
-					</Tippy>
-					<Tippy
-						theme="small"
-						tag="div"
-						class="stock"
-						:class="{
-							full: true
-						}"
-						v-else
-					>
-						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
-						<template #content>
-							<div
-								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveItem(selectedItem).maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
-								"
-							/>
-							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
-						</template>
-					</Tippy>
-					<div class="type">
-						<Tippy
-							theme="small"
-							tag="img"
-							v-if="resolveItem(selectedItem).canBeUsedNow"
-							:src="getImgURL('icons', 'small_use')"
-							alt="use"
-						>
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.use'))" />
-							</template>
-						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.useOff'))" />
-							</template>
-						</Tippy>
-						<Tippy
-							theme="small"
-							tag="img"
-							v-if="resolveItem(selectedItem).canBeEquipped"
-							:src="getImgURL('icons', 'small_equip')"
-							alt="equip"
-						>
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.equip'))" />
-							</template>
-						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
-							</template>
-						</Tippy>
-					</div>
-					<div class="infos">
-						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
-						<input type="number" v-model="selectedQuantity" />
-						<a
-							class="button"
-							v-if="isSelectedQuantityValid(parseFloat(selectedQuantity), resolveItem(selectedItem))"
-							@click="popinConfirmChoice(false)"
-						>
-							{{ $t(`shop.item.buy`) }}
-						</a>
-						<Tippy theme="small" tag="a" class="button disabled" v-else>
-							<template #content>
-								<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
-								<div v-html="formatContent($t('tooltip.shop.invalidQuantity_foot'))" />
-							</template>
-							{{ $t(`shop.item.buy`) }}
-						</Tippy>
-					</div>
-					<div class="header">
-						<img
-							class="icon"
-							:src="getImgURL('item', `item_${resolveItem(selectedItem).name}`)"
-							:alt="resolveItem(selectedItem).name"
-						/>
-						<div class="name">
-							{{ $t(`item.name.${resolveItem(selectedItem).name}`) }}
-						</div>
-						<div v-if="selectedItem.itemType !== 'magical'" class="value">
-							<span class="money">
-								{{ resolveItem(selectedItem).price }}
-								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-							</span>
 						</div>
 					</div>
-					<div class="clear"></div>
-					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
-						{{ formatContent($t(`shop.item.price`)) }}
-						<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-						{{ formatContent($t(`item.name.golden_napodino`)) }}
-						x {{ selectedItem.price }}
-					</div>
-					<div class="desc" v-html="formatContent($t(`item.description.${resolveItem(selectedItem).name}`))" />
-				</div>
-				<div
-					v-if="selectedItem && selectedItem.type === ItemShopType.INGREDIENT"
-					id="ingredient_"
-					class="item"
-					style="display: block"
-				>
-					<Tippy
-						theme="small"
-						tag="div"
-						class="stock"
-						:class="{
-							full: isFull(selectedItem)
-						}"
-						:key="selectedItem.quantity"
-						@click="popinConfirmChoice(true)"
-					>
-						{{ resolveIngredient(selectedItem).quantity }} / {{ resolveIngredient(selectedItem).maxQuantity }}
-						<template #content>
-							<div
-								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									selectedItem.maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
-								"
-							/>
-							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
-						</template>
-					</Tippy>
-					<div class="type">
-						<Tippy
-							theme="small"
-							tag="img"
-							v-if="selectedItem.canBeUsedNow"
-							:src="getImgURL('icons', 'small_use')"
-							alt="use"
-						>
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.use'))" />
-							</template>
-						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.useOff'))" />
-							</template>
-						</Tippy>
-						<Tippy
-							theme="small"
-							tag="img"
-							v-if="selectedItem.canBeEquipped"
-							:src="getImgURL('icons', 'small_equip')"
-							alt="equip"
-						>
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.equip'))" />
-							</template>
-						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
-							</template>
-						</Tippy>
-					</div>
-					<div class="infos">
-						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
-						<input type="number" v-model="selectedQuantity" />
-						<a
-							class="button"
-							v-if="selectedQuantity > 0 && selectedQuantity * selectedItem.price <= selectedItem.quantity"
-							@click="popinConfirmChoice(false)"
-						>
-							{{ $t(`shop.item.buy`) }}
-						</a>
-						<Tippy theme="small" tag="a" class="button disabled" v-else>
-							<template #content>
-								<div v-html="formatContent($t('tooltip.shop.invalidQuantity'))" />
-								<div v-html="formatContent($t('tooltip.shop.invalidQuantity_foot'))" />
-							</template>
-							{{ $t(`shop.item.buy`) }}
-						</Tippy>
-					</div>
-					<div class="header">
-						<img
-							class="icon"
-							:src="getImgURL('ingredients', resolveIngredient(selectedItem).name)"
-							:alt="resolveIngredient(selectedItem).name"
-						/>
-						<div class="name">
-							{{ $t(`ingredients.name.${resolveIngredient(selectedItem).name}`) }}
-						</div>
-						<div v-if="selectedItem.itemType !== 'magical'" class="value">
-							<span class="money">
-								{{ resolveItem(selectedItem).price }} -> 1
-								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
-							</span>
-						</div>
-					</div>
-					<div class="clear"></div>
-					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
-						{{ formatContent($t(`shop.item.price`)) }}
-						<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-						{{ formatContent($t(`item.name.golden_napodino`)) }}
-						x {{ selectedItem.price }}
-					</div>
-					<div
-						class="desc"
-						v-html="formatContent($t(`ingredients.description.${resolveIngredient(selectedItem).name}`))"
-					/>
 				</div>
 			</div>
 		</div>
@@ -533,281 +549,238 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.shop {
-	.section {
-		height: 45px;
-		margin-left: -15px;
-		margin-bottom: 20px;
-		background-image: url('../assets/design/title_h1.webp');
-		background-position: left bottom;
-		background-repeat: no-repeat;
-	}
-	.shopDesc {
-		margin: auto;
-		margin-bottom: 8px;
-		width: 520px;
-		height: 168px;
-		padding: 5px;
-		font-style: italic;
-		color: #ffee92;
-		font-size: 10pt;
-		background-image: url('../assets/background/desc_shop.webp');
-		background-repeat: no-repeat;
-		.contain {
-			margin-top: 10px;
-			padding: 15px;
-		}
-		.art {
-			width: 160px;
-			height: 120px;
-			margin-right: 10px;
-			margin-bottom: 10px;
-			border: none;
-			outline: none;
-			float: left;
-			position: relative;
-			overflow: hidden;
-			font-size: 0pt;
-			line-height: 0pt;
-			background-position: top left;
-			background-repeat: no-repeat;
-		}
-		p {
-			margin: 0px;
-		}
-	}
-	.bg {
-		margin: auto;
-		width: 520px;
-		height: 222px;
-		background-image: url('../assets/design/shop_bg.webp');
-		background-repeat: no-repeat;
-		.list {
-			position: absolute;
-			width: 140px;
-			margin-left: 20px;
-			margin-top: 19px;
-			font-size: 0pt;
-			line-height: 0pt;
-			a {
-				display: block;
-				float: left;
-				position: relative;
-				width: 32px;
-				height: 32px;
-				margin-left: 1.2px;
-				margin-top: 1px;
-				border: 1px solid #b37047;
-				border-radius: 0px;
-				-webkit-border-radius: 0px;
-				cursor: pointer;
-				&:hover {
-					border-color: white;
-					z-index: 3;
-				}
-			}
-		}
-		.full {
-			.stock {
-				color: yellow;
-				font-weight: bold;
-			}
-			.button {
-				opacity: 0.3;
-			}
-		}
-		.details {
-			position: absolute;
-			width: 294px;
-			height: 180px;
-			margin-left: 200px;
-			margin-top: 20px;
-			#shop_guide {
-				.ad {
-					margin-top: 80px;
-					color: #ffee92;
-					font-size: 9pt;
-					line-height: 10pt;
-					font-style: italic;
-				}
-				p {
-					padding-left: 40px;
-					text-indent: 0px;
-					color: #fce3bc;
-					background-image: url('../assets/design/shop_arrow.webp');
-					background-position: 0px 5px;
-					background-repeat: no-repeat;
-				}
-			}
-			.item {
-				display: none;
-			}
-			.name {
-				color: #ffee92;
-				font-variant: small-caps;
-				font-weight: bold;
-				line-height: 9pt;
-				padding-bottom: 4px;
-				border-bottom: 1px solid #ffee92;
-			}
-			.noValue {
-				height: 12px;
-			}
-			.value {
-				color: white;
-				font-size: 9pt;
-				margin-top: 1px;
-				span.money {
-					background-color: transparent;
-					border: 0px;
-					color: #ffee92;
-				}
-				img {
-					vertical-align: -5%;
-				}
-				.objValue {
-					margin-top: 4px;
-					padding: 3px;
-					color: #ffee92;
-					font-weight: bold;
-					border-top: 1px solid #9a4029;
-					border-bottom: 1px solid #9a4029;
-					img {
-						vertical-align: -50%;
-					}
-				}
-			}
-			.objValue {
-				margin-top: 4px;
-				padding: 3px;
-				color: #ffee92;
-				font-weight: bold;
-				border-top: 1px solid #9a4029;
-				border-bottom: 1px solid #9a4029;
-				img {
-					vertical-align: -50%;
-				}
-			}
-			.type {
-				position: absolute;
-				z-index: 2;
-				margin-top: 23px;
-				margin-left: 230px;
-				width: 65px;
-				text-align: right;
-				font-size: 0pt;
-				line-height: 0pt;
-				img {
-					margin-left: 5px;
-					cursor: help;
-				}
-			}
-			.desc {
-				color: #fce3bc;
-				font-size: 11pt;
-				line-height: 12pt;
-			}
-			.obj {
-				margin-top: 0px;
-			}
-			.infos {
-				position: absolute;
-				margin-top: 143px;
-				width: 294px;
-				padding-top: 2px;
-				border-top: 1px solid #ffee92;
-				display: flex;
-				flex-direction: revert;
-				justify-content: space-between;
-				input {
-					align-self: center;
-					width: 64px;
-					height: 20px;
-					padding-left: 8px;
-					padding-right: 8px;
-					padding-top: 2px;
-					color: #ffee92;
-					font-size: 9pt;
-					font-weight: bold;
-					border: none;
-					background-image: url('../assets/design/form_field_small.webp');
-					background-repeat: no-repeat;
-					background-color: transparent;
-					&:focus {
-						background-image: url('../assets/design/form_field_small_hover.webp');
-					}
-				}
-			}
-			.stock {
-				position: absolute;
-				width: 60px;
-				margin-left: 233px;
-				padding-right: 5px;
-				text-align: right;
-				color: #ffee92;
-				font-size: 11pt;
-				letter-spacing: -0.5pt;
-				background-color: #b46843;
-				border: 1px solid #ffee92;
-				cursor: pointer;
-				&:hover {
-					border-color: white;
-					background-color: #9f562b;
-				}
-			}
-			img.icon {
-				float: left;
-				position: relative;
-				border: 1px solid black;
-				margin-right: 5px;
-			}
-			label {
-				align-self: center;
-				display: block;
-				float: right;
-				position: relative;
-				margin-top: 4px;
-				margin-bottom: 4px;
-				margin-right: 2px;
-				padding: 3px 6px;
-				border-radius: 10px;
-				-webkit-border-radius: 10px;
-				font-size: 8pt;
-				background-color: #9a4029;
-				color: #ffee92;
-			}
-		}
-	}
-	.bg2 {
-		background-image: url('../assets/design/shop_bg2.webp');
-		height: 304px;
-	}
-	p {
-		line-height: 12pt;
+.shopDesc {
+	margin-bottom: 8px;
+	min-width: 100%;
+	min-height: 210px;
+	padding: 5px;
+	font-style: italic;
+	color: #ffee92;
+	font-size: 10pt;
+	.art {
+		width: 160px;
+		height: 120px;
+		margin-right: 10px;
 		margin-bottom: 10px;
-		&:first-letter {
-			font-weight: bold;
-			font-size: 115%;
-			color: white;
+		border: none;
+		outline: none;
+		float: left;
+		position: relative;
+		overflow: hidden;
+		font-size: 0pt;
+		line-height: 0pt;
+		background-position: top left;
+		background-repeat: no-repeat;
+	}
+}
+
+.list {
+	a {
+		display: block;
+		float: left;
+		position: relative;
+		width: 32px;
+		height: 32px;
+		margin-left: 1.2px;
+		margin-top: 1px;
+		border: 1px solid #b37047;
+		border-radius: 0px;
+		-webkit-border-radius: 0px;
+		cursor: pointer;
+		&:hover {
+			border-color: white;
+			z-index: 3;
 		}
 	}
-	.full {
+}
+.full {
+	.stock {
+		color: yellow;
 		font-weight: bold;
 	}
-	.disabled {
+	.button {
 		opacity: 0.3;
 	}
-	div {
-		.clear {
-			clear: both;
-			height: 1px;
-			font-size: 0pt;
-			line-height: 0pt;
+}
+.details {
+	width: 294px;
+	height: 180px;
+	margin-left: 10px;
+	margin-top: 20px;
+	#shop_guide {
+		.ad {
+			margin-top: 80px;
+			color: #ffee92;
+			font-size: 9pt;
+			line-height: 10pt;
+			font-style: italic;
+		}
+		p {
+			padding-left: 40px;
+			text-indent: 0px;
+			color: #fce3bc;
+			background-image: url('../assets/design/shop_arrow.webp');
+			background-position: 0px 5px;
+			background-repeat: no-repeat;
 		}
 	}
-	// Does not work, so I changed in _general.scss
-	/*& strong {
+	.item {
+		display: none;
+	}
+	.name {
+		color: #ffee92;
+		font-variant: small-caps;
+		font-weight: bold;
+		line-height: 9pt;
+		padding-bottom: 4px;
+		border-bottom: 1px solid #ffee92;
+	}
+	.noValue {
+		height: 12px;
+	}
+	.value {
 		color: white;
-	}*/
+		font-size: 9pt;
+		margin-top: 1px;
+		span.money {
+			background-color: transparent;
+			border: 0px;
+			color: #ffee92;
+		}
+		img {
+			vertical-align: -5%;
+		}
+		.objValue {
+			margin-top: 4px;
+			padding: 3px;
+			color: #ffee92;
+			font-weight: bold;
+			border-top: 1px solid #9a4029;
+			border-bottom: 1px solid #9a4029;
+			img {
+				vertical-align: -50%;
+			}
+		}
+	}
+	.objValue {
+		margin-top: 4px;
+		padding: 3px;
+		color: #ffee92;
+		font-weight: bold;
+		border-top: 1px solid #9a4029;
+		border-bottom: 1px solid #9a4029;
+		img {
+			vertical-align: -50%;
+		}
+	}
+	.type {
+		position: absolute;
+		z-index: 2;
+		margin-top: 23px;
+		margin-left: 230px;
+		width: 65px;
+		text-align: right;
+		font-size: 0pt;
+		line-height: 0pt;
+		img {
+			margin-left: 5px;
+			cursor: help;
+		}
+	}
+	.desc {
+		color: #fce3bc;
+		font-size: 11pt;
+		line-height: 12pt;
+	}
+	.obj {
+		margin-top: 0px;
+	}
+	.infos {
+		position: absolute;
+		margin-top: 143px;
+		width: 294px;
+		padding-top: 2px;
+		border-top: 1px solid #ffee92;
+		display: flex;
+		flex-direction: revert;
+		justify-content: space-between;
+		input {
+			align-self: center;
+			width: 64px;
+			height: 20px;
+			padding-left: 8px;
+			padding-right: 8px;
+			padding-top: 2px;
+			color: #ffee92;
+			font-size: 9pt;
+			font-weight: bold;
+			border: none;
+			background-image: url('../assets/design/form_field_small.webp');
+			background-repeat: no-repeat;
+			background-color: transparent;
+			&:focus {
+				background-image: url('../assets/design/form_field_small_hover.webp');
+			}
+		}
+	}
+	.stock {
+		position: absolute;
+		width: 70px;
+		margin-left: 225px;
+		padding-right: 5px;
+		text-align: right;
+		color: #ffee92;
+		font-size: 11pt;
+		letter-spacing: -0.5pt;
+		background-color: #b46843;
+		border: 1px solid #ffee92;
+		cursor: pointer;
+		&:hover {
+			border-color: white;
+			background-color: #9f562b;
+		}
+	}
+	img.icon {
+		float: left;
+		position: relative;
+		border: 1px solid black;
+		margin-right: 5px;
+	}
+	label {
+		align-self: center;
+		display: block;
+		float: right;
+		position: relative;
+		margin-top: 4px;
+		margin-bottom: 4px;
+		margin-right: 2px;
+		padding: 3px 6px;
+		border-radius: 10px;
+		-webkit-border-radius: 10px;
+		font-size: 8pt;
+		background-color: #9a4029;
+		color: #ffee92;
+	}
+}
+p {
+	line-height: 12pt;
+	margin-bottom: 10px;
+	&:first-letter {
+		font-weight: bold;
+		font-size: 115%;
+		color: white;
+	}
+}
+.full {
+	font-weight: bold;
+}
+.disabled {
+	opacity: 0.3;
+}
+div {
+	.clear {
+		clear: both;
+		height: 5px;
+	}
 }
 </style>

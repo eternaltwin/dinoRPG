@@ -18,7 +18,7 @@
 		</select>
 	</div>
 	<div
-		class="ml-[-50px] flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:flex-row sm:gap-0"
+		class="ml-[-50px] mt-4 flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:flex-row sm:gap-0"
 		v-if="pantheon === PantheonMotif.EPIC"
 	>
 		<select v-model="rewardId" @change="refreshPantheon()">
@@ -80,7 +80,7 @@
 		</table>
 	</div>
 	<div
-		class="flex flex-col items-center"
+		class="ml-[-55px] flex flex-col items-center sm:ml-0"
 		v-if="
 			pantheon === PantheonMotif.EPIC &&
 			rewardId &&
@@ -90,6 +90,7 @@
 		"
 	>
 		<Tippy
+			class="mt-[10px]"
 			theme="normal"
 			tag="img"
 			:src="getImgURL('epicRewards', `collec_${epicRewards[rewardId - 1].name}`)"

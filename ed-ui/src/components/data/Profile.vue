@@ -232,12 +232,12 @@ export default defineComponent({
 		font-variant-caps: small-caps;
 		font-weight: 400;
 		text-align: center;
+		align-items: center;
 		color: #ffee92; //!important;
 		text-shadow: 1px 1px 1px #383522;
 		img {
 			height: 7px;
 			width: 7px;
-			padding-top: 5px;
 		}
 	}
 	dl {

@@ -101,7 +101,7 @@
         color: #fff1ad;
     }
     ul.tabs {
-        @apply list-none h-[18px] pl-[10px] mt-[-9px] mb-[5px] ml-[-5px] mr-[-5px] bg-[#9a4029] border-b border-[#ffe7aa];
+        @apply list-none h-[18px] pl-[10px] mt-[-9px] mb-[10px] mr-[-5px] bg-[#9a4029] border-b border-[#ffe7aa] ml-[-30px] sm:ml-0;
         background-image: url("./assets/design/tabsBg.webp");
         background-repeat: no-repeat;
     }

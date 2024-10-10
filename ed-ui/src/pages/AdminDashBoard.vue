@@ -17,7 +17,7 @@
 	</div>
 	<div v-if="displayErrorMessage" class="text-red-500">This player doesn't exist</div>
 	<ul class="tabs" style="margin-top: 10px">
-		<li class="ml-[-45px] sm:ml-0">
+		<li>
 			<a href="#" :class="tabSelected === 1 ? 'active' : ''" @click="setTab(1)"> Player Edit </a>
 		</li>
 		<li>

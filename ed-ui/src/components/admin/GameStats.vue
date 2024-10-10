@@ -1,5 +1,5 @@
 <template>
-	<div class="ml-[-50px] mt-[40px] sm:ml-0 sm:mt-[20px]">
+	<div class="ml-[-50px] mt-[45px] sm:ml-0 sm:mt-[20px]">
 		<select v-model="type">
 			<option value="null">All</option>
 			<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>

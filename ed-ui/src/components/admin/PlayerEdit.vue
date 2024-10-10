@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<form class="ml-[-50px] mt-[30px] sm:ml-0 sm:mt-[20px]" @submit.prevent="sendUpdate()">
+	<form class="ml-[-50px] mt-[45px] sm:ml-0 sm:mt-[20px]" @submit.prevent="sendUpdate()">
 		<fieldset>
 			<legend class="text-[10pt] sm:text-[13pt]">Player details</legend>
 			<div>
