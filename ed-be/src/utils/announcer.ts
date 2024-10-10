@@ -18,6 +18,7 @@ export async function checkAnnounce(type: PantheonMotif, id: number, rewardId?: 
 				DISCORD.sendNotification(
 					translateAll('announce.dinoz', {
 						player: dinoz.player.name,
+						position: raceAtThisLevel.length + 1,
 						dinoz: dinoz.name,
 						race: dinoz.raceId,
 						level: dinoz.level
