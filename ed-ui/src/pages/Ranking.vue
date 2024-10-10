@@ -24,17 +24,30 @@
 			<a href="#" @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
 		</li>
 	</ul>
-	<DZDisclaimer v-if="tabSelected === 1" help :content="$t('ranking.disclaimer.classic')" class="ml-[-50px] sm:ml-0" />
-	<DZDisclaimer v-if="tabSelected === 2" help :content="$t('ranking.disclaimer.average')" class="ml-[-50px] sm:ml-0" />
+	<DZDisclaimer
+		v-if="tabSelected === 1"
+		help
+		:content="$t('ranking.disclaimer.classic')"
+		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+	/>
+	<DZDisclaimer
+		v-if="tabSelected === 2"
+		help
+		:content="$t('ranking.disclaimer.average')"
+		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+	/>
 	<DZDisclaimer
 		v-if="tabSelected === 3"
 		help
 		:content="$t('ranking.disclaimer.completion')"
-		class="ml-[-50px] sm:ml-0"
+		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
 	/>
-	<div class="disclaimer" v-if="tabSelected === 5">
-		{{ $t('ranking.disclaimer.pantheon') }}
-	</div>
+	<DZDisclaimer
+		v-if="tabSelected === 5"
+		help
+		:content="$t('ranking.disclaimer.pantheon')"
+		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+	/>
 	<PlayerRanking sort="classic" :tab-selected="tabSelected" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" :tab-selected="tabSelected" v-if="tabSelected === 2" />
 	<CompletionRanking :tab-selected="tabSelected" v-if="tabSelected === 3" />

@@ -1,9 +1,13 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="wrapper">
-		<DZButton @click="pantheon = PantheonMotif.RACE">{{ $t(`ranking.pantheon.dinozPantheon`) }}</DZButton>
+	<div class="ml-[-50px] flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:flex-row sm:gap-0">
+		<DZButton class="" @click="pantheon = PantheonMotif.RACE">{{ $t(`ranking.pantheon.dinozPantheon`) }}</DZButton>
 		<DZButton @click="pantheon = PantheonMotif.EPIC">{{ $t(`ranking.pantheon.playerPantheon`) }}</DZButton>
 	</div>
-	<div class="wrapper" v-if="pantheon === PantheonMotif.RACE">
+	<div
+		class="ml-[-50px] mt-4 flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:mt-0 sm:flex-row sm:gap-0"
+		v-if="pantheon === PantheonMotif.RACE"
+	>
 		<select v-model="race" @change="refreshPantheon()">
 			<option :value="null">{{ $t(`ranking.pantheon.allRaces`) }}</option>
 			<option v-for="(race, index) in races" :key="index" :value="race">{{ $t(`race.name.${race}`) }}</option>
@@ -13,7 +17,10 @@
 			<option v-for="(level, index) in [10, 20, 30, 40, 50]" :key="index" :value="level">{{ level }}</option>
 		</select>
 	</div>
-	<div class="wrapper" v-if="pantheon === PantheonMotif.EPIC">
+	<div
+		class="ml-[-50px] flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:flex-row sm:gap-0"
+		v-if="pantheon === PantheonMotif.EPIC"
+	>
 		<select v-model="rewardId" @change="refreshPantheon()">
 			<option :value="null">{{ $t(`ranking.pantheon.pickEpic`) }}</option>
 			<option v-for="(epic, index) in epicRewards" :key="index" :value="epic.id">
@@ -21,7 +28,7 @@
 			</option>
 		</select>
 	</div>
-	<div v-if="pantheon === PantheonMotif.RACE && display">
+	<div v-if="pantheon === PantheonMotif.RACE && display" class="ml-[-55px] sm:ml-0">
 		<table>
 			<tbody>
 				<tr>
@@ -30,8 +37,13 @@
 				</tr>
 				<tr v-for="item in display" :key="item.id">
 					<template v-if="item.motif === PantheonMotif.RACE">
-						<td class="dinoz">
-							<DinozWithoutFlash class="dinoImg" :display="item.dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
+						<td class="dinoz min-h-[250px] sm:min-h-[50px]">
+							<DinozWithoutFlash
+								class="h-auto w-[120px] sm:h-[165px] sm:w-[190px]"
+								:display="item.dinoz.display"
+								:life="1"
+								:flip="-1"
+							></DinozWithoutFlash>
 						</td>
 						<td class="missions">
 							<ul>
@@ -68,7 +80,7 @@
 		</table>
 	</div>
 	<div
-		class="pantheon"
+		class="flex flex-col items-center"
 		v-if="
 			pantheon === PantheonMotif.EPIC &&
 			rewardId &&
@@ -189,31 +201,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.pantheon {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-}
-.wrapper {
-	margin: 5px;
-	display: flex;
-	justify-content: space-around;
-}
 .hidden {
 	display: none !important;
 }
 table {
-	width: 100%;
+	min-width: 100%;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	background-color: #ecbd84;
 	border-collapse: separate;
 	border-spacing: 1px;
-
 	tr {
 		display: table-row;
 		cursor: help;
-
 		th {
 			font-size: 8pt;
 			text-shadow: 1px 1px 0px #356847;
@@ -229,13 +229,11 @@ table {
 			background-color: #c64e36;
 			background-image: url('../../assets/background/table_header.webp');
 			background-position: left bottom;
-
 			&.dinoz {
 				padding-left: 4px;
 				padding-right: 4px;
 				padding-bottom: 8px;
 			}
-
 			&.name {
 				padding-left: 4px;
 				padding-right: 4px;
@@ -247,7 +245,6 @@ table {
 				padding-bottom: 8px;
 			}
 		}
-
 		td {
 			font-size: 16px;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -256,39 +253,32 @@ table {
 			border: 1px solid #c88f44;
 			background-image: url('../../assets/background/table_cell.webp');
 			background-position: -10px 0px;
-
 			&.dinoz {
 				padding: 1px 5px;
 				font-variant: small-caps;
 				display: flex;
 				justify-content: center;
-				min-height: 30px;
 				align-items: center;
 			}
-
 			&.missions {
 				font-size: 9pt;
 				padding: 1px 5px;
 				font-weight: bold;
-
 				ul {
 					list-style-type: none;
 					background-color: #f4d9a8;
 					border-radius: 5px;
 					margin: 4px 8px;
 					padding: 4px 8px;
-
 					img {
 						padding-right: 8px;
 						padding-left: 4px;
 					}
-
 					.total {
 						color: #ea0000;
 					}
 				}
 			}
-
 			.see-button {
 				margin-left: 8px;
 				border-color: #c85d3f;
@@ -300,7 +290,6 @@ table {
 				font-size: 9pt;
 				padding: 0px 4px;
 				text-decoration: none;
-
 				&:hover {
 					background-color: #f3ca92;
 					color: #c85d3f;
