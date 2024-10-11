@@ -2,9 +2,11 @@
 <template>
 	<Transition>
 		<div v-if="enabled" class="modal-background">
-			<div class="modal-box">
+			<div
+				class="modal-box h-auto w-[83%] bg-none sm:h-[296px] sm:w-[394px] sm:bg-[url('./assets/background/mission.webp')]"
+			>
 				<button class="modal-close" @click="$emit('close')">X</button>
-				<p v-html="formatContent($t(`missions.description.${missionName}`))" />
+				<p class="ml-7 mt-1 w-[90%] p-3" v-html="formatContent($t(`missions.description.${missionName}`))" />
 				<div class="option">
 					<a v-if="mission?.status === 'ongoing'" class="button" @click="updateMission('stop')">
 						{{ $t('missions.giveUp') }}
@@ -79,23 +81,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .modal-background {
-	position: fixed;
 	background: transparentize(#09092d, 0.4);
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	z-index: 999;
 	transition: all 0.3s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	.modal-box {
-		background-image: url('../../assets/background/mission.webp');
 		background-repeat: no-repeat;
-		width: 394px;
-		height: 296px;
 		position: absolute;
 		background-color: #fff0d1;
 		border-radius: 3px;
@@ -115,7 +105,7 @@ export default defineComponent({
 			font-size: 10pt;
 		}
 		.option {
-			margin-left: 35px;
+			margin-left: 40px;
 			margin-right: 35px;
 			padding-top: 10px;
 			border-top: 1px solid #e6b778;
@@ -132,7 +122,6 @@ export default defineComponent({
 		}
 	}
 }
-
 .v-enter-active {
 	transition:
 		opacity 0.5s ease,
@@ -144,7 +133,6 @@ export default defineComponent({
 		opacity 0.5s ease,
 		bottom 0.5s ease;
 }
-
 .v-enter-from {
 	bottom: 0;
 	opacity: 0;
@@ -169,14 +157,12 @@ export default defineComponent({
 	text-decoration: none;
 	font-variant: small-caps;
 	transition: all 0.15s;
-
 	&:hover,
 	&:focus,
 	&:active {
 		color: black;
 	}
 }
-
 @keyframes blowUpModal {
 	0% {
 		transform: scale(0);

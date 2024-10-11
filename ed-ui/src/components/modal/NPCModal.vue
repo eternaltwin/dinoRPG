@@ -2,16 +2,21 @@
 <template>
 	<Transition>
 		<div v-if="text" class="modal-background">
-			<div class="box">
+			<div class="box w-[95%] sm:w-[580px]">
 				<div class="headerBox">
 					<div class="name">{{ $t(`missions.npc.${npcName}`) }} :</div>
 				</div>
-				<div class="footer">
-					<DZButton class="continue" @click="$emit('close')">{{ $t(`npc.continue`) }}</DZButton>
-					<span class="dialog">
-						{{ $t(`missions.dialog.${text}`) }}
-					</span>
+				<div class="flex flex-col flex-wrap gap-8">
+					<div class="dialog flex flex-wrap">
+						<p class="pr-5">
+							{{ $t(`missions.dialog.${text}`) }}
+						</p>
+					</div>
+					<div class="mr-[25px] flex justify-end">
+						<DZButton class="w-[130px]" @click="$emit('close')">{{ $t(`npc.continue`) }}</DZButton>
+					</div>
 				</div>
+				<div class="footer"></div>
 			</div>
 		</div>
 	</Transition>
@@ -33,29 +38,19 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .modal-background {
-	position: fixed;
 	background: transparentize(#09092d, 0.4);
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	z-index: 999;
 	transition: all 0.3s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	.box {
 		cursor: pointer;
-		min-width: 528px;
 		background-repeat: repeat-y;
 		background-image: url('../../assets/background/dialog_bg_pix.webp');
-
+		background-size: contain;
 		.headerBox {
 			background-image: url('../../assets/background/dialog_bg_header.webp');
 			background-repeat: no-repeat;
-			height: 30px;
-
+			background-size: cover;
+			min-height: 50px;
 			.name {
 				margin-left: 15px;
 				padding-top: 15px;
@@ -65,31 +60,26 @@ export default defineComponent({
 				color: #693118;
 			}
 		}
-
+		.dialog {
+			display: flex;
+			flex-wrap: wrap;
+			float: left;
+			position: relative;
+			margin-bottom: 10px;
+			margin-left: 10px;
+			color: #fff3b3;
+			font-size: 10pt;
+			font-style: italic;
+			overflow: hidden;
+		}
 		.footer {
-			min-height: 148px;
+			min-height: 50px;
 			padding: 1px;
 			background-image: url('../../assets/background/dialog_bg_footer.webp');
 			background-repeat: no-repeat;
 			background-position: bottom left;
+			background-size: contain;
 			overflow: hidden;
-
-			.continue {
-				top: 100px;
-				left: 15px;
-			}
-
-			.dialog {
-				width: 390px;
-				float: left;
-				position: relative;
-				margin-bottom: 10px;
-				margin-left: 10px;
-				color: #fff3b3;
-				font-size: 10pt;
-				font-style: italic;
-				overflow: hidden;
-			}
 		}
 	}
 }

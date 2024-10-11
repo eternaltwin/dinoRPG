@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<dialog ref="dialogRef">
+	<dialog class="max-w-[80%] sm:max-w-[500px]" ref="dialogRef">
 		<div class="modal-title">{{ $t(`report.header`) }}</div>
 		<form v-if="player" method="dialog">
 			<div class="modal-content">
@@ -129,8 +129,6 @@ dialog {
 	border: 1px solid #b37c4a;
 	color: wheat;
 	max-height: 100%;
-	max-width: 500px;
-	min-width: 200px;
 	outline: 2px solid #000;
 	overflow: auto;
 	overflow: visible;

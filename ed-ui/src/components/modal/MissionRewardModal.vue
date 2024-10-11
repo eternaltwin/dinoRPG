@@ -2,7 +2,9 @@
 <template>
 	<Transition>
 		<div v-if="missionReward" class="modal-background">
-			<div class="modal-box">
+			<div
+				class="modal-box h-auto w-[83%] bg-none sm:h-[296px] sm:w-[394px] sm:bg-[url('./assets/background/mission.webp')]"
+			>
 				<div class="result">
 					{{ $t(`missions.status.over`, { mission: $t(`missions.name.${missionName}`) }) }}
 				</div>
@@ -109,22 +111,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .modal-background {
-	position: fixed;
 	background: transparentize(#09092d, 0.4);
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	z-index: 999;
 	transition: all 0.3s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	.modal-box {
-		background-image: url('../../assets/background/mission.webp');
 		background-repeat: no-repeat;
-		width: 394px;
 		height: 296px;
 		position: absolute;
 		background-color: #fff0d1;
@@ -189,7 +180,6 @@ export default defineComponent({
 		}
 	}
 }
-
 .v-enter-active {
 	transition:
 		opacity 0.5s ease,
@@ -201,7 +191,6 @@ export default defineComponent({
 		opacity 0.5s ease,
 		bottom 0.5s ease;
 }
-
 .v-enter-from {
 	bottom: 0;
 	opacity: 0;
@@ -210,30 +199,6 @@ export default defineComponent({
 	bottom: 0;
 	opacity: 0;
 }
-
-.modal-close {
-	min-width: 31px;
-	cursor: pointer;
-	position: absolute;
-	text-align: center;
-	right: 0;
-	top: 0;
-	padding: 5px;
-	background-color: #fadcb0;
-	color: transparentize(brown, 0.4);
-	font-size: 0.85em;
-	letter-spacing: 0.03em;
-	text-decoration: none;
-	font-variant: small-caps;
-	transition: all 0.15s;
-
-	&:hover,
-	&:focus,
-	&:active {
-		color: black;
-	}
-}
-
 @keyframes blowUpModal {
 	0% {
 		transform: scale(0);

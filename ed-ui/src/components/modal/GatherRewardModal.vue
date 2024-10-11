@@ -1,4 +1,3 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<Transition>
 		<div class="modal-background">
@@ -80,22 +79,14 @@ export default defineComponent({
 	}
 });
 </script>
-
 <style lang="scss" scoped>
 .modal-background {
 	position: absolute;
 	width: v-bind(size);
 	height: v-bind(size);
 	background: transparentize(#09092d, 0.4);
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	z-index: 999;
 	transition: all 0.3s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	flex-direction: column;
 	img {
 		margin-top: 15px;
@@ -104,7 +95,6 @@ export default defineComponent({
 		margin-top: 25px;
 	}
 }
-
 .v-enter-active {
 	transition:
 		opacity 0.5s ease,
@@ -116,7 +106,6 @@ export default defineComponent({
 		opacity 0.5s ease,
 		bottom 0.5s ease;
 }
-
 .v-enter-from {
 	bottom: 0;
 	opacity: 0;
@@ -124,37 +113,5 @@ export default defineComponent({
 .v-leave-to {
 	bottom: 0;
 	opacity: 0;
-}
-
-.modal-close {
-	min-width: 31px;
-	cursor: pointer;
-	position: absolute;
-	text-align: center;
-	right: 0;
-	top: 0;
-	padding: 5px;
-	background-color: #fadcb0;
-	color: transparentize(brown, 0.4);
-	font-size: 0.85em;
-	letter-spacing: 0.03em;
-	text-decoration: none;
-	font-variant: small-caps;
-	transition: all 0.15s;
-
-	&:hover,
-	&:focus,
-	&:active {
-		color: black;
-	}
-}
-
-@keyframes blowUpModal {
-	0% {
-		transform: scale(0);
-	}
-	100% {
-		transform: scale(1);
-	}
 }
 </style>

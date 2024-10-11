@@ -1,9 +1,9 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<div v-if="enabled" class="modal-background">
-		<div class="modal-box">
+		<div class="modal-box w-[300px] sm:w-[600px]">
 			<button class="modal-close" @click="$emit('close')">Close</button>
-			<div class="details">
+			<div class="mt-[16px] flex flex-col items-center justify-around sm:flex-row">
 				<div class="choice">
 					<div class="title">
 						<img :src="getImgURL('icons', 'act_default')" alt="icon" />
@@ -124,7 +124,7 @@ export default defineComponent({
 	}
 	.button {
 		position: absolute;
-		margin-top: 130px;
+		margin-top: 115px;
 	}
 	ul {
 		list-style: square;
@@ -134,27 +134,11 @@ export default defineComponent({
 		color: #fce3bc;
 	}
 }
-.details {
-	margin-top: 16px;
-	font-size: 0.65em;
-	display: flex;
-	justify-content: space-around;
-}
 .modal-background {
-	position: fixed;
 	background: transparentize(#09092d, 0.4);
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	z-index: 999;
 	transition: all 0.3s;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	.modal-box {
-		width: 600px;
 		position: absolute;
 		padding: 2em;
 		font-size: 1.1em;
@@ -167,7 +151,6 @@ export default defineComponent({
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 	}
 }
-
 .modal-close {
 	cursor: pointer;
 	position: absolute;
@@ -182,14 +165,12 @@ export default defineComponent({
 	text-decoration: none;
 	font-variant: small-caps;
 	transition: all 0.15s;
-
 	&:hover,
 	&:focus,
 	&:active {
 		color: black;
 	}
 }
-
 @keyframes blowUpModal {
 	0% {
 		transform: scale(0);
