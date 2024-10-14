@@ -4186,7 +4186,7 @@ const checkDefensiveEffects = (
 	// M_PROTECTION
 	if (isCloseCombat && target.skills.find(s => s.id === Skill.M_PROTECTION)) {
 		// Only take 1/3 damage on assaults
-		damage = Math.round(damage / 3);
+		damage = Math.ceil(damage / 3);
 	}
 
 	// M_ELEMENTAL
