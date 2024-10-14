@@ -17,7 +17,6 @@
 		/>
 		<input type="submit" class="button" :value="$t(`faq.search`)" />
 	</form>
-
 	<div class="ml-[-50px] mt-[20px] w-full sm:ml-0">
 		<h3 class="mb-[10px] bg-[#bc683c] pl-[10px] text-[#fff1ad]">{{ $t('faq.qa') }}</h3>
 		<dl class="mt-[10px] flex flex-col gap-[10px]">

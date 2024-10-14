@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<DZDisclaimer help :content="$t('clan.ingredients.help', { value: treasureValue })" />
+	<DZDisclaimer help :content="$t('clan.ingredients.help', { value: treasureValue })" class="ml-0" />
 	<div class="wrapper">
 		<Tippy theme="normal" tag="div" v-for="ingredient in treasure" :key="ingredient.name" class="container">
 			<img :src="getImgURL('ingredients', ingredient.name)" :alt="ingredient.name" />

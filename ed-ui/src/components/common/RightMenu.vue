@@ -38,7 +38,9 @@
 				<a @click="goToMyAccount('MyAccount', getPlayerId)">{{ $t('rightMenu.account') }}</a>
 			</li>
 			<li>
-				<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank">{{ $t('rightMenu.forum') }}</a>
+				<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank" @click="togglePanel">{{
+					$t('rightMenu.forum')
+				}}</a>
 				<a @click="goToPage('FAQ')">{{ $t('rightMenu.faq') }}</a>
 			</li>
 			<li>
@@ -99,9 +101,11 @@ export default defineComponent({
 			this.isPanelOpen = !this.isPanelOpen; // Bascule entre ouvert et fermé
 		},
 		goToMyAccount(page: string, paramId: number): void {
+			this.togglePanel();
 			this.$router.push({ name: page, params: { id: paramId } });
 		},
 		goToPage(page: string): void {
+			this.togglePanel();
 			this.$router.push({ name: page });
 		},
 		getTime(): void {

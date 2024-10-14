@@ -78,7 +78,7 @@
 			</div>
 			<p class="text-center italic text-[#bc683c]">{{ $t(`place.name.${place}`) }}</p>
 		</div>
-		<DinozList :currentDinozId="currentDinozId()" :key="dinozStore"></DinozList>
+		<DinozList :currentDinozId="currentDinozId()" :key="dinozStore" @click="togglePanel"></DinozList>
 		<a
 			v-if="hasPDA"
 			class="mb-px flex h-[20px] cursor-pointer border border-[#d69e68] py-px pl-[5px] text-[8pt] font-bold leading-[10pt] text-[#8e3e26] hover:bg-[#8e3e26] hover:text-[#fce3bc]"
@@ -143,12 +143,15 @@ export default defineComponent({
 			return new Date(date.getTime() - diff); // needs to substract
 		},
 		goToPage(pageName: string) {
+			this.togglePanel();
 			this.$router.push({ name: pageName });
 		},
 		goToCine() {
+			this.togglePanel();
 			window.open('https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/', '_blank');
 		},
 		goToPageWithParam(pageName: string, param: string) {
+			this.togglePanel();
 			this.$router.push({
 				name: pageName,
 				params: { name: param }
@@ -161,12 +164,14 @@ export default defineComponent({
 			});
 		},
 		goToPageWithId(pageName: string, _id: number) {
+			this.togglePanel();
 			this.$router.push({
 				name: pageName,
 				params: { id: _id }
 			});
 		},
 		goToPlayerClan() {
+			this.togglePanel();
 			if (this.clanId) {
 				this.$router.push({
 					name: 'Clan',

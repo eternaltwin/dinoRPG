@@ -8,7 +8,11 @@
 			<div class="fx_content">
 				<template v-for="(status, index) in dinozStatus" :key="index">
 					<Tippy theme="normal" v-if="statusList.displayed[status]">
-						<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
+						<img
+							class="mt-[8px]"
+							:src="getImgURL('status', `fx_${statusList.imgName[status]}`)"
+							:alt="statusList.imgName[status]"
+						/>
 						<template #content>
 							<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
 							<p v-html="formatContent($t(`status.description.${status}`))"></p>
@@ -42,17 +46,14 @@ export default defineComponent({
 	margin-left: 192px;
 	margin-top: 101px;
 	width: 223px;
-	// height: 77px !important;
 	// display: flex;
 	// flex-wrap: wrap;
 	background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
-	// background-position: bottom;
-	background-size: auto;
 	box-shadow: inset 0 0 1px 2px #d3a76a;
 	.fx_top {
 		position: relative;
 		width: 223px;
-		height: 28px;
+		height: 29px;
 		background: url('../../assets/background/box_header.webp') no-repeat;
 		p {
 			color: white;
@@ -68,7 +69,7 @@ export default defineComponent({
 	}
 	.fx_content {
 		height: 77px;
-		margin-top: -5px;
+		margin-top: -9px;
 		padding-left: 2px;
 		border-style: hidden solid solid solid;
 		border-width: 0 1px 1px 1px;
@@ -77,7 +78,6 @@ export default defineComponent({
 	img {
 		border: 1px solid transparent;
 		border-radius: 5px;
-
 		&:hover {
 			border-color: white;
 		}
