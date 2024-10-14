@@ -15,7 +15,7 @@ export async function calculatePlayerPower(playerId: number) {
 	const AVAILABLE_MISSIONS = 55;
 	const dinozLevelTotal = boxInfo.dinoz.reduce((partialSum, a) => partialSum + a.level, 0);
 	const totalRewards = boxInfo.rewards.filter(r => r.rewardId <= 24).length;
-	const AVAIALBLE_REWARDS = 23;
+	const AVAILABLE_REWARDS = 23;
 	const universalCount =
 		(boxInfo.cooker ? 1 : 0) +
 		(boxInfo.engineer ? 1 : 0) +
@@ -26,7 +26,7 @@ export async function calculatePlayerPower(playerId: number) {
 		(boxInfo.priest ? 1 : 0) +
 		(boxInfo.shopKeeper ? 1 : 0) +
 		(boxInfo.teacher ? 1 : 0);
-	const AVAIALBLE_UNIVERSAL = 9;
+	const AVAILABLE_UNIVERSAL = 9;
 
 	const coefficients = {
 		dinoz: 1,
@@ -37,10 +37,10 @@ export async function calculatePlayerPower(playerId: number) {
 	};
 	const completion =
 		(((dinozCount / gameConfig.dinoz.maxQuantity) * coefficients.dinoz +
-			(universalCount / AVAIALBLE_UNIVERSAL) * coefficients.universal +
+			(universalCount / AVAILABLE_UNIVERSAL) * coefficients.universal +
 			(missionTotal / (AVAILABLE_MISSIONS * gameConfig.dinoz.maxQuantity)) * coefficients.missions +
 			(dinozLevelTotal / (gameConfig.dinoz.maxLevel * gameConfig.dinoz.maxQuantity)) * coefficients.level +
-			(totalRewards / AVAIALBLE_REWARDS) * coefficients.rewards) /
+			(totalRewards / AVAILABLE_REWARDS) * coefficients.rewards) /
 			(coefficients.dinoz +
 				coefficients.universal +
 				coefficients.missions +
