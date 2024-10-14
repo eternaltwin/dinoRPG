@@ -1,7 +1,7 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<Transition>
-		<div v-if="displayToast" class="snackbar" @click="displayToast = !displayToast">
+		<div v-if="displayToast" class="snackbar ml-0 sm:ml-[-125px]" @click="displayToast = !displayToast">
 			<template v-if="type === 'error'">{{ $t(`toast.${message}`, params) }}</template>
 			<template v-if="type === 'success'">{{ $t(`toast.${message}`, params) }}</template>
 			<p v-if="type === 'notif'" v-html="formatContent(message)" />
@@ -52,7 +52,6 @@ export default defineComponent({
 .snackbar {
 	opacity: 1;
 	min-width: 250px; /* Set a default minimum width */
-	margin-left: -125px; /* Divide value of min-width by 2 */
 	color: #fff; /* White text color */
 	text-align: center; /* Centered text */
 	border-radius: 2px; /* Rounded borders */
