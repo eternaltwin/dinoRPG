@@ -321,6 +321,7 @@ import { ItemShopFiche, ItemShopType } from '@drpg/core/models/shop/ShopFiche';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -476,7 +477,7 @@ export default defineComponent({
 				...itemList[item.id],
 				price: item.price,
 				quantity: item.quantity ?? 0,
-				maxQuantity: this.playerStore.isShopkeeper ? realItem!.maxQuantity * 1.5 : realItem!.maxQuantity
+				maxQuantity: this.playerStore.isShopkeeper && realItem?.itemType !== ItemType.MAGICAL ? realItem!.maxQuantity * 1.5 : realItem!.maxQuantity
 			} as ItemFiche;
 		},
 		resolveIngredient(item: ItemShopFiche): IngredientFiche {
