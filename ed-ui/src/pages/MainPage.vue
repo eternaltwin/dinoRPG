@@ -57,6 +57,7 @@ export default defineComponent({
 				this.dinozStore.setDinozCount(commonData.dinozCount);
 				this.playerStore.setClanId(commonData.clanId);
 				this.playerStore.setPriest(commonData.priest);
+				this.playerStore.setShopkeeper(commonData.shopkeeper);
 
 				if (!this.playerStore.getPlayerId) {
 					this.playerStore.setPlayerId(commonData.id);

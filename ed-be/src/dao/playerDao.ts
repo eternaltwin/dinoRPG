@@ -309,6 +309,7 @@ export async function getCommonDataRequest(playerId: number) {
 			money: true,
 			engineer: true,
 			priest: true,
+			shopKeeper: true,
 			lastLogin: true,
 			ClanMember: { select: { clanId: true } },
 			dinoz: {

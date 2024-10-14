@@ -99,7 +99,8 @@ export async function getCommonData(req: Request) {
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI)
 		},
 		admin: req.auth.isAdmin || false,
-		priest: playerCommonData.priest
+		priest: playerCommonData.priest,
+		shopkeeper: playerCommonData.shopKeeper
 	};
 
 	// Order dinoz

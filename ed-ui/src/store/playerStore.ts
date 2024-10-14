@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import { defineStore, Store } from 'pinia';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 
@@ -14,14 +14,16 @@ export const playerStore = defineStore('playerStore', {
 			currentDinozId: undefined
 		},
 		admin: false,
-		priest: false
+		priest: false,
+		shopkeeper: false,
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
 		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
 		getPlayerOptions: (state: StorePlayer) => state.playerOptions,
 		getClanId: (state: StorePlayer) => state.clanId,
-		isPriest: (state: StorePlayer) => state.priest
+		isPriest: (state: StorePlayer) => state.priest,
+		isShopkeeper: (state: StorePlayer) => state.shopkeeper
 	},
 	actions: {
 		setMoney(money: number): void {
@@ -44,6 +46,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setPriest(priest: boolean): void {
 			this.priest = priest;
+		},
+		setShopkeeper(shopkeeper: boolean): void {
+			this.shopkeeper = shopkeeper;
 		},
 		setClanId(clanId: number | undefined): void {
 			this.clanId = clanId;

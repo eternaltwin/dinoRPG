@@ -11,4 +11,5 @@ export interface PlayerCommonData {
 	playerOptions: PlayerOptions;
 	admin: boolean;
 	priest: boolean;
+	shopkeeper: boolean;
 }

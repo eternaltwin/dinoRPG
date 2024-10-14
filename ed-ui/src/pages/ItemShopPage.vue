@@ -74,9 +74,7 @@
 						theme="small"
 						tag="div"
 						class="stock"
-						:class="{
-							full: isFull(selectedItem)
-						}"
+						v-if="!isFull(selectedItem)"
 						@click="popinConfirmChoice(true)"
 					>
 						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
@@ -86,7 +84,30 @@
 									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
 									selectedItem.quantity +
 									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									selectedItem.maxQuantity +
+									resolveItem(selectedItem).maxQuantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+								"
+							/>
+							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
+						</template>
+					</Tippy>
+					<Tippy
+						theme="small"
+						tag="div"
+						class="stock"
+						:class="{
+							full: true
+						}"
+						v-else
+					>
+						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
+						<template #content>
+							<div
+								v-html="
+									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
+									selectedItem.quantity +
+									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+									resolveItem(selectedItem).maxQuantity +
 									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
 								"
 							/>
@@ -345,8 +366,8 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		isFull(item: ItemFiche): boolean {
-			return item.quantity! >= item.maxQuantity!;
+		isFull(item: ItemShopFiche): boolean {
+			return this.resolveItem(item).quantity! >= this.resolveItem(item).maxQuantity!;
 		},
 		// Buy n of the selected item
 		async buyItems(itemId: number, quantity: number): Promise<void> {
@@ -450,16 +471,18 @@ export default defineComponent({
 			}
 		},
 		resolveItem(item: ItemShopFiche): ItemFiche {
+			const realItem = Object.values(itemList).find(i => i.itemId === item.id);
 			return {
 				...itemList[item.id],
 				price: item.price,
-				quantity: item.quantity ?? 0
+				quantity: item.quantity ?? 0,
+				maxQuantity: this.playerStore.isShopkeeper ? realItem!.maxQuantity * 1.5 : realItem!.maxQuantity
 			} as ItemFiche;
 		},
 		resolveIngredient(item: ItemShopFiche): IngredientFiche {
-			const realItem = Object.values(ingredientList).find(i => i.ingredientId === item.id);
+			const realIngredient = Object.values(ingredientList).find(i => i.ingredientId === item.id);
 			return {
-				...realItem,
+				...realIngredient,
 				price: item.price,
 				quantity: item.quantity ?? 0
 			} as IngredientFiche;

@@ -8,4 +8,5 @@ export interface StorePlayer {
 	clanId: number | undefined;
 	admin: boolean;
 	priest: boolean;
+	shopkeeper: boolean;
 }
