@@ -118,7 +118,7 @@
 						<Tippy
 							theme="small"
 							tag="img"
-							v-if="selectedItem.canBeUsedNow"
+							v-if="resolveItem(selectedItem).canBeUsedNow"
 							:src="getImgURL('icons', 'small_use')"
 							alt="use"
 						>
@@ -134,7 +134,7 @@
 						<Tippy
 							theme="small"
 							tag="img"
-							v-if="selectedItem.canBeEquipped"
+							v-if="resolveItem(selectedItem).canBeEquipped"
 							:src="getImgURL('icons', 'small_equip')"
 							alt="equip"
 						>
