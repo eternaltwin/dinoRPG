@@ -511,7 +511,10 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 		dinoz.items.push(await addItemToDinoz(dinoz.id, itemToEquip.itemId));
 	} else {
 		if (!dinozItem) throw new ExpectedError(`This dinoz doesn't have this item equiped`);
-		if (playerItem >= itemToEquip.maxQuantity) throw new ExpectedError(translate('maxQuantityInventory', authed));
+
+		if (playerItem >= (dinoz.player.shopKeeper
+			? Math.round(itemToEquip.maxQuantity * 1.5)
+			: itemToEquip.maxQuantity)) throw new ExpectedError(translate('maxQuantityInventory', authed));
 		await removeItemFromDinoz(dinoz.id, dinozItem.itemId);
 		await increaseItemQuantity(dinoz.player.id, itemToEquip.itemId, 1);
 		const itemIndex = dinoz.items.findIndex(item => item.id === dinozItem.id);
