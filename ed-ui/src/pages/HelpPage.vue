@@ -24,7 +24,7 @@
 			<img class="size-[250px] lg:size-[350px]" :src="getImgURL('design', 'rocky_01')" />
 		</div>
 	</div>
-	<div class="showContent ml-[-25px] sm:ml-0">
+	<div ref="contentSection" class="showContent ml-[-25px] sm:ml-0">
 		<div v-if="selectedItem" class="custom-deep ml-[-20px] mt-[20px] flex w-full flex-col flex-wrap sm:ml-0">
 			<h2 class="titlePage">{{ selectedItem.name }}</h2>
 			<img class="size-full" :src="getImgURL('design', 'title_h1')" />
@@ -525,11 +525,23 @@ export default defineComponent({
 				const nextItemIndex = this.selectedItem.nextItem;
 				this.selectedItem = this.items[nextItemIndex];
 			}
+			this.$nextTick(() => {
+				this.scrollToTop();
+			});
 		},
 		showPrevItem() {
 			if (this.selectedItem && this.selectedItem.prevItem !== undefined) {
 				const prevItemIndex = this.selectedItem.prevItem;
 				this.selectedItem = this.items[prevItemIndex];
+			}
+			this.$nextTick(() => {
+				this.scrollToTop();
+			});
+		},
+		scrollToTop() {
+			const section = this.$refs.contentSection;
+			if (section) {
+				section.scrollIntoView({ behavior: 'smooth' });
 			}
 		},
 		goToPage(pageName: string) {
