@@ -5,6 +5,7 @@
 		<Report />
 		<Spinner />
 		<ErrorMessage />
+		<Messagerie />
 	</div>
 	<RouterView />
 	<FooterComp />
@@ -20,10 +21,12 @@ import Spinner from './components/utils/Spinner.vue';
 import ErrorMessage from './components/utils/ErrorMessage.vue';
 import Toast from './components/utils/Toast.vue';
 import Report from './components/modal/ReportModal.vue';
+import Messagerie from './components/modal/MessagerieModal.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
+		Messagerie,
 		TitleHeader,
 		FooterComp,
 		Spinner,

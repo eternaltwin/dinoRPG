@@ -22,9 +22,9 @@
 					{{ time }}
 				</div>
 			</li>
-			<!--		<li>-->
-			<!--			<a @click="goToPage('')">{{ $t('rightMenu.gazette') }}</a>-->
-			<!--		</li>-->
+			<li>
+				<a @click="messagerie()">{{ $t('rightMenu.gazette') }}</a>
+			</li>
 			<li>
 				<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
 			</li>
@@ -70,6 +70,7 @@
 import { defineComponent } from 'vue';
 import LocaleChange from '../../components/utils/LocaleChange.vue';
 import { dinozStore, playerStore, localStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'RightMenu',
@@ -97,6 +98,9 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		messagerie() {
+			EventBus.emit('message', true);
+		},
 		togglePanel() {
 			this.isPanelOpen = !this.isPanelOpen; // Bascule entre ouvert et fermé
 		},

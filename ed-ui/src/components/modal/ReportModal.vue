@@ -117,7 +117,6 @@ export default defineComponent({
 				this.dialogRef.showModal();
 			}
 		});
-		console.log(this.player);
 		this.dialogRef = this.$refs.dialogRef as HTMLDialogElement;
 	}
 });

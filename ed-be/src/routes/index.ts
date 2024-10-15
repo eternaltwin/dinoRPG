@@ -22,6 +22,7 @@ import testingRoutes from './testing.routes.js';
 import clanRoutes from './clan.routes.js';
 import moderationRoutes from './moderation.routes.js';
 import pantheonRoutes from './pantheon.routes.js';
+import messagerieRoutes from './messagerie.routes.js';
 import { jwtConfig } from '../utils/index.js';
 
 export default function initRoutes(app: Express, config: Config) {
@@ -47,6 +48,7 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(clanRoutes);
 	app.use(pantheonRoutes);
 	app.use(moderationRoutes);
+	app.use(messagerieRoutes);
 	if (!config.isProduction) {
 		app.use(testingRoutes);
 	}

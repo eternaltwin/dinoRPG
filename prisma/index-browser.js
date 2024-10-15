@@ -550,6 +550,31 @@ exports.Prisma.ModerationScalarFieldEnum = {
   sorted: 'sorted'
 };
 
+exports.Prisma.ConversationScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  createdById: 'createdById',
+  playerId: 'playerId',
+  pinnedMessageId: 'pinnedMessageId'
+};
+
+exports.Prisma.ParticipantsScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  conversationId: 'conversationId',
+  joinedAt: 'joinedAt'
+};
+
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  createdAt: 'createdAt',
+  senderId: 'senderId',
+  conversationId: 'conversationId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -688,7 +713,10 @@ exports.Prisma.ModelName = {
   ClanHistory: 'ClanHistory',
   ClanMember: 'ClanMember',
   ClanPage: 'ClanPage',
-  Moderation: 'Moderation'
+  Moderation: 'Moderation',
+  Conversation: 'Conversation',
+  Participants: 'Participants',
+  Message: 'Message'
 };
 
 /**

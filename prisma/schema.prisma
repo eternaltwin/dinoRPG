@@ -386,6 +386,10 @@ model Player {
   reportedCases               Moderation[]                 @relation("ReporterRelation")
   targetedCases               Moderation[]                 @relation("TargetRelation")
   Pantheon                    Pantheon[]
+  conversations               Participants[]
+  messages                    Message[]
+  createdConversations        Conversation[]               @relation("CreatedConversations")
+  Conversation                Conversation[]
 
   @@map("player")
 }
@@ -704,4 +708,41 @@ model Moderation {
   reason     ModerationReason
   comment    String
   sorted     Boolean          @default(false)
+}
+
+model Conversation {
+  id              String         @id @default(dbgenerated("uuid_generate_v4()"))
+  title           String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  createdById     Int
+  createdBy       Player         @relation("CreatedConversations", fields: [createdById], references: [id])
+  participants    Participants[]
+  messages        Message[]      @relation("ConversationMessages")
+  Player          Player?        @relation(fields: [playerId], references: [id])
+  playerId        Int?
+  pinnedMessageId Int?           @unique
+  pinnedMessage   Message?       @relation("PinnedMessage", fields: [pinnedMessageId], references: [id])
+}
+
+model Participants {
+  id             Int          @id @default(autoincrement())
+  playerId       Int
+  conversationId String
+  joinedAt       DateTime     @default(now())
+  player         Player       @relation(fields: [playerId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+
+  @@unique([playerId, conversationId])
+}
+
+model Message {
+  id             Int           @id @default(autoincrement())
+  content        String
+  createdAt      DateTime      @default(now())
+  senderId       Int
+  conversationId String
+  sender         Player        @relation(fields: [senderId], references: [id])
+  conversation   Conversation  @relation("ConversationMessages", fields: [conversationId], references: [id])
+  pinnedIn       Conversation? @relation("PinnedMessage")
 }
