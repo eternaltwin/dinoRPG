@@ -49,6 +49,7 @@
 import { defineComponent } from 'vue';
 import LocaleChange from '../../components/utils/LocaleChange.vue';
 import { dinozStore, playerStore, localStore } from '../../store/index.js';
+import EventBus from '../../events/index.js';
 
 export default defineComponent({
 	name: 'RightMenu',
@@ -75,6 +76,12 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		messagerie() {
+			EventBus.emit('message', true);
+		},
+		togglePanel() {
+			this.isPanelOpen = !this.isPanelOpen; // Bascule entre ouvert et fermé
+		},
 		goToMyAccount(page: string, paramId: number): void {
 			this.$router.push({ name: page, params: { id: paramId } });
 		},
@@ -108,33 +115,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .rightMenu {
-	//left: 550px;
-	//position: absolute;
-	//padding-bottom: 10px;
-	//padding-right: 10px;
-	margin-top: 90px;
-	height: fit-content;
-	width: fit-content;
-	padding: 15px;
-	//padding-left: 15px;
-	//padding-top: 15px;
-	//padding-bottom: 20px;
 	background:
 		url('../../assets/design/sideMenu_header.webp') no-repeat,
 		url('../../assets/design/sideMenu_footer.webp') no-repeat,
 		url('../../assets/design/sideMenu_bg.webp') repeat-y;
 	background-position-y: top, bottom;
-	//display: block;
-	list-style: none;
-
-	li {
-		width: 100px;
-	}
-
 	a {
 		text-decoration: none;
-		border-collapse: collapse;
-		border-spacing: 0px 0px;
 		color: rgb(142, 62, 38);
 		display: block;
 		font-family: 'Trebuchet MS', Arial, sans-serif;
@@ -143,17 +130,7 @@ export default defineComponent({
 		font-weight: 700;
 		height: 20px;
 		line-height: 14.6667px;
-		list-style-image: none;
-		list-style-position: outside;
-		list-style-type: none;
-		margin-bottom: 0px;
-		margin-left: 0px;
-		margin-right: 10px;
-		margin-top: 0px;
-		padding-bottom: 0px;
 		padding-left: 5px;
-		padding-right: 0px;
-		padding-top: 0px;
 		text-align: left;
 	}
 

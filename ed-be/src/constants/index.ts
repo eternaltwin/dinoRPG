@@ -21,7 +21,8 @@ export const apiRoutes = {
 	eternalTwinRoute: '/api/v1/eternaltwin',
 	clanRoutes: '/api/v1/clan',
 	moderation: '/api/v1/moderation',
-	pantheon: '/api/v1/pantheon'
+	pantheon: '/api/v1/pantheon',
+	messagerie: '/api/v1/messagerie'
 };
 
 export const regex = {
