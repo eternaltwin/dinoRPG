@@ -1,4 +1,4 @@
-import { defineStore, Store } from 'pinia';
+import { defineStore } from 'pinia';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 
