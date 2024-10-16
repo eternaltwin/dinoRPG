@@ -70,13 +70,7 @@
 					class="item"
 					style="display: block"
 				>
-					<Tippy
-						theme="small"
-						tag="div"
-						class="stock"
-						v-if="!isFull(selectedItem)"
-						@click="popinConfirmChoice(true)"
-					>
+					<Tippy theme="small" tag="div" class="stock" v-if="!isFull(selectedItem)" @click="popinConfirmChoice(true)">
 						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
 						<template #content>
 							<div
@@ -477,7 +471,10 @@ export default defineComponent({
 				...itemList[item.id],
 				price: item.price,
 				quantity: item.quantity ?? 0,
-				maxQuantity: this.playerStore.isShopkeeper && realItem?.itemType !== ItemType.MAGICAL ? realItem!.maxQuantity * 1.5 : realItem!.maxQuantity
+				maxQuantity:
+					this.playerStore.isShopkeeper && realItem?.itemType !== ItemType.MAGICAL
+						? realItem!.maxQuantity * 1.5
+						: realItem!.maxQuantity
 			} as ItemFiche;
 		},
 		resolveIngredient(item: ItemShopFiche): IngredientFiche {

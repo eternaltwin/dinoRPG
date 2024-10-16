@@ -15,7 +15,7 @@ export const playerStore = defineStore('playerStore', {
 		},
 		admin: false,
 		priest: false,
-		shopkeeper: false,
+		shopkeeper: false
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
