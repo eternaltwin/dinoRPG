@@ -1,9 +1,11 @@
 <template>
-	<div class="message-header">
-		<DZUser :user="message.sender" />
+	<div class="mb-[10px] ml-[-12px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic">
+		<div class="mb-[10px] flex items-center justify-between bg-[#ae6139] p-[5px] px-[10px]">
+			<DZUser :user="message.sender" />
+			<div class="text-xl">{{ formatDate(message.createdAt.toString()) }}</div>
+		</div>
+		<div class="p-[5px]" v-html="message.content" />
 	</div>
-	<div class="message-content" v-html="message.content"></div>
-	<div class="message-footer">{{ formatDate(message.createdAt.toString()) }}</div>
 </template>
 
 <script lang="ts">

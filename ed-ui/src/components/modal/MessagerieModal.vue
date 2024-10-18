@@ -1,42 +1,133 @@
 <template>
 	<dialog ref="messageRef">
-		<div class="conversation-container">
-			<div class="conversation-list">
-				<div class="buttons">
-					<DZButton @click="create()">Créer</DZButton>
-					<DZButton @click="close">Close</DZButton>
+		<div class="flex h-screen flex-col md:flex-row">
+			<div class="mt-[2px] px-[5px] md:w-[30%]">
+				<div class="mb-[10px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic">
+					<div class="flex items-center gap-3 bg-[#ae6139] p-[4px]">
+						<img :src="getImgURL('icons', 'small_browse_next')" />
+						<p>{{ $t('messagerie.actions') }}</p>
+					</div>
+					<div class="flex flex-wrap p-[4px] md:flex-nowrap">
+						<div
+							@click="create()"
+							class="m-[3px] flex w-full cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139] md:w-1/2"
+							style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
+						>
+							<img :src="getImgURL('icons', 'edit')" />
+							<span>{{ $t('messagerie.create') }}</span>
+						</div>
+						<div
+							@click="toggleSearch()"
+							class="m-[3px] flex w-full cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139] md:w-1/2"
+							style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
+						>
+							<img :src="getImgURL('icons', 'search')" />
+							<span>{{ $t('messagerie.research') }}</span>
+						</div>
+					</div>
 				</div>
-				<div v-for="thread in threads" :key="thread.id" @click="selectThread(thread.id)">
-					<b class="title">{{ thread.title }}</b>
-					<span class="">
-						<b class="creator">{{ thread.createdBy }}</b
-						>, {{ thread.participants.length }} participants
-					</span>
-					<span class="date">
-						{{ thread.lastMessage }}
-					</span>
+				<div class="my-[10px] px-[5px]">
+					<div v-if="isSearchVisible">
+						<div class="flex items-center gap-2">
+							<label for="conv_list_filter"><img :src="getImgURL('icons', 'search')" class="size-10" /></label>
+							<input
+								v-model="searchQuery"
+								id="conv_list_filter"
+								class="w-full border-2 border-black bg-[url('./assets/background/bg_conv_input.webp')] bg-cover bg-no-repeat pl-[10px] outline-none placeholder:text-[#ffee92]"
+								:placeholder="$t('messagerie.search')"
+							/>
+						</div>
+					</div>
+				</div>
+				<div class="border-2 border-b-0 border-[#704328] bg-[#cb7c49]">
+					<div class="flex items-center gap-2 bg-[#ae6139] pl-[5px]">
+						<img :src="getImgURL('icons', 'thread')" />
+						<span>{{ $t('messagerie.conversations') }}</span>
+					</div>
+				</div>
+				<div class="mt-[-2px] border-2 border-t-0 border-[#704328] bg-[#cb7c49] p-[10px]">
+					<div class="flex flex-col gap-2 scroll-auto">
+						<ul class="m-0 p-0">
+							<li
+								v-for="thread in filteredThreads()"
+								:key="thread.id"
+								@click="selectThread(thread.id)"
+								class="box-border flex cursor-pointer flex-col border-2 border-[#b37c4a] p-2 pl-[15px] hover:bg-[#ae6139]"
+								:class="{
+									selected: thread.id === selectedThreadId
+								}"
+							>
+								<b class="text-white">{{ thread.title }}</b>
+								<span class="">
+									<b class="text-white">{{ thread.createdBy }}</b>
+									<span>, {{ thread.participants.length }} {{ $t('messagerie.participants') }},</span>
+									<span class="text-gray-300">{{ thread.lastMessage }}</span>
+								</span>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
-			<div class="conversation-content">
-				<div class="creation" v-if="creationMode">
-					<input type="text" id="title" v-model="newThread.title" class="editTexte" placeholder="Titre" />
-					<div class="participants">
+			<div class="ml-[-12px] mt-5 flex flex-col p-[20px] sm:mt-0 md:w-[70%]">
+				<div
+					class="mt-[-17px] bg-[#ae6139] p-[5px]"
+					style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
+					v-if="!threadSelected"
+				>
+					<p style="font-variant: small-caps">{{ $t('messagerie.disclaimer') }}</p>
+				</div>
+				<div class="flex flex-col gap-2 bg-[#cb7c49]" v-if="creationMode">
+					<div
+						class="mb-[10px] mt-[-17px] h-[26px] bg-[#ae6139] p-[5px]"
+						style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
+					>
+						<p>{{ $t('messagerie.newMsg') }}</p>
+					</div>
+					<div class="flex flex-col p-[5px] lg:flex-row">
+						<label for="title" class="lg:w-1/4">{{ $t('messagerie.newMsgTitle') }}</label>
+						<input
+							type="text"
+							id="title"
+							v-model="newThread.title"
+							class="w-full bg-[url('./assets/background/bg_conv_input.webp')] pl-[5px] outline-none placeholder:text-[#ffee92]"
+							:placeholder="$t('messagerie.title')"
+						/>
+					</div>
+					<div class="flex flex-col p-[5px] lg:flex-row">
+						<label for="player" class="lg:w-1/4">{{ $t('messagerie.newMsgParticipants') }}</label>
 						<SearchPlayer @player="participantThead" />
+					</div>
+					<div class="flex w-full items-center justify-center gap-3">
 						<template v-for="participant in newThread.participants" :key="participant.id">
 							<DZUser :user="participant" />
 						</template>
 					</div>
-
-					<textarea id="message" v-model="newThread.message" class="editTexte" placeholder="Message" />
-					<DZButton @click="sendMessage">Envoyer le message</DZButton>
+					<!-- Ajouter un éditeur de texte avancé -->
+					<div class="mt-4 flex flex-col p-[5px]">
+						<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
+						<textarea
+							id="message"
+							v-model="newThread.message"
+							class="w-full bg-[url('./assets/background/bg_conv_textarea.webp')] pl-[5px] outline-none placeholder:text-[#ffee92]"
+							:placeholder="$t('messagerie.message')"
+						/>
+					</div>
+					<div class="flex justify-end p-[5px]">
+						<DZButton @click="sendMessage">{{ $t('messagerie.newMsgSend') }}</DZButton>
+					</div>
 				</div>
-				<div class="displayThread" v-if="!creationMode && currentThread">
+				<!-- Ajouter un aperçu du message -->
+				<div v-if="!creationMode && currentThread">
 					<Thread :current-thread="currentThread" />
 				</div>
 			</div>
 		</div>
-		<div class="buttons">
-			<DZButton @click="close">Close</DZButton>
+		<div class="absolute right-1 top-[4px]">
+			<span
+				@click="close"
+				class="cursor-pointer border-2 border-red-500 bg-orange-200 px-3 py-1 font-extrabold text-red-700 hover:bg-red-700 hover:text-black"
+				>X</span
+			>
 		</div>
 	</dialog>
 </template>
@@ -66,12 +157,17 @@ export default defineComponent({
 			creationMode: false as boolean,
 			newThread: {} as NewThread,
 			currentThread: undefined as undefined | FullThread,
-			response: undefined as undefined | string
+			response: undefined as undefined | string,
+			threadSelected: false as boolean,
+			selectedThreadId: null as string | null,
+			isSearchVisible: false,
+			searchQuery: ''
 		};
 	},
 	methods: {
 		async create() {
 			this.creationMode = true;
+			this.threadSelected = true;
 		},
 		participantThead(p: Pick<Player, 'id' | 'name'>) {
 			if (!this.newThread.participants) {
@@ -84,10 +180,16 @@ export default defineComponent({
 			if (this.messageRef) {
 				this.messageRef.close();
 				this.currentThread = undefined;
+				this.creationMode = false;
+				this.threadSelected = false;
+				this.selectedThreadId = null;
+				this.isSearchVisible = false;
 			}
 		},
 		async selectThread(id: string) {
 			this.creationMode = false;
+			this.threadSelected = true;
+			this.selectedThreadId = id;
 			this.currentThread = await MessagerieService.getThread(id, 1);
 		},
 		formatDate(dateString: string) {
@@ -112,6 +214,15 @@ export default defineComponent({
 			} catch (error) {
 				console.error("Erreur lors de l'envoi du message", error);
 			}
+		},
+		toggleSearch() {
+			this.isSearchVisible = !this.isSearchVisible;
+		},
+		filteredThreads() {
+			if (!this.searchQuery) {
+				return this.threads;
+			}
+			return this.threads.filter(thread => thread.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
 		}
 	},
 	mounted(): void {
@@ -129,9 +240,9 @@ export default defineComponent({
 
 <style scoped>
 dialog {
-	background-color: #5c2b20;
-	border: 1px solid #b37c4a;
-	color: wheat;
+	background-color: #fff0c5;
+	border: 3px solid #cb7c49;
+	color: #ffee92;
 	max-height: 100%;
 	max-width: 90%;
 	min-width: 200px;
@@ -145,25 +256,14 @@ dialog {
 		background: linear-gradient(0deg, rgba(107, 32, 17, 0.2), rgba(107, 32, 17, 0.4) 70%, rgba(0, 0, 0, 0.7));
 	}
 }
-.conversation-container {
-	display: flex;
-
-	flex-direction: row;
-
-	height: 100vh;
-}
-
-.conversation-list {
-	width: 30%;
-
-	border: 1px solid #ccc;
-
-	padding: 20px;
-}
-
-.conversation-content {
-	width: 70%;
-
-	padding: 20px;
+li {
+	&.selected {
+		background-color: #e6b479;
+		border-color: black;
+		& b,
+		span {
+			color: #7e4d2a;
+		}
+	}
 }
 </style>

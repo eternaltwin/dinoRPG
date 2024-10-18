@@ -1,16 +1,35 @@
 <template>
-	<div class="thread-header">
-		<DZButton @click="answerMode = true">Répondre</DZButton>
+	<div
+		class="mb-[10px] ml-[-12px] mt-[-18px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic"
+	>
+		<div class="flex items-center gap-3 bg-[#ae6139] p-[4px]">
+			<img :src="getImgURL('icons', 'small_browse_next')" />
+			<p>{{ $t('messagerie.conversation') }}</p>
+		</div>
+		<div class="flex flex-wrap p-[4px] md:flex-nowrap">
+			<div
+				@click="answerMsg()"
+				class="m-[3px] flex w-full cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139]"
+				style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
+			>
+				<img :src="getImgURL('icons', 'edit')" />
+				<span>{{ $t('messagerie.response') }}</span>
+			</div>
+		</div>
 	</div>
-	<div class="answerMode" v-if="answerMode">
+	<div
+		v-if="answerMode"
+		class="mb-[10px] ml-[-12px] flex h-auto w-full flex-col gap-2 border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic"
+	>
 		<Ckeditor :editor="editor" v-model="answer" />
-		<DZButton @click="sendMessage()">Envoyer</DZButton>
+		<div class="flex justify-end pl-[5px]">
+			<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
+		</div>
 	</div>
 	<div v-if="currentThread.pinnedMessage">
 		<Message :message="currentThread.pinnedMessage" />
 	</div>
-
-	<div v-for="message in currentThread.messages" :key="message.id" class="pm-message">
+	<div v-for="message in currentThread.messages" :key="message.id">
 		<Message :message="message" />
 	</div>
 </template>
@@ -40,6 +59,9 @@ export default defineComponent({
 	},
 	components: { Message, DZButton },
 	methods: {
+		async answerMsg() {
+			this.answerMode = true;
+		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
 			const lang = this.localStore.getLanguage;

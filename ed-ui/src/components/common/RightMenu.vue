@@ -22,9 +22,9 @@
 					{{ time }}
 				</div>
 			</li>
-			<li>
-				<a @click="messagerie()">{{ $t('rightMenu.gazette') }}</a>
-			</li>
+			<!--<li>
+				<a @click="goToPage('Gazette')">{{ $t('rightMenu.gazette') }}</a>
+			</li>-->
 			<li>
 				<a @click="goToPage('Ranking')">{{ $t('rightMenu.ranking') }}</a>
 			</li>
@@ -36,6 +36,9 @@
 			</li>
 			<li v-if="getPlayerId">
 				<a @click="goToMyAccount('MyAccount', getPlayerId)">{{ $t('rightMenu.account') }}</a>
+			</li>
+			<li>
+				<a @click="messagerie()">{{ $t('rightMenu.messagerie') }}</a>
 			</li>
 			<li>
 				<a href="https://eternal-twin.net/forum/sections/drpg_main" target="_blank" @click="togglePanel">{{

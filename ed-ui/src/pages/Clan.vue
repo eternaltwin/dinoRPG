@@ -8,7 +8,7 @@
 		<ClanHeader :clan="clan" v-if="clan"></ClanHeader>
 	</div>
 	<!-- Pages du clan (à faire dans un composant à part)-->
-	<div class="pages ml-[-60px] min-w-full sm:ml-0 lg:min-w-[123%]">
+	<div class="pages ml-[-60px] min-w-full sm:ml-0 lg:mt-8 lg:min-w-[123%]">
 		<h3 class="mt-[5px] sm:mt-0">
 			<img class="mt-[6px]" :src="getImgURL('design', 'info_button')" alt="info_button" style="margin-right: 10px" />
 			{{ $t('clan.tabs.pages') }}

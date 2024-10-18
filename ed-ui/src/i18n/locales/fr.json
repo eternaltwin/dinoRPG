@@ -8,6 +8,7 @@
 		"clans": "Clans",
 		"ingredients": "Ingrédients",
 		"account": "Mon Compte",
+		"messagerie": "Messagerie",
 		"forum": "Forum",
 		"api": "API",
 		"logout": "Déconnexion",
@@ -4608,5 +4609,26 @@
 		"error": "Vous devez spécifier une raison et une explication à votre complainte.",
 		"errorDinoz": "Vous devez spécifier un dinoz à reporter",
 		"success": "Plainte envoyée avec succès."
+	},
+	"messagerie": {
+		"actions": "Actions",
+		"create": "Écrire",
+		"research": "Rechercher",
+		"search": "Rechercher une conversation...",
+		"conversations": "Conversations",
+		"disclaimer": "Veuillez sélectionner une conversation.",
+		"close": "Fermer",
+		"participants": "participants",
+		"newMsg": "Nouveau message",
+		"newMsgTitle": "Titre de la conversation :",
+		"title": "Votre titre...",
+		"newMsgParticipants": "Ajouter un destinataire :",
+		"addParticipants": "Ajouter un joueur...",
+		"newMsgMessage": "Votre message :",
+		"message": "Votre message...",
+		"newMsgSend": "Envoyer le message",
+		"playerNotFound": "Ce joueur n'existe pas !",
+		"conversation": "Cette conversation",
+		"response": "Répondre"
 	}
 }
