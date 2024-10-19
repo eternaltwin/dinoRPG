@@ -1,10 +1,10 @@
 <template>
-	<div class="mb-[10px] ml-[-12px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic">
+	<div class="mb-[10px] ml-[-12px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px]">
 		<div class="mb-[10px] flex items-center justify-between bg-[#ae6139] p-[5px] px-[10px]">
 			<DZUser :user="message.sender" />
 			<div class="text-xl">{{ formatDate(message.createdAt.toString()) }}</div>
 		</div>
-		<div class="p-[5px]" v-html="message.content" />
+		<div class="p-[5px]" v-html="message.content"></div>
 	</div>
 </template>
 
@@ -39,4 +39,12 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+:deep(blockquote) {
+	border-left: 4px solid #ccc; /* Bordure de citation */
+	padding-left: 1rem; /* Espacement à gauche */
+	margin: 1rem 0; /* Espacement vertical */
+	color: #666; /* Couleur du texte */
+	font-style: italic; /* Italique pour le texte de citation */
+}
+</style>

@@ -676,7 +676,7 @@ export default defineComponent({
 	.type {
 		position: absolute;
 		z-index: 2;
-		margin-top: 23px;
+		margin-top: 25px;
 		margin-left: 230px;
 		width: 65px;
 		text-align: right;
@@ -706,11 +706,11 @@ export default defineComponent({
 		justify-content: space-between;
 		input {
 			align-self: center;
-			width: 64px;
-			height: 20px;
-			padding-left: 8px;
-			padding-right: 8px;
-			padding-top: 2px;
+			width: 80px;
+			height: 22px;
+			padding-left: 10px;
+			padding-right: 3px;
+			padding-top: 1px;
 			color: #ffee92;
 			font-size: 9pt;
 			font-weight: bold;
@@ -726,6 +726,7 @@ export default defineComponent({
 	.stock {
 		position: absolute;
 		width: 70px;
+		margin-top: -3px;
 		margin-left: 225px;
 		padding-right: 5px;
 		text-align: right;

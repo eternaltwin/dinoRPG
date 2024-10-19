@@ -3771,7 +3771,8 @@
 			"pickEpic": "Choisir une récompense",
 			"dinoz": "Dinoz",
 			"detail": "Détails"
-		}
+		},
+		"search": "Rechercher un joueur..."
 	},
 	"clan": {
 		"ingredients": {
@@ -3821,7 +3822,8 @@
 		"button": {
 			"search": "Rechercher",
 			"create": "Créer un clan"
-		}
+		},
+		"search": "Rechercher un clan..."
 	},
 	"clansMembers": {
 		"th": {
@@ -4608,7 +4610,9 @@
 		"cancel": "Annuler",
 		"error": "Vous devez spécifier une raison et une explication à votre complainte.",
 		"errorDinoz": "Vous devez spécifier un dinoz à reporter",
-		"success": "Plainte envoyée avec succès."
+		"success": "Plainte envoyée avec succès.",
+		"send": "Envoyer",
+		"close": "Fermer"
 	},
 	"messagerie": {
 		"actions": "Actions",
@@ -4629,6 +4633,11 @@
 		"newMsgSend": "Envoyer le message",
 		"playerNotFound": "Ce joueur n'existe pas !",
 		"conversation": "Cette conversation",
-		"response": "Répondre"
+		"actualizeThread": "Actualiser la conversation",
+		"responseConv": "Répondre",
+		"pinnedConv": "Épingler",
+		"deletedConv": "Supprimer",
+		"participantsConv": "Participants",
+		"blockSender": "Bloquer l'expéditeur"
 	}
 }

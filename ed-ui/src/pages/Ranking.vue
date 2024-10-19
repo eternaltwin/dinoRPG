@@ -55,7 +55,7 @@
 	<input
 		class="ml-[-50px] h-[22px] w-[200px] border-none bg-[url('./assets/background/form_field.webp')] bg-no-repeat px-2.5 pt-0.5 text-[#fce3bc] outline-none placeholder:text-[#fce3bc] sm:ml-0"
 		type="text"
-		placeholder="Search Player"
+		:placeholder="$t('ranking.search')"
 		v-model="searchValue"
 		list="players"
 		@keyup.enter="getPlayer()"

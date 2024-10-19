@@ -75,7 +75,12 @@
 		</tr>
 	</table>
 	<div class="ml-[-40px] flex flex-col items-center justify-between sm:ml-0 sm:flex-row">
-		<input type="text" class="m-0" v-model="searchClanName" />
+		<input
+			type="text"
+			class="m-0 placeholder:text-[#fce3bc]"
+			v-model="searchClanName"
+			:placeholder="$t('clansList.search')"
+		/>
 		<a class="button" @click="search()">
 			{{ $t('clansList.button.search') }}
 		</a>

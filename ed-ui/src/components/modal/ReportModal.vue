@@ -1,37 +1,45 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<dialog class="max-w-[80%] sm:max-w-[500px]" ref="dialogRef">
-		<div class="modal-title">{{ $t(`report.header`) }}</div>
+		<div class="bg-[#ae6139] pl-4 pr-16 text-[18px] font-bold leading-[3rem]">{{ $t(`report.header`) }}</div>
 		<form v-if="player" method="dialog">
-			<div class="modal-content">
-				<p class="small bold">{{ $t(`report.player`) }}</p>
-				<p class="small">
-					<span class="text-white">
+			<div class="flex min-h-20 flex-col gap-[1.2rem] p-4">
+				<p class="text-[1.2rem] font-bold">{{ $t(`report.player`) }}</p>
+				<p class="text-[1.2rem]">
+					<span class="text-2xl font-bold text-white">
 						{{ $t(`report.specify`) }}
 					</span>
 					<template v-for="moderation in ModerationReasonFront" :key="moderation">
-						<label class="block">
+						<label class="block leading-8">
 							<input type="radio" name="report_reason" v-model="reportedReason" :value="moderation" />
 							{{ $t(`report.reason.${moderation}`) }}
 						</label>
 					</template>
-					<select name="dinoz" v-model="selectedDinoz" v-if="reportedReason === ModerationReasonFront.DINOZNAME">
+					<select
+						class="bg-[#ae6139] p-2"
+						name="dinoz"
+						v-model="selectedDinoz"
+						v-if="reportedReason === ModerationReasonFront.DINOZNAME"
+					>
 						<template v-for="(dinoz, index) in player.dinoz" :key="index">
 							<option :value="dinoz">{{ dinoz.name }}</option>
 						</template>
 					</select>
 				</p>
-				<p class="small">
-					<span class="text-white">
+				<div class="flex flex-col">
+					<span class="font-bold text-white">
 						{{ $t(`report.arguments`) }}
 					</span>
-					<textarea id="reportedArgument" v-model="reportedArgument" class="editTexte" />
-				</p>
+					<textarea
+						id="reportedArgument"
+						v-model="reportedArgument"
+						class="relative h-[70px] max-h-[120px] min-h-[70px] overflow-auto border-2 border-[#fff0c5] bg-[#ae6139] pl-2 text-[1.2rem] leading-8 text-[#ffee92]"
+					/>
+				</div>
 			</div>
 		</form>
-		<div class="buttons">
-			<DZButton @click="reports">Send</DZButton>
-			<DZButton @click="close">Close</DZButton>
+		<div class="flex justify-evenly pb-4">
+			<DZButton @click="reports">{{ $t(`report.send`) }}</DZButton>
+			<DZButton @click="close">{{ $t(`report.close`) }}</DZButton>
 		</div>
 	</dialog>
 </template>
@@ -65,10 +73,21 @@ export default defineComponent({
 		dismiss(): void {
 			EventBus.emit('report', undefined);
 		},
+		openDialog() {
+			if (this.dialogRef && !this.dialogRef.open) {
+				this.dialogRef.showModal();
+			}
+		},
 		close(): void {
 			if (this.dialogRef) {
 				this.dialogRef.close();
 			}
+			this.resetForm();
+		},
+		resetForm() {
+			this.reportedArgument = '';
+			this.reportedReason = '';
+			this.selectedDinoz = undefined;
 		},
 		async reports(): Promise<void> {
 			if (!this.reportedArgument || !this.reportedReason) {
@@ -113,9 +132,7 @@ export default defineComponent({
 	mounted(): void {
 		EventBus.on('report', async e => {
 			this.player = await ReportService.getPlayer(e);
-			if (this.dialogRef) {
-				this.dialogRef.showModal();
-			}
+			this.openDialog();
 		});
 		this.dialogRef = this.$refs.dialogRef as HTMLDialogElement;
 	}
@@ -124,9 +141,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 dialog {
-	background-color: #5c2b20;
-	border: 1px solid #b37c4a;
-	color: wheat;
+	background-color: #cb7c49;
+	border: 3px solid #cb7c49;
+	color: #ffee92;
 	max-height: 100%;
 	outline: 2px solid #000;
 	overflow: auto;
@@ -138,47 +155,5 @@ dialog {
 	&::backdrop {
 		background: linear-gradient(0deg, rgba(107, 32, 17, 0.2), rgba(107, 32, 17, 0.4) 70%, rgba(0, 0, 0, 0.7));
 	}
-}
-.modal-title {
-	background-color: rgba(0, 0, 0, 0.25);
-	font-size: 18px;
-	font-weight: 700;
-	line-height: 3rem;
-	padding: 0 4rem 0 1rem;
-}
-.modal-content {
-	min-height: 5rem;
-	padding: 1rem;
-	display: flex;
-	flex-direction: column;
-	gap: 1.2rem;
-}
-.block {
-	display: block;
-	line-height: 2rem;
-}
-.small {
-	color: #ddab76;
-	font-size: 1.1rem;
-	display: flex;
-	flex-direction: column;
-}
-.editTexte {
-	min-height: 70px;
-	max-height: 120px;
-	height: 70px;
-	overflow: auto;
-	position: relative;
-	font-size: 1.2rem;
-	background-color: #9a4029;
-	border: 1px solid #fbdfba;
-	color: #fce3bb;
-	line-height: 2rem;
-	padding-left: 0.5rem;
-}
-.buttons {
-	display: flex;
-	justify-content: space-evenly;
-	padding-bottom: 1rem;
 }
 </style>

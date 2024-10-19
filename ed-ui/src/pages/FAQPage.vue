@@ -7,13 +7,14 @@
 	</div>
 	<DZDisclaimer help :content="$t(`faq.intro`)" class="ml-[-45px] sm:ml-0" />
 	<form
-		class="ml-[-40px] mt-[10px] flex w-full flex-col items-center sm:ml-0 sm:flex-row"
+		class="ml-[-40px] mt-[10px] flex w-full flex-col items-center gap-2 sm:ml-0 sm:flex-row"
 		@submit.prevent="searchQuestion"
 	>
 		<input
-			class="h-[22px] w-[184px] self-center border-none bg-transparent bg-[url('./assets/background/form_field.webp')] bg-no-repeat px-[8px] pt-[2px] text-[9pt] font-bold text-[#fce3bc]"
+			class="h-[22px] w-[200px] self-center border-none bg-transparent bg-[url('./assets/background/form_field.webp')] bg-no-repeat px-[8px] pt-[2px] text-[9pt] font-bold text-[#fce3bc] placeholder:text-[#fce3bc]"
 			name="search"
 			v-model="searchQuery"
+			:placeholder="$t(`faq.qa`)"
 		/>
 		<input type="submit" class="button" :value="$t(`faq.search`)" />
 	</form>

@@ -104,7 +104,6 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-			console.log(this.rankings);
 		},
 		changePage(i: number) {
 			this.page += i;
