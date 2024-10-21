@@ -3,7 +3,9 @@
 	<div id="nav" class="flex flex-col items-center">
 		<div class="flex w-full">
 			<!-- Section Left -->
-			<div class="hidden grow bg-[url('./assets/background/bg_ciel.webp')] bg-left-top bg-repeat-x md:block"></div>
+			<div
+				class="hidden grow -scale-x-100 bg-[url('./assets/background/bg_ciel.webp')] bg-left-top bg-no-repeat md:block"
+			></div>
 			<!-- Section Center -->
 			<div class="mx-0 flex w-full max-w-[1008px] flex-col items-center px-0 sm:w-full">
 				<div
@@ -42,7 +44,9 @@
 				</div>
 			</div>
 			<!-- Section Right -->
-			<div class="hidden grow bg-[url('./assets/background/bg_ciel.webp')] bg-right-top bg-repeat-x md:block"></div>
+			<div
+				class="hidden grow -scale-x-100 bg-[url('./assets/background/bg_ciel.webp')] bg-right-top bg-no-repeat md:block"
+			></div>
 		</div>
 	</div>
 </template>

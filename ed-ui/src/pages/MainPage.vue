@@ -9,17 +9,17 @@
 			<div class="grow"></div>
 			<!-- Section Center -->
 			<div
-				class="center flex w-[900px] flex-col items-center bg-[url('./assets/background/sky_core_bg.webp')] bg-contain bg-repeat-y md:bg-auto"
+				class="center flex w-[900px] flex-col items-center bg-[url('./assets/background/sky_core_bg.webp')] bg-contain bg-repeat-y sm:bg-auto"
 			>
 				<div
 					id="centerHeader"
-					class="flex min-h-screen w-full bg-[url('./assets/background/core_center_header3.webp')] bg-contain bg-no-repeat p-px md:bg-auto"
+					class="flex min-h-screen w-full bg-[url('./assets/background/core_center_header3.webp')] bg-contain bg-no-repeat p-px sm:bg-auto"
 					v-if="loaded"
 				>
 					<LeftPanel />
 					<div
 						id="centerContent"
-						class="ml-[80px] mt-[-20px] flex w-full flex-col md:ml-[40px] md:mt-[10px] lg:ml-[30px] lg:max-w-[540px]"
+						class="ml-[80px] mt-[-40px] flex w-full flex-col md:ml-[40px] md:mt-[10px] lg:ml-[30px] lg:max-w-[540px]"
 					>
 						<a @click="goToNews()" class="linkHome z-1 h-[120px] w-full cursor-pointer"></a>
 						<Router-view />
@@ -35,7 +35,7 @@
 			<div class="grow"></div>
 			<!-- Section Center -->
 			<div
-				class="bg-top-center flex size-full items-center bg-[url('./assets/background/core_center_footer.webp')] bg-contain bg-no-repeat sm:w-[900px] sm:bg-cover"
+				class="bg-top-center flex size-full items-center bg-[url('./assets/background/core_center_footer.webp')] bg-contain bg-no-repeat sm:w-[900px] sm:bg-auto"
 			></div>
 			<!-- Section Right -->
 			<div class="footRight grow"></div>

@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.ranking')}`"></TitleHeader>
-	<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-15px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.ranking`) }}</h3>
 		</div>
@@ -18,7 +18,7 @@
 			<a href="#" @click="setTab(3)">{{ $t('tabs.completion') }}</a>
 		</li>
 		<li :class="tabSelected === 4 ? 'active' : ''">
-			<a href="#" @click="setTab(3)">{{ $t('tabs.clans') }}</a>
+			<a href="#" @click="setTab(4)">{{ $t('tabs.clans') }}</a>
 		</li>
 		<li :class="tabSelected === 5 ? 'active' : ''">
 			<a href="#" @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
@@ -28,31 +28,39 @@
 		v-if="tabSelected === 1"
 		help
 		:content="$t('ranking.disclaimer.classic')"
-		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+		class="ml-[-50px] mt-[50px] sm:ml-[-20px] sm:mr-[20px] sm:mt-0 md:mx-0"
 	/>
 	<DZDisclaimer
 		v-if="tabSelected === 2"
 		help
 		:content="$t('ranking.disclaimer.average')"
-		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+		class="ml-[-50px] mt-[50px] sm:ml-[-20px] sm:mr-[20px] sm:mt-0 md:mx-0"
 	/>
 	<DZDisclaimer
 		v-if="tabSelected === 3"
 		help
 		:content="$t('ranking.disclaimer.completion')"
-		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+		class="ml-[-50px] mt-[50px] sm:ml-[-20px] sm:mr-[20px] sm:mt-0 md:mx-0"
+	/>
+	<DZDisclaimer
+		v-if="tabSelected === 4"
+		help
+		:content="$t('ranking.disclaimer.clans')"
+		class="ml-[-50px] mt-[50px] sm:ml-[-20px] sm:mr-[20px] sm:mt-0 md:mx-0"
 	/>
 	<DZDisclaimer
 		v-if="tabSelected === 5"
 		help
 		:content="$t('ranking.disclaimer.pantheon')"
-		class="ml-[-50px] mt-[50px] sm:ml-0 sm:mt-0"
+		class="ml-[-50px] mt-[50px] sm:ml-[-20px] sm:mr-[20px] sm:mt-0 md:mx-0"
 	/>
 	<PlayerRanking sort="classic" :tab-selected="tabSelected" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" :tab-selected="tabSelected" v-if="tabSelected === 2" />
 	<CompletionRanking :tab-selected="tabSelected" v-if="tabSelected === 3" />
+	<ClansRanking :tab-selected="tabSelected" v-if="tabSelected === 4" />
 	<Pantheon v-if="tabSelected === 5" />
 	<input
+		v-if="tabSelected !== 4"
 		class="ml-[-50px] h-[22px] w-[200px] border-none bg-[url('./assets/background/form_field.webp')] bg-no-repeat px-2.5 pt-0.5 text-[#fce3bc] outline-none placeholder:text-[#fce3bc] sm:ml-0"
 		type="text"
 		:placeholder="$t('ranking.search')"
@@ -75,6 +83,7 @@ import CompletionRanking from '../components/rankings/CompletionRanking.vue';
 import { PlayerService } from '../services/index.js';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import Pantheon from '../components/rankings/Pantheon.vue';
+import ClansRanking from '../components/rankings/ClansRanking.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -88,7 +97,8 @@ export default defineComponent({
 		TitleHeader,
 		PlayerRanking,
 		DZDisclaimer,
-		Pantheon
+		Pantheon,
+		ClansRanking
 	},
 	data() {
 		return {

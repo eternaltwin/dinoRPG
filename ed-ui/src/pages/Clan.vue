@@ -1,14 +1,14 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.clan')}${clan.name} ]`"></TitleHeader>
-	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">{{ $t('clan.header.title', { name: clan.name }) }}</div>
 	</div>
-	<div class="ml-[-60px] min-w-full sm:ml-0">
+	<div class="ml-[-50px] min-w-full md:ml-[-25px] lg:ml-0">
 		<ClanHeader :clan="clan" v-if="clan"></ClanHeader>
 	</div>
 	<!-- Pages du clan (à faire dans un composant à part)-->
-	<div class="pages ml-[-60px] min-w-full sm:ml-0 lg:mt-8 lg:min-w-[123%]">
+	<div class="pages ml-[-50px] min-w-full md:ml-[-25px] lg:ml-0 lg:mt-8 lg:min-w-[123%]">
 		<h3 class="mt-[5px] sm:mt-0">
 			<img class="mt-[6px]" :src="getImgURL('design', 'info_button')" alt="info_button" style="margin-right: 10px" />
 			{{ $t('clan.tabs.pages') }}

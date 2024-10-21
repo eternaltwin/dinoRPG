@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.clansList')"></TitleHeader>
-	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-25px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t('clansList.title') }}</h3>
 		</div>

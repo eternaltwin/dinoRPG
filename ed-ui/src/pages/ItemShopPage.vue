@@ -1,6 +1,6 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="ml-[-45px] sm:ml-0" v-if="actualShop">
+	<div class="ml-[-50px] sm:ml-[-30px] sm:mr-[20px] lg:mx-0" v-if="actualShop">
 		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`" />
 		<div class="section mb-[40px] ml-[15px] mt-[-30px] sm:ml-0 sm:mt-0">
 			<div class="titlePage" style="undefined" width="520" height="27" v-html="formatContent($t(`shop.item.title`))" />
@@ -85,22 +85,28 @@
 							class="item"
 							style="display: block"
 						>
-							<Tippy theme="small" tag="div" class="stock" v-if="!isFull(selectedItem)" @click="popinConfirmChoice(true)">
-						{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
-						<template #content>
-							<div
-								v-html="
-									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
-									selectedItem.quantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveItem(selectedItem).maxQuantity +
-									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
-								"
-							/>
-							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
-						</template>
-					</Tippy>
-					<Tippy
+							<Tippy
+								theme="small"
+								tag="div"
+								class="stock"
+								v-if="!isFull(selectedItem)"
+								@click="popinConfirmChoice(true)"
+							>
+								{{ resolveItem(selectedItem).quantity }} / {{ resolveItem(selectedItem).maxQuantity }}
+								<template #content>
+									<div
+										v-html="
+											formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
+											selectedItem.quantity +
+											formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
+											resolveItem(selectedItem).maxQuantity +
+											formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
+										"
+									/>
+									<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
+								</template>
+							</Tippy>
+							<Tippy
 								theme="small"
 								tag="div"
 								class="stock"
@@ -552,7 +558,7 @@ export default defineComponent({
 .shopDesc {
 	margin-bottom: 8px;
 	min-width: 100%;
-	min-height: 210px;
+	min-height: 220px;
 	padding: 5px;
 	font-style: italic;
 	color: #ffee92;

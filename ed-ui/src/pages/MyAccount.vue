@@ -1,7 +1,7 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.account')}`"></TitleHeader>
-	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-20px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`myAccount.title`) }} {{ accountData.playerName }}</h3>
 		</div>

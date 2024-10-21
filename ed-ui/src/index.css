@@ -1,4 +1,5 @@
 @import "vue-toast-notification/dist/theme-bootstrap.css";
+@import "ckeditor5/ckeditor5.css";
 @font-face {
 	font-family: 'Berlin Sans FB Demi';
 	src: url('./assets/font/Berlin Sans FB Demi.woff');
@@ -101,7 +102,7 @@
         color: #fff1ad;
     }
     ul.tabs {
-        @apply list-none h-[18px] pl-[10px] mt-[-9px] mb-[10px] mr-[-5px] bg-[#9a4029] border-b border-[#ffe7aa] ml-[-30px] sm:ml-0;
+        @apply list-none h-[18px] pl-[10px] mt-[-9px] mb-[10px] mr-[-5px] bg-[#9a4029] border-b border-[#ffe7aa] ml-[-30px] sm:ml-[-20px] sm:mr-[20px] md:mx-0;
         background-image: url("./assets/design/tabsBg.webp");
         background-repeat: no-repeat;
     }
@@ -295,4 +296,12 @@
 	padding-left: 1em;
 	padding-right: 1em;
 	gap: 1em;
+}
+:root {
+	/* Overrides colors editor */
+	.ck {
+		--ck-color-toolbar-background: #ae6139;
+		--ck-color-base-background: #cb7c49;
+		--ck-color-text: #ffee92;
+	}
 }

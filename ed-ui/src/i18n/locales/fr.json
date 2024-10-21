@@ -3747,13 +3747,17 @@
 		"th": {
 			"pos": "Pos.",
 			"player": "Maître",
-			"points": "Points"
+			"dinoz": "Dinoz",
+			"points": "Points",
+			"clans": "Clans",
+			"treasure": "Trésor du Clan"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
 			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
 			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu.",
-			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels dinoz sont parvenus les premiers à accomplir des hauts faits."
+			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels dinoz sont parvenus les premiers à accomplir des hauts faits.",
+			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan."
 		},
 		"page": {
 			"previous": "Page précedente",

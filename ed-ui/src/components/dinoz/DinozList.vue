@@ -17,11 +17,14 @@
 				@click="goToDinozPage(dinoz.id)"
 			>
 				<span class="relative float-right h-[10px] w-[40px]">
-					<span class="mt-[4px] block h-[3px] w-[36px] bg-black" style="border: 1px solid #bc683c">
-						<span class="block h-[2px] bg-[yellow]" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
+					<span class="mt-[4px] block h-[4px] w-[36px] bg-black" style="border: 1px solid #bc683c">
+						<span class="block h-[2.5px] bg-[yellow]" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
 					</span>
-					<span class="mt-[4px] block h-[3px] w-[36px] bg-black" style="border: 1px solid #bc683c">
-						<span class="block h-px bg-[#ff54e4]" :style="getBarWidth(dinoz.experience, dinoz.maxExperience)"></span>
+					<span class="mt-[4px] block h-[4px] w-[36px] bg-black" style="border: 1px solid #bc683c">
+						<span
+							class="block h-[2.5px] bg-[#ff54e4]"
+							:style="getBarWidth(dinoz.experience, dinoz.maxExperience)"
+						></span>
 					</span>
 					<div class="mt-[5px] flex flex-wrap-reverse gap-[2px] overflow-hidden">
 						<img

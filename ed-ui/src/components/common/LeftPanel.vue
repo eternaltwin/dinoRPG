@@ -15,7 +15,7 @@
 		:class="{ 'translate-x-0': isPanelOpen }"
 	>
 		<div
-			class="m-[10px] -ml-2 mb-[28px] h-[31px] w-[137px] cursor-help bg-[url('./assets/background/goldbox2.webp')] bg-no-repeat pl-[15px] pt-[5px] text-left text-[10pt] font-bold text-[#ffee92]"
+			class="m-[10px] -ml-2 mb-[28px] h-[31px] w-[137px] cursor-help bg-[url('./assets/background/goldbox2.webp')] bg-no-repeat pt-[5px] text-center text-[10pt] font-bold text-[#ffee92]"
 			v-tippy="{ content: formatContent($t('tooltip.gold')), theme: 'small' }"
 		>
 			{{ beautifulMoney }}

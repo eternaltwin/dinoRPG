@@ -1,5 +1,5 @@
 <template>
-	<div class="ml-[-25px] mt-[-80px] w-full sm:ml-0 sm:mt-0">
+	<div class="ml-[-25px] mt-[-60px] w-full sm:ml-0 sm:mt-0">
 		<div class="mt-[50px] sm:mt-0">
 			<!-- Dinoz 1 -->
 			<DinozSWF :display="display" :width="190" :height="165" type="dino" v-if="showDinoz"></DinozSWF>

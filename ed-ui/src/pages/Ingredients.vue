@@ -1,10 +1,10 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.ingredients')" />
-	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-20px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">{{ $t(`rightMenu.ingredients`) }}</div>
 	</div>
-	<DZDisclaimer help :content="$t('ingredients.disclaimer')" class="ml-[-50px] sm:ml-0" />
-	<table class="ml-[-50px] sm:ml-0">
+	<DZDisclaimer help :content="$t('ingredients.disclaimer')" class="ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0" />
+	<table class="ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0">
 		<tbody>
 			<tr>
 				<th class="w-[32px]"></th>

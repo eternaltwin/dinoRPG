@@ -52,7 +52,7 @@
 								v-for="thread in filteredThreads()"
 								:key="thread.id"
 								@click="selectThread(thread.id)"
-								class="box-border flex cursor-pointer flex-col border-2 border-[#b37c4a] p-2 pl-[15px] hover:bg-[#ae6139]"
+								class="box-border flex cursor-pointer flex-col overflow-y-auto border-2 border-[#b37c4a] p-2 pl-[15px] hover:bg-[#ae6139]"
 								:class="{
 									selected: thread.id === selectedThreadId
 								}"
@@ -68,7 +68,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="ml-[-12px] mt-5 flex flex-col p-[20px] sm:mt-0 md:w-[70%]">
+			<div class="ml-[-12px] mt-5 flex flex-col overflow-y-auto p-[20px] sm:mt-0 md:w-[70%]">
 				<div
 					class="mt-[-17px] bg-[#ae6139] p-[5px]"
 					style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
@@ -122,7 +122,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="absolute right-1 top-[4px]">
+		<div class="absolute right-1 top-[4px] z-20">
 			<span
 				@click="close"
 				class="cursor-pointer border-2 border-red-500 bg-orange-200 px-3 py-1 font-extrabold text-red-700 hover:bg-red-700 hover:text-black"

@@ -1,11 +1,13 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="ml-[-50px] flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:flex-row sm:gap-0">
+	<div
+		class="ml-[-50px] flex flex-col flex-wrap justify-around gap-4 sm:ml-[-20px] sm:mr-[20px] sm:flex-row sm:gap-0 md:mx-0"
+	>
 		<DZButton class="" @click="pantheon = PantheonMotif.RACE">{{ $t(`ranking.pantheon.dinozPantheon`) }}</DZButton>
 		<DZButton @click="pantheon = PantheonMotif.EPIC">{{ $t(`ranking.pantheon.playerPantheon`) }}</DZButton>
 	</div>
 	<div
-		class="ml-[-50px] mt-4 flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:mt-0 sm:flex-row sm:gap-0"
+		class="ml-[-50px] mt-4 flex flex-col flex-wrap justify-around gap-4 sm:ml-[-20px] sm:mr-[20px] sm:flex-row sm:gap-0 md:mx-0"
 		v-if="pantheon === PantheonMotif.RACE"
 	>
 		<select v-model="race" @change="refreshPantheon()">
@@ -18,7 +20,7 @@
 		</select>
 	</div>
 	<div
-		class="ml-[-50px] mt-4 flex flex-col flex-wrap justify-around gap-4 sm:ml-0 sm:flex-row sm:gap-0"
+		class="ml-[-50px] mt-4 flex flex-col flex-wrap justify-around gap-4 sm:ml-[-20px] sm:mr-[20px] sm:flex-row sm:gap-0 md:mx-0"
 		v-if="pantheon === PantheonMotif.EPIC"
 	>
 		<select v-model="rewardId" @change="refreshPantheon()">
@@ -28,12 +30,12 @@
 			</option>
 		</select>
 	</div>
-	<div v-if="pantheon === PantheonMotif.RACE && display" class="ml-[-55px] sm:ml-0">
+	<div v-if="pantheon === PantheonMotif.RACE && display" class="ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0">
 		<table>
 			<tbody>
 				<tr>
-					<th class="name">{{ $t('ranking.pantheon.dinoz') }}</th>
-					<th class="status">{{ $t('ranking.pantheon.detail') }}</th>
+					<th class="px-[4px] pb-[8px]">{{ $t('ranking.pantheon.dinoz') }}</th>
+					<th class="px-[4px] pb-[8px]">{{ $t('ranking.pantheon.detail') }}</th>
 				</tr>
 				<tr v-for="item in display" :key="item.id">
 					<template v-if="item.motif === PantheonMotif.RACE">
@@ -80,7 +82,7 @@
 		</table>
 	</div>
 	<div
-		class="ml-[-55px] flex flex-col items-center sm:ml-0"
+		class="ml-[-50px] flex flex-col items-center sm:ml-[-20px] sm:mr-[20px] md:mx-0"
 		v-if="
 			pantheon === PantheonMotif.EPIC &&
 			rewardId &&
@@ -90,7 +92,7 @@
 		"
 	>
 		<Tippy
-			class="mt-[10px]"
+			class="my-[10px]"
 			theme="normal"
 			tag="img"
 			:src="getImgURL('epicRewards', `collec_${epicRewards[rewardId - 1].name}`)"
@@ -104,12 +106,12 @@
 		<table>
 			<tbody>
 				<tr>
-					<th class="name">{{ $t('ranking.pantheon.masterName') }}</th>
-					<th class="name">{{ $t('ranking.pantheon.date') }}</th>
+					<th class="px-[4px] pb-[8px]">{{ $t('ranking.pantheon.masterName') }}</th>
+					<th class="px-[4px] pb-[8px]">{{ $t('ranking.pantheon.date') }}</th>
 				</tr>
 				<tr v-for="player in display" :key="player.id">
 					<template v-if="player.motif === PantheonMotif.EPIC">
-						<td class="dinoz"><DZUser :user="player.player" /></td>
+						<td class="dinoz h-[40px]"><DZUser :user="player.player" /></td>
 						<td class="missions">
 							<ul>
 								<li>
@@ -230,21 +232,6 @@ table {
 			background-color: #c64e36;
 			background-image: url('../../assets/background/table_header.webp');
 			background-position: left bottom;
-			&.dinoz {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
-			&.name {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
-			&.status {
-				padding-left: 4px;
-				padding-right: 4px;
-				padding-bottom: 8px;
-			}
 		}
 		td {
 			font-size: 16px;

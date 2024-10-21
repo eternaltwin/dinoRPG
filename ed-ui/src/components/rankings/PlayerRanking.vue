@@ -1,12 +1,12 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="relative ml-[-50px] sm:ml-0">
+	<div class="relative ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0">
 		<table v-on-click-outside="(selectedPlayer = undefined)">
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
 					<th class="player">{{ $t('ranking.th.player') }}</th>
-					<th class="dinoz">Dinoz</th>
+					<th class="dinoz">{{ $t('ranking.th.dinoz') }}</th>
 					<th class="points average-column" :class="{ hiddenOnMobile: tabSelected === 2 }">
 						{{ $t('ranking.th.points') }}
 					</th>

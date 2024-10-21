@@ -1,14 +1,12 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0">
+	<div class="relative ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0">
 		<table>
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
-					<th class="player">{{ $t('ranking.th.player') }}</th>
-					<th class="dinoz dinoz-column">{{ $t('ranking.th.dinoz') }}</th>
-					<th class="points points-column">{{ $t('ranking.th.points') }}</th>
-					<th class="points">{{ $t('tabs.completion') }}</th>
+					<th class="clans">{{ $t('ranking.th.clans') }}</th>
+					<th class="treasure">{{ $t('ranking.th.treasure') }}</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
 					<td class="pos" colspan="5" style="text-align: center">
@@ -16,32 +14,29 @@
 					</td>
 				</tr>
 				<tr
-					v-for="(ranking, index) in rankings"
-					:key="ranking.player.id"
+					v-for="(clan, index) in clansList"
+					:key="clan.id"
+					@click="goToClan(clan.id)"
 					class="select"
-					:class="(index + 1) % 2 === 0 ? 'even' : ''"
-					@click="selectedPlayer = ranking.player.id"
-					v-click-outside="leave"
+					:class="{
+						even: (index + 1) % 2 === 0
+					}"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}
 					</td>
 					<td class="other">
-						<DZUser :user="ranking.player" :me="ranking.player.id === me" :friend="false" />
-					</td>
-					<td class="other dinoz-column">
-						{{ ranking.dinozCount }}
-					</td>
-					<td class="other points-column">
-						{{ ranking.points }}
+						{{ clan.name }}
 					</td>
 					<td class="other">
-						{{ ranking.completion }}
+						<div class="flex items-center gap-2">
+							{{ moneyLint(clan.treasureValue ?? 0) }}
+							<span v-html="formatContent(':gold:')" class="relative mt-[-2px]" />
+						</div>
 					</td>
 				</tr>
-				<PlayerMenu v-if="seePlayer && selectedPlayer" :playerId="selectedPlayer" />
 			</tbody>
-			<tr class="select" @click="changePage(1)" :class="{ hidden: rankings.length < 20 }">
+			<tr class="select" @click="changePage(1)" :class="{ hidden: clansList.length < 20 }">
 				<td class="pos" colspan="5" style="text-align: center">
 					{{ $t('ranking.page.next') }}
 				</td>
@@ -53,58 +48,51 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { PlayerService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
-import { playerStore } from '../../store/index.js';
-import DZUser from '../common/DZUser.vue';
-import PlayerMenu from '../modal/PlayerMenu.vue';
+import { Clan } from '@drpg/prisma';
+import { ClanService } from '../../services/index.js';
+import { utils } from '../../utils/index.js';
 
 export default defineComponent({
-	name: 'CompletionRanking',
-	components: {
-		DZUser,
-		PlayerMenu
-	},
+	name: 'ClansRanking',
+	components: {},
 	data() {
 		return {
-			rankings: [] as RankingGetResponse,
-			page: 1 as number,
-			me: playerStore().getPlayerId,
-			seePlayer: false,
-			selectedPlayer: undefined as undefined | number
+			clansList: [] as Array<Clan>,
+			page: 1 as number
 		};
 	},
 	props: {
+		sort: String,
 		tabSelected: {
 			type: Number,
 			required: true
 		}
 	},
 	methods: {
-		leave() {
-			this.seePlayer = false;
-		},
-		goToAccount(paramId: number): void {
-			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
-		},
-		async getRanking(): Promise<void> {
+		async getClansList(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.rankings = await PlayerService.getPlayersRanking('completion', this.page);
+				this.clansList = await ClanService.getClansList(this.page);
+				this.clansList.sort((a, b) => b.treasureValue - a.treasureValue);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast);
+				errorHandler.handle(err, this.$toast, this.$t);
 				return;
 			}
 		},
+		goToClan(_id: number): void {
+			this.$router.push({ name: 'Clan', params: { id: _id } });
+		},
 		changePage(i: number) {
 			this.page += i;
-			this.getRanking();
+			this.getClansList();
+		},
+		moneyLint(quantity: number): string {
+			return utils.beautifulNumber(quantity.toString());
 		}
 	},
 	async created(): Promise<void> {
-		await this.getRanking();
+		await this.getClansList();
 	}
 });
 </script>
@@ -113,8 +101,7 @@ export default defineComponent({
 table {
 	width: 100%;
 	margin-top: 10px;
-	margin-bottom: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	border: 2px solid #f3d6b1;
 	background-color: #ecbd84;
 	border-collapse: separate;
@@ -142,16 +129,13 @@ table {
 			background-position: left bottom;
 			max-width: 222px;
 			&.pos {
-				width: 5em;
+				width: 4em;
 			}
-			&.player {
-				max-width: 100px;
+			&.clans {
+				max-width: 150px;
 			}
-			&.dinoz {
-				max-width: 15px;
-			}
-			&.points {
-				max-width: 20px;
+			&.treasure {
+				width: 150px;
 			}
 		}
 		td {
@@ -174,6 +158,7 @@ table {
 				background-position: -10px 0px;
 				max-width: 4px;
 				padding-top: 4px;
+				font-variant: small-caps;
 			}
 		}
 		&.even {
@@ -196,11 +181,5 @@ table {
 }
 .hidden {
 	display: none !important;
-}
-@media (max-width: 490px) {
-	.dinoz-column,
-	.points-column {
-		display: none;
-	}
 }
 </style>

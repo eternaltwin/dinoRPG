@@ -13,7 +13,7 @@
 			>
 				<a>
 					<small
-						class="mb-[5px] mt-[-15px] block h-[17px] text-base font-bold uppercase text-black"
+						class="mb-[5px] mt-[-15px] block h-[20px] text-[7pt] font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
@@ -29,7 +29,7 @@
 			>
 				<a>
 					<small
-						class="mb-[5px] mt-[-15px] block h-[20px] text-base font-bold uppercase text-black"
+						class="mb-[5px] mt-[-15px] block h-[20px] text-[7pt] font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>
@@ -45,7 +45,7 @@
 			>
 				<a>
 					<small
-						class="mb-[5px] mt-[-15px] block h-[20px] text-base font-bold uppercase text-black"
+						class="mb-[5px] mt-[-15px] block h-[20px] text-[7pt] font-bold uppercase text-black"
 						style="border-bottom: 1px dashed #9a4029"
 						>{{ $t('roadmap.small') }}</small
 					>

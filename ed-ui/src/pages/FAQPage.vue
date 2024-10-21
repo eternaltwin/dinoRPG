@@ -1,13 +1,13 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.faq')}`" />
-	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-30px] mt-[-30px] sm:ml-0 sm:mt-0">
 		<div class="titlePage">
 			<h3>{{ $t(`rightMenu.faq`) }}</h3>
 		</div>
 	</div>
-	<DZDisclaimer help :content="$t(`faq.intro`)" class="ml-[-45px] sm:ml-0" />
+	<DZDisclaimer help :content="$t(`faq.intro`)" class="ml-[-50px] mr-0 sm:ml-[-20px] sm:mr-[20px] md:mx-0" />
 	<form
-		class="ml-[-40px] mt-[10px] flex w-full flex-col items-center gap-2 sm:ml-0 sm:flex-row"
+		class="ml-[-50px] mr-0 mt-[10px] flex w-full flex-col items-center gap-2 sm:ml-[-20px] sm:mr-[20px] sm:flex-row md:mx-0"
 		@submit.prevent="searchQuestion"
 	>
 		<input
@@ -18,7 +18,7 @@
 		/>
 		<input type="submit" class="button" :value="$t(`faq.search`)" />
 	</form>
-	<div class="ml-[-50px] mt-[20px] w-full sm:ml-0">
+	<div class="ml-[-50px] mr-0 mt-[20px] min-w-full sm:ml-[-20px] sm:mr-[20px] md:mx-0">
 		<h3 class="mb-[10px] bg-[#bc683c] pl-[10px] text-[#fff1ad]">{{ $t('faq.qa') }}</h3>
 		<dl class="mt-[10px] flex flex-col gap-[10px]">
 			<template v-for="pair in filteredPairs" :key="pair.id">

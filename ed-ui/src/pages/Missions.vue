@@ -1,10 +1,10 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<TitleHeader :title="`${$t('pageTitle.missions')}`"></TitleHeader>
-	<div class="section ml-[-25px] mt-[-30px] sm:ml-0 sm:mt-0">
+	<div class="section ml-[-25px] mt-[-15px] sm:ml-0 sm:mt-0">
 		<div class="titlePage" v-html="formatContent($t(`missions.header`))" />
 	</div>
-	<table class="ml-[-45px] sm:ml-0">
+	<table class="ml-[-45px] sm:ml-[-20px] sm:mr-[20px] lg:mx-0">
 		<tbody>
 			<tr>
 				<th class="name">{{ $t('missions.headers.title') }}</th>

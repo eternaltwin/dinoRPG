@@ -4,7 +4,7 @@
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</div>
 	<div
-		class="ml-[-45px] mt-[-20px] min-h-[265px] min-w-full bg-none bg-contain bg-no-repeat sm:ml-0 sm:mt-0 sm:bg-[url('./assets/background/dinoz_bg_cut.webp')]"
+		class="ml-[-45px] mt-0 min-h-[265px] min-w-full bg-none bg-contain bg-no-repeat sm:ml-0 sm:mt-0 sm:bg-[url('./assets/background/dinoz_bg_cut.webp')]"
 		v-if="nameChoosen === true"
 	>
 		<Suspense>

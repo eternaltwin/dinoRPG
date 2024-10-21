@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
-	<div class="ml-[-20px] flex min-w-full items-center justify-center sm:ml-0 sm:block">
+	<div class="ml-[-20px] mt-[10px] flex min-w-full items-center justify-center sm:ml-0 sm:mt-0 sm:block">
 		<a
 			class="h-[21px] w-[15px] cursor-pointer bg-transparent bg-[url('./assets/icons/left.webp')] sm:absolute sm:ml-[205px] sm:mt-[69px]"
 			@click="goToDinozPage(-1)"
@@ -21,7 +21,11 @@
 		/>
 	</div>
 
-	<Tippy theme="normal" tag="div" class="ml-[-20px] flex min-w-full items-center justify-center sm:ml-0 sm:block">
+	<Tippy
+		theme="normal"
+		tag="div"
+		class="ml-[-20px] mt-[55px] flex min-w-full items-center justify-center sm:ml-0 sm:mt-0 sm:block"
+	>
 		<Suspense>
 			<DinozWithoutFlash
 				:display="dinozData.display"

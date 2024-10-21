@@ -14,7 +14,8 @@ export async function getAllClansRequest(page: number) {
 			name: true,
 			members: true,
 			creationDate: true,
-			leader: true
+			leader: true,
+			treasureValue: true
 		},
 		orderBy: [{ creationDate: 'desc' }],
 		take: 20,
