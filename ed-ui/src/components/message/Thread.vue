@@ -110,6 +110,8 @@ export default defineComponent({
 			if (!this.answer) return;
 			try {
 				await MessagerieService.answerThread(this.currentThread.id, this.answer);
+				this.$emit('message-sent');
+				this.answer = '';
 			} catch (e) {
 				errorHandler.handle(e, this.$t);
 			}

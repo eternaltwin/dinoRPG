@@ -39,12 +39,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-:deep(blockquote) {
-	border-left: 4px solid #ccc; /* Bordure de citation */
-	padding-left: 1rem; /* Espacement à gauche */
-	margin: 1rem 0; /* Espacement vertical */
-	color: #666; /* Couleur du texte */
-	font-style: italic; /* Italique pour le texte de citation */
-}
-</style>
+<style scoped lang="scss"></style>

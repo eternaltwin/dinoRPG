@@ -1,3 +1,4 @@
+<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
 	<dialog ref="messageRef">
 		<div class="flex h-screen flex-col md:flex-row">
@@ -52,23 +53,25 @@
 								v-for="thread in filteredThreads()"
 								:key="thread.id"
 								@click="selectThread(thread.id)"
-								class="box-border flex cursor-pointer flex-col overflow-y-auto border-2 border-[#b37c4a] p-2 pl-[15px] hover:bg-[#ae6139]"
+								class="scrollable-container box-border flex cursor-pointer flex-col overflow-y-auto border-2 border-[#b37c4a] p-2 pl-[15px] hover:bg-[#ae6139]"
 								:class="{
 									selected: thread.id === selectedThreadId
 								}"
 							>
 								<b class="text-white">{{ thread.title }}</b>
 								<span class="">
-									<b class="text-white">{{ thread.createdBy }}</b>
-									<span>, {{ thread.participants.length }} {{ $t('messagerie.participants') }},</span>
-									<span class="text-gray-300">{{ thread.lastMessage }}</span>
+									<b class="text-white">{{ thread.createdBy.name }}</b>
+									<span>, {{ thread.participants.length }} {{ $t('messagerie.participants') }}, </span>
+									<span class="text-gray-300">{{
+										formatDate(thread.messages[thread.messages.length - 1].createdAt)
+									}}</span>
 								</span>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="ml-[-12px] mt-5 flex flex-col overflow-y-auto p-[20px] sm:mt-0 md:w-[70%]">
+			<div class="scrollable-container ml-[-12px] mt-5 flex flex-col overflow-y-auto p-[20px] sm:mt-0 md:w-[70%]">
 				<div
 					class="mt-[-17px] bg-[#ae6139] p-[5px]"
 					style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
@@ -102,7 +105,6 @@
 							<DZUser :user="participant" />
 						</template>
 					</div>
-					<!-- Ajouter un éditeur de texte avancé -->
 					<div class="mt-4 flex flex-col p-[5px]">
 						<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
 						<textarea
@@ -116,9 +118,8 @@
 						<DZButton @click="sendMessage">{{ $t('messagerie.newMsgSend') }}</DZButton>
 					</div>
 				</div>
-				<!-- Ajouter un aperçu du message -->
 				<div v-if="!creationMode && currentThread">
-					<Thread :current-thread="currentThread" />
+					<Thread :current-thread="currentThread" @message-sent="reloadThread" />
 				</div>
 			</div>
 		</div>
@@ -190,16 +191,29 @@ export default defineComponent({
 			this.creationMode = false;
 			this.threadSelected = true;
 			this.selectedThreadId = id;
-			this.currentThread = await MessagerieService.getThread(id, 1);
+			this.currentThread = await MessagerieService.getThread(id);
+		},
+		async reloadThread() {
+			if (this.selectedThreadId) {
+				this.currentThread = await MessagerieService.getThread(this.selectedThreadId);
+			}
 		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
 			const lang = this.localStore.getLanguage;
-			const formatter = new Intl.DateTimeFormat(lang ?? 'fr', { month: 'long' });
-			const day = String(date.getDate()).padStart(2, '0'); // Ajoute un '0' si nécessaire
-			const month = formatter.format(date);
-			const year = date.getFullYear();
-			return `${day} ${month} ${year}`;
+			const dateFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
+				day: '2-digit',
+				month: 'long',
+				year: 'numeric'
+			});
+			const formattedDate = dateFormatter.format(date);
+			const timeFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: false
+			});
+			const formattedTime = timeFormatter.format(date);
+			return `${formattedDate}, ${formattedTime}`;
 		},
 		async sendMessage() {
 			try {
@@ -232,6 +246,7 @@ export default defineComponent({
 				this.messageRef.showModal();
 			}
 			this.threads = await MessagerieService.getThreads();
+			console.log(this.threads);
 		});
 		this.messageRef = this.$refs.messageRef as HTMLDialogElement;
 	}
@@ -265,5 +280,26 @@ li {
 			color: #7e4d2a;
 		}
 	}
+}
+.scrollable-container {
+	::-webkit-scrollbar {
+		width: 10px;
+	}
+	::-webkit-scrollbar-thumb {
+		background: #704328;
+		border-radius: 10px;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background: #ae6139;
+	}
+	::-webkit-scrollbar-track {
+		background: #cb7c49;
+		border-radius: 10px;
+	}
+	::-webkit-scrollbar-track:hover {
+		background: #d3b2a0;
+	}
+	scrollbar-width: thin;
+	scrollbar-color: #704328 #cb7c49;
 }
 </style>

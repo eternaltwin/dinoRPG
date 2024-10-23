@@ -13,6 +13,12 @@ export async function getConversationsWithPlayer(playerId: number) {
 			title: true,
 			id: true,
 			createdById: true,
+			createdBy: true,
+			messages: {
+				select: {
+					createdAt: true
+				}
+			},
 			participants: {
 				select: {
 					playerId: true
@@ -88,9 +94,7 @@ export async function removeFromConversation(conversationId: string, participant
 	});
 }
 
-export async function getConversation(conversationId: string, page: number) {
-	const skip = (page - 1) * 10;
-	const take = 10;
+export async function getConversation(conversationId: string) {
 	return await prisma.conversation.findUniqueOrThrow({
 		where: {
 			id: conversationId
@@ -106,8 +110,6 @@ export async function getConversation(conversationId: string, page: number) {
 				}
 			},
 			messages: {
-				skip: skip,
-				take: take,
 				select: {
 					id: true,
 					content: true,

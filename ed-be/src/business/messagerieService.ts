@@ -25,7 +25,7 @@ export async function startConversation(req: Request) {
 
 export async function getFullConversattion(req: Request) {
 	const authed = await auth(req);
-	const conversation = await getConversation(req.params.thread, +req.params.page);
+	const conversation = await getConversation(req.params.thread);
 
 	if (!conversation.participants.map(p => p.playerId).includes(authed.id)) {
 		throw new ExpectedError(`notInConversation`);
@@ -36,7 +36,7 @@ export async function getFullConversattion(req: Request) {
 
 export async function sendMessage(req: Request) {
 	const authed = await auth(req);
-	const conversation = await getConversation(req.params.thread, 1);
+	const conversation = await getConversation(req.params.thread);
 	if (!conversation.participants.map(p => p.playerId).includes(authed.id)) {
 		throw new ExpectedError(`notInConversation`);
 	}
@@ -46,7 +46,7 @@ export async function sendMessage(req: Request) {
 
 export async function pinMesage(req: Request) {
 	const authed = await auth(req);
-	const conversation = await getConversation(req.params.thread, 1);
+	const conversation = await getConversation(req.params.thread);
 	if (!conversation.participants.map(p => p.playerId).includes(authed.id)) {
 		throw new ExpectedError(`notInConversation`);
 	}

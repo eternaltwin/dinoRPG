@@ -29,8 +29,8 @@ routes.get(`${commonPath}/getThreads`, async (req: Request, res: Response) => {
 });
 
 routes.get(
-	`${commonPath}/getThread/:thread/:page`,
-	[param('thread').exists().isString(), param('page').exists().isNumeric()],
+	`${commonPath}/getThread/:thread`,
+	[param('thread').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
