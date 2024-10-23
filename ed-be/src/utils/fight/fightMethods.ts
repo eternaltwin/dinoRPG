@@ -3735,7 +3735,7 @@ export const heal = (
 		}
 	}
 
-	fighter.hp += hp * healBonus;
+	fighter.hp += Math.round(hp * healBonus);
 
 	if (fighter.hp > fighter.startingHp) {
 		fighter.hp = fighter.startingHp;
