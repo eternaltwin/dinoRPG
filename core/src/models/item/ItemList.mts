@@ -1256,8 +1256,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.MOUEFFE
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 10000,
 		display: 'mouef1'
 	},
 	// Rare Moueffe Egg
@@ -1290,8 +1290,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.PIGMOU
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 14000,
 		display: 'pig'
 	},
 	// Rare Pigmou Egg
@@ -1324,8 +1324,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.WINKS
 		},
 		sellable: true,
-		maxQuantity: 8, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 14000,
 		display: 'winks'
 	},
 	// Rare Winks Egg
@@ -1358,8 +1358,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.PLANAILLE
 		},
 		sellable: true,
-		maxQuantity: 8, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 10000,
 		display: 'plan'
 	},
 	// Rare Planaille Egg
@@ -1392,8 +1392,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.CASTIVORE
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 10000,
 		display: 'casti'
 	},
 	// Rare Castivore Egg
@@ -1409,8 +1409,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.CASTIVORE
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 30000,
 		display: 'casti2'
 	},
 	// Rocky Egg
@@ -1426,8 +1426,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.ROCKY
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 12000,
 		display: 'rocky'
 	},
 	// Rare Rocky Egg
@@ -1460,8 +1460,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.PTEROZ
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10, 
+		price: 16000,
 		display: 'ptero'
 	},
 	// Rare Pteroz Egg
@@ -1477,8 +1477,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.PTEROZ
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 30000,
 		display: 'ptero2'
 	},
 	// Nuagoz Egg
@@ -1494,8 +1494,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.NUAGOZ
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 10000,
 		display: 'nuago'
 	},
 	// Rare Nuagoz Egg
@@ -1528,8 +1528,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.SIRAIN
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 10000,
 		display: 'sirai'
 	},
 	// Rare Sirain Egg
@@ -1562,8 +1562,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.HIPPOCLAMP
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 22000,
 		display: 'hippo'
 	},
 	// Rare Hippoclamp Egg
@@ -1596,8 +1596,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.GORILLOZ
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 10000,
 		display: 'goegg'
 	},
 	// Rare Gorilloz Egg
@@ -1630,8 +1630,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.WANWAN
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 13000,
 		display: 'wan'
 	},
 	// Rare Wanwan Egg
@@ -1664,8 +1664,8 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.WANWAN
 		},
 		sellable: true,
-		maxQuantity: 10, // TODO double check
-		price: 30000, // TODO double check
+		maxQuantity: 10,
+		price: 30000,
 		display: 'wan2'
 	},
 	// Santaz Egg
