@@ -34,6 +34,7 @@ export type DetailedFight = {
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
+	deads: number[];
 	time: number;
 	lastFighterId: number | undefined;
 	environment?: {
@@ -85,6 +86,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		steps: [] as FightStep[],
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
+		deads: [] as number[],
 		attackerData: {
 			hasCook: config.attacker_has_cook
 		},

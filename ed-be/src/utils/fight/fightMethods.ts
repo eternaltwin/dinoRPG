@@ -18,6 +18,7 @@ import {
 	FightStep,
 	InitStepFighter,
 	LeaveAnimation,
+	NotifyStep,
 	SkillActivateStep,
 	StepFighter
 } from '@drpg/core/models/fight/FightStep';
@@ -1037,6 +1038,61 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 		}
 	}
 };
+
+const cancelEnvironment = (fightData: DetailedFight) => {
+	if (!fightData.environment) {
+		return;
+	}
+
+	switch (fightData.environment.type) {
+		case Skill.AMAZONIE: {
+			// Wake up all fighters
+			getFighters(fightData).forEach(f => {
+				removeStatus(fightData, f, Status.ASLEEP);
+			});
+			break;
+		}
+		case Skill.PAYS_DE_CENDRE: {
+			// Remove NO_EVENT, NO_SKILL from all fighters
+			getFighters(fightData).forEach(f => {
+				removeStatus(fightData, f, Status.NO_EVENT, Status.NO_SKILL);
+			});
+			break;
+		}
+		case Skill.ABYSSE: {
+			// Remove WEAKENED from all fighters
+			getFighters(fightData).forEach(f => {
+				removeStatus(fightData, f, Status.WEAKENED);
+			});
+			break;
+		}
+		case Skill.FEU_DE_ST_ELME: {
+			// Remove LIGHTNING_STRUCK from all fighters
+			getFighters(fightData).forEach(f => {
+				removeStatus(fightData, f, Status.LIGHTNING_STRUCK);
+			});
+			break;
+		}
+		case Skill.OURANOS: {
+			// Remove AIR_SLOWED from all fighters
+			getFighters(fightData).forEach(f => {
+				removeStatus(fightData, f, Status.AIR_SLOWED);
+			});
+			break;
+		}
+		default:
+			console.warn('Unknown environment', fightData.environment.type);
+			break;
+	}
+
+	// Add expire environment step
+	fightData.steps.push({
+		action: 'expireEnvironment',
+		environment: fightData.environment.type
+	});
+
+	fightData.environment = undefined;
+}
 
 const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche): boolean => {
 	// Get current fighter
@@ -2588,9 +2644,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			);
 			// Increase time of all opponents by 8
 			const opponents = getOpponents(fightData, fighter);
+			const init_down_notify = {
+				action: 'notify',
+				fids: [],
+				notification: NotificationList.InitUp
+			} as NotifyStep;
 			opponents.forEach(opponent => {
 				opponent.time += 8 * TIME_FACTOR;
+				init_down_notify.fids.push(opponent.id);
 			});
+			fightData.steps.push(init_down_notify);
 		}
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
@@ -3592,6 +3655,11 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	// TODO: check for danger detector item
 	fighter.hp -= damage;
 
+	// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
+	if (fighter.hp < 0) {
+		fighter.hp = 0;
+	}
+
 	fightData.steps.push({
 		action: 'looseHp',
 		fid: fighter.id,
@@ -3715,9 +3783,6 @@ export const heal = (
 	fx?: LifeEffect,
 	isItem?: boolean
 ) => {
-	// No heal if fighter is dead
-	if (fighter.hp <= 0) return;
-
 	// No heal if BEER
 	// TODO add fx for no healing
 	if (hasStatus(fighter, Status.BEER)) return;
@@ -3742,6 +3807,8 @@ export const heal = (
 	}
 
 	const healAmount = fighter.hp - hpBeforeHeal;
+
+	// Remove fighter from deads if it was?
 
 	const lifeFx = fx ?? LifeEffect.Heal;
 
@@ -3988,6 +4055,13 @@ const attackTarget = (
 
 		// Apply and log damage
 		target.hp -= damage;
+
+		// Set hp minimum to 0.
+		// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
+		if (target.hp < 0) {
+			target.hp = 0;
+		}
+
 		totalDamage += damage;
 
 		// Update skill step or add hit step
@@ -4412,8 +4486,35 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		// Only add death step if fighter is dead and hasn't died yet
 		if (
 			fighter.hp <= 0 &&
-			fightData.steps.filter(step => step.action === 'death' && step.fighter.id === fighter.id).length === 0
+			fightData.deads.filter(fid => fid === fighter.id).length === 0
 		) {
+			// Check if dinoz can survive
+			if (fighter.canSurvive) {
+				fighter.canSurvive = false;
+
+				// Update history & heal
+				fightData.steps.push({
+					action: 'skillAnnounce',
+					fid: fighter.id,
+					skill: Skill.SURVIE,
+				});
+				fightData.steps.push({
+					action: 'skillActivate',
+					fid: fighter.id,
+					skill: Skill.SURVIE,
+					targets: []
+				});
+				heal(fightData, fighter, 12, undefined, LifeEffect.Heal);
+
+				// Make sure the fighter is counted as alive
+				if (fighter.attacker) {
+					attackersAlive++;
+				} else {
+					defendersAlive++;
+				}
+				continue;
+			}
+
 			// Check if dinoz has SCALE
 			if (fighter.items.some(item => item.itemId === Item.SCALE)) {
 				// Get random opponent
@@ -4444,13 +4545,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 				continue;
 			}
-
-			// Add death step
-			fightData.steps.push({
-				action: 'death',
-				fighter: stepFighter(fighter)
-			});
-
+			
 			// Phoenix Feather
 			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
 				// Add skillActivate step
@@ -4475,6 +4570,14 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 				// TODO add init up notification for resurrected fighter
 			}
+
+			// Add death step
+			fightData.steps.push({
+				action: 'death',
+				fighter: stepFighter(fighter)
+			});
+			fightData.deads.push(fighter.id);
+
 
 			// Reset stolen gold
 			fighter.goldStolen = undefined;
@@ -4561,6 +4664,11 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				});
 		}
 
+		// Cancel environment if the caster died
+		if (fightData.environment && fighter.id === fightData.environment.caster.id) {
+			cancelEnvironment(fightData);
+		}
+
 		// Count alive fighters
 		if (fighter.hp > 0) {
 			if (fighter.attacker) {
@@ -4610,54 +4718,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 		// Remove environment if no more turns left
 		if (fightData.environment.turnsLeft <= 0) {
-			switch (fightData.environment.type) {
-				case Skill.AMAZONIE: {
-					// Wake up all fighters
-					getFighters(fightData).forEach(f => {
-						removeStatus(fightData, f, Status.ASLEEP);
-					});
-					break;
-				}
-				case Skill.PAYS_DE_CENDRE: {
-					// Remove NO_EVENT, NO_SKILL from all fighters
-					getFighters(fightData).forEach(f => {
-						removeStatus(fightData, f, Status.NO_EVENT, Status.NO_SKILL);
-					});
-					break;
-				}
-				case Skill.ABYSSE: {
-					// Remove WEAKENED from all fighters
-					getFighters(fightData).forEach(f => {
-						removeStatus(fightData, f, Status.WEAKENED);
-					});
-					break;
-				}
-				case Skill.FEU_DE_ST_ELME: {
-					// Remove LIGHTNING_STRUCK from all fighters
-					getFighters(fightData).forEach(f => {
-						removeStatus(fightData, f, Status.LIGHTNING_STRUCK);
-					});
-					break;
-				}
-				case Skill.OURANOS: {
-					// Remove AIR_SLOWED from all fighters
-					getFighters(fightData).forEach(f => {
-						removeStatus(fightData, f, Status.AIR_SLOWED);
-					});
-					break;
-				}
-				default:
-					console.warn('Unknown environment', fightData.environment.type);
-					break;
-			}
-
-			// Add expire environment step
-			fightData.steps.push({
-				action: 'expireEnvironment',
-				environment: fightData.environment.type
-			});
-
-			fightData.environment = undefined;
+			cancelEnvironment(fightData);
 		} else {
 			if (fightData.environment.type === Skill.FEU_DE_ST_ELME) {
 				// Take 5% HP for LIGHTNING_STRUCK fighters

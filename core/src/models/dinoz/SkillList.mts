@@ -3060,7 +3060,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.SURVIE,
 		name: 'Survie',
 		type: SkillType.S,
-		energy: Energy.E75,
+		energy: Energy.E65,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTree.VANILLA,
