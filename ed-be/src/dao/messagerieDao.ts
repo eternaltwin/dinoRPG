@@ -13,7 +13,11 @@ export async function getConversationsWithPlayer(playerId: number) {
 			title: true,
 			id: true,
 			createdById: true,
-			createdBy: true,
+			createdBy: {
+				select: {
+					name: true
+				}
+			},
 			messages: {
 				select: {
 					createdAt: true
@@ -110,6 +114,7 @@ export async function getConversation(conversationId: string) {
 				}
 			},
 			messages: {
+				take: 10,
 				select: {
 					id: true,
 					content: true,
@@ -128,6 +133,39 @@ export async function getConversation(conversationId: string) {
 	});
 }
 
+export async function getMoreMessages(conversationId: string, page: number) {
+	const skip = (page - 1) * 10;
+	const take = 10;
+
+	return await prisma.conversation.findUniqueOrThrow({
+		where: {
+			id: conversationId
+		},
+		select: {
+			participants: {
+				select: {
+					playerId: true
+				}
+			},
+			messages: {
+				skip: skip,
+				take: take,
+				select: {
+					id: true,
+					content: true,
+					createdAt: true,
+					sender: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				},
+				orderBy: [{ id: 'desc' }]
+			}
+		}
+	});
+}
 export async function addMessage(conversationId: string, message: string, senderId: number) {
 	return await prisma.conversation.update({
 		data: {
@@ -140,7 +178,8 @@ export async function addMessage(conversationId: string, message: string, sender
 						}
 					}
 				}
-			}
+			},
+			updatedAt: new Date()
 		},
 		where: {
 			id: conversationId
@@ -158,7 +197,8 @@ export async function addMessage(conversationId: string, message: string, sender
 							name: true
 						}
 					}
-				}
+				},
+				orderBy: [{ id: 'desc' }]
 			}
 		}
 	});

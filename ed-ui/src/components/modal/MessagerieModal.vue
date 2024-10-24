@@ -62,16 +62,17 @@
 								<span class="">
 									<b class="text-white">{{ thread.createdBy.name }}</b>
 									<span>, {{ thread.participants.length }} {{ $t('messagerie.participants') }}, </span>
-									<span class="text-gray-300">{{
-										formatDate(thread.messages[thread.messages.length - 1].createdAt)
-									}}</span>
+									<span class="text-gray-300">{{ formatDate(thread.updatedAt.toString()) }}</span>
 								</span>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="scrollable-container ml-[-12px] mt-5 flex flex-col overflow-y-auto p-[20px] sm:mt-0 md:w-[70%]">
+			<div
+				class="scrollable-container ml-[-12px] mt-5 flex flex-col overflow-y-auto p-[20px] sm:mt-0 md:w-[70%]"
+				@scroll="onScroll"
+			>
 				<div
 					class="mt-[-17px] bg-[#ae6139] p-[5px]"
 					style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
@@ -119,7 +120,7 @@
 					</div>
 				</div>
 				<div v-if="!creationMode && currentThread">
-					<Thread :current-thread="currentThread" @message-sent="reloadThread" />
+					<Thread :current-thread="currentThread" />
 				</div>
 			</div>
 		</div>
@@ -158,6 +159,7 @@ export default defineComponent({
 			creationMode: false as boolean,
 			newThread: {} as NewThread,
 			currentThread: undefined as undefined | FullThread,
+			currentThreadPage: 1,
 			response: undefined as undefined | string,
 			threadSelected: false as boolean,
 			selectedThreadId: null as string | null,
@@ -192,11 +194,7 @@ export default defineComponent({
 			this.threadSelected = true;
 			this.selectedThreadId = id;
 			this.currentThread = await MessagerieService.getThread(id);
-		},
-		async reloadThread() {
-			if (this.selectedThreadId) {
-				this.currentThread = await MessagerieService.getThread(this.selectedThreadId);
-			}
+			this.currentThreadPage = 1;
 		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
@@ -237,6 +235,16 @@ export default defineComponent({
 				return this.threads;
 			}
 			return this.threads.filter(thread => thread.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+		},
+		onScroll(e) {
+			const { scrollTop, offsetHeight, scrollHeight } = e.target;
+			if (
+				this.currentThread &&
+				scrollTop + offsetHeight >= scrollHeight &&
+				this.currentThread.messages.length - 10 * this.currentThreadPage >= 0
+			) {
+				this.currentThreadPage++;
+			}
 		}
 	},
 	mounted(): void {
@@ -249,6 +257,14 @@ export default defineComponent({
 			console.log(this.threads);
 		});
 		this.messageRef = this.$refs.messageRef as HTMLDialogElement;
+	},
+	watch: {
+		async currentThreadPage() {
+			if (this.currentThread && this.currentThreadPage > 1) {
+				const olderMessages = await MessagerieService.loadMessages(this.currentThread.id, this.currentThreadPage);
+				this.currentThread.messages.push(...olderMessages.messages);
+			}
+		}
 	}
 });
 </script>

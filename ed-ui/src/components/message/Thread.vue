@@ -109,8 +109,8 @@ export default defineComponent({
 		async sendMessage() {
 			if (!this.answer) return;
 			try {
-				await MessagerieService.answerThread(this.currentThread.id, this.answer);
-				this.$emit('message-sent');
+				const updatedThread = await MessagerieService.answerThread(this.currentThread.id, this.answer);
+				this.currentThread.messages = updatedThread.messages;
 				this.answer = '';
 			} catch (e) {
 				errorHandler.handle(e, this.$t);

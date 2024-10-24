@@ -3,11 +3,14 @@ import { Player } from '../player/Player.mjs';
 export interface ThreadsBasic {
 	id: string;
 	title: string;
-	createdBy: number;
+	createdById: number;
+	createdBy: {
+		name: string;
+	};
 	participants: {
 		playerId: number;
 	}[];
-	lastMessage: Date;
+	updatedAt: Date;
 }
 
 export interface NewThread {
