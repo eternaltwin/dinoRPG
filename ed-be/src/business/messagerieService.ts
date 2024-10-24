@@ -5,7 +5,8 @@ import {
 	changePinMessage,
 	createConversation,
 	getConversation,
-	getConversationsWithPlayer
+	getConversationsWithPlayer,
+	getMoreMessages
 } from '../dao/messagerieDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
@@ -26,6 +27,17 @@ export async function startConversation(req: Request) {
 export async function getFullConversattion(req: Request) {
 	const authed = await auth(req);
 	const conversation = await getConversation(req.params.thread, +req.params.page);
+
+	if (!conversation.participants.map(p => p.playerId).includes(authed.id)) {
+		throw new ExpectedError(`notInConversation`);
+	}
+
+	return conversation;
+}
+
+export async function loadMessages(req: Request) {
+	const authed = await auth(req);
+	const conversation = await getMoreMessages(req.params.thread, +req.params.page);
 
 	if (!conversation.participants.map(p => p.playerId).includes(authed.id)) {
 		throw new ExpectedError(`notInConversation`);
