@@ -1,5 +1,5 @@
 <template>
-	<ul class="my-[5px] list-none border-2 p-[2px]" style="border-color: #d69e68">
+	<ul class="my-[5px] list-none border p-[2px]" style="border-color: #d69e68">
 		<li
 			v-for="(dinoz, index) in dinozList"
 			:key="index"
@@ -177,16 +177,13 @@ li {
 		&.selected {
 			background-color: #e6b479;
 			color: black;
-			border-color: black;
+			border: 1px solid black;
 			a {
 				background-color: #e6b479;
 				color: black;
 				border-color: black;
 			}
 			span {
-				color: black;
-			}
-			em {
 				color: black;
 			}
 		}

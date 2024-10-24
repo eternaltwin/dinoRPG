@@ -21,7 +21,7 @@
 						id="centerContent"
 						class="ml-[80px] mt-[-40px] flex w-full flex-col md:ml-[40px] md:mt-[10px] lg:ml-[30px] lg:max-w-[540px]"
 					>
-						<a @click="goToNews()" class="linkHome z-1 h-[120px] w-full cursor-pointer"></a>
+						<a @click="goToNews()" class="linkHome z-1 h-[80px] w-full cursor-pointer"></a>
 						<Router-view />
 					</div>
 					<RightMenu />

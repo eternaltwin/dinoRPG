@@ -76,7 +76,7 @@
 					:alt="$t(`place.name.${place}`)"
 				/>
 			</div>
-			<p class="text-center italic text-[#bc683c]">{{ $t(`place.name.${place}`) }}</p>
+			<p class="text-center text-lg italic text-[#bc683c]">{{ $t(`place.name.${place}`) }}</p>
 		</div>
 		<DinozList :currentDinozId="currentDinozId()" :key="dinozStore" @click="togglePanel"></DinozList>
 		<a
