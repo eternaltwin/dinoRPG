@@ -1,5 +1,6 @@
 {
   "tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
+  "maxParticipantInThread": "Vous ne pouvez ajouter plus de 9 participants à une conversation",
   "notEnoughMoney": "Vous n'avez pas assez d'or.",
   "notEnoughNapo": "Vous n'avez pas assez de Napodino.",
   "OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 16 lettres et chiffres peuvent être utilisés.",

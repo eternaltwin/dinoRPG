@@ -8,7 +8,7 @@
 		list="players"
 		@keyup.enter="getPlayer()"
 	/><datalist id="players" @click="getPlayer()">
-		<option v-for="(players, index) in playerList" :key="index">
+		<option v-for="(players, index) in playerList" :key="index" @click="getPlayer()">
 			{{ players.name }}
 		</option>
 	</datalist>
