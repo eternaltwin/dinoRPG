@@ -118,8 +118,8 @@
 						<DZButton @click="sendMessage">{{ $t('messagerie.newMsgSend') }}</DZButton>
 					</div>
 				</div>
-				<div v-if="!creationMode && currentThread">
-					<Thread :current-thread="currentThread" />
+				<div v-if="!creationMode && selectedThreadId">
+					<Thread :thread-id="selectedThreadId" :threadPage="currentThreadPage" />
 				</div>
 			</div>
 		</div>
@@ -134,7 +134,7 @@ import EventBus from '../../events/index.js';
 import { defineComponent } from 'vue';
 import { localStore, playerStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
-import { FullThread, NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
+import { NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
 import { MessagerieService } from '../../services/MessagerieService.js';
 import SearchPlayer from '../data/SearchPlayer.vue';
 import DZUser from '../common/DZUser.vue';
@@ -153,8 +153,7 @@ export default defineComponent({
 			threads: [] as ThreadsBasic[], // Liste des messages de la conversation
 			creationMode: false as boolean,
 			newThread: {} as NewThread,
-			currentThread: undefined as undefined | FullThread,
-			currentThreadPage: 1,
+			currentThreadPage: 0,
 			response: undefined as undefined | string,
 			threadSelected: false as boolean,
 			selectedThreadId: null as string | null,
@@ -177,19 +176,24 @@ export default defineComponent({
 		close(): void {
 			if (this.messageRef) {
 				this.messageRef.close();
-				this.currentThread = undefined;
 				this.creationMode = false;
 				this.threadSelected = false;
 				this.selectedThreadId = null;
 				this.isSearchVisible = false;
+				this.currentThreadPage = 0;
+			}
+		},
+		onScroll(e) {
+			const { scrollTop, offsetHeight, scrollHeight } = e.target;
+			if (scrollTop + offsetHeight >= scrollHeight) {
+				this.currentThreadPage++;
 			}
 		},
 		async selectThread(id: string) {
 			this.creationMode = false;
 			this.threadSelected = true;
 			this.selectedThreadId = id;
-			this.currentThread = await MessagerieService.getThread(id);
-			this.currentThreadPage = 1;
+			this.currentThreadPage = 0;
 		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
@@ -230,16 +234,6 @@ export default defineComponent({
 				return this.threads;
 			}
 			return this.threads.filter(thread => thread.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
-		},
-		onScroll(e) {
-			const { scrollTop, offsetHeight, scrollHeight } = e.target;
-			if (
-				this.currentThread &&
-				scrollTop + offsetHeight >= scrollHeight &&
-				this.currentThread.messages.length - 10 * this.currentThreadPage >= 0
-			) {
-				this.currentThreadPage++;
-			}
 		}
 	},
 	mounted(): void {
@@ -251,14 +245,6 @@ export default defineComponent({
 			this.threads = await MessagerieService.getThreads();
 		});
 		this.messageRef = this.$refs.messageRef as HTMLDialogElement;
-	},
-	watch: {
-		async currentThreadPage() {
-			if (this.currentThread && this.currentThreadPage > 1) {
-				const olderMessages = await MessagerieService.loadMessages(this.currentThread.id, this.currentThreadPage);
-				this.currentThread.messages.push(...olderMessages.messages);
-			}
-		}
 	}
 });
 </script>
