@@ -11,6 +11,7 @@
 			<div
 				class="m-[3px] flex max-w-[230px] cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139]"
 				style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
+				@click="refresh()"
 			>
 				<img :src="getImgURL('icons', 'refresh')" />
 				<p>{{ $t('messagerie.actualizeThread') }}</p>
@@ -102,6 +103,14 @@ export default defineComponent({
 		async answerMsg() {
 			this.answerMode = true;
 		},
+		async refresh() {
+			try {
+				this.myThread = undefined;
+				this.myThread = await MessagerieService.getThread(this.threadId);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
 			const lang = this.localStore.getLanguage;
@@ -128,6 +137,10 @@ export default defineComponent({
 				const olderMessages = await MessagerieService.loadMessages(this.myThread.id, this.threadPage + 1);
 				this.myThread.messages.push(...olderMessages.messages);
 			}
+		},
+		async threadId() {
+			this.myThread = undefined;
+			this.myThread = await MessagerieService.getThread(this.threadId);
 		}
 	},
 	async mounted() {
@@ -136,6 +149,9 @@ export default defineComponent({
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
+	},
+	unmounted() {
+		console.log('unmount');
 	}
 });
 </script>
