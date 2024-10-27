@@ -62,7 +62,10 @@ export async function createConversation(
 		},
 		select: {
 			id: true,
-			createdById: true,
+			createdBy: {select: {
+					id: true,
+					name: true
+				}},
 			participants: true,
 			title: true,
 			updatedAt: true
