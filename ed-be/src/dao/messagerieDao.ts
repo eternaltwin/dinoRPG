@@ -110,9 +110,15 @@ export async function getConversation(conversationId: string, page: number) {
 			id: true,
 			createdById: true,
 			pinnedMessage: true,
+
 			participants: {
 				select: {
-					playerId: true
+					player: {
+						select: {
+							id: true,
+							name: true
+						}
+					},
 				}
 			},
 			messages: {
@@ -168,6 +174,7 @@ export async function getMoreMessages(conversationId: string, page: number) {
 		}
 	});
 }
+
 export async function addMessage(conversationId: string, message: string, senderId: number) {
 	return await prisma.conversation.update({
 		data: {
