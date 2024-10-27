@@ -26,7 +26,7 @@ export interface FullThread {
 	pinnedMessage: Message | undefined;
 	title: string;
 	createdBy: number;
-	participants: { player: Pick<Player, 'id' | 'name'>}[];
+	participants: { player: Pick<Player, 'id' | 'name'> }[];
 }
 
 export interface Message {

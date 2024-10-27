@@ -63,10 +63,12 @@ export async function createConversation(
 		},
 		select: {
 			id: true,
-			createdBy: {select: {
+			createdBy: {
+				select: {
 					id: true,
 					name: true
-				}},
+				}
+			},
 			participants: true,
 			title: true,
 			updatedAt: true
@@ -120,7 +122,7 @@ export async function getConversation(conversationId: string) {
 							id: true,
 							name: true
 						}
-					},
+					}
 				}
 			},
 			messages: {
