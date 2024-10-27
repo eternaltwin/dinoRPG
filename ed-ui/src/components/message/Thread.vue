@@ -7,7 +7,7 @@
 			<img :src="getImgURL('icons', 'small_browse_next')" />
 			<p>{{ $t('messagerie.conversation') }}</p>
 		</div>
-		<div class="flex flex-wrap p-[4px] md:flex-nowrap">
+		<div class="flex flex-wrap justify-around p-[4px] md:flex-nowrap">
 			<div
 				class="m-[3px] flex max-w-[230px] cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139]"
 				style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
@@ -24,7 +24,7 @@
 				<img :src="getImgURL('icons', 'edit')" />
 				<span>{{ $t('messagerie.responseConv') }}</span>
 			</div>
-			<div
+			<!--			<div
 				class="m-[3px] flex max-w-[105px] cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139]"
 				style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
 			>
@@ -37,21 +37,25 @@
 			>
 				<img :src="getImgURL('icons', 'small_delete')" />
 				<span>{{ $t('messagerie.deletedConv') }}</span>
-			</div>
+			</div>-->
 			<div
-				class="m-[3px] flex max-w-[120px] cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139]"
+				class="m-[3px] flex max-w-[120px] cursor-pointer items-center justify-around gap-2 p-[6px] text-center hover:bg-[#ae6139]"
 				style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
+				@click="showParticipants = !showParticipants"
 			>
 				<img :src="getImgURL('icons', 'player')" />
 				<span>{{ $t('messagerie.participantsConv') }}</span>
 			</div>
-			<div
+			<!--			<div
 				class="m-[3px] flex max-w-[180px] cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139]"
 				style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
 			>
 				<img :src="getImgURL('icons', 'small_lock')" />
 				<span>{{ $t('messagerie.blockSender') }}</span>
-			</div>
+			</div>-->
+		</div>
+		<div id="particpants" v-if="showParticipants" class="flex justify-around">
+			<DZUser v-for="user in myThread.participants" :user="user.player" :key="user.player.id" />
 		</div>
 	</div>
 	<div
@@ -63,14 +67,12 @@
 			<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
 		</div>
 	</div>
-	<template v-if="myThread">
-		<div v-if="myThread.pinnedMessage">
-			<Message :message="myThread.pinnedMessage" />
-		</div>
-		<div id="conversation">
-			<Message v-for="message in myThread.messages" :key="message.id" :message="message" />
-		</div>
-	</template>
+	<div v-if="myThread.pinnedMessage">
+		<Message :message="myThread.pinnedMessage" />
+	</div>
+	<div id="conversation">
+		<Message v-for="message in myThread.messages" :key="message.id" :message="message" />
+	</div>
 </template>
 
 <script lang="ts">
@@ -82,6 +84,7 @@ import { localStore } from '../../store/index.js';
 import Message from './Message.vue';
 import { MessagerieService } from '../../services/MessagerieService.js';
 import { errorHandler } from '../../utils/index.js';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'Thread',
@@ -95,10 +98,11 @@ export default defineComponent({
 			answerMode: false as boolean,
 			localStore: localStore(),
 			answer: undefined as undefined | string,
-			myThread: undefined as undefined | FullThread
+			myThread: {} as FullThread,
+			showParticipants: false as boolean
 		};
 	},
-	components: { Message, DZButton },
+	components: { DZUser, Message, DZButton },
 	methods: {
 		async answerMsg() {
 			this.answerMode = true;
