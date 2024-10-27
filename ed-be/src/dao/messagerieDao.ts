@@ -29,7 +29,8 @@ export async function getConversationsWithPlayer(playerId: number) {
 				}
 			},
 			updatedAt: true
-		}
+		},
+		orderBy: [{ updatedAt: 'desc' }]
 	});
 }
 

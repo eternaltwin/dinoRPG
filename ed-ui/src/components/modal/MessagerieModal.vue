@@ -123,7 +123,7 @@
 					</div>
 				</div>
 				<div v-if="!creationMode && selectedThreadId">
-					<Thread :thread-id="selectedThreadId" :threadPage="currentThreadPage" />
+					<Thread :thread-id="selectedThreadId" :threadPage="currentThreadPage" @messageSent="refreshThreads()" />
 				</div>
 			</div>
 		</div>
@@ -225,7 +225,7 @@ export default defineComponent({
 					this.newThread.title,
 					this.newThread.message
 				);
-				this.threads.push(newThread);
+				this.threads.unshift(newThread);
 				this.creationMode = false;
 			} catch (error) {
 				console.error("Erreur lors de l'envoi du message", error);
@@ -239,6 +239,9 @@ export default defineComponent({
 				return this.threads;
 			}
 			return this.threads.filter(thread => thread.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
+		},
+		async refreshThreads() {
+			this.threads = await MessagerieService.getThreads();
 		}
 	},
 	mounted(): void {

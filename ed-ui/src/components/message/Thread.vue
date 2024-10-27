@@ -54,7 +54,7 @@
 				<span>{{ $t('messagerie.blockSender') }}</span>
 			</div>-->
 		</div>
-		<div id="particpants" v-if="showParticipants" class="flex justify-around">
+		<div id="particpants" v-if="showParticipants && myThread" class="flex justify-around">
 			<DZUser v-for="user in myThread.participants" :user="user.player" :key="user.player.id" />
 		</div>
 	</div>
@@ -67,10 +67,10 @@
 			<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
 		</div>
 	</div>
-	<div v-if="myThread.pinnedMessage">
+	<div v-if="myThread && myThread.pinnedMessage">
 		<Message :message="myThread.pinnedMessage" />
 	</div>
-	<div id="conversation">
+	<div id="conversation" v-if="myThread">
 		<Message v-for="message in myThread.messages" :key="message.id" :message="message" />
 	</div>
 </template>
@@ -98,7 +98,7 @@ export default defineComponent({
 			answerMode: false as boolean,
 			localStore: localStore(),
 			answer: undefined as undefined | string,
-			myThread: {} as FullThread,
+			myThread: undefined as undefined | FullThread,
 			showParticipants: false as boolean
 		};
 	},
@@ -130,6 +130,7 @@ export default defineComponent({
 				const updatedThread = await MessagerieService.answerThread(this.myThread.id, this.answer);
 				this.myThread.messages = updatedThread.messages;
 				this.answer = '';
+				this.$emit('messageSent');
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
