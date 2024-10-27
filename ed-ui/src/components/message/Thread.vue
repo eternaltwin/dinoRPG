@@ -1,5 +1,6 @@
 <template>
 	<div
+		id="threadPannel"
 		class="mb-[10px] ml-[-12px] mt-[-18px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic"
 	>
 		<div class="flex items-center gap-3 bg-[#ae6139] p-[4px]">
@@ -61,16 +62,18 @@
 			<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
 		</div>
 	</div>
-	<div v-if="currentThread.pinnedMessage">
-		<Message :message="currentThread.pinnedMessage" />
-	</div>
-	<div v-for="message in currentThread.messages" :key="message.id">
-		<Message :message="message" />
-	</div>
+	<template v-if="myThread">
+		<div v-if="myThread.pinnedMessage">
+			<Message :message="myThread.pinnedMessage" />
+		</div>
+		<div id="conversation">
+			<Message v-for="message in myThread.messages" :key="message.id" :message="message" />
+		</div>
+	</template>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FullThread } from '@drpg/core/models/messagerie/threadsBasic';
@@ -82,14 +85,16 @@ import { errorHandler } from '../../utils/index.js';
 export default defineComponent({
 	name: 'Thread',
 	props: {
-		currentThread: { type: Object as PropType<FullThread>, required: true }
+		threadPage: { type: Number, required: true },
+		threadId: { type: String, required: true }
 	},
 	data() {
 		return {
 			editor: ClassicEditor,
 			answerMode: false as boolean,
 			localStore: localStore(),
-			answer: undefined as undefined | string
+			answer: undefined as undefined | string,
+			myThread: undefined as undefined | FullThread
 		};
 	},
 	components: { Message, DZButton },
@@ -107,14 +112,29 @@ export default defineComponent({
 			return `${day} ${month} ${year}`;
 		},
 		async sendMessage() {
-			if (!this.answer) return;
+			if (!this.answer || !this.myThread) return;
 			try {
-				const updatedThread = await MessagerieService.answerThread(this.currentThread.id, this.answer);
-				this.currentThread.messages = updatedThread.messages;
+				const updatedThread = await MessagerieService.answerThread(this.myThread.id, this.answer);
+				this.myThread.messages = updatedThread.messages;
 				this.answer = '';
 			} catch (e) {
-				errorHandler.handle(e, this.$t);
+				errorHandler.handle(e, this.$toast);
 			}
+		}
+	},
+	watch: {
+		async threadPage() {
+			if (this.myThread && this.myThread.messages.length - 10 * this.threadPage >= 0) {
+				const olderMessages = await MessagerieService.loadMessages(this.myThread.id, this.threadPage + 1);
+				this.myThread.messages.push(...olderMessages.messages);
+			}
+		}
+	},
+	async mounted() {
+		try {
+			this.myThread = await MessagerieService.getThread(this.threadId);
+		} catch (e) {
+			errorHandler.handle(e, this.$toast);
 		}
 	}
 });
