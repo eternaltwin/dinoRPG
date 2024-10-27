@@ -1,17 +1,18 @@
 <template>
 	<input
-		class="search"
+		id="player"
+		class="w-full bg-[url('./assets/background/bg_conv_input.webp')] pl-[5px] outline-none placeholder:text-[#ffee92]"
 		type="text"
-		placeholder="Search Player"
+		:placeholder="$t('messagerie.addParticipants')"
 		v-model="searchValue"
 		list="players"
 		@keyup.enter="getPlayer()"
-	/><datalist id="players">
-		<option v-for="(players, index) in playerList" :key="index">
+	/><datalist id="players" @click="getPlayer()">
+		<option v-for="(players, index) in playerList" :key="index" @click="getPlayer()">
 			{{ players.name }}
 		</option>
 	</datalist>
-	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
+	<div v-if="displayErrorMessage" class="text-red-500">{{ $t('messagerie.playerNotFound') }}</div>
 </template>
 
 <script lang="ts">

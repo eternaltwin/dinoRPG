@@ -96,10 +96,14 @@
 							:placeholder="$t('messagerie.title')"
 						/>
 					</div>
-					<div class="flex flex-col p-[5px] lg:flex-row">
+					<div
+						class="flex flex-col p-[5px] lg:flex-row"
+						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
+					>
 						<label for="player" class="lg:w-1/4">{{ $t('messagerie.newMsgParticipants') }}</label>
 						<SearchPlayer @player="participantThead" />
 					</div>
+					<p v-else>{{ $t('toast.maxParticipantInThread') }}</p>
 					<div class="flex w-full items-center justify-center gap-3">
 						<template v-for="participant in newThread.participants" :key="participant.id">
 							<DZUser :user="participant" />
@@ -169,7 +173,7 @@ export default defineComponent({
 		participantThead(p: Pick<Player, 'id' | 'name'>) {
 			if (!this.newThread.participants) {
 				this.newThread.participants = [p];
-			} else if (!this.newThread.participants.some(e => e.id === p.id)) {
+			} else if (!this.newThread.participants.some(e => e.id === p.id) && this.newThread.participants.length < 9) {
 				this.newThread.participants.push(p);
 			}
 		},
@@ -181,6 +185,7 @@ export default defineComponent({
 				this.selectedThreadId = null;
 				this.isSearchVisible = false;
 				this.currentThreadPage = 0;
+				this.newThread = {} as NewThread;
 			}
 		},
 		onScroll(e) {
