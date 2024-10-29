@@ -3,5 +3,5 @@ files:
     translation: /ed-ui/src/i18n/locales/%two_letters_code%.json
   - source: /ed-be/i18n/fr.json
     translation: /ed-be/i18n/%two_letters_code%.json
-commit_message: "feat(translations): crowdin translations"
+commit_message: "feat(i18n): crowdin translations"
 pull_request_title: "Crowdin translations"
