@@ -96,7 +96,7 @@
     a.bSmall {
         @apply w-[100px] h-[30px] mt-[3px] mb-[2px] pl-[10px] pt-[4px] text-[10pt] font-bold text-left cursor-pointer no-underline;
 		font-variant: small-caps;
-        background-image: url("./assets/design/button_small.webp");
+        background-image: url("./assets/button/button_small.webp");
 		background-repeat: no-repeat;
         border-radius: 0;
         color: #fff1ad;
