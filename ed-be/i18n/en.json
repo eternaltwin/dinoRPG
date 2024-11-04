@@ -1,5 +1,6 @@
 {
   "tooManyActiveDinoz": "You have too many active Dinoz.",
+  "maxParticipantInThread": "You cannot add more than 9 people to this conversation",
   "notEnoughMoney": "Vous n'avez pas assez d'or",
   "notEnoughNapo": "You don't have enough Napodino.",
   "OnlyLettersAndNumbers": "Incorrect name ! You can only use between 3 and 16 letters or numbers.",
@@ -95,7 +96,7 @@
     "fmedal": "3-Eyed Medallion"
   },
   "announce": {
-    "dinoz": "Congratulations to {{player}} for their dinoz {{dinoz}} who is the first $t(race.{{race}}) to reach level {{level}}!",
+    "dinoz": "Congratulations to {{player}} for their Dinoz {{dinoz}} who is the $t(position.{{position}}) $t(race.{{race}}) to reach level {{level}}!",
     "epic": "Congratulations to {{player}} who is the $t(position.{{position}}) player to obtain the reward $t(reward.{{reward}})!"
   }
 }
