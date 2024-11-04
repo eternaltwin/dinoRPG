@@ -1,5 +1,5 @@
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { LogType, Prisma, UnavailableReason } from '@drpg/prisma';
+import { LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 import { AdminRole } from '@drpg/prisma';
@@ -155,7 +155,15 @@ export async function checkBeforeDeletion(playerId: number) {
 		},
 		select: {
 			offers: true,
-			bids: true,
+			bids: {
+				where: {
+					offer: {
+						status: {
+							equals: OfferStatus.ONGOING
+						}
+					}
+				}
+			},
 			ClanMember: true
 		}
 	});

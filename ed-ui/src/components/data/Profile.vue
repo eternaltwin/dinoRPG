@@ -130,14 +130,14 @@ export default defineComponent({
 			if (res) {
 				try {
 					await PlayerService.resetAccount();
+					this.localStore.setJwt(undefined);
+					this.dinozStore.$reset();
+					this.playerStore.$reset();
+					this.$router.go(0);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
 				}
-				this.localStore.setJwt(undefined);
-				this.dinozStore.$reset();
-				this.playerStore.$reset();
-				this.$router.go(0);
 			}
 		},
 		hasPDA(): boolean {

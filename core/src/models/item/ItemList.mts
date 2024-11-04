@@ -1460,7 +1460,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 			race: raceList.PTEROZ
 		},
 		sellable: true,
-		maxQuantity: 10, 
+		maxQuantity: 10,
 		price: 16000,
 		display: 'ptero'
 	},
