@@ -272,24 +272,22 @@ export async function playerToolTip(req: Request) {
 }
 
 export async function resetAccount(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const playerToDelete = await checkBeforeDeletion(req.auth.playerId);
+	const playerToDelete = await checkBeforeDeletion(authed.id);
 
 	//Check if sell of bids are ongoing
 	if (
 		playerToDelete &&
 		(playerToDelete.bids.length > 0 || playerToDelete.offers.filter(b => b.status !== OfferStatus.ENDED).length > 0)
 	) {
-		throw new ExpectedError(`bidsOngoing`);
+		throw new ExpectedError(translate(`bidsOngoing`, authed));
 	}
 
 	//Check if part of a clan
 	if (playerToDelete && playerToDelete.ClanMember) {
-		throw new ExpectedError(`inClan`);
+		throw new ExpectedError(translate(`inClan`, authed));
 	}
 
-	await resetUser(req.auth.playerId);
+	await resetUser(authed.id);
 }
