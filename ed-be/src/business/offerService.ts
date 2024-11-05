@@ -18,7 +18,7 @@ import {
 	getAllIngredientsDataRequest,
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
-import { OfferStatus, UnavailableReason } from '@drpg/prisma';
+import { LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
 import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -28,6 +28,7 @@ import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { LOGGER } from '../context.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { createLog } from '../dao/logDao.js';
 
 /**
  * Get the list of current offers
@@ -156,7 +157,7 @@ export async function createOffer(req: Request) {
 
 	// Insert offer
 	const offer = await insertOffer(dinozId, total, itemsAndIngredients, authed.id);
-	// console.log(itemsAndIngredients);
+	await createLog(LogType.OfferNew, authed.id, undefined, offer.id, offer.total);
 
 	// Set Dinoz as selling
 	if (dinozId) {
@@ -256,6 +257,7 @@ export async function cancelOffer(req: Request) {
 
 	// Delete offer
 	await deleteOffer(offerId);
+	await createLog(LogType.OfferCancelled, playerId, undefined, offerId);
 }
 
 /**
@@ -309,6 +311,7 @@ export async function bidOffer(req: Request) {
 
 	// Add bid
 	await addBid(offerId, authed.id, value);
+	await createLog(LogType.OfferBid, authed.id, undefined, offer.id, value);
 
 	// Repay previous bidder
 	if (offer.bids.length > 0) {
@@ -371,6 +374,7 @@ export const expireOffer = async (offerId: number) => {
 
 		// Send Discord notification
 		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
+		await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
 
 		await addMoney(offer.seller.id, winnerBid.value * 1000);
 		// Update stats tracking
@@ -391,6 +395,7 @@ export const expireOffer = async (offerId: number) => {
 
 		// Send Discord notification
 		LOGGER.log(`Offer ${offerId} expired`);
+		await createLog(LogType.OfferExpired, offer.seller.id, undefined, offer.id);
 	}
 
 	await Promise.all(promises);

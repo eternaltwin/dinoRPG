@@ -76,6 +76,11 @@ const LogTypes = [
 	'ChangeDinozOrder',
 	'PlayerCreated',
 	'PlayerConnected',
+	'OfferNew',
+	'OfferBid',
+	'OfferCancelled',
+	'OfferExpired',
+	'OfferWon',
 	'LBDone',
 	'AdminUpdateDinoz',
 	'AdminAddStatus',
@@ -196,6 +201,35 @@ const getLogPropsForTranslation = (
 		case 'PlayerConnected':
 			values = {
 				name: log.values[0]
+			};
+			break;
+		case 'OfferNew':
+			values = {
+				offer: log.values[0],
+				amount: log.values[1]
+			};
+			break;
+		case 'OfferBid':
+			values = {
+				offer: log.values[0],
+				amount: log.values[1]
+			};
+			break;
+		case 'OfferCancelled':
+			values = {
+				offer: log.values[0]
+			};
+			break;
+		case 'OfferExpired':
+			values = {
+				offer: log.values[0]
+			};
+			break;
+		case 'OfferWon':
+			values = {
+				offer: log.values[0],
+				winner: log.values[1],
+				amount: log.values[2]
 			};
 			break;
 		case 'AdminUpdateDinoz':
