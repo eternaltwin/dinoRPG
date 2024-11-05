@@ -89,13 +89,15 @@ const getLogPropsForTranslation = (
 		case 'ItemBought':
 			values = {
 				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
-				quantity: log.values[1]
+				quantity: log.values[1],
+				total: log.values[2]
 			};
 			break;
 		case 'IngredientSold':
 			values = {
 				item: $t(`ingredients.name.${ingredientNameList[+log.values[0]]}`),
-				quantity: log.values[1]
+				quantity: log.values[1],
+				amount: log.values[2]
 			};
 			break;
 		case 'GoldWon':
