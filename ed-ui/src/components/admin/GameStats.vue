@@ -113,12 +113,14 @@ const getLogPropsForTranslation = (
 			break;
 		case 'GoldWon':
 			values = {
-				quantity: log.values[0]
+				quantity: log.values[0],
+				total: log.values[1]
 			};
 			break;
 		case 'GoldLost':
 			values = {
-				quantity: log.values[0]
+				quantity: log.values[0],
+				total: log.values[1]
 			};
 			break;
 		case 'Move':
@@ -329,8 +331,8 @@ export default defineComponent({
 		},
 		generateChart() {
 			this.loaded = false;
-			const fromDate = this.fromDate ? new Date(this.fromDate) : null;
-			const toDate = this.toDate ? new Date(this.toDate) : null;
+			const fromDate = this.fromDate ? new Date(this.fromDate) : null; // TODO: set minus 1 week instead of null
+			const toDate = this.toDate ? new Date(this.toDate) : null; // TODO: set surrent date instead of null
 			const diffTime = fromDate && toDate ? Math.abs(toDate.getTime() - fromDate.getTime()) : 0;
 			const diffDays = diffTime > 0 ? Math.ceil(diffTime / (1000 * 60 * 60 * 24)) : 0;
 			const totalsByPeriod = {};

@@ -94,12 +94,14 @@ const getLogPropsForTranslation = (
 			break;
 		case 'GoldWon':
 			values = {
-				quantity: log.values[0]
+				quantity: log.values[0],
+				total: log.values[1]
 			};
 			break;
 		case 'GoldLost':
 			values = {
-				quantity: log.values[0]
+				quantity: log.values[0],
+				total: log.values[1]
 			};
 			break;
 		case 'Move':
