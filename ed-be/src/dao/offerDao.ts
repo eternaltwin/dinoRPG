@@ -1,8 +1,10 @@
 import { MARKET_OFFER_DURATION } from '@drpg/core/constants';
-import { OfferStatus, Prisma, Offer } from '@drpg/prisma';
+import { OfferStatus, Prisma, Offer, LogType } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { LOGGER } from '../context.js';
+import { createLog } from './logDao.js';
 
 export async function getOffers(
 	userId: number | null,
@@ -97,8 +99,8 @@ export async function insertOffer(
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
-			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
-			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
+			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
 			dinozId,
 			items: {
 				create: itemsAndIngredient

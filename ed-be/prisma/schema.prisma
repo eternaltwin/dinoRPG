@@ -553,6 +553,11 @@ enum LogType {
   ChangeDinozOrder
   PlayerCreated
   PlayerConnected
+  OfferNew
+  OfferBid
+  OfferCancelled
+  OfferExpired
+  OfferWon
   LBDone
   AdminUpdateDinoz
   AdminAddStatus
