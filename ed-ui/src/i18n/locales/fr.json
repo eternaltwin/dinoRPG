@@ -4178,8 +4178,8 @@
 	"followed": "Ce Dinoz est chef de groupe.",
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** a utilisé **{quantity}x {item}** avec le dinoz **{dinoz} ({dinozId})**.",
-		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}**.",
-		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}**.",
+		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",
+		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (left {amount}).",
 		"GoldWon": "**{player} ({playerId})** a gagné **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** a perdu **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** a bougé son Dinoz **{dinoz} ({dinozId})** à **{location}**.",

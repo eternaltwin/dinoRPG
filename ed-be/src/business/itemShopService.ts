@@ -133,7 +133,7 @@ export async function buyItem(req: Request) {
 		playerShopData.merchant && theShop.shopId === shopList.FLYING_SHOP.shopId
 			? Math.round(itemSold.price * 0.9)
 			: itemSold.price;
-	itemReference.quantity = playerItemData ? playerItemData.quantity : quantityBought;
+	itemReference.quantity = playerItemData ? playerItemData.quantity : 0;
 	// ShopKeeper does not work for magical items
 	itemReference.maxQuantity =
 		playerShopData.shopKeeper && itemReference.itemType !== ItemType.MAGICAL
@@ -150,12 +150,14 @@ export async function buyItem(req: Request) {
 		} else {
 			await increaseItemQuantity(authed.id, itemList[Item.TREASURE_COUPON].itemId, quantityBought);
 		}
+
 		await createLog(
 			LogType.ItemBought,
 			authed.id,
 			undefined,
 			itemList[Item.TREASURE_COUPON].itemId.toString(),
-			quantityBought.toString()
+			quantityBought,
+			playerTreasure ? playerTreasure.quantity + quantityBought : quantityBought
 		);
 
 		//Update stats
@@ -178,7 +180,7 @@ export async function buyItem(req: Request) {
 		}
 
 		// Throws an exception if the player does not have enough storage space left
-		if (itemReference.quantity > itemReference.maxQuantity) {
+		if (itemReference.quantity + quantityBought > itemReference.maxQuantity) {
 			throw new ExpectedError(translate('notEnoughStorage', authed));
 		}
 
@@ -196,22 +198,21 @@ export async function buyItem(req: Request) {
 		await increaseItemQuantity(
 			authed.id,
 			itemReference.itemId,
-			itemReference.quantity + quantityBought <= itemReference.maxQuantity
-				? quantityBought
-				: itemReference.maxQuantity - itemReference.quantity
+			quantityBought
 		);
 	}
 	// Else create it
 	else {
-		await insertItem(authed.id, { itemId: itemReference.itemId, quantity: itemReference.quantity });
+		await insertItem(authed.id, { itemId: itemReference.itemId, quantity: quantityBought });
 	}
-
+	
 	await createLog(
 		LogType.ItemBought,
 		authed.id,
 		undefined,
 		itemReference.itemId.toString(),
-		itemReference.quantity.toString()
+		quantityBought,
+		itemReference.quantity + quantityBought // new total
 	);
 
 	//Update stats
