@@ -840,7 +840,7 @@ export async function addMoney(playerId: number, money: number) {
 		select: { money: true }
 	});
 
-	await createLog(LogType.GoldWon, playerId, undefined, money.toString());
+	await createLog(LogType.GoldWon, playerId, undefined, money.toString(), playerData.money.toString());
 
 	return playerData;
 }
@@ -858,7 +858,7 @@ export async function removeMoney(playerId: number, money: number) {
 		select: { money: true }
 	});
 
-	await createLog(LogType.GoldLost, playerId, undefined, money.toString());
+	await createLog(LogType.GoldLost, playerId, undefined, money.toString(), playerData.money.toString());
 
 	return playerData;
 }
