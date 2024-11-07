@@ -17,7 +17,7 @@
 		"start": "webpack serve",
 		"types": "tsc",
 		"pack": "node ./assets/packer.cjs",
-		"release": "release-it"
+		"release": "yarn release-it"
 	},
 	"author": "Gerardufoin",
 	"license": "ISC",

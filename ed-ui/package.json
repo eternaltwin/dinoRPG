@@ -3,15 +3,15 @@
   "version": "0.13.15",
   "private": true,
   "scripts": {
-    "serve": "concurrently -k -n \"vite,deps\" -p \"[{name}]\" \"yarn run serve:app\" \"yarn run serve:deps\"",
-    "serve:app": "yarn run build:deps && yarn run lint:fix && vite --host",
+    "serve": "yarn concurrently -k -n \"vite,deps\" -p \"[{name}]\" \"yarn run serve:app\" \"yarn run serve:deps\"",
+    "serve:app": "yarn run build:deps && yarn run lint:fix && yarn vite --host",
     "serve:deps": "yarn run build:deps --watch",
-    "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" && yarn run build:deps && vite build",
-    "build:deps": "tsc --project ./tsconfig.deps.json --noEmit",
-    "preview": "vite preview",
-    "lint:test": "eslint --ext .ts,vue --ignore-path .gitignore .",
-    "lint:fix": "eslint --ext .ts,vue --ignore-path .gitignore . --fix",
-    "release": "release-it"
+    "build": "NODE_OPTIONS=\"--max_old_space_size=8192\" && yarn run build:deps && yarn vite build",
+    "build:deps": "yarn tsc --project ./tsconfig.deps.json --noEmit",
+    "preview": "yarn vite preview",
+    "lint:test": "yarn eslint --ext .ts,vue --ignore-path .gitignore .",
+    "lint:fix": "yarn eslint --ext .ts,vue --ignore-path .gitignore . --fix",
+    "release": "yarn release-it"
   },
   "release-it": {
     "git": false

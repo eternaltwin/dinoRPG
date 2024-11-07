@@ -3,18 +3,18 @@
   "version": "0.13.15",
   "description": "EternalDino API",
   "scripts": {
-    "serve": "tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
-    "debug": "concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
-    "prettier": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "serve": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
+    "debug": "yarn concurrently -k -n \"Typescript,Node\" -p \"[{name}]\" -c \"blue,green\" \"tsc --watch\" \"node --inspect dist/server.js\"",
+    "prettier": "yarn prettier --config .prettierrc 'src/**/*.ts' --write",
     "test:ci": "yarn run build && NODE_ENV=development NODE_OPTIONS=\"--experimental-vm-modules\" yarn jest --config ./jest.config.json --collectCoverage --coverageDirectory=\"./coverage\" --ci --reporters=default --reporters=jest-junit --watchAll=false",
     "test:debug": "yarn run build && NODE_ENV=development jest --config ./jest.config.json --watchAll",
-    "build": "tsc --build ./tsconfig.json",
+    "build": "yarn tsc --build ./tsconfig.json",
     "start": "yarn run build && node dist/index.js",
-    "db:sync:dev": "prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
-    "db:migrate:manual": "prisma migrate dev --create-only",
-    "migration": "prisma migrate deploy",
+    "db:sync:dev": "yarn prisma migrate dev && cp ../prisma/package.reference.json ../prisma/package.json",
+    "db:migrate:manual": "yarn prisma migrate dev --create-only",
+    "migration": "yarn prisma migrate deploy",
     "seed": "node --loader ts-node/esm prisma/seed.ts",
-    "release": "release-it"
+    "release": "yarn release-it"
   },
   "release-it": {
     "git": false

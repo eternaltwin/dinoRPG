@@ -3,8 +3,8 @@
   "version": "0.13.15",
   "private": true,
   "scripts": {
-    "etwin": "etwin",
-    "release": "release-it"
+    "etwin": "yarn eternaltwin start",
+    "release": "yarn release-it"
   },
   "release-it": {
     "git": false
