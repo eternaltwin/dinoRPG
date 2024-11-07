@@ -30,7 +30,8 @@ import {
 	getClanMessagesCount,
 	getClanHistoryCount,
 	giveClanIngredients,
-	getClanTreasureDetails
+	getClanTreasureDetails,
+	getRankingClans
 } from '../business/clanService.js';
 import multer from 'multer';
 import sendError from '../utils/sendErrors.js';
@@ -50,6 +51,12 @@ const commonPath: string = apiRoutes.clanRoutes;
  *       - Clans
  *     produces:
  *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: page
+ *         type: string
+ *         required: true
+ *         description: Number of the page to display
  *     responses:
  *       200:
  *         description: Successfull Operation
@@ -66,6 +73,46 @@ routes.get(
 
 		try {
 			const response = await getAllClans(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/clan/ranking/{page}:
+ *   get:
+ *     summary: Get ranking page of clan
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Clans
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: page
+ *         type: string
+ *         required: true
+ *         description: Number of the page to display
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       500:
+ *         description: Error
+ */
+routes.get(
+	`${commonPath}/ranking/:page`,
+	[param('page').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getRankingClans(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

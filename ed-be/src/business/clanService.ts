@@ -22,6 +22,7 @@ import {
 	getFullClanTreasure,
 	getPlayerJoinListRequest,
 	getPlayerJoinRequest,
+	getRankingClansRequest,
 	joinClanRequest,
 	leaveClanSelfRequest,
 	playerHasRightRequest,
@@ -52,7 +53,21 @@ import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
  */
 export async function getAllClans(req: Request) {
 	if (!req.auth?.playerId) throw new Error('No auth data');
-	const clans = await getAllClansRequest(Number(req.params.page));
+	const page = +req.params.page;
+	const clans = await getAllClansRequest(page);
+	return clans;
+}
+
+/**
+ * Get ranking of clans
+ * @param req
+ * @param req.params.page {number} page number
+ * @returns Array<Clan>
+ */
+export async function getRankingClans(req: Request) {
+	if (!req.auth?.playerId) throw new Error('No auth data');
+	const page = +req.params.page;
+	const clans = await getRankingClansRequest(page);
 	return clans;
 }
 

@@ -51,6 +51,7 @@ import EventBus from '../../events/index.js';
 import { Clan } from '@drpg/prisma';
 import { ClanService } from '../../services/index.js';
 import { utils } from '../../utils/index.js';
+import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'ClansRanking',
@@ -69,14 +70,13 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		async getClansList(): Promise<void> {
+		async getClansRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.clansList = await ClanService.getClansList(this.page);
-				this.clansList.sort((a, b) => b.treasureValue - a.treasureValue);
+				this.clansList = await ClanService.getClansRanking(this.page);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -85,14 +85,14 @@ export default defineComponent({
 		},
 		changePage(i: number) {
 			this.page += i;
-			this.getClansList();
+			this.getClansRanking();
 		},
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
 		}
 	},
 	async created(): Promise<void> {
-		await this.getClansList();
+		await this.getClansRanking();
 	}
 });
 </script>

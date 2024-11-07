@@ -12,12 +12,34 @@ export async function getAllClansRequest(page: number) {
 		select: {
 			id: true,
 			name: true,
-			members: true,
+			members: {
+				select: {
+					id: true
+				}
+			},
 			creationDate: true,
-			leader: true,
-			treasureValue: true
+			leader: {
+				select: {
+					id: true,
+					name: true
+				}
+			},
 		},
 		orderBy: [{ creationDate: 'desc' }],
+		take: 20,
+		skip: (page - 1) * 20
+	});
+	return clans;
+}
+
+export async function getRankingClansRequest(page: number) {
+	const clans = await prisma.clan.findMany({
+		select: {
+			id: true,
+			name: true,
+			treasureValue: true
+		},
+		orderBy: [{ treasureValue: 'desc' }],
 		take: 20,
 		skip: (page - 1) * 20
 	});
@@ -62,9 +84,18 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 		select: {
 			id: true,
 			name: true,
-			members: true,
+			members: {
+				select: {
+					id: true
+				}
+			},
 			creationDate: true,
-			leader: true
+			leader:  {
+				select: {
+					id: true,
+					name: true
+				}
+			},
 		},
 		orderBy: [{ creationDate: 'desc' }],
 		take: 20,
