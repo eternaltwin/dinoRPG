@@ -496,7 +496,7 @@ export default defineComponent({
 				quantity: item.quantity ?? 0,
 				maxQuantity:
 					this.playerStore.isShopkeeper && realItem?.itemType !== ItemType.MAGICAL
-						? realItem!.maxQuantity * 1.5
+						? Math.round(realItem!.maxQuantity * 1.5)
 						: realItem!.maxQuantity
 			} as ItemFiche;
 		},
