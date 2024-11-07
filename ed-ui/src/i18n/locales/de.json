@@ -903,33 +903,33 @@
 		},
 		"sofia": {
 			"speech": {
-				"begin": "Allongée sur le transat de Mandragore, Sofia sirote un cocktail. Elle profite allégrement du soleil et se laisse bronzer sur la plage...",
+				"begin": "Auf dem Liegestuhl von Mandragor ausgebreitet nippt Sofia an einem Cocktail. Sie genießt glückselig die Sonne und bräunt sich am Strand...",
 				"slurp": "Schlürf...",
-				"nouvelle": "Sluuuuuuuuurpp.... Ca va pas trop mal, j'étais plutôt tranquille avant que tu n'arrives. Si tu allais jouer ailleurs ? Slurpp.... Et ne dérange pas mon mari, je ne voudrais pas que tu lui donnes des idées suspectes...",
-				"bien": "Il vaut mieux la laisser tranquille, si même Mandragore n'ose pas la contrarier, alors qui serait assez fou pour le faire...?",
-				"troph": "Slurpp.... Caushemesh ne craint rien... J'ai chargé les filles de surveiller la brêche du monde sombre. En cas de problème, j'enverrai mon mari faire mon boulot.",
-				"palais": "Il n'y a rien d'intéressant de toute façon là-bas... Hormis peut-être un objet. Humm... Je n'ai pas envie d'aller le chercher... Ecoute, je te le donne, je n'en ai plus besoin de toute façon, maintenant que j'ai le vrai, héhé... Prend le donc en guise de récompense pour avoir retrouvé mon mari.",
-				"retour": "Maintenant laisse moi, j'ai des affaires urgentes à traiter... ... Mandrachou !!!! Viens me masser... VITE !",
-				"niveau": "C'est bien vrai qu'avec ton niveau actuel, tu ne vas pas aller très loin... Bon, je suis capable de briser la limite du niveau maximal de ton dinoz, mais prend garde, cette décision est IRREVOCABLE ! Une fois la limite brisée, tu pourras évoluer jusqu'au niveau 60 !",
+				"nouvelle": "Schlüüüüüüüüürf... Jedenfalls hatte ich meine Ruhe, bevor du zu mir gekommen bist, aber ansonsten nicht übel. Warum spielst du nicht irgendwo anders, hm? Schlürf... Und störe bloß meinen Mann nicht, sonst bringst du ihn noch auf dumme Ideen...",
+				"bien": "Es wäre wohl besser, sie in Ruhe zu lassen. Wenn selbst Mandragor es nicht wagt, ihr zu widersprechen, wer wäre dann so blöd, das zu tun..?",
+				"troph": "Schlürf... Es gibt bezüglich Caushemesh nichts zu befürchten... Ich hab die Mädchen beauftragt, den Riss der Dunklen Welt zu überwachen. Sollte es da Probleme geben, schicke ich meinen Mann, um meine Arbeit zu erledigen.",
+				"palais": "Da gibt's sowieso nichts Interessantes... Außer einer Sache vielleicht. Hmmm... Mir ist gerade nicht danach, es suchen zu gehen... Hör zu, ich kann dir das hier geben, jetzt wo ich's nicht mehr brauche, da das Original wieder bei mir ist, hehe... Betrachte es als Belohnung dafür, dass du meinen Mann wiedergefunden hast.",
+				"retour": "Und jetzt lass mich in Ruhe, ich muss mich um Wichtigeres kümmern... Mandragörchen!!! Komm her und massier mich... und zwar FLOTT!",
+				"niveau": "Es ist wohl wahr, dass du mit der derzeitigen Stufe nicht weit kommen wirst... Nun, ich bin in der Lage, die Grenze für die Höchststufe deines Dinoz zu durchbrechen, aber sei gewarnt: Diese Entscheidung ist UNUMKEHRBAR! Sobald die Grenze durchbrochen ist, wird dein Dinoz sich bis Stufe 60 weiterentwickeln können!",
 				"yes": "Qu'il en soit ainsi ! _(Sofia se lève d'un seul coup, concentre son énergie... et projette une décharge intense sur votre dinoz !)_\n\t\t_(Au travers de sa souffrance, son organisme réagit. Il développe une nouvelle force, capable de surmonter les dures épreuves qui lui feront face !)_\n\t\tBien, j'ai levé le seau qui empêchait ton dinoz d'évoluer. Cette sécurité avait été apposée il y a longtemps pour éviter une surpopulation de dinoz aussi puissant... _(Votre dinoz a changé, il peut dorénavant dépasser ses limites, comment va t'il évoluer ? )_",
-				"ether": "Oula, il en mourra sûrement... Cependant, s'il est exposé un temps très court à l'éther, il pourrait développer de nouvelles compétences qui le rendrait surement plus fort ! Mais attention, tu n'aurais plus accès à l'ancien arbre de compétences, tu ne pourrais donc pas apprendre les dernières compétences qu'il te manquait... Avant d'exposer ton dinoz à l'ether, sois sûr de bien avoir optimisé son choix de compétences...",
+				"ether": "Oje, das würde ihn sicher umbringen... Wenn man ihn dem Äther allerdings nur kurz aussetzt, könnte er neue Fähigkeiten entwickeln, die ihn zweifellos stärker machen würden! Aber Vorsicht: Er wird keinen Zugang mehr zum ursprünglichen Fähigkeitenbaum haben, also wird es nicht mehr möglich sein, die noch fehlenden Fähigkeiten zu erlernen... Bevor du deinen Dinoz also dem Äther aussetzt, stelle sicher, dass seine ausgewählten Fähigkeiten optimiert sind.",
 				"newskill": "Qu'il en soit ainsi ! _(Sofia fait amener une cuve remplie d'ether, et y plonge votre dinoz d'un coup !)_\n\t\t_(Peu content d'être malmené, votre dinoz en ressort très vite en boudant...)_\n\t\tVoilà, ton dinoz va petit à petit comprendre la portée de cet acte quand il gagnera des niveaux supplémentaires. _(Vous regardez votre dinoz avec interrogation, sa pupille est plus verte qu'avant. Que vous réserve-t'il ?)_",
-				"no": "Bien, si tu changes d'avis, tu peux revenir me voir. Tu peux aussi venir me voir avec n'importe lequel de tes Dinoz ayant atteint le niveau 50.",
-				"no2": "Bien, si tu changes d'avis, tu peux revenir me voir. Tu peux aussi venir me voir avec n'importe lequel de tes Dinoz ayant dépassé le niveau 50."
+				"no": "Nun gut. Falls du deine Meinung änderst, suche mich wieder auf. Du kannst mit allen Dinoz zu mir kommen, die Stufe 50 erreicht haben.",
+				"no2": "Nun gut. Falls du deine Meinung änderst, suche mich wieder auf. Du kannst mit allen Dinoz zu mir kommen, die Stufe 50 überschritten haben."
 			},
 			"playerChoice": {
 				"slurp": "Guten Tag!",
-				"nouvelle": "Tout va bien ?",
-				"bien": "Euh... Bien sûr...",
-				"troph": "Et Caushemesh ?",
-				"palais": "Et le palais ?",
-				"retour": "Euh merci ?",
-				"niveau": "Pourriez-vous rendre mon Dinoz plus fort ?",
-				"yes": "Je suis sûr de moi, mon Dinoz veut évoluer !",
-				"ether": "Je ferais bien tremper mon Dinoz dans de l'éther !",
-				"newskill": "Je suis sûr de moi, mon Dinoz veut apprendre de nouvelles compétences !",
-				"no": "Non merci, mon Dinoz n'a pas besoin de surpasser le niveau 50 !",
-				"no2": "Non merci, mon Dinoz préfère continuer d'apprendre les anciennes compétences !"
+				"nouvelle": "Geht es Ihnen gut?",
+				"bien": "Äh... alles klar...",
+				"troph": "Und was ist mit Caushemesh?",
+				"palais": "Und was ist mit dem Palast?",
+				"retour": "Äh, danke?",
+				"niveau": "Könnten Sie meinen Dinoz stärker machen?",
+				"yes": "Ich bin mir sicher, dass mein Dinoz sich entwickeln möchte!",
+				"ether": "Ich möchte unbedingt meinen Dinoz in Äther tauchen!",
+				"newskill": "Ich bin mir sicher, dass mein Dinoz neue Fähigkeiten lernen möchte!",
+				"no": "Nein danke, mein Dinoz braucht Stufe 50 noch nicht zu überschreiten!",
+				"no2": "Nein danke, mein Dinoz würde gerne weiterhin die ursprünglichen Fähigkeiten erlernen!"
 			}
 		},
 		"mmex": {
@@ -1418,16 +1418,16 @@
 		},
 		"rocky": {
 			"speech": {
-				"begin": "Une étrange pierre se dresse au milieu du chemin, Son emplacement ne semble pas très naturel... Was möchtest du tun?",
-				"fight_win": "Oooops !! La pierre en question était un Rocky, un Dinoz moitié animal moitié minéral assez rare dans le Royaume de Dinoville... En l'ayant vaincu, vous obtenez le Trophée des Rockys, qui vous permettra désormais d'obtenir des Rockys dans la Boutique des Dinoz. Bravo !",
-				"touch": "C'est étrange... la pierre semble chaude au toucher. Il n'y a rien d'autre de spécial... Peut-être vaut-il mieux ne pas insister...",
-				"leave": "Vous avez raison, après-tout ce n'est qu'un simple caillou...."
+				"begin": "Ein seltsamer Felsen steht dir mitten im Weg. Er sieht aus, als würde er nicht hierhergehören... Was möchtest du tun?",
+				"fight_win": "Ups! Der besagte Stein hat sich als Rocky herausgestellt. Ein Dinoz, der halb Tier, halb Mineral ist und ziemlich selten im Königreich von Dinoville... Indem du ihn besiegt hast, hast du dir die Trophäe der Rockys verdient, welche es dir ermöglicht, Rockys im Geschäft für Dinoz zu kaufen. Glückwunsch!",
+				"touch": "Eigenartig... er fühlt sich warm an. Ansonsten ist daran nichts besonders... Es wäre wohl besser, es gut sein zu lassen...",
+				"leave": "Da hast du wohl recht, denn es ist ja einfach nur ein Stein..."
 			},
 			"playerChoice": {
-				"touch": "La toucher",
-				"fight": "Essayer de la faire basculer",
+				"touch": "Ihn anfassen",
+				"fight": "Versuchen, ihn umzukippen",
 				"leave": "Weitergehen",
-				"grave": "Graver quelque chose"
+				"grave": "Etwas eingravieren"
 			}
 		},
 		"vener": {
@@ -1463,44 +1463,44 @@
 		},
 		"alien_0": {
 			"speech": {
-				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
-				"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
+				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
+				"no": "Stimmt, es wohl besser, sich nicht in Angelegenheiten von Wesen einzumischen, die so komisch aussehen!",
 				"yes": ". . . . . Merci . . . . beaucoup. . . Bziiiiiiiiiiiiiiiiiiit ! Ah! Na bitte! Mein Simultanübersetzer ist repariert! Zum Glück hatte ich noch Erdbeerersatzbatterien dabei! Danke, mein lieber Freund! Danke, dass du mir deine überaus freundliche Hilfe anbietest...",
-				"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique. Mon (SiAvUaEs) est cassé comme une noisette, et je ne peux donc pas rentrer chez moi, sur (PuOsEniLa) !",
-				"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)... Voyons voir... dans votre langage, cela devrait ressembler à des étoiles brillantes, avec l'air très appétissant !",
-				"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée, et je serais même prèt à vous récompenser avec un (CiLoJuAeDa) de chez moi !",
-				"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations, qui sont inscrites dans le Guide du Touriste Éclectik. A chaque fois je vous lirai le passage, ensuite à vous de vous débrouissailler ! Ah !",
-				"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant..."
+				"nothing": "Das ist alles nur dir zu verdanken! Wie gesagt, ich habe hier ein kleines technisches Problem. Mein (SiAvUaEs) ist völlig im Eimer und so kann ich nicht nach (PuOsEniLa) zurückkehren!",
+				"dom": "Also gut, ich bräuchte deine nette Hilfe, um Kristalle aus (TcEtCiNo) zu beschaffen... Mal sehen... in deiner Sprache wären sie wohl gleichbedeutend mit leuchtenden Sternen, die irgendwie verlockend aussehen!",
+				"star": "Ja, in der Tat! Falls du es schaffen solltest, mir genau sieben von ihnen zu besorgen, könnte ich meine Reise fortsetzen und würde dich dafür sogar mit einem (CiLoJuAeDa) aus meiner Heimat belohnen!",
+				"how": "Das ist ziemlich einfach. Alles, was du tun musst, ist einer bestimmten Anzahl spektakulärer Weissagungen zu folgen, die im Eklektischen Touristenführer beschrieben werden. Jedes Mal, wenn ich dir einen Auszug vorlese, darfst du diesen entziffern! Ach ja!",
+				"ah": "Tja, nun, also! Ich gehe mal den Touristenführer suchen. Rühr dich nicht vom Fleck, ich bin sofort wieder da..."
 			},
 			"playerChoice": {
-				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
 				"no": "Auf keinen Fall",
 				"yes": "Ähm... ja?",
-				"nothing": "De rien...",
-				"dom": "Effectivement, quel dommage !",
-				"star": "Des étoiles ?",
-				"how": "Et comment trouver ces étoiles ?",
-				"ah": "\"Ah\" ?"
+				"nothing": "Keine Ursache...",
+				"dom": "Was für ein Jammer!",
+				"star": "Sterne?",
+				"how": "Und wo finde ich diese Sterne?",
+				"ah": "„Ach ja“?"
 			}
 		},
 		"alien_1": {
 			"speech": {
-				"begin": "Le Guide a dit : \"Un mégaloup t'attend dans la capitale !\"",
-				"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !"
+				"begin": "Im Führer steht: „Ein Megawolf erwartet dich in der Hauptstadt!“",
+				"et": "Und was? Das war's! Den Rest musst du schon selbst entziffern. Verzeih, dass ich auch so eklektisch bin!"
 			},
 			"playerChoice": {
-				"et": "Et ?"
+				"et": "Und?"
 			}
 		},
 		"alien_8": {
 			"speech": {
-				"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
-				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
-				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
+				"begin": "...Jaaaaaa!!! Danke, danke, danke! Dank dir werde ich endlich nach (PuOsEniLa) zurückkehren können! Mir bleibt nicht mehr viel Zeit bis die Sterne nicht mehr nach Rochechouart ausgerichtet sind...",
+				"ok": "Würdest du mir die Sterne geben? Wie versprochen, würde ich dir dafür einen (CiLoJuAeDa) überlassen, sowie ein Schmuckstück, das ich in deiner Welt gefunden habe!",
+				"give": "Das Seltsame Wesen rennt in eine Art kleines Haus hinein, woraufhin alles von einem grellen Blitz erleuchtet wird und schon ist das Haus verschwunden. Es ist kaum was übrig außer Brandflecken im Boden und einer riesigen Rauchsäule, die hoch in den Himmel emporsteigt... Das Wesen hat dir einen „Goldenen Napodino“ hinterlassen und irgendein eigenartiges Sammlerlstück..."
 			},
 			"playerChoice": {
 				"ok": "...",
-				"give": "Donner les 7 Étoiles"
+				"give": "Die 7 Sterne geben"
 			}
 		},
 		"alien_all": {
@@ -3535,7 +3535,7 @@
 			"pteroz": "Die Trophäe der Pteros ist eine Belohnung für Spieler, die den seltsamen Ptero besiegt haben. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Pteros zur Verfügung.",
 			"hippo": "Die Trophäe der Hippoklampen ist eine Belohnung für Spieler, die den wilden Hippoklampen besiegt haben. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Hippoklampen zur Verfügung.",
 			"rocky": "Die Trophäe der Rockys ist eine Belohnung für Spieler, die den schlafenden Rocky besiegt haben. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Rockys zur Verfügung.",
-			"quetzu": "Die Trophäe der Quetzus wurde dir von Mandragore nach dem Sieg über den Erzdorogon Grizorg verliehen. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Quetzus zur Verfügung.",
+			"quetzu": "Die Trophäe der Quetzus wurde dir von Mandragor nach dem Sieg über den Erzdorogon Grizorg verliehen. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Quetzus zur Verfügung.",
 			"labowi": "Die Trophäe der Smogs wurde dir von Professor Henderson während dem Zwischenfall im korrupten Labor verliehen. Leider konnte während der Mission nur ein Smog entstehen.",
 			"tour": "Dieses gelbe Trikot ist die Belohnung für deine großartige Teilnahme an der „Tour de Dinoland“. Du gehörst nun zu den großen Entdeckern des Dinolandes!",
 			"vener": "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
@@ -3552,7 +3552,7 @@
 			"fdjv1": "Ce trophée remercie les joueurs ayant fait un long périple jusqu'au Festival du Jeu video édition 2010 pour rencontrer les marionnettistes de l'ombre !",
 			"dico1": "Un livre très ancien, peut-être pourra-t-il vous servir à déchiffrer quelque chose ? Malheureusement pour le moment, il est fermé par un verrou très complexe. Existe-t-il quelqu'un qui saurait ouvrir ce livre ? Pour l'instant, il semble que non...",
 			"dicarb": "Un livre très ancien, vous avez réussi à l'ouvrir, il peut désormais servir à déchiffrer le langage Arboris.",
-			"caush": "Une poupée à l'éffigie de Mandragore, elle peut servir de poupée vaudou, punching-ball ou de coussin, c'est au choix. Elle est en piteuse état, l'ancien propriétaire a dû passer ses nerfs dessus assez souvent.",
+			"caush": "Das Abbild von Mandragor in Form einer Puppe, kann diese je nach Wunsch als Voodoo-Puppe, Boxsack oder Kissen verwendet werden. Sie ist in einem erbärmlichen Zustand, was darauf hindeutet, dass der ehemalige Besitzer wohl recht häufig seinen Frust an ihr ausgelassen haben muss.",
 			"fmedal": "Vous avez reconstitué le médaillon permettant d'accéder à une nouvelle partie de l'île céleste de Nimbao. Il vous faut trouver le bon endroit où utiliser ce médaillon afin d'ouvrir le portail correctement.",
 			"war1a": "Ce collier forgé dans un minerai rare est la récompense des plus puissants guerriers ayant participé à la 1ère Guerre des Clans !",
 			"war1b": "On raconte que ce minerai étrange peut rendre fou celui qui le touche, et qu'il se met alors à faire des mouvements bizarre. C'est en tout cas un objet très rare, réservé aux maîtres Dinoz s'étant fait remarquer lors de la 1ère Guerre des Clans !",
