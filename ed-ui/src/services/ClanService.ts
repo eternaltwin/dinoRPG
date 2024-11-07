@@ -3,6 +3,12 @@ import { http } from '../utils/index.js';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 
 export const ClanService = {
+	getClansRanking(page: number): Promise<Array<Clan>> {
+		return http()
+			.get(`/clan/ranking/${page}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
 	getClansList(page: number): Promise<Array<Clan>> {
 		return http()
 			.get(`/clan/all/${page}`)
