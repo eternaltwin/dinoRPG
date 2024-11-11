@@ -168,6 +168,15 @@ export function transpileFight(
 						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy
 					}
 				});
+				// Initialize energy of fighter
+				history.push({
+					action: DinoAction.ENERGY,
+					fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+				});
+				history.push({
+					action: DinoAction.MAXENERGY,
+					fighters: [{ fid: myFighter.id, maxEnergy: myFighter.maxEnergy }]
+				});
 				myFighter = undefined;
 				break;
 			case 'activateEnvironment':
@@ -303,6 +312,27 @@ export function transpileFight(
 					});
 				}
 				break;
+			// TODO: more infrastructure needed to support this otherwise this errors because "fighters" is all fighters, even dead ones
+			// case `newTurn`:
+			// 	// eslint-disable-next-line no-case-declarations
+			// 	let energyStep = {
+			// 		action: DinoAction.ENERGY,
+			// 		fighters: [] as {
+			// 			fid: number;
+			// 			energy: number;
+			// 		}[]
+			// 	};
+			// 	fighters.forEach(f => {
+			// 			if (f.id !== step.fighter.id) {
+			// 				let newEnergy = Math.round(f.energy + f.energyRecovery * step.delta * 0.5);
+			// 				energyStep.fighters.push({ fid: f.id, energy: newEnergy });
+			// 				console.log(`f: ${f.id}, e: ${newEnergy}`);
+			// 			}
+			// 		}
+			// 	);
+			// 	// Update energy of fighters except the one that is playing a new turn.
+			// 	history.push(energyStep as transpiled);
+			// 	break;
 			case 'reduceEnergy':
 				break;
 			case 'removeCostume':

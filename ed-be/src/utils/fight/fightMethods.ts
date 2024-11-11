@@ -2199,7 +2199,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		targets: []
 	};
 
-	// Add skillActivate step
+	// Add announce step
 	fightData.steps.push({
 		action: 'skillAnnounce',
 		fid: fighter.id,
@@ -4772,7 +4772,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Recover energy for all fighters except the current one
 	getFighters(fightData).forEach(f => {
 		if (f.id === attacker.id) return;
-		setEnergy(f, f.energy + f.stats.special.energyRecovery * deltaTime * ENERGY_RECOVERY_BASE_FACTOR);
+		setEnergy(f, Math.round(f.energy + f.stats.special.energyRecovery * deltaTime * ENERGY_RECOVERY_BASE_FACTOR));
 	});
 
 	// Log a new turn

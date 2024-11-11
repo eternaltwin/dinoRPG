@@ -505,7 +505,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				attacker: f.attacker,
 				maxHp: f.maxHp,
 				startingHp: f.startingHp,
-				energy: f.energy,
+				energy: f.maxEnergy, // starting energy is same as max energy
 				maxEnergy: f.maxEnergy,
 				energyRecovery: f.stats.special.energyRecovery ?? 1
 			};
