@@ -108,7 +108,8 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 		case 'skillAnnounce':
 			return t(`fight.step.skillAnnounce`, {
 				dinoz: getFighterName(fightStep.fid, t),
-				skill: t(`skill.name.${skillList[fightStep.skill].name}`)
+				skill: t(`skill.name.${skillList[fightStep.skill].name}`),
+				energy: getSkillEnergy(fightStep.skill)
 			});
 		case 'skillActivate':
 			if (fightStep.targets.length) {
@@ -116,7 +117,6 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					return t(`fight.step.skillActivate-heal-targets`, {
 						dinoz: getFighterName(fightStep.fid, t),
 						skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-						energy: getSkillEnergy(fightStep.skill),
 						targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
 						heals: fightStep.targets.map(target => target.damages ?? 0).join(', '),
 						elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
@@ -125,7 +125,6 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 					return t(`fight.step.skillActivate-hit-targets`, {
 						dinoz: getFighterName(fightStep.fid, t),
 						skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-						energy: getSkillEnergy(fightStep.skill),
 						targets: fightStep.targets.map(target => getFighterName(target.tid, t)).join(', '),
 						damages: fightStep.targets.map(target => target.damages ?? 0).join(', '),
 						elements: skillList[fightStep.skill].element.map(element => `:${ElementNames[element]}:`).join(', ')
