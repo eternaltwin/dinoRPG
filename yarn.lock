@@ -8546,7 +8546,6 @@ __metadata:
     pixi.js: "npm:^7.3.2"
     prettier: "npm:^3.0.3"
     sass: "npm:^1.60.0"
-    tailwindcss: "npm:^3.4.13"
     twinoid-goals: "npm:^1.2.2"
     typescript: "npm:^5.2.2"
     url-join: "npm:^5.0.0"
