@@ -9,7 +9,6 @@
 						<a @click="goToNews()" class="linkHome"></a>
 						<Router-view />
 					</div>
-					<RightMenu />
 				</div>
 			</div>
 			<div class="right">
@@ -27,7 +26,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import LeftPanel from '../components/common/LeftPanel.vue';
-import RightMenu from '../components/common/RightMenu.vue';
 import { playerStore, dinozStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
@@ -36,8 +34,7 @@ import EventBus from '../events/index.js';
 export default defineComponent({
 	name: 'MainPage',
 	components: {
-		LeftPanel,
-		RightMenu
+		LeftPanel
 	},
 	data() {
 		return {
@@ -133,7 +130,9 @@ export default defineComponent({
 }
 
 .center {
-	width: 900px;
+	//width: 900px;
+	max-width: 100vw;
+	overflow: hidden;
 	background-image: url('../assets/background/sky_core_bg.webp');
 	background-repeat: repeat-y;
 	display: flex;

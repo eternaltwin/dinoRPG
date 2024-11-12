@@ -60,12 +60,6 @@ const router = createRouter({
 					component: () => import('../pages/Fight.vue')
 				},
 				{
-					path: '/generator',
-					name: 'DinozGenerator',
-					component: () => import('../pages/DinozGenerator.vue'),
-					props: route => ({ chk: route.query.chk, chk2: route.query.chk2 })
-				},
-				{
 					path: '/ranking',
 					name: 'Ranking',
 					component: () => import('../pages/Ranking.vue')

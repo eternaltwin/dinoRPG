@@ -1,13 +1,12 @@
 <template>
-	<ol>
-		<a
-			v-for="(lang, i) in langs"
-			:key="`Lang${i}`"
-			@click="switchLocale(lang.short)"
-			:class="[$i18n.locale === lang.short ? 'selected' : '', lang.short]"
-			class="flag"
-		></a>
-	</ol>
+	<img
+		v-for="(lang, i) in langs"
+		:key="`Lang${i}`"
+		:src="getImgURL('design', `lang_${lang.short}`)"
+		@click="switchLocale(lang.short)"
+		:class="[$i18n.locale === lang.short ? 'selected' : '']"
+		class="flag"
+	/>
 </template>
 
 <script lang="ts">
@@ -35,36 +34,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-ol {
-	display: flex;
-	padding: 0;
-	padding-right: 10px;
-	padding-bottom: 5px;
-}
 .flag {
-	width: 12px;
-	height: 7px;
-	margin: 0.1em auto;
-	padding: 2px;
 	cursor: pointer;
+	width: 15px;
+	box-shadow: none;
+	border: 1px solid rgb(108, 113, 136);
 
 	&:not(.selected):hover {
-		outline: #c87560 solid 3px;
+		box-shadow: rgb(189, 61, 0) 0px 0px 8px;
 	}
 }
-.fr {
-	background-image: url('/src/assets/design/lang_fr.webp');
-}
-.en {
-	background-image: url('/src/assets/design/lang_en.webp');
-}
-.de {
-	background-image: url('/src/assets/design/lang_de.webp');
-}
-.es {
-	background-image: url('/src/assets/design/lang_es.webp');
-}
 .selected {
-	outline: #9a4029 solid 3px;
+	box-shadow: rgb(189, 61, 0) 0px 0px 8px;
 }
 </style>

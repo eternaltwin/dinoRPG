@@ -25,7 +25,9 @@ export default defineComponent({
 		loadAnimation() {
 			const canvas = document.getElementById('pixiCanvas') as HTMLCanvasElement;
 			this.loadedFight = new Fight(this.fight);
-			canvas.appendChild(this.loadedFight.getDisplay());
+			const display = this.loadedFight.getDisplay();
+			display.style.maxWidth = '100%';
+			canvas.appendChild(display);
 		}
 	},
 	mounted() {

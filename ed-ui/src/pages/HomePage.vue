@@ -331,7 +331,7 @@ export default defineComponent({
 		background-image: url('../assets/background/sky_headerbg_02.webp');
 		background-repeat: no-repeat;
 		background-position: center;
-		width: 1008px;
+		//width: 1008px;
 		height: 510px;
 		margin: 0;
 		padding: 0;

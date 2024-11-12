@@ -19,11 +19,13 @@ export const playerStore = defineStore('playerStore', {
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
+		getPlayerName: (state: StorePlayer) => state.playerName,
 		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
 		getPlayerOptions: (state: StorePlayer) => state.playerOptions,
 		getClanId: (state: StorePlayer) => state.clanId,
 		isPriest: (state: StorePlayer) => state.priest,
-		isShopkeeper: (state: StorePlayer) => state.shopkeeper
+		isShopkeeper: (state: StorePlayer) => state.shopkeeper,
+		isAdmin: (state: StorePlayer) => state.admin
 	},
 	actions: {
 		setMoney(money: number): void {

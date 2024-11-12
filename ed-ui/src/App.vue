@@ -1,10 +1,14 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.default')" />
+	<TopBar />
 	<div id="dynamic">
 		<Report />
 		<Spinner />
 		<ErrorMessage />
 		<Messagerie />
+		<!--		<Transition name="slide">-->
+		<TwinoRightMenu />
+		<!--		</Transition>-->
 	</div>
 	<RouterView />
 	<FooterComp />
@@ -21,10 +25,14 @@ import ErrorMessage from './components/utils/ErrorMessage.vue';
 import Toast from './components/utils/Toast.vue';
 import Report from './components/modal/ReportModal.vue';
 import Messagerie from './components/modal/MessagerieModal.vue';
+import TopBar from './components/toolBar/TopBar.vue';
+import TwinoRightMenu from './components/toolBar/TwinoRightMenu.vue';
 
 export default defineComponent({
 	name: 'App',
 	components: {
+		TwinoRightMenu,
+		TopBar,
 		Messagerie,
 		TitleHeader,
 		FooterComp,
@@ -53,5 +61,21 @@ export default defineComponent({
 	position: absolute;
 	flex-direction: column;
 	gap: 74px;
+}
+
+/* Styles pour l'animation slide */
+.slide-enter-active,
+.slide-leave-active {
+	transition: all 0.5s ease;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+	transform: translateX(100%);
+}
+
+.slide-enter-to,
+.slide-leave-from {
+	transform: translateX(0);
 }
 </style>
