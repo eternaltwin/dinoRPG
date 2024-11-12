@@ -1,34 +1,20 @@
 <template>
-	<div id="nav" align="center">
-		<table>
-			<tbody>
-				<tr>
-					<td class="left" valign="top" />
-					<td valign="top" align="center">
-						<div class="centerHeader" valign="top" />
-						<div class="menusky">
-							<AuthenticationPage :autoLog="autoLog"></AuthenticationPage>
-						</div>
-						<div class="homepage-container">
-							<div class="box">
-								<p>
-									{{ $t('alpha.homepage.part1') }}<br /><br />
-									{{ $t('alpha.homepage.part2') }}
-									<a href="https://eternal-twin.net">Eternal-Twin</a> /
-									<a href="https://discord.gg/ERc3svy">Discord</a>.
-								</p>
-							</div>
-							<Suspense>
-								<FullFightAnimation :fight="fight" @animationEnded="autoLog = true" />
-								<template #fallback> <Loading /> </template>
-							</Suspense>
-						</div>
-					</td>
-					<td class="right" valign="top" />
-				</tr>
-			</tbody>
-		</table>
-		<div class="footer" />
+	<div class="dinorpg">
+		<div class="menusky"></div>
+		<div class="homepage-container">
+			<AuthenticationPage class="sign" :autoLog="autoLog"></AuthenticationPage>
+			<div class="box">
+				<p>
+					{{ $t('alpha.homepage.part1') }}<br /><br />
+					{{ $t('alpha.homepage.part2') }}
+					<a href="https://eternal-twin.net">Eternal-Twin</a> / <a href="https://discord.gg/ERc3svy">Discord</a>.
+				</p>
+			</div>
+			<Suspense>
+				<FullFightAnimation :fight="fight" @animationEnded="autoLog = true" />
+				<template #fallback> <Loading /> </template>
+			</Suspense>
+		</div>
 	</div>
 </template>
 
@@ -217,14 +203,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#nav {
+.dinorpg {
+	background-image: url('../assets/background/full_sky_bg.webp');
+	background-position-x: calc(50%);
+	background-repeat: no-repeat;
+	.menusky {
+		height: 295px;
+	}
 	.homepage-container {
 		display: flex;
 		flex-flow: column;
 		justify-content: center;
 		align-items: center;
-		max-width: 1280px;
-		margin: 1em 3vw;
 		.box {
 			position: relative;
 			max-width: calc(640px - 2em);
@@ -292,131 +282,67 @@ export default defineComponent({
 				text-decoration-color: #ff4e64;
 			}
 		}
-	}
-	.menusky {
-		display: flex;
-		justify-content: center;
-		position: relative;
-		margin-top: -8em;
-	}
-	td {
-		text-align: center;
-		padding: 0;
-	}
-	table {
-		border-collapse: collapse;
-		border-spacing: 0;
-		width: 100%;
-	}
-	.right {
-		background-position: left top;
-		background-image: url('../assets/background/bg_ciel.webp');
-	}
-	.left {
-		background-position: right top;
-		background-image: url('../assets/background/bg_ciel.webp');
-	}
-	.right,
-	.left {
-		background-repeat: repeat-x;
-		width: 50%;
-		@media (max-width: 1024px) {
-			width: 1%;
+		.sign {
+			position: inherit;
+			font-family:
+				trebuchet ms,
+				arial;
+			font-size: 25px;
+			color: #016390;
+			font-weight: bold;
+			text-decoration: none;
+			cursor: pointer;
+			margin-left: 10px;
+			text-shadow:
+				0 1px 0 #a5d9ff,
+				0 -1px 0 #a5d9ff,
+				1px 0 0 #a5d9ff,
+				-1px 0 0 #a5d9ff,
+				1px 1px 0 #a5d9ff,
+				-1px -1px 0 #a5d9ff,
+				-1px 1px 0 #a5d9ff,
+				1px -1px 0 #a5d9ff,
+				0 2px 2px #0076cc;
+			padding: 10px;
+			overflow: hidden;
+			animation: disappear 2s infinite alternate;
 		}
-		@media (max-width: 1010px) {
-			width: 0%;
+
+		.sign:hover {
+			color: #52b6ff;
+			background-color: transparent;
+			text-shadow:
+				0 1px 0 white,
+				0 -1px 0 white,
+				1px 0 0 white,
+				-1px 0 0 white,
+				1px 1px 0 white,
+				-1px -1px 0 white,
+				-1px 1px 0 white,
+				1px -1px 0 white,
+				0 2px 2px #0076cc;
+			animation: none;
 		}
-	}
-	.centerHeader {
-		background-image: url('../assets/background/sky_headerbg_02.webp');
-		background-repeat: no-repeat;
-		background-position: center;
-		//width: 1008px;
-		height: 510px;
-		margin: 0;
-		padding: 0;
-		@media (max-width: 1024px) {
-			width: 100%;
+		.sign:hover::before {
+			animation: appear 2s infinite alternate;
 		}
-		@media (max-width: 768px) {
-			background-image: url('../assets/background/sky_headerbg.webp');
-			background-size: cover;
-		}
-	}
-	.sign {
-		position: inherit;
-		font-family:
-			trebuchet ms,
-			arial;
-		font-size: 25px;
-		color: #016390;
-		font-weight: bold;
-		text-decoration: none;
-		cursor: pointer;
-		margin-left: 10px;
-		text-shadow:
-			0 1px 0 #a5d9ff,
-			0 -1px 0 #a5d9ff,
-			1px 0 0 #a5d9ff,
-			-1px 0 0 #a5d9ff,
-			1px 1px 0 #a5d9ff,
-			-1px -1px 0 #a5d9ff,
-			-1px 1px 0 #a5d9ff,
-			1px -1px 0 #a5d9ff,
-			0 2px 2px #0076cc;
-		padding: 10px;
-		overflow: hidden;
-		animation: disappear 2s infinite alternate;
-	}
-	@keyframes disappear {
-		from {
-			opacity: 1;
-		}
-		to {
-			opacity: 0;
-		}
-	}
-	.sign:hover {
-		color: #52b6ff;
-		background-color: transparent;
-		text-shadow:
-			0 1px 0 white,
-			0 -1px 0 white,
-			1px 0 0 white,
-			-1px 0 0 white,
-			1px 1px 0 white,
-			-1px -1px 0 white,
-			-1px 1px 0 white,
-			1px -1px 0 white,
-			0 2px 2px #0076cc;
-		animation: none;
-	}
-	.sign:hover::before {
-		animation: appear 2s infinite alternate;
-	}
-	@keyframes appear {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-	.bloc {
-		width: 53em;
-		height: 19em;
-		margin-top: 21.5em;
-		background-position: left top;
-		position: absolute;
 	}
 }
-.footer {
-	background-image: url('../assets/background/sky_footer_blue.webp');
-	height: 4em;
-	width: 100%;
-	background-repeat: repeat-x;
-	background-position: center bottom;
-	bottom: 0;
-	position: fixed;
+
+@keyframes disappear {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+@keyframes appear {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 </style>

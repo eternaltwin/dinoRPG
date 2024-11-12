@@ -1,31 +1,18 @@
 <template>
 	<div class="dinorpg">
-		<div id="layout">
-			<div class="left"><div></div></div>
-			<div class="center">
-				<div id="centerHeader" v-if="loaded">
-					<LeftPanel />
-					<div id="centerContent">
-						<a @click="goToNews()" class="linkHome"></a>
-						<Router-view />
-					</div>
-				</div>
-			</div>
-			<div class="right">
-				<div></div>
+		<div id="centerHeader" v-if="loaded">
+			<div id="centerContent">
+				<a @click="goToNews()" class="linkHome"></a>
+				<Router-view />
 			</div>
 		</div>
-		<div id="prefoot">
-			<div class="left"><div></div></div>
-			<div class="footCenter center"><div></div></div>
-			<div class="footRight right"><div></div></div>
-		</div>
+		<div id="prefoot" />
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import LeftPanel from '../components/common/LeftPanel.vue';
+// import LeftPanel from '../components/common/LeftPanel.vue';
 import { playerStore, dinozStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
@@ -33,9 +20,9 @@ import EventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'MainPage',
-	components: {
+	/*components: {
 		LeftPanel
-	},
+	},*/
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -93,74 +80,33 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-#layout {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	flex-grow: 3;
+.dinorpg {
 	background-image: url('../assets/background/bg_ciel3.webp');
-	background-color: white;
-	background-repeat: no-repeat;
+	background-repeat: repeat-x;
+}
+#centerHeader {
+	min-height: 100vh;
+	background:
+		url('../assets/background/full_bg.webp') no-repeat,
+		url('../assets/background/full_core_bg.webp') repeat-y;
+	background-position-x: calc(50% + 247px);
+	background-position-y: top;
 }
 
 #prefoot {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-around;
-	flex-grow: 3;
-	//background-image: url('../assets/background/bg_ciel3.webp');
+	background-image: url('../assets/background/full_footer.webp');
 	background-color: white;
 	background-repeat: no-repeat;
+	background-position-x: calc(50% + 248px);
+	min-height: 128px;
 }
-
-.left {
-	flex-grow: 1;
-}
-.right {
-	background-image: url('../assets/background/core_right_bg.webp');
-	background-position: left 77px;
-	background-repeat: repeat-y;
-	flex-grow: 1;
-	div {
-		height: 88px;
-		background-image: url('../assets/background/core_right_header3.webp');
-		background-repeat: no-repeat;
-		background-position: left top;
-	}
-}
-
-.center {
-	//width: 900px;
-	max-width: 100vw;
-	overflow: hidden;
-	background-image: url('../assets/background/sky_core_bg.webp');
-	background-repeat: repeat-y;
+#centerContent {
+	//display: flex;
+	//flex-wrap: nowrap;
+	//margin-left: 30px;
+	width: 100%;
+	max-width: 540px;
 	display: flex;
-	align-items: center;
 	flex-direction: column;
-	a.linkHome {
-		width: 100%;
-		height: 91px;
-		z-index: 10;
-		background-color: transparent;
-		cursor: pointer;
-	}
-
-	#centerHeader {
-		padding: 1px;
-		background-image: url('../assets/background/core_center_header3.webp');
-		background-repeat: no-repeat;
-		min-height: 100vh;
-		width: 100%;
-		display: flex;
-	}
-}
-.footCenter {
-	background-image: url('../assets/background/core_center_footer.webp');
-}
-.footRight {
-	div {
-		background-image: url('../assets/background/core_right_footer.webp');
-	}
 }
 </style>

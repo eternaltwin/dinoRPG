@@ -1,5 +1,5 @@
 <template>
-	<p v-if="!isCodePresent" class="sign" @click="getRedirectUri()">
+	<p v-if="!isCodePresent" @click="getRedirectUri()">
 		{{ $t('alpha.login') }}
 	</p>
 </template>
