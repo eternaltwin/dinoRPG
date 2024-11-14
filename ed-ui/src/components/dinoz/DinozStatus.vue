@@ -1,7 +1,7 @@
 <template>
-	<div class="fx">
+	<div class="fx" @click="displayStatus = !displayStatus">
 		<p>{{ $t('layout.fx') }}</p>
-		<div class="status">
+		<div class="status" :class="displayStatus ? 'displayMe' : ''">
 			<template v-for="(status, index) in dinozStatus" :key="index">
 				<Tippy theme="normal" v-if="statusList.displayed[status]">
 					<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
@@ -23,7 +23,8 @@ export default defineComponent({
 	name: 'DinozStatus',
 	data() {
 		return {
-			statusList: statusList
+			statusList: statusList,
+			displayStatus: false as boolean
 		};
 	},
 	props: {
@@ -78,6 +79,19 @@ export default defineComponent({
 		flex-wrap: wrap;
 		height: 100%;
 		align-content: baseline;
+	}
+}
+@media (max-width: 510px) {
+	.fx {
+		width: 100%;
+		cursor: pointer;
+		.status {
+			display: none;
+			width: 100%;
+		}
+		.displayMe {
+			display: flex;
+		}
 	}
 }
 </style>
