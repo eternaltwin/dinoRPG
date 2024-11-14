@@ -7,7 +7,7 @@
 			><DinozDisplay v-if="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
 		></Suspense>
 	</div>
-	<!--	<div class="dinozPanels" v-if="nameChoosen === true">
+	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-if="isReady"
 			:updateActions="updateActions"
@@ -18,7 +18,7 @@
 		/>
 		<TabPanel v-if="isReady" :dinozData="dinozData" :key="dinozData" />
 		<div class="footer" />
-	</div>-->
+	</div>
 </template>
 
 <script lang="ts">
@@ -181,7 +181,7 @@ export default defineComponent({
 	display: grid;
 	padding-top: 15px;
 	grid-template-columns: [first] 180px [line1] 225px [line2] 100px [end];
-	grid-template-rows: [first] 40px [row1] 40px [row2] 100px [row3] 40px [row4] 50px [end];
+	grid-template-rows: [first] 40px [row1] 40px [row2] 100px [row3] 40px [row4] 30px [end];
 	column-gap: 2px;
 	row-gap: 2px;
 	grid-template-areas:
