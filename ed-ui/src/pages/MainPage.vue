@@ -1,8 +1,8 @@
 <template>
 	<div class="dinorpg">
 		<div id="centerHeader" v-if="loaded">
+			<a @click="goToNews()" class="linkHome"></a>
 			<div id="centerContent">
-				<a @click="goToNews()" class="linkHome"></a>
 				<Router-view />
 			</div>
 		</div>
@@ -91,6 +91,14 @@ export default defineComponent({
 		url('../assets/background/full_core_bg.webp') repeat-y;
 	background-position-x: calc(50% + 247px);
 	background-position-y: top;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	.linkHome {
+		cursor: pointer;
+		height: 11rem;
+		width: 540px;
+	}
 }
 
 #prefoot {
