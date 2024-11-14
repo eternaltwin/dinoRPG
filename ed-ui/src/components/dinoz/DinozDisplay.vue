@@ -1,10 +1,17 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
-	<a class="left" @click="goToDinozPage(-1)" />
-	<div class="title">
-		{{ dinozData.name }}
+	<div class="navigation">
+		<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: getDinozId(-1) } }" class="see-button">
+			<img :src="getImgURL('icons', 'left')" />
+		</router-link>
+		<span class="title">
+			{{ dinozData.name }}
+		</span>
+		<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: getDinozId(1) } }" class="see-button">
+			<img :src="getImgURL('icons', 'right')" />
+		</router-link>
 	</div>
-	<a class="right" @click="goToDinozPage(1)" />
+
 	<Tippy theme="normal" tag="div" id="dinozVisual">
 		<Suspense>
 			<DinozWithoutFlash
@@ -80,71 +87,58 @@ export default defineComponent({
 			}
 			return 'top: -15px;';
 		},
-		goToDinozPage(shift: number): void {
+		getDinozId(shift: number): void | number {
 			if (!this.dinozStore.getDinozList) return;
 
 			const currentIndex = this.dinozStore.getDinozList.findIndex(dinoz => dinoz.id === this.dinozData?.id);
 			if (currentIndex === -1) return;
 
 			const newIndex = currentIndex + shift;
-			if (newIndex < 0 || newIndex >= this.dinozStore.getDinozList.length) return;
+			if (newIndex < 0 || newIndex >= this.dinozStore.getDinozList.length) return 1;
 
-			this.$router.push({ name: 'DinozPage', params: { id: this.dinozStore.getDinozList[newIndex].id } });
+			return this.dinozStore.getDinozList[newIndex].id;
 		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
-#dinozVisual {
-	width: 200px;
-	height: 165px;
-	position: absolute;
+.navigation {
+	grid-area: name;
+	align-self: center;
+	justify-self: center;
 	display: flex;
-	align-items: center;
 	justify-content: center;
-	margin-top: 40px;
-}
-.left {
-	position: absolute;
-	margin-left: 205px;
-	margin-top: 69px;
-	background-image: url('../../assets/icons/left.webp');
-	background-color: transparent;
-	width: 15px;
-	height: 21px;
-	border-radius: 0px;
-	cursor: pointer;
-}
-.title {
-	position: absolute;
-	margin-top: 62px;
-	background: url('../../assets/background/name_box.webp') no-repeat;
-	width: 222px;
+	align-items: center;
 	height: 33px;
-	margin-left: 240px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 15pt;
-	font-weight: bold;
-	text-transform: uppercase;
-	letter-spacing: 1pt;
-	color: #fce3bc;
-	text-shadow:
-		-1px -1px 0px #68361b,
-		1px 1px 0px #ddad8c;
+	gap: 5px;
+	.title {
+		background: url('../../assets/background/name_box.webp') no-repeat;
+		width: 222px;
+		height: 33px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 15pt;
+		font-weight: bold;
+		text-transform: uppercase;
+		letter-spacing: 1pt;
+		color: #fce3bc;
+		text-shadow:
+			-1px -1px 0px #68361b,
+			1px 1px 0px #ddad8c;
+	}
 }
-
-.right {
-	position: absolute;
-	margin-left: 490px;
-	margin-top: 69px;
-	background-image: url('../../assets/icons/right.webp');
-	background-color: transparent;
-	width: 15px;
-	height: 21px;
-	border-radius: 0px;
-	cursor: pointer;
+#dinozVisual {
+	grid-area: dinoz;
+	align-self: center;
+	justify-self: center;
+	width: fit-content;
+	height: fit-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	max-width: 150px;
+	//margin-top: 40px;
 }
 </style>

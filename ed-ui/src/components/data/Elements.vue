@@ -1,5 +1,18 @@
 <template>
-	<ul class="elements">
+	<div class="element">
+		<div
+			v-for="el in elementList"
+			:key="el"
+			v-tippy="{
+				content: formatContent($t(`element.${el}`)),
+				theme: 'small'
+			}"
+		>
+			<img :src="getImgURL('elements', `elem_${el}`)" :alt="el" />
+			<p>{{ getElement(el) }}</p>
+		</div>
+	</div>
+	<!--	<ul class="elements">
 		<li
 			:class="getMaxElement() === fire ? 'max' : ''"
 			v-tippy="{
@@ -45,7 +58,7 @@
 		>
 			<img :src="getImgURL('elements', 'elem_air')" alt="air" /> {{ air }}
 		</li>
-	</ul>
+	</ul>-->
 </template>
 
 <script lang="ts">
@@ -65,46 +78,59 @@ export default defineComponent({
 			{
 				return Math.max(this.fire, this.wood, this.water, this.lightning, this.air);
 			}
+		},
+		getElement(el: string): number {
+			switch (el) {
+				case 'fire':
+					return this.fire;
+				case 'wood':
+					return this.wood;
+				case 'water':
+					return this.water;
+				case 'lightning':
+					return this.lightning;
+				case 'air':
+					return this.air;
+				default:
+					return 0;
+			}
+		}
+	},
+	computed: {
+		elementList() {
+			return ['fire', 'wood', 'water', 'lightning', 'air'];
 		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
-span {
-	font-size: 10pt !important;
-
-	&.max {
-		color: yellow;
-	}
-}
-.elements {
-	list-style: none;
-	height: 23px;
-
-	li {
-		float: left;
-		position: relative;
-		width: 42px;
-		height: 23px;
-		margin-right: 2px;
-		font-size: 10pt !important;
+.element {
+	display: flex;
+	gap: 1px;
+	flex-wrap: wrap;
+	width: 100%;
+	padding-bottom: 2px;
+	justify-content: space-evenly;
+	div {
+		display: flex;
 		font-weight: bold;
-		color: white;
-		text-align: left;
-		letter-spacing: -0.2pt;
-		background-image: url('../../assets/icons/element_bg.webp');
-		background-position: 7px 5px;
-		background-repeat: no-repeat;
+		gap: 5px;
+		width: fit-content;
+		align-items: flex-end;
+		background: url('../../assets/icons/element_bg.webp') no-repeat;
+		background-position-y: 6px;
+		background-position-x: 7px;
 		cursor: help;
-
-		&.max {
-			color: yellow;
-		}
-
-		img {
-			margin-right: -3px;
-			vertical-align: -30%;
+		p {
+			color: white;
+			font-size: 13.3px;
+			text-align: left;
+			padding-right: 7px;
+			letter-spacing: -0.2pt;
+			&.max {
+				color: yellow;
+			}
 		}
 	}
 }

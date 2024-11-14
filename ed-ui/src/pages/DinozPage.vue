@@ -7,7 +7,7 @@
 			><DinozDisplay v-if="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
 		></Suspense>
 	</div>
-	<div class="dinozPanels" v-if="nameChoosen === true">
+	<!--	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-if="isReady"
 			:updateActions="updateActions"
@@ -18,7 +18,7 @@
 		/>
 		<TabPanel v-if="isReady" :dinozData="dinozData" :key="dinozData" />
 		<div class="footer" />
-	</div>
+	</div>-->
 </template>
 
 <script lang="ts">
@@ -177,6 +177,37 @@ export default defineComponent({
 .dinoz {
 	background-image: url('../assets/background/dinoz_bg_cut.webp');
 	background-repeat: no-repeat;
-	min-height: 265px;
+	//min-height: 265px;
+	display: grid;
+	padding-top: 15px;
+	grid-template-columns: [first] 180px [line1] 225px [line2] 100px [end];
+	grid-template-rows: [first] 40px [row1] 40px [row2] 100px [row3] 40px [row4] 50px [end];
+	column-gap: 2px;
+	row-gap: 2px;
+	grid-template-areas:
+		'. . . '
+		'dinoz name name '
+		'dinoz status equip '
+		'vie elements equip ';
+
+	//grid-template-columns: [first] 2% [line1] 15% [line2] auto [line3] 35% [line4] 3% [end];
+	//grid-template-rows: [first] 35px [row1] 170px [row2] 100px [last-line];
+}
+@media (max-width: 510px) {
+	.dinoz {
+		grid-template-columns: [first] 1% [line1] 26% [line2] 8% [line3] 13% [line3] 2%[line4] 13% [line5] 8% [line6] 26% [line7] 1% [end];
+		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
+		column-gap: 0;
+		row-gap: 0;
+		width: 100%;
+		grid-template-areas:
+			'. . name name name name name . .'
+			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
+			'. vie vie vie vie vie equip equip .'
+			'. vie vie vie vie vie . . .'
+			'. elements elements elements elements elements elements elements .'
+			'. . . . . . . . .'
+			'. status status status status status status status .';
+	}
 }
 </style>

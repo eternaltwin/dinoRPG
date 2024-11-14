@@ -1,27 +1,25 @@
 <template>
 	<div class="equip">
-		<ul>
-			<li v-for="item in items" :key="item">
-				<Tippy
-					@click="unequip(item)"
-					theme="normal"
-					tag="img"
-					v-if="item"
-					:src="getImgURL('item', `item_${itemNameList[item]}`)"
-					:alt="itemNameList[item]"
-				>
-					<template #content>
-						<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
-						<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
-					</template>
-				</Tippy>
-				<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
-					<template #content>
-						<p v-html="formatContent($t(`item.empty`))" />
-					</template>
-				</Tippy>
-			</li>
-		</ul>
+		<template v-for="item in items" :key="item">
+			<Tippy
+				@click="unequip(item)"
+				theme="normal"
+				tag="img"
+				v-if="item"
+				:src="getImgURL('item', `item_${itemNameList[item]}`)"
+				:alt="itemNameList[item]"
+			>
+				<template #content>
+					<h1 v-html="formatContent($t(`item.name.${itemNameList[item]}`))" />
+					<p v-html="formatContent($t(`item.description.${itemNameList[item]}`))" />
+				</template>
+			</Tippy>
+			<Tippy theme="small" tag="img" v-else :src="getImgURL('item', `item_empty`)" alt="empty">
+				<template #content>
+					<p v-html="formatContent($t(`item.empty`))" />
+				</template>
+			</Tippy>
+		</template>
 	</div>
 </template>
 
@@ -87,7 +85,8 @@ export default defineComponent({
 			});
 			return;
 		}
-		this.items = new Array(this.dinozData.maxItems);
+		// this.items = new Array(this.dinozData.maxItems);
+		this.items = new Array(6);
 		this.dinozData.items?.forEach((item, index) => (this.items![index] = item));
 
 		EventBus.on('equipItem', e => {
@@ -108,31 +107,30 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .equip {
-	position: absolute;
-	margin-left: 420px;
-	margin-top: 101px;
-	font-size: 0pt;
-	width: 100px;
-	height: 138px;
+	grid-area: equip;
+	align-self: center;
+	justify-self: center;
+	width: 83px;
+	height: 115px;
 	background: url('../../assets/background/equipment_box.webp') no-repeat;
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 3px;
+	column-gap: 3px;
+	padding-top: 23px;
+	padding-left: 17px;
+	align-items: self-start;
+	align-content: flex-start;
 
-	ul {
-		list-style: none;
-		margin-left: 17px;
-		text-align: left;
-		margin-top: 23px;
-	}
-
-	li {
-		display: inline-block;
-		padding-right: 3px;
-		padding-bottom: 3px;
-		img {
-			position: relative;
-			&:hover {
-				outline: 1px solid white;
-				cursor: pointer;
-			}
+	img {
+		object-fit: contain;
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100%;
+		&:hover {
+			outline: 1px solid white;
+			cursor: pointer;
 		}
 	}
 }

@@ -7,38 +7,34 @@
 				theme: 'small'
 			}"
 		>
-			<div class="over">{{ dinozData.level }}</div>
+			{{ dinozData.level }}
 		</div>
 		<div class="bars">
 			<div class="life">
-				<div class="bar">
-					<img
-						v-if="dinozData.life <= Math.round(dinozData.maxLife * 0.1)"
-						:src="getImgURL('bar', 'bar_warning')"
-						alt="life"
-						style="width: 98px; height: 11px"
-					/>
-					<img
-						v-else
-						:src="getImgURL('bar', 'bar_life')"
-						alt="life"
-						:style="getBarSize(dinozData.life, dinozData.maxLife)"
-					/>
-				</div>
+				<img
+					v-if="dinozData.life <= Math.round(dinozData.maxLife * 0.1)"
+					:src="getImgURL('bar', 'bar_warning')"
+					alt="life"
+					style="width: 98px; height: 11px"
+				/>
+				<img
+					v-else
+					:src="getImgURL('bar', 'bar_life')"
+					alt="life"
+					:style="getBarSize(dinozData.life, dinozData.maxLife)"
+				/>
+				<div>{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
 			</div>
-			<div class="lifetext">{{ dinozData.life }} / {{ dinozData.maxLife }}</div>
 			<div class="xp">
-				<div class="bar">
-					<img
-						:src="getImgURL('bar', 'bar_xp')"
-						alt="xp"
-						:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
-					/>
+				<img
+					:src="getImgURL('bar', 'bar_xp')"
+					alt="xp"
+					:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
+				/>
+				<div>
+					{{ dinozData.experience > dinozData.maxExperience ? dinozData.maxExperience : dinozData.experience }} /
+					{{ dinozData.maxExperience }}
 				</div>
-			</div>
-			<div class="xptext">
-				{{ dinozData.experience > dinozData.maxExperience ? dinozData.maxExperience : dinozData.experience }} /
-				{{ dinozData.maxExperience }}
 			</div>
 		</div>
 	</div>
@@ -68,73 +64,62 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozBars {
+	grid-area: vie;
+	align-self: center;
+	justify-self: center;
 	background: url('../../assets/background/stats_box.webp') no-repeat;
+	display: flex;
 	width: 180px;
 	height: 40px;
-	position: absolute;
-	margin-top: 198px;
-	margin-left: 10px;
-	.bars {
-		position: absolute;
-		margin-left: 69px;
-		margin-top: 7px;
-		width: 100px;
-		font-size: 8pt;
-		line-height: 11pt;
-		color: white;
-
-		.lifetext {
-			font-size: 11px;
-			margin-top: -1px;
-			position: absolute;
-			font-weight: bold;
-			width: 98px;
-			text-align: center;
-			color: #fef4d4;
-			text-shadow: 1px 1px 0px #8f5203;
-		}
-
-		.xptext {
-			position: absolute;
-			font-size: 11px;
-			margin-top: 14px;
-			font-weight: bold;
-			width: 98px;
-			text-align: center;
-			color: #fbd7ff;
-			text-shadow: 1px 1px 0px #812b56;
-		}
-	}
-
-	.bar {
-		cursor: help;
-		position: absolute;
-		width: 98px;
-		height: 11px;
-		font-size: 0pt;
-		line-height: 0pt;
-	}
-
-	.xp {
-		.bar {
-			margin-top: 15px;
-		}
-	}
 	.level {
-		position: absolute;
-		margin-top: 7px;
 		font-weight: bold;
 		text-align: center;
 		font-size: 17pt;
 		color: #faf1c5;
 		text-shadow: -1px -2px 0px #581a10;
+		min-width: 40px;
+		cursor: help;
+		align-items: center;
+		display: flex;
+		justify-content: center;
+	}
 
-		.over {
-			cursor: help;
-			position: absolute;
-			width: 40px;
-			letter-spacing: -2pt;
-		}
+	.bars {
+		display: flex;
+		flex-direction: column;
+		width: 140px;
+		font-size: 8pt;
+		line-height: 11pt;
+		color: white;
+		justify-content: center;
+		align-items: center;
+		padding-top: 4px;
+	}
+
+	.life,
+	.xp {
+		position: relative;
+		width: 98px;
+		margin-left: 16px;
+	}
+
+	.life div,
+	.xp div {
+		position: absolute;
+		top: -2px;
+		left: 50%;
+		transform: translateX(-50%);
+		font-size: 12px;
+		font-weight: bold;
+		width: 100%;
+		text-align: center;
+		color: #fef4d4;
+		text-shadow: 1px 1px 0px #8f5203;
+	}
+
+	.xp div {
+		color: #fbd7ff;
+		text-shadow: 1px 1px 0px #812b56;
 	}
 }
 </style>

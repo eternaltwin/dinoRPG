@@ -1,9 +1,7 @@
 <template>
 	<div class="fx">
-		<div class="fx_top">
-			<p>{{ $t('layout.fx') }}</p>
-		</div>
-		<div class="fx_content">
+		<p>{{ $t('layout.fx') }}</p>
+		<div class="status">
 			<template v-for="(status, index) in dinozStatus" :key="index">
 				<Tippy theme="normal" v-if="statusList.displayed[status]">
 					<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
@@ -36,40 +34,35 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .fx {
-	position: absolute;
-	margin-left: 192px;
-	margin-top: 101px;
-	width: 223px;
+	grid-area: status;
+	//align-self: center;
+	justify-self: center;
+	//width: 223px;
 	// height: 77px !important;
-	// display: flex;
+	display: flex;
+	flex-direction: column;
+	max-width: 223px;
 	// flex-wrap: wrap;
-	background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
+	//background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
+	background:
+		url('../../assets/background/banniere_left.webp') no-repeat,
+		url('../../assets/background/banniere_middle.webp') repeat-x,
+		url('../../assets/background/banniere_right.webp') no-repeat;
+	background-position-x: left, center, right;
 	// background-position: bottom;
 	background-size: auto;
 	box-shadow: inset 0 0 1px 2px #d3a76a;
-	.fx_top {
-		width: 223px;
-		height: 28px;
-		background: url('../../assets/background/box_header.webp') no-repeat;
-		p {
-			color: white;
-			padding-left: 2px;
-			font-size: 7.5pt;
-			position: absolute;
-			top: -1.5px;
-			text-shadow: 0.5px 0 1px grey;
-			text-transform: uppercase;
-			font-family: 'Trebuchet MS', Arial, sans-serif;
-			font-weight: bold;
-		}
-	}
-	.fx_content {
-		height: 77px;
-		margin-top: -13px;
+	border-style: hidden solid solid solid;
+	border-width: 0 1px 1px 1px;
+	border-color: #9f5841;
+	p {
+		color: white;
 		padding-left: 2px;
-		border-style: hidden solid solid solid;
-		border-width: 0 1px 1px 1px;
-		border-color: #9f5841;
+		font-size: 7.5pt;
+		text-shadow: 0.5px 0 1px grey;
+		text-transform: uppercase;
+		font-family: 'Trebuchet MS', Arial, sans-serif;
+		font-weight: bold;
 	}
 	img {
 		border: 1px solid transparent;
@@ -78,6 +71,13 @@ export default defineComponent({
 		&:hover {
 			border-color: white;
 		}
+	}
+	.status {
+		background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
+		display: flex;
+		flex-wrap: wrap;
+		height: 100%;
+		align-content: baseline;
 	}
 }
 </style>

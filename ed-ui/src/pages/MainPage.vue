@@ -97,7 +97,8 @@ export default defineComponent({
 	.linkHome {
 		cursor: pointer;
 		height: 11rem;
-		width: 540px;
+		width: 100%;
+		max-width: 540px;
 	}
 }
 
