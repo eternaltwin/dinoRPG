@@ -9,56 +9,9 @@
 			}"
 		>
 			<img :src="getImgURL('elements', `elem_${el}`)" :alt="el" />
-			<p>{{ getElement(el) }}</p>
+			<p :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</p>
 		</div>
 	</div>
-	<!--	<ul class="elements">
-		<li
-			:class="getMaxElement() === fire ? 'max' : ''"
-			v-tippy="{
-				content: formatContent($t('element.fire')),
-				theme: 'small'
-			}"
-		>
-			<img :src="getImgURL('elements', 'elem_fire')" alt="fire" /> {{ fire }}
-		</li>
-		<li
-			:class="getMaxElement() === wood ? 'max' : ''"
-			v-tippy="{
-				content: formatContent($t('element.wood')),
-				theme: 'small'
-			}"
-		>
-			<img :src="getImgURL('elements', 'elem_wood')" alt="wood" /> {{ wood }}
-		</li>
-		<li
-			:class="getMaxElement() === water ? 'max' : ''"
-			v-tippy="{
-				content: formatContent($t('element.water')),
-				theme: 'small'
-			}"
-		>
-			<img :src="getImgURL('elements', 'elem_water')" alt="water" /> {{ water }}
-		</li>
-		<li
-			:class="getMaxElement() === lightning ? 'max' : ''"
-			v-tippy="{
-				content: formatContent($t('element.lightning')),
-				theme: 'small'
-			}"
-		>
-			<img :src="getImgURL('elements', 'elem_lightning')" alt="lightning" /> {{ lightning }}
-		</li>
-		<li
-			:class="getMaxElement() === air ? 'max' : ''"
-			v-tippy="{
-				content: formatContent($t('element.air')),
-				theme: 'small'
-			}"
-		>
-			<img :src="getImgURL('elements', 'elem_air')" alt="air" /> {{ air }}
-		</li>
-	</ul>-->
 </template>
 
 <script lang="ts">
@@ -74,9 +27,21 @@ export default defineComponent({
 		air: { type: Number, required: true }
 	},
 	methods: {
-		getMaxElement(): number {
-			{
-				return Math.max(this.fire, this.wood, this.water, this.lightning, this.air);
+		getMaxElement(el: string): boolean {
+			const maxValue = Math.max(this.fire, this.wood, this.water, this.lightning, this.air);
+			switch (el) {
+				case 'fire':
+					return this.fire === maxValue;
+				case 'wood':
+					return this.wood === maxValue;
+				case 'water':
+					return this.water === maxValue;
+				case 'lightning':
+					return this.lightning === maxValue;
+				case 'air':
+					return this.air === maxValue;
+				default:
+					return false;
 			}
 		},
 		getElement(el: string): number {
