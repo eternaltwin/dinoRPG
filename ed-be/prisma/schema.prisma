@@ -354,6 +354,7 @@ model Player {
   messie                      Boolean                      @default(false)
   matelasseur                 Boolean                      @default(false)
   labruteDone                 Boolean                      @default(false)
+  dailyGridRewards            Int                          @default(0)
   createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
   updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
   lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
@@ -546,6 +547,7 @@ enum LogType {
   MissionFinished
   MissionCanceled
   Gather
+  GridFinished
   CreateDinoz
   ChangeDinozOrder
   PlayerCreated

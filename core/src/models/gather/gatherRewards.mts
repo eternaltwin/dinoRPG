@@ -5,3 +5,5 @@ export interface GatherRewards {
 	item: ItemFicheDTO[];
 	ingredients: IngredientFiche[];
 }
+
+export const GRID_FINISHED_GOLD_REWARD = 1000;

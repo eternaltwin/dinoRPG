@@ -664,6 +664,7 @@ export async function getDinozGatherData(dinozId: number, playerId: number) {
 		select: {
 			id: true,
 			money: true,
+			dailyGridRewards: true,
 			items: { select: { id: true, itemId: true, quantity: true } },
 			rewards: { select: { rewardId: true } },
 			ingredients: true,

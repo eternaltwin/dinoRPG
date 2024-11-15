@@ -1092,7 +1092,7 @@ const cancelEnvironment = (fightData: DetailedFight) => {
 	});
 
 	fightData.environment = undefined;
-}
+};
 
 const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche): boolean => {
 	// Get current fighter
@@ -4484,10 +4484,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		if (fighter.escaped) continue;
 
 		// Only add death step if fighter is dead and hasn't died yet
-		if (
-			fighter.hp <= 0 &&
-			fightData.deads.filter(fid => fid === fighter.id).length === 0
-		) {
+		if (fighter.hp <= 0 && fightData.deads.filter(fid => fid === fighter.id).length === 0) {
 			// Check if dinoz can survive
 			if (fighter.canSurvive) {
 				fighter.canSurvive = false;
@@ -4496,7 +4493,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				fightData.steps.push({
 					action: 'skillAnnounce',
 					fid: fighter.id,
-					skill: Skill.SURVIE,
+					skill: Skill.SURVIE
 				});
 				fightData.steps.push({
 					action: 'skillActivate',
@@ -4545,7 +4542,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 				continue;
 			}
-			
+
 			// Phoenix Feather
 			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
 				// Add skillActivate step
@@ -4577,7 +4574,6 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				fighter: stepFighter(fighter)
 			});
 			fightData.deads.push(fighter.id);
-
 
 			// Reset stolen gold
 			fighter.goldStolen = undefined;

@@ -197,17 +197,13 @@ export async function buyItem(req: Request) {
 	// Update entry if it already exists
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
-		await increaseItemQuantity(
-			authed.id,
-			itemReference.itemId,
-			quantityBought
-		);
+		await increaseItemQuantity(authed.id, itemReference.itemId, quantityBought);
 	}
 	// Else create it
 	else {
 		await insertItem(authed.id, { itemId: itemReference.itemId, quantity: quantityBought });
 	}
-	
+
 	await createLog(
 		LogType.ItemBought,
 		authed.id,

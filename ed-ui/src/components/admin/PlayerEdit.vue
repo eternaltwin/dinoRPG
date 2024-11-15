@@ -61,6 +61,11 @@
 				<input type="number" min="0" max="6" v-model="playerFields.quetzuBought" />
 			</div>
 			<div>
+				<label class="title" for="playerDailyGridRewards">Daily Grid Rewards :</label>
+				<input type="text" v-model="player.dailyGridRewards" />
+				<input type="number" min="0" max="10" v-model="playerFields.dailyGridRewards" />
+			</div>
+			<div>
 				<label class="title" for="role">Role :</label>
 				<input id="role" type="text" v-model="player.role" disabled />
 				<div class="uSkills">
@@ -390,6 +395,7 @@ export default defineComponent({
 				this.playerFields.customText ||
 				this.playerFields.hasImported ||
 				this.playerFields.quetzuBought ||
+				this.playerFields.dailyGridRewards !== undefined ||
 				this.playerFields.leader !== undefined ||
 				this.playerFields.engineer !== undefined ||
 				this.playerFields.cooker !== undefined ||
@@ -406,6 +412,7 @@ export default defineComponent({
 					this.playerFields.customText,
 					this.playerFields.hasImported,
 					this.playerFields.quetzuBought,
+					this.playerFields.dailyGridRewards,
 					this.playerFields.leader,
 					this.playerFields.engineer,
 					this.playerFields.cooker,

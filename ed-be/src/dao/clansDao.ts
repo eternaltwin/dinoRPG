@@ -23,7 +23,7 @@ export async function getAllClansRequest(page: number) {
 					id: true,
 					name: true
 				}
-			},
+			}
 		},
 		orderBy: [{ creationDate: 'desc' }],
 		take: 20,
@@ -90,12 +90,12 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 				}
 			},
 			creationDate: true,
-			leader:  {
+			leader: {
 				select: {
 					id: true,
 					name: true
 				}
-			},
+			}
 		},
 		orderBy: [{ creationDate: 'desc' }],
 		take: 20,

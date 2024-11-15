@@ -4190,6 +4190,7 @@
 		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** a annulé la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** a effectué une récolte avec son Dinoz **{dinoz} ({dinozId})**.",
+		"GridFinished": "**{player} ({playerId})** a fini une grille de récolte et gagné  {gold} :gold:.",
 		"CreateDinoz": "**{player} ({playerId})** a créé le Dinoz **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** a changé l'ordre de son Dinoz **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**Un nouveau joueur est arrivé : {name}**.",

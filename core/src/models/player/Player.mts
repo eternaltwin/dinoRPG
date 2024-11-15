@@ -7,6 +7,7 @@ export interface Player {
 	eternalTwinId: string;
 	money: number;
 	quetzuBought: number;
+	dailyGridRewards: number;
 	leader: boolean;
 	engineer: boolean;
 	cooker: boolean;
