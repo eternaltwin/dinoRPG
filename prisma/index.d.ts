@@ -330,6 +330,7 @@ export const LogType: {
   MissionFinished: 'MissionFinished',
   MissionCanceled: 'MissionCanceled',
   Gather: 'Gather',
+  GridFinished: 'GridFinished',
   CreateDinoz: 'CreateDinoz',
   ChangeDinozOrder: 'ChangeDinozOrder',
   PlayerCreated: 'PlayerCreated',
@@ -30112,6 +30113,7 @@ export namespace Prisma {
     id: number | null
     money: number | null
     quetzuBought: number | null
+    dailyGridRewards: number | null
     clanMemberId: number | null
     leaderOfId: number | null
   }
@@ -30120,6 +30122,7 @@ export namespace Prisma {
     id: number | null
     money: number | null
     quetzuBought: number | null
+    dailyGridRewards: number | null
     clanMemberId: number | null
     leaderOfId: number | null
   }
@@ -30142,6 +30145,7 @@ export namespace Prisma {
     messie: boolean | null
     matelasseur: boolean | null
     labruteDone: boolean | null
+    dailyGridRewards: number | null
     createdDate: Date | null
     updatedDate: Date | null
     lastLogin: Date | null
@@ -30169,6 +30173,7 @@ export namespace Prisma {
     messie: boolean | null
     matelasseur: boolean | null
     labruteDone: boolean | null
+    dailyGridRewards: number | null
     createdDate: Date | null
     updatedDate: Date | null
     lastLogin: Date | null
@@ -30196,6 +30201,7 @@ export namespace Prisma {
     messie: number
     matelasseur: number
     labruteDone: number
+    dailyGridRewards: number
     createdDate: number
     updatedDate: number
     lastLogin: number
@@ -30211,6 +30217,7 @@ export namespace Prisma {
     id?: true
     money?: true
     quetzuBought?: true
+    dailyGridRewards?: true
     clanMemberId?: true
     leaderOfId?: true
   }
@@ -30219,6 +30226,7 @@ export namespace Prisma {
     id?: true
     money?: true
     quetzuBought?: true
+    dailyGridRewards?: true
     clanMemberId?: true
     leaderOfId?: true
   }
@@ -30241,6 +30249,7 @@ export namespace Prisma {
     messie?: true
     matelasseur?: true
     labruteDone?: true
+    dailyGridRewards?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -30268,6 +30277,7 @@ export namespace Prisma {
     messie?: true
     matelasseur?: true
     labruteDone?: true
+    dailyGridRewards?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -30295,6 +30305,7 @@ export namespace Prisma {
     messie?: true
     matelasseur?: true
     labruteDone?: true
+    dailyGridRewards?: true
     createdDate?: true
     updatedDate?: true
     lastLogin?: true
@@ -30409,6 +30420,7 @@ export namespace Prisma {
     messie: boolean
     matelasseur: boolean
     labruteDone: boolean
+    dailyGridRewards: number
     createdDate: Date
     updatedDate: Date
     lastLogin: Date
@@ -30455,6 +30467,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -30512,6 +30525,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -30539,6 +30553,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: boolean
     createdDate?: boolean
     updatedDate?: boolean
     lastLogin?: boolean
@@ -30548,7 +30563,7 @@ export namespace Prisma {
     leaderOfId?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "hasImported" | "customText" | "name" | "eternalTwinId" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "messie" | "matelasseur" | "labruteDone" | "createdDate" | "updatedDate" | "lastLogin" | "role" | "lang" | "clanMemberId" | "leaderOfId", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "hasImported" | "customText" | "name" | "eternalTwinId" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "messie" | "matelasseur" | "labruteDone" | "dailyGridRewards" | "createdDate" | "updatedDate" | "lastLogin" | "role" | "lang" | "clanMemberId" | "leaderOfId", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Player$dinozArgs<ExtArgs>
     importedPlayer?: boolean | Player$importedPlayerArgs<ExtArgs>
@@ -30634,6 +30649,7 @@ export namespace Prisma {
       messie: boolean
       matelasseur: boolean
       labruteDone: boolean
+      dailyGridRewards: number
       createdDate: Date
       updatedDate: Date
       lastLogin: Date
@@ -31080,6 +31096,7 @@ export namespace Prisma {
     readonly messie: FieldRef<"Player", 'Boolean'>
     readonly matelasseur: FieldRef<"Player", 'Boolean'>
     readonly labruteDone: FieldRef<"Player", 'Boolean'>
+    readonly dailyGridRewards: FieldRef<"Player", 'Int'>
     readonly createdDate: FieldRef<"Player", 'DateTime'>
     readonly updatedDate: FieldRef<"Player", 'DateTime'>
     readonly lastLogin: FieldRef<"Player", 'DateTime'>
@@ -61912,6 +61929,7 @@ export namespace Prisma {
     messie: 'messie',
     matelasseur: 'matelasseur',
     labruteDone: 'labruteDone',
+    dailyGridRewards: 'dailyGridRewards',
     createdDate: 'createdDate',
     updatedDate: 'updatedDate',
     lastLogin: 'lastLogin',
@@ -63939,6 +63957,7 @@ export namespace Prisma {
     messie?: BoolFilter<"Player"> | boolean
     matelasseur?: BoolFilter<"Player"> | boolean
     labruteDone?: BoolFilter<"Player"> | boolean
+    dailyGridRewards?: IntFilter<"Player"> | number
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
@@ -63995,6 +64014,7 @@ export namespace Prisma {
     messie?: SortOrder
     matelasseur?: SortOrder
     labruteDone?: SortOrder
+    dailyGridRewards?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -64055,6 +64075,7 @@ export namespace Prisma {
     messie?: BoolFilter<"Player"> | boolean
     matelasseur?: BoolFilter<"Player"> | boolean
     labruteDone?: BoolFilter<"Player"> | boolean
+    dailyGridRewards?: IntFilter<"Player"> | number
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
@@ -64110,6 +64131,7 @@ export namespace Prisma {
     messie?: SortOrder
     matelasseur?: SortOrder
     labruteDone?: SortOrder
+    dailyGridRewards?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -64145,6 +64167,7 @@ export namespace Prisma {
     messie?: BoolWithAggregatesFilter<"Player"> | boolean
     matelasseur?: BoolWithAggregatesFilter<"Player"> | boolean
     labruteDone?: BoolWithAggregatesFilter<"Player"> | boolean
+    dailyGridRewards?: IntWithAggregatesFilter<"Player"> | number
     createdDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
@@ -67263,6 +67286,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -67319,6 +67343,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -67374,6 +67399,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67430,6 +67456,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67486,6 +67513,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -67512,6 +67540,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67539,6 +67568,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -70669,6 +70699,7 @@ export namespace Prisma {
     messie?: SortOrder
     matelasseur?: SortOrder
     labruteDone?: SortOrder
+    dailyGridRewards?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -70682,6 +70713,7 @@ export namespace Prisma {
     id?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    dailyGridRewards?: SortOrder
     clanMemberId?: SortOrder
     leaderOfId?: SortOrder
   }
@@ -70704,6 +70736,7 @@ export namespace Prisma {
     messie?: SortOrder
     matelasseur?: SortOrder
     labruteDone?: SortOrder
+    dailyGridRewards?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -70731,6 +70764,7 @@ export namespace Prisma {
     messie?: SortOrder
     matelasseur?: SortOrder
     labruteDone?: SortOrder
+    dailyGridRewards?: SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
     lastLogin?: SortOrder
@@ -70744,6 +70778,7 @@ export namespace Prisma {
     id?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    dailyGridRewards?: SortOrder
     clanMemberId?: SortOrder
     leaderOfId?: SortOrder
   }
@@ -76282,6 +76317,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -76337,6 +76373,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -76884,6 +76921,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -76939,6 +76977,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -78950,6 +78989,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -79005,6 +79045,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -79197,6 +79238,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79252,6 +79294,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79689,6 +79732,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -79744,6 +79788,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -79814,6 +79859,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79869,6 +79915,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -79923,6 +79970,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -79978,6 +80026,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -80048,6 +80097,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -80103,6 +80153,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -80157,6 +80208,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -80212,6 +80264,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -80282,6 +80335,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -80337,6 +80391,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82083,6 +82138,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82138,6 +82194,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82208,6 +82265,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82263,6 +82321,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82317,6 +82376,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82372,6 +82432,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82442,6 +82503,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82497,6 +82559,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82551,6 +82614,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82606,6 +82670,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82676,6 +82741,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82731,6 +82797,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82785,6 +82852,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82840,6 +82908,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -82910,6 +82979,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -82965,6 +83035,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83019,6 +83090,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83074,6 +83146,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83144,6 +83217,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83199,6 +83273,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83253,6 +83328,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83308,6 +83384,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83378,6 +83455,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83433,6 +83511,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83487,6 +83566,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83542,6 +83622,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83612,6 +83693,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83667,6 +83749,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83721,6 +83804,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83776,6 +83860,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -83846,6 +83931,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -83901,6 +83987,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84039,6 +84126,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -84094,6 +84182,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -84196,6 +84285,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84251,6 +84341,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84305,6 +84396,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -84360,6 +84452,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -84564,6 +84657,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84619,6 +84713,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -84812,6 +84907,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -84867,6 +84963,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -85027,6 +85124,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85082,6 +85180,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85418,6 +85517,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -85473,6 +85573,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -85543,6 +85644,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85598,6 +85700,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85652,6 +85755,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -85707,6 +85811,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -85867,6 +85972,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -85922,6 +86028,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -86182,6 +86289,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -86237,6 +86345,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -86462,6 +86571,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -86517,6 +86627,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -86659,6 +86770,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -86714,6 +86826,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -86824,6 +86937,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -86879,6 +86993,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87109,6 +87224,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -87164,6 +87280,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -87274,6 +87391,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87329,6 +87447,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87417,6 +87536,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -87472,6 +87592,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -87582,6 +87703,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87637,6 +87759,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87725,6 +87848,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -87780,6 +87904,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -87890,6 +88015,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -87945,6 +88071,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88073,6 +88200,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88128,6 +88256,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88187,6 +88316,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88242,6 +88372,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88402,6 +88533,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88457,6 +88589,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88522,6 +88655,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88577,6 +88711,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -88727,6 +88862,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88782,6 +88918,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88887,6 +89024,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -88942,6 +89080,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -89032,6 +89171,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89087,6 +89227,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89184,6 +89325,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89239,6 +89381,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89319,6 +89462,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -89374,6 +89518,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -89471,6 +89616,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89526,6 +89672,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89613,6 +89760,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -89668,6 +89816,7 @@ export namespace Prisma {
     messie?: boolean
     matelasseur?: boolean
     labruteDone?: boolean
+    dailyGridRewards?: number
     createdDate?: Date | string
     updatedDate?: Date | string
     lastLogin?: Date | string
@@ -89792,6 +89941,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89847,6 +89997,7 @@ export namespace Prisma {
     messie?: BoolFieldUpdateOperationsInput | boolean
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string

@@ -296,6 +296,8 @@ export async function rewardFight(
 				increment: fightResult.winner ? xp : 0
 			}
 		});
+		await createLog(LogType.XPEarned, playerId, d.id, fightResult.winner ? xp : 0);
+		await createLog(LogType.HPLost, playerId, d.id, attacker.hpLost);
 
 		// Log death if dinoz is dead
 		if (attacker.hpLost >= d.life) {

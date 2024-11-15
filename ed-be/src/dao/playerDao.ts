@@ -865,6 +865,22 @@ export async function removeMoney(playerId: number, money: number) {
 	return playerData;
 }
 
+export async function removeDailyGridRewards(playerId: number, rewards: number) {
+	const playerData = await prisma.player.update({
+		where: {
+			id: playerId
+		},
+		data: {
+			dailyGridRewards: {
+				decrement: rewards
+			}
+		},
+		select: { dailyGridRewards: true }
+	});
+
+	return playerData;
+}
+
 export async function setPlayer(playerId: number, player: Prisma.PlayerUpdateInput) {
 	const playerData = await prisma.player.update({
 		where: {

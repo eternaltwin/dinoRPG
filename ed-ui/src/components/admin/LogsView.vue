@@ -48,6 +48,7 @@ const LogTypes = [
 	'MissionFinished',
 	'MissionCanceled',
 	'Gather',
+	'GridFinished',
 	'CreateDinoz',
 	'ChangeDinozOrder',
 	'PlayerCreated',
@@ -153,6 +154,11 @@ const getLogPropsForTranslation = (
 		case 'Gather':
 			values = {
 				quantity: log.values[0]
+			};
+			break;
+		case 'GridFinished':
+			values = {
+				gold: log.values[0]
 			};
 			break;
 		case 'CreateDinoz':

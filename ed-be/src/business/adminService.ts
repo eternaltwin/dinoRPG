@@ -421,6 +421,7 @@ export async function editPlayer(req: Request) {
 		hasImported: req.body.hasImported,
 		customText: req.body.customText,
 		quetzuBought: req.body.quetzuBought,
+		dailyGridRewards: req.body.dailyGridRewards,
 		leader: req.body.leader,
 		engineer: req.body.engineer,
 		cooker: req.body.cooker,
@@ -463,6 +464,16 @@ export async function editPlayer(req: Request) {
 			+req.params.id,
 			'quetzuBought',
 			player.quetzuBought
+		);
+	}
+	if (typeof player.dailyGridRewards !== 'undefined') {
+		await createLog(
+			LogType.AdminUpdatePlayer,
+			req.auth.playerId,
+			undefined,
+			+req.params.id,
+			'dailyGridRewards',
+			player.dailyGridRewards
 		);
 	}
 	if (typeof player.leader !== 'undefined') {
@@ -541,6 +552,7 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		eternalTwinId: player.eternalTwinId,
 		money: player.money,
 		quetzuBought: player.quetzuBought,
+		dailyGridRewards: player.dailyGridRewards,
 		leader: player.leader,
 		engineer: player.engineer,
 		cooker: player.cooker,

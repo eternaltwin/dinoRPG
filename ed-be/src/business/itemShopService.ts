@@ -195,10 +195,7 @@ export async function buyItem(req: Request) {
 	// Update entry if it already exists
 	// Note: itemToBuy can be re-used here regardless of the type of shop and item
 	if (playerItemData) {
-		await increaseItemQuantity(
-			authed.id,
-			itemReference.itemId,
-			itemReference.quantity + quantityBought <= itemReference.maxQuantity
+		await increaseItemQuantity(authed.id, itemReference.itemId, itemReference.quantity + quantityBought <= itemReference.maxQuantity
 				? quantityBought
 				: itemReference.maxQuantity - itemReference.quantity
 		);

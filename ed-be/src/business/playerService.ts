@@ -32,6 +32,7 @@ import sanitizeHtml from 'sanitize-html';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { OfferStatus } from '@drpg/prisma';
+import gameConfig from '../config/game.config.js';
 import { getAvailableActions } from './dinozService.js';
 
 /**
@@ -57,8 +58,8 @@ export async function getCommonData(req: Request) {
 		const completion = await calculatePlayerPower(playerCommonData.id);
 		await updateCompletion(req.auth.playerId, completion);
 
-		// Update last login
-		await setPlayer(req.auth.playerId, { lastLogin: new Date(), labruteDone: false });
+		// Update last login: refresh Labrute flag and daily grid reward limit
+		await setPlayer(req.auth.playerId, { lastLogin: new Date(), labruteDone: false, dailyGridRewards: gameConfig.general.dailyGridRewards});
 
 		// Tik bracelet regen
 		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>

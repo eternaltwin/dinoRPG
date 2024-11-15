@@ -63,7 +63,14 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
-import { addMoney, auth, getPlayerCompletion, ownsDinoz, removeMoney } from '../dao/playerDao.js';
+import {
+	addMoney,
+	auth,
+	getPlayerCompletion,
+	ownsDinoz,
+	removeDailyGridRewards,
+	removeMoney
+} from '../dao/playerDao.js';
 import { deleteDinozInShopRequest, getDinozShopDetailsRequest } from '../dao/playerDinozShopDao.js';
 import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGatherDao.js';
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
@@ -88,6 +95,7 @@ import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { updateQuest } from '../dao/questsDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
 
 /**
  * @summary Get available action from dinoz
@@ -1007,6 +1015,17 @@ export async function gatherWithDinoz(req: Request) {
 		await updateDinoz(dinozId, {
 			gather: false
 		});
+
+		// Check if the grid was finished and award the player if it has not exhausted its daily grid rewards.
+		if (myGrid.grid.every(box => box === -1)) {
+			if (player.dailyGridRewards > 0) {
+				await addMoney(player.id, GRID_FINISHED_GOLD_REWARD);
+				await removeDailyGridRewards(player.id, 1);
+				await createLog(LogType.GridFinished, playerId, undefined, GRID_FINISHED_GOLD_REWARD);
+			} else {
+				await createLog(LogType.GridFinished, playerId, undefined, 0);
+			}
+		}
 	}
 
 	switch (gatherPlace.type) {

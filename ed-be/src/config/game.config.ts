@@ -13,7 +13,8 @@ const gameConfig: GameConfig = {
 			buyableQuetzu: 6
 		},
 		general: {
-			initialMoney: 1000000
+			initialMoney: 1000000,
+			dailyGridRewards: 10
 		}
 	},
 	production: {
@@ -28,7 +29,8 @@ const gameConfig: GameConfig = {
 			buyableQuetzu: 6
 		},
 		general: {
-			initialMoney: 200000
+			initialMoney: 200000,
+			dailyGridRewards: 5
 		}
 	}
 };
@@ -47,6 +49,7 @@ interface GameConfig {
 		};
 		general: {
 			initialMoney: number;
+			dailyGridRewards: number;
 		};
 	};
 }
