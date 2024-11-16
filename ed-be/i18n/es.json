@@ -96,7 +96,7 @@
     "fmedal": "Medallón de 3 ojos"
   },
   "announce": {
-    "dinoz": "Félicitation à {{player}} pour son dinoz {{dinoz}} qui est le premier $t(race.{{race}}) à atteindre le niveau {{level}} !",
+    "dinoz": "Félicitation à {{player}} pour son dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
     "epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
   }
 }

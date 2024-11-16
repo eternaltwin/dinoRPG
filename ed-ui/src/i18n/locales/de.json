@@ -12,7 +12,7 @@
 		"forum": "Forum",
 		"api": "API",
 		"logout": "Ausloggen",
-		"guide": "Spieleführer",
+		"guide": "Spielhandbuch",
 		"faq": "FAQ"
 	},
 	"toast": {
@@ -24,7 +24,7 @@
 		"nocookie": "Das Cookie ist abgelaufen oder ist ungültig. Bitte versuche den Import von deinem Konto aus.",
 		"wronglogins": "Les identifiants twino ne sont pas les bons.",
 		"noPDA": "Du benötigst Angereichertes Diamantitgestein, um auf diese Seite zugreifen zu können.",
-		"noPMI": "Du benötigst das Illustrierte Missionsbüchlein, um auf diese Seite zugreifen zu können.",
+		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
 		"dinozListMissing": "Dinoz-Liste nicht gefunden.",
 		"noFight": "Heute ist der Sumpf von Nebel umhüllt... Hier wirst du kein Monster zum Kämpfen finden können.",
 		"dinozDataMissing": "Dinoz-Daten nicht gefunden.",
@@ -527,7 +527,7 @@
 			"tictac_ticket": "Mit den Tack-Tickets kannst du in Papy Joes Garten graben und versuchen, den verlorenen Schatz seines Urgroßvaters zu finden.",
 			"anniversary_ticket": "TODO",
 			"easter_egg": "Ein Ei von Madame Urma kann einen der zahllosen Gegenstände enthalten, die es im Dinoland gibt. Ob es ein seltener oder ein gewöhnlicher wird, bestimmt allein das Schicksal. Wird das Glück dir hold sein?",
-			"fire_cracker": "TODO",
+			"fire_cracker": "Dieser Knaller ermöglicht es dir, in Dinoville Feuerwerk zu zünden, um Schätze zu gewinnen!",
 			"special_potion_irma": "Der berühmte Trank von Madame Irma gewährt dem Dinoz, der es trinkt, **sofort eine neue Aktion**, ohne auf den nächsten Tag warten zu müssen. Du kannst nicht mehr als 3 von ihnen bei dir haben.",
 			"daily_ticket": "Ermöglicht es, an der Universität eine tägliche Geschenkbox zu erhalten.",
 			"box_common": "Diese Box kann übliche Gegenstände enthalten.",
@@ -540,8 +540,8 @@
 		"empty": "Dieser Ausrüstungsplatz ist leer. Wähle einen Gegenstand aus dem Inventar, um ihn auszurüsten.&&//Ausgerüstete Gegenstände können von deinem Dinoz im Kampf eingesetzt werden.//"
 	},
 	"news": {
-		"actualites": "Dino-Land Nachrichten",
-		"overload": "Ältere Nachrichten anzeigen"
+		"actualites": "Neuigkeiten aus dem Dinoland",
+		"overload": "Ältere Neuigkeiten anzeigen"
 	},
 	"place": {
 		"name": {
@@ -645,7 +645,7 @@
 			"mvpalc": "Palast von Antraxes",
 			"bkport": "zum Predigerhafen zurückkehren",
 			"mcuzco": "Cuzcous-Ruinen",
-			"mcelit": "Elite-Camp",
+			"mcelit": "Elit-Camp",
 			"tourup": "Zur Spitze des Turmes von Karinbao aufsteigen",
 			"dkbao": "Portal",
 			"dkchut": "Abgrund der verlorenen Seelen",
@@ -741,10 +741,10 @@
 			"mfoutp": "Das Grenzgebiet zwischen der Fruchtox und Gemüsox wird von beiden Seiten gut bewacht. Dieser von den Fruchtox kontrollierte Vorposten ist ein strategischer Ort, da er sowohl ermöglicht, Truppenbewegungen der Gemüsox auszuspionieren, als auch gleichzeitig den königlichen Palast zu schützen.",
 			"mfpalc": "Der König der Fruchtox wird als Grotox bezeichnet. Er wird oft als stärkster seines Volkes dargestellt und herrscht mit eiserner Hand über den vom ihm kontrollierten Teil der Monsterinsel.",
 			"mforst": "Der heilige Wald von Kaze-Kami ist als der Ort bekannt, an dem die uralten Grotox begraben sind. Man findet hier aber auch andere uralte Ruinen, die sicherlich voller Schätze sind, da hier so gut wie keine Ausgrabungen durchgeführt wurden...",
-			"mvoutp": "Der Gemüsox-Vorposten liegt versteckt in einem üppigen Wald. Er ist unter Kontrolle von Spezialeinheiten der Gemüsox, die im Elite-Camp ausgebildet wurden, wo es Spezialisten für Militärstrategie gibt.",
+			"mvoutp": "Der Gemüsox-Vorposten liegt versteckt in einem üppigen Wald. Er ist unter Kontrolle von Spezialeinheiten der Gemüsox, die im Elit-Camp ausgebildet wurden, wo es Spezialisten für Militärstrategie gibt.",
 			"mvpalc": "Der Palast von Antraxes, wo der König der Gemüsox lebt, ist eine wahre Festung, die offensichtlich sehr gut bewacht ist. Zahlreiche Wachen sind auf Patrouille und ein Eindringling würde es schwer haben, diesen Ort zu infiltrieren. Der Palast ist faszinierend: Es handelt sich um einen riesigen Baum mit eingeschnitzten Verzierungen, die nach Cuzcous-Symbolen aussehen.",
 			"mcuzco": "An diesem von der Monsterinsel abgeschnittenen Ort befinden sich die Ruinen der antiken Hauptstadt des Monsterimperiums. Vom mächtigen Cuzcous-Reich sind heute nur noch von Pflanzen überwucherte Steine übrig, doch die Gebäude zeugen nach wie vor von einer großartigen Zivilisation. Unter diesen alten Steinen schlummern bestimmt noch zahlreiche Schätze...",
-			"mcelit": "Im Herzen des Gemüsox-Gebietes liegt das geheime Trainingslager ihrer Spezialkräfte: das Elite-Camp! In diesem abgeschirmten Camp trainieren die besten Vegetox-Soldaten, um eines Tages den Krieg gegen die Fruchtox zu gewinnen. Auch wenn dieser Krieg schon eine gefühlte Ewigkeit dauert, ist die Moral der Soldaten ungebrochen.",
+			"mcelit": "Au cœur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact.",
 			"dkbao": "Auf der anderen Seite des Portals befindet sich ein unbekannter und doch seltsam vertrauter Ort. In der Ferne sind Schreie zu hören. Dein Dinoz muss auf der Hut sein, wenn er überleben will.",
 			"dkchut": "Durch den dichten Nebel hindurch ist ein weit entferntes Rauschen zu hören: Wasser, das tosend bergab fließt. Es ist wohl besser, nicht zu weit hinauszuschwimmen, denn die Strömung ist sehr heftig...",
 			"dktow": "Ein großer Schwarzer Turm ragt an dieser Stelle in den Himmel empor. Auf den ersten Blick sieht er unbewohnt aus, jedoch sind am Eingang zahlreiche Gebeine von Dinoz aufgehäuft. Die große, dunkle Tür, durch die man in den Turm gelangt, scheint einen Spalt weit offen zu sein. Im Moment ist es sicher besser, sich nicht weiter in den Turm hineinzuwagen, denn das wäre reiner Selbstmord!",
@@ -1537,22 +1537,22 @@
 		},
 		"skully_star": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
-				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
-				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!!! Was sehe ich denn da?!! Na, wenn das kein wunderschönes Exemplar eines „Capsicum annuum“ ist! Was für eine Farbenpracht, welch ein Duft, es ist wun-der-schön!",
+				"ok": "Ich danke dir vielmals! Oh oh oh! Im Gegenzug für diesen wundervollen Anblick, schenke ich dir etwas, das ich fand, als ich nach einem Knochen gesucht habe, den ich verloren hatte! Hier, bitte!",
+				"star": "Glückwunsch! Dank Skully, hast du den fünften Zauberstern erhalten! Jetzt fehlen nur noch zwei!"
 			},
 			"playerChoice": {
 				"ok": "...",
-				"star": "Ah ?"
+				"star": "Oh?"
 			}
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Désolé mais les développeurs sont de gros fainéants et ne m'ont pas encore intégrée au jeu. Quelle honte !"
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh!!! Verzeihung, aber die Entwickler sind wirklich faul und haben mich in das Spiel noch nicht eingebaut. Wie schade!"
 			},
 			"playerChoice": {
 				"ok": "...",
-				"star": "Ah ?"
+				"star": "Oh?"
 			}
 		},
 		"bob_star": {
@@ -1595,43 +1595,43 @@
 			},
 			"magic": {
 				"name": "Magische Boutique",
-				"description": "Verirrt sich mal ein Abenteurer in dieses Gässchen in Dinoville, so landet er in der Magischen Boutique... Die extrem seltenen und mächtigen Gegenstände, die dort verkauft werden, können nicht mit gewöhnlichen Goldmünzen bezahlt werden. Außerdem lastet auf diesen Gegenständen ein Bann, denn sobald ein Dinoz sie ausrüstet, lassen sie sich mehrere Tage lang nicht abnehmen!"
+				"description": "Au cœur d'une petite ruelle de Dinoville, les aventuriers se perdent parfois et trouvent alors la Boutique Magique... Les objets extrêmement rares et puissants qu'elle vend ne peuvent être achetés avec de vulgaires pièces d'or. Par contre, ces objets sont ensorcelés : une fois équipés sur un Dinoz, ils ne peuvent plus être enlevés avant plusieurs jours !"
 			},
 			"cursed": {
-				"name": "Verfluchte Boutique",
-				"description": "La Boutique Maudite vend des objets rarissimes introuvables ailleurs. Comme on raconte que quiconque y rentre est maudit à vie, seuls ceux qui le sont déjà osent s'y aventurer..."
+				"name": "Verfluchtes Geschäft",
+				"description": "Das Verfluchte Geschäft verkauft äußerst seltene Gegenstände, welche nirgendwo anders zu finden sind. Gerüchten zufolge wird jeder, der das Geschäft betritt, bis an sein Lebensende verflucht sein, also wagen sich nur jene hinein, die bereits verflucht sind..."
 			},
 			"fruity": {
 				"name": "Fruchtgeschäft",
-				"description": "« Si vous laissez de l'or dans le seau pendu au vieil arbre, un fruit tombera ! “"
+				"description": "„Wenn du etwas Gold im Eimer lässt, der am alten Baum hängt, wird eine Frucht herunterfallen!“"
 			},
 			"razad": {
 				"name": "Razads Laden",
-				"description": "Razad est un vieux nomade ayant fui les steppes occidentales, devenues trop dangereuses pour son commerce. Aujourd'hui, sa boutique est bien plus modeste qu'avant, mais au moins il est installé en sécurité à l'Avant-Poste Rocky."
+				"description": "Razad ist ein alter Nomade, der aus den westlichen Steppen geflohen ist, weil es ihm dort zu gefährlich geworden war. Sein Laden ist heute weit bescheidener, aber wenigstens ist er am Rocky-Vorposten jetzt in Sicherheit."
 			},
 			"souk": {
 				"name": "Basar „Blitzverkauf“",
-				"description": "Le souk est installé un peu à l'écart des Pylônes de Magnétite, offrant une très jolie vue sur les arcs électriques qui se forment régulièrement dans cette région. Malheureusement, la boutique n'est pas hors d'atteinte de ces éclairs, ce qui pose quelques soucis évidents..."
+				"description": "Der Basar befindet sich ein wenig abseits der Magnetitpylonen und bietet eine hübsche Aussicht auf die Lichtbögen, die in dieser Gegend regelmäßig entstehen. Leider befindet er sich nicht unbedingt außer Einschlagreichweite dieser Blitze, was verständlicherweise einige Bedenken aufwirft..."
 			},
 			"neerhel": {
 				"name": "Beschaffer von Ganzdortunten",
-				"description": "La petite boutique du Pourvoyeur est cachée au fin fond des canyons de Toutemba dans une crique bien protégée. Normal quand on connaît les dangers que recelle la région..."
+				"description": "Das kleine Geschäft des Beschaffers ist ganz am Ende der Schlucht von Ganzdortunten in einer gut geschützten Einbuchtung versteckt. Wenn man die Gefahren dieser Region kennt, ist dies nur allzu verständlich..."
 			},
 			"barbarian": {
 				"name": "Barbaren-Tauschwaren",
-				"description": "„Preis nich verhandlich. Vous pas toucher marchandises. NICH ANFASSEN ICH SAG! Si vous toucher, moi BROYER vous !»"
+				"description": "„Preis nich verhandlich. Nich Waren anfassen. NICH ANFASSEN ICH SAG! Wenn du anfassen, ich dich mach PLATT!“"
 			},
 			"secret": {
 				"name": "Geheimer Laden",
-				"description": "« La boutique secrète de la Team-W, contiens tous les objets des Steppes Magnétiques en un seul endroit, et surtout à prix très raisonnable ! “"
+				"description": "„Der Geheime Laden des W-Teams enthält an einem Ort alle Gegenstände der Magnetischen Steppen und das auch noch zu vernünftigen Preisen!“"
 			},
 			"elit": {
 				"name": "Elit-Geschäft",
-				"description": "Vous trouverez dans cette Boutique divers objets que les forces spéciales Végétox utilisent souvent au cours de leurs dangereuses missions."
+				"description": "In diesem Geschäft findet man verschiedene Gegenstände, die von Spezialkräften der Gemüsox bei ihren gefährlichen Einsätzen verwendet werden."
 			},
 			"chens": {
 				"name": "Chens Laden",
-				"description": "Chen met à votre disposition des compétences consommables, elles sont tellement puissantes qu'elles se détruisent après utilisation. Elles sont à utiliser avec parcimonie."
+				"description": "Chen kann dich mit verwendbaren Fähigkeiten versorgen, die so mächtig sind, dass sie sich bei Benutzung selbst zerstören. Nutze sie also mit Bedacht."
 			},
 			"merchant": {
 				"name": "Der fliegende Händler",
@@ -2298,10 +2298,10 @@
 			"60": "Silbermedaille",
 			"61": "Bronzemedaille",
 			"54": "Koralle",
-			"44": "Bronze-Pokal",
-			"45": "Silber-Pokal",
+			"44": "Bronzepokal",
+			"45": "Silberpokal",
 			"46": "Goldpokal",
-			"47": "Diamant-Pokal",
+			"47": "Diamantpokal",
 			"39": "Blumenzweig des Wächters",
 			"55": "Eiswürfel",
 			"50": "1. Grenze durchbrochen",
@@ -2333,7 +2333,7 @@
 			"3": "Mit der Laterne kann dieser Dinoz die tiefsten Höhlen erforschen, ohne Gefahr zu laufen, sich zu verirren.",
 			"13": "Diese Seerosenblätter werden von den Zenzen-Mönchen sehr geschätzt.",
 			"4": "Mit dieser Schaufel kann der Dinoz **graben** und verborgene Schätze entdecken.",
-			"5": "Cette Pelle offre une plus grande résistance, en plus son manche offre un meilleur grip donc vous aurez moins d'ampoules.",
+			"5": "Diese Schaufel bietet eine höhere Widerstandsfähigkeit und der Griff ist angenehmer, sodass man weniger Blasen an den Händen bekommt.",
 			"6": "Die Glücksbringerschaufel ist kaputt. Sie sollte erst repariert werden, bevor man sie erneut benutzt.",
 			"22": "Mit dieser kleinen Flöte kannst du Tiefseeskorpen anlocken und so die Unterwasserkuppel betreten.",
 			"25": "Mit diesen von Korgonen hergestellten Flossen kann dieser Dinoz große Wasserflächen überqueren.",
@@ -2375,7 +2375,7 @@
 			"30": "Dieser Dinoz hat den Ehrwürdigen bezwungen.",
 			"23": "Die Feuerverzauberung erhöht die Stärke der Feuerangriffe dieses Dinoz.",
 			"24": "Die Bao-Verzauberung erhöht die Abwehr dieses Dinoz gegen Wasserangriffe.",
-			"7": "La Pelle améliorée s'est finalement cassée il faudra la faire réparer avant de l'utiliser à nouveau."
+			"7": "Die Verbesserte Schaufel ist letztendlich kaputtgegangen. Sie sollte erst repariert werden, bevor man sie erneut benutzt."
 		}
 	},
 	"tabs": {
@@ -2446,7 +2446,7 @@
 		"manageDinoz": "Dino-RPG [ Dinoz verwalten ]",
 		"market": "Dino-RPG [ Züchtermarkt ]",
 		"dojo": "Dino-RPG [ Dojo ]",
-		"guide": "Dino-RPG [ Spieleführer ]",
+		"guide": "Dino-RPG [ Spielhandbuch ]",
 		"itinerant": "Dino-RPG [ Der Fliegende Händler ]",
 		"faq": "Dino-RPG [ FAQ ]",
 		"clan": "Dino-RPG [ Klan: ",
@@ -2566,7 +2566,7 @@
 			"kilwlf": "Die Bauern haben seit kurzem viele Probleme mit einer Gruppe von Wölfen, die ihre Ziegen angreifen. Könntest du mal hier und dort eine Runde drehen und ein paar von ihnen umbringen, damit sie fernbleiben?",
 			"fflow": "Der Lieblingsrosenstock von Madame Seyche ist aufgrund der brütenden Hitze in einem sehr schlechten Zustand. Könntest du etwas Reines Wasser am Brunnen holen und es ihr bringen?",
 			"kbook": "Ich habe wieder einen Auftrag von der entzückenden Madame Seyche erhalten. Sie würde gerne ein Rezeptbuch zurate ziehen, das sich in der Universität befindet. Könntest du es ihr holen?",
-			"msg": "Ich möchte unbedingt einer gewissen Person schreiben, die mir am Herzen liegt. Aber es hat sich herausgestellt, dass meine Briefmarken von Kloppignon-Plünderern gestohlen wurden, die sich normalerweise am Jungbrunnen aufhalten. Wenn du sie umbringst, erlaube ich dir meine Briefmarken zu benutzen, sagt dir das zu?",
+			"msg": "J'ai très envie d'écrire une lettre à une certaine personne qui me tient à cœur. Mais il se trouve que mes Timbres ont été volés par des Goupignons Chapardeurs qui se regroupent habituellement à la Fontaine de Jouvence. Si tu les tues, je te laisserai utiliser mes Timbres, ça te va ?",
 			"lettre": "Ähm... Dieses Mal wirst du für mich, Papy Joe, arbeiten... Ich bräuchte dich, damit du für mich DRINGEND diesen Brief zu einer bestimmten Person in Dinoville bringst. Vor allem muss es sehr schnell erledigt werden!",
 			"kilglu": "Ein seltsames Monster ist in letzter Zeit im Königreich von Dinoville aufgetaucht. Es ist ziemlich zäh und kann je nach Lage in einem Kampf großen Schaden anrichten. Könntest du eines von ihnen erledigen und es mir dann bringen, damit ich es untersuchen kann?",
 			"kilgnt": "Ich weiß nicht, ob es dir aufgefallen ist, aber das Königreich von Dinoville wird von enormen Grünen Riesen bevölkert, die sich nicht nur von Gemüse zu ernähren scheinen! Könntest du so schnell wie möglich ein gutes Dutzend von ihnen umbringen? Es handelt sich um einen Befehl des Königs, deshalb musst du dich beeilen!",
@@ -2805,8 +2805,8 @@
 			"pickWings": "Flügel sammeln",
 			"pickMedecine": "Kiste mit Gegenmittel",
 			"drawMap": "Eine Karte zeichnen",
-			"catchBat": "Pfeifender Sog",
-			"bat": "Seltenes Feross-Ei",
+			"catchBat": "Jägerflatter fangen",
+			"bat": "Jägerflatter",
 			"launchRock": "Einen Stein werfen",
 			"pickNote": "Notizbuch aufheben",
 			"redraw": "Die Karte zeichnen",
@@ -2902,7 +2902,7 @@
 			"mvoutp": "zum Vorposten der Gemüsox",
 			"mvpalc": "zum Palast von Antraxes",
 			"mcuzco": "zu den Cuzcous-Ruinen",
-			"mcelit": "zum Elite-Camp",
+			"mcelit": "zum Elit-Camp",
 			"shaman": "zur Lavagrube"
 		},
 		"dialog": {
@@ -3103,7 +3103,7 @@
 				"shaman": "Hmmm... Sehr, sehr interessant... Hmmm... Das ist doch mal was, um den alten Kasper an der Universität zum Schweigen zu bringen! Vielen Dank für den kleinen Dienst!"
 			},
 			"pigeon": {
-				"profLetter": "Wie ich sehe, hat dieser Pfuschermagier wieder etwas gefunden, das er mir unter die Nase reiben möchte. Hmm... Hmm... OH! Das allerdings..! Da muss ich erst mal auf Nummer sicher gehen... Zeig diesen Brief meiner guten Freundin Doktor Yolanda, die auf der Waïkiki-Insel wohnt!",
+				"profLetter": "Je vois que ce magicien de pacotille a encore trouvé quelque chose à me coller sous la moustache. Hmm... Hmm... OH ! Ça par exemple ! Il faut que j'en ai le cœur net... Montrez cette lettre à ma bonne amie le docteur Yolande de l'île de Waïkiki !",
 				"yolande": "Oh, na das ist ja mal was! Und das kommt aus den Höhlen der Tiefen Schluchten, sagst du? Also das... das ist ja wirklich unglaublich! Hast du das denn schon Herrn Schaufler, dem Archäologen von Rohkraft, gezeigt?",
 				"foundArcheo": "Der Archäologe Schaufler scheint nicht vor Ort zu sein. Ziemlich schnell erfährst du, dass er momentan auf einer Grabungsstätte in den Tiefen Schluchten arbeitet...",
 				"archeo": "Oh... Das sieht den Notizen, die ich auf die Höhlenwände gekritzelt hatte, zum Verwechseln ähnlich. Wie bitte? Der Schamane hat angenommen, das seien alte Texte? Aber nicht doch! Das sind nur persönliche Aufzeichnungen! Die habe ich selbst geschrieben...",
@@ -3172,7 +3172,7 @@
 			"map": {
 				"drawMap": "Du setzt dich auf einen alten Baumstumpf, um eine Karte der Umgebung anzufertigen... Urplötzlich taucht wie aus dem Nichts ein abscheulicher Jägerflatter auf und bemächtigt sich mit einem Biss deines Notizblocks! Er hebt die Flügel schlagend ab, um sich anschließend auf einen hoch gelegenen Ast zu setzen...",
 				"catchBat": "Du bist dir ziemlich sicher, ihn auf seinem hohen Ast sitzend hämisch lachen zu hören... Du greifst nach einem der Zweige und schüttelst kräftig, damit der Jägerflatter runterfällt, aber dieser fliegt einfach weg und verschwindet irgendwo im Dschungel!",
-				"bat": "Dieses hinterhältige Biest hat sich auf die Krone eines riesigen Baumes gesetzt! Es starrt dich gleichgültig an.",
+				"bat": "Das Mistvieh hat sich auf die Krone eines riesigen Baumes gesetzt! Es starrt dich teilnahmslos an.",
 				"launchRock": "Volltreffer! Der Jägerflatter kreischt auf und lässt deinen Notizblock am Fuße seines Baumes fallen. Gereizt setzt er sich ein Stück weiter weg und glotzt dich mit einem trotzigen Blick an...",
 				"pickNote": "Endlich hast du deinen Notizblock wieder!",
 				"redraw": "Du zeichnest die Karte zu Ende, aber diesmal mit einem wachsamen Auge...",
@@ -3205,7 +3205,7 @@
 			"goupignon": "Kloppignon-Plünderer",
 			"gluon": "Gluons",
 			"greeng": "grüne Riesen",
-			"coq": "Harthuhn",
+			"coq": "Harthühner",
 			"pira": "Piranhsel",
 			"kazka": "Kazkadinen",
 			"anguil": "Aalos",
@@ -3215,8 +3215,8 @@
 			"barche": "Baby Archelöwen",
 			"flam": "Flämmchen",
 			"cobra": "Cobrazeros",
-			"goblin": "Goblin",
-			"bat": "Jägerflatter",
+			"goblin": "Goblins",
+			"bat": "Jägerflattern",
 			"ronciv": "Dornenschlinger",
 			"gardien": "Baumkronwächter",
 			"any": "Monster"
@@ -3333,7 +3333,7 @@
 			"plume": "Sternenfeder",
 			"kaura": "Kabuki-Aura",
 			"demon": "Dämonische Schriftrolle",
-			"pmi": "Illustriertes Missionsbüchlein",
+			"pmi": "Petit Missionnaire Illustré",
 			"pda": "Angereichertes Diamantitgestein",
 			"fdjv1": "FDJV 2010",
 			"dico1": "Wörterbuch",
@@ -3347,82 +3347,82 @@
 			"war3a": "Höllische Kelle",
 			"war3b": "Jadenagel",
 			"war4a": "Flammender Schild",
-			"war4b": "Pierre d'Orientation",
-			"war5a": "Crâne de Gob",
-			"war5b": "Clochette Enchantant",
-			"warfa": "Mug Mog",
+			"war4b": "Stein der Orientierung",
+			"war5a": "Schädel von Gob",
+			"war5b": "Verzauberte Glocke",
+			"warfa": "Mog-Krug",
 			"warfb": "Chokokookie",
-			"warga": "Arm'or",
-			"wargb": "Bottes Demyom",
-			"warha": "An'or",
-			"warhb": "Na'arg",
+			"warga": "Grüstung",
+			"wargb": "Halpmants-Stiefel",
+			"warha": "Gring",
+			"warhb": "Nör'gell",
 			"waria": "Samouraï Etincelant",
-			"warib": "Samouraï Fantôme",
-			"waric": "Soldat errant",
+			"warib": "Geistersamurai",
+			"waric": "Fahrender Ritter",
 			"warja": "Epée de Mana",
-			"warjb": "Capsule de Mana",
-			"warjc": "Flamme glacée",
+			"warjb": "Manakapsel",
+			"warjc": "Eingefrorene Flamme",
 			"warka": "MiniDjinn",
 			"warkb": "Minifrit",
 			"warkc": "Miniggdra",
-			"warla": "Citadelle du vertige",
-			"warlb": "Palais de jade",
-			"warlc": "Ile flottante",
-			"warma": "Suprême Burger des champions",
-			"warmb": "Côte supérieure de Gromster",
+			"warla": "Zitadelle des Vertigo",
+			"warlb": "Jadepalast",
+			"warlc": "Schwebende Insel",
+			"warma": "Erstklassiger Heldenburger",
+			"warmb": "Erstklassige Gromster-Rippchen",
 			"warmc": "Gebratenes Harthuhn",
-			"warna": "Casque Crevette",
-			"warnb": "Anneau Sushi",
-			"warnc": "Ceinturon Maki",
-			"waroa": "Portrait d'un vieux lubrique",
-			"warob": "Portrait d'un chat agile",
-			"waroc": "Portrait d'un homme au regard vide",
-			"warpa": "Shiva, dieu de la destruction",
-			"warpb": "Ganesh, dieu de la sagesse",
-			"warpc": "Ananta, roi des nagas",
-			"warqa": "Peluche éclairante",
-			"warqb": "Peluche inflammable",
-			"warqc": "Peluche mouillée",
-			"warra": "Lanterne Magique",
-			"warrb": "Lampe à huile",
-			"warrc": "Petite Lanterne",
-			"warsa": "Freeman Vigilante",
-			"warsb": "Testroom Vigilante",
-			"warsc": "Fortress Vigilante",
-			"warta": "Mjöllnir",
-			"wartb": "Hache d'Obsidienne",
-			"wartc": "Hache Lodbrok",
-			"warua": "Cube diamantifère",
-			"warub": "Coffret cubique design",
-			"waruc": "Bloc de Gaia",
-			"warva": "Chaussure à pointe",
-			"warvb": "Chausson ninja",
-			"warvc": "Sandale Sparte",
-			"warwa": "Collier de diamant",
-			"warwb": "Collier aurifère",
-			"warwc": "Collier Sélénites",
-			"warxa": "Grenade étourdissante d'apparat",
-			"warxb": "Bombe d'huile de collection",
-			"warxc": "Grenade de Damas",
-			"warya": "Coeur de la guerre",
+			"warna": "Garnelenhelm",
+			"warnb": "Sushi-Ring",
+			"warnc": "Gürtel-Maki",
+			"waroa": "Porträt eines alten Lüstlings",
+			"warob": "Porträt eines flinken Katers",
+			"waroc": "Porträt eines Mannes mit leerem Blick",
+			"warpa": "Shiva, Gottheit der Zerstörung",
+			"warpb": "Ganesh, Gottheit der Weisheit",
+			"warpc": "Ananta, König der Nagas",
+			"warqa": "Leuchtendes Plüschtier",
+			"warqb": "Brennendes Plüschtier",
+			"warqc": "Triefendes Plüschtier",
+			"warra": "Zauberlaterne",
+			"warrb": "Öllampe",
+			"warrc": "Kleine Laterne",
+			"warsa": "Wächtereinheit Freeman",
+			"warsb": "Testraum-Wächtereinheit",
+			"warsc": "Festungswachturm",
+			"warta": "Mjölnir",
+			"wartb": "Obsidian Handaxt",
+			"wartc": "Lodbrok Handaxt",
+			"warua": "Diamantierter Würfel",
+			"warub": "Koffer im Würfelstil",
+			"waruc": "Gaia-Block",
+			"warva": "Geschliffener Schuh",
+			"warvb": "Ninja-Schuh",
+			"warvc": "Spartanische Sandale",
+			"warwa": "Diamant-Halskette",
+			"warwb": "Vergoldete Halskette",
+			"warwc": "Selenit-Halskette",
+			"warxa": "Zeremonielle Betäubungsgranate",
+			"warxb": "Ölbombe zum Sammeln",
+			"warxc": "Granate aus Damaskus",
+			"warya": "Cœur de la guerre",
 			"waryb": "Auge des Odin",
-			"waryc": "Rognon martial",
-			"warza": "Orbe du tourment",
-			"warzb": "Orbe de glace",
-			"warzc": "Orbe de feu",
-			"ch1x1a": "Coupe Pro d'Or",
-			"ch1x1b": "Coupe Pro d'Argent",
-			"ch1x2a": "Coupe Medium d'Or",
-			"ch1x2b": "Coupe Medium de Bronze",
-			"ch2x1a": "Coupe Pro d'Or",
-			"ch2x2a": "Coupe Medium d'Argent",
-			"ch2x2b": "Coupe Medium d'Amethyste",
-			"ch2x3a": "Trophée Starter d'Or",
-			"ch2x3b": "Trophée Starter d'Argent",
+			"waryc": "Kampfniere",
+			"warza": "Sphäre der Qualen",
+			"warzb": "Eissphäre",
+			"warzc": "Feuersphäre",
+			"ch1x1a": "Profi-Goldpokal",
+			"ch1x1b": "Profi-Silberpokal",
+			"ch1x2a": "Fortgeschrittener Goldpokal",
+			"ch1x2b": "Fortgeschrittener Bronzepokal",
+			"ch2x1a": "Profi-Goldpokal",
+			"ch2x2a": "Fortgeschrittener Silberpokal",
+			"ch2x2b": "Fortgeschrittener Amethystpokal",
+			"ch2x3a": "Junior-Goldpokal",
+			"ch2x3b": "Junior-Silberpokal",
 			"ch3x1a": "Dinocolada Sunrise",
-			"ch3x1b": "Dinocolada Fraise",
-			"ch3x2a": "Tartalagagne Miel",
-			"ch3x2b": "Tartalagagne Pistache",
+			"ch3x1b": "Erdbeer-Dinocolada",
+			"ch3x2a": "Honig-Siegestorte",
+			"ch3x2b": "Pistazien-Siegestorte",
 			"ch3x3a": "Caramel bou doré",
 			"ch3x3b": "Caramel bou",
 			"ch3x4a": "Oeuf dur doré",
@@ -3538,16 +3538,16 @@
 			"quetzu": "Die Trophäe der Quetzus wurde dir von Mandragor nach dem Sieg über den Erzdorogon Grizorg verliehen. Damit stehen dir unter den im Geschäft erhältlichen Dinoz die Quetzus zur Verfügung.",
 			"labowi": "Die Trophäe der Smogs wurde dir von Professor Henderson während dem Zwischenfall im korrupten Labor verliehen. Leider konnte während der Mission nur ein Smog entstehen.",
 			"tour": "Dieses gelbe Trikot ist die Belohnung für deine großartige Teilnahme an der „Tour de Dinoland“. Du gehörst nun zu den großen Entdeckern des Dinolandes!",
-			"vener": "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
+			"vener": "Das Auge des Ehrwürdigen ist ein äußerst seltener Gegenstand und nur die größten Krieger können es erlangen! Es wird erzählt, dass es unglaublich starke magische Eigenschaften hätte...",
 			"taurus": "Du hast Baobob dabei geholfen, den höllischen Taurus, einen mächtigen Möffen zurück in die Dunkle Welt zu befördern. Vous n'êtes pas prêt de le revoir, votre courage commence déjà à traverser les frontières de Dinoland.",
 			"belius": "Du hast den höllischen Belius, einen mächtigen Santas vertrieben. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de dinoz démons dans la boutique démoniaque.",
 			"scorp": "Du hast den höllischen Scorpus, einen mächtigen Winks vertrieben. Il est reparti dans les profondeurs du Monde Sombre.",
 			"msg": "Dieser unbegrenzte Vorrat an offiziellen Briefmarken der Dinoz Post AG verifiziert deinen Aufenthalt in Dinoville.",
 			"magnet": "Cet éclat de Magnétite Négative vous a été offert par le Roi des Rockys en personne ! Qui sait quels pouvoirs mystérieux il possède...",
-			"plume": "Cette plume, cadeau de quelqu'un venu de très loin, permet d'éditer la présentation de la fiche joueur.",
+			"plume": "Diese Feder ist ein Geschenk von jemandem, der aus weiter Ferne stammt. Damit kann man die Präsentation des Spielerprofils bearbeiten.",
 			"kaura": "Diese Aura ermöglicht es dir, die Totem-Insel zu erreichen und möglicherweise einen Kabuki zu finden, der die Gewaltige Katastrophe überlebt hat!",
 			"demon": "Cet ancien parchemin vous permettra d'accèder à la Boutique Démoniaque au Cimetière du Crépuscule !",
-			"pmi": "Le Petit Missionaire Illustré permet d'avoir accés à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz",
+			"pmi": "Das Illustrierte Missionsbüchlein ermöglicht es, jederzeit auf die Liste der abgeschlossenen und ausstehenden Missionen deiner Dinoz zuzugreifen.",
 			"pda": "La P.D.A. est une pierre remplie (chose surprenante) de technologie formée naturellement et permettant à l'éleveur d'avoir un aperçu de tous ses Dinoz en un simple coup d'oeil. La Diamantite au contraire c'est juste pour la frime.",
 			"fdjv1": "Ce trophée remercie les joueurs ayant fait un long périple jusqu'au Festival du Jeu video édition 2010 pour rencontrer les marionnettistes de l'ombre !",
 			"dico1": "Un livre très ancien, peut-être pourra-t-il vous servir à déchiffrer quelque chose ? Malheureusement pour le moment, il est fermé par un verrou très complexe. Existe-t-il quelqu'un qui saurait ouvrir ce livre ? Pour l'instant, il semble que non...",
@@ -3586,7 +3586,7 @@
 			"warmb": "Pour avoir brillé lors de la 4ème Guerre du Mana, le chef cuisinier du Roi vous offre une tranche finement préparée de son meilleur arrivage de Gromster de Nimbao.Quand on en a affronté quelques-uns, on se doute bien de la difficulté d'en ramener à Dinoville en un seul morceau.",
 			"warmc": "Das Harthuhn ist nicht gerade selten, aber die Kochkünste des besten Kochs des Königs ermöglichen es dem Gericht alles andere zu übertreffen. Il régalera vos papilles lors d'un repos bien mérité après cette 4ème Guerre du Mana.",
 			"warna": "Cette relique unique, mise au point par le plus célèbre forgeron du château de Dinoville, rend hommage à un grand maître Dinoz. Il vous est offert pour avoir triomphé lors de la 5ème Guerre du Mana.",
-			"warnb": "Forgé au coeur même du château de Dinoville, cet anneau permet à son détenteur de voir la vie en rose et de sentir le poisson, il vous est offert pour récompenser vos faits d'armes lors de la 5ème Guerre du Mana.",
+			"warnb": "Forgé au cœur même du château de Dinoville, cet anneau permet à son détenteur de voir la vie en rose et de sentir le poisson, il vous est offert pour récompenser vos faits d'armes lors de la 5ème Guerre du Mana.",
 			"warnc": "Ne jamais partir à la guerre sans son ceinturon, et en cas de fringale, le tour est joué, facilement transportable, il peut remplacer n'importe quel oreiller. Profitez en pour vous reposer de cette 5ème Guerre du Mana.",
 			"waroa": "Ce portrait d'un célèbre maître des arts martiaux (une vieille connaissance de maître zénith parait-il) vous revient pour avoir gagné la 6ème Guerre du Mana. Que son portrait vous montre la voie du combat ou quoique ce soit d'autres.",
 			"warob": "Ce portrait d'un puissant maître des arts martiaux vous est offert pour avoir vaillamment guerroyé lors de la 6ème Guerre du Mana. Si un jour vous le croisez, n'acceptez pas ce qu'il vous propose à boire. Votre vie en dépend !",
@@ -3605,7 +3605,7 @@
 			"warsc": "Cette tourelle, aussi coquette qu'impitoyable récompense votre participation à la 10e Guerre du Mana. Existe aussi en bleu.",
 			"warta": "Ce marteau 230volts récompense votre flamboyante victoire sur cette 11e Guerre du mana. Pour planter des clous ou recharger son smartphone.",
 			"wartb": "Cette hache récompense votre bravoure sur cette 11e Guerre du mana. Vitrifiée dans la lave du Mont Tongariro, résiste aux flammes de votre succès.",
-			"wartc": "Cette hache venue du froid à beaucoup servi à trancher des fruits rouges",
+			"wartc": "Cette hache venue du froid à beaucoup servi à trancher des fruits rouges.",
 			"warua": "Cette tranche de sol contenant des diamants récompense votre incroyable victoire à la 12ème guerre du Mana.",
 			"warub": "Ce coffre scellé à jamais récompense votre bravoure sur cette 12ème guerre du mana.",
 			"waruc": "Un morceau de terre des titans est le symbole de votre courage à la 12ème guerre du mana.",
@@ -3618,7 +3618,7 @@
 			"warxa": "Cette grenade récompense votre assomante victoire à la 15ème guerre du Mana.",
 			"warxb": "Cette bombe d'huile de ricin antique récompense votre bravoure sur cette 15ème guerre du mana.",
 			"warxc": "cette grenade remplie de salpêtre aromatique est le symbole de votre courage explosif à la 15ème guerre du mana.",
-			"warya": "Ce coeur vaillant récompense votre incroyable victoire à la 16ème guerre du Mana.",
+			"warya": "Ce cœur vaillant récompense votre incroyable victoire à la 16ème guerre du Mana.",
 			"waryb": "Cet oeil divin récompense votre bravoure sur cette 16ème guerre du mana.",
 			"waryc": "Ce rein  de champ de bataille est le symbole de votre courage à la 16ème guerre du mana.",
 			"warza": "Cet orbe ténébreux récompense votre incroyable victoire à la 17ème guerre du Mana.",
@@ -3721,7 +3721,7 @@
 			"chpx1b": "Ce cuissot grillé à la braise vous est offert pour avoir participé aux phases finales de la ligue Élite du 16ème Championnat des clans.",
 			"chpx2a": "Ce fraisier aux fraises des bois vous est offert pour avoir remporté la finale de la ligue Pro du 16ème Championnat des clans.",
 			"chpx2b": "Ce hot-dog issus de la plus pure tradition de street-food chinoise vous est offert pour avoir participé aux phases finales de la ligue Pro du 16ème Championnat des clans.",
-			"chpx3a": "Cet incroyable trophée vous est offert pour avoir remporté la finale de la ligue Starter du 16ème Championnat des clans. Le croquer vous donne du beaume au coeur !",
+			"chpx3a": "Cet incroyable trophée vous est offert pour avoir remporté la finale de la ligue Starter du 16ème Championnat des clans. Le croquer vous donne du baume au cœur !",
 			"chpx3b": "Cette incroyable trophée vous a été offert pour avoir participé aux phases finales de la ligue Starter du 16ème Championnat des clans. Une carotte qui donne la patate !",
 			"cinec1": "This magnificent trophy was awarded to the first winner of the Grand Prize at the first Cinema Paradino Film Festival.",
 			"cinec2": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Outstanding Contribution Award.",
@@ -3751,13 +3751,13 @@
 			"dinoz": "Dinoz",
 			"points": "Punkte",
 			"clans": "Klane",
-			"treasure": "Klantresor"
+			"treasure": "Schatzkammer des Klans"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
 			"average": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus dem Durchschnitt der Stufe aller Dinoz errechnet.",
 			"completion": "Die Spielerplatzierung wird täglich um Mitternacht aktualisiert und wird anhand einer Formel errechnet, die sowohl auf dem Fortschritt aller aktiven Dinoz, als auch auf dem Spielverlauf basiert.",
-			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels dinoz sont parvenus les premiers à accomplir des hauts faits.",
+			"pantheon": "Hier kann man erfahren, welche Spieler oder Dinoz als erste bestimmte große Taten geleistet haben.",
 			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan."
 		},
 		"page": {
@@ -3765,25 +3765,25 @@
 			"next": "Nächste Seite"
 		},
 		"pantheon": {
-			"dinozPantheon": "Pantheon des dinoz",
-			"playerPantheon": "Pantheon des joueurs",
-			"allRaces": "Toutes races confondues",
-			"allLevel": "Tout niveaux confondus",
-			"dinozName": "Nom du dinoz: ",
+			"dinozPantheon": "Ruhmeshalle der Dinoz",
+			"playerPantheon": "Ruhmeshalle der Spieler",
+			"allRaces": "Alle Rassen",
+			"allLevel": "Alle Stufen",
+			"dinozName": "Name des Dinoz: ",
 			"masterName": "Meister: ",
-			"dinozLevel": "Niveau du dinoz: ",
-			"date": "Date d'entrée: ",
-			"pickEpic": "Choisir une récompense",
+			"dinozLevel": "Stufe des Dinoz: ",
+			"date": "Datum des Erreichens: ",
+			"pickEpic": "Wähle eine Belohnung",
 			"dinoz": "Dinoz",
 			"detail": "Details"
 		},
-		"search": "Rechercher un joueur..."
+		"search": "Spielersuche..."
 	},
 	"clan": {
 		"ingredients": {
 			"price": "{price} :gold:",
-			"help": "Votre trésor d'une valeur de **{value}** :gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
-			"giveAway": "Donner au clan."
+			"help": "Eure Schatzkammer im Wert von **{value}** :gold: ist durch die Burg geschützt. Du kannst Zutaten spenden, um sie der Schatzkammer des Klans beizufügen.",
+			"giveAway": "Dem Klan spenden."
 		},
 		"header": {
 			"title": "Klan: {name}",
@@ -3793,21 +3793,21 @@
 		"tabs": {
 			"pages": "Klanseiten",
 			"members": "Liste der Mitglieder",
-			"treasure": "Klantresor",
-			"war": "War informations",
-			"discussion": "Discussion thread",
+			"treasure": "Schatzkammer des Klans",
+			"war": "Infos zum Krieg",
+			"discussion": "Diskussionsthema",
 			"history": "Chronik des Klans",
 			"parameters": "Einstellungen"
 		},
 		"icons": {
-			"members": "Number of members",
-			"gold": "Treasure value",
+			"members": "Anzahl der Mitglieder",
+			"gold": "Wert der Schatzkammer",
 			"rank": "Rang",
 			"crown": "Klananführer"
 		},
 		"forum": {
-			"connectionFailed": "Une erreur s'est produite lors de la connexion au chat du clan !",
-			"connectionFailed2": "Actualise la page ou réessaye plus tard !"
+			"connectionFailed": "Bei der Verbindung zum Klan-Chat ist ein Fehler aufgetreten!",
+			"connectionFailed2": "Aktualisiere die Seite oder versuche es später noch einmal!"
 		}
 	},
 	"clansList": {
@@ -3823,69 +3823,69 @@
 			"see_help": "Mehr über Klane erfahren",
 			"see_ranking": "Rangliste der besten Klane ansehen"
 		},
-		"cannot_create_info": "Creating a clan costs {money} :gold:, and requires you to have {points} ranking points.",
+		"cannot_create_info": "Es kostet {money} :gold:, einen Klan zu erstellen und man benötigt {points} Rangpunkte.",
 		"button": {
-			"search": "Search",
+			"search": "Suche",
 			"create": "Klan gründen"
 		},
-		"search": "Rechercher un clan..."
+		"search": "Klansuche..."
 	},
 	"clansMembers": {
 		"th": {
 			"name": "Name",
-			"donation": "Donations",
-			"stats": "Stats",
-			"actions": "Actions"
+			"donation": "Spenden",
+			"stats": "Statistiken",
+			"actions": "Aktionen"
 		},
 		"edit": {
-			"disclaimer": "This page allows you to edit the rights of clan member <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
+			"disclaimer": "Diese Seite ermöglicht es, die Rechte von Klanmitgliedern zu berarbeiten <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
 			"right": {
-				"MEMBER_EDIT": "Can edit rights and surname of other members",
-				"PAGE_MANAGE": "Can manage clan pages",
-				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Can accept or deny joining requests",
-				"MEMBER_EXCLUDE": "Can exclude members",
-				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
-				"CLAN_EDIT_BANNER": "Can change the clan banner"
+				"MEMBER_EDIT": "Kann Rechte und Spitznamen der Mitglieder bearbeiten",
+				"PAGE_MANAGE": "Kann Klanseiten verwalten",
+				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Kann Beitrittsanfragen annehmen und ablehnen",
+				"MEMBER_EXCLUDE": "Kann Mitglieder ausschließen",
+				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
+				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern"
 			},
-			"nickname": "Player's nickname :",
-			"save": "Save"
+			"nickname": "Spitzname des Spielers:",
+			"save": "Speichern"
 		},
 		"request": {
-			"title": "Waiting requests",
+			"title": "Wartende Anfragen",
 			"line": "möchte gerne dem Klan beitreten!",
-			"accept": "Accept",
-			"deny": "Deny",
+			"accept": "Annehmen",
+			"deny": "Ablehnen",
 			"maximum": "Der Klan ist voll und du kannst keine neuen Anfragen annehmen."
 		},
 		"action": {
-			"edit": "Edit",
-			"exclude": "Exclude",
+			"edit": "Bearbeiten",
+			"exclude": "Ausschließen",
 			"leave": "Klan verlassen"
 		},
 		"stat": {
-			"last_login": "Last connexion the {date}."
+			"last_login": "Zuletzt eingeloggt: {date}"
 		}
 	},
 	"clanPages": {
 		"button": {
 			"join_clan": "Klan beitreten",
-			"delete": "Delete page",
+			"delete": "Seite löschen",
 			"create": "Seite erstellen",
 			"edit": "Seite bearbeiten"
 		},
 		"tip": {
-			"join_clan": "Joining this clan will cost you {money} :gold:. This amount will be given back in case of deny."
+			"join_clan": "Es kostet {money} :gold:, um einem Klan beizutreten. Dieser Betrag wird im Falle einer Ablehnung zurückerstattet."
 		},
 		"request": {
-			"info": "You have a waiting request for joining the clan ",
-			"cancel": "Cancel request."
+			"info": "Eine Klanbeitrittsanfrage ist ausstehend",
+			"cancel": "Anfrage abbrechen"
 		},
 		"creation": {
 			"new": "Neue Klanseite",
 			"edit": "Klanseite bearbeiten",
-			"title": "Title",
-			"content": "Content",
-			"public": "Public page",
+			"title": "Titel",
+			"content": "Inhalt",
+			"public": "Öffentliche Seite",
 			"action": {
 				"create": "Gründen",
 				"edit": "Bearbeiten",
@@ -3896,30 +3896,30 @@
 	"clanDiscussion": {
 		"action": {
 			"create": "Neue Nachricht",
-			"refresh": "Refresh"
+			"refresh": "Aktualisieren"
 		},
 		"pagination": {
-			"page": "Page",
-			"go_to": "Go to page"
+			"page": "Seite",
+			"go_to": "Zur Seite gehen"
 		}
 	},
 	"clanHistory": {
 		"type": {
 			"CLAN_CREATED": "Klan wurde gegründet.",
-			"PLAYER_JOIN": "A player has joined the clan.",
-			"PLAYER_LEAVE": "This player decided to leave the clan.",
-			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
-			"UNKNOWN": "Unknown event."
+			"PLAYER_JOIN": "Ein Spieler ist dem Klan beigetreten.",
+			"PLAYER_LEAVE": "Dieser Spieler hat beschlossen, den Klan zu verlassen.",
+			"PLAYER_EXCLUSION": "Dieser Spieler wurde aus dem Klan ausgeschlossen.",
+			"UNKNOWN": "Unbekanntes Ereignis."
 		}
 	},
 	"clanSettings": {
 		"action": {
-			"delete": "Delete clan",
-			"save": "Save"
+			"delete": "Klan löschen",
+			"save": "Speichern"
 		},
 		"banner": {
-			"title": "Edit clan banner URL :",
-			"info": "Clan banner has a ratio of 448px large by 100px long."
+			"title": "URL des Klanbanners bearbeiten:",
+			"info": "Das Banner muss 448px breit und 100px hoch sein."
 		}
 	},
 	"createClan": {
@@ -3932,12 +3932,12 @@
 	},
 	"fight": {
 		"pageName": "Kampf!",
-		"win": "Vous **remportez** ce combat !",
-		"lose": "Vous avez **perdu**...",
-		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
+		"win": "Du hast den Kampf **gewonnen**!",
+		"lose": "Du hast **verloren**...",
+		"lvlup": "Ein Dinoz hat eine **zusätzliche Stufe** erhalten!",
 		"continue": "Fortfahren",
 		"display": "Kampf zeigen",
-		"resume": "Vous avez combattu un {enemy}",
+		"resume": "Du hast gegen {enemy} gekämpft",
 		"clone": "Klon",
 		"monster": {
 			"goupignon": "Kloppignon",
@@ -3973,7 +3973,7 @@
 			"vener": "Der Ehrwürdige",
 			"rasca": "Alter Tiefseeskorp",
 			"eearth": "Erdelementar",
-			"pirask": "Pirhan-os",
+			"pirask": "Grätanha",
 			"megawf": "Megawolf"
 		},
 		"status": {
@@ -4008,7 +4008,7 @@
 			"counter": "**{fighter}** hat **{opponent}** gekontert.",
 			"survive": "**{dinoz}** hat den Angriff überlebt.",
 			"skillAnnounce": "**{dinoz}** hat die Fähigkeit „**{skill}**“ gewirkt.",
-			"skillActivate": "**{dinoz}** hat **{skill}** benutzt (-{energy} Energie).",
+			"skillActivate": "**{dinoz}** hat **{skill}** gewirkt (-{energy} Energie).",
 			"skillActivate-hit-targets": "**{dinoz}** hat **{skill}** auf **{targets}** gewirkt und hat ihnen jeweils **{damages}** {elements}-Schaden zugefügt (-{energy} Energie).",
 			"skillActivate-heal-targets": "**{dinoz}** hat **{skill}** auf **{targets}** gewirkt und ihnen jeweils **{heals}** Lebenspunkte wiederhergestellt (-{energy} Energie).",
 			"skillExpire": "**{skill}** von **{dinoz}** ist abgelaufen.",
@@ -4027,8 +4027,8 @@
 		"disclaimer": "Diese Seite erfasst alle Zutaten, die mithilfe von Sammelfähigkeiten zusammengetragen worden sind.",
 		"tname": "Zutaten",
 		"giveAway": {
-			"button": "Donner au clan",
-			"confirm": "Désirez-vous donner vos ingrédients pour un total de {gold} or ?"
+			"button": "Dem Klan spenden",
+			"confirm": "Möchtest du wirklich Zutaten im Gesamtwert von {gold} Gold deinem Klan spenden?"
 		},
 		"tstock": "Vorrat",
 		"tquantity": "Menge",
@@ -4072,7 +4072,7 @@
 			"merou_lujidane": "Eine Fischart, die in den Gewässern des Dinolandes weit verbreitet ist und stets für ihren Karamellgeschmack geschätzt wird.",
 			"poisson_vengeur": "Er stiehlt von den Laichen, um es den Armen zu geben.",
 			"an_guili_guilille": "Während die meisten Arten von Aalen Stromstöße von sich geben, friert diese hier ein. Der Kühlakkuaal wird oft dazu verwendet, Getränke zu kühlen, aber man kann auch Lebensmittel kalt lagern, wenn man sie damit bedeckt.",
-			"globulos": "Le Globulos est particulièrement visqueux et mou mais il rebondit étonnamment bien si on le projette contre un mur. Cette propriété amusante en fait un jouet très apprécié !",
+			"globulos": "Der Globulus ist ein besonders schleimiger und weicher Fisch, aber er prallt überraschend gut ab, wenn man ihn an die Wand wirft. Diese ulkige Eigenschaft macht aus ihm ein sehr beliebtes Spielzeug!",
 			"super_poisson": "Der Beschützer der Zackenbarsche und Globuli! Niemand kennt die wahre Identität des Superfisches. Im Grunde genommen hat sich auch nie jemand dafür interessiert... Superfisch ist ein ziemlich unbekannter Held.",
 			"touffe_de_fourrure": "Eine ganze Handvoll Pelz ziemlich guter Qualität! Für einen Mantel reicht es wohl nicht aus, aber besser als gar nichts...",
 			"roche_radio_active": "Dieser Steinbrocken eines geschmolzenen Grolems wurde Äther ausgesetzt und weist nun eine seltsame Fluoreszenz auf. Es wäre nicht empfehlenswert, ihn länger als einen Tag bei sich zu tragen, da ansonsten die Gefahr von akutem Haarausfall besteht.",
@@ -4109,11 +4109,11 @@
 		"title": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"disclaimer": "Dank deinem **Angereicherten Diamantitgestein** kannst du dieses Verwaltungsmodul verwenden: wahrlich ein Wunder der Technik!",
 		"dinoz": "Dinoz",
-		"elements": "Eléments"
+		"elements": "Elemente"
 	},
 	"dinozMissions": {
 		"title": "Missionen meiner Dinoz",
-		"disclaimer": "Ce module de gestion est accessible grâce à votre **Petit Missionnaire Illustré** : très pratique pour suivre les missions de vos Dinoz !",
+		"disclaimer": "Dieses Verwaltungsmodul ist dank deines **Illustrierten Missionsbüchleins** zugänglich. Echt praktisch, um die Missionen deiner Dinoz zu verfolgen!",
 		"dinoz": "Dinoz",
 		"missions": "Missionen",
 		"see": "Anzeigen",
@@ -4136,7 +4136,7 @@
 		"timeLeft": "Restzeit",
 		"auctionExpired": "Auktion beendet",
 		"minimumPrice": "Mindestpreis",
-		"highestBid": "Enchère actuelle",
+		"highestBid": "Aktuelles Gebot",
 		"by": "nach",
 		"details": "Details",
 		"time": "{days}T {hours}Std. {minutes}M {seconds}Sek.",
@@ -4170,20 +4170,20 @@
 		}
 	},
 	"following": "Dieser Dinoz folgt seinem Gruppenführer.",
-	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
+	"remaingActions": "Deine Dinoz haben noch freie Aktionen übrig.",
 	"follow": "Der Gruppenführer ist {leader}.",
 	"followed": "Dieser Dinoz ist der Gruppenführer.",
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** hat **{quantity}x {item}** mit dem Dinoz **{dinoz} ({dinozId})** benutzt.",
-		"ItemBought": "**{player} ({playerId})** hat **{quantity}x {item}** gekauft.",
-		"IngredientSold": "**{player} ({playerId})** hat **{quantity}x {item}** verkauft.",
-		"GoldWon": "**{player} ({playerId})** hat **{quantity} :gold:** erhalten.",
-		"GoldLost": "**{player} ({playerId})** hat **{quantity} :gold:** verloren.",
-		"Move": "**{player} ({playerId})** hat den Dinoz **{dinoz} ({dinozId})** nach **{location}** bewegt.",
+		"ItemBought": "**{player} ({playerId})** hat **{quantity}x {item}** gekauft (Gesamt: {total}).",
+		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
+		"GoldWon": "**{player} ({playerId})** hat **{quantity} :gold:** erhalten (Gesamt: {total} :gold:).",
+		"GoldLost": "**{player} ({playerId})** hat **{quantity} :gold:** verloren (Übrig: {total} :gold:).",
+		"Move": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** nach **{location}** bewegt.",
 		"LevelUp": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** hat **Stufe {level}** erreicht.",
-		"Fight": "**{player} ({playerId})** hat gekämpft und dabei **{hpLost} LP** verloren, sowie **{gold} :gold:** und **{xp} EP** erhalten.",
-		"XPEarned": "**{player} ({playerId})** hat **{xp} EP** erhalten.",
-		"HPLost": "**{player} ({playerId})** hat **{hpLost} LP** verloren.",
+		"Fight": "**{player} ({playerId})** hat gekämpft und dabei **{hpLost} :pv:** verloren, sowie **{gold} :gold:** und **{xp} :xp:** erhalten.",
+		"XPEarned": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** hat **{xp} :xp:** erhalten.",
+		"HPLost": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** hat **{hpLost} :pv:** verloren.",
 		"Death": "Der Dinoz **{dinoz} ({dinozId})** von **{player} ({playerId})** ist gestorben.",
 		"Revive": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** wiederbelebt.",
 		"MissionStep": "**{player} ({playerId})** erreicht mit dem Dinoz **{dinoz} ({dinozId})** in der Mission **„{mission}“ den Abschnitt {step}** .",
@@ -4194,34 +4194,39 @@
 		"ChangeDinozOrder": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** anders geordnet.",
 		"PlayerCreated": "**Ein neuer Spieler ist angekommen: {name}**.",
 		"PlayerConnected": "**Der Spieler: {name}** hat sich verbunden.",
-		"LBDone": "**Der Spieler: {player}** hat seine Belohnungen abgeholt."
+		"LBDone": "**Der Spieler: {player}** hat seine Belohnungen abgeholt.",
+		"OfferNew": "**{player} ({playerId})** hat ein **neues Angebot {offer}** im Wert von {amount} :gold: erstellt.",
+		"OfferBid": "Das **Angebot {offer}** von **{player} ({playerId})** hat ein neues **Gebot von {amount}** Schatzbriefen erhalten.",
+		"OfferCancelled": "**{player} ({playerId}** hat sein **Angebot {offer} abgebrochen**.",
+		"OfferExpired": "Das **Angebot {offer}** von **{player} ({playerId})** ist ohne gewonnen zu werden **abgelaufen**.",
+		"OfferWon": "**{winner}** hat das **Angebot {offer}** von **{player} ({playerId})** für den **Betrag von {amount}** Schatzbriefen **gewonnen**."
 	},
 	"selectDinoz": {
-		"selectChampions": "Choisis tes champions",
-		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
-		"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
-		"validate": "Valider ma sélection"
+		"selectChampions": "Wähle deine Mitstreiter",
+		"selectTeam": "Stelle deine Dinoz-Mannschaft zusammen, um an den heutigen Herausforderungen teilzunehmen",
+		"disclaimer": "Du kannst deine Mannschaft aus bis zu **10** Dinoz bilden. Wähle mit Bedacht, denn du wirst die Auswahl bis morgen nicht mehr ändern können.",
+		"validate": "Auswahl bestätigen"
 	},
 	"dojo": {
-		"welcome": "Bienvenue dans votre Dojo",
-		"accessTournament": "Accéder au tournoi",
-		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis!",
-		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
-		"reputation": "Réputation",
-		"points": "Points",
+		"welcome": "Willkommen in deinem Dojo",
+		"accessTournament": "An Wettkampf teilnehmen",
+		"disclaimer": "**Es gibt kein Entkommen!**&&Die Fähigkeit „Schwarzes Loch“ und der Gegenstand „Dimensionales Pulver“ sind weder in Wettkämpfen, noch in weiteren Herausforderungen verfügbar!",
+		"tidInProgress": "Der letzte Abschnitt des Inter-Dojo-Wettkampfes ist im Gange.",
+		"reputation": "Ruf",
+		"points": "Punkte",
 		"worth": "Meuterei",
 		"ranking": "Platzierung",
-		"accessChallenges": "Accéder aux défis",
+		"accessChallenges": "Herausforderungen ansehen",
 		"testDinoz": "Probekampf",
 		"fightHistory": "Kampfverlauf",
-		"team": "Mon équipe",
-		"tournaments": "Tournois",
-		"build": "Construire mon dojo",
-		"group": "Groupe {group}",
-		"seeFinal": "Voir la finale",
+		"team": "Meine Mannschaft",
+		"tournaments": "Wettkämpfe",
+		"build": "Dojo erbauen",
+		"group": "Gruppe {group}",
+		"seeFinal": "Finale ansehen",
 		"seeFight": "Kampf ansehen",
-		"nextTournament": "Le prochain tournoi commencera le **{next}**, soyez prêt ! Les phases de qualifications se terminent le **{qualif}**.",
-		"tournamentInfo": "**ATTENTION :**&&Votre position est indiqué en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**"
+		"nextTournament": "Der nächste Wettkampf findet nächsten **{next}** statt. Sei Bereit! Die Qualifizierungsrunden enden am **{qualif}**.",
+		"tournamentInfo": "**ACHTUNG**:&&Deine Position wird in Grün dargestellt und du kannst die Teilnehmer anklicken, um den Kampf nochmals anzusehen. **Nur Gruppensieger können am Finale teilnehmen**."
 	},
 	"guide": {
 		"sections": {
@@ -4230,7 +4235,7 @@
 			"name": "Deinen Dinoz benennen",
 			"card": "Dinoz-Profil",
 			"move": "Fortbewegung",
-			"fight": "Kampf",
+			"fight": "Die Kämpfe",
 			"heal": "Heilung",
 			"death": "Tod",
 			"exp": "Erfahrung",
@@ -4249,8 +4254,8 @@
 			"security": "Sicherheit"
 		},
 		"text": {
-			"stop": "Arrêter le Guide",
-			"intro": "Bienvenue sur **DinoRPG** ! && && Sur ce site, vous jouez un **Maître Éleveur** et vous pouvez adopter une ou plusieurs petites créatures sauvages nommées les **Dinoz**. Vous pouvez ainsi parcourir le monde de Dinoland, faire combattre et évoluer vos Dinoz, accomplir des Missions et remplir les nombreuses Quêtes que vous rencontrerez au cours de votre aventure. && && Si vous avez besoin d'aide, vous pouvez à tout moment accéder à ce **Guide du Jeu** en cliquant sur le bouton dans le Menu de droite. && && Pour découvrir la suite du Guide, merci de cliquer sur le bouton ci-dessous.",
+			"stop": "Handbuch schließen",
+			"intro": "Willkommen in **Dino-RPG**!&& &&Auf dieser Seite spielst du einen **Meisterzüchter** und kannst einen oder mehrere kleine wilde Kreaturen namens **Dinoz** adoptieren. Du kannst die Welt von Dinoland bereisen, deine Dinoz kämpfen und weiterentwickeln lassen, Missionen erfüllen und zahlreiche Aufgaben abschließen, die du während deiner Abenteuer erhalten wirst.&& &&Falls du Hilfe benötigst, kannst du jederzeit auf dieses **Spielhandbuch** zugreifen, indem du auf der rechten Seite die Schaltfläche im Menü anklickst.&& &&Um den Rest des Handbuchs zu entdecken, klicke bitte auf die Schaltfläche weiter unten.",
 			"adopt": "La première chose que vous devez faire sur DinoRPG est d'adopter un Dinoz. Pour cela vous disposez de **200.000** :gold: (pièces d'or) obtenues lors de la création de votre compte. && && En cliquant sur **ACHETER UN DINOZ** dans le Menu de gauche, vous pourrez accéder à la Boutique des Dinoz. Chaque Dinoz est unique et chaque jour cette boutique vous proposera une sélection de Dinoz parmi lesquels vous pourrez choisir celui qui vous plaît le plus. && && Chaque Dinoz est présenté de la façon suivante :",
 			"adopt2": "Vous pouvez voir une image du Dinoz, sa **Race** et son Prix. Il existe différentes races de Dinoz, chacune ayant ses propres spécificités. En particulier, les valeurs des **5 éléments** indiquées lors de l'achat dépendent de la race du Dinoz, et certaines races disposent d'une **compétence supplémentaire**. Ces deux points influencent le **combat** comme nous le verrons plus tard. Le prix varie aussi en fonction de la race du Dinoz, certaines races étant plus rares et donc plus chères. && && Dans un premier temps, choisissez le Dinoz que vous préférez et achetez-le.",
 			"name": "Une fois votre Dinoz acheté, il vous est demandé de lui donner un Nom, comme par exemple ici :",
@@ -4271,16 +4276,16 @@
 			"fight2-2": "Effectuer une **attaque spéciale**, qui remplace alors l'assaut",
 			"fight2-3": "Utiliser une compétence de type **évènement**",
 			"fight2-4": "Utiliser un **équipement de combat**",
-			"fight3": "Les Éléments",
+			"fight3": "Die Elemente",
 			"fight3-1": "Un Dinoz possède 5 valeurs d'**éléments** qui sont indiqués sur sa fiche :",
-			"fight3-1-1": "Feu",
-			"fight3-1-2": "Bois",
-			"fight3-1-3": "Eau",
-			"fight3-1-4": "Foudre",
-			"fight3-1-5": "Air",
+			"fight3-1-1": "Feuer",
+			"fight3-1-2": "Holz",
+			"fight3-1-3": "Wasser",
+			"fight3-1-4": "Blitz",
+			"fight3-1-5": "Luft",
 			"fight3-2": "Ces éléments sont organisés selon le **Grand Cycle des éléments** :",
 			"fight3-3": "Un élément est contre les deux qui le suivent et faible contre les deux qui le précèdent. Ainsi, par exemple, le Feu est très fort contre le Bois et plutôt fort contre l'Eau, mais est très faible contre l'Air et plutôt faible contre la Foudre.",
-			"fight4": "Les Assauts",
+			"fight4": "Die Angriffe",
 			"fight4-1": "Les Assauts se font toujours dans un ordre bien précis, qui est déterminé en fonction des valeurs des éléments, avec un tirage aléatoire en cas d'égalité.",
 			"fight4-2": "Ainsi, un Dinoz ayant les éléments ci-dessus va effectuer ses assauts dans l'ordre suivant :",
 			"fight4-2-1": ":water: Eau en premier",
@@ -4288,13 +4293,13 @@
 			"fight4-2-3": "puis :foudre: Foudre et :air: Air dans un ordre indéterminé",
 			"fight4-2-4": "et enfin :feu: Feu",
 			"fight4-3": "Une fois les 5 assauts effectués, le Dinoz recommencera à nouveau le cycle. && && En fonction de ses **éléments** et de ses **compétences**, le Dinoz a donc une certaine **puissance d'assaut** ainsi qu'une **défense** pour chaque élément. Ces caractéristiques sont visibles dans l'onglet **Détails** de la fiche du Dinoz. && && Plus la **puissance d'assaut** d'un élément est forte et plus le Dinoz fera perdre des points de vie à ses adversaires quand il effectuera un assaut de cet élément. Plus la **défense** contre un élément est forte et plus le Dinoz sera protégé contre les attaques des adversaires effectuées avec cet élément.",
-			"fight5": "Les Monstres ",
+			"fight5": "Die Monster",
 			"fight5-1": "De nombreux monstres effectuent des assauts de l'élément Vide. Cela veut dire que tous vos éléments sont pris en compte lors de la défense. Cependant, certains monstres sont capable d'effectuer des assauts ou des attaques spéciales d'un élément particulier.",
-			"fight6": "Einnahmen:",
+			"fight6": "Einnahmen",
 			"fight6-1": "Nach dem Kampf erhalten deine Dinoz **Goldstücke** :gold:, die es ihnen ermöglichen, sich zu heilen, sowie **Erfahrungspunkte**, die es ihnen ermöglichen, Stufen aufzusteigen.",
-			"fight7": "Energie:",
+			"fight7": "Energie",
 			"fight7-1": "Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le dinoz détient. _L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance._ && && Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres. && && Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de **récupération**. _La récupération d'un Dinoz peut varier en fonction de certaines compétences apprises._ Le Dinoz doit donc attendre d'avoir refait le plein d'énergie avant de lancer une compétence.",
-			"fight8": "Kampfstatus",
+			"fight8": "Die Kampfstatus",
 			"fight8-1": "Pendant le combat, différents statuts affecteront vos Dinoz, en bonus ou en malus, vous pouvez retrouver la liste de ses statuts ci-dessous :",
 			"fight8-1-1": "_Le Dinoz est endormi, il ne peut pas bouger_",
 			"fight8-1-2": "_Le Dinoz ne peut être touché par un assaut classique_",
@@ -4361,7 +4366,7 @@
 			"dojos3-3": "Sur la page Tournoi, vous pourrez sélectionner les Dinoz qui participeront au Tournoi, vous ne pourrez pas les changer entre les combats des phases finales. Le tournoi commence au moment où les phases éliminatoires se terminent. && && Les joueurs s'étant qualifiés pour un tournoi, ne pourront pas participer au tournoi suivant. Ils pourront cependant retenter leur chance à l'édition suivante.",
 			"dojos4": "...Kampfverlauf:",
 			"dojos4-1": "Ce bouton permet d'accéder aux défis que vous aurez effectués, vous pourrez ainsi revoir ces combats à loisirs.",
-			"dojos5": "Questions diverses",
+			"dojos5": "Diverse Fragen",
 			"dojos5-1": "**Créer un Dojo est-il gratuit ?** Non, la création de votre Dojo vous coûtera un certain nombre de pièces d'or. Mais pas d'inquiétudes, vos combats quotidiens vous faisant gagner de l'or, il ne vous faudra pas bien longtemps avant de pouvoir créer votre édifice de Maître.",
 			"dojos5-2": "**Comment customiser son Dojo ?** Vous avez remarqué le bouton ? Alors vous avez aussi dû remarquer qu'il n'est pas actif pour le moment... En effet, nous travaillons sur cette fonctionnalité, donc un peu de patience.",
 			"dojos5-3": "**Quelle est la fréquence des Tournois Inter-Dojos ?** Tous les mois, au lendemain de la finale du tournoi précédent, une nouvelle phase de qualifications commence. Elle se terminera toujours le dernier jour du mois à minuit, et les jours suivants se passent les phases éliminatoires pour les 256 dojos qualifiés.",
@@ -4369,7 +4374,7 @@
 			"dojos5-5": "**Comment gagner un oeuf de Toufufu ?** Il faut que votre Dojo fasse parti des 50 premiers du classement des Dojos à la fin du mois pour gagner cette récompense.",
 			"dojos5-6": "**Je ne suis pas là tous les jours, comment faire tous mes défis ?** Si vous ne faites pas vos 50 défis dans la journée, ils se cumuleront avec les 50 défis ajoutés le lendemain sans limite de cumul.",
 			"gdc": "Les Clans peuvent aussi s'affronter les uns aux autres lors de la Guerre des Clans ! En voici les principes et les règles :",
-			"gdc1": "Le Trésor du Clan",
+			"gdc1": "Schatzkammer des Klans",
 			"gdc1-1": "Chaque Clan possède un Trésor qui correspond à la valeur des ingrédients à disposition dans le Clan. && && Pour remplir le Trésor du Clan, chaque membre peut donner tout ou partie de ses ingrédients recueillis lors de ses actions de collecte. À partir de la page Ingrédients dans le menu de droite, vous aurez accès à un bouton permettant de 'Donner au Clan'. && && Le trésor a différentes utilités, les voici :",
 			"gdc1-2": "_La construction/reconstruction du Château_",
 			"gdc1-3": "_La déclaration de guerre contre un autre Clan_",
@@ -4393,7 +4398,7 @@
 			"cdc2": "Bataille",
 			"cdc2-1": "Une Bataille est lancée lorsque deux clans s'affrontent. Une bataille a une durée de _3 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte. && && Une Bataille se déroule dans un lieu donné. Vous devrez déplacer vos Dinoz à ce lieu pour qu'ils puissent y participer. Un joueur peut avoir jusqu'à _3 Dinoz_ dans une Bataille, et dans tous les cas un Clan ne peut avoir plus de _45 Dinoz_ dans une Bataille. && && Voici une vue de Bataille simplifiée :",
 			"cdc2-2": "En haut, vous pouvez voir le **score** actuel de la Bataille et en bas le temps restant avant la fin de la Bataille. && && Les Dinoz qui ont rejoint la Bataille peuvent se déplacer d'une case, ils doivent ensuite attendre un certain nombre de minutes avant de pouvoir effectuer à nouveau un déplacement. Il est possible de cumuler des actions si vous ne les utilisez pas tout de suite. && && Vous pouvez cliquer sur un Dinoz pour pouvoir le déplacer ou savoir à qui il appartient. Seule le propriétaire d'un Dinoz peut le déplacer. && && _Nous rappelons que le prêt de compte entre joueurs est interdit et qu'en cas de violation du règlement tous les comptes concernés seront définitivement bloqués._ && && Une bonne organisation entre les membres du Clan est donc nécessaire pour remporter la victoire.",
-			"cdc3": "Score",
+			"cdc3": "Punkte",
 			"cdc3-1": "Comme vous pouvez le voir sur l'affichage de la bataille, chaque Clan dispose d'une **ligne de score**, bleue pour le Clan de gauche et rouge pour le Clan de droite. && && Toutes les _15 minutes_, chaque Clan marque autant de points que l'avancement de sa ligne de score. Ainsi, dans l'exemple ci-dessus, le Clan de gauche (ligne bleue) va remporter 2 points et le Clan de droite (ligne rouge) 4 points. && && La ligne de score est positionnée de la façon suivante : elle indique la position du premier Dinoz du Clan qui n'a pas été dépassé par un Dinoz du Clan adverse. && && **Attention !** Un Dinoz adverse peut ainsi effectuer une percée qui va repousser votre ligne de score, ce qui vous empêchera de marquer des points lors du prochain calcul. && && Rappel : une Bataille a une durée de _3 jours_ et à la fin le Clan ayant le meilleur **score** l'emporte.",
 			"cdc4": "Combats",
 			"cdc4-1": "Si un Dinoz essaie de se déplacer sur l'emplacement occupé par un Dinoz adverse, un combat s'engage. Tous les Dinoz des 10 cases autour des deux combattants participent au combat, selon le schéma suivant :",
@@ -4401,11 +4406,11 @@
 			"questions": "Si vous avez des questions, des problèmes ou des suggestions à faire à l'équipe de DinoRPG, merci tout d'abord de prendre le temps de lire les différentes réponses proposées ci-dessous :",
 			"questions1": "**Qui a créé DinoRPG ?** Motion Twin ! Le studio indépendant a été fondé en 2001 et a créé plus de 150 jeux Web. Aujourd'hui Motion Twin doit son renouveau à Dead Cells, jeu sorti en 2017 sur PC, consoles et smartphones.",
 			"questions2": "**Pourquoi le jeu a-t-il été arrêté par Motion Twin ?** Motion Twin a arrêté de développer leurs jeux en ligne lorsqu'Adobe a cessé de mettre à jour Flash Player en 2020. Motion Twin a arrêté l'intégralité de ses jeux web et de Twinoid en Novembre 2023.",
-			"questions3": "**Gibt es Dino-RPG etwa immer noch?** Ja, dank EternalTwin. Dieses Projekt ist von Spielern ins Leben gerufen worden, die beschlossen hatten, diese Art von Spielen zu retten und das vollständige Verschwinden dieses gemeinsamen Videospielerbes zu verhindern.",
+			"questions3": "**Gibt es Dino-RPG etwa immer noch?** Ja, dank Eternaltwin. Dieses Projekt ist von Spielern ins Leben gerufen worden, die beschlossen hatten, diese Art von Spielen zu retten und das vollständige Verschwinden dieses gemeinsamen Videospielerbes zu verhindern.",
 			"questions4": "**DinoRPG est-t-il gratuit ?** Oui, DinoRPG est un jeu gratuit.",
 			"questions5": "**Comment obtenir plus de pièces d'or ?** Vos Dinoz pourront récupérer des pièces d'or chaque jour en combattant, ou en validant leurs missions. De plus, chaque jour vous obtiendrez un Ticket Quotidien qui vous permettra de récupérer de l'or ou une Boîte contenant divers objets, oeufs de Dinoz. Ou tout simplement vendre vos ingrédients au Marchand Ambulant.",
 			"questions6": "**Comment recommencer le jeu ?** En cas de problème, vous pouvez recommencer le jeu depuis le début. Pour cela il vous suffit d'aller dans la section **Mon Compte / Modifier mes Infos** de façon à effectuer une remise à zéro de votre compte. Il est aussi possible de se désinscrire à partir de cette page.",
-			"questions7": "Bei Problemen, Fehlern oder Vorschlägen kontaktiere uns bitte im EternalTwin-Discord.",
+			"questions7": "Bei Problemen, Fehlern oder Vorschlägen kontaktiere uns bitte im Eternaltwin-Discord.",
 			"support": "Vider son cache",
 			"support-1": "Avant toute autre chose, pensez à essayer de **vider le cache** de votre navigateur Internet ! Cette opération simple peut solutionner bon nombre de problèmes techniques.",
 			"support1": "Sur Microsoft Edge :",
@@ -4421,7 +4426,7 @@
 			"support3-1": "Cliquez sur 'Plus', et choisissez 'Effacer les données de navigation'",
 			"support3-2": "Sélectionnez 'Images et fichiers en cache' et cliquez sur 'Effacer les données'",
 			"support4": "Demander de l'aide",
-			"support4-1": "Die Antworten auf Fragen findet man oft direkt auf dem **EternalTwin-Discord**.&& &&Falls nicht, stelle deine Fragen und jemand aus der Gemeinschaft wird dir sicher helfen.",
+			"support4-1": "Die Antworten auf Fragen findet man oft direkt auf dem **Eternaltwin-Discord**.&& &&Falls nicht, stelle deine Fragen und jemand aus der Gemeinschaft wird dir sicher helfen.",
 			"security": "Sécurité de mon compte",
 			"security-1": "**Egal, wer fragt**...&& &&**Niemals** deine Einlogdaten oder Passwörter weitergeben!"
 		}
@@ -4612,7 +4617,7 @@
 		},
 		"arguments": "Verdeutliche, weshalb du es unangemessen findest.",
 		"report": "Reporter le contenu",
-		"cancel": "Annuler",
+		"cancel": "Abbrechen",
 		"error": "Vous devez spécifier une raison et une explication à votre complainte.",
 		"errorDinoz": "Vous devez spécifier un dinoz à reporter",
 		"success": "Plainte envoyée avec succès.",
