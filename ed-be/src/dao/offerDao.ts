@@ -1,4 +1,4 @@
-import { MARKET_OFFER_DURATION, MARKET_OFFER_DURATION_DEBUG } from '@drpg/core/constants';
+import { MARKET_OFFER_DURATION } from '@drpg/core/constants';
 import { OfferStatus, Prisma, Offer } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
