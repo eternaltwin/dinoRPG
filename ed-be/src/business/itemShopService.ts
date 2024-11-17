@@ -25,11 +25,9 @@ import { Player } from '@drpg/prisma';
  * @return Array<ItemFiche>
  */
 export async function getItemsFromShop(req: Request): Promise<ItemShopFiche[]> {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const playerId = req.auth.playerId;
+	const playerId = authed.id;
 	const shopId = +req.params.shopId;
 	const tempShop = Object.values(shopList).find(shop => shop.shopId === shopId);
 

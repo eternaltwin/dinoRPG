@@ -368,14 +368,15 @@ export async function getDinozFiche(req: Request) {
  * @param req.params.id {string} DinozId
  */
 export async function getDinozSkill(req: Request) {
+	const authed = await auth(req);
 	const dinozId: number = parseInt(req.params.id);
 	const dinozSkillData = await getDinozSkillRequest(dinozId);
 	if (!dinozSkillData) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 
-	if (!dinozSkillData.player || !req.auth || dinozSkillData.player.id !== req.auth.playerId) {
-		throw new ExpectedError(`Dinoz ${dinozSkillData.id} doesn't belong to player ${req.auth?.playerId}`);
+	if (!dinozSkillData.player || dinozSkillData.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${dinozSkillData.id} doesn't belong to player ${authed.id}`);
 	}
 
 	return toSkillDetails(dinozSkillData);
@@ -516,6 +517,7 @@ export async function setDinozName(req: Request) {
  * @return boolean
  */
 export async function setSkillState(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const skillToUpdate = +req.body.skillId;
 	const skillStateToUpdate = !!req.body.skillState;
@@ -536,8 +538,8 @@ export async function setSkillState(req: Request) {
 	}
 
 	// Check if dinoz belongs to player who do the request
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+	if (!dinoz.player || dinoz.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
 	}
 
 	// Check if dinoz can change his skills
@@ -699,6 +701,7 @@ export async function betaMove(req: Request) {
 }
 
 export async function resurrectDinoz(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 
 	// Retrieve player from dinozId
@@ -709,7 +712,7 @@ export async function resurrectDinoz(req: Request) {
 	}
 
 	// If player found is different from player who do the request, throw exception
-	if (!dinozData.player || !req.auth || dinozData.player.id !== req.auth.playerId) {
+	if (!dinozData.player || dinozData.player.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`);
 	}
 
@@ -801,12 +804,11 @@ export async function digWithDinoz(req: Request) {
 }
 
 export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.params.type.toString().toLowerCase());
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-	const playerId = +req.auth.playerId;
+
+	const playerId = +authed.id;
 	const player = await getDinozGatherData(dinozId, playerId);
 	if (!player) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
@@ -844,7 +846,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	let myGrid = playerGrid.filter(grid => grid.place === place.placeId).find(grid => grid.type === idOfTypeOfGrid);
 
 	if (!myGrid) {
-		myGrid = await createGrid(initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace));
+		myGrid = await createGrid(initializeGatherGrid(authed.id, place.placeId, gatherPlace));
 	}
 
 	// Generate a new one if all box are empty
@@ -853,7 +855,7 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 			player.id,
 			dinozId,
 			myGrid.id,
-			initializeGatherGrid(req.auth.playerId, place.placeId, gatherPlace)
+			initializeGatherGrid(authed.id, place.placeId, gatherPlace)
 		);
 	}
 
@@ -871,12 +873,11 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 }
 
 export async function gatherWithDinoz(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.body.type.toString().toLowerCase());
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-	const playerId = +req.auth.playerId;
+
+	const playerId = +authed.id;
 	const player = await getDinozGatherData(dinozId, playerId);
 	if (!player) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
@@ -1058,12 +1059,9 @@ export async function gatherWithDinoz(req: Request) {
  * Get data needed for the /manage page
  */
 export async function getDinozToManage(req: Request) {
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
+	const authed = await auth(req);
 
-	const playerId = req.auth.playerId;
+	const playerId = authed.id;
 
 	// Get player rewards
 	const rewards = await getPlayerRewards(playerId);
@@ -1086,10 +1084,7 @@ export async function getDinozToManage(req: Request) {
  * Update a player dinoz order
  */
 export async function updateOrders(req: Request) {
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
+	const authed = await auth(req);
 
 	const order = req.body.order;
 
@@ -1097,7 +1092,7 @@ export async function updateOrders(req: Request) {
 		throw new ExpectedError('Order is not an array');
 	}
 
-	const playerId = req.auth.playerId;
+	const playerId = authed.id;
 
 	// Get player rewards
 	const rewards = await getPlayerRewards(playerId);
@@ -1124,12 +1119,10 @@ export async function updateOrders(req: Request) {
  * Follow a dinoz
  */
 export async function followDinoz(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const dinozToFollowId = +req.params.targetId;
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-	const playerId = +req.auth.playerId;
+	const playerId = +authed.id;
 
 	const player_dinoz = await getDinozFicheRequest(dinozId, playerId);
 	const player_leader = await getDinozFicheRequest(dinozToFollowId, playerId);
@@ -1163,7 +1156,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId, dinozToFollowId))) {
+	if (!(await ownsDinoz(authed.id, dinozId, dinozToFollowId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 
@@ -1179,15 +1172,11 @@ export async function followDinoz(req: Request) {
  * Unfollow a dinoz
  */
 export async function unfollowDinoz(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
-
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+	if (!(await ownsDinoz(authed.id, dinozId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 
@@ -1196,15 +1185,11 @@ export async function unfollowDinoz(req: Request) {
 }
 
 export async function disband(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
-
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+	if (!(await ownsDinoz(authed.id, dinozId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 	const dinoz = await getFollowingDinoz(dinozId);
@@ -1268,15 +1253,11 @@ export async function useIrma(req: Request) {
 }
 
 export async function frozeDinoz(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
-
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+	if (!(await ownsDinoz(authed.id, dinozId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 
@@ -1348,16 +1329,12 @@ export async function unfrozeDinoz(req: Request) {
 }
 
 export async function restDinoz(req: Request) {
+	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const start = req.body.start as boolean;
 
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
-
 	// Check if the player owns the dinoz
-	if (!(await ownsDinoz(req.auth.playerId, dinozId))) {
+	if (!(await ownsDinoz(authed.id, dinozId))) {
 		throw new ExpectedError('Player does not own this dinoz');
 	}
 

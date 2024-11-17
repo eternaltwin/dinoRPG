@@ -40,25 +40,23 @@ import gameConfig from '../config/game.config.js';
  * @return Player
  */
 export async function getCommonData(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
-	const playerCommonData = await getCommonDataRequest(req.auth.playerId);
+	const authed = await auth(req);
+	const playerCommonData = await getCommonDataRequest(authed.id);
 	if (!playerCommonData) {
-		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
 	// Check if it's the first login of the day
 	if (!dayjs().isSame(playerCommonData.lastLogin, 'day')) {
 		// Add 1 daily ticket
-		await increaseItemQuantity(req.auth.playerId, Item.DAILY_TICKET, 1);
+		await increaseItemQuantity(authed.id, Item.DAILY_TICKET, 1);
 
 		// Update completion
 		const completion = await calculatePlayerPower(playerCommonData.id);
-		await updateCompletion(req.auth.playerId, completion);
+		await updateCompletion(authed.id, completion);
 
 		// Update last login: refresh Labrute flag and daily grid reward limit
-		await setPlayer(req.auth.playerId, { lastLogin: new Date(), labruteDone: false, dailyGridRewards: gameConfig.general.dailyGridRewards});
+		await setPlayer(authed.id, { lastLogin: new Date(), labruteDone: false, dailyGridRewards: gameConfig.general.dailyGridRewards});
 
 		// Tik bracelet regen
 		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>
@@ -82,7 +80,7 @@ export async function getCommonData(req: Request) {
 		}
 
 		// Update stat
-		await setSpecificStat(StatTracking.P_DAYS, req.auth.playerId, 1);
+		await setSpecificStat(StatTracking.P_DAYS, authed.id, 1);
 		await createLog(LogType.PlayerConnected, playerCommonData.id, undefined, playerCommonData.name.toString());
 	}
 
@@ -99,7 +97,7 @@ export async function getCommonData(req: Request) {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PDA),
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI)
 		},
-		admin: req.auth.isAdmin || false,
+		admin: req?.auth?.isAdmin || false,
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper
 	};
@@ -207,11 +205,9 @@ export async function searchPlayers(req: Request) {
 }
 
 export async function getDinozList(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const playerId: number = req.auth.playerId;
+	const playerId: number = authed.id;
 	const dinozActive = await getAllDinozFicheLite(playerId);
 	if (!dinozActive) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
@@ -226,11 +222,9 @@ export async function getDinozList(req: Request) {
  * @return boolean
  */
 export async function canCreateClan(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const canCreateClan = await getCanCreateClanRequest(req.auth.playerId);
+	const canCreateClan = await getCanCreateClanRequest(authed.id);
 	return canCreateClan;
 }
 
@@ -240,11 +234,9 @@ export async function canCreateClan(req: Request) {
  * @return boolean
  */
 export async function canJoinClan(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const canJoinClan = await getCanJoinClanRequest(req.auth.playerId);
+	const canJoinClan = await getCanJoinClanRequest(authed.id);
 	return canJoinClan;
 }
 
@@ -255,11 +247,9 @@ export async function canJoinClan(req: Request) {
  * @return boolean
  */
 export async function isPlayerLeaderOfClan(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const isPlayerLeaderOfClan = await isPlayerLeaderOfClanRequest(req.auth.playerId, Number(req.params.id));
+	const isPlayerLeaderOfClan = await isPlayerLeaderOfClanRequest(authed.id, Number(req.params.id));
 	return isPlayerLeaderOfClan;
 }
 
