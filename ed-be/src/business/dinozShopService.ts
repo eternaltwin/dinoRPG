@@ -4,7 +4,7 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
+import { auth, getPlayerDinozShopRequest, getPlayerRewardsRequest } from '../dao/playerDao.js';
 import { createMultipleDinoz } from '../dao/playerDinozShopDao.js';
 import { getRandomLetter, getRandomNumber } from '../utils/index.js';
 import { getRace } from '@drpg/core/utils/DinozUtils';
@@ -19,14 +19,13 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 // TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
+
 	// Retrieve player with dinoz shop info
-	const playerData = await getPlayerDinozShopRequest(req.auth.playerId);
+	const playerData = await getPlayerDinozShopRequest(authed.id);
 
 	if (!playerData) {
-		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
 	// If nothing is found, create 15 (?) dinoz to fill the shop
@@ -47,10 +46,10 @@ export async function getDinozFromDinozShop(req: Request) {
 		];
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
-		const player = await getPlayerRewardsRequest(req.auth.playerId);
+		const player = await getPlayerRewardsRequest(authed.id);
 
 		if (!player) {
-			throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
+			throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 		}
 
 		player.rewards.forEach(playerReward => {

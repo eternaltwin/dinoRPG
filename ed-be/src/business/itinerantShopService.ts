@@ -22,11 +22,9 @@ import { ItemShopType } from '@drpg/core/models/shop/ShopFiche';
  * @return Array<IngredientFiche>
  */
 export async function getIngredientsFromItinerantShop(req: Request): Promise<IngredientFiche[]> {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
+	const authed = await auth(req);
 
-	const playerId = req.auth.playerId;
+	const playerId = authed.id;
 	const dinozId = +req.params.dinozId;
 
 	const player = await getDinozItinerantShop(dinozId, playerId);

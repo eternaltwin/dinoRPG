@@ -5,6 +5,7 @@ import {
 	getImportedPlayerSpecificSiteStat
 } from '../dao/importDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { auth } from '../dao/playerDao.js';
 
 export async function displayTwinoidSite(req: Request) {
 	const playerId = +req.params.id;
@@ -26,10 +27,8 @@ export async function displayTwinoidSpecificSite(req: Request) {
 			score: site.score
 		}));
 	} else {
-		if (!req.auth?.playerId) {
-			throw new ExpectedError(`You are not logged in.`);
-		}
-		const playerSite = await getImportedPlayerSpecificSiteAchievements(req.auth.playerId, site);
+		const authed = await auth(req);
+		const playerSite = await getImportedPlayerSpecificSiteAchievements(authed.id, site);
 		return playerSite.map(site => ({
 			name: site.nameId,
 			requirement: site.requirement,

@@ -52,7 +52,7 @@ import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
  * @returns Array<Clan>
  */
 export async function getAllClans(req: Request) {
-	if (!req.auth?.playerId) throw new Error('No auth data');
+	const authed = await auth(req);
 	const page = +req.params.page;
 	const clans = await getAllClansRequest(page);
 	return clans;
@@ -65,7 +65,7 @@ export async function getAllClans(req: Request) {
  * @returns Array<Clan>
  */
 export async function getRankingClans(req: Request) {
-	if (!req.auth?.playerId) throw new Error('No auth data');
+	const authed = await auth(req);
 	const page = +req.params.page;
 	const clans = await getRankingClansRequest(page);
 	return clans;
@@ -79,7 +79,7 @@ export async function getRankingClans(req: Request) {
  * @returns Array<Clan>
  */
 export async function searchClanByName(req: Request) {
-	if (!req.auth?.playerId) throw new Error('No auth data');
+	const authed = await auth(req);
 
 	const clans = await searchClansByNameRequest(req.params.name, Number(req.params.page));
 
@@ -93,7 +93,7 @@ export async function searchClanByName(req: Request) {
  * @returns Clan
  */
 export async function getClan(req: Request) {
-	if (!req.auth?.playerId) throw new Error('No auth data');
+	const authed = await auth(req);
 	const clan = await getClanRequest(Number(req.params.id));
 	return clan;
 }
@@ -105,7 +105,7 @@ export async function getClan(req: Request) {
  * @returns Array of clanMembers
  */
 export async function getClanMembers(req: Request) {
-	if (!req.auth?.playerId) throw new Error('No auth data');
+	const authed = await auth(req);
 	const members = await getClanMembersListRequest(Number(req.params.id));
 	return members;
 }
@@ -143,18 +143,16 @@ export async function createClan(req: Request) {
  * @returns Clan
  */
 export async function joinClan(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const canCreate: boolean = await canJoinClan(req);
 	if (!canCreate) {
-		throw new ExpectedError(`Player ${req.auth.playerId} doesn't fill conditions to join a clan`);
+		throw new ExpectedError(`Player ${authed.id} doesn't fill conditions to join a clan`);
 	}
 
-	await removeMoney(req.auth.playerId, CLAN_JOIN_MONEY);
+	await removeMoney(authed.id, CLAN_JOIN_MONEY);
 
-	const clan = await joinClanRequest(Number(req.params.id), req.auth?.playerId);
+	const clan = await joinClanRequest(Number(req.params.id), authed.id);
 	return clan;
 }
 
@@ -165,9 +163,7 @@ export async function joinClan(req: Request) {
  * @returns Clan
  */
 export async function acceptJoinRequest(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const fullClanRequest = await clanJoinRequest(+req.params.id);
 	if (!fullClanRequest) {
@@ -180,7 +176,7 @@ export async function acceptJoinRequest(req: Request) {
 
 	const hasRight = await playerHasRightRequest(
 		fullClanRequest.clanId,
-		req.auth.playerId,
+		authed.id,
 		ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS
 	);
 
@@ -199,11 +195,9 @@ export async function acceptJoinRequest(req: Request) {
  * @returns Clan
  */
 export async function denyJoinRequest(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
-	await addMoney(req.auth.playerId, CLAN_JOIN_MONEY);
+	await addMoney(authed.id, CLAN_JOIN_MONEY);
 
 	const deny = await denyPlayerJoinRequest(Number(req.params.id));
 	return deny;
@@ -215,11 +209,10 @@ export async function denyJoinRequest(req: Request) {
  * @returns Clan
  */
 export async function getJoinRequest(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
+
 	//TODO : pas besoin de playerId en param vu qu'on l'a dans requ.auth.playerId
-	const joinRequest = await getPlayerJoinRequest(Number(req.auth.playerId));
+	const joinRequest = await getPlayerJoinRequest(Number(authed.id));
 	return joinRequest;
 }
 
@@ -230,9 +223,7 @@ export async function getJoinRequest(req: Request) {
  * @returns Clan
  */
 export async function getJoinRequestslist(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const deny = await getPlayerJoinListRequest(Number(req.params.id));
 	return deny;
@@ -245,13 +236,11 @@ export async function getJoinRequestslist(req: Request) {
  * @returns Clan
  */
 export async function deleteClan(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const isPlayerLeader: boolean = await isPlayerLeaderOfClan(req);
 	if (!isPlayerLeader) {
-		throw new ExpectedError(`Player ${req.auth.playerId} is not leader of clan ${req.params.id}`);
+		throw new ExpectedError(`Player ${authed.id} is not leader of clan ${req.params.id}`);
 	}
 
 	const clan = await deleteClanRequest(Number(req.params.id));
@@ -266,15 +255,14 @@ export async function deleteClan(req: Request) {
  * @returns Clan
  */
 export async function updateClanBanner(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
+
 	if (!req.file) {
 		throw new ExpectedError(`No file`);
 	}
 	const clanId = +req.params.id;
 
-	const hasRight = await playerHasRightRequest(clanId, Number(req.auth?.playerId), ClanMemberRight.CLAN_EDIT_BANNER);
+	const hasRight = await playerHasRightRequest(clanId, Number(authed.id), ClanMemberRight.CLAN_EDIT_BANNER);
 
 	if (!hasRight) {
 		throw new ExpectedError(
@@ -309,13 +297,11 @@ export async function getClanBanner(req: Request) {
  * @returns member
  */
 export async function getClanMember(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.params.clanId),
-		Number(req.auth?.playerId),
+		Number(authed.id),
 		ClanMemberRight.MEMBER_EDIT
 	);
 	if (!hasRight) {
@@ -337,13 +323,11 @@ export async function getClanMember(req: Request) {
  * @returns member
  */
 export async function updateClanMember(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.params.clanId),
-		Number(req.auth?.playerId),
+		Number(authed.id),
 		ClanMemberRight.MEMBER_EDIT
 	);
 	if (!hasRight) {
@@ -370,13 +354,11 @@ export async function updateClanMember(req: Request) {
  * @returns member
  */
 export async function excludeClanMember(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.params.clanId),
-		Number(req.auth?.playerId),
+		Number(authed.id),
 		ClanMemberRight.MEMBER_EXCLUDE
 	);
 	if (!hasRight) {
@@ -396,11 +378,9 @@ export async function excludeClanMember(req: Request) {
  * @returns member
  */
 export async function leaveClanSelf(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
-	const member = await leaveClanSelfRequest(Number(req.auth?.playerId));
+	const member = await leaveClanSelfRequest(Number(authed.id));
 
 	return member;
 }
@@ -412,11 +392,9 @@ export async function leaveClanSelf(req: Request) {
  * @returns member
  */
 export async function getClanPages(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
-	const pages = await getClanPagesListRequest(Number(req.auth.playerId), Number(req.params.clanId));
+	const pages = await getClanPagesListRequest(Number(authed.id), Number(req.params.clanId));
 
 	return pages;
 }
@@ -428,11 +406,9 @@ export async function getClanPages(req: Request) {
  * @returns member
  */
 export async function getClanPage(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
-	const page = await getClanPageRequest(Number(req.auth.playerId), Number(req.params.id));
+	const page = await getClanPageRequest(Number(authed.id), Number(req.params.id));
 
 	return page;
 }
@@ -447,15 +423,13 @@ export async function getClanPage(req: Request) {
  * @returns Page
  */
 export async function createClanPage(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const isPublic = Boolean(req.body.isPublic);
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.body.clanId),
-		Number(req.auth?.playerId),
+		Number(authed.id),
 		ClanMemberRight.PAGE_MANAGE
 	);
 	if (!hasRight) {
@@ -476,13 +450,11 @@ export async function createClanPage(req: Request) {
  * @returns page
  */
 export async function deleteClanPage(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.params.clanId),
-		Number(req.auth?.playerId),
+		Number(authed.id),
 		ClanMemberRight.PAGE_MANAGE
 	);
 	if (!hasRight) {
@@ -506,13 +478,11 @@ export async function deleteClanPage(req: Request) {
  * @returns page
  */
 export async function updateClanPage(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.params.clanId),
-		Number(req.auth?.playerId),
+		Number(authed.id),
 		ClanMemberRight.PAGE_MANAGE
 	);
 	if (!hasRight) {
@@ -534,11 +504,9 @@ export async function updateClanPage(req: Request) {
  * @returns messages list
  */
 export async function getClanMessages(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
-	const messages = await getClanMessagesRequest(req.auth.playerId, Number(req.params.id), Number(req.params.page));
+	const messages = await getClanMessagesRequest(authed.id, Number(req.params.id), Number(req.params.page));
 	return messages;
 }
 
@@ -550,11 +518,9 @@ export async function getClanMessages(req: Request) {
  * @returns Clan
  */
 export async function getClanHistory(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
-	const messages = await getClanHistoryRequest(req.auth.playerId, Number(req.params.id), Number(req.params.page));
+	const messages = await getClanHistoryRequest(authed.id, Number(req.params.id), Number(req.params.page));
 	return messages;
 }
 
@@ -566,15 +532,13 @@ export async function getClanHistory(req: Request) {
  * @returns boolean
  */
 export async function getPlayerHasRight(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const rightString = req.params.right as keyof typeof ClanMemberRight;
 
 	const hasRight = await playerHasRightRequest(
 		Number(req.params.clanId),
-		req.auth.playerId,
+		authed.id,
 		ClanMemberRight[rightString]
 	);
 	return hasRight;
@@ -587,9 +551,7 @@ export async function getPlayerHasRight(req: Request) {
  * @returns Clan
  */
 export async function getClanMessagesCount(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const count = await getClanMessagesCountRequest(Number(req.params.id));
 
@@ -603,9 +565,7 @@ export async function getClanMessagesCount(req: Request) {
  * @returns Clan
  */
 export async function getClanHistoryCount(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const count = await getClanHistoryCountRequest(Number(req.params.id));
 
@@ -620,21 +580,19 @@ export async function getClanHistoryCount(req: Request) {
  * @returns void
  */
 export async function giveClanIngredients(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 	const clanId = +req.params.id;
 	const clan = await getClanMembersListRequest(clanId);
 
-	if (!clan || !clan.some(p => p.player.id === req.auth?.playerId)) {
+	if (!clan || !clan.some(p => p.player.id === authed.id)) {
 		throw new ExpectedError(`Player is not in the clan`);
 	}
 
 	const ingredients = req.body.ingredients as ShopDTO[];
-	const playerIngredients = await getAllIngredientsDataRequest(req.auth.playerId);
+	const playerIngredients = await getAllIngredientsDataRequest(authed.id);
 	// Throw an exception if the player doesn't exist
 	if (!playerIngredients) {
-		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
 	// Lock negative quantities
@@ -650,13 +608,13 @@ export async function giveClanIngredients(req: Request) {
 
 	const promises = [];
 	promises.push(updateClanTreasure(clanId, gold));
-	promises.push(updateClanContribution(req.auth.playerId, gold));
+	promises.push(updateClanContribution(authed.id, gold));
 	for (const ingredient of ingredients) {
 		const playerIngredient = playerIngredients.find(i => i.ingredientId === ingredient.itemId);
 		if (!playerIngredient || playerIngredient.quantity - ingredient.quantity < 0) {
 			throw new ExpectedError(translate(`wrongQuantity`));
 		}
-		promises.push(decreaseIngredientQuantity(req.auth.playerId, ingredient.itemId, ingredient.quantity));
+		promises.push(decreaseIngredientQuantity(authed.id, ingredient.itemId, ingredient.quantity));
 		promises.push(upsertClanIngredients(clanId, ingredient.itemId, ingredient.quantity));
 	}
 
@@ -671,14 +629,12 @@ export async function giveClanIngredients(req: Request) {
  * @returns Clan
  */
 export async function getClanTreasureDetails(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const clanId = +req.params.id;
 	const clan = await getClanMembersListRequest(clanId);
 
-	if (!clan || !clan.some(p => p.player.id === req.auth?.playerId)) {
+	if (!clan || !clan.some(p => p.player.id === authed.id)) {
 		throw new ExpectedError(`Player is not in the clan`);
 	}
 

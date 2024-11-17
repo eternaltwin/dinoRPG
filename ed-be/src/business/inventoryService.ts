@@ -45,11 +45,8 @@ import translate from '../utils/translate.js';
  * @param req
  */
 export async function getAllItemsData(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized.`);
-	}
-
-	const playerId: number = req.auth.playerId;
+	const authed = await auth(req);
+	const playerId: number = authed.id;
 
 	// Get the player's data (shopKeeper)
 	const playerInventoryData = await getPlayerInventoryDataRequest(playerId);

@@ -1,14 +1,11 @@
 import { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { getPlayerInfoToReport } from '../dao/playerDao.js';
+import { auth, getPlayerInfoToReport } from '../dao/playerDao.js';
 import { ModerationReason } from '@drpg/prisma';
 import { createModeration, getModeration } from '../dao/moderationDao.js';
 
 export async function getPlayerToReport(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-
+	await auth(req);
 	const playerToReport = await getPlayerInfoToReport(+req.params.id);
 
 	if (!playerToReport) {
@@ -18,10 +15,7 @@ export async function getPlayerToReport(req: Request) {
 }
 
 export async function reportPlayer(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
-
+	const authed = await auth(req);
 	const playerToReport = await getPlayerInfoToReport(+req.params.id);
 
 	if (!playerToReport) {
@@ -32,15 +26,13 @@ export async function reportPlayer(req: Request) {
 		throw new ExpectedError('Invalid reason.');
 	}
 
-	await createModeration(req.auth.playerId, playerToReport.id, req.body.reason, req.body.comment, req.body.dinozId);
+	await createModeration(authed.id, playerToReport.id, req.body.reason, req.body.comment, req.body.dinozId);
 
 	return;
 }
 
 export async function getAllModeration(req: Request) {
-	if (!req.auth?.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	await auth(req);
 
 	const page = +req.params.page;
 
