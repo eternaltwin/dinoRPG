@@ -599,8 +599,6 @@ export default defineComponent({
 @media (max-width: 510px) {
 	.actions {
 		width: 95%;
-		margin-left: 3px;
-		margin-right: 3px;
 		.action_content {
 			display: flex;
 			flex-direction: row;

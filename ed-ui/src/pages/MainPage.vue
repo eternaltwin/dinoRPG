@@ -2,6 +2,7 @@
 	<div class="dinorpg">
 		<div id="centerHeader" v-if="loaded">
 			<a @click="goToNews()" class="linkHome"></a>
+			<LeftPanel />
 			<div id="centerContent">
 				<Router-view />
 			</div>
@@ -12,17 +13,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-// import LeftPanel from '../components/common/LeftPanel.vue';
 import { playerStore, dinozStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
+import LeftPanel from '../components/common/LeftPanel.vue';
 
 export default defineComponent({
 	name: 'MainPage',
-	/*components: {
-		LeftPanel
-	},*/
+	components: { LeftPanel },
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -91,14 +90,29 @@ export default defineComponent({
 		url('../assets/background/full_core_bg.webp') repeat-y;
 	background-position-x: calc(50% + 247px);
 	background-position-y: top;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
 	.linkHome {
+		grid-area: top;
 		cursor: pointer;
 		height: 11rem;
 		width: 100%;
 		max-width: 540px;
+	}
+}
+@media (min-width: 875px) {
+	#centerHeader {
+		display: grid;
+		grid-template-areas: 'left top .' 'left center .';
+		padding-top: 15px;
+		height: 250px;
+		grid-template-columns: 1fr 540px 1fr;
+		grid-template-rows: 110px 1fr;
+	}
+}
+@media (max-width: 875px) {
+	#centerHeader {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
 	}
 }
 
@@ -110,6 +124,7 @@ export default defineComponent({
 	min-height: 128px;
 }
 #centerContent {
+	grid-area: center;
 	width: 100%;
 	max-width: 540px;
 	display: flex;

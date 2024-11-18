@@ -1,10 +1,9 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`" />
-	<div style="width: auto">
-		<div class="section">
-			<div class="titlePage">
-				<h3>{{ $t(`gather.action.${gatherType}`) }}</h3>
-			</div>
+
+	<div class="section">
+		<div class="titlePage">
+			<h3>{{ $t(`gather.action.${gatherType}`) }}</h3>
 		</div>
 	</div>
 	<div class="disclaimer" v-if="loaded">
@@ -170,6 +169,7 @@ export default defineComponent({
 	overflow: hidden;
 	border: 10px solid transparent;
 	border-image: url('../assets/gather/border.webp') 30 stretch;
+	align-self: center;
 }
 
 .row {

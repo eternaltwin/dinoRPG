@@ -69,10 +69,6 @@
 		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>
-		<a class="button" @click="goToPage('DinozGenerator')">
-			{{ $t('button.generator') }}
-		</a>
-		<a class="button" v-if="isDevEnv()" @click="goToPage('DinozWithoutFlash')"> Dinoz display </a>
 	</div>
 </template>
 
@@ -230,9 +226,10 @@ export default defineComponent({
 	}
 }
 #accountList {
-	float: left;
-	padding-left: 60px;
-	padding-top: 35px;
+	grid-area: left;
+	justify-self: end;
+	margin-top: 20px;
+	margin-right: 20px;
 	max-width: min-content;
 	display: flex;
 	flex-direction: column;
@@ -344,7 +341,11 @@ export default defineComponent({
 		}
 	}
 }
-
+@media (max-width: 875px) {
+	#accountList {
+		display: none;
+	}
+}
 .place {
 	padding: 2px;
 	background-color: #fbdca5;

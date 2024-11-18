@@ -42,7 +42,7 @@ export default defineComponent({
 	// height: 77px !important;
 	display: flex;
 	flex-direction: column;
-	max-width: 223px;
+	//max-width: 223px;
 	// flex-wrap: wrap;
 	//background: linear-gradient(180deg, rgba(186, 107, 66, 1) 0%, rgba(211, 152, 96, 1) 100%);
 	background:
@@ -83,7 +83,7 @@ export default defineComponent({
 }
 @media (max-width: 510px) {
 	.fx {
-		width: 100%;
+		width: calc(100% - 2px);
 		cursor: pointer;
 		.status {
 			display: none;

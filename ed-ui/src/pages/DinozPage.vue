@@ -194,7 +194,7 @@ export default defineComponent({
 }
 @media (max-width: 510px) {
 	.dinoz {
-		grid-template-columns: [first] 1% [line1] 26% [line2] 8% [line3] 13% [line3] 2%[line4] 13% [line5] 8% [line6] 26% [line7] 1% [end];
+		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
 		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
 		column-gap: 0;
 		row-gap: 0;
