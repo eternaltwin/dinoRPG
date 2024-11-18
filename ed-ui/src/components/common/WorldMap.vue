@@ -262,7 +262,6 @@ export default defineComponent({
 	height: 250px;
 	overflow: hidden;
 	position: relative;
-	width: 300px;
 }
 .full_map {
 	position: relative;

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<!-- Dinoz 1 -->
-		<DinozSWF :display="display" :width="190" :height="165" type="dino" class="avatar" v-if="showDinoz"></DinozSWF>
+		<DinozSWF :display="display" :width="190" :height="165" type="dino" class="avatar" v-show="showDinoz"></DinozSWF>
 		<p>CHK : {{ display }}</p>
 		<br />
 		<div>
@@ -16,7 +16,7 @@
 
 	<div>
 		<!-- Dinoz 2 -->
-		<DinozSWF :display="display2" :width="190" :height="165" type="dino" class="avatar" v-if="showDinoz"></DinozSWF>
+		<DinozSWF :display="display2" :width="190" :height="165" type="dino" class="avatar" v-show="showDinoz"></DinozSWF>
 		<p>CHK : {{ display2 }}</p>
 		<br />
 		<div>

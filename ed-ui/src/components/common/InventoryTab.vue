@@ -218,7 +218,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .inventory {
-	margin: 5px;
+	width: 95%;
 	table {
 		width: 100%;
 		margin-top: 10px;

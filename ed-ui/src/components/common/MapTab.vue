@@ -61,9 +61,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .placeDesc {
-	margin: 0px;
 	padding: 0px;
-	margin-top: 5px;
 	padding: 5px;
 	font-size: 9pt;
 	line-height: 10.5pt;
@@ -73,16 +71,14 @@ export default defineComponent({
 	cursor: help;
 	background-color: #cd8956;
 	border-radius: 10px;
-	margin-left: 5px;
-	max-width: 295px;
+	max-width: 95%;
 }
 .boxMap {
 	display: block;
-	width: 300px;
+	width: 95%;
 	border: 1px solid #874b2e;
 	outline: 2px solid #cc8557;
 	padding: 1px;
-	margin-left: 5px;
 }
 .placeName {
 	display: block;

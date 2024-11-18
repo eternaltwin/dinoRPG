@@ -3,7 +3,7 @@
 	<div class="section">
 		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
 	</div>
-	<div v-if="loaded" class="content">
+	<div v-show="loaded" class="content">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
 			<template #fallback> <Loading /> </template>

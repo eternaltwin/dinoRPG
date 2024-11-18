@@ -4,20 +4,20 @@
 	</div>
 	<div class="dinoz" v-if="nameChoosen === true">
 		<Suspense
-			><DinozDisplay v-if="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
+			><DinozDisplay v-show="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
 		></Suspense>
 	</div>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
-			v-if="isReady"
+			v-show="isReady"
 			:updateActions="updateActions"
 			:dinoz="dinozData"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
 			:key="dinozData"
 		/>
-		<TabPanel v-if="isReady" :dinozData="dinozData" :key="dinozData" />
-		<div class="footer" />
+		<TabPanel v-show="isReady" :dinozData="dinozData" :key="dinozData" />
+		<!--		<div class="footer" />-->
 	</div>
 </template>
 
@@ -154,12 +154,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .dinozPanels {
-	background-image: url('../assets/design/dinoz_panels_bg.webp');
+	//background-image: url('../assets/design/dinoz_panels_bg.webp');
 	background-repeat: repeat-y;
 	display: flex;
 	flex-wrap: wrap;
-	position: relative;
-	top: -11px;
 
 	// For futur implementation of header div
 	// .header {
@@ -180,6 +178,7 @@ export default defineComponent({
 	//min-height: 265px;
 	display: grid;
 	padding-top: 15px;
+	height: 250px;
 	grid-template-columns: [first] 180px [line1] 225px [line2] 100px [end];
 	grid-template-rows: [first] 40px [row1] 40px [row2] 100px [row3] 40px [row4] 30px [end];
 	column-gap: 2px;
@@ -200,6 +199,7 @@ export default defineComponent({
 		column-gap: 0;
 		row-gap: 0;
 		width: 100%;
+		height: auto;
 		grid-template-areas:
 			'. . name name name name name . .'
 			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
@@ -208,6 +208,26 @@ export default defineComponent({
 			'. elements elements elements elements elements elements elements .'
 			'. . . . . . . . .'
 			'. status status status status status status status .';
+		margin-bottom: 5px;
+	}
+	.dinozPanels {
+		//background-image: url('../assets/design/dinoz_panels_bg.webp');
+		background-repeat: repeat-y;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 5px;
+
+		// For futur implementation of header div
+		// .header {
+		// 	flex-grow: 100%;
+		// 	height: 24px;
+		// 	width: 100%;
+		// 	background-image: url(../../assets/design/dinoz_footer.webp);
+		// }
+		.footer {
+			display: none;
+		}
 	}
 }
 </style>

@@ -218,7 +218,15 @@ const router = createRouter({
 			path: '/:pathMatch(.*)',
 			redirect: '/'
 		}
-	]
+	] /*,
+	scrollBehavior(to, from, savedPosition) {
+		console.log(savedPosition)
+		if (savedPosition) {
+			return savedPosition;
+		} else {
+			return { left: 0, top: 0 };
+		}
+	}*/
 });
 
 router.beforeEach(to => {

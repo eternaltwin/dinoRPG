@@ -5,73 +5,75 @@
 		<div class="actions_top">
 			<p>{{ $t('layout.action') }}</p>
 		</div>
-		<template v-for="didi in dinozFullParty" :key="didi">
-			<MissionHUDVue
-				v-if="didi.missionHUD"
-				:missionId="didi.missionId"
-				:dinozName="didi.name"
-				:dinozId="didi.id"
-				@abort="endMission(didi.id)"
-			/>
-		</template>
-		<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
-		<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
-			{{ $t('following') }}
-			<template #content>
-				{{ $t(`follow`, { leader: leaderDinoz.name }) }}
-			</template>
-		</Tippy>
-		<DZDisclaimer
-			v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST)"
-			:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
-			timer
-		></DZDisclaimer>
-		<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
-		<Tippy
-			tag="div"
-			theme="normal"
-			class="action"
-			v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW)"
-			:key="action"
-			:id="action.imgName"
-			@click="launch(action)"
-		>
-			<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
-			<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}</p>
-			<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}</p>
-			<p v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION">
-				{{ $t(`missions.actions.terminate`) }}
-			</p>
-			<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>
-			<p v-else>{{ $t(`action.name.${action.name}`) }}</p>
-			<template #content>
-				<h1 v-if="action.name === 'shop'" v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))" />
-				<h1 v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.name.${npcDisplayName(action.prop)}`))" />
-				<h1
-					v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
-					v-html="formatContent($t(`missions.actions.terminate`))"
-				/>
-				<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
-				<h1
-					v-else-if="action.name !== 'npc' && action.name !== 'shop'"
-					v-html="formatContent($t(`action.name.${action.name}`))"
-				/>
-				<p
-					v-if="action.name === 'shop'"
-					v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
-				/>
-				<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
-				<p
-					v-else-if="action.name === 'mission'"
-					v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
-				/>
-				<p
-					v-else-if="action.name !== 'npc' && action.name !== 'shop'"
-					v-html="formatContent($t(`action.description.${action.name}`))"
+		<div class="action_content">
+			<template v-for="didi in dinozFullParty" :key="didi">
+				<MissionHUDVue
+					v-if="didi.missionHUD"
+					:missionId="didi.missionId"
+					:dinozName="didi.name"
+					:dinozId="didi.id"
+					@abort="endMission(didi.id)"
 				/>
 			</template>
-		</Tippy>
-		<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
+			<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
+			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
+				{{ $t('following') }}
+				<template #content>
+					{{ $t(`follow`, { leader: leaderDinoz.name }) }}
+				</template>
+			</Tippy>
+			<DZDisclaimer
+				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST)"
+				:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
+				timer
+			></DZDisclaimer>
+			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
+			<Tippy
+				tag="div"
+				theme="normal"
+				class="action"
+				v-for="action in dinoz.actions?.filter(a => a.name !== Action.FOLLOW)"
+				:key="action"
+				:id="action.imgName"
+				@click="launch(action)"
+			>
+				<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
+				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}</p>
+				<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}</p>
+				<p v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION">
+					{{ $t(`missions.actions.terminate`) }}
+				</p>
+				<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>
+				<p v-else>{{ $t(`action.name.${action.name}`) }}</p>
+				<template #content>
+					<h1 v-if="action.name === 'shop'" v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))" />
+					<h1 v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.name.${npcDisplayName(action.prop)}`))" />
+					<h1
+						v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
+						v-html="formatContent($t(`missions.actions.terminate`))"
+					/>
+					<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
+					<h1
+						v-else-if="action.name !== 'npc' && action.name !== 'shop'"
+						v-html="formatContent($t(`action.name.${action.name}`))"
+					/>
+					<p
+						v-if="action.name === 'shop'"
+						v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
+					/>
+					<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
+					<p
+						v-else-if="action.name === 'mission'"
+						v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
+					/>
+					<p
+						v-else-if="action.name !== 'npc' && action.name !== 'shop'"
+						v-html="formatContent($t(`action.description.${action.name}`))"
+					/>
+				</template>
+			</Tippy>
+			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
+		</div>
 	</div>
 </template>
 
@@ -543,14 +545,16 @@ export default defineComponent({
 		url('../../assets/background/banniere_middle.webp') repeat-x,
 		url('../../assets/background/banniere_right.webp') no-repeat;
 	background-position-x: left, center, right;
-	float: left;
-	left: 12px;
-	top: -14px;
-	position: relative;
-	width: 185px;
+	background-color: #d19860;
+	background-size: auto;
+	box-shadow: inset 0 0 1px 2px #d3a76a;
+	border-style: hidden solid solid solid;
+	border-width: 0 1px 1px 1px;
+	border-color: #9f5841;
+	//float: left;
+	//width: 185px;
 	min-height: 90px;
 	color: white;
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: 0.2rem;
@@ -581,16 +585,34 @@ export default defineComponent({
 			color: white;
 			padding-left: 2px;
 			font-size: 7.5pt;
-			position: absolute;
-			top: -1.5px;
 			text-shadow: 0.5px 0 1px grey;
 			text-transform: uppercase;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
 			font-weight: bold;
 		}
 	}
-}
 
+	.action_content {
+		margin-bottom: 5px;
+	}
+}
+@media (max-width: 510px) {
+	.actions {
+		width: 95%;
+		margin-left: 3px;
+		margin-right: 3px;
+		.action_content {
+			display: flex;
+			flex-direction: row;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 0.2rem;
+			.action {
+				width: 46%;
+			}
+		}
+	}
+}
 .selling {
 	margin-right: 1px;
 }

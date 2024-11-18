@@ -110,12 +110,10 @@ export default defineComponent({
 	min-height: 128px;
 }
 #centerContent {
-	//display: flex;
-	//flex-wrap: nowrap;
-	//margin-left: 30px;
 	width: 100%;
 	max-width: 540px;
 	display: flex;
 	flex-direction: column;
+	//gap: 10px;
 }
 </style>
