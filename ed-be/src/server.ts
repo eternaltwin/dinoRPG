@@ -25,6 +25,7 @@ import { RawData, WebSocketServer } from 'ws';
 import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 import { IncomingMessage } from 'http';
+import { checkBans } from './cron/checkBans.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -80,6 +81,7 @@ export function main(cx: ServerContext) {
 	healRestingDinoz().start();
 	healDinozFount().start();
 	itinerantMerchant().start();
+	checkBans().start();
 
 	scheduleOffersExpiration();
 

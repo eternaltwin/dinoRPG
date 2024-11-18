@@ -19,7 +19,14 @@ import {
 import { apiRoutes } from '../constants/index.js';
 import { checkIsAdmin } from '../utils/jwt.js';
 import sendError from '../utils/sendErrors.js';
-import { getAllModeration } from '../business/moderationService.js';
+import {
+	banPlayer,
+	cancelBan,
+	getPaginatedBannedPlayers,
+	getAllModeration,
+	takeActionOnReport,
+	updateBan
+} from '../business/moderationService.js';
 
 const routes: Router = Router();
 
@@ -311,6 +318,111 @@ routes.get(
 		try {
 			const response = await getAllModeration(req);
 			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/moderation/:id`,
+	[
+		param('id').exists().toInt().isNumeric(),
+		body('action').exists().isString().isIn(['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan'])
+	],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await takeActionOnReport(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/ban/:page`,
+	[param('page').exists().isNumeric()],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getPaginatedBannedPlayers(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.post(
+	`${commonPath}/ban/:id`,
+	[
+		param('id').exists().toInt().isNumeric(),
+		body('action').exists().isString().isIn(['shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
+		body('reason').exists().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
+		body('comment').exists().isString(),
+		body('dinozId').optional().toInt().isNumeric()
+	],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await banPlayer(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/updateBan/:id`,
+	[
+		param('id').exists().toInt().isNumeric(),
+		body('action').optional().isString().isIn(['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
+		body('reason').optional().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
+		body('comment').optional().isString(),
+		body('dinozId').optional({ nullable: true }).toInt().isNumeric()
+	],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await updateBan(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/cancelBan/:id`,
+	[param('id').exists().toInt().isNumeric()],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await cancelBan(req);
+			return res.status(200).send();
 		} catch (err) {
 			sendError(res, err);
 		}

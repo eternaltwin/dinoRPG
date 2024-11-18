@@ -1,10 +1,12 @@
 import { AdminRole } from '@drpg/prisma';
+import { ModerationAdminType } from '../admin/ModerationType.mjs';
 
 export interface Player {
 	id: number;
 	hasImported: boolean;
 	name: string;
 	eternalTwinId: string;
+	banCase: ModerationAdminType;
 	money: number;
 	quetzuBought: number;
 	dailyGridRewards: number;

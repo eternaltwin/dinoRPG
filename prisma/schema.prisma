@@ -45,6 +45,15 @@ enum ModerationReason {
   customText
 }
 
+enum ModerationAction {
+  closed
+  warning
+  shortBan
+  mediumBan
+  longBan
+  infiniteBan
+}
+
 model Dinoz {
   id                 Int                    @id(map: "PK_297ca7f55b56853c204d8301fb6") @default(autoincrement())
   leader             Dinoz?                 @relation("DinozFollowers", fields: [leaderId], references: [id])
@@ -203,6 +212,8 @@ model NPC {
 model Player {
   id                   Int                @id(map: "PK_65edadc946a7faf4b638d5e8885") @default(autoincrement())
   hasImported          Boolean
+  banCase              Moderation?        @relation("AcceptedBan", fields: [banCaseId], references: [id])
+  banCaseId            Int?               @unique
   customText           String?
   name                 String             @db.VarChar
   eternalTwinId        String             @db.VarChar
@@ -582,16 +593,19 @@ model ClanPage {
 }
 
 model Moderation {
-  id         Int              @id @default(autoincrement())
+  id         Int               @id @default(autoincrement())
   reporterId Int
-  reporter   Player           @relation("ReporterRelation", fields: [reporterId], references: [id])
+  reporter   Player            @relation("ReporterRelation", fields: [reporterId], references: [id])
   targetId   Int
-  target     Player           @relation("TargetRelation", fields: [targetId], references: [id])
+  target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
   dinozId    Int?
-  dinoz      Dinoz?           @relation(fields: [dinozId], references: [id])
+  dinoz      Dinoz?            @relation(fields: [dinozId], references: [id])
   reason     ModerationReason
   comment    String
-  sorted     Boolean          @default(false)
+  sorted     ModerationAction?
+  bannedUser Player?           @relation("AcceptedBan")
+  banDate    DateTime?
+  banEndDate DateTime?
 }
 
 model Conversation {

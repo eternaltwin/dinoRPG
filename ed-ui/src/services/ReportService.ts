@@ -9,7 +9,7 @@ export const ReportService = {
 	},
 	reportPlayer(playerId: number, reason: string, comment: string, dinozId?: number) {
 		return http()
-			.put(`/moderation/player/${playerId}`, {
+			.post(`/moderation/player/${playerId}`, {
 				reason: reason,
 				comment: comment,
 				dinozId: dinozId

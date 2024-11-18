@@ -4639,6 +4639,15 @@
 			"dinozName": "Nom de Dinoz inapproprié",
 			"multi": "Ce joueur utilise plusieurs comptes"
 		},
+		"sorted": {
+			"open": "À traiter",
+			"closed": "Fermé",
+			"warning": "Avertissement",
+			"shortBan": "Ban court",
+			"mediumBan": "Ban moyen",
+			"longBan": "Ban long",
+			"infiniteBan": "Ban infini"
+		},
 		"arguments": "Précisez en quoi vous trouver cela innaproprié.",
 		"report": "Reporter le contenu",
 		"cancel": "Annuler",

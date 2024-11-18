@@ -15,7 +15,7 @@ const itinerantMerchant = () => {
 			await setSpecificSecret('itinerant', weekPlace.placeId.toString());
 			LOGGER.log(`Itinerant merchant is at ${weekPlace.name}`);
 		} catch (err) {
-			console.error(`Cannot heal resting dinoz: ${err}`);
+			console.error(`Cannot set itinerant merchant place: ${err}`);
 		}
 	});
 };

@@ -4,7 +4,6 @@ import dayjs from 'dayjs';
 import { prisma } from '../prisma.js';
 import { LOGGER } from '../context.js';
 
-// Truncate table 'player_dinoz_shop' at midnight
 const healRestingDinoz = () => {
 	const CronJob = cron.CronJob;
 

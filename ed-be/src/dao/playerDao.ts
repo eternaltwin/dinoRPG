@@ -1,5 +1,5 @@
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
+import { LogType, Moderation, ModerationAction, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 import { AdminRole } from '@drpg/prisma';
@@ -53,12 +53,17 @@ export async function auth(request: Request) {
 		},
 		select: {
 			id: true,
-			lang: true
+			lang: true,
+			banCase: true
 		}
 	});
 
 	if (!user) {
 		throw new ExpectedError('User not found');
+	}
+
+	if (user.banCase) {
+		throw new ExpectedError('Action forbidden: you have been banned');
 	}
 
 	return user;
@@ -339,6 +344,7 @@ export async function getAllInformationFromPlayer(playerId: number) {
 			id: playerId
 		},
 		include: {
+			banCase: true,
 			items: true,
 			ingredients: true,
 			rewards: true,
@@ -916,6 +922,74 @@ export async function getClanIdAndNameFromPlayerId(playerId: number) {
 		},
 		where: {
 			id: playerId
+		}
+	});
+}
+
+export async function getPlayerBanInfo(playerId: number) {
+	return await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			name: true,
+			banCase: true
+		}
+	});
+}
+
+export async function getAllBannedPlayers() {
+	return await prisma.player.findMany({
+		where: {
+			NOT: {
+				banCase: null
+			}
+		},
+		select: {
+			id: true,
+			name: true,
+			banCase: {
+				select: {
+					id: true,
+					sorted: true,
+					banDate: true,
+					banEndDate: true
+				}
+			}
+		}
+	});
+}
+
+export async function getBannedPlayers(page: number) {
+	const skip = (page - 1) * 20;
+	const take = 20;
+
+	return await prisma.player.findMany({
+		skip: skip,
+		take: take,
+		orderBy: {
+			banCase: {
+				banDate: 'desc'
+			}
+		},
+		where: {
+			NOT: {
+				banCase: null
+			}
+		},
+		select: {
+			id: true,
+			name: true,
+			banCase: {
+				select: {
+					id: true,
+					reason: true,
+					sorted: true,
+					banDate: true,
+					banEndDate: true
+				}
+			}
 		}
 	});
 }

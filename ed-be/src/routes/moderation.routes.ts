@@ -26,7 +26,7 @@ routes.get(
 	}
 );
 
-routes.put(
+routes.post(
 	`${commonPath}/player/:id`,
 	[
 		param('id').exists().toInt().isNumeric(),

@@ -19,6 +19,8 @@ import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { AdminRole } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { ModerationReasonFront } from '@drpg/core/models/enums/ModerationReasonFront';
+import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -464,6 +466,7 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 	const playerToSend = {
 		id: player.id,
 		hasImported: player.hasImported,
+		banCase: player.banCase as ModerationAdminType,
 		customText: player.customText,
 		name: player.name,
 		eternalTwinId: player.eternalTwinId,

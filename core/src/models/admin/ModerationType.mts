@@ -1,13 +1,26 @@
 import { Player } from '../player/Player.mjs';
 import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 import { ModerationReasonFront } from '../enums/ModerationReasonFront.mjs';
+import { ModerationActionFront } from '../enums/ModerationActionFront.mjs';
 
 export type ModerationType = {
 	id: number;
-	sorted: boolean;
+	sorted: ModerationActionFront;
 	reason: ModerationReasonFront;
 	comment: string;
 	reporter: Pick<Player, 'id' | 'name'>;
 	target: Pick<Player, 'id' | 'name' | 'customText'>;
 	dinoz?: Pick<DinozFiche, 'id' | 'name'>;
+};
+
+export type ModerationAdminType = {
+	id: number;
+	targetId: number;
+	reporterId: number;
+	comment: string;
+	reason: ModerationReasonFront;
+	sorted?: ModerationActionFront;
+	dinozId?: number;
+	banDate?: Date;
+	banEndDate?: Date;
 };

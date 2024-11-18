@@ -228,6 +228,7 @@ exports.Prisma.NPCScalarFieldEnum = {
 exports.Prisma.PlayerScalarFieldEnum = {
   id: 'id',
   hasImported: 'hasImported',
+  banCaseId: 'banCaseId',
   customText: 'customText',
   name: 'name',
   eternalTwinId: 'eternalTwinId',
@@ -444,7 +445,9 @@ exports.Prisma.ModerationScalarFieldEnum = {
   dinozId: 'dinozId',
   reason: 'reason',
   comment: 'comment',
-  sorted: 'sorted'
+  sorted: 'sorted',
+  banDate: 'banDate',
+  banEndDate: 'banEndDate'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {
@@ -578,6 +581,15 @@ exports.ModerationReason = exports.$Enums.ModerationReason = {
   accountName: 'accountName',
   avatar: 'avatar',
   customText: 'customText'
+};
+
+exports.ModerationAction = exports.$Enums.ModerationAction = {
+  closed: 'closed',
+  warning: 'warning',
+  shortBan: 'shortBan',
+  mediumBan: 'mediumBan',
+  longBan: 'longBan',
+  infiniteBan: 'infiniteBan'
 };
 
 exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {

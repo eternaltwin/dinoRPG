@@ -263,6 +263,18 @@ export const ModerationReason: {
 export type ModerationReason = (typeof ModerationReason)[keyof typeof ModerationReason]
 
 
+export const ModerationAction: {
+  closed: 'closed',
+  warning: 'warning',
+  shortBan: 'shortBan',
+  mediumBan: 'mediumBan',
+  longBan: 'longBan',
+  infiniteBan: 'infiniteBan'
+};
+
+export type ModerationAction = (typeof ModerationAction)[keyof typeof ModerationAction]
+
+
 export const OfferStatus: {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
@@ -357,6 +369,10 @@ export const PantheonMotif: typeof $Enums.PantheonMotif
 export type ModerationReason = $Enums.ModerationReason
 
 export const ModerationReason: typeof $Enums.ModerationReason
+
+export type ModerationAction = $Enums.ModerationAction
+
+export const ModerationAction: typeof $Enums.ModerationAction
 
 export type OfferStatus = $Enums.OfferStatus
 
@@ -17139,6 +17155,7 @@ export namespace Prisma {
 
   export type PlayerAvgAggregateOutputType = {
     id: number | null
+    banCaseId: number | null
     money: number | null
     quetzuBought: number | null
     dailyGridRewards: number | null
@@ -17148,6 +17165,7 @@ export namespace Prisma {
 
   export type PlayerSumAggregateOutputType = {
     id: number | null
+    banCaseId: number | null
     money: number | null
     quetzuBought: number | null
     dailyGridRewards: number | null
@@ -17158,6 +17176,7 @@ export namespace Prisma {
   export type PlayerMinAggregateOutputType = {
     id: number | null
     hasImported: boolean | null
+    banCaseId: number | null
     customText: string | null
     name: string | null
     eternalTwinId: string | null
@@ -17186,6 +17205,7 @@ export namespace Prisma {
   export type PlayerMaxAggregateOutputType = {
     id: number | null
     hasImported: boolean | null
+    banCaseId: number | null
     customText: string | null
     name: string | null
     eternalTwinId: string | null
@@ -17214,6 +17234,7 @@ export namespace Prisma {
   export type PlayerCountAggregateOutputType = {
     id: number
     hasImported: number
+    banCaseId: number
     customText: number
     name: number
     eternalTwinId: number
@@ -17243,6 +17264,7 @@ export namespace Prisma {
 
   export type PlayerAvgAggregateInputType = {
     id?: true
+    banCaseId?: true
     money?: true
     quetzuBought?: true
     dailyGridRewards?: true
@@ -17252,6 +17274,7 @@ export namespace Prisma {
 
   export type PlayerSumAggregateInputType = {
     id?: true
+    banCaseId?: true
     money?: true
     quetzuBought?: true
     dailyGridRewards?: true
@@ -17262,6 +17285,7 @@ export namespace Prisma {
   export type PlayerMinAggregateInputType = {
     id?: true
     hasImported?: true
+    banCaseId?: true
     customText?: true
     name?: true
     eternalTwinId?: true
@@ -17290,6 +17314,7 @@ export namespace Prisma {
   export type PlayerMaxAggregateInputType = {
     id?: true
     hasImported?: true
+    banCaseId?: true
     customText?: true
     name?: true
     eternalTwinId?: true
@@ -17318,6 +17343,7 @@ export namespace Prisma {
   export type PlayerCountAggregateInputType = {
     id?: true
     hasImported?: true
+    banCaseId?: true
     customText?: true
     name?: true
     eternalTwinId?: true
@@ -17433,6 +17459,7 @@ export namespace Prisma {
   export type PlayerGroupByOutputType = {
     id: number
     hasImported: boolean
+    banCaseId: number | null
     customText: string | null
     name: string
     eternalTwinId: string
@@ -17480,6 +17507,7 @@ export namespace Prisma {
   export type PlayerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     hasImported?: boolean
+    banCaseId?: boolean
     customText?: boolean
     name?: boolean
     eternalTwinId?: boolean
@@ -17503,6 +17531,7 @@ export namespace Prisma {
     lang?: boolean
     clanMemberId?: boolean
     leaderOfId?: boolean
+    banCase?: boolean | Player$banCaseArgs<ExtArgs>
     dinoz?: boolean | Player$dinozArgs<ExtArgs>
     dinozShop?: boolean | Player$dinozShopArgs<ExtArgs>
     gathers?: boolean | Player$gathersArgs<ExtArgs>
@@ -17535,6 +17564,7 @@ export namespace Prisma {
   export type PlayerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     hasImported?: boolean
+    banCaseId?: boolean
     customText?: boolean
     name?: boolean
     eternalTwinId?: boolean
@@ -17558,11 +17588,13 @@ export namespace Prisma {
     lang?: boolean
     clanMemberId?: boolean
     leaderOfId?: boolean
+    banCase?: boolean | Player$banCaseArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
   export type PlayerSelectScalar = {
     id?: boolean
     hasImported?: boolean
+    banCaseId?: boolean
     customText?: boolean
     name?: boolean
     eternalTwinId?: boolean
@@ -17588,8 +17620,9 @@ export namespace Prisma {
     leaderOfId?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "hasImported" | "customText" | "name" | "eternalTwinId" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "messie" | "matelasseur" | "labruteDone" | "dailyGridRewards" | "createdDate" | "updatedDate" | "lastLogin" | "role" | "lang" | "clanMemberId" | "leaderOfId", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "hasImported" | "banCaseId" | "customText" | "name" | "eternalTwinId" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "messie" | "matelasseur" | "labruteDone" | "dailyGridRewards" | "createdDate" | "updatedDate" | "lastLogin" | "role" | "lang" | "clanMemberId" | "leaderOfId", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    banCase?: boolean | Player$banCaseArgs<ExtArgs>
     dinoz?: boolean | Player$dinozArgs<ExtArgs>
     dinozShop?: boolean | Player$dinozShopArgs<ExtArgs>
     gathers?: boolean | Player$gathersArgs<ExtArgs>
@@ -17618,11 +17651,14 @@ export namespace Prisma {
     notifications?: boolean | Player$notificationsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    banCase?: boolean | Player$banCaseArgs<ExtArgs>
+  }
 
   export type $PlayerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Player"
     objects: {
+      banCase: Prisma.$ModerationPayload<ExtArgs> | null
       dinoz: Prisma.$DinozPayload<ExtArgs>[]
       dinozShop: Prisma.$PlayerDinozShopPayload<ExtArgs>[]
       gathers: Prisma.$PlayerGatherPayload<ExtArgs>[]
@@ -17653,6 +17689,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       hasImported: boolean
+      banCaseId: number | null
       customText: string | null
       name: string
       eternalTwinId: string
@@ -18040,6 +18077,7 @@ export namespace Prisma {
    */
   export interface Prisma__PlayerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    banCase<T extends Player$banCaseArgs<ExtArgs> = {}>(args?: Subset<T, Player$banCaseArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     dinoz<T extends Player$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     dinozShop<T extends Player$dinozShopArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozShopArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     gathers<T extends Player$gathersArgs<ExtArgs> = {}>(args?: Subset<T, Player$gathersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
@@ -18097,6 +18135,7 @@ export namespace Prisma {
   interface PlayerFieldRefs {
     readonly id: FieldRef<"Player", 'Int'>
     readonly hasImported: FieldRef<"Player", 'Boolean'>
+    readonly banCaseId: FieldRef<"Player", 'Int'>
     readonly customText: FieldRef<"Player", 'String'>
     readonly name: FieldRef<"Player", 'String'>
     readonly eternalTwinId: FieldRef<"Player", 'String'>
@@ -18375,6 +18414,10 @@ export namespace Prisma {
      */
     data: PlayerCreateManyInput | PlayerCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -18480,6 +18523,25 @@ export namespace Prisma {
      * Filter which Players to delete
      */
     where?: PlayerWhereInput
+  }
+
+  /**
+   * Player.banCase
+   */
+  export type Player$banCaseArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Moderation
+     */
+    select?: ModerationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Moderation
+     */
+    omit?: ModerationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ModerationInclude<ExtArgs> | null
+    where?: ModerationWhereInput
   }
 
   /**
@@ -44278,7 +44340,9 @@ export namespace Prisma {
     dinozId: number | null
     reason: $Enums.ModerationReason | null
     comment: string | null
-    sorted: boolean | null
+    sorted: $Enums.ModerationAction | null
+    banDate: Date | null
+    banEndDate: Date | null
   }
 
   export type ModerationMaxAggregateOutputType = {
@@ -44288,7 +44352,9 @@ export namespace Prisma {
     dinozId: number | null
     reason: $Enums.ModerationReason | null
     comment: string | null
-    sorted: boolean | null
+    sorted: $Enums.ModerationAction | null
+    banDate: Date | null
+    banEndDate: Date | null
   }
 
   export type ModerationCountAggregateOutputType = {
@@ -44299,6 +44365,8 @@ export namespace Prisma {
     reason: number
     comment: number
     sorted: number
+    banDate: number
+    banEndDate: number
     _all: number
   }
 
@@ -44325,6 +44393,8 @@ export namespace Prisma {
     reason?: true
     comment?: true
     sorted?: true
+    banDate?: true
+    banEndDate?: true
   }
 
   export type ModerationMaxAggregateInputType = {
@@ -44335,6 +44405,8 @@ export namespace Prisma {
     reason?: true
     comment?: true
     sorted?: true
+    banDate?: true
+    banEndDate?: true
   }
 
   export type ModerationCountAggregateInputType = {
@@ -44345,6 +44417,8 @@ export namespace Prisma {
     reason?: true
     comment?: true
     sorted?: true
+    banDate?: true
+    banEndDate?: true
     _all?: true
   }
 
@@ -44441,7 +44515,9 @@ export namespace Prisma {
     dinozId: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted: boolean
+    sorted: $Enums.ModerationAction | null
+    banDate: Date | null
+    banEndDate: Date | null
     _count: ModerationCountAggregateOutputType | null
     _avg: ModerationAvgAggregateOutputType | null
     _sum: ModerationSumAggregateOutputType | null
@@ -44471,9 +44547,12 @@ export namespace Prisma {
     reason?: boolean
     comment?: boolean
     sorted?: boolean
+    banDate?: boolean
+    banEndDate?: boolean
     reporter?: boolean | PlayerDefaultArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
+    bannedUser?: boolean | Moderation$bannedUserArgs<ExtArgs>
   }, ExtArgs["result"]["moderation"]>
 
   export type ModerationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -44484,6 +44563,8 @@ export namespace Prisma {
     reason?: boolean
     comment?: boolean
     sorted?: boolean
+    banDate?: boolean
+    banEndDate?: boolean
     reporter?: boolean | PlayerDefaultArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
@@ -44497,13 +44578,16 @@ export namespace Prisma {
     reason?: boolean
     comment?: boolean
     sorted?: boolean
+    banDate?: boolean
+    banEndDate?: boolean
   }
 
-  export type ModerationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reporterId" | "targetId" | "dinozId" | "reason" | "comment" | "sorted", ExtArgs["result"]["moderation"]>
+  export type ModerationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reporterId" | "targetId" | "dinozId" | "reason" | "comment" | "sorted" | "banDate" | "banEndDate", ExtArgs["result"]["moderation"]>
   export type ModerationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reporter?: boolean | PlayerDefaultArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
+    bannedUser?: boolean | Moderation$bannedUserArgs<ExtArgs>
   }
   export type ModerationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     reporter?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -44517,6 +44601,7 @@ export namespace Prisma {
       reporter: Prisma.$PlayerPayload<ExtArgs>
       target: Prisma.$PlayerPayload<ExtArgs>
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
+      bannedUser: Prisma.$PlayerPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -44525,7 +44610,9 @@ export namespace Prisma {
       dinozId: number | null
       reason: $Enums.ModerationReason
       comment: string
-      sorted: boolean
+      sorted: $Enums.ModerationAction | null
+      banDate: Date | null
+      banEndDate: Date | null
     }, ExtArgs["result"]["moderation"]>
     composites: {}
   }
@@ -44893,6 +44980,7 @@ export namespace Prisma {
     reporter<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     target<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     dinoz<T extends Moderation$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Moderation$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    bannedUser<T extends Moderation$bannedUserArgs<ExtArgs> = {}>(args?: Subset<T, Moderation$bannedUserArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -44928,7 +45016,9 @@ export namespace Prisma {
     readonly dinozId: FieldRef<"Moderation", 'Int'>
     readonly reason: FieldRef<"Moderation", 'ModerationReason'>
     readonly comment: FieldRef<"Moderation", 'String'>
-    readonly sorted: FieldRef<"Moderation", 'Boolean'>
+    readonly sorted: FieldRef<"Moderation", 'ModerationAction'>
+    readonly banDate: FieldRef<"Moderation", 'DateTime'>
+    readonly banEndDate: FieldRef<"Moderation", 'DateTime'>
   }
     
 
@@ -45312,6 +45402,25 @@ export namespace Prisma {
      */
     include?: DinozInclude<ExtArgs> | null
     where?: DinozWhereInput
+  }
+
+  /**
+   * Moderation.bannedUser
+   */
+  export type Moderation$bannedUserArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
   }
 
   /**
@@ -49773,6 +49882,7 @@ export namespace Prisma {
   export const PlayerScalarFieldEnum: {
     id: 'id',
     hasImported: 'hasImported',
+    banCaseId: 'banCaseId',
     customText: 'customText',
     name: 'name',
     eternalTwinId: 'eternalTwinId',
@@ -50064,7 +50174,9 @@ export namespace Prisma {
     dinozId: 'dinozId',
     reason: 'reason',
     comment: 'comment',
-    sorted: 'sorted'
+    sorted: 'sorted',
+    banDate: 'banDate',
+    banEndDate: 'banEndDate'
   };
 
   export type ModerationScalarFieldEnum = (typeof ModerationScalarFieldEnum)[keyof typeof ModerationScalarFieldEnum]
@@ -50318,6 +50430,20 @@ export namespace Prisma {
    * Reference to a field of type 'ModerationReason[]'
    */
   export type ListEnumModerationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationReason[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'ModerationAction'
+   */
+  export type EnumModerationActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationAction'>
+    
+
+
+  /**
+   * Reference to a field of type 'ModerationAction[]'
+   */
+  export type ListEnumModerationActionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationAction[]'>
     
 
 
@@ -51110,6 +51236,7 @@ export namespace Prisma {
     NOT?: PlayerWhereInput | PlayerWhereInput[]
     id?: IntFilter<"Player"> | number
     hasImported?: BoolFilter<"Player"> | boolean
+    banCaseId?: IntNullableFilter<"Player"> | number | null
     customText?: StringNullableFilter<"Player"> | string | null
     name?: StringFilter<"Player"> | string
     eternalTwinId?: StringFilter<"Player"> | string
@@ -51133,6 +51260,7 @@ export namespace Prisma {
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     clanMemberId?: IntNullableFilter<"Player"> | number | null
     leaderOfId?: IntNullableFilter<"Player"> | number | null
+    banCase?: XOR<ModerationNullableScalarRelationFilter, ModerationWhereInput> | null
     dinoz?: DinozListRelationFilter
     dinozShop?: PlayerDinozShopListRelationFilter
     gathers?: PlayerGatherListRelationFilter
@@ -51164,6 +51292,7 @@ export namespace Prisma {
   export type PlayerOrderByWithRelationInput = {
     id?: SortOrder
     hasImported?: SortOrder
+    banCaseId?: SortOrderInput | SortOrder
     customText?: SortOrderInput | SortOrder
     name?: SortOrder
     eternalTwinId?: SortOrder
@@ -51187,6 +51316,7 @@ export namespace Prisma {
     lang?: SortOrder
     clanMemberId?: SortOrderInput | SortOrder
     leaderOfId?: SortOrderInput | SortOrder
+    banCase?: ModerationOrderByWithRelationInput
     dinoz?: DinozOrderByRelationAggregateInput
     dinozShop?: PlayerDinozShopOrderByRelationAggregateInput
     gathers?: PlayerGatherOrderByRelationAggregateInput
@@ -51217,6 +51347,7 @@ export namespace Prisma {
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    banCaseId?: number
     clanMemberId?: number
     AND?: PlayerWhereInput | PlayerWhereInput[]
     OR?: PlayerWhereInput[]
@@ -51244,6 +51375,7 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     leaderOfId?: IntNullableFilter<"Player"> | number | null
+    banCase?: XOR<ModerationNullableScalarRelationFilter, ModerationWhereInput> | null
     dinoz?: DinozListRelationFilter
     dinozShop?: PlayerDinozShopListRelationFilter
     gathers?: PlayerGatherListRelationFilter
@@ -51270,11 +51402,12 @@ export namespace Prisma {
     createdConversations?: ConversationListRelationFilter
     Conversation?: ConversationListRelationFilter
     notifications?: NotificationListRelationFilter
-  }, "id" | "clanMemberId">
+  }, "id" | "banCaseId" | "clanMemberId">
 
   export type PlayerOrderByWithAggregationInput = {
     id?: SortOrder
     hasImported?: SortOrder
+    banCaseId?: SortOrderInput | SortOrder
     customText?: SortOrderInput | SortOrder
     name?: SortOrder
     eternalTwinId?: SortOrder
@@ -51311,6 +51444,7 @@ export namespace Prisma {
     NOT?: PlayerScalarWhereWithAggregatesInput | PlayerScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Player"> | number
     hasImported?: BoolWithAggregatesFilter<"Player"> | boolean
+    banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     customText?: StringNullableWithAggregatesFilter<"Player"> | string | null
     name?: StringWithAggregatesFilter<"Player"> | string
     eternalTwinId?: StringWithAggregatesFilter<"Player"> | string
@@ -52727,10 +52861,13 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Moderation"> | number | null
     reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
     comment?: StringFilter<"Moderation"> | string
-    sorted?: BoolFilter<"Moderation"> | boolean
+    sorted?: EnumModerationActionNullableFilter<"Moderation"> | $Enums.ModerationAction | null
+    banDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
+    banEndDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     reporter?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    bannedUser?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type ModerationOrderByWithRelationInput = {
@@ -52740,10 +52877,13 @@ export namespace Prisma {
     dinozId?: SortOrderInput | SortOrder
     reason?: SortOrder
     comment?: SortOrder
-    sorted?: SortOrder
+    sorted?: SortOrderInput | SortOrder
+    banDate?: SortOrderInput | SortOrder
+    banEndDate?: SortOrderInput | SortOrder
     reporter?: PlayerOrderByWithRelationInput
     target?: PlayerOrderByWithRelationInput
     dinoz?: DinozOrderByWithRelationInput
+    bannedUser?: PlayerOrderByWithRelationInput
   }
 
   export type ModerationWhereUniqueInput = Prisma.AtLeast<{
@@ -52756,10 +52896,13 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Moderation"> | number | null
     reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
     comment?: StringFilter<"Moderation"> | string
-    sorted?: BoolFilter<"Moderation"> | boolean
+    sorted?: EnumModerationActionNullableFilter<"Moderation"> | $Enums.ModerationAction | null
+    banDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
+    banEndDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     reporter?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    bannedUser?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
 
   export type ModerationOrderByWithAggregationInput = {
@@ -52769,7 +52912,9 @@ export namespace Prisma {
     dinozId?: SortOrderInput | SortOrder
     reason?: SortOrder
     comment?: SortOrder
-    sorted?: SortOrder
+    sorted?: SortOrderInput | SortOrder
+    banDate?: SortOrderInput | SortOrder
+    banEndDate?: SortOrderInput | SortOrder
     _count?: ModerationCountOrderByAggregateInput
     _avg?: ModerationAvgOrderByAggregateInput
     _max?: ModerationMaxOrderByAggregateInput
@@ -52787,7 +52932,9 @@ export namespace Prisma {
     dinozId?: IntNullableWithAggregatesFilter<"Moderation"> | number | null
     reason?: EnumModerationReasonWithAggregatesFilter<"Moderation"> | $Enums.ModerationReason
     comment?: StringWithAggregatesFilter<"Moderation"> | string
-    sorted?: BoolWithAggregatesFilter<"Moderation"> | boolean
+    sorted?: EnumModerationActionNullableWithAggregatesFilter<"Moderation"> | $Enums.ModerationAction | null
+    banDate?: DateTimeNullableWithAggregatesFilter<"Moderation"> | Date | string | null
+    banEndDate?: DateTimeNullableWithAggregatesFilter<"Moderation"> | Date | string | null
   }
 
   export type ConversationWhereInput = {
@@ -53822,6 +53969,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -53853,6 +54001,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -53929,6 +54078,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -53960,6 +54110,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -54014,6 +54165,7 @@ export namespace Prisma {
   export type PlayerCreateManyInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -54069,6 +54221,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -55321,10 +55474,13 @@ export namespace Prisma {
   export type ModerationCreateInput = {
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
     reporter: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
     dinoz?: DinozCreateNestedOneWithoutModerationInput
+    bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationUncheckedCreateInput = {
@@ -55334,16 +55490,22 @@ export namespace Prisma {
     dinozId?: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
+    bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationUpdateInput = {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
+    bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateInput = {
@@ -55353,7 +55515,10 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationCreateManyInput = {
@@ -55363,13 +55528,17 @@ export namespace Prisma {
     dinozId?: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
   }
 
   export type ModerationUpdateManyMutationInput = {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ModerationUncheckedUpdateManyInput = {
@@ -55379,7 +55548,9 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ConversationCreateInput = {
@@ -56521,6 +56692,11 @@ export namespace Prisma {
     not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
   }
 
+  export type ModerationNullableScalarRelationFilter = {
+    is?: ModerationWhereInput | null
+    isNot?: ModerationWhereInput | null
+  }
+
   export type PlayerDinozShopListRelationFilter = {
     every?: PlayerDinozShopWhereInput
     some?: PlayerDinozShopWhereInput
@@ -56694,6 +56870,7 @@ export namespace Prisma {
   export type PlayerCountOrderByAggregateInput = {
     id?: SortOrder
     hasImported?: SortOrder
+    banCaseId?: SortOrder
     customText?: SortOrder
     name?: SortOrder
     eternalTwinId?: SortOrder
@@ -56721,6 +56898,7 @@ export namespace Prisma {
 
   export type PlayerAvgOrderByAggregateInput = {
     id?: SortOrder
+    banCaseId?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     dailyGridRewards?: SortOrder
@@ -56731,6 +56909,7 @@ export namespace Prisma {
   export type PlayerMaxOrderByAggregateInput = {
     id?: SortOrder
     hasImported?: SortOrder
+    banCaseId?: SortOrder
     customText?: SortOrder
     name?: SortOrder
     eternalTwinId?: SortOrder
@@ -56759,6 +56938,7 @@ export namespace Prisma {
   export type PlayerMinOrderByAggregateInput = {
     id?: SortOrder
     hasImported?: SortOrder
+    banCaseId?: SortOrder
     customText?: SortOrder
     name?: SortOrder
     eternalTwinId?: SortOrder
@@ -56786,6 +56966,7 @@ export namespace Prisma {
 
   export type PlayerSumOrderByAggregateInput = {
     id?: SortOrder
+    banCaseId?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     dailyGridRewards?: SortOrder
@@ -57871,6 +58052,13 @@ export namespace Prisma {
     not?: NestedEnumModerationReasonFilter<$PrismaModel> | $Enums.ModerationReason
   }
 
+  export type EnumModerationActionNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationAction | EnumModerationActionFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumModerationActionNullableFilter<$PrismaModel> | $Enums.ModerationAction | null
+  }
+
   export type ModerationCountOrderByAggregateInput = {
     id?: SortOrder
     reporterId?: SortOrder
@@ -57879,6 +58067,8 @@ export namespace Prisma {
     reason?: SortOrder
     comment?: SortOrder
     sorted?: SortOrder
+    banDate?: SortOrder
+    banEndDate?: SortOrder
   }
 
   export type ModerationAvgOrderByAggregateInput = {
@@ -57896,6 +58086,8 @@ export namespace Prisma {
     reason?: SortOrder
     comment?: SortOrder
     sorted?: SortOrder
+    banDate?: SortOrder
+    banEndDate?: SortOrder
   }
 
   export type ModerationMinOrderByAggregateInput = {
@@ -57906,6 +58098,8 @@ export namespace Prisma {
     reason?: SortOrder
     comment?: SortOrder
     sorted?: SortOrder
+    banDate?: SortOrder
+    banEndDate?: SortOrder
   }
 
   export type ModerationSumOrderByAggregateInput = {
@@ -57923,6 +58117,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumModerationReasonFilter<$PrismaModel>
     _max?: NestedEnumModerationReasonFilter<$PrismaModel>
+  }
+
+  export type EnumModerationActionNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationAction | EnumModerationActionFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumModerationActionNullableWithAggregatesFilter<$PrismaModel> | $Enums.ModerationAction | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumModerationActionNullableFilter<$PrismaModel>
+    _max?: NestedEnumModerationActionNullableFilter<$PrismaModel>
   }
 
   export type MessageNullableScalarRelationFilter = {
@@ -58986,6 +59190,12 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutNpcsInput, DinozUpdateWithoutNpcsInput>, DinozUncheckedUpdateWithoutNpcsInput>
   }
 
+  export type ModerationCreateNestedOneWithoutBannedUserInput = {
+    create?: XOR<ModerationCreateWithoutBannedUserInput, ModerationUncheckedCreateWithoutBannedUserInput>
+    connectOrCreate?: ModerationCreateOrConnectWithoutBannedUserInput
+    connect?: ModerationWhereUniqueInput
+  }
+
   export type DinozCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -59348,6 +59558,16 @@ export namespace Prisma {
 
   export type EnumLangFieldUpdateOperationsInput = {
     set?: $Enums.Lang
+  }
+
+  export type ModerationUpdateOneWithoutBannedUserNestedInput = {
+    create?: XOR<ModerationCreateWithoutBannedUserInput, ModerationUncheckedCreateWithoutBannedUserInput>
+    connectOrCreate?: ModerationCreateOrConnectWithoutBannedUserInput
+    upsert?: ModerationUpsertWithoutBannedUserInput
+    disconnect?: ModerationWhereInput | boolean
+    delete?: ModerationWhereInput | boolean
+    connect?: ModerationWhereUniqueInput
+    update?: XOR<XOR<ModerationUpdateToOneWithWhereWithoutBannedUserInput, ModerationUpdateWithoutBannedUserInput>, ModerationUncheckedUpdateWithoutBannedUserInput>
   }
 
   export type DinozUpdateManyWithoutPlayerNestedInput = {
@@ -60951,8 +61171,24 @@ export namespace Prisma {
     connect?: DinozWhereUniqueInput
   }
 
+  export type PlayerCreateNestedOneWithoutBanCaseInput = {
+    create?: XOR<PlayerCreateWithoutBanCaseInput, PlayerUncheckedCreateWithoutBanCaseInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutBanCaseInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerUncheckedCreateNestedOneWithoutBanCaseInput = {
+    create?: XOR<PlayerCreateWithoutBanCaseInput, PlayerUncheckedCreateWithoutBanCaseInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutBanCaseInput
+    connect?: PlayerWhereUniqueInput
+  }
+
   export type EnumModerationReasonFieldUpdateOperationsInput = {
     set?: $Enums.ModerationReason
+  }
+
+  export type NullableEnumModerationActionFieldUpdateOperationsInput = {
+    set?: $Enums.ModerationAction | null
   }
 
   export type PlayerUpdateOneRequiredWithoutReportedCasesNestedInput = {
@@ -60979,6 +61215,26 @@ export namespace Prisma {
     delete?: DinozWhereInput | boolean
     connect?: DinozWhereUniqueInput
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutModerationInput, DinozUpdateWithoutModerationInput>, DinozUncheckedUpdateWithoutModerationInput>
+  }
+
+  export type PlayerUpdateOneWithoutBanCaseNestedInput = {
+    create?: XOR<PlayerCreateWithoutBanCaseInput, PlayerUncheckedCreateWithoutBanCaseInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutBanCaseInput
+    upsert?: PlayerUpsertWithoutBanCaseInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutBanCaseInput, PlayerUpdateWithoutBanCaseInput>, PlayerUncheckedUpdateWithoutBanCaseInput>
+  }
+
+  export type PlayerUncheckedUpdateOneWithoutBanCaseNestedInput = {
+    create?: XOR<PlayerCreateWithoutBanCaseInput, PlayerUncheckedCreateWithoutBanCaseInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutBanCaseInput
+    upsert?: PlayerUpsertWithoutBanCaseInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutBanCaseInput, PlayerUpdateWithoutBanCaseInput>, PlayerUncheckedUpdateWithoutBanCaseInput>
   }
 
   export type PlayerCreateNestedOneWithoutCreatedConversationsInput = {
@@ -61584,6 +61840,13 @@ export namespace Prisma {
     not?: NestedEnumModerationReasonFilter<$PrismaModel> | $Enums.ModerationReason
   }
 
+  export type NestedEnumModerationActionNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationAction | EnumModerationActionFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumModerationActionNullableFilter<$PrismaModel> | $Enums.ModerationAction | null
+  }
+
   export type NestedEnumModerationReasonWithAggregatesFilter<$PrismaModel = never> = {
     equals?: $Enums.ModerationReason | EnumModerationReasonFieldRefInput<$PrismaModel>
     in?: $Enums.ModerationReason[] | ListEnumModerationReasonFieldRefInput<$PrismaModel>
@@ -61592,6 +61855,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumModerationReasonFilter<$PrismaModel>
     _max?: NestedEnumModerationReasonFilter<$PrismaModel>
+  }
+
+  export type NestedEnumModerationActionNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.ModerationAction | EnumModerationActionFieldRefInput<$PrismaModel> | null
+    in?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.ModerationAction[] | ListEnumModerationActionFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumModerationActionNullableWithAggregatesFilter<$PrismaModel> | $Enums.ModerationAction | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedEnumModerationActionNullableFilter<$PrismaModel>
+    _max?: NestedEnumModerationActionNullableFilter<$PrismaModel>
   }
 
   export type NestedUuidFilter<$PrismaModel = never> = {
@@ -61896,6 +62169,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
@@ -61926,6 +62200,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutDinozInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -62313,9 +62588,12 @@ export namespace Prisma {
   export type ModerationCreateWithoutDinozInput = {
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
     reporter: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
+    bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationUncheckedCreateWithoutDinozInput = {
@@ -62324,7 +62602,10 @@ export namespace Prisma {
     targetId: number
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
+    bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationCreateOrConnectWithoutDinozInput = {
@@ -62494,6 +62775,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
@@ -62524,6 +62806,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -62897,7 +63180,9 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Moderation"> | number | null
     reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
     comment?: StringFilter<"Moderation"> | string
-    sorted?: BoolFilter<"Moderation"> | boolean
+    sorted?: EnumModerationActionNullableFilter<"Moderation"> | $Enums.ModerationAction | null
+    banDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
+    banEndDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
   }
 
   export type PantheonUpsertWithWhereUniqueWithoutDinozInput = {
@@ -64302,6 +64587,34 @@ export namespace Prisma {
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
+  export type ModerationCreateWithoutBannedUserInput = {
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
+    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    target: PlayerCreateNestedOneWithoutTargetedCasesInput
+    dinoz?: DinozCreateNestedOneWithoutModerationInput
+  }
+
+  export type ModerationUncheckedCreateWithoutBannedUserInput = {
+    id?: number
+    reporterId: number
+    targetId: number
+    dinozId?: number | null
+    reason: $Enums.ModerationReason
+    comment: string
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
+  }
+
+  export type ModerationCreateOrConnectWithoutBannedUserInput = {
+    where: ModerationWhereUniqueInput
+    create: XOR<ModerationCreateWithoutBannedUserInput, ModerationUncheckedCreateWithoutBannedUserInput>
+  }
+
   export type DinozCreateWithoutPlayerInput = {
     name: string
     raceId: number
@@ -64781,9 +65094,12 @@ export namespace Prisma {
   export type ModerationCreateWithoutReporterInput = {
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
     dinoz?: DinozCreateNestedOneWithoutModerationInput
+    bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationUncheckedCreateWithoutReporterInput = {
@@ -64792,7 +65108,10 @@ export namespace Prisma {
     dinozId?: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
+    bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationCreateOrConnectWithoutReporterInput = {
@@ -64808,9 +65127,12 @@ export namespace Prisma {
   export type ModerationCreateWithoutTargetInput = {
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
     reporter: PlayerCreateNestedOneWithoutReportedCasesInput
     dinoz?: DinozCreateNestedOneWithoutModerationInput
+    bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationUncheckedCreateWithoutTargetInput = {
@@ -64819,7 +65141,10 @@ export namespace Prisma {
     dinozId?: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
+    bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
   export type ModerationCreateOrConnectWithoutTargetInput = {
@@ -64993,6 +65318,40 @@ export namespace Prisma {
   export type NotificationCreateManyPlayerInputEnvelope = {
     data: NotificationCreateManyPlayerInput | NotificationCreateManyPlayerInput[]
     skipDuplicates?: boolean
+  }
+
+  export type ModerationUpsertWithoutBannedUserInput = {
+    update: XOR<ModerationUpdateWithoutBannedUserInput, ModerationUncheckedUpdateWithoutBannedUserInput>
+    create: XOR<ModerationCreateWithoutBannedUserInput, ModerationUncheckedCreateWithoutBannedUserInput>
+    where?: ModerationWhereInput
+  }
+
+  export type ModerationUpdateToOneWithWhereWithoutBannedUserInput = {
+    where?: ModerationWhereInput
+    data: XOR<ModerationUpdateWithoutBannedUserInput, ModerationUncheckedUpdateWithoutBannedUserInput>
+  }
+
+  export type ModerationUpdateWithoutBannedUserInput = {
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
+    dinoz?: DinozUpdateOneWithoutModerationNestedInput
+  }
+
+  export type ModerationUncheckedUpdateWithoutBannedUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    reporterId?: IntFieldUpdateOperationsInput | number
+    targetId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
+    comment?: StringFieldUpdateOperationsInput | string
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type DinozUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -65646,6 +66005,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -65676,6 +66036,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -65767,6 +66128,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -65797,6 +66159,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -65872,6 +66235,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
@@ -65902,6 +66266,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -65993,6 +66358,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
@@ -66023,6 +66389,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -66098,6 +66465,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
@@ -66128,6 +66496,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutGathersInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -66219,6 +66588,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
@@ -66249,6 +66619,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutGathersInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -66324,6 +66695,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -66354,6 +66726,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -66445,6 +66818,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -66475,6 +66849,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -66550,6 +66925,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -66580,6 +66956,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutItemsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -66671,6 +67048,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -66701,6 +67079,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutItemsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -66776,6 +67155,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -66806,6 +67186,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutQuestsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -66897,6 +67278,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -66927,6 +67309,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -67002,6 +67385,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -67032,6 +67416,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutRewardsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -67123,6 +67508,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -67153,6 +67539,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -67228,6 +67615,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -67258,6 +67646,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutRankingInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -67349,6 +67738,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -67379,6 +67769,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutRankingInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -67538,6 +67929,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -67568,6 +67960,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutBidsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -67691,6 +68084,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -67721,6 +68115,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutBidsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -67796,6 +68191,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -67826,6 +68222,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutOffersInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -68051,6 +68448,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -68081,6 +68479,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutOffersInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -68295,6 +68694,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -68325,6 +68725,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutLogsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -68506,6 +68907,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -68536,6 +68938,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutLogsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -68893,6 +69296,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -68923,6 +69327,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -69014,6 +69419,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -69044,6 +69450,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -69119,6 +69526,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -69149,6 +69557,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutPantheonInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -69330,6 +69739,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -69360,6 +69770,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -69641,6 +70052,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -69671,6 +70083,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -69917,6 +70330,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -69947,6 +70361,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -70110,6 +70525,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -70140,6 +70556,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -70271,6 +70688,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -70301,6 +70719,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -70552,6 +70971,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -70582,6 +71002,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -70713,6 +71134,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -70743,6 +71165,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -70852,6 +71275,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -70882,6 +71306,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -71013,6 +71438,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -71043,6 +71469,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -71152,6 +71579,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -71182,6 +71610,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -71313,6 +71742,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -71343,6 +71773,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -71492,6 +71923,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -71522,6 +71954,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -71602,6 +72035,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -71632,6 +72066,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -71777,6 +72212,118 @@ export namespace Prisma {
     create: XOR<DinozCreateWithoutModerationInput, DinozUncheckedCreateWithoutModerationInput>
   }
 
+  export type PlayerCreateWithoutBanCaseInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    dailyGridRewards?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutBanCaseInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    dailyGridRewards?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutBanCaseInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutBanCaseInput, PlayerUncheckedCreateWithoutBanCaseInput>
+  }
+
   export type PlayerUpsertWithoutReportedCasesInput = {
     update: XOR<PlayerUpdateWithoutReportedCasesInput, PlayerUncheckedUpdateWithoutReportedCasesInput>
     create: XOR<PlayerCreateWithoutReportedCasesInput, PlayerUncheckedCreateWithoutReportedCasesInput>
@@ -71813,6 +72360,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -71843,6 +72391,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -71929,6 +72478,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -71959,6 +72509,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -72105,6 +72656,124 @@ export namespace Prisma {
     Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
   }
 
+  export type PlayerUpsertWithoutBanCaseInput = {
+    update: XOR<PlayerUpdateWithoutBanCaseInput, PlayerUncheckedUpdateWithoutBanCaseInput>
+    create: XOR<PlayerCreateWithoutBanCaseInput, PlayerUncheckedCreateWithoutBanCaseInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutBanCaseInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutBanCaseInput, PlayerUncheckedUpdateWithoutBanCaseInput>
+  }
+
+  export type PlayerUpdateWithoutBanCaseInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutBanCaseInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
   export type PlayerCreateWithoutCreatedConversationsInput = {
     hasImported: boolean
     customText?: string | null
@@ -72130,6 +72799,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -72160,6 +72830,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -72286,6 +72957,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -72316,6 +72988,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutConversationInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -72427,6 +73100,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -72457,6 +73131,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -72575,6 +73250,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -72605,6 +73281,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutConversationInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -72706,6 +73383,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -72736,6 +73414,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutConversationsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -72854,6 +73533,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -72884,6 +73564,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -72992,6 +73673,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -73022,6 +73704,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutMessagesInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -73167,6 +73850,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -73197,6 +73881,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -73338,6 +74023,7 @@ export namespace Prisma {
     lang?: $Enums.Lang
     clanMemberId?: number | null
     leaderOfId?: number | null
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
     dinoz?: DinozCreateNestedManyWithoutPlayerInput
     dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
     gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
@@ -73368,6 +74054,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
     id?: number
     hasImported: boolean
+    banCaseId?: number | null
     customText?: string | null
     name: string
     eternalTwinId: string
@@ -73459,6 +74146,7 @@ export namespace Prisma {
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
     dinoz?: DinozUpdateManyWithoutPlayerNestedInput
     dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
     gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
@@ -73489,6 +74177,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
     id?: IntFieldUpdateOperationsInput | number
     hasImported?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     eternalTwinId?: StringFieldUpdateOperationsInput | string
@@ -73782,7 +74471,9 @@ export namespace Prisma {
     targetId: number
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
   }
 
   export type PantheonCreateManyDinozInput = {
@@ -74094,9 +74785,12 @@ export namespace Prisma {
   export type ModerationUpdateWithoutDinozInput = {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
+    bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateWithoutDinozInput = {
@@ -74105,7 +74799,10 @@ export namespace Prisma {
     targetId?: IntFieldUpdateOperationsInput | number
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateManyWithoutDinozInput = {
@@ -74114,7 +74811,9 @@ export namespace Prisma {
     targetId?: IntFieldUpdateOperationsInput | number
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type PantheonUpdateWithoutDinozInput = {
@@ -74276,7 +74975,9 @@ export namespace Prisma {
     dinozId?: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
   }
 
   export type ModerationCreateManyTargetInput = {
@@ -74285,7 +74986,9 @@ export namespace Prisma {
     dinozId?: number | null
     reason: $Enums.ModerationReason
     comment: string
-    sorted?: boolean
+    sorted?: $Enums.ModerationAction | null
+    banDate?: Date | string | null
+    banEndDate?: Date | string | null
   }
 
   export type PantheonCreateManyPlayerInput = {
@@ -74697,9 +75400,12 @@ export namespace Prisma {
   export type ModerationUpdateWithoutReporterInput = {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
+    bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateWithoutReporterInput = {
@@ -74708,7 +75414,10 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateManyWithoutReporterInput = {
@@ -74717,15 +75426,20 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ModerationUpdateWithoutTargetInput = {
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
+    bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateWithoutTargetInput = {
@@ -74734,7 +75448,10 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
   export type ModerationUncheckedUpdateManyWithoutTargetInput = {
@@ -74743,7 +75460,9 @@ export namespace Prisma {
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
     reason?: EnumModerationReasonFieldUpdateOperationsInput | $Enums.ModerationReason
     comment?: StringFieldUpdateOperationsInput | string
-    sorted?: BoolFieldUpdateOperationsInput | boolean
+    sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
+    banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type PantheonUpdateWithoutPlayerInput = {

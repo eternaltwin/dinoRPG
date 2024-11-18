@@ -26,10 +26,13 @@
 			<a href="#" :class="tabSelected === 5 ? 'active' : ''" @click="setTab(5)"> Logs </a>
 		</li>
 		<li>
-			<a href="#" :class="tabSelected === 6 ? 'active' : ''" @click="setTab(6)"> Moderation </a>
+			<a href="#" :class="tabSelected === 6 ? 'active' : ''" @click="setTab(6)"> GameStats </a>
 		</li>
 		<li>
-			<a href="#" :class="tabSelected === 7 ? 'active' : ''" @click="setTab(7)"> GameStats </a>
+			<a href="#" :class="tabSelected === 7 ? 'active' : ''" @click="setTab(7)"> Moderation </a>
+		</li>
+		<li>
+			<a href="#" :class="tabSelected === 8 ? 'active' : ''" @click="setTab(8)"> Banned </a>
 		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
@@ -46,8 +49,9 @@
 	<NewsEdit v-if="tabSelected === 3" />
 	<SecretEdit v-if="tabSelected === 4" />
 	<LogsView v-if="tabSelected === 5" />
-	<Moderation v-if="tabSelected === 6" />
-	<GameStats v-if="tabSelected === 7" />
+	<GameStats v-if="tabSelected === 6" />
+	<Moderation v-if="tabSelected === 7" />
+	<Banned v-if="tabSelected === 8" />
 </template>
 
 <script lang="ts">
@@ -60,8 +64,9 @@ import DinozEdit from '../components/admin/DinozEdit.vue';
 import NewsEdit from '../components/admin/NewsEdit.vue';
 import SecretEdit from '../components/admin/SecretEdit.vue';
 import LogsView from '../components/admin/LogsView.vue';
-import Moderation from '../components/admin/Moderation.vue';
 import GameStats from '../components/admin/GameStats.vue';
+import Moderation from '../components/admin/Moderation.vue';
+import Banned from '../components/admin/Banned.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Player } from '@drpg/core/models/player/Player';
 
@@ -72,7 +77,7 @@ interface PlayerSearch {
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	components: { NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, Moderation, GameStats },
+	components: { NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, GameStats, Moderation, Banned },
 	data() {
 		return {
 			searchValue: undefined as string | undefined,

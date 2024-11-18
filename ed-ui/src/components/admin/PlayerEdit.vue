@@ -78,6 +78,56 @@
 			</div>
 		</fieldset>
 		<fieldset>
+			<legend>Moderation</legend>
+			<div v-if="player.banCase" class="moderation">
+				<label class="title" for="banReason">Reason: </label>
+				<select id="banReasonSelect" v-model="player.banCase.reason">
+					<option v-for="reason in banReasons" :key="reason">
+						{{ reason }}
+					</option>
+				</select>
+				<label class="title" for="banAction">Action: </label>
+				<select id="banActionSelect" v-model="player.banCase.sorted">
+					<option v-for="action in banActions" :key="action">
+						{{ action }}
+					</option>
+				</select>
+				<label class="title" for="banComment">Comment: </label>
+				<input type="text" id="banComment" v-model="player.banCase.comment" />
+				<label class="title" for="banDinoz">Dinoz ID: </label>
+				<input type="text" id="banDinoz" v-model="player.banCase.dinozId" />
+				<label class="title" for="reportId">Report ID: </label>
+				<input type="text" id="reportId" v-model="player.banCase.id" disabled />
+				<label class="title" for="reporterId">Reporter ID: </label>
+				<input type="text" id="reporterId" v-model="player.banCase.reporterId" disabled />
+				<label class="title" for="banDate">Ban Date: </label>
+				<input type="text" id="banDate" v-model="player.banCase.banDate" disabled />
+				<label class="title" for="banEndDate">Ban End Date: </label>
+				<input type="text" id="banEndDate" v-model="player.banCase.banEndDate" disabled />
+				<DZButton @click="updateBan()">Update Ban</DZButton>
+				<DZButton @click="cancelBan()">Cancel Ban</DZButton>
+			</div>
+			<div v-else class="moderation">
+				<label class="title" for="banReason">Reason: </label>
+				<select id="banReasonSelect" v-model="banFields.reason">
+					<option v-for="reason in banReasons" :key="reason">
+						{{ reason }}
+					</option>
+				</select>
+				<label class="title" for="banAction">Action: </label>
+				<select id="banActionSelect" v-model="banFields.sorted">
+					<option v-for="action in banActions" :key="action">
+						{{ action }}
+					</option>
+				</select>
+				<label class="title" for="banComment">Comment: </label>
+				<input type="text" id="banComment" v-model="banFields.comment" />
+				<label class="title" for="banDinoz">Dinoz ID: </label>
+				<input type="text" id="banDinoz" v-model="banFields.dinozId" />
+				<DZButton @click="banPlayer()">Ban</DZButton>
+			</div>
+		</fieldset>
+		<fieldset>
 			<legend>Rewards</legend>
 			<div class="rewards">
 				<template v-for="(reward, index) in player.rewards" :key="index">
@@ -354,13 +404,20 @@
 import { defineComponent, PropType } from 'vue';
 import { AdminService } from '../../services/index.js';
 import { epicList } from '../../constants/index.js';
+import { errorHandler } from '../../utils/index.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import { Player } from '@drpg/core/models/player/Player';
 import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
+import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
+import DZButton from '../common/DZButton.vue';
+
+const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName'];
+const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
 
 export default defineComponent({
 	name: 'PlayerEdit',
+	components: { DZButton },
 	data() {
 		return {
 			playerFields: {
@@ -378,11 +435,20 @@ export default defineComponent({
 				progressionQuest: undefined as number | undefined,
 				questOperation: ''
 			} as PlayerEdit,
+			banFields: {
+				sorted: undefined as string | undefined,
+				reason: undefined as string | undefined,
+				comment: undefined as string | undefined,
+				banDate: undefined as Date | undefined,
+				banEndDate: undefined as Date | undefined
+			} as ModerationAdminType,
 			epicList: epicList,
 			epicListFiltered: {} as Array<string>,
 			itemNameList: itemNameList,
 			ingredientNameList: ingredientNameList,
-			player: {} as Player
+			player: {} as Player,
+			banReasons,
+			banActions
 		};
 	},
 	props: {
@@ -390,6 +456,7 @@ export default defineComponent({
 	},
 	methods: {
 		async sendUpdate(): Promise<void> {
+			// General player update
 			if (
 				this.playerFields.customText ||
 				this.playerFields.hasImported ||
@@ -425,10 +492,12 @@ export default defineComponent({
 				);
 			}
 
+			// Money update
 			if (this.playerFields.money && this.playerFields.operation) {
 				await AdminService.givePlayerMoney(this.player.id, this.playerFields.money, this.playerFields.operation);
 			}
 
+			// Epic rewards update
 			if (this.playerFields.rewards!.length > 0 && this.playerFields.epicOperation) {
 				await AdminService.givePlayerEpicRewards(
 					this.player.id,
@@ -437,6 +506,7 @@ export default defineComponent({
 				);
 			}
 
+			// Item update
 			if (
 				this.playerFields.selectedItem !== undefined &&
 				this.playerFields.itemQuantity !== undefined &&
@@ -450,6 +520,7 @@ export default defineComponent({
 				);
 			}
 
+			// Ingredient update
 			if (
 				this.playerFields.selectedIngredient !== undefined &&
 				this.playerFields.ingredientQuantity !== undefined &&
@@ -463,6 +534,7 @@ export default defineComponent({
 				);
 			}
 
+			// Quest update
 			if (
 				this.playerFields.selectedQuestId !== undefined &&
 				this.playerFields.progressionQuest !== undefined &&
@@ -476,6 +548,7 @@ export default defineComponent({
 				);
 			}
 
+			// Reload player info
 			this.player = await AdminService.getplayerInformation(this.player.id);
 
 			this.playerFields.rewards = [];
@@ -527,6 +600,48 @@ export default defineComponent({
 				quest.progression = selectedQuestId.progression;
 			} else {
 				quest.progression = '';
+			}
+		},
+		async banPlayer() {
+			const res: boolean = confirm(this.$t('popup.confirmBanAction'));
+			if (res) {
+				try {
+					await AdminService.banPlayer(
+						this.player.id,
+						this.banFields.reason,
+						this.banFields.sorted,
+						this.banFields.comment,
+						this.banFields.dinozId
+					);
+					this.player = await AdminService.getplayerInformation(this.player.id);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
+		},
+		async cancelBan() {
+			try {
+				await AdminService.cancelBan(this.player.id);
+				this.player = await AdminService.getplayerInformation(this.player.id);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+		},
+		async updateBan() {
+			try {
+				await AdminService.updateBan(
+					this.player.id,
+					this.player.banCase.sorted,
+					this.player.banCase.reason,
+					this.player.banCase.comment,
+					this.player.banCase.dinozId
+				);
+				this.player = await AdminService.getplayerInformation(this.player.id);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
 			}
 		},
 		mountedPlayer(): void {

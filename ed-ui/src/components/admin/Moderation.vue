@@ -31,10 +31,21 @@
 						>Voir</DZButton
 					>
 				</td>
-				<td><DZButton>TODO</DZButton></td>
+				<td>
+					{{ mod.sorted ? $t(`report.sorted.${mod.sorted}`) : $t(`report.sorted.open`) }}
+					<select>
+						<option value="null">Pick an action</option>
+						<option v-for="(action, index) in ActionTypes" :key="index" :value="action" @click="selectAction(action)">
+							{{ action }}
+						</option>
+					</select>
+					<DZButton @click="takeAction(mod.id)">Take Action</DZButton>
+				</td>
 			</tr>
 		</template>
 	</table>
+	<button @click="page--" :disabled="page <= 1">Previous</button>
+	<button @click="page++" :disabled="moderationLogs.length < 100">Next</button>
 </template>
 
 <script lang="ts">
@@ -45,12 +56,18 @@ import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { ModerationReasonFront } from '@drpg/core/models/enums/ModerationReasonFront';
 import DZUser from '../common/DZUser.vue';
 import DZButton from '../common/DZButton.vue';
+import EventBus from '../../events/index.js';
+
+const ActionTypes = ['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan'] as const;
 
 export default defineComponent({
 	components: { DZButton, DZUser },
 	data() {
 		return {
-			moderationLogs: [] as ModerationType[]
+			moderationLogs: [] as ModerationType[],
+			selectedAction: null as string | null,
+			page: 1,
+			ActionTypes
 		};
 	},
 	methods: {
@@ -70,6 +87,27 @@ export default defineComponent({
 					return 'multi';
 				default:
 					return 'error';
+			}
+		},
+		selectAction(action: string) {
+			this.selectedAction = action;
+		},
+		async takeAction(modId: number) {
+			const res: boolean = confirm(this.$t('popup.confirmBanAction'));
+			if (res) {
+				EventBus.emit('isLoading', true);
+				try {
+					await AdminService.takeAction(modId, this.selectedAction!);
+					this.moderationLogs.forEach(l => {
+						if (l.id === modId) {
+							l.sorted = this.selectedAction!;
+						}
+					});
+					EventBus.emit('isLoading', false);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
 			}
 		}
 	},

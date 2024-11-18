@@ -3,7 +3,6 @@ import { prisma } from '../prisma.js';
 import dayjs from 'dayjs';
 import { LOGGER } from '../context.js';
 
-// Truncate table 'player_dinoz_shop' at midnight
 const healDinozFount = () => {
 	const CronJob = cron.CronJob;
 

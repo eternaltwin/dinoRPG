@@ -4,6 +4,7 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
+import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -159,6 +160,48 @@ export const AdminService = {
 	getAllModeration(page: number): Promise<Array<ModerationType>> {
 		return http()
 			.get(`/admin/moderation/${page}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	takeAction(reportId: number, action: string): Promise<void> {
+		return http()
+			.put(`/admin/moderation/${reportId}`, {
+				action: action
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getBannedPlayers(page: number): Promise<Array<BannedPlayerType>> {
+		return http()
+			.get(`/admin/ban/${page}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	banPlayer(playerId: number, reason: string, action: string, comment: string, dinozId?: number) {
+		return http()
+			.post(`/admin/ban/${playerId}`, {
+				reason: reason,
+				action: action,
+				comment: comment,
+				dinozId: dinozId
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	updateBan(playerId: number, action?: string, reason?: string, comment?: string, dinozId?: number): Promise<void> {
+		return http()
+			.put(`/admin/updateBan/${playerId}`, {
+				action: action,
+				reason: reason,
+				comment: comment,
+				dinozId: dinozId
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	cancelBan(playerId: number): Promise<void> {
+		return http()
+			.put(`/admin/cancelBan/${playerId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
