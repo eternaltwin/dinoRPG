@@ -554,6 +554,7 @@ export default defineComponent({
 	//float: left;
 	//width: 185px;
 	min-height: 90px;
+	max-width: 221px;
 	color: white;
 	display: flex;
 	flex-direction: column;
@@ -599,6 +600,7 @@ export default defineComponent({
 @media (max-width: 510px) {
 	.actions {
 		width: 95%;
+		max-width: 100%;
 		.action_content {
 			display: flex;
 			flex-direction: row;

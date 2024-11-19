@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper">
-		<table v-on-click-outside="(selectedPlayer = undefined)">
+		<table>
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
@@ -22,7 +22,6 @@
 						even: (index + 1) % 2 === 0
 					}"
 					@click="selectedPlayer = ranking.player.id"
-					v-click-outside="leave"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}

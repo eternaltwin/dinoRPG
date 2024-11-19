@@ -16,6 +16,7 @@ type Events = {
 	report: number | undefined;
 	equipItem: Array<DinozItems>;
 	twinoMenu: boolean;
+	dinozMenu: boolean;
 };
 
 type toast = {

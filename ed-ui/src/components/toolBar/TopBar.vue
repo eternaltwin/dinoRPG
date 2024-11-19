@@ -1,7 +1,7 @@
 <template>
 	<div id="topBar">
 		<div v-if="isLogged" class="boxRoot">
-			<a class="connectLink" @click="getRedirectUri()">
+			<a class="connectLink" @click="openDinoz()">
 				<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddIcon">
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path>
 				</svg>
@@ -68,6 +68,9 @@ export default defineComponent({
 		},
 		openMenu() {
 			EventBus.emit('twinoMenu', true);
+		},
+		openDinoz() {
+			EventBus.emit('dinozMenu', true);
 		}
 	},
 	watch: {

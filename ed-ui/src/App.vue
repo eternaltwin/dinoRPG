@@ -8,6 +8,7 @@
 		<Messagerie />
 		<!--		<Transition name="slide">-->
 		<TwinoRightMenu />
+		<DinozLeftMenu />
 		<!--		</Transition>-->
 	</div>
 	<RouterView />
@@ -27,6 +28,7 @@ import Report from './components/modal/ReportModal.vue';
 import Messagerie from './components/modal/MessagerieModal.vue';
 import TopBar from './components/toolBar/TopBar.vue';
 import TwinoRightMenu from './components/toolBar/TwinoRightMenu.vue';
+import DinozLeftMenu from './components/toolBar/DinozLeftMenu.vue';
 
 export default defineComponent({
 	name: 'App',
@@ -39,7 +41,8 @@ export default defineComponent({
 		Spinner,
 		ErrorMessage,
 		Toast,
-		Report
+		Report,
+		DinozLeftMenu
 	}
 });
 </script>

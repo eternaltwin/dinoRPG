@@ -6,14 +6,6 @@
 		</div>
 		<div class="iconMenu">
 			<a
-				id="menu_blank"
-				class="iconor"
-				v-tippy="{
-					content: formatContent($t('button.getGold')),
-					theme: 'small'
-				}"
-			></a>
-			<a
 				id="menu_shop"
 				@click="goToPageWithParam('ItemShopPage', 'flying')"
 				class="iconboutik"
@@ -266,6 +258,8 @@ export default defineComponent({
 		width: 143px;
 		height: 32px;
 		margin-bottom: 10px;
+		display: flex;
+		justify-content: space-evenly;
 		&:hover {
 			cursor: pointer;
 		}

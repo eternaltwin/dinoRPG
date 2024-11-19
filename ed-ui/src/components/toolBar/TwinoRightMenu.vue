@@ -1,7 +1,7 @@
 <template>
 	<!--	<div  class="modal">-->
 	<Transition name="opacity">
-		<div v-show="menuCalled" class="backDrop"></div>
+		<div v-show="menuCalled" class="backDrop" @click="close()"></div>
 	</Transition>
 	<Transition name="slide">
 		<div v-show="menuCalled" class="root">
@@ -36,14 +36,14 @@
 					<RouterLink v-if="playerStore.getClanId" class="link" :to="`/clan/${playerStore.getClanId}`">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
-								d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91M4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29M20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m4 3.43c0-.81-.48-1.53-1.22-1.85-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3"
+								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
 							></path></svg
 						><span>Mon Clan</span></RouterLink
 					>
 					<RouterLink v-else class="link" to="/clans">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
-								d="M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.17-.52 2.61-.91 4.24-.91M4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m1.13 1.1c-.37-.06-.74-.1-1.13-.1-.99 0-1.93.21-2.78.58C.48 14.9 0 15.62 0 16.43V18h4.5v-1.61c0-.83.23-1.61.63-2.29M20 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m4 3.43c0-.81-.48-1.53-1.22-1.85-.85-.37-1.79-.58-2.78-.58-.39 0-.76.04-1.13.1.4.68.63 1.46.63 2.29V18H24zM12 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3"
+								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
 							></path></svg
 						><span>Clans</span></RouterLink
 					>
@@ -67,7 +67,14 @@
 							></path></svg
 						><span>Classement</span></RouterLink
 					>
-
+					<a class="link" href="https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/">
+						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
+							<path
+								d="m18 4 2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"
+							></path>
+						</svg>
+						<span>Cinéma</span>
+					</a>
 					<RouterLink class="link" to="/">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
@@ -163,9 +170,7 @@ export default defineComponent({
 	},
 	mounted() {
 		EventBus.on('twinoMenu', async e => {
-			if (e) {
-				this.menuCalled = e;
-			}
+			this.menuCalled = e;
 		});
 	}
 	/*watch: {
@@ -340,7 +345,7 @@ export default defineComponent({
 	justify-content: center;
 	inset: 0px;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 0;
+	z-index: 1;
 	opacity: 1;
 }
 

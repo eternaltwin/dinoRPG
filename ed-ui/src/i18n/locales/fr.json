@@ -4163,6 +4163,8 @@
 		}
 	},
 	"following": "Ce Dinoz suit son chef de groupe.",
+	"gather": "Ce dinoz peut récolter en ce lieu.",
+	"rest": "Ce dinoz se repose.",
 	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
 	"follow": "Le chef de groupe est {leader}.",
 	"followed": "Ce Dinoz est chef de groupe.",

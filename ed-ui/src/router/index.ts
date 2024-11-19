@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { localStore } from '../store/index.js';
+import EventBus from '../events/index.js';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -247,6 +248,8 @@ router.beforeEach(to => {
 			return { name: 'MainPage' };
 		}
 	}
+	EventBus.emit('twinoMenu', false);
+	EventBus.emit('dinozMenu', false);
 });
 
 export default router;

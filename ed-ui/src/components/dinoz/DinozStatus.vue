@@ -36,10 +36,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 .fx {
 	grid-area: status;
-	//align-self: center;
-	justify-self: center;
 	//width: 223px;
 	// height: 77px !important;
+	justify-self: stretch;
 	display: flex;
 	flex-direction: column;
 	//max-width: 223px;
