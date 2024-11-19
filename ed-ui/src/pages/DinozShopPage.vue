@@ -1,6 +1,6 @@
 <template>
 	<div class="enclos">
-		<TitleHeader :title="$t('pageTitle.dinozShop')" header="Enclos des dinoz"/>
+		<TitleHeader :title="$t('pageTitle.dinozShop')" header="Enclos des dinoz" />
 		<DZDisclaimer help :content="$t('shop.dinoz.help')" />
 		<div class="sheets">
 			<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">

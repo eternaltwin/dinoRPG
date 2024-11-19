@@ -1,6 +1,10 @@
 <template>
 	<div class="shop" v-if="actualShop">
-		<TitleHeader :title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`" :header="formatContent($t(`shop.item.title`))" :subHeader="formatContent($t(`shop.item.${actualShop.name}.name`))"/>
+		<TitleHeader
+			:title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`"
+			:header="formatContent($t(`shop.item.title`))"
+			:subHeader="formatContent($t(`shop.item.${actualShop.name}.name`))"
+		/>
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">

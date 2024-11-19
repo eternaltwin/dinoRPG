@@ -3,12 +3,7 @@
 		<div class="titlePage">
 			<h3 v-html="header" />
 		</div>
-		<div
-			class="subTitlePage"
-			width="520"
-			height="27"
-			v-html="subHeader"
-		/>
+		<div class="subTitlePage" width="520" height="27" v-html="subHeader" />
 	</div>
 </template>
 

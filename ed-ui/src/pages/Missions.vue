@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.missions')}`" :header="formatContent($t(`missions.header`))""></TitleHeader>
+	<TitleHeader :title="`${$t('pageTitle.missions')}`" :header="formatContent($t(`missions.header`))" />
 	<table>
 		<tbody>
 			<tr>

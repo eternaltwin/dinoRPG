@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.manageDinoz')" :header="$t(`manageDinoz.title`)"/>
+	<TitleHeader :title="$t('pageTitle.manageDinoz')" :header="$t(`manageDinoz.title`)" />
 	<DZDisclaimer :content="$t('manageDinoz.disclaimer')" />
 	<table>
 		<tbody>

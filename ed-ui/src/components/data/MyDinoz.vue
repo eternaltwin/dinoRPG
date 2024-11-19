@@ -1,20 +1,17 @@
 <template>
-	<ul style="list-style: none">
-		<Tippy v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
-			<li class="dinozList">
-				<Suspense>
-					<DinozWithoutFlash class="dinoz" :display="dinoz.display" :life="1" :flip="1" :isFrozen="dinoz.isFrozen" />
-					<template #fallback><Loading /></template>
-				</Suspense>
-
-				<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
-					{{ dinoz.name }}
-				</div>
-				<div class="dinozInfo">
-					{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
-					{{ $t(`myAccount.level`) }} {{ dinoz.level }}
-				</div>
-			</li>
+	<div class="dinozList">
+		<Tippy class="dinoz" tag="div" v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
+			<Suspense>
+				<DinozWithoutFlash :display="dinoz.display" :life="1" :flip="1" :isFrozen="dinoz.isFrozen" />
+				<template #fallback><Loading /></template>
+			</Suspense>
+			<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
+				{{ dinoz.name }}
+			</div>
+			<div class="dinozInfo">
+				{{ $t(`race.name.${raceList[dinoz.race.raceId]}`) }}
+				{{ $t(`myAccount.level`) }} {{ dinoz.level }}
+			</div>
 			<template v-if="dinoz.status && dinoz.status.length > 0" #content>
 				<template v-for="(status, index) in dinoz.status" :key="index">
 					<img
@@ -25,7 +22,7 @@
 				</template>
 			</template>
 		</Tippy>
-	</ul>
+	</div>
 </template>
 
 <script lang="ts">
@@ -113,19 +110,24 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .dinozList {
-	float: left;
-	position: relative;
-	width: 170px;
-	height: 175px;
-	background-color: #fbdba8;
-	margin-bottom: 10px;
-	margin-right: 3px;
-	cursor: default;
-	border: 1px solid #fce3bc;
-	border-radius: 10px;
-	-webkit-border-radius: 10px;
-	&:hover {
-		border: 1px solid #f1c98e;
+	display: flex;
+	gap: 5px;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	.dinoz {
+		width: 170px;
+		height: 160px;
+		background-color: #fbdba8;
+		cursor: default;
+		border: 1px solid #fce3bc;
+		border-radius: 10px;
+		-webkit-border-radius: 10px;
+		&:hover {
+			border: 1px solid #f1c98e;
+		}
+		img {
+			width: 100%;
+		}
 	}
 }
 .name {
@@ -146,10 +148,5 @@ export default defineComponent({
 .link:hover {
 	text-decoration: underline;
 	cursor: pointer;
-}
-.dinoz {
-	position: inherit;
-	top: -15px;
-	left: -12px;
 }
 </style>

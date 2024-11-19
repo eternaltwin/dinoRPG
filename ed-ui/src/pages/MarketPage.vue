@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.market')" :header="$t(`market.title`)"/>
+	<TitleHeader :title="$t('pageTitle.market')" :header="$t(`market.title`)" />
 	<div class="tabPanel">
 		<ul class="tabs">
 			<li :class="tab === 0 ? 'active' : ''">

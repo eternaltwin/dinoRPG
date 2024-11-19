@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)"/>
+	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)" />
 	<div v-show="loaded" class="content">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />

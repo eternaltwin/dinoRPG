@@ -1,24 +1,24 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.account')}`" :header="`${$t('myAccount.title')} ${accountData.playerName}`"></TitleHeader>
-	<div style="width: auto">
-		<div class="wrapper" v-if="dataLoaded">
-			<div class="filler">
-				<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" class="dinoz" />
-				<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" class="dinoz" />
-				<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
-			</div>
-			<div style="display: flex; width: 100%; max-height: 100%">
-				<div style="width: 50%">
-					<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
-				</div>
-				<div style="width: 50%; display: flex; flex-direction: column">
-					<Profile :accountData="accountData" :key="accountData"></Profile>
-					<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
-				</div>
-			</div>
-			<MyDinoz class="dinoz" style="width: 690px" :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
-			<!--			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />-->
+	<TitleHeader
+		:title="`${$t('pageTitle.account')}`"
+		:header="`${$t('myAccount.title')} ${accountData.playerName}`"
+	></TitleHeader>
+
+	<div class="wrapper" v-if="dataLoaded">
+		<div class="filler">
+			<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" class="dinoz" />
+			<img :src="getImgURL('design', 'pigmou_01')" alt="pigmou" class="dinoz" />
+			<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
 		</div>
+		<div class="cards">
+			<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
+			<div class="profilCard">
+				<Profile :accountData="accountData" :key="accountData"></Profile>
+				<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
+			</div>
+		</div>
+		<MyDinoz :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
+		<!--			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />-->
 	</div>
 </template>
 
@@ -109,17 +109,28 @@ export default defineComponent({
 }
 .wrapper {
 	display: flex;
-	width: 620px;
+	//width: 620px;
 	justify-content: space-between;
 	gap: 10px;
 	flex-direction: column;
 	//flex-wrap: wrap;
-	margin-top: 30px;
 	height: 100%;
 	.mandragore {
 		position: absolute;
 		right: -180px;
 		bottom: 0;
+	}
+	.cards {
+		display: flex;
+		width: 100%;
+		max-height: 100%;
+		flex-wrap: wrap;
+		gap: 10px;
+		justify-content: center;
+		.profilCard {
+			display: flex;
+			flex-direction: column;
+		}
 	}
 }
 .filler {
@@ -130,6 +141,11 @@ export default defineComponent({
 	img {
 		object-fit: scale-down;
 		width: 75%;
+	}
+}
+@media (max-width: 540px) {
+	.filler {
+		display: none;
 	}
 }
 </style>

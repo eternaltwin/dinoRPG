@@ -90,6 +90,7 @@ export default defineComponent({
 		url('../assets/background/full_core_bg.webp') repeat-y;
 	background-position-x: calc(50% + 247px);
 	background-position-y: top;
+	padding-bottom: 50px;
 	.linkHome {
 		grid-area: top;
 		cursor: pointer;
@@ -103,7 +104,6 @@ export default defineComponent({
 		display: grid;
 		grid-template-areas: 'left top .' 'left center center';
 		padding-top: 15px;
-		height: 250px;
 		grid-template-columns: 1fr 540px 1fr;
 		grid-template-rows: 110px 1fr;
 	}
@@ -126,9 +126,10 @@ export default defineComponent({
 #centerContent {
 	grid-area: center;
 	width: 100%;
-	max-width: 540px;
+	max-width: 640px;
 	display: flex;
 	flex-direction: column;
+	z-index: 1;
 	//gap: 10px;
 }
 </style>

@@ -1,5 +1,8 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.clan')}${clan.name} ]`" :header="$t('clan.header.title', { name: clan.name }"></TitleHeader>
+	<TitleHeader
+		:title="`${$t('pageTitle.clan')}${clan.name} ]`"
+		:header="$t('clan.header.title', { name: clan.name })"
+	></TitleHeader>
 	<div class="wrapper">
 		<div class="filler">
 			<ClanHeader :clan="clan" v-if="clan"></ClanHeader>

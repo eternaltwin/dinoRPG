@@ -1,5 +1,8 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`" :header="$t(`gather.action.${gatherType}`)" />
+	<TitleHeader
+		:title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`"
+		:header="$t(`gather.action.${gatherType}`)"
+	/>
 	<div class="disclaimer" v-if="loaded">
 		{{ $t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) }) }}
 	</div>

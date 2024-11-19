@@ -1,8 +1,6 @@
 <template class="twinoid-goals">
 	<div class="profil">
-		<div class="headProfil">
-			<img :src="getImgURL('design', 'ugoals_crown')" alt="info_button" />
-		</div>
+		<img class="headProfil" :src="getImgURL('design', 'ugoals_crown')" alt="info_button" />
 		<h3>
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 			{{ $t(`myAccount.twinoidgoals.name`) }}
@@ -224,12 +222,14 @@ export default defineComponent({
 	background-position-y: top, bottom;
 	height: auto;
 	width: 305px;
-	margin-bottom: 10px;
-	margin-top: 9px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	.headProfil {
+		flex-shrink: 0;
+		width: 125px;
 		position: relative;
 		top: -15px;
-		left: 80px;
 	}
 	h3 {
 		display: flex;
@@ -244,7 +244,8 @@ export default defineComponent({
 		color: #ffee92;
 		text-shadow: 1px 1px 1px #383522;
 		position: relative;
-		top: -18px;
+		top: -16px;
+		gap: 5px;
 		img {
 			height: 7px;
 			width: 7px;
