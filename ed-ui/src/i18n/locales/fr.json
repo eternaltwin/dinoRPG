@@ -3292,7 +3292,7 @@
 	},
 	"levelup": {
 		"disclaimer": "Vous pouvez à présent lancer l'animation afin de savoir avec quel élément votre Dinoz évolue.",
-		"title": "Niveau supplémentaire pour ",
+		"title": "Niveau supplémentaire pour {name}",
 		"helper": "Choisissez une compétence à apprendre :",
 		"fire": "Gagne +1 en :feu: Feu",
 		"wood": "Gagne +1 en :bois: Bois",

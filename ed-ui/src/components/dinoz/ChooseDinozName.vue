@@ -1,10 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`"></TitleHeader>
-	<div class="section">
-		<div class="titlePage">
-			<h3>{{ $t(`chooseDinoz.pageName`) }}</h3>
-		</div>
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`" :header="$t(`chooseDinoz.pageName`)"></TitleHeader>
 	<div id="chooseDinozName">
 		<div class="disclaimer">{{ $t('chooseDinoz.information') }}</div>
 		<div class="dinoz_display">

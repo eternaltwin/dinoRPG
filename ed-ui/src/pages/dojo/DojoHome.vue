@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.dojo')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`dojo.welcome`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.dojo')" :header="$t(`dojo.welcome`)" />
 	<div class="wrapper">
 		<div class="header df">
 			<div class="header-text df jcsb">

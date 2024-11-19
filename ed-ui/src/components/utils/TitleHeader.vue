@@ -1,5 +1,16 @@
-<!-- eslint-disable-next-line -->
-<template></template>
+<template>
+	<div class="section" v-if="header">
+		<div class="titlePage">
+			<h3 v-html="header" />
+		</div>
+		<div
+			class="subTitlePage"
+			width="520"
+			height="27"
+			v-html="subHeader"
+		/>
+	</div>
+</template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
@@ -7,7 +18,9 @@ import { defineComponent } from 'vue';
 export default defineComponent({
 	name: 'TitleHeader',
 	props: {
-		title: String
+		title: String,
+		header: String,
+		subHeader: String
 	},
 	watch: {
 		title: {

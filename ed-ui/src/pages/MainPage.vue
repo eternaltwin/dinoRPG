@@ -101,7 +101,7 @@ export default defineComponent({
 @media (min-width: 875px) {
 	#centerHeader {
 		display: grid;
-		grid-template-areas: 'left top .' 'left center .';
+		grid-template-areas: 'left top .' 'left center center';
 		padding-top: 15px;
 		height: 250px;
 		grid-template-columns: 1fr 540px 1fr;

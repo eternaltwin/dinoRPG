@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.dinozMissions')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`dinozMissions.title`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.dinozMissions')" :header="$t(`dinozMissions.title`)" />
 	<div class="disclaimer" v-html="formatContent($t('dinozMissions.disclaimer'))" />
 	<table>
 		<tbody>

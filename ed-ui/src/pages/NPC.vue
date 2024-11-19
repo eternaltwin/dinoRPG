@@ -1,9 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.npc')}${$t(`npc.name.${npcName}`)}]`"></TitleHeader>
-	<div class="section">
-		<div class="titlePage" v-html="formatContent($t(`npc.header.character`))" />
-		<div class="subTitlePage" v-html="formatContent($t(`npc.name.${npcName}`))" />
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.npc')}${$t(`npc.name.${npcName}`)}]`" :header="formatContent($t(`npc.header.character`))" :subHeader="formatContent($t(`npc.name.${npcName}`))"></TitleHeader>
 	<div class="box">
 		<div class="headerBox">
 			<div class="name">{{ $t(`npc.name.${npcName}`) }} :</div>

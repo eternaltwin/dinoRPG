@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.manageDinoz')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`manageDinoz.title`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.manageDinoz')" :header="$t(`manageDinoz.title`)"/>
 	<DZDisclaimer :content="$t('manageDinoz.disclaimer')" />
 	<table>
 		<tbody>

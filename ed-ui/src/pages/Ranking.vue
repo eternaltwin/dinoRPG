@@ -1,10 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.ranking')}`"></TitleHeader>
-	<div class="section">
-		<div class="titlePage">
-			<h3>{{ $t(`rightMenu.ranking`) }}</h3>
-		</div>
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t(`rightMenu.ranking`)"></TitleHeader>
 	<ul class="tabs">
 		<li :class="tabSelected === 1 ? 'active' : ''">
 			<a href="#" @click="setTab(1)"

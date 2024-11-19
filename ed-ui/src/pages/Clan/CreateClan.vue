@@ -1,10 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.createClan')"></TitleHeader>
-	<div class="section">
-		<div class="titlePage">
-			<h3>{{ $t('createClan.title') }}</h3>
-		</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.createClan')" :header="$t('createClan.title')"></TitleHeader>
 	<div id="chooseClanName">
 		<div class="disclaimer">
 			<img :src="getImgURL('icons', 'small_question')" alt="question_mark" style="margin-right: 2px" />

@@ -1,10 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.guide')}`" />
-	<div class="section">
-		<div class="titlePage">
-			<h3>{{ $t(`rightMenu.guide`) }}</h3>
-		</div>
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t(`rightMenu.guide`)" />
 	<div class="intro">
 		<div class="menu">
 			<ul class="list">

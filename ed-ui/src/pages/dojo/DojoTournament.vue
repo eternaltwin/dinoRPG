@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.dojo')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`dojo.tournaments`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.dojo')" :header="$t(`dojo.tournaments`)"/>
 	<ul class="tournament-list">
 		<li v-for="(_, group) in Array(GROUP_COUNT).fill(0)" :key="group" class="group">
 			<a @click="goToPage('DojoTournament', { id: group.toString() })">

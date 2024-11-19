@@ -1,12 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"></TitleHeader>
-	<div style="width: auto">
-		<div class="section">
-			<div class="titlePage">
-				<h3>{{ $t(`levelup.title`) }} {{ dinozData.name }}</h3>
-			</div>
-		</div>
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.levelup')}${dinozData.name} ]`" :header="$t(`levelup.title`, {name: dinozData.name})"></TitleHeader>
 	<div class="disclaimer">
 		{{ $t('levelup.disclaimer') }}
 	</div>

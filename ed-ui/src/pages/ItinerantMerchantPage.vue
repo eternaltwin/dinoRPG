@@ -1,15 +1,6 @@
 <template>
 	<div class="shop">
-		<TitleHeader :title="$t('pageTitle.itinerant')" />
-		<div class="section">
-			<div
-				class="titlePage"
-				:style="undefined"
-				width="520"
-				height="27"
-				v-html="formatContent($t(`shop.item.merchant.name`))"
-			/>
-		</div>
+		<TitleHeader :title="$t('pageTitle.itinerant')" :header="formatContent($t(`shop.item.merchant.name`))" />
 		<div class="shopDesc">
 			<div class="contain">
 				<div class="art art_shop">

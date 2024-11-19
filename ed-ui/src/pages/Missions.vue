@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.missions')}`"></TitleHeader>
-	<div class="section">
-		<div class="titlePage" v-html="formatContent($t(`missions.header`))" />
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.missions')}`" :header="formatContent($t(`missions.header`))""></TitleHeader>
 	<table>
 		<tbody>
 			<tr>

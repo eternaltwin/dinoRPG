@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.fight')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`fight.pageName`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)"/>
 	<div v-show="loaded" class="content">
 		<Suspense>
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />

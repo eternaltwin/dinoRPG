@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.selectDinoz')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`selectDinoz.selectChampions`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.selectDinoz')" :header="$t(`selectDinoz.selectChampions`)" />
 	<p class="subtitle">{{ $t('selectDinoz.selectTeam') }}</p>
 	<DZDisclaimer :content="$t('selectDinoz.disclaimer')" />
 	<div class="wrapper">

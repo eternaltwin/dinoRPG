@@ -1,11 +1,6 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.account')}`"></TitleHeader>
+	<TitleHeader :title="`${$t('pageTitle.account')}`" :header="`${$t('myAccount.title')} ${accountData.playerName}`"></TitleHeader>
 	<div style="width: auto">
-		<div class="section">
-			<div class="titlePage">
-				<h3>{{ $t(`myAccount.title`) }} {{ accountData.playerName }}</h3>
-			</div>
-		</div>
 		<div class="wrapper" v-if="dataLoaded">
 			<div class="filler">
 				<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" class="dinoz" />

@@ -1,10 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.clansList')"></TitleHeader>
-	<div class="section">
-		<div class="titlePage">
-			<h3>{{ $t('clansList.title') }}</h3>
-		</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.clansList')" :header="$t('clansList.title')"></TitleHeader>
 	<div class="disclaimer">
 		<img :src="getImgURL('icons', 'small_question')" alt="info_button" style="margin-right: 2px" />
 		{{ $t(`clansList.disclaimer.text`) }} <a @click="goToHelp()">{{ $t(`clansList.disclaimer.see_help`) }}</a> &

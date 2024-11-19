@@ -1,10 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.faq')}`" />
-	<div class="section">
-		<div class="titlePage">
-			<h3>{{ $t(`rightMenu.faq`) }}</h3>
-		</div>
-	</div>
+	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t(`rightMenu.faq`)" />
 	<div class="intro">
 		<span><img :src="getImgURL('icons', 'small_question')" /></span>
 		<p>{{ $t(`faq.intro`) }}</p>

@@ -1,8 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.ingredients')" />
-	<div class="section">
-		<div class="titlePage">{{ $t(`rightMenu.ingredients`) }}</div>
-	</div>
+	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`rightMenu.ingredients`)" />
 	<div class="disclaimer">
 		{{ $t('ingredients.disclaimer') }}
 	</div>
