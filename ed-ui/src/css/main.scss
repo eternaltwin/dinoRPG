@@ -83,29 +83,9 @@ p:first-letter {
 	font-size: 115%;
 }
 
-.titlePage {
-	color: #71b703;
-	display: inline;
-	float: left;
-	font-family: 'Berlin Sans FB Demi';
-	font-variant: small-caps;
-	font-size: 19px;
-	text-shadow: 1px 0px #FDF1BF, 0px 1px #FDF1BF, -1px 0px #FDF1BF, 0px -1px #FDF1BF, 0px -1px 2px #B25D21;
-	line-height: 28px;
-	margin-left: 12px;
-}
 
-.subTitlePage {
-	color: #a5512d;
-	display: inline;
-	float: left;
-	font-family: 'Berlin Sans FB Demi';
-	font-variant: small-caps;
-	font-size: 19px;
-	text-shadow: 1px 0px #FDF1BF, 0px 1px #FDF1BF, -1px 0px #FDF1BF, 0px -1px #FDF1BF, 0px -1px 2px #B25D21;
-	line-height: 28px;
-	margin-left: 12px;
-}
+
+
 
 .newsSection {
 
@@ -145,14 +125,7 @@ p:first-letter {
 	}
 }
 
-.section {
-	height : 45px;
-	margin-left : -15px;
-	margin-bottom : 20px;
-	background-image : url("../assets/design/title_h1.webp");
-	background-position : left bottom;
-	background-repeat : no-repeat;
-}
+
 
 .light {
 	object {

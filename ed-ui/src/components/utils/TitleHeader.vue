@@ -1,9 +1,7 @@
 <template>
 	<div class="section" v-if="header">
-		<div class="titlePage">
-			<h3 v-html="header" />
-		</div>
-		<div class="subTitlePage" width="520" height="27" v-html="subHeader" />
+		<h2 class="titlePage" v-html="header"></h2>
+		<h3 class="subTitlePage" width="520" height="27" v-html="subHeader" />
 	</div>
 </template>
 
@@ -27,3 +25,56 @@ export default defineComponent({
 	}
 });
 </script>
+
+<style lang="scss" scoped>
+.section {
+	height: fit-content;
+	background-image: url('../../assets/design/title_h1.webp');
+	background-position: left bottom;
+	background-repeat: no-repeat;
+	padding-bottom: 46px;
+	.titlePage {
+		color: #71b703;
+		display: inline;
+		float: left;
+		font-family: 'Berlin Sans FB Demi';
+		font-variant: small-caps;
+		font-size: 19px;
+		text-shadow:
+			1px 0px #fdf1bf,
+			0px 1px #fdf1bf,
+			-1px 0px #fdf1bf,
+			0px -1px #fdf1bf,
+			0px -1px 2px #b25d21;
+		line-height: 28px;
+		margin-left: 12px;
+	}
+	.subTitlePage {
+		color: #a5512d;
+		display: inline;
+		float: left;
+		font-family: 'Berlin Sans FB Demi';
+		font-variant: small-caps;
+		font-size: 19px;
+		text-shadow:
+			1px 0px #fdf1bf,
+			0px 1px #fdf1bf,
+			-1px 0px #fdf1bf,
+			0px -1px #fdf1bf,
+			0px -1px 2px #b25d21;
+		line-height: 28px;
+		margin-left: 12px;
+	}
+}
+@media (max-width: 510px) {
+	.section {
+		padding-bottom: 43px;
+		.titlePage {
+			font-size: 15px;
+		}
+		.subTitlePage {
+			font-size: 15px;
+		}
+	}
+}
+</style>

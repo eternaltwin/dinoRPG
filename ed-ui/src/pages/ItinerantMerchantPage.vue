@@ -190,14 +190,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .shop {
-	.section {
-		height: 45px;
-		margin-left: -15px;
-		margin-bottom: 20px;
-		background-image: url('../assets/design/title_h1.webp');
-		background-position: left bottom;
-		background-repeat: no-repeat;
-	}
 	.shopDesc {
 		margin: auto;
 		margin-bottom: 8px;

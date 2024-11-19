@@ -249,11 +249,6 @@ export default defineComponent({
 		padding-top: 8px;
 	}
 }
-.modal {
-	position: fixed;
-	inset: 0px;
-	z-index: 1200;
-}
 .svgIcon {
 	user-select: none;
 	width: 1em;
@@ -345,7 +340,7 @@ export default defineComponent({
 	justify-content: center;
 	inset: 0px;
 	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 1;
+	z-index: 5;
 	opacity: 1;
 }
 

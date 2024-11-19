@@ -204,7 +204,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapper {
 	margin: 5px;
-	width: 530px;
 	table {
 		width: 100%;
 		margin-top: 10px;
