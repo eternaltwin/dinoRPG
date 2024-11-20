@@ -92,7 +92,7 @@ export default defineComponent({
 			}
 			if (this.dinozData.followers.length >= 1) {
 				for (const follower of this.dinozData.followers) {
-					const followerToUpdate = await DinozService.getDinozFiche(follower);
+					const followerToUpdate = await DinozService.getDinozFiche(follower.id);
 					const followerIndex = dinozList.findIndex(dinoz => dinoz.id === followerToUpdate.id);
 					dinozList.splice(followerIndex, 1, {
 						...dinozList.find(dinoz => dinoz.id === followerToUpdate.id),
@@ -103,7 +103,7 @@ export default defineComponent({
 			const storedFollowers = dinozList.filter(d => d.leaderId === +dinozId);
 			if (storedFollowers.length > 0) {
 				storedFollowers.map(d => {
-					if (!this.dinozData.followers.includes(d.id)) {
+					if (!this.dinozData.followers.some(f => f.id === d.id)) {
 						d.leaderId = null;
 					}
 				});

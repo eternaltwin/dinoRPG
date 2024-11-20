@@ -426,7 +426,7 @@ export default defineComponent({
 	.dinoz {
 		cursor: pointer;
 		display: grid;
-		grid-template-columns: 50px repeat(4, 1fr) 50px;
+		grid-template-columns: 50px 3fr repeat(3, 1fr) 30px;
 		width: 100%;
 		color: rgb(108, 113, 136);
 		text-decoration: none;
@@ -436,7 +436,7 @@ export default defineComponent({
 			color: rgb(255, 255, 255);
 		}
 		.display {
-			height: 40px;
+			//height: 40px;
 		}
 		.dinozName {
 			place-self: center;
@@ -475,6 +475,7 @@ export default defineComponent({
 			justify-content: flex-start;
 			flex-direction: row;
 			width: 100%;
+			margin-left: 4px;
 			img {
 				object-fit: contain;
 			}

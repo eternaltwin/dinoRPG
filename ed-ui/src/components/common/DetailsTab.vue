@@ -347,7 +347,7 @@ export default defineComponent({
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData!.status!.includes(statusList.id.amulst);
+			return this.dinozData!.status!.some(s => s.statusId === statusList.id.amulst);
 		},
 		sort(): void {
 			switch (this.selectedSort) {
@@ -404,17 +404,35 @@ export default defineComponent({
 
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
-				getAssaultStat(data, data.status, this.dinozSkill, stat as AssaultElement)
+				getAssaultStat(
+					data,
+					data.status.map(s => s.statusId),
+					this.dinozSkill,
+					stat as AssaultElement
+				)
 			);
 
 			this.defenseStats = Object.values(DefenseElement).map(stat =>
-				getDefenseStat(data, data.status, this.dinozSkill, stat as DefenseElement)
+				getDefenseStat(
+					data,
+					data.status.map(s => s.statusId),
+					this.dinozSkill,
+					stat as DefenseElement
+				)
 			);
 
 			const priest = this.playerStore.isPriest;
 
 			this.specialStats = Object.values(SpecialStat)
-				.map(stat => getSpecialStat(data, data.status, this.dinozSkill, stat as SpecialStat, priest))
+				.map(stat =>
+					getSpecialStat(
+						data,
+						data.status.map(s => s.statusId),
+						this.dinozSkill,
+						stat as SpecialStat,
+						priest
+					)
+				)
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 
 			// Refresh special stats on EventBus `refreshInventory`
@@ -437,7 +455,7 @@ export default defineComponent({
 					if (!this.specialStats.find(stat => stat?.name === SpecialStat.TORCH_DAMAGE)) {
 						const torchDamage = getSpecialStat(
 							this.dinozData,
-							this.dinozData.status,
+							this.dinozData.status.map(s => s.statusId),
 							this.dinozSkill,
 							SpecialStat.TORCH_DAMAGE
 						);

@@ -11,7 +11,7 @@ export default defineComponent({
 	props: {
 		display: { type: String, required: true },
 		width: { type: Number, default: 45 },
-		height: { type: Number, default: 50 },
+		height: { type: Number, default: 55 },
 		flip: { type: Boolean, default: false }
 	},
 	data() {
@@ -45,7 +45,9 @@ export default defineComponent({
 				this.imageCount = +(div.getAttribute('data-length') ?? '0');
 			},
 			this.width,
-			this.height
+			this.height,
+			0,
+			-13
 		);
 	}
 });

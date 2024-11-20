@@ -141,8 +141,8 @@ export async function getAvailableActions(
 		const dinozToFollow = getFollowableDinoz(
 			potentialDinozToFollow.map(dinoz => ({
 				...dinoz,
-				skills: dinoz.skills.map(skill => skill.skillId),
-				followers: dinoz.followers.map(follower => follower.id)
+				skills: dinoz.skills,
+				followers: dinoz.followers
 			})),
 			dinoz
 		);
@@ -440,7 +440,8 @@ export async function buyDinoz(req: Request) {
 				skills: [],
 				missions: [],
 				items: [],
-				followers: []
+				followers: [],
+				concentration: null
 			}
 		]
 	};

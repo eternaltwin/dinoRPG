@@ -1,4 +1,4 @@
-import { UnavailableReason } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, UnavailableReason } from '@drpg/prisma';
 import { MissionHUD } from '../missions/missionHUD.mjs';
 import { ActionFiche } from './ActionList.mjs';
 import { DinozRace } from './DinozRace.mjs';
@@ -13,7 +13,7 @@ export interface DinozFiche {
 	missionId: number | undefined | null;
 	missionHUD: MissionHUD | null;
 	leaderId: number | null;
-	followers: number[];
+	followers: Pick<Dinoz, 'id'>[];
 	life: number;
 	maxLife: number;
 	experience: number;
@@ -23,8 +23,8 @@ export interface DinozFiche {
 	actions: ActionFiche[];
 	items: number[];
 	maxItems: number;
-	skills: number[];
-	status: number[];
+	skills: Pick<DinozSkill, 'skillId'>[];
+	status: Pick<DinozStatus, 'statusId'>[];
 	borderPlace: number[];
 	nbrUpFire: number;
 	nbrUpWood: number;
@@ -32,7 +32,11 @@ export interface DinozFiche {
 	nbrUpLightning: number;
 	nbrUpAir: number;
 	order: number | null;
-	remainingActions: number;
+	remaining: number;
+	fight: boolean;
+	gather: boolean;
+	missions: DinozMission[];
+	concentration: Concentration | null;
 	npcAwait?: {
 		npcSpeech: string;
 		npcName: string;

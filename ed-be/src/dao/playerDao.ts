@@ -342,10 +342,12 @@ export async function getCommonDataRequest(playerId: number) {
 					nbrUpAir: true,
 					remaining: true,
 					fight: true,
+					gather: true,
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },
-					followers: { select: { id: true } }
+					followers: { select: { id: true } },
+					concentration: true
 				},
 				where: {
 					OR: [

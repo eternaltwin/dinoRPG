@@ -8,7 +8,8 @@ import {
 	PlayerReward,
 	PlayerQuest,
 	type Dinoz,
-	Prisma
+	Prisma,
+	Concentration
 } from '@drpg/prisma';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
@@ -142,12 +143,14 @@ export const toDinozFiche = (
 			| 'order'
 			| 'remaining'
 			| 'fight'
+			| 'gather'
 		> & {
 			missions: DinozMission[];
 			items: Pick<DinozItem, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkill, 'skillId'>[];
 			followers: Pick<Dinoz, 'id'>[];
+			concentration: Concentration | null;
 		})[];
 	},
 	activeDinoz: number
@@ -166,7 +169,7 @@ export const toDinozFiche = (
 		level: dinoz.level,
 		missionId: dinoz.missions?.find(mission => !mission.isFinished)?.missionId ?? null,
 		leaderId: dinoz.leaderId,
-		followers: dinoz.followers.map(follower => follower.id),
+		followers: dinoz.followers,
 		life: dinoz.life,
 		maxLife: dinoz.maxLife,
 		experience: dinoz.experience,
@@ -175,7 +178,7 @@ export const toDinozFiche = (
 		placeId: dinoz.placeId,
 		items: dinoz.items?.map(item => item.itemId),
 		maxItems: backpackSlot(player.engineer, dinoz),
-		status: dinoz.status?.map(status => status.statusId).sort((a, b) => a - b),
+		status: dinoz.status?.sort((a, b) => a.statusId - b.statusId),
 		borderPlace:
 			dinoz.unavailableReason !== null || !dinoz.fight || dinoz.leaderId
 				? []
@@ -196,9 +199,13 @@ export const toDinozFiche = (
 		nbrUpAir: dinoz.nbrUpAir,
 		missionHUD: getHUDObjective(dinoz),
 		actions: [],
-		skills: dinoz.skills.map(skill => skill.skillId),
+		skills: dinoz.skills,
 		order: dinoz.order,
-		remainingActions: dinoz.remaining
+		remaining: dinoz.remaining,
+		fight: dinoz.fight,
+		gather: dinoz.gather,
+		missions: dinoz.missions,
+		concentration: dinoz.concentration
 	};
 };
 
@@ -474,7 +481,7 @@ export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
 	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
 
 	for (const skill of skillsAffectingMaxFollowers) {
-		if (dinoz.skills.some(s => s === skill.id)) {
+		if (dinoz.skills.some(s => s.skillId === skill.id)) {
 			max += skill.effects?.[Stat.MAX_FOLLOWERS] || 0;
 		}
 	}

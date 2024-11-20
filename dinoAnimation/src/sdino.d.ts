@@ -106,7 +106,13 @@ export class sdino extends Container<import('pixi.js').DisplayObject> {
 	 * @param {number | undefined} height The height of the image. Needs width to be defined.
 	 */
 	// eslint-disable-next-line  @typescript-eslint/no-explicit-any
-	toAnimation(callback: any, width?: number | undefined, height?: number | undefined): void;
+	toAnimation(
+		callback: any,
+		width?: number | undefined,
+		height?: number | undefined,
+		xOffset?: number | undefined,
+		yOffset?: number | undefined
+	): void;
 	/**
 	 * Extract the visual data from the container into an animation.
 	 * The animation is an array comprised of multiple raw image data (one per frame, in order).

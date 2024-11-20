@@ -32,6 +32,7 @@ import sanitizeHtml from 'sanitize-html';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { OfferStatus } from '@drpg/prisma';
+import { getAvailableActions } from './dinozService.js';
 
 /**
  * @summary Get data from player on login
@@ -85,12 +86,17 @@ export async function getCommonData(req: Request) {
 		await createLog(LogType.PlayerConnected, playerCommonData.id, undefined, playerCommonData.name.toString());
 	}
 
+	const dinoz = playerCommonData.dinoz.map(dinoz => {
+		return toDinozFiche(playerCommonData, dinoz.id);
+	});
+	for (const d of dinoz) {
+		d.actions = await getAvailableActions(d, playerCommonData);
+	}
+
 	const commonData: PlayerCommonData = {
 		money: playerCommonData.money,
 		dinozCount: await getDinozTotalCount(),
-		dinoz: playerCommonData.dinoz.map(dinoz => {
-			return toDinozFiche(playerCommonData, dinoz.id);
-		}),
+		dinoz: dinoz,
 		id: playerCommonData.id,
 		name: playerCommonData.name,
 		clanId: playerCommonData.ClanMember?.clanId,

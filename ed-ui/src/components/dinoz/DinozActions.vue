@@ -337,7 +337,7 @@ export default defineComponent({
 							if (dinoz.id === currentDinoz.id) {
 								dinoz.leaderId = null;
 							} else if (dinoz.id === previousLeader) {
-								dinoz.followers = dinoz.followers.filter(follower => follower !== currentDinoz.id);
+								dinoz.followers = dinoz.followers.filter(follower => follower.id !== currentDinoz.id);
 							}
 							return dinoz;
 						});
@@ -483,7 +483,15 @@ export default defineComponent({
 			const dinozSkill = await DinozService.getDinozSkill(+this.dinozId);
 			const priest = this.playerStore.isPriest;
 			const specialStats = Object.values(SpecialStat)
-				.map(stat => getSpecialStat(data, data.status, dinozSkill, stat as SpecialStat, priest))
+				.map(stat =>
+					getSpecialStat(
+						data,
+						data.status.map(s => s.statusId),
+						dinozSkill,
+						stat as SpecialStat,
+						priest
+					)
+				)
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
 			regen ? (this.hpRegen = regen.value) : 1;
