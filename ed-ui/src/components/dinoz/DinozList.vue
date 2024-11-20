@@ -159,6 +159,13 @@ ul {
 			line-height: 11pt;
 			text-decoration: none;
 			cursor: pointer;
+			&:hover {
+				background-color: rgb(154 64 41);
+				color: black;
+				em {
+					color: black;
+				}
+			}
 
 			em {
 				font-variant: normal;
