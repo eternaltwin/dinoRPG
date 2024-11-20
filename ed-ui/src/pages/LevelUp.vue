@@ -3,143 +3,151 @@
 		:title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"
 		:header="$t(`levelup.title`, { name: dinozData.name })"
 	></TitleHeader>
-	<div class="disclaimer">
-		{{ $t('levelup.disclaimer') }}
-	</div>
-	<div class="wrapper border" v-if="availableSkills">
-		<LevelUpGrid
-			v-if="availableSkills.upChance && availableSkills.element"
-			:grid="availableSkills.upChance"
-			:element="availableSkills.element"
-			@spinOver="spinOver"
-		/>
-		<div class="dinozWrapper">
-			<Suspense>
-				<DinozWithoutFlash
-					:style="{
-						position: `relative`,
-						top: `45px`
-					}"
-					:display="dinozData.display"
-					:life="dinozData.life / dinozData.maxLife"
-					:flip="1"
-					:race="dinozData.race.raceId"
-				/>
-				<template #fallback><Loading /></template>
-			</Suspense>
+	<div class="levelUp">
+		<div class="disclaimer">
+			{{ $t('levelup.disclaimer') }}
 		</div>
-	</div>
-	<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
-		<div class="result" v-if="ElementType[availableSkills.element]">
-			{{ dinozData.name }}
-			<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
-			<Elements
-				:fire="
-					ElementType[availableSkills.element] === 'fire' ? availableSkills.nbrUpFire + 1 : availableSkills.nbrUpFire
-				"
-				:wood="
-					ElementType[availableSkills.element] === 'wood' ? availableSkills.nbrUpWood + 1 : availableSkills.nbrUpWood
-				"
-				:water="
-					ElementType[availableSkills.element] === 'water' ? availableSkills.nbrUpWater + 1 : availableSkills.nbrUpWater
-				"
-				:lightning="
-					ElementType[availableSkills.element] === 'lightning'
-						? availableSkills.nbrUpLightning + 1
-						: availableSkills.nbrUpLightning
-				"
-				:air="ElementType[availableSkills.element] === 'air' ? availableSkills.nbrUpAir + 1 : availableSkills.nbrUpAir"
-				class="elements"
+		<div class="wrapper border" v-if="availableSkills">
+			<LevelUpGrid
+				v-if="availableSkills.upChance && availableSkills.element"
+				:grid="availableSkills.upChance"
+				:element="availableSkills.element"
+				@spinOver="spinOver"
 			/>
-			{{ $t(`levelup.helper`) }}
+			<div class="dinozWrapper">
+				<Suspense>
+					<DinozWithoutFlash
+						:style="{
+							position: `relative`,
+							top: `45px`
+						}"
+						:display="dinozData.display"
+						:life="dinozData.life / dinozData.maxLife"
+						:flip="false"
+						:race="dinozData.race.raceId"
+					/>
+					<template #fallback><Loading /></template>
+				</Suspense>
+			</div>
 		</div>
-		<div class="select">
-			<table>
-				<tbody>
-					<tr>
-						<th class="name">{{ $t('details.th.comp') }}</th>
-						<th class="type">{{ $t('details.th.type') }}</th>
-						<th class="type">{{ $t('levelup.level') }}</th>
-						<th class="type"></th>
-					</tr>
-					<tr v-for="skill in availableSkills.learnableSkills" :key="skill" @click="learnSkill(skill.skillId)">
-						<td class="name">
-							<div class="skillName">
-								<img
-									v-for="element in skill.element"
-									:key="element"
-									:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
-									alt="elementUp"
-								/>
-								<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
-							</div>
-							<p class="desc">
-								{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
-							</p>
-						</td>
-						<Tippy theme="normal" tag="td" class="type">
-							{{ skill.type }}
-							<template #content>
-								<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
-								<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
-							</template>
-						</Tippy>
-						<td class="type">
-							{{ String(skill.skillId)[2] }}
-						</td>
-						<td class="learn"><img :src="getImgURL('icons', 'small_right')" alt="right" />{{ $t('levelup.learn') }}</td>
-					</tr>
-					<template v-if="availableSkills.unlockableSkills">
-						<tr v-if="availableSkills.unlockableSkills.length > 0" @click="unlockSkill()">
-							<td class="name" colspan="4">
+		<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
+			<div class="result" v-if="ElementType[availableSkills.element]">
+				{{ dinozData.name }}
+				<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
+				<Elements
+					:fire="
+						ElementType[availableSkills.element] === 'fire' ? availableSkills.nbrUpFire + 1 : availableSkills.nbrUpFire
+					"
+					:wood="
+						ElementType[availableSkills.element] === 'wood' ? availableSkills.nbrUpWood + 1 : availableSkills.nbrUpWood
+					"
+					:water="
+						ElementType[availableSkills.element] === 'water'
+							? availableSkills.nbrUpWater + 1
+							: availableSkills.nbrUpWater
+					"
+					:lightning="
+						ElementType[availableSkills.element] === 'lightning'
+							? availableSkills.nbrUpLightning + 1
+							: availableSkills.nbrUpLightning
+					"
+					:air="
+						ElementType[availableSkills.element] === 'air' ? availableSkills.nbrUpAir + 1 : availableSkills.nbrUpAir
+					"
+					class="elements"
+				/>
+				{{ $t(`levelup.helper`) }}
+			</div>
+			<div class="select">
+				<table>
+					<tbody>
+						<tr>
+							<th class="name">{{ $t('details.th.comp') }}</th>
+							<th class="type">{{ $t('details.th.type') }}</th>
+							<th class="type">{{ $t('levelup.level') }}</th>
+							<th class="type"></th>
+						</tr>
+						<tr v-for="skill in availableSkills.learnableSkills" :key="skill" @click="learnSkill(skill.skillId)">
+							<td class="name">
 								<div class="skillName">
-									<img :src="getImgURL('icons', 'small_right')" alt="right" />
-									{{ $t(`levelup.unlock1`) }}
-									{{ availableSkills.unlockableSkills.length }}
-									{{ $t(`levelup.unlock2`) }}
-									<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
-										<template #content>
-											<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
-											<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
-										</template>
-									</Tippy>
+									<img
+										v-for="element in skill.element"
+										:key="element"
+										:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+										alt="elementUp"
+									/>
+									<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
 								</div>
-								<ul class="unlock">
-									<Tippy
-										tag="li"
-										theme="small"
-										v-for="(skill, index) in (availableSkills as DinozSkillOwnAndUnlockable).unlockableSkills"
-										:key="index"
-									>
-										<img
-											v-for="element in skill.element"
-											:key="element"
-											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
-											alt="elementUp"
-										/>
-										{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
-										<template #content>
-											{{ $t(`levelup.unlock`) }}
-										</template>
-									</Tippy>
-								</ul>
+								<p class="desc">
+									{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
+								</p>
+							</td>
+							<Tippy theme="normal" tag="td" class="type">
+								{{ skill.type }}
+								<template #content>
+									<h1 v-html="formatContent($t(`details.type.name.${skill.type}`))" />
+									<p v-html="formatContent($t(`details.type.description.${skill.type}`))" />
+								</template>
+							</Tippy>
+							<td class="type">
+								{{ String(skill.skillId)[2] }}
+							</td>
+							<td class="learn">
+								<img :src="getImgURL('icons', 'small_right')" alt="right" />{{ $t('levelup.learn') }}
 							</td>
 						</tr>
-					</template>
-				</tbody>
-			</table>
+						<template v-if="availableSkills.unlockableSkills">
+							<tr v-if="availableSkills.unlockableSkills.length > 0" @click="unlockSkill()">
+								<td class="name" colspan="4">
+									<div class="skillName">
+										<img :src="getImgURL('icons', 'small_right')" alt="right" />
+										{{ $t(`levelup.unlock1`) }}
+										{{ availableSkills.unlockableSkills.length }}
+										{{ $t(`levelup.unlock2`) }}
+										<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
+											<template #content>
+												<h1 v-html="formatContent($t(`levelup.helperUnlock.title`))" />
+												<p v-html="formatContent($t(`levelup.helperUnlock.description`))" />
+											</template>
+										</Tippy>
+									</div>
+									<ul class="unlock">
+										<Tippy
+											tag="li"
+											theme="small"
+											v-for="(skill, index) in (availableSkills as DinozSkillOwnAndUnlockable).unlockableSkills"
+											:key="index"
+										>
+											<img
+												v-for="element in skill.element"
+												:key="element"
+												:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+												alt="elementUp"
+											/>
+											{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
+											<template #content>
+												{{ $t(`levelup.unlock`) }}
+											</template>
+										</Tippy>
+									</ul>
+								</td>
+							</tr>
+						</template>
+					</tbody>
+				</table>
+			</div>
+			<a
+				class="button"
+				v-if="availableSkills.canRelaunch"
+				@click="retry()"
+				v-tippy="{
+					content: formatContent($t('levelup.pdc')),
+					theme: 'small'
+				}"
+			>
+				{{ $t(`skill.name.PlanDeCarriere`) }}
+			</a>
 		</div>
-		<a
-			class="button"
-			v-if="availableSkills.canRelaunch"
-			@click="retry()"
-			v-tippy="{
-				content: formatContent($t('levelup.pdc')),
-				theme: 'small'
-			}"
-		>
-			{{ $t(`skill.name.PlanDeCarriere`) }}
-		</a>
 	</div>
 </template>
 
@@ -265,6 +273,12 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.levelUp {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
 .disclaimer {
 	border-radius: 5px;
 	margin-top: 10px;
@@ -275,6 +289,7 @@ export default defineComponent({
 	background-color: #bc683c;
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
+	width: 90%;
 }
 .border {
 	border: 1px solid #874b2e;
@@ -283,16 +298,19 @@ export default defineComponent({
 .dinozWrapper {
 	background-color: #d99b73;
 	height: 211px;
-	width: 195px;
+	max-width: 195px;
+	width: 50%;
 }
 .wrapper {
 	display: flex;
-	width: 362px;
+	width: 90%;
+	max-width: 362px;
 	justify-content: center;
 	color: #fce3bc;
 	text-align: center;
 	background-color: #854b25;
 	align-self: center;
+	align-items: center;
 }
 .hidden {
 	display: none;
@@ -344,6 +362,9 @@ export default defineComponent({
 	animation: bounce-in-top 1.1s both;
 	animation-timing-function: ease-in-out;
 	animation-delay: 1s;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 .skillName {
 	font-size: 12pt;
@@ -364,18 +385,18 @@ export default defineComponent({
 	}
 }
 .result {
-	width: 330px;
-	margin: auto;
-	margin-top: 5px;
-	margin-bottom: 15px;
-	padding: 5px;
-	padding-left: 5px;
+	width: 90%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-self: center;
 	color: #fce3bc;
 	text-align: center;
 	background-color: #bc683c;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	font-size: 10pt;
+	padding: 5px;
 }
 .desc {
 	font-size: 9pt;
@@ -386,11 +407,8 @@ export default defineComponent({
 	font-style: italic;
 }
 .elements {
-	margin-bottom: 5px;
-	margin-top: 5px;
-	padding-left: 58px;
-	padding-bottom: 4px;
-	border-bottom: 1px solid #cd8a4e;
+	display: flex;
+	justify-content: space-evenly;
 }
 .unlock {
 	list-style: none;

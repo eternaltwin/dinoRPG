@@ -32,7 +32,7 @@ export default defineComponent({
 	background-image: url('../../assets/design/title_h1.webp');
 	background-position: left bottom;
 	background-repeat: no-repeat;
-	padding-bottom: 46px;
+	padding-bottom: 16px;
 	.titlePage {
 		color: #71b703;
 		display: inline;
@@ -68,7 +68,7 @@ export default defineComponent({
 }
 @media (max-width: 510px) {
 	.section {
-		padding-bottom: 43px;
+		padding-bottom: 15px;
 		.titlePage {
 			font-size: 15px;
 		}

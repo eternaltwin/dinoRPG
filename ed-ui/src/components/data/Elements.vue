@@ -9,7 +9,7 @@
 			}"
 		>
 			<img :src="getImgURL('elements', `elem_${el}`)" :alt="el" />
-			<p :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</p>
+			<span :class="getMaxElement(el) ? 'max' : ''">{{ getElement(el) }}</span>
 		</div>
 	</div>
 </template>
@@ -81,13 +81,13 @@ export default defineComponent({
 		display: flex;
 		font-weight: bold;
 		gap: 5px;
-		width: fit-content;
+		width: 43px;
 		align-items: flex-end;
 		background: url('../../assets/icons/element_bg.webp') no-repeat;
 		background-position-y: 6px;
 		background-position-x: 7px;
 		cursor: help;
-		p {
+		span {
 			color: white;
 			font-size: 13.3px;
 			text-align: left;

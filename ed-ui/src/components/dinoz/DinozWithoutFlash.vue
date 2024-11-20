@@ -17,7 +17,7 @@ export default defineComponent({
 	props: {
 		display: { type: String, required: true },
 		life: { type: Number, required: true },
-		flip: { type: Number, required: true },
+		flip: { type: Boolean, required: true },
 		isFrozen: { type: Boolean, required: false }
 	},
 	mounted() {
