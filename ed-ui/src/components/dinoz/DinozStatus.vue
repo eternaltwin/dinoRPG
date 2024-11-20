@@ -3,8 +3,11 @@
 		<p>{{ $t('layout.fx') }}</p>
 		<div class="status" :class="displayStatus ? 'displayMe' : ''">
 			<template v-for="(status, index) in dinozStatus" :key="index">
-				<Tippy theme="normal" v-if="statusList.displayed[status]">
-					<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
+				<Tippy theme="normal" v-if="statusList.displayed[status.statusId]">
+					<img
+						:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
+						:alt="statusList.imgName[status.statusId]"
+					/>
 					<template #content>
 						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
 						<p v-html="formatContent($t(`status.description.${status}`))"></p>
@@ -18,6 +21,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { statusList } from '../../constants/index.js';
+import { DinozStatus } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'DinozStatus',
@@ -28,7 +32,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozStatus: Array as PropType<Array<number>>
+		dinozStatus: Array as PropType<Pick<DinozStatus, 'statusId'>[]>
 	}
 });
 </script>

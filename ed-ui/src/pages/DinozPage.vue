@@ -2,11 +2,10 @@
 	<div v-if="nameChoosen === false">
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</div>
-	<div class="dinoz" v-if="nameChoosen === true">
-		<Suspense
-			><DinozDisplay v-show="isReady" :dinozData="dinozData" /><template #fallback> <Loading /> </template
-		></Suspense>
-	</div>
+	<Suspense
+		><DinozDisplay v-if="nameChoosen === true" v-show="isReady" :dinozData="dinozData" /><template #fallback>
+			<Loading /> </template
+	></Suspense>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-show="isReady"

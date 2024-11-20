@@ -1,40 +1,42 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
-	<div class="navigation">
-		<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: getDinozId(-1) } }" class="see-button">
-			<img :src="getImgURL('icons', 'left')" />
-		</router-link>
-		<span class="title">
-			{{ dinozData.name }}
-		</span>
-		<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: getDinozId(1) } }" class="see-button">
-			<img :src="getImgURL('icons', 'right')" />
-		</router-link>
-	</div>
+	<div class="dinoz">
+		<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
+		<div class="navigation">
+			<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: getDinozId(-1) } }" class="see-button">
+				<img :src="getImgURL('icons', 'left')" />
+			</router-link>
+			<span class="title">
+				{{ dinozData.name }}
+			</span>
+			<router-link v-if="getDinozId(1)" :to="{ name: 'DinozPage', params: { id: getDinozId(1) } }" class="see-button">
+				<img :src="getImgURL('icons', 'right')" />
+			</router-link>
+		</div>
 
-	<Tippy theme="normal" tag="div" id="dinozVisual">
-		<Suspense>
-			<DinozWithoutFlash
-				:display="dinozData.display"
-				:life="dinozData.life / dinozData.maxLife"
-				:flip="-1"
-				:race="dinozData.race.raceId"
-				:key="dinozData.life || dinozData.display"
-				:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
-			/>
-			<template #fallback> <Loading /> </template>
-		</Suspense>
-		<template #content>
-			<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
-			<p>
-				{{ $t(`race.description.${dinozRace}`) }}
-			</p>
-		</template>
-	</Tippy>
-	<DinozElements :dinozData="dinozData" :key="dinozData" />
-	<DinozBars :dinozData="dinozData" :key="dinozData" />
-	<DinozEquip :dinozData="dinozData" :key="dinozData" />
-	<DinozStatus :dinozStatus="dinozData.status" :key="dinozData" />
+		<Tippy theme="normal" tag="div" id="dinozVisual">
+			<Suspense>
+				<DinozWithoutFlash
+					:display="dinozData.display"
+					:life="dinozData.life / dinozData.maxLife"
+					:flip="-1"
+					:race="dinozData.race.raceId"
+					:key="dinozData.life || dinozData.display"
+					:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"
+				/>
+				<template #fallback> <Loading /> </template>
+			</Suspense>
+			<template #content>
+				<h1>{{ $t(`race.name.${dinozRace}`) }}</h1>
+				<p>
+					{{ $t(`race.description.${dinozRace}`) }}
+				</p>
+			</template>
+		</Tippy>
+		<DinozElements :dinozData="dinozData" :key="dinozData" />
+		<DinozBars :dinozData="dinozData" :key="dinozData" />
+		<DinozEquip :dinozData="dinozData" :key="dinozData" />
+		<DinozStatus :dinozStatus="dinozData.status" :key="dinozData" />
+	</div>
 </template>
 
 <script lang="ts">
@@ -94,7 +96,12 @@ export default defineComponent({
 			if (currentIndex === -1) return;
 
 			const newIndex = currentIndex + shift;
-			if (newIndex < 0 || newIndex >= this.dinozStore.getDinozList.length) return 1;
+			if (newIndex < 0) {
+				return this.dinozStore.getDinozList[this.dinozStore.getDinozList.length - 1].id;
+			}
+			if (newIndex >= this.dinozStore.getDinozList.length) {
+				return this.dinozStore.getDinozList[0].id;
+			}
 
 			return this.dinozStore.getDinozList[newIndex].id;
 		}
@@ -103,6 +110,45 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.dinoz {
+	background-image: url('../../assets/background/dinoz_bg_cut.webp');
+	background-repeat: no-repeat;
+	//min-height: 265px;
+	display: grid;
+	padding-top: 15px;
+	height: 250px;
+	grid-template-columns: [first] 180px [line1] 225px [line2] 100px [end];
+	grid-template-rows: [first] 40px [row1] 40px [row2] 100px [row3] 40px [row4] 30px [end];
+	column-gap: 2px;
+	row-gap: 2px;
+	grid-template-areas:
+		'. . . '
+		'dinoz name name '
+		'dinoz status equip '
+		'vie elements equip ';
+
+	//grid-template-columns: [first] 2% [line1] 15% [line2] auto [line3] 35% [line4] 3% [end];
+	//grid-template-rows: [first] 35px [row1] 170px [row2] 100px [last-line];
+}
+@media (max-width: 510px) {
+	.dinoz {
+		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
+		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
+		column-gap: 0;
+		row-gap: 0;
+		width: 100%;
+		height: auto;
+		grid-template-areas:
+			'. . name name name name name . .'
+			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
+			'. vie vie vie vie vie equip equip .'
+			'. vie vie vie vie vie . . .'
+			'. elements elements elements elements elements elements elements .'
+			'. . . . . . . . .'
+			'. status status status status status status status .';
+		margin-bottom: 5px;
+	}
+}
 .navigation {
 	grid-area: name;
 	align-self: center;
