@@ -532,16 +532,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .follow {
-	margin: 0 10px 10px;
 	padding: 5px 5px 5px 20px;
-	font-size: 10pt;
 	background-color: #bc683c;
 	background-image: url('../../assets/icons/small_missAct.webp');
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
 	line-height: 10pt;
 	overflow: hidden;
-	color: #774828;
 	cursor: pointer;
 	font-style: italic;
 	color: #fce3bc;
@@ -572,7 +569,6 @@ export default defineComponent({
 		flex-direction: row;
 		align-items: center;
 		gap: 0.5rem;
-		margin-left: 5px;
 		margin-right: 5px;
 		border-radius: 7px;
 		font-size: 11pt;
@@ -603,6 +599,12 @@ export default defineComponent({
 
 	.action_content {
 		margin-bottom: 5px;
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		gap: 2px;
+		padding-left: 5px;
+		padding-right: 5px;
 	}
 }
 @media (max-width: 510px) {
@@ -617,6 +619,9 @@ export default defineComponent({
 			gap: 0.2rem;
 			.action {
 				width: 46%;
+			}
+			.follow {
+				width: 100%;
 			}
 		}
 	}
