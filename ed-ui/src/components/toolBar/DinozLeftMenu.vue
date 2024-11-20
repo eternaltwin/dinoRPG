@@ -63,7 +63,7 @@
 						</span>
 					</div>
 					<div class="icons">
-						<template v-for="i in dinoz.remainingActions" :key="i">
+						<template v-for="i in dinoz.remaining" :key="i">
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
