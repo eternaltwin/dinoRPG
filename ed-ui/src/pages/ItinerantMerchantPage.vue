@@ -1,13 +1,14 @@
 <template>
+	<TitleHeader :title="$t('pageTitle.itinerant')" :header="formatContent($t(`shop.item.merchant.name`))" />
 	<div class="shop">
-		<TitleHeader :title="$t('pageTitle.itinerant')" :header="formatContent($t(`shop.item.merchant.name`))" />
 		<div class="shopDesc">
-			<div class="contain">
-				<div class="art art_shop">
-					<img :src="getImgURL('shop', 'shop_itinerant')" :alt="formatContent($t(`shop.item.merchant.name`))" />
-				</div>
-				<p v-html="formatContent($t(`shop.item.merchant.description`))" />
-			</div>
+			<h3 class="shopName">
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				{{ $t(`shop.item.merchant.name`) }}
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			</h3>
+			<img class="art" :src="getImgURL('shop', 'shop_itinerant')" :alt="formatContent($t(`shop.item.merchant.name`))" />
+			<p class="shopText" v-html="formatContent($t(`shop.item.merchant.description`))" />
 		</div>
 		<div class="list">
 			<div v-if="ingredientList.length === 0" class="sundayMessage">
@@ -190,40 +191,69 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .shop {
+	display: flex;
+	align-self: center;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
 	.shopDesc {
-		margin: auto;
-		margin-bottom: 8px;
-		width: 520px;
-		height: 200px;
-		padding: 5px;
 		font-style: italic;
 		color: #ffee92;
 		font-size: 10pt;
-		background-image: url('../assets/background/desc_shop.webp');
-		background-repeat: no-repeat;
-		.contain {
-			margin-top: 10px;
-			padding: 15px;
-		}
+		display: grid;
+		grid-template-rows: 17px auto;
+		grid-template-columns: 180px auto;
+		grid-template-areas: 'top top ' 'left center';
+		background: url('../assets/background/desc_shop_top_left.webp'),
+			url('../assets/background/desc_shop_top_right.webp'), url('../assets/background/desc_shop_top_center.webp'),
+			url('../assets/background/desc_shop_bottom_left.webp'), url('../assets/background/desc_shop_bottom_right.webp'),
+			url('../assets/background/desc_shop_bottom_center.webp'), url('../assets/background/desc_shop_center_left.webp'),
+			url('../assets/background/desc_shop_center_right.webp'), url('../assets/background/desc_shop_center_center.webp');
+		background-position-x: left, right, center, left, right, center, left, right, center;
+		background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
+		background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+
+		min-height: 160px;
+		max-width: 95%;
+		padding-right: 10px;
+		padding-bottom: 10px;
 		.art {
-			width: 160px;
-			height: 120px;
-			margin-right: 10px;
-			margin-bottom: 10px;
-			border: none;
-			outline: none;
-			float: left;
-			position: relative;
-			font-size: 0pt;
-			line-height: 0pt;
-			background-position: top left;
-			background-repeat: no-repeat;
+			grid-area: left;
+			justify-self: center;
+			margin-top: 15px;
 		}
-		p {
+		.shopText {
+			grid-area: center;
 			margin: 0px;
+			justify-self: center;
+			margin-top: 15px;
+		}
+		.shopName {
+			grid-area: top;
+			justify-self: stretch;
+			align-self: center;
+			display: flex;
+			justify-content: space-evenly;
+			padding-top: 3px;
+			font-family: Arial, sans-serif;
+			font-size: 10pt;
+			font-style: normal;
+			font-variant-caps: small-caps;
+			font-weight: 400;
+			text-align: center;
+			color: #ffee92; //!important;
+			text-shadow: 1px 1px 1px #383522;
+			img {
+				height: 7px;
+				width: 7px;
+				padding-top: 5px;
+			}
 		}
 	}
 	.list {
+		max-width: 95%;
+		justify-self: center;
+		align-self: center;
 		.sundayMessage {
 			margin: 20px auto;
 			width: 80%;
@@ -234,9 +264,6 @@ export default defineComponent({
 			color: #9a4029;
 		}
 		table {
-			width: 100%;
-			margin-top: 40px;
-			margin-bottom: 15px;
 			background-color: #ecbd84;
 			border-collapse: separate;
 			border-spacing: 1px;

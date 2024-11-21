@@ -631,6 +631,10 @@ export default defineComponent({
 				gap: 2px;
 				img {
 					align-self: center;
+					&:hover {
+						cursor: pointer;
+						box-shadow: 0px 0px 0px 1px white inset;
+					}
 				}
 			}
 		}
