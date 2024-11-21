@@ -1576,7 +1576,7 @@
 			"magic": "Désirez-vous acheter {item} pour un total de {sold} napodinos ?"
 		},
 		"item": {
-			"help": "Cliquez sur un objet dans la liste de gauche pour l'examiner...",
+			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
 			"advice": "**Conseil du jour :**",
 			"advice_1": "Envie de se déplacer à nouveau mais pas du tout envie d'attendre le lendemain ? La potion de Madame Irma : l'essayer, c'est l'adopter !",
 			"quantity": "Quantité",

@@ -1,62 +1,80 @@
 <template>
+	<TitleHeader
+		v-if="actualShop"
+		:title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`"
+		:header="formatContent($t(`shop.item.title`))"
+		:subHeader="formatContent($t(`shop.item.${actualShop.name}.name`))"
+	/>
 	<div class="shop" v-if="actualShop">
-		<TitleHeader
-			:title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`"
-			:header="formatContent($t(`shop.item.title`))"
-			:subHeader="formatContent($t(`shop.item.${actualShop.name}.name`))"
-		/>
 		<div class="shopDesc">
-			<div class="contain">
-				<div class="art art_shop">
-					<img :src="getImgURL('shop', `shop_${actualShop.name}`)" :alt="actualShop.name" />
-				</div>
-				<p v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
-				<div class="clear"></div>
-			</div>
+			<h3 class="shopName">
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+				{{ $t(`shop.item.${actualShop.name}.name`) }}
+				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
+			</h3>
+			<img class="art" :src="getImgURL('shop', `shop_${actualShop.name}`)" :alt="actualShop.name" />
+			<p class="shopText" v-html="formatContent($t(`shop.item.${actualShop.name}.description`))" />
 		</div>
-		<div class="bg bg2">
-			<div class="list">
-				<template v-if="itemList.length > 0">
-					<Tippy theme="small" class="name" v-for="(item, index) in itemList" :id="item.name" :key="index" tag="a">
-						<img :src="getImgURL('item', `item_${item.name}`)" :alt="item.name" @click="selectItem(item.itemId)" />
-						<template #content>
-							<h2 v-html="formatContent($t(`item.name.${item.name}`))" />
-							<p v-if="item.itemType === 'magical'">
-								{{ formatContent($t(`shop.item.price`)) }}
-								<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
-								{{ formatContent($t(`item.name.golden_napodino`)) }}
-								x {{ item.price }}
-							</p>
-							<p v-else>
-								{{ item.price }}
-								<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
-							</p>
-						</template>
-					</Tippy>
-				</template>
-				<template v-else>
-					<Tippy
-						theme="small"
-						class="name"
-						v-for="(item, index) in ingredientList"
-						:id="item.name"
-						:key="index"
-						tag="a"
-					>
-						<img :src="getImgURL('ingredients', item.name)" :alt="item.name" @click="selectItem(item.ingredientId)" />
-						<template #content>
-							<h2 v-html="formatContent($t(`ingredients.name.${item.name}`))" />
-							<div>
-								{{ item.price }} -> 1
-								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
-							</div>
-						</template>
-					</Tippy>
-				</template>
+		<div class="shopShop">
+			<div class="back">
+				<div class="list">
+					<template v-if="itemList.length > 0">
+						<Tippy
+							theme="small"
+							class="name"
+							v-for="(item, index) in itemList"
+							:id="item.name"
+							:key="index"
+							tag="img"
+							:src="getImgURL('item', `item_${item.name}`)"
+							:alt="item.name"
+							@click="selectItem(item.itemId)"
+						>
+							<template #content>
+								<h2 v-html="formatContent($t(`item.name.${item.name}`))" />
+								<p v-if="item.itemType === 'magical'">
+									{{ formatContent($t(`shop.item.price`)) }}
+									<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
+									{{ formatContent($t(`item.name.golden_napodino`)) }}
+									x {{ item.price }}
+								</p>
+								<p v-else>
+									{{ item.price }}
+									<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
+								</p>
+							</template>
+						</Tippy>
+					</template>
+					<template v-else>
+						<Tippy
+							theme="small"
+							class="name"
+							v-for="(item, index) in ingredientList"
+							:id="item.name"
+							:key="index"
+							tag="img"
+							:src="getImgURL('ingredients', item.name)"
+							:alt="item.name"
+							@click="selectItem(item.ingredientId)"
+						>
+							<template #content>
+								<h2 v-html="formatContent($t(`ingredients.name.${item.name}`))" />
+								<div>
+									{{ item.price }} -> 1
+									<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+								</div>
+							</template>
+						</Tippy>
+					</template>
+				</div>
 			</div>
 			<div class="details">
 				<div v-if="!selectedItem" id="shop_guide">
-					<p v-html="formatContent($t('shop.item.help'))" />
+					<div class="shop_help">
+						<img :src="getImgURL('design', `shop_arrow`)" alt="arrow" class="arrow" />
+						<p v-html="formatContent($t('shop.item.help'))" />
+					</div>
+
 					<div class="ad" v-html="formatContent($t('shop.item.advice') + $t('shop.item.advice_1'))" />
 				</div>
 				<div
@@ -527,39 +545,258 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@media (max-width: 524px) {
+	.arrow {
+		transform: rotate(90deg);
+	}
+}
+.shopName {
+	grid-area: top;
+	justify-self: stretch;
+	align-self: center;
+	display: flex;
+	justify-content: space-evenly;
+	padding-top: 3px;
+	font-family: Arial, sans-serif;
+	font-size: 10pt;
+	font-style: normal;
+	font-variant-caps: small-caps;
+	font-weight: 400;
+	text-align: center;
+	color: #ffee92; //!important;
+	text-shadow: 1px 1px 1px #383522;
+	img {
+		height: 7px;
+		width: 7px;
+		padding-top: 5px;
+	}
+}
 .shop {
+	display: flex;
+	align-self: center;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
 	.shopDesc {
-		margin: auto;
-		margin-bottom: 8px;
-		width: 520px;
-		height: 168px;
-		padding: 5px;
 		font-style: italic;
 		color: #ffee92;
 		font-size: 10pt;
-		background-image: url('../assets/background/desc_shop.webp');
-		background-repeat: no-repeat;
-		.contain {
-			margin-top: 10px;
-			padding: 15px;
-		}
+		display: grid;
+		grid-template-rows: 17px auto;
+		grid-template-columns: 180px auto;
+		grid-template-areas: 'top top ' 'left center';
+		background: url('../assets/background/desc_shop_top_left.webp'),
+			url('../assets/background/desc_shop_top_right.webp'), url('../assets/background/desc_shop_top_center.webp'),
+			url('../assets/background/desc_shop_bottom_left.webp'), url('../assets/background/desc_shop_bottom_right.webp'),
+			url('../assets/background/desc_shop_bottom_center.webp'), url('../assets/background/desc_shop_center_left.webp'),
+			url('../assets/background/desc_shop_center_right.webp'), url('../assets/background/desc_shop_center_center.webp');
+		background-position-x: left, right, center, left, right, center, left, right, center;
+		background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
+		background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+
+		min-height: 160px;
+		max-width: 95%;
+		padding-right: 10px;
+		padding-bottom: 10px;
+
 		.art {
-			width: 160px;
-			height: 120px;
-			margin-right: 10px;
-			margin-bottom: 10px;
-			border: none;
-			outline: none;
-			float: left;
-			position: relative;
-			overflow: hidden;
-			font-size: 0pt;
-			line-height: 0pt;
-			background-position: top left;
-			background-repeat: no-repeat;
+			grid-area: left;
+			justify-self: center;
+			margin-top: 15px;
 		}
-		p {
+		.shopText {
+			grid-area: center;
 			margin: 0px;
+			justify-self: center;
+			margin-top: 15px;
+		}
+	}
+	.shopShop {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		max-width: 95%;
+		align-self: center;
+		.back {
+			background: url('../assets/design/shop_bg_items.webp');
+			width: 162px;
+			height: 193px;
+			.list {
+				padding-right: 14px;
+				padding-top: 12px;
+				padding-left: 14px;
+				display: flex;
+				flex-wrap: wrap;
+				//justify-content: space-between;
+				gap: 2px;
+				img {
+					align-self: center;
+				}
+			}
+		}
+		.details {
+			background: url('../assets/design/shop_bg_detail.webp') no-repeat;
+			width: 306px;
+			height: 266px;
+			padding: 15px;
+			#shop_guide {
+				.shop_help {
+					padding-left: 15px;
+					display: flex;
+					gap: 10px;
+					p {
+						text-indent: 0px;
+						color: #fce3bc;
+						//background-image: url('../assets/design/shop_arrow.webp');
+						background-position: 0px 5px;
+						background-repeat: no-repeat;
+					}
+				}
+				.ad {
+					margin-top: 80px;
+					color: #ffee92;
+					font-size: 9pt;
+					line-height: 10pt;
+					font-style: italic;
+				}
+			}
+			.item {
+				display: none;
+			}
+			.name {
+				color: #ffee92;
+				font-variant: small-caps;
+				font-weight: bold;
+				line-height: 9pt;
+				padding-bottom: 4px;
+				border-bottom: 1px solid #ffee92;
+			}
+			.noValue {
+				height: 12px;
+			}
+			.value {
+				color: white;
+				font-size: 9pt;
+				margin-top: 1px;
+				span.money {
+					background-color: transparent;
+					border: 0px;
+					color: #ffee92;
+				}
+				img {
+					vertical-align: -5%;
+				}
+				.objValue {
+					margin-top: 4px;
+					padding: 3px;
+					color: #ffee92;
+					font-weight: bold;
+					border-top: 1px solid #9a4029;
+					border-bottom: 1px solid #9a4029;
+					img {
+						vertical-align: -50%;
+					}
+				}
+			}
+			.objValue {
+				margin-top: 4px;
+				padding: 3px;
+				color: #ffee92;
+				font-weight: bold;
+				border-top: 1px solid #9a4029;
+				border-bottom: 1px solid #9a4029;
+				img {
+					vertical-align: -50%;
+				}
+			}
+			.type {
+				position: absolute;
+				z-index: 2;
+				margin-top: 23px;
+				margin-left: 230px;
+				width: 65px;
+				text-align: right;
+				font-size: 0pt;
+				line-height: 0pt;
+				img {
+					margin-left: 5px;
+					cursor: help;
+				}
+			}
+			.desc {
+				color: #fce3bc;
+				font-size: 11pt;
+				line-height: 12pt;
+			}
+			.obj {
+				margin-top: 0px;
+			}
+			.infos {
+				position: absolute;
+				margin-top: 143px;
+				width: 294px;
+				padding-top: 2px;
+				border-top: 1px solid #ffee92;
+				display: flex;
+				flex-direction: revert;
+				justify-content: space-between;
+				input {
+					align-self: center;
+					width: 64px;
+					height: 20px;
+					padding-left: 8px;
+					padding-right: 8px;
+					padding-top: 2px;
+					color: #ffee92;
+					font-size: 9pt;
+					font-weight: bold;
+					border: none;
+					background-image: url('../assets/design/form_field_small.webp');
+					background-repeat: no-repeat;
+					background-color: transparent;
+					&:focus {
+						background-image: url('../assets/design/form_field_small_hover.webp');
+					}
+				}
+			}
+			.stock {
+				position: absolute;
+				width: 60px;
+				margin-left: 233px;
+				padding-right: 5px;
+				text-align: right;
+				color: #ffee92;
+				font-size: 11pt;
+				letter-spacing: -0.5pt;
+				background-color: #b46843;
+				border: 1px solid #ffee92;
+				cursor: pointer;
+				&:hover {
+					border-color: white;
+					background-color: #9f562b;
+				}
+			}
+			img.icon {
+				float: left;
+				position: relative;
+				border: 1px solid black;
+				margin-right: 5px;
+			}
+			label {
+				align-self: center;
+				display: block;
+				float: right;
+				position: relative;
+				margin-top: 4px;
+				margin-bottom: 4px;
+				margin-right: 2px;
+				padding: 3px 6px;
+				border-radius: 10px;
+				-webkit-border-radius: 10px;
+				font-size: 8pt;
+				background-color: #9a4029;
+				color: #ffee92;
+			}
 		}
 	}
 	.bg {
@@ -768,7 +1005,6 @@ export default defineComponent({
 	}
 	p {
 		line-height: 12pt;
-		margin-bottom: 10px;
 		&:first-letter {
 			font-weight: bold;
 			font-size: 115%;
