@@ -1,36 +1,26 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t(`rightMenu.ranking`)"></TitleHeader>
-	<ul class="tabs">
+	<ul class="onglets">
 		<li :class="tabSelected === 1 ? 'active' : ''">
-			<a href="#" @click="setTab(1)"
-				><img :src="getImgURL('design', 'small_member')" alt="member" /> {{ $t('tabs.players') }}</a
-			>
+			<a @click="setTab(1)"><img :src="getImgURL('design', 'small_member')" alt="member" /> {{ $t('tabs.players') }}</a>
 		</li>
 		<li :class="tabSelected === 2 ? 'active' : ''">
-			<a href="#" @click="setTab(2)">{{ $t('tabs.average') }}</a>
+			<a @click="setTab(2)">{{ $t('tabs.average') }}</a>
 		</li>
 		<li :class="tabSelected === 3 ? 'active' : ''">
-			<a href="#" @click="setTab(3)">{{ $t('tabs.completion') }}</a>
+			<a @click="setTab(3)">{{ $t('tabs.completion') }}</a>
 		</li>
 		<li :class="tabSelected === 4 ? 'active' : ''">
-			<a href="#" @click="setTab(3)">{{ $t('tabs.clans') }}</a>
+			<a @click="setTab(3)">{{ $t('tabs.clans') }}</a>
 		</li>
 		<li :class="tabSelected === 5 ? 'active' : ''">
-			<a href="#" @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
+			<a @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
 		</li>
 	</ul>
-	<div class="disclaimer" v-if="tabSelected === 1">
-		{{ $t('ranking.disclaimer.classic') }}
-	</div>
-	<div class="disclaimer" v-if="tabSelected === 2">
-		{{ $t('ranking.disclaimer.average') }}
-	</div>
-	<div class="disclaimer" v-if="tabSelected === 3">
-		{{ $t('ranking.disclaimer.completion') }}
-	</div>
-	<div class="disclaimer" v-if="tabSelected === 5">
-		{{ $t('ranking.disclaimer.pantheon') }}
-	</div>
+	<DZDisclaimer content="ranking.disclaimer.classic" v-if="tabSelected === 1" />
+	<DZDisclaimer content="ranking.disclaimer.average" v-if="tabSelected === 2" />
+	<DZDisclaimer content="ranking.disclaimer.completion" v-if="tabSelected === 3" />
+	<DZDisclaimer content="ranking.disclaimer.pantheon" v-if="tabSelected === 5" />
 	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" v-if="tabSelected === 2" />
 	<CompletionRanking v-if="tabSelected === 3" />
@@ -57,6 +47,7 @@ import PlayerRanking from '../components/rankings/PlayerRanking.vue';
 import CompletionRanking from '../components/rankings/CompletionRanking.vue';
 import { PlayerService } from '../services/index.js';
 import Pantheon from '../components/rankings/Pantheon.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -66,6 +57,7 @@ interface PlayerSearch {
 export default defineComponent({
 	name: 'Ranking',
 	components: {
+		DZDisclaimer,
 		CompletionRanking,
 		TitleHeader,
 		PlayerRanking,
@@ -119,18 +111,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px;
-	padding-left: 5px;
-	padding-left: 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
 .search {
 	background-image: url('../assets/background/form_field.webp');
 	background-repeat: no-repeat;
@@ -141,8 +121,40 @@ export default defineComponent({
 	padding-right: 8px;
 	padding-top: 2px;
 	width: 185px;
+	margin-left: 1rem;
 }
 .search::placeholder {
 	color: #fce3bc;
+}
+a {
+	cursor: pointer;
+}
+.onglets {
+	list-style: none;
+	height: 18px;
+	align-self: center;
+	background-color: #9a4029;
+	background-image: url('../assets/design/tabsBg.webp');
+	background-repeat: no-repeat;
+	border-bottom: 1px solid #ffe7aa;
+
+	li {
+		float: left;
+		position: relative;
+		margin-right: 5px;
+
+		a {
+			color: #fce3bc;
+			text-decoration: none;
+			padding-left: 5px;
+			padding-right: 5px;
+			background-color: #bc683c;
+			border-right: 1px solid black;
+			border-left: 1px solid #d39a65;
+			border-top: 1px solid #d39a65;
+			font-size: 10pt;
+			border-radius: 0px;
+		}
+	}
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`" :header="$t(`chooseDinoz.pageName`)"></TitleHeader>
 	<div id="chooseDinozName">
-		<div class="disclaimer">{{ $t('chooseDinoz.information') }}</div>
+		<DZDisclaimer content="chooseDinoz.information" />
 		<div class="dinoz_display">
 			<Suspense>
 				<DinozWithoutFlash
 					:display="dinozData.display"
 					:life="1"
-					:flip="-1"
+					:flip="true"
 					:race="dinozData.race.raceId"
 				></DinozWithoutFlash>
 				<template #fallback> <Loading /> </template>
@@ -30,10 +30,12 @@ import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { formatText } from '../../utils/formatText.js';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
+		DZDisclaimer,
 		TitleHeader,
 		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/DinozWithoutFlash.vue'))
 	},

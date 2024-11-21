@@ -84,7 +84,7 @@ export default defineComponent({
 		align-content: baseline;
 	}
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.fx {
 		width: calc(100% - 2px);
 		cursor: pointer;

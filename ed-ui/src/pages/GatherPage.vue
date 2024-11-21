@@ -3,9 +3,11 @@
 		:title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`"
 		:header="$t(`gather.action.${gatherType}`)"
 	/>
-	<div class="disclaimer" v-if="loaded">
-		{{ $t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) }) }}
-	</div>
+	<DZDisclaimer
+		help
+		round
+		:content="$t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) })"
+	/>
 	<div
 		class="container"
 		v-if="grid && loaded"
@@ -47,10 +49,12 @@ import { errorHandler } from '../utils/index.js';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import GatherRewardModal from '../components/modal/GatherRewardModal.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'GatherPage',
 	components: {
+		DZDisclaimer,
 		GatherRewardModal,
 		TitleHeader
 	},
@@ -134,17 +138,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	border-radius: 5px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
 .bgimg {
 	position: absolute;
 	top: 0;

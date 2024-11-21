@@ -4,9 +4,7 @@
 		:header="$t(`levelup.title`, { name: dinozData.name })"
 	></TitleHeader>
 	<div class="levelUp">
-		<div class="disclaimer">
-			{{ $t('levelup.disclaimer') }}
-		</div>
+		<DZDisclaimer content="levelup.disclaimer" />
 		<div class="wrapper border" v-if="availableSkills">
 			<LevelUpGrid
 				v-if="availableSkills.upChance && availableSkills.element"
@@ -165,10 +163,12 @@ import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'LevelUp',
 	components: {
+		DZDisclaimer,
 		LevelUpGrid,
 		TitleHeader,
 		Elements,

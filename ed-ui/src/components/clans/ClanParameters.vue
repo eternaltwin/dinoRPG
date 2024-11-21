@@ -118,7 +118,7 @@ export default defineComponent({
 	}
 }
 
-.disclaimer {
+/*.disclaimer {
 	margin-top: 10px;
 	margin-bottom: 10px;
 	padding: 5px;
@@ -129,5 +129,5 @@ export default defineComponent({
 	background-color: #bc683c;
 	background-position: 5px 8px;
 	background-repeat: no-repeat;
-}
+}*/
 </style>

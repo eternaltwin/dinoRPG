@@ -7,7 +7,7 @@
 					<th class="player">{{ $t('ranking.th.player') }}</th>
 					<th class="dinoz">Dinoz</th>
 					<th class="points">{{ $t('ranking.th.points') }}</th>
-					<th class="points">{{ $t('tabs.completion') }}</th>
+					<th class="points">{{ $t('ranking.th.completion') }}</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
 					<td class="pos" colspan="5" style="text-align: center">

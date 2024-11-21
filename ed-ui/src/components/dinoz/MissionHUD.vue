@@ -153,7 +153,7 @@ export default defineComponent({
 	color: #fce3bc;
 	font-size: 9pt;
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.mission {
 		width: 100%;
 	}

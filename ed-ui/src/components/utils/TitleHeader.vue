@@ -19,7 +19,8 @@ export default defineComponent({
 		title: {
 			immediate: true,
 			handler: function () {
-				return (document.title = this.title!);
+				if (!this.title) return;
+				return (document.title = this.title);
 			}
 		}
 	}
@@ -66,7 +67,7 @@ export default defineComponent({
 		margin-left: 12px;
 	}
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.section {
 		padding-bottom: 15px;
 		.titlePage {

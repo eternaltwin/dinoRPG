@@ -9,14 +9,14 @@
 				</li>
 			</ul>
 		</div>
-		<div class="image">
+		<!--		<div class="image">
 			<img :src="getImgURL('design', 'rocky_01')" />
-		</div>
+		</div>-->
 	</div>
 	<div class="showContent">
 		<div v-if="selectedItem" class="content">
-			<h2 class="titlePage">{{ selectedItem.name }}</h2>
-			<img :src="getImgURL('design', 'title_h1')" />
+			<TitleHeader header=" " :sub-header="selectedItem.name" />
+			<!--			<img :src="getImgURL('design', 'title_h1')" />-->
 			<div v-for="(section, index) in selectedItem.contentSections" :key="index" class="sectionContent">
 				<h3 class="titleSection">{{ section.name }}</h3>
 				<ul v-if="section.texts" class="textContent">
@@ -525,6 +525,8 @@ export default defineComponent({
 .intro {
 	display: flex;
 	margin-left: 10px;
+	max-width: 95%;
+	align-self: baseline;
 	.menu {
 		background-color: #e09b6244;
 		border-radius: 5px;
@@ -553,6 +555,8 @@ export default defineComponent({
 	}
 }
 .showContent {
+	max-width: 95%;
+	align-self: center;
 	.content {
 		margin-top: 20px;
 		:deep(strong) {

@@ -1,5 +1,5 @@
 <template>
-	<div class="map_container" @mousemove="parallax($event)">
+	<div class="map_container" ref="container" @mousemove="parallax($event)">
 		<div
 			class="full_map"
 			:style="{
@@ -113,8 +113,18 @@ export default defineComponent({
 		},
 		centerPos(mapImage: DOMRect) {
 			const rect: DOMRect = document.querySelector('.map_container')!.getBoundingClientRect(); // taille du wrapper (250*300)
-			const centerMapY: number = mapImage.height - rect.height;
-			const centerMapX: number = mapImage.width - rect.width;
+			let centerMapY: number = mapImage.height - rect.height;
+			let centerMapX: number = mapImage.width - rect.width;
+			const boxMap = document.getElementById('boxMap') as HTMLDivElement;
+			if (boxMap && centerMapX < 0) {
+				boxMap.style.width = mapImage.width + 'px';
+				centerMapX = 0;
+			}
+			if (boxMap && centerMapY < 0) {
+				boxMap.style.height = mapImage.height + 'px';
+				centerMapY = 0;
+			}
+
 			const centerX: number = rect.width / 2;
 			const centerY: number = rect.height / 2;
 			const actualPlace = placeList.find(place => place.placeId === this.dinozData!.placeId)!;

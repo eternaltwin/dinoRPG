@@ -21,7 +21,7 @@
 			</option>
 		</select>
 	</div>
-	<div v-if="pantheon === PantheonMotif.RACE && display">
+	<div class="table" v-if="pantheon === PantheonMotif.RACE && display">
 		<table>
 			<tbody>
 				<tr>
@@ -195,12 +195,18 @@ export default defineComponent({
 	align-items: center;
 }
 .wrapper {
-	margin: 5px;
 	display: flex;
 	justify-content: space-around;
+	width: 95%;
+	align-self: center;
+	margin-bottom: 5px;
 }
 .hidden {
 	display: none !important;
+}
+.table {
+	width: 95%;
+	align-self: center;
 }
 table {
 	width: 100%;

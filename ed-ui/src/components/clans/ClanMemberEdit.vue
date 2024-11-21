@@ -97,7 +97,7 @@ export default defineComponent({
 		}
 	}
 }
-.disclaimer {
+/*.disclaimer {
 	display: flex;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -111,5 +111,5 @@ export default defineComponent({
 	strong {
 		color: #ffee92;
 	}
-}
+}*/
 </style>

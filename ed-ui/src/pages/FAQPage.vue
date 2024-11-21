@@ -1,9 +1,6 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t(`rightMenu.faq`)" />
-	<div class="intro">
-		<span><img :src="getImgURL('icons', 'small_question')" /></span>
-		<p>{{ $t(`faq.intro`) }}</p>
-	</div>
+	<DZDisclaimer help round content="faq.intro" />
 	<div class="search">
 		<form @submit.prevent="searchQuestion">
 			<table>
@@ -36,6 +33,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 interface FaqPair {
 	id: number;
@@ -47,6 +45,7 @@ interface FaqPair {
 export default defineComponent({
 	name: 'FAQ',
 	components: {
+		DZDisclaimer,
 		TitleHeader
 	},
 	data() {
@@ -174,7 +173,7 @@ export default defineComponent({
 			margin-inline-start: 40px;
 			outline: 2px solid #f8d39c;
 			padding: 5px;
-			width: 90%;
+			max-width: calc(100% - 52px);
 		}
 	}
 }

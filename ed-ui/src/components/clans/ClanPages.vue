@@ -234,7 +234,7 @@ export default defineComponent({
 	padding: 8px;
 }
 
-.disclaimer {
+/*.disclaimer {
 	border-radius: 16px;
 	padding: 5px;
 	padding-left: 5px;
@@ -248,5 +248,5 @@ export default defineComponent({
 		cursor: pointer;
 		text-decoration: underline;
 	}
-}
+}*/
 </style>

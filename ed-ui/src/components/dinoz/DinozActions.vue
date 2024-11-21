@@ -608,7 +608,7 @@ export default defineComponent({
 		padding-right: 5px;
 	}
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.actions {
 		width: 95%;
 		max-width: 100%;

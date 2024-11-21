@@ -60,16 +60,16 @@
 		<div class="timehelp">
 			<p>{{ $t('roadmap.help') }}</p>
 		</div>
-		<div class="disclaimer">
-			<p>{{ $t('roadmap.disclaimer') }}</p>
-		</div>
+		<DZDisclaimer content="roadmap.disclaimer" />
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
+import DZDisclaimer from './DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'Roadmap',
+	components: { DZDisclaimer },
 	data() {
 		return {
 			showFuturTable: false,

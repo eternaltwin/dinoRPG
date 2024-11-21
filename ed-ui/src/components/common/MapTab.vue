@@ -1,5 +1,5 @@
 <template>
-	<div class="boxMap">
+	<div id="boxMap">
 		<WorldMap :dinozData="dinozData" :key="dinozData" />
 		<p class="placeName">
 			{{ $t(`place.name.${getPlaceName(dinozData!.placeId)}`) }}
@@ -73,7 +73,7 @@ export default defineComponent({
 	border-radius: 10px;
 	max-width: 95%;
 }
-.boxMap {
+#boxMap {
 	display: block;
 	width: 95%;
 	border: 1px solid #874b2e;

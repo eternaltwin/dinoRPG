@@ -1,8 +1,6 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`rightMenu.ingredients`)" />
-	<div class="disclaimer">
-		{{ $t('ingredients.disclaimer') }}
-	</div>
+	<DZDisclaimer help round content="ingredients.disclaimer" />
 	<table>
 		<tbody>
 			<tr>
@@ -59,10 +57,12 @@ import { playerStore } from '../store/index.js';
 import DZInput from '../components/common/DZInput.vue';
 import DZButton from '../components/common/DZButton.vue';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'Ingredients',
 	components: {
+		DZDisclaimer,
 		DZButton,
 		DZInput,
 		TitleHeader
@@ -138,16 +138,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}
 table {
 	width: 100%;
 	margin-top: 10px;

@@ -59,7 +59,7 @@ export default defineComponent({
 		font-weight: bold;
 	}
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.elements_div {
 		width: 100%;
 	}

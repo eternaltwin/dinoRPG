@@ -157,6 +157,8 @@ export default defineComponent({
 	background-repeat: repeat-y;
 	display: flex;
 	flex-wrap: wrap;
+	width: fit-content;
+	align-self: center;
 
 	// For futur implementation of header div
 	// .header {
@@ -191,7 +193,7 @@ export default defineComponent({
 	//grid-template-columns: [first] 2% [line1] 15% [line2] auto [line3] 35% [line4] 3% [end];
 	//grid-template-rows: [first] 35px [row1] 170px [row2] 100px [last-line];
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.dinoz {
 		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
 		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
@@ -216,6 +218,8 @@ export default defineComponent({
 		flex-direction: column;
 		align-items: center;
 		gap: 5px;
+		width: auto;
+		align-self: auto;
 
 		// For futur implementation of header div
 		// .header {

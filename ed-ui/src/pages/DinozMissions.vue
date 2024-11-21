@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.dinozMissions')" :header="$t(`dinozMissions.title`)" />
-	<div class="disclaimer" v-html="formatContent($t('dinozMissions.disclaimer'))" />
+	<DZDisclaimer content="dinozMissions.disclaimer" />
 	<table>
 		<tbody>
 			<tr>
@@ -105,10 +105,12 @@ import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { errorHandler } from '../utils/errorHandler.js';
 import { formatText } from '../utils/formatText.js';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'DinozMissions',
 	components: {
+		DZDisclaimer,
 		TitleHeader
 	},
 	data() {

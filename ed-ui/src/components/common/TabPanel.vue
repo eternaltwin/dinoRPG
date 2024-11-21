@@ -101,7 +101,7 @@ export default defineComponent({
 		}
 	}
 }
-@media (max-width: 510px) {
+@media (max-width: 539px) {
 	.tabPanel {
 		width: 95%;
 	}
