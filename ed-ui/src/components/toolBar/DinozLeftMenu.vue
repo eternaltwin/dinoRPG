@@ -46,14 +46,17 @@
 					}"
 				>
 					<DinozMini class="display" :display="dinoz.display" />
-					<p
-						class="dinozName"
-						:class="{
-							dead: dinoz.life === 0
-						}"
-					>
-						{{ dinoz.name }}
-					</p>
+					<div class="dinozName">
+						<p
+							:class="{
+								dead: dinoz.life === 0
+							}"
+						>
+							{{ dinoz.name }}
+						</p>
+						<span class="place">{{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }}</span>
+					</div>
+
 					<div class="bars">
 						<span class="tinyBar">
 							<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
@@ -166,6 +169,7 @@ import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReaso
 import DinozMini from '../dinoz/DinozMini.vue';
 import { utils } from '../../utils/index.js';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
+import { placeList } from '../../constants/index.js';
 
 export default defineComponent({
 	name: 'DinozLeftMenu',
@@ -225,6 +229,9 @@ export default defineComponent({
 				return true;
 			}
 			return false;
+		},
+		getPlaceName(placeId: number): string {
+			return placeList.find(place => place.placeId === placeId)!.name;
 		}
 	},
 	watch: {
@@ -440,6 +447,13 @@ export default defineComponent({
 		}
 		.dinozName {
 			place-self: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			.place {
+				font-size: small;
+				text-align: center;
+			}
 		}
 		.dead {
 			text-decoration: line-through;

@@ -1,6 +1,6 @@
 <template>
-	<Tippy class="action" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
-		<img :src="getImgURL('icons', 'act_follow')" alt="act_follow" />
+	<Tippy v-if="!display" class="act_follow" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
+		<img class="arrow" :src="getImgURL('icons', 'act_follow')" alt="act_follow" />
 		<p>
 			{{ $t(`action.name.follow`) }}
 		</p>
@@ -9,16 +9,21 @@
 			<p v-html="formatContent($t(`action.description.follow`))" />
 		</template>
 	</Tippy>
-	<div
-		v-for="dinozToFollow in dinozAvailableToFollow"
-		:key="dinozToFollow"
-		class="dinoz-to-follow"
-		@click="followDinoz(dinozToFollow.id)"
-	>
-		<p>
-			<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
-			{{ dinozToFollow.name }}
-		</p>
+	<!--	<div v-if="display" class="followList">
+			<span
+				v-for="dinozToFollow in dinozAvailableToFollow"
+				:key="dinozToFollow"
+				class="dinoz-to-follow"
+				@click="followDinoz(dinozToFollow.id)"
+			>
+				<img :src="getImgURL('icons', 'small_follow')" alt="follow" />
+				{{ dinozToFollow.name }}
+			</span>
+	</div>-->
+	<div v-if="display" class="followList">
+		<template v-for="dinozToFollow in dinozAvailableToFollow" :key="dinozToFollow">
+			<DinozMini class="follower" :display="dinozToFollow.display" @click="followDinoz(dinozToFollow.id)" />
+		</template>
 	</div>
 </template>
 
@@ -31,13 +36,16 @@ import { errorHandler } from '../../utils/index.js';
 import { dinozStore } from '../../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { formatText } from '../../utils/formatText.js';
+import DinozMini from './DinozMini.vue';
 
 export default defineComponent({
 	name: 'DZFollow',
+	components: { DinozMini },
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			dinozAvailableToFollow: [] as DinozFiche[]
+			dinozAvailableToFollow: [] as DinozFiche[],
+			display: false as boolean
 		};
 	},
 	methods: {
@@ -61,6 +69,7 @@ export default defineComponent({
 
 			// Display the list of dinoz available to follow
 			this.dinozAvailableToFollow = getFollowableDinoz(this.dinozStore.getDinozList, currentDinoz);
+			this.display = true;
 		},
 		async followDinoz(targetId: number) {
 			try {
@@ -97,24 +106,53 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-.action {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	gap: 0.5rem;
-	margin-left: 5px;
-	margin-right: 5px;
-	border-radius: 7px;
+<style lang="scss" scoped>
+.act_follow {
+	display: grid;
+	grid-template-areas: 'left top ' 'center center';
+	grid-template-columns: 32px 1fr;
+	grid-template-rows: 1fr auto;
+	width: 46%;
 	font-size: 11pt;
 	font-variant: small-caps;
 	line-height: 10.5pt;
 	font-weight: 700;
+	.arrow {
+		grid-area: left;
+	}
+	p {
+		margin-left: 0.5rem;
+		grid-area: top;
+		align-self: center;
+	}
+	span {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 4px;
+		margin-left: 3px;
+		align-items: flex-start;
+	}
 	&:hover {
 		background-color: #9a4029;
 		cursor: pointer;
-		img {
+		.arrow {
 			outline: 1px solid white;
+		}
+	}
+}
+.followList {
+	display: flex;
+	gap: 2px;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	.follower {
+		//border: 1px solid #356847;
+		background-color: #cd8956;
+		border-radius: 5px;
+		&:hover {
+			outline: none;
+			background-color: #9a4029;
+			cursor: pointer;
 		}
 	}
 }
@@ -127,6 +165,11 @@ export default defineComponent({
 		outline: none;
 		background-color: #9a4029;
 		cursor: pointer;
+	}
+}
+@media (max-width: 539px) {
+	.action {
+		width: 46%;
 	}
 }
 </style>

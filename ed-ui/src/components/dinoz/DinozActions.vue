@@ -576,6 +576,7 @@ export default defineComponent({
 		font-variant: small-caps;
 		line-height: 10.5pt;
 		font-weight: 700;
+		width: 100%;
 		&:hover {
 			background-color: #9a4029;
 			cursor: pointer;

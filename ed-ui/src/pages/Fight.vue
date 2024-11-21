@@ -246,14 +246,18 @@ export default defineComponent({
 			align-self: center;
 			justify-self: center;
 			white-space: nowrap;
-			font-weight: bold;
+			font-weight: 1000;
 			font-variant: all-petite-caps;
 			font-size: smaller;
+			color: #ffda97;
 		}
 		.data {
 			grid-area: center;
 			align-self: center;
 			padding-left: 5px;
+			text-align: left;
+			font-size: 15pt;
+			color: #fff;
 		}
 		img {
 			grid-area: left;
