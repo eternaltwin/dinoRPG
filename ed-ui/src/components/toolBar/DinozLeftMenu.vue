@@ -45,7 +45,7 @@
 						group: getLeaderGroup(dinoz)
 					}"
 				>
-					<DinozMini class="display" :display="dinoz.display" />
+					<DinozMini class="display" :display="dinoz.display" :key="dinoz.display" />
 					<div class="dinozName">
 						<p
 							:class="{
