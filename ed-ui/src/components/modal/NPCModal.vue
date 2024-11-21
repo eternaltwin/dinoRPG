@@ -2,14 +2,12 @@
 	<Transition>
 		<div v-if="text" class="modal-background">
 			<div class="box">
-				<div class="headerBox">
-					<div class="name">{{ $t(`missions.npc.${npcName}`) }} :</div>
-				</div>
-				<div class="footer">
-					<DZButton class="continue" @click="$emit('close')">{{ $t(`npc.continue`) }}</DZButton>
+				<p class="name">{{ $t(`missions.npc.${npcName}`) }} :</p>
+				<div class="content">
 					<span class="dialog">
 						{{ $t(`missions.dialog.${text}`) }}
 					</span>
+					<DZButton class="continue" @click="$emit('close')">{{ $t(`npc.continue`) }}</DZButton>
 				</div>
 			</div>
 		</div>
@@ -46,40 +44,50 @@ export default defineComponent({
 
 	.box {
 		cursor: pointer;
-		min-width: 528px;
 		background-repeat: repeat-y;
-		background-image: url('../../assets/background/dialog_bg_pix.webp');
+		max-width: 95%;
+		min-height: 75px;
+		//background-image: url('../../assets/background/dialog_bg_pix.webp');
+		background: url('../../assets/background/dialog_bg_top_left.webp'),
+			url('../../assets/background/dialog_bg_top_right.webp'), url('../../assets/background/dialog_bg_top_center.webp'),
+			url('../../assets/background/dialog_bg_footer_left.webp'),
+			url('../../assets/background/dialog_bg_footer_right.webp'),
+			url('../../assets/background/dialog_bg_footer_center.webp'),
+			url('../../assets/background/dialog_bg_center_left.webp'),
+			url('../../assets/background/dialog_bg_center_right.webp'),
+			url('../../assets/background/dialog_bg_center_center.webp');
+		background-position-x: left, right, center, left, right, center, left, right, center;
+		background-position-y: top, top, top, bottom, bottom, bottom, 40px, 40px, 40px;
+		background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
 
-		.headerBox {
-			background-image: url('../../assets/background/dialog_bg_header.webp');
-			background-repeat: no-repeat;
-			height: 30px;
-
-			.name {
-				margin-left: 15px;
-				padding-top: 15px;
-				font-variant: small-caps;
-				font-weight: bold;
-				font-size: 10pt;
-				color: #693118;
-			}
+		padding-right: 5px;
+		padding-left: 5px;
+		.name {
+			margin-left: 15px;
+			padding-top: 15px;
+			font-variant: small-caps;
+			font-weight: bold;
+			font-size: 10pt;
+			color: #693118;
 		}
-
-		.footer {
-			min-height: 148px;
+		.content {
 			padding: 1px;
-			background-image: url('../../assets/background/dialog_bg_footer.webp');
 			background-repeat: no-repeat;
 			background-position: bottom left;
 			overflow: hidden;
-
-			.continue {
-				top: 100px;
-				left: 15px;
+			display: flex;
+			justify-content: space-between;
+			gap: 15px;
+			.portrait {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 5px;
+				width: fit-content;
 			}
 
 			.dialog {
-				width: 390px;
+				width: fit-content;
 				float: left;
 				position: relative;
 				margin-bottom: 10px;
