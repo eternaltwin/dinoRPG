@@ -138,10 +138,12 @@ export default defineComponent({
 }
 .bloc {
 	background-image: url('../../assets/background/bloc_news.webp');
+	width: 90%;
+	align-self: center;
+	max-width: 496px;
 	background-repeat: repeat-y;
 	cursor: pointer;
 	margin-bottom: 10px;
-	margin-right: 11px;
 	border: 1px solid #ffee92;
 	outline: 1px solid #92471f;
 	transition: max-height 0.9s ease-out;
