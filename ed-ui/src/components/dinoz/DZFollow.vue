@@ -22,7 +22,15 @@
 	</div>-->
 	<div v-if="display" class="followList">
 		<template v-for="dinozToFollow in dinozAvailableToFollow" :key="dinozToFollow">
-			<DinozMini class="follower" :display="dinozToFollow.display" @click="followDinoz(dinozToFollow.id)" />
+			<DinozMini
+				v-tippy="{
+					content: dinozToFollow.name,
+					theme: 'small'
+				}"
+				class="follower"
+				:display="dinozToFollow.display"
+				@click="followDinoz(dinozToFollow.id)"
+			/>
 		</template>
 	</div>
 </template>
