@@ -140,6 +140,11 @@ dialog {
 		background: linear-gradient(0deg, rgba(107, 32, 17, 0.2), rgba(107, 32, 17, 0.4) 70%, rgba(0, 0, 0, 0.7));
 	}
 }
+@media (max-width: 520px) {
+	dialog {
+		max-width: 95%;
+	}
+}
 .modal-title {
 	background-color: rgba(0, 0, 0, 0.25);
 	font-size: 18px;
