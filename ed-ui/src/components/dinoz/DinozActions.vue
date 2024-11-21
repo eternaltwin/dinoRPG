@@ -543,6 +543,7 @@ export default defineComponent({
 	font-style: italic;
 	color: #fce3bc;
 	font-size: 9pt;
+	align-self: stretch;
 }
 .actions {
 	background:

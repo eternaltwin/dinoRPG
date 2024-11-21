@@ -130,7 +130,7 @@ export default defineComponent({
 	font-weight: bold;
 }
 .mission {
-	margin: 0 10px 10px;
+	//margin: 0 10px 10px;
 	padding: 5px 5px 5px 20px;
 	font-size: 10pt;
 	background-color: #bc683c;
@@ -141,6 +141,7 @@ export default defineComponent({
 	overflow: hidden;
 	color: #774828;
 	cursor: pointer;
+	align-self: stretch;
 }
 .name {
 	font-variant: small-caps;
@@ -151,5 +152,10 @@ export default defineComponent({
 	font-style: italic;
 	color: #fce3bc;
 	font-size: 9pt;
+}
+@media (max-width: 510px) {
+	.mission {
+		width: 100%;
+	}
 }
 </style>

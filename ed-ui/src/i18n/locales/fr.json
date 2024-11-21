@@ -3932,6 +3932,9 @@
 		"display": "Afficher le combat",
 		"resume": "Vous avez combattu un {enemy}",
 		"clone": "Clone",
+		"life": "Vie perdue",
+		"experience": "Expérience",
+		"gold": "Or trouvée",
 		"monster": {
 			"goupignon": "Goupignon",
 			"wolf": "Loup",

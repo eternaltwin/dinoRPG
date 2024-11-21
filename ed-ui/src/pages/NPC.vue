@@ -198,6 +198,7 @@ export default defineComponent({
 		background-position: bottom left;
 		overflow: hidden;
 		display: flex;
+		justify-content: space-between;
 		gap: 15px;
 		.portrait {
 			display: flex;
