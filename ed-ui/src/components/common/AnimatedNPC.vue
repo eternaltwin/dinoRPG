@@ -23,8 +23,6 @@ export default defineComponent({
 	position: relative;
 	width: 100px;
 	height: 100px;
-	margin-right: 10px;
-	margin-top: -1px;
 	font-size: 0pt;
 	line-height: 0pt;
 	border: 1px solid #ffe044;

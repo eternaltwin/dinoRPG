@@ -547,9 +547,9 @@ export default defineComponent({
 .actions {
 	background:
 		url('../../assets/background/banniere_left.webp') no-repeat,
-		url('../../assets/background/banniere_middle.webp') repeat-x,
-		url('../../assets/background/banniere_right.webp') no-repeat;
-	background-position-x: left, center, right;
+		url('../../assets/background/banniere_right.webp') no-repeat,
+		url('../../assets/background/banniere_middle.webp') repeat-x;
+	background-position-x: left, right, center;
 	background-color: #d19860;
 	background-size: auto;
 	box-shadow: inset 0 0 1px 2px #d3a76a;

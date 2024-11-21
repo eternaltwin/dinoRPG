@@ -4,27 +4,28 @@
 		:header="formatContent($t(`npc.header.character`))"
 		:subHeader="formatContent($t(`npc.name.${npcName}`))"
 	></TitleHeader>
-	<div class="box">
-		<div class="headerBox">
-			<div class="name">{{ $t(`npc.name.${npcName}`) }} :</div>
+	<div class="wrapper">
+		<div class="box">
+			<p class="name">{{ $t(`npc.name.${npcName}`) }} :</p>
+			<div class="content">
+				<span
+					class="dialog"
+					v-if="npcSpeech.speech"
+					v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
+				/>
+				<div class="portrait">
+					<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
+					<DZButton @click="stop()">{{ $t(`npc.stop`) }}</DZButton>
+				</div>
+			</div>
 		</div>
-		<div class="footer">
-			<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
-			<a class="button" @click="stop()">
-				<span v-html="formatContent($t(`npc.stop`))" />
-			</a>
-			<span
-				class="dialog"
-				v-if="npcSpeech.speech"
-				v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
-			/>
-		</div>
+		<div class="footer"></div>
+		<ul id="answer" v-if="loaded && npcSpeech.playerChoice.length > 0">
+			<li v-for="choice in npcSpeech.playerChoice" :key="choice">
+				<a v-html="formatContent($t(`npc.${npcName}.playerChoice.${choice}`))" @click="choiseStep(choice)" />
+			</li>
+		</ul>
 	</div>
-	<ul id="answer" v-if="loaded && npcSpeech.playerChoice.length > 0">
-		<li v-for="choice in npcSpeech.playerChoice" :key="choice">
-			<a v-html="formatContent($t(`npc.${npcName}.playerChoice.${choice}`))" @click="choiseStep(choice)" />
-		</li>
-	</ul>
 </template>
 
 <script lang="ts">
@@ -40,6 +41,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { formatText } from '../utils/formatText.js';
+import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
 	name: 'NPC',
@@ -55,6 +57,7 @@ export default defineComponent({
 		};
 	},
 	components: {
+		DZButton,
 		TitleHeader,
 		AnimatedNPC
 	},
@@ -161,53 +164,51 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+	width: 95%;
+	align-self: center;
+}
 .box {
 	cursor: pointer;
 	background-repeat: repeat-y;
-	background-image: url('../assets/background/dialog_bg_pix.webp');
-	.headerBox {
-		background-image: url('../assets/background/dialog_bg_header.webp');
-		background-repeat: no-repeat;
-		height: 30px;
-		.name {
-			margin-left: 15px;
-			padding-top: 15px;
-			font-variant: small-caps;
-			font-weight: bold;
-			font-size: 10pt;
-			color: #693118;
-		}
+	//background-image: url('../assets/background/dialog_bg_pix.webp');
+	background: url('../assets/background/dialog_bg_top_left.webp'), url('../assets/background/dialog_bg_top_right.webp'),
+		url('../assets/background/dialog_bg_top_center.webp'), url('../assets/background/dialog_bg_footer_left.webp'),
+		url('../assets/background/dialog_bg_footer_right.webp'), url('../assets/background/dialog_bg_footer_center.webp'),
+		url('../assets/background/dialog_bg_center_left.webp'), url('../assets/background/dialog_bg_center_right.webp'),
+		url('../assets/background/dialog_bg_center_center.webp');
+	background-position-x: left, right, center, left, right, center, left, right, center;
+	background-position-y: top, top, top, bottom, bottom, bottom, 40px, 40px, 40px;
+	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+
+	padding-right: 5px;
+	padding-left: 5px;
+	.name {
+		margin-left: 15px;
+		padding-top: 15px;
+		font-variant: small-caps;
+		font-weight: bold;
+		font-size: 10pt;
+		color: #693118;
 	}
-	.footer {
+	.content {
 		min-height: 148px;
 		padding: 1px;
-		background-image: url('../assets/background/dialog_bg_footer.webp');
 		background-repeat: no-repeat;
 		background-position: bottom left;
 		overflow: hidden;
-		.button {
-			position: absolute;
+		display: flex;
+		gap: 15px;
+		.portrait {
 			display: flex;
+			flex-direction: column;
 			align-items: center;
-			justify-content: center;
-			margin-left: 419px;
-			margin-top: 107px;
-			padding: 0;
-			font-size: 9pt;
-			line-height: 7pt;
-			width: 96px;
-			height: 28px;
-			background-image: url('../assets/button/button_small.webp');
-			&:hover {
-				background-image: url('../assets/button/button_small_hover.webp');
-			}
-
-			span {
-				padding: 4px 6px;
-			}
+			gap: 5px;
+			width: fit-content;
 		}
+
 		.dialog {
-			width: 390px;
+			width: fit-content;
 			float: left;
 			position: relative;
 			margin-bottom: 10px;
@@ -219,9 +220,21 @@ export default defineComponent({
 		}
 	}
 }
+/*.footer {
+	&::after {
+		content: '.';
+		visibility: hidden;
+	}
+	background: url('../assets/background/dialog_bg_footer_left.webp'), url('../assets/background/dialog_bg_footer_right.webp'),
+	url('../assets/background/dialog_bg_footer_center.webp');
+	background-position-x: left, right, center;
+	background-repeat: no-repeat, no-repeat, repeat-x;
+	display: block;
+
+}*/
 #answer {
 	list-style: none;
-	margin: 10px;
+	margin-top: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
 	background-color: #9a4029;
