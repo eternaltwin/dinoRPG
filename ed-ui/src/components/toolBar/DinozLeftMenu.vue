@@ -24,11 +24,11 @@
 						<img :src="getImgURL('icons', 'act_treasure')" alt="shop" />
 						<span>Enclos</span>
 					</RouterLink>
-					<RouterLink class="link" :to="`/manage`">
+					<RouterLink class="link" :to="`/manage`" v-if="playerStore.playerOptions.hasPDA">
 						<img :src="getImgURL('epicRewards', 'collec_pda')" alt="shop" />
 						<span>Ordonner</span>
 					</RouterLink>
-					<RouterLink class="link" :to="`/missions`">
+					<RouterLink class="link" :to="`/missions`" v-if="playerStore.playerOptions.hasPMI">
 						<img :src="getImgURL('epicRewards', 'collec_pmi')" alt="shop" />
 						<span>Missions</span>
 					</RouterLink>
