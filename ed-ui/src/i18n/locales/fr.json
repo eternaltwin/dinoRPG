@@ -3921,7 +3921,7 @@
 	},
 	"createClan": {
 		"title": "Créer un Clan",
-		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera ",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
 		"clan_name": "Nom du Clan",
 		"clan_description": "Description du Clan",
 		"create_button": "Créer le Clan",

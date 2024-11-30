@@ -1,10 +1,6 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.clansList')" :header="$t('clansList.title')"></TitleHeader>
-	<div class="disclaimer">
-		<img :src="getImgURL('icons', 'small_question')" alt="info_button" style="margin-right: 2px" />
-		{{ $t(`clansList.disclaimer.text`) }} <a @click="goToHelp()">{{ $t(`clansList.disclaimer.see_help`) }}</a> &
-		<a>{{ $t(`clansList.disclaimer.see_ranking`) }}</a>
-	</div>
+	<DZDisclaimer help round :content="$t('clansList.disclaimer.text')" />
 	<div class="disclaimer" v-if="joinRequest">
 		<p>
 			{{ $t('clanPages.request.info') }}
@@ -92,10 +88,12 @@ import { playerStore } from '../store';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS } from '@drpg/core/constants';
 import { formatNumber } from '../utils/formatText';
 import { formatText } from '../utils/formatText.js';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'ClansList',
 	components: {
+		DZDisclaimer,
 		TitleHeader
 	},
 	data() {
@@ -203,7 +201,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .wrapper {
-	margin: 5px;
+	width: 95%;
+	align-self: center;
 	table {
 		width: 100%;
 		margin-top: 10px;
@@ -295,7 +294,9 @@ export default defineComponent({
 	.bottom-elements {
 		width: 100%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
+		flex-wrap: wrap;
+		gap: 5px;
 		.bottom-element {
 			margin: auto 0;
 		}

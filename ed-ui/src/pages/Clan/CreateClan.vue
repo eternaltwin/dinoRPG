@@ -1,13 +1,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.createClan')" :header="$t('createClan.title')"></TitleHeader>
 	<div id="chooseClanName">
-		<div class="disclaimer">
-			<img :src="getImgURL('icons', 'small_question')" alt="question_mark" style="margin-right: 2px" />
-			{{ $t('createClan.information') }}
-			<strong>{{ creationCost }}</strong>
-			<img :src="getImgURL('icons', 'small_gold')" alt="question_mark" style="margin-left: 3px" />
-		</div>
-
+		<DZDisclaimer help round :content="$t('createClan.information', { cost: creationCost })" />
 		<div class="middle-content">
 			<div class="grid">
 				<p>{{ $t('createClan.clan_name') }}</p>
@@ -39,10 +33,12 @@ import { ClanService } from '../../services/ClanService.js';
 import { CLAN_CREATE_MONEY } from '@drpg/core/constants';
 import { formatNumber } from '../../utils/formatText.js';
 import { playerStore } from '../../store/index.js';
+import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'CreateClan',
 	components: {
+		DZDisclaimer,
 		TitleHeader
 	},
 	data() {
@@ -75,6 +71,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+#chooseClanName {
+	max-width: 95%;
+	align-self: center;
+}
 .disclaimer {
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -128,7 +128,7 @@ export default defineComponent({
 		font-weight: bold;
 		border: none;
 		height: 100px;
-		width: 300px;
+		width: 184px;
 		background-color: #bc683c;
 		resize: vertical;
 	}
