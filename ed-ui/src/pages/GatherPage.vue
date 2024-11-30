@@ -220,6 +220,10 @@ export default defineComponent({
 	background-image: url('../assets/gather/overlay/anniv.webp');
 	background-size: 340px;
 }
+.xmas::after {
+	background-image: url('../assets/gather/overlay/xmas.webp');
+	background-size: 340px;
+}
 .daily::after {
 	background-image: url('../assets/gather/overlay/daily.webp');
 	background-size: 199px;

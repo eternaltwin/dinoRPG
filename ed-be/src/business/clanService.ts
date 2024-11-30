@@ -427,11 +427,7 @@ export async function createClanPage(req: Request) {
 
 	const isPublic = Boolean(req.body.isPublic);
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.body.clanId),
-		Number(authed.id),
-		ClanMemberRight.PAGE_MANAGE
-	);
+	const hasRight = await playerHasRightRequest(Number(req.body.clanId), Number(authed.id), ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
@@ -536,11 +532,7 @@ export async function getPlayerHasRight(req: Request) {
 
 	const rightString = req.params.right as keyof typeof ClanMemberRight;
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.params.clanId),
-		authed.id,
-		ClanMemberRight[rightString]
-	);
+	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight[rightString]);
 	return hasRight;
 }
 

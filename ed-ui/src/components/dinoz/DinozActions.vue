@@ -284,6 +284,7 @@ export default defineComponent({
 				case Action.ENERGY:
 				case Action.SEEK:
 				case Action.HUNT:
+				case Action.XMAS:
 				case GatherType.HUNT:
 				case GatherType.SEEK:
 				case GatherType.XMAS:

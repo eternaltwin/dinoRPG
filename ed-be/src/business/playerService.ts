@@ -56,7 +56,11 @@ export async function getCommonData(req: Request) {
 		await updateCompletion(authed.id, completion);
 
 		// Update last login: refresh Labrute flag and daily grid reward limit
-		await setPlayer(authed.id, { lastLogin: new Date(), labruteDone: false, dailyGridRewards: gameConfig.general.dailyGridRewards});
+		await setPlayer(authed.id, {
+			lastLogin: new Date(),
+			labruteDone: false,
+			dailyGridRewards: gameConfig.general.dailyGridRewards
+		});
 
 		// Tik bracelet regen
 		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>
@@ -67,6 +71,10 @@ export async function getCommonData(req: Request) {
 			// Regen 10 HP
 			const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
 			await updateDinoz(dinoz.id, { life: newHp });
+		}
+
+		if (dayjs().month() === 11) {
+			await increaseItemQuantity(authed.id, Item.CHRISTMAS_TICKET, 1);
 		}
 
 		// Give 2 action for active dinoz

@@ -132,15 +132,17 @@ export async function getAvailableActions(
 		return [actionList[Action.MARKET]];
 	}
 
+	// Stop congel
 	if (dinoz.unavailableReason === UnavailableReason.frozen) {
 		return [actionList[Action.STOP_CONGEL]];
 	}
 
+	// Stop rest
 	if (dinoz.unavailableReason === UnavailableReason.resting) {
 		return [actionList[Action.STOP_REST]];
 	}
 
-	// If Dinoz is following another dinoz, add the unfollow action
+	// Leaders actions
 	if (dinoz.leaderId) {
 		availableActions.push(actionList[Action.UNFOLLOW]);
 	} else {
@@ -162,6 +164,7 @@ export async function getAvailableActions(
 		availableActions.push(actionList[Action.DISBAND]);
 	}
 
+	// Death related actions
 	if (!isAlive(dinoz)) {
 		availableActions.push(actionList[Action.RESURRECT]);
 		// REINCARNATION
@@ -175,15 +178,18 @@ export async function getAvailableActions(
 		return availableActions;
 	}
 
+	// Rest
 	if (dinoz.life < Math.round(dinoz.maxLife / 2) && dinoz.fight) {
 		availableActions.push(actionList[Action.REST]);
 	}
 
+	// Concentration
 	if (dinoz.concentration) {
 		availableActions.push(actionList[Action.CONCENTRATE]);
 		return availableActions;
 	}
 
+	// Refresh action
 	if (!dinoz.leaderId && (!dinoz.fight || !dinoz.gather)) {
 		if (dinoz.remaining > 0) {
 			availableActions.push(actionList[Action.ACTION]);
@@ -192,6 +198,7 @@ export async function getAvailableActions(
 		}
 	}
 
+	// Refresh actions in party
 	if (dinoz.followers.length > 0 && (!dinoz.fight || !dinoz.gather)) {
 		let index = availableActions.indexOf(actionList[Action.IRMA]);
 		if (index >= 0) {
@@ -206,6 +213,7 @@ export async function getAvailableActions(
 		}
 	}
 
+	// Fight
 	if (!dinoz.leaderId && dinoz.fight) {
 		availableActions.push(actionList[Action.FIGHT]);
 	}
