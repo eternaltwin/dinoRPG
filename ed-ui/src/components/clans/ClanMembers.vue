@@ -31,8 +31,8 @@
 				<tr>
 					<th class="name">{{ $t('clansMembers.th.name') }}</th>
 					<th class="donation">{{ $t('clansMembers.th.donation') }}</th>
-					<th class="stats">{{ $t('clansMembers.th.stats') }}</th>
-					<th class="actions">{{ $t('clansMembers.th.actions') }}</th>
+					<th class="stats" v-if="selfMember">{{ $t('clansMembers.th.stats') }}</th>
+					<th class="actions" v-if="selfMember">{{ $t('clansMembers.th.actions') }}</th>
 				</tr>
 				<tr v-for="member in clanMembersList" :key="member.id" :class="(member.id + 1) % 2 === 0 ? 'even' : ''">
 					<td class="name-column" @click="goToPlayer(member.player.id)">
@@ -61,7 +61,7 @@
 							}"
 						/>
 					</td>
-					<td class="stats other">
+					<td class="stats other" v-if="selfMember">
 						<img
 							src="\src\assets\icons\small_hourglass.webp"
 							alt="lastLogin"
@@ -71,7 +71,7 @@
 							}"
 						/>
 					</td>
-					<td class="actions other">
+					<td class="actions other" v-if="selfMember">
 						<div class="buttons">
 							<button class="edit" v-if="hasEditRight" @click="goToMemberEdit(member.id)">
 								{{ $t('clansMembers.action.edit') }}
@@ -313,6 +313,7 @@ export default defineComponent({
 				&.actions {
 					.buttons {
 						display: flex;
+						flex-wrap: wrap;
 						gap: 4px;
 						button {
 							border: none;

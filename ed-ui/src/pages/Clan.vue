@@ -200,14 +200,16 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapper {
 	display: flex;
-	width: 620px;
+	width: 95%;
+	align-self: center;
 	justify-content: space-between;
 	gap: 10px;
 	flex-wrap: wrap;
+	padding-bottom: 5px;
 }
 .filler {
 	height: 180px;
-	width: 550px;
+	width: 100%;
 }
 
 .topspace {
@@ -233,18 +235,25 @@ export default defineComponent({
 		height: 32px;
 	}
 	.selected {
-		background-color: #f3ca92;
+		background-color: #c97d49;
+		img {
+			filter: brightness(1.2);
+			margin-top: 4px;
+		}
 	}
 }
 
 .pages {
-	background:
-		url('/src/assets/design/clan_pages_header.webp') no-repeat,
-		url('/src/assets/design/clan_pages_footer.webp') no-repeat,
-		url('/src/assets/design/clan_pages_center.webp') repeat-y;
-	background-position-y: top, bottom;
-	background-size: 674px;
-	width: 674px;
+	background: url('../assets/background/desc_shop_top_left.webp'), url('../assets/background/desc_shop_top_right.webp'),
+		url('../assets/background/desc_shop_top_center.webp'), url('../assets/background/desc_shop_bottom_left.webp'),
+		url('../assets/background/desc_shop_bottom_right.webp'), url('../assets/background/desc_shop_bottom_center.webp'),
+		url('../assets/background/desc_shop_center_left.webp'), url('../assets/background/desc_shop_center_right.webp'),
+		url('../assets/background/desc_shop_center_center.webp');
+	background-position-x: left, right, center, left, right, center, left, right, center;
+	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
+	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+	width: 95%;
+	align-self: center;
 	height: auto;
 	max-height: none;
 	overflow: hidden;
@@ -266,6 +275,10 @@ export default defineComponent({
 			width: 7px;
 			padding-top: 5px;
 		}
+	}
+	.clan-page {
+		background-color: #f4cb92;
+		margin: 3px;
 	}
 }
 </style>

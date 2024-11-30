@@ -1,6 +1,6 @@
 <template>
-	<DZDisclaimer help :content="$t('clan.ingredients.help', { value: treasureValue })" />
 	<div class="wrapper">
+		<DZDisclaimer round help :content="$t('clan.ingredients.help', { value: treasureValue })" />
 		<Tippy theme="normal" tag="div" v-for="ingredient in treasure" :key="ingredient.name" class="container">
 			<img :src="getImgURL('ingredients', ingredient.name)" :alt="ingredient.name" />
 			<p>x {{ ingredient.quantity }}</p>

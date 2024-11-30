@@ -96,16 +96,26 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .header {
-	background:
-		url('/src/assets/design/clan_banner_header.webp') no-repeat,
-		url('/src/assets/design/clan_banner_footer.webp') no-repeat,
-		url('/src/assets/design/clan_banner_center.webp') repeat-y;
-	background-position-y: top, bottom;
-	background-size: 550px;
+	//background-size: 550px;
 	height: auto;
 	max-height: 600px;
 	overflow: hidden;
 	margin-bottom: 10px;
+	background: url('../../assets/background/desc_shop_top_left.webp'),
+		url('../../assets/background/desc_shop_top_right.webp'), url('../../assets/background/desc_shop_top_center.webp'),
+		url('../../assets/background/desc_shop_bottom_left.webp'),
+		url('../../assets/background/desc_shop_bottom_right.webp'),
+		url('../../assets/background/desc_shop_bottom_center.webp'),
+		url('../../assets/background/desc_shop_center_left.webp'),
+		url('../../assets/background/desc_shop_center_right.webp'),
+		url('../../assets/background/desc_shop_center_center.webp');
+	background-position-x: left, right, center, left, right, center, left, right, center;
+	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
+	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 2px;
 	h3 {
 		display: flex;
 		justify-content: center;
@@ -127,10 +137,8 @@ export default defineComponent({
 }
 
 .banner {
-	width: 448px;
+	width: 95%;
 	height: 100px;
-	margin-left: auto;
-	margin-right: auto;
 	border: 1px solid #fff798;
 	.banner-img {
 		width: 100%;
@@ -139,7 +147,7 @@ export default defineComponent({
 }
 
 .top-info {
-	margin-left: 65px;
+	//margin-left: 65px;
 	display: flex;
 	padding-top: 5px;
 	padding-bottom: 1px;
@@ -153,9 +161,10 @@ export default defineComponent({
 }
 
 .bottom-info {
-	margin: 0 65px;
+	//margin: 0 65px;
+	width: 100%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	color: #fff798;
 	padding-top: 1px;
 	padding-bottom: 15px;

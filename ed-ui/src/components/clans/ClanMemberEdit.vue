@@ -1,13 +1,10 @@
 <template>
 	<div class="wrapper">
-		<div class="disclaimer" v-if="clanMember?.player?.name">
-			<img :src="getImgURL('icons', 'small_question')" alt="question_mark" style="margin-right: 5px" />
-			<p
-				class="text"
-				v-html="$t('clansMembers.edit.disclaimer', { name: clanMember.player.name })"
-				@click="goToPlayer(clanMember.player.id)"
-			></p>
-		</div>
+		<DZDisclaimer
+			help
+			v-if="clanMember?.player?.name"
+			:content="$t('clansMembers.edit.disclaimer', { name: clanMember.player.name })"
+		/>
 		<div class="rights-panel">
 			<div class="right-line" v-for="right in rights" :key="right.name">
 				<input type="checkbox" v-model="right.selected" />
@@ -29,9 +26,10 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 export default defineComponent({
 	name: 'ClanMemberEdit',
-	components: {},
+	components: { DZDisclaimer },
 	data() {
 		return {
 			clanMember: {} as ClanMember,
