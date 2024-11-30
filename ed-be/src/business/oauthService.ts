@@ -13,6 +13,9 @@ import urlJoin from 'url-join';
 import { AdminRole } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL } from '../context.js';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
+import { Item } from '@drpg/core/models/item/ItemList';
+import dayjs from 'dayjs';
 
 /**
  * @summary Forge a JWT with EternalTwin authentication
@@ -57,6 +60,11 @@ export async function authenticateToET(req: Request) {
 		});
 		// Create player at position 0 in ranking
 		await addPlayerInRanking(player.id);
+
+		await increaseItemQuantity(player.id, Item.DAILY_TICKET, 1);
+		if (dayjs().month() === 11) {
+			await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
+		}
 		await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
 	}
 

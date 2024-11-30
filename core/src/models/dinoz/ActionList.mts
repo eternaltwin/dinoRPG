@@ -20,6 +20,7 @@ export enum Action {
 	SEEK = 'seek',
 	ANNIV = 'anniv',
 	DAILY = 'daily',
+	XMAS = 'xmas',
 	DISBAND = 'disband',
 	IRMA = 'irma',
 	IRMAS = 'irmas',
@@ -114,6 +115,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.DAILY]: {
 		name: Action.DAILY,
+		imgName: 'act_default'
+	},
+	[Action.XMAS]: {
+		name: Action.XMAS,
 		imgName: 'act_default'
 	},
 	[Action.DISBAND]: {

@@ -2324,7 +2324,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		itemId: 130,
 		name: 'christmas_egg',
 		canBeEquipped: false,
-		canBeUsedNow: false, // disabled for now
+		canBeUsedNow: true, // disabled for now
 		itemType: ItemType.CLASSIC,
 		effect: {
 			category: ItemEffect.EGG,

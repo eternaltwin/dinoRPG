@@ -650,15 +650,130 @@ export const gatherList: Record<GatherType, GatherData> = {
 		]
 	},
 	[GatherType.XMAS]: {
-		action: Action.DIG,
+		action: Action.XMAS,
 		special: true,
 		type: GatherType.XMAS,
 		size: 10,
 		minimumClick: 3,
-		// Unachievable condition to prevent the gather from being displayed
-		condition: { [ConditionEnum.MINLEVEL]: 999 },
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.POSSESS_OBJECT]: itemList[Item.CHRISTMAS_TICKET].itemId },
+				{ [ConditionEnum.PLACE_IS]: PlaceEnum.DINOVILLE }
+			]
+		},
 		apparence: 'XMAS',
-		items: [],
+		items: [
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.SILEX_TAILLE.ingredientId],
+				startQuantity: 8
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId],
+				startQuantity: 4
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.CALICE_CISELE.ingredientId],
+				startQuantity: 1
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.COLLIER_KARAT.ingredientId],
+				startQuantity: 1
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.TOUFFE_DE_FOURRURE.ingredientId],
+				startQuantity: 13
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.FEUILLES_DE_PELINAE.ingredientId],
+				startQuantity: 11
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.BOLET_PHALISK_BLANC.ingredientId],
+				startQuantity: 8
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.RACINE_DE_FIGONICIA.ingredientId],
+				startQuantity: 1
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.FLAUREOLE.ingredientId],
+				startQuantity: 1
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.SPORE_ETHERAL.ingredientId],
+				startQuantity: 1
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.MEROU_LUJIDANE.ingredientId],
+				startQuantity: 11
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.POISSON_VENGEUR.ingredientId],
+				startQuantity: 5
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.GRIFFES_ACEREES.ingredientId],
+				startQuantity: 5
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.ENERGIE_EAU.ingredientId],
+				startQuantity: 3
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.ENERGIE_FEU.ingredientId],
+				startQuantity: 2
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.ENERGIE_BOIS.ingredientId],
+				startQuantity: 4
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.ENERGIE_AIR.ingredientId],
+				startQuantity: 5
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.ENERGIE_FOUDRE.ingredientId],
+				startQuantity: 5
+			},
+			{
+				type: 'ingredient',
+				ingredientId: [ingredientList.GRAINE_DE_DEVOREUSE.ingredientId],
+				startQuantity: 3
+			},
+			{
+				type: 'item',
+				ingredientId: [itemList[Item.GOLD3000].itemId],
+				startQuantity: 6
+			},
+			{
+				type: 'item',
+				ingredientId: [itemList[Item.CHRISTMAS_EGG].itemId],
+				startQuantity: 1
+			},
+			{
+				type: 'item',
+				ingredientId: [itemList[Item.SMOG_EGG_CHRISTMAS_BLUE].itemId],
+				startQuantity: 1
+			}
+		],
 		cost: {
 			...itemList[Item.CHRISTMAS_TICKET],
 			quantity: 1

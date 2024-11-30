@@ -83,6 +83,7 @@ export const placeList: Record<
 		borderPlace: [6, 7, 12],
 		map: MapZone.DINOLAND,
 		gather: GatherType.SEEK,
+		specialGather: GatherType.XMAS,
 		ground: GroundEnum.NONE,
 		background: 's_dnv',
 		top: 155,

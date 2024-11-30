@@ -164,10 +164,10 @@ export async function useItem(req: Request) {
 			await setSpecificStat(StatTracking.DEATHS, dinoz.player.id, 1);
 			break;
 		case ItemEffect.EGG:
-			await hatchEgg(item, authed);
+			const race = await hatchEgg(item, authed);
 			feedback = {
 				category: ItemEffect.EGG,
-				value: item.effect.race.name
+				value: race.name
 			};
 			break;
 		case ItemEffect.SPHERE:
@@ -348,7 +348,8 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
 			break;
 		case itemList[Item.CHRISTMAS_EGG].itemId:
-			if (getRandomNumber(0, 3) === 0) {
+			// MT is [0,3], we switched to [0,10] to increase trice rarity
+			if (getRandomNumber(0, 10) === 0) {
 				race = raceList.TRICERAGNON;
 				randomDisplay = generateDinozDisplay(race, '0', '0', '0');
 			} else {
@@ -379,6 +380,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	);
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
+	return race;
 }
 
 function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
