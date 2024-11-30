@@ -106,7 +106,7 @@ export default defineComponent({
 	.life div,
 	.xp div {
 		position: absolute;
-		top: -2px;
+		top: -1px;
 		left: 50%;
 		transform: translateX(-50%);
 		font-size: 12px;
