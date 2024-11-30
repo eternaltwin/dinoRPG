@@ -4194,7 +4194,12 @@
 		"ChangeDinozOrder": "**{player} ({playerId})** a changé l'ordre de son Dinoz **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**Un nouveau joueur est arrivé : {name}**.",
 		"PlayerConnected": "**Le joueur {name}** vient de se connecter.",
-		"LBDone": "**Le joueur {player}** a récupéré sa récompense."
+		"LBDone": "**Le joueur {player}** a récupéré sa récompense.",
+		"OfferNew": "**{player} ({playerId})** a créé une **nouvelle offre {offer}** pour un montant de {amount} :gold:.",
+		"OfferBid": "L'**offre {offer}** de **{player} ({playerId})** a reçu une nouvelle **mise de {amount}** bons.",
+		"OfferCancelled": "**{player} ({playerId})** a  **annulé** son **offre {offer}**.",
+		"OfferExpired": "L'**offre {offer}** de **{player} ({playerId})** a **expiré** et n'a pas été remportée.",
+		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
 	},
 	"selectDinoz": {
 		"selectChampions": "Choisis tes champions",
@@ -4279,7 +4284,7 @@
 			"fight3-1-4": "Foudre",
 			"fight3-1-5": "Air",
 			"fight3-2": "Ces éléments sont organisés selon le **Grand Cycle des éléments** :",
-			"fight3-3": "Un élément est contre les deux qui le suivent et faible contre les deux qui le précèdent. Ainsi, par exemple, le Feu est très fort contre le Bois et plutôt fort contre l'Eau, mais est très faible contre l'Air et plutôt faible contre la Foudre.",
+			"fight3-3": "Un élément est fort contre les deux qui le suivent et faible contre les deux qui le précèdent. Ainsi, par exemple, le Feu est très fort contre le Bois et plutôt fort contre l'Eau, mais est très faible contre l'Air et plutôt faible contre la Foudre.",
 			"fight4": "Les Assauts",
 			"fight4-1": "Les Assauts se font toujours dans un ordre bien précis, qui est déterminé en fonction des valeurs des éléments, avec un tirage aléatoire en cas d'égalité.",
 			"fight4-2": "Ainsi, un Dinoz ayant les éléments ci-dessus va effectuer ses assauts dans l'ordre suivant :",

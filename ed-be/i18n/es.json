@@ -88,7 +88,7 @@
     "plume": "Pluma Sideral",
     "kaura": "Aura Kabuki",
     "demon": "Pergamino del Demonio",
-    "pmi": "Pequeño Misionario Ilustrado",
+    "pmi": "Pequeño Misionero Ilustrado",
     "pda": "Piedra en Diamantito Aglomerado",
     "dico1": "Diccionario",
     "dicarb": "Diccionario Arboris",
@@ -96,7 +96,7 @@
     "fmedal": "Medallón de 3 ojos"
   },
   "announce": {
-    "dinoz": "Félicitation à {{player}} pour son dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
+    "dinoz": "¡Felicidades a {{player}} por su Dino {{dinoz}}, que es el $t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
     "epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
   }
 }
