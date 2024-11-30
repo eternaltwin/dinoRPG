@@ -583,6 +583,9 @@ export default defineComponent({
 			.imageContent {
 				margin-bottom: 10px;
 				margin-top: 10px;
+				max-width: -moz-available;
+				max-width: -webkit-fill-available;
+				max-width: stretch;
 			}
 			.listItemsContent {
 				list-style: none;
