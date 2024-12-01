@@ -334,8 +334,9 @@ h4 {
 }
 
 table {
-	width: 100%;
+	width: 95%;
 	table-layout: fixed;
+	align-self: center;
 
 	td {
 		font-size: 9pt;

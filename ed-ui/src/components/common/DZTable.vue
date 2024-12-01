@@ -16,7 +16,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 table {
-	width: 100%;
+	width: 95%;
+	align-self: center;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	background-color: #ecbd84;

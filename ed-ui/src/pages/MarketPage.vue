@@ -95,6 +95,8 @@ export default defineComponent({
 .tabPanel {
 	position: relative;
 	color: white;
+	width: 95%;
+	top: 6px;
 
 	.tabs {
 		padding-top: 4px;

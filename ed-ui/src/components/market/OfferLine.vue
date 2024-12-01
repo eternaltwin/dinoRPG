@@ -339,6 +339,8 @@ export default defineComponent({
 .items {
 	display: flex;
 	align-items: center;
+	flex-wrap: wrap;
+	justify-content: center;
 	& > div {
 		display: flex;
 		flex-direction: column;

@@ -13,6 +13,11 @@
 	&.fww{
 		flex-wrap: wrap;
 	}
+
+	&.center {
+		width: 95%;
+		align-self: center;
+	}
 }
 
 .mt-1{

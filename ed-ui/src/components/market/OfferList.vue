@@ -1,6 +1,6 @@
 <template>
 	<DZDisclaimer help content="market.disclaimer" />
-	<div class="df jcsb">
+	<div class="df jcsb center">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
 		<select :placeholder="$t('market.filter')" @change="changeFilter">
 			<option value="all">{{ $t('market.all') }}</option>
@@ -128,7 +128,7 @@ select {
 	width: 50px;
 }
 .items-header {
-	width: 187px;
+	//width: 187px;
 }
 .bid-action-header {
 	width: 80px;
