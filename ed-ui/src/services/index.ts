@@ -8,6 +8,7 @@ export * from './ItemShopService.js';
 export * from './LogsService.js';
 export * from './MissionService.js';
 export * from './NewsService.js';
+export * from './NotificationService.js';
 export * from './NPCService.js';
 export * from './OauthService.js';
 export * from './PlayerService.js';

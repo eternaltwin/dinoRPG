@@ -15,259 +15,264 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 /**
  * Model Concentration
- * 
+ *
  */
 export type Concentration = $Result.DefaultSelection<Prisma.$ConcentrationPayload>
 /**
  * Model Dinoz
- * 
+ *
  */
 export type Dinoz = $Result.DefaultSelection<Prisma.$DinozPayload>
 /**
  * Model DinozItem
- * 
+ *
  */
 export type DinozItem = $Result.DefaultSelection<Prisma.$DinozItemPayload>
 /**
  * Model DinozItemToDinoz
- * 
+ *
  */
 export type DinozItemToDinoz = $Result.DefaultSelection<Prisma.$DinozItemToDinozPayload>
 /**
  * Model DinozMission
- * 
+ *
  */
 export type DinozMission = $Result.DefaultSelection<Prisma.$DinozMissionPayload>
 /**
  * Model DinozSkill
- * 
+ *
  */
 export type DinozSkill = $Result.DefaultSelection<Prisma.$DinozSkillPayload>
 /**
  * Model DinozSkillUnlockable
- * 
+ *
  */
 export type DinozSkillUnlockable = $Result.DefaultSelection<Prisma.$DinozSkillUnlockablePayload>
 /**
  * Model DinozStatus
- * 
+ *
  */
 export type DinozStatus = $Result.DefaultSelection<Prisma.$DinozStatusPayload>
 /**
  * Model ImportedDinoz
- * 
+ *
  */
 export type ImportedDinoz = $Result.DefaultSelection<Prisma.$ImportedDinozPayload>
 /**
  * Model ImportedDinozSkill
- * 
+ *
  */
 export type ImportedDinozSkill = $Result.DefaultSelection<Prisma.$ImportedDinozSkillPayload>
 /**
  * Model ImportedDinozStatus
- * 
+ *
  */
 export type ImportedDinozStatus = $Result.DefaultSelection<Prisma.$ImportedDinozStatusPayload>
 /**
  * Model ImportedPlayer
- * 
+ *
  */
 export type ImportedPlayer = $Result.DefaultSelection<Prisma.$ImportedPlayerPayload>
 /**
  * Model ImportedPlayerIngredient
- * 
+ *
  */
 export type ImportedPlayerIngredient = $Result.DefaultSelection<Prisma.$ImportedPlayerIngredientPayload>
 /**
  * Model ImportedPlayerItem
- * 
+ *
  */
 export type ImportedPlayerItem = $Result.DefaultSelection<Prisma.$ImportedPlayerItemPayload>
 /**
  * Model ImportedPlayerReward
- * 
+ *
  */
 export type ImportedPlayerReward = $Result.DefaultSelection<Prisma.$ImportedPlayerRewardPayload>
 /**
  * Model ImportedPlayerScenario
- * 
+ *
  */
 export type ImportedPlayerScenario = $Result.DefaultSelection<Prisma.$ImportedPlayerScenarioPayload>
 /**
  * Model ImportedTwinoidAchievement
- * 
+ *
  */
 export type ImportedTwinoidAchievement = $Result.DefaultSelection<Prisma.$ImportedTwinoidAchievementPayload>
 /**
  * Model ImportedTwinoidSite
- * 
+ *
  */
 export type ImportedTwinoidSite = $Result.DefaultSelection<Prisma.$ImportedTwinoidSitePayload>
 /**
  * Model ImportedTwinoidStat
- * 
+ *
  */
 export type ImportedTwinoidStat = $Result.DefaultSelection<Prisma.$ImportedTwinoidStatPayload>
 /**
  * Model migrations
- * 
+ *
  */
 export type migrations = $Result.DefaultSelection<Prisma.$migrationsPayload>
 /**
  * Model News
- * 
+ *
  */
 export type News = $Result.DefaultSelection<Prisma.$NewsPayload>
 /**
  * Model NPC
- * 
+ *
  */
 export type NPC = $Result.DefaultSelection<Prisma.$NPCPayload>
 /**
  * Model Player
- * 
+ *
  */
 export type Player = $Result.DefaultSelection<Prisma.$PlayerPayload>
 /**
  * Model UsernameHistory
- * 
+ *
  */
 export type UsernameHistory = $Result.DefaultSelection<Prisma.$UsernameHistoryPayload>
 /**
  * Model PlayerDinozShop
- * 
+ *
  */
 export type PlayerDinozShop = $Result.DefaultSelection<Prisma.$PlayerDinozShopPayload>
 /**
  * Model PlayerGather
- * 
+ *
  */
 export type PlayerGather = $Result.DefaultSelection<Prisma.$PlayerGatherPayload>
 /**
  * Model PlayerIngredient
- * 
+ *
  */
 export type PlayerIngredient = $Result.DefaultSelection<Prisma.$PlayerIngredientPayload>
 /**
  * Model PlayerItem
- * 
+ *
  */
 export type PlayerItem = $Result.DefaultSelection<Prisma.$PlayerItemPayload>
 /**
  * Model PlayerQuest
- * 
+ *
  */
 export type PlayerQuest = $Result.DefaultSelection<Prisma.$PlayerQuestPayload>
 /**
  * Model PlayerReward
- * 
+ *
  */
 export type PlayerReward = $Result.DefaultSelection<Prisma.$PlayerRewardPayload>
 /**
  * Model Ranking
- * 
+ *
  */
 export type Ranking = $Result.DefaultSelection<Prisma.$RankingPayload>
 /**
  * Model Secret
- * 
+ *
  */
 export type Secret = $Result.DefaultSelection<Prisma.$SecretPayload>
 /**
  * Model OfferItem
- * 
+ *
  */
 export type OfferItem = $Result.DefaultSelection<Prisma.$OfferItemPayload>
 /**
  * Model OfferBid
- * 
+ *
  */
 export type OfferBid = $Result.DefaultSelection<Prisma.$OfferBidPayload>
 /**
  * Model Offer
- * 
+ *
  */
 export type Offer = $Result.DefaultSelection<Prisma.$OfferPayload>
 /**
  * Model Log
- * 
+ *
  */
 export type Log = $Result.DefaultSelection<Prisma.$LogPayload>
 /**
  * Model DinozCatch
- * 
+ *
  */
 export type DinozCatch = $Result.DefaultSelection<Prisma.$DinozCatchPayload>
 /**
  * Model PlayerTracking
- * 
+ *
  */
 export type PlayerTracking = $Result.DefaultSelection<Prisma.$PlayerTrackingPayload>
 /**
  * Model Pantheon
- * 
+ *
  */
 export type Pantheon = $Result.DefaultSelection<Prisma.$PantheonPayload>
 /**
  * Model Clan
- * 
+ *
  */
 export type Clan = $Result.DefaultSelection<Prisma.$ClanPayload>
 /**
  * Model ClanJoinRequest
- * 
+ *
  */
 export type ClanJoinRequest = $Result.DefaultSelection<Prisma.$ClanJoinRequestPayload>
 /**
  * Model ClanWar
- * 
+ *
  */
 export type ClanWar = $Result.DefaultSelection<Prisma.$ClanWarPayload>
 /**
  * Model ClanIngredient
- * 
+ *
  */
 export type ClanIngredient = $Result.DefaultSelection<Prisma.$ClanIngredientPayload>
 /**
  * Model ClanMessage
- * 
+ *
  */
 export type ClanMessage = $Result.DefaultSelection<Prisma.$ClanMessagePayload>
 /**
  * Model ClanHistory
- * 
+ *
  */
 export type ClanHistory = $Result.DefaultSelection<Prisma.$ClanHistoryPayload>
 /**
  * Model ClanMember
- * 
+ *
  */
 export type ClanMember = $Result.DefaultSelection<Prisma.$ClanMemberPayload>
 /**
  * Model ClanPage
- * 
+ *
  */
 export type ClanPage = $Result.DefaultSelection<Prisma.$ClanPagePayload>
 /**
  * Model Moderation
- * 
+ *
  */
 export type Moderation = $Result.DefaultSelection<Prisma.$ModerationPayload>
 /**
  * Model Conversation
- * 
+ *
  */
 export type Conversation = $Result.DefaultSelection<Prisma.$ConversationPayload>
 /**
  * Model Participants
- * 
+ *
  */
 export type Participants = $Result.DefaultSelection<Prisma.$ParticipantsPayload>
 /**
  * Model Message
- * 
+ *
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
+/**
+ * Model Notification
+ *
+ */
+export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
 
 /**
  * Enums
@@ -375,6 +380,16 @@ export const ModerationReason: {
 
 export type ModerationReason = (typeof ModerationReason)[keyof typeof ModerationReason]
 
+
+export const NotificationSeverity: {
+  info: 'info',
+  success: 'success',
+  warning: 'warning',
+  error: 'error'
+};
+
+export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]
+
 }
 
 export type UnavailableReason = $Enums.UnavailableReason
@@ -405,9 +420,13 @@ export type ModerationReason = $Enums.ModerationReason
 
 export const ModerationReason: typeof $Enums.ModerationReason
 
+export type NotificationSeverity = $Enums.NotificationSeverity
+
+export const NotificationSeverity: typeof $Enums.NotificationSeverity
+
 /**
  * ##  Prisma Client ʲˢ
- * 
+ *
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
@@ -416,7 +435,7 @@ export const ModerationReason: typeof $Enums.ModerationReason
  * const concentrations = await prisma.concentration.findMany()
  * ```
  *
- * 
+ *
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export class PrismaClient<
@@ -428,7 +447,7 @@ export class PrismaClient<
 
     /**
    * ##  Prisma Client ʲˢ
-   * 
+   *
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
@@ -437,7 +456,7 @@ export class PrismaClient<
    * const concentrations = await prisma.concentration.findMany()
    * ```
    *
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
@@ -467,7 +486,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -479,7 +498,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -490,7 +509,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -502,7 +521,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -517,7 +536,7 @@ export class PrismaClient<
    *   prisma.user.create({ data: { name: 'Alice' } }),
    * ])
    * ```
-   * 
+   *
    * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
   $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
@@ -1038,6 +1057,16 @@ export class PrismaClient<
     * ```
     */
   get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.notification`: Exposes CRUD operations for the **Notification** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Notifications
+    * const notifications = await prisma.notification.findMany()
+    * ```
+    */
+  get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1077,7 +1106,7 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics 
+   * Metrics
    */
   export type Metrics = runtime.Metrics
   export type Metric<T> = runtime.Metric<T>
@@ -1102,7 +1131,7 @@ export namespace Prisma {
     client: string
   }
 
-  export const prismaVersion: PrismaVersion 
+  export const prismaVersion: PrismaVersion
 
   /**
    * Utility Types
@@ -1111,7 +1140,7 @@ export namespace Prisma {
   /**
    * From https://github.com/sindresorhus/type-fest/
    * Matches a JSON object.
-   * This type can be useful to enforce some input to be JSON-compatible or as a super-type to be extended from. 
+   * This type can be useful to enforce some input to be JSON-compatible or as a super-type to be extended from.
    */
   export type JsonObject = {[Key in string]?: JsonValue}
 
@@ -1156,15 +1185,15 @@ export namespace Prisma {
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   namespace NullTypes {
     /**
     * Type of `Prisma.DbNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class DbNull {
@@ -1174,9 +1203,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.JsonNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class JsonNull {
@@ -1186,9 +1215,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.AnyNull`.
-    * 
+    *
     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    * 
+    *
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class AnyNull {
@@ -1199,21 +1228,21 @@ export namespace Prisma {
 
   /**
    * Helper for filtering JSON entries that have `null` on the database (empty on the db)
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const DbNull: NullTypes.DbNull
 
   /**
    * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const JsonNull: NullTypes.JsonNull
 
   /**
    * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
-   * 
+   *
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const AnyNull: NullTypes.AnyNull
@@ -1565,7 +1594,8 @@ export namespace Prisma {
     Moderation: 'Moderation',
     Conversation: 'Conversation',
     Participants: 'Participants',
-    Message: 'Message'
+    Message: 'Message',
+    Notification: 'Notification'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1581,7 +1611,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "importedDinoz" | "importedDinozSkill" | "importedDinozStatus" | "importedPlayer" | "importedPlayerIngredient" | "importedPlayerItem" | "importedPlayerReward" | "importedPlayerScenario" | "importedTwinoidAchievement" | "importedTwinoidSite" | "importedTwinoidStat" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "importedDinoz" | "importedDinozSkill" | "importedDinozStatus" | "importedPlayer" | "importedPlayerIngredient" | "importedPlayerItem" | "importedPlayerReward" | "importedPlayerScenario" | "importedTwinoidAchievement" | "importedTwinoidSite" | "importedTwinoidStat" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5155,6 +5185,76 @@ export namespace Prisma {
           }
         }
       }
+      Notification: {
+        payload: Prisma.$NotificationPayload<ExtArgs>
+        fields: Prisma.NotificationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findFirst: {
+            args: Prisma.NotificationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          findMany: {
+            args: Prisma.NotificationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          create: {
+            args: Prisma.NotificationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          createMany: {
+            args: Prisma.NotificationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+          }
+          delete: {
+            args: Prisma.NotificationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          update: {
+            args: Prisma.NotificationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          deleteMany: {
+            args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.NotificationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NotificationPayload>
+          }
+          aggregate: {
+            args: Prisma.NotificationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNotification>
+          }
+          groupBy: {
+            args: Prisma.NotificationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NotificationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NotificationCountArgs<ExtArgs>
+            result: $Utils.Optional<NotificationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5200,7 +5300,7 @@ export namespace Prisma {
      * ```
      * // Defaults to stdout
      * log: ['query', 'info', 'warn', 'error']
-     * 
+     *
      * // Emit as events
      * log: [
      *   { emit: 'stdout', level: 'query' },
@@ -5224,7 +5324,7 @@ export namespace Prisma {
     }
     /**
      * Global configuration for omitting model fields by default.
-     * 
+     *
      * @example
      * ```
      * const prisma = new PrismaClient({
@@ -5290,6 +5390,7 @@ export namespace Prisma {
     conversation?: ConversationOmit
     participants?: ParticipantsOmit
     message?: MessageOmit
+    notification?: NotificationOmit
   }
 
   /* Types for Logging */
@@ -5715,6 +5816,7 @@ export namespace Prisma {
     messages: number
     createdConversations: number
     Conversation: number
+    notifications: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5742,6 +5844,7 @@ export namespace Prisma {
     messages?: boolean | PlayerCountOutputTypeCountMessagesArgs
     createdConversations?: boolean | PlayerCountOutputTypeCountCreatedConversationsArgs
     Conversation?: boolean | PlayerCountOutputTypeCountConversationArgs
+    notifications?: boolean | PlayerCountOutputTypeCountNotificationsArgs
   }
 
   // Custom InputTypes
@@ -5921,6 +6024,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountConversationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ConversationWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
   }
 
 
@@ -6177,55 +6287,55 @@ export namespace Prisma {
     where?: ConcentrationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Concentrations to fetch.
      */
     orderBy?: ConcentrationOrderByWithRelationInput | ConcentrationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ConcentrationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Concentrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Concentrations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Concentrations
     **/
     _count?: true | ConcentrationCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ConcentrationAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ConcentrationSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ConcentrationMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ConcentrationMaxAggregateInputType
@@ -6313,7 +6423,7 @@ export namespace Prisma {
 
   type ConcentrationGetPayload<S extends boolean | null | undefined | ConcentrationDefaultArgs> = $Result.GetResult<Prisma.$ConcentrationPayload, S>
 
-  type ConcentrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ConcentrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ConcentrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ConcentrationCountAggregateInputType | true
     }
@@ -6334,7 +6444,7 @@ export namespace Prisma {
     findUnique<T extends ConcentrationFindUniqueArgs>(args: SelectSubset<T, ConcentrationFindUniqueArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Concentration that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Concentration that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ConcentrationFindUniqueOrThrowArgs} args - Arguments to find a Concentration
      * @example
@@ -6386,13 +6496,13 @@ export namespace Prisma {
      * @example
      * // Get all Concentrations
      * const concentrations = await prisma.concentration.findMany()
-     * 
+     *
      * // Get first 10 Concentrations
      * const concentrations = await prisma.concentration.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const concentrationWithIdOnly = await prisma.concentration.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ConcentrationFindManyArgs>(args?: SelectSubset<T, ConcentrationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -6406,7 +6516,7 @@ export namespace Prisma {
      *     // ... data to create a Concentration
      *   }
      * })
-     * 
+     *
      */
     create<T extends ConcentrationCreateArgs>(args: SelectSubset<T, ConcentrationCreateArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -6420,7 +6530,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ConcentrationCreateManyArgs>(args?: SelectSubset<T, ConcentrationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6434,9 +6544,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Concentrations and only return the `id`
-     * const concentrationWithIdOnly = await prisma.concentration.createManyAndReturn({ 
+     * const concentrationWithIdOnly = await prisma.concentration.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -6444,7 +6554,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ConcentrationCreateManyAndReturnArgs>(args?: SelectSubset<T, ConcentrationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -6458,7 +6568,7 @@ export namespace Prisma {
      *     // ... filter to delete one Concentration
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ConcentrationDeleteArgs>(args: SelectSubset<T, ConcentrationDeleteArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -6475,7 +6585,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ConcentrationUpdateArgs>(args: SelectSubset<T, ConcentrationUpdateArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -6489,7 +6599,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ConcentrationDeleteManyArgs>(args?: SelectSubset<T, ConcentrationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6508,7 +6618,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ConcentrationUpdateManyArgs>(args: SelectSubset<T, ConcentrationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -6597,7 +6707,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ConcentrationGroupByArgs,
@@ -6699,11 +6809,11 @@ export namespace Prisma {
 
   /**
    * Fields of the Concentration model
-   */ 
+   */
   interface ConcentrationFieldRefs {
     readonly id: FieldRef<"Concentration", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -6774,31 +6884,31 @@ export namespace Prisma {
     where?: ConcentrationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Concentrations to fetch.
      */
     orderBy?: ConcentrationOrderByWithRelationInput | ConcentrationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Concentrations.
      */
     cursor?: ConcentrationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Concentrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Concentrations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Concentrations.
      */
     distinct?: ConcentrationScalarFieldEnum | ConcentrationScalarFieldEnum[]
@@ -6827,31 +6937,31 @@ export namespace Prisma {
     where?: ConcentrationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Concentrations to fetch.
      */
     orderBy?: ConcentrationOrderByWithRelationInput | ConcentrationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Concentrations.
      */
     cursor?: ConcentrationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Concentrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Concentrations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Concentrations.
      */
     distinct?: ConcentrationScalarFieldEnum | ConcentrationScalarFieldEnum[]
@@ -6880,25 +6990,25 @@ export namespace Prisma {
     where?: ConcentrationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Concentrations to fetch.
      */
     orderBy?: ConcentrationOrderByWithRelationInput | ConcentrationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Concentrations.
      */
     cursor?: ConcentrationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Concentrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Concentrations.
      */
     skip?: number
@@ -7403,55 +7513,55 @@ export namespace Prisma {
     where?: DinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Dinozs to fetch.
      */
     orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Dinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Dinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Dinozs
     **/
     _count?: true | DinozCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozMaxAggregateInputType
@@ -7726,7 +7836,7 @@ export namespace Prisma {
 
   type DinozGetPayload<S extends boolean | null | undefined | DinozDefaultArgs> = $Result.GetResult<Prisma.$DinozPayload, S>
 
-  type DinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozCountAggregateInputType | true
     }
@@ -7747,7 +7857,7 @@ export namespace Prisma {
     findUnique<T extends DinozFindUniqueArgs>(args: SelectSubset<T, DinozFindUniqueArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Dinoz that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Dinoz that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozFindUniqueOrThrowArgs} args - Arguments to find a Dinoz
      * @example
@@ -7799,13 +7909,13 @@ export namespace Prisma {
      * @example
      * // Get all Dinozs
      * const dinozs = await prisma.dinoz.findMany()
-     * 
+     *
      * // Get first 10 Dinozs
      * const dinozs = await prisma.dinoz.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozWithIdOnly = await prisma.dinoz.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozFindManyArgs>(args?: SelectSubset<T, DinozFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -7819,7 +7929,7 @@ export namespace Prisma {
      *     // ... data to create a Dinoz
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozCreateArgs>(args: SelectSubset<T, DinozCreateArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -7833,7 +7943,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozCreateManyArgs>(args?: SelectSubset<T, DinozCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7847,9 +7957,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Dinozs and only return the `id`
-     * const dinozWithIdOnly = await prisma.dinoz.createManyAndReturn({ 
+     * const dinozWithIdOnly = await prisma.dinoz.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -7857,7 +7967,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -7871,7 +7981,7 @@ export namespace Prisma {
      *     // ... filter to delete one Dinoz
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozDeleteArgs>(args: SelectSubset<T, DinozDeleteArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -7888,7 +7998,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozUpdateArgs>(args: SelectSubset<T, DinozUpdateArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -7902,7 +8012,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozDeleteManyArgs>(args?: SelectSubset<T, DinozDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -7921,7 +8031,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozUpdateManyArgs>(args: SelectSubset<T, DinozUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -8010,7 +8120,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozGroupByArgs,
@@ -8127,7 +8237,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Dinoz model
-   */ 
+   */
   interface DinozFieldRefs {
     readonly id: FieldRef<"Dinoz", 'Int'>
     readonly leaderId: FieldRef<"Dinoz", 'Int'>
@@ -8158,7 +8268,7 @@ export namespace Prisma {
     readonly concentrationId: FieldRef<"Dinoz", 'Int'>
     readonly unavailableReason: FieldRef<"Dinoz", 'UnavailableReason'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -8229,31 +8339,31 @@ export namespace Prisma {
     where?: DinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Dinozs to fetch.
      */
     orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Dinozs.
      */
     cursor?: DinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Dinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Dinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Dinozs.
      */
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
@@ -8282,31 +8392,31 @@ export namespace Prisma {
     where?: DinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Dinozs to fetch.
      */
     orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Dinozs.
      */
     cursor?: DinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Dinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Dinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Dinozs.
      */
     distinct?: DinozScalarFieldEnum | DinozScalarFieldEnum[]
@@ -8335,25 +8445,25 @@ export namespace Prisma {
     where?: DinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Dinozs to fetch.
      */
     orderBy?: DinozOrderByWithRelationInput | DinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Dinozs.
      */
     cursor?: DinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Dinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Dinozs.
      */
     skip?: number
@@ -8974,55 +9084,55 @@ export namespace Prisma {
     where?: DinozItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItems to fetch.
      */
     orderBy?: DinozItemOrderByWithRelationInput | DinozItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozItems
     **/
     _count?: true | DinozItemCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozItemAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozItemSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozItemMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozItemMaxAggregateInputType
@@ -9126,7 +9236,7 @@ export namespace Prisma {
 
   type DinozItemGetPayload<S extends boolean | null | undefined | DinozItemDefaultArgs> = $Result.GetResult<Prisma.$DinozItemPayload, S>
 
-  type DinozItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozItemCountAggregateInputType | true
     }
@@ -9147,7 +9257,7 @@ export namespace Prisma {
     findUnique<T extends DinozItemFindUniqueArgs>(args: SelectSubset<T, DinozItemFindUniqueArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozItem that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozItem that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozItemFindUniqueOrThrowArgs} args - Arguments to find a DinozItem
      * @example
@@ -9199,13 +9309,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozItems
      * const dinozItems = await prisma.dinozItem.findMany()
-     * 
+     *
      * // Get first 10 DinozItems
      * const dinozItems = await prisma.dinozItem.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozItemWithIdOnly = await prisma.dinozItem.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozItemFindManyArgs>(args?: SelectSubset<T, DinozItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -9219,7 +9329,7 @@ export namespace Prisma {
      *     // ... data to create a DinozItem
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozItemCreateArgs>(args: SelectSubset<T, DinozItemCreateArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -9233,7 +9343,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozItemCreateManyArgs>(args?: SelectSubset<T, DinozItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -9247,9 +9357,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozItems and only return the `id`
-     * const dinozItemWithIdOnly = await prisma.dinozItem.createManyAndReturn({ 
+     * const dinozItemWithIdOnly = await prisma.dinozItem.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -9257,7 +9367,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozItemCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -9271,7 +9381,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozItem
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozItemDeleteArgs>(args: SelectSubset<T, DinozItemDeleteArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -9288,7 +9398,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozItemUpdateArgs>(args: SelectSubset<T, DinozItemUpdateArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -9302,7 +9412,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozItemDeleteManyArgs>(args?: SelectSubset<T, DinozItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -9321,7 +9431,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozItemUpdateManyArgs>(args: SelectSubset<T, DinozItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -9410,7 +9520,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozItemGroupByArgs,
@@ -9513,13 +9623,13 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozItem model
-   */ 
+   */
   interface DinozItemFieldRefs {
     readonly id: FieldRef<"DinozItem", 'Int'>
     readonly itemId: FieldRef<"DinozItem", 'Int'>
     readonly dinozId: FieldRef<"DinozItem", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -9590,31 +9700,31 @@ export namespace Prisma {
     where?: DinozItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItems to fetch.
      */
     orderBy?: DinozItemOrderByWithRelationInput | DinozItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozItems.
      */
     cursor?: DinozItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozItems.
      */
     distinct?: DinozItemScalarFieldEnum | DinozItemScalarFieldEnum[]
@@ -9643,31 +9753,31 @@ export namespace Prisma {
     where?: DinozItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItems to fetch.
      */
     orderBy?: DinozItemOrderByWithRelationInput | DinozItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozItems.
      */
     cursor?: DinozItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozItems.
      */
     distinct?: DinozItemScalarFieldEnum | DinozItemScalarFieldEnum[]
@@ -9696,25 +9806,25 @@ export namespace Prisma {
     where?: DinozItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItems to fetch.
      */
     orderBy?: DinozItemOrderByWithRelationInput | DinozItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozItems.
      */
     cursor?: DinozItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItems.
      */
     skip?: number
@@ -10018,55 +10128,55 @@ export namespace Prisma {
     where?: DinozItemToDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItemToDinozs to fetch.
      */
     orderBy?: DinozItemToDinozOrderByWithRelationInput | DinozItemToDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozItemToDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItemToDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItemToDinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozItemToDinozs
     **/
     _count?: true | DinozItemToDinozCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozItemToDinozAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozItemToDinozSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozItemToDinozMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozItemToDinozMaxAggregateInputType
@@ -10165,7 +10275,7 @@ export namespace Prisma {
 
   type DinozItemToDinozGetPayload<S extends boolean | null | undefined | DinozItemToDinozDefaultArgs> = $Result.GetResult<Prisma.$DinozItemToDinozPayload, S>
 
-  type DinozItemToDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozItemToDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozItemToDinozFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozItemToDinozCountAggregateInputType | true
     }
@@ -10186,7 +10296,7 @@ export namespace Prisma {
     findUnique<T extends DinozItemToDinozFindUniqueArgs>(args: SelectSubset<T, DinozItemToDinozFindUniqueArgs<ExtArgs>>): Prisma__DinozItemToDinozClient<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozItemToDinoz that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozItemToDinoz that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozItemToDinozFindUniqueOrThrowArgs} args - Arguments to find a DinozItemToDinoz
      * @example
@@ -10238,13 +10348,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozItemToDinozs
      * const dinozItemToDinozs = await prisma.dinozItemToDinoz.findMany()
-     * 
+     *
      * // Get first 10 DinozItemToDinozs
      * const dinozItemToDinozs = await prisma.dinozItemToDinoz.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `dinozId`
      * const dinozItemToDinozWithDinozIdOnly = await prisma.dinozItemToDinoz.findMany({ select: { dinozId: true } })
-     * 
+     *
      */
     findMany<T extends DinozItemToDinozFindManyArgs>(args?: SelectSubset<T, DinozItemToDinozFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -10258,7 +10368,7 @@ export namespace Prisma {
      *     // ... data to create a DinozItemToDinoz
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozItemToDinozCreateArgs>(args: SelectSubset<T, DinozItemToDinozCreateArgs<ExtArgs>>): Prisma__DinozItemToDinozClient<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -10272,7 +10382,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozItemToDinozCreateManyArgs>(args?: SelectSubset<T, DinozItemToDinozCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10286,9 +10396,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozItemToDinozs and only return the `dinozId`
-     * const dinozItemToDinozWithDinozIdOnly = await prisma.dinozItemToDinoz.createManyAndReturn({ 
+     * const dinozItemToDinozWithDinozIdOnly = await prisma.dinozItemToDinoz.createManyAndReturn({
      *   select: { dinozId: true },
      *   data: [
      *     // ... provide data here
@@ -10296,7 +10406,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozItemToDinozCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozItemToDinozCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -10310,7 +10420,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozItemToDinoz
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozItemToDinozDeleteArgs>(args: SelectSubset<T, DinozItemToDinozDeleteArgs<ExtArgs>>): Prisma__DinozItemToDinozClient<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -10327,7 +10437,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozItemToDinozUpdateArgs>(args: SelectSubset<T, DinozItemToDinozUpdateArgs<ExtArgs>>): Prisma__DinozItemToDinozClient<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -10341,7 +10451,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozItemToDinozDeleteManyArgs>(args?: SelectSubset<T, DinozItemToDinozDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10360,7 +10470,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozItemToDinozUpdateManyArgs>(args: SelectSubset<T, DinozItemToDinozUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -10449,7 +10559,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozItemToDinozGroupByArgs,
@@ -10552,12 +10662,12 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozItemToDinoz model
-   */ 
+   */
   interface DinozItemToDinozFieldRefs {
     readonly dinozId: FieldRef<"DinozItemToDinoz", 'Int'>
     readonly dinozItemId: FieldRef<"DinozItemToDinoz", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -10628,31 +10738,31 @@ export namespace Prisma {
     where?: DinozItemToDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItemToDinozs to fetch.
      */
     orderBy?: DinozItemToDinozOrderByWithRelationInput | DinozItemToDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozItemToDinozs.
      */
     cursor?: DinozItemToDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItemToDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItemToDinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozItemToDinozs.
      */
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
@@ -10681,31 +10791,31 @@ export namespace Prisma {
     where?: DinozItemToDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItemToDinozs to fetch.
      */
     orderBy?: DinozItemToDinozOrderByWithRelationInput | DinozItemToDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozItemToDinozs.
      */
     cursor?: DinozItemToDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItemToDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItemToDinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozItemToDinozs.
      */
     distinct?: DinozItemToDinozScalarFieldEnum | DinozItemToDinozScalarFieldEnum[]
@@ -10734,25 +10844,25 @@ export namespace Prisma {
     where?: DinozItemToDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozItemToDinozs to fetch.
      */
     orderBy?: DinozItemToDinozOrderByWithRelationInput | DinozItemToDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozItemToDinozs.
      */
     cursor?: DinozItemToDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozItemToDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozItemToDinozs.
      */
     skip?: number
@@ -11049,55 +11159,55 @@ export namespace Prisma {
     where?: DinozMissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozMissions to fetch.
      */
     orderBy?: DinozMissionOrderByWithRelationInput | DinozMissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozMissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozMissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozMissions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozMissions
     **/
     _count?: true | DinozMissionCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozMissionAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozMissionSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozMissionMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozMissionMaxAggregateInputType
@@ -11211,7 +11321,7 @@ export namespace Prisma {
 
   type DinozMissionGetPayload<S extends boolean | null | undefined | DinozMissionDefaultArgs> = $Result.GetResult<Prisma.$DinozMissionPayload, S>
 
-  type DinozMissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozMissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozMissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozMissionCountAggregateInputType | true
     }
@@ -11232,7 +11342,7 @@ export namespace Prisma {
     findUnique<T extends DinozMissionFindUniqueArgs>(args: SelectSubset<T, DinozMissionFindUniqueArgs<ExtArgs>>): Prisma__DinozMissionClient<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozMission that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozMission that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozMissionFindUniqueOrThrowArgs} args - Arguments to find a DinozMission
      * @example
@@ -11284,13 +11394,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozMissions
      * const dinozMissions = await prisma.dinozMission.findMany()
-     * 
+     *
      * // Get first 10 DinozMissions
      * const dinozMissions = await prisma.dinozMission.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozMissionWithIdOnly = await prisma.dinozMission.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozMissionFindManyArgs>(args?: SelectSubset<T, DinozMissionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -11304,7 +11414,7 @@ export namespace Prisma {
      *     // ... data to create a DinozMission
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozMissionCreateArgs>(args: SelectSubset<T, DinozMissionCreateArgs<ExtArgs>>): Prisma__DinozMissionClient<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -11318,7 +11428,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozMissionCreateManyArgs>(args?: SelectSubset<T, DinozMissionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11332,9 +11442,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozMissions and only return the `id`
-     * const dinozMissionWithIdOnly = await prisma.dinozMission.createManyAndReturn({ 
+     * const dinozMissionWithIdOnly = await prisma.dinozMission.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -11342,7 +11452,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozMissionCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozMissionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -11356,7 +11466,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozMission
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozMissionDeleteArgs>(args: SelectSubset<T, DinozMissionDeleteArgs<ExtArgs>>): Prisma__DinozMissionClient<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -11373,7 +11483,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozMissionUpdateArgs>(args: SelectSubset<T, DinozMissionUpdateArgs<ExtArgs>>): Prisma__DinozMissionClient<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -11387,7 +11497,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozMissionDeleteManyArgs>(args?: SelectSubset<T, DinozMissionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11406,7 +11516,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozMissionUpdateManyArgs>(args: SelectSubset<T, DinozMissionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -11495,7 +11605,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozMissionGroupByArgs,
@@ -11597,7 +11707,7 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozMission model
-   */ 
+   */
   interface DinozMissionFieldRefs {
     readonly id: FieldRef<"DinozMission", 'Int'>
     readonly missionId: FieldRef<"DinozMission", 'Int'>
@@ -11606,7 +11716,7 @@ export namespace Prisma {
     readonly isFinished: FieldRef<"DinozMission", 'Boolean'>
     readonly progress: FieldRef<"DinozMission", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -11677,31 +11787,31 @@ export namespace Prisma {
     where?: DinozMissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozMissions to fetch.
      */
     orderBy?: DinozMissionOrderByWithRelationInput | DinozMissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozMissions.
      */
     cursor?: DinozMissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozMissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozMissions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozMissions.
      */
     distinct?: DinozMissionScalarFieldEnum | DinozMissionScalarFieldEnum[]
@@ -11730,31 +11840,31 @@ export namespace Prisma {
     where?: DinozMissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozMissions to fetch.
      */
     orderBy?: DinozMissionOrderByWithRelationInput | DinozMissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozMissions.
      */
     cursor?: DinozMissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozMissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozMissions.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozMissions.
      */
     distinct?: DinozMissionScalarFieldEnum | DinozMissionScalarFieldEnum[]
@@ -11783,25 +11893,25 @@ export namespace Prisma {
     where?: DinozMissionWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozMissions to fetch.
      */
     orderBy?: DinozMissionOrderByWithRelationInput | DinozMissionOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozMissions.
      */
     cursor?: DinozMissionWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozMissions from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozMissions.
      */
     skip?: number
@@ -12097,55 +12207,55 @@ export namespace Prisma {
     where?: DinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkills to fetch.
      */
     orderBy?: DinozSkillOrderByWithRelationInput | DinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkills.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozSkills
     **/
     _count?: true | DinozSkillCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozSkillAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozSkillSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozSkillMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozSkillMaxAggregateInputType
@@ -12249,7 +12359,7 @@ export namespace Prisma {
 
   type DinozSkillGetPayload<S extends boolean | null | undefined | DinozSkillDefaultArgs> = $Result.GetResult<Prisma.$DinozSkillPayload, S>
 
-  type DinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozSkillCountAggregateInputType | true
     }
@@ -12270,7 +12380,7 @@ export namespace Prisma {
     findUnique<T extends DinozSkillFindUniqueArgs>(args: SelectSubset<T, DinozSkillFindUniqueArgs<ExtArgs>>): Prisma__DinozSkillClient<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozSkill that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozSkill that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozSkillFindUniqueOrThrowArgs} args - Arguments to find a DinozSkill
      * @example
@@ -12322,13 +12432,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozSkills
      * const dinozSkills = await prisma.dinozSkill.findMany()
-     * 
+     *
      * // Get first 10 DinozSkills
      * const dinozSkills = await prisma.dinozSkill.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozSkillWithIdOnly = await prisma.dinozSkill.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozSkillFindManyArgs>(args?: SelectSubset<T, DinozSkillFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -12342,7 +12452,7 @@ export namespace Prisma {
      *     // ... data to create a DinozSkill
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozSkillCreateArgs>(args: SelectSubset<T, DinozSkillCreateArgs<ExtArgs>>): Prisma__DinozSkillClient<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -12356,7 +12466,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozSkillCreateManyArgs>(args?: SelectSubset<T, DinozSkillCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12370,9 +12480,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozSkills and only return the `id`
-     * const dinozSkillWithIdOnly = await prisma.dinozSkill.createManyAndReturn({ 
+     * const dinozSkillWithIdOnly = await prisma.dinozSkill.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -12380,7 +12490,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozSkillCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozSkillCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -12394,7 +12504,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozSkill
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozSkillDeleteArgs>(args: SelectSubset<T, DinozSkillDeleteArgs<ExtArgs>>): Prisma__DinozSkillClient<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -12411,7 +12521,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozSkillUpdateArgs>(args: SelectSubset<T, DinozSkillUpdateArgs<ExtArgs>>): Prisma__DinozSkillClient<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -12425,7 +12535,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozSkillDeleteManyArgs>(args?: SelectSubset<T, DinozSkillDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12444,7 +12554,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozSkillUpdateManyArgs>(args: SelectSubset<T, DinozSkillUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -12533,7 +12643,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozSkillGroupByArgs,
@@ -12635,14 +12745,14 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozSkill model
-   */ 
+   */
   interface DinozSkillFieldRefs {
     readonly id: FieldRef<"DinozSkill", 'Int'>
     readonly skillId: FieldRef<"DinozSkill", 'Int'>
     readonly state: FieldRef<"DinozSkill", 'Boolean'>
     readonly dinozId: FieldRef<"DinozSkill", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -12713,31 +12823,31 @@ export namespace Prisma {
     where?: DinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkills to fetch.
      */
     orderBy?: DinozSkillOrderByWithRelationInput | DinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozSkills.
      */
     cursor?: DinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkills.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozSkills.
      */
     distinct?: DinozSkillScalarFieldEnum | DinozSkillScalarFieldEnum[]
@@ -12766,31 +12876,31 @@ export namespace Prisma {
     where?: DinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkills to fetch.
      */
     orderBy?: DinozSkillOrderByWithRelationInput | DinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozSkills.
      */
     cursor?: DinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkills.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozSkills.
      */
     distinct?: DinozSkillScalarFieldEnum | DinozSkillScalarFieldEnum[]
@@ -12819,25 +12929,25 @@ export namespace Prisma {
     where?: DinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkills to fetch.
      */
     orderBy?: DinozSkillOrderByWithRelationInput | DinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozSkills.
      */
     cursor?: DinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkills.
      */
     skip?: number
@@ -13127,55 +13237,55 @@ export namespace Prisma {
     where?: DinozSkillUnlockableWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkillUnlockables to fetch.
      */
     orderBy?: DinozSkillUnlockableOrderByWithRelationInput | DinozSkillUnlockableOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozSkillUnlockableWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkillUnlockables from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkillUnlockables.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozSkillUnlockables
     **/
     _count?: true | DinozSkillUnlockableCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozSkillUnlockableAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozSkillUnlockableSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozSkillUnlockableMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozSkillUnlockableMaxAggregateInputType
@@ -13274,7 +13384,7 @@ export namespace Prisma {
 
   type DinozSkillUnlockableGetPayload<S extends boolean | null | undefined | DinozSkillUnlockableDefaultArgs> = $Result.GetResult<Prisma.$DinozSkillUnlockablePayload, S>
 
-  type DinozSkillUnlockableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozSkillUnlockableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozSkillUnlockableFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozSkillUnlockableCountAggregateInputType | true
     }
@@ -13295,7 +13405,7 @@ export namespace Prisma {
     findUnique<T extends DinozSkillUnlockableFindUniqueArgs>(args: SelectSubset<T, DinozSkillUnlockableFindUniqueArgs<ExtArgs>>): Prisma__DinozSkillUnlockableClient<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozSkillUnlockable that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozSkillUnlockable that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozSkillUnlockableFindUniqueOrThrowArgs} args - Arguments to find a DinozSkillUnlockable
      * @example
@@ -13347,13 +13457,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozSkillUnlockables
      * const dinozSkillUnlockables = await prisma.dinozSkillUnlockable.findMany()
-     * 
+     *
      * // Get first 10 DinozSkillUnlockables
      * const dinozSkillUnlockables = await prisma.dinozSkillUnlockable.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozSkillUnlockableWithIdOnly = await prisma.dinozSkillUnlockable.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozSkillUnlockableFindManyArgs>(args?: SelectSubset<T, DinozSkillUnlockableFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -13367,7 +13477,7 @@ export namespace Prisma {
      *     // ... data to create a DinozSkillUnlockable
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozSkillUnlockableCreateArgs>(args: SelectSubset<T, DinozSkillUnlockableCreateArgs<ExtArgs>>): Prisma__DinozSkillUnlockableClient<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -13381,7 +13491,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozSkillUnlockableCreateManyArgs>(args?: SelectSubset<T, DinozSkillUnlockableCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13395,9 +13505,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozSkillUnlockables and only return the `id`
-     * const dinozSkillUnlockableWithIdOnly = await prisma.dinozSkillUnlockable.createManyAndReturn({ 
+     * const dinozSkillUnlockableWithIdOnly = await prisma.dinozSkillUnlockable.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -13405,7 +13515,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozSkillUnlockableCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozSkillUnlockableCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -13419,7 +13529,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozSkillUnlockable
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozSkillUnlockableDeleteArgs>(args: SelectSubset<T, DinozSkillUnlockableDeleteArgs<ExtArgs>>): Prisma__DinozSkillUnlockableClient<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -13436,7 +13546,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozSkillUnlockableUpdateArgs>(args: SelectSubset<T, DinozSkillUnlockableUpdateArgs<ExtArgs>>): Prisma__DinozSkillUnlockableClient<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -13450,7 +13560,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozSkillUnlockableDeleteManyArgs>(args?: SelectSubset<T, DinozSkillUnlockableDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13469,7 +13579,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozSkillUnlockableUpdateManyArgs>(args: SelectSubset<T, DinozSkillUnlockableUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -13558,7 +13668,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozSkillUnlockableGroupByArgs,
@@ -13660,13 +13770,13 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozSkillUnlockable model
-   */ 
+   */
   interface DinozSkillUnlockableFieldRefs {
     readonly id: FieldRef<"DinozSkillUnlockable", 'Int'>
     readonly skillId: FieldRef<"DinozSkillUnlockable", 'Int'>
     readonly dinozId: FieldRef<"DinozSkillUnlockable", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -13737,31 +13847,31 @@ export namespace Prisma {
     where?: DinozSkillUnlockableWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkillUnlockables to fetch.
      */
     orderBy?: DinozSkillUnlockableOrderByWithRelationInput | DinozSkillUnlockableOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozSkillUnlockables.
      */
     cursor?: DinozSkillUnlockableWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkillUnlockables from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkillUnlockables.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozSkillUnlockables.
      */
     distinct?: DinozSkillUnlockableScalarFieldEnum | DinozSkillUnlockableScalarFieldEnum[]
@@ -13790,31 +13900,31 @@ export namespace Prisma {
     where?: DinozSkillUnlockableWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkillUnlockables to fetch.
      */
     orderBy?: DinozSkillUnlockableOrderByWithRelationInput | DinozSkillUnlockableOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozSkillUnlockables.
      */
     cursor?: DinozSkillUnlockableWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkillUnlockables from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkillUnlockables.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozSkillUnlockables.
      */
     distinct?: DinozSkillUnlockableScalarFieldEnum | DinozSkillUnlockableScalarFieldEnum[]
@@ -13843,25 +13953,25 @@ export namespace Prisma {
     where?: DinozSkillUnlockableWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozSkillUnlockables to fetch.
      */
     orderBy?: DinozSkillUnlockableOrderByWithRelationInput | DinozSkillUnlockableOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozSkillUnlockables.
      */
     cursor?: DinozSkillUnlockableWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozSkillUnlockables from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozSkillUnlockables.
      */
     skip?: number
@@ -14151,55 +14261,55 @@ export namespace Prisma {
     where?: DinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozStatuses to fetch.
      */
     orderBy?: DinozStatusOrderByWithRelationInput | DinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozStatuses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozStatuses
     **/
     _count?: true | DinozStatusCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozStatusAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozStatusSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozStatusMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozStatusMaxAggregateInputType
@@ -14298,7 +14408,7 @@ export namespace Prisma {
 
   type DinozStatusGetPayload<S extends boolean | null | undefined | DinozStatusDefaultArgs> = $Result.GetResult<Prisma.$DinozStatusPayload, S>
 
-  type DinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozStatusFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozStatusCountAggregateInputType | true
     }
@@ -14319,7 +14429,7 @@ export namespace Prisma {
     findUnique<T extends DinozStatusFindUniqueArgs>(args: SelectSubset<T, DinozStatusFindUniqueArgs<ExtArgs>>): Prisma__DinozStatusClient<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozStatus that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozStatus that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozStatusFindUniqueOrThrowArgs} args - Arguments to find a DinozStatus
      * @example
@@ -14371,13 +14481,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozStatuses
      * const dinozStatuses = await prisma.dinozStatus.findMany()
-     * 
+     *
      * // Get first 10 DinozStatuses
      * const dinozStatuses = await prisma.dinozStatus.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozStatusWithIdOnly = await prisma.dinozStatus.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozStatusFindManyArgs>(args?: SelectSubset<T, DinozStatusFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -14391,7 +14501,7 @@ export namespace Prisma {
      *     // ... data to create a DinozStatus
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozStatusCreateArgs>(args: SelectSubset<T, DinozStatusCreateArgs<ExtArgs>>): Prisma__DinozStatusClient<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -14405,7 +14515,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozStatusCreateManyArgs>(args?: SelectSubset<T, DinozStatusCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -14419,9 +14529,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozStatuses and only return the `id`
-     * const dinozStatusWithIdOnly = await prisma.dinozStatus.createManyAndReturn({ 
+     * const dinozStatusWithIdOnly = await prisma.dinozStatus.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -14429,7 +14539,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozStatusCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozStatusCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -14443,7 +14553,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozStatus
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozStatusDeleteArgs>(args: SelectSubset<T, DinozStatusDeleteArgs<ExtArgs>>): Prisma__DinozStatusClient<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -14460,7 +14570,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozStatusUpdateArgs>(args: SelectSubset<T, DinozStatusUpdateArgs<ExtArgs>>): Prisma__DinozStatusClient<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -14474,7 +14584,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozStatusDeleteManyArgs>(args?: SelectSubset<T, DinozStatusDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -14493,7 +14603,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozStatusUpdateManyArgs>(args: SelectSubset<T, DinozStatusUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -14582,7 +14692,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozStatusGroupByArgs,
@@ -14684,13 +14794,13 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozStatus model
-   */ 
+   */
   interface DinozStatusFieldRefs {
     readonly id: FieldRef<"DinozStatus", 'Int'>
     readonly statusId: FieldRef<"DinozStatus", 'Int'>
     readonly dinozId: FieldRef<"DinozStatus", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -14761,31 +14871,31 @@ export namespace Prisma {
     where?: DinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozStatuses to fetch.
      */
     orderBy?: DinozStatusOrderByWithRelationInput | DinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozStatuses.
      */
     cursor?: DinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozStatuses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozStatuses.
      */
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
@@ -14814,31 +14924,31 @@ export namespace Prisma {
     where?: DinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozStatuses to fetch.
      */
     orderBy?: DinozStatusOrderByWithRelationInput | DinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozStatuses.
      */
     cursor?: DinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozStatuses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozStatuses.
      */
     distinct?: DinozStatusScalarFieldEnum | DinozStatusScalarFieldEnum[]
@@ -14867,25 +14977,25 @@ export namespace Prisma {
     where?: DinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozStatuses to fetch.
      */
     orderBy?: DinozStatusOrderByWithRelationInput | DinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozStatuses.
      */
     cursor?: DinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozStatuses.
      */
     skip?: number
@@ -15301,55 +15411,55 @@ export namespace Prisma {
     where?: ImportedDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozs to fetch.
      */
     orderBy?: ImportedDinozOrderByWithRelationInput | ImportedDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedDinozs
     **/
     _count?: true | ImportedDinozCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedDinozAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedDinozSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedDinozMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedDinozMaxAggregateInputType
@@ -15531,7 +15641,7 @@ export namespace Prisma {
 
   type ImportedDinozGetPayload<S extends boolean | null | undefined | ImportedDinozDefaultArgs> = $Result.GetResult<Prisma.$ImportedDinozPayload, S>
 
-  type ImportedDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedDinozFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedDinozCountAggregateInputType | true
     }
@@ -15552,7 +15662,7 @@ export namespace Prisma {
     findUnique<T extends ImportedDinozFindUniqueArgs>(args: SelectSubset<T, ImportedDinozFindUniqueArgs<ExtArgs>>): Prisma__ImportedDinozClient<$Result.GetResult<Prisma.$ImportedDinozPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedDinoz that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedDinoz that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedDinozFindUniqueOrThrowArgs} args - Arguments to find a ImportedDinoz
      * @example
@@ -15604,13 +15714,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedDinozs
      * const importedDinozs = await prisma.importedDinoz.findMany()
-     * 
+     *
      * // Get first 10 ImportedDinozs
      * const importedDinozs = await prisma.importedDinoz.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedDinozWithIdOnly = await prisma.importedDinoz.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedDinozFindManyArgs>(args?: SelectSubset<T, ImportedDinozFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedDinozPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -15624,7 +15734,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedDinoz
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedDinozCreateArgs>(args: SelectSubset<T, ImportedDinozCreateArgs<ExtArgs>>): Prisma__ImportedDinozClient<$Result.GetResult<Prisma.$ImportedDinozPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -15638,7 +15748,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedDinozCreateManyArgs>(args?: SelectSubset<T, ImportedDinozCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -15652,9 +15762,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedDinozs and only return the `id`
-     * const importedDinozWithIdOnly = await prisma.importedDinoz.createManyAndReturn({ 
+     * const importedDinozWithIdOnly = await prisma.importedDinoz.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -15662,7 +15772,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedDinozCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedDinozCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedDinozPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -15676,7 +15786,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedDinoz
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedDinozDeleteArgs>(args: SelectSubset<T, ImportedDinozDeleteArgs<ExtArgs>>): Prisma__ImportedDinozClient<$Result.GetResult<Prisma.$ImportedDinozPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -15693,7 +15803,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedDinozUpdateArgs>(args: SelectSubset<T, ImportedDinozUpdateArgs<ExtArgs>>): Prisma__ImportedDinozClient<$Result.GetResult<Prisma.$ImportedDinozPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -15707,7 +15817,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedDinozDeleteManyArgs>(args?: SelectSubset<T, ImportedDinozDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -15726,7 +15836,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedDinozUpdateManyArgs>(args: SelectSubset<T, ImportedDinozUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -15815,7 +15925,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedDinozGroupByArgs,
@@ -15919,7 +16029,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedDinoz model
-   */ 
+   */
   interface ImportedDinozFieldRefs {
     readonly id: FieldRef<"ImportedDinoz", 'Int'>
     readonly importedId: FieldRef<"ImportedDinoz", 'Int'>
@@ -15940,7 +16050,7 @@ export namespace Prisma {
     readonly playerId: FieldRef<"ImportedDinoz", 'Int'>
     readonly isFrozen: FieldRef<"ImportedDinoz", 'Boolean'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -16011,31 +16121,31 @@ export namespace Prisma {
     where?: ImportedDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozs to fetch.
      */
     orderBy?: ImportedDinozOrderByWithRelationInput | ImportedDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedDinozs.
      */
     cursor?: ImportedDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedDinozs.
      */
     distinct?: ImportedDinozScalarFieldEnum | ImportedDinozScalarFieldEnum[]
@@ -16064,31 +16174,31 @@ export namespace Prisma {
     where?: ImportedDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozs to fetch.
      */
     orderBy?: ImportedDinozOrderByWithRelationInput | ImportedDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedDinozs.
      */
     cursor?: ImportedDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedDinozs.
      */
     distinct?: ImportedDinozScalarFieldEnum | ImportedDinozScalarFieldEnum[]
@@ -16117,25 +16227,25 @@ export namespace Prisma {
     where?: ImportedDinozWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozs to fetch.
      */
     orderBy?: ImportedDinozOrderByWithRelationInput | ImportedDinozOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedDinozs.
      */
     cursor?: ImportedDinozWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozs.
      */
     skip?: number
@@ -16473,55 +16583,55 @@ export namespace Prisma {
     where?: ImportedDinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozSkills to fetch.
      */
     orderBy?: ImportedDinozSkillOrderByWithRelationInput | ImportedDinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedDinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozSkills.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedDinozSkills
     **/
     _count?: true | ImportedDinozSkillCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedDinozSkillAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedDinozSkillSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedDinozSkillMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedDinozSkillMaxAggregateInputType
@@ -16620,7 +16730,7 @@ export namespace Prisma {
 
   type ImportedDinozSkillGetPayload<S extends boolean | null | undefined | ImportedDinozSkillDefaultArgs> = $Result.GetResult<Prisma.$ImportedDinozSkillPayload, S>
 
-  type ImportedDinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedDinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedDinozSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedDinozSkillCountAggregateInputType | true
     }
@@ -16641,7 +16751,7 @@ export namespace Prisma {
     findUnique<T extends ImportedDinozSkillFindUniqueArgs>(args: SelectSubset<T, ImportedDinozSkillFindUniqueArgs<ExtArgs>>): Prisma__ImportedDinozSkillClient<$Result.GetResult<Prisma.$ImportedDinozSkillPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedDinozSkill that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedDinozSkill that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedDinozSkillFindUniqueOrThrowArgs} args - Arguments to find a ImportedDinozSkill
      * @example
@@ -16693,13 +16803,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedDinozSkills
      * const importedDinozSkills = await prisma.importedDinozSkill.findMany()
-     * 
+     *
      * // Get first 10 ImportedDinozSkills
      * const importedDinozSkills = await prisma.importedDinozSkill.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedDinozSkillWithIdOnly = await prisma.importedDinozSkill.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedDinozSkillFindManyArgs>(args?: SelectSubset<T, ImportedDinozSkillFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedDinozSkillPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -16713,7 +16823,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedDinozSkill
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedDinozSkillCreateArgs>(args: SelectSubset<T, ImportedDinozSkillCreateArgs<ExtArgs>>): Prisma__ImportedDinozSkillClient<$Result.GetResult<Prisma.$ImportedDinozSkillPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -16727,7 +16837,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedDinozSkillCreateManyArgs>(args?: SelectSubset<T, ImportedDinozSkillCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -16741,9 +16851,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedDinozSkills and only return the `id`
-     * const importedDinozSkillWithIdOnly = await prisma.importedDinozSkill.createManyAndReturn({ 
+     * const importedDinozSkillWithIdOnly = await prisma.importedDinozSkill.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -16751,7 +16861,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedDinozSkillCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedDinozSkillCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedDinozSkillPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -16765,7 +16875,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedDinozSkill
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedDinozSkillDeleteArgs>(args: SelectSubset<T, ImportedDinozSkillDeleteArgs<ExtArgs>>): Prisma__ImportedDinozSkillClient<$Result.GetResult<Prisma.$ImportedDinozSkillPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -16782,7 +16892,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedDinozSkillUpdateArgs>(args: SelectSubset<T, ImportedDinozSkillUpdateArgs<ExtArgs>>): Prisma__ImportedDinozSkillClient<$Result.GetResult<Prisma.$ImportedDinozSkillPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -16796,7 +16906,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedDinozSkillDeleteManyArgs>(args?: SelectSubset<T, ImportedDinozSkillDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -16815,7 +16925,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedDinozSkillUpdateManyArgs>(args: SelectSubset<T, ImportedDinozSkillUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -16904,7 +17014,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedDinozSkillGroupByArgs,
@@ -17006,13 +17116,13 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedDinozSkill model
-   */ 
+   */
   interface ImportedDinozSkillFieldRefs {
     readonly id: FieldRef<"ImportedDinozSkill", 'Int'>
     readonly skillId: FieldRef<"ImportedDinozSkill", 'Int'>
     readonly dinozId: FieldRef<"ImportedDinozSkill", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -17083,31 +17193,31 @@ export namespace Prisma {
     where?: ImportedDinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozSkills to fetch.
      */
     orderBy?: ImportedDinozSkillOrderByWithRelationInput | ImportedDinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedDinozSkills.
      */
     cursor?: ImportedDinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozSkills.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedDinozSkills.
      */
     distinct?: ImportedDinozSkillScalarFieldEnum | ImportedDinozSkillScalarFieldEnum[]
@@ -17136,31 +17246,31 @@ export namespace Prisma {
     where?: ImportedDinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozSkills to fetch.
      */
     orderBy?: ImportedDinozSkillOrderByWithRelationInput | ImportedDinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedDinozSkills.
      */
     cursor?: ImportedDinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozSkills.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedDinozSkills.
      */
     distinct?: ImportedDinozSkillScalarFieldEnum | ImportedDinozSkillScalarFieldEnum[]
@@ -17189,25 +17299,25 @@ export namespace Prisma {
     where?: ImportedDinozSkillWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozSkills to fetch.
      */
     orderBy?: ImportedDinozSkillOrderByWithRelationInput | ImportedDinozSkillOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedDinozSkills.
      */
     cursor?: ImportedDinozSkillWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozSkills from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozSkills.
      */
     skip?: number
@@ -17497,55 +17607,55 @@ export namespace Prisma {
     where?: ImportedDinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozStatuses to fetch.
      */
     orderBy?: ImportedDinozStatusOrderByWithRelationInput | ImportedDinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedDinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozStatuses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedDinozStatuses
     **/
     _count?: true | ImportedDinozStatusCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedDinozStatusAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedDinozStatusSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedDinozStatusMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedDinozStatusMaxAggregateInputType
@@ -17644,7 +17754,7 @@ export namespace Prisma {
 
   type ImportedDinozStatusGetPayload<S extends boolean | null | undefined | ImportedDinozStatusDefaultArgs> = $Result.GetResult<Prisma.$ImportedDinozStatusPayload, S>
 
-  type ImportedDinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedDinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedDinozStatusFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedDinozStatusCountAggregateInputType | true
     }
@@ -17665,7 +17775,7 @@ export namespace Prisma {
     findUnique<T extends ImportedDinozStatusFindUniqueArgs>(args: SelectSubset<T, ImportedDinozStatusFindUniqueArgs<ExtArgs>>): Prisma__ImportedDinozStatusClient<$Result.GetResult<Prisma.$ImportedDinozStatusPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedDinozStatus that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedDinozStatus that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedDinozStatusFindUniqueOrThrowArgs} args - Arguments to find a ImportedDinozStatus
      * @example
@@ -17717,13 +17827,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedDinozStatuses
      * const importedDinozStatuses = await prisma.importedDinozStatus.findMany()
-     * 
+     *
      * // Get first 10 ImportedDinozStatuses
      * const importedDinozStatuses = await prisma.importedDinozStatus.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedDinozStatusWithIdOnly = await prisma.importedDinozStatus.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedDinozStatusFindManyArgs>(args?: SelectSubset<T, ImportedDinozStatusFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedDinozStatusPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -17737,7 +17847,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedDinozStatus
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedDinozStatusCreateArgs>(args: SelectSubset<T, ImportedDinozStatusCreateArgs<ExtArgs>>): Prisma__ImportedDinozStatusClient<$Result.GetResult<Prisma.$ImportedDinozStatusPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -17751,7 +17861,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedDinozStatusCreateManyArgs>(args?: SelectSubset<T, ImportedDinozStatusCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -17765,9 +17875,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedDinozStatuses and only return the `id`
-     * const importedDinozStatusWithIdOnly = await prisma.importedDinozStatus.createManyAndReturn({ 
+     * const importedDinozStatusWithIdOnly = await prisma.importedDinozStatus.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -17775,7 +17885,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedDinozStatusCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedDinozStatusCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedDinozStatusPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -17789,7 +17899,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedDinozStatus
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedDinozStatusDeleteArgs>(args: SelectSubset<T, ImportedDinozStatusDeleteArgs<ExtArgs>>): Prisma__ImportedDinozStatusClient<$Result.GetResult<Prisma.$ImportedDinozStatusPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -17806,7 +17916,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedDinozStatusUpdateArgs>(args: SelectSubset<T, ImportedDinozStatusUpdateArgs<ExtArgs>>): Prisma__ImportedDinozStatusClient<$Result.GetResult<Prisma.$ImportedDinozStatusPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -17820,7 +17930,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedDinozStatusDeleteManyArgs>(args?: SelectSubset<T, ImportedDinozStatusDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -17839,7 +17949,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedDinozStatusUpdateManyArgs>(args: SelectSubset<T, ImportedDinozStatusUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -17928,7 +18038,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedDinozStatusGroupByArgs,
@@ -18030,13 +18140,13 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedDinozStatus model
-   */ 
+   */
   interface ImportedDinozStatusFieldRefs {
     readonly id: FieldRef<"ImportedDinozStatus", 'Int'>
     readonly dinozId: FieldRef<"ImportedDinozStatus", 'Int'>
     readonly statusId: FieldRef<"ImportedDinozStatus", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -18107,31 +18217,31 @@ export namespace Prisma {
     where?: ImportedDinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozStatuses to fetch.
      */
     orderBy?: ImportedDinozStatusOrderByWithRelationInput | ImportedDinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedDinozStatuses.
      */
     cursor?: ImportedDinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozStatuses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedDinozStatuses.
      */
     distinct?: ImportedDinozStatusScalarFieldEnum | ImportedDinozStatusScalarFieldEnum[]
@@ -18160,31 +18270,31 @@ export namespace Prisma {
     where?: ImportedDinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozStatuses to fetch.
      */
     orderBy?: ImportedDinozStatusOrderByWithRelationInput | ImportedDinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedDinozStatuses.
      */
     cursor?: ImportedDinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozStatuses.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedDinozStatuses.
      */
     distinct?: ImportedDinozStatusScalarFieldEnum | ImportedDinozStatusScalarFieldEnum[]
@@ -18213,25 +18323,25 @@ export namespace Prisma {
     where?: ImportedDinozStatusWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedDinozStatuses to fetch.
      */
     orderBy?: ImportedDinozStatusOrderByWithRelationInput | ImportedDinozStatusOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedDinozStatuses.
      */
     cursor?: ImportedDinozStatusWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedDinozStatuses from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedDinozStatuses.
      */
     skip?: number
@@ -18549,55 +18659,55 @@ export namespace Prisma {
     where?: ImportedPlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayers to fetch.
      */
     orderBy?: ImportedPlayerOrderByWithRelationInput | ImportedPlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedPlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedPlayers
     **/
     _count?: true | ImportedPlayerCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedPlayerAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedPlayerSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedPlayerMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedPlayerMaxAggregateInputType
@@ -18733,7 +18843,7 @@ export namespace Prisma {
 
   type ImportedPlayerGetPayload<S extends boolean | null | undefined | ImportedPlayerDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerPayload, S>
 
-  type ImportedPlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedPlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedPlayerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerCountAggregateInputType | true
     }
@@ -18754,7 +18864,7 @@ export namespace Prisma {
     findUnique<T extends ImportedPlayerFindUniqueArgs>(args: SelectSubset<T, ImportedPlayerFindUniqueArgs<ExtArgs>>): Prisma__ImportedPlayerClient<$Result.GetResult<Prisma.$ImportedPlayerPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedPlayer that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedPlayer that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedPlayerFindUniqueOrThrowArgs} args - Arguments to find a ImportedPlayer
      * @example
@@ -18806,13 +18916,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedPlayers
      * const importedPlayers = await prisma.importedPlayer.findMany()
-     * 
+     *
      * // Get first 10 ImportedPlayers
      * const importedPlayers = await prisma.importedPlayer.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedPlayerWithIdOnly = await prisma.importedPlayer.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedPlayerFindManyArgs>(args?: SelectSubset<T, ImportedPlayerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -18826,7 +18936,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedPlayer
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedPlayerCreateArgs>(args: SelectSubset<T, ImportedPlayerCreateArgs<ExtArgs>>): Prisma__ImportedPlayerClient<$Result.GetResult<Prisma.$ImportedPlayerPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -18840,7 +18950,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedPlayerCreateManyArgs>(args?: SelectSubset<T, ImportedPlayerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -18854,9 +18964,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedPlayers and only return the `id`
-     * const importedPlayerWithIdOnly = await prisma.importedPlayer.createManyAndReturn({ 
+     * const importedPlayerWithIdOnly = await prisma.importedPlayer.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -18864,7 +18974,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedPlayerCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedPlayerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -18878,7 +18988,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedPlayer
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedPlayerDeleteArgs>(args: SelectSubset<T, ImportedPlayerDeleteArgs<ExtArgs>>): Prisma__ImportedPlayerClient<$Result.GetResult<Prisma.$ImportedPlayerPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -18895,7 +19005,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedPlayerUpdateArgs>(args: SelectSubset<T, ImportedPlayerUpdateArgs<ExtArgs>>): Prisma__ImportedPlayerClient<$Result.GetResult<Prisma.$ImportedPlayerPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -18909,7 +19019,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedPlayerDeleteManyArgs>(args?: SelectSubset<T, ImportedPlayerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -18928,7 +19038,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedPlayerUpdateManyArgs>(args: SelectSubset<T, ImportedPlayerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -19017,7 +19127,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedPlayerGroupByArgs,
@@ -19124,7 +19234,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedPlayer model
-   */ 
+   */
   interface ImportedPlayerFieldRefs {
     readonly id: FieldRef<"ImportedPlayer", 'Int'>
     readonly name: FieldRef<"ImportedPlayer", 'String'>
@@ -19134,7 +19244,7 @@ export namespace Prisma {
     readonly updatedDate: FieldRef<"ImportedPlayer", 'DateTime'>
     readonly playerId: FieldRef<"ImportedPlayer", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -19205,31 +19315,31 @@ export namespace Prisma {
     where?: ImportedPlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayers to fetch.
      */
     orderBy?: ImportedPlayerOrderByWithRelationInput | ImportedPlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayers.
      */
     cursor?: ImportedPlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayers.
      */
     distinct?: ImportedPlayerScalarFieldEnum | ImportedPlayerScalarFieldEnum[]
@@ -19258,31 +19368,31 @@ export namespace Prisma {
     where?: ImportedPlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayers to fetch.
      */
     orderBy?: ImportedPlayerOrderByWithRelationInput | ImportedPlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayers.
      */
     cursor?: ImportedPlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayers.
      */
     distinct?: ImportedPlayerScalarFieldEnum | ImportedPlayerScalarFieldEnum[]
@@ -19311,25 +19421,25 @@ export namespace Prisma {
     where?: ImportedPlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayers to fetch.
      */
     orderBy?: ImportedPlayerOrderByWithRelationInput | ImportedPlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedPlayers.
      */
     cursor?: ImportedPlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayers.
      */
     skip?: number
@@ -19749,55 +19859,55 @@ export namespace Prisma {
     where?: ImportedPlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerIngredients to fetch.
      */
     orderBy?: ImportedPlayerIngredientOrderByWithRelationInput | ImportedPlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedPlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedPlayerIngredients
     **/
     _count?: true | ImportedPlayerIngredientCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedPlayerIngredientAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedPlayerIngredientSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedPlayerIngredientMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedPlayerIngredientMaxAggregateInputType
@@ -19901,7 +20011,7 @@ export namespace Prisma {
 
   type ImportedPlayerIngredientGetPayload<S extends boolean | null | undefined | ImportedPlayerIngredientDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerIngredientPayload, S>
 
-  type ImportedPlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedPlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedPlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerIngredientCountAggregateInputType | true
     }
@@ -19922,7 +20032,7 @@ export namespace Prisma {
     findUnique<T extends ImportedPlayerIngredientFindUniqueArgs>(args: SelectSubset<T, ImportedPlayerIngredientFindUniqueArgs<ExtArgs>>): Prisma__ImportedPlayerIngredientClient<$Result.GetResult<Prisma.$ImportedPlayerIngredientPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedPlayerIngredient that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedPlayerIngredient that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedPlayerIngredientFindUniqueOrThrowArgs} args - Arguments to find a ImportedPlayerIngredient
      * @example
@@ -19974,13 +20084,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedPlayerIngredients
      * const importedPlayerIngredients = await prisma.importedPlayerIngredient.findMany()
-     * 
+     *
      * // Get first 10 ImportedPlayerIngredients
      * const importedPlayerIngredients = await prisma.importedPlayerIngredient.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedPlayerIngredientWithIdOnly = await prisma.importedPlayerIngredient.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedPlayerIngredientFindManyArgs>(args?: SelectSubset<T, ImportedPlayerIngredientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerIngredientPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -19994,7 +20104,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedPlayerIngredient
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedPlayerIngredientCreateArgs>(args: SelectSubset<T, ImportedPlayerIngredientCreateArgs<ExtArgs>>): Prisma__ImportedPlayerIngredientClient<$Result.GetResult<Prisma.$ImportedPlayerIngredientPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -20008,7 +20118,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedPlayerIngredientCreateManyArgs>(args?: SelectSubset<T, ImportedPlayerIngredientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -20022,9 +20132,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedPlayerIngredients and only return the `id`
-     * const importedPlayerIngredientWithIdOnly = await prisma.importedPlayerIngredient.createManyAndReturn({ 
+     * const importedPlayerIngredientWithIdOnly = await prisma.importedPlayerIngredient.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -20032,7 +20142,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedPlayerIngredientCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedPlayerIngredientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerIngredientPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -20046,7 +20156,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedPlayerIngredient
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedPlayerIngredientDeleteArgs>(args: SelectSubset<T, ImportedPlayerIngredientDeleteArgs<ExtArgs>>): Prisma__ImportedPlayerIngredientClient<$Result.GetResult<Prisma.$ImportedPlayerIngredientPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -20063,7 +20173,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedPlayerIngredientUpdateArgs>(args: SelectSubset<T, ImportedPlayerIngredientUpdateArgs<ExtArgs>>): Prisma__ImportedPlayerIngredientClient<$Result.GetResult<Prisma.$ImportedPlayerIngredientPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -20077,7 +20187,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedPlayerIngredientDeleteManyArgs>(args?: SelectSubset<T, ImportedPlayerIngredientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -20096,7 +20206,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedPlayerIngredientUpdateManyArgs>(args: SelectSubset<T, ImportedPlayerIngredientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -20185,7 +20295,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedPlayerIngredientGroupByArgs,
@@ -20287,14 +20397,14 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedPlayerIngredient model
-   */ 
+   */
   interface ImportedPlayerIngredientFieldRefs {
     readonly id: FieldRef<"ImportedPlayerIngredient", 'Int'>
     readonly ingredientId: FieldRef<"ImportedPlayerIngredient", 'Int'>
     readonly quantity: FieldRef<"ImportedPlayerIngredient", 'Int'>
     readonly playerId: FieldRef<"ImportedPlayerIngredient", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -20365,31 +20475,31 @@ export namespace Prisma {
     where?: ImportedPlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerIngredients to fetch.
      */
     orderBy?: ImportedPlayerIngredientOrderByWithRelationInput | ImportedPlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerIngredients.
      */
     cursor?: ImportedPlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerIngredients.
      */
     distinct?: ImportedPlayerIngredientScalarFieldEnum | ImportedPlayerIngredientScalarFieldEnum[]
@@ -20418,31 +20528,31 @@ export namespace Prisma {
     where?: ImportedPlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerIngredients to fetch.
      */
     orderBy?: ImportedPlayerIngredientOrderByWithRelationInput | ImportedPlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerIngredients.
      */
     cursor?: ImportedPlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerIngredients.
      */
     distinct?: ImportedPlayerIngredientScalarFieldEnum | ImportedPlayerIngredientScalarFieldEnum[]
@@ -20471,25 +20581,25 @@ export namespace Prisma {
     where?: ImportedPlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerIngredients to fetch.
      */
     orderBy?: ImportedPlayerIngredientOrderByWithRelationInput | ImportedPlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedPlayerIngredients.
      */
     cursor?: ImportedPlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerIngredients.
      */
     skip?: number
@@ -20789,55 +20899,55 @@ export namespace Prisma {
     where?: ImportedPlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerItems to fetch.
      */
     orderBy?: ImportedPlayerItemOrderByWithRelationInput | ImportedPlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedPlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedPlayerItems
     **/
     _count?: true | ImportedPlayerItemCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedPlayerItemAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedPlayerItemSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedPlayerItemMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedPlayerItemMaxAggregateInputType
@@ -20941,7 +21051,7 @@ export namespace Prisma {
 
   type ImportedPlayerItemGetPayload<S extends boolean | null | undefined | ImportedPlayerItemDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerItemPayload, S>
 
-  type ImportedPlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedPlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedPlayerItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerItemCountAggregateInputType | true
     }
@@ -20962,7 +21072,7 @@ export namespace Prisma {
     findUnique<T extends ImportedPlayerItemFindUniqueArgs>(args: SelectSubset<T, ImportedPlayerItemFindUniqueArgs<ExtArgs>>): Prisma__ImportedPlayerItemClient<$Result.GetResult<Prisma.$ImportedPlayerItemPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedPlayerItem that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedPlayerItem that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedPlayerItemFindUniqueOrThrowArgs} args - Arguments to find a ImportedPlayerItem
      * @example
@@ -21014,13 +21124,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedPlayerItems
      * const importedPlayerItems = await prisma.importedPlayerItem.findMany()
-     * 
+     *
      * // Get first 10 ImportedPlayerItems
      * const importedPlayerItems = await prisma.importedPlayerItem.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedPlayerItemWithIdOnly = await prisma.importedPlayerItem.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedPlayerItemFindManyArgs>(args?: SelectSubset<T, ImportedPlayerItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerItemPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -21034,7 +21144,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedPlayerItem
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedPlayerItemCreateArgs>(args: SelectSubset<T, ImportedPlayerItemCreateArgs<ExtArgs>>): Prisma__ImportedPlayerItemClient<$Result.GetResult<Prisma.$ImportedPlayerItemPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -21048,7 +21158,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedPlayerItemCreateManyArgs>(args?: SelectSubset<T, ImportedPlayerItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -21062,9 +21172,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedPlayerItems and only return the `id`
-     * const importedPlayerItemWithIdOnly = await prisma.importedPlayerItem.createManyAndReturn({ 
+     * const importedPlayerItemWithIdOnly = await prisma.importedPlayerItem.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -21072,7 +21182,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedPlayerItemCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedPlayerItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerItemPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -21086,7 +21196,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedPlayerItem
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedPlayerItemDeleteArgs>(args: SelectSubset<T, ImportedPlayerItemDeleteArgs<ExtArgs>>): Prisma__ImportedPlayerItemClient<$Result.GetResult<Prisma.$ImportedPlayerItemPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -21103,7 +21213,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedPlayerItemUpdateArgs>(args: SelectSubset<T, ImportedPlayerItemUpdateArgs<ExtArgs>>): Prisma__ImportedPlayerItemClient<$Result.GetResult<Prisma.$ImportedPlayerItemPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -21117,7 +21227,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedPlayerItemDeleteManyArgs>(args?: SelectSubset<T, ImportedPlayerItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -21136,7 +21246,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedPlayerItemUpdateManyArgs>(args: SelectSubset<T, ImportedPlayerItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -21225,7 +21335,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedPlayerItemGroupByArgs,
@@ -21327,14 +21437,14 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedPlayerItem model
-   */ 
+   */
   interface ImportedPlayerItemFieldRefs {
     readonly id: FieldRef<"ImportedPlayerItem", 'Int'>
     readonly quantity: FieldRef<"ImportedPlayerItem", 'Int'>
     readonly playerId: FieldRef<"ImportedPlayerItem", 'Int'>
     readonly itemId: FieldRef<"ImportedPlayerItem", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -21405,31 +21515,31 @@ export namespace Prisma {
     where?: ImportedPlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerItems to fetch.
      */
     orderBy?: ImportedPlayerItemOrderByWithRelationInput | ImportedPlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerItems.
      */
     cursor?: ImportedPlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerItems.
      */
     distinct?: ImportedPlayerItemScalarFieldEnum | ImportedPlayerItemScalarFieldEnum[]
@@ -21458,31 +21568,31 @@ export namespace Prisma {
     where?: ImportedPlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerItems to fetch.
      */
     orderBy?: ImportedPlayerItemOrderByWithRelationInput | ImportedPlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerItems.
      */
     cursor?: ImportedPlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerItems.
      */
     distinct?: ImportedPlayerItemScalarFieldEnum | ImportedPlayerItemScalarFieldEnum[]
@@ -21511,25 +21621,25 @@ export namespace Prisma {
     where?: ImportedPlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerItems to fetch.
      */
     orderBy?: ImportedPlayerItemOrderByWithRelationInput | ImportedPlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedPlayerItems.
      */
     cursor?: ImportedPlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerItems.
      */
     skip?: number
@@ -21819,55 +21929,55 @@ export namespace Prisma {
     where?: ImportedPlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerRewards to fetch.
      */
     orderBy?: ImportedPlayerRewardOrderByWithRelationInput | ImportedPlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedPlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerRewards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedPlayerRewards
     **/
     _count?: true | ImportedPlayerRewardCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedPlayerRewardAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedPlayerRewardSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedPlayerRewardMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedPlayerRewardMaxAggregateInputType
@@ -21966,7 +22076,7 @@ export namespace Prisma {
 
   type ImportedPlayerRewardGetPayload<S extends boolean | null | undefined | ImportedPlayerRewardDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerRewardPayload, S>
 
-  type ImportedPlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedPlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedPlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerRewardCountAggregateInputType | true
     }
@@ -21987,7 +22097,7 @@ export namespace Prisma {
     findUnique<T extends ImportedPlayerRewardFindUniqueArgs>(args: SelectSubset<T, ImportedPlayerRewardFindUniqueArgs<ExtArgs>>): Prisma__ImportedPlayerRewardClient<$Result.GetResult<Prisma.$ImportedPlayerRewardPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedPlayerReward that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedPlayerReward that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedPlayerRewardFindUniqueOrThrowArgs} args - Arguments to find a ImportedPlayerReward
      * @example
@@ -22039,13 +22149,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedPlayerRewards
      * const importedPlayerRewards = await prisma.importedPlayerReward.findMany()
-     * 
+     *
      * // Get first 10 ImportedPlayerRewards
      * const importedPlayerRewards = await prisma.importedPlayerReward.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedPlayerRewardWithIdOnly = await prisma.importedPlayerReward.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedPlayerRewardFindManyArgs>(args?: SelectSubset<T, ImportedPlayerRewardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerRewardPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -22059,7 +22169,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedPlayerReward
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedPlayerRewardCreateArgs>(args: SelectSubset<T, ImportedPlayerRewardCreateArgs<ExtArgs>>): Prisma__ImportedPlayerRewardClient<$Result.GetResult<Prisma.$ImportedPlayerRewardPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -22073,7 +22183,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedPlayerRewardCreateManyArgs>(args?: SelectSubset<T, ImportedPlayerRewardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -22087,9 +22197,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedPlayerRewards and only return the `id`
-     * const importedPlayerRewardWithIdOnly = await prisma.importedPlayerReward.createManyAndReturn({ 
+     * const importedPlayerRewardWithIdOnly = await prisma.importedPlayerReward.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -22097,7 +22207,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedPlayerRewardCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedPlayerRewardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerRewardPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -22111,7 +22221,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedPlayerReward
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedPlayerRewardDeleteArgs>(args: SelectSubset<T, ImportedPlayerRewardDeleteArgs<ExtArgs>>): Prisma__ImportedPlayerRewardClient<$Result.GetResult<Prisma.$ImportedPlayerRewardPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -22128,7 +22238,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedPlayerRewardUpdateArgs>(args: SelectSubset<T, ImportedPlayerRewardUpdateArgs<ExtArgs>>): Prisma__ImportedPlayerRewardClient<$Result.GetResult<Prisma.$ImportedPlayerRewardPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -22142,7 +22252,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedPlayerRewardDeleteManyArgs>(args?: SelectSubset<T, ImportedPlayerRewardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -22161,7 +22271,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedPlayerRewardUpdateManyArgs>(args: SelectSubset<T, ImportedPlayerRewardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -22250,7 +22360,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedPlayerRewardGroupByArgs,
@@ -22352,13 +22462,13 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedPlayerReward model
-   */ 
+   */
   interface ImportedPlayerRewardFieldRefs {
     readonly id: FieldRef<"ImportedPlayerReward", 'Int'>
     readonly playerId: FieldRef<"ImportedPlayerReward", 'Int'>
     readonly rewardId: FieldRef<"ImportedPlayerReward", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -22429,31 +22539,31 @@ export namespace Prisma {
     where?: ImportedPlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerRewards to fetch.
      */
     orderBy?: ImportedPlayerRewardOrderByWithRelationInput | ImportedPlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerRewards.
      */
     cursor?: ImportedPlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerRewards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerRewards.
      */
     distinct?: ImportedPlayerRewardScalarFieldEnum | ImportedPlayerRewardScalarFieldEnum[]
@@ -22482,31 +22592,31 @@ export namespace Prisma {
     where?: ImportedPlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerRewards to fetch.
      */
     orderBy?: ImportedPlayerRewardOrderByWithRelationInput | ImportedPlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerRewards.
      */
     cursor?: ImportedPlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerRewards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerRewards.
      */
     distinct?: ImportedPlayerRewardScalarFieldEnum | ImportedPlayerRewardScalarFieldEnum[]
@@ -22535,25 +22645,25 @@ export namespace Prisma {
     where?: ImportedPlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerRewards to fetch.
      */
     orderBy?: ImportedPlayerRewardOrderByWithRelationInput | ImportedPlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedPlayerRewards.
      */
     cursor?: ImportedPlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerRewards.
      */
     skip?: number
@@ -22849,55 +22959,55 @@ export namespace Prisma {
     where?: ImportedPlayerScenarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerScenarios to fetch.
      */
     orderBy?: ImportedPlayerScenarioOrderByWithRelationInput | ImportedPlayerScenarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedPlayerScenarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerScenarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerScenarios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedPlayerScenarios
     **/
     _count?: true | ImportedPlayerScenarioCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedPlayerScenarioAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedPlayerScenarioSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedPlayerScenarioMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedPlayerScenarioMaxAggregateInputType
@@ -23001,7 +23111,7 @@ export namespace Prisma {
 
   type ImportedPlayerScenarioGetPayload<S extends boolean | null | undefined | ImportedPlayerScenarioDefaultArgs> = $Result.GetResult<Prisma.$ImportedPlayerScenarioPayload, S>
 
-  type ImportedPlayerScenarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedPlayerScenarioCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedPlayerScenarioFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedPlayerScenarioCountAggregateInputType | true
     }
@@ -23022,7 +23132,7 @@ export namespace Prisma {
     findUnique<T extends ImportedPlayerScenarioFindUniqueArgs>(args: SelectSubset<T, ImportedPlayerScenarioFindUniqueArgs<ExtArgs>>): Prisma__ImportedPlayerScenarioClient<$Result.GetResult<Prisma.$ImportedPlayerScenarioPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedPlayerScenario that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedPlayerScenario that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedPlayerScenarioFindUniqueOrThrowArgs} args - Arguments to find a ImportedPlayerScenario
      * @example
@@ -23074,13 +23184,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedPlayerScenarios
      * const importedPlayerScenarios = await prisma.importedPlayerScenario.findMany()
-     * 
+     *
      * // Get first 10 ImportedPlayerScenarios
      * const importedPlayerScenarios = await prisma.importedPlayerScenario.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedPlayerScenarioWithIdOnly = await prisma.importedPlayerScenario.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedPlayerScenarioFindManyArgs>(args?: SelectSubset<T, ImportedPlayerScenarioFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerScenarioPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -23094,7 +23204,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedPlayerScenario
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedPlayerScenarioCreateArgs>(args: SelectSubset<T, ImportedPlayerScenarioCreateArgs<ExtArgs>>): Prisma__ImportedPlayerScenarioClient<$Result.GetResult<Prisma.$ImportedPlayerScenarioPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -23108,7 +23218,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedPlayerScenarioCreateManyArgs>(args?: SelectSubset<T, ImportedPlayerScenarioCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -23122,9 +23232,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedPlayerScenarios and only return the `id`
-     * const importedPlayerScenarioWithIdOnly = await prisma.importedPlayerScenario.createManyAndReturn({ 
+     * const importedPlayerScenarioWithIdOnly = await prisma.importedPlayerScenario.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -23132,7 +23242,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedPlayerScenarioCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedPlayerScenarioCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedPlayerScenarioPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -23146,7 +23256,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedPlayerScenario
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedPlayerScenarioDeleteArgs>(args: SelectSubset<T, ImportedPlayerScenarioDeleteArgs<ExtArgs>>): Prisma__ImportedPlayerScenarioClient<$Result.GetResult<Prisma.$ImportedPlayerScenarioPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -23163,7 +23273,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedPlayerScenarioUpdateArgs>(args: SelectSubset<T, ImportedPlayerScenarioUpdateArgs<ExtArgs>>): Prisma__ImportedPlayerScenarioClient<$Result.GetResult<Prisma.$ImportedPlayerScenarioPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -23177,7 +23287,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedPlayerScenarioDeleteManyArgs>(args?: SelectSubset<T, ImportedPlayerScenarioDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -23196,7 +23306,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedPlayerScenarioUpdateManyArgs>(args: SelectSubset<T, ImportedPlayerScenarioUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -23285,7 +23395,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedPlayerScenarioGroupByArgs,
@@ -23387,14 +23497,14 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedPlayerScenario model
-   */ 
+   */
   interface ImportedPlayerScenarioFieldRefs {
     readonly id: FieldRef<"ImportedPlayerScenario", 'Int'>
     readonly questName: FieldRef<"ImportedPlayerScenario", 'String'>
     readonly progression: FieldRef<"ImportedPlayerScenario", 'Int'>
     readonly playerId: FieldRef<"ImportedPlayerScenario", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -23465,31 +23575,31 @@ export namespace Prisma {
     where?: ImportedPlayerScenarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerScenarios to fetch.
      */
     orderBy?: ImportedPlayerScenarioOrderByWithRelationInput | ImportedPlayerScenarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerScenarios.
      */
     cursor?: ImportedPlayerScenarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerScenarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerScenarios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerScenarios.
      */
     distinct?: ImportedPlayerScenarioScalarFieldEnum | ImportedPlayerScenarioScalarFieldEnum[]
@@ -23518,31 +23628,31 @@ export namespace Prisma {
     where?: ImportedPlayerScenarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerScenarios to fetch.
      */
     orderBy?: ImportedPlayerScenarioOrderByWithRelationInput | ImportedPlayerScenarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedPlayerScenarios.
      */
     cursor?: ImportedPlayerScenarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerScenarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerScenarios.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedPlayerScenarios.
      */
     distinct?: ImportedPlayerScenarioScalarFieldEnum | ImportedPlayerScenarioScalarFieldEnum[]
@@ -23571,25 +23681,25 @@ export namespace Prisma {
     where?: ImportedPlayerScenarioWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedPlayerScenarios to fetch.
      */
     orderBy?: ImportedPlayerScenarioOrderByWithRelationInput | ImportedPlayerScenarioOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedPlayerScenarios.
      */
     cursor?: ImportedPlayerScenarioWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedPlayerScenarios from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedPlayerScenarios.
      */
     skip?: number
@@ -23919,55 +24029,55 @@ export namespace Prisma {
     where?: ImportedTwinoidAchievementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidAchievements to fetch.
      */
     orderBy?: ImportedTwinoidAchievementOrderByWithRelationInput | ImportedTwinoidAchievementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedTwinoidAchievementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidAchievements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidAchievements.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedTwinoidAchievements
     **/
     _count?: true | ImportedTwinoidAchievementCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedTwinoidAchievementAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedTwinoidAchievementSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedTwinoidAchievementMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedTwinoidAchievementMaxAggregateInputType
@@ -24096,7 +24206,7 @@ export namespace Prisma {
 
   type ImportedTwinoidAchievementGetPayload<S extends boolean | null | undefined | ImportedTwinoidAchievementDefaultArgs> = $Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload, S>
 
-  type ImportedTwinoidAchievementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedTwinoidAchievementCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedTwinoidAchievementFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedTwinoidAchievementCountAggregateInputType | true
     }
@@ -24117,7 +24227,7 @@ export namespace Prisma {
     findUnique<T extends ImportedTwinoidAchievementFindUniqueArgs>(args: SelectSubset<T, ImportedTwinoidAchievementFindUniqueArgs<ExtArgs>>): Prisma__ImportedTwinoidAchievementClient<$Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedTwinoidAchievement that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedTwinoidAchievement that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedTwinoidAchievementFindUniqueOrThrowArgs} args - Arguments to find a ImportedTwinoidAchievement
      * @example
@@ -24169,13 +24279,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedTwinoidAchievements
      * const importedTwinoidAchievements = await prisma.importedTwinoidAchievement.findMany()
-     * 
+     *
      * // Get first 10 ImportedTwinoidAchievements
      * const importedTwinoidAchievements = await prisma.importedTwinoidAchievement.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedTwinoidAchievementWithIdOnly = await prisma.importedTwinoidAchievement.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedTwinoidAchievementFindManyArgs>(args?: SelectSubset<T, ImportedTwinoidAchievementFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -24189,7 +24299,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedTwinoidAchievement
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedTwinoidAchievementCreateArgs>(args: SelectSubset<T, ImportedTwinoidAchievementCreateArgs<ExtArgs>>): Prisma__ImportedTwinoidAchievementClient<$Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -24203,7 +24313,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedTwinoidAchievementCreateManyArgs>(args?: SelectSubset<T, ImportedTwinoidAchievementCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -24217,9 +24327,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedTwinoidAchievements and only return the `id`
-     * const importedTwinoidAchievementWithIdOnly = await prisma.importedTwinoidAchievement.createManyAndReturn({ 
+     * const importedTwinoidAchievementWithIdOnly = await prisma.importedTwinoidAchievement.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -24227,7 +24337,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedTwinoidAchievementCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedTwinoidAchievementCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -24241,7 +24351,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedTwinoidAchievement
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedTwinoidAchievementDeleteArgs>(args: SelectSubset<T, ImportedTwinoidAchievementDeleteArgs<ExtArgs>>): Prisma__ImportedTwinoidAchievementClient<$Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -24258,7 +24368,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedTwinoidAchievementUpdateArgs>(args: SelectSubset<T, ImportedTwinoidAchievementUpdateArgs<ExtArgs>>): Prisma__ImportedTwinoidAchievementClient<$Result.GetResult<Prisma.$ImportedTwinoidAchievementPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -24272,7 +24382,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedTwinoidAchievementDeleteManyArgs>(args?: SelectSubset<T, ImportedTwinoidAchievementDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -24291,7 +24401,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedTwinoidAchievementUpdateManyArgs>(args: SelectSubset<T, ImportedTwinoidAchievementUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -24380,7 +24490,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedTwinoidAchievementGroupByArgs,
@@ -24482,7 +24592,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedTwinoidAchievement model
-   */ 
+   */
   interface ImportedTwinoidAchievementFieldRefs {
     readonly id: FieldRef<"ImportedTwinoidAchievement", 'Int'>
     readonly siteId: FieldRef<"ImportedTwinoidAchievement", 'Int'>
@@ -24494,7 +24604,7 @@ export namespace Prisma {
     readonly requirement: FieldRef<"ImportedTwinoidAchievement", 'String'>
     readonly quantity: FieldRef<"ImportedTwinoidAchievement", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -24565,31 +24675,31 @@ export namespace Prisma {
     where?: ImportedTwinoidAchievementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidAchievements to fetch.
      */
     orderBy?: ImportedTwinoidAchievementOrderByWithRelationInput | ImportedTwinoidAchievementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedTwinoidAchievements.
      */
     cursor?: ImportedTwinoidAchievementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidAchievements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidAchievements.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedTwinoidAchievements.
      */
     distinct?: ImportedTwinoidAchievementScalarFieldEnum | ImportedTwinoidAchievementScalarFieldEnum[]
@@ -24618,31 +24728,31 @@ export namespace Prisma {
     where?: ImportedTwinoidAchievementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidAchievements to fetch.
      */
     orderBy?: ImportedTwinoidAchievementOrderByWithRelationInput | ImportedTwinoidAchievementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedTwinoidAchievements.
      */
     cursor?: ImportedTwinoidAchievementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidAchievements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidAchievements.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedTwinoidAchievements.
      */
     distinct?: ImportedTwinoidAchievementScalarFieldEnum | ImportedTwinoidAchievementScalarFieldEnum[]
@@ -24671,25 +24781,25 @@ export namespace Prisma {
     where?: ImportedTwinoidAchievementWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidAchievements to fetch.
      */
     orderBy?: ImportedTwinoidAchievementOrderByWithRelationInput | ImportedTwinoidAchievementOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedTwinoidAchievements.
      */
     cursor?: ImportedTwinoidAchievementWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidAchievements from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidAchievements.
      */
     skip?: number
@@ -25011,55 +25121,55 @@ export namespace Prisma {
     where?: ImportedTwinoidSiteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidSites to fetch.
      */
     orderBy?: ImportedTwinoidSiteOrderByWithRelationInput | ImportedTwinoidSiteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedTwinoidSiteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidSites from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidSites.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedTwinoidSites
     **/
     _count?: true | ImportedTwinoidSiteCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedTwinoidSiteAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedTwinoidSiteSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedTwinoidSiteMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedTwinoidSiteMaxAggregateInputType
@@ -25178,7 +25288,7 @@ export namespace Prisma {
 
   type ImportedTwinoidSiteGetPayload<S extends boolean | null | undefined | ImportedTwinoidSiteDefaultArgs> = $Result.GetResult<Prisma.$ImportedTwinoidSitePayload, S>
 
-  type ImportedTwinoidSiteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedTwinoidSiteCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedTwinoidSiteFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedTwinoidSiteCountAggregateInputType | true
     }
@@ -25199,7 +25309,7 @@ export namespace Prisma {
     findUnique<T extends ImportedTwinoidSiteFindUniqueArgs>(args: SelectSubset<T, ImportedTwinoidSiteFindUniqueArgs<ExtArgs>>): Prisma__ImportedTwinoidSiteClient<$Result.GetResult<Prisma.$ImportedTwinoidSitePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedTwinoidSite that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedTwinoidSite that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedTwinoidSiteFindUniqueOrThrowArgs} args - Arguments to find a ImportedTwinoidSite
      * @example
@@ -25251,13 +25361,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedTwinoidSites
      * const importedTwinoidSites = await prisma.importedTwinoidSite.findMany()
-     * 
+     *
      * // Get first 10 ImportedTwinoidSites
      * const importedTwinoidSites = await prisma.importedTwinoidSite.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedTwinoidSiteWithIdOnly = await prisma.importedTwinoidSite.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedTwinoidSiteFindManyArgs>(args?: SelectSubset<T, ImportedTwinoidSiteFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedTwinoidSitePayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -25271,7 +25381,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedTwinoidSite
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedTwinoidSiteCreateArgs>(args: SelectSubset<T, ImportedTwinoidSiteCreateArgs<ExtArgs>>): Prisma__ImportedTwinoidSiteClient<$Result.GetResult<Prisma.$ImportedTwinoidSitePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -25285,7 +25395,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedTwinoidSiteCreateManyArgs>(args?: SelectSubset<T, ImportedTwinoidSiteCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -25299,9 +25409,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedTwinoidSites and only return the `id`
-     * const importedTwinoidSiteWithIdOnly = await prisma.importedTwinoidSite.createManyAndReturn({ 
+     * const importedTwinoidSiteWithIdOnly = await prisma.importedTwinoidSite.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -25309,7 +25419,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedTwinoidSiteCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedTwinoidSiteCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedTwinoidSitePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -25323,7 +25433,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedTwinoidSite
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedTwinoidSiteDeleteArgs>(args: SelectSubset<T, ImportedTwinoidSiteDeleteArgs<ExtArgs>>): Prisma__ImportedTwinoidSiteClient<$Result.GetResult<Prisma.$ImportedTwinoidSitePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -25340,7 +25450,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedTwinoidSiteUpdateArgs>(args: SelectSubset<T, ImportedTwinoidSiteUpdateArgs<ExtArgs>>): Prisma__ImportedTwinoidSiteClient<$Result.GetResult<Prisma.$ImportedTwinoidSitePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -25354,7 +25464,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedTwinoidSiteDeleteManyArgs>(args?: SelectSubset<T, ImportedTwinoidSiteDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -25373,7 +25483,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedTwinoidSiteUpdateManyArgs>(args: SelectSubset<T, ImportedTwinoidSiteUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -25462,7 +25572,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedTwinoidSiteGroupByArgs,
@@ -25564,7 +25674,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedTwinoidSite model
-   */ 
+   */
   interface ImportedTwinoidSiteFieldRefs {
     readonly id: FieldRef<"ImportedTwinoidSite", 'Int'>
     readonly siteId: FieldRef<"ImportedTwinoidSite", 'Int'>
@@ -25574,7 +25684,7 @@ export namespace Prisma {
     readonly updatedDate: FieldRef<"ImportedTwinoidSite", 'DateTime'>
     readonly playerId: FieldRef<"ImportedTwinoidSite", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -25645,31 +25755,31 @@ export namespace Prisma {
     where?: ImportedTwinoidSiteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidSites to fetch.
      */
     orderBy?: ImportedTwinoidSiteOrderByWithRelationInput | ImportedTwinoidSiteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedTwinoidSites.
      */
     cursor?: ImportedTwinoidSiteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidSites from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidSites.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedTwinoidSites.
      */
     distinct?: ImportedTwinoidSiteScalarFieldEnum | ImportedTwinoidSiteScalarFieldEnum[]
@@ -25698,31 +25808,31 @@ export namespace Prisma {
     where?: ImportedTwinoidSiteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidSites to fetch.
      */
     orderBy?: ImportedTwinoidSiteOrderByWithRelationInput | ImportedTwinoidSiteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedTwinoidSites.
      */
     cursor?: ImportedTwinoidSiteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidSites from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidSites.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedTwinoidSites.
      */
     distinct?: ImportedTwinoidSiteScalarFieldEnum | ImportedTwinoidSiteScalarFieldEnum[]
@@ -25751,25 +25861,25 @@ export namespace Prisma {
     where?: ImportedTwinoidSiteWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidSites to fetch.
      */
     orderBy?: ImportedTwinoidSiteOrderByWithRelationInput | ImportedTwinoidSiteOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedTwinoidSites.
      */
     cursor?: ImportedTwinoidSiteWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidSites from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidSites.
      */
     skip?: number
@@ -26087,55 +26197,55 @@ export namespace Prisma {
     where?: ImportedTwinoidStatWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidStats to fetch.
      */
     orderBy?: ImportedTwinoidStatOrderByWithRelationInput | ImportedTwinoidStatOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ImportedTwinoidStatWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidStats from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidStats.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ImportedTwinoidStats
     **/
     _count?: true | ImportedTwinoidStatCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ImportedTwinoidStatAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ImportedTwinoidStatSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ImportedTwinoidStatMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ImportedTwinoidStatMaxAggregateInputType
@@ -26254,7 +26364,7 @@ export namespace Prisma {
 
   type ImportedTwinoidStatGetPayload<S extends boolean | null | undefined | ImportedTwinoidStatDefaultArgs> = $Result.GetResult<Prisma.$ImportedTwinoidStatPayload, S>
 
-  type ImportedTwinoidStatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ImportedTwinoidStatCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ImportedTwinoidStatFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ImportedTwinoidStatCountAggregateInputType | true
     }
@@ -26275,7 +26385,7 @@ export namespace Prisma {
     findUnique<T extends ImportedTwinoidStatFindUniqueArgs>(args: SelectSubset<T, ImportedTwinoidStatFindUniqueArgs<ExtArgs>>): Prisma__ImportedTwinoidStatClient<$Result.GetResult<Prisma.$ImportedTwinoidStatPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ImportedTwinoidStat that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ImportedTwinoidStat that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ImportedTwinoidStatFindUniqueOrThrowArgs} args - Arguments to find a ImportedTwinoidStat
      * @example
@@ -26327,13 +26437,13 @@ export namespace Prisma {
      * @example
      * // Get all ImportedTwinoidStats
      * const importedTwinoidStats = await prisma.importedTwinoidStat.findMany()
-     * 
+     *
      * // Get first 10 ImportedTwinoidStats
      * const importedTwinoidStats = await prisma.importedTwinoidStat.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const importedTwinoidStatWithIdOnly = await prisma.importedTwinoidStat.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ImportedTwinoidStatFindManyArgs>(args?: SelectSubset<T, ImportedTwinoidStatFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedTwinoidStatPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -26347,7 +26457,7 @@ export namespace Prisma {
      *     // ... data to create a ImportedTwinoidStat
      *   }
      * })
-     * 
+     *
      */
     create<T extends ImportedTwinoidStatCreateArgs>(args: SelectSubset<T, ImportedTwinoidStatCreateArgs<ExtArgs>>): Prisma__ImportedTwinoidStatClient<$Result.GetResult<Prisma.$ImportedTwinoidStatPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -26361,7 +26471,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ImportedTwinoidStatCreateManyArgs>(args?: SelectSubset<T, ImportedTwinoidStatCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -26375,9 +26485,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ImportedTwinoidStats and only return the `id`
-     * const importedTwinoidStatWithIdOnly = await prisma.importedTwinoidStat.createManyAndReturn({ 
+     * const importedTwinoidStatWithIdOnly = await prisma.importedTwinoidStat.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -26385,7 +26495,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ImportedTwinoidStatCreateManyAndReturnArgs>(args?: SelectSubset<T, ImportedTwinoidStatCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ImportedTwinoidStatPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -26399,7 +26509,7 @@ export namespace Prisma {
      *     // ... filter to delete one ImportedTwinoidStat
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ImportedTwinoidStatDeleteArgs>(args: SelectSubset<T, ImportedTwinoidStatDeleteArgs<ExtArgs>>): Prisma__ImportedTwinoidStatClient<$Result.GetResult<Prisma.$ImportedTwinoidStatPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -26416,7 +26526,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ImportedTwinoidStatUpdateArgs>(args: SelectSubset<T, ImportedTwinoidStatUpdateArgs<ExtArgs>>): Prisma__ImportedTwinoidStatClient<$Result.GetResult<Prisma.$ImportedTwinoidStatPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -26430,7 +26540,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ImportedTwinoidStatDeleteManyArgs>(args?: SelectSubset<T, ImportedTwinoidStatDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -26449,7 +26559,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ImportedTwinoidStatUpdateManyArgs>(args: SelectSubset<T, ImportedTwinoidStatUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -26538,7 +26648,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ImportedTwinoidStatGroupByArgs,
@@ -26640,7 +26750,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ImportedTwinoidStat model
-   */ 
+   */
   interface ImportedTwinoidStatFieldRefs {
     readonly id: FieldRef<"ImportedTwinoidStat", 'Int'>
     readonly siteId: FieldRef<"ImportedTwinoidStat", 'Int'>
@@ -26650,7 +26760,7 @@ export namespace Prisma {
     readonly updatedDate: FieldRef<"ImportedTwinoidStat", 'DateTime'>
     readonly playerId: FieldRef<"ImportedTwinoidStat", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -26721,31 +26831,31 @@ export namespace Prisma {
     where?: ImportedTwinoidStatWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidStats to fetch.
      */
     orderBy?: ImportedTwinoidStatOrderByWithRelationInput | ImportedTwinoidStatOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedTwinoidStats.
      */
     cursor?: ImportedTwinoidStatWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidStats from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidStats.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedTwinoidStats.
      */
     distinct?: ImportedTwinoidStatScalarFieldEnum | ImportedTwinoidStatScalarFieldEnum[]
@@ -26774,31 +26884,31 @@ export namespace Prisma {
     where?: ImportedTwinoidStatWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidStats to fetch.
      */
     orderBy?: ImportedTwinoidStatOrderByWithRelationInput | ImportedTwinoidStatOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ImportedTwinoidStats.
      */
     cursor?: ImportedTwinoidStatWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidStats from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidStats.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ImportedTwinoidStats.
      */
     distinct?: ImportedTwinoidStatScalarFieldEnum | ImportedTwinoidStatScalarFieldEnum[]
@@ -26827,25 +26937,25 @@ export namespace Prisma {
     where?: ImportedTwinoidStatWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ImportedTwinoidStats to fetch.
      */
     orderBy?: ImportedTwinoidStatOrderByWithRelationInput | ImportedTwinoidStatOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ImportedTwinoidStats.
      */
     cursor?: ImportedTwinoidStatWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ImportedTwinoidStats from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ImportedTwinoidStats.
      */
     skip?: number
@@ -27131,55 +27241,55 @@ export namespace Prisma {
     where?: migrationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of migrations to fetch.
      */
     orderBy?: migrationsOrderByWithRelationInput | migrationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: migrationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` migrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` migrations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned migrations
     **/
     _count?: true | MigrationsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: MigrationsAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: MigrationsSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: MigrationsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: MigrationsMaxAggregateInputType
@@ -27268,7 +27378,7 @@ export namespace Prisma {
 
   type migrationsGetPayload<S extends boolean | null | undefined | migrationsDefaultArgs> = $Result.GetResult<Prisma.$migrationsPayload, S>
 
-  type migrationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type migrationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<migrationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: MigrationsCountAggregateInputType | true
     }
@@ -27289,7 +27399,7 @@ export namespace Prisma {
     findUnique<T extends migrationsFindUniqueArgs>(args: SelectSubset<T, migrationsFindUniqueArgs<ExtArgs>>): Prisma__migrationsClient<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Migrations that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Migrations that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {migrationsFindUniqueOrThrowArgs} args - Arguments to find a Migrations
      * @example
@@ -27341,13 +27451,13 @@ export namespace Prisma {
      * @example
      * // Get all Migrations
      * const migrations = await prisma.migrations.findMany()
-     * 
+     *
      * // Get first 10 Migrations
      * const migrations = await prisma.migrations.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const migrationsWithIdOnly = await prisma.migrations.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends migrationsFindManyArgs>(args?: SelectSubset<T, migrationsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -27361,7 +27471,7 @@ export namespace Prisma {
      *     // ... data to create a Migrations
      *   }
      * })
-     * 
+     *
      */
     create<T extends migrationsCreateArgs>(args: SelectSubset<T, migrationsCreateArgs<ExtArgs>>): Prisma__migrationsClient<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -27375,7 +27485,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends migrationsCreateManyArgs>(args?: SelectSubset<T, migrationsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -27389,9 +27499,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Migrations and only return the `id`
-     * const migrationsWithIdOnly = await prisma.migrations.createManyAndReturn({ 
+     * const migrationsWithIdOnly = await prisma.migrations.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -27399,7 +27509,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends migrationsCreateManyAndReturnArgs>(args?: SelectSubset<T, migrationsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -27413,7 +27523,7 @@ export namespace Prisma {
      *     // ... filter to delete one Migrations
      *   }
      * })
-     * 
+     *
      */
     delete<T extends migrationsDeleteArgs>(args: SelectSubset<T, migrationsDeleteArgs<ExtArgs>>): Prisma__migrationsClient<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -27430,7 +27540,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends migrationsUpdateArgs>(args: SelectSubset<T, migrationsUpdateArgs<ExtArgs>>): Prisma__migrationsClient<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -27444,7 +27554,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends migrationsDeleteManyArgs>(args?: SelectSubset<T, migrationsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -27463,7 +27573,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends migrationsUpdateManyArgs>(args: SelectSubset<T, migrationsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -27552,7 +27662,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends migrationsGroupByArgs,
@@ -27653,13 +27763,13 @@ export namespace Prisma {
 
   /**
    * Fields of the migrations model
-   */ 
+   */
   interface migrationsFieldRefs {
     readonly id: FieldRef<"migrations", 'Int'>
     readonly timestamp: FieldRef<"migrations", 'BigInt'>
     readonly name: FieldRef<"migrations", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -27718,31 +27828,31 @@ export namespace Prisma {
     where?: migrationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of migrations to fetch.
      */
     orderBy?: migrationsOrderByWithRelationInput | migrationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for migrations.
      */
     cursor?: migrationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` migrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` migrations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of migrations.
      */
     distinct?: MigrationsScalarFieldEnum | MigrationsScalarFieldEnum[]
@@ -27767,31 +27877,31 @@ export namespace Prisma {
     where?: migrationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of migrations to fetch.
      */
     orderBy?: migrationsOrderByWithRelationInput | migrationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for migrations.
      */
     cursor?: migrationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` migrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` migrations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of migrations.
      */
     distinct?: MigrationsScalarFieldEnum | MigrationsScalarFieldEnum[]
@@ -27816,25 +27926,25 @@ export namespace Prisma {
     where?: migrationsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of migrations to fetch.
      */
     orderBy?: migrationsOrderByWithRelationInput | migrationsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing migrations.
      */
     cursor?: migrationsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` migrations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` migrations.
      */
     skip?: number
@@ -28133,55 +28243,55 @@ export namespace Prisma {
     where?: NewsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of News to fetch.
      */
     orderBy?: NewsOrderByWithRelationInput | NewsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: NewsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` News from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` News.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned News
     **/
     _count?: true | NewsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: NewsAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: NewsSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: NewsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: NewsMaxAggregateInputType
@@ -28320,7 +28430,7 @@ export namespace Prisma {
 
   type NewsGetPayload<S extends boolean | null | undefined | NewsDefaultArgs> = $Result.GetResult<Prisma.$NewsPayload, S>
 
-  type NewsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type NewsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<NewsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: NewsCountAggregateInputType | true
     }
@@ -28341,7 +28451,7 @@ export namespace Prisma {
     findUnique<T extends NewsFindUniqueArgs>(args: SelectSubset<T, NewsFindUniqueArgs<ExtArgs>>): Prisma__NewsClient<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one News that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one News that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {NewsFindUniqueOrThrowArgs} args - Arguments to find a News
      * @example
@@ -28393,13 +28503,13 @@ export namespace Prisma {
      * @example
      * // Get all News
      * const news = await prisma.news.findMany()
-     * 
+     *
      * // Get first 10 News
      * const news = await prisma.news.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const newsWithIdOnly = await prisma.news.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends NewsFindManyArgs>(args?: SelectSubset<T, NewsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -28413,7 +28523,7 @@ export namespace Prisma {
      *     // ... data to create a News
      *   }
      * })
-     * 
+     *
      */
     create<T extends NewsCreateArgs>(args: SelectSubset<T, NewsCreateArgs<ExtArgs>>): Prisma__NewsClient<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -28427,7 +28537,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends NewsCreateManyArgs>(args?: SelectSubset<T, NewsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -28441,9 +28551,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many News and only return the `id`
-     * const newsWithIdOnly = await prisma.news.createManyAndReturn({ 
+     * const newsWithIdOnly = await prisma.news.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -28451,7 +28561,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends NewsCreateManyAndReturnArgs>(args?: SelectSubset<T, NewsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -28465,7 +28575,7 @@ export namespace Prisma {
      *     // ... filter to delete one News
      *   }
      * })
-     * 
+     *
      */
     delete<T extends NewsDeleteArgs>(args: SelectSubset<T, NewsDeleteArgs<ExtArgs>>): Prisma__NewsClient<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -28482,7 +28592,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends NewsUpdateArgs>(args: SelectSubset<T, NewsUpdateArgs<ExtArgs>>): Prisma__NewsClient<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -28496,7 +28606,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends NewsDeleteManyArgs>(args?: SelectSubset<T, NewsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -28515,7 +28625,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends NewsUpdateManyArgs>(args: SelectSubset<T, NewsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -28604,7 +28714,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends NewsGroupByArgs,
@@ -28705,7 +28815,7 @@ export namespace Prisma {
 
   /**
    * Fields of the News model
-   */ 
+   */
   interface NewsFieldRefs {
     readonly id: FieldRef<"News", 'Int'>
     readonly title: FieldRef<"News", 'String'>
@@ -28721,7 +28831,7 @@ export namespace Prisma {
     readonly createdDate: FieldRef<"News", 'DateTime'>
     readonly updatedDate: FieldRef<"News", 'DateTime'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -28780,31 +28890,31 @@ export namespace Prisma {
     where?: NewsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of News to fetch.
      */
     orderBy?: NewsOrderByWithRelationInput | NewsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for News.
      */
     cursor?: NewsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` News from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` News.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of News.
      */
     distinct?: NewsScalarFieldEnum | NewsScalarFieldEnum[]
@@ -28829,31 +28939,31 @@ export namespace Prisma {
     where?: NewsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of News to fetch.
      */
     orderBy?: NewsOrderByWithRelationInput | NewsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for News.
      */
     cursor?: NewsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` News from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` News.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of News.
      */
     distinct?: NewsScalarFieldEnum | NewsScalarFieldEnum[]
@@ -28878,25 +28988,25 @@ export namespace Prisma {
     where?: NewsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of News to fetch.
      */
     orderBy?: NewsOrderByWithRelationInput | NewsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing News.
      */
     cursor?: NewsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` News from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` News.
      */
     skip?: number
@@ -29149,55 +29259,55 @@ export namespace Prisma {
     where?: NPCWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of NPCS to fetch.
      */
     orderBy?: NPCOrderByWithRelationInput | NPCOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: NPCWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` NPCS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` NPCS.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned NPCS
     **/
     _count?: true | NPCCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: NPCAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: NPCSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: NPCMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: NPCMaxAggregateInputType
@@ -29301,7 +29411,7 @@ export namespace Prisma {
 
   type NPCGetPayload<S extends boolean | null | undefined | NPCDefaultArgs> = $Result.GetResult<Prisma.$NPCPayload, S>
 
-  type NPCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type NPCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<NPCFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: NPCCountAggregateInputType | true
     }
@@ -29322,7 +29432,7 @@ export namespace Prisma {
     findUnique<T extends NPCFindUniqueArgs>(args: SelectSubset<T, NPCFindUniqueArgs<ExtArgs>>): Prisma__NPCClient<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one NPC that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one NPC that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {NPCFindUniqueOrThrowArgs} args - Arguments to find a NPC
      * @example
@@ -29374,13 +29484,13 @@ export namespace Prisma {
      * @example
      * // Get all NPCS
      * const nPCS = await prisma.nPC.findMany()
-     * 
+     *
      * // Get first 10 NPCS
      * const nPCS = await prisma.nPC.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const nPCWithIdOnly = await prisma.nPC.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends NPCFindManyArgs>(args?: SelectSubset<T, NPCFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -29394,7 +29504,7 @@ export namespace Prisma {
      *     // ... data to create a NPC
      *   }
      * })
-     * 
+     *
      */
     create<T extends NPCCreateArgs>(args: SelectSubset<T, NPCCreateArgs<ExtArgs>>): Prisma__NPCClient<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -29408,7 +29518,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends NPCCreateManyArgs>(args?: SelectSubset<T, NPCCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -29422,9 +29532,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many NPCS and only return the `id`
-     * const nPCWithIdOnly = await prisma.nPC.createManyAndReturn({ 
+     * const nPCWithIdOnly = await prisma.nPC.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -29432,7 +29542,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends NPCCreateManyAndReturnArgs>(args?: SelectSubset<T, NPCCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -29446,7 +29556,7 @@ export namespace Prisma {
      *     // ... filter to delete one NPC
      *   }
      * })
-     * 
+     *
      */
     delete<T extends NPCDeleteArgs>(args: SelectSubset<T, NPCDeleteArgs<ExtArgs>>): Prisma__NPCClient<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -29463,7 +29573,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends NPCUpdateArgs>(args: SelectSubset<T, NPCUpdateArgs<ExtArgs>>): Prisma__NPCClient<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -29477,7 +29587,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends NPCDeleteManyArgs>(args?: SelectSubset<T, NPCDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -29496,7 +29606,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends NPCUpdateManyArgs>(args: SelectSubset<T, NPCUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -29585,7 +29695,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends NPCGroupByArgs,
@@ -29687,14 +29797,14 @@ export namespace Prisma {
 
   /**
    * Fields of the NPC model
-   */ 
+   */
   interface NPCFieldRefs {
     readonly id: FieldRef<"NPC", 'Int'>
     readonly npcId: FieldRef<"NPC", 'Int'>
     readonly step: FieldRef<"NPC", 'String'>
     readonly dinozId: FieldRef<"NPC", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -29765,31 +29875,31 @@ export namespace Prisma {
     where?: NPCWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of NPCS to fetch.
      */
     orderBy?: NPCOrderByWithRelationInput | NPCOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for NPCS.
      */
     cursor?: NPCWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` NPCS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` NPCS.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of NPCS.
      */
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
@@ -29818,31 +29928,31 @@ export namespace Prisma {
     where?: NPCWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of NPCS to fetch.
      */
     orderBy?: NPCOrderByWithRelationInput | NPCOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for NPCS.
      */
     cursor?: NPCWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` NPCS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` NPCS.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of NPCS.
      */
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
@@ -29871,25 +29981,25 @@ export namespace Prisma {
     where?: NPCWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of NPCS to fetch.
      */
     orderBy?: NPCOrderByWithRelationInput | NPCOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing NPCS.
      */
     cursor?: NPCWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` NPCS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` NPCS.
      */
     skip?: number
@@ -30323,55 +30433,55 @@ export namespace Prisma {
     where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Players to fetch.
      */
     orderBy?: PlayerOrderByWithRelationInput | PlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Players.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Players
     **/
     _count?: true | PlayerCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerMaxAggregateInputType
@@ -30504,6 +30614,7 @@ export namespace Prisma {
     messages?: boolean | Player$messagesArgs<ExtArgs>
     createdConversations?: boolean | Player$createdConversationsArgs<ExtArgs>
     Conversation?: boolean | Player$ConversationArgs<ExtArgs>
+    notifications?: boolean | Player$notificationsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -30594,6 +30705,7 @@ export namespace Prisma {
     messages?: boolean | Player$messagesArgs<ExtArgs>
     createdConversations?: boolean | Player$createdConversationsArgs<ExtArgs>
     Conversation?: boolean | Player$ConversationArgs<ExtArgs>
+    notifications?: boolean | Player$notificationsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -30630,6 +30742,7 @@ export namespace Prisma {
       messages: Prisma.$MessagePayload<ExtArgs>[]
       createdConversations: Prisma.$ConversationPayload<ExtArgs>[]
       Conversation: Prisma.$ConversationPayload<ExtArgs>[]
+      notifications: Prisma.$NotificationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -30663,7 +30776,7 @@ export namespace Prisma {
 
   type PlayerGetPayload<S extends boolean | null | undefined | PlayerDefaultArgs> = $Result.GetResult<Prisma.$PlayerPayload, S>
 
-  type PlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerCountAggregateInputType | true
     }
@@ -30684,7 +30797,7 @@ export namespace Prisma {
     findUnique<T extends PlayerFindUniqueArgs>(args: SelectSubset<T, PlayerFindUniqueArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Player that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Player that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerFindUniqueOrThrowArgs} args - Arguments to find a Player
      * @example
@@ -30736,13 +30849,13 @@ export namespace Prisma {
      * @example
      * // Get all Players
      * const players = await prisma.player.findMany()
-     * 
+     *
      * // Get first 10 Players
      * const players = await prisma.player.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerWithIdOnly = await prisma.player.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerFindManyArgs>(args?: SelectSubset<T, PlayerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -30756,7 +30869,7 @@ export namespace Prisma {
      *     // ... data to create a Player
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerCreateArgs>(args: SelectSubset<T, PlayerCreateArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -30770,7 +30883,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerCreateManyArgs>(args?: SelectSubset<T, PlayerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -30784,9 +30897,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Players and only return the `id`
-     * const playerWithIdOnly = await prisma.player.createManyAndReturn({ 
+     * const playerWithIdOnly = await prisma.player.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -30794,7 +30907,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -30808,7 +30921,7 @@ export namespace Prisma {
      *     // ... filter to delete one Player
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerDeleteArgs>(args: SelectSubset<T, PlayerDeleteArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -30825,7 +30938,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerUpdateArgs>(args: SelectSubset<T, PlayerUpdateArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -30839,7 +30952,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerDeleteManyArgs>(args?: SelectSubset<T, PlayerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -30858,7 +30971,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerUpdateManyArgs>(args: SelectSubset<T, PlayerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -30947,7 +31060,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerGroupByArgs,
@@ -31050,6 +31163,7 @@ export namespace Prisma {
     messages<T extends Player$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Player$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     createdConversations<T extends Player$createdConversationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$createdConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     Conversation<T extends Player$ConversationArgs<ExtArgs> = {}>(args?: Subset<T, Player$ConversationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    notifications<T extends Player$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -31077,7 +31191,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Player model
-   */ 
+   */
   interface PlayerFieldRefs {
     readonly id: FieldRef<"Player", 'Int'>
     readonly hasImported: FieldRef<"Player", 'Boolean'>
@@ -31105,7 +31219,7 @@ export namespace Prisma {
     readonly clanMemberId: FieldRef<"Player", 'Int'>
     readonly leaderOfId: FieldRef<"Player", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -31176,31 +31290,31 @@ export namespace Prisma {
     where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Players to fetch.
      */
     orderBy?: PlayerOrderByWithRelationInput | PlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Players.
      */
     cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Players.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Players.
      */
     distinct?: PlayerScalarFieldEnum | PlayerScalarFieldEnum[]
@@ -31229,31 +31343,31 @@ export namespace Prisma {
     where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Players to fetch.
      */
     orderBy?: PlayerOrderByWithRelationInput | PlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Players.
      */
     cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Players.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Players.
      */
     distinct?: PlayerScalarFieldEnum | PlayerScalarFieldEnum[]
@@ -31282,25 +31396,25 @@ export namespace Prisma {
     where?: PlayerWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Players to fetch.
      */
     orderBy?: PlayerOrderByWithRelationInput | PlayerOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Players.
      */
     cursor?: PlayerWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Players from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Players.
      */
     skip?: number
@@ -32138,6 +32252,30 @@ export namespace Prisma {
   }
 
   /**
+   * Player.notifications
+   */
+  export type Player$notificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    cursor?: NotificationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
    * Player without action
    */
   export type PlayerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -32234,55 +32372,55 @@ export namespace Prisma {
     where?: UsernameHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UsernameHistories to fetch.
      */
     orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: UsernameHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UsernameHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UsernameHistories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned UsernameHistories
     **/
     _count?: true | UsernameHistoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: UsernameHistoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: UsernameHistorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: UsernameHistoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: UsernameHistoryMaxAggregateInputType
@@ -32381,7 +32519,7 @@ export namespace Prisma {
 
   type UsernameHistoryGetPayload<S extends boolean | null | undefined | UsernameHistoryDefaultArgs> = $Result.GetResult<Prisma.$UsernameHistoryPayload, S>
 
-  type UsernameHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type UsernameHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<UsernameHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: UsernameHistoryCountAggregateInputType | true
     }
@@ -32402,7 +32540,7 @@ export namespace Prisma {
     findUnique<T extends UsernameHistoryFindUniqueArgs>(args: SelectSubset<T, UsernameHistoryFindUniqueArgs<ExtArgs>>): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one UsernameHistory that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one UsernameHistory that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {UsernameHistoryFindUniqueOrThrowArgs} args - Arguments to find a UsernameHistory
      * @example
@@ -32454,13 +32592,13 @@ export namespace Prisma {
      * @example
      * // Get all UsernameHistories
      * const usernameHistories = await prisma.usernameHistory.findMany()
-     * 
+     *
      * // Get first 10 UsernameHistories
      * const usernameHistories = await prisma.usernameHistory.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const usernameHistoryWithIdOnly = await prisma.usernameHistory.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends UsernameHistoryFindManyArgs>(args?: SelectSubset<T, UsernameHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -32474,7 +32612,7 @@ export namespace Prisma {
      *     // ... data to create a UsernameHistory
      *   }
      * })
-     * 
+     *
      */
     create<T extends UsernameHistoryCreateArgs>(args: SelectSubset<T, UsernameHistoryCreateArgs<ExtArgs>>): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -32488,7 +32626,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends UsernameHistoryCreateManyArgs>(args?: SelectSubset<T, UsernameHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -32502,9 +32640,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many UsernameHistories and only return the `id`
-     * const usernameHistoryWithIdOnly = await prisma.usernameHistory.createManyAndReturn({ 
+     * const usernameHistoryWithIdOnly = await prisma.usernameHistory.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -32512,7 +32650,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends UsernameHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, UsernameHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -32526,7 +32664,7 @@ export namespace Prisma {
      *     // ... filter to delete one UsernameHistory
      *   }
      * })
-     * 
+     *
      */
     delete<T extends UsernameHistoryDeleteArgs>(args: SelectSubset<T, UsernameHistoryDeleteArgs<ExtArgs>>): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -32543,7 +32681,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends UsernameHistoryUpdateArgs>(args: SelectSubset<T, UsernameHistoryUpdateArgs<ExtArgs>>): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -32557,7 +32695,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends UsernameHistoryDeleteManyArgs>(args?: SelectSubset<T, UsernameHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -32576,7 +32714,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends UsernameHistoryUpdateManyArgs>(args: SelectSubset<T, UsernameHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -32665,7 +32803,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends UsernameHistoryGroupByArgs,
@@ -32767,13 +32905,13 @@ export namespace Prisma {
 
   /**
    * Fields of the UsernameHistory model
-   */ 
+   */
   interface UsernameHistoryFieldRefs {
     readonly id: FieldRef<"UsernameHistory", 'Int'>
     readonly playerId: FieldRef<"UsernameHistory", 'Int'>
     readonly username: FieldRef<"UsernameHistory", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -32844,31 +32982,31 @@ export namespace Prisma {
     where?: UsernameHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UsernameHistories to fetch.
      */
     orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for UsernameHistories.
      */
     cursor?: UsernameHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UsernameHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UsernameHistories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of UsernameHistories.
      */
     distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
@@ -32897,31 +33035,31 @@ export namespace Prisma {
     where?: UsernameHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UsernameHistories to fetch.
      */
     orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for UsernameHistories.
      */
     cursor?: UsernameHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UsernameHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UsernameHistories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of UsernameHistories.
      */
     distinct?: UsernameHistoryScalarFieldEnum | UsernameHistoryScalarFieldEnum[]
@@ -32950,25 +33088,25 @@ export namespace Prisma {
     where?: UsernameHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of UsernameHistories to fetch.
      */
     orderBy?: UsernameHistoryOrderByWithRelationInput | UsernameHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing UsernameHistories.
      */
     cursor?: UsernameHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` UsernameHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` UsernameHistories.
      */
     skip?: number
@@ -33264,55 +33402,55 @@ export namespace Prisma {
     where?: PlayerDinozShopWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerDinozShops to fetch.
      */
     orderBy?: PlayerDinozShopOrderByWithRelationInput | PlayerDinozShopOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerDinozShopWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerDinozShops from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerDinozShops.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerDinozShops
     **/
     _count?: true | PlayerDinozShopCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerDinozShopAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerDinozShopSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerDinozShopMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerDinozShopMaxAggregateInputType
@@ -33416,7 +33554,7 @@ export namespace Prisma {
 
   type PlayerDinozShopGetPayload<S extends boolean | null | undefined | PlayerDinozShopDefaultArgs> = $Result.GetResult<Prisma.$PlayerDinozShopPayload, S>
 
-  type PlayerDinozShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerDinozShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerDinozShopFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerDinozShopCountAggregateInputType | true
     }
@@ -33437,7 +33575,7 @@ export namespace Prisma {
     findUnique<T extends PlayerDinozShopFindUniqueArgs>(args: SelectSubset<T, PlayerDinozShopFindUniqueArgs<ExtArgs>>): Prisma__PlayerDinozShopClient<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerDinozShop that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerDinozShop that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerDinozShopFindUniqueOrThrowArgs} args - Arguments to find a PlayerDinozShop
      * @example
@@ -33489,13 +33627,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerDinozShops
      * const playerDinozShops = await prisma.playerDinozShop.findMany()
-     * 
+     *
      * // Get first 10 PlayerDinozShops
      * const playerDinozShops = await prisma.playerDinozShop.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerDinozShopWithIdOnly = await prisma.playerDinozShop.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerDinozShopFindManyArgs>(args?: SelectSubset<T, PlayerDinozShopFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -33509,7 +33647,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerDinozShop
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerDinozShopCreateArgs>(args: SelectSubset<T, PlayerDinozShopCreateArgs<ExtArgs>>): Prisma__PlayerDinozShopClient<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -33523,7 +33661,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerDinozShopCreateManyArgs>(args?: SelectSubset<T, PlayerDinozShopCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -33537,9 +33675,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerDinozShops and only return the `id`
-     * const playerDinozShopWithIdOnly = await prisma.playerDinozShop.createManyAndReturn({ 
+     * const playerDinozShopWithIdOnly = await prisma.playerDinozShop.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -33547,7 +33685,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerDinozShopCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerDinozShopCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -33561,7 +33699,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerDinozShop
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerDinozShopDeleteArgs>(args: SelectSubset<T, PlayerDinozShopDeleteArgs<ExtArgs>>): Prisma__PlayerDinozShopClient<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -33578,7 +33716,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerDinozShopUpdateArgs>(args: SelectSubset<T, PlayerDinozShopUpdateArgs<ExtArgs>>): Prisma__PlayerDinozShopClient<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -33592,7 +33730,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerDinozShopDeleteManyArgs>(args?: SelectSubset<T, PlayerDinozShopDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -33611,7 +33749,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerDinozShopUpdateManyArgs>(args: SelectSubset<T, PlayerDinozShopUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -33700,7 +33838,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerDinozShopGroupByArgs,
@@ -33802,14 +33940,14 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerDinozShop model
-   */ 
+   */
   interface PlayerDinozShopFieldRefs {
     readonly id: FieldRef<"PlayerDinozShop", 'Int'>
     readonly raceId: FieldRef<"PlayerDinozShop", 'Int'>
     readonly display: FieldRef<"PlayerDinozShop", 'String'>
     readonly playerId: FieldRef<"PlayerDinozShop", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -33880,31 +34018,31 @@ export namespace Prisma {
     where?: PlayerDinozShopWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerDinozShops to fetch.
      */
     orderBy?: PlayerDinozShopOrderByWithRelationInput | PlayerDinozShopOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerDinozShops.
      */
     cursor?: PlayerDinozShopWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerDinozShops from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerDinozShops.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerDinozShops.
      */
     distinct?: PlayerDinozShopScalarFieldEnum | PlayerDinozShopScalarFieldEnum[]
@@ -33933,31 +34071,31 @@ export namespace Prisma {
     where?: PlayerDinozShopWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerDinozShops to fetch.
      */
     orderBy?: PlayerDinozShopOrderByWithRelationInput | PlayerDinozShopOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerDinozShops.
      */
     cursor?: PlayerDinozShopWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerDinozShops from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerDinozShops.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerDinozShops.
      */
     distinct?: PlayerDinozShopScalarFieldEnum | PlayerDinozShopScalarFieldEnum[]
@@ -33986,25 +34124,25 @@ export namespace Prisma {
     where?: PlayerDinozShopWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerDinozShops to fetch.
      */
     orderBy?: PlayerDinozShopOrderByWithRelationInput | PlayerDinozShopOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerDinozShops.
      */
     cursor?: PlayerDinozShopWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerDinozShops from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerDinozShops.
      */
     skip?: number
@@ -34310,55 +34448,55 @@ export namespace Prisma {
     where?: PlayerGatherWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerGathers to fetch.
      */
     orderBy?: PlayerGatherOrderByWithRelationInput | PlayerGatherOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerGatherWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerGathers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerGathers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerGathers
     **/
     _count?: true | PlayerGatherCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerGatherAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerGatherSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerGatherMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerGatherMaxAggregateInputType
@@ -34467,7 +34605,7 @@ export namespace Prisma {
 
   type PlayerGatherGetPayload<S extends boolean | null | undefined | PlayerGatherDefaultArgs> = $Result.GetResult<Prisma.$PlayerGatherPayload, S>
 
-  type PlayerGatherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerGatherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerGatherFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerGatherCountAggregateInputType | true
     }
@@ -34488,7 +34626,7 @@ export namespace Prisma {
     findUnique<T extends PlayerGatherFindUniqueArgs>(args: SelectSubset<T, PlayerGatherFindUniqueArgs<ExtArgs>>): Prisma__PlayerGatherClient<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerGather that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerGather that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerGatherFindUniqueOrThrowArgs} args - Arguments to find a PlayerGather
      * @example
@@ -34540,13 +34678,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerGathers
      * const playerGathers = await prisma.playerGather.findMany()
-     * 
+     *
      * // Get first 10 PlayerGathers
      * const playerGathers = await prisma.playerGather.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerGatherWithIdOnly = await prisma.playerGather.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerGatherFindManyArgs>(args?: SelectSubset<T, PlayerGatherFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -34560,7 +34698,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerGather
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerGatherCreateArgs>(args: SelectSubset<T, PlayerGatherCreateArgs<ExtArgs>>): Prisma__PlayerGatherClient<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -34574,7 +34712,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerGatherCreateManyArgs>(args?: SelectSubset<T, PlayerGatherCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -34588,9 +34726,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerGathers and only return the `id`
-     * const playerGatherWithIdOnly = await prisma.playerGather.createManyAndReturn({ 
+     * const playerGatherWithIdOnly = await prisma.playerGather.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -34598,7 +34736,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerGatherCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerGatherCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -34612,7 +34750,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerGather
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerGatherDeleteArgs>(args: SelectSubset<T, PlayerGatherDeleteArgs<ExtArgs>>): Prisma__PlayerGatherClient<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -34629,7 +34767,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerGatherUpdateArgs>(args: SelectSubset<T, PlayerGatherUpdateArgs<ExtArgs>>): Prisma__PlayerGatherClient<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -34643,7 +34781,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerGatherDeleteManyArgs>(args?: SelectSubset<T, PlayerGatherDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -34662,7 +34800,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerGatherUpdateManyArgs>(args: SelectSubset<T, PlayerGatherUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -34751,7 +34889,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerGatherGroupByArgs,
@@ -34853,7 +34991,7 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerGather model
-   */ 
+   */
   interface PlayerGatherFieldRefs {
     readonly id: FieldRef<"PlayerGather", 'Int'>
     readonly place: FieldRef<"PlayerGather", 'Int'>
@@ -34861,7 +34999,7 @@ export namespace Prisma {
     readonly grid: FieldRef<"PlayerGather", 'Int[]'>
     readonly playerId: FieldRef<"PlayerGather", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -34932,31 +35070,31 @@ export namespace Prisma {
     where?: PlayerGatherWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerGathers to fetch.
      */
     orderBy?: PlayerGatherOrderByWithRelationInput | PlayerGatherOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerGathers.
      */
     cursor?: PlayerGatherWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerGathers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerGathers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerGathers.
      */
     distinct?: PlayerGatherScalarFieldEnum | PlayerGatherScalarFieldEnum[]
@@ -34985,31 +35123,31 @@ export namespace Prisma {
     where?: PlayerGatherWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerGathers to fetch.
      */
     orderBy?: PlayerGatherOrderByWithRelationInput | PlayerGatherOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerGathers.
      */
     cursor?: PlayerGatherWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerGathers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerGathers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerGathers.
      */
     distinct?: PlayerGatherScalarFieldEnum | PlayerGatherScalarFieldEnum[]
@@ -35038,25 +35176,25 @@ export namespace Prisma {
     where?: PlayerGatherWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerGathers to fetch.
      */
     orderBy?: PlayerGatherOrderByWithRelationInput | PlayerGatherOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerGathers.
      */
     cursor?: PlayerGatherWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerGathers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerGathers.
      */
     skip?: number
@@ -35356,55 +35494,55 @@ export namespace Prisma {
     where?: PlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerIngredients to fetch.
      */
     orderBy?: PlayerIngredientOrderByWithRelationInput | PlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerIngredients
     **/
     _count?: true | PlayerIngredientCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerIngredientAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerIngredientSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerIngredientMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerIngredientMaxAggregateInputType
@@ -35508,7 +35646,7 @@ export namespace Prisma {
 
   type PlayerIngredientGetPayload<S extends boolean | null | undefined | PlayerIngredientDefaultArgs> = $Result.GetResult<Prisma.$PlayerIngredientPayload, S>
 
-  type PlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerIngredientCountAggregateInputType | true
     }
@@ -35529,7 +35667,7 @@ export namespace Prisma {
     findUnique<T extends PlayerIngredientFindUniqueArgs>(args: SelectSubset<T, PlayerIngredientFindUniqueArgs<ExtArgs>>): Prisma__PlayerIngredientClient<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerIngredient that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerIngredient that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerIngredientFindUniqueOrThrowArgs} args - Arguments to find a PlayerIngredient
      * @example
@@ -35581,13 +35719,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerIngredients
      * const playerIngredients = await prisma.playerIngredient.findMany()
-     * 
+     *
      * // Get first 10 PlayerIngredients
      * const playerIngredients = await prisma.playerIngredient.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerIngredientWithIdOnly = await prisma.playerIngredient.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerIngredientFindManyArgs>(args?: SelectSubset<T, PlayerIngredientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -35601,7 +35739,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerIngredient
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerIngredientCreateArgs>(args: SelectSubset<T, PlayerIngredientCreateArgs<ExtArgs>>): Prisma__PlayerIngredientClient<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -35615,7 +35753,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerIngredientCreateManyArgs>(args?: SelectSubset<T, PlayerIngredientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -35629,9 +35767,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerIngredients and only return the `id`
-     * const playerIngredientWithIdOnly = await prisma.playerIngredient.createManyAndReturn({ 
+     * const playerIngredientWithIdOnly = await prisma.playerIngredient.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -35639,7 +35777,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerIngredientCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerIngredientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -35653,7 +35791,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerIngredient
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerIngredientDeleteArgs>(args: SelectSubset<T, PlayerIngredientDeleteArgs<ExtArgs>>): Prisma__PlayerIngredientClient<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -35670,7 +35808,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerIngredientUpdateArgs>(args: SelectSubset<T, PlayerIngredientUpdateArgs<ExtArgs>>): Prisma__PlayerIngredientClient<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -35684,7 +35822,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerIngredientDeleteManyArgs>(args?: SelectSubset<T, PlayerIngredientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -35703,7 +35841,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerIngredientUpdateManyArgs>(args: SelectSubset<T, PlayerIngredientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -35792,7 +35930,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerIngredientGroupByArgs,
@@ -35894,14 +36032,14 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerIngredient model
-   */ 
+   */
   interface PlayerIngredientFieldRefs {
     readonly id: FieldRef<"PlayerIngredient", 'Int'>
     readonly ingredientId: FieldRef<"PlayerIngredient", 'Int'>
     readonly quantity: FieldRef<"PlayerIngredient", 'Int'>
     readonly playerId: FieldRef<"PlayerIngredient", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -35972,31 +36110,31 @@ export namespace Prisma {
     where?: PlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerIngredients to fetch.
      */
     orderBy?: PlayerIngredientOrderByWithRelationInput | PlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerIngredients.
      */
     cursor?: PlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerIngredients.
      */
     distinct?: PlayerIngredientScalarFieldEnum | PlayerIngredientScalarFieldEnum[]
@@ -36025,31 +36163,31 @@ export namespace Prisma {
     where?: PlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerIngredients to fetch.
      */
     orderBy?: PlayerIngredientOrderByWithRelationInput | PlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerIngredients.
      */
     cursor?: PlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerIngredients.
      */
     distinct?: PlayerIngredientScalarFieldEnum | PlayerIngredientScalarFieldEnum[]
@@ -36078,25 +36216,25 @@ export namespace Prisma {
     where?: PlayerIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerIngredients to fetch.
      */
     orderBy?: PlayerIngredientOrderByWithRelationInput | PlayerIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerIngredients.
      */
     cursor?: PlayerIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerIngredients.
      */
     skip?: number
@@ -36396,55 +36534,55 @@ export namespace Prisma {
     where?: PlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerItems to fetch.
      */
     orderBy?: PlayerItemOrderByWithRelationInput | PlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerItems
     **/
     _count?: true | PlayerItemCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerItemAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerItemSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerItemMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerItemMaxAggregateInputType
@@ -36548,7 +36686,7 @@ export namespace Prisma {
 
   type PlayerItemGetPayload<S extends boolean | null | undefined | PlayerItemDefaultArgs> = $Result.GetResult<Prisma.$PlayerItemPayload, S>
 
-  type PlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerItemCountAggregateInputType | true
     }
@@ -36569,7 +36707,7 @@ export namespace Prisma {
     findUnique<T extends PlayerItemFindUniqueArgs>(args: SelectSubset<T, PlayerItemFindUniqueArgs<ExtArgs>>): Prisma__PlayerItemClient<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerItem that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerItem that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerItemFindUniqueOrThrowArgs} args - Arguments to find a PlayerItem
      * @example
@@ -36621,13 +36759,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerItems
      * const playerItems = await prisma.playerItem.findMany()
-     * 
+     *
      * // Get first 10 PlayerItems
      * const playerItems = await prisma.playerItem.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerItemWithIdOnly = await prisma.playerItem.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerItemFindManyArgs>(args?: SelectSubset<T, PlayerItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -36641,7 +36779,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerItem
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerItemCreateArgs>(args: SelectSubset<T, PlayerItemCreateArgs<ExtArgs>>): Prisma__PlayerItemClient<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -36655,7 +36793,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerItemCreateManyArgs>(args?: SelectSubset<T, PlayerItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -36669,9 +36807,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerItems and only return the `id`
-     * const playerItemWithIdOnly = await prisma.playerItem.createManyAndReturn({ 
+     * const playerItemWithIdOnly = await prisma.playerItem.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -36679,7 +36817,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerItemCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -36693,7 +36831,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerItem
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerItemDeleteArgs>(args: SelectSubset<T, PlayerItemDeleteArgs<ExtArgs>>): Prisma__PlayerItemClient<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -36710,7 +36848,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerItemUpdateArgs>(args: SelectSubset<T, PlayerItemUpdateArgs<ExtArgs>>): Prisma__PlayerItemClient<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -36724,7 +36862,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerItemDeleteManyArgs>(args?: SelectSubset<T, PlayerItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -36743,7 +36881,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerItemUpdateManyArgs>(args: SelectSubset<T, PlayerItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -36832,7 +36970,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerItemGroupByArgs,
@@ -36934,14 +37072,14 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerItem model
-   */ 
+   */
   interface PlayerItemFieldRefs {
     readonly id: FieldRef<"PlayerItem", 'Int'>
     readonly itemId: FieldRef<"PlayerItem", 'Int'>
     readonly quantity: FieldRef<"PlayerItem", 'Int'>
     readonly playerId: FieldRef<"PlayerItem", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -37012,31 +37150,31 @@ export namespace Prisma {
     where?: PlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerItems to fetch.
      */
     orderBy?: PlayerItemOrderByWithRelationInput | PlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerItems.
      */
     cursor?: PlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerItems.
      */
     distinct?: PlayerItemScalarFieldEnum | PlayerItemScalarFieldEnum[]
@@ -37065,31 +37203,31 @@ export namespace Prisma {
     where?: PlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerItems to fetch.
      */
     orderBy?: PlayerItemOrderByWithRelationInput | PlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerItems.
      */
     cursor?: PlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerItems.
      */
     distinct?: PlayerItemScalarFieldEnum | PlayerItemScalarFieldEnum[]
@@ -37118,25 +37256,25 @@ export namespace Prisma {
     where?: PlayerItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerItems to fetch.
      */
     orderBy?: PlayerItemOrderByWithRelationInput | PlayerItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerItems.
      */
     cursor?: PlayerItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerItems.
      */
     skip?: number
@@ -37436,55 +37574,55 @@ export namespace Prisma {
     where?: PlayerQuestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerQuests to fetch.
      */
     orderBy?: PlayerQuestOrderByWithRelationInput | PlayerQuestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerQuestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerQuests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerQuests.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerQuests
     **/
     _count?: true | PlayerQuestCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerQuestAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerQuestSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerQuestMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerQuestMaxAggregateInputType
@@ -37588,7 +37726,7 @@ export namespace Prisma {
 
   type PlayerQuestGetPayload<S extends boolean | null | undefined | PlayerQuestDefaultArgs> = $Result.GetResult<Prisma.$PlayerQuestPayload, S>
 
-  type PlayerQuestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerQuestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerQuestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerQuestCountAggregateInputType | true
     }
@@ -37609,7 +37747,7 @@ export namespace Prisma {
     findUnique<T extends PlayerQuestFindUniqueArgs>(args: SelectSubset<T, PlayerQuestFindUniqueArgs<ExtArgs>>): Prisma__PlayerQuestClient<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerQuest that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerQuest that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerQuestFindUniqueOrThrowArgs} args - Arguments to find a PlayerQuest
      * @example
@@ -37661,13 +37799,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerQuests
      * const playerQuests = await prisma.playerQuest.findMany()
-     * 
+     *
      * // Get first 10 PlayerQuests
      * const playerQuests = await prisma.playerQuest.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerQuestWithIdOnly = await prisma.playerQuest.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerQuestFindManyArgs>(args?: SelectSubset<T, PlayerQuestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -37681,7 +37819,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerQuest
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerQuestCreateArgs>(args: SelectSubset<T, PlayerQuestCreateArgs<ExtArgs>>): Prisma__PlayerQuestClient<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -37695,7 +37833,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerQuestCreateManyArgs>(args?: SelectSubset<T, PlayerQuestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -37709,9 +37847,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerQuests and only return the `id`
-     * const playerQuestWithIdOnly = await prisma.playerQuest.createManyAndReturn({ 
+     * const playerQuestWithIdOnly = await prisma.playerQuest.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -37719,7 +37857,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerQuestCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerQuestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -37733,7 +37871,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerQuest
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerQuestDeleteArgs>(args: SelectSubset<T, PlayerQuestDeleteArgs<ExtArgs>>): Prisma__PlayerQuestClient<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -37750,7 +37888,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerQuestUpdateArgs>(args: SelectSubset<T, PlayerQuestUpdateArgs<ExtArgs>>): Prisma__PlayerQuestClient<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -37764,7 +37902,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerQuestDeleteManyArgs>(args?: SelectSubset<T, PlayerQuestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -37783,7 +37921,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerQuestUpdateManyArgs>(args: SelectSubset<T, PlayerQuestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -37872,7 +38010,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerQuestGroupByArgs,
@@ -37974,14 +38112,14 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerQuest model
-   */ 
+   */
   interface PlayerQuestFieldRefs {
     readonly id: FieldRef<"PlayerQuest", 'Int'>
     readonly questId: FieldRef<"PlayerQuest", 'Int'>
     readonly progression: FieldRef<"PlayerQuest", 'Int'>
     readonly playerId: FieldRef<"PlayerQuest", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -38052,31 +38190,31 @@ export namespace Prisma {
     where?: PlayerQuestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerQuests to fetch.
      */
     orderBy?: PlayerQuestOrderByWithRelationInput | PlayerQuestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerQuests.
      */
     cursor?: PlayerQuestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerQuests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerQuests.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerQuests.
      */
     distinct?: PlayerQuestScalarFieldEnum | PlayerQuestScalarFieldEnum[]
@@ -38105,31 +38243,31 @@ export namespace Prisma {
     where?: PlayerQuestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerQuests to fetch.
      */
     orderBy?: PlayerQuestOrderByWithRelationInput | PlayerQuestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerQuests.
      */
     cursor?: PlayerQuestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerQuests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerQuests.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerQuests.
      */
     distinct?: PlayerQuestScalarFieldEnum | PlayerQuestScalarFieldEnum[]
@@ -38158,25 +38296,25 @@ export namespace Prisma {
     where?: PlayerQuestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerQuests to fetch.
      */
     orderBy?: PlayerQuestOrderByWithRelationInput | PlayerQuestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerQuests.
      */
     cursor?: PlayerQuestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerQuests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerQuests.
      */
     skip?: number
@@ -38466,55 +38604,55 @@ export namespace Prisma {
     where?: PlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerRewards to fetch.
      */
     orderBy?: PlayerRewardOrderByWithRelationInput | PlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerRewards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerRewards
     **/
     _count?: true | PlayerRewardCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerRewardAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerRewardSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerRewardMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerRewardMaxAggregateInputType
@@ -38613,7 +38751,7 @@ export namespace Prisma {
 
   type PlayerRewardGetPayload<S extends boolean | null | undefined | PlayerRewardDefaultArgs> = $Result.GetResult<Prisma.$PlayerRewardPayload, S>
 
-  type PlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerRewardCountAggregateInputType | true
     }
@@ -38634,7 +38772,7 @@ export namespace Prisma {
     findUnique<T extends PlayerRewardFindUniqueArgs>(args: SelectSubset<T, PlayerRewardFindUniqueArgs<ExtArgs>>): Prisma__PlayerRewardClient<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerReward that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerReward that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerRewardFindUniqueOrThrowArgs} args - Arguments to find a PlayerReward
      * @example
@@ -38686,13 +38824,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerRewards
      * const playerRewards = await prisma.playerReward.findMany()
-     * 
+     *
      * // Get first 10 PlayerRewards
      * const playerRewards = await prisma.playerReward.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerRewardWithIdOnly = await prisma.playerReward.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerRewardFindManyArgs>(args?: SelectSubset<T, PlayerRewardFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -38706,7 +38844,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerReward
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerRewardCreateArgs>(args: SelectSubset<T, PlayerRewardCreateArgs<ExtArgs>>): Prisma__PlayerRewardClient<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -38720,7 +38858,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerRewardCreateManyArgs>(args?: SelectSubset<T, PlayerRewardCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -38734,9 +38872,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerRewards and only return the `id`
-     * const playerRewardWithIdOnly = await prisma.playerReward.createManyAndReturn({ 
+     * const playerRewardWithIdOnly = await prisma.playerReward.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -38744,7 +38882,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerRewardCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerRewardCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -38758,7 +38896,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerReward
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerRewardDeleteArgs>(args: SelectSubset<T, PlayerRewardDeleteArgs<ExtArgs>>): Prisma__PlayerRewardClient<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -38775,7 +38913,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerRewardUpdateArgs>(args: SelectSubset<T, PlayerRewardUpdateArgs<ExtArgs>>): Prisma__PlayerRewardClient<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -38789,7 +38927,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerRewardDeleteManyArgs>(args?: SelectSubset<T, PlayerRewardDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -38808,7 +38946,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerRewardUpdateManyArgs>(args: SelectSubset<T, PlayerRewardUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -38897,7 +39035,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerRewardGroupByArgs,
@@ -38999,13 +39137,13 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerReward model
-   */ 
+   */
   interface PlayerRewardFieldRefs {
     readonly id: FieldRef<"PlayerReward", 'Int'>
     readonly rewardId: FieldRef<"PlayerReward", 'Int'>
     readonly playerId: FieldRef<"PlayerReward", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -39076,31 +39214,31 @@ export namespace Prisma {
     where?: PlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerRewards to fetch.
      */
     orderBy?: PlayerRewardOrderByWithRelationInput | PlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerRewards.
      */
     cursor?: PlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerRewards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerRewards.
      */
     distinct?: PlayerRewardScalarFieldEnum | PlayerRewardScalarFieldEnum[]
@@ -39129,31 +39267,31 @@ export namespace Prisma {
     where?: PlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerRewards to fetch.
      */
     orderBy?: PlayerRewardOrderByWithRelationInput | PlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerRewards.
      */
     cursor?: PlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerRewards.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerRewards.
      */
     distinct?: PlayerRewardScalarFieldEnum | PlayerRewardScalarFieldEnum[]
@@ -39182,25 +39320,25 @@ export namespace Prisma {
     where?: PlayerRewardWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerRewards to fetch.
      */
     orderBy?: PlayerRewardOrderByWithRelationInput | PlayerRewardOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerRewards.
      */
     cursor?: PlayerRewardWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerRewards from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerRewards.
      */
     skip?: number
@@ -39520,55 +39658,55 @@ export namespace Prisma {
     where?: RankingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Rankings to fetch.
      */
     orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: RankingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Rankings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Rankings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Rankings
     **/
     _count?: true | RankingCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: RankingAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: RankingSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: RankingMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: RankingMaxAggregateInputType
@@ -39682,7 +39820,7 @@ export namespace Prisma {
 
   type RankingGetPayload<S extends boolean | null | undefined | RankingDefaultArgs> = $Result.GetResult<Prisma.$RankingPayload, S>
 
-  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: RankingCountAggregateInputType | true
     }
@@ -39703,7 +39841,7 @@ export namespace Prisma {
     findUnique<T extends RankingFindUniqueArgs>(args: SelectSubset<T, RankingFindUniqueArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {RankingFindUniqueOrThrowArgs} args - Arguments to find a Ranking
      * @example
@@ -39755,13 +39893,13 @@ export namespace Prisma {
      * @example
      * // Get all Rankings
      * const rankings = await prisma.ranking.findMany()
-     * 
+     *
      * // Get first 10 Rankings
      * const rankings = await prisma.ranking.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const rankingWithIdOnly = await prisma.ranking.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends RankingFindManyArgs>(args?: SelectSubset<T, RankingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -39775,7 +39913,7 @@ export namespace Prisma {
      *     // ... data to create a Ranking
      *   }
      * })
-     * 
+     *
      */
     create<T extends RankingCreateArgs>(args: SelectSubset<T, RankingCreateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -39789,7 +39927,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends RankingCreateManyArgs>(args?: SelectSubset<T, RankingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -39803,9 +39941,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Rankings and only return the `id`
-     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({ 
+     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -39813,7 +39951,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends RankingCreateManyAndReturnArgs>(args?: SelectSubset<T, RankingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -39827,7 +39965,7 @@ export namespace Prisma {
      *     // ... filter to delete one Ranking
      *   }
      * })
-     * 
+     *
      */
     delete<T extends RankingDeleteArgs>(args: SelectSubset<T, RankingDeleteArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -39844,7 +39982,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends RankingUpdateArgs>(args: SelectSubset<T, RankingUpdateArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -39858,7 +39996,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends RankingDeleteManyArgs>(args?: SelectSubset<T, RankingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -39877,7 +40015,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends RankingUpdateManyArgs>(args: SelectSubset<T, RankingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -39966,7 +40104,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends RankingGroupByArgs,
@@ -40068,7 +40206,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Ranking model
-   */ 
+   */
   interface RankingFieldRefs {
     readonly id: FieldRef<"Ranking", 'Int'>
     readonly points: FieldRef<"Ranking", 'Int'>
@@ -40077,7 +40215,7 @@ export namespace Prisma {
     readonly completion: FieldRef<"Ranking", 'Int'>
     readonly playerId: FieldRef<"Ranking", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -40148,31 +40286,31 @@ export namespace Prisma {
     where?: RankingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Rankings to fetch.
      */
     orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Rankings.
      */
     cursor?: RankingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Rankings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Rankings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Rankings.
      */
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
@@ -40201,31 +40339,31 @@ export namespace Prisma {
     where?: RankingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Rankings to fetch.
      */
     orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Rankings.
      */
     cursor?: RankingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Rankings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Rankings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Rankings.
      */
     distinct?: RankingScalarFieldEnum | RankingScalarFieldEnum[]
@@ -40254,25 +40392,25 @@ export namespace Prisma {
     where?: RankingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Rankings to fetch.
      */
     orderBy?: RankingOrderByWithRelationInput | RankingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Rankings.
      */
     cursor?: RankingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Rankings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Rankings.
      */
     skip?: number
@@ -40530,43 +40668,43 @@ export namespace Prisma {
     where?: SecretWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Secrets to fetch.
      */
     orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: SecretWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Secrets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Secrets.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Secrets
     **/
     _count?: true | SecretCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: SecretMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: SecretMaxAggregateInputType
@@ -40646,7 +40784,7 @@ export namespace Prisma {
 
   type SecretGetPayload<S extends boolean | null | undefined | SecretDefaultArgs> = $Result.GetResult<Prisma.$SecretPayload, S>
 
-  type SecretCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type SecretCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<SecretFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: SecretCountAggregateInputType | true
     }
@@ -40667,7 +40805,7 @@ export namespace Prisma {
     findUnique<T extends SecretFindUniqueArgs>(args: SelectSubset<T, SecretFindUniqueArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Secret that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Secret that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {SecretFindUniqueOrThrowArgs} args - Arguments to find a Secret
      * @example
@@ -40719,13 +40857,13 @@ export namespace Prisma {
      * @example
      * // Get all Secrets
      * const secrets = await prisma.secret.findMany()
-     * 
+     *
      * // Get first 10 Secrets
      * const secrets = await prisma.secret.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `key`
      * const secretWithKeyOnly = await prisma.secret.findMany({ select: { key: true } })
-     * 
+     *
      */
     findMany<T extends SecretFindManyArgs>(args?: SelectSubset<T, SecretFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -40739,7 +40877,7 @@ export namespace Prisma {
      *     // ... data to create a Secret
      *   }
      * })
-     * 
+     *
      */
     create<T extends SecretCreateArgs>(args: SelectSubset<T, SecretCreateArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -40753,7 +40891,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends SecretCreateManyArgs>(args?: SelectSubset<T, SecretCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -40767,9 +40905,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Secrets and only return the `key`
-     * const secretWithKeyOnly = await prisma.secret.createManyAndReturn({ 
+     * const secretWithKeyOnly = await prisma.secret.createManyAndReturn({
      *   select: { key: true },
      *   data: [
      *     // ... provide data here
@@ -40777,7 +40915,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends SecretCreateManyAndReturnArgs>(args?: SelectSubset<T, SecretCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -40791,7 +40929,7 @@ export namespace Prisma {
      *     // ... filter to delete one Secret
      *   }
      * })
-     * 
+     *
      */
     delete<T extends SecretDeleteArgs>(args: SelectSubset<T, SecretDeleteArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -40808,7 +40946,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends SecretUpdateArgs>(args: SelectSubset<T, SecretUpdateArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -40822,7 +40960,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends SecretDeleteManyArgs>(args?: SelectSubset<T, SecretDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -40841,7 +40979,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends SecretUpdateManyArgs>(args: SelectSubset<T, SecretUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -40930,7 +41068,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends SecretGroupByArgs,
@@ -41031,12 +41169,12 @@ export namespace Prisma {
 
   /**
    * Fields of the Secret model
-   */ 
+   */
   interface SecretFieldRefs {
     readonly key: FieldRef<"Secret", 'String'>
     readonly value: FieldRef<"Secret", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -41095,31 +41233,31 @@ export namespace Prisma {
     where?: SecretWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Secrets to fetch.
      */
     orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Secrets.
      */
     cursor?: SecretWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Secrets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Secrets.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Secrets.
      */
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
@@ -41144,31 +41282,31 @@ export namespace Prisma {
     where?: SecretWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Secrets to fetch.
      */
     orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Secrets.
      */
     cursor?: SecretWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Secrets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Secrets.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Secrets.
      */
     distinct?: SecretScalarFieldEnum | SecretScalarFieldEnum[]
@@ -41193,25 +41331,25 @@ export namespace Prisma {
     where?: SecretWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Secrets to fetch.
      */
     orderBy?: SecretOrderByWithRelationInput | SecretOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Secrets.
      */
     cursor?: SecretWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Secrets from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Secrets.
      */
     skip?: number
@@ -41474,55 +41612,55 @@ export namespace Prisma {
     where?: OfferItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferItems to fetch.
      */
     orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: OfferItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned OfferItems
     **/
     _count?: true | OfferItemCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: OfferItemAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: OfferItemSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: OfferItemMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: OfferItemMaxAggregateInputType
@@ -41631,7 +41769,7 @@ export namespace Prisma {
 
   type OfferItemGetPayload<S extends boolean | null | undefined | OfferItemDefaultArgs> = $Result.GetResult<Prisma.$OfferItemPayload, S>
 
-  type OfferItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type OfferItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<OfferItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: OfferItemCountAggregateInputType | true
     }
@@ -41652,7 +41790,7 @@ export namespace Prisma {
     findUnique<T extends OfferItemFindUniqueArgs>(args: SelectSubset<T, OfferItemFindUniqueArgs<ExtArgs>>): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one OfferItem that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one OfferItem that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {OfferItemFindUniqueOrThrowArgs} args - Arguments to find a OfferItem
      * @example
@@ -41704,13 +41842,13 @@ export namespace Prisma {
      * @example
      * // Get all OfferItems
      * const offerItems = await prisma.offerItem.findMany()
-     * 
+     *
      * // Get first 10 OfferItems
      * const offerItems = await prisma.offerItem.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const offerItemWithIdOnly = await prisma.offerItem.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends OfferItemFindManyArgs>(args?: SelectSubset<T, OfferItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -41724,7 +41862,7 @@ export namespace Prisma {
      *     // ... data to create a OfferItem
      *   }
      * })
-     * 
+     *
      */
     create<T extends OfferItemCreateArgs>(args: SelectSubset<T, OfferItemCreateArgs<ExtArgs>>): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -41738,7 +41876,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends OfferItemCreateManyArgs>(args?: SelectSubset<T, OfferItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -41752,9 +41890,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many OfferItems and only return the `id`
-     * const offerItemWithIdOnly = await prisma.offerItem.createManyAndReturn({ 
+     * const offerItemWithIdOnly = await prisma.offerItem.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -41762,7 +41900,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends OfferItemCreateManyAndReturnArgs>(args?: SelectSubset<T, OfferItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -41776,7 +41914,7 @@ export namespace Prisma {
      *     // ... filter to delete one OfferItem
      *   }
      * })
-     * 
+     *
      */
     delete<T extends OfferItemDeleteArgs>(args: SelectSubset<T, OfferItemDeleteArgs<ExtArgs>>): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -41793,7 +41931,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends OfferItemUpdateArgs>(args: SelectSubset<T, OfferItemUpdateArgs<ExtArgs>>): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -41807,7 +41945,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends OfferItemDeleteManyArgs>(args?: SelectSubset<T, OfferItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -41826,7 +41964,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends OfferItemUpdateManyArgs>(args: SelectSubset<T, OfferItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -41915,7 +42053,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends OfferItemGroupByArgs,
@@ -42017,7 +42155,7 @@ export namespace Prisma {
 
   /**
    * Fields of the OfferItem model
-   */ 
+   */
   interface OfferItemFieldRefs {
     readonly id: FieldRef<"OfferItem", 'Int'>
     readonly offerId: FieldRef<"OfferItem", 'Int'>
@@ -42025,7 +42163,7 @@ export namespace Prisma {
     readonly quantity: FieldRef<"OfferItem", 'Int'>
     readonly isIngredient: FieldRef<"OfferItem", 'Boolean'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -42096,31 +42234,31 @@ export namespace Prisma {
     where?: OfferItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferItems to fetch.
      */
     orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for OfferItems.
      */
     cursor?: OfferItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of OfferItems.
      */
     distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
@@ -42149,31 +42287,31 @@ export namespace Prisma {
     where?: OfferItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferItems to fetch.
      */
     orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for OfferItems.
      */
     cursor?: OfferItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferItems.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of OfferItems.
      */
     distinct?: OfferItemScalarFieldEnum | OfferItemScalarFieldEnum[]
@@ -42202,25 +42340,25 @@ export namespace Prisma {
     where?: OfferItemWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferItems to fetch.
      */
     orderBy?: OfferItemOrderByWithRelationInput | OfferItemOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing OfferItems.
      */
     cursor?: OfferItemWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferItems from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferItems.
      */
     skip?: number
@@ -42501,55 +42639,55 @@ export namespace Prisma {
     where?: OfferBidWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferBids to fetch.
      */
     orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: OfferBidWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferBids from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferBids.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned OfferBids
     **/
     _count?: true | OfferBidCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: OfferBidAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: OfferBidSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: OfferBidMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: OfferBidMaxAggregateInputType
@@ -42658,7 +42796,7 @@ export namespace Prisma {
 
   type OfferBidGetPayload<S extends boolean | null | undefined | OfferBidDefaultArgs> = $Result.GetResult<Prisma.$OfferBidPayload, S>
 
-  type OfferBidCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type OfferBidCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<OfferBidFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: OfferBidCountAggregateInputType | true
     }
@@ -42679,7 +42817,7 @@ export namespace Prisma {
     findUnique<T extends OfferBidFindUniqueArgs>(args: SelectSubset<T, OfferBidFindUniqueArgs<ExtArgs>>): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one OfferBid that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one OfferBid that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {OfferBidFindUniqueOrThrowArgs} args - Arguments to find a OfferBid
      * @example
@@ -42731,13 +42869,13 @@ export namespace Prisma {
      * @example
      * // Get all OfferBids
      * const offerBids = await prisma.offerBid.findMany()
-     * 
+     *
      * // Get first 10 OfferBids
      * const offerBids = await prisma.offerBid.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const offerBidWithIdOnly = await prisma.offerBid.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends OfferBidFindManyArgs>(args?: SelectSubset<T, OfferBidFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -42751,7 +42889,7 @@ export namespace Prisma {
      *     // ... data to create a OfferBid
      *   }
      * })
-     * 
+     *
      */
     create<T extends OfferBidCreateArgs>(args: SelectSubset<T, OfferBidCreateArgs<ExtArgs>>): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -42765,7 +42903,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends OfferBidCreateManyArgs>(args?: SelectSubset<T, OfferBidCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -42779,9 +42917,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many OfferBids and only return the `id`
-     * const offerBidWithIdOnly = await prisma.offerBid.createManyAndReturn({ 
+     * const offerBidWithIdOnly = await prisma.offerBid.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -42789,7 +42927,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends OfferBidCreateManyAndReturnArgs>(args?: SelectSubset<T, OfferBidCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -42803,7 +42941,7 @@ export namespace Prisma {
      *     // ... filter to delete one OfferBid
      *   }
      * })
-     * 
+     *
      */
     delete<T extends OfferBidDeleteArgs>(args: SelectSubset<T, OfferBidDeleteArgs<ExtArgs>>): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -42820,7 +42958,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends OfferBidUpdateArgs>(args: SelectSubset<T, OfferBidUpdateArgs<ExtArgs>>): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -42834,7 +42972,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends OfferBidDeleteManyArgs>(args?: SelectSubset<T, OfferBidDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -42853,7 +42991,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends OfferBidUpdateManyArgs>(args: SelectSubset<T, OfferBidUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -42942,7 +43080,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends OfferBidGroupByArgs,
@@ -43045,14 +43183,14 @@ export namespace Prisma {
 
   /**
    * Fields of the OfferBid model
-   */ 
+   */
   interface OfferBidFieldRefs {
     readonly id: FieldRef<"OfferBid", 'Int'>
     readonly offerId: FieldRef<"OfferBid", 'Int'>
     readonly userId: FieldRef<"OfferBid", 'Int'>
     readonly value: FieldRef<"OfferBid", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -43123,31 +43261,31 @@ export namespace Prisma {
     where?: OfferBidWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferBids to fetch.
      */
     orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for OfferBids.
      */
     cursor?: OfferBidWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferBids from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferBids.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of OfferBids.
      */
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
@@ -43176,31 +43314,31 @@ export namespace Prisma {
     where?: OfferBidWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferBids to fetch.
      */
     orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for OfferBids.
      */
     cursor?: OfferBidWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferBids from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferBids.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of OfferBids.
      */
     distinct?: OfferBidScalarFieldEnum | OfferBidScalarFieldEnum[]
@@ -43229,25 +43367,25 @@ export namespace Prisma {
     where?: OfferBidWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of OfferBids to fetch.
      */
     orderBy?: OfferBidOrderByWithRelationInput | OfferBidOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing OfferBids.
      */
     cursor?: OfferBidWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` OfferBids from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` OfferBids.
      */
     skip?: number
@@ -43546,55 +43684,55 @@ export namespace Prisma {
     where?: OfferWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Offers to fetch.
      */
     orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: OfferWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Offers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Offers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Offers
     **/
     _count?: true | OfferCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: OfferAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: OfferSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: OfferMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: OfferMaxAggregateInputType
@@ -43726,7 +43864,7 @@ export namespace Prisma {
 
   type OfferGetPayload<S extends boolean | null | undefined | OfferDefaultArgs> = $Result.GetResult<Prisma.$OfferPayload, S>
 
-  type OfferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type OfferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<OfferFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: OfferCountAggregateInputType | true
     }
@@ -43747,7 +43885,7 @@ export namespace Prisma {
     findUnique<T extends OfferFindUniqueArgs>(args: SelectSubset<T, OfferFindUniqueArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Offer that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Offer that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {OfferFindUniqueOrThrowArgs} args - Arguments to find a Offer
      * @example
@@ -43799,13 +43937,13 @@ export namespace Prisma {
      * @example
      * // Get all Offers
      * const offers = await prisma.offer.findMany()
-     * 
+     *
      * // Get first 10 Offers
      * const offers = await prisma.offer.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const offerWithIdOnly = await prisma.offer.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends OfferFindManyArgs>(args?: SelectSubset<T, OfferFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -43819,7 +43957,7 @@ export namespace Prisma {
      *     // ... data to create a Offer
      *   }
      * })
-     * 
+     *
      */
     create<T extends OfferCreateArgs>(args: SelectSubset<T, OfferCreateArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -43833,7 +43971,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends OfferCreateManyArgs>(args?: SelectSubset<T, OfferCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -43847,9 +43985,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Offers and only return the `id`
-     * const offerWithIdOnly = await prisma.offer.createManyAndReturn({ 
+     * const offerWithIdOnly = await prisma.offer.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -43857,7 +43995,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends OfferCreateManyAndReturnArgs>(args?: SelectSubset<T, OfferCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -43871,7 +44009,7 @@ export namespace Prisma {
      *     // ... filter to delete one Offer
      *   }
      * })
-     * 
+     *
      */
     delete<T extends OfferDeleteArgs>(args: SelectSubset<T, OfferDeleteArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -43888,7 +44026,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends OfferUpdateArgs>(args: SelectSubset<T, OfferUpdateArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -43902,7 +44040,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends OfferDeleteManyArgs>(args?: SelectSubset<T, OfferDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -43921,7 +44059,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends OfferUpdateManyArgs>(args: SelectSubset<T, OfferUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -44010,7 +44148,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends OfferGroupByArgs,
@@ -44115,7 +44253,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Offer model
-   */ 
+   */
   interface OfferFieldRefs {
     readonly id: FieldRef<"Offer", 'Int'>
     readonly sellerId: FieldRef<"Offer", 'Int'>
@@ -44125,7 +44263,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Offer", 'OfferStatus'>
     readonly dinozDetails: FieldRef<"Offer", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -44196,31 +44334,31 @@ export namespace Prisma {
     where?: OfferWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Offers to fetch.
      */
     orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Offers.
      */
     cursor?: OfferWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Offers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Offers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Offers.
      */
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
@@ -44249,31 +44387,31 @@ export namespace Prisma {
     where?: OfferWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Offers to fetch.
      */
     orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Offers.
      */
     cursor?: OfferWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Offers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Offers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Offers.
      */
     distinct?: OfferScalarFieldEnum | OfferScalarFieldEnum[]
@@ -44302,25 +44440,25 @@ export namespace Prisma {
     where?: OfferWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Offers to fetch.
      */
     orderBy?: OfferOrderByWithRelationInput | OfferOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Offers.
      */
     cursor?: OfferWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Offers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Offers.
      */
     skip?: number
@@ -44672,55 +44810,55 @@ export namespace Prisma {
     where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Logs to fetch.
      */
     orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Logs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Logs
     **/
     _count?: true | LogCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: LogAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: LogSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: LogMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: LogMaxAggregateInputType
@@ -44839,7 +44977,7 @@ export namespace Prisma {
 
   type LogGetPayload<S extends boolean | null | undefined | LogDefaultArgs> = $Result.GetResult<Prisma.$LogPayload, S>
 
-  type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<LogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: LogCountAggregateInputType | true
     }
@@ -44860,7 +44998,7 @@ export namespace Prisma {
     findUnique<T extends LogFindUniqueArgs>(args: SelectSubset<T, LogFindUniqueArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Log that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Log that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {LogFindUniqueOrThrowArgs} args - Arguments to find a Log
      * @example
@@ -44912,13 +45050,13 @@ export namespace Prisma {
      * @example
      * // Get all Logs
      * const logs = await prisma.log.findMany()
-     * 
+     *
      * // Get first 10 Logs
      * const logs = await prisma.log.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const logWithIdOnly = await prisma.log.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends LogFindManyArgs>(args?: SelectSubset<T, LogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -44932,7 +45070,7 @@ export namespace Prisma {
      *     // ... data to create a Log
      *   }
      * })
-     * 
+     *
      */
     create<T extends LogCreateArgs>(args: SelectSubset<T, LogCreateArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -44946,7 +45084,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends LogCreateManyArgs>(args?: SelectSubset<T, LogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -44960,9 +45098,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Logs and only return the `id`
-     * const logWithIdOnly = await prisma.log.createManyAndReturn({ 
+     * const logWithIdOnly = await prisma.log.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -44970,7 +45108,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends LogCreateManyAndReturnArgs>(args?: SelectSubset<T, LogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -44984,7 +45122,7 @@ export namespace Prisma {
      *     // ... filter to delete one Log
      *   }
      * })
-     * 
+     *
      */
     delete<T extends LogDeleteArgs>(args: SelectSubset<T, LogDeleteArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -45001,7 +45139,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends LogUpdateArgs>(args: SelectSubset<T, LogUpdateArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -45015,7 +45153,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends LogDeleteManyArgs>(args?: SelectSubset<T, LogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -45034,7 +45172,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends LogUpdateManyArgs>(args: SelectSubset<T, LogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -45123,7 +45261,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends LogGroupByArgs,
@@ -45226,7 +45364,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Log model
-   */ 
+   */
   interface LogFieldRefs {
     readonly id: FieldRef<"Log", 'Int'>
     readonly playerId: FieldRef<"Log", 'Int'>
@@ -45235,7 +45373,7 @@ export namespace Prisma {
     readonly values: FieldRef<"Log", 'String[]'>
     readonly createdAt: FieldRef<"Log", 'DateTime'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -45306,31 +45444,31 @@ export namespace Prisma {
     where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Logs to fetch.
      */
     orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Logs.
      */
     cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Logs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Logs.
      */
     distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
@@ -45359,31 +45497,31 @@ export namespace Prisma {
     where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Logs to fetch.
      */
     orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Logs.
      */
     cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Logs.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Logs.
      */
     distinct?: LogScalarFieldEnum | LogScalarFieldEnum[]
@@ -45412,25 +45550,25 @@ export namespace Prisma {
     where?: LogWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Logs to fetch.
      */
     orderBy?: LogOrderByWithRelationInput | LogOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Logs.
      */
     cursor?: LogWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Logs from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Logs.
      */
     skip?: number
@@ -45726,55 +45864,55 @@ export namespace Prisma {
     where?: DinozCatchWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozCatches to fetch.
      */
     orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: DinozCatchWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozCatches from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozCatches.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned DinozCatches
     **/
     _count?: true | DinozCatchCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: DinozCatchAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: DinozCatchSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: DinozCatchMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: DinozCatchMaxAggregateInputType
@@ -45878,7 +46016,7 @@ export namespace Prisma {
 
   type DinozCatchGetPayload<S extends boolean | null | undefined | DinozCatchDefaultArgs> = $Result.GetResult<Prisma.$DinozCatchPayload, S>
 
-  type DinozCatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type DinozCatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<DinozCatchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozCatchCountAggregateInputType | true
     }
@@ -45899,7 +46037,7 @@ export namespace Prisma {
     findUnique<T extends DinozCatchFindUniqueArgs>(args: SelectSubset<T, DinozCatchFindUniqueArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one DinozCatch that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one DinozCatch that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {DinozCatchFindUniqueOrThrowArgs} args - Arguments to find a DinozCatch
      * @example
@@ -45951,13 +46089,13 @@ export namespace Prisma {
      * @example
      * // Get all DinozCatches
      * const dinozCatches = await prisma.dinozCatch.findMany()
-     * 
+     *
      * // Get first 10 DinozCatches
      * const dinozCatches = await prisma.dinozCatch.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const dinozCatchWithIdOnly = await prisma.dinozCatch.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends DinozCatchFindManyArgs>(args?: SelectSubset<T, DinozCatchFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -45971,7 +46109,7 @@ export namespace Prisma {
      *     // ... data to create a DinozCatch
      *   }
      * })
-     * 
+     *
      */
     create<T extends DinozCatchCreateArgs>(args: SelectSubset<T, DinozCatchCreateArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -45985,7 +46123,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends DinozCatchCreateManyArgs>(args?: SelectSubset<T, DinozCatchCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -45999,9 +46137,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many DinozCatches and only return the `id`
-     * const dinozCatchWithIdOnly = await prisma.dinozCatch.createManyAndReturn({ 
+     * const dinozCatchWithIdOnly = await prisma.dinozCatch.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -46009,7 +46147,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends DinozCatchCreateManyAndReturnArgs>(args?: SelectSubset<T, DinozCatchCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -46023,7 +46161,7 @@ export namespace Prisma {
      *     // ... filter to delete one DinozCatch
      *   }
      * })
-     * 
+     *
      */
     delete<T extends DinozCatchDeleteArgs>(args: SelectSubset<T, DinozCatchDeleteArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -46040,7 +46178,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends DinozCatchUpdateArgs>(args: SelectSubset<T, DinozCatchUpdateArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -46054,7 +46192,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends DinozCatchDeleteManyArgs>(args?: SelectSubset<T, DinozCatchDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -46073,7 +46211,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends DinozCatchUpdateManyArgs>(args: SelectSubset<T, DinozCatchUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -46162,7 +46300,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends DinozCatchGroupByArgs,
@@ -46264,14 +46402,14 @@ export namespace Prisma {
 
   /**
    * Fields of the DinozCatch model
-   */ 
+   */
   interface DinozCatchFieldRefs {
     readonly id: FieldRef<"DinozCatch", 'Int'>
     readonly dinozId: FieldRef<"DinozCatch", 'Int'>
     readonly monsterId: FieldRef<"DinozCatch", 'String'>
     readonly hp: FieldRef<"DinozCatch", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -46342,31 +46480,31 @@ export namespace Prisma {
     where?: DinozCatchWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozCatches to fetch.
      */
     orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozCatches.
      */
     cursor?: DinozCatchWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozCatches from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozCatches.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozCatches.
      */
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
@@ -46395,31 +46533,31 @@ export namespace Prisma {
     where?: DinozCatchWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozCatches to fetch.
      */
     orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for DinozCatches.
      */
     cursor?: DinozCatchWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozCatches from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozCatches.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of DinozCatches.
      */
     distinct?: DinozCatchScalarFieldEnum | DinozCatchScalarFieldEnum[]
@@ -46448,25 +46586,25 @@ export namespace Prisma {
     where?: DinozCatchWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of DinozCatches to fetch.
      */
     orderBy?: DinozCatchOrderByWithRelationInput | DinozCatchOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing DinozCatches.
      */
     cursor?: DinozCatchWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` DinozCatches from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` DinozCatches.
      */
     skip?: number
@@ -46762,55 +46900,55 @@ export namespace Prisma {
     where?: PlayerTrackingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerTrackings to fetch.
      */
     orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PlayerTrackingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerTrackings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerTrackings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned PlayerTrackings
     **/
     _count?: true | PlayerTrackingCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PlayerTrackingAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PlayerTrackingSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PlayerTrackingMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PlayerTrackingMaxAggregateInputType
@@ -46914,7 +47052,7 @@ export namespace Prisma {
 
   type PlayerTrackingGetPayload<S extends boolean | null | undefined | PlayerTrackingDefaultArgs> = $Result.GetResult<Prisma.$PlayerTrackingPayload, S>
 
-  type PlayerTrackingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PlayerTrackingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PlayerTrackingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerTrackingCountAggregateInputType | true
     }
@@ -46935,7 +47073,7 @@ export namespace Prisma {
     findUnique<T extends PlayerTrackingFindUniqueArgs>(args: SelectSubset<T, PlayerTrackingFindUniqueArgs<ExtArgs>>): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one PlayerTracking that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one PlayerTracking that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PlayerTrackingFindUniqueOrThrowArgs} args - Arguments to find a PlayerTracking
      * @example
@@ -46987,13 +47125,13 @@ export namespace Prisma {
      * @example
      * // Get all PlayerTrackings
      * const playerTrackings = await prisma.playerTracking.findMany()
-     * 
+     *
      * // Get first 10 PlayerTrackings
      * const playerTrackings = await prisma.playerTracking.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const playerTrackingWithIdOnly = await prisma.playerTracking.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PlayerTrackingFindManyArgs>(args?: SelectSubset<T, PlayerTrackingFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -47007,7 +47145,7 @@ export namespace Prisma {
      *     // ... data to create a PlayerTracking
      *   }
      * })
-     * 
+     *
      */
     create<T extends PlayerTrackingCreateArgs>(args: SelectSubset<T, PlayerTrackingCreateArgs<ExtArgs>>): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -47021,7 +47159,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PlayerTrackingCreateManyArgs>(args?: SelectSubset<T, PlayerTrackingCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -47035,9 +47173,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many PlayerTrackings and only return the `id`
-     * const playerTrackingWithIdOnly = await prisma.playerTracking.createManyAndReturn({ 
+     * const playerTrackingWithIdOnly = await prisma.playerTracking.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -47045,7 +47183,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PlayerTrackingCreateManyAndReturnArgs>(args?: SelectSubset<T, PlayerTrackingCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -47059,7 +47197,7 @@ export namespace Prisma {
      *     // ... filter to delete one PlayerTracking
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PlayerTrackingDeleteArgs>(args: SelectSubset<T, PlayerTrackingDeleteArgs<ExtArgs>>): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -47076,7 +47214,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PlayerTrackingUpdateArgs>(args: SelectSubset<T, PlayerTrackingUpdateArgs<ExtArgs>>): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -47090,7 +47228,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PlayerTrackingDeleteManyArgs>(args?: SelectSubset<T, PlayerTrackingDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -47109,7 +47247,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PlayerTrackingUpdateManyArgs>(args: SelectSubset<T, PlayerTrackingUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -47198,7 +47336,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PlayerTrackingGroupByArgs,
@@ -47300,14 +47438,14 @@ export namespace Prisma {
 
   /**
    * Fields of the PlayerTracking model
-   */ 
+   */
   interface PlayerTrackingFieldRefs {
     readonly id: FieldRef<"PlayerTracking", 'Int'>
     readonly playerId: FieldRef<"PlayerTracking", 'Int'>
     readonly stat: FieldRef<"PlayerTracking", 'String'>
     readonly quantity: FieldRef<"PlayerTracking", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -47378,31 +47516,31 @@ export namespace Prisma {
     where?: PlayerTrackingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerTrackings to fetch.
      */
     orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerTrackings.
      */
     cursor?: PlayerTrackingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerTrackings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerTrackings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerTrackings.
      */
     distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
@@ -47431,31 +47569,31 @@ export namespace Prisma {
     where?: PlayerTrackingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerTrackings to fetch.
      */
     orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for PlayerTrackings.
      */
     cursor?: PlayerTrackingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerTrackings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerTrackings.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of PlayerTrackings.
      */
     distinct?: PlayerTrackingScalarFieldEnum | PlayerTrackingScalarFieldEnum[]
@@ -47484,25 +47622,25 @@ export namespace Prisma {
     where?: PlayerTrackingWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of PlayerTrackings to fetch.
      */
     orderBy?: PlayerTrackingOrderByWithRelationInput | PlayerTrackingOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing PlayerTrackings.
      */
     cursor?: PlayerTrackingWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` PlayerTrackings from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` PlayerTrackings.
      */
     skip?: number
@@ -47795,55 +47933,55 @@ export namespace Prisma {
     where?: PantheonWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Pantheons to fetch.
      */
     orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: PantheonWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Pantheons from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Pantheons.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Pantheons
     **/
     _count?: true | PantheonCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: PantheonAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: PantheonSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: PantheonMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: PantheonMaxAggregateInputType
@@ -47962,7 +48100,7 @@ export namespace Prisma {
 
   type PantheonGetPayload<S extends boolean | null | undefined | PantheonDefaultArgs> = $Result.GetResult<Prisma.$PantheonPayload, S>
 
-  type PantheonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type PantheonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<PantheonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PantheonCountAggregateInputType | true
     }
@@ -47983,7 +48121,7 @@ export namespace Prisma {
     findUnique<T extends PantheonFindUniqueArgs>(args: SelectSubset<T, PantheonFindUniqueArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Pantheon that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Pantheon that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {PantheonFindUniqueOrThrowArgs} args - Arguments to find a Pantheon
      * @example
@@ -48035,13 +48173,13 @@ export namespace Prisma {
      * @example
      * // Get all Pantheons
      * const pantheons = await prisma.pantheon.findMany()
-     * 
+     *
      * // Get first 10 Pantheons
      * const pantheons = await prisma.pantheon.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const pantheonWithIdOnly = await prisma.pantheon.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends PantheonFindManyArgs>(args?: SelectSubset<T, PantheonFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -48055,7 +48193,7 @@ export namespace Prisma {
      *     // ... data to create a Pantheon
      *   }
      * })
-     * 
+     *
      */
     create<T extends PantheonCreateArgs>(args: SelectSubset<T, PantheonCreateArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -48069,7 +48207,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends PantheonCreateManyArgs>(args?: SelectSubset<T, PantheonCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -48083,9 +48221,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Pantheons and only return the `id`
-     * const pantheonWithIdOnly = await prisma.pantheon.createManyAndReturn({ 
+     * const pantheonWithIdOnly = await prisma.pantheon.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -48093,7 +48231,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends PantheonCreateManyAndReturnArgs>(args?: SelectSubset<T, PantheonCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -48107,7 +48245,7 @@ export namespace Prisma {
      *     // ... filter to delete one Pantheon
      *   }
      * })
-     * 
+     *
      */
     delete<T extends PantheonDeleteArgs>(args: SelectSubset<T, PantheonDeleteArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -48124,7 +48262,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends PantheonUpdateArgs>(args: SelectSubset<T, PantheonUpdateArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -48138,7 +48276,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends PantheonDeleteManyArgs>(args?: SelectSubset<T, PantheonDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -48157,7 +48295,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends PantheonUpdateManyArgs>(args: SelectSubset<T, PantheonUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -48246,7 +48384,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends PantheonGroupByArgs,
@@ -48349,7 +48487,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Pantheon model
-   */ 
+   */
   interface PantheonFieldRefs {
     readonly id: FieldRef<"Pantheon", 'Int'>
     readonly playerId: FieldRef<"Pantheon", 'Int'>
@@ -48358,7 +48496,7 @@ export namespace Prisma {
     readonly date: FieldRef<"Pantheon", 'DateTime'>
     readonly indicator: FieldRef<"Pantheon", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -48429,31 +48567,31 @@ export namespace Prisma {
     where?: PantheonWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Pantheons to fetch.
      */
     orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Pantheons.
      */
     cursor?: PantheonWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Pantheons from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Pantheons.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Pantheons.
      */
     distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
@@ -48482,31 +48620,31 @@ export namespace Prisma {
     where?: PantheonWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Pantheons to fetch.
      */
     orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Pantheons.
      */
     cursor?: PantheonWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Pantheons from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Pantheons.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Pantheons.
      */
     distinct?: PantheonScalarFieldEnum | PantheonScalarFieldEnum[]
@@ -48535,25 +48673,25 @@ export namespace Prisma {
     where?: PantheonWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Pantheons to fetch.
      */
     orderBy?: PantheonOrderByWithRelationInput | PantheonOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Pantheons.
      */
     cursor?: PantheonWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Pantheons from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Pantheons.
      */
     skip?: number
@@ -48871,55 +49009,55 @@ export namespace Prisma {
     where?: ClanWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Clans to fetch.
      */
     orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Clans from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Clans.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Clans
     **/
     _count?: true | ClanCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanMaxAggregateInputType
@@ -49063,7 +49201,7 @@ export namespace Prisma {
 
   type ClanGetPayload<S extends boolean | null | undefined | ClanDefaultArgs> = $Result.GetResult<Prisma.$ClanPayload, S>
 
-  type ClanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanCountAggregateInputType | true
     }
@@ -49084,7 +49222,7 @@ export namespace Prisma {
     findUnique<T extends ClanFindUniqueArgs>(args: SelectSubset<T, ClanFindUniqueArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Clan that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Clan that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanFindUniqueOrThrowArgs} args - Arguments to find a Clan
      * @example
@@ -49136,13 +49274,13 @@ export namespace Prisma {
      * @example
      * // Get all Clans
      * const clans = await prisma.clan.findMany()
-     * 
+     *
      * // Get first 10 Clans
      * const clans = await prisma.clan.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanWithIdOnly = await prisma.clan.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanFindManyArgs>(args?: SelectSubset<T, ClanFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -49156,7 +49294,7 @@ export namespace Prisma {
      *     // ... data to create a Clan
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanCreateArgs>(args: SelectSubset<T, ClanCreateArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -49170,7 +49308,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanCreateManyArgs>(args?: SelectSubset<T, ClanCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -49184,9 +49322,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Clans and only return the `id`
-     * const clanWithIdOnly = await prisma.clan.createManyAndReturn({ 
+     * const clanWithIdOnly = await prisma.clan.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -49194,7 +49332,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -49208,7 +49346,7 @@ export namespace Prisma {
      *     // ... filter to delete one Clan
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanDeleteArgs>(args: SelectSubset<T, ClanDeleteArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -49225,7 +49363,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanUpdateArgs>(args: SelectSubset<T, ClanUpdateArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -49239,7 +49377,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanDeleteManyArgs>(args?: SelectSubset<T, ClanDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -49258,7 +49396,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanUpdateManyArgs>(args: SelectSubset<T, ClanUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -49347,7 +49485,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanGroupByArgs,
@@ -49456,7 +49594,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Clan model
-   */ 
+   */
   interface ClanFieldRefs {
     readonly id: FieldRef<"Clan", 'Int'>
     readonly name: FieldRef<"Clan", 'String'>
@@ -49466,7 +49604,7 @@ export namespace Prisma {
     readonly leaderId: FieldRef<"Clan", 'Int'>
     readonly banner: FieldRef<"Clan", 'Bytes'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -49537,31 +49675,31 @@ export namespace Prisma {
     where?: ClanWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Clans to fetch.
      */
     orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Clans.
      */
     cursor?: ClanWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Clans from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Clans.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Clans.
      */
     distinct?: ClanScalarFieldEnum | ClanScalarFieldEnum[]
@@ -49590,31 +49728,31 @@ export namespace Prisma {
     where?: ClanWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Clans to fetch.
      */
     orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Clans.
      */
     cursor?: ClanWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Clans from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Clans.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Clans.
      */
     distinct?: ClanScalarFieldEnum | ClanScalarFieldEnum[]
@@ -49643,25 +49781,25 @@ export namespace Prisma {
     where?: ClanWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Clans to fetch.
      */
     orderBy?: ClanOrderByWithRelationInput | ClanOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Clans.
      */
     cursor?: ClanWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Clans from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Clans.
      */
     skip?: number
@@ -50101,55 +50239,55 @@ export namespace Prisma {
     where?: ClanJoinRequestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanJoinRequests to fetch.
      */
     orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanJoinRequestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanJoinRequests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanJoinRequests.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanJoinRequests
     **/
     _count?: true | ClanJoinRequestCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanJoinRequestAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanJoinRequestSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanJoinRequestMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanJoinRequestMaxAggregateInputType
@@ -50258,7 +50396,7 @@ export namespace Prisma {
 
   type ClanJoinRequestGetPayload<S extends boolean | null | undefined | ClanJoinRequestDefaultArgs> = $Result.GetResult<Prisma.$ClanJoinRequestPayload, S>
 
-  type ClanJoinRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanJoinRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanJoinRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanJoinRequestCountAggregateInputType | true
     }
@@ -50279,7 +50417,7 @@ export namespace Prisma {
     findUnique<T extends ClanJoinRequestFindUniqueArgs>(args: SelectSubset<T, ClanJoinRequestFindUniqueArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanJoinRequest that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanJoinRequest that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanJoinRequestFindUniqueOrThrowArgs} args - Arguments to find a ClanJoinRequest
      * @example
@@ -50331,13 +50469,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanJoinRequests
      * const clanJoinRequests = await prisma.clanJoinRequest.findMany()
-     * 
+     *
      * // Get first 10 ClanJoinRequests
      * const clanJoinRequests = await prisma.clanJoinRequest.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanJoinRequestFindManyArgs>(args?: SelectSubset<T, ClanJoinRequestFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -50351,7 +50489,7 @@ export namespace Prisma {
      *     // ... data to create a ClanJoinRequest
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanJoinRequestCreateArgs>(args: SelectSubset<T, ClanJoinRequestCreateArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -50365,7 +50503,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanJoinRequestCreateManyArgs>(args?: SelectSubset<T, ClanJoinRequestCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -50379,9 +50517,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanJoinRequests and only return the `id`
-     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.createManyAndReturn({ 
+     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -50389,7 +50527,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanJoinRequestCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanJoinRequestCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -50403,7 +50541,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanJoinRequest
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanJoinRequestDeleteArgs>(args: SelectSubset<T, ClanJoinRequestDeleteArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -50420,7 +50558,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanJoinRequestUpdateArgs>(args: SelectSubset<T, ClanJoinRequestUpdateArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -50434,7 +50572,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanJoinRequestDeleteManyArgs>(args?: SelectSubset<T, ClanJoinRequestDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -50453,7 +50591,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanJoinRequestUpdateManyArgs>(args: SelectSubset<T, ClanJoinRequestUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -50542,7 +50680,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanJoinRequestGroupByArgs,
@@ -50645,14 +50783,14 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanJoinRequest model
-   */ 
+   */
   interface ClanJoinRequestFieldRefs {
     readonly id: FieldRef<"ClanJoinRequest", 'Int'>
     readonly clanId: FieldRef<"ClanJoinRequest", 'Int'>
     readonly playerId: FieldRef<"ClanJoinRequest", 'Int'>
     readonly date: FieldRef<"ClanJoinRequest", 'DateTime'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -50723,31 +50861,31 @@ export namespace Prisma {
     where?: ClanJoinRequestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanJoinRequests to fetch.
      */
     orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanJoinRequests.
      */
     cursor?: ClanJoinRequestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanJoinRequests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanJoinRequests.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanJoinRequests.
      */
     distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
@@ -50776,31 +50914,31 @@ export namespace Prisma {
     where?: ClanJoinRequestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanJoinRequests to fetch.
      */
     orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanJoinRequests.
      */
     cursor?: ClanJoinRequestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanJoinRequests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanJoinRequests.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanJoinRequests.
      */
     distinct?: ClanJoinRequestScalarFieldEnum | ClanJoinRequestScalarFieldEnum[]
@@ -50829,25 +50967,25 @@ export namespace Prisma {
     where?: ClanJoinRequestWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanJoinRequests to fetch.
      */
     orderBy?: ClanJoinRequestOrderByWithRelationInput | ClanJoinRequestOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanJoinRequests.
      */
     cursor?: ClanJoinRequestWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanJoinRequests from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanJoinRequests.
      */
     skip?: number
@@ -51110,55 +51248,55 @@ export namespace Prisma {
     where?: ClanWarWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanWars to fetch.
      */
     orderBy?: ClanWarOrderByWithRelationInput | ClanWarOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanWarWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanWars from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanWars.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanWars
     **/
     _count?: true | ClanWarCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanWarAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanWarSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanWarMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanWarMaxAggregateInputType
@@ -51256,7 +51394,7 @@ export namespace Prisma {
 
   type ClanWarGetPayload<S extends boolean | null | undefined | ClanWarDefaultArgs> = $Result.GetResult<Prisma.$ClanWarPayload, S>
 
-  type ClanWarCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanWarCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanWarFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanWarCountAggregateInputType | true
     }
@@ -51277,7 +51415,7 @@ export namespace Prisma {
     findUnique<T extends ClanWarFindUniqueArgs>(args: SelectSubset<T, ClanWarFindUniqueArgs<ExtArgs>>): Prisma__ClanWarClient<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanWar that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanWar that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanWarFindUniqueOrThrowArgs} args - Arguments to find a ClanWar
      * @example
@@ -51329,13 +51467,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanWars
      * const clanWars = await prisma.clanWar.findMany()
-     * 
+     *
      * // Get first 10 ClanWars
      * const clanWars = await prisma.clanWar.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanWarWithIdOnly = await prisma.clanWar.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanWarFindManyArgs>(args?: SelectSubset<T, ClanWarFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -51349,7 +51487,7 @@ export namespace Prisma {
      *     // ... data to create a ClanWar
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanWarCreateArgs>(args: SelectSubset<T, ClanWarCreateArgs<ExtArgs>>): Prisma__ClanWarClient<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -51363,7 +51501,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanWarCreateManyArgs>(args?: SelectSubset<T, ClanWarCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -51377,9 +51515,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanWars and only return the `id`
-     * const clanWarWithIdOnly = await prisma.clanWar.createManyAndReturn({ 
+     * const clanWarWithIdOnly = await prisma.clanWar.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -51387,7 +51525,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanWarCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanWarCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -51401,7 +51539,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanWar
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanWarDeleteArgs>(args: SelectSubset<T, ClanWarDeleteArgs<ExtArgs>>): Prisma__ClanWarClient<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -51418,7 +51556,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanWarUpdateArgs>(args: SelectSubset<T, ClanWarUpdateArgs<ExtArgs>>): Prisma__ClanWarClient<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -51432,7 +51570,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanWarDeleteManyArgs>(args?: SelectSubset<T, ClanWarDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -51451,7 +51589,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanWarUpdateManyArgs>(args: SelectSubset<T, ClanWarUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -51540,7 +51678,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanWarGroupByArgs,
@@ -51642,13 +51780,13 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanWar model
-   */ 
+   */
   interface ClanWarFieldRefs {
     readonly id: FieldRef<"ClanWar", 'Int'>
     readonly dateStart: FieldRef<"ClanWar", 'DateTime'>
     readonly dateEnd: FieldRef<"ClanWar", 'DateTime'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -51719,31 +51857,31 @@ export namespace Prisma {
     where?: ClanWarWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanWars to fetch.
      */
     orderBy?: ClanWarOrderByWithRelationInput | ClanWarOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanWars.
      */
     cursor?: ClanWarWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanWars from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanWars.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanWars.
      */
     distinct?: ClanWarScalarFieldEnum | ClanWarScalarFieldEnum[]
@@ -51772,31 +51910,31 @@ export namespace Prisma {
     where?: ClanWarWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanWars to fetch.
      */
     orderBy?: ClanWarOrderByWithRelationInput | ClanWarOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanWars.
      */
     cursor?: ClanWarWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanWars from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanWars.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanWars.
      */
     distinct?: ClanWarScalarFieldEnum | ClanWarScalarFieldEnum[]
@@ -51825,25 +51963,25 @@ export namespace Prisma {
     where?: ClanWarWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanWars to fetch.
      */
     orderBy?: ClanWarOrderByWithRelationInput | ClanWarOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanWars.
      */
     cursor?: ClanWarWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanWars from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanWars.
      */
     skip?: number
@@ -52144,55 +52282,55 @@ export namespace Prisma {
     where?: ClanIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanIngredients to fetch.
      */
     orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanIngredients
     **/
     _count?: true | ClanIngredientCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanIngredientAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanIngredientSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanIngredientMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanIngredientMaxAggregateInputType
@@ -52296,7 +52434,7 @@ export namespace Prisma {
 
   type ClanIngredientGetPayload<S extends boolean | null | undefined | ClanIngredientDefaultArgs> = $Result.GetResult<Prisma.$ClanIngredientPayload, S>
 
-  type ClanIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanIngredientCountAggregateInputType | true
     }
@@ -52317,7 +52455,7 @@ export namespace Prisma {
     findUnique<T extends ClanIngredientFindUniqueArgs>(args: SelectSubset<T, ClanIngredientFindUniqueArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanIngredient that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanIngredient that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanIngredientFindUniqueOrThrowArgs} args - Arguments to find a ClanIngredient
      * @example
@@ -52369,13 +52507,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanIngredients
      * const clanIngredients = await prisma.clanIngredient.findMany()
-     * 
+     *
      * // Get first 10 ClanIngredients
      * const clanIngredients = await prisma.clanIngredient.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanIngredientWithIdOnly = await prisma.clanIngredient.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanIngredientFindManyArgs>(args?: SelectSubset<T, ClanIngredientFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -52389,7 +52527,7 @@ export namespace Prisma {
      *     // ... data to create a ClanIngredient
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanIngredientCreateArgs>(args: SelectSubset<T, ClanIngredientCreateArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -52403,7 +52541,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanIngredientCreateManyArgs>(args?: SelectSubset<T, ClanIngredientCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -52417,9 +52555,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanIngredients and only return the `id`
-     * const clanIngredientWithIdOnly = await prisma.clanIngredient.createManyAndReturn({ 
+     * const clanIngredientWithIdOnly = await prisma.clanIngredient.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -52427,7 +52565,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanIngredientCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanIngredientCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -52441,7 +52579,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanIngredient
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanIngredientDeleteArgs>(args: SelectSubset<T, ClanIngredientDeleteArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -52458,7 +52596,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanIngredientUpdateArgs>(args: SelectSubset<T, ClanIngredientUpdateArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -52472,7 +52610,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanIngredientDeleteManyArgs>(args?: SelectSubset<T, ClanIngredientDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -52491,7 +52629,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanIngredientUpdateManyArgs>(args: SelectSubset<T, ClanIngredientUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -52580,7 +52718,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanIngredientGroupByArgs,
@@ -52682,14 +52820,14 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanIngredient model
-   */ 
+   */
   interface ClanIngredientFieldRefs {
     readonly id: FieldRef<"ClanIngredient", 'Int'>
     readonly ingredientId: FieldRef<"ClanIngredient", 'Int'>
     readonly quantity: FieldRef<"ClanIngredient", 'Int'>
     readonly clanId: FieldRef<"ClanIngredient", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -52760,31 +52898,31 @@ export namespace Prisma {
     where?: ClanIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanIngredients to fetch.
      */
     orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanIngredients.
      */
     cursor?: ClanIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanIngredients.
      */
     distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
@@ -52813,31 +52951,31 @@ export namespace Prisma {
     where?: ClanIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanIngredients to fetch.
      */
     orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanIngredients.
      */
     cursor?: ClanIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanIngredients.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanIngredients.
      */
     distinct?: ClanIngredientScalarFieldEnum | ClanIngredientScalarFieldEnum[]
@@ -52866,25 +53004,25 @@ export namespace Prisma {
     where?: ClanIngredientWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanIngredients to fetch.
      */
     orderBy?: ClanIngredientOrderByWithRelationInput | ClanIngredientOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanIngredients.
      */
     cursor?: ClanIngredientWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanIngredients from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanIngredients.
      */
     skip?: number
@@ -53186,55 +53324,55 @@ export namespace Prisma {
     where?: ClanMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMessages to fetch.
      */
     orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanMessages
     **/
     _count?: true | ClanMessageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanMessageAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanMessageSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanMessageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanMessageMaxAggregateInputType
@@ -53348,7 +53486,7 @@ export namespace Prisma {
 
   type ClanMessageGetPayload<S extends boolean | null | undefined | ClanMessageDefaultArgs> = $Result.GetResult<Prisma.$ClanMessagePayload, S>
 
-  type ClanMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanMessageCountAggregateInputType | true
     }
@@ -53369,7 +53507,7 @@ export namespace Prisma {
     findUnique<T extends ClanMessageFindUniqueArgs>(args: SelectSubset<T, ClanMessageFindUniqueArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanMessage that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanMessage that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanMessageFindUniqueOrThrowArgs} args - Arguments to find a ClanMessage
      * @example
@@ -53421,13 +53559,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanMessages
      * const clanMessages = await prisma.clanMessage.findMany()
-     * 
+     *
      * // Get first 10 ClanMessages
      * const clanMessages = await prisma.clanMessage.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanMessageWithIdOnly = await prisma.clanMessage.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanMessageFindManyArgs>(args?: SelectSubset<T, ClanMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -53441,7 +53579,7 @@ export namespace Prisma {
      *     // ... data to create a ClanMessage
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanMessageCreateArgs>(args: SelectSubset<T, ClanMessageCreateArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -53455,7 +53593,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanMessageCreateManyArgs>(args?: SelectSubset<T, ClanMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -53469,9 +53607,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanMessages and only return the `id`
-     * const clanMessageWithIdOnly = await prisma.clanMessage.createManyAndReturn({ 
+     * const clanMessageWithIdOnly = await prisma.clanMessage.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -53479,7 +53617,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -53493,7 +53631,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanMessage
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanMessageDeleteArgs>(args: SelectSubset<T, ClanMessageDeleteArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -53510,7 +53648,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanMessageUpdateArgs>(args: SelectSubset<T, ClanMessageUpdateArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -53524,7 +53662,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanMessageDeleteManyArgs>(args?: SelectSubset<T, ClanMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -53543,7 +53681,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanMessageUpdateManyArgs>(args: SelectSubset<T, ClanMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -53632,7 +53770,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanMessageGroupByArgs,
@@ -53735,7 +53873,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanMessage model
-   */ 
+   */
   interface ClanMessageFieldRefs {
     readonly id: FieldRef<"ClanMessage", 'Int'>
     readonly clanId: FieldRef<"ClanMessage", 'Int'>
@@ -53743,7 +53881,7 @@ export namespace Prisma {
     readonly authorId: FieldRef<"ClanMessage", 'Int'>
     readonly content: FieldRef<"ClanMessage", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -53814,31 +53952,31 @@ export namespace Prisma {
     where?: ClanMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMessages to fetch.
      */
     orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanMessages.
      */
     cursor?: ClanMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanMessages.
      */
     distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
@@ -53867,31 +54005,31 @@ export namespace Prisma {
     where?: ClanMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMessages to fetch.
      */
     orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanMessages.
      */
     cursor?: ClanMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMessages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanMessages.
      */
     distinct?: ClanMessageScalarFieldEnum | ClanMessageScalarFieldEnum[]
@@ -53920,25 +54058,25 @@ export namespace Prisma {
     where?: ClanMessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMessages to fetch.
      */
     orderBy?: ClanMessageOrderByWithRelationInput | ClanMessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanMessages.
      */
     cursor?: ClanMessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMessages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMessages.
      */
     skip?: number
@@ -54240,55 +54378,55 @@ export namespace Prisma {
     where?: ClanHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanHistories to fetch.
      */
     orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanHistories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanHistories
     **/
     _count?: true | ClanHistoryCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanHistoryAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanHistorySumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanHistoryMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanHistoryMaxAggregateInputType
@@ -54402,7 +54540,7 @@ export namespace Prisma {
 
   type ClanHistoryGetPayload<S extends boolean | null | undefined | ClanHistoryDefaultArgs> = $Result.GetResult<Prisma.$ClanHistoryPayload, S>
 
-  type ClanHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanHistoryCountAggregateInputType | true
     }
@@ -54423,7 +54561,7 @@ export namespace Prisma {
     findUnique<T extends ClanHistoryFindUniqueArgs>(args: SelectSubset<T, ClanHistoryFindUniqueArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanHistory that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanHistory that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanHistoryFindUniqueOrThrowArgs} args - Arguments to find a ClanHistory
      * @example
@@ -54475,13 +54613,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanHistories
      * const clanHistories = await prisma.clanHistory.findMany()
-     * 
+     *
      * // Get first 10 ClanHistories
      * const clanHistories = await prisma.clanHistory.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanHistoryWithIdOnly = await prisma.clanHistory.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanHistoryFindManyArgs>(args?: SelectSubset<T, ClanHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -54495,7 +54633,7 @@ export namespace Prisma {
      *     // ... data to create a ClanHistory
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanHistoryCreateArgs>(args: SelectSubset<T, ClanHistoryCreateArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -54509,7 +54647,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanHistoryCreateManyArgs>(args?: SelectSubset<T, ClanHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -54523,9 +54661,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanHistories and only return the `id`
-     * const clanHistoryWithIdOnly = await prisma.clanHistory.createManyAndReturn({ 
+     * const clanHistoryWithIdOnly = await prisma.clanHistory.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -54533,7 +54671,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -54547,7 +54685,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanHistory
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanHistoryDeleteArgs>(args: SelectSubset<T, ClanHistoryDeleteArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -54564,7 +54702,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanHistoryUpdateArgs>(args: SelectSubset<T, ClanHistoryUpdateArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -54578,7 +54716,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanHistoryDeleteManyArgs>(args?: SelectSubset<T, ClanHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -54597,7 +54735,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanHistoryUpdateManyArgs>(args: SelectSubset<T, ClanHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -54686,7 +54824,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanHistoryGroupByArgs,
@@ -54789,7 +54927,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanHistory model
-   */ 
+   */
   interface ClanHistoryFieldRefs {
     readonly id: FieldRef<"ClanHistory", 'Int'>
     readonly clanId: FieldRef<"ClanHistory", 'Int'>
@@ -54797,7 +54935,7 @@ export namespace Prisma {
     readonly authorId: FieldRef<"ClanHistory", 'Int'>
     readonly type: FieldRef<"ClanHistory", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -54868,31 +55006,31 @@ export namespace Prisma {
     where?: ClanHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanHistories to fetch.
      */
     orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanHistories.
      */
     cursor?: ClanHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanHistories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanHistories.
      */
     distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
@@ -54921,31 +55059,31 @@ export namespace Prisma {
     where?: ClanHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanHistories to fetch.
      */
     orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanHistories.
      */
     cursor?: ClanHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanHistories.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanHistories.
      */
     distinct?: ClanHistoryScalarFieldEnum | ClanHistoryScalarFieldEnum[]
@@ -54974,25 +55112,25 @@ export namespace Prisma {
     where?: ClanHistoryWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanHistories to fetch.
      */
     orderBy?: ClanHistoryOrderByWithRelationInput | ClanHistoryOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanHistories.
      */
     cursor?: ClanHistoryWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanHistories from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanHistories.
      */
     skip?: number
@@ -55306,55 +55444,55 @@ export namespace Prisma {
     where?: ClanMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMembers to fetch.
      */
     orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMembers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanMembers
     **/
     _count?: true | ClanMemberCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanMemberAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanMemberSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanMemberMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanMemberMaxAggregateInputType
@@ -55478,7 +55616,7 @@ export namespace Prisma {
 
   type ClanMemberGetPayload<S extends boolean | null | undefined | ClanMemberDefaultArgs> = $Result.GetResult<Prisma.$ClanMemberPayload, S>
 
-  type ClanMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanMemberCountAggregateInputType | true
     }
@@ -55499,7 +55637,7 @@ export namespace Prisma {
     findUnique<T extends ClanMemberFindUniqueArgs>(args: SelectSubset<T, ClanMemberFindUniqueArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanMember that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanMember that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanMemberFindUniqueOrThrowArgs} args - Arguments to find a ClanMember
      * @example
@@ -55551,13 +55689,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanMembers
      * const clanMembers = await prisma.clanMember.findMany()
-     * 
+     *
      * // Get first 10 ClanMembers
      * const clanMembers = await prisma.clanMember.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanMemberWithIdOnly = await prisma.clanMember.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanMemberFindManyArgs>(args?: SelectSubset<T, ClanMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -55571,7 +55709,7 @@ export namespace Prisma {
      *     // ... data to create a ClanMember
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanMemberCreateArgs>(args: SelectSubset<T, ClanMemberCreateArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -55585,7 +55723,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanMemberCreateManyArgs>(args?: SelectSubset<T, ClanMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -55599,9 +55737,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanMembers and only return the `id`
-     * const clanMemberWithIdOnly = await prisma.clanMember.createManyAndReturn({ 
+     * const clanMemberWithIdOnly = await prisma.clanMember.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -55609,7 +55747,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -55623,7 +55761,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanMember
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanMemberDeleteArgs>(args: SelectSubset<T, ClanMemberDeleteArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -55640,7 +55778,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanMemberUpdateArgs>(args: SelectSubset<T, ClanMemberUpdateArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -55654,7 +55792,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanMemberDeleteManyArgs>(args?: SelectSubset<T, ClanMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -55673,7 +55811,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanMemberUpdateManyArgs>(args: SelectSubset<T, ClanMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -55762,7 +55900,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanMemberGroupByArgs,
@@ -55865,7 +56003,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanMember model
-   */ 
+   */
   interface ClanMemberFieldRefs {
     readonly id: FieldRef<"ClanMember", 'Int'>
     readonly clanId: FieldRef<"ClanMember", 'Int'>
@@ -55875,7 +56013,7 @@ export namespace Prisma {
     readonly dateJoin: FieldRef<"ClanMember", 'DateTime'>
     readonly nickname: FieldRef<"ClanMember", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -55946,31 +56084,31 @@ export namespace Prisma {
     where?: ClanMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMembers to fetch.
      */
     orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanMembers.
      */
     cursor?: ClanMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMembers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanMembers.
      */
     distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
@@ -55999,31 +56137,31 @@ export namespace Prisma {
     where?: ClanMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMembers to fetch.
      */
     orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanMembers.
      */
     cursor?: ClanMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMembers.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanMembers.
      */
     distinct?: ClanMemberScalarFieldEnum | ClanMemberScalarFieldEnum[]
@@ -56052,25 +56190,25 @@ export namespace Prisma {
     where?: ClanMemberWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanMembers to fetch.
      */
     orderBy?: ClanMemberOrderByWithRelationInput | ClanMemberOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanMembers.
      */
     cursor?: ClanMemberWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanMembers from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanMembers.
      */
     skip?: number
@@ -56355,55 +56493,55 @@ export namespace Prisma {
     where?: ClanPageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanPages to fetch.
      */
     orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ClanPageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanPages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanPages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned ClanPages
     **/
     _count?: true | ClanPageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ClanPageAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ClanPageSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ClanPageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ClanPageMaxAggregateInputType
@@ -56517,7 +56655,7 @@ export namespace Prisma {
 
   type ClanPageGetPayload<S extends boolean | null | undefined | ClanPageDefaultArgs> = $Result.GetResult<Prisma.$ClanPagePayload, S>
 
-  type ClanPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ClanPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ClanPageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanPageCountAggregateInputType | true
     }
@@ -56538,7 +56676,7 @@ export namespace Prisma {
     findUnique<T extends ClanPageFindUniqueArgs>(args: SelectSubset<T, ClanPageFindUniqueArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one ClanPage that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one ClanPage that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ClanPageFindUniqueOrThrowArgs} args - Arguments to find a ClanPage
      * @example
@@ -56590,13 +56728,13 @@ export namespace Prisma {
      * @example
      * // Get all ClanPages
      * const clanPages = await prisma.clanPage.findMany()
-     * 
+     *
      * // Get first 10 ClanPages
      * const clanPages = await prisma.clanPage.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const clanPageWithIdOnly = await prisma.clanPage.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ClanPageFindManyArgs>(args?: SelectSubset<T, ClanPageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -56610,7 +56748,7 @@ export namespace Prisma {
      *     // ... data to create a ClanPage
      *   }
      * })
-     * 
+     *
      */
     create<T extends ClanPageCreateArgs>(args: SelectSubset<T, ClanPageCreateArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -56624,7 +56762,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ClanPageCreateManyArgs>(args?: SelectSubset<T, ClanPageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -56638,9 +56776,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many ClanPages and only return the `id`
-     * const clanPageWithIdOnly = await prisma.clanPage.createManyAndReturn({ 
+     * const clanPageWithIdOnly = await prisma.clanPage.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -56648,7 +56786,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ClanPageCreateManyAndReturnArgs>(args?: SelectSubset<T, ClanPageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -56662,7 +56800,7 @@ export namespace Prisma {
      *     // ... filter to delete one ClanPage
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ClanPageDeleteArgs>(args: SelectSubset<T, ClanPageDeleteArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -56679,7 +56817,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ClanPageUpdateArgs>(args: SelectSubset<T, ClanPageUpdateArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -56693,7 +56831,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ClanPageDeleteManyArgs>(args?: SelectSubset<T, ClanPageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -56712,7 +56850,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ClanPageUpdateManyArgs>(args: SelectSubset<T, ClanPageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -56801,7 +56939,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ClanPageGroupByArgs,
@@ -56903,7 +57041,7 @@ export namespace Prisma {
 
   /**
    * Fields of the ClanPage model
-   */ 
+   */
   interface ClanPageFieldRefs {
     readonly id: FieldRef<"ClanPage", 'Int'>
     readonly home: FieldRef<"ClanPage", 'Boolean'>
@@ -56912,7 +57050,7 @@ export namespace Prisma {
     readonly content: FieldRef<"ClanPage", 'String'>
     readonly clanId: FieldRef<"ClanPage", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -56983,31 +57121,31 @@ export namespace Prisma {
     where?: ClanPageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanPages to fetch.
      */
     orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanPages.
      */
     cursor?: ClanPageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanPages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanPages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanPages.
      */
     distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
@@ -57036,31 +57174,31 @@ export namespace Prisma {
     where?: ClanPageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanPages to fetch.
      */
     orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for ClanPages.
      */
     cursor?: ClanPageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanPages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanPages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of ClanPages.
      */
     distinct?: ClanPageScalarFieldEnum | ClanPageScalarFieldEnum[]
@@ -57089,25 +57227,25 @@ export namespace Prisma {
     where?: ClanPageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of ClanPages to fetch.
      */
     orderBy?: ClanPageOrderByWithRelationInput | ClanPageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing ClanPages.
      */
     cursor?: ClanPageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` ClanPages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` ClanPages.
      */
     skip?: number
@@ -57406,55 +57544,55 @@ export namespace Prisma {
     where?: ModerationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Moderations to fetch.
      */
     orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ModerationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Moderations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Moderations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Moderations
     **/
     _count?: true | ModerationCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ModerationAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ModerationSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ModerationMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ModerationMaxAggregateInputType
@@ -57583,7 +57721,7 @@ export namespace Prisma {
 
   type ModerationGetPayload<S extends boolean | null | undefined | ModerationDefaultArgs> = $Result.GetResult<Prisma.$ModerationPayload, S>
 
-  type ModerationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ModerationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ModerationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ModerationCountAggregateInputType | true
     }
@@ -57604,7 +57742,7 @@ export namespace Prisma {
     findUnique<T extends ModerationFindUniqueArgs>(args: SelectSubset<T, ModerationFindUniqueArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Moderation that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Moderation that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ModerationFindUniqueOrThrowArgs} args - Arguments to find a Moderation
      * @example
@@ -57656,13 +57794,13 @@ export namespace Prisma {
      * @example
      * // Get all Moderations
      * const moderations = await prisma.moderation.findMany()
-     * 
+     *
      * // Get first 10 Moderations
      * const moderations = await prisma.moderation.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const moderationWithIdOnly = await prisma.moderation.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ModerationFindManyArgs>(args?: SelectSubset<T, ModerationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -57676,7 +57814,7 @@ export namespace Prisma {
      *     // ... data to create a Moderation
      *   }
      * })
-     * 
+     *
      */
     create<T extends ModerationCreateArgs>(args: SelectSubset<T, ModerationCreateArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -57690,7 +57828,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ModerationCreateManyArgs>(args?: SelectSubset<T, ModerationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -57704,9 +57842,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Moderations and only return the `id`
-     * const moderationWithIdOnly = await prisma.moderation.createManyAndReturn({ 
+     * const moderationWithIdOnly = await prisma.moderation.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -57714,7 +57852,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ModerationCreateManyAndReturnArgs>(args?: SelectSubset<T, ModerationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -57728,7 +57866,7 @@ export namespace Prisma {
      *     // ... filter to delete one Moderation
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ModerationDeleteArgs>(args: SelectSubset<T, ModerationDeleteArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -57745,7 +57883,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ModerationUpdateArgs>(args: SelectSubset<T, ModerationUpdateArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -57759,7 +57897,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ModerationDeleteManyArgs>(args?: SelectSubset<T, ModerationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -57778,7 +57916,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ModerationUpdateManyArgs>(args: SelectSubset<T, ModerationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -57867,7 +58005,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ModerationGroupByArgs,
@@ -57971,7 +58109,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Moderation model
-   */ 
+   */
   interface ModerationFieldRefs {
     readonly id: FieldRef<"Moderation", 'Int'>
     readonly reporterId: FieldRef<"Moderation", 'Int'>
@@ -57981,7 +58119,7 @@ export namespace Prisma {
     readonly comment: FieldRef<"Moderation", 'String'>
     readonly sorted: FieldRef<"Moderation", 'Boolean'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -58052,31 +58190,31 @@ export namespace Prisma {
     where?: ModerationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Moderations to fetch.
      */
     orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Moderations.
      */
     cursor?: ModerationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Moderations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Moderations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Moderations.
      */
     distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
@@ -58105,31 +58243,31 @@ export namespace Prisma {
     where?: ModerationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Moderations to fetch.
      */
     orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Moderations.
      */
     cursor?: ModerationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Moderations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Moderations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Moderations.
      */
     distinct?: ModerationScalarFieldEnum | ModerationScalarFieldEnum[]
@@ -58158,25 +58296,25 @@ export namespace Prisma {
     where?: ModerationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Moderations to fetch.
      */
     orderBy?: ModerationOrderByWithRelationInput | ModerationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Moderations.
      */
     cursor?: ModerationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Moderations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Moderations.
      */
     skip?: number
@@ -58490,55 +58628,55 @@ export namespace Prisma {
     where?: ConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Conversations to fetch.
      */
     orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Conversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Conversations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Conversations
     **/
     _count?: true | ConversationCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ConversationAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ConversationSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ConversationMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ConversationMaxAggregateInputType
@@ -58675,7 +58813,7 @@ export namespace Prisma {
 
   type ConversationGetPayload<S extends boolean | null | undefined | ConversationDefaultArgs> = $Result.GetResult<Prisma.$ConversationPayload, S>
 
-  type ConversationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ConversationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ConversationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ConversationCountAggregateInputType | true
     }
@@ -58696,7 +58834,7 @@ export namespace Prisma {
     findUnique<T extends ConversationFindUniqueArgs>(args: SelectSubset<T, ConversationFindUniqueArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Conversation that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Conversation that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ConversationFindUniqueOrThrowArgs} args - Arguments to find a Conversation
      * @example
@@ -58748,13 +58886,13 @@ export namespace Prisma {
      * @example
      * // Get all Conversations
      * const conversations = await prisma.conversation.findMany()
-     * 
+     *
      * // Get first 10 Conversations
      * const conversations = await prisma.conversation.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const conversationWithIdOnly = await prisma.conversation.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ConversationFindManyArgs>(args?: SelectSubset<T, ConversationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -58768,7 +58906,7 @@ export namespace Prisma {
      *     // ... data to create a Conversation
      *   }
      * })
-     * 
+     *
      */
     create<T extends ConversationCreateArgs>(args: SelectSubset<T, ConversationCreateArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -58782,7 +58920,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ConversationCreateManyArgs>(args?: SelectSubset<T, ConversationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -58796,9 +58934,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Conversations and only return the `id`
-     * const conversationWithIdOnly = await prisma.conversation.createManyAndReturn({ 
+     * const conversationWithIdOnly = await prisma.conversation.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -58806,7 +58944,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ConversationCreateManyAndReturnArgs>(args?: SelectSubset<T, ConversationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -58820,7 +58958,7 @@ export namespace Prisma {
      *     // ... filter to delete one Conversation
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ConversationDeleteArgs>(args: SelectSubset<T, ConversationDeleteArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -58837,7 +58975,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ConversationUpdateArgs>(args: SelectSubset<T, ConversationUpdateArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -58851,7 +58989,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ConversationDeleteManyArgs>(args?: SelectSubset<T, ConversationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -58870,7 +59008,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ConversationUpdateManyArgs>(args: SelectSubset<T, ConversationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -58959,7 +59097,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ConversationGroupByArgs,
@@ -59065,7 +59203,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Conversation model
-   */ 
+   */
   interface ConversationFieldRefs {
     readonly id: FieldRef<"Conversation", 'String'>
     readonly title: FieldRef<"Conversation", 'String'>
@@ -59075,7 +59213,7 @@ export namespace Prisma {
     readonly playerId: FieldRef<"Conversation", 'Int'>
     readonly pinnedMessageId: FieldRef<"Conversation", 'Int'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -59146,31 +59284,31 @@ export namespace Prisma {
     where?: ConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Conversations to fetch.
      */
     orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Conversations.
      */
     cursor?: ConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Conversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Conversations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Conversations.
      */
     distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
@@ -59199,31 +59337,31 @@ export namespace Prisma {
     where?: ConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Conversations to fetch.
      */
     orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Conversations.
      */
     cursor?: ConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Conversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Conversations.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Conversations.
      */
     distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
@@ -59252,25 +59390,25 @@ export namespace Prisma {
     where?: ConversationWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Conversations to fetch.
      */
     orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Conversations.
      */
     cursor?: ConversationWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Conversations from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Conversations.
      */
     skip?: number
@@ -59629,55 +59767,55 @@ export namespace Prisma {
     where?: ParticipantsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Participants to fetch.
      */
     orderBy?: ParticipantsOrderByWithRelationInput | ParticipantsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: ParticipantsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Participants from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Participants.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Participants
     **/
     _count?: true | ParticipantsCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: ParticipantsAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: ParticipantsSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: ParticipantsMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: ParticipantsMaxAggregateInputType
@@ -59786,7 +59924,7 @@ export namespace Prisma {
 
   type ParticipantsGetPayload<S extends boolean | null | undefined | ParticipantsDefaultArgs> = $Result.GetResult<Prisma.$ParticipantsPayload, S>
 
-  type ParticipantsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type ParticipantsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<ParticipantsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ParticipantsCountAggregateInputType | true
     }
@@ -59807,7 +59945,7 @@ export namespace Prisma {
     findUnique<T extends ParticipantsFindUniqueArgs>(args: SelectSubset<T, ParticipantsFindUniqueArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Participants that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Participants that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {ParticipantsFindUniqueOrThrowArgs} args - Arguments to find a Participants
      * @example
@@ -59859,13 +59997,13 @@ export namespace Prisma {
      * @example
      * // Get all Participants
      * const participants = await prisma.participants.findMany()
-     * 
+     *
      * // Get first 10 Participants
      * const participants = await prisma.participants.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const participantsWithIdOnly = await prisma.participants.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends ParticipantsFindManyArgs>(args?: SelectSubset<T, ParticipantsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -59879,7 +60017,7 @@ export namespace Prisma {
      *     // ... data to create a Participants
      *   }
      * })
-     * 
+     *
      */
     create<T extends ParticipantsCreateArgs>(args: SelectSubset<T, ParticipantsCreateArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -59893,7 +60031,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends ParticipantsCreateManyArgs>(args?: SelectSubset<T, ParticipantsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -59907,9 +60045,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Participants and only return the `id`
-     * const participantsWithIdOnly = await prisma.participants.createManyAndReturn({ 
+     * const participantsWithIdOnly = await prisma.participants.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -59917,7 +60055,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends ParticipantsCreateManyAndReturnArgs>(args?: SelectSubset<T, ParticipantsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -59931,7 +60069,7 @@ export namespace Prisma {
      *     // ... filter to delete one Participants
      *   }
      * })
-     * 
+     *
      */
     delete<T extends ParticipantsDeleteArgs>(args: SelectSubset<T, ParticipantsDeleteArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -59948,7 +60086,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends ParticipantsUpdateArgs>(args: SelectSubset<T, ParticipantsUpdateArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -59962,7 +60100,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends ParticipantsDeleteManyArgs>(args?: SelectSubset<T, ParticipantsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -59981,7 +60119,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends ParticipantsUpdateManyArgs>(args: SelectSubset<T, ParticipantsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -60070,7 +60208,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends ParticipantsGroupByArgs,
@@ -60173,14 +60311,14 @@ export namespace Prisma {
 
   /**
    * Fields of the Participants model
-   */ 
+   */
   interface ParticipantsFieldRefs {
     readonly id: FieldRef<"Participants", 'Int'>
     readonly playerId: FieldRef<"Participants", 'Int'>
     readonly conversationId: FieldRef<"Participants", 'String'>
     readonly joinedAt: FieldRef<"Participants", 'DateTime'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -60251,31 +60389,31 @@ export namespace Prisma {
     where?: ParticipantsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Participants to fetch.
      */
     orderBy?: ParticipantsOrderByWithRelationInput | ParticipantsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Participants.
      */
     cursor?: ParticipantsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Participants from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Participants.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Participants.
      */
     distinct?: ParticipantsScalarFieldEnum | ParticipantsScalarFieldEnum[]
@@ -60304,31 +60442,31 @@ export namespace Prisma {
     where?: ParticipantsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Participants to fetch.
      */
     orderBy?: ParticipantsOrderByWithRelationInput | ParticipantsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Participants.
      */
     cursor?: ParticipantsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Participants from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Participants.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Participants.
      */
     distinct?: ParticipantsScalarFieldEnum | ParticipantsScalarFieldEnum[]
@@ -60357,25 +60495,25 @@ export namespace Prisma {
     where?: ParticipantsWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Participants to fetch.
      */
     orderBy?: ParticipantsOrderByWithRelationInput | ParticipantsOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Participants.
      */
     cursor?: ParticipantsWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Participants from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Participants.
      */
     skip?: number
@@ -60654,55 +60792,55 @@ export namespace Prisma {
     where?: MessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Messages to fetch.
      */
     orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the start position
      */
     cursor?: MessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Messages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Messages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Count returned Messages
     **/
     _count?: true | MessageCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to average
     **/
     _avg?: MessageAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to sum
     **/
     _sum?: MessageSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the minimum value
     **/
     _min?: MessageMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
+     *
      * Select which fields to find the maximum value
     **/
     _max?: MessageMaxAggregateInputType
@@ -60819,7 +60957,7 @@ export namespace Prisma {
 
   type MessageGetPayload<S extends boolean | null | undefined | MessageDefaultArgs> = $Result.GetResult<Prisma.$MessagePayload, S>
 
-  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
     Omit<MessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: MessageCountAggregateInputType | true
     }
@@ -60840,7 +60978,7 @@ export namespace Prisma {
     findUnique<T extends MessageFindUniqueArgs>(args: SelectSubset<T, MessageFindUniqueArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
 
     /**
-     * Find one Message that matches the filter or throw an error with `error.code='P2025'` 
+     * Find one Message that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
      * @param {MessageFindUniqueOrThrowArgs} args - Arguments to find a Message
      * @example
@@ -60892,13 +61030,13 @@ export namespace Prisma {
      * @example
      * // Get all Messages
      * const messages = await prisma.message.findMany()
-     * 
+     *
      * // Get first 10 Messages
      * const messages = await prisma.message.findMany({ take: 10 })
-     * 
+     *
      * // Only select the `id`
      * const messageWithIdOnly = await prisma.message.findMany({ select: { id: true } })
-     * 
+     *
      */
     findMany<T extends MessageFindManyArgs>(args?: SelectSubset<T, MessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", ClientOptions>>
 
@@ -60912,7 +61050,7 @@ export namespace Prisma {
      *     // ... data to create a Message
      *   }
      * })
-     * 
+     *
      */
     create<T extends MessageCreateArgs>(args: SelectSubset<T, MessageCreateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -60926,7 +61064,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *     
+     *
      */
     createMany<T extends MessageCreateManyArgs>(args?: SelectSubset<T, MessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -60940,9 +61078,9 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     * 
+     *
      * // Create many Messages and only return the `id`
-     * const messageWithIdOnly = await prisma.message.createManyAndReturn({ 
+     * const messageWithIdOnly = await prisma.message.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -60950,7 +61088,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * 
+     *
      */
     createManyAndReturn<T extends MessageCreateManyAndReturnArgs>(args?: SelectSubset<T, MessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
 
@@ -60964,7 +61102,7 @@ export namespace Prisma {
      *     // ... filter to delete one Message
      *   }
      * })
-     * 
+     *
      */
     delete<T extends MessageDeleteArgs>(args: SelectSubset<T, MessageDeleteArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -60981,7 +61119,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     update<T extends MessageUpdateArgs>(args: SelectSubset<T, MessageUpdateArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
 
@@ -60995,7 +61133,7 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     * 
+     *
      */
     deleteMany<T extends MessageDeleteManyArgs>(args?: SelectSubset<T, MessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -61014,7 +61152,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   }
      * })
-     * 
+     *
      */
     updateMany<T extends MessageUpdateManyArgs>(args: SelectSubset<T, MessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
@@ -61103,7 +61241,7 @@ export namespace Prisma {
      *     _all: true
      *   },
      * })
-     * 
+     *
     **/
     groupBy<
       T extends MessageGroupByArgs,
@@ -61207,7 +61345,7 @@ export namespace Prisma {
 
   /**
    * Fields of the Message model
-   */ 
+   */
   interface MessageFieldRefs {
     readonly id: FieldRef<"Message", 'Int'>
     readonly content: FieldRef<"Message", 'String'>
@@ -61215,7 +61353,7 @@ export namespace Prisma {
     readonly senderId: FieldRef<"Message", 'Int'>
     readonly conversationId: FieldRef<"Message", 'String'>
   }
-    
+
 
   // Custom InputTypes
   /**
@@ -61286,31 +61424,31 @@ export namespace Prisma {
     where?: MessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Messages to fetch.
      */
     orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Messages.
      */
     cursor?: MessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Messages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Messages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Messages.
      */
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
@@ -61339,31 +61477,31 @@ export namespace Prisma {
     where?: MessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Messages to fetch.
      */
     orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for searching for Messages.
      */
     cursor?: MessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Messages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Messages.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
+     *
      * Filter by unique combinations of Messages.
      */
     distinct?: MessageScalarFieldEnum | MessageScalarFieldEnum[]
@@ -61392,25 +61530,25 @@ export namespace Prisma {
     where?: MessageWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
+     *
      * Determine the order of Messages to fetch.
      */
     orderBy?: MessageOrderByWithRelationInput | MessageOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
+     *
      * Sets the position for listing Messages.
      */
     cursor?: MessageWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Take `±n` Messages from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
+     *
      * Skip the first `n` Messages.
      */
     skip?: number
@@ -61615,6 +61753,1051 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MessageInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Notification
+   */
+
+  export type AggregateNotification = {
+    _count: NotificationCountAggregateOutputType | null
+    _avg: NotificationAvgAggregateOutputType | null
+    _sum: NotificationSumAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  export type NotificationAvgAggregateOutputType = {
+    playerId: number | null
+  }
+
+  export type NotificationSumAggregateOutputType = {
+    playerId: number | null
+  }
+
+  export type NotificationMinAggregateOutputType = {
+    id: string | null
+    playerId: number | null
+    message: string | null
+    severity: $Enums.NotificationSeverity | null
+    link: string | null
+    read: boolean | null
+    date: Date | null
+  }
+
+  export type NotificationMaxAggregateOutputType = {
+    id: string | null
+    playerId: number | null
+    message: string | null
+    severity: $Enums.NotificationSeverity | null
+    link: string | null
+    read: boolean | null
+    date: Date | null
+  }
+
+  export type NotificationCountAggregateOutputType = {
+    id: number
+    playerId: number
+    message: number
+    severity: number
+    link: number
+    read: number
+    date: number
+    _all: number
+  }
+
+
+  export type NotificationAvgAggregateInputType = {
+    playerId?: true
+  }
+
+  export type NotificationSumAggregateInputType = {
+    playerId?: true
+  }
+
+  export type NotificationMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    message?: true
+    severity?: true
+    link?: true
+    read?: true
+    date?: true
+  }
+
+  export type NotificationMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    message?: true
+    severity?: true
+    link?: true
+    read?: true
+    date?: true
+  }
+
+  export type NotificationCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    message?: true
+    severity?: true
+    link?: true
+    read?: true
+    date?: true
+    _all?: true
+  }
+
+  export type NotificationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notification to aggregate.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the start position
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Count returned Notifications
+    **/
+    _count?: true | NotificationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to average
+    **/
+    _avg?: NotificationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to sum
+    **/
+    _sum?: NotificationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the minimum value
+    **/
+    _min?: NotificationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     *
+     * Select which fields to find the maximum value
+    **/
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type GetNotificationAggregateType<T extends NotificationAggregateArgs> = {
+        [P in keyof T & keyof AggregateNotification]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNotification[P]>
+      : GetScalarType<T[P], AggregateNotification[P]>
+  }
+
+
+
+
+  export type NotificationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NotificationWhereInput
+    orderBy?: NotificationOrderByWithAggregationInput | NotificationOrderByWithAggregationInput[]
+    by: NotificationScalarFieldEnum[] | NotificationScalarFieldEnum
+    having?: NotificationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NotificationCountAggregateInputType | true
+    _avg?: NotificationAvgAggregateInputType
+    _sum?: NotificationSumAggregateInputType
+    _min?: NotificationMinAggregateInputType
+    _max?: NotificationMaxAggregateInputType
+  }
+
+  export type NotificationGroupByOutputType = {
+    id: string
+    playerId: number
+    message: string
+    severity: $Enums.NotificationSeverity
+    link: string | null
+    read: boolean
+    date: Date
+    _count: NotificationCountAggregateOutputType | null
+    _avg: NotificationAvgAggregateOutputType | null
+    _sum: NotificationSumAggregateOutputType | null
+    _min: NotificationMinAggregateOutputType | null
+    _max: NotificationMaxAggregateOutputType | null
+  }
+
+  type GetNotificationGroupByPayload<T extends NotificationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NotificationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NotificationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+            : GetScalarType<T[P], NotificationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NotificationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    message?: boolean
+    severity?: boolean
+    link?: boolean
+    read?: boolean
+    date?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    message?: boolean
+    severity?: boolean
+    link?: boolean
+    read?: boolean
+    date?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["notification"]>
+
+  export type NotificationSelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    message?: boolean
+    severity?: boolean
+    link?: boolean
+    read?: boolean
+    date?: boolean
+  }
+
+  export type NotificationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "message" | "severity" | "link" | "read" | "date", ExtArgs["result"]["notification"]>
+  export type NotificationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type NotificationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $NotificationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Notification"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      playerId: number
+      message: string
+      severity: $Enums.NotificationSeverity
+      link: string | null
+      read: boolean
+      date: Date
+    }, ExtArgs["result"]["notification"]>
+    composites: {}
+  }
+
+  type NotificationGetPayload<S extends boolean | null | undefined | NotificationDefaultArgs> = $Result.GetResult<Prisma.$NotificationPayload, S>
+
+  type NotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NotificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: NotificationCountAggregateInputType | true
+    }
+
+  export interface NotificationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Notification'], meta: { name: 'Notification' } }
+    /**
+     * Find zero or one Notification that matches the filter.
+     * @param {NotificationFindUniqueArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NotificationFindUniqueArgs>(args: SelectSubset<T, NotificationFindUniqueArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Notification that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NotificationFindUniqueOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NotificationFindUniqueOrThrowArgs>(args: SelectSubset<T, NotificationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Notification that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NotificationFindFirstArgs>(args?: SelectSubset<T, NotificationFindFirstArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Notification that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindFirstOrThrowArgs} args - Arguments to find a Notification
+     * @example
+     * // Get one Notification
+     * const notification = await prisma.notification.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NotificationFindFirstOrThrowArgs>(args?: SelectSubset<T, NotificationFindFirstOrThrowArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Notifications that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Notifications
+     * const notifications = await prisma.notification.findMany()
+     *
+     * // Get first 10 Notifications
+     * const notifications = await prisma.notification.findMany({ take: 10 })
+     *
+     * // Only select the `id`
+     * const notificationWithIdOnly = await prisma.notification.findMany({ select: { id: true } })
+     *
+     */
+    findMany<T extends NotificationFindManyArgs>(args?: SelectSubset<T, NotificationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Notification.
+     * @param {NotificationCreateArgs} args - Arguments to create a Notification.
+     * @example
+     * // Create one Notification
+     * const Notification = await prisma.notification.create({
+     *   data: {
+     *     // ... data to create a Notification
+     *   }
+     * })
+     *
+     */
+    create<T extends NotificationCreateArgs>(args: SelectSubset<T, NotificationCreateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Notifications.
+     * @param {NotificationCreateManyArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     */
+    createMany<T extends NotificationCreateManyArgs>(args?: SelectSubset<T, NotificationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Notifications and returns the data saved in the database.
+     * @param {NotificationCreateManyAndReturnArgs} args - Arguments to create many Notifications.
+     * @example
+     * // Create many Notifications
+     * const notification = await prisma.notification.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *
+     * // Create many Notifications and only return the `id`
+     * const notificationWithIdOnly = await prisma.notification.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     *
+     */
+    createManyAndReturn<T extends NotificationCreateManyAndReturnArgs>(args?: SelectSubset<T, NotificationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Notification.
+     * @param {NotificationDeleteArgs} args - Arguments to delete one Notification.
+     * @example
+     * // Delete one Notification
+     * const Notification = await prisma.notification.delete({
+     *   where: {
+     *     // ... filter to delete one Notification
+     *   }
+     * })
+     *
+     */
+    delete<T extends NotificationDeleteArgs>(args: SelectSubset<T, NotificationDeleteArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Notification.
+     * @param {NotificationUpdateArgs} args - Arguments to update one Notification.
+     * @example
+     * // Update one Notification
+     * const notification = await prisma.notification.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    update<T extends NotificationUpdateArgs>(args: SelectSubset<T, NotificationUpdateArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Notifications.
+     * @param {NotificationDeleteManyArgs} args - Arguments to filter Notifications to delete.
+     * @example
+     * // Delete a few Notifications
+     * const { count } = await prisma.notification.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     *
+     */
+    deleteMany<T extends NotificationDeleteManyArgs>(args?: SelectSubset<T, NotificationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Notifications
+     * const notification = await prisma.notification.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     *
+     */
+    updateMany<T extends NotificationUpdateManyArgs>(args: SelectSubset<T, NotificationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Notification.
+     * @param {NotificationUpsertArgs} args - Arguments to update or create a Notification.
+     * @example
+     * // Update or create a Notification
+     * const notification = await prisma.notification.upsert({
+     *   create: {
+     *     // ... data to create a Notification
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Notification we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NotificationUpsertArgs>(args: SelectSubset<T, NotificationUpsertArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Notifications.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationCountArgs} args - Arguments to filter Notifications to count.
+     * @example
+     * // Count the number of Notifications
+     * const count = await prisma.notification.count({
+     *   where: {
+     *     // ... the filter for the Notifications we want to count
+     *   }
+     * })
+    **/
+    count<T extends NotificationCountArgs>(
+      args?: Subset<T, NotificationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NotificationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NotificationAggregateArgs>(args: Subset<T, NotificationAggregateArgs>): Prisma.PrismaPromise<GetNotificationAggregateType<T>>
+
+    /**
+     * Group by Notification.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NotificationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     *
+    **/
+    groupBy<
+      T extends NotificationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NotificationGroupByArgs['orderBy'] }
+        : { orderBy?: NotificationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NotificationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNotificationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Notification model
+   */
+  readonly fields: NotificationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Notification.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NotificationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Notification model
+   */
+  interface NotificationFieldRefs {
+    readonly id: FieldRef<"Notification", 'String'>
+    readonly playerId: FieldRef<"Notification", 'Int'>
+    readonly message: FieldRef<"Notification", 'String'>
+    readonly severity: FieldRef<"Notification", 'NotificationSeverity'>
+    readonly link: FieldRef<"Notification", 'String'>
+    readonly read: FieldRef<"Notification", 'Boolean'>
+    readonly date: FieldRef<"Notification", 'DateTime'>
+  }
+
+
+  // Custom InputTypes
+  /**
+   * Notification findUnique
+   */
+  export type NotificationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification findUniqueOrThrow
+   */
+  export type NotificationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where: NotificationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification findFirst
+   */
+  export type NotificationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification findFirstOrThrow
+   */
+  export type NotificationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notification to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for searching for Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     *
+     * Filter by unique combinations of Notifications.
+     */
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification findMany
+   */
+  export type NotificationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter, which Notifications to fetch.
+     */
+    where?: NotificationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     *
+     * Determine the order of Notifications to fetch.
+     */
+    orderBy?: NotificationOrderByWithRelationInput | NotificationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     *
+     * Sets the position for listing Notifications.
+     */
+    cursor?: NotificationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Take `±n` Notifications from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     *
+     * Skip the first `n` Notifications.
+     */
+    skip?: number
+    distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification create
+   */
+  export type NotificationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Notification.
+     */
+    data: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification createMany
+   */
+  export type NotificationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Notification createManyAndReturn
+   */
+  export type NotificationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * The data used to create many Notifications.
+     */
+    data: NotificationCreateManyInput | NotificationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Notification update
+   */
+  export type NotificationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Notification.
+     */
+    data: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+    /**
+     * Choose, which Notification to update.
+     */
+    where: NotificationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification updateMany
+   */
+  export type NotificationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Notifications.
+     */
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyInput>
+    /**
+     * Filter which Notifications to update
+     */
+    where?: NotificationWhereInput
+  }
+
+  /**
+   * Notification upsert
+   */
+  export type NotificationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Notification to update in case it exists.
+     */
+    where: NotificationWhereUniqueInput
+    /**
+     * In case the Notification found by the `where` argument doesn't exist, create a new Notification with this data.
+     */
+    create: XOR<NotificationCreateInput, NotificationUncheckedCreateInput>
+    /**
+     * In case the Notification was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NotificationUpdateInput, NotificationUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification delete
+   */
+  export type NotificationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
+    /**
+     * Filter which Notification to delete.
+     */
+    where: NotificationWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Notification deleteMany
+   */
+  export type NotificationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Notifications to delete
+     */
+    where?: NotificationWhereInput
+  }
+
+  /**
+   * Notification without action
+   */
+  export type NotificationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Notification
+     */
+    select?: NotificationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Notification
+     */
+    omit?: NotificationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NotificationInclude<ExtArgs> | null
   }
 
 
@@ -62245,6 +63428,19 @@ export namespace Prisma {
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+  export const NotificationScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    message: 'message',
+    severity: 'severity',
+    link: 'link',
+    read: 'read',
+    date: 'date'
+  };
+
+  export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -62270,7 +63466,7 @@ export namespace Prisma {
 
 
   /**
-   * Field references 
+   * Field references
    */
 
 
@@ -62278,189 +63474,203 @@ export namespace Prisma {
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
+
 
 
   /**
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
+
 
 
   /**
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
+
 
 
   /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
-    
+
 
 
   /**
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'UnavailableReason'
    */
   export type EnumUnavailableReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnavailableReason'>
-    
+
 
 
   /**
    * Reference to a field of type 'UnavailableReason[]'
    */
   export type ListEnumUnavailableReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UnavailableReason[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'BigInt'
    */
   export type BigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt'>
-    
+
 
 
   /**
    * Reference to a field of type 'BigInt[]'
    */
   export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'Bytes'
    */
   export type BytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes'>
-    
+
 
 
   /**
    * Reference to a field of type 'Bytes[]'
    */
   export type ListBytesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Bytes[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'AdminRole'
    */
   export type EnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole'>
-    
+
 
 
   /**
    * Reference to a field of type 'AdminRole[]'
    */
   export type ListEnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'Lang'
    */
   export type EnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang'>
-    
+
 
 
   /**
    * Reference to a field of type 'Lang[]'
    */
   export type ListEnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'OfferStatus'
    */
   export type EnumOfferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OfferStatus'>
-    
+
 
 
   /**
    * Reference to a field of type 'OfferStatus[]'
    */
   export type ListEnumOfferStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'OfferStatus[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'LogType'
    */
   export type EnumLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LogType'>
-    
+
 
 
   /**
    * Reference to a field of type 'LogType[]'
    */
   export type ListEnumLogTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'LogType[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'PantheonMotif'
    */
   export type EnumPantheonMotifFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PantheonMotif'>
-    
+
 
 
   /**
    * Reference to a field of type 'PantheonMotif[]'
    */
   export type ListEnumPantheonMotifFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PantheonMotif[]'>
-    
+
 
 
   /**
    * Reference to a field of type 'ModerationReason'
    */
   export type EnumModerationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationReason'>
-    
+
 
 
   /**
    * Reference to a field of type 'ModerationReason[]'
    */
   export type ListEnumModerationReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ModerationReason[]'>
-    
+
+
+
+  /**
+   * Reference to a field of type 'NotificationSeverity'
+   */
+  export type EnumNotificationSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationSeverity'>
+
+
+
+  /**
+   * Reference to a field of type 'NotificationSeverity[]'
+   */
+  export type ListEnumNotificationSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationSeverity[]'>
+
 
 
   /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
-    
+
 
 
   /**
    * Reference to a field of type 'Float[]'
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
-    
+
   /**
    * Deep Input Types
    */
@@ -63994,6 +65204,7 @@ export namespace Prisma {
     messages?: MessageListRelationFilter
     createdConversations?: ConversationListRelationFilter
     Conversation?: ConversationListRelationFilter
+    notifications?: NotificationListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -64051,6 +65262,7 @@ export namespace Prisma {
     messages?: MessageOrderByRelationAggregateInput
     createdConversations?: ConversationOrderByRelationAggregateInput
     Conversation?: ConversationOrderByRelationAggregateInput
+    notifications?: NotificationOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -64111,6 +65323,7 @@ export namespace Prisma {
     messages?: MessageListRelationFilter
     createdConversations?: ConversationListRelationFilter
     Conversation?: ConversationListRelationFilter
+    notifications?: NotificationListRelationFilter
   }, "id" | "clanMemberId">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -65829,6 +67042,73 @@ export namespace Prisma {
     conversationId?: StringWithAggregatesFilter<"Message"> | string
   }
 
+  export type NotificationWhereInput = {
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    id?: UuidFilter<"Notification"> | string
+    playerId?: IntFilter<"Notification"> | number
+    message?: StringFilter<"Notification"> | string
+    severity?: EnumNotificationSeverityFilter<"Notification"> | $Enums.NotificationSeverity
+    link?: StringNullableFilter<"Notification"> | string | null
+    read?: BoolFilter<"Notification"> | boolean
+    date?: DateTimeFilter<"Notification"> | Date | string
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+  }
+
+  export type NotificationOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    message?: SortOrder
+    severity?: SortOrder
+    link?: SortOrderInput | SortOrder
+    read?: SortOrder
+    date?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type NotificationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NotificationWhereInput | NotificationWhereInput[]
+    OR?: NotificationWhereInput[]
+    NOT?: NotificationWhereInput | NotificationWhereInput[]
+    playerId?: IntFilter<"Notification"> | number
+    message?: StringFilter<"Notification"> | string
+    severity?: EnumNotificationSeverityFilter<"Notification"> | $Enums.NotificationSeverity
+    link?: StringNullableFilter<"Notification"> | string | null
+    read?: BoolFilter<"Notification"> | boolean
+    date?: DateTimeFilter<"Notification"> | Date | string
+    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+  }, "id" | "id">
+
+  export type NotificationOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    message?: SortOrder
+    severity?: SortOrder
+    link?: SortOrderInput | SortOrder
+    read?: SortOrder
+    date?: SortOrder
+    _count?: NotificationCountOrderByAggregateInput
+    _avg?: NotificationAvgOrderByAggregateInput
+    _max?: NotificationMaxOrderByAggregateInput
+    _min?: NotificationMinOrderByAggregateInput
+    _sum?: NotificationSumOrderByAggregateInput
+  }
+
+  export type NotificationScalarWhereWithAggregatesInput = {
+    AND?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    OR?: NotificationScalarWhereWithAggregatesInput[]
+    NOT?: NotificationScalarWhereWithAggregatesInput | NotificationScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Notification"> | string
+    playerId?: IntWithAggregatesFilter<"Notification"> | number
+    message?: StringWithAggregatesFilter<"Notification"> | string
+    severity?: EnumNotificationSeverityWithAggregatesFilter<"Notification"> | $Enums.NotificationSeverity
+    link?: StringNullableWithAggregatesFilter<"Notification"> | string | null
+    read?: BoolWithAggregatesFilter<"Notification"> | boolean
+    date?: DateTimeWithAggregatesFilter<"Notification"> | Date | string
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -67323,6 +68603,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -67380,6 +68661,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -67436,6 +68718,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -67493,6 +68776,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -69038,6 +70322,75 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     senderId?: IntFieldUpdateOperationsInput | number
     conversationId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type NotificationCreateInput = {
+    id?: string
+    message: string
+    severity?: $Enums.NotificationSeverity
+    link?: string | null
+    read?: boolean
+    date?: Date | string
+    player: PlayerCreateNestedOneWithoutNotificationsInput
+  }
+
+  export type NotificationUncheckedCreateInput = {
+    id?: string
+    playerId: number
+    message: string
+    severity?: $Enums.NotificationSeverity
+    link?: string | null
+    read?: boolean
+    date?: Date | string
+  }
+
+  export type NotificationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutNotificationsNestedInput
+  }
+
+  export type NotificationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationCreateManyInput = {
+    id?: string
+    playerId: number
+    message: string
+    severity?: $Enums.NotificationSeverity
+    link?: string | null
+    read?: boolean
+    date?: Date | string
+  }
+
+  export type NotificationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: IntFieldUpdateOperationsInput | number
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -70613,6 +71966,12 @@ export namespace Prisma {
     none?: ConversationWhereInput
   }
 
+  export type NotificationListRelationFilter = {
+    every?: NotificationWhereInput
+    some?: NotificationWhereInput
+    none?: NotificationWhereInput
+  }
+
   export type ImportedTwinoidAchievementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -70678,6 +72037,10 @@ export namespace Prisma {
   }
 
   export type ConversationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NotificationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -72035,6 +73398,88 @@ export namespace Prisma {
   export type MessageSumOrderByAggregateInput = {
     id?: SortOrder
     senderId?: SortOrder
+  }
+
+  export type UuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type EnumNotificationSeverityFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationSeverity | EnumNotificationSeverityFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationSeverityFilter<$PrismaModel> | $Enums.NotificationSeverity
+  }
+
+  export type NotificationCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    message?: SortOrder
+    severity?: SortOrder
+    link?: SortOrder
+    read?: SortOrder
+    date?: SortOrder
+  }
+
+  export type NotificationAvgOrderByAggregateInput = {
+    playerId?: SortOrder
+  }
+
+  export type NotificationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    message?: SortOrder
+    severity?: SortOrder
+    link?: SortOrder
+    read?: SortOrder
+    date?: SortOrder
+  }
+
+  export type NotificationMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    message?: SortOrder
+    severity?: SortOrder
+    link?: SortOrder
+    read?: SortOrder
+    date?: SortOrder
+  }
+
+  export type NotificationSumOrderByAggregateInput = {
+    playerId?: SortOrder
+  }
+
+  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumNotificationSeverityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationSeverity | EnumNotificationSeverityFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationSeverityWithAggregatesFilter<$PrismaModel> | $Enums.NotificationSeverity
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationSeverityFilter<$PrismaModel>
+    _max?: NestedEnumNotificationSeverityFilter<$PrismaModel>
   }
 
   export type DinozCreateNestedManyWithoutConcentrationInput = {
@@ -73557,6 +75002,13 @@ export namespace Prisma {
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
   }
 
+  export type NotificationCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<NotificationCreateWithoutPlayerInput, NotificationUncheckedCreateWithoutPlayerInput> | NotificationCreateWithoutPlayerInput[] | NotificationUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPlayerInput | NotificationCreateOrConnectWithoutPlayerInput[]
+    createMany?: NotificationCreateManyPlayerInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
   export type DinozUncheckedCreateNestedManyWithoutPlayerInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -73753,6 +75205,13 @@ export namespace Prisma {
     connectOrCreate?: ConversationCreateOrConnectWithoutPlayerInput | ConversationCreateOrConnectWithoutPlayerInput[]
     createMany?: ConversationCreateManyPlayerInputEnvelope
     connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  }
+
+  export type NotificationUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<NotificationCreateWithoutPlayerInput, NotificationUncheckedCreateWithoutPlayerInput> | NotificationCreateWithoutPlayerInput[] | NotificationUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPlayerInput | NotificationCreateOrConnectWithoutPlayerInput[]
+    createMany?: NotificationCreateManyPlayerInputEnvelope
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -74149,6 +75608,20 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
+  export type NotificationUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<NotificationCreateWithoutPlayerInput, NotificationUncheckedCreateWithoutPlayerInput> | NotificationCreateWithoutPlayerInput[] | NotificationUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPlayerInput | NotificationCreateOrConnectWithoutPlayerInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutPlayerInput | NotificationUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: NotificationCreateManyPlayerInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutPlayerInput | NotificationUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutPlayerInput | NotificationUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
   export type DinozUncheckedUpdateManyWithoutPlayerNestedInput = {
     create?: XOR<DinozCreateWithoutPlayerInput, DinozUncheckedCreateWithoutPlayerInput> | DinozCreateWithoutPlayerInput[] | DinozUncheckedCreateWithoutPlayerInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutPlayerInput | DinozCreateOrConnectWithoutPlayerInput[]
@@ -74533,6 +76006,20 @@ export namespace Prisma {
     update?: ConversationUpdateWithWhereUniqueWithoutPlayerInput | ConversationUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: ConversationUpdateManyWithWhereWithoutPlayerInput | ConversationUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<NotificationCreateWithoutPlayerInput, NotificationUncheckedCreateWithoutPlayerInput> | NotificationCreateWithoutPlayerInput[] | NotificationUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: NotificationCreateOrConnectWithoutPlayerInput | NotificationCreateOrConnectWithoutPlayerInput[]
+    upsert?: NotificationUpsertWithWhereUniqueWithoutPlayerInput | NotificationUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: NotificationCreateManyPlayerInputEnvelope
+    set?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    disconnect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    delete?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+    update?: NotificationUpdateWithWhereUniqueWithoutPlayerInput | NotificationUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: NotificationUpdateManyWithWhereWithoutPlayerInput | NotificationUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutUsernameHistoryInput = {
@@ -75688,6 +77175,24 @@ export namespace Prisma {
     update?: XOR<XOR<ConversationUpdateToOneWithWhereWithoutPinnedMessageInput, ConversationUpdateWithoutPinnedMessageInput>, ConversationUncheckedUpdateWithoutPinnedMessageInput>
   }
 
+  export type PlayerCreateNestedOneWithoutNotificationsInput = {
+    create?: XOR<PlayerCreateWithoutNotificationsInput, PlayerUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutNotificationsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type EnumNotificationSeverityFieldUpdateOperationsInput = {
+    set?: $Enums.NotificationSeverity
+  }
+
+  export type PlayerUpdateOneRequiredWithoutNotificationsNestedInput = {
+    create?: XOR<PlayerCreateWithoutNotificationsInput, PlayerUncheckedCreateWithoutNotificationsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutNotificationsInput
+    upsert?: PlayerUpsertWithoutNotificationsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutNotificationsInput, PlayerUpdateWithoutNotificationsInput>, PlayerUncheckedUpdateWithoutNotificationsInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -76065,6 +77570,48 @@ export namespace Prisma {
     _max?: NestedEnumModerationReasonFilter<$PrismaModel>
   }
 
+  export type NestedUuidFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumNotificationSeverityFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationSeverity | EnumNotificationSeverityFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationSeverityFilter<$PrismaModel> | $Enums.NotificationSeverity
+  }
+
+  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNotificationSeverityWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NotificationSeverity | EnumNotificationSeverityFieldRefInput<$PrismaModel>
+    in?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NotificationSeverity[] | ListEnumNotificationSeverityFieldRefInput<$PrismaModel>
+    not?: NestedEnumNotificationSeverityWithAggregatesFilter<$PrismaModel> | $Enums.NotificationSeverity
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNotificationSeverityFilter<$PrismaModel>
+    _max?: NestedEnumNotificationSeverityFilter<$PrismaModel>
+  }
+
   export type DinozCreateWithoutConcentrationInput = {
     name: string
     raceId: number
@@ -76353,6 +77900,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -76409,6 +77957,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -76957,6 +78506,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -77013,6 +78563,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -79025,6 +80576,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedPlayerInput = {
@@ -79081,6 +80633,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedPlayerInput = {
@@ -79274,6 +80827,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedPlayerInput = {
@@ -79330,6 +80884,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ImportedPlayerIngredientUpsertWithWhereUniqueWithoutImported_playerInput = {
@@ -79768,6 +81323,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidAchievementsInput = {
@@ -79824,6 +81380,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidAchievementsInput = {
@@ -79895,6 +81452,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidAchievementsInput = {
@@ -79951,6 +81509,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidSiteInput = {
@@ -80006,6 +81565,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidSiteInput = {
@@ -80062,6 +81622,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidSiteInput = {
@@ -80133,6 +81694,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidSiteInput = {
@@ -80189,6 +81751,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutImportedTwinoidStatsInput = {
@@ -80244,6 +81807,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutImportedTwinoidStatsInput = {
@@ -80300,6 +81864,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutImportedTwinoidStatsInput = {
@@ -80371,6 +81936,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutImportedTwinoidStatsInput = {
@@ -80427,6 +81993,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -81397,6 +82964,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type NotificationCreateWithoutPlayerInput = {
+    id?: string
+    message: string
+    severity?: $Enums.NotificationSeverity
+    link?: string | null
+    read?: boolean
+    date?: Date | string
+  }
+
+  export type NotificationUncheckedCreateWithoutPlayerInput = {
+    id?: string
+    message: string
+    severity?: $Enums.NotificationSeverity
+    link?: string | null
+    read?: boolean
+    date?: Date | string
+  }
+
+  export type NotificationCreateOrConnectWithoutPlayerInput = {
+    where: NotificationWhereUniqueInput
+    create: XOR<NotificationCreateWithoutPlayerInput, NotificationUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type NotificationCreateManyPlayerInputEnvelope = {
+    data: NotificationCreateManyPlayerInput | NotificationCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DinozUpsertWithWhereUniqueWithoutPlayerInput = {
     where: DinozWhereUniqueInput
     update: XOR<DinozUpdateWithoutPlayerInput, DinozUncheckedUpdateWithoutPlayerInput>
@@ -82121,6 +83716,35 @@ export namespace Prisma {
     data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutPlayerInput>
   }
 
+  export type NotificationUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: NotificationWhereUniqueInput
+    update: XOR<NotificationUpdateWithoutPlayerInput, NotificationUncheckedUpdateWithoutPlayerInput>
+    create: XOR<NotificationCreateWithoutPlayerInput, NotificationUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type NotificationUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: NotificationWhereUniqueInput
+    data: XOR<NotificationUpdateWithoutPlayerInput, NotificationUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type NotificationUpdateManyWithWhereWithoutPlayerInput = {
+    where: NotificationScalarWhereInput
+    data: XOR<NotificationUpdateManyMutationInput, NotificationUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type NotificationScalarWhereInput = {
+    AND?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    OR?: NotificationScalarWhereInput[]
+    NOT?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+    id?: UuidFilter<"Notification"> | string
+    playerId?: IntFilter<"Notification"> | number
+    message?: StringFilter<"Notification"> | string
+    severity?: EnumNotificationSeverityFilter<"Notification"> | $Enums.NotificationSeverity
+    link?: StringNullableFilter<"Notification"> | string | null
+    read?: BoolFilter<"Notification"> | boolean
+    date?: DateTimeFilter<"Notification"> | Date | string
+  }
+
   export type PlayerCreateWithoutUsernameHistoryInput = {
     hasImported: boolean
     customText?: string | null
@@ -82174,6 +83798,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -82230,6 +83855,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -82301,6 +83927,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -82357,6 +83984,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -82412,6 +84040,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -82468,6 +84097,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -82539,6 +84169,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -82595,6 +84226,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -82650,6 +84282,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -82706,6 +84339,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -82777,6 +84411,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -82833,6 +84468,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -82888,6 +84524,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -82944,6 +84581,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -83015,6 +84653,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -83071,6 +84710,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -83126,6 +84766,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -83182,6 +84823,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -83253,6 +84895,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -83309,6 +84952,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -83364,6 +85008,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -83420,6 +85065,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -83491,6 +85137,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -83547,6 +85194,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -83602,6 +85250,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -83658,6 +85307,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -83729,6 +85379,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -83785,6 +85436,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -83840,6 +85492,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -83896,6 +85549,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -83967,6 +85621,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -84023,6 +85678,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -84162,6 +85818,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -84218,6 +85875,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -84321,6 +85979,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -84377,6 +86036,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutOffersInput = {
@@ -84432,6 +86092,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -84488,6 +86149,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -84693,6 +86355,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -84749,6 +86412,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutOffersInput = {
@@ -84943,6 +86607,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -84999,6 +86664,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -85160,6 +86826,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -85216,6 +86883,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutLogsInput = {
@@ -85553,6 +87221,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -85609,6 +87278,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -85680,6 +87350,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -85736,6 +87407,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutPantheonInput = {
@@ -85791,6 +87463,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -85847,6 +87520,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -86008,6 +87682,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -86064,6 +87739,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutPantheonInput = {
@@ -86325,6 +88001,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -86381,6 +88058,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -86607,6 +88285,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -86663,6 +88342,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanJoinRequestUpsertWithWhereUniqueWithoutClanInput = {
@@ -86806,6 +88486,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -86862,6 +88543,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -86973,6 +88655,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -87029,6 +88712,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -87260,6 +88944,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -87316,6 +89001,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -87427,6 +89113,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -87483,6 +89170,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutHistoryInput = {
@@ -87572,6 +89260,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -87628,6 +89317,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -87739,6 +89429,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -87795,6 +89486,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutMembersInput = {
@@ -87884,6 +89576,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -87940,6 +89633,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -88051,6 +89745,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -88107,6 +89802,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -88236,6 +89932,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -88292,6 +89989,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -88352,6 +90050,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -88408,6 +90107,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -88569,6 +90269,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -88625,6 +90326,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -88691,6 +90393,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -88747,6 +90450,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozUpsertWithoutModerationInput = {
@@ -88898,6 +90602,7 @@ export namespace Prisma {
     conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -88954,6 +90659,7 @@ export namespace Prisma {
     conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -89060,6 +90766,7 @@ export namespace Prisma {
     conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -89116,6 +90823,7 @@ export namespace Prisma {
     conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -89207,6 +90915,7 @@ export namespace Prisma {
     conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -89263,6 +90972,7 @@ export namespace Prisma {
     conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ParticipantsUpsertWithWhereUniqueWithoutConversationInput = {
@@ -89361,6 +91071,7 @@ export namespace Prisma {
     conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -89417,6 +91128,7 @@ export namespace Prisma {
     conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -89498,6 +91210,7 @@ export namespace Prisma {
     messages?: MessageCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -89554,6 +91267,7 @@ export namespace Prisma {
     messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -89652,6 +91366,7 @@ export namespace Prisma {
     messages?: MessageUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -89708,6 +91423,7 @@ export namespace Prisma {
     messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationUpsertWithoutParticipantsInput = {
@@ -89796,6 +91512,7 @@ export namespace Prisma {
     conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
     createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -89852,6 +91569,7 @@ export namespace Prisma {
     conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
     createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
     Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -89977,6 +91695,7 @@ export namespace Prisma {
     conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
     createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -90033,6 +91752,7 @@ export namespace Prisma {
     conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
     createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
     Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationUpsertWithoutMessagesInput = {
@@ -90099,6 +91819,248 @@ export namespace Prisma {
     playerId?: NullableIntFieldUpdateOperationsInput | number | null
     participants?: ParticipantsUncheckedUpdateManyWithoutConversationNestedInput
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type PlayerCreateWithoutNotificationsInput = {
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    dailyGridRewards?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutNotificationsInput = {
+    id?: number
+    hasImported: boolean
+    customText?: string | null
+    name: string
+    eternalTwinId: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    messie?: boolean
+    matelasseur?: boolean
+    labruteDone?: boolean
+    dailyGridRewards?: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    importedPlayer?: ImportedPlayerUncheckedCreateNestedOneWithoutPlayerInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedCreateNestedManyWithoutPlayerInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutNotificationsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutNotificationsInput, PlayerUncheckedCreateWithoutNotificationsInput>
+  }
+
+  export type PlayerUpsertWithoutNotificationsInput = {
+    update: XOR<PlayerUpdateWithoutNotificationsInput, PlayerUncheckedUpdateWithoutNotificationsInput>
+    create: XOR<PlayerCreateWithoutNotificationsInput, PlayerUncheckedCreateWithoutNotificationsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutNotificationsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutNotificationsInput, PlayerUncheckedUpdateWithoutNotificationsInput>
+  }
+
+  export type PlayerUpdateWithoutNotificationsInput = {
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutNotificationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    hasImported?: BoolFieldUpdateOperationsInput | boolean
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    eternalTwinId?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    importedPlayer?: ImportedPlayerUncheckedUpdateOneWithoutPlayerNestedInput
+    importedTwinoidAchievements?: ImportedTwinoidAchievementUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidSite?: ImportedTwinoidSiteUncheckedUpdateManyWithoutPlayerNestedInput
+    importedTwinoidStats?: ImportedTwinoidStatUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -91127,6 +93089,15 @@ export namespace Prisma {
     pinnedMessageId?: number | null
   }
 
+  export type NotificationCreateManyPlayerInput = {
+    id?: string
+    message: string
+    severity?: $Enums.NotificationSeverity
+    link?: string | null
+    read?: boolean
+    date?: Date | string
+  }
+
   export type DinozUpdateWithoutPlayerInput = {
     name?: StringFieldUpdateOperationsInput | string
     raceId?: IntFieldUpdateOperationsInput | number
@@ -91745,6 +93716,33 @@ export namespace Prisma {
     pinnedMessageId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type NotificationUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NotificationUncheckedUpdateManyWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    severity?: EnumNotificationSeverityFieldUpdateOperationsInput | $Enums.NotificationSeverity
+    link?: NullableStringFieldUpdateOperationsInput | string | null
+    read?: BoolFieldUpdateOperationsInput | boolean
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OfferItemCreateManyOfferInput = {
     id?: number
     itemId: number
@@ -92309,6 +94307,10 @@ export namespace Prisma {
      * @deprecated Use MessageDefaultArgs instead
      */
     export type MessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MessageDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NotificationDefaultArgs instead
+     */
+    export type NotificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NotificationDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

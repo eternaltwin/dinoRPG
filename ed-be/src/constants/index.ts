@@ -22,7 +22,8 @@ export const apiRoutes = {
 	clanRoutes: '/api/v1/clan',
 	moderation: '/api/v1/moderation',
 	pantheon: '/api/v1/pantheon',
-	messagerie: '/api/v1/messagerie'
+	messagerie: '/api/v1/messagerie',
+	notification: '/api/v1/notifications'
 };
 
 export const regex = {

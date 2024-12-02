@@ -17,7 +17,7 @@
 			</a>
 			<span v-if="isLogged" class="playerLogged">
 				<button @click="openMenu" class="playerBadge">Menu</button>
-				<span class="notifications">1</span>
+				<span class="notifications" v-if="notification > 0">{{ notification }}</span>
 			</span>
 		</div>
 	</div>
@@ -25,9 +25,9 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { localStore } from '../../store/index.js';
+import { localStore, playerStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
-import { OauthService } from '../../services/index.js';
+import { NotificationService, OauthService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
@@ -36,13 +36,12 @@ export default defineComponent({
 		return {
 			isLogged: false as boolean,
 			localStore: localStore(),
-			time: '' as string
+			playerStore: playerStore(),
+			time: '' as string,
+			notification: 0 as number
 		};
 	},
 	methods: {
-		debug() {
-			console.log();
-		},
 		async authenticateToET(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			let jwt: string;
@@ -71,18 +70,30 @@ export default defineComponent({
 		},
 		openDinoz() {
 			EventBus.emit('dinozMenu', true);
+		},
+		async refreshNotif() {
+			const notification = await NotificationService.getNotifications();
+			this.playerStore.setNotifications(notification);
+			this.playerStore.setNotificationsCounter(notification.length);
 		}
 	},
 	watch: {
 		'localStore.getJwt': function (jwt: string | undefined) {
 			this.isLogged = typeof jwt === 'string';
+		},
+		'playerStore.getNotificationsCounter': function (notification: number) {
+			this.notification = notification;
 		}
 	},
 	mounted() {
 		this.isLogged = typeof this.localStore.getJwt === 'string';
+		this.notification = this.playerStore.getNotificationsCounter;
 		setInterval(() => {
 			this.getTime();
 		}, 1000);
+		setInterval(() => {
+			this.refreshNotif();
+		}, 60 * 1000);
 	}
 });
 </script>

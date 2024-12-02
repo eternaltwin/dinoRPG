@@ -576,6 +576,16 @@ exports.Prisma.MessageScalarFieldEnum = {
   conversationId: 'conversationId'
 };
 
+exports.Prisma.NotificationScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  message: 'message',
+  severity: 'severity',
+  link: 'link',
+  read: 'read',
+  date: 'date'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -672,6 +682,13 @@ exports.ModerationReason = exports.$Enums.ModerationReason = {
   customText: 'customText'
 };
 
+exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
+  info: 'info',
+  success: 'success',
+  warning: 'warning',
+  error: 'error'
+};
+
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
   Dinoz: 'Dinoz',
@@ -723,7 +740,8 @@ exports.Prisma.ModelName = {
   Moderation: 'Moderation',
   Conversation: 'Conversation',
   Participants: 'Participants',
-  Message: 'Message'
+  Message: 'Message',
+  Notification: 'Notification'
 };
 
 /**
@@ -743,7 +761,7 @@ class PrismaClient {
         } else {
           message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
         }
-        
+
         message += `
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 

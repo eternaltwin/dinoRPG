@@ -1,5 +1,6 @@
 import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 import { PlayerOptions } from './PlayerOptions.mjs';
+import { Notification } from '../notifications/notification.mjs';
 
 export interface PlayerCommonData {
 	money: number;
@@ -12,4 +13,5 @@ export interface PlayerCommonData {
 	admin: boolean;
 	priest: boolean;
 	shopkeeper: boolean;
+	notifications: Notification[];
 }

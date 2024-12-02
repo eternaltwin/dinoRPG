@@ -28,12 +28,23 @@ export default defineComponent({
 	methods: {
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage;
-			const formatter = new Intl.DateTimeFormat(lang ?? 'fr', { month: 'long' });
-			const day = String(date.getDate()).padStart(2, '0'); // Ajoute un '0' si nécessaire
-			const month = formatter.format(date);
-			const year = date.getFullYear();
-			return `${day} ${month} ${year}`;
+			const lang = this.localStore.getLanguage ?? 'fr';
+
+			// Formatter pour la date (jour, mois, année)
+			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
+			const formattedDate = dateFormatter.format(date);
+
+			// Formatter pour l'heure (heure, minute, seconde)
+			const timeFormatter = new Intl.DateTimeFormat(lang, {
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: false
+			});
+			const formattedTime = timeFormatter.format(date);
+
+			// Combinaison date + heure
+			return `${formattedDate}, ${formattedTime}`;
 		}
 	}
 });
@@ -55,7 +66,7 @@ export default defineComponent({
 		padding: 4px;
 		justify-content: space-between;
 		.date {
-			font-size: 1.25rem;
+			font-size: 1rem;
 			line-height: 1.75rem;
 		}
 	}

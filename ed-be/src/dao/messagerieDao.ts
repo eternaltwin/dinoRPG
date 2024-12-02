@@ -18,11 +18,6 @@ export async function getConversationsWithPlayer(playerId: number) {
 					name: true
 				}
 			},
-			messages: {
-				select: {
-					createdAt: true
-				}
-			},
 			participants: {
 				select: {
 					playerId: true

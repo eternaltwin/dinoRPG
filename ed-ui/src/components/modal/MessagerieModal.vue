@@ -46,7 +46,10 @@
 							selected: thread.id === selectedThreadId
 						}"
 					>
-						<p class="name">{{ thread.title }}</p>
+						<p class="name" :key="notifiedThreads.length">
+							<img v-if="notifiedThreads.includes(thread.id)" :src="getImgURL('icons', 'small_notif')" />
+							{{ thread.title }}
+						</p>
 						<div>
 							<span>
 								<b class="creator">{{ thread.createdBy.name }}</b>
@@ -136,7 +139,9 @@ export default defineComponent({
 			selectedThreadId: null as string | null,
 			isSearchVisible: false,
 			searchQuery: '',
-			currentThread: undefined as undefined | FullThread
+			currentThread: undefined as undefined | FullThread,
+			notifiedThreads: [] as string[],
+			playerStore: playerStore()
 		};
 	},
 	methods: {
@@ -165,6 +170,7 @@ export default defineComponent({
 			this.creationMode = false;
 			this.threadSelected = true;
 			this.selectedThreadId = id;
+			this.notifiedThreads = this.notifiedThreads.filter(t => t !== id);
 		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
@@ -217,6 +223,12 @@ export default defineComponent({
 			this.threads = await MessagerieService.getThreads();
 		});
 		this.messageRef = this.$refs.messageRef as HTMLDialogElement;
+		this.notifiedThreads = this.playerStore.getNotifications.map(n => n.message);
+	},
+	watch: {
+		'playerStore.getNotifications': function () {
+			this.notifiedThreads = this.playerStore.getNotifications.map(n => n.message);
+		}
 	}
 });
 </script>
@@ -328,6 +340,10 @@ dialog {
 					text-overflow: ' [...]';
 					white-space: nowrap;
 					max-width: calc(100% - 50px);
+					img {
+						width: 16px;
+						height: 16px;
+					}
 				}
 				span {
 					padding-left: 3px;

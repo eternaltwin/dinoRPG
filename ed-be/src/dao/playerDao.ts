@@ -320,6 +320,10 @@ export async function getCommonDataRequest(playerId: number) {
 			shopKeeper: true,
 			lastLogin: true,
 			ClanMember: { select: { clanId: true } },
+			notifications: {
+				select: { id: true, message: true, severity: true, link: true, date: true },
+				where: { read: false }
+			},
 			dinoz: {
 				select: {
 					id: true,

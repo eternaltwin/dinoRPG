@@ -113,7 +113,8 @@ export async function getCommonData(req: Request) {
 		},
 		admin: req?.auth?.isAdmin || false,
 		priest: playerCommonData.priest,
-		shopkeeper: playerCommonData.shopKeeper
+		shopkeeper: playerCommonData.shopKeeper,
+		notifications: playerCommonData.notifications
 	};
 
 	// Order dinoz

@@ -391,6 +391,7 @@ model Player {
   messages                    Message[]
   createdConversations        Conversation[]               @relation("CreatedConversations")
   Conversation                Conversation[]
+  notifications               Notification[]
 
   @@map("player")
 }
@@ -752,4 +753,26 @@ model Message {
   sender         Player        @relation(fields: [senderId], references: [id])
   conversation   Conversation  @relation("ConversationMessages", fields: [conversationId], references: [id])
   pinnedIn       Conversation? @relation("PinnedMessage")
+}
+
+// Notifications
+enum NotificationSeverity {
+  info
+  success
+  warning
+  error
+}
+
+model Notification {
+  id       String               @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  player   Player               @relation(fields: [playerId], references: [id])
+  playerId Int                  @db.Integer
+  message  String               @db.Text
+  severity NotificationSeverity @default(info)
+  link     String?              @db.Text
+  read     Boolean              @default(false)
+  date     DateTime             @default(now()) @db.Timestamp()
+
+  @@index([playerId, read])
+  @@index([date])
 }

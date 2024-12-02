@@ -10,6 +10,7 @@ import {
 } from '../dao/messagerieDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { createNotification, readNotificationFromMessages } from '../dao/notificationDao.js';
 
 export async function getMyConversation(req: Request) {
 	const authed = await auth(req);
@@ -26,7 +27,9 @@ export async function startConversation(req: Request) {
 		throw new ExpectedError(translate('maxParticipantInThread', authed));
 	}
 
-	return await createConversation(authed.id, participants, title, message);
+	const conversation = await createConversation(authed.id, participants, title, message);
+	participants.filter((p: number) => p !== authed.id).forEach((p: number) => createNotification(p, conversation.id));
+	return conversation;
 }
 
 export async function getFullConversattion(req: Request) {
@@ -36,6 +39,8 @@ export async function getFullConversattion(req: Request) {
 	if (!conversation.participants.map(p => p.player.id).includes(authed.id)) {
 		throw new ExpectedError(translate(`notInConversation`, authed));
 	}
+
+	await readNotificationFromMessages(authed.id, conversation.id);
 
 	return conversation;
 }
@@ -58,6 +63,9 @@ export async function sendMessage(req: Request) {
 		throw new ExpectedError(translate(`notInConversation`, authed));
 	}
 
+	conversation.participants
+		.filter(p => p.player.id !== authed.id)
+		.forEach(p => createNotification(p.player.id, conversation.id));
 	return await addMessage(req.params.thread, req.body.content, authed.id);
 }
 
