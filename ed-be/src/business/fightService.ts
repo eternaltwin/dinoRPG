@@ -158,8 +158,8 @@ export function calculateFight(
 	monsters?: MonsterFiche[],
 	seed?: string
 ): FightProcessResult {
-	let rng_seed = seed ?? generateString(20);
-	let rng = seedrandom(rng_seed);
+	const rng_seed = seed ?? generateString(20);
+	const rng = seedrandom(rng_seed);
 
 	const fighters = getFighters(
 		{
@@ -276,7 +276,7 @@ export async function rewardFight(
 
 		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf), player);
 		const max = getMaxXp(d);
-		if (d.experience + xp > max) {
+		if (d.experience + xp >= max) {
 			levelup = true;
 			xp = max - d.experience;
 			if (xp < 0) xp = 0;
