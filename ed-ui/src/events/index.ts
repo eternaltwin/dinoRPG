@@ -17,6 +17,7 @@ type Events = {
 	equipItem: Array<DinozItems>;
 	twinoMenu: boolean;
 	dinozMenu: boolean;
+	messageToPlayer: { name: string; id: number };
 };
 
 type toast = {

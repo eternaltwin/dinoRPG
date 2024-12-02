@@ -222,6 +222,11 @@ export default defineComponent({
 			}
 			this.threads = await MessagerieService.getThreads();
 		});
+		EventBus.on('messageToPlayer', async (e: { name: string; id: number }) => {
+			this.creationMode = true;
+			this.threadSelected = true;
+			this.newThread.participants = [e];
+		});
 		this.messageRef = this.$refs.messageRef as HTMLDialogElement;
 		this.notifiedThreads = this.playerStore.getNotifications.map(n => n.message);
 	},

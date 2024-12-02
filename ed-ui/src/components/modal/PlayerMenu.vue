@@ -9,7 +9,7 @@
 				<img :src="getImgURL('icons', 'small_eternaltwin')" alt="eternaltwinProfile" /><br />
 				{{ $t('playerMenu.gridMenu.pEternal') }}
 			</a>
-			<a class="link-block">
+			<a class="link-block" @click="sendMessage()">
 				<img :src="getImgURL('icons', 'mail')" alt="sendMessage" /><br />
 				{{ $t('playerMenu.gridMenu.sendMSG') }}
 			</a>
@@ -56,9 +56,10 @@ export default defineComponent({
 		leave() {
 			this.$emit('leavePlayerMenu');
 		},
-		goToPlayerPage() {
+		sendMessage() {
 			if (!this.loadedPlayer) return;
-			this.$router.push({ name: 'MyAccount', params: { id: this.loadedPlayer.id } });
+			EventBus.emit('message', true);
+			EventBus.emit('messageToPlayer', { name: this.loadedPlayer.name, id: this.loadedPlayer.id });
 		},
 		report() {
 			if (!this.loadedPlayer) return;
