@@ -371,7 +371,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 1,
 			air: 12
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'C0',
 		skillId: [61105] //PIETINEMENT
 	},
@@ -391,7 +391,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 1,
 			air: 1
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'D0',
 		skillId: [61106] //CUIRASSE
 	},
@@ -411,7 +411,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 2,
 			air: 8
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'E0',
 		skillId: [61107] //INSAISISSABLE
 	},
@@ -451,7 +451,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 2,
 			air: 1
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'F0',
 		skillId: [61113] //ECRASEMENT
 	},
@@ -471,7 +471,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 4,
 			air: 8
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'G0',
 		skillId: [61109] //NAPOMAGICIEN
 	},
@@ -491,7 +491,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 6,
 			air: 5
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'H0',
 		skillId: [61108] //DEPLACEMENT_INSTANTANE
 	},
@@ -530,7 +530,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 8,
 			air: 6
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'J0'
 	},
 	TRICERAGNON: {
@@ -549,7 +549,7 @@ export const raceList: Record<string, DinozRace> = {
 			lightning: 2,
 			air: 2
 		},
-		price: 0,
+		price: 35000,
 		swfLetter: 'K0',
 		skillId: [61117] //BIGMAGNON
 	}
