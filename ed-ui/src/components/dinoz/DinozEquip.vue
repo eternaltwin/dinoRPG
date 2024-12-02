@@ -85,8 +85,7 @@ export default defineComponent({
 			});
 			return;
 		}
-		// this.items = new Array(this.dinozData.maxItems);
-		this.items = new Array(6);
+		this.items = new Array(this.dinozData.maxItems);
 		this.dinozData.items?.forEach((item, index) => (this.items![index] = item));
 
 		EventBus.on('equipItem', e => {
