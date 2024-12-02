@@ -26,7 +26,7 @@
 								content: formatContent($t('following')),
 								theme: 'small'
 							}"
-							alt="lvlup"
+							alt="follower"
 						/>
 						<img
 							v-if="dinoz.followers.length > 0"
@@ -35,9 +35,9 @@
 								content: formatContent($t('followed')),
 								theme: 'small'
 							}"
-							alt="lvlup"
+							alt="leader"
 						/>
-						<template v-for="i in dinoz.remainingActions" :key="i">
+						<template v-for="i in dinoz.remaining" :key="i">
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
