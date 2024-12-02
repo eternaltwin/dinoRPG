@@ -24,7 +24,7 @@
 		</div>
 		<span class="dashed"></span>
 		<div class="profil">
-			<div class="profil-info">
+			<div class="profil-info" v-if="loadedPlayer.customText">
 				<div class="player-desc" v-html="loadedPlayer.customText"></div>
 			</div>
 			<p class="contact">{{ $t('playerMenu.contact') }}</p>
@@ -131,6 +131,7 @@ export default defineComponent({
 			}
 		}
 		.contact {
+			margin-top: 2px;
 			background-color: #fff;
 			color: #c2381a;
 			padding: 4px;
