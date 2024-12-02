@@ -188,6 +188,7 @@ export default defineComponent({
 	},
 	methods: {
 		spinOver(): void {
+			console.log('received');
 			this.isSpinOver = true;
 		},
 		learnSkill(skillId: number): void {
@@ -312,9 +313,7 @@ export default defineComponent({
 	align-self: center;
 	align-items: center;
 }
-.hidden {
-	display: none;
-}
+
 @keyframes bounce-in-top {
 	0% {
 		transform: translateY(-200px);
@@ -365,6 +364,9 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+.hidden {
+	display: none;
 }
 .skillName {
 	font-size: 12pt;

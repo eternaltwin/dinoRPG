@@ -55,37 +55,34 @@ export default defineComponent({
 	methods: {
 		spin(): void {
 			this.isSpinning = true;
+			this.isSpinOver = false;
+			const totalDuration = 6000;
+			const startTime = Date.now();
 
-			if (this.isSpinOver) {
-				return;
-			}
+			const animateSpin = () => {
+				const elapsedTime = Date.now() - startTime;
+				if (elapsedTime >= totalDuration) {
+					this.isSpinOver = true;
+					this.isSpinning = false;
+					this.$emit('spinOver');
+					console.log('ended');
+					return;
+				}
 
-			setTimeout(() => {
 				this.increment++;
-				this.speed = this.getNewSpeed()!;
-				this.spin();
-			}, this.speed);
+
+				this.speed = this.calculateSpeed(elapsedTime, totalDuration);
+				setTimeout(animateSpin, this.speed);
+			};
+
+			animateSpin();
 		},
-		getNewSpeed(): number | undefined {
-			if (this.increment < 40 + this.selectedIndex) {
-				return 60;
-			}
-			if (this.increment < 45 + this.selectedIndex) {
-				return 75;
-			}
-			if (this.increment < 50 + this.selectedIndex) {
-				return 90;
-			}
-			if (this.increment < 75 + this.selectedIndex) {
-				return 100;
-			}
-			if (this.increment < 80 + this.selectedIndex) {
-				return this.speed + 15;
-			}
-			if (this.increment === 80 + this.selectedIndex) {
-				this.isSpinOver = true;
-				this.$emit('spinOver');
-			}
+		calculateSpeed(elapsedTime: number, totalDuration: number): number {
+			const progress = elapsedTime / totalDuration;
+			const minSpeed = 50; // Vitesse maximale
+			const maxSpeed = 200; // Vitesse minimale
+
+			return minSpeed + (maxSpeed - minSpeed) * Math.pow(progress, 2);
 		}
 	},
 	mounted(): void {
