@@ -3,6 +3,7 @@ import { OfferStatus, Prisma, Offer } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import OfferOrderByWithRelationInput = Prisma.OfferOrderByWithRelationInput;
 export async function getOffers(
 	userId: number | null,
 	filter: string,
@@ -13,6 +14,7 @@ export async function getOffers(
 ): Promise<OfferFromGetOffers[]> {
 	const where: Prisma.OfferWhereInput = {};
 	const pageSize = 10;
+	let orderBy: OfferOrderByWithRelationInput
 
 	if (filter === 'dinoz') {
 		where.dinoz = { isNot: null };
@@ -36,8 +38,10 @@ export async function getOffers(
 
 	if (expired) {
 		where.status = OfferStatus.ENDED;
+		orderBy = { id: 'desc' }
 	} else {
 		where.status = OfferStatus.ONGOING;
+		orderBy = { endDate: 'asc' }
 	}
 
 	const offers = await prisma.offer.findMany({
@@ -71,9 +75,7 @@ export async function getOffers(
 				orderBy: { value: 'asc' }
 			}
 		},
-		orderBy: {
-			id: 'desc'
-		}
+		orderBy
 	});
 
 	return offers;
