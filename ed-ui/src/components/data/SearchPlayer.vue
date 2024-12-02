@@ -67,4 +67,20 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+input {
+	background-color: #b05733;
+	outline: 1px solid transparent;
+	outline-offset: 2px;
+	width: 100%;
+	border: none;
+	padding-left: 4px;
+	font-weight: 400;
+	font-size: 16px;
+	color: #ffee92;
+	&:focus {
+		transition: outline-color 0.5s;
+		outline-color: #efdba8;
+	}
+}
+</style>

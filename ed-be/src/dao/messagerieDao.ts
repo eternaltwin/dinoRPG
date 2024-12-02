@@ -104,10 +104,8 @@ export async function removeFromConversation(conversationId: string, participant
 	});
 }
 
-export async function getConversation(conversationId: string, page: number) {
-	const skip = (page - 1) * 10;
-	const take = 10;
-	return await prisma.conversation.findUniqueOrThrow({
+export async function getConversation(conversationId: string) {
+	return prisma.conversation.findUniqueOrThrow({
 		where: {
 			id: conversationId
 		},
@@ -147,11 +145,44 @@ export async function getConversation(conversationId: string, page: number) {
 	});
 }
 
-export async function getMoreMessages(conversationId: string, page: number) {
+/*export async function getMoreMessages(conversationId: string, page: number) {
 	const skip = (page - 1) * 10;
 	const take = 10;
 
 	return await prisma.conversation.findUniqueOrThrow({
+		where: {
+			id: conversationId
+		},
+		select: {
+			participants: {
+				select: {
+					playerId: true
+				}
+			},
+			messages: {
+				take: 10,
+				select: {
+					id: true,
+					content: true,
+					createdAt: true,
+					sender: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				},
+				orderBy: [{ id: 'desc' }]
+			}
+		}
+	});
+}*/
+
+export async function getMoreMessages(conversationId: string, page: number) {
+	const skip = (page - 1) * 10;
+	const take = 10;
+
+	return prisma.conversation.findUniqueOrThrow({
 		where: {
 			id: conversationId
 		},
@@ -182,7 +213,7 @@ export async function getMoreMessages(conversationId: string, page: number) {
 }
 
 export async function addMessage(conversationId: string, message: string, senderId: number) {
-	return await prisma.conversation.update({
+	return prisma.conversation.update({
 		data: {
 			messages: {
 				create: {

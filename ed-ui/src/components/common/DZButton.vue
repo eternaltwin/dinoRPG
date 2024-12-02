@@ -43,6 +43,7 @@ export default defineComponent({
 	cursor: pointer;
 	text-decoration: none;
 	max-width: 95%;
+	min-height: 28px;
 
 	&.small {
 		border-color: #c5482c;

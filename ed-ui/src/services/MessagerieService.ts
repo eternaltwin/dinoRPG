@@ -2,9 +2,9 @@ import { http } from '../utils/index.js';
 import { FullThread, Message, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
 
 export const MessagerieService = {
-	getThread(threadId: string, page: number): Promise<FullThread> {
+	getThread(threadId: string): Promise<FullThread> {
 		return http()
-			.get(`/messagerie/getThread/${threadId}/${page}`)
+			.get(`/messagerie/getThread/${threadId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

@@ -1,130 +1,103 @@
 <template>
 	<dialog ref="messageRef">
-		<div class="flex h-screen flex-col md:flex-row">
-			<div class="mt-[2px] px-[5px] md:w-[30%]">
-				<div class="mb-[10px] flex h-auto w-full flex-col border-2 border-[#704328] bg-[#cb7c49] p-[5px] italic">
-					<div class="flex items-center gap-3 bg-[#ae6139] p-[4px]">
+		<div class="modal">
+			<div
+				class="menu"
+				:class="{
+					leftShow: !threadSelected,
+					leftHide: threadSelected
+				}"
+			>
+				<div class="actions">
+					<div class="title">
 						<img :src="getImgURL('icons', 'small_browse_next')" />
 						<p>{{ $t('messagerie.actions') }}</p>
 					</div>
-					<div class="flex flex-wrap p-[4px] md:flex-nowrap">
-						<div
-							@click="create()"
-							class="m-[3px] flex w-full cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139] md:w-1/2"
-							style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
-						>
+					<div class="buttons">
+						<div @click="create()" class="clickable" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)">
 							<img :src="getImgURL('icons', 'edit')" />
 							<span>{{ $t('messagerie.create') }}</span>
 						</div>
-						<div
-							@click="toggleSearch()"
-							class="m-[3px] flex w-full cursor-pointer items-center gap-2 p-[6px] text-center hover:bg-[#ae6139] md:w-1/2"
-							style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)"
-						>
+						<div @click="toggleSearch()" class="clickable" style="box-shadow: 0 0 3px rgba(0, 0, 0, 0.3)">
 							<img :src="getImgURL('icons', 'search')" />
 							<span>{{ $t('messagerie.research') }}</span>
 						</div>
 					</div>
 				</div>
-				<div class="my-[10px] px-[5px]">
+				<div class="search">
 					<div v-if="isSearchVisible">
-						<div class="flex items-center gap-2">
+						<div>
 							<label for="conv_list_filter"><img :src="getImgURL('icons', 'search')" class="size-10" /></label>
-							<input
-								v-model="searchQuery"
-								id="conv_list_filter"
-								class="w-full border-2 border-black bg-[url('./assets/background/bg_conv_input.webp')] bg-cover bg-no-repeat pl-[10px] outline-none placeholder:text-[#ffee92]"
-								:placeholder="$t('messagerie.search')"
-							/>
+							<input v-model="searchQuery" id="conv_list_filter" :placeholder="$t('messagerie.search')" />
 						</div>
 					</div>
 				</div>
-				<div class="border-2 border-b-0 border-[#704328] bg-[#cb7c49]">
-					<div class="flex items-center gap-2 bg-[#ae6139] pl-[5px]">
+				<div class="threads">
+					<div class="title">
 						<img :src="getImgURL('icons', 'thread')" />
 						<span>{{ $t('messagerie.conversations') }}</span>
 					</div>
-				</div>
-				<div class="mt-[-2px] border-2 border-t-0 border-[#704328] bg-[#cb7c49] p-[10px]">
-					<div class="flex flex-col gap-2 scroll-auto">
-						<ul class="m-0 p-0">
-							<li
-								v-for="thread in filteredThreads()"
-								:key="thread.id"
-								@click="selectThread(thread.id)"
-								class="scrollable-container box-border flex cursor-pointer flex-col overflow-y-auto border-2 border-[#b37c4a] p-2 pl-[15px] hover:bg-[#ae6139]"
-								:class="{
-									selected: thread.id === selectedThreadId
-								}"
-							>
-								<b class="text-white">{{ thread.title }}</b>
-								<span class="">
-									<b class="text-white">{{ thread.createdBy.name }}</b>
-									<span>, {{ thread.participants.length }} {{ $t('messagerie.participants') }}, </span>
-									<span class="text-gray-300">{{ formatDate(thread.updatedAt.toString()) }}</span>
-								</span>
-							</li>
-						</ul>
+					<div
+						class="thread"
+						v-for="thread in filteredThreads()"
+						:key="thread.id"
+						@click="selectThread(thread.id)"
+						:class="{
+							selected: thread.id === selectedThreadId
+						}"
+					>
+						<p class="name">{{ thread.title }}</p>
+						<div>
+							<span>
+								<b class="creator">{{ thread.createdBy.name }}</b>
+								, {{ thread.participants.length }} {{ $t('messagerie.participants') }},
+							</span>
+							<span class="date">{{ formatDate(thread.updatedAt.toString()) }}</span>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div
-				class="scrollable-container ml-[-12px] mt-5 flex flex-col overflow-y-auto p-[20px] sm:mt-0 md:w-[70%]"
-				@scroll="onScroll"
+				class="conversations"
+				:class="{
+					rightHide: !threadSelected,
+					rightShow: threadSelected
+				}"
 			>
-				<div
-					class="mt-[-17px] bg-[#ae6139] p-[5px]"
-					style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
-					v-if="!threadSelected"
-				>
-					<p style="font-variant: small-caps">{{ $t('messagerie.disclaimer') }}</p>
-				</div>
-				<div class="flex flex-col gap-2 bg-[#cb7c49]" v-if="creationMode">
-					<div
-						class="mb-[10px] mt-[-17px] h-[26px] bg-[#ae6139] p-[5px]"
-						style="box-shadow: 0 0 5px rgba(0, 0, 0, 0.2)"
-					>
+				<DZButton back @click="threadSelected = false">Retour</DZButton>
+				<DZDisclaimer help v-if="!threadSelected" content="messagerie.disclaimer" />
+				<div class="creationMode" v-if="creationMode">
+					<div class="title">
 						<p>{{ $t('messagerie.newMsg') }}</p>
 					</div>
-					<div class="flex flex-col p-[5px] lg:flex-row">
-						<label for="title" class="lg:w-1/4">{{ $t('messagerie.newMsgTitle') }}</label>
-						<input
-							type="text"
-							id="title"
-							v-model="newThread.title"
-							class="w-full bg-[url('./assets/background/bg_conv_input.webp')] pl-[5px] outline-none placeholder:text-[#ffee92]"
-							:placeholder="$t('messagerie.title')"
-						/>
+					<div class="messageTitle">
+						<label for="title">{{ $t('messagerie.newMsgTitle') }}</label>
+						<input type="text" id="title" v-model="newThread.title" :placeholder="$t('messagerie.title')" />
 					</div>
 					<div
-						class="flex flex-col p-[5px] lg:flex-row"
+						class="search"
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
-						<label for="player" class="lg:w-1/4">{{ $t('messagerie.newMsgParticipants') }}</label>
+						<label for="player">{{ $t('messagerie.newMsgParticipants') }}</label>
 						<SearchPlayer @player="participantThead" />
 					</div>
 					<p v-else>{{ $t('toast.maxParticipantInThread') }}</p>
-					<div class="flex w-full items-center justify-center gap-3">
+					<div class="participants">
 						<template v-for="participant in newThread.participants" :key="participant.id">
 							<DZUser :user="participant" />
 						</template>
 					</div>
-					<div class="mt-4 flex flex-col p-[5px]">
+					<div class="message">
 						<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
-						<textarea
-							id="message"
-							v-model="newThread.message"
-							class="w-full bg-[url('./assets/background/bg_conv_textarea.webp')] pl-[5px] outline-none placeholder:text-[#ffee92]"
-							:placeholder="$t('messagerie.message')"
-						/>
+						<textarea id="message" v-model="newThread.message" :placeholder="$t('messagerie.message')" />
 					</div>
-					<div class="flex justify-end p-[5px]">
+					<div class="send">
 						<DZButton @click="sendMessage">{{ $t('messagerie.newMsgSend') }}</DZButton>
 					</div>
 				</div>
-				<div v-if="!creationMode && selectedThreadId">
-					<Thread :thread-id="selectedThreadId" :threadPage="currentThreadPage" @messageSent="refreshThreads()" />
-				</div>
+				<template v-if="!creationMode && selectedThreadId && threadSelected">
+					<Thread :thread-id="selectedThreadId" />
+				</template>
 			</div>
 		</div>
 		<div class="buttons">
@@ -138,16 +111,17 @@ import EventBus from '../../events/index.js';
 import { defineComponent } from 'vue';
 import { localStore, playerStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
-import { NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
+import { FullThread, NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
 import { MessagerieService } from '../../services/MessagerieService.js';
 import SearchPlayer from '../data/SearchPlayer.vue';
 import DZUser from '../common/DZUser.vue';
 import { Player } from '@drpg/core/models/player/Player';
 import Thread from '../message/Thread.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'messagerie',
-	components: { DZUser, SearchPlayer, DZButton, Thread },
+	components: { DZDisclaimer, DZUser, SearchPlayer, DZButton, Thread },
 	data() {
 		return {
 			localStore: localStore(),
@@ -157,12 +131,12 @@ export default defineComponent({
 			threads: [] as ThreadsBasic[], // Liste des messages de la conversation
 			creationMode: false as boolean,
 			newThread: {} as NewThread,
-			currentThreadPage: 0,
 			response: undefined as undefined | string,
 			threadSelected: false as boolean,
 			selectedThreadId: null as string | null,
 			isSearchVisible: false,
-			searchQuery: ''
+			searchQuery: '',
+			currentThread: undefined as undefined | FullThread
 		};
 	},
 	methods: {
@@ -184,21 +158,13 @@ export default defineComponent({
 				this.threadSelected = false;
 				this.selectedThreadId = null;
 				this.isSearchVisible = false;
-				this.currentThreadPage = 0;
 				this.newThread = {} as NewThread;
-			}
-		},
-		onScroll(e) {
-			const { scrollTop, offsetHeight, scrollHeight } = e.target;
-			if (scrollTop + offsetHeight >= scrollHeight) {
-				this.currentThreadPage++;
 			}
 		},
 		async selectThread(id: string) {
 			this.creationMode = false;
 			this.threadSelected = true;
 			this.selectedThreadId = id;
-			this.currentThreadPage = 0;
 		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
@@ -227,6 +193,7 @@ export default defineComponent({
 				);
 				this.threads.unshift(newThread);
 				this.creationMode = false;
+				this.newThread = {} as NewThread;
 			} catch (error) {
 				console.error("Erreur lors de l'envoi du message", error);
 			}
@@ -239,9 +206,6 @@ export default defineComponent({
 				return this.threads;
 			}
 			return this.threads.filter(thread => thread.title.toLowerCase().includes(this.searchQuery.toLowerCase()));
-		},
-		async refreshThreads() {
-			this.threads = await MessagerieService.getThreads();
 		}
 	},
 	mounted(): void {
@@ -273,6 +237,222 @@ dialog {
 	position: fixed;
 	&::backdrop {
 		background: linear-gradient(0deg, rgba(107, 32, 17, 0.2), rgba(107, 32, 17, 0.4) 70%, rgba(0, 0, 0, 0.7));
+	}
+}
+.modal {
+	display: flex;
+	flex-direction: row;
+	height: 93vh;
+	.menu {
+		display: flex;
+		flex-direction: column;
+		width: 30%;
+		padding: 5px;
+		gap: 15px;
+		.actions {
+			background-color: rgb(203 124 73);
+			border-color: rgb(112 67 40);
+			font-style: italic;
+			border-style: solid;
+			border-width: 2px;
+			padding: 5px;
+			.title {
+				display: flex;
+				background-color: rgb(174 97 57);
+				align-items: center;
+				gap: 0.75rem;
+				padding: 4px;
+			}
+			.buttons {
+				display: flex;
+				flex-wrap: nowrap;
+				padding: 4px;
+				.clickable {
+					display: flex;
+					box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 3px;
+					width: 50%;
+					text-align: center;
+					gap: 0.5rem;
+					align-items: center;
+					cursor: pointer;
+					padding: 6px;
+					&:hover {
+						background-color: rgb(174 97 57);
+					}
+				}
+			}
+		}
+		.threads {
+			display: flex;
+			flex-direction: column;
+			background-color: #cb7c49;
+			border-color: #704328;
+			border-style: solid;
+			border-width: 2px;
+			padding-bottom: 4px;
+			overflow-y: auto;
+			.title {
+				display: flex;
+				background-color: rgb(174 97 57);
+				align-items: center;
+				gap: 0.75rem;
+				padding: 4px;
+			}
+			.thread {
+				display: flex;
+				padding-top: 8px;
+				flex-direction: column;
+				gap: 3px;
+				cursor: pointer;
+				transition:
+					background-color 0.5s ease,
+					box-shadow 0.5s ease;
+				&:hover {
+					background-color: hsla(0, 0%, 100%, 0.2);
+					box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+					transition:
+						background-color 0.5s ease,
+						box-shadow 0.5s ease;
+				}
+				&::after {
+					content: ' ';
+					border: 1px solid #b37c4a;
+				}
+				.name {
+					padding-left: 3px;
+					color: white;
+					font-size: 17.6px;
+					font-weight: 700;
+					font-variant: all-petite-caps;
+					overflow: hidden;
+					text-overflow: ' [...]';
+					white-space: nowrap;
+					max-width: calc(100% - 50px);
+				}
+				span {
+					padding-left: 3px;
+					font-size: 11px;
+				}
+				.creator {
+					color: white;
+					margin-right: -3px;
+				}
+				.date {
+					opacity: 0.6;
+				}
+			}
+		}
+	}
+	.conversations {
+		width: 70%;
+		padding: 5px;
+		scrollbar-width: thin;
+		scrollbar-color: rgb(112, 67, 40) rgb(203, 124, 73);
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		.creationMode {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
+			background-color: #cb7c49;
+			padding: 4px;
+			.title {
+				display: flex;
+				background-color: rgb(174 97 57);
+				align-items: center;
+				gap: 0.75rem;
+				padding: 4px;
+				box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+			}
+			.messageTitle {
+				display: flex;
+				label {
+					width: 25%;
+				}
+				input {
+					background-color: #b05733;
+					outline: 1px solid transparent;
+					color: #ffee92;
+					font-weight: 400;
+					font-size: 16px;
+					outline-offset: 2px;
+					width: 100%;
+					border: none;
+					padding-left: 4px;
+					&:focus {
+						transition: outline-color 0.5s;
+						outline-color: #efdba8;
+					}
+				}
+			}
+			.search {
+				display: flex;
+				label {
+					width: 25%;
+				}
+			}
+			.participants {
+				display: flex;
+				justify-content: center;
+				width: 100%;
+				gap: 3px;
+			}
+			.message {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+				label {
+					width: 25%;
+				}
+				textarea {
+					background-color: #b05733;
+					outline: 1px solid transparent;
+					color: #ffee92;
+					font-weight: 400;
+					font-size: 16px;
+					outline-offset: 2px;
+					width: 100%;
+					border: none;
+					padding-left: 4px;
+					&:focus {
+						transition: outline-color 0.5s;
+						outline-color: #efdba8;
+					}
+				}
+			}
+			.send {
+				display: flex;
+				justify-content: end;
+			}
+		}
+	}
+}
+@media (max-width: 539px) {
+	.modal {
+		.leftShow {
+			width: 100%;
+			transition: transform 0.3s ease-out;
+			transform: translateX(0%);
+		}
+		.leftHide {
+			transform: translateX(-100%);
+			width: 0;
+			opacity: 0;
+			padding: 0;
+		}
+		.rightShow {
+			width: 100%;
+			display: flex;
+			transition: transform 0.3s ease-out;
+			transform: translateX(0%);
+		}
+		.rightHide {
+			transform: translateX(100%);
+			opacity: 0;
+			width: 0%;
+			padding: 0;
+		}
 	}
 }
 li {
