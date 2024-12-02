@@ -1,6 +1,12 @@
 <!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
-	<div class="relative ml-[-50px] sm:ml-[-20px] sm:mr-[20px] md:mx-0">
+	<div class="wrapper">
+		<i18n-t keypath="ranking.disclaimer.clansCreation" tag="p" for="ranking.disclaimer.clansCreationLink">
+			<RouterLink :to="`/clans`">
+				{{ $t('ranking.disclaimer.clansCreationLink') }}
+			</RouterLink>
+		</i18n-t>
+
 		<table>
 			<tbody>
 				<tr>
@@ -62,13 +68,6 @@ export default defineComponent({
 			page: 1 as number
 		};
 	},
-	props: {
-		sort: String,
-		tabSelected: {
-			type: Number,
-			required: true
-		}
-	},
 	methods: {
 		async getClansRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -98,83 +97,98 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-table {
-	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 15px;
-	border: 2px solid #f3d6b1;
-	background-color: #ecbd84;
-	border-collapse: separate;
-	border-spacing: 1px;
-	tr {
-		display: table-row;
-		th {
-			font-size: 8pt;
-			letter-spacing: 0pt;
-			text-shadow: 1px 1px 0px #356847;
-			padding-left: 4px;
-			padding-right: 4px;
-			padding-bottom: 8px;
-			height: 41px;
-			vertical-align: bottom;
-			color: #fffdba;
-			text-transform: uppercase;
-			font-weight: bold;
-			letter-spacing: 1pt;
-			text-align: left;
-			white-space: nowrap;
-			border: 1px solid #356847;
-			background-color: #c64e36;
-			background-image: url('../../assets/background/table_header.webp');
-			background-position: left bottom;
-			max-width: 222px;
-			&.pos {
-				width: 4em;
+.wrapper {
+	margin: 5px;
+
+	table {
+		width: 100%;
+		margin-top: 10px;
+		margin-bottom: 15px;
+		border: 2px solid #f3d6b1;
+		background-color: #ecbd84;
+		border-collapse: separate;
+		border-spacing: 1px;
+
+		tr {
+			display: table-row;
+
+			th {
+				font-size: 8pt;
+				letter-spacing: 0pt;
+				text-shadow: 1px 1px 0px #356847;
+				padding-left: 4px;
+				padding-right: 4px;
+				padding-bottom: 8px;
+				height: 41px;
+				vertical-align: bottom;
+				color: #fffdba;
+				text-transform: uppercase;
+				font-weight: bold;
+				letter-spacing: 1pt;
+				text-align: left;
+				white-space: nowrap;
+				border: 1px solid #356847;
+				background-color: #c64e36;
+				background-image: url('../../assets/background/table_header.webp');
+				background-position: left bottom;
+				max-width: 222px;
+
+				&.pos {
+					width: 4em;
+				}
+
+				&.clans {
+					max-width: 150px;
+				}
+
+				&.treasure {
+					width: 150px;
+				}
 			}
-			&.clans {
-				max-width: 150px;
-			}
-			&.treasure {
-				width: 150px;
-			}
-		}
-		td {
-			font-size: 9pt;
-			padding-right: 5px;
-			padding-top: 1px;
-			padding-bottom: 1px;
-			color: #710;
-			background-color: #f3ca92;
-			border: 1px solid #c88f44;
-			cursor: pointer;
-			&.pos {
-				background-image: url('../../assets/background/table_cell.webp');
-				background-position: 0px 0px;
-				padding-left: 1.2em;
-			}
-			&.other {
-				padding-left: 1em;
-				background-image: url('../../assets/background/table_cell.webp');
-				background-position: -10px 0px;
-				max-width: 4px;
-				padding-top: 4px;
-				font-variant: small-caps;
-			}
-		}
-		&.even {
-			td.pos {
-				background-image: url('../../assets/background/table_cell_even.webp');
-				background-position: 0px 0px;
-			}
-			td.other {
-				background-image: url('../../assets/background/table_cell_even.webp');
-				background-position: -10px 0px;
-			}
-		}
-		&.select:hover {
+
 			td {
-				color: white;
-				border-color: #9a4029;
+				font-size: 9pt;
+				padding-right: 5px;
+				padding-top: 1px;
+				padding-bottom: 1px;
+				color: #710;
+				background-color: #f3ca92;
+				border: 1px solid #c88f44;
+				cursor: pointer;
+
+				&.pos {
+					background-image: url('../../assets/background/table_cell.webp');
+					background-position: 0px 0px;
+					padding-left: 1.2em;
+				}
+
+				&.other {
+					padding-left: 1em;
+					background-image: url('../../assets/background/table_cell.webp');
+					background-position: -10px 0px;
+					max-width: 4px;
+					padding-top: 4px;
+					font-variant: small-caps;
+				}
+			}
+
+			&.even {
+				td.pos {
+					background-image: url('../../assets/background/table_cell_even.webp');
+					background-position: 0px 0px;
+				}
+
+				td.other {
+					background-image: url('../../assets/background/table_cell_even.webp');
+					background-position: -10px 0px;
+				}
+			}
+
+			&.select:hover {
+				td {
+					color: white;
+					border-color: #9a4029;
+				}
 			}
 		}
 	}

@@ -11,7 +11,7 @@
 			<a @click="setTab(3)">{{ $t('tabs.completion') }}</a>
 		</li>
 		<li :class="tabSelected === 4 ? 'active' : ''">
-			<a @click="setTab(3)">{{ $t('tabs.clans') }}</a>
+			<a @click="setTab(4)">{{ $t('tabs.clans') }}</a>
 		</li>
 		<li :class="tabSelected === 5 ? 'active' : ''">
 			<a @click="setTab(5)">{{ $t('tabs.pantheon') }}</a>
@@ -20,10 +20,12 @@
 	<DZDisclaimer content="ranking.disclaimer.classic" v-if="tabSelected === 1" />
 	<DZDisclaimer content="ranking.disclaimer.average" v-if="tabSelected === 2" />
 	<DZDisclaimer content="ranking.disclaimer.completion" v-if="tabSelected === 3" />
+	<DZDisclaimer content="ranking.disclaimer.clans" v-if="tabSelected === 4" />
 	<DZDisclaimer content="ranking.disclaimer.pantheon" v-if="tabSelected === 5" />
 	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
 	<PlayerRanking sort="average" v-if="tabSelected === 2" />
 	<CompletionRanking v-if="tabSelected === 3" />
+	<ClansRanking v-if="tabSelected === 4" />
 	<Pantheon v-if="tabSelected === 5" />
 	<input
 		class="search"
@@ -48,6 +50,7 @@ import CompletionRanking from '../components/rankings/CompletionRanking.vue';
 import { PlayerService } from '../services/index.js';
 import Pantheon from '../components/rankings/Pantheon.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import ClansRanking from '../components/rankings/ClansRanking.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -57,6 +60,7 @@ interface PlayerSearch {
 export default defineComponent({
 	name: 'Ranking',
 	components: {
+		ClansRanking,
 		DZDisclaimer,
 		CompletionRanking,
 		TitleHeader,
