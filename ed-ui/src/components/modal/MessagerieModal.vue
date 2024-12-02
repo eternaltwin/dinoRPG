@@ -451,6 +451,9 @@ dialog {
 }
 @media (max-width: 539px) {
 	.modal {
+		bottom: 0;
+		top: 0;
+		position: relative;
 		.leftShow {
 			width: 100%;
 			transition: transform 0.3s ease-out;
