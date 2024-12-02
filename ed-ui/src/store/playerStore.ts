@@ -7,7 +7,7 @@ export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
 		money: 0,
 		playerId: undefined,
-		playerName: '',
+		name: '',
 		clanId: undefined,
 		playerOptions: {
 			hasPDA: false,
@@ -22,7 +22,7 @@ export const playerStore = defineStore('playerStore', {
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
-		getPlayerName: (state: StorePlayer) => state.playerName,
+		getPlayerName: (state: StorePlayer) => state.name,
 		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
 		getPlayerOptions: (state: StorePlayer) => state.playerOptions,
 		getClanId: (state: StorePlayer) => state.clanId,
@@ -43,7 +43,7 @@ export const playerStore = defineStore('playerStore', {
 			this.playerId = playerId;
 		},
 		setPlayerName(playerName: string): void {
-			this.playerName = playerName;
+			this.name = playerName;
 		},
 		setPlayerOptions(playerOptions: PlayerOptions): void {
 			this.playerOptions = playerOptions;

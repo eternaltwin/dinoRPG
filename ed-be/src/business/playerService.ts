@@ -159,7 +159,8 @@ export async function getAccountData(req: Request) {
 		pointCount: playerInfo.ranking.points,
 		subscribeAt: subscribe,
 		clan: clan,
-		playerName: playerInfo.name,
+		name: playerInfo.name,
+		id: playerInfo.id,
 		epicRewards: playerInfo.rewards.map(reward => reward.rewardId).sort((a, b) => a - b),
 		dinoz: playerInfo.dinoz.map(dinoz => {
 			return toDinozPublicFiche({

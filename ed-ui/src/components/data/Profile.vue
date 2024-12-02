@@ -9,6 +9,12 @@
 			</h3>
 			<dl>
 				<dt>
+					{{ $t(`myAccount.title`) }}
+				</dt>
+				<dd>
+					<DZUser :user="accountData" />
+				</dd>
+				<dt>
 					{{ $t(`myAccount.dinoz`) }}
 				</dt>
 				<dd>
@@ -97,6 +103,7 @@ import { goTo } from '../../utils/goTo.js';
 import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { formatText } from '../../utils/formatText.js';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'Profile',
@@ -113,6 +120,7 @@ export default defineComponent({
 		};
 	},
 	components: {
+		DZUser,
 		DZButton
 	},
 	props: {

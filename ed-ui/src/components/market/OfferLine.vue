@@ -222,7 +222,7 @@ export default defineComponent({
 							value: this.bidValue,
 							user: {
 								id: this.playerStore.playerId,
-								name: this.playerStore.playerName
+								name: this.playerStore.name
 							}
 						}
 					]

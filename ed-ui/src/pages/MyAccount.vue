@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader
 		:title="`${$t('pageTitle.account')}`"
-		:header="`${$t('myAccount.title')} ${accountData.playerName}`"
+		:header="`${$t('myAccount.title')} ${accountData.name}`"
 	></TitleHeader>
 
 	<div class="wrapper" v-if="dataLoaded">

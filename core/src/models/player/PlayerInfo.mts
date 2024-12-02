@@ -11,7 +11,8 @@ export interface PlayerInfo {
 				name: string;
 		  }
 		| undefined;
-	playerName: string;
+	name: string;
+	id: number;
 	dinoz: DinozPublicFiche[];
 	epicRewards: number[];
 	customText: string | null;

@@ -452,6 +452,7 @@ export async function getPlayerDataRequest(playerId: number) {
 		},
 		select: {
 			createdDate: true,
+			id: true,
 			name: true,
 			customText: true,
 			rewards: { select: { rewardId: true } },
