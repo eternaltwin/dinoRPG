@@ -177,7 +177,6 @@ export default defineComponent({
 		.clickable {
 			display: flex;
 			box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 3px;
-			width: 50%;
 			text-align: center;
 			gap: 0.5rem;
 			align-items: center;

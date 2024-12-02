@@ -158,15 +158,19 @@ p:first-letter {
     font-size: 0pt;
     line-height: 0pt;
 }
-
+.ck.ck-editor {
+	position: relative;
+	width: 100%;
+}
 :root {
 	/* Overrides colors editor */
+	.ck.ck-editor {
+		position: relative;
+		width: 100%;
+	}
 	.ck {
 		--ck-color-toolbar-background: #ae6139;
 		--ck-color-base-background: #cb7c49;
 		--ck-color-text: #ffee92;
-		.ck-editor {
-			width: 100%
-		}
 	}
 }
