@@ -1,8 +1,8 @@
 <template>
 	<div class="player-menu" v-if="loadedPlayer">
-		<p class="playerLink" @click="goToPlayerPage()">
-			{{ $t('playerMenu.title') }} <span>{{ loadedPlayer.name }}</span>
-		</p>
+		<RouterLink class="playerLink" :to="`/player/${loadedPlayer.id}`">
+			{{ $t('playerMenu.title', { player: loadedPlayer.name }) }}
+		</RouterLink>
 		<span class="dashed"></span>
 		<div class="grid-menu">
 			<a class="link-block" :href="`https://eternaltwin.org/users/${loadedPlayer.eternalTwinId}`" target="_blank">
@@ -172,11 +172,15 @@ export default defineComponent({
 }
 
 .playerLink {
-	cursor: pointer;
 	margin: 0 -10px;
 	padding: 1px 10px;
 	text-decoration: none;
 	font-size: 10px;
+	font-weight: 700;
+	color: #f1e8e6;
+	width: 100%;
+	display: block;
+	text-align: start;
 	&:hover {
 		background-color: #79432b;
 	}

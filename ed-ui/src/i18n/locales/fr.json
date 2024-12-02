@@ -4570,7 +4570,7 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Profil du joueur :",
+		"title": "Aller sur le profil DinoRPG de {player}",
 		"gridMenu": {
 			"pDRPG": "Profil DinoRPG",
 			"pEternal": "Profil Eternaltwin",
