@@ -88,7 +88,7 @@
 					</div>
 					<div class="icons">
 						<img
-							v-if="dinoz.actions.some(a => a.name === Action.FIGHT)"
+							v-if="dinoz.fight"
 							:src="getImgURL('icons', 'small_attack')"
 							v-tippy="{
 								content: formatContent($t('following')),
