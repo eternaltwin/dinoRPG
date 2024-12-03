@@ -67,15 +67,16 @@ export default defineComponent({
 		margin-left: 12px;
 	}
 }
-@media (max-width: 539px) {
+/*@media (max-width: 539px) {
 	.section {
-		padding-bottom: 15px;
-		.titlePage {
-			font-size: 15px;
+		padding-bottom: 17px;
+		!*.titlePage {
+			//font-size: 15px;
+			font-size: 2rem;
 		}
 		.subTitlePage {
 			font-size: 15px;
-		}
+		}*!
 	}
-}
+}*/
 </style>
