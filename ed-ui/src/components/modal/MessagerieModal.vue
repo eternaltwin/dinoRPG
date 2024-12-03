@@ -67,7 +67,7 @@
 					rightShow: threadSelected
 				}"
 			>
-				<DZButton back @click="threadSelected = false">Retour</DZButton>
+				<DZButton back @click="unselect()">Retour</DZButton>
 				<DZDisclaimer help v-if="!threadSelected" content="messagerie.disclaimer" />
 				<div class="creationMode" v-if="creationMode">
 					<div class="title">
@@ -146,6 +146,11 @@ export default defineComponent({
 		async create() {
 			this.creationMode = true;
 			this.threadSelected = true;
+		},
+		unselect() {
+			this.threadSelected = false;
+			this.creationMode = false;
+			this.newThread = {} as NewThread;
 		},
 		participantThead(p: Pick<Player, 'id' | 'name'>) {
 			if (!this.newThread.participants) {
@@ -397,7 +402,7 @@ dialog {
 					font-weight: 400;
 					font-size: 16px;
 					outline-offset: 2px;
-					width: 100%;
+					width: auto;
 					border: none;
 					padding-left: 4px;
 					&:focus {
@@ -449,7 +454,24 @@ dialog {
 	}
 }
 @media (max-width: 539px) {
+	label {
+		width: 40%;
+	}
 	.modal {
+		.conversations {
+			.creationMode {
+				.messageTitle {
+					label {
+						width: 40%;
+					}
+				}
+				.search {
+					label {
+						width: 40%;
+					}
+				}
+			}
+		}
 		.leftShow {
 			width: 100%;
 			transition: transform 0.3s ease-out;
