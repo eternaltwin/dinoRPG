@@ -1,5 +1,5 @@
 <template>
-	<div v-if="ownOffer">
+	<template v-if="ownOffer">
 		<h4>{{ $t('market.transactionView.yourOngoingOffer') }}</h4>
 		<table>
 			<tr>
@@ -33,14 +33,20 @@
 		<DZTable>
 			<OfferLine :offer="ownOffer" :now="now" />
 		</DZTable>
-	</div>
+	</template>
 	<DZDisclaimer v-else help content="market.transactionView.noOnGoingOffer" />
-	<div v-if="offers.length">
+	<template v-if="offers.length">
 		<h4>{{ $t('market.transactionView.yourActiveBids') }}</h4>
 		<DZTable>
+			<tr>
+				<th class="dinoz-header">{{ $t('market.dinoz') }}</th>
+				<th class="items-header">{{ $t('market.items') }}</th>
+				<th>{{ $t('market.details') }}</th>
+				<th class="bid-action-header"></th>
+			</tr>
 			<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
 		</DZTable>
-	</div>
+	</template>
 	<DZDisclaimer v-else help content="market.transactionView.noActiveBid" />
 </template>
 
@@ -136,6 +142,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.dinoz-header {
+	width: 50px;
+}
 h4 {
 	background-color: #bc683c;
 	color: #ffee92;
@@ -145,8 +154,9 @@ h4 {
 }
 
 table {
-	width: 100%;
+	width: 95%;
 	table-layout: fixed;
+	align-self: center;
 
 	td {
 		font-size: 9pt;
