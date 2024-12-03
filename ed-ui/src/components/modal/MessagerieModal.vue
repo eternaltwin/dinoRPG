@@ -103,9 +103,7 @@
 				</template>
 			</div>
 		</div>
-		<div class="buttons">
-			<DZButton @click="close">Close</DZButton>
-		</div>
+		<div class="close" @click="close()">X</div>
 	</dialog>
 </template>
 
@@ -247,11 +245,12 @@ dialog {
 	max-width: 90%;
 	min-width: 200px;
 	outline: 2px solid #000;
-	overflow: auto;
 	overflow: visible;
 	padding: 0;
 	width: auto;
 	position: fixed;
+	top: 2vh;
+	bottom: 2vh;
 	&::backdrop {
 		background: linear-gradient(0deg, rgba(107, 32, 17, 0.2), rgba(107, 32, 17, 0.4) 70%, rgba(0, 0, 0, 0.7));
 	}
@@ -451,9 +450,6 @@ dialog {
 }
 @media (max-width: 539px) {
 	.modal {
-		bottom: 0;
-		top: 0;
-		position: relative;
 		.leftShow {
 			width: 100%;
 			transition: transform 0.3s ease-out;
@@ -489,25 +485,20 @@ li {
 		}
 	}
 }
-.scrollable-container {
-	::-webkit-scrollbar {
-		width: 10px;
+.close {
+	top: 0;
+	right: 0;
+	position: absolute;
+	color: rgb(185 28 28);
+	background-color: rgb(254 215 170);
+	border-color: rgb(239 68 68);
+	border-width: 2px;
+	border-style: solid;
+	cursor: pointer;
+	padding: 0.25rem 0.75rem;
+	font-weight: 800;
+	&:hover {
+		filter: brightness(120%);
 	}
-	::-webkit-scrollbar-thumb {
-		background: #704328;
-		border-radius: 10px;
-	}
-	::-webkit-scrollbar-thumb:hover {
-		background: #ae6139;
-	}
-	::-webkit-scrollbar-track {
-		background: #cb7c49;
-		border-radius: 10px;
-	}
-	::-webkit-scrollbar-track:hover {
-		background: #d3b2a0;
-	}
-	scrollbar-width: thin;
-	scrollbar-color: #704328 #cb7c49;
 }
 </style>

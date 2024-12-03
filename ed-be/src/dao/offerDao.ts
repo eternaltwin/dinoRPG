@@ -14,7 +14,7 @@ export async function getOffers(
 ): Promise<OfferFromGetOffers[]> {
 	const where: Prisma.OfferWhereInput = {};
 	const pageSize = 10;
-	let orderBy: OfferOrderByWithRelationInput
+	let orderBy: OfferOrderByWithRelationInput;
 
 	if (filter === 'dinoz') {
 		where.dinoz = { isNot: null };
@@ -38,10 +38,10 @@ export async function getOffers(
 
 	if (expired) {
 		where.status = OfferStatus.ENDED;
-		orderBy = { id: 'desc' }
+		orderBy = { id: 'desc' };
 	} else {
 		where.status = OfferStatus.ONGOING;
-		orderBy = { endDate: 'asc' }
+		orderBy = { endDate: 'asc' };
 	}
 
 	const offers = await prisma.offer.findMany({
