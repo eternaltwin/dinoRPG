@@ -67,7 +67,7 @@
 					rightShow: threadSelected
 				}"
 			>
-				<DZButton back @click="unselect()">Retour</DZButton>
+				<DZButton class="mobile" back @click="unselect()">Retour</DZButton>
 				<DZDisclaimer help v-if="!threadSelected" content="messagerie.disclaimer" />
 				<div class="creationMode" v-if="creationMode">
 					<div class="title">
@@ -259,6 +259,9 @@ dialog {
 	&::backdrop {
 		background: linear-gradient(0deg, rgba(107, 32, 17, 0.2), rgba(107, 32, 17, 0.4) 70%, rgba(0, 0, 0, 0.7));
 	}
+}
+.mobile {
+	display: none;
 }
 .modal {
 	display: flex;
@@ -454,6 +457,11 @@ dialog {
 	}
 }
 @media (max-width: 539px) {
+	.mobile {
+		display: inherit;
+		width: 80%;
+		align-self: center;
+	}
 	label {
 		width: 40%;
 	}
