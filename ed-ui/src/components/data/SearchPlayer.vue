@@ -1,12 +1,11 @@
 <template>
-	<div class="search">
-		<input
-			id="player"
-			type="text"
-			:placeholder="$t('messagerie.addParticipants')"
-			v-model="searchValue"
-			list="players"
-		/>
+	<div
+		:class="{
+			search: true,
+			background: background
+		}"
+	>
+		<input id="player" type="text" :placeholder="$t(placeHolder)" v-model="searchValue" list="players" />
 		<div>
 			<div
 				class="userSearchResultsContainer"
@@ -27,8 +26,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div v-if="displayErrorMessage">{{ $t('messagerie.playerNotFound') }}</div>
 	</div>
 </template>
 
@@ -42,12 +39,15 @@ interface PlayerSearch {
 }
 export default defineComponent({
 	name: 'SearchPlayer',
+	props: {
+		placeHolder: { type: String, required: true },
+		background: { type: Boolean, default: false }
+	},
 	data() {
 		return {
 			searchValue: undefined as string | undefined,
 			playerList: [] as Array<PlayerSearch>,
-			awaitingSearch: false as boolean,
-			displayErrorMessage: false as boolean
+			awaitingSearch: false as boolean
 		};
 	},
 	emits: ['player'],
@@ -142,6 +142,46 @@ input {
 		opacity: 1;
 		height: auto;
 		transition: height 2s ease;
+	}
+}
+.background {
+	background-image: url('../../assets/background/form_field.webp');
+	align-self: center;
+	background-repeat: no-repeat;
+	border: none;
+	color: #fce3bc;
+	width: 200px;
+	height: 22px;
+	&:focus {
+		transition: outline-color 0.5s;
+		outline-color: #efdba8;
+	}
+	input {
+		background: none;
+		margin-left: 5px;
+		outline: 1px solid transparent;
+		outline-offset: 0;
+		border: none;
+		padding-left: 0;
+		font-weight: 400;
+		font-size: 16px;
+		color: #ffee92;
+		height: 100%;
+	}
+	.userSearchResultsContainer {
+		flex-direction: column;
+		max-height: calc(32px * 5);
+		position: absolute;
+		background: #5c2b20;
+		border: 1px solid #ddab76;
+		box-shadow: 0 0 3px #000;
+
+		display: block;
+		margin: 2px 0 0;
+		outline: 1px solid #000;
+		overflow: auto;
+		width: calc(100% - 2px);
+		z-index: 1;
 	}
 }
 </style>

@@ -82,7 +82,7 @@
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
 						<label for="player">{{ $t('messagerie.newMsgParticipants') }}</label>
-						<SearchPlayer @player="participantThead" />
+						<SearchPlayer place-holder="messagerie.addParticipants" @player="participantThead" />
 					</div>
 					<p v-else>{{ $t('toast.maxParticipantInThread') }}</p>
 					<div class="participants">

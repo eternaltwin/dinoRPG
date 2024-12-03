@@ -27,19 +27,7 @@
 	<CompletionRanking v-if="tabSelected === 3" />
 	<ClansRanking v-if="tabSelected === 4" />
 	<Pantheon v-if="tabSelected === 5" />
-	<input
-		class="search"
-		type="text"
-		placeholder="Search Player"
-		v-model="searchValue"
-		list="players"
-		@keyup.enter="getPlayer()"
-	/><datalist id="players">
-		<option v-for="(players, index) in playerList" :key="index">
-			{{ players.name }}
-		</option>
-	</datalist>
-	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
+	<SearchPlayer background place-holder="Search Player" @player="goToAccount" />
 </template>
 
 <script lang="ts">
@@ -51,6 +39,8 @@ import { PlayerService } from '../services/index.js';
 import Pantheon from '../components/rankings/Pantheon.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import ClansRanking from '../components/rankings/ClansRanking.vue';
+import SearchPlayer from '../components/data/SearchPlayer.vue';
+import { Player } from '@drpg/core/models/player/Player';
 
 interface PlayerSearch {
 	name: string;
@@ -60,6 +50,7 @@ interface PlayerSearch {
 export default defineComponent({
 	name: 'Ranking',
 	components: {
+		SearchPlayer,
 		ClansRanking,
 		DZDisclaimer,
 		CompletionRanking,
@@ -85,19 +76,8 @@ export default defineComponent({
 				this.playerList = await PlayerService.searchPlayers(this.searchValue);
 			}
 		},
-		goToAccount(paramId: number): void {
-			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
-		},
-		async getPlayer(): Promise<void> {
-			this.displayErrorMessage = false;
-			const playerId: number | undefined = this.playerList.find(player => player.name === this.searchValue)?.id;
-
-			if (playerId === undefined) {
-				this.displayErrorMessage = true;
-				return;
-			}
-
-			this.goToAccount(playerId);
+		goToAccount(p: Pick<Player, 'id' | 'name'>): void {
+			this.$router.push({ name: 'MyAccount', params: { id: p.id } });
 		}
 	},
 	watch: {
@@ -115,7 +95,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.search {
+/*.search {
 	background-image: url('../assets/background/form_field.webp');
 	background-repeat: no-repeat;
 	border: none;
@@ -126,7 +106,7 @@ export default defineComponent({
 	padding-top: 2px;
 	width: 185px;
 	margin-left: 1rem;
-}
+}*/
 .search::placeholder {
 	color: #fce3bc;
 }
