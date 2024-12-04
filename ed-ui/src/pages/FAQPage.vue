@@ -21,11 +21,11 @@
 		<h3 class="titleSection">{{ $t('faq.qa') }}</h3>
 		<dl class="results">
 			<template v-for="pair in filteredPairs" :key="pair.id">
-				<dt @click="toggleCollapse(pair.id)">
+				<dt @click="toggleCollapsed(pair.id)">
 					<span><img :src="getImgURL('icons', 'small_follow')" /></span>
 					<p v-html="formatContent(pair.question)" />
 				</dt>
-				<dd v-show="!pair.collapsed" v-html="formatContent(pair.answer)" />
+				<dd v-show="!isCollapsed(pair.id)" v-html="formatContent(pair.answer)" />
 			</template>
 		</dl>
 	</div>
@@ -49,7 +49,7 @@ export default defineComponent({
 		TitleHeader
 	},
 	data() {
-		const faqPairs = ref<FaqPair[]>([
+		const faqPairs = computed<FaqPair[]>(() => [
 			{ id: 1, question: this.$t('faq.faq1.question'), answer: this.$t('faq.faq1.answer'), collapsed: true },
 			{ id: 2, question: this.$t('faq.faq2.question'), answer: this.$t('faq.faq2.answer'), collapsed: true },
 			{ id: 3, question: this.$t('faq.faq8.question'), answer: this.$t('faq.faq8.answer'), collapsed: true },
@@ -83,25 +83,26 @@ export default defineComponent({
 		]);
 
 		const searchQuery = ref<string>('');
-
-		const toggleCollapse = (id: number) => {
-			const pair = faqPairs.value.find(pair => pair.id === id);
-			if (pair) {
-				pair.collapsed = !pair.collapsed;
-			}
-		};
-
 		const filteredPairs = computed(() => {
 			const searchTerm = searchQuery.value.toLowerCase();
 			return faqPairs.value.filter(pair => pair.question.toLowerCase().includes(searchTerm));
 		});
+		const collapsedPairs = new Map<number, boolean>();
 
 		return {
 			faqPairs,
 			searchQuery,
-			toggleCollapse,
-			filteredPairs
+			filteredPairs,
+			collapsedPairs
 		};
+	},
+	methods: {
+		toggleCollapsed(id: number) {
+			this.collapsedPairs.set(id, !this.isCollapsed(id));
+		},
+		isCollapsed(id: number): boolean {
+			return this.collapsedPairs.get(id) ?? true;
+		}
 	}
 });
 </script>
