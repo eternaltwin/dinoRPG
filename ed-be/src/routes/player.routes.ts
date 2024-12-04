@@ -11,10 +11,11 @@ import {
 	setCustomText
 } from '../business/playerService.js';
 import { apiRoutes } from '../constants/index.js';
-import { getPlayerMoney } from '../dao/playerDao.js';
+import { getPlayerMoney, updatePlayerLanguage } from '../dao/playerDao.js';
 import { checkLB } from '../business/eternaltwinService.js';
 import sendError from '../utils/sendErrors.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { Lang } from '@drpg/prisma';
 
 const routes: Router = Router();
 
@@ -360,5 +361,56 @@ routes.delete(commonPath, [], async (req: Request, res: Response) => {
 		sendError(res, err);
 	}
 });
+
+/**
+ * @openapi
+ * /api/v1/player/language:
+ *   put:
+ *     summary: Update the language of the player
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Player
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: body
+ *         name: language
+ *         schema:
+ *           type: string
+ *           enum:
+ *             - fr
+ *             - en
+ *             - es
+ *             - de
+ *           description: The new language for the player.
+ *     responses:
+ *       200:
+ *         description: Successfully updated the player's language.
+ *       400:
+ *         description: Invalid language or missing data.
+ *       401:
+ *         description: Unauthorized. The player ID is required.
+ *       500:
+ *         description: Internal server error.
+ */
+routes.put(
+	`${commonPath}/language`, [body('language').exists().isIn(Object.values(Lang))],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+		try {
+			if (!req.auth?.playerId) {
+				throw new ExpectedError('No player ID found');
+			}
+			const { language } = req.body;
+			const response = await updatePlayerLanguage(req.auth.playerId, language);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
 
 export default routes;

@@ -13,6 +13,7 @@
 import { defineComponent } from 'vue';
 import { Locales, LocalesEnum, loadLanguage } from '../../i18n/index.js';
 import { localStore } from '../../store/index.js';
+import { PlayerService } from '../../services/PlayerService';
 
 export default defineComponent({
 	name: 'LocaleChange',
@@ -23,10 +24,17 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		switchLocale(locale: LocalesEnum): void {
+		async switchLocale(locale: LocalesEnum): Promise<void> {
 			if (this.$i18n.locale !== locale) {
-				loadLanguage(locale);
-				this.localStore.setLanguage(locale);
+				try {
+					// Mettre à jour la langue du joueur sur le backend
+					await PlayerService.updatePlayerLanguage(locale);
+					// Changer la langue localement
+					loadLanguage(locale);
+					this.localStore.setLanguage(locale);
+				} catch (err) {
+					console.error('Erreur lors de la mise à jour de la langue du joueur :', err);
+				}
 			}
 		}
 	}

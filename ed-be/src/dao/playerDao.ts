@@ -2,7 +2,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { LogType, Moderation, ModerationAction, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
-import { AdminRole } from '@drpg/prisma';
+import { AdminRole, Lang } from '@drpg/prisma';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import type { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -282,6 +282,7 @@ export async function getCommonDataRequest(playerId: number) {
 			id: true,
 			name: true,
 			money: true,
+			lang: true,
 			engineer: true,
 			priest: true,
 			shopKeeper: true,
@@ -992,4 +993,23 @@ export async function getBannedPlayers(page: number) {
 			}
 		}
 	});
+}
+
+/**
+ * Update the language of a player.
+ * @param playerId - The ID of the player.
+ * @param language - The new language to set (default is Lang.FR).
+ * @returns Updated player language.
+ */
+export async function updatePlayerLanguage(playerId: number, language: Lang) {
+    const updatedPlayer = await prisma.player.update({
+        where: {
+            id: playerId
+        },
+        data: {
+            lang: language
+        }
+    });
+
+    return updatedPlayer;
 }

@@ -8,6 +8,7 @@ import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { Player } from '@drpg/core/models/player/Player';
+import { Lang } from '@drpg/prisma';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<PlayerCommonData> {
@@ -119,6 +120,14 @@ export const PlayerService = {
 	resetAccount(): Promise<void> {
 		return http()
 			.delete(`/player`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	updatePlayerLanguage(language: Lang): Promise<void> {
+		return http()
+			.put('/player/language', {
+				language: language
+			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
