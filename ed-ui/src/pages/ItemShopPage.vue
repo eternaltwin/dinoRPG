@@ -632,8 +632,8 @@ export default defineComponent({
 				img {
 					align-self: center;
 					&:hover {
+						outline: 1px solid white;
 						cursor: pointer;
-						box-shadow: 0px 0px 0px 1px white inset;
 					}
 				}
 			}
@@ -867,14 +867,7 @@ export default defineComponent({
 			.item {
 				display: none;
 			}
-			.name {
-				color: #ffee92;
-				font-variant: small-caps;
-				font-weight: bold;
-				line-height: 9pt;
-				padding-bottom: 4px;
-				border-bottom: 1px solid #ffee92;
-			}
+
 			.noValue {
 				height: 12px;
 			}
