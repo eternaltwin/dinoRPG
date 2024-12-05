@@ -3,8 +3,11 @@
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</div>
 	<Suspense
-		><DinozDisplay v-if="nameChoosen === true" v-show="isReady" :dinozData="dinozData" /><template #fallback>
-			<Loading /> </template
+		><DinozDisplay
+			v-if="nameChoosen === true"
+			v-show="isReady"
+			:dinozData="dinozData"
+			:key="dinozData.display" /><template #fallback> <Loading /> </template
 	></Suspense>
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions

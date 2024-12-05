@@ -206,29 +206,32 @@ export default defineComponent({
 			const width: number = Math.round((actual / max) * 36);
 			return `width : ${width}px`;
 		},
-		currentDinozId(): number | undefined {
-			return this.playerStore.playerOptions.currentDinozId;
+		currentDinozId(): number {
+			return +this.$route.params.id;
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
-			if (!dinoz.leaderId && this.currentDinozId()) {
-				const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
-				if (selectedDinoz && selectedDinoz.leaderId === dinoz.id) return true;
-			}
-			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
 			const selectedDinoz = this.dinozStore.getDinoz(this.currentDinozId());
-			if (dinoz.leaderId && leader?.followers.includes(this.currentDinozId())) {
+			if (!selectedDinoz) return false;
+			// Le dinoz est leader
+			if (!dinoz.leaderId && selectedDinoz.leaderId === dinoz.id) {
 				return true;
 			}
-			if (dinoz.followers && dinoz.followers.includes(this.currentDinozId())) {
+			// Le dinoz n'est pas suiveur
+			if (!dinoz.leaderId) return false;
+
+			const leader = this.dinozStore.getDinoz(dinoz.leaderId);
+			if (!leader) return false;
+			// Si le dinoz est follower et que le dinoz courrant est son leader
+			if (dinoz.leaderId && leader.id === selectedDinoz.id) {
+				return true;
+			}
+			if (dinoz.followers && dinoz.followers.map(d => d.id).includes(selectedDinoz.id)) {
 				return true;
 			}
 			if (dinoz.id === this.currentDinozId()) {
 				return true;
 			}
-			if (selectedDinoz?.followers.includes(dinoz.id)) {
-				return true;
-			}
-			return false;
+			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
 		},
 		getPlaceName(placeId: number): string {
 			return placeList.find(place => place.placeId === placeId)!.name;
