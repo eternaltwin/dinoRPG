@@ -126,6 +126,18 @@ a {
 		float: left;
 		position: relative;
 		margin-right: 5px;
+		&.active {
+			margin-top: 1px;
+			text-shadow: 1px 1px 0px #9a4029;
+
+			a {
+				background-color: #d69e68;
+				color: white;
+				border-left-color: #ffe7aa;
+				border-top-color: #ffe7aa;
+				border-bottom: 1px solid #d69e68;
+			}
+		}
 
 		a {
 			color: #fce3bc;

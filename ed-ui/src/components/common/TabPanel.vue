@@ -85,13 +85,12 @@ export default defineComponent({
 		li {
 			cursor: pointer;
 
-			.active {
+			&.active {
 				margin-top: 1px;
 				text-shadow: 1px 1px 0px #9a4029;
 
 				a {
 					background-color: #d69e68;
-					line-height: 16pt;
 					color: white;
 					border-left-color: #ffe7aa;
 					border-top-color: #ffe7aa;
