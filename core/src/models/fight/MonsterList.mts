@@ -972,7 +972,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS]
+		events: [GameEvent.CHRISTMAS],
+		display: 'piglou'
 	},
 	[Monster.PIGLOUBI]: {
 		id: Monster.PIGLOUBI,
@@ -994,7 +995,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS]
+		events: [GameEvent.CHRISTMAS],
+		display: 'piglou'
 	},
 	[Monster.PIGLOUGLOU]: {
 		id: Monster.PIGLOUGLOU,
@@ -1016,7 +1018,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS]
+		events: [GameEvent.CHRISTMAS],
+		display: 'piglou'
 	},
 	[Monster.SUPER_PIGLOU]: {
 		id: Monster.SUPER_PIGLOU,
@@ -1038,7 +1041,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS]
+		events: [GameEvent.CHRISTMAS],
+		display: 'piglou'
 	},
 	[Monster.ULTRA_PIGLOU]: {
 		id: Monster.ULTRA_PIGLOU,
@@ -1060,7 +1064,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 40,
 		skills: [],
 		canBeCaptured: false,
-		events: [GameEvent.CHRISTMAS]
+		events: [GameEvent.CHRISTMAS],
+		display: 'piglou'
 	},
 	[Monster.FEBREZA]: {
 		id: Monster.FEBREZA,

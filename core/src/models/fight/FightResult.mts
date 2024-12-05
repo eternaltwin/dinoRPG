@@ -24,6 +24,7 @@ export interface FightResult {
 	place: PlaceEnum;
 	startText?: FightText;
 	endText?: FightText;
+	itemWon?: number;
 }
 
 export interface FighterRecap {

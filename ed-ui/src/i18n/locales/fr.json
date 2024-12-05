@@ -4028,6 +4028,9 @@
 			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie.",
 			"newTurn": "C'est au tour de **{fighter}**.",
 			"tired": "**{fighter}** est fatigué et passe son tour."
+		},
+		"event": {
+			"christmas_ticket": "Il semblerait que ce monstrait possédait un ticket de Noël sur lui. Quelle aubaine !"
 		}
 	},
 	"ingredients": {

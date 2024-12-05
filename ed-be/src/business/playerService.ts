@@ -7,18 +7,18 @@ import dayjs from 'dayjs';
 import { Request } from 'express';
 import { getAllDinozFicheLite, getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
 import {
+	auth,
+	checkBeforeDeletion,
+	getCanCreateClanRequest,
+	getCanJoinClanRequest,
 	getCommonDataRequest,
 	getPlayerDataRequest,
 	getPlayerRewardsRequest,
-	searchPlayersByName,
-	setPlayer,
-	getCanCreateClanRequest,
-	getCanJoinClanRequest,
-	isPlayerLeaderOfClanRequest,
-	auth,
 	getToolTipInfos,
-	checkBeforeDeletion,
-	resetUser
+	isPlayerLeaderOfClanRequest,
+	resetUser,
+	searchPlayersByName,
+	setPlayer
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { calculatePlayerPower } from '../utils/boxesLogic.js';
@@ -27,13 +27,13 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { createLog } from '../dao/logDao.js';
-import { LogType } from '@drpg/prisma';
+import { LogType, OfferStatus } from '@drpg/prisma';
 import sanitizeHtml from 'sanitize-html';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
-import { OfferStatus } from '@drpg/prisma';
 import gameConfig from '../config/game.config.js';
 import { getAvailableActions } from './dinozService.js';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 
 /**
  * @summary Get data from player on login
@@ -74,7 +74,7 @@ export async function getCommonData(req: Request) {
 			await updateDinoz(dinoz.id, { life: newHp });
 		}
 
-		if (dayjs().month() === 11) {
+		if (currentEvents()[0] === GameEvent.CHRISTMAS) {
 			await increaseItemQuantity(authed.id, Item.CHRISTMAS_TICKET, 1);
 		}
 

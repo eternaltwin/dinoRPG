@@ -16,7 +16,7 @@ import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { generateString, getRandomNumber } from '../utils/index.js';
 import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
-import { currentEvents } from '@drpg/core/models/event/Events';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
@@ -32,6 +32,8 @@ import { bossList } from '@drpg/core/models/fight/BossList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import seedrandom from 'seedrandom';
+import { Item } from '@drpg/core/models/item/ItemList';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
 
 /**
  * @summary Process a fight
@@ -337,6 +339,32 @@ export async function rewardFight(
 		gold = 0;
 	}
 
+	// Check events monsters
+	const eventMonsters = monsters.filter(m => m.events && m.events.length > 0);
+	let itemWon = undefined;
+
+	for (const m of eventMonsters) {
+		if (m.events && m.events.length > 0 && fightResult.winner) {
+			switch (m.events[0]) {
+				case GameEvent.CHRISTMAS:
+					if (Math.floor(Math.random() * 100) <= 15) {
+						itemWon = Item.CHRISTMAS_TICKET;
+						await increaseItemQuantity(playerId, Item.CHRISTMAS_TICKET, 1);
+						await createLog(LogType.ItemFound, playerId, fightResult.attackers[0].dinozId, Item.CHRISTMAS_TICKET);
+					}
+					break;
+				case GameEvent.VALENTINE:
+					if (Math.floor(Math.random() * 100) <= 15) {
+						// itemsWon = Item.CHRISTMAS_TICKET;
+						// await increaseItemQuantity(playerId, Item.CHRISTMAS_TICKET, 1);
+					}
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
 	// If attackers won
 	if (fightResult.winner) {
 		await addMoney(playerId, gold);
@@ -416,7 +444,8 @@ export async function rewardFight(
 			id: a.dinozId,
 			itemsUsed: a.itemsUsed
 		})),
-		place: place
+		place: place,
+		itemWon: itemWon
 	};
 }
 
@@ -663,7 +692,8 @@ export function generateMonsterList(
 		const ml = monsters.map(a => {
 			return { monster: a.monster, odds: a.p };
 		});
-		const total = ml.reduce((acc, item) => acc + item.odds, 0);
+		// Already calculted before
+		// const total = ml.reduce((acc, item) => acc + item.odds, 0);
 		const m = weightedRandom(ml, total).monster;
 		let count = 1;
 		if (m.groups) {

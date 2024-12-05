@@ -54,7 +54,18 @@
 							{{ fight.goldEarned }}
 						</span>
 					</div>
-					<img :src="getImgURL('design', `large_empty`)" alt="empty" />
+					<img v-if="!fight.itemWon" :src="getImgURL('design', `large_empty`)" alt="empty" />
+					<Tippy
+						theme="small"
+						tag="img"
+						v-else
+						:src="getImgURL('item', `item_${itemList[fight.itemWon].name}`)"
+						:alt="itemList[fight.itemWon].name"
+					>
+						<template #content>
+							<p v-html="formatContent($t(`fight.event.${itemList[fight.itemWon].name}`))" />
+						</template>
+					</Tippy>
 				</div>
 				<DZButton @click="returnToDinoz()">{{ $t(`fight.continue`) }}</DZButton>
 				<DZButton @click="processFight()" v-if="isDevEnv()">[Dev] Fight again</DZButton>
@@ -78,9 +89,15 @@ import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import DZButton from '../components/common/DZButton.vue';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'Fight',
+	computed: {
+		itemList() {
+			return itemList;
+		}
+	},
 	components: {
 		DZButton,
 		TitleHeader,

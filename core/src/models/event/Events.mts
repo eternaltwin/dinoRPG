@@ -20,7 +20,7 @@ export const Events: Record<GameEvent, EventDetails> = {
 		name: GameEvent.CHRISTMAS,
 		start: {
 			month: 12,
-			day: 24
+			day: 1
 		},
 		end: {
 			month: 12,
