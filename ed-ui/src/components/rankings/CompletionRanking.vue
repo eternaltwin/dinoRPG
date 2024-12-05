@@ -25,7 +25,7 @@
 						{{ (page - 1) * 20 + (index + 1) }}
 					</td>
 					<td class="other">
-						{{ ranking.player.name }}
+						<DZUser :user="ranking.player" :me="ranking.player.id === me" :friend="false" />
 					</td>
 					<td class="other">
 						{{ ranking.dinozCount }}
@@ -53,12 +53,16 @@ import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
+import { playerStore } from '../../store/index.js';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'CompletionRanking',
+	components: { DZUser },
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
+			me: playerStore().getPlayerId,
 			page: 1 as number
 		};
 	},
