@@ -42,7 +42,7 @@
 			</div>
 		</div>
 		<div class="banner" v-if="clan && clan.id > 0">
-			<img class="banner-img" :src="`${API_BASE}/clan/${clan.id}/banner`" alt="Clan banner" />
+			<img class="banner-img" :src="`${API_BASE}/clan/${clan.id}/banner`" alt="banner" />
 		</div>
 		<div class="bottom-info">
 			<p class="creation-date">{{ $t('clan.header.creation_date', { date: DateToString(clan?.creationDate) }) }}</p>
@@ -137,7 +137,7 @@ export default defineComponent({
 }
 
 .banner {
-	width: 95%;
+	max-width: 95%;
 	height: 100px;
 	border: 1px solid #fff798;
 	.banner-img {
