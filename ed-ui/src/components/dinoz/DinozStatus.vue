@@ -9,8 +9,8 @@
 						:alt="statusList.imgName[status.statusId]"
 					/>
 					<template #content>
-						<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
-						<p v-html="formatContent($t(`status.description.${status}`))"></p>
+						<h1 v-html="formatContent($t(`status.name.${status.statusId}`))"></h1>
+						<p v-html="formatContent($t(`status.description.${status.statusId}`))"></p>
 					</template>
 				</Tippy>
 			</template>
