@@ -4176,12 +4176,14 @@
 			"yourBids": "Vos mises"
 		}
 	},
-	"following": "Ce Dinoz suit son chef de groupe.",
-	"gather": "Ce dinoz peut récolter en ce lieu.",
-	"rest": "Ce dinoz se repose.",
-	"remaingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
-	"follow": "Le chef de groupe est {leader}.",
-	"followed": "Ce Dinoz est chef de groupe.",
+	"hud": {
+		"following": "Ce Dinoz suit son chef de groupe.",
+		"gather": "Ce dinoz peut récolter en ce lieu.",
+		"rest": "Ce dinoz se repose.",
+		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
+		"follow": "Le chef de groupe est {leader}.",
+		"followed": "Ce Dinoz est chef de groupe."
+	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** a utilisé **{quantity}x {item}** avec le dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",

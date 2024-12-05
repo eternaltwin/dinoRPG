@@ -23,7 +23,7 @@
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
 							v-tippy="{
-								content: formatContent($t('following')),
+								content: formatContent($t('hud.following')),
 								theme: 'small'
 							}"
 							alt="follower"
@@ -32,7 +32,7 @@
 							v-if="dinoz.followers.length > 0"
 							:src="getImgURL('icons', 'crown', true)"
 							v-tippy="{
-								content: formatContent($t('followed')),
+								content: formatContent($t('hud.followed')),
 								theme: 'small'
 							}"
 							alt="leader"
@@ -41,7 +41,7 @@
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
-									content: formatContent($t('remaingActions')),
+									content: formatContent($t('hud.remainingActions')),
 									theme: 'small'
 								}"
 								alt="actions"

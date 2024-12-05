@@ -70,7 +70,7 @@
 							<img
 								:src="getImgURL('icons', `small_hourglass`)"
 								v-tippy="{
-									content: formatContent($t('remaingActions')),
+									content: formatContent($t('hud.remainingActions')),
 									theme: 'small'
 								}"
 								alt="actions"
@@ -91,7 +91,7 @@
 							v-if="dinoz.fight"
 							:src="getImgURL('icons', 'small_attack')"
 							v-tippy="{
-								content: formatContent($t('following')),
+								content: formatContent($t('hud.following')),
 								theme: 'small'
 							}"
 							alt="fight"
@@ -100,7 +100,7 @@
 							v-if="dinoz.actions.some(a => a.imgName === 'act_gather')"
 							:src="getImgURL('icons', 'small_gather')"
 							v-tippy="{
-								content: formatContent($t('gather')),
+								content: formatContent($t('hud.gather')),
 								theme: 'small'
 							}"
 							alt="gather"
@@ -108,7 +108,7 @@
 						<svg
 							v-if="dinoz.actions.some(a => a.name === Action.STOP_REST)"
 							v-tippy="{
-								content: formatContent($t('rest')),
+								content: formatContent($t('hud.rest')),
 								theme: 'small'
 							}"
 							xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -137,7 +137,7 @@
 							v-if="dinoz.leaderId"
 							:src="getImgURL('icons', 'small_follow')"
 							v-tippy="{
-								content: formatContent($t('following')),
+								content: formatContent($t('hud.following')),
 								theme: 'small'
 							}"
 							alt="lvlup"
@@ -146,7 +146,7 @@
 							v-if="dinoz.followers.length > 0"
 							:src="getImgURL('icons', 'crown', true)"
 							v-tippy="{
-								content: formatContent($t('followed')),
+								content: formatContent($t('hud.followed')),
 								theme: 'small'
 							}"
 							alt="lvlup"

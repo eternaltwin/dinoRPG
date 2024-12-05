@@ -17,9 +17,9 @@
 			</template>
 			<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
 			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
-				{{ $t('following') }}
+				{{ $t('hud.following') }}
 				<template #content>
-					{{ $t(`follow`, { leader: leaderDinoz.name }) }}
+					{{ $t(`hud.follow`, { leader: leaderDinoz.name }) }}
 				</template>
 			</Tippy>
 			<DZDisclaimer
