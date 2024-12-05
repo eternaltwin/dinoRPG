@@ -23,7 +23,7 @@
 								d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4m0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4"
 							></path>
 						</svg>
-						<span>Profil</span>
+						<span>{{ $t('rightMenu.account') }}</span>
 					</RouterLink>
 					<div class="link" @click="messagerie()">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
@@ -31,28 +31,28 @@
 								d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
 							></path>
 						</svg>
-						<span>Messagerie</span>
+						<span>{{ $t('rightMenu.messagerie') }}</span>
 					</div>
 					<RouterLink v-if="playerStore.getClanId" class="link" :to="`/clan/${playerStore.getClanId}`">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
 								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
 							></path></svg
-						><span>Mon Clan</span></RouterLink
+						><span>{{ $t('rightMenu.clans') }}</span></RouterLink
 					>
 					<RouterLink v-else class="link" to="/clans">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
 								d="M21 9v2h-2V3h-2v2h-2V3h-2v2h-2V3H9v2H7V3H5v8H3V9H1v12h9v-3c0-1.1.9-2 2-2s2 .9 2 2v3h9V9zm-10 3H9V9h2zm4 0h-2V9h2z"
 							></path></svg
-						><span>Clans</span></RouterLink
+						><span>{{ $t('rightMenu.clans') }}</span></RouterLink
 					>
 					<RouterLink class="link" to="/ingredients">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
 								d="M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2m-5 12H9v-2h6zm5-7H4V4l16-.02z"
 							></path></svg
-						><span>Ingrédients</span></RouterLink
+						><span>{{ $t('rightMenu.ingredients') }}</span></RouterLink
 					>
 					<RouterLink class="link" to="/ranking">
 						<svg
@@ -65,7 +65,7 @@
 							<path
 								d="M17 10.43V2H7v8.43c0 .35.18.68.49.86l4.18 2.51-.99 2.34-3.41.29 2.59 2.24L9.07 22 12 20.23 14.93 22l-.78-3.33 2.59-2.24-3.41-.29-.99-2.34 4.18-2.51c.3-.18.48-.5.48-.86m-4 1.8-1 .6-1-.6V3h2z"
 							></path></svg
-						><span>Classement</span></RouterLink
+						><span>{{ $t('rightMenu.ranking') }}</span></RouterLink
 					>
 					<a class="link" href="https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
@@ -73,21 +73,21 @@
 								d="m18 4 2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4z"
 							></path>
 						</svg>
-						<span>Cinéma</span>
+						<span>{{ $t('rightMenu.cinema') }}</span>
 					</a>
 					<RouterLink class="link" to="/">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
 								d="m23 12-2.44-2.78.34-3.68-3.61-.82-1.89-3.18L12 3 8.6 1.54 6.71 4.72l-3.61.81.34 3.68L1 12l2.44 2.78-.34 3.69 3.61.82 1.89 3.18L12 21l3.4 1.46 1.89-3.18 3.61-.82-.34-3.68zm-10 5h-2v-2h2zm0-4h-2V7h2z"
 							></path></svg
-						><span>News</span></RouterLink
+						><span>{{ $t('rightMenu.news') }}</span></RouterLink
 					>
 					<RouterLink class="link" to="/help">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
 							<path
 								d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m1 17h-2v-2h2zm2.07-7.75-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25"
 							></path></svg
-						><span>Aide</span></RouterLink
+						><span>{{ $t('rightMenu.guide') }}</span></RouterLink
 					>
 					<RouterLink class="link" to="/faq">
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
@@ -95,7 +95,7 @@
 							<path
 								d="M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2m-5.99 13c-.59 0-1.05-.47-1.05-1.05 0-.59.47-1.04 1.05-1.04.59 0 1.04.45 1.04 1.04-.01.58-.45 1.05-1.04 1.05m2.5-6.17c-.63.93-1.23 1.21-1.56 1.81-.13.24-.18.4-.18 1.18h-1.52c0-.41-.06-1.08.26-1.65.41-.73 1.18-1.16 1.63-1.8.48-.68.21-1.94-1.14-1.94-.88 0-1.32.67-1.5 1.23l-1.37-.57C11.51 5.96 12.52 5 13.99 5c1.23 0 2.08.56 2.51 1.26.37.61.58 1.73.01 2.57"
 							></path></svg
-						><span>FAQ</span></RouterLink
+						><span>{{ $t('rightMenu.faq') }}</span></RouterLink
 					>
 					<RouterLink v-if="playerStore.isAdmin" class="link" to="/admin">
 						<svg

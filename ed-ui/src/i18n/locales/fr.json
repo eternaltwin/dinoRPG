@@ -13,7 +13,8 @@
 		"api": "API",
 		"logout": "Déconnexion",
 		"guide": "Guide du Jeu",
-		"faq": "FAQ"
+		"faq": "FAQ",
+		"cinema": "Cinéma"
 	},
 	"toast": {
 		"maxParticipantInThread": "Vous ne pouvez ajouter plus de 9 participants à une conversation.",
