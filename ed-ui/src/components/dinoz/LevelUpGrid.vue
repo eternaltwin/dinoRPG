@@ -61,11 +61,10 @@ export default defineComponent({
 
 			const animateSpin = () => {
 				const elapsedTime = Date.now() - startTime;
-				if (elapsedTime >= totalDuration) {
+				if (elapsedTime >= totalDuration && this.increment % 20 === this.selectedIndex) {
 					this.isSpinOver = true;
 					this.isSpinning = false;
 					this.$emit('spinOver');
-					console.log('ended');
 					return;
 				}
 
