@@ -137,6 +137,7 @@ export default defineComponent({
 	margin-top: 16px;
 	font-size: 0.65em;
 	display: flex;
+	gap: 80px;
 	justify-content: space-around;
 }
 .modal-background {
@@ -151,9 +152,8 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
 	.modal-box {
-		width: 600px;
+		max-width: 600px;
 		position: absolute;
 		padding: 2em;
 		font-size: 1.1em;
@@ -166,7 +166,6 @@ export default defineComponent({
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 	}
 }
-
 .modal-close {
 	cursor: pointer;
 	position: absolute;
@@ -181,20 +180,24 @@ export default defineComponent({
 	text-decoration: none;
 	font-variant: small-caps;
 	transition: all 0.15s;
-
 	&:hover,
 	&:focus,
 	&:active {
 		color: black;
 	}
 }
-
 @keyframes blowUpModal {
 	0% {
 		transform: scale(0);
 	}
 	100% {
 		transform: scale(1);
+	}
+}
+@media (max-width: 699px) {
+	.details {
+		flex-direction: column;
+		gap: 20px;
 	}
 }
 </style>
