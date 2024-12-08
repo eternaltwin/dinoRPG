@@ -588,19 +588,26 @@ export async function giveClanIngredients(req: Request) {
 	}
 
 	// Lock negative quantities
-	if (ingredients.filter(i => i.quantity <= 0).length > 0) {
+	if (ingredients.some(i => i.quantity <= 0)) {
 		throw new ExpectedError(translate(`wrongQuantity`));
 	}
 
-	const gold = ingredients.reduce(
-		(acc, cur) =>
-			acc + (Object.values(ingredientList).find(a => a.ingredientId === cur.itemId)?.price ?? 0) * cur.quantity,
-		0
-	);
+	let totalGold = 0;
+
+	// Lock
+	for (const ingredient of ingredients) {
+		const playerIngredient = playerIngredients.find(i => i.ingredientId === ingredient.itemId);
+		// If the ingredient is missing or the requested quantity exceeds the player's available quantity
+		if (!playerIngredient || playerIngredient.quantity < ingredient.quantity) {
+			throw new ExpectedError(translate(`wrongQuantity`));
+		}
+		const price = Object.values(ingredientList).find(a => a.ingredientId === ingredient.itemId)?.price ?? 0;
+		totalGold += price * ingredient.quantity;
+	}
 
 	const promises = [];
-	promises.push(updateClanTreasure(clanId, gold));
-	promises.push(updateClanContribution(authed.id, gold));
+	promises.push(updateClanTreasure(clanId, totalGold));
+	promises.push(updateClanContribution(authed.id, totalGold));
 	for (const ingredient of ingredients) {
 		const playerIngredient = playerIngredients.find(i => i.ingredientId === ingredient.itemId);
 		if (!playerIngredient || playerIngredient.quantity - ingredient.quantity < 0) {
