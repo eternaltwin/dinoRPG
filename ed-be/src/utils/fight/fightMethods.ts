@@ -2647,13 +2647,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const init_down_notify = {
 				action: 'notify',
 				fids: [],
-				notification: NotificationList.InitUp
+				notification: NotificationList.InitDown
 			} as NotifyStep;
 			opponents.forEach(opponent => {
 				opponent.time += 8 * TIME_FACTOR;
 				init_down_notify.fids.push(opponent.id);
 			});
 			fightData.steps.push(init_down_notify);
+			break;
 		}
 		break;
 		// WOOD
