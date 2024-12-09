@@ -133,8 +133,7 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			}
 			return t(`fight.step.${fightStep.action}`, {
 				dinoz: getFighterName(fightStep.fid, t),
-				skill: t(`skill.name.${skillList[fightStep.skill].name}`),
-				energy: getSkillEnergy(fightStep.skill)
+				skill: t(`skill.name.${skillList[fightStep.skill].name}`)
 			});
 		case 'skillExpire':
 			return t(`fight.step.${fightStep.action}`, {
