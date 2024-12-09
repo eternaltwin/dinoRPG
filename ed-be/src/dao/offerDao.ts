@@ -209,3 +209,13 @@ export async function extendTimer(offer: Pick<Offer, 'id' | 'endDate'>) {
 		data: { endDate: newEndDate }
 	});
 }
+
+export async function getOngoingOffers() {
+	const offers = await prisma.offer.findMany({
+		where: {
+			status: OfferStatus.ONGOING
+		}
+	});
+
+	return offers;
+}

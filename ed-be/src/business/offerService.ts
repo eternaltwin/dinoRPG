@@ -4,7 +4,7 @@ import {
 	deleteOffer,
 	extendTimer,
 	getOffer,
-	getOffers,
+	getOffers, getOngoingOffers,
 	insertOffer,
 	updateOfferDinoz,
 	updateOfferStatus
@@ -408,7 +408,7 @@ export const expireOffer = async (offerId: number) => {
  * Schedule offers expiration
  */
 export const scheduleOffersExpiration = async () => {
-	const ongoingOffers = await getOffers(null, 'all', null, null, false, 1);
+	const ongoingOffers = await getOngoingOffers();
 
 	// Process outdated offers immediately
 	const outdatedOffers = ongoingOffers.filter(offer => offer.endDate <= new Date());
