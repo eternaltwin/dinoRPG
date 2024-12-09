@@ -78,6 +78,7 @@ export default defineComponent({
 		}
 	},
 	mounted() {
+		EventBus.off('equipItem');
 		if (!this.dinozData) {
 			this.$toast.open({
 				message: formatText(this.$t(`toast.dinozDataMissing`)),
@@ -93,13 +94,9 @@ export default defineComponent({
 				this.$toast.open({ message: formatText(this.$t(`toast.dinozDataMissing`)), type: 'error' });
 				return;
 			}
-
 			this.items = new Array(this.dinozData.maxItems);
 			e.forEach((item, index) => (this.items![index] = item.itemId));
 		});
-	},
-	unmounted() {
-		EventBus.off('equipItem');
 	}
 });
 </script>
