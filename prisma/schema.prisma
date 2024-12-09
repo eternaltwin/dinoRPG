@@ -507,6 +507,7 @@ model OfferBid {
 enum OfferStatus {
   ONGOING
   ENDED
+  CLAIMED
   CANCELLED
 }
 

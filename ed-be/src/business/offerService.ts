@@ -4,8 +4,10 @@ import {
 	deleteOffer,
 	extendTimer,
 	getOffer,
-	getOffers, getOngoingOffers,
+	getOffers,
+	getOngoingOffers,
 	insertOffer,
+	prepareRefund,
 	updateOfferDinoz,
 	updateOfferStatus
 } from '../dao/offerDao.js';
@@ -29,6 +31,7 @@ import { LOGGER } from '../context.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { createLog } from '../dao/logDao.js';
+import gameConfig from '../config/game.config.js';
 
 /**
  * Get the list of current offers
@@ -197,7 +200,7 @@ export async function cancelOffer(req: Request) {
 	const offerId = +req.params.offerId;
 
 	// Get user current offers
-	const offer = await getOffer(offerId);
+	const offer = await getOffer(offerId, OfferStatus.ONGOING);
 
 	// Check if user is the seller
 	if (!offer || offer.seller.id !== playerId) {
@@ -271,7 +274,7 @@ export async function bidOffer(req: Request) {
 	const value = +req.body.value;
 
 	// Get user current offers
-	const offer = await getOffer(offerId);
+	const offer = await getOffer(offerId, OfferStatus.ONGOING);
 
 	// Check if user is the seller
 	if (!offer || offer.seller.id === authed.id) {
@@ -333,21 +336,47 @@ export async function bidOffer(req: Request) {
  * Expire an offer
  */
 export const expireOffer = async (offerId: number) => {
-	const offer = await getOffer(offerId);
+	const offer = await getOffer(offerId, OfferStatus.ONGOING);
 
 	if (!offer) {
 		throw new ExpectedError('Offer not found');
 	}
 
+	const winnerBid = offer.bids[offer.bids.length - 1];
+	// Send Discord notification
+	LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
+	await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
+
+	await addMoney(offer.seller.id, winnerBid.value * 1000);
+	// Update offer status
+	await updateOfferStatus(offerId, OfferStatus.ENDED);
+	// Update stats tracking
+	await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
+};
+
+/**
+ * Claim an ENDED offer
+ */
+export async function claimOffer(req: Request) {
+	const offerId = +req.params.offerId;
+	const offer = await getOffer(offerId, OfferStatus.ENDED);
+	if (!offer) {
+		throw new ExpectedError('Offer not found');
+	}
+	const authed = await auth(req);
+
 	// Separate items and ingredients
 	const items = offer.items.filter(item => !item.isIngredient);
 	const ingredients = offer.items.filter(item => item.isIngredient);
+	const winnerBid = offer.bids[offer.bids.length - 1];
 	const promises = [];
 
-	// Process offer if there is at least one bid
 	if (offer.bids.length) {
-		const winnerBid = offer.bids[offer.bids.length - 1];
+		const winner = await checkRefund(winnerBid.userId, ingredients, items, offer.dinoz !== undefined, offerId);
 
+		if (!winner) {
+			throw new ExpectedError(translate('cannotClaim', authed));
+		}
 		if (offer.dinoz) {
 			// Change Dinoz owner and set as not selling
 			updateDinoz(offer.dinoz.id, {
@@ -371,22 +400,16 @@ export const expireOffer = async (offerId: number) => {
 
 		// Add ingredients to winner inventory
 		promises.push(...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity)));
-
-		// Send Discord notification
-		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
-		await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
-
-		await addMoney(offer.seller.id, winnerBid.value * 1000);
-		// Update stats tracking
-		await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
 	} else {
-		// Refund seller if there is no bid
+		const refund = await checkRefund(offer.sellerId, ingredients, items, false, offerId);
 
+		if (!refund) {
+			throw new ExpectedError(translate('cannotClaim', authed));
+		}
 		// Set Dinoz as not selling
 		if (offer.dinoz) {
 			updateDinoz(offer.dinoz.id, { unavailableReason: null });
 		}
-
 		// Add items to inventory
 		promises.push(...items.map(item => increaseItemQuantity(offer.seller.id, item.itemId, item.quantity)));
 
@@ -398,11 +421,82 @@ export const expireOffer = async (offerId: number) => {
 		await createLog(LogType.OfferExpired, offer.seller.id, undefined, offer.id);
 	}
 
-	await Promise.all(promises);
-
 	// Update offer status
-	await updateOfferStatus(offerId, OfferStatus.ENDED);
-};
+	await updateOfferStatus(offerId, OfferStatus.CLAIMED);
+
+	await Promise.all(promises);
+}
+
+export async function checkRefund(
+	playerId: number,
+	ingredients: { itemId: number; quantity: number; isIngredient: boolean }[],
+	items: { itemId: number; quantity: number; isIngredient: boolean }[],
+	dinoz = false,
+	offerId: number
+) {
+	const refund = await prepareRefund(
+		playerId,
+		ingredients.map(p => p.itemId),
+		items.map(i => i.itemId)
+	);
+
+	const maxDinoz = gameConfig.dinoz.maxQuantity + (refund.leader ? 3 : 0) + (refund.messie ? 3 : 0);
+	if (dinoz && refund._count.dinoz + 1 >= maxDinoz) {
+		return false;
+	}
+
+	const shopKeeper = refund.shopKeeper;
+
+	const ingredientsWithMaxQuantity = Object.values(ingredientList)
+		.filter(i => {
+			return ingredients.some(a => a.itemId === i.ingredientId);
+		})
+		.filter(i => {
+			return refund.ingredients.some(a => a.ingredientId === i.ingredientId);
+		})
+		.map(i => {
+			const playerIng = refund.ingredients.find(a => a.ingredientId === i.ingredientId);
+			const marketIng = ingredients.find(a => a.itemId === i.ingredientId);
+			if (!playerIng || !marketIng) {
+				LOGGER.error(
+					`Cannot find ingredient ${i.name} in offer or database for offer ${offerId} when player ${playerId} refund.`
+				);
+				throw new ExpectedError(`Cannot find ingredient ${i.name} in offer or database`);
+			}
+			return {
+				ingredientId: i.ingredientId,
+				maxQuantity: shopKeeper ? i.maxQuantity * 1.5 : i.maxQuantity,
+				futureQuantity: playerIng.quantity + marketIng.quantity
+			};
+		});
+	const itemWithMaxQuantity = Object.values(itemList)
+		.filter(i => {
+			return items.some(a => a.itemId === i.itemId);
+		})
+		.filter(i => {
+			return refund.items.some(a => a.itemId === i.itemId);
+		})
+		.map(i => {
+			const playerItems = refund.items.find(a => a.itemId === i.itemId);
+			const marketItems = items.find(a => a.itemId === i.itemId);
+			if (!playerItems || !marketItems) {
+				LOGGER.error(
+					`Cannot find item ${i.name} in offer or database for offer ${offerId} when player ${playerId} refund.`
+				);
+				throw new ExpectedError(`Cannot find item ${i.name} in offer or database`);
+			}
+			return {
+				itemId: i.itemId,
+				maxQuantity: shopKeeper ? i.maxQuantity * 1.5 : i.maxQuantity,
+				futureQuantity: playerItems.quantity + marketItems.quantity
+			};
+		});
+
+	return (
+		ingredientsWithMaxQuantity.every(i => i.futureQuantity <= i.maxQuantity) &&
+		itemWithMaxQuantity.every(i => i.futureQuantity <= i.maxQuantity)
+	);
+}
 
 /**
  * Schedule offers expiration

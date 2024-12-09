@@ -312,6 +312,7 @@ export type Lang = (typeof Lang)[keyof typeof Lang]
 export const OfferStatus: {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
+  CLAIMED: 'CLAIMED',
   CANCELLED: 'CANCELLED'
 };
 

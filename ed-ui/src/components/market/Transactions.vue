@@ -1,4 +1,28 @@
 <template>
+	<template v-if="wonOffers.length">
+		<h4>{{ $t('market.transactionView.yourWonOffer') }}</h4>
+		<template v-for="offer in wonOffers" :key="offer.id">
+			<table>
+				<tr>
+					<td>{{ $t('market.transactionView.bid') }}</td>
+					<td>
+						<p v-if="offer.bids.length" class="bid">
+							<span>{{ offer.bids[0].value }}</span>
+							<img :src="getImgURL('icons', 'ticket', true)" />
+							<span>{{ $t('market.by') }}</span>
+							<DZUser :user="offer.bids[0].user" />
+						</p>
+						<p v-else>{{ $t('market.transactionView.noBidYet') }}</p>
+						<DZButton @click="reclaimOffer(offer.id)">{{ $t('market.transactionView.claim') }}</DZButton>
+					</td>
+				</tr>
+			</table>
+			<DZTable>
+				<OfferLine :offer="offer" :now="now" />
+			</DZTable>
+		</template>
+	</template>
+	<DZDisclaimer v-else help content="market.transactionView.noWonOffer" />
 	<template v-if="ownOffer">
 		<h4>{{ $t('market.transactionView.yourOngoingOffer') }}</h4>
 		<table>
@@ -75,7 +99,8 @@ export default defineComponent({
 			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
 			ownOffer: null as EnhancedOffer | null,
-			offers: [] as EnhancedOffer[]
+			offers: [] as EnhancedOffer[],
+			wonOffers: [] as EnhancedOffer[]
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, DZUser, OfferLine },
@@ -104,6 +129,7 @@ export default defineComponent({
 			try {
 				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
 				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
+				this.wonOffers = this.formatOffers(await OfferService.getList('all', null, userId, true));
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
@@ -125,6 +151,19 @@ export default defineComponent({
 				errorHandler.handle(error, this.$toast);
 				return;
 			}
+		},
+		async reclaimOffer(offerId: number) {
+			try {
+				await OfferService.claimOffer(offerId);
+				await this.fetchOffers();
+			} catch (error) {
+				errorHandler.handle(error, this.$toast);
+				return;
+			}
+			this.$toast.open({
+				message: formatText(this.$t(`toast.market.offerClaimed`)),
+				type: 'success'
+			});
 		},
 		updateOffer(offer: EnhancedOffer) {
 			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));

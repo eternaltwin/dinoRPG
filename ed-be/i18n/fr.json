@@ -34,6 +34,7 @@
   "DinozNotDead": "Votre Dinoz n'est pas mort.",
   "tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
   "maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
+	"cannotClaim": "Vous ne pouvez pas actuellement récupérez vos gains.",
   "race": {
     "1": "Moueffe",
     "2": "Moueffe Démon",

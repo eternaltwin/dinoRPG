@@ -66,7 +66,6 @@ export async function auth(request: Request) {
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
 export async function resetUser(playerId: number) {
-
 	await prisma.$executeRaw`SET TRANSACTION ISOLATION LEVEL SERIALIZABLE`;
 	await prisma.$transaction([
 		// Suppression des entités associées
@@ -96,8 +95,6 @@ export async function resetUser(playerId: number) {
 		})
 	]);
 }
-
-
 
 export async function getPlayerInfoToReport(playerId: number) {
 	return await prisma.player.findUnique({

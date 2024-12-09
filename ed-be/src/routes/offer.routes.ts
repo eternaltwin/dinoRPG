@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { body, param, query, validationResult } from 'express-validator';
-import { bidOffer, cancelOffer, createOffer, getOfferList } from '../business/offerService.js';
+import { bidOffer, cancelOffer, claimOffer, createOffer, getOfferList } from '../business/offerService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
 import { totalOffers } from '../dao/offerDao.js';
@@ -97,6 +97,26 @@ routes.post(
 
 		try {
 			await bidOffer(req);
+			return res.status(200).send({
+				message: 'Bid placed'
+			});
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Claim an offer
+routes.post(
+	`${commonPath}/:offerId/claim`,
+	[param('offerId').exists().toInt().isInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await claimOffer(req);
 			return res.status(200).send({
 				message: 'Bid placed'
 			});

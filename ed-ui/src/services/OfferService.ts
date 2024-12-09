@@ -56,5 +56,11 @@ export const OfferService = {
 			})
 			.then(() => Promise.resolve())
 			.catch(err => Promise.reject(err));
+	},
+	claimOffer(offerId: number) {
+		return http()
+			.post(`/offer/${offerId}/claim`)
+			.then(() => Promise.resolve())
+			.catch(err => Promise.reject(err));
 	}
 };

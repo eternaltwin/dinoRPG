@@ -625,6 +625,7 @@ exports.Lang = exports.$Enums.Lang = {
 exports.OfferStatus = exports.$Enums.OfferStatus = {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
+  CLAIMED: 'CLAIMED',
   CANCELLED: 'CANCELLED'
 };
 

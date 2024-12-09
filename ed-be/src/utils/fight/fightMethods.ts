@@ -2634,29 +2634,30 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 			break;
 		}
-		case Skill.DELUGE: {
-			attackAllOpponents(
-				fightData,
-				fighter,
-				getElementalAttack(fighter, ElementType.WATER, 10),
-				skill.id,
-				activate_step
-			);
-			// Increase time of all opponents by 8
-			const opponents = getOpponents(fightData, fighter);
-			const init_down_notify = {
-				action: 'notify',
-				fids: [],
-				notification: NotificationList.InitDown
-			} as NotifyStep;
-			opponents.forEach(opponent => {
-				opponent.time += 8 * TIME_FACTOR;
-				init_down_notify.fids.push(opponent.id);
-			});
-			fightData.steps.push(init_down_notify);
+		case Skill.DELUGE:
+			{
+				attackAllOpponents(
+					fightData,
+					fighter,
+					getElementalAttack(fighter, ElementType.WATER, 10),
+					skill.id,
+					activate_step
+				);
+				// Increase time of all opponents by 8
+				const opponents = getOpponents(fightData, fighter);
+				const init_down_notify = {
+					action: 'notify',
+					fids: [],
+					notification: NotificationList.InitDown
+				} as NotifyStep;
+				opponents.forEach(opponent => {
+					opponent.time += 8 * TIME_FACTOR;
+					init_down_notify.fids.push(opponent.id);
+				});
+				fightData.steps.push(init_down_notify);
+				break;
+			}
 			break;
-		}
-		break;
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
 			attackSingleOpponent(

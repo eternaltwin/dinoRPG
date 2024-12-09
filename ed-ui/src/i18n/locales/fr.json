@@ -41,7 +41,8 @@
 			"tooManyItems": "Vous ne pouvez pas vendre plus de {items} objets différents à la fois.",
 			"offerCreated": "Votre offre a été créée.",
 			"offerCancelled": "Votre offre a été annulée.",
-			"notEnoughItems": "Vous n'avez pas assez de cet objet."
+			"notEnoughItems": "Vous n'avez pas assez de cet objet.",
+			"offerClaimed": "Vos gains ont été récupérés"
 		},
 		"isSelling": "Votre Dinoz est actuellement en vente au Marché des Éleveurs.",
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
@@ -4167,7 +4168,10 @@
 		},
 		"transactionView": {
 			"yourOngoingOffer": "Votre offre en cours",
+			"yourWonOffer": "Vos offres gagnées",
 			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
+			"noWonOffer": "Vous n'avez aucune offre à récupérer",
+			"claim": "Récupérer mes gains",
 			"bid": "Mise",
 			"noBidYet": "Aucune mise pour l'instant.",
 			"cancel": "Annuler",

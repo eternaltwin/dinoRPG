@@ -1,5 +1,5 @@
-import { MARKET_OFFER_DURATION } from '@drpg/core/constants';
-import { OfferStatus, Prisma, Offer } from '@drpg/prisma';
+import { MARKET_OFFER_DURATION, MARKET_OFFER_DURATION_DEBUG } from '@drpg/core/constants';
+import { OfferStatus, Prisma, Offer, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -37,7 +37,7 @@ export async function getOffers(
 	}
 
 	if (expired) {
-		where.status = OfferStatus.ENDED;
+		where.OR = [{ status: OfferStatus.ENDED }, { status: OfferStatus.CLAIMED }];
 		orderBy = { id: 'desc' };
 	} else {
 		where.status = OfferStatus.ONGOING;
@@ -98,8 +98,8 @@ export async function insertOffer(
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
-			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
-			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
+			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
 			dinozId,
 			items: {
 				create: itemsAndIngredient
@@ -132,11 +132,11 @@ export async function deleteOffer(offerId: number) {
 	});
 }
 
-export async function getOffer(offerId: number) {
+export async function getOffer(offerId: number, status: OfferStatus) {
 	const offer = await prisma.offer.findUnique({
 		where: {
 			id: offerId,
-			status: OfferStatus.ONGOING
+			status: status
 		},
 		include: {
 			seller: { select: { id: true, name: true } },
@@ -165,6 +165,48 @@ export async function getOffer(offerId: number) {
 	});
 
 	return offer;
+}
+
+export async function prepareRefund(playerId: number, ingredientList: number[], itemList: number[]) {
+	const player = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			id: true,
+			name: true,
+			shopKeeper: true,
+			leader: true,
+			messie: true,
+			ingredients: {
+				where: {
+					ingredientId: { in: ingredientList }
+				},
+				select: {
+					ingredientId: true,
+					quantity: true
+				}
+			},
+			items: {
+				where: {
+					itemId: { in: itemList }
+				}
+			},
+			_count: {
+				select: {
+					dinoz: {
+						where: {
+							OR: [
+								{ unavailableReason: null },
+								{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+							]
+						}
+					}
+				}
+			}
+		}
+	});
+	return player;
 }
 
 export async function addBid(offerId: number, userId: number, value: number) {

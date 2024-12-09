@@ -286,7 +286,7 @@ export async function resetAccount(req: Request) {
 	//Check if sell of bids are ongoing
 	if (
 		playerToDelete &&
-		(playerToDelete.bids.length > 0 || playerToDelete.offers.filter(b => b.status !== OfferStatus.ENDED).length > 0)
+		(playerToDelete.bids.length > 0 || playerToDelete.offers.filter(b => b.status === OfferStatus.ONGOING).length > 0)
 	) {
 		throw new ExpectedError(translate(`bidsOngoing`, authed));
 	}
