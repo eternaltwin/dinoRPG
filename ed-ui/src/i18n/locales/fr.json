@@ -61,7 +61,6 @@
 		},
 		"notEnoughQuantity": "Vous n'avez pas assez d'ingrédients...",
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
 		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre."
 	},
@@ -4184,9 +4183,11 @@
 		"following": "Ce Dinoz suit son chef de groupe.",
 		"gather": "Ce dinoz peut récolter en ce lieu.",
 		"rest": "Ce dinoz se repose.",
+		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
 		"follow": "Le chef de groupe est {leader}.",
-		"followed": "Ce Dinoz est chef de groupe."
+		"followed": "Ce Dinoz est chef de groupe.",
+		"restEnd": "Votre dinoz a déjà récupéré le maximum de point de vie en se reposant."
 	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** a utilisé **{quantity}x {item}** avec le dinoz **{dinoz} ({dinozId})**.",

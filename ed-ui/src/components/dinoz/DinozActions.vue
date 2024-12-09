@@ -23,10 +23,11 @@
 				</template>
 			</Tippy>
 			<DZDisclaimer
-				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST)"
-				:content="$t('toast.resting', { hp: hpRegen, min: minutesBeforeHour })"
+				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life == Math.floor(dinoz.maxLife / 2)"
+				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
 				timer
 			></DZDisclaimer>
+			<DZDisclaimer v-else :content="$t('hud.restEnd')" help></DZDisclaimer>
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
 			<Tippy
 				tag="div"
