@@ -7,7 +7,7 @@
 				<DinozWithoutFlash
 					:display="dinozData.display"
 					:life="1"
-					:flip="true"
+					flip
 					:race="dinozData.race.raceId"
 				></DinozWithoutFlash>
 				<template #fallback> <Loading /> </template>

@@ -18,7 +18,7 @@
 				<DinozWithoutFlash
 					:display="dinozData.display"
 					:life="dinozData.life / dinozData.maxLife"
-					:flip="true"
+					flip
 					:race="dinozData.race.raceId"
 					:key="dinozData.life || dinozData.display"
 					:isFrozen="dinozData?.unavailableReason === UnavailableReasonFront.frozen"

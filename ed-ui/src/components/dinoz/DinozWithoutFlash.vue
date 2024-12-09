@@ -17,13 +17,13 @@ export default defineComponent({
 	props: {
 		display: { type: String, required: true },
 		life: { type: Number, required: true },
-		flip: { type: Boolean, required: true },
+		flip: { type: Boolean, default: false },
 		isFrozen: { type: Boolean, required: false }
 	},
 	mounted() {
 		const dinos = new dino({
 			data: this.display,
-			flip: this.flip ? 1 : 0,
+			flip: this.flip,
 			damages: this.life > 0.5 ? 0 : this.life > 0.1 ? 1 : 2,
 			dark: false,
 			scale: 1,

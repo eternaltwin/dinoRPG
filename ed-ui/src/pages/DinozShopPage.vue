@@ -4,7 +4,7 @@
 	<div class="sheets">
 		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
 			<Suspense>
-				<DinozWithoutFlash class="dinoImg" :display="dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
+				<DinozWithoutFlash class="dinoImg" :display="dinoz.display" flip :life="1"></DinozWithoutFlash>
 
 				<template #fallback
 					><div class="loading-wrapper"><Loading /></div

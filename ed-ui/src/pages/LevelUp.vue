@@ -21,7 +21,6 @@
 						}"
 						:display="dinozData.display"
 						:life="dinozData.life / dinozData.maxLife"
-						:flip="false"
 						:race="dinozData.race.raceId"
 					/>
 					<template #fallback><Loading /></template>

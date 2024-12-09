@@ -31,7 +31,7 @@
 				<tr v-for="item in display" :key="item.id">
 					<template v-if="item.motif === PantheonMotif.RACE">
 						<td class="dinoz">
-							<DinozWithoutFlash class="dinoImg" :display="item.dinoz.display" :life="1" :flip="-1"></DinozWithoutFlash>
+							<DinozWithoutFlash class="dinoImg" :display="item.dinoz.display" :life="1" flip></DinozWithoutFlash>
 						</td>
 						<td class="missions">
 							<ul>

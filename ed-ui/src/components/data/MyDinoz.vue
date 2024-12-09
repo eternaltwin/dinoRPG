@@ -2,7 +2,7 @@
 	<div class="dinozList">
 		<Tippy class="dinoz" tag="div" v-for="(dinoz, index) in sortedDinozList" :key="index" theme="small">
 			<Suspense>
-				<DinozWithoutFlash :display="dinoz.display" :life="1" :flip="1" :isFrozen="dinoz.isFrozen" />
+				<DinozWithoutFlash :display="dinoz.display" :life="1" flip :isFrozen="dinoz.isFrozen" />
 				<template #fallback><Loading /></template>
 			</Suspense>
 			<div class="name" @click="goToDinoz(dinoz.id)" :class="myAccount ? 'link' : ''">
