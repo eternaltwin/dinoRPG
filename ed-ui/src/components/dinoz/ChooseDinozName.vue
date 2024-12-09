@@ -29,7 +29,6 @@ import { dinozStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
-import { formatText } from '../../utils/formatText.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
@@ -47,13 +46,13 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozData: Object as PropType<DinozFiche>
+		dinozData: { type: Object as PropType<DinozFiche>, required: true }
 	},
 	emits: ['setNameChoosen'],
 	methods: {
 		async nameDinoz(): Promise<void> {
 			// Check if dinoz name matches regex
-			if (this.name && this.regexName.test(this.name)) {
+			if (this.name) {
 				EventBus.emit('isLoading', true);
 				try {
 					await DinozService.setDinozName(this.dinozData!.id!, this.name!);
@@ -72,11 +71,6 @@ export default defineComponent({
 
 				// Set parent's data to display dinoz page
 				this.$emit('setNameChoosen', this.name);
-			} else {
-				this.$toast.open({
-					message: formatText(this.$t(`toast.OnlyLettersAndNumbers`)),
-					type: 'error'
-				});
 			}
 		}
 	},

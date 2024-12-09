@@ -142,7 +142,7 @@ routes.post(
  */
 routes.put(
 	`${commonPath}/setname/:id`,
-	[param('id').exists().toInt().isNumeric(), body('newName').exists().isString().matches(regex.DINOZ_NAME)],
+	[param('id').exists().toInt().isNumeric(), body('newName').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

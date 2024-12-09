@@ -4,7 +4,7 @@ const gameConfig: GameConfig = {
 	development: {
 		dinoz: {
 			maxLevel: 50,
-			maxQuantity: 10,
+			maxQuantity: 25,
 			leaderBonus: 3,
 			initialMaxLevel: 50
 		},
