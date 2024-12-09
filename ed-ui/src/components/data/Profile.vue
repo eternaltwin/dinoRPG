@@ -135,6 +135,7 @@ export default defineComponent({
 		},
 		async resetAccount() {
 			const res: boolean = confirm(this.$t('popup.confirm'));
+			EventBus.emit('isLoading', true);
 			if (res) {
 				try {
 					await PlayerService.resetAccount();
@@ -147,6 +148,7 @@ export default defineComponent({
 					return;
 				}
 			}
+			EventBus.emit('isLoading', true);
 		},
 		hasPDA(): boolean {
 			return this.accountData!.epicRewards.includes(Reward.PDA);

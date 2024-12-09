@@ -66,58 +66,25 @@ export async function auth(request: Request) {
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
 export async function resetUser(playerId: number) {
-	// Regroupement des requêtes dans une seule transaction
+
+	await prisma.$executeRaw`SET TRANSACTION ISOLATION LEVEL SERIALIZABLE`;
 	await prisma.$transaction([
-		// Suppression des dinoz
-		prisma.dinoz.deleteMany({
-			where: { playerId }
-		}),
-
-		// Suppression des données importées
-		prisma.importedPlayer.deleteMany({
-			where: { playerId }
-		}),
-		prisma.importedTwinoidAchievement.deleteMany({
-			where: { playerId }
-		}),
-		prisma.importedTwinoidSite.deleteMany({
-			where: { playerId }
-		}),
-		prisma.importedTwinoidStat.deleteMany({
-			where: { playerId }
-		}),
-
-		// Suppression des shops et autres données associées au joueur
-		prisma.playerDinozShop.deleteMany({
-			where: { playerId }
-		}),
-		prisma.playerGather.deleteMany({
-			where: { playerId }
-		}),
-		prisma.playerIngredient.deleteMany({
-			where: { playerId }
-		}),
-		prisma.playerItem.deleteMany({
-			where: { playerId }
-		}),
-		prisma.playerQuest.deleteMany({
-			where: { playerId }
-		}),
-		prisma.playerReward.deleteMany({
-			where: { playerId }
-		}),
-		prisma.ranking.deleteMany({
-			where: { playerId }
-		}),
-		prisma.usernameHistory.deleteMany({
-			where: { playerId }
-		}),
-		prisma.playerTracking.deleteMany({
-			where: { playerId }
-		}),
-		prisma.clanJoinRequest.deleteMany({
-			where: { playerId }
-		}),
+		// Suppression des entités associées
+		prisma.dinoz.deleteMany({ where: { playerId } }),
+		prisma.importedPlayer.deleteMany({ where: { playerId } }),
+		prisma.importedTwinoidAchievement.deleteMany({ where: { playerId } }),
+		prisma.importedTwinoidSite.deleteMany({ where: { playerId } }),
+		prisma.importedTwinoidStat.deleteMany({ where: { playerId } }),
+		prisma.playerDinozShop.deleteMany({ where: { playerId } }),
+		prisma.playerGather.deleteMany({ where: { playerId } }),
+		prisma.playerIngredient.deleteMany({ where: { playerId } }),
+		prisma.playerItem.deleteMany({ where: { playerId } }),
+		prisma.playerQuest.deleteMany({ where: { playerId } }),
+		prisma.playerReward.deleteMany({ where: { playerId } }),
+		prisma.ranking.deleteMany({ where: { playerId } }),
+		prisma.usernameHistory.deleteMany({ where: { playerId } }),
+		prisma.playerTracking.deleteMany({ where: { playerId } }),
+		prisma.clanJoinRequest.deleteMany({ where: { playerId } }),
 
 		// Mise à jour du joueur
 		prisma.player.update({
@@ -129,6 +96,8 @@ export async function resetUser(playerId: number) {
 		})
 	]);
 }
+
+
 
 export async function getPlayerInfoToReport(playerId: number) {
 	return await prisma.player.findUnique({
