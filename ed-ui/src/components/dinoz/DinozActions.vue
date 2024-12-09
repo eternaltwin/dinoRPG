@@ -112,8 +112,8 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
-				.missionHUD,
+			// mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
+			// 	.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
 			sessionStore: sessionStore(),
@@ -469,8 +469,8 @@ export default defineComponent({
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
 		},
 		isSelling() {
-			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
-
+			const dinoz = this.dinozStore.getDinoz(+this.dinozId);
+			if (!dinoz) return false;
 			return dinoz.unavailableReason === UnavailableReasonFront.selling;
 		},
 		goToLeader() {
@@ -507,11 +507,17 @@ export default defineComponent({
 			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missionHUD || null;
 		},
 		leaderDinoz() {
+			if (!this.dinoz.leaderId) return;
 			return dinozStore().getDinoz(this.dinoz.leaderId);
 		},
 		minutesBeforeHour() {
 			const day: Date = new Date();
 			return 60 - day.getMinutes();
+		},
+		mission() {
+			const dinoz = dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString());
+			if (!dinoz) return null;
+			return dinoz.missionHUD;
 		}
 	},
 	watch: {
