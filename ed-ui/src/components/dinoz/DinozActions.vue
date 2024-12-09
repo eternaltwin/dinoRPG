@@ -529,7 +529,9 @@ export default defineComponent({
 		if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 			await this.regenRate();
 		}
-		this.dinozFullParty = dinozStore().getDinozList!.filter(dinoz => this.dinoz?.followers.includes(dinoz.id));
+		this.dinozFullParty = dinozStore().getDinozList!.filter(
+			dinoz => this.dinoz?.followers.some(a => a.id === dinoz.id)
+		);
 		this.dinozFullParty.push(this.dinoz);
 	}
 });
