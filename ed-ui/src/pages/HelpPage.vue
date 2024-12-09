@@ -9,14 +9,15 @@
 				</li>
 			</ul>
 		</div>
-		<!--		<div class="image">
+		<div class="image">
 			<img :src="getImgURL('design', 'rocky_01')" />
-		</div>-->
+		</div>
 	</div>
 	<div class="showContent">
 		<div v-if="selectedItem" class="content">
-			<TitleHeader header=" " :sub-header="selectedItem.name" />
-			<!--			<img :src="getImgURL('design', 'title_h1')" />-->
+			<div class="titleContent">
+				<h3>{{ selectedItem.name }}</h3>
+			</div>
 			<div v-for="(section, index) in selectedItem.contentSections" :key="index" class="sectionContent">
 				<h3 class="titleSection">{{ section.name }}</h3>
 				<ul v-if="section.texts" class="textContent">
@@ -64,7 +65,12 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			items: [
+			selectedItemIndex: 0
+		};
+	},
+	computed: {
+		items() {
+			return [
 				{
 					name: this.$t('guide.sections.intro'),
 					nameImageUrl: { path: 'icons', name: 'small_home' },
@@ -494,24 +500,24 @@ export default defineComponent({
 					contentSections: [{ name: this.$t('guide.text.security'), texts: [this.$t('guide.text.security-1')] }],
 					prevItem: 20
 				}
-			],
-			selectedItem: null
-		};
+			];
+		},
+		selectedItem() {
+			return this.items[this.selectedItemIndex] || null;
+		}
 	},
 	methods: {
 		showContent(item) {
-			this.selectedItem = item;
+			this.selectedItemIndex = this.items.indexOf(item);
 		},
 		showNextItem() {
 			if (this.selectedItem && this.selectedItem.nextItem !== undefined) {
-				const nextItemIndex = this.selectedItem.nextItem;
-				this.selectedItem = this.items[nextItemIndex];
+				this.selectedItemIndex = this.selectedItem.nextItem;
 			}
 		},
 		showPrevItem() {
 			if (this.selectedItem && this.selectedItem.prevItem !== undefined) {
-				const prevItemIndex = this.selectedItem.prevItem;
-				this.selectedItem = this.items[prevItemIndex];
+				this.selectedItemIndex = this.selectedItem.prevItem;
 			}
 		},
 		goToPage(pageName: string) {
@@ -546,19 +552,31 @@ export default defineComponent({
 		}
 	}
 	.image {
-		position: absolute;
-		top: 80px;
-		right: 0;
+		margin-top: auto;
 		& img {
-			height: 365px;
+			max-width: 95%;
+			height: auto;
 		}
 	}
 }
 .showContent {
 	max-width: 95%;
 	align-self: center;
+	margin-top: 30px;
 	.content {
-		margin-top: 20px;
+		margin-top: 30px;
+		.titleContent {
+			height: fit-content;
+			background-image: url('../assets/design/title_h1.webp');
+			background-position: left bottom;
+			background-repeat: no-repeat;
+			padding-bottom: 22px;
+			h3 {
+				margin-left: 5px;
+				color: #71b703;
+				font-variant: small-caps;
+			}
+		}
 		:deep(strong) {
 			color: rgb(142, 62, 38);
 		}
