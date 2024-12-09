@@ -2655,6 +2655,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 			fightData.steps.push(init_down_notify);
 		}
+		break;
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
 			attackSingleOpponent(
@@ -4546,7 +4547,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 			// Phoenix Feather
 			if (fighter.skills.some(skill => skill.id === Skill.PLUMES_DE_PHOENIX)) {
 				// Add skillActivate step
-				let res_step: SkillActivateStep = {
+				const res_step: SkillActivateStep = {
 					action: 'skillActivate',
 					fid: fighter.id,
 					skill: Skill.PLUMES_DE_PHOENIX,
