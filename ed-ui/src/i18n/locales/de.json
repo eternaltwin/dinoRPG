@@ -162,7 +162,7 @@
 			"seek": "Schürfen",
 			"energy": "Energie anziehen",
 			"anniv": "Sandburg",
-			"xmas": "Schneeräumspiel",
+			"xmas": "Schneepflugspiel",
 			"tictac": "Der Schatz von Papy Joe",
 			"labo": "Labor des Erzdorogon",
 			"party": "Feierliches Feuerwerk",
@@ -193,7 +193,7 @@
 		"dinozMissions": "Missionen meiner Dinoz"
 	},
 	"chooseDinoz": {
-		"information": "Bevor du diesen Dinoz steuern kannst, musst du es zunächst einen Namen geben.",
+		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
 		"nomDuDinoz": "Name des Dinoz:",
 		"pageName": "Namensauswahl"
 	},
@@ -386,6 +386,7 @@
 			"smog_egg_christmas_green": "Smog-Ei der Grünen Weihnacht",
 			"triceragnon_baby": "Triceragon-Junges",
 			"triceragnon_baby_rare": "Seltenes Triceragon-Junges",
+			"christmas_egg": "Weihnachtliches Ei",
 			"amnesic_rice": "Reis der Amnesie",
 			"tik_bracelet": "Tik-Armreif",
 			"magic_star": "Zauberstern",
@@ -517,6 +518,7 @@
 			"smog_egg_christmas_green": "Dieses Smog-Ei ist nicht wie die anderen und stammt geradewegs aus der Mannschaft vom Weihnachtsmann. Es wirkt so, als könnte es nicht nur Geschenke austeilen!",
 			"triceragnon_baby": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
 			"triceragnon_baby_rare": "Dieses Junges wird zweifellos zu einem einen außergewöhnlichen Dinoz heranwachsen!",
+			"christmas_egg": "Dieses Weihnachtliche Ei wird sich entweder in einen Santas oder einen Triceragon verwandeln. Es ist eine Überraschung!",
 			"amnesic_rice": "Diese sehr seltene Reissorte macht vergesslich. Wenn er davon isst, vergisst dein Dinoz seinen Namen und verliert auch alle seine seit dem letzten Stufenaufstieg gesammelten Erfahrungspunkte.",
 			"tik_bracelet": "Dieses Stück Caushemesh-Technologie stellt dem Dinoz, der es trägt, täglich **bis zu 10 Lebenspunkte** wieder her.",
 			"magic_star": "Diese geheimnisvollen Sterne sind über ganz Dinoland verstreut. Wirst du es schaffen, alle 7 zu finden?",
@@ -1577,7 +1579,7 @@
 			"magic": "Möchtest du {item} für einen Gesamtpreis von {sold} Napodinos kaufen?"
 		},
 		"item": {
-			"help": "Klicke ein Gegenstand in der Liste links an, um mehr darüber zu erfahren...",
+			"help": "Klicke ein Gegenstand in der Liste an, um mehr darüber zu erfahren...",
 			"advice": "**Tipp des Tages:** ",
 			"advice_1": "Du möchtest wieder aufbrechen ohne auf morgen warten zu müssen? Trank von Madame Irma: Probieren geht über Studieren!",
 			"quantity": "Menge",
@@ -2457,11 +2459,11 @@
 		"action": {
 			"cueille": "Pflücken",
 			"fish": "Fischen",
-			"hunt": "Jagdtrophäen",
+			"hunt": "Jagen",
 			"seek": "Schürfen",
 			"energy": "Energie anziehen",
-			"anniv": "Jahrestag",
-			"xmas": "Schneeräumspiel",
+			"anniv": "Jubiläum",
+			"xmas": "Schneepflugspiel",
 			"tictac": "Der Schatz von Papy Joe",
 			"labo": "Labor des Erzdorogon",
 			"party": "Feuerwerk",
@@ -2731,7 +2733,7 @@
 			"wood": "Äste sammeln",
 			"grigri": "Nach „Mojos“ fragen",
 			"trophee": "Nach einer Trophäe suchen",
-			"branch": "Seltsamer Baum",
+			"branch": "Einige Äste einsammeln",
 			"seve": "Baumsaft sammeln",
 			"trap": "Die Fikoia präparieren",
 			"ambush": "Hinterhalt",
@@ -3421,20 +3423,20 @@
 			"ch2x3b": "Junior-Silberpokal",
 			"ch3x1a": "Dinocolada Sunrise",
 			"ch3x1b": "Erdbeer-Dinocolada",
-			"ch3x2a": "Honig-Siegestorte",
-			"ch3x2b": "Pistazien-Siegestorte",
+			"ch3x2a": "Honig-Widersachertorte",
+			"ch3x2b": "Pistazien-Widersachertorte",
 			"ch3x3a": "Caramel bou doré",
 			"ch3x3b": "Caramel bou",
-			"ch3x4a": "Oeuf dur doré",
-			"ch3x4b": "Oeuf dur bleuté",
+			"ch3x4a": "Goldenes hartgekochtes Ei",
+			"ch3x4b": "Bläuliches hartgekochtes Ei",
 			"ch4x1a": "Supernova",
-			"ch4x1b": "Soleil Cramoisi",
+			"ch4x1b": "Blutrote Sonne",
 			"ch4x2a": "Flamme noire",
 			"ch4x2b": "Flamme bleue",
 			"ch4x3a": "Esprit de feu",
 			"ch4x3b": "Feu follet",
-			"ch4x4a": "Cendres",
-			"ch4x4b": "Tas de cendres",
+			"ch4x4a": "Asche",
+			"ch4x4b": "Häufchen Asche",
 			"ch5x1": "Pousse radieuse",
 			"ch5x2": "Arbrisseau sacré",
 			"ch5x3": "Arbuste céleste",
@@ -3624,31 +3626,31 @@
 			"warza": "Cet orbe ténébreux récompense votre incroyable victoire à la 17ème guerre du Mana.",
 			"warzb": "Cet orbe en glace du Mont Blanc récompense votre bravoure sur cette 17ème guerre du mana.",
 			"warzc": "Cet orbe de feu grégeois est le symbole de votre courage à la 17ème guerre du mana.",
-			"ch1x1a": "Cette coupe récompense les gagnants du 1er Championnat des Clans en Ligue Pro : un véritable objet de Champion !",
-			"ch1x1b": "Cette coupe récompense les clans ayant participé aux phases finales du 1er Championnat des Clans en Ligue Pro : c'est la marque d'un grand exploit !",
-			"ch1x2a": "Cette coupe récompense les gagnants du 1er Championnat des Clans en Ligue Medium : c'est une grande distinction reservée aux bons joueurs !",
-			"ch1x2b": "Cette coupe récompense les clans ayant participé aux phases finales du 1er Championnat des Clans en Ligue Medium : celà n'est déjà pas facile à obtenir !",
-			"ch2x1a": "Cette coupe récompense les participants du 2ème Championnat des Clans en Ligue Pro : réservé aux joueurs ayant le goût du sang !",
-			"ch2x2a": "Cette coupe récompense les vainqueurs du 2ème Championnat des Clans en Ligue Medium : avec toutes les félicitations du jury !",
-			"ch2x2b": "Cette coupe récompense les participants aux phases finales du 2ème Championnat des Clans en Ligue Medium !",
-			"ch2x3a": "Ce trophée remercie les vainqueurs du 2ème Championnat des Clans en Ligue Starter : en espérant vous voir en Ligue Médium dès la prochaine saison !",
-			"ch2x3b": "Ce trophée remercie les participants aux phases finales du 2ème Championnat des Clans en Ligue Starter !",
+			"ch1x1a": "Mit diesem Pokal werden die Sieger der 1. Meisterschaft der Klane in der Profiliga gekürt. Wahrlich eine Auszeichnung für Meister!",
+			"ch1x1b": "Mit diesem Pokal werden die Klane ausgezeichnet, die es während der 1. Meisterschaft der Klane in der Profiliga bis zu den Endrunden geschafft haben. Ein Zeichen großartiger Leistung!",
+			"ch1x2a": "Mit diesem Pokal werden die Sieger der 1. Meisterschaft der Klane in der Mittelliga gekürt. Eine beeindruckende Auszeichnung, die tollen Spielern vorbehalten ist!",
+			"ch1x2b": "Mit diesem Pokal werden die Klane ausgezeichnet, die es während der 1. Meisterschaft der Klane in der Mittelliga bis zu den Endrunden geschafft haben. Eine solche Belohnung ist gar nicht so einfach zu bekommen!",
+			"ch2x1a": "Mit diesem Pokal werden die Teilnehmer der 2. Meisterschaft der Klane in der Profiliga gekürt. Für die blutrünstigsten Spieler vorbehalten!",
+			"ch2x2a": "Mit diesem Pokal werden die Sieger der 2. Meisterschaft der Klane in der Mittelliga gekürt. Mit Glückwünschen von den Preisrichtern!",
+			"ch2x2b": "Mit diesem Pokal werden die Teilnehmer ausgezeichnet, die es während der 2. Meisterschaft der Klane in der Mittelliga bis zu den Endrunden geschafft haben!",
+			"ch2x3a": "Mit diesem Pokal werden die Sieger der 2. Meisterschaft der Klane in der Starterliga gekürt. Hoffentlich sehen wir uns in der nächsten Saison in der Mittelliga wieder!",
+			"ch2x3b": "Mit diesem Pokal werden die Teilnehmer ausgezeichnet, die es während der 2. Meisterschaft der Klane in der Starterliga bis zu den Endrunden geschafft haben!",
 			"ch3x1a": "A vous la plage et tous ses plaisirs ! En tant que vainqueurs de la ligue Elite du 3ème Championnat, vous allez pouvoir profiter de l'aura de votre victoire en sirotant un Dinocolada Sunrise, l'élixir des gagnants !",
-			"ch3x1b": "Finaliste dans la ligue Elite du 3ème Championnat des Clans, c'est tout de même un bel exploit. Rien ne vaut un bon petit Dinocolada Fraise pour se détendre après vos exploits !",
-			"ch3x2a": "Aprés tant d'efforts pour remporter la ligue Pro du 3ème Championnat, vous méritez bien une Tartalagagne au miel qui vous permettra de reconstituer vos forces en attendant la suite des opérations !",
-			"ch3x2b": "Il a fallu beaucoup de courage pour s'inscrire dans la Ligue Pro du 3ème Championnat, et encore plus pour faire partie des finalistes ! Cette succulente Tartalagagne parfum Pistache en valait bien le coup.",
+			"ch3x1b": "Ein Finalist der 3. Meisterschaft der Klane in der Elite-Liga zu sein, ist es immer noch ein großartiger Erfolg. Nach all den Heldentaten geht zum Entspannen nichts über eine bescheidene Erdbeer-Dinocolada!",
+			"ch3x2a": "Nach all den Bemühungen, die 3. Meisterschaft der Klane in der Profiliga zu gewinnen, hast du dir eine Widersachertorte mit Honig verdient, mit der du neue Kräfte tanken kannst, während du auf zukünftige Einsätze wartest!",
+			"ch3x2b": "Es hat viel Mut erfordert, sich für die 3. Meisterschaft der Klane in der Profiliga anzumelden, und erst recht zu den Finalisten zu gehören. Für diese saftige Widersachertorte mit Pistaziengeschmack hat es sich auf jeden Fall gelohnt!",
 			"ch3x3a": "Aprés tant d'efforts pour remporter la ligue Medium du 3ème Championnat, vous méritez bien une Caramal bou doré qui vous permettra de reconstituer vos forces en attendant la suite des opérations !",
 			"ch3x3b": "Il a fallu beaucoup de courage pour s'inscrire dans la Ligue Medium du 3ème Championnat, et encore plus pour faire partie des finalistes ! Ce Caramel bou en valait bien le coup.",
-			"ch3x4a": "Ce trophée remercie les vainqueurs du 3ème Championnat des Clans en Ligue Starter : en espérant vous voir en Ligue Médium dès la prochaine saison !",
-			"ch3x4b": "Ce trophée remercie les participants aux phases finales du 3ème Championnat des Clans en Ligue Starter !",
+			"ch3x4a": "Mit dieser Trophäe werden die Sieger der 3. Meisterschaft der Klane in der Starterliga gekürt. Hoffentlich sehen wir uns in der nächsten Saison in der Mittelliga wieder!",
+			"ch3x4b": "Mit dieser Trophäe werden die Teilnehmer ausgezeichnet, die es während der 3. Meisterschaft der Klane in der Starterliga bis zu den Endrunden geschafft haben!",
 			"ch4x1a": "Un soleil jeune et vif, symbole de puissance vient récompenser les vainqueurs du 4ème championnat en Ligue Elite, que la force brûle en vous jusqu'à son paroxysme !",
-			"ch4x1b": "Finaliste dans la ligue Elite du 4ème Championnat des Clans, ce soleil vous est offert, même au terme de sa vie, il reste puissant et majestueux.",
+			"ch4x1b": "Als Finalist der 4. Meisterschaft der Klane in der Elite-Liga wurde dir diese Sonne überreicht. Auch in ihrem Lebensabend bleibt sie mächtig und majestätisch.",
 			"ch4x2a": "Vous avez remporté la ligue Pro du 4ème Championnat, vous avez sûrement dû faire des sacrifices, un extrait de flammes des ténèbres vous est offerte en souvenir.",
 			"ch4x2b": "Pour avoir atteint les phases finales dans la Ligue Pro du 4ème Championnat, un extrait de flamme bleue vous est offerte.",
 			"ch4x3a": "Pour avoir remporté la ligue Medium du 4ème Championnat, l'esprit du feu vous habite et montre à chacun le courage dont vous avez fait preuve.",
 			"ch4x3b": "Il a fallu beaucoup de volonté pour faire partie des finalistes de la Ligue Medium du 4ème Championnat, La flamme de l'espoir brûle en vous comme jamais.",
-			"ch4x4a": "Ce trophée remercie les vainqueurs du 4ème Championnat des Clans en Ligue Starter, ce sont les restes d'une puissante boule de feu.",
-			"ch4x4b": "Ce trophée remercie les participants aux phases finales du 4ème Championnat des Clans en Ligue Starter !",
+			"ch4x4a": "Mit dieser Trophäe werden die Sieger der 4. Meisterschaft der Klane in der Starterliga gekürt. Das hier sind die Überreste eines mächtigen Feuerballs!",
+			"ch4x4b": "Mit dieser Trophäe werden die Teilnehmer ausgezeichnet, die es während der 4. Meisterschaft der Klane in der Starterliga bis zu den Endrunden geschafft haben!",
 			"ch5x1": "Une jeune pousse extraite aux alentours du palais de l'Archidorogon vous est offerte afin de saluer votre performance lors du 5ème Championnat des clans.",
 			"ch5x2": "Un petit arbre provenant de la serre protégée de l'Archidorogon vous est offert pour avoir réussi à gagner 5 victoires lors du 5ème Championnat des clans.",
 			"ch5x3": "Un arbuste appartenant à la réserve personnelle de l'Archidorogon vous est offert pour avoir réussi à gagner 6 victoires lors du 5ème Championnat des clans.",
@@ -3749,7 +3751,9 @@
 			"pos": "Platz",
 			"player": "Meister",
 			"dinoz": "Dinoz",
-			"points": "Punkte",
+			"points": "Pkte",
+			"average": "Schn.",
+			"completion": "Vollst.",
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans"
 		},
@@ -3758,7 +3762,9 @@
 			"average": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus dem Durchschnitt der Stufe aller Dinoz errechnet.",
 			"completion": "Die Spielerplatzierung wird täglich um Mitternacht aktualisiert und wird anhand einer Formel errechnet, die sowohl auf dem Fortschritt aller aktiven Dinoz, als auch auf dem Spielverlauf basiert.",
 			"pantheon": "Hier kann man erfahren, welche Spieler oder Dinoz als erste bestimmte große Taten geleistet haben.",
-			"clans": "Die Platzierung der Klans wird jeden Tag in Echtzeit errechnet und basiert auf dem Wert der Klanschatzkammer."
+			"clans": "Die Platzierung der Klans wird jeden Tag in Echtzeit errechnet und basiert auf dem Wert der Klanschatzkammer.",
+			"clansCreation": "Auf der {0} kannst du neu gegründete Klans begutachten.",
+			"clansCreationLink": "Seite für Klansuche"
 		},
 		"page": {
 			"previous": "Vorherige Seite",
@@ -3776,8 +3782,7 @@
 			"pickEpic": "Wähle eine Belohnung",
 			"dinoz": "Dinoz",
 			"detail": "Details"
-		},
-		"search": "Spielersuche..."
+		}
 	},
 	"clan": {
 		"ingredients": {
@@ -3827,8 +3832,7 @@
 		"button": {
 			"search": "Suche",
 			"create": "Klan gründen"
-		},
-		"search": "Klansuche..."
+		}
 	},
 	"clansMembers": {
 		"th": {
@@ -3924,7 +3928,7 @@
 	},
 	"createClan": {
 		"title": "Klan gründen",
-		"information": "Fülle bitte die Felder weiter unten aus, um deinen Klan zu gründen. Die Kosten für die Gründung des Klans belaufen sich auf ",
+		"information": "Fülle bitte die Felder weiter unten aus, um deinen Klan zu gründen. Die Kosten für die Gründung des Klans belaufen sich auf **{cost}** :gold:",
 		"clan_name": "Name des Klans",
 		"clan_description": "Klanbeschreibung",
 		"create_button": "Klan gründen",
@@ -3939,6 +3943,9 @@
 		"display": "Kampf zeigen",
 		"resume": "Du hast gegen {enemy} gekämpft",
 		"clone": "Klon",
+		"life": "Verlorene LP",
+		"experience": "Erfahrung",
+		"gold": "Gold",
 		"monster": {
 			"goupignon": "Kloppignon",
 			"wolf": "Wolf",
@@ -4169,10 +4176,14 @@
 			"yourBids": "Meine Gebote"
 		}
 	},
-	"following": "Dieser Dinoz folgt seinem Gruppenführer.",
-	"remaingActions": "Deine Dinoz haben noch freie Aktionen übrig.",
-	"follow": "Der Gruppenführer ist {leader}.",
-	"followed": "Dieser Dinoz ist der Gruppenführer.",
+	"hud": {
+		"following": "Dieser Dinoz folgt seinem Gruppenführer.",
+		"gather": "Dieser Dinoz kann hier etwas sammeln.",
+		"rest": "Dieser Dinoz ruht sich aus.",
+		"remainingActions": "Deine Dinoz haben noch freie Aktionen übrig.",
+		"follow": "Der Gruppenführer ist {leader}.",
+		"followed": "Dieser Dinoz ist der Gruppenführer."
+	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** hat **{quantity}x {item}** mit dem Dinoz **{dinoz} ({dinozId})** benutzt.",
 		"ItemBought": "**{player} ({playerId})** hat **{quantity}x {item}** gekauft (Gesamt: {total}).",
@@ -4190,6 +4201,7 @@
 		"MissionFinished": "**{player} ({playerId})** hat mit dem Dinoz **{dinoz} ({dinozId})** die Mission **{mission}** abgeschlossen.",
 		"MissionCanceled": "**{player} ({playerId})** hat mit dem Dinoz **{dinoz} ({dinozId})** die Mission **{mission}** abgebrochen.",
 		"Gather": "**{player} ({playerId})** hat mit seinem Dinoz **{dinoz} ({dinozId})** etwas gesammelt.",
+		"GridFinished": "**{player} ({playerId})** hat ein Raster vollständig abgesucht und {gold} :gold: erhalten.",
 		"CreateDinoz": "**{player} ({playerId})** hat den Dinoz **{dinoz} ({dinozId})** adoptiert.",
 		"ChangeDinozOrder": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** anders geordnet.",
 		"PlayerCreated": "**Ein neuer Spieler ist angekommen: {name}**.",
@@ -4560,7 +4572,7 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Spielerprofil:",
+		"title": "Zum Dino-RPG Profil von {player}",
 		"gridMenu": {
 			"pDRPG": "Dino-RPG Profil",
 			"pEternal": "Eternaltwin Profil",
@@ -4620,9 +4632,7 @@
 		"cancel": "Abbrechen",
 		"error": "Du musst deiner Beschwerde einen Grund und eine Beschreibung beifügen.",
 		"errorDinoz": "Du musst einen Dinoz zum Melden angeben",
-		"success": "Meldung erfolgreich gesendet.",
-		"send": "Senden",
-		"close": "Schließen"
+		"success": "Meldung erfolgreich gesendet."
 	},
 	"messagerie": {
 		"actions": "Aktionen",

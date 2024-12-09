@@ -72,7 +72,7 @@
 	"alpha": {
 		"login": "Inicia sesión en Eternal-Twin",
 		"homepage": {
-			"part1": "DinoRPG está en una versión alpha abierta al público. Tened cuidado, el juego está repleto de Gupiñones.",
+			"part1": "DinoRPG está en una versión alpha abierta al público. Tened cuidado, el juego está repleto de Gupiñones. Al finalizar la versión alpha, el progreso de todos será reiniciado.",
 			"part2": "Toda la información está disponible en:"
 		},
 		"issue": "Por favor, informa de cualquier error que encuentres en ",
@@ -87,7 +87,7 @@
 		"text3": "DinoRPG es parte del proyecto {EternalTwin}. Si lo deseas, puedes donar en {OpenCollective}."
 	},
 	"import": {
-		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en EternalDinoRPG.&&&Todos tus dinoz, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus dinoz.&&&Las misiones llevadas a cabo por tus dinoz no se guardarán, algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus dinoz. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de dinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación twinoid cuando se te solicite.&&&Cuantos más dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus dinoz de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
+		"disclaimer": "Puedes guardar tu cuenta original de DinoRPG en EternalDinoRPG.&&&Todos tus Dinos, objetos e ingredientes serán guardados. Lo mismo ocurre con el estado, las habilidades, los niveles y las apariencias de tus Dinos.&&&Las misiones llevadas a cabo por tus Dinos no se guardarán. Algunas se completarán automáticamente debido a su carácter obligatorio.&&Lo mismo ocurre con los objetos equipados en tus Dinos. Recuerda quitarlos antes de iniciar la partida guardada.&& &&El progreso de tus misiones se guarda.&& && && &&&&&&&Para iniciar la partida guardada, guarda el enlace de la cookie como un nuevo marcador, ve a la página web de DinorRPG y haz clic en este nuevo marcador. A continuación, pega la cookie en el campo correspondiente y haz clic en el botón del servidor que deseas importar.&&&Acepta el uso de la aplicación Twinoid cuando se te solicite.&&&Cuantos más Dinos tengas en tu cuenta, más tardará en guardarse. **No abandones la página durante el proceso de importación&&Puedes reiniciar la importación una segunda vez. Esto borrará la copia de seguridad, pero podrás hacer nuevas copias más tarde.&& Sólo se puede hacer una copia de seguridad de un servidor. No podrás guardar tu progreso y tus Dinos de todos los servidores a la vez, así que ¡elige con cuidado!&& &&Si tienes alguna pregunta o problema, no dudes en contactar con nosotros en el Discord de Eternaltwin.",
 		"imported": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido importada! && ¡{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, se han guardado del servidor {server}!&& &&Una nueva importación eliminará lo que está actualmente guardado.",
 		"deleted": "¡Felicitaciones, la cuenta llamada {accountName} con ID de Twinoid {accountID} ha sido eliminada de EternalDinoRPG! &&{nbDinos} Dinos, incluidos los {nbDemons} Dinos sacrificados, han sido eliminados. Ahora puedes volver a importar.",
 		"disclaimer2": "Puedes guardar tus trofeos y estadísticas de Twinoid haciendo clic en el botón de abajo."
@@ -152,7 +152,7 @@
 		"name": {
 			"fight": "Combatir",
 			"follow": "Seguir",
-			"unfollow": "Seguir",
+			"unfollow": "Dejar de seguir",
 			"levelup": "¡Subir de Nivel!",
 			"resurrect": "Resucitar",
 			"dig": "Excavar",
@@ -221,7 +221,7 @@
 			},
 			"description": {
 				"E": "Esta competencia **puede activarse antes de cada ataque**",
-				"P": "Esta competencia se aplica **a todo momento**",
+				"P": "Esta competencia se aplica **en todo momento**",
 				"A": "Esta competencia **puede reemplazar** un ataque",
 				"S": "Esta competencia tiene un **efecto particular**",
 				"U": "Esta competencia se aplica **una sola vez para un conjunto de Dinos**",
@@ -283,7 +283,7 @@
 			"hot_bread": "Pan caliente auténtico",
 			"meat_pie": "Pastel de Carne",
 			"fight_ration": "Ración de Combate",
-			"surviving_ration": "Ración de Combate",
+			"surviving_ration": "Ración de Supervivencia",
 			"goblin_merguez": "Salchicha de Goblin",
 			"pampleboum": "Pomelum",
 			"sos_helmet": "Casco de Seguridad",
@@ -294,7 +294,7 @@
 			"fuca_pill": "Caramelo Fuca",
 			"monochromatic": "Monocromático",
 			"poisonite_shot": "Jeringuilla de Venenite",
-			"loris_costume": "Disfraz de Lori",
+			"loris_costume": "Traje de Lori",
 			"vegetox_costume": "Disfraz de Guardia Vegetox",
 			"goblin_costume": "Disfraz de Globlin",
 			"pampleboum_pit": "Hueso de Pomelum",
@@ -331,7 +331,7 @@
 			"enchanted_steroid": "Esteroide mágico",
 			"curse_locker": "Candado maldito",
 			"fear_factor": "Fuerza brava",
-			"life_stealer": "Robavidas",
+			"life_stealer": "Robo de Vida",
 			"fire_sphere": "Esfera de Fuego",
 			"wood_sphere": "Esfera de Madera",
 			"water_sphere": "Esfera de Agua",
@@ -386,6 +386,7 @@
 			"smog_egg_christmas_green": "Huevo de Smog Verde Navideño",
 			"triceragnon_baby": "Bebé Tricerithumps",
 			"triceragnon_baby_rare": "Bebé Tricerithumps raro",
+			"christmas_egg": "Oeuf de Noël",
 			"amnesic_rice": "Arroz amnésico",
 			"tik_bracelet": "Brazalete en Tik",
 			"magic_star": "Estrella mágica",
@@ -414,7 +415,7 @@
 			"hot_bread": "Cuando lo necesites, los **100 puntos de vida** del Pan caliente vendrán muy bien a tu Dino. Perfecto para antes de luchar contra los dragones.",
 			"meat_pie": "Si tu Dino tiene mucha hambre, nada mejor que un buen Pastel de Carne. Le aportará **30 puntos de vida** de forma instantánea.",
 			"fight_ration": "En caso de líos, la Ración de Combate te dará **hasta 20 puntos de vida** en combate.",
-			"surviving_ration": "En caso de líos, la Ración de Combate te dará hasta **20 puntos de vida** en combate.",
+			"surviving_ration": "En caso de heridas graves, recuperarás *entre 10 y 40 puntos de vida* durante un combate.",
 			"goblin_merguez": "La especialidad de la región del Gran Señor-Todo-Quema. A consumir con mucha moderación.",
 			"pampleboum": "¡Un fruto bello y apetitoso capaz de darte 15 puntos de vida con un solo mordisco!",
 			"sos_helmet": "Aumenta la armadura de tu Dino en 1 punto cuando es utilizado.",
@@ -426,8 +427,8 @@
 			"monochromatic": "Los asaltos de tus Dinos se vuelven todos del color de su mejor elemento.",
 			"poisonite_shot": "Protege a tu Dino de los efectos del veneno.",
 			"loris_costume": "Un enemigo ataca a uno de sus compañeros.",
-			"vegetox_costume": "Con este disfraz podrás disfrazar a tu Dino en Guardia Vegetox durante el combate. Atención, es altamente inflamable.",
-			"goblin_costume": "Este disfraz te permitirá disfrazar a tu Dino en Goblin durante el combate. Presta atención, pues es altamante inflamable.",
+			"vegetox_costume": "Con este disfraz podrás disfrazar a tu Dino de Guardia Vegetox durante el combate. Atención, es altamente inflamable.",
+			"goblin_costume": "Este disfraz te permitirá disfrazar a tu Dino de Goblin durante el combate. Presta atención, pues es altamante inflamable.",
 			"pampleboum_pit": "El Hueso de Pomelum es particularmente frágil y puede romperse con cualquier golpe. Su contenido es especialmente tóxico. Por ello algunos lo utilizan en combate para asegurarse de tener una ventaja extra.",
 			"portable_love": "El amor da alas... tu Dino podrá atacar a los enemigos voladores.",
 			"danger_detector": "Este objeto permite proteger una sola vez a tu Dino contra un efecto indirecto que conlleve la pérdida de más de 25 puntos de vida.",
@@ -453,7 +454,7 @@
 			"time_manipulator": "Los Dinos no pueden usar competencias de tipo Evento.",
 			"dimensional_powder": "Cuando un Dino baja de los 10 PV, es enviado a un agujero negro y desaparece del combate.",
 			"sorcerers_stick": "Disminuye los puntos de vida de cualquier Dino (enemigo o amigo) al azar en un 30% en lugar de atacar.",
-			"friendly_whistle": "Cuando tu Dino efectúa un asalto contra otro Dino, sus amigos vienen a echarle una mano.",
+			"friendly_whistle": "Cuando tu Dino efectúa un asalto contra otro Dino, sus amigos sin silbato vienen a echarle una mano.",
 			"dinoz_cube": "El Dino puede hacer girar de nuevo el tablero de elementos en sus subidas de nivel hasta el nivel 10.",
 			"temporal_reduction": "Reduce los bonus y penalidades de iniciativa en 50% del Dino que lo posee.",
 			"tear_of_life": "Da 10% de la vida del Dino a los clones.",
@@ -470,66 +471,67 @@
 			"air_sphere": "Una Esfera Elemental le permite aprender a tu Dino una de las competencias esféricas.",
 			"void_sphere": "La Esfera Elemental enseña directamente a tu Dino una de las competencias esféricas.",
 			"demon_ticket": "Los Tickets-Demonio se obtienen al sacrificar Dinos en la Tienda Demoníaca. Una vez tengas suficientes, puedes intercambiarlos por Dinos-Demonio.",
-			"treasure_coupon": "Un Bono del Tesoro vale 1.000 Monedas. Te permite participar en la Plaza del Mercado. Para pasarlo a monedas, úsalo desde la sección Inventario. Il suffit de l'utiliser pour le convertir en pièces.",
+			"treasure_coupon": "Un Bono del Tesoro vale 1.000 Monedas. Te permite participar en la Plaza del Mercado. Para pasarlo a monedas, úsalo desde la sección Inventario.",
 			"moueffe_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"moueffe_egg_rare": "TODO",
+			"moueffe_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"pigmou_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"pigmou_egg_rare": "TODO",
+			"pigmou_egg_rare": "Este bebé Pigmou está listo para hacer destrozos, sus rayas de presidiario espantan a sus enemigos en los campos de batalla.",
 			"winks_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"winks_egg_rare": "TODO",
+			"winks_egg_rare": "Un huevo de cáscara muy dura, ¡solo la criatura que está dentro puede romperla!",
 			"planaille_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"planaille_egg_rare": "TODO",
+			"planaille_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"castivore_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"castivore_egg_rare": "TODO",
+			"castivore_egg_rare": "Una bola de pelos, cuando se le toca salta en todos los sentidos. Este compañero será de gran ayuda en el futuro.",
 			"rocky_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"rocky_egg_rare": "TODO",
+			"rocky_egg_rare": "Un bloque de piedra duro como el acero, parece que hay algo que vibra en el interior... ¡Un corazón de guerrero ansioso por comenzar la aventura!",
 			"pteroz_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"pteroz_egg_rare": "TODO",
+			"pteroz_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"nuagoz_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"nuagoz_egg_rare": "TODO",
+			"nuagoz_egg_rare": "Una pequeña nube, pero hay que desconfiar de su aparente tranquilidad. ¡La tormenta que trae puede ser muy violenta!",
 			"sirain_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"sirain_egg_rare": "TODO",
+			"sirain_egg_rare": "Este huevo es muy misterioso, ¿cómo será el Dino que tiene dentro?",
 			"hippoclamp_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"hippoclamp_egg_rare": "TODO",
+			"hippoclamp_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"gorilloz_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"gorilloz_egg_rare": "TODO",
+			"gorilloz_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"wanwan_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"wanwan_egg_rare": "TODO",
+			"wanwan_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"wanwan_baby_rare": "Este huevo es muy extraño... El Dino que tenga dentro debe ser excepcional.",
 			"santaz_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"santaz_egg_rare": "TODO",
+			"santaz_egg_rare": "Este huevo de Polvorón no es nada común, ¿qué sorpresas guardará?",
 			"feross_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"feross_egg_rare": "TODO",
-			"feross_egg_christmas": "TODO",
+			"feross_egg_rare": "Este huevo de Feros no es como los otros, ¡tiene rasgos de guerrero!",
+			"feross_egg_christmas": "Este huevo de Feros no es como los demás... ¡Directo desde el Polo Norte! Parece que el viejo Papá Noel entrega más que solo regalos.",
 			"kabuki_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"kabuki_egg_rare": "TODO",
-			"mahamuti_egg": "A través del hielo, se ve una forma extraña, ¿una bola de pelo con cuernos...?",
-			"mahamuti_egg_rare": "TODO",
+			"kabuki_egg_rare": "Este insólito huevo contiene un Dino extraordinario...",
+			"mahamuti_egg": "Distingues una forma extraña a través del hielo. Parece una bola de pelos con un cuerno. ¿Qué será?",
+			"mahamuti_egg_rare": "Distingues una forma extraña a través del hielo. Parece una bola de pelos con un cuerno. ¿Qué será?",
 			"souffet_egg": "Este huevo de Visper está a punto de eclosionar, ¿qué aspecto tendrá?",
 			"soufflet_egg_rare": "Este huevo contiene un Dino especial...",
 			"toufufu_baby": "Este bebé Toufufu ya empieza a agitarse, ¡tiene muchas ganas de desahogarse en el campo de batalla!",
-			"toufufu_baby_rare": "TODO",
+			"toufufu_baby_rare": "Este huevo contiene un Dino especial...",
 			"quetzu_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
-			"quetzu_egg_rare": "TODO",
+			"quetzu_egg_rare": "Este extraño huevo contiene un Dino excepcional...",
 			"smog_egg": "Este extraño huevo parece estar a punto de convertirse en un Dino excepcional...",
-			"smog_egg_anniversary": "TODO",
-			"smog_egg_christmas_blue": "TODO",
-			"smog_egg_christmas_green": "TODO",
-			"triceragnon_baby": "TODO",
+			"smog_egg_anniversary": "Este extraño huevo parece estar a punto de convertirse en un Dino excepcional...",
+			"smog_egg_christmas_blue": "Este huevo de Smog no es como los demás... ¡Directo desde el Polo Norte! Parece que el viejo Papá Noel entrega más que solo regalos.",
+			"smog_egg_christmas_green": "Este huevo de Smog no es como los demás... ¡Directo desde el Polo Norte! Parece que el viejo Papá Noel entrega más que solo regalos.",
+			"triceragnon_baby": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
 			"triceragnon_baby_rare": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
+			"christmas_egg": "Cet oeuf de Noël vous réserve la surprise de se transformer soit en Santaz soit en Tricéragnon. Ce sera la surprise !",
 			"amnesic_rice": "Esta variedad muy rara de Arroz vuelve amnésicos a los Dinos. Si come este arroz, tu Dino perderá su nombre, así como su experiencia acumulada desde su último nivel...",
 			"tik_bracelet": "Este objeto perteneciente a la tecnología de Caushemesh, ¡puede dar cada día hasta 10 puntos de vida al Dino que lo lleve!",
 			"magic_star": "Estas misteriosas estrellas están repartidas por todo el mundo de Dinoland. ¿Puedes encontrar las 7?",
 			"golden_napodino": "Los Napodinos de oro son piezas de oro macizo provenientes de una civilización pre-dinovillana. Tienen un gran valor para los coleccionistas, y se dice que dan buena suerte a los Dinos que lo lleven consigo.",
 			"bamboo_friend": "Un amigo Bambo vendrá a ayudar a tu Dino durante los combates.",
-			"candle_card": "TODO",
+			"candle_card": "¡Esta vela te permite buscar regalos en el Pastel Sorpresa en el Puerto de Santa Moría!",
 			"christmas_ticket": "Este Ticket de Navidad te permite acceder al juego de caza de nieves en Dinovilla.",
 			"tictac_ticket": "Los Tickets Taque te permitirán excavar en el jardín de Papy Jose. Podrás encontrar tesoros escondidos por su tatarabuelo.",
-			"anniversary_ticket": "TODO",
-			"easter_egg": "Un oeuf d'Urma permet d'obtenir un objet parmi tous ceux qui existent à Dinoland. Objet Rare ou commum, la chance sera-t-elle de votre côté ?",
-			"fire_cracker": "TODO",
+			"anniversary_ticket": "¡Esta vela te permite buscar regalos en el Pastel Sorpresa en el Puerto de Santa Moría!",
+			"easter_egg": "Un huevo de Lula permite ganar un objeto entre todos los que existen en Dinoland. Objeto raro o común, ¡Hoy puede ser tu día de suerte!",
+			"fire_cracker": "¡Con este petardo lanzarás los fuegos artificiales en Dinovilla que te harán ganar tesoros!",
 			"special_potion_irma": "La famosa Poción de la Bruja Lola permite al Dino que la beba **realizar inmediatamente una nueva acción** sin tener que esperar al día siguiente. Solo puedes llevar 3.",
-			"daily_ticket": "Este billete te permite abrir un espacio diario en la universidad.",
+			"daily_ticket": "Este ticket te permite abrir una casilla diariamente en la universidad.",
 			"box_common": "Esta caja parece contener objetos comunes.",
 			"box_rare": "Esta caja parece contener algunos objetos bastante raros.",
 			"box_epic": "Esta hermosa caja parece contener algo extraordinario.",
@@ -682,8 +684,8 @@
 			"baobob": "Don Bao Bob es un personaje extraordinario. Afirma ser el último de un antiguo pueblo de gigantes que desapareció hace cientos de años. Seguro que conoce los secretos más escondidos de Dinoland. Las historias que cuenta son extraordinarias y divierten mucho a los niños.",
 			"dome": "Sulaflota es una auténtica ciudad submarina que alberga a los últimos supervivientes de la civilización de los Atlanteidos. Antiguamente dominaban las Islas Atlanteidas, pero una extraña enfermedad estuvo cerca de exterminarlos. Le Dôme reste néanmoins magnifique malgré les nombreux siècles qui se sont passés.",
 			"marais_flood": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. ¡Hoy el pantano está totalmente inundado! No puedes desplazarte hoy. Tendrás que esperar a mañana para poder salir de este fangoso lugar.",
-			"marais_fog": "Ce marais qui occupe le milieu de l'archipel est un véritable problème pour les voyageurs ! Suivant les jours, il change d'état. On dit qu'il existe depuis plusieurs millénaires, et certains pensent même qu'il s'agit d'un gigantesque être vivant doué d'un très mauvais sens de l'humour. Hoy la marea está perdida en la bruma... Vous n'y trouverez surement aucun monstre à combattre.",
-			"marais": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. Aujourd'hui, les eaux sont basses : vous pouvez vous déplacer normalement.",
+			"marais_fog": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. Hoy la marea está perdida en la bruma... Seguramente no encontrarás ningún monstruo a combatir.",
+			"marais": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. Hoy la marea está baja: puedes desplazarte normalmente.",
 			"corail": "Hace mucho tiempo se encontraban bajo el agua, pero hoy estas grandes cantidades de coral se encuentran en la superficie. Su extraordinaria solidez hacen del Coral un material muy utilizado en Dinoland. Es por esta razón que este lugar es una inmensa mina en la que trabajan centenas de personas.",
 			"ilewkk": "La Isla Waïkiki es una pequeña isla del archipiélago de las Islas Atlanteidas. Se distingue por sus palmeras violetas, cuyas hojas son utilizadas para dar colores vivos a las telas en Dinoland. Los humanos locales practican también un Arte Marcial muy famoso, el Waïkidô.",
 			"chbroc": "En la cima de una roca de las Islas Atlanteidas hay un taller. Hay quien dice que el inventor eligió este lugar para aislarse de las burlas de los demás, pero en realidad no parece que sea realmente el motivo, sino más bien por algo muy distinto...",
@@ -1166,15 +1168,15 @@
 			"speech": {
 				"begin": "Un individuo raro escondido torpemente entre los árboles te mira fijamente con una mirada inquietante... Tiene una linterna que apunta hacia tu dirección.",
 				"hi": "El hombre parece inquieto y te mira de arriba a abajo sin decir nada...",
-				"approch": "A peine faites-vous un pas dans sa direction que l'homme bondit,  terrorisé, et se jette dans un fourré un peu plus loin ! Un instant plus tard,  sa tête émerge du feuillage et vous fixe à nouveau avec inquiétude...",
+				"approch": "Apenas haces un paso en su dirección y el hombre pega un brinco aterrorizado y se lanza a la maleza. Un instante más tarde, su cabeza emerge de las plantas y te echa otra mirada inquietante...",
 				"run": "¡Echas a correr!",
 				"ignore": "Giras la cabeza para intentar ignorarlo. Cuando echas una mirada rápida en su dirección, constatas con sorpresa que corre hacia ti como un loco. ¡No puedes evitar lanzar un grito de sorpresa! Te pega la linterna bajo la nariz e intenta sonarte la nariz...",
-				"intro": "Peur ? Peur de quoi ? Les ombres ou les voix ? Vous avez peur aussi ? On a tous peur !  Moi je les ai vus !",
-				"leave": "Vous reculez lentement puis vous tournez les talons sans prendre la peine de jeter  un regard derrière vous...",
+				"intro": "¿Tienes miedo? ¿Miedo de qué? ¿Las sombras o las voces? ¿Tú también? ¿Tú también tienes miedo? ¡Todos tenemos miedo! ¡Yo los he visto!",
+				"leave": "Retrocedes lentamente y te vuelves sobre los talones sin más miramientos...",
 				"seenWhat": "¡¡Gorgoth!! ¡¡Ése al que dicen el innombrable comedor de cabezas de la perfidia abisal!!",
 				"lowLevel": "¡¡¡NOOOOO!!!&&No lo hagas, ¡es demasiado peligroso, tonto! Vuelve cuando tu Dino sea más poderoso. No quiero ofrecerte pociones de ángel.",
-				"show": "Il terrorise tout ce qui vit dans la Jungle de Grumhel !! Sachant que la Jungle terrorise déjà  tout le monde. Tenez regardez, il est juste là (il pointe du doigt la végétation épaisse et  noire) !",
-				"fight_win": "Alors que vous recherchez du regard l'homme bizarre, vous constatez sans grande surprise qu'il  a disparu... La bonne nouvelle c'est qu'il a laissé sa lanterne en prenant ses jambes à  son cou. Vous pourrez utiliser cette lanterne pour ne plus perdre votre chemin dans les  endroits obscurs."
+				"show": "¡Aterroriza todo lo que vive en la Jungla de Grumhel! Sabiendo además que la Jungla de por sí da mucho miedo a todo el mundo. Anda mira, está justo ahí (señala la vegetación espesa y negra).",
+				"fight_win": "Buscas la mirada del hombre raro, pero constatas con sorpresa que ha desaparecido... La buena noticia es que ha olvidado su linterna. A partir de ahora podrás usar la linterna para no perderte más en los  lugares oscuros."
 			},
 			"playerChoice": {
 				"begin": "",
@@ -1221,7 +1223,7 @@
 				"sry": "... ¡¿perdón?!",
 				"trad": "Ir a buscar un traductor",
 				"go": "Seguir a Jovebozé",
-				"attack": "Periodino",
+				"attack": "Continuar",
 				"back": "¡¡¡REGRESAR!!!"
 			}
 		},
@@ -1577,7 +1579,7 @@
 			"magic": "¿Deseas comprar {item} por un total de {sold} napodinos?"
 		},
 		"item": {
-			"help": "Haz clic en un objeto de la lista de la izquierda para examinarlo...",
+			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
 			"advice": "**Consejo del día:** ",
 			"advice_1": "¿Quieres desplazarte de nuevo pero no quieres esperar hasta el día siguiente? ¡Prueba con la Poción de la Bruja Lola!",
 			"quantity": "Cantidad",
@@ -1959,7 +1961,7 @@
 			"PoingDeBraise": "Puño de brasa",
 			"Leader": "Líder",
 			"GrosDormeur": "Dormilón",
-			"Veilleuse": "Sabroso",
+			"Veilleuse": "Luz Nocturna",
 			"Matelasseur": "Acolchador",
 			"Absorption": "Absorción",
 			"Bite": "Mordedura",
@@ -2480,7 +2482,7 @@
 			"party": "Regalos fabulosos",
 			"daily": "Recompensas diarias"
 		},
-		"disclaimer": "Cliquez sur {number} cases de la grille pour trouver des {search}"
+		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}"
 	},
 	"missions": {
 		"header": "Lista de misiones",
@@ -2608,7 +2610,7 @@
 			"map": "Un buen mapa siempre es útil, eso dicen. Lo que ocurre es que no hay para la Jungla de Grumhel. ¿Podrías ir al norte y tomar algunas notas para mí? Hay colinas en el este donde podrías tener una buena vista.",
 			"hucure": "Ef muy amable por tu parte. Creo que lof Monjef de la Ifla de laf Caídaf Mutantef podrían ayudarme... coge laf plantaf que me haf traido y ve a verlof de mi parte... ... Snif...",
 			"bckpck": "Antes de enfrentarme a mi viaje increíble por tierras desconocidas, necesitaría algo primordial. Una buena mochila. Perdí la mía rodeando las Caídas Mutantes... ¿Podrías encontrármela?",
-			"rodriz": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Iles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
+			"rodriz": "Necesito Arroz para recargar mi capa mágica. Parece que hay en el Pantano Pegajoso de las Islas Atlanteidas. ¿Podrías traerme lo suficiente para que pueda volverme de nuevo invisible? Rápido, ¡es urgente!",
 			"rodlif": "Tres Dinos Sombra de Caushemesh te esperan en las Caídas Mutantes. Ve a vencerlos y vuelve a verme para obtener tu recompensa... Te aconsejo que no intentes eliminarlos tú solo."
 		},
 		"actions": {
@@ -2628,7 +2630,7 @@
 			"branch": "Árbol extraño",
 			"seve": "Coger savia",
 			"trap": "Sabotear el Fikoïa",
-			"ambush": "Sacudida",
+			"ambush": "Emboscada",
 			"leaves": "Rastro en el suelo",
 			"fiquoia": "Fikoïa Cenizo",
 			"hide": "Esconder el Fikoïa",
@@ -2731,7 +2733,7 @@
 			"wood": "Cortar madera",
 			"grigri": "Pedir un amuleto",
 			"trophee": "Encontrar un trofeo",
-			"branch": "Árbol extraño",
+			"branch": "Coger algunas ramas",
 			"seve": "Coger savia",
 			"trap": "Sabotear el Fikoïa",
 			"ambush": "Emboscada",
@@ -2823,10 +2825,10 @@
 		"place": {
 			"port": "al Puerto de Santa Moría",
 			"market": "a la Plaza del mercado",
-			"papyjoe": "Casa de Papy Jose",
+			"papyjoe": "a Casa de Papy Jose",
 			"forcebrut": "a Fuerzabruta",
 			"dnv": "a Dinovilla",
-			"colesc": "A las Colinas Escarpadas",
+			"colesc": "a las Colinas Escarpadas",
 			"fountj": "a la Fuente de la Juventud",
 			"universite": "a la Universidad",
 			"marais": "al Pantano Pegajoso",
@@ -2856,7 +2858,7 @@
 			"bslt": "a las Pendientes de Basalto",
 			"forges": "a las Fraguas del Gran Señor Todo-Quema",
 			"rashpk": "a las Ruinas Ashpuk",
-			"vener": "la Guarida del Venerable",
+			"vener": "a la Guarida del Venerable",
 			"tunel": "al Túnel bajo la Rama",
 			"gorges": "a las Gargantas profundas",
 			"tourbt": "a la Torre de Karinbao",
@@ -2866,16 +2868,16 @@
 			"sking": "a la Ciudadela del Rey",
 			"spylon": "a los Pilares de Magnetita",
 			"slake": "al Sifón Silbante",
-			"scanyo": "al Senderos de Tutumba",
+			"scanyo": "a los Senderos de Tutumba",
 			"stowr1": "a la Devorosa del Este",
-			"stowr2": "en la Devorosa del Norte",
-			"stowr3": "en la Devorosa del Oeste",
-			"sband1": "en el Tugurio de los Zaxa",
-			"sband2": "en el Campo de los Emema",
-			"sband3": "en el Campamento de los Matmût",
+			"stowr2": "a la Devorosa del Norte",
+			"stowr3": "a la Devorosa del Oeste",
+			"sband1": "al Tugurio de los Zaxa",
+			"sband2": "al Campo de los Emema",
+			"sband3": "al Campamento de los Matmût",
 			"scampw": "a la Guarida del Equipo-W",
 			"scaush": "a los Confines de las Estepas",
-			"sport": "à la Portes de Caushemesh",
+			"sport": "al Portal de Caushemesh",
 			"iroche": "al Extremo de la isla",
 			"ipont": "al Puente",
 			"iporte": "a la Puerta al nivel superior",
@@ -2887,13 +2889,13 @@
 			"ihaut": "a la Cima de la Montaña Sagrada",
 			"voie": "al Camino al Observatorio",
 			"observ": "al Observatorio",
-			"egout": "aux Egouts du Palais",
+			"egout": "a las Alcantarillas del palacio",
 			"ilac": "a las Cataratas del Nirvana",
 			"ilac2": "al Ala Oeste del Dragón",
-			"prison": "à la Priranèse",
-			"ville1": "en el Barrio prolífico",
+			"prison": "a Priranese",
+			"ville1": "al Barrio prolífico",
 			"ville2": "al Barrio exuberante",
-			"sommet": "Pala rota",
+			"sommet": "al Camino hacia el Palacio",
 			"palais": "al Palacio del Archidorogón",
 			"mport": "al Puerto Monstruoso",
 			"mfoutp": "al Puesto de Vanguardia Frutox",
@@ -2907,7 +2909,7 @@
 		},
 		"dialog": {
 			"fish": {
-				"fishVendor": "Salut mon ptit, tu viens chercher du poisson c'est ça ? Tiens, prends-le et apporte-le à Dinoville au plus vite.",
+				"fishVendor": "Hola pequeño, ¿vienes a por el Pescado? Aquí tienes. Llévalo a Dinovilla lo más rápido posible.",
 				"mmeSeyche": "¡Ooooohhhh gracias mi pequeño, esta cena va a ser todo un éxito gracias a ti! Vuelve rápido a casa de Papy Jose para obtener tu recompensa...",
 				"papyjoe": "Doña Seyche está muy contenta contigo. ¡Aquí tienes tu recompensa!"
 			},
@@ -3016,7 +3018,7 @@
 				"camp": "¡qué buena idea lo de las garras! Parece que los korgones de aquí lo aprecian... mucho... Toma esto."
 			},
 			"kfood": {
-				"branch": "Mieux vaut ne pas trop tarder par ici: vous préparez un gros fagot de bois et vous vous éloignez des fourrés...",
+				"branch": "Más vale no quedarse mucho tiempo por aquí: coges la madera y te alejas lo más rápido que puedes...",
 				"tree": "Te llama la atención un árbol de hojas grises que huele a tabaco frío... ¡Seguramente se trata de un Fikoïa Cenizo! Cuando intentas coger varias ramas, oyes unos ruidos provenientes de la maleza...",
 				"camp": "Van a disfrutar mucho, ¡gracias!"
 			},
@@ -3191,7 +3193,7 @@
 				"auree": "Eh te vas a reír pero... fíjate que he recibido una mochila nueva gracias a la garantía. Vamos a hacer una cosa: me quedo con mi mochila vieja y tú te quedas con la nueva. ¿Te vale?"
 			},
 			"rodriz": {
-				"seekrice": "Aprés quelques recherches, vous trouvez un coin du Marais où pousse du Riz Amnésique, une variété trés rare de Riz aux propriétés étonnantes. Le seul problème c'est que des dizaines de Pirhanoz protègent l'accés. Il va falloir d'abord nettoyer le chemin !",
+				"seekrice": "Tras varios intentos, encuentras un lugar del Pantano donde crece el Arroz Amnésico, una variedad muy rara de Arroz con propiedades extrañas. El problema es que hay decenas de Pirantas que protegen el acceso. ¡Tendrás que limpiar el camino!",
 				"pickrice": "¡Enhorabuena! Obtienes Arroz Amnésico",
 				"forges": " ¡Ah! Uhm... Creo que entendí mal. Finalmente solo necesito un poco de energía de rayo para recargar mi capa... Quédate con el Arroz, no lo necesito."
 			},
@@ -3293,7 +3295,7 @@
 	},
 	"levelup": {
 		"disclaimer": "Ahora puede iniciar la animación para saber en qué elemento sube de nivel tu Dino.",
-		"title": "Nivel suplementario para ",
+		"title": "Niveau supplémentaire pour {name}",
 		"helper": "Elige la competencia que quieres que tu Dino aprenda:",
 		"fire": "Gana +1 en :feu: Fuego",
 		"wood": "Gana +1 en :bois: Madera",
@@ -3382,7 +3384,7 @@
 			"warpc": "Ananta, rey de los Nagas",
 			"warqa": "Illumiating Doll",
 			"warqb": "Flamable Doll",
-			"warqc": "Minigendro",
+			"warqc": "Peluche empapado",
 			"warra": "Linterna Mágica",
 			"warrb": "Lámpara de aceite",
 			"warrc": "Linterna Pequeña",
@@ -3749,7 +3751,9 @@
 			"pos": "Pos.",
 			"player": "Maestro",
 			"dinoz": "Dinos",
-			"points": "Puntos",
+			"points": "Pts",
+			"average": "Moy.",
+			"completion": "Comp.",
 			"clans": "Clanes",
 			"treasure": "Tesoro del Clan"
 		},
@@ -3758,7 +3762,9 @@
 			"average": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
 			"completion": "Las clasificaciones de jugadores se actualizan a medianoche y se calculan utilizando la fórmula de finalización basada en los Dinos activos y el progreso en la historia del juego.",
 			"pantheon": "Aquí podrás encontrar qué jugadores y qué Dinos fueron los primeros en lograr hitos.",
-			"clans": "La Clasificación de clanes se actualiza en tiempo real y se calculan a partir del valor del Tesoro del Clan."
+			"clans": "La Clasificación de clanes se actualiza en tiempo real y se calculan a partir del valor del Tesoro del Clan.",
+			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
+			"clansCreationLink": "page de recherche des clans"
 		},
 		"page": {
 			"previous": "Página anterior",
@@ -3776,8 +3782,7 @@
 			"pickEpic": "Elegir una recompensa",
 			"dinoz": "Dino",
 			"detail": "Detalles"
-		},
-		"search": "Buscar jugador..."
+		}
 	},
 	"clan": {
 		"ingredients": {
@@ -3827,8 +3832,7 @@
 		"button": {
 			"search": "Search",
 			"create": "Create clan"
-		},
-		"search": "Buscar clan..."
+		}
 	},
 	"clansMembers": {
 		"th": {
@@ -3924,7 +3928,7 @@
 	},
 	"createClan": {
 		"title": "Create a clan",
-		"information": "Please fill in informations below in order to create your clan. The clan creation will cost you ",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
 		"clan_name": "Clan name",
 		"clan_description": "Clan description",
 		"create_button": "Create clan",
@@ -3939,6 +3943,9 @@
 		"display": "Mostrar el combate",
 		"resume": "Luchaste contra un {enemy}",
 		"clone": "Clon",
+		"life": "Vie perdue",
+		"experience": "Expérience",
+		"gold": "Or trouvée",
 		"monster": {
 			"goupignon": "Gupión",
 			"wolf": "Lobo",
@@ -4169,14 +4176,18 @@
 			"yourBids": "Tus pujas"
 		}
 	},
-	"following": "Este Dino sigue al líder del grupo.",
-	"remaingActions": "Tu dino todavía puede efectuar acciones gratuitas.",
-	"follow": "El líder del grupo es {leader}.",
-	"followed": "Este Dino es el líder del grupo.",
+	"hud": {
+		"following": "Ce Dinoz suit son chef de groupe.",
+		"gather": "Ce dinoz peut récolter en ce lieu.",
+		"rest": "Ce dinoz se repose.",
+		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
+		"follow": "Le chef de groupe est {leader}.",
+		"followed": "Ce Dinoz est chef de groupe."
+	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** usó **{quantity}x {item}** con Dino **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** ha comprado **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "**{player} ({playerId})** ha vendido **{quantity}x {item}** (restante {amount}).",
+		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (left {amount}).",
 		"GoldWon": "**{player} ({playerId})** ha ganado **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** ha perdido **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** movió al Dino **{dinoz} ({dinozId})** a **{location}**.",
@@ -4190,6 +4201,7 @@
 		"MissionFinished": "**{player} ({playerId})** terminó **{mission}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceló **{mission}** con Dino **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** se reunió con Dino **{dinoz} ({dinozId})**.",
+		"GridFinished": "**{player} ({playerId})** a fini une grille de récolte et gagné  {gold} :gold:.",
 		"CreateDinoz": "**{player} ({playerId})** creó al Dino **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** cambió el orden del Dino **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**Ha llegado un nuevo jugador: {name}**.",
@@ -4232,7 +4244,7 @@
 		"sections": {
 			"intro": "Introducción",
 			"adopt": "Adoptar un Dino",
-			"name": "Nombrar tu Dinoz",
+			"name": "Nombrar tu Dino",
 			"card": "La Ficha del Dino",
 			"move": "Desplazarse",
 			"fight": "Los Combates",
@@ -4489,7 +4501,7 @@
 		},
 		"faq14": {
 			"question": "¿Cómo puedo acceder a las Estepas Magnéticas?",
-			"answer": "Vous, ou les personnes de votre clan si vous en avez un, devez faire concentrer 7 dinoz chez Bao Bob (équipés des Palmes de korgon, c'est obligatoire). && && Une fois les 7 dinoz en concentration, vous aurez accès à un portail qui vous mènera vers un monde dans lequel, après un petit périple et un gros gardien à abattre, vous obtiendrez une clé. && && Cette clé, celle de la Porte de Sylvenoire, vous donnera accès aux Steppes Magnétiques... Accessible à partir de la forêt de Grumhel. && && Conseil : destiné avant tout aux dinoz de haut LVL, genre 30 et +... Les dinoz à Element Majeur d'Eau sont défavorisés."
+			"answer": "Tú o las personas de tu clan, si tienes uno, deben concentrar **7 Dinos** en Casa de Don Bao Bob. Estos dinos deben tener, obligatoriamente, las **Aletas de Korgones** en sus estatus. && && Una vez concentrados los 7 Dinos, tendrás acceso a un portal que te conducirá a un mundo en el que, tras un corto viaje y un gran guardián al que matar, obtendrás una llave. && && Esta llave de la **Puerta de Sylvanegra** te dará acceso a las Estepas Magnéticas, accesible desde la Jungla de Grumhel. && && Consejo: recomendado principalmente para Dinos con un nivel alto, de 30 hacia arriba. Adicionalmente, los Dinos cuyo elemento principal sea agua estarán en desventaja."
 		},
 		"faq15": {
 			"question": "¿Dónde se encuentra Yakuzi?",
@@ -4505,19 +4517,19 @@
 		},
 		"faq18": {
 			"question": "¿Dónde puedo encontrar el paquete desaparecido?",
-			"answer": "Parler au type qui a perdu le colis aux Forges du Grand Tout Chaud. Il faut pour cela descendre aux Pentes de Basalte. Il faut tuer 4 Gobelins. && && Ensuite, remonter au Tunnel sous la Branche. 6 Gobelins à tuer. && && Regresar para validar la Misión en Fosalava."
+			"answer": "Habla con el tipo que perdió el paquete en las Fraguas del Gran Señor Todo-Quema. Para ello hay que bajar hasta las Pendientes de Basalto. Debes matar a 4 Goblins. && && Luego regresa al Túnel bajo la Rama y mata 6 Goblins. && && Finalmente, regresa para validar la Misión en Fosalava."
 		},
 		"faq19": {
 			"question": "¿Cómo puedo acceder al Estadio de Sulaflota?",
 			"answer": "Con la **Flauta de Rascafandro**, desde las Caídas Mutantes. && && Para obtener la flauta, necesitarás el Salvavidas y un Dino bastante fuerte. Ve a las Islas Atlanteidas desde el Puerto de Santa Moría y luego ve a las Caídas Mutantes. Habla con la Guardia Atlanteido, y él te contará sobre un amigo pescador ubicado en el Puerto de Santa Moría. Así que regresa al Puerto de Santa Moría y habla con Jovebozé. && && Este último te llevará a luchar contra un Rascafandro y, si logras matarlo, te dará la Flaute de Rascafandro."
 		},
 		"faq20": {
-			"question": "Où trouver les Etoiles Magiques ?",
+			"question": "¿Dónde puedo encontrar las Estrellas Mágicas?",
 			"answer": "Sigue las instrucciones dadas por el **Ser Extraño** que encontrarás al azar en la Fuente de la Juventud. && && Pistas adicionales: && && **Primera estrella:** la Capital no es otra que Dinovilla. Necesitarás una nueva acción para luchar contra un Megalobo. && **Segunda estrella:** el tipo grasiento es el Vendedor de Salchichas ubicado en las Ruinas Ashpuk. && **Tercera estrella:** el acertijo habla por sí solo. && **Cuarta estrella:** el agujero... la Pala... && **Quinta estrella:** el capsicum es un vegetal más conocido con el nombre de pimiento. && **Sexta estrella:** el hombre-dios es Bao Bob. && **Séptima estrella:** Saru significa 'mono'. Ojo, ya debes estar en la Jungla Salvaje antes de dejar morir allí a tu Dino."
 		},
 		"faq21": {
 			"question": "¿Cómo puedo conseguir una reliquia?",
-			"answer": "Pour avoir une relique, il faut creuser aux Ruines Ashpouk (Grand Tout Chaud) et se rendre ensuite à l'université pour authentifier la relique. && && Pour l'obtenir, il faut d'abord : la Bouée , le Matériel d'escalade et la Pelle. Niveaux minimum pour la Bouée et le Matériel d'Escalade : 5 et 6. && && La relique permet d'accéder au tournoi de Forcebrut."
+			"answer": "Para obtener una reliquia, debes excavar en las Ruinas Ashpuk (Gran Señor Todo-Quema) y luego ir a la universidad para autentificar la reliquia. && && Para obtenerlo primero necesitas: el Salvavidas, el Material de Escalada y la Pala. Niveles mínimos para obtener el Salvavidas y el Material de Escalada: 5 y 6. && && La reliquia permite el acceso al torneo de Fuerzabruta."
 		},
 		"faq22": {
 			"question": "¿Cómo acceder a la Jungla de Grumhel desde las Gargantas Profundas o cómo acceder a la segunda parte de la Jungla de Grumhel?",
@@ -4560,7 +4572,7 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Perfil del jugador:",
+		"title": "Aller sur le profil DinoRPG de {player}",
 		"gridMenu": {
 			"pDRPG": "Perfil DinoRPG",
 			"pEternal": "Perfil EternalTwin",
@@ -4620,9 +4632,7 @@
 		"cancel": "Cancelar",
 		"error": "Debe especificar el motivo y la explicación de su reporte.",
 		"errorDinoz": "Debes especificar un Dino para reportar",
-		"success": "Reporte enviado con éxito.",
-		"send": "Enviar",
-		"close": "Cerrar"
+		"success": "Reporte enviado con éxito."
 	},
 	"messagerie": {
 		"actions": "Acciones",

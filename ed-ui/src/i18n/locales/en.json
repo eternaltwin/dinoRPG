@@ -386,6 +386,7 @@
 			"smog_egg_christmas_green": "Green Christmas Smog's Egg",
 			"triceragnon_baby": "Baby Triceragnon",
 			"triceragnon_baby_rare": "Rare baby Triceragnon",
+			"christmas_egg": "Oeuf de Noël",
 			"amnesic_rice": "Amnesiac Rice",
 			"tik_bracelet": "Tik Bracelet",
 			"magic_star": "Magic Star",
@@ -517,6 +518,7 @@
 			"smog_egg_christmas_green": "This strange egg seems ready to hatch into a truly exceptional dinoz...",
 			"triceragnon_baby": "This strange little egg seems to be ready to transform into an amazing Dino!",
 			"triceragnon_baby_rare": "This strange little egg seems to be ready to transform into an amazing Dino!",
+			"christmas_egg": "Cet oeuf de Noël vous réserve la surprise de se transformer soit en Santaz soit en Tricéragnon. Ce sera la surprise !",
 			"amnesic_rice": "This rice will cause a Dinoz to have amnesia. After eating it a Dinoz forgets its name along with the experience it has gained since its last level up.",
 			"tik_bracelet": "This bracelet, created using Caushemesh technology, can restore up to 10 health points each day to the Dinoz who wears it!",
 			"magic_star": "These mysterious stars are scattered throughout Dinoland. Will you be able to find all 7?",
@@ -1577,7 +1579,7 @@
 			"magic": "Do you wish to buy {item} for a total of {sold} napodinos?"
 		},
 		"item": {
-			"help": "Click on these items to take a closer look...",
+			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
 			"advice": "**Tip:** ",
 			"advice_1": "Want to take another turn? La potion de Madame Irma : l'essayer, c'est l'adopter !",
 			"quantity": "Quantity",
@@ -2455,32 +2457,32 @@
 	},
 	"gather": {
 		"action": {
-			"cueille": "Learn",
-			"fish": "Lighter",
-			"hunt": "Hunt Trophies",
-			"seek": "Artifacts",
-			"energy": "Energize",
-			"anniv": "Anniversary",
-			"xmas": "Snowplow",
-			"tictac": "Grandpa Joe's Treasure",
-			"labo": "Archdorogon's Laboratory",
-			"party": "Fireworks",
-			"daily": "Daily Grid"
+			"cueille": "Cueillir",
+			"fish": "Pêcher",
+			"hunt": "Trophées de Chasse",
+			"seek": "Artefacts",
+			"energy": "Energétiser",
+			"anniv": "Anniversaire",
+			"xmas": "Chasse-Neige",
+			"tictac": "Trésor de Papy Joe",
+			"labo": "Laboratoire de l'Archidorogon",
+			"party": "Feu d'artifice",
+			"daily": "Grille Quotidienne"
 		},
 		"type": {
-			"cueille": "plants",
-			"fish": "fishes",
-			"hunt": "Hunt",
-			"seek": "Excavate",
-			"energy": "energy",
-			"anniv": "fabulous treasures",
-			"xmas": "Christmas Gifts",
-			"tictac": "treasures in Grandpa Joe's garden",
-			"labo": "resources in the Archdorogon's Laboratory",
-			"party": "fabulous treasures",
-			"daily": "daily rewards"
+			"cueille": "plantes",
+			"fish": "poissons",
+			"hunt": "Chasser",
+			"seek": "Fouiller",
+			"energy": "énergie",
+			"anniv": "trésors fabuleux",
+			"xmas": "Cadeaux de Noël",
+			"tictac": "trésors dans le jardin de Papy Joe",
+			"labo": "ressources dans le laboratoire de l'Archidorogon",
+			"party": "trésors fabuleux",
+			"daily": "récompenses quotidiennes"
 		},
-		"disclaimer": "Click on {number} grid box(es) to search for {search}"
+		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}"
 	},
 	"missions": {
 		"header": "Missions list",
@@ -3293,7 +3295,7 @@
 	},
 	"levelup": {
 		"disclaimer": "You can now start the animation to find out which element your dinoz is evolving with.",
-		"title": "New level for ",
+		"title": "Niveau supplémentaire pour {name}",
 		"helper": "Choose a skill to learn:",
 		"fire": "Gains +1 :feu: Fire",
 		"wood": "Gains +1 :bois: Wood",
@@ -3749,7 +3751,9 @@
 			"pos": "Pos.",
 			"player": "Master",
 			"dinoz": "Dinoz",
-			"points": "Points",
+			"points": "Pts",
+			"average": "Moy.",
+			"completion": "Comp.",
 			"clans": "Clans",
 			"treasure": "Trésor du Clan"
 		},
@@ -3758,7 +3762,9 @@
 			"average": "The Player Ranking is updated in real time and is calculated from the average level of all the player's Dinoz.",
 			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu.",
 			"pantheon": "Here you can find which players and dinoz were the first to accomplish feats and challenges.",
-			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan."
+			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan.",
+			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
+			"clansCreationLink": "page de recherche des clans"
 		},
 		"page": {
 			"previous": "Previous page",
@@ -3776,8 +3782,7 @@
 			"pickEpic": "Select a reward",
 			"dinoz": "Dinoz",
 			"detail": "Details"
-		},
-		"search": "Rechercher un joueur..."
+		}
 	},
 	"clan": {
 		"ingredients": {
@@ -3827,8 +3832,7 @@
 		"button": {
 			"search": "Search",
 			"create": "Create clan"
-		},
-		"search": "Rechercher un clan..."
+		}
 	},
 	"clansMembers": {
 		"th": {
@@ -3924,7 +3928,7 @@
 	},
 	"createClan": {
 		"title": "Create a clan",
-		"information": "Please fill in informations below in order to create your clan. The clan creation will cost you ",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
 		"clan_name": "Clan name",
 		"clan_description": "Clan description",
 		"create_button": "Create clan",
@@ -3939,6 +3943,9 @@
 		"display": "Show the battle",
 		"resume": "You fought an {enemy}",
 		"clone": "Clone",
+		"life": "Vie perdue",
+		"experience": "Expérience",
+		"gold": "Or trouvée",
 		"monster": {
 			"goupignon": "Smashroom",
 			"wolf": "Loup",
@@ -4169,14 +4176,18 @@
 			"yourBids": "Your bids"
 		}
 	},
-	"following": "This Dinoz is following their group leader.",
-	"remaingActions": "Your Dinoz still has free actions left.",
-	"follow": "The group leader is {leader}.",
-	"followed": "This Dinoz is a group leader.",
+	"hud": {
+		"following": "Ce Dinoz suit son chef de groupe.",
+		"gather": "Ce dinoz peut récolter en ce lieu.",
+		"rest": "Ce dinoz se repose.",
+		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
+		"follow": "Le chef de groupe est {leader}.",
+		"followed": "Ce Dinoz est chef de groupe."
+	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
+		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (left {amount}).",
 		"GoldWon": "**{player} ({playerId})** a gagné **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** a perdu **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** a bougé son Dinoz **{dinoz} ({dinozId})** à **{location}**.",
@@ -4190,6 +4201,7 @@
 		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
+		"GridFinished": "**{player} ({playerId})** a fini une grille de récolte et gagné  {gold} :gold:.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**New player has arrived : {name}**.",
@@ -4197,7 +4209,7 @@
 		"LBDone": "**Player {player}** just claimed his rewards.",
 		"OfferNew": "**{player} ({playerId})** a créé une **nouvelle offre {offer}** pour un montant de {amount} :gold:.",
 		"OfferBid": "L'**offre {offer}** de **{player} ({playerId})** a reçu une nouvelle **mise de {amount}** bons.",
-		"OfferCancelled": "**{player} ({playerId})** a  **annulé** son **offre {offer}**.",
+		"OfferCancelled": "**{player} ({playerId}** a  **annulé** son **offre {offer}**.",
 		"OfferExpired": "L'**offre {offer}** de **{player} ({playerId})** a **expiré** et n'a pas été remportée.",
 		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
 	},
@@ -4560,7 +4572,7 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Player Profile:",
+		"title": "Aller sur le profil DinoRPG de {player}",
 		"gridMenu": {
 			"pDRPG": "DinoRPG Profile",
 			"pEternal": "Eternaltwin Profile",
@@ -4620,9 +4632,7 @@
 		"cancel": "Cancel",
 		"error": "You must provide a reason and explanation with your complaint.",
 		"errorDinoz": "You must specify a dinoz to report",
-		"success": "Complaint sent successfully.",
-		"send": "Envoyer",
-		"close": "Fermer"
+		"success": "Complaint sent successfully."
 	},
 	"messagerie": {
 		"actions": "Actions",
