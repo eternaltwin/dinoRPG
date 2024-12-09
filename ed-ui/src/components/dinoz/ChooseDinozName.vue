@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader :title="`${$t('pageTitle.dinozNaming')}`" :header="$t(`chooseDinoz.pageName`)"></TitleHeader>
 	<div id="chooseDinozName">
-		<DZDisclaimer content="chooseDinoz.information" />
+		<DZDisclaimer help round content="chooseDinoz.information" />
 		<div class="dinoz_display">
 			<Suspense>
 				<DinozWithoutFlash
@@ -16,7 +16,7 @@
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 			<input type="text" v-model="name" />
-			<a class="button" @click="nameDinoz()">{{ $t('button.name') }}</a>
+			<DZButton @click="nameDinoz()">{{ $t('button.name') }}</DZButton>
 		</div>
 	</div>
 </template>
@@ -30,10 +30,12 @@ import EventBus from '../../events/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
+		DZButton,
 		DZDisclaimer,
 		TitleHeader,
 		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/DinozWithoutFlash.vue'))
@@ -81,14 +83,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+#chooseDinozName {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+}
 .naming {
-	position: relative;
-	top: -110px;
-	left: 190px;
-	width: 310px;
-	height: 60px;
-	display: grid;
-	grid-template-columns: repeat(4, 110px);
+	display: flex;
+	align-items: center;
+	max-width: 310px;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
 }
 .name {
 	width: 95px;
@@ -122,21 +129,5 @@ input {
 .button {
 	grid-row: 2;
 	grid-column: 1 / 2;
-}
-.dinoz_display {
-	position: relative;
-	height: 130px;
-	width: 175px;
-}
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px 5px 5px 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-	flex-grow: 2;
 }
 </style>

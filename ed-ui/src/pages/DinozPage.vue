@@ -1,7 +1,7 @@
 <template>
-	<div v-if="nameChoosen === false">
+	<template v-if="nameChoosen === false">
 		<ChooseDinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
-	</div>
+	</template>
 	<Suspense
 		><DinozDisplay
 			v-if="nameChoosen === true"
