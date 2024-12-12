@@ -192,11 +192,9 @@ export async function createOffer(req: Request) {
  */
 export async function cancelOffer(req: Request) {
 	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('missingUser');
-	}
+	const authed = await auth(req)
 
-	const playerId = req.auth.playerId;
+	const playerId = authed.id;
 	const offerId = +req.params.offerId;
 
 	// Get user current offers
@@ -214,14 +212,22 @@ export async function cancelOffer(req: Request) {
 
 	const { dinoz, items: itemsAndIngredients } = offer;
 
-	// Set Dinoz as not selling
-	if (dinoz) {
-		updateDinoz(dinoz.id, { unavailableReason: null });
-	}
+
 
 	// Separate items and ingredients
 	const items = itemsAndIngredients.filter(item => !item.isIngredient);
 	const ingredients = itemsAndIngredients.filter(item => item.isIngredient);
+
+	const refund = await checkRefund(playerId, ingredients, items, offer.dinoz !== undefined, offerId);
+
+	if (!refund) {
+		throw new ExpectedError(translate('cannotClaim', authed));
+	}
+
+	// Set Dinoz as not selling
+	if (dinoz) {
+		updateDinoz(dinoz.id, { unavailableReason: null });
+	}
 
 	const promises = [];
 
