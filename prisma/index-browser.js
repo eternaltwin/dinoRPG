@@ -198,108 +198,6 @@ exports.Prisma.DinozStatusScalarFieldEnum = {
   dinozId: 'dinozId'
 };
 
-exports.Prisma.ImportedDinozScalarFieldEnum = {
-  id: 'id',
-  importedId: 'importedId',
-  name: 'name',
-  isSacrificed: 'isSacrificed',
-  level: 'level',
-  display: 'display',
-  life: 'life',
-  maxLife: 'maxLife',
-  experience: 'experience',
-  nbrUpFire: 'nbrUpFire',
-  nbrUpWood: 'nbrUpWood',
-  nbrUpWater: 'nbrUpWater',
-  nbrUpLightning: 'nbrUpLightning',
-  nbrUpAir: 'nbrUpAir',
-  createdDate: 'createdDate',
-  updatedDate: 'updatedDate',
-  playerId: 'playerId',
-  isFrozen: 'isFrozen'
-};
-
-exports.Prisma.ImportedDinozSkillScalarFieldEnum = {
-  id: 'id',
-  skillId: 'skillId',
-  dinozId: 'dinozId'
-};
-
-exports.Prisma.ImportedDinozStatusScalarFieldEnum = {
-  id: 'id',
-  dinozId: 'dinozId',
-  statusId: 'statusId'
-};
-
-exports.Prisma.ImportedPlayerScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  twinId: 'twinId',
-  money: 'money',
-  createdDate: 'createdDate',
-  updatedDate: 'updatedDate',
-  playerId: 'playerId'
-};
-
-exports.Prisma.ImportedPlayerIngredientScalarFieldEnum = {
-  id: 'id',
-  ingredientId: 'ingredientId',
-  quantity: 'quantity',
-  playerId: 'playerId'
-};
-
-exports.Prisma.ImportedPlayerItemScalarFieldEnum = {
-  id: 'id',
-  quantity: 'quantity',
-  playerId: 'playerId',
-  itemId: 'itemId'
-};
-
-exports.Prisma.ImportedPlayerRewardScalarFieldEnum = {
-  id: 'id',
-  playerId: 'playerId',
-  rewardId: 'rewardId'
-};
-
-exports.Prisma.ImportedPlayerScenarioScalarFieldEnum = {
-  id: 'id',
-  questName: 'questName',
-  progression: 'progression',
-  playerId: 'playerId'
-};
-
-exports.Prisma.ImportedTwinoidAchievementScalarFieldEnum = {
-  id: 'id',
-  siteId: 'siteId',
-  date: 'date',
-  nameId: 'nameId',
-  createdDate: 'createdDate',
-  updatedDate: 'updatedDate',
-  playerId: 'playerId',
-  requirement: 'requirement',
-  quantity: 'quantity'
-};
-
-exports.Prisma.ImportedTwinoidSiteScalarFieldEnum = {
-  id: 'id',
-  siteId: 'siteId',
-  npoints: 'npoints',
-  points: 'points',
-  createdDate: 'createdDate',
-  updatedDate: 'updatedDate',
-  playerId: 'playerId'
-};
-
-exports.Prisma.ImportedTwinoidStatScalarFieldEnum = {
-  id: 'id',
-  siteId: 'siteId',
-  score: 'score',
-  nameId: 'nameId',
-  createdDate: 'createdDate',
-  updatedDate: 'updatedDate',
-  playerId: 'playerId'
-};
-
 exports.Prisma.MigrationsScalarFieldEnum = {
   id: 'id',
   timestamp: 'timestamp',
@@ -700,17 +598,6 @@ exports.Prisma.ModelName = {
   DinozSkill: 'DinozSkill',
   DinozSkillUnlockable: 'DinozSkillUnlockable',
   DinozStatus: 'DinozStatus',
-  ImportedDinoz: 'ImportedDinoz',
-  ImportedDinozSkill: 'ImportedDinozSkill',
-  ImportedDinozStatus: 'ImportedDinozStatus',
-  ImportedPlayer: 'ImportedPlayer',
-  ImportedPlayerIngredient: 'ImportedPlayerIngredient',
-  ImportedPlayerItem: 'ImportedPlayerItem',
-  ImportedPlayerReward: 'ImportedPlayerReward',
-  ImportedPlayerScenario: 'ImportedPlayerScenario',
-  ImportedTwinoidAchievement: 'ImportedTwinoidAchievement',
-  ImportedTwinoidSite: 'ImportedTwinoidSite',
-  ImportedTwinoidStat: 'ImportedTwinoidStat',
   migrations: 'migrations',
   News: 'News',
   NPC: 'NPC',

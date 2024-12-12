@@ -91,6 +91,7 @@ model Dinoz {
   Moderation         Moderation[]
   Pantheon           Pantheon[]
 
+  @@index([playerId], name: "idx_playerId")
   @@map("dinoz")
 }
 
@@ -101,6 +102,7 @@ model DinozItem {
   dinoz            Dinoz?             @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_37055da55534196f2248a1b5c6d")
   dinozItemToDinoz DinozItemToDinoz[]
 
+  @@index([dinozId])
   @@map("dinoz_item")
 }
 
@@ -126,6 +128,7 @@ model DinozMission {
   dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_f408ddb692ab5519808f24fb2b7")
 
   @@unique([missionId, dinozId])
+  @@index([dinozId])
   @@map("dinoz_mission")
 }
 
@@ -137,6 +140,7 @@ model DinozSkill {
   dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_5662d0ad643e55696f10bcbc858")
 
   @@unique([skillId, dinozId])
+  @@index([dinozId])
   @@map("dinoz_skill")
 }
 
@@ -156,149 +160,8 @@ model DinozStatus {
   dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ec5230fd4ad653770e13558df7d")
 
   @@unique([statusId, dinozId])
+  @@index([dinozId])
   @@map("dinoz_status")
-}
-
-model ImportedDinoz {
-  id                    Int                   @id(map: "PK_ac97d6b0ae8b55980f5caaacb3d") @default(autoincrement())
-  importedId            Int
-  name                  String                @db.VarChar
-  isSacrificed          Boolean               @default(false)
-  level                 Int
-  display               String                @db.VarChar
-  life                  Int
-  maxLife               Int
-  experience            Int
-  nbrUpFire             Int
-  nbrUpWood             Int
-  nbrUpWater            Int
-  nbrUpLightning        Int
-  nbrUpAir              Int
-  createdDate           DateTime              @default(now()) @db.Timestamp(6)
-  updatedDate           DateTime              @default(now()) @updatedAt @db.Timestamp(6)
-  playerId              Int?
-  isFrozen              Boolean
-  imported_player       ImportedPlayer?       @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_b52fe496437841d0af36c9377c8")
-  imported_dinoz_skill  ImportedDinozSkill[]
-  imported_dinoz_status ImportedDinozStatus[]
-
-  @@map("imported_dinoz")
-}
-
-model ImportedDinozSkill {
-  id             Int            @id(map: "PK_6b3eb5c2d481d86de754a07ece9") @default(autoincrement())
-  skillId        Int
-  dinozId        Int?
-  imported_dinoz ImportedDinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_6c23c77389c410949f7317585b5")
-
-  @@map("imported_dinoz_skill")
-}
-
-model ImportedDinozStatus {
-  id             Int            @id(map: "PK_24b93fc1ae51e002bd4affccf88") @default(autoincrement())
-  dinozId        Int?
-  statusId       Int
-  imported_dinoz ImportedDinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_edb147edc96c7814e88d8dc3544")
-
-  @@map("imported_dinoz_status")
-}
-
-model ImportedPlayer {
-  id                          Int                        @id(map: "PK_a754b050a93ed32ba1908d8fe84") @default(autoincrement())
-  name                        String                     @db.VarChar
-  twinId                      Int
-  money                       Int
-  createdDate                 DateTime                   @default(now()) @db.Timestamp(6)
-  updatedDate                 DateTime                   @default(now()) @updatedAt @db.Timestamp(6)
-  playerId                    Int?                       @unique(map: "REL_97b48349be6078fa1d0f0eb877")
-  imported_dinoz              ImportedDinoz[]
-  player                      Player?                    @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_97b48349be6078fa1d0f0eb8778")
-  imported_player_ingredients ImportedPlayerIngredient[]
-  imported_player_item        ImportedPlayerItem[]
-  imported_player_reward      ImportedPlayerReward[]
-  imported_player_scenario    ImportedPlayerScenario[]
-
-  @@map("imported_player")
-}
-
-model ImportedPlayerIngredient {
-  id              Int             @id(map: "PK_22fed52412e1953f761a38ce27c") @default(autoincrement())
-  ingredientId    Int
-  quantity        Int
-  playerId        Int?
-  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_18eaf3ec2ed7576bfb676c6dab5")
-
-  @@map("imported_player_ingredients")
-}
-
-model ImportedPlayerItem {
-  id              Int             @id(map: "PK_d85684b37ac3e044d15ea95e16f") @default(autoincrement())
-  quantity        Int
-  playerId        Int?
-  itemId          Int
-  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3df6f968a129fe0311f01d00338")
-
-  @@map("imported_player_item")
-}
-
-model ImportedPlayerReward {
-  id              Int             @id(map: "PK_c6b0c5f9aeb412ee12f0309d299") @default(autoincrement())
-  playerId        Int?
-  rewardId        Int
-  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_63c119aab5f6d9990f2b10062c3")
-
-  @@map("imported_player_reward")
-}
-
-model ImportedPlayerScenario {
-  id              Int             @id(map: "PK_84a5181a8d3f0255bcf9ab904c4") @default(autoincrement())
-  questName       String          @db.VarChar
-  progression     Int
-  playerId        Int?
-  imported_player ImportedPlayer? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_24b0dbe4c862c2f651d8795f65a")
-
-  @@map("imported_player_scenario")
-}
-
-model ImportedTwinoidAchievement {
-  id          Int      @id(map: "PK_2f068d951f9cc9764221e649206") @default(autoincrement())
-  siteId      Int
-  date        String   @db.VarChar
-  nameId      String   @db.VarChar
-  createdDate DateTime @default(now()) @db.Timestamp(6)
-  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
-  playerId    Int?
-  requirement String   @db.VarChar
-  quantity    Int
-  player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_50282b160872353eda6276418d1")
-
-  @@map("imported_twinoid_achievements")
-}
-
-model ImportedTwinoidSite {
-  id          Int      @id(map: "PK_c5bbb1c1ff466442f1eb4c48078") @default(autoincrement())
-  siteId      Int
-  npoints     Int
-  points      Int
-  createdDate DateTime @default(now()) @db.Timestamp(6)
-  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
-  playerId    Int?
-  player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_8035669ec1e7b5a0b09d4c76db7")
-
-  @@map("imported_twinoid_site")
-}
-
-model ImportedTwinoidStat {
-  id          Int      @id(map: "PK_8b3e084a6917445a324d12c382d") @default(autoincrement())
-  siteId      Int
-  score       Int
-  nameId      String   @db.VarChar
-  createdDate DateTime @default(now()) @db.Timestamp(6)
-  updatedDate DateTime @default(now()) @updatedAt @db.Timestamp(6)
-  playerId    Int?
-  player      Player?  @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_bcfa9706d0fd62569a7e9aeaf27")
-
-  @@map("imported_twinoid_stats")
 }
 
 model migrations {
@@ -333,65 +196,62 @@ model NPC {
   dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_90ce8a070feaea28d5a39295762")
 
   @@unique([npcId, dinozId])
+  @@index([dinozId])
   @@map("npc")
 }
 
 model Player {
-  id                          Int                          @id(map: "PK_65edadc946a7faf4b638d5e8885") @default(autoincrement())
-  hasImported                 Boolean
-  customText                  String?
-  name                        String                       @db.VarChar
-  eternalTwinId               String                       @db.VarChar
-  money                       Int
-  quetzuBought                Int
-  leader                      Boolean                      @default(false)
-  engineer                    Boolean                      @default(false)
-  cooker                      Boolean                      @default(false)
-  shopKeeper                  Boolean                      @default(false)
-  merchant                    Boolean                      @default(false)
-  priest                      Boolean                      @default(false)
-  teacher                     Boolean                      @default(false)
-  messie                      Boolean                      @default(false)
-  matelasseur                 Boolean                      @default(false)
-  labruteDone                 Boolean                      @default(false)
-  dailyGridRewards            Int                          @default(0)
-  createdDate                 DateTime                     @default(now()) @db.Timestamp(6)
-  updatedDate                 DateTime                     @default(now()) @updatedAt @db.Timestamp(6)
-  lastLogin                   DateTime                     @default(now()) @db.Timestamp(6)
-  role                        AdminRole                    @default(PLAYER)
-  lang                        Lang                         @default(fr)
-  dinoz                       Dinoz[]
-  importedPlayer              ImportedPlayer?
-  importedTwinoidAchievements ImportedTwinoidAchievement[]
-  importedTwinoidSite         ImportedTwinoidSite[]
-  importedTwinoidStats        ImportedTwinoidStat[]
-  dinozShop                   PlayerDinozShop[]
-  gathers                     PlayerGather[]
-  ingredients                 PlayerIngredient[]
-  items                       PlayerItem[]
-  quests                      PlayerQuest[]
-  rewards                     PlayerReward[]
-  ranking                     Ranking?
-  offers                      Offer[]
-  bids                        OfferBid[]
-  logs                        Log[]
-  usernameHistory             UsernameHistory[]
-  playerTracking              PlayerTracking[]
-  ClanMember                  ClanMember?
-  clanMemberId                Int?                         @unique
-  ClanMessage                 ClanMessage[]
-  ClanHistory                 ClanHistory[]
-  leaderOf                    Clan?                        @relation("leader")
-  leaderOfId                  Int?
-  ClanJoinRequest             ClanJoinRequest?             @relation("clanRequest")
-  reportedCases               Moderation[]                 @relation("ReporterRelation")
-  targetedCases               Moderation[]                 @relation("TargetRelation")
-  Pantheon                    Pantheon[]
-  conversations               Participants[]
-  messages                    Message[]
-  createdConversations        Conversation[]               @relation("CreatedConversations")
-  Conversation                Conversation[]
-  notifications               Notification[]
+  id                   Int                @id(map: "PK_65edadc946a7faf4b638d5e8885") @default(autoincrement())
+  hasImported          Boolean
+  customText           String?
+  name                 String             @db.VarChar
+  eternalTwinId        String             @db.VarChar
+  money                Int
+  quetzuBought         Int
+  leader               Boolean            @default(false)
+  engineer             Boolean            @default(false)
+  cooker               Boolean            @default(false)
+  shopKeeper           Boolean            @default(false)
+  merchant             Boolean            @default(false)
+  priest               Boolean            @default(false)
+  teacher              Boolean            @default(false)
+  messie               Boolean            @default(false)
+  matelasseur          Boolean            @default(false)
+  labruteDone          Boolean            @default(false)
+  dailyGridRewards     Int                @default(0)
+  createdDate          DateTime           @default(now()) @db.Timestamp(6)
+  updatedDate          DateTime           @default(now()) @updatedAt @db.Timestamp(6)
+  lastLogin            DateTime           @default(now()) @db.Timestamp(6)
+  role                 AdminRole          @default(PLAYER)
+  lang                 Lang               @default(fr)
+  dinoz                Dinoz[]
+  dinozShop            PlayerDinozShop[]
+  gathers              PlayerGather[]
+  ingredients          PlayerIngredient[]
+  items                PlayerItem[]
+  quests               PlayerQuest[]
+  rewards              PlayerReward[]
+  ranking              Ranking?
+  offers               Offer[]
+  bids                 OfferBid[]
+  logs                 Log[]
+  usernameHistory      UsernameHistory[]
+  playerTracking       PlayerTracking[]
+  ClanMember           ClanMember?
+  clanMemberId         Int?               @unique
+  ClanMessage          ClanMessage[]
+  ClanHistory          ClanHistory[]
+  leaderOf             Clan?              @relation("leader")
+  leaderOfId           Int?
+  ClanJoinRequest      ClanJoinRequest?   @relation("clanRequest")
+  reportedCases        Moderation[]       @relation("ReporterRelation")
+  targetedCases        Moderation[]       @relation("TargetRelation")
+  Pantheon             Pantheon[]
+  conversations        Participants[]
+  messages             Message[]
+  createdConversations Conversation[]     @relation("CreatedConversations")
+  Conversation         Conversation[]
+  notifications        Notification[]
 
   @@map("player")
 }
@@ -401,6 +261,8 @@ model UsernameHistory {
   playerId Int?
   username String  @db.VarChar
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([playerId])
 }
 
 model PlayerDinozShop {
@@ -421,6 +283,7 @@ model PlayerGather {
   playerId Int?
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_86eed52f66f7126e4dc7a998cdf")
 
+  @@index([playerId])
   @@map("player_gather")
 }
 
@@ -432,6 +295,7 @@ model PlayerIngredient {
   player       Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ad198392886a52e7f184474a0d6")
 
   @@unique([ingredientId, playerId])
+  @@index([playerId])
   @@map("player_ingredient")
 }
 
@@ -443,6 +307,7 @@ model PlayerItem {
   player   Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_21535fcb93f8613fd893b74b08b")
 
   @@unique([itemId, playerId])
+  @@index([playerId])
   @@map("player_item")
 }
 
@@ -476,6 +341,7 @@ model Ranking {
   playerId   Int?    @unique(map: "REL_3ac96196d0a3851989be8c52a9")
   player     Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_3ac96196d0a3851989be8c52a9a")
 
+  @@index([playerId])
   @@map("ranking")
 }
 
@@ -583,6 +449,8 @@ model Log {
   type      LogType
   values    String[] @default([])
   createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  @@index([playerId, dinozId, type])
 }
 
 model DinozCatch {
@@ -601,6 +469,7 @@ model PlayerTracking {
   quantity Int
 
   @@unique([stat, playerId])
+  @@index([playerId])
   @@map("playerTracking")
 }
 
@@ -672,6 +541,7 @@ model ClanMessage {
   content  String
 
   @@unique([id, clanId])
+  @@index([clanId])
   @@map("clan_messages")
 }
 
@@ -695,6 +565,8 @@ model ClanMember {
   rights   String[] @default([])
   dateJoin DateTime @default(now()) @db.Timestamp(6)
   nickname String?
+
+  @@index([clanId])
 }
 
 model ClanPage {
@@ -705,6 +577,8 @@ model ClanPage {
   content String  @default("")
   Clan    Clan    @relation(fields: [clanId], references: [id])
   clanId  Int
+
+  @@index([clanId])
 }
 
 model Moderation {
