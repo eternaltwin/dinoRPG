@@ -4,6 +4,7 @@
 		:header="$t(`gather.action.${gatherType}`)"
 	/>
 	<DZDisclaimer
+		v-if="grid"
 		help
 		round
 		:content="$t('gather.disclaimer', { number: grid.gatherTurn, search: $t(`gather.type.${gatherType}`) })"
