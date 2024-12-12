@@ -343,11 +343,13 @@ export const expireOffer = async (offerId: number) => {
 	}
 
 	const winnerBid = offer.bids[offer.bids.length - 1];
-	// Send Discord notification
-	LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
-	await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
+	if (winnerBid) {
+		// Send Discord notification
+		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
+		await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
 
-	await addMoney(offer.seller.id, winnerBid.value * 1000);
+		await addMoney(offer.seller.id, winnerBid.value * 1000);
+	}
 	// Update offer status
 	await updateOfferStatus(offerId, OfferStatus.ENDED);
 	// Update stats tracking
