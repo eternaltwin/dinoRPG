@@ -1,12 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import {
-	displayTwinoidSite,
-	displayTwinoidSpecificSite
-	// importAPI,
-	// importTwinoidData
-} from '../business/importService.js';
-import {
 	canCreateClan,
 	getAccountData,
 	getCommonData,
@@ -66,36 +60,6 @@ routes.get(`${commonPath}/dinozList`, async (req: Request, res: Response) => {
 		sendError(res, err);
 	}
 });
-
-routes.get(`${commonPath}/twinoStats/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	try {
-		const response = await displayTwinoidSite(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
-	}
-});
-
-routes.get(
-	`${commonPath}/twinoStats/:id/:type/:site`,
-	[param('id').exists().isNumeric(), param('type').exists().isString(), param('site').exists().isNumeric()],
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-
-		try {
-			const response = await displayTwinoidSpecificSite(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
-	}
-);
 
 routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {

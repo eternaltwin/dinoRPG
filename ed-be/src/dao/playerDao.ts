@@ -70,10 +70,6 @@ export async function resetUser(playerId: number) {
 	await prisma.$transaction([
 		// Suppression des entités associées
 		prisma.dinoz.deleteMany({ where: { playerId } }),
-		prisma.importedPlayer.deleteMany({ where: { playerId } }),
-		prisma.importedTwinoidAchievement.deleteMany({ where: { playerId } }),
-		prisma.importedTwinoidSite.deleteMany({ where: { playerId } }),
-		prisma.importedTwinoidStat.deleteMany({ where: { playerId } }),
 		prisma.playerDinozShop.deleteMany({ where: { playerId } }),
 		prisma.playerGather.deleteMany({ where: { playerId } }),
 		prisma.playerIngredient.deleteMany({ where: { playerId } }),
@@ -353,35 +349,6 @@ export async function getAllInformationFromPlayer(playerId: number) {
 	return player;
 }
 
-export async function getImportedData(playerId: number) {
-	const player = await prisma.player.findUnique({
-		where: {
-			id: playerId
-		},
-		select: {
-			id: true,
-			eternalTwinId: true,
-			hasImported: true
-		}
-	});
-
-	return player;
-}
-
-export async function getImportedTwinoidData(playerId: number) {
-	const player = await prisma.player.findUnique({
-		where: {
-			id: playerId
-		},
-		select: {
-			id: true,
-			eternalTwinId: true,
-			importedTwinoidSite: true
-		}
-	});
-
-	return player;
-}
 
 export async function getPlayerMoney(playerId: number) {
 	const player = await prisma.player.findUnique({
