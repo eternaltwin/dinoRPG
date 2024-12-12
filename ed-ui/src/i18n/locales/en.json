@@ -3136,7 +3136,7 @@
 				"garde": "A fruit falls near you. While you are bending over to pick it up, a big purse full of gold falls out of nowhere and hits you on the head! Plunk!"
 			},
 			"wishes": {
-				"tosscoin": "You throw a coin into the Falls and wait a few minutes... Nothing happens so you decide to grant the wish yourself.",
+				"tosscoin": "You throw a coin into the Falls and wait a few minutes... Nothing happens so you decide to grant the wish yourself by eliminating the population of monsters yourself.",
 				"garde": "Many fruits fall from the tree..."
 			},
 			"newplt": {
@@ -3477,10 +3477,10 @@
 			"chjx3b": "Angry Shroom",
 			"chkx1b": "Cloud Sword",
 			"chkx1a": "Chocobo",
-			"chkx2b": "Tomberry",
+			"chkx2b": "Tonberry",
 			"chkx2a": "Mog",
 			"chkx3b": "Magician",
-			"chkx3a": "Pampa",
+			"chkx3a": "Cactuar",
 			"chlx1b": "Crossbow of Victory",
 			"chlx1a": "Apple Phone",
 			"chlx2b": "Shadow Bow",
@@ -3545,14 +3545,14 @@
 			"belius": "Vous avez supprimé le puissant Santaz infernal Belius. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de dinoz démons dans la boutique démoniaque.",
 			"scorp": "You expelled the powerful infernal Winks Scorpus. He is back in the depths of the Dark World.",
 			"msg": "This unlimited dinozian postal services approved stamp's stock validates your Dinotown trip",
-			"magnet": "You have been gifted this negative magnetite shard by the rockies' king himself ! Who knows what kind of mysterious powers it holds ...",
+			"magnet": "You have been gifted this negative magnetite shard by the Rockies' king himself ! Who knows what kind of mysterious powers it holds...",
 			"plume": "This feather, gifted from someone far away, allows editing player's presentation.",
 			"kaura": "This aura allows you accessing the totem island and finding - maybe - Kabuki having survived the Great Cataclysm !",
 			"demon": "This old scroll will allow you to access the demonic shop at the downfall Cemetery !",
 			"pmi": "Le Petit Missionnaire Illustré permet d'avoir accès à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz.",
 			"pda": "La P.D.A. est une pierre remplie (chose surprenante) de technologie formée naturellement et permettant à l'éleveur d'avoir un aperçu de tous ses Dinoz en un simple coup d'oeil. La Diamantite au contraire c'est juste pour la frime.",
 			"fdjv1": "This trophy is a thanks to the players who made a long journey to the 2010 edition of the Gaming Festival to meet the shadow puppeteers!",
-			"dico1": "A very old book, maybe it will help you decipher something ? Unfortunately for now, it is closed by a very complex lock. Does someone who can open this book only exist ? For now, it seems that no ...",
+			"dico1": "A very old book, maybe it will help you decipher something? Unfortunately for now, it is closed by a very complex lock. Does anyone know how to open it ? For now, it seems that no one can...",
 			"dicarb": "A very old book, you managed to open it, it can now help decipher the Arboris language.",
 			"caush": "A doll bearing the image of Mandragore, it can be used as a voodoo doll, a punching-ball or a pillow, it's up to you. It is in a pitiful state, the previous owner must have let off steam on it quite often.",
 			"fmedal": "Vous avez reconstitué le médaillon permettant d'accéder à une nouvelle partie de l'île céleste de Nimbao. Il vous faut trouver le bon endroit où utiliser ce médaillon afin d'ouvrir le portail correctement.",
@@ -4191,7 +4191,7 @@
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (left {amount}).",
+		"IngredientSold": "",
 		"GoldWon": "**{player} ({playerId})** a gagné **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** a perdu **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** a bougé son Dinoz **{dinoz} ({dinozId})** à **{location}**.",
@@ -4213,7 +4213,7 @@
 		"LBDone": "**Player {player}** just claimed his rewards.",
 		"OfferNew": "**{player} ({playerId})** a créé une **nouvelle offre {offer}** pour un montant de {amount} :gold:.",
 		"OfferBid": "L'**offre {offer}** de **{player} ({playerId})** a reçu une nouvelle **mise de {amount}** bons.",
-		"OfferCancelled": "**{player} ({playerId}** a  **annulé** son **offre {offer}**.",
+		"OfferCancelled": "**{player} ({playerId})** a  **annulé** son **offre {offer}**.",
 		"OfferExpired": "L'**offre {offer}** de **{player} ({playerId})** a **expiré** et n'a pas été remportée.",
 		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
 	},

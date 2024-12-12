@@ -129,7 +129,7 @@
 			"anniv": "¡Utiliza tus Tickets de aniversario para encontrar tesoros raros y quizás huevos!",
 			"fish": "Tu Dino puede **pescar** en este lugar. ¡Ten cuidado con el gran tiburón de los abismos pestilentes!",
 			"hunt": "Tu Dino puede cazar **animales salvajes** que encuentre a su alrededor y así obtener valiosos ingredientes.",
-			"seek": "Tu Dino puede buscar *artefactos antiguos* en este lugar. Son objetos muy raros, ¡pero tienen un gran valor!",
+			"seek": "Tu Dino puede buscar **artefactos antiguos** en este lugar. Son objetos muy raros, ¡pero tienen un gran valor!",
 			"energy": "Este lugar está lleno de energías poderosas y elementales. Tu Dino puede absorberlas aquí.",
 			"xmas": "Puedes jugar al Caza nieves con tus Tickets de Navidad y ganar numerosos regalos.",
 			"tictac": "¡Utiliza tus Tickets Taque para, quizás, encontrar un tesoro especial!",
@@ -296,7 +296,7 @@
 			"poisonite_shot": "Jeringuilla de Venenite",
 			"loris_costume": "Traje de Lori",
 			"vegetox_costume": "Disfraz de Guardia Vegetox",
-			"goblin_costume": "Disfraz de Globlin",
+			"goblin_costume": "Disfraz de Goblin",
 			"pampleboum_pit": "Hueso de Pomelum",
 			"portable_love": "Amor Portátil",
 			"danger_detector": "Detector de Peligro",
@@ -386,7 +386,7 @@
 			"smog_egg_christmas_green": "Huevo de Smog Verde Navideño",
 			"triceragnon_baby": "Bebé Tricerithumps",
 			"triceragnon_baby_rare": "Bebé Tricerithumps raro",
-			"christmas_egg": "Oeuf de Noël",
+			"christmas_egg": "Huevo de Navidad",
 			"amnesic_rice": "Arroz amnésico",
 			"tik_bracelet": "Brazalete en Tik",
 			"magic_star": "Estrella mágica",
@@ -497,7 +497,7 @@
 			"wanwan_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
 			"wanwan_egg_rare": "Este huevo extraño contiene un Dino excepcional",
 			"wanwan_baby_rare": "Este huevo es muy extraño... El Dino que tenga dentro debe ser excepcional.",
-			"santaz_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
+			"santaz_egg": "De este huevo tan raro saldrá un Dino de mirada tierna, pero muy rudo en combate...",
 			"santaz_egg_rare": "Este huevo de Polvorón no es nada común, ¿qué sorpresas guardará?",
 			"feross_egg": "Este extraño huevo parece estar a punto de convertirse en un hermoso Dino.",
 			"feross_egg_rare": "Este huevo de Feros no es como los otros, ¡tiene rasgos de guerrero!",
@@ -518,7 +518,7 @@
 			"smog_egg_christmas_green": "Este huevo de Smog no es como los demás... ¡Directo desde el Polo Norte! Parece que el viejo Papá Noel entrega más que solo regalos.",
 			"triceragnon_baby": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
 			"triceragnon_baby_rare": "¡Este pequeño y extraño huevo parece estar listo para transformarse en un increíble Dino!",
-			"christmas_egg": "Cet oeuf de Noël vous réserve la surprise de se transformer soit en Santaz soit en Tricéragnon. Ce sera la surprise !",
+			"christmas_egg": "Este huevo de Navidad tiene la sorpresa de transformarse en Polvorón o en Tricerithumps. ¡Será una sorpresa!",
 			"amnesic_rice": "Esta variedad muy rara de Arroz vuelve amnésicos a los Dinos. Si come este arroz, tu Dino perderá su nombre, así como su experiencia acumulada desde su último nivel...",
 			"tik_bracelet": "Este objeto perteneciente a la tecnología de Caushemesh, ¡puede dar cada día hasta 10 puntos de vida al Dino que lo lleve!",
 			"magic_star": "Estas misteriosas estrellas están repartidas por todo el mundo de Dinoland. ¿Puedes encontrar las 7?",
@@ -648,7 +648,7 @@
 			"bkport": "¿Volver al Puerto de Santa Moría?",
 			"mcuzco": "Ruinas de Cuzcús",
 			"mcelit": "Campo de Élite",
-			"tourup": "Torre de Karinbao",
+			"tourup": "Ir a la Cima de la Torre de Karinbao",
 			"dkbao": "Portal",
 			"dkchut": "Remolino de Almas Perdidas",
 			"dktow": "La Torre Sombra",
@@ -682,7 +682,7 @@
 			"garde": "Esta parte de la Jungla es una de las más inexploradas de Dinoland. Son pocos los Maestros de Dinos que se han aventurado, y aún menos los que han vuelto vivos... la vegetación es tan densa que forma un muro infranqueable de varios kilómetros. La única apertura que existe es un pequeño portal situado en el lado de la Jungla. Está protegido por una criatura extraña conocida con el nombre de «Guardián de la Jungla».",
 			"chutes": "Las Caídas Mutantes forman uno de los lugares más misteriosos y grandes de Dinoland. Aquí el agua del océano cae de forma continua en este inmenso agujero sin que por ello el nivel del mar baje. Los científicos piensan que existe un lugar lejano donde el agua vuelve al océano, pero nadie les cree.",
 			"baobob": "Don Bao Bob es un personaje extraordinario. Afirma ser el último de un antiguo pueblo de gigantes que desapareció hace cientos de años. Seguro que conoce los secretos más escondidos de Dinoland. Las historias que cuenta son extraordinarias y divierten mucho a los niños.",
-			"dome": "Sulaflota es una auténtica ciudad submarina que alberga a los últimos supervivientes de la civilización de los Atlanteidos. Antiguamente dominaban las Islas Atlanteidas, pero una extraña enfermedad estuvo cerca de exterminarlos. Le Dôme reste néanmoins magnifique malgré les nombreux siècles qui se sont passés.",
+			"dome": "Sulaflota es una auténtica ciudad submarina que alberga a los últimos supervivientes de la civilización de los Atlanteidos. Antiguamente dominaban las Islas Atlanteidas, pero una extraña enfermedad estuvo cerca de exterminarlos.",
 			"marais_flood": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. ¡Hoy el pantano está totalmente inundado! No puedes desplazarte hoy. Tendrás que esperar a mañana para poder salir de este fangoso lugar.",
 			"marais_fog": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. Hoy la marea está perdida en la bruma... Seguramente no encontrarás ningún monstruo a combatir.",
 			"marais": "¡Este pantano situado en el centro del archipiélago es un verdadero problema para los viajeros! En función del día, cambia de estado. Se dice que existe desde hace milenios y algunos piensan incluso que se trata de un gigantesco ser vivo que tiene su propio y mal sentido del humor. Hoy la marea está baja: puedes desplazarte normalmente.",
@@ -690,10 +690,10 @@
 			"ilewkk": "La Isla Waïkiki es una pequeña isla del archipiélago de las Islas Atlanteidas. Se distingue por sus palmeras violetas, cuyas hojas son utilizadas para dar colores vivos a las telas en Dinoland. Los humanos locales practican también un Arte Marcial muy famoso, el Waïkidô.",
 			"chbroc": "En la cima de una roca de las Islas Atlanteidas hay un taller. Hay quien dice que el inventor eligió este lugar para aislarse de las burlas de los demás, pero en realidad no parece que sea realmente el motivo, sino más bien por algo muy distinto...",
 			"dplaza": "Este flamante barrio nuevo sigue siendo de difícil acceso. Sin embargo hay quienes ya se las han arreglado para instalarse aquí y escapar de la superpoblada capital. Aquí se encuentra de todo y las nuevas atracciones como el Concurso de Dinos lo han convertido en un lugar de moda.",
-			"villa": "Una auto-denominada \"Villa\" que parece más una cabaña con ruedas, un poco accidentada y situada en la playa. Hay un cartel que dice: \"Cuidado, Dino peligroso\". Peut-être vaut-il mieux passer son chemin...?",
+			"villa": "Una auto-denominada \"Villa\" que parece más una cabaña con ruedas, un poco accidentada y situada en la playa. Hay un cartel que dice: \"Cuidado, Dino peligroso\". ¿Mejor pasar de largo?",
 			"dcine": "En los contrafuertes del Pequeño Cañón, una caverna de la era Predinoniana ha sido convertida en un magnífico cine. Las películas más sofisticadas se proyectan en esta sala y numerosos jóvenes directores con talento vienen a realizar sus estrafalarios proyectos a este lugar.",
 			"clinik": "En este lugar se encuentra la clínica de Dinovilla. Sus tratamientos parecen ser los mejores de Dinoland.",
-			"chato": "Al abrir la puerta, el salón del trono se encuentra delante de ti. Ves algunos guardias por aquí y por allá, algunos hablan del último juego de moda, otros llevan ropa sucia a la lavandería, todo parece tranquilo. décontracté. El rey, siempre de buen humor, te espera en su trono.",
+			"chato": "Al abrir la puerta, el salón del trono se encuentra delante de ti. Ves algunos guardias por aquí y por allá, algunos hablan del último juego de moda, otros llevan ropa sucia a la lavandería, todo parece tranquilo. El rey, siempre de buen humor, te espera en su trono.",
 			"poste": "Este puesto controla los ingresos a los dominios reales. Desde aquí, el castillo se ve magnífico. ¡La guardia hace una vigilancia implacable, la capitana tiene fama de ser muy estricta!",
 			"portal": "La estrella de 5 puntos se dibuja en el suelo y proyecta una luz viva que disipa las nubes de Nimbao. Por desgracia, el rayo de luz no es suficientemente poderoso para transportarte al cielo. Tendrás que buscar otra solución.",
 			"bslt": "Entre el suelo y la cima del Gran Señor Todo-Quema se extienden las Pendientes de Basalto. Son grandes extensiones formadas de rocas volcánicas. Se distingue el trazo de un camino que serpentea hasta la cima. Las emboscadas ocurren a menudo, tendrás que prestar atención cuando cojas este camino.",
@@ -704,21 +704,21 @@
 			"tunel": "Lejos de Fosalava se erige un viejo árbol. Su corteza es tan gruesa que ni siquiera los ríos de lava pueden quemarla, lo que le ha permitido sobrevivir a numerosas erupciones volcánicas. Hace poco la lava proveniente de una erupción desbloqueó el paso a la entrada de un Túnel en el pie del árbol. Este Túnel parece llegar muy lejos en las profundidades del Gran Señor Todo-Quema. Para explorarlo, te haría falta al menos una Linterna que te permita iluminar el camino.",
 			"gorges": "Las Gargantas Profundas son un estrecho pasillo rocoso excavado en el flanco del Gran Señor Todo-Quema. Tras una sucesión de valles inundados, las gargantas finalizan para dar paso a una gran Jungla. Puedes apreciar el Río Jumin extenderse hacia el sur. Sin lugar a dudas desde aquí puedes acceder a la parte Norte de la Jungla de Grumhel.",
 			"tourbt": "Una torre gigantesca se alza imponente en Gran Todo-Quema. Las nubes que atraviesa no te permiten verla entera, subir puede ser agotador, pero la vista desde allá arriba vale, sin duda, el esfuerzo.",
-			"senter": "Le sentier qui traverse la Porte de Sylvenoire débouche directement sur une immense steppe de sable brûlant s'étendant à perte de vue... Violentos rayos desgarran regularmente el cielo en un amenazador gruñido. Todo ello está provocado por la Magnetita, la roca principal que caracteriza este lugar.",
+			"senter": "El sendero que atraviesa la Puerta de Sylvanegra te lleva directamente a una inmensa estepa de arena ardiente. Violentos rayos desgarran regularmente el cielo en un amenazador gruñido. Todo ello está provocado por la Magnetita, la roca principal que caracteriza este lugar.",
 			"scross": "El camino que serpentea este lugar ha sido utilizado durante generaciones por los esclavos Rokky. Transportaban cargamentos de Magnetita entre la Ciudadela del norte y la jungla de Grumhel. Esta ruta es hoy en día demasiado peligrosa para ir solo. Una vía alternativa y segura ha sido trazada más allá del \"Sabot\", hacia el este.",
 			"svillg": "El Puesto es un lugar de parada para los mercaderes provenientes de Grumhel. Esta etapa es más segura que la Encrucijada y el último remanso de paz antes de los peligros que acechan en las Estepas Magnéticas.",
 			"sking": "En el centro de las Estepas se erige una gran roca de extraño aspecto. En su interior se encuentra la Ciudadela del Rey Rokky. La familia real, mitad humana, mitad mineral, controla a los Rokkys desde hace generaciones y ejerce su autoridad en casi todo el territorio.",
 			"spylon": "Los Pilares, situados en el centro del desierto, son una formación natural de Magnetita que provoca continuamente potentes y peligrosas descargas eléctricas. Más vale no quedarse aquí más tiempo del necesario...",
 			"slake": "Las arenas movedizas de los alrededores son extremadamente peligrosas: son ricas en Magnetita y su reflejo hacen pensar que se trata de agua. Muchos aventureros con sed han caído en la trampa de acercarse. Se dice que por cada víctima el Sifón emite un silbido melódico.",
 			"scanyo": "Entre los altiplanos de Tulaho se encuentran los Senderos de Tutumba. Son conocidos por los numerosos Dinos desaparecidos por los desprendimientos de Magnetita. El suelo está cubierto de piedras cortantes y ardientes, y los muros en Magnetita sueltan a menudo descargas eléctricas y mortales. ",
-			"stowr1": "Desde una eternidad los Maestros Dinos luchan por tomar el control de la producción cotidiana de raíces de la Devorosa. Hay tres Devorosas en las Estepas Magnéticas, pero se cuenta que todas ellas tienen una raíz única. ¡Solo un gran héroe podrá conservar el control de las tres Devorosas!",
-			"stowr2": "Desde una eternidad los Maestros Dinos luchan por tomar el control de la producción cotidiana de raíces de la Devorosa. Se dice que aquél que consiga tener 100, podrá cumplir su deseo. En attendant, les graînes se revendent pour un très bon prix auprés du Marchand Ambulant.",
-			"stowr3": "Desde una eternidad los Maestros Dinos luchan por tomar el control de la producción cotidiana de raíces de la Devorosa. Según leyendas nómadas, las Devorosas se alimentan de la sangre de aquellos que intenten adueñarse de ella.",
+			"stowr1": "\"Quien cultive la Devorosa se volverá rico\". Desde una eternidad los Maestros Dinos luchan por tomar el control de la producción cotidiana de raíces de la Devorosa. Hay tres Devorosas en las Estepas Magnéticas, pero se cuenta que todas ellas tienen una raíz única. ¡Solo un gran héroe podrá conservar el control de las tres Devorosas!",
+			"stowr2": "\"Quien cultive la Devorosa se volverá rico\". Desde una eternidad los Maestros Dinos luchan por tomar el control de la producción cotidiana de raíces de la Devorosa. Se dice que aquel que consiga tener 100, podrá cumplir su deseo. Mientras tanto, las raíces pueden venderse al Mercader Ambulante por muy buen precio.",
+			"stowr3": "\"Quien cultive la Devorosa se volverá rico\". Desde una eternidad los Maestros Dinos luchan por tomar el control de la producción cotidiana de raíces de la Devorosa. Según leyendas nómadas, las Devorosas se alimentan de la sangre de aquellos que intenten adueñarse de ella.",
 			"sband1": "Los Zaxa son familias de saqueadores muy apreciadas por su trabajo limpio. Sus ataques a los convoyes son incluso recomendados por las guías turísticas de la región...",
-			"sband2": "Los Emema son mercenarios sin piedad conocidos por sus técnicas arcaicas de emboscada: lanzar una roca gigante desde el borde del barranco y después golpear con el mazo hasta que nada se mueva más. Ensuite seulement on ramasse. Pas de tracas ni de blabla.",
+			"sband2": "Los Emema son mercenarios sin piedad conocidos por sus técnicas arcaicas de emboscada: lanzar una roca gigante desde el borde del barranco y después golpear con el mazo hasta que nada se mueva más. Después, se recoge todo lo que tenga valor y se regresa a casa.",
 			"sband3": "Los Matmût son los especialistas en los timos y en los juegos. Son menos agresivos que sus vecinos, pero siguen siendo peligrosos por muy poco que aprecies tu oro. Su técnica consiste en cansar al adversario con sus cantos tradicionales.",
 			"scampw": "La guarida secreta del Equipo-W... Aquí se refugian en caso de mucho peligro para curar sus heridas y preparar sus contraataques. Estos nómadas tienen una voluntad de acero y nunca se declaran vencidos. Muchos han caído bajo sus manos creyendo inocentemente haberlos eliminado para siempre...",
-			"scaush": "En los confines de las Estepas se encuentra una barrera rocosa infranqueable... on peut appercevoir au loin une chaîne de montagnes, la patrie des Santaz : les monts de Caushemesh. ¿Quién sabe los peligros que te esperan ahí? Y eso, en el caso de que consigas llegar...",
+			"scaush": "En los confines de las Estepas se encuentra una barrera rocosa infranqueable... a lo lejos se percibe una cadena de montañas heladas. Se trata de la patria de los Polvorones: los montes de Caushemesh. ¿Quién sabe los peligros que te esperan allí? Y eso, en el caso en el que consigas llegar hasta allí...",
 			"sport": "Escondida por las tormentas de arena, una gran puerta se impone en el desierto de las Estepas, al pie de los montes de Caushesmesh. Como única entrada a ese reino misterioso, impide a cualquiera ingresar... ¿O más bien salir?",
 			"iroche": "Te encuentras en el extremo sur de la isla celeste de Nimbao. Rocas puntiagudas emergen del suelo. Algunos lo llaman los cuernos del dragón. Pocas personas provienen de este lugar. Probablemente porque no hay gran cosa que hacer aquí. Contemplar el vacío, quizás.",
 			"ipont": "El único medio de atravesar este precipicio es utilizando este puente. Hay que tener cuidado con no resbalar, pues hay un viento muy fuerte. Al tratarse del único acceso a la isla, el puente a menudo se encuentra vigilado por los soldados de Grizorg.",
@@ -732,12 +732,12 @@
 			"voie": "A lo lejos, el inmenso observatorio impone su figura en el panorama. Situado en la parte trasera de Nimbao, su impresionante telescopio se orienta al horizonte. Al parecer, vigilar los montes de Caushemesh es más interesante que observar las estrellas...",
 			"observ": "El observatorio es también una gran biblioteca, alberga una cantidad impresionante de obras que relatan la historia de Dinoland. Desgraciadamente, los libros están escritos en la lengua de los antiguos Dorogones, y es prácticamente imposible entenderlos.",
 			"egout": "Los pilares que sostienen el palacio del Archidorogón contienen una compleja red de canales de agua pura que llegan hasta él.",
-			"ilac": "El agua del lago celeste cae de forma continua en el vacío, pero eso no impide que las cascadas continúen vertiendo sus aguas de manera infinita. Serait-ce la condensation des nuages qui permet à l'île d'avoir une aussi grande quantité d'eau à disposition...",
+			"ilac": "El agua del lago celeste cae de forma continua en el vacío, pero eso no impide que las cascadas continúen vertiendo sus aguas de manera infinita.",
 			"ilac2": "Detrás de esos lagos, el terreno tiene la forma de una enorme ala, en el horizonte no hay nada más que verdes planicies bañadas por la luz del sol. Sientes el viento salvaje que acaricia ese apacible paisaje y llegas a ver el extremo del ala. Nadie en el mundo la había visto desde esa perspectiva...",
-			"prison": "Las puertas de la prisión infernal de Priranese se abren sólo una vez a sus visitantes, nunca nadie salió de ella. Allí están encerrados todos aquellos que han desafiado la autoridad del Archidorogón Grizorg.",
+			"prison": "Las puertas de la prisión infernal de Priranese se abren solo una vez a sus visitantes. Nunca nadie salió de ella. Allí están encerrados todos aquellos que han desafiado la autoridad del Archidorogón Grizorg.",
 			"ville1": "La ciudad de los Dorogones es rica y exuberante, los habitantes tienen un aire pacífico, contrariamente a los soldados que patrullan la ciudad.",
 			"ville2": "Este barrio Dorogón ofrece una vista impresionante de Nimbao, la ciudad es atravesada por el arco que lleva hacia el palacio del Archidorogón.",
-			"sommet": "El panorama es espléndido, estás en la cima de la Isla Celeste de Nimbao, a lo lejos divisas el palacio del Archidorogón, bañado de luz, representando la poderosa civilización dorogona.",
+			"sommet": "El panorama es espléndido, estás en la cima de la Isla Celeste de Nimbao. A lo lejos divisas el palacio del Archidorogón, bañado de luz, representando la poderosa civilización dorogona.",
 			"palais": "El palacio del Archidorogón es una joya de la arquitectura dorogona, que supo dominar tecnologías antiguas para llevar canales de agua pura por toda la ciudad. Este grandioso monumento puede resultar laberíntico para los inexpertos...",
 			"mport": "El Puerto Monstruoso merece su nombre... aquí se encuentran monstruos de todo tipo. Parece que hay algo inusual en su organización, como si el puerto estuviera dividido en dos partes diferentes.",
 			"mfoutp": "La zona fronteriza entre Frutox y Vegetox se encuentra vigilada en cada campo. El puesto está controlado por los Frutox en un lugar estratégico, pues permite espiar los movimientos Vegetox y proteger el Palacio Real.",
@@ -747,17 +747,17 @@
 			"mvpalc": "El palacio es una auténtica fortaleza que alberga al rey de los Vegetox. Es un lugar bien resguardado de los peligros gracias a los guardias que patrullan a su alrededor. Un intruso nunca podría conseguir infiltrarse. El Palacio es magnífico: se trata de un inmenso árbol esculpido con decoraciones que recuerdan a los símbolos Cuzcusianos.",
 			"mcuzco": "En este lugar aislado de la Isla de los Monstruos se levantan las ruinas de la antigua capital del Imperio de los Monstruos. La potente Cuzcús ya no es más que un montón de piedras invadidas por la vegetación, pero los edificios que quedan en pie dan testimonio de una gran civilización. Numerosos tesoros duermen bajo estas viejas piedras...",
 			"mcelit": "En el corazón del territorio Vegetox se encuentra el campo de entrenamiento secreto de las fuerzas especiales Vegetox: ¡el Campo de Élite! En este lugar rodeado de barricadas los mejores soldados Vegetox se entrenan para poder un día ganar la Guerra contra los Frutox. A pesar de los años en guerra, la moral de los soldados permanece intacta.",
-			"dkbao": "De l'autre coté du portail se dresse un lieu inconnu et pourtant étrangement familier. Des hurlements se font entendre au loin. Si quieres, tu Dino puede **seguir** a otro de tus Dinos.",
-			"dkchut": "A travers l'épais brouillard, on entend comme un lointain grondement, de l'eau qui s'écoule violemment. Il vaut mieux ne pas aller nager très loin, le courant est très violent...",
+			"dkbao": "En el otro lado del portal se encuentra un lugar desconocido pero extrañamente familiar. Se oye aullidos a lo lejos... Habrá que mantener la guardia para mantenerse con vida.",
+			"dkchut": "Un violento gruñido confundido con un golpe de agua atraviesa la espesa niebla hasta llegar a tus oídos. Más vale no nadar muy lejos, ya que la corriente es muy fuerte.",
 			"dktow": "Una gran Torre Negra se erige en este tétrico lugar. A primera vista se diría que se encuentra deshabitada, pero los esqueletos semienterrados de la entrada hacen presagiar lo peor. La gran y sombría puerta se encuentra entreabierta. Más vale no acercarse más por el momento, ¡este lugar parece destinado al suicidio! ",
-			"dktow2": "Los grotescos muros se parecen entre sí, podrías perderte con facilidad, felizmente, solo existe un camino hacia la cima.",
-			"dktow3": "La longue ascension continue, cette Tour peu hospitalière héberge des habitants peu disposé à vous laisser tranquillement aller au sommet.",
+			"dktow2": "Los grotescos muros se parecen entre sí, podrías perderte con facilidad. Felizmente, solo existe un camino hacia la cima.",
+			"dktow3": "El largo ascenso continúa. Esta torre hostil alberga seres dispuestos a impedir todo avance hacia la cima.",
 			"dktow4": "El primer torreón de la Torre Sombra. Su acceso acaba de revelarse ante tus ojos. El Mundo Sombra no deja de desarrollarse...",
 			"dktowa": "El segundo torreón de la Torre Sombra. Su acceso acaba de revelarse ante tus ojos. El Mundo Sombra no deja de desarrollarse...",
-			"dktowb": "Tercera mazmorra de la torre oscura, su acceso acaba de ser revelado, el mundo oscuro siempre está en constante evolución...",
-			"dktows": "El último torreón de la Torre Sombra, su acceso acaba de revelarse ante tus ojos, el Mundo Sombra no deja de desarrollarse...",
+			"dktowb": "El tercer torreón de la Torre Sombra. Su acceso acaba de revelarse ante tus ojos. El Mundo Sombra no deja de desarrollarse...",
+			"dktows": "El último torreón de la Torre Sombra. Su acceso acaba de revelarse ante tus ojos. El Mundo Sombra no deja de desarrollarse...",
 			"fake": "Una isla desierta llamada La Isla de la Condena, donde algunas almas en pena vienen a parar. La oscuridad es muy extraña por aquí...",
-			"fake2": "Une île déserte communément appelé l'île des feu-folles, ces esprits errants sèment le désespoir et la mort. Il fait particulièrement sombre par ici...",
+			"fake2": "Una isla desierta llamada \"Isla de las Flamas Extrañas\". Sus espíritus errantes siembran el horror por doquier. Está muy oscuro por aquí...",
 			"rechut": "Gracias al pedazo de Orbe Oscuro que tu Dino posee, puedes volver a la superficie. La luz repentina llega a enceguecer, es mejor no quedarse mucho tiempo en el Mundo Sombra."
 		}
 	},
@@ -799,7 +799,7 @@
 			"pigmou": "Los Pigmous son pequeños animales feroces y testarudos. Tienen una extraordinaria fuerza, por lo que son difíciles de controlar. Una vez aprenden a respetar a su Maestro, siempre estarán ahí para defenderlo.",
 			"planaille": "Los Planealas son Dinos voladores. Su cuerpo tiene pequeños receptores y sus músculos les permiten controlar de manera casi perfecta cada centímetro de sus alas. Estas últimas les permiten manipular y amplificar el viento y la electricidad, lo que hace de ellos auténticas armas letales. No están dotados de una gran inteligencia por lo que son fácilmente controlables por su Maestro.",
 			"pteroz": "Los Teroz son Dinos con alas que les permiten planear sobre el Gran Señor-Todo-Quema. Son muy territoriales por lo que más vale no molestar a una Mamá Teroz que esté protegiendo sus huevos. Son difíciles de controlar pero son grandes luchadores.",
-			"quetzu": "Los Quetzus son Dinos oriundos de la Isla de Nimbao, con el fin del reino de Grizorg, la isla volvió a ser accesible a los Maestros Dinos, y estas raras criaturas proliferan en el lugar. Su fuerza y agilidad son incomparables. Leur force et leur agilité restent inégalées, on trouve cependant peu de Quetzus à un âge avancé, leur vrai potentiel est libéré à ce moment.",
+			"quetzu": "Los Quetzus son Dinos oriundos de la Isla de Nimbao. Con el fin del reino de Grizorg, la isla volvió a ser accesible a los Maestros Dinos, y estas raras criaturas proliferan en el lugar. Su fuerza y agilidad son incomparables. Sin embargo, muy pocos Quetzus se encuentran en edad madura, que es cuando su verdadero potencial se libera.",
 			"rocky": "Los Rokkys son a veces confundidos con piedras talladas por el ser humano. En realidad, son seres vivos, mitad animal mitad mineral. Una gran parte de sus cuerpos está compuesta de Magnetita. Esto les permite producir electricidad casi a voluntad simplemente con la frotación.",
 			"santaz": "Los Polvorones provienen de las lejanas montañas de Caushemesh. Son muy difíciles de atrapar y por lo tanto son muy apreciados por los Maestros de Dinoland. Es un Dino difícil de controlar, pero es muy poderoso y domina perfectamente el elemento Aire.",
 			"smog": "El ADN de los Smogs ha sido descubierto por el Dr. Grand. Al extraer una muestra de sangre encapsulada en el vientre de un mosquito, pudo reconstituir genéticamente a esta criatura que fue uno de los más grandes depredadores del planeta.",
@@ -821,18 +821,18 @@
 			"michel": "El Guía Michel",
 			"street_shouter": "Pregonero",
 			"sofia": "Sofía",
-			"mmex": "Madam X",
+			"mmex": "Señora X",
 			"mineur": "Minero Coraliano",
-			"papy": "Papi José",
-			"bob": "Sr. Bao Bob",
+			"papy": "Papy Jose",
+			"bob": "Don Bao Bob",
 			"baofan": "Fan de Bao",
-			"forgeron": "Herrero",
+			"forgeron": "Herrera",
 			"dian": "Dian Korgsey",
 			"merguez": "Vendedor de Salchichas",
 			"shaman": "Chamán Lacio",
 			"gardien": "Guardián de la Jungla",
 			"fou": "Hombre raro",
-			"garde_atlante": "Guardia atlanteido",
+			"garde_atlante": "Guardia Atlanteido",
 			"joveboze": "Jovebozé",
 			"archis": "Archisabio",
 			"hydargol": "Maestro Hydargol",
@@ -840,11 +840,11 @@
 			"hulot": "Nicolás Mulot",
 			"rodeur": "Merodeador Extraño",
 			"rodeur2": "Merodeador Extraño",
-			"rodeur3": "Aliento Ardiente",
+			"rodeur3": "Merodeador Extraño",
 			"spelele": "Pelele-ólogo",
-			"pteroz": "El Dino se vuelve objetivo principal de los enemigos",
-			"hippo": "Anula todos los estatus negativos del Dino",
-			"rocky": "Etrange Pierre",
+			"pteroz": "Dino raro",
+			"hippo": "Dino raro",
+			"rocky": "Piedra extraña",
 			"vener": "El Venerable",
 			"alien_0": "Ser raro",
 			"alien_1": "Ser raro",
@@ -866,8 +866,8 @@
 				"fire": "La Escalada no es fácil de dominar, y además necesitas Material de Escalada para poder iniciarse. Si consigue ganar a este monstruo, le enseñaré las bases a tu Dino y le daré el material que le permitirá escalar el volcán del Gran Señor-Todo-Quema.",
 				"water_win": "Increíble, ¡qué belleza de combate! Como te prometí, le enseño a nadar con un salvavidas, y de paso os regalo el salvavidas. Ahora podrá acceder a las Islas Atlanteidas al sur de Dinoland. Buena suerte, ¡y sé prudente!",
 				"fire_win": "Bien, ¡un combate muy bello! Tu Dino acaba de aprender la capacidad de escalar; os cedo el Material de Escalada también. Ya debe de poder escalar las Colinas Escarpadas del volcán del Gran Señor-Todo-Quema. Los monstruos allí son muy calurosos, ¡presta atención!",
-				"learn_water": "¿Has venido por el Material de Escalada? Para ello, tendrás que derrotar a este monstruo.",
-				"learn_fire": "¿Vienes para llevarte un flotador salvavidas? Tendrás que combatir este monstruo antes que nada...",
+				"learn_water": "¿Vienes para llevarte un flotador salvavidas? Tendrás que combatir este monstruo antes que nada...",
+				"learn_fire": "¿Has venido por el Material de Escalada? Para ello, tendrás que derrotar a este monstruo.",
 				"learn_done": "No tengo nada que enseñar a tu Dino. Pero no te preocupes, hay otras personas en Dinoland que podrán enseñarle numerosas técnicas.",
 				"question": "Ah, ¡me encaaaaaaantan las preguntas! ¿Qué quieres saber, chavalín?",
 				"dinoville": "El Reino de Dinovilla ha sido destruido y reconstruido varias veces desde hace mucho tiempo. Hoy en día es un lugar próspero y civilizado, especialmente comparado con los otros lugares que lo rodean. ¡Es por ello que Dinovilla es un lugar perfecto para un pequeño Maestro de Dinos como tú! No dudes en entrenar a tu Dino antes de llevarlo a otros lugares de Dinoland, ¡pues los monstruos de por allí son más peligrosos que aquí!",
@@ -1060,7 +1060,7 @@
 				"wah": "¡Sí! Y Don Bao Bob me está enseñando cosas. Dice que tengo mucho talento para mi edad. Es fantástico, ¿no te parece? Espera, mira... voy a crear un Talismán, ¿quieres ver cómo lo hago?",
 				"yes": ".............. Ya está, ¡terminé! ¿Lo quieres? Toma... ¡Es un Talismán Bao! ¡Cuídalo bien! Debe de serte útil durante varios combates. Cuando el fluido esprital se agote, puedes venir a verme para que te lo recargue.",
 				"spirit": "Heu... sí, ¡eso mismo! ¡Espitri... ra... sprit...! ¡Jo qué palabras más raras tiene hoy la tecnología!",
-				"thanks": "Hooo tu t'en vas déja... Tu reviendras, hein ? A bientôt alors !",
+				"thanks": "Joooo ya te vas... ¿volverás, no? ¡Hasta pronto!",
 				"nothing": "Ah... ¡pero tu Dino ya tiene un Talismán Bao! Mira, sigue teniendo energía... ¿lo ves? Cuando deje de funcionar podré recargártelo.",
 				"no": "¿Ah? Bueno, pues peor para ti entonces... *refunfuño*."
 			},
@@ -1294,8 +1294,8 @@
 				"flora": "¡Estos árboles milenarios esconden incontables secretos maravillosos! Sin embargo, el que sabe mirar es capaz de apreciar muchas cosas para el mayor gozo. Olores exóticos, flores multicolores, vegetación frondosa... La Jungla de Grumhel. \"Una Aventura en el país de la Madre Naturaleza\", secuencia Exploración.",
 				"whynot": "Digamos que aquí hay algunas plantas compremetedoras... Como la \"Toxicae Virulenta Negra\" o la \"Salvajina Gigante Devoradora de Hígados\"...",
 				"fauna": "Entre los roncivores, los korgones y los ratones-fiera, la Jungla de Grumhel acoge unos peligros que depasan cualquier imaginación. Tierra hostil, Tierra prometida... este lugar de Dinoland nunca se dejará dominar...",
-				"fear": "Euh, comment dire... C'est... Disons un contretemps technique. Creo que sería más prudente planificar primero una misión de reconocimiento. Avant de plonger corps et âme dans l'aventure, cela va de soi !",
-				"explore": "Ca serait une excellente idée ! Il faut dire qu'il n'y a pas beaucoup de passage par ici... Un petit coup de main serait le bienvenu... Séquence action.",
+				"fear": "Eh, cómo decirlo... digamos que se trata de un contratiempo técnico. Sería más prudente planificar en primer lugar una misión de reconocimiento. Antes de introducirse en cuerpo y alma, ¡este tipo de acciones son necesarias!",
+				"explore": "¡Es una buena idea! A decir verdad, no hay mucha actividad por aquí... un poco de ayuda vendría bien... secuencia acción.",
 				"other": "¿Tendrías el valor de introducirte en los misterios insondables de la Jungla de Grumhel?",
 				"sick": "Cuando Nicolás Mulot se vuelve para responderte, ¡constatas con horror que tiene la cara hinchada y cubierta de granos!",
 				"problem": "Faludos. No te lo tomes a mal pero creo que las plantaf que me haf dado eran... cómo decirlo... tóxicaf... Creo que mi alergia a las plantaf ha tomado cierta amplitud... ¿Podríaf ayudarme a encontrar un remedio?...",
@@ -1349,7 +1349,7 @@
 				"caush": "¡Sí! Por supuesto, la gran civilización de las Montañas de Caushemesh, más allá de las Estepas Magnéticas. Estamos más desarrollados que los bárbaros de Dinovilla...",
 				"ether": "Tras centenas de años de búsqueda, los Caushemeshianos han conseguido controlar la potencia del Éter, una sabiduría que mezcla elementos del Aire y del Vacío. Esto nos da una potencia tecnológica fuera de lo normal. ¡Los ingenieros de Caushemesh son los mejores de todo Dinoland!",
 				"next": "Tus Dinos son muy poquita cosa comparados con los de Caushemesh, no pesan lo suficiente. ¡Ja, ja, ja! Entrena bien a tus Dinos, joven maestro, ¡pues un día tendrás que afrontar peligros aún mayores!",
-				"more": "Mais j'en ai déjà trop dit... Para convencerse de la tecnología de Caushemesh, ¿qué tal una pequeña misión?"
+				"more": "Bueno, ya he contado demasiado... Para convencerte sobre la tecnología de Caushemesh, ¿qué tal una pequeña misión?"
 			},
 			"playerChoice": {
 				"qual2": "Seguramente sea de mala calidad...",
@@ -1579,7 +1579,7 @@
 			"magic": "¿Deseas comprar {item} por un total de {sold} napodinos?"
 		},
 		"item": {
-			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
+			"help": "Haz clic en un objeto de la lista para examinarlo...",
 			"advice": "**Consejo del día:** ",
 			"advice_1": "¿Quieres desplazarte de nuevo pero no quieres esperar hasta el día siguiente? ¡Prueba con la Poción de la Bruja Lola!",
 			"quantity": "Cantidad",
@@ -2337,7 +2337,7 @@
 			"4": "Esta pala permite a los Dinos **excavar** y encontrar tesoros escondidos.",
 			"5": "Este mango de pala ofrece una mayor resistencia, su modelo ergonómico está cubierto de hule para evitar las ampollas.",
 			"6": "La pala de la Buena Suerte está rota. Tendrás que repararla para poder volver a usarla.",
-			"22": "Cette petite Flute permet d'attirer les Rascaphandres et ainsi d'accéder au Dôme Soulaflotte.",
+			"22": "Esta pequeña flauta permite atraer a los Rascafandros y acceder al Estadio Sulaflota.",
 			"25": "Estas aletas, fabricadas por los Korgones, permiten a tu Dino atravesar grandes superficies de agua.",
 			"34": "Este libro, muy completo, permite al Dino desactivar libremente sus competencias de tipo 'ataque', 'evento', y algunas de tipo 'especial' (desde la pestaña Detalles). Es una guía indispensable para los grandes estrategas de Dinoland que deseen adaptarse a las condiciones de combate de cada lugar.",
 			"26": "Una vieja piedra que tu Dino ha encontrado en una excavación. ¿Para qué puede servir?",
@@ -2387,7 +2387,7 @@
 		"players": "Jugadores",
 		"average": "Promedio",
 		"clans": "Clanes",
-		"completion": "Evento",
+		"completion": "Completado",
 		"pantheon": "Panteón"
 	},
 	"layout": {
@@ -2458,31 +2458,31 @@
 	"gather": {
 		"action": {
 			"cueille": "Recolectar",
-			"fish": "Pêcher",
-			"hunt": "Trofeos de Caza",
-			"seek": "Artefactos",
-			"energy": "Enredadera",
-			"anniv": "Anniversaire",
+			"fish": "Pescar",
+			"hunt": "Cazar",
+			"seek": "Buscar",
+			"energy": "Energetizar",
+			"anniv": "Pastel Sorpresa",
 			"xmas": "Jugar en la nieve",
-			"tictac": "Trésor de Papy Joe",
-			"labo": "Laboratoire de l'Archidorogon",
+			"tictac": "Tesoro de Papy Jose",
+			"labo": "Laboratorio del Archidorogón",
 			"party": "Fuegos artificiales",
 			"daily": "Tablero diario"
 		},
 		"type": {
-			"cueille": "plantas",
+			"cueille": "Plantas",
 			"fish": "Pescado",
 			"hunt": "Trofeos de Caza",
-			"seek": "Tendero",
+			"seek": "Artefactos",
 			"energy": "Energías",
 			"anniv": "Regalos fabulosos",
 			"xmas": "Regalos de Navidad",
-			"tictac": "trésors dans le jardin de Papy Joe",
-			"labo": "ressources dans le laboratoire de l'Archidorogon",
+			"tictac": "Tesoros en el jardín de Papy Jose",
+			"labo": "Recursos en el laboratorio del Archidorogón",
 			"party": "Regalos fabulosos",
 			"daily": "Recompensas diarias"
 		},
-		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}"
+		"disclaimer": "Haz clic en {number} casilla(s) del tablero para encontrar {search}"
 	},
 	"missions": {
 		"header": "Lista de misiones",
@@ -2639,7 +2639,7 @@
 			"inscriptions_decrypt": "Descifrar las inscripciones",
 			"claw": "Recoger las garras",
 			"cinder": "Examinar las cenizas",
-			"sniff": "Resplandor",
+			"sniff": "Olfatear",
 			"seek": "Investigar los alrededores",
 			"sbranch": "Recoger una rama",
 			"ecaille": "Robar una escama al Venerable",
@@ -2677,11 +2677,11 @@
 			"tosscoin": "Echar una moneda",
 			"liftrock": "Levantar las rocas",
 			"bucket": "Examinar el cubo",
-			"pickfigo": "Dinoferomonas",
+			"pickfigo": "Figonicia Forúncula",
 			"pickpuru": "Purulenta Negra",
 			"moinemedecinCoral": "Darle el coral al monje",
 			"moineChutes": "Llevar los ingredientes a las Caídas",
-			"pickvisqueuse": "Lanzador de Bellotas",
+			"pickvisqueuse": "Viscosa de Barro",
 			"pickherbs": "Recoger las plantas",
 			"pickCoral": "Trozo de coral",
 			"pickTeeth": "Recoger colmillos",
@@ -2746,7 +2746,7 @@
 			"forgeron": "Forjar",
 			"garde": "Guardia de las fraguas",
 			"artisan": "Artesano de las Fraguas",
-			"eclaireur": "Eclaireur des Forges",
+			"eclaireur": "Explorador de las Fraguas",
 			"convoy": "Escolta de Dinovilla",
 			"profLetter": "Eugenio (darle la carta)",
 			"yolande": "Doctora Yolanda",
@@ -2756,7 +2756,7 @@
 			"inscriptions_decrypt": "Descifrar las inscripciones",
 			"claw": "Coger las garras",
 			"cinder": "Examinar las cenizas",
-			"sniff": "Recolector",
+			"sniff": "Olfatear",
 			"seek": "Investigar los alrededores",
 			"sbranch": "Recoger una rama",
 			"ecaille": "Robar una escama al Venerable",
@@ -2797,7 +2797,7 @@
 			"talkingorchide": "Orquídea Quidea que habla",
 			"benevole": "Bénévole «Paix Verte»",
 			"arbre": "Validar la Misión",
-			"pickfigo": "Disfraz de Globlin",
+			"pickfigo": "Figonicia Forúncula",
 			"pickpuru": "Purulenta Negra",
 			"pickvisqueuse": "Zarpas punzantes",
 			"moinemedecin": "Monje médico",
@@ -2953,7 +2953,7 @@
 				"papyjoe": "¡Uhm! Ehm... ¡¿Una respuesta?! ¡¿Tan pronto?! ¡GENIAL! Acepta mi invitación a cenar. ¡La tengo en el bolsillo!"
 			},
 			"kilpir": {
-				"sophie": "Oh ! Merci ! C'est très gentil de m'avoir apporté ces délicieux Piranhoz pour mon anniversaire ! Fait des gros bisoux à Monsieur Bao de ma part !",
+				"sophie": "¡Oh! ¡Gracias! ¡Es muy simpático por tu parte de haberme traído esta deliciosa Piranta por mi cumpleaños! ¡Dale muchos besos a Don Bao de mi parte!",
 				"bob": "Me gusta hacer regalos... ten, te doy esto."
 			},
 			"troc": {
@@ -3001,8 +3001,8 @@
 				"etape1": "Enhorabuena por haber franqueado la primera etapa de la Vuelta a Dinoland. La siguiente etapa se encuentra en Fuerzabruta. ¡Ánimo!",
 				"etape2": "Enhorabuena por haber franqueado la segunda etapa de la Vuelta a Dinoland. La siguiente etapa se encuentra en las Colinas Escarpadas. ¡Ánimo!",
 				"etape3": "Enhorabuena por haber franqueado la tercera etapa de la Vuelta a Dinoland. La siguiente etapa se encuentra en Fosalava. ¡Ánimo en la escalada del Gran Señor-Todo-Quema!",
-				"etape4": "Félicitations pour avoir franchi la quatrième étape du Tour de Dinoland. La prochaine étape se trouve au Camp Korgon de la Forêt de Grumhel. Evitez de vous faire ralentir par ces sales bestioles !",
-				"etape5": "Enhorabuena por haber franqueado la cuarta etapa de la Vuelta a Dinoland. La siguiente etapa se encuentra en el Campamento Korgón de la Jungla de Grumhel. ¡Que esas bestias no retarden tu destino!",
+				"etape4": "Enhorabuena por haber franqueado la cuarta etapa de la Vuelta a Dinoland. La siguiente etapa se encuentra en el Campamento Korgón de la Jungla de Grumhel. ¡Que esas bestias no retarden tu destino!",
+				"etape5": "Enhorabuena por haber franqueado la quinta etapa de la Vuelta a Dinoland. La siguiente etapa se encuentra en la Entrada de la Jungla. Ten cuidado con no perderte en el Camino Tenebroso.",
 				"etape6": "Enhorabuena por haber franqueado la sexta etapa de la Vuelta a Dinoland. La siguiente etapa consiste en ir a ver a Don Bao Bob para obtener tu recompensa",
 				"bob": "¡Enhorabuena! Ha sido una vuelta magnífica por todo Dinoland. ¡Aquí tienes una recompensa digna de tu hazaña!"
 			},
@@ -3042,7 +3042,7 @@
 			"init2": {
 				"claw": "Has cogido unas garras bien grandes de un cachorro arqueliano. Ahora hay que tallarlas bien.",
 				"forgeron": "¿Quieres tallar las Garras de Arquelión? ¿Sabes que es muy peligroso pasearse con eso encima? Esa cosa de ahí atrae a TODO TIPO de monstruos. ¡Ala, lo que faltaba! ¡Ahí vienen!...",
-				"garde": "C'est vous le responsable de tout ce bazar ?! On ne vous félicite pas hein ! Comment ça, c'est ce filou de Shaman qui vous envoie ? Il veut un Epouvantarchelion ? C'est facile, il suffit de... OH ! Attention en voilà d'autres !!",
+				"garde": "¿Eres tú el culpable de este desastre? ¡Gracias por nada, eh! ¿Es el chamán ese tan lacio, el que te envía? ¿Quiere un espanta-arquelianos? Eso es fácil, sólo tienes que ... ¡OH! ¡Cuidado que llegan más!",
 				"garde2": "Anda dame esas Garras, ¡ya me encargo yo! Sobre los arquelianos, te doy una pomada olorosa a aplicar cada mañana para mantenerlos alejados. Te aviso, huele muy mal...",
 				"shaman": "¿Ah? No sabía nada sobre esa historia de las Garras... bueno, mejor saberlo ahora que nunca. Espero que el Guardia de las Fraguas no haya sido desagradable contigo. Gracias por la pomada, ¡me imagino que me vale como compensación! Ten la Guía de Estrategia, gracias por todo."
 			},
@@ -3098,7 +3098,7 @@
 				"donga": "¡DONGA! ¡DONGAAA! ... Eah, ya lo único que queda es terminar el ritual en el lado oeste del volcán.",
 				"wahhh": "¡WAAAAAAAAH! ...",
 				"rock": "Tiras una piedra en el gran cráter para completar el Ritual ridículo.",
-				"shaman": "A en juger par ta mine dépitée, tu dois maintenant comprendre pourquoi je n'avais aucune envie de m'occuper de ce rituel idiot... Enfin, merci pour le service, voilà de quoi couvrir le dérangement."
+				"shaman": "A juzgar por tu cara de disgusto, me imagino que entenderás ahora por qué no tenía ningunas ganas de realizar este ritual tan ridículo... En fin, gracias por el favor. Aquí tienes con qué compensar las molestias."
 			},
 			"hiero": {
 				"hieroglyphes": "Copias como puedes los jeroglíficos en el pergamino que te ha dado el Chamán.",
@@ -3162,7 +3162,7 @@
 			},
 			"hucure": {
 				"pickherbs": "Recoges las plantas tóxicas de Nicolás Mulot. Se diría que intentó hacer una infusión con ellas....",
-				"moinemedecin": "Vous lui avez donné des Figonicia Furonclées ? De la Purulente Noire ?! Une Visqueuse des Boues !! Ouh la la... Il vaut mieux ne pas tarder ! Apportez moi un peu de poudre de corail pour commencer.",
+				"moinemedecin": "¿Le habías dado la Figonicia Forúncula? ¿y también la Purulenta Negra? ¡¡Una Viscosa de Barro!! ay, ay, ay... ¡más vale no perder más tiempo! Tráeme un poco de polvo de coral para empezar.",
 				"pickCoral": "Coges un trozo de coral roto: ¡debería servir!",
 				"moinemedecin2": "Bien. Ahora tráeme algunos colmillos de korgones del Camino Tenebroso y un par de ratones-fiera del norte.",
 				"pickTeeth": "Coges algunos colmillos de korgones.",
@@ -3215,7 +3215,7 @@
 			"korgon": "Korgones",
 			"korgon:ronciv": "Roncivores o korgones",
 			"barche": "Bebé Arquelion",
-			"flam": "Flauta de Rascafondro",
+			"flam": "Flamachas",
 			"cobra": "Cobrasero",
 			"goblin": "Goblin",
 			"bat": "Ratón Fiera",
@@ -3295,7 +3295,7 @@
 	},
 	"levelup": {
 		"disclaimer": "Ahora puede iniciar la animación para saber en qué elemento sube de nivel tu Dino.",
-		"title": "Niveau supplémentaire pour {name}",
+		"title": "Nivel suplementario para {name}",
 		"helper": "Elige la competencia que quieres que tu Dino aprenda:",
 		"fire": "Gana +1 en :feu: Fuego",
 		"wood": "Gana +1 en :bois: Madera",
@@ -3752,7 +3752,7 @@
 			"player": "Maestro",
 			"dinoz": "Dinos",
 			"points": "Pts",
-			"average": "Moy.",
+			"average": "Med.",
 			"completion": "Comp.",
 			"clans": "Clanes",
 			"treasure": "Tesoro del Clan"
@@ -3763,8 +3763,8 @@
 			"completion": "Las clasificaciones de jugadores se actualizan a medianoche y se calculan utilizando la fórmula de finalización basada en los Dinos activos y el progreso en la historia del juego.",
 			"pantheon": "Aquí podrás encontrar qué jugadores y qué Dinos fueron los primeros en lograr hitos.",
 			"clans": "La Clasificación de clanes se actualiza en tiempo real y se calculan a partir del valor del Tesoro del Clan.",
-			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
-			"clansCreationLink": "page de recherche des clans"
+			"clansCreation": "Puedes consultar la {0} para ver los clanes recién creados.",
+			"clansCreationLink": "página de búsqueda de clanes"
 		},
 		"page": {
 			"previous": "Página anterior",
@@ -3834,44 +3834,44 @@
 		},
 		"cannot_create_info": "Creating a clan costs {money} :gold:, and requires you to have {points} ranking points.",
 		"button": {
-			"search": "Search",
+			"search": "Buscar",
 			"create": "Create clan"
 		}
 	},
 	"clansMembers": {
 		"th": {
-			"name": "Name",
+			"name": "Nombre",
 			"donation": "Donations",
 			"stats": "Estadísticas",
 			"actions": "Acciones"
 		},
 		"edit": {
-			"disclaimer": "This page allows you to edit the rights of clan member <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
+			"disclaimer": "Esta página le permite modificar los derechos del jugador <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> en el Clan.",
 			"right": {
 				"MEMBER_EDIT": "Can edit rights and surname of other members",
-				"PAGE_MANAGE": "Can manage clan pages",
-				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Can accept or deny joining requests",
-				"MEMBER_EXCLUDE": "Can exclude members",
-				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
-				"CLAN_EDIT_BANNER": "Can change the clan banner"
+				"PAGE_MANAGE": "Puede gestionar las páginas del Clan",
+				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Puede aceptar y rechazar nuevos miembros",
+				"MEMBER_EXCLUDE": "Puede expulsar miembros",
+				"DISCUSSION_DELETE_MESSAGE": "Puede eliminar mensajes del hilo de discusión",
+				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan"
 			},
-			"nickname": "Player's nickname :",
-			"save": "Save"
+			"nickname": "Apodo del jugador:",
+			"save": "Guardar"
 		},
 		"request": {
-			"title": "Waiting requests",
-			"line": "would like to join the clan !",
-			"accept": "Accept",
-			"deny": "Deny",
-			"maximum": "Clan is full, you cannot accept more requests."
+			"title": "Solicitudes pendientes",
+			"line": "quiere unirse al Clan",
+			"accept": "Aceptar",
+			"deny": "Rechazar",
+			"maximum": "El clan está lleno, no puedes aceptar nuevas solicitudes."
 		},
 		"action": {
-			"edit": "Edit",
-			"exclude": "Exclude",
-			"leave": "Leave the clan"
+			"edit": "Editar",
+			"exclude": "Expulsar",
+			"leave": "Salir del clan"
 		},
 		"stat": {
-			"last_login": "Last connexion the {date}."
+			"last_login": "Última conexión el {date}."
 		}
 	},
 	"clanPages": {
@@ -3882,7 +3882,7 @@
 			"edit": "Edit page"
 		},
 		"tip": {
-			"join_clan": "Joining this clan will cost you {money} :gold:. This amount will be given back in case of deny."
+			"join_clan": "Unirse a este clan te costará {money} :gold:. Esta cantidad te será devuelta en caso de rechazo."
 		},
 		"request": {
 			"info": "You have a waiting request for joining the clan ",
@@ -3931,12 +3931,12 @@
 		}
 	},
 	"createClan": {
-		"title": "Create a clan",
-		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
-		"clan_name": "Clan name",
-		"clan_description": "Clan description",
-		"create_button": "Create clan",
-		"go_back_button": "Back to list"
+		"title": "Crear un clan",
+		"information": "Por favor completa la información a continuación para crear tu Clan. La creación de un Clan te costará **{cost}** :gold:",
+		"clan_name": "Nombre del clan",
+		"clan_description": "Descripción del Clan",
+		"create_button": "Crear Clan",
+		"go_back_button": "Volver a la lista"
 	},
 	"fight": {
 		"pageName": "Combate",
@@ -3947,9 +3947,9 @@
 		"display": "Mostrar el combate",
 		"resume": "Luchaste contra un {enemy}",
 		"clone": "Clon",
-		"life": "Vie perdue",
-		"experience": "Expérience",
-		"gold": "Or trouvée",
+		"life": "Vida perdida",
+		"experience": "Experiencia",
+		"gold": "Oro obtenido",
 		"monster": {
 			"goupignon": "Gupión",
 			"wolf": "Lobo",
@@ -4136,14 +4136,14 @@
 		"disclaimer": "¡Bienvenido al Mercado de los Maestros! ¡Aquí puedes comprar y vender Dinos, ingredientes y algunos artículos raros provenientes de todo Dinoland!",
 		"allOffers": "Todas las Ofertas",
 		"myTransactions": "Mis transacciones",
-		"sell": "Comprar",
+		"sell": "Vender",
 		"history": "Historial",
 		"dinoz": "Dinos",
 		"items": "Objetos",
 		"makeAnOffer": "Hacer oferta",
 		"filter": "Filtro",
 		"all": "Todos",
-		"seller": "Proveedor de Tutumba",
+		"seller": "Vendedor",
 		"timeLeft": "Tiempo restante",
 		"auctionExpired": "Puja caducada",
 		"minimumPrice": "Precio mínimo",
@@ -4152,8 +4152,8 @@
 		"details": "Detalles",
 		"time": "{days}d {hours}h {minutes}m {seconds}s",
 		"currency": "Los **Bonos del Tesoro** necesarios para compras en el Mercado de los Maestros se pueden obtener por el equivalente de **1** :ticket: **= 1000** :gold: del **Banco de Dinoland**",
-		"back": "Recolector",
-		"bid": "Pala mejorada",
+		"back": "Volver",
+		"bid": "Pujar",
 		"detail": "Ver detalles",
 		"sellView": {
 			"disclaimer": "Aquí puedes crear tu oferta, que se enviará a los demás Maestros de Dinos. Si vendes un Dino o artículos, no estarán disponibles mientras dure la oferta.",
@@ -4164,14 +4164,14 @@
 			"minimalValueDisclaimer": "Su oferta debe tener, como MÍNIMO, un valor de **{minValue}** :gold: para ser validada.",
 			"create": "Crear oferta",
 			"add": "Añadir",
-			"remove": "Destierro"
+			"remove": "Eliminar"
 		},
 		"transactionView": {
 			"yourOngoingOffer": "Tu oferta en curso",
 			"noOnGoingOffer": "No tienes ninguna oferta en curso.",
-			"bid": "Mechero",
+			"bid": "Puja",
 			"noBidYet": "Aún no hay pujas.",
-			"cancel": "Confirmar",
+			"cancel": "Cancelar",
 			"yourActiveBids": "Tus pujas activas",
 			"noActiveBid": "Aún no has pujado por ninguna oferta."
 		},
@@ -4181,17 +4181,17 @@
 		}
 	},
 	"hud": {
-		"following": "Ce Dinoz suit son chef de groupe.",
-		"gather": "Ce dinoz peut récolter en ce lieu.",
-		"rest": "Ce dinoz se repose.",
-		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
-		"follow": "Le chef de groupe est {leader}.",
-		"followed": "Ce Dinoz est chef de groupe."
+		"following": "Este Dino sigue a su líder de grupo.",
+		"gather": "Este Dino puede recolectar en este lugar.",
+		"rest": "Este Dino está descansando.",
+		"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
+		"follow": "El líder del grupo es {leader}.",
+		"followed": "Este Dino es el líder del grupo."
 	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** usó **{quantity}x {item}** con Dino **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** ha comprado **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "**{player} ({playerId})** ha vendido **{quantity}x {item}** (restante {amount}).",
+		"IngredientSold": "",
 		"GoldWon": "**{player} ({playerId})** ha ganado **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** ha perdido **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** movió al Dino **{dinoz} ({dinozId})** a **{location}**.",
@@ -4205,7 +4205,7 @@
 		"MissionFinished": "**{player} ({playerId})** terminó **{mission}** con Dino **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceló **{mission}** con Dino **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** se reunió con Dino **{dinoz} ({dinozId})**.",
-		"GridFinished": "**{player} ({playerId})** a fini une grille de récolte et gagné  {gold} :gold:.",
+		"GridFinished": "**{player} ({playerId})** ha completado un tablero de recolección y ganado {gold} :gold:.",
 		"CreateDinoz": "**{player} ({playerId})** creó al Dino **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** cambió el orden del Dino **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**Ha llegado un nuevo jugador: {name}**.",
@@ -4576,7 +4576,7 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Aller sur le profil DinoRPG de {player}",
+		"title": "Ir al perfil DinoRPG de {player}",
 		"gridMenu": {
 			"pDRPG": "Perfil DinoRPG",
 			"pEternal": "Perfil EternalTwin",
