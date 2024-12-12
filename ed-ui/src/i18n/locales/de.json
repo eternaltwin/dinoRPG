@@ -396,7 +396,7 @@
 			"christmas_ticket": "Weihnachtsgutschein",
 			"tictac_ticket": "Tack-Ticket",
 			"anniversary_ticket": "Jubiläumsgutschein",
-			"easter_egg": "Oeuf de Pâque",
+			"easter_egg": "Ei von Madame Urma",
 			"fire_cracker": "Zauberknaller",
 			"special_potion_irma": "Madame Irmas Spezialtrank",
 			"daily_ticket": "Täglicher Gutschein",
@@ -444,7 +444,7 @@
 			"elixir": "Ein mächtiges Heilmittel, das von den stärksten Dinoz-Meistern verwendet wird, um ihre treuen Gefährten zu heilen. Ein Elixier stellt **200 Lebenspunkte** wieder her.",
 			"elixir_of_life": "Ein Heilmittel, das den Ehrwürdigen von den Gebrechen erlösen kann, die ihn plagen. Hergestellt aus dem Harzextrakt einer Pflanze, die nur auf der Himmlischen Insel zu finden ist. Nun ist es fast unmöglich, ein weiteres Exemplar zu finden.",
 			"banishement": "Hindert alle Dinoz daran, während des Kampfes Verstärkung zu holen.",
-			"battering_ram": "Das Schloss wird im Falle eines Sieges von allen Verbündeten zwei Mal angegriffen.",
+			"battering_ram": "Die Burg wird im Falle eines Sieges von allen Verbündeten zwei Mal angegriffen.",
 			"ember": "Erhöht den Feuerangriff aller Kämpfer um 30%.",
 			"scale": "Falls der Träger während des Kampfes stirbt, wird ein gegnerischer Dinoz getötet.",
 			"beer": "Hindert alle Dinoz daran, während des Kampfes Lebenspunkte wiederherzustellen.",
@@ -2095,7 +2095,7 @@
 			"KarateSousMarin": "Erhöht die Stärke aller Wasserangriffe des Dinoz um 10.",
 			"Sumo": "Erhöht die maximalen Lebenspunkte um 100.",
 			"SansPitie": "Angriffe zielen auf den Gegner mit den wenigsten Lebenspunkten.",
-			"CloneAqueux": "Erstellt eine Kopie des Anwenders mit 1 LP.",
+			"CloneAqueux": "Der Wirker erschafft eine Kopie von sich selbst mit 1 LP. Die Kopie erbt lediglich die Basiseigenschaften des Wirkers (Angriff, Verteidigung, Ausweichen, Mehrfachschlag, Gegenangriff).",
 			"GriffesEmpoisonnees": "Wenn der Dinoz einen seiner Gegner mit einem Wasserangriff trifft, wird dieser für eine bestimmte Zeit vergiftet.",
 			"Cuisinier": "Erhöht für alle Dinoz die wiederhergestellten Lebenspunkte durch Benutzung von Gegenständen um 10%.",
 			"SangAcide": "Angreifer im Nahkampf haben eine Chance, Schaden zu erleiden, der dem Wasserelement des Dinoz entspricht.",
@@ -3431,10 +3431,10 @@
 			"ch3x4b": "Bläuliches hartgekochtes Ei",
 			"ch4x1a": "Supernova",
 			"ch4x1b": "Blutrote Sonne",
-			"ch4x2a": "Flamme noire",
-			"ch4x2b": "Flamme bleue",
-			"ch4x3a": "Esprit de feu",
-			"ch4x3b": "Feu follet",
+			"ch4x2a": "Dunkle Flamme",
+			"ch4x2b": "Blaue Flamme",
+			"ch4x3a": "Feuergeist",
+			"ch4x3b": "Irrlicht",
 			"ch4x4a": "Asche",
 			"ch4x4b": "Häufchen Asche",
 			"ch5x1": "Pousse radieuse",
@@ -3525,9 +3525,9 @@
 			"xhunt3": "Roi des Chasseurs",
 			"xhunt2": "Prince des Chasseurs",
 			"xhunt1": "Chasseur royal",
-			"cinema": "Pellicule d'or",
-			"cinem2": "Pellicule d'argent",
-			"eugene": "Prix Eugène de Physique",
+			"cinema": "Die Goldene Filmrolle",
+			"cinem2": "Die Silberne Filmrolle",
+			"eugene": "Der Eugeniepreis für Physik",
 			"litter": "Prix de Littérature",
 			"clover": "Gagnant de DinoLoto",
 			"import": "Os D'importasaurus"
@@ -3643,12 +3643,12 @@
 			"ch3x3b": "Il a fallu beaucoup de courage pour s'inscrire dans la Ligue Medium du 3ème Championnat, et encore plus pour faire partie des finalistes ! Ce Caramel bou en valait bien le coup.",
 			"ch3x4a": "Mit dieser Trophäe werden die Sieger der 3. Meisterschaft der Klane in der Starterliga gekürt. Hoffentlich sehen wir uns in der nächsten Saison in der Mittelliga wieder!",
 			"ch3x4b": "Mit dieser Trophäe werden die Teilnehmer ausgezeichnet, die es während der 3. Meisterschaft der Klane in der Starterliga bis zu den Endrunden geschafft haben!",
-			"ch4x1a": "Un soleil jeune et vif, symbole de puissance vient récompenser les vainqueurs du 4ème championnat en Ligue Elite, que la force brûle en vous jusqu'à son paroxysme !",
+			"ch4x1a": "Eine junge und quicklebendige Sonne, das Symbol für Macht, kürt die Sieger der 4. Meisterschaft der Klane in der Elite-Liga. Möge die Kraft in dir bis zum Höhepunkt brennen!",
 			"ch4x1b": "Als Finalist der 4. Meisterschaft der Klane in der Elite-Liga wurde dir diese Sonne überreicht. Auch in ihrem Lebensabend bleibt sie mächtig und majestätisch.",
-			"ch4x2a": "Vous avez remporté la ligue Pro du 4ème Championnat, vous avez sûrement dû faire des sacrifices, un extrait de flammes des ténèbres vous est offerte en souvenir.",
-			"ch4x2b": "Pour avoir atteint les phases finales dans la Ligue Pro du 4ème Championnat, un extrait de flamme bleue vous est offerte.",
-			"ch4x3a": "Pour avoir remporté la ligue Medium du 4ème Championnat, l'esprit du feu vous habite et montre à chacun le courage dont vous avez fait preuve.",
-			"ch4x3b": "Il a fallu beaucoup de volonté pour faire partie des finalistes de la Ligue Medium du 4ème Championnat, La flamme de l'espoir brûle en vous comme jamais.",
+			"ch4x2a": "Du hast die 4. Meisterschaft der Klane in der Profiliga gewonnen. Eine Leistung, die sicherlich ihre Opfer gefordert hat. Dein dargereichtes Andenken wurde direkt aus den Flammen der Finsternis extrahiert.",
+			"ch4x2b": "Für das Erreichen der Endrunden in der Profiliga der 4. Meisterschaft der Klane wurde dir eine extrahierte blaue Flamme dargereicht.",
+			"ch4x3a": "Nach dem Sieg in der Mittelliga der 4. Meisterschaft der Klane wohnt in dir ein Feuergeist, der all deinen Mut zur Schau stellt, den du bewiesen hast.",
+			"ch4x3b": "Es hat viel Willenskraft erfordert, um zu den Finalisten der 4. Meisterschaft der Klane in der Mittelliga zu gehören. Die Flamme der Hoffnung in dir lodert unerschütterlich weiter.",
 			"ch4x4a": "Mit dieser Trophäe werden die Sieger der 4. Meisterschaft der Klane in der Starterliga gekürt. Das hier sind die Überreste eines mächtigen Feuerballs!",
 			"ch4x4b": "Mit dieser Trophäe werden die Teilnehmer ausgezeichnet, die es während der 4. Meisterschaft der Klane in der Starterliga bis zu den Endrunden geschafft haben!",
 			"ch5x1": "Une jeune pousse extraite aux alentours du palais de l'Archidorogon vous est offerte afin de saluer votre performance lors du 5ème Championnat des clans.",
@@ -3738,9 +3738,9 @@
 			"xhunt3": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
 			"xhunt2": "Vous avez été le second plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
 			"xhunt1": "Vous avez été l'un des plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"cinema": "Votre film a été sélectionné par le jury du festival du film de Dinoville en temps que meilleur film d'aventuro/mélodrama/comédino/époustouflo/rocambolesque. Vous faîtes partie de la caste des meilleurs réalisateurs qui délivrent notre imaginaire en nous emportant dans un monde onirique dont vous seul avez le secret !",
-			"cinem2": "Prix spécial du jury du festival du film de Dinoville.",
-			"eugene": "Votre créativité sans pareille vous a fait gagner cette magnifique médaille, seuls les maîtres Dinoz ayant une intelligence hors du commun se permettent de la porter. Certains disent que vous êtes un génie, d'autres que vous êtes un vrai tordu, le plus important c'est qu'ils parlent de vous !",
+			"cinema": "Dein Film wurde von der Jury des Dinoville-Filmfestivals in der Kategorie „Bester Abenteuer-, Melodrama-, Komödino-, Kriegs- und Wahnsinnsfilm“ ausgezeichnet. Du bist nun unter den hochkarätigsten Regisseuren, die in der Lage sind, unsere Fantasie in eine Welt voller Magie zu entführen, die verborgenen Geheimnisse derer nur ihnen bekannt sind!",
+			"cinem2": "Spezialpreis der Jury des Dinoville-Filmfestivals.",
+			"eugene": "Der Verdienst dieser großartigen Medaille ist deiner beispiellosen Kreativität zu verdanken! Nur Dinoz-Meister von außergewöhnlicher Intelligenz erlauben sich, sie zu tragen. Manche sagen, du seist ein Genie, andere behaupten, du seist ein echter Spinner. Das Wichtigste ist, dass sie über dich reden!",
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe tel que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
 			"clover": "Ce prix vous a été remis pour avoir été le maître dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Glückwunsch!",
 			"import": "Glückwunsch! Vous avez importé votre compte sur EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Peut-être est-ce une erreur finalement ?"
@@ -4014,8 +4014,8 @@
 			"death": "**{fighter}** ist seinen Verletzungen erlegen!",
 			"counter": "**{fighter}** hat **{opponent}** gekontert.",
 			"survive": "**{dinoz}** hat den Angriff überlebt.",
-			"skillAnnounce": "**{dinoz}** hat die Fähigkeit „**{skill}**“ gewirkt (-{energy} Energie).",
-			"skillActivate": "**{dinoz}** hat **{skill}** gewirkt (-{energy} Energie).",
+			"skillAnnounce": "**{dinoz}** wirkt die Fähigkeit „**{skill}**“ (-{energy} Energie).",
+			"skillActivate": "**{dinoz}** hat **{skill}** gewirkt.",
 			"skillActivate-hit-targets": "**{dinoz}** hat **{skill}** auf **{targets}** gewirkt und hat ihnen jeweils **{damages}** {elements}-Schaden zugefügt.",
 			"skillActivate-heal-targets": "**{dinoz}** hat **{skill}** auf **{targets}** gewirkt und ihnen basierend auf {elements} jeweils **{heals}** Lebenspunkte wiederhergestellt.",
 			"skillExpire": "**{skill}** von **{dinoz}** ist abgelaufen.",
@@ -4392,7 +4392,7 @@
 			"gdc1-3": "_Kriegserklärung an einen anderen Klan_",
 			"gdc1-4": "_Bezahlung des Steuereintreibers_",
 			"gdc2": "Die Klanburg",
-			"gdc2-1": "Jeder Klan kann im Reiter „Burg“ seine eigene Burg errichten. Um sie zu bauen, werden **Zutaten** benötigt, die aus der Klanschatzkammer entnommen werden. Nur der Anführer des Klans kann den Erstbau der Burg in die Wege leiten.&& &&Sobald die Burg errichtet ist, kann man ihr Verteidiger zuweisen, die ihren Schutz gegen feindliche Angriffe gewährleisten. Um einen Dinoz der Burgverteidigung zuzuweisen, musst du zu ihrem Standort gehen und die Aktion „Burg verteidigen“ ausführen.&& &&Sollten bei einem Angriff alle Verteidiger getötet werden oder sollte es keine Verteidiger mehr geben, erleidet die Burg Schaden und wird dadurch beschädigt.&& &&Hier ist ein Beispiel für den Reiter „Schloss“:",
+			"gdc2-1": "Jeder Klan kann im Reiter „Burg“ seine eigene Burg errichten. Um sie zu bauen, werden **Zutaten** benötigt, die aus der Klanschatzkammer entnommen werden. Nur der Anführer des Klans kann den Erstbau der Burg in die Wege leiten.&& &&Sobald die Burg errichtet ist, kann man ihr Verteidiger zuweisen, die ihren Schutz gegen feindliche Angriffe gewährleisten. Um einen Dinoz der Burgverteidigung zuzuweisen, musst du zu ihrem Standort gehen und die Aktion „Burg verteidigen“ ausführen.&& &&Sollten bei einem Angriff alle Verteidiger getötet werden oder sollte es keine Verteidiger mehr geben, erleidet die Burg Schaden und wird dadurch beschädigt.&& &&Hier ist ein Beispiel für den Reiter „Burg“:",
 			"gdc2-2": "Auf die Seite der Burg sind die folgenden Dinge aufgeführt:",
 			"gdc2-2-1": "_Standort der Burg_",
 			"gdc2-2-2": "_Zustand der Burg: Lebenspunkte wie im obigen Bild zu sehen ist. Standardmäßig verfügt eine Burg über 300:pv:._",
@@ -4480,8 +4480,8 @@
 			"answer": "Diese Mission ist in Abschnitte unterteilt. Du musst zu den Korallenminen gehen, dann zu der Waïkiki-Insel, dann zu den Mutierenden Sturzfluten, dann zum Klebrigen Sumpf, dann zurück zu den Korallenminen und anschließend zum Haus von Bao Bob.&& &&An jedem dieser Orte musst du mit einer Person sprechen und den jeweiligen Tauschhandel vollziehen."
 		},
 		"faq9": {
-			"question": "Que choisir au jeu du Pile-ou-face face à Yakuzi ?",
-			"answer": "Peu importe le choix, le premier pari sera forcément perdu alors que le second sera forcément gagné."
+			"question": "Was soll man bei „Kopf oder Zahl?“ nehmen, wenn man es mit Yakuzi spielt?",
+			"answer": "Welche Wahl man auch trifft, die erste Runde verliert man und die zweite wird gewonnen."
 		},
 		"faq10": {
 			"question": "Wie funktioniert die Perle aus dem Brunnen?",
@@ -4500,16 +4500,16 @@
 			"answer": "Auf den Atlantinischen Inseln kann Herr Bao Bob (Haus von Bao Bob) dir neue Missionen anbieten. Auf dem Großen Immerhitzus ist es der Lässige Schamane (Lavagrube), der deine Dienste benötigt."
 		},
 		"faq14": {
-			"question": "Comment accéder aux Steppes Magnétiques ?",
+			"question": "Wie erreicht man die Magnetischen Steppen?",
 			"answer": "Du oder deine Klanmitglieder, falls du einem angehörst, müssen 7 Dinoz bei Bao Bob versammeln (zwingend ausgestattet mit Korgonenflossen).&& &&Sobald die 7 Dinoz sich konzentrieren, erhältst du Zugang zu einem Portal, das in eine andere Welt führt. Dort wirst du nach einer kurzen Reise und einem Kampf mit einem Wächter einen Schlüssel erhalten.&& &&Dieser Schüssel zum Tor von Waldenacht wird dir vom Grumhel-Wald aus Zugang zu den Magnetischen Steppen gewähren.&& &&Tipp: Geeignet für Dinoz hoher Stufen, ca. 30+. Dinoz mit Wasser als ihr Hauptelement sind dabei im Nachteil."
 		},
 		"faq15": {
-			"question": "Où trouve-t-on Yakuzi ?",
-			"answer": "Yakuzi apparait de manière aléatoire au Port de Prêche."
+			"question": "Wo findet man Yakuzi?",
+			"answer": "Yakuzi erscheint zufällig am Predigerhafen."
 		},
 		"faq16": {
-			"question": "Quelles sont les conditions pour créer/adhérer à un clan ?",
-			"answer": "Pour créer un clan : avoir 20.000:gold: et 15 points minimum. && && Pour adhérer à un clan : avoir 1.000:gold: et 4 points minimum."
+			"question": "Was sind die Bedingungen, um einen Klan zu gründen / einem beizutreten?",
+			"answer": "Um einen Klan zu gründen, musst du 20.000 :gold: und mindestens 15 Rangpunkte besitzen.&& &&Um einem Klan beizutreten, brauchst du 1.000 :gold: und mindestens 4 Punkte."
 		},
 		"faq17": {
 			"question": "Wo sollte man mit der Schaufel graben?",
@@ -4525,7 +4525,7 @@
 		},
 		"faq20": {
 			"question": "Wo finde ich die Zaubersterne?",
-			"answer": "Suivez bien les instructions données par l'Être Étrange que vous rencontrerez aléatoirement à la Fontaine de Jouvence. && && Indices supplémentaires && && Première étoile : la Capitale n'est autre que Dinoville. Il vous faudra une nouvelle action pour combattre le Megaloup. && Deuxième étoile : le Graisseux enthousiaste est le Vendeur de Merguez qui se trouve aux Ruines Ashpouk. && Troisième étoile : l'énigme parle d'elle-même. && Quatrième étoile : l'appel... la Pelle... && Cinquième étoile : le capsicum est un végétal connu plus fréquemment sous le nom de poivron. && Sixième étoile : l'Homme-dieu est Bao Bob. && Septième étoile : Saru veut dire 'singe'. Attention, vous devez déjà être dans la Jungle Sauvage avant d'y laisser mourir votre dinoz."
+			"answer": "Befolge die Anweisungen des Seltsamen Wesens, das man am Jungbrunnen treffen kann.&& &&**Zusatztipps:**&& &&Erster Stern: Bei der Hauptstadt handelt es sich um Dinoville. Du brauchst eine neue Aktion, um gegen den Megawolf zu kämpfen.&&Zweiter Stern: Der schmierige Enthusiast ist der Merguez-Verkäufer, der sich bei den Aschpuckruinen befindet.&&Dritter Stern: Das Rätsel ist selbsterklärend.&&Vierter Stern: Umschau fällt... umschaufelt...&&Fünfter Stern: „Capiscum“ ist ein Gemüse, das auch als Paprika bekannt ist.&&Sechster Stern: Der Halbgott ist Bao Bob.&&Siebter Stern: Der „Saru“ ist ein Affe. Vorsicht, denn du musst bereits im Wilden Dschungel gewesen sein, bevor du deinen Dinoz dort sterben lässt."
 		},
 		"faq21": {
 			"question": "Wie erhält man ein uraltes Relikt?",
