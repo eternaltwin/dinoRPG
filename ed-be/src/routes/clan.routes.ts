@@ -425,10 +425,7 @@ routes.get(
 		}
 		try {
 			const response = await getClanBanner(req);
-			return res
-				.status(200)
-				.contentType('image/webp')
-				.send(response?.banner);
+			return res.status(200).contentType('image/webp').send(response?.banner);
 		} catch (err) {
 			sendError(res, err);
 		}

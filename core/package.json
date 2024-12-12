@@ -11,8 +11,8 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin-ts": "^1.4.0",
-    "@types/eslint": "^8",
-    "@types/seedrandom": "^3",
+    "@types/eslint": "^9.6.1",
+    "@types/seedrandom": "^3.0.8",
     "@typescript-eslint/eslint-plugin": "^6.4.0",
     "@typescript-eslint/parser": "^6.11.0",
     "eslint": "^8.0.1",
@@ -20,8 +20,8 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
     "eslint-plugin-promise": "^6.0.0",
-    "prettier": "^3.0.3",
-    "typescript": "*"
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
   },
   "type": "module",
   "exports": {

@@ -209,8 +209,8 @@ async function checkMission(req: Request) {
 		throw new ExpectedError('This mission is already over');
 	}
 
-	const npc = Object.values(npcList).find(
-		npc => npc.missions?.find(mission => mission.missionId === dinozMission.missionId)
+	const npc = Object.values(npcList).find(npc =>
+		npc.missions?.find(mission => mission.missionId === dinozMission.missionId)
 	);
 	const missionReference = Object.values(npc?.missions || {}).find(
 		missions => missions.missionId === dinozMission.missionId

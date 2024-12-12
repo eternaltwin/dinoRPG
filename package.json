@@ -52,7 +52,7 @@
     "coverage": "cd ed-be && yarn run coverage",
     "lint:test": "cd ed-ui && yarn lint:test",
     "lint:fix": "cd ed-ui && yarn lint:fix",
-    "prettier": "prettier --config .prettierrc '**/src/**/*.{mts,ts,json}' --write && yarn lint:fix",
+    "lint": "yarn prettier --config .prettierrc '**/src/**/*.{mts,ts,json}' --write && yarn lint:fix",
     "precommit": "yarn prettier",
     "clean": "rimraf -g ed-ui/ts-out ed-ui/.rollup.cache ed-be/dist core/dist ./node_modules '*/tsconfig.tsbuildinfo' ./.yarn/cache ./.yarn/install",
     "reset": "yarn clean && yarn install && cd Eternaltwin && yarn install",
@@ -75,11 +75,11 @@
   "packageManager": "yarn@4.2.2",
   "devDependencies": {
     "@release-it/bumper": "^6.0.1",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.1.0",
     "husky": "^8.0.3",
-    "prettier": "^3.0.3",
+    "prettier": "^3.4.2",
     "release-it": "^17.6.0",
     "rimraf": "^5.0.5",
-    "typescript": "^5.2.2"
+    "typescript": "^5.7.2"
   }
 }

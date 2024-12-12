@@ -12,7 +12,7 @@ function stringifyMessage(message: unknown): string {
 				colors: false,
 				compact: true,
 				breakLength: Infinity
-		  });
+			});
 }
 
 export enum LogLevel {

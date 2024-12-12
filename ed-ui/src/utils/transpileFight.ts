@@ -161,8 +161,8 @@ export function transpileFight(
 							myFighter.type === 'dinoz' || myFighter.type === 'clone'
 								? myFighter.maxHp / 100
 								: myFighter.size
-								  ? myFighter.size / 100
-								  : 1,
+									? myFighter.size / 100
+									: 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
 						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy

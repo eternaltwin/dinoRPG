@@ -1,10 +1,7 @@
 {
 	"parserOptions": { "project": ["./tsconfig.json"] },
 	"parser": "@typescript-eslint/parser",
-	"plugins": [
-		"@typescript-eslint",
-		"@stylistic/ts"
-	],
+	"plugins": ["@typescript-eslint", "@stylistic/ts"],
 	"extends": ["plugin:@typescript-eslint/strict"],
 	"rules": {
 		"@typescript-eslint/no-inferrable-types": "error",

@@ -67,7 +67,7 @@ export class ServerContext {
 								level: 'warn'
 							}
 						]
-				  }
+					}
 				: undefined
 		);
 

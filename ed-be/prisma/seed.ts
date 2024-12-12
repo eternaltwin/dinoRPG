@@ -5,18 +5,18 @@ async function main() {
 		where: { key: 'itinerant' },
 		update: {},
 		create: {
-			key: "itinerant",
-			value: "5"
-		},
-	})
+			key: 'itinerant',
+			value: '5'
+		}
+	});
 	// console.log(itinerant)
 }
 main()
 	.then(async () => {
-		await prisma.$disconnect()
+		await prisma.$disconnect();
 	})
-	.catch(async (e) => {
-		console.error(e)
-		await prisma.$disconnect()
-		process.exit(1)
-	})
+	.catch(async e => {
+		console.error(e);
+		await prisma.$disconnect();
+		process.exit(1);
+	});

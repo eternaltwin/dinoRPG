@@ -62,8 +62,8 @@ export function getActualStep(dinoz: {
 	if (!missionDinoz) {
 		return;
 	}
-	const npc = Object.values(npcList).find(
-		npc => npc.missions?.find(mission => mission.missionId === missionDinoz.missionId)
+	const npc = Object.values(npcList).find(npc =>
+		npc.missions?.find(mission => mission.missionId === missionDinoz.missionId)
 	);
 
 	if (!npc || !npc.missions) {

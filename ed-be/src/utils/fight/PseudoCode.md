@@ -11,6 +11,7 @@ A common entity is used for dinoz, monsters and anything else called [fighter](h
 The pseudo code below relates to the function [execute() line 526](https://github.com/motion-twin/WebGamesArchives/blob/main/DinoRPG/src/fight/Manager.hx#L526)
 
 The execution of a fight goes as follows:
+
 - prepare all the fighters if needed, the preparation of a fighter consists in:
   - adding the effect of all permanent objects
   - adding the effect of all activated (a player can elect to disable/enable any skill) skills
@@ -28,12 +29,12 @@ The execution of a fight goes as follows:
   - TODO: some stuff about status/next status, environment skill
   - update all the statuses of all fighters
   - check if any fighters died from the status
-  - apply any effect that takes place before the start of the turn 
-  - if the attacker casted the environment effect ongoing then apply the environment effect 
+  - apply any effect that takes place before the start of the turn
+  - if the attacker casted the environment effect ongoing then apply the environment effect
   - if the attacker is no different than the previous fighter that did a turn, reset its combo
   - if the attacker has a combo of more than 10 or less than 5 energy, it passes its turn
   - else:
-    - check if the attacker will use an event skill, a check if made for all event skills of the attacker (remember they have been ordered by priority)      - 
+    - check if the attacker will use an event skill, a check if made for all event skills of the attacker (remember they have been ordered by priority) -
       - the attacker must have enough energy to use it
       - a random value between 0 and 100 (included) is picked, if that value is below the priority of the skill, that skill will be used
       - if an event skill has been selected, then its effect is applied
@@ -43,7 +44,7 @@ The execution of a fight goes as follows:
       - there are filters to consider that may remove the ability to use some active skills
     - if a skill or forced attack was picked, execute it
     - else if no skill was selected, execute an assault and consume 4 energy
-    - For the details of processing a skill/attack/assault see the "Attack" section 
+    - For the details of processing a skill/attack/assault see the "Attack" section
   - Move the attacker's current element to the next one (regardless if it used a skill, an assault, or passed its turn)
   - Increase the time of the attacker based on its global speed and current element speed (minimum of 1)
   - Apply any effect (not specific to the attacker) that takes place at the end of the turn
@@ -52,11 +53,12 @@ The execution of a fight goes as follows:
 - Once the loop is finished:
   - Handle castle attacks if there is a castle
   - Process any effect that happen after the fight
-- The fight is finished 
+- The fight is finished
 
 ## Attack
 
 An attack can be be of 3 different types:
+
 - an assault
 - a single target skill
 - a multi-target skill
@@ -66,6 +68,7 @@ The pseudo code below relates to the function [attackTarget() line 778](https://
 Note that this is the common logic to handle: an assault, a single target skill hit and the hit on one fighter for a multi-target skill.
 
 An attack goes as follows:
+
 - given a base damage vector that describes how much damage per element the attack does (see the assault, single target skill or multi-target skill)
 - if the attacker has a combo above 10, it passes its turn
 - else:
@@ -105,7 +108,9 @@ An attack goes as follows:
   - If the attack is an assault, check if the target realizes a counter attack, if yes, process the counter attack (which is an assault)
 
 ### Base damage score
+
 The base damage score follows the same formula for assault and skills. Given the "power" of the attack for a given element:
+
 - for an assault it is 5
 - for a skill, it depends
 
@@ -120,4 +125,3 @@ For example, for the skill Water Canon that has a power of 6 for water, used by 
 ## Skills
 
 ## Status
-

@@ -263,8 +263,8 @@ export default defineComponent({
 					statusId => !this.dinoz.status?.includes(parseInt(statusId))
 				);
 			} else {
-				this.statusListFiltered = Object.keys(statusList.imgName).filter(
-					statusId => this.dinoz.status?.includes(parseInt(statusId))
+				this.statusListFiltered = Object.keys(statusList.imgName).filter(statusId =>
+					this.dinoz.status?.includes(parseInt(statusId))
 				);
 			}
 		},
