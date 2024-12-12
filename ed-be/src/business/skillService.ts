@@ -536,10 +536,7 @@ async function applyUSkillEffect(playerId: number, skill: SkillDetails) {
 
 export async function reincarnate(req: Request) {
 	const dinozId: number = +req.params.id;
-
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError(`Unauthorized`);
-	}
+	const authed = await auth(req);
 
 	const dinoz = await getDinozToReincarnate(dinozId);
 
@@ -557,15 +554,21 @@ export async function reincarnate(req: Request) {
 
 	const race = getRace(dinoz);
 
+	const promises = [];
+
 	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.id));
-	await removeAllSkillFromDinoz(dinoz.id);
+	promises.push(removeAllSkillFromDinoz(dinoz.id));
+
 	if (race.skillId && race.skillId.length > 0) {
 		for (const skill of race.skillId) {
-			await addSkillToDinoz(dinoz.id, skill);
+			promises.push(addSkillToDinoz(dinoz.id, skill));
 		}
 	}
-	await removeAllStatusFromDinoz(dinoz.id);
-	await removeAllMissionsFromDinoz(dinoz.id);
-	await removeAllUnlockableSkillsFromDinoz(dinoz.id);
-	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
+	promises.push(removeAllStatusFromDinoz(dinoz.id));
+	promises.push(removeAllMissionsFromDinoz(dinoz.id));
+	promises.push(removeAllUnlockableSkillsFromDinoz(dinoz.id));
+	promises.push(updatePoints(authed.id, -dinoz.level));
+	promises.push(addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION));
+
+	await Promise.all(promises);
 }
