@@ -40,10 +40,11 @@ import { CLAN_CREATE_MONEY, CLAN_JOIN_MONEY, CLAN_MAX_MEMBERS_AMOUNT } from '@dr
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
-import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
+import { LOGGER } from '../context.js';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 
 /**
  * Get all the clans
@@ -52,7 +53,7 @@ import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
  * @returns Array<Clan>
  */
 export async function getAllClans(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 	const page = +req.params.page;
 	const clans = await getAllClansRequest(page);
 	return clans;
@@ -65,7 +66,7 @@ export async function getAllClans(req: Request) {
  * @returns Array<Clan>
  */
 export async function getRankingClans(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 	const page = +req.params.page;
 	const clans = await getRankingClansRequest(page);
 	return clans;
@@ -79,7 +80,7 @@ export async function getRankingClans(req: Request) {
  * @returns Array<Clan>
  */
 export async function searchClanByName(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 
 	const clans = await searchClansByNameRequest(req.params.name, Number(req.params.page));
 
@@ -93,7 +94,7 @@ export async function searchClanByName(req: Request) {
  * @returns Clan
  */
 export async function getClan(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 	const clan = await getClanRequest(Number(req.params.id));
 	return clan;
 }
@@ -105,7 +106,7 @@ export async function getClan(req: Request) {
  * @returns Array of clanMembers
  */
 export async function getClanMembers(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 	const members = await getClanMembersListRequest(Number(req.params.id));
 	return members;
 }
@@ -223,7 +224,7 @@ export async function getJoinRequest(req: Request) {
  * @returns Clan
  */
 export async function getJoinRequestslist(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 
 	const deny = await getPlayerJoinListRequest(Number(req.params.id));
 	return deny;
@@ -543,7 +544,7 @@ export async function getPlayerHasRight(req: Request) {
  * @returns Clan
  */
 export async function getClanMessagesCount(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 
 	const count = await getClanMessagesCountRequest(Number(req.params.id));
 
@@ -557,7 +558,7 @@ export async function getClanMessagesCount(req: Request) {
  * @returns Clan
  */
 export async function getClanHistoryCount(req: Request) {
-	const authed = await auth(req);
+	await auth(req);
 
 	const count = await getClanHistoryCountRequest(Number(req.params.id));
 
@@ -592,30 +593,39 @@ export async function giveClanIngredients(req: Request) {
 		throw new ExpectedError(translate(`wrongQuantity`));
 	}
 
+	const ingredientToGive = playerIngredients
+		.filter(i => ingredients.some(a => a.itemId === i.ingredientId))
+		.filter(i => {
+			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
+			if (!givenIngredient) {
+				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donnation.`);
+				throw new ExpectedError('Error');
+			}
+			return i.quantity >= givenIngredient.quantity;
+		})
+		.map(i => {
+			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
+			const ingredientRefence = Object.values(ingredientList).find(a => a.ingredientId === i.ingredientId);
+			if (!givenIngredient || !ingredientRefence) {
+				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donnation.`);
+				throw new ExpectedError('Error');
+			}
+			return {
+				ingredientId: i.ingredientId,
+				quantity: givenIngredient.quantity,
+				gold: i.quantity * ingredientRefence.price
+			};
+		});
+
 	let totalGold = 0;
-
-	// Lock
-	for (const ingredient of ingredients) {
-		const playerIngredient = playerIngredients.find(i => i.ingredientId === ingredient.itemId);
-		// If the ingredient is missing or the requested quantity exceeds the player's available quantity
-		if (!playerIngredient || playerIngredient.quantity < ingredient.quantity) {
-			throw new ExpectedError(translate(`wrongQuantity`));
-		}
-		const price = Object.values(ingredientList).find(a => a.ingredientId === ingredient.itemId)?.price ?? 0;
-		totalGold += price * ingredient.quantity;
-	}
-
 	const promises = [];
+	for (const ingredient of ingredientToGive) {
+		totalGold += ingredient.gold;
+		promises.push(decreaseIngredientQuantity(authed.id, ingredient.ingredientId, ingredient.quantity));
+		promises.push(upsertClanIngredients(clanId, ingredient.ingredientId, ingredient.quantity));
+	}
 	promises.push(updateClanTreasure(clanId, totalGold));
 	promises.push(updateClanContribution(authed.id, totalGold));
-	for (const ingredient of ingredients) {
-		const playerIngredient = playerIngredients.find(i => i.ingredientId === ingredient.itemId);
-		if (!playerIngredient || playerIngredient.quantity - ingredient.quantity < 0) {
-			throw new ExpectedError(translate(`wrongQuantity`));
-		}
-		promises.push(decreaseIngredientQuantity(authed.id, ingredient.itemId, ingredient.quantity));
-		promises.push(upsertClanIngredients(clanId, ingredient.itemId, ingredient.quantity));
-	}
 
 	await Promise.all(promises);
 	return;

@@ -349,7 +349,6 @@ export async function getAllInformationFromPlayer(playerId: number) {
 	return player;
 }
 
-
 export async function getPlayerMoney(playerId: number) {
 	const player = await prisma.player.findUnique({
 		where: {

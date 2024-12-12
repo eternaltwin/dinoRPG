@@ -192,7 +192,7 @@ export async function createOffer(req: Request) {
  */
 export async function cancelOffer(req: Request) {
 	// Check if player is logged in
-	const authed = await auth(req)
+	const authed = await auth(req);
 
 	const playerId = authed.id;
 	const offerId = +req.params.offerId;
@@ -211,8 +211,6 @@ export async function cancelOffer(req: Request) {
 	}
 
 	const { dinoz, items: itemsAndIngredients } = offer;
-
-
 
 	// Separate items and ingredients
 	const items = itemsAndIngredients.filter(item => !item.isIngredient);
