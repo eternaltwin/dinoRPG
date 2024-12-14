@@ -9,7 +9,7 @@ before_script:
 
 container-build:
   stage: build
-  image: "demurgos/node:2023.6"
+  image: "demurgos/node"
   cache:
     - key:
         files:
