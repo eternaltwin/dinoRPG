@@ -34,6 +34,7 @@ import translate from '../utils/translate.js';
 import gameConfig from '../config/game.config.js';
 import { getAvailableActions } from './dinozService.js';
 import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { LOGGER } from '../context.js';
 
 /**
  * @summary Get data from player on login
@@ -54,7 +55,12 @@ export async function getCommonData(req: Request) {
 
 		// Update completion
 		const completion = await calculatePlayerPower(playerCommonData.id);
-		await updateCompletion(authed.id, completion);
+		try {
+			await updateCompletion(authed.id, completion);
+		} catch (e) {
+			LOGGER.error(`UpdateCompletion crash with id: ${authed.id} and completion score of ${completion}`)
+		}
+
 
 		// Update last login: refresh Labrute flag and daily grid reward limit
 		await setPlayer(authed.id, {
