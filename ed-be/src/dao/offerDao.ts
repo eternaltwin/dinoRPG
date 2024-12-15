@@ -72,7 +72,8 @@ export async function getOffers(
 					value: true,
 					user: { select: { id: true, name: true } }
 				},
-				orderBy: { value: 'asc' }
+				orderBy: { value: 'asc' },
+				take: 1
 			}
 		},
 		orderBy

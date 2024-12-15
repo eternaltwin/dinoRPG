@@ -37,19 +37,23 @@ import gameConfig from '../config/game.config.js';
  * Get the list of current offers
  */
 export async function getOfferList(req: Request) {
-	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('missingUser');
-	}
+	const authed = await auth(req)
+
 
 	const filter = req.params.filter;
 	const sellerId = req.query.sellerId ? +req.query.sellerId : null;
 	const bidderId = req.query.bidderId ? +req.query.bidderId : null;
 	const expired = req.query.expired ? req.query.expired === 'true' : false;
 	const page = req.query.page ? +req.query.page : 1;
+	const onlyMines = req.query.onlyMines ? req.query.onlyMines === 'true' : false;
 
 	// Get filtered offers
-	const offers = await getOffers(req.auth.playerId, filter, sellerId, bidderId, expired, page);
+	let offers = await getOffers(authed.id, filter, sellerId, bidderId, expired, page);
+
+
+	if (onlyMines) {
+		offers = offers.filter(o => o.bids[0].user.id === authed.id).filter(o => o.status === OfferStatus.ENDED)
+	}
 
 	if (expired) {
 		offers.map(o => {

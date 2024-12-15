@@ -7,7 +7,8 @@ export const OfferService = {
 		sellerId: number | null = null,
 		bidderId: number | null = null,
 		expired: boolean = false,
-		page: number
+		page: number,
+		onlyMines: boolean = false
 	) {
 		return http()
 			.get(`/offer/list/${filter}`, {
@@ -15,7 +16,8 @@ export const OfferService = {
 					sellerId,
 					bidderId,
 					expired,
-					page
+					page,
+					onlyMines
 				}
 			})
 			.then(res => Promise.resolve<Offer[]>(res.data))

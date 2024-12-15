@@ -52,7 +52,8 @@ routes.put(
 		body('dinoz').optional().isInt(),
 		body('total').exists().isNumeric(),
 		body('ingredients').exists().isArray(),
-		body('items').exists().isArray()
+		body('items').exists().isArray(),
+		body('onlyMines').exists().isBoolean()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

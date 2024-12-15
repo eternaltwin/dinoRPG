@@ -129,7 +129,7 @@ export default defineComponent({
 			try {
 				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
 				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
-				this.wonOffers = this.formatOffers(await OfferService.getList('all', null, userId, true));
+				this.wonOffers = this.formatOffers(await OfferService.getList('all', null, userId, true, 1, true));
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
