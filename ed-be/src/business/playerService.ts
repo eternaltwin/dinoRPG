@@ -58,9 +58,8 @@ export async function getCommonData(req: Request) {
 		try {
 			await updateCompletion(authed.id, completion);
 		} catch (e) {
-			LOGGER.error(`UpdateCompletion crash with id: ${authed.id} and completion score of ${completion}`)
+			LOGGER.error(`UpdateCompletion crash with id: ${authed.id} and completion score of ${completion}`);
 		}
-
 
 		// Update last login: refresh Labrute flag and daily grid reward limit
 		await setPlayer(authed.id, {

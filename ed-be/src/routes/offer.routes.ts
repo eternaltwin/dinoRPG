@@ -16,7 +16,8 @@ routes.get(
 		param('filter').exists().isString(),
 		query('sellerId').optional().isInt(),
 		query('bidderId').optional().isInt(),
-		query('expired').optional().isBoolean()
+		query('expired').optional().isBoolean(),
+		query('onlyMines').optional().isBoolean()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -52,8 +53,7 @@ routes.put(
 		body('dinoz').optional().isInt(),
 		body('total').exists().isNumeric(),
 		body('ingredients').exists().isArray(),
-		body('items').exists().isArray(),
-		body('onlyMines').exists().isBoolean()
+		body('items').exists().isArray()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

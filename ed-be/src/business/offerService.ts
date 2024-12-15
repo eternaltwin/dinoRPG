@@ -37,8 +37,7 @@ import gameConfig from '../config/game.config.js';
  * Get the list of current offers
  */
 export async function getOfferList(req: Request) {
-	const authed = await auth(req)
-
+	const authed = await auth(req);
 
 	const filter = req.params.filter;
 	const sellerId = req.query.sellerId ? +req.query.sellerId : null;
@@ -50,9 +49,16 @@ export async function getOfferList(req: Request) {
 	// Get filtered offers
 	let offers = await getOffers(authed.id, filter, sellerId, bidderId, expired, page);
 
-
 	if (onlyMines) {
-		offers = offers.filter(o => o.bids[0].user.id === authed.id).filter(o => o.status === OfferStatus.ENDED)
+		offers = offers
+			.filter(o => {
+				if (o.bids[0]) {
+					return o.bids[0].user.id === authed.id;
+				} else {
+					return o.sellerId === authed.id;
+				}
+			})
+			.filter(o => o.status === OfferStatus.ENDED);
 	}
 
 	if (expired) {
@@ -358,6 +364,10 @@ export const expireOffer = async (offerId: number) => {
 
 		await addMoney(offer.seller.id, winnerBid.value * 1000);
 	}
+
+	if (offer.dinoz) {
+		await updateOfferDinoz(offerId, JSON.stringify(offer.dinoz));
+	}
 	// Update offer status
 	await updateOfferStatus(offerId, OfferStatus.ENDED);
 	// Update stats tracking
@@ -402,7 +412,7 @@ export async function claimOffer(req: Request) {
 			await updateDinozCount(winnerBid.userId, 1);
 			await updatePoints(winnerBid.userId, offer.dinoz.level);
 
-			await updateOfferDinoz(offerId, JSON.stringify(offer.dinoz));
+			// await updateOfferDinoz(offerId, JSON.stringify(offer.dinoz));
 		}
 
 		// Add items to winner inventory

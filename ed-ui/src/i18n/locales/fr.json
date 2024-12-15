@@ -4170,6 +4170,8 @@
 		"transactionView": {
 			"yourOngoingOffer": "Votre offre en cours",
 			"yourWonOffer": "Vos offres gagnées",
+			"myExpiredOffers": "Vos ventes expirées",
+			"claimExpired": "Récupérer ma vente",
 			"noOnGoingOffer": "Vous n'avez aucune offre en cours.",
 			"noWonOffer": "Vous n'avez aucune offre à récupérer",
 			"claim": "Récupérer mes gains",

@@ -1,4 +1,19 @@
 <template>
+	<template v-if="myExpiredOffers">
+		<h4>{{ $t('market.transactionView.myExpiredOffers') }}</h4>
+		<table>
+			<tr>
+				<td>{{ $t('market.transactionView.bid') }}</td>
+				<td>
+					<DZButton @click="reclaimOffer(myExpiredOffers.id)">{{ $t('market.transactionView.claimExpired') }}</DZButton>
+				</td>
+			</tr>
+		</table>
+		<DZTable>
+			<OfferLine :offer="myExpiredOffers" :now="now" />
+		</DZTable>
+	</template>
+	<DZDisclaimer v-else help content="market.transactionView.noWonOffer" />
 	<template v-if="wonOffers.length">
 		<h4>{{ $t('market.transactionView.yourWonOffer') }}</h4>
 		<template v-for="offer in wonOffers" :key="offer.id">
@@ -99,6 +114,7 @@ export default defineComponent({
 			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
 			ownOffer: null as EnhancedOffer | null,
+			myExpiredOffers: null as EnhancedOffer | null,
 			offers: [] as EnhancedOffer[],
 			wonOffers: [] as EnhancedOffer[]
 		};
@@ -130,6 +146,7 @@ export default defineComponent({
 				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
 				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
 				this.wonOffers = this.formatOffers(await OfferService.getList('all', null, userId, true, 1, true));
+				[this.myExpiredOffers] = this.formatOffers(await OfferService.getList('all', userId, null, true, 1, true));
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
