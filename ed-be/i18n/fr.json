@@ -35,6 +35,7 @@
 	"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 	"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 	"cannotClaim": "Vous ne pouvez pas actuellement récupérez vos gains.",
+	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
 	"race": {
 		"1": "Moueffe",
 		"2": "Moueffe Démon",

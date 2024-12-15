@@ -13,7 +13,7 @@ import {
 } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { getDinozPlace, updateDinoz } from '../dao/dinozDao.js';
+import { getDinozEquipItemRequest, getDinozPlace, updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
 import {
 	decreaseIngredientQuantity,
@@ -108,6 +108,10 @@ export async function createOffer(req: Request) {
 		const dinozPlace = await getDinozPlace(dinozId);
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ExpectedError('Dinoz is not at the right place to do this.');
+		}
+		const dinozItems = await getDinozEquipItemRequest(dinozId)
+		if (dinozItems && dinozItems.items.length >= 1) {
+			throw new ExpectedError(translate('equipedItems', authed));
 		}
 	}
 
