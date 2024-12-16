@@ -347,7 +347,8 @@ export const NotificationSeverity: {
   error: 'error',
   offerWon: 'offerWon',
   offerExpired: 'offerExpired',
-  offerEnded: 'offerEnded'
+  offerEnded: 'offerEnded',
+  ban: 'ban'
 };
 
 export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]

@@ -136,14 +136,23 @@
 				</div>
 			</div>
 			<div class="notifications">
-				<div class="notification" v-for="notification in notifications" :key="notification.id">
+				<div
+					:class="{
+						notification: true,
+						warning: notification.severity === 'warning',
+						ban: notification.severity === 'ban'
+					}"
+					v-for="notification in notifications"
+					:key="notification.id"
+				>
 					<div class="element">
-						<span v-html="formatContent(translateNotification(notification).message)" />
+						<span v-html="formatContent(notification.message)" />
 					</div>
 					<div class="element">
-						<RouterLink @click="cleanNotif(notification.id)" class="go" :to="{ name: 'MarketPage', params: { tab: 1 } }"
+						<RouterLink v-if="notification.link" @click="cleanNotif(notification.id)" class="go" :to="notification.link"
 							>Go</RouterLink
 						>
+						<a @click="cleanNotif(notification.id)" class="go">OK</a>
 					</div>
 				</div>
 			</div>
@@ -160,7 +169,7 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { dinozStore, localStore, playerStore } from '../../store/index.js';
 import LocaleChange from '../utils/LocaleChange.vue';
-import { Notification } from '@drpg/core/models/notifications/notification';
+import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
 import { NotificationService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 
@@ -173,7 +182,7 @@ export default defineComponent({
 			localStore: localStore(),
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			notifications: [] as Notification[]
+			notifications: [] as translatedNotification[]
 		};
 	},
 	methods: {
@@ -192,43 +201,86 @@ export default defineComponent({
 		async cleanNotif(id: string) {
 			try {
 				await NotificationService.readNotification(id);
-				this.notifications = this.notifications.filter(n => n.id !== id);
-				this.playerStore.setNotifications(this.notifications);
+				const notifications = this.playerStore.getNotifications.filter(n => n.id !== id);
+				this.playerStore.setNotifications(notifications);
 				this.playerStore.setNotificationsCounter(this.notifications.length - 1);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
 		},
-		translateNotification(notification: Notification) {
+		formatDate(dateString: string) {
+			const date = new Date(dateString);
+			const lang = this.localStore.getLanguage ?? 'fr';
+
+			// Formatter pour la date (jour, mois, année)
+			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
+			const formattedDate = dateFormatter.format(date);
+
+			// Formatter pour l'heure (heure, minute, seconde)
+			const timeFormatter = new Intl.DateTimeFormat(lang, {
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: false
+			});
+			const formattedTime = timeFormatter.format(date);
+
+			// Combinaison date + heure
+			return `${formattedDate}, ${formattedTime}`;
+		},
+		translateNotification(notification: Notification): translatedNotification | null {
 			switch (notification.severity) {
 				case 'offerExpired':
 					return {
 						id: notification.id,
 						message: this.$t(`notification.offerExpired`),
 						severity: notification.severity,
-						link: notification.link,
+						link: { name: 'MarketPage', params: { tab: 1 } },
 						date: notification.date
 					};
 				case 'offerEnded':
-					console.log(JSON.parse(notification.message));
 					return {
 						id: notification.id,
 						message: this.$t(`notification.offerEnded`, JSON.parse(notification.message)),
 						severity: notification.severity,
-						link: notification.link,
+						link: { name: 'MarketPage', params: { tab: 1 } },
 						date: notification.date
 					};
 				case 'offerWon':
-					console.log(JSON.parse(notification.message));
 					return {
 						id: notification.id,
 						message: this.$t(`notification.offerWon`, JSON.parse(notification.message)),
 						severity: notification.severity,
-						link: notification.link,
+						link: { name: 'MarketPage', params: { tab: 1 } },
+						date: notification.date
+					};
+				case 'warning':
+					// eslint-disable-next-line no-case-declarations
+					const messageWarning = JSON.parse(notification.message);
+					return {
+						id: notification.id,
+						message: this.$t(`notification.warning`, {
+							reason: this.$t(`notification.reasons.${messageWarning.reason}`)
+						}),
+						severity: notification.severity,
+						link: null,
+						date: notification.date
+					};
+				case 'ban':
+					// eslint-disable-next-line no-case-declarations
+					const messageBan = JSON.parse(notification.message);
+					return {
+						id: notification.id,
+						message: this.$t(`notification.ban`, {
+							reason: this.$t(`notification.reasons.${messageBan.reason}`),
+							date: this.formatDate(messageBan.banEndDate)
+						}),
+						severity: notification.severity,
+						link: null,
 						date: notification.date
 					};
 				default:
-					return notification;
+					return null;
 			}
 		}
 	},
@@ -239,7 +291,7 @@ export default defineComponent({
 	},
 	watch: {
 		'playerStore.getNotifications': function (notifications: Notification[]) {
-			this.notifications = notifications;
+			this.notifications = notifications.map(notif => this.translateNotification(notif)).filter(n => n !== null);
 		}
 	}
 });
@@ -252,14 +304,17 @@ export default defineComponent({
 	flex-direction: column;
 	.notification {
 		transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+		justify-content: space-between;
+		gap: 5px;
 		border-radius: 5px;
 		margin: 0px 16px 8px;
 		font-family: arial, sans-serif;
 		font-weight: 400;
 		line-height: 1.43;
+		font-size: 1.2rem;
 		background-color: transparent;
 		display: flex;
-		padding: 6px 16px;
+		padding: 6px 12px;
 		color: rgb(184, 231, 251);
 		border: 1px solid rgb(79, 195, 247);
 		box-shadow:
@@ -309,6 +364,38 @@ export default defineComponent({
 					text-decoration: none;
 					background-color: rgba(2, 136, 209, 0.04);
 					border: 1px solid rgb(2, 136, 209);
+				}
+			}
+		}
+	}
+	.warning {
+		border: 1px solid rgb(255, 183, 77);
+		color: rgb(255, 226, 183);
+		.element {
+			.go {
+				border: 1px solid rgba(255, 167, 38, 0.5);
+				color: rgb(255, 167, 38);
+
+				&:hover {
+					text-decoration: none;
+					background-color: rgba(255, 167, 38, 0.08);
+					border: 1px solid rgb(255, 167, 38);
+				}
+			}
+		}
+	}
+	.ban {
+		border: 1px solid rgb(255, 77, 77);
+		color: rgb(255, 183, 183);
+		.element {
+			.go {
+				border: 1px solid rgba(255, 38, 38, 0.5);
+				color: rgb(255, 38, 38);
+
+				&:hover {
+					text-decoration: none;
+					background-color: rgba(255, 38, 38, 0.08);
+					border: 1px solid rgb(255, 38, 38);
 				}
 			}
 		}

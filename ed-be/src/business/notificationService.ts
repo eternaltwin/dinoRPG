@@ -3,7 +3,7 @@ import { auth } from '../dao/playerDao.js';
 import { getNotification, readAllNotification, readNotification } from '../dao/notificationDao.js';
 
 export async function getNotifications(req: Request) {
-	const authed = await auth(req);
+	const authed = await auth(req, true);
 	return await getNotification(authed.id);
 }
 

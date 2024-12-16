@@ -593,19 +593,19 @@ model ClanPage {
 }
 
 model Moderation {
-  id          Int              @id @default(autoincrement())
-  reporterId  Int
-  reporter    Player           @relation("ReporterRelation", fields: [reporterId], references: [id])
-  targetId    Int
-  target      Player           @relation("TargetRelation", fields: [targetId], references: [id])
-  dinozId     Int?
-  dinoz       Dinoz?           @relation(fields: [dinozId], references: [id])
-  reason      ModerationReason
-  comment     String
-  sorted      ModerationAction?
-  bannedUser  Player?          @relation("AcceptedBan")
-  banDate     DateTime?
-  banEndDate  DateTime?
+  id         Int               @id @default(autoincrement())
+  reporterId Int
+  reporter   Player            @relation("ReporterRelation", fields: [reporterId], references: [id])
+  targetId   Int
+  target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
+  dinozId    Int?
+  dinoz      Dinoz?            @relation(fields: [dinozId], references: [id])
+  reason     ModerationReason
+  comment    String
+  sorted     ModerationAction?
+  bannedUser Player?           @relation("AcceptedBan")
+  banDate    DateTime?
+  banEndDate DateTime?
 }
 
 model Conversation {
@@ -654,6 +654,7 @@ enum NotificationSeverity {
   offerWon
   offerExpired
   offerEnded
+  ban
 }
 
 model Notification {

@@ -599,7 +599,8 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
   error: 'error',
   offerWon: 'offerWon',
   offerExpired: 'offerExpired',
-  offerEnded: 'offerEnded'
+  offerEnded: 'offerEnded',
+  ban: 'ban'
 };
 
 exports.Prisma.ModelName = {

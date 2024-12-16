@@ -29,7 +29,7 @@ export async function getToolTipInfos(playerid: number) {
 	});
 }
 
-export async function auth(request: Request) {
+export async function auth(request: Request, banByPass = false) {
 	const {
 		headers: { authorization }
 	} = request;
@@ -62,7 +62,7 @@ export async function auth(request: Request) {
 		throw new ExpectedError('User not found');
 	}
 
-	if (user.banCase) {
+	if (user.banCase && !banByPass) {
 		throw new ExpectedError('Action forbidden: you have been banned');
 	}
 

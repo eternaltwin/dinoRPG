@@ -654,6 +654,7 @@ enum NotificationSeverity {
   offerWon
   offerExpired
   offerEnded
+  ban
 }
 
 model Notification {

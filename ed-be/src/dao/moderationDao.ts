@@ -70,6 +70,7 @@ export async function getModerationReport(id: number) {
 		select: {
 			id: true,
 			sorted: true,
+			reason: true,
 			target: {
 				select: {
 					id: true,

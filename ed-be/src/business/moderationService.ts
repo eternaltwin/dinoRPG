@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { auth, getBannedPlayers, getPlayerBanInfo, getPlayerInfoToReport } from '../dao/playerDao.js';
-import { ModerationReason, ModerationAction, LogType } from '@drpg/prisma';
+import { ModerationReason, ModerationAction, $Enums } from '@drpg/prisma';
 import {
 	createModerationReport,
 	getModerationReport,
@@ -10,7 +10,8 @@ import {
 } from '../dao/moderationDao.js';
 import { LONG_BAN_DURATION_MS, MEDIUM_BAN_DURATION_MS, SHORT_BAN_DURATION_MS } from '@drpg/core/constants';
 import { LOGGER } from '../context.js';
-import { createLog } from '../dao/logDao.js';
+import { createNotification } from '../dao/notificationDao.js';
+import NotificationSeverity = $Enums.NotificationSeverity;
 
 /**
  * Get info of a player for a report
@@ -79,7 +80,7 @@ export async function takeActionOnReport(req: Request) {
 	const reportId = +req.params.id;
 	const action = req.body.action;
 
-	let report = await getModerationReport(reportId);
+	const report = await getModerationReport(reportId);
 
 	if (!report) {
 		throw new ExpectedError('Missing moderation report.');
@@ -94,32 +95,68 @@ export async function takeActionOnReport(req: Request) {
 	if (action === ModerationAction.closed) {
 		promises.push(setModerationReport(reportId, { sorted: ModerationAction.closed }));
 	} else if (action === ModerationAction.warning) {
-		// TODO send warning notification
+		promises.push(
+			setModerationReport(reportId, {
+				sorted: action
+			})
+		);
+		promises.push(
+			createNotification(
+				playerId,
+				JSON.stringify({ message: 'banWarning', reason: report.reason }),
+				NotificationSeverity.warning
+			)
+		);
 	} else if (action === ModerationAction.shortBan) {
 		banEndDate = new Date(Date.now() + SHORT_BAN_DURATION_MS);
+		promises.push(
+			createNotification(
+				playerId,
+				JSON.stringify({ message: 'ban', reason: report.reason, banEndDate: banEndDate }),
+				NotificationSeverity.warning
+			)
+		);
 	} else if (action === ModerationAction.mediumBan) {
 		banEndDate = new Date(Date.now() + MEDIUM_BAN_DURATION_MS);
+		promises.push(
+			createNotification(
+				playerId,
+				JSON.stringify({ message: 'ban', reason: report.reason, banEndDate: banEndDate }),
+				NotificationSeverity.warning
+			)
+		);
 	} else if (action === ModerationAction.longBan) {
 		banEndDate = new Date(Date.now() + LONG_BAN_DURATION_MS);
+		promises.push(
+			createNotification(
+				playerId,
+				JSON.stringify({ message: 'ban', reason: report.reason, banEndDate: banEndDate }),
+				NotificationSeverity.warning
+			)
+		);
 	} else if (action === ModerationAction.infiniteBan) {
 		// Force end date to null in case it has been set before for the same report
-		setModerationReport(reportId, {
-			sorted: ModerationAction.infiniteBan,
-			banDate: new Date(Date.now()),
-			banEndDate: null,
-			bannedUser: { connect: { id: playerId } }
-		});
+		promises.push(
+			setModerationReport(reportId, {
+				sorted: ModerationAction.infiniteBan,
+				banDate: new Date(Date.now()),
+				banEndDate: null,
+				bannedUser: { connect: { id: playerId } }
+			})
+		);
 		// promises.push(updatePlayerBan(playerId, reportId));
 		LOGGER.log(`Player ${playerId} has been banned by Admin (${authed.id}) indefinitely`);
 	}
 
 	if (banEndDate !== null) {
-		await setModerationReport(reportId, {
-			sorted: action,
-			banDate: new Date(Date.now()),
-			banEndDate: banEndDate,
-			bannedUser: { connect: { id: playerId } }
-		});
+		promises.push(
+			setModerationReport(reportId, {
+				sorted: action,
+				banDate: new Date(Date.now()),
+				banEndDate: banEndDate,
+				bannedUser: { connect: { id: playerId } }
+			})
+		);
 
 		LOGGER.log(
 			`Player ${report.target.name} (${playerId}) has been banned by Admin (${authed.id}) until ${banEndDate}`
@@ -166,7 +203,7 @@ export async function banPlayer(req: Request) {
 	}
 
 	// Update the ban of the player, even if it is already banned: create a report and execute the ban
-	let report = await createModerationReport(authed.id, playerId, reason, comment, dinozId);
+	const report = await createModerationReport(authed.id, playerId, reason, comment, dinozId);
 
 	let banEndDate = null;
 	if (action === ModerationAction.shortBan) {
@@ -227,7 +264,7 @@ export async function updateBan(req: Request) {
 		newBanEndDate = new Date(player.banCase.banDate.getTime() + LONG_BAN_DURATION_MS);
 	}
 
-	let updatedBanCase = {
+	const updatedBanCase = {
 		reason: req.body.reason,
 		sorted: req.body.action,
 		comment: req.body.comment,
