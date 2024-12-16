@@ -36,7 +36,7 @@ routes.patch(`${commonPath}/all/read`, async (req: Request, res: Response) => {
 
 routes.patch(
 	`${commonPath}/:notificationId/read`,
-	[param('notificationId').exists().isUUID],
+	[param('notificationId').exists()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

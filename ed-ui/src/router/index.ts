@@ -97,7 +97,7 @@ const router = createRouter({
 					component: () => import('../pages/DinozMissions.vue')
 				},
 				{
-					path: '/market',
+					path: '/market/:tab',
 					name: 'MarketPage',
 					component: () => import('../pages/MarketPage.vue')
 				},

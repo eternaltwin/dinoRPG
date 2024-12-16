@@ -637,6 +637,9 @@ enum NotificationSeverity {
   success
   warning
   error
+  offerWon
+  offerExpired
+  offerEnded
 }
 
 model Notification {

@@ -25,7 +25,13 @@
 						</svg>
 						<span>{{ $t('rightMenu.account') }}</span>
 					</RouterLink>
-					<div class="link" @click="messagerie()">
+					<div
+						:class="{
+							link: true
+							// notification:
+						}"
+						@click="messagerie()"
+					>
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
 								d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
@@ -130,7 +136,16 @@
 				</div>
 			</div>
 			<div class="notifications">
-				<!--				TODO-->
+				<div class="notification" v-for="notification in notifications" :key="notification.id">
+					<div class="element">
+						<span v-html="formatContent(translateNotification(notification).message)" />
+					</div>
+					<div class="element">
+						<RouterLink @click="cleanNotif(notification.id)" class="go" :to="{ name: 'MarketPage', params: { tab: 1 } }"
+							>Go</RouterLink
+						>
+					</div>
+				</div>
 			</div>
 			<div class="parameters">
 				<!--				TODO-->
@@ -145,6 +160,9 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { dinozStore, localStore, playerStore } from '../../store/index.js';
 import LocaleChange from '../utils/LocaleChange.vue';
+import { Notification } from '@drpg/core/models/notifications/notification';
+import { NotificationService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
@@ -154,7 +172,8 @@ export default defineComponent({
 			menuCalled: false,
 			localStore: localStore(),
 			dinozStore: dinozStore(),
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			notifications: [] as Notification[]
 		};
 	},
 	methods: {
@@ -169,22 +188,132 @@ export default defineComponent({
 		},
 		messagerie() {
 			EventBus.emit('message', true);
+		},
+		async cleanNotif(id: string) {
+			try {
+				await NotificationService.readNotification(id);
+				this.notifications = this.notifications.filter(n => n.id !== id);
+				this.playerStore.setNotifications(this.notifications);
+				this.playerStore.setNotificationsCounter(this.notifications.length - 1);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		translateNotification(notification: Notification) {
+			switch (notification.severity) {
+				case 'offerExpired':
+					return {
+						id: notification.id,
+						message: this.$t(`notification.offerExpired`),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
+				case 'offerEnded':
+					console.log(JSON.parse(notification.message));
+					return {
+						id: notification.id,
+						message: this.$t(`notification.offerEnded`, JSON.parse(notification.message)),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
+				case 'offerWon':
+					console.log(JSON.parse(notification.message));
+					return {
+						id: notification.id,
+						message: this.$t(`notification.offerWon`, JSON.parse(notification.message)),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
+				default:
+					return notification;
+			}
 		}
 	},
 	mounted() {
 		EventBus.on('twinoMenu', async e => {
 			this.menuCalled = e;
 		});
-	}
-	/*watch: {
-		playerStore() {
-
+	},
+	watch: {
+		'playerStore.getNotifications': function (notifications: Notification[]) {
+			this.notifications = notifications;
 		}
-	}*/
+	}
 });
 </script>
 
 <style scoped lang="scss">
+.notifications {
+	margin-top: 5px;
+	display: flex;
+	flex-direction: column;
+	.notification {
+		transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+		border-radius: 5px;
+		margin: 0px 16px 8px;
+		font-family: arial, sans-serif;
+		font-weight: 400;
+		line-height: 1.43;
+		background-color: transparent;
+		display: flex;
+		padding: 6px 16px;
+		color: rgb(184, 231, 251);
+		border: 1px solid rgb(79, 195, 247);
+		box-shadow:
+			rgba(0, 0, 0, 0.2) 0px 2px 1px -1px,
+			rgba(0, 0, 0, 0.14) 0px 1px 1px 0px,
+			rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+		.element {
+			display: flex;
+			padding: 8px 0px;
+			min-width: 0px;
+			overflow: auto;
+			max-width: 70%;
+			align-items: center;
+			.go {
+				display: inline-flex;
+				-moz-box-align: center;
+				align-items: center;
+				-moz-box-pack: center;
+				justify-content: center;
+				position: relative;
+				box-sizing: border-box;
+				background-color: transparent;
+				outline: 0px;
+				margin: 0px;
+				cursor: pointer;
+				user-select: none;
+				vertical-align: middle;
+				appearance: none;
+				text-decoration: none;
+				font-family: arial, sans-serif;
+				font-weight: 500;
+				font-size: 1rem;
+				line-height: 1.75;
+				text-transform: uppercase;
+				min-width: 64px;
+				padding: 3px 9px;
+				border-radius: 4px;
+				transition:
+					background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+					box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+					border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+					color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+				border: 1px solid rgba(2, 136, 209, 0.5);
+				color: rgb(2, 136, 209);
+				max-height: 25px;
+				&:hover {
+					text-decoration: none;
+					background-color: rgba(2, 136, 209, 0.04);
+					border: 1px solid rgb(2, 136, 209);
+				}
+			}
+		}
+	}
+}
 .shortCutMenu {
 	padding: 16px;
 	background-color: rgb(29, 32, 40);

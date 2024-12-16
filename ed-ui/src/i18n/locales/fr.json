@@ -4671,5 +4671,10 @@
 		"deletedConv": "Supprimer",
 		"participantsConv": "Participants",
 		"blockSender": "Bloquer l'expéditeur"
+	},
+	"notification": {
+		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
+		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
+		"offerWon": "Vous avez gagné l'enchère avec {value} :ticket:"
 	}
 }

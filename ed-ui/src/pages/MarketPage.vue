@@ -28,7 +28,6 @@ import { defineAsyncComponent, defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { dinozStore, playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
-import { placeList } from '@drpg/core/models/place/PlaceList';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import DZButton from '../components/common/DZButton.vue';
 import { goTo } from '../utils/goTo.js';
@@ -43,6 +42,12 @@ export default defineComponent({
 		Sell: defineAsyncComponent(() => import('../components/market/Sell.vue')),
 		OfferHistory: defineAsyncComponent(() => import('../components/market/OfferHistory.vue')),
 		DZButton
+	},
+	props: {
+		routeTab: {
+			type: Number,
+			default: 0
+		}
 	},
 	data() {
 		return {
@@ -60,10 +65,21 @@ export default defineComponent({
 		}
 	},
 	async mounted(): Promise<void> {
+		this.tab = +this.$route.params.tab;
+
 		const currentDinozId = this.playerStore.playerOptions.currentDinozId;
 
 		// Check if we have a dinoz selected
 		if (!currentDinozId) {
+			const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
+			if (dinozList.length >= 0) {
+				this.playerStore.setPlayerOptions({
+					...this.playerStore.playerOptions,
+					currentDinozId: dinozList[0].id
+				});
+				EventBus.emit('isLoading', false);
+				return;
+			}
 			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
 			goTo(this.$router, 'MainPage');
 			return;
@@ -78,15 +94,24 @@ export default defineComponent({
 		}
 
 		// Check if the dinoz is at the market
-		const atMarket =
-			Object.values(placeList).find(place => place.placeId === currentDinoz.placeId)?.placeId ===
-			PlaceEnum.PLACE_DU_MARCHE;
-		if (!atMarket) {
-			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
-			goTo(this.$router, 'MainPage');
+
+		if (currentDinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
+			EventBus.emit('isLoading', false);
 			return;
 		}
-		EventBus.emit('isLoading', false);
+		const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
+		if (dinozList.length >= 0) {
+			this.playerStore.setPlayerOptions({
+				...this.playerStore.playerOptions,
+				currentDinozId: dinozList[0].id
+			});
+			EventBus.emit('isLoading', false);
+			return;
+		}
+
+		this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
+		goTo(this.$router, 'MainPage');
+		return;
 	}
 });
 </script>

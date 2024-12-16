@@ -7,5 +7,11 @@ export const NotificationService = {
 			.get('/notifications/list')
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	readNotification(id: string): Promise<boolean> {
+		return http()
+			.patch(`/notifications/${id}/read`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

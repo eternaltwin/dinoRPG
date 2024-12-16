@@ -20,7 +20,7 @@ import {
 	getAllIngredientsDataRequest,
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
-import { LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
+import { $Enums, LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
 import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -32,6 +32,8 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { createLog } from '../dao/logDao.js';
 import gameConfig from '../config/game.config.js';
+import { createNotification } from '../dao/notificationDao.js';
+import NotificationSeverity = $Enums.NotificationSeverity;
 
 /**
  * Get the list of current offers
@@ -109,7 +111,7 @@ export async function createOffer(req: Request) {
 		if (dinozPlace && dinozPlace.placeId !== PlaceEnum.PLACE_DU_MARCHE) {
 			throw new ExpectedError('Dinoz is not at the right place to do this.');
 		}
-		const dinozItems = await getDinozEquipItemRequest(dinozId)
+		const dinozItems = await getDinozEquipItemRequest(dinozId);
 		if (dinozItems && dinozItems.items.length >= 1) {
 			throw new ExpectedError(translate('equipedItems', authed));
 		}
@@ -365,8 +367,22 @@ export const expireOffer = async (offerId: number) => {
 		// Send Discord notification
 		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 		await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
-
+		// Send buyer notification for won offer
+		await createNotification(
+			winnerBid.userId,
+			JSON.stringify({ offer: offerId, value: winnerBid.value }),
+			NotificationSeverity.offerWon
+		);
 		await addMoney(offer.seller.id, winnerBid.value * 1000);
+		// Send seller notification for ended offer
+		await createNotification(
+			offer.seller.id,
+			JSON.stringify({ offer: offerId, value: winnerBid.value }),
+			NotificationSeverity.offerEnded
+		);
+	} else {
+		// Send seller notification for expired offer
+		await createNotification(offer.seller.id, JSON.stringify({ offer: offerId }), NotificationSeverity.offerExpired);
 	}
 
 	if (offer.dinoz) {

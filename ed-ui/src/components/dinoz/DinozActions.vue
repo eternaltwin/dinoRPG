@@ -309,7 +309,8 @@ export default defineComponent({
 					break;
 				case Action.MARKET:
 					this.$router.push({
-						name: 'MarketPage'
+						name: 'MarketPage',
+						params: { tab: 0 }
 					});
 					break;
 				case Action.FOLLOW: {

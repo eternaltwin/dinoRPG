@@ -234,16 +234,6 @@ export namespace $Enums {
 export type UnavailableReason = (typeof UnavailableReason)[keyof typeof UnavailableReason]
 
 
-export const AdminRole: {
-  ADMIN: 'ADMIN',
-  MODERATOR: 'MODERATOR',
-  BETA: 'BETA',
-  PLAYER: 'PLAYER'
-};
-
-export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
-
-
 export const Lang: {
   fr: 'fr',
   en: 'en',
@@ -254,6 +244,25 @@ export const Lang: {
 export type Lang = (typeof Lang)[keyof typeof Lang]
 
 
+export const PantheonMotif: {
+  race: 'race',
+  epic: 'epic'
+};
+
+export type PantheonMotif = (typeof PantheonMotif)[keyof typeof PantheonMotif]
+
+
+export const ModerationReason: {
+  multi: 'multi',
+  dinozName: 'dinozName',
+  accountName: 'accountName',
+  avatar: 'avatar',
+  customText: 'customText'
+};
+
+export type ModerationReason = (typeof ModerationReason)[keyof typeof ModerationReason]
+
+
 export const OfferStatus: {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
@@ -262,6 +271,16 @@ export const OfferStatus: {
 };
 
 export type OfferStatus = (typeof OfferStatus)[keyof typeof OfferStatus]
+
+
+export const AdminRole: {
+  ADMIN: 'ADMIN',
+  MODERATOR: 'MODERATOR',
+  BETA: 'BETA',
+  PLAYER: 'PLAYER'
+};
+
+export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
 
 
 export const LogType: {
@@ -309,30 +328,14 @@ export const LogType: {
 export type LogType = (typeof LogType)[keyof typeof LogType]
 
 
-export const PantheonMotif: {
-  race: 'race',
-  epic: 'epic'
-};
-
-export type PantheonMotif = (typeof PantheonMotif)[keyof typeof PantheonMotif]
-
-
-export const ModerationReason: {
-  multi: 'multi',
-  dinozName: 'dinozName',
-  accountName: 'accountName',
-  avatar: 'avatar',
-  customText: 'customText'
-};
-
-export type ModerationReason = (typeof ModerationReason)[keyof typeof ModerationReason]
-
-
 export const NotificationSeverity: {
   info: 'info',
   success: 'success',
   warning: 'warning',
-  error: 'error'
+  error: 'error',
+  offerWon: 'offerWon',
+  offerExpired: 'offerExpired',
+  offerEnded: 'offerEnded'
 };
 
 export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]
@@ -343,21 +346,9 @@ export type UnavailableReason = $Enums.UnavailableReason
 
 export const UnavailableReason: typeof $Enums.UnavailableReason
 
-export type AdminRole = $Enums.AdminRole
-
-export const AdminRole: typeof $Enums.AdminRole
-
 export type Lang = $Enums.Lang
 
 export const Lang: typeof $Enums.Lang
-
-export type OfferStatus = $Enums.OfferStatus
-
-export const OfferStatus: typeof $Enums.OfferStatus
-
-export type LogType = $Enums.LogType
-
-export const LogType: typeof $Enums.LogType
 
 export type PantheonMotif = $Enums.PantheonMotif
 
@@ -366,6 +357,18 @@ export const PantheonMotif: typeof $Enums.PantheonMotif
 export type ModerationReason = $Enums.ModerationReason
 
 export const ModerationReason: typeof $Enums.ModerationReason
+
+export type OfferStatus = $Enums.OfferStatus
+
+export const OfferStatus: typeof $Enums.OfferStatus
+
+export type AdminRole = $Enums.AdminRole
+
+export const AdminRole: typeof $Enums.AdminRole
+
+export type LogType = $Enums.LogType
+
+export const LogType: typeof $Enums.LogType
 
 export type NotificationSeverity = $Enums.NotificationSeverity
 
@@ -472,6 +475,7 @@ export class PrismaClient<
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
+
 
   /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -924,7 +928,6 @@ export namespace Prisma {
   export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
   export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
   export import PrismaClientValidationError = runtime.PrismaClientValidationError
-  export import NotFoundError = runtime.NotFoundError
 
   /**
    * Re-export of sql-template-tag
@@ -934,6 +937,8 @@ export namespace Prisma {
   export import join = runtime.join
   export import raw = runtime.raw
   export import Sql = runtime.Sql
+
+
 
   /**
    * Decimal.js
@@ -961,8 +966,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.17.0
-   * Query Engine version: 393aa359c9ad4a4bb28630fb5613f9c281cde053
+   * Prisma Client JS version: 6.0.1
+   * Query Engine version: 5dbef10bdbfb579e07d35cc85fb1518d357cb99e
    */
   export type PrismaVersion = {
     client: string
@@ -974,51 +979,13 @@ export namespace Prisma {
    * Utility Types
    */
 
-  /**
-   * From https://github.com/sindresorhus/type-fest/
-   * Matches a JSON object.
-   * This type can be useful to enforce some input to be JSON-compatible or as a super-type to be extended from. 
-   */
-  export type JsonObject = {[Key in string]?: JsonValue}
 
-  /**
-   * From https://github.com/sindresorhus/type-fest/
-   * Matches a JSON array.
-   */
-  export interface JsonArray extends Array<JsonValue> {}
-
-  /**
-   * From https://github.com/sindresorhus/type-fest/
-   * Matches any valid JSON value.
-   */
-  export type JsonValue = string | number | boolean | JsonObject | JsonArray | null
-
-  /**
-   * Matches a JSON object.
-   * Unlike `JsonObject`, this type allows undefined and read-only properties.
-   */
-  export type InputJsonObject = {readonly [Key in string]?: InputJsonValue | null}
-
-  /**
-   * Matches a JSON array.
-   * Unlike `JsonArray`, readonly arrays are assignable to this type.
-   */
-  export interface InputJsonArray extends ReadonlyArray<InputJsonValue | null> {}
-
-  /**
-   * Matches any valid value that can be used as an input for operations like
-   * create and update as the value of a JSON field. Unlike `JsonValue`, this
-   * type allows read-only arrays and read-only object properties and disallows
-   * `null` at the top level.
-   *
-   * `null` cannot be used as the value of a JSON field because its meaning
-   * would be ambiguous. Use `Prisma.JsonNull` to store the JSON null value or
-   * `Prisma.DbNull` to clear the JSON value and set the field to the database
-   * NULL value instead.
-   *
-   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-by-null-values
-   */
-  export type InputJsonValue = string | number | boolean | InputJsonObject | InputJsonArray | { toJSON(): unknown }
+  export import JsonObject = runtime.JsonObject
+  export import JsonArray = runtime.JsonArray
+  export import JsonValue = runtime.JsonValue
+  export import InputJsonObject = runtime.InputJsonObject
+  export import InputJsonArray = runtime.InputJsonArray
+  export import InputJsonValue = runtime.InputJsonValue
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
@@ -4316,20 +4283,20 @@ export namespace Prisma {
     other: {
       payload: any
       operations: {
-        $executeRawUnsafe: {
-          args: [query: string, ...values: any[]],
-          result: any
-        }
         $executeRaw: {
           args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
           result: any
         }
-        $queryRawUnsafe: {
+        $executeRawUnsafe: {
           args: [query: string, ...values: any[]],
           result: any
         }
         $queryRaw: {
           args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
+        $queryRawUnsafe: {
+          args: [query: string, ...values: any[]],
           result: any
         }
       }
@@ -15083,7 +15050,7 @@ export namespace Prisma {
   export type NewsMinAggregateOutputType = {
     id: number | null
     title: string | null
-    image: Buffer | null
+    image: Uint8Array | null
     frenchTitle: string | null
     frenchText: string | null
     englishTitle: string | null
@@ -15099,7 +15066,7 @@ export namespace Prisma {
   export type NewsMaxAggregateOutputType = {
     id: number | null
     title: string | null
-    image: Buffer | null
+    image: Uint8Array | null
     frenchTitle: string | null
     frenchText: string | null
     englishTitle: string | null
@@ -15276,7 +15243,7 @@ export namespace Prisma {
   export type NewsGroupByOutputType = {
     id: number
     title: string | null
-    image: Buffer | null
+    image: Uint8Array | null
     frenchTitle: string | null
     frenchText: string | null
     englishTitle: string | null
@@ -15364,7 +15331,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string | null
-      image: Buffer | null
+      image: Uint8Array | null
       frenchTitle: string | null
       frenchText: string | null
       englishTitle: string | null
@@ -35776,7 +35743,7 @@ export namespace Prisma {
     creationDate: Date | null
     clanWarId: number | null
     leaderId: number | null
-    banner: Buffer | null
+    banner: Uint8Array | null
   }
 
   export type ClanMaxAggregateOutputType = {
@@ -35786,7 +35753,7 @@ export namespace Prisma {
     creationDate: Date | null
     clanWarId: number | null
     leaderId: number | null
-    banner: Buffer | null
+    banner: Uint8Array | null
   }
 
   export type ClanCountAggregateOutputType = {
@@ -35939,7 +35906,7 @@ export namespace Prisma {
     creationDate: Date
     clanWarId: number | null
     leaderId: number
-    banner: Buffer | null
+    banner: Uint8Array | null
     _count: ClanCountAggregateOutputType | null
     _avg: ClanAvgAggregateOutputType | null
     _sum: ClanSumAggregateOutputType | null
@@ -36038,7 +36005,7 @@ export namespace Prisma {
       creationDate: Date
       clanWarId: number | null
       leaderId: number
-      banner: Buffer | null
+      banner: Uint8Array | null
     }, ExtArgs["result"]["clan"]>
     composites: {}
   }
@@ -50454,9 +50421,9 @@ export namespace Prisma {
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
-    leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
+    leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    concentration?: XOR<ConcentrationNullableScalarRelationFilter, ConcentrationWhereInput> | null
     items?: DinozItemListRelationFilter
     missions?: DinozMissionListRelationFilter
     skills?: DinozSkillListRelationFilter
@@ -50551,9 +50518,9 @@ export namespace Prisma {
     order?: IntNullableFilter<"Dinoz"> | number | null
     concentrationId?: IntNullableFilter<"Dinoz"> | number | null
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
-    leader?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    concentration?: XOR<ConcentrationNullableRelationFilter, ConcentrationWhereInput> | null
+    leader?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    concentration?: XOR<ConcentrationNullableScalarRelationFilter, ConcentrationWhereInput> | null
     items?: DinozItemListRelationFilter
     missions?: DinozMissionListRelationFilter
     skills?: DinozSkillListRelationFilter
@@ -50646,7 +50613,7 @@ export namespace Prisma {
     id?: IntFilter<"DinozItem"> | number
     itemId?: IntFilter<"DinozItem"> | number
     dinozId?: IntNullableFilter<"DinozItem"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     dinozItemToDinoz?: DinozItemToDinozListRelationFilter
   }
 
@@ -50665,7 +50632,7 @@ export namespace Prisma {
     NOT?: DinozItemWhereInput | DinozItemWhereInput[]
     itemId?: IntFilter<"DinozItem"> | number
     dinozId?: IntNullableFilter<"DinozItem"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     dinozItemToDinoz?: DinozItemToDinozListRelationFilter
   }, "id">
 
@@ -50695,8 +50662,8 @@ export namespace Prisma {
     NOT?: DinozItemToDinozWhereInput | DinozItemToDinozWhereInput[]
     dinozId?: IntFilter<"DinozItemToDinoz"> | number
     dinozItemId?: IntFilter<"DinozItemToDinoz"> | number
-    dinoz?: XOR<DinozRelationFilter, DinozWhereInput>
-    dinoz_item?: XOR<DinozItemRelationFilter, DinozItemWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+    dinoz_item?: XOR<DinozItemScalarRelationFilter, DinozItemWhereInput>
   }
 
   export type DinozItemToDinozOrderByWithRelationInput = {
@@ -50713,8 +50680,8 @@ export namespace Prisma {
     NOT?: DinozItemToDinozWhereInput | DinozItemToDinozWhereInput[]
     dinozId?: IntFilter<"DinozItemToDinoz"> | number
     dinozItemId?: IntFilter<"DinozItemToDinoz"> | number
-    dinoz?: XOR<DinozRelationFilter, DinozWhereInput>
-    dinoz_item?: XOR<DinozItemRelationFilter, DinozItemWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+    dinoz_item?: XOR<DinozItemScalarRelationFilter, DinozItemWhereInput>
   }, "dinozId_dinozItemId">
 
   export type DinozItemToDinozOrderByWithAggregationInput = {
@@ -50745,7 +50712,7 @@ export namespace Prisma {
     step?: IntFilter<"DinozMission"> | number
     isFinished?: BoolNullableFilter<"DinozMission"> | boolean | null
     progress?: IntNullableFilter<"DinozMission"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type DinozMissionOrderByWithRelationInput = {
@@ -50769,7 +50736,7 @@ export namespace Prisma {
     step?: IntFilter<"DinozMission"> | number
     isFinished?: BoolNullableFilter<"DinozMission"> | boolean | null
     progress?: IntNullableFilter<"DinozMission"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id" | "missionId_dinozId">
 
   export type DinozMissionOrderByWithAggregationInput = {
@@ -50806,7 +50773,7 @@ export namespace Prisma {
     skillId?: IntFilter<"DinozSkill"> | number
     state?: BoolFilter<"DinozSkill"> | boolean
     dinozId?: IntNullableFilter<"DinozSkill"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type DinozSkillOrderByWithRelationInput = {
@@ -50826,7 +50793,7 @@ export namespace Prisma {
     skillId?: IntFilter<"DinozSkill"> | number
     state?: BoolFilter<"DinozSkill"> | boolean
     dinozId?: IntNullableFilter<"DinozSkill"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id" | "skillId_dinozId">
 
   export type DinozSkillOrderByWithAggregationInput = {
@@ -50858,7 +50825,7 @@ export namespace Prisma {
     id?: IntFilter<"DinozSkillUnlockable"> | number
     skillId?: IntFilter<"DinozSkillUnlockable"> | number
     dinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type DinozSkillUnlockableOrderByWithRelationInput = {
@@ -50875,7 +50842,7 @@ export namespace Prisma {
     NOT?: DinozSkillUnlockableWhereInput | DinozSkillUnlockableWhereInput[]
     skillId?: IntFilter<"DinozSkillUnlockable"> | number
     dinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id">
 
   export type DinozSkillUnlockableOrderByWithAggregationInput = {
@@ -50905,7 +50872,7 @@ export namespace Prisma {
     id?: IntFilter<"DinozStatus"> | number
     statusId?: IntFilter<"DinozStatus"> | number
     dinozId?: IntNullableFilter<"DinozStatus"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type DinozStatusOrderByWithRelationInput = {
@@ -50923,7 +50890,7 @@ export namespace Prisma {
     NOT?: DinozStatusWhereInput | DinozStatusWhereInput[]
     statusId?: IntFilter<"DinozStatus"> | number
     dinozId?: IntNullableFilter<"DinozStatus"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id" | "statusId_dinozId">
 
   export type DinozStatusOrderByWithAggregationInput = {
@@ -50996,7 +50963,7 @@ export namespace Prisma {
     NOT?: NewsWhereInput | NewsWhereInput[]
     id?: IntFilter<"News"> | number
     title?: StringNullableFilter<"News"> | string | null
-    image?: BytesNullableFilter<"News"> | Buffer | null
+    image?: BytesNullableFilter<"News"> | Uint8Array | null
     frenchTitle?: StringNullableFilter<"News"> | string | null
     frenchText?: StringNullableFilter<"News"> | string | null
     englishTitle?: StringNullableFilter<"News"> | string | null
@@ -51031,7 +50998,7 @@ export namespace Prisma {
     OR?: NewsWhereInput[]
     NOT?: NewsWhereInput | NewsWhereInput[]
     title?: StringNullableFilter<"News"> | string | null
-    image?: BytesNullableFilter<"News"> | Buffer | null
+    image?: BytesNullableFilter<"News"> | Uint8Array | null
     frenchTitle?: StringNullableFilter<"News"> | string | null
     frenchText?: StringNullableFilter<"News"> | string | null
     englishTitle?: StringNullableFilter<"News"> | string | null
@@ -51071,7 +51038,7 @@ export namespace Prisma {
     NOT?: NewsScalarWhereWithAggregatesInput | NewsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"News"> | number
     title?: StringNullableWithAggregatesFilter<"News"> | string | null
-    image?: BytesNullableWithAggregatesFilter<"News"> | Buffer | null
+    image?: BytesNullableWithAggregatesFilter<"News"> | Uint8Array | null
     frenchTitle?: StringNullableWithAggregatesFilter<"News"> | string | null
     frenchText?: StringNullableWithAggregatesFilter<"News"> | string | null
     englishTitle?: StringNullableWithAggregatesFilter<"News"> | string | null
@@ -51092,7 +51059,7 @@ export namespace Prisma {
     npcId?: IntFilter<"NPC"> | number
     step?: StringFilter<"NPC"> | string
     dinozId?: IntNullableFilter<"NPC"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type NPCOrderByWithRelationInput = {
@@ -51112,7 +51079,7 @@ export namespace Prisma {
     npcId?: IntFilter<"NPC"> | number
     step?: StringFilter<"NPC"> | string
     dinozId?: IntNullableFilter<"NPC"> | number | null
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id" | "npcId_dinozId">
 
   export type NPCOrderByWithAggregationInput = {
@@ -51173,17 +51140,17 @@ export namespace Prisma {
     items?: PlayerItemListRelationFilter
     quests?: PlayerQuestListRelationFilter
     rewards?: PlayerRewardListRelationFilter
-    ranking?: XOR<RankingNullableRelationFilter, RankingWhereInput> | null
+    ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     offers?: OfferListRelationFilter
     bids?: OfferBidListRelationFilter
     logs?: LogListRelationFilter
     usernameHistory?: UsernameHistoryListRelationFilter
     playerTracking?: PlayerTrackingListRelationFilter
-    ClanMember?: XOR<ClanMemberNullableRelationFilter, ClanMemberWhereInput> | null
+    ClanMember?: XOR<ClanMemberNullableScalarRelationFilter, ClanMemberWhereInput> | null
     ClanMessage?: ClanMessageListRelationFilter
     ClanHistory?: ClanHistoryListRelationFilter
-    leaderOf?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
-    ClanJoinRequest?: XOR<ClanJoinRequestNullableRelationFilter, ClanJoinRequestWhereInput> | null
+    leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    ClanJoinRequest?: XOR<ClanJoinRequestNullableScalarRelationFilter, ClanJoinRequestWhereInput> | null
     reportedCases?: ModerationListRelationFilter
     targetedCases?: ModerationListRelationFilter
     Pantheon?: PantheonListRelationFilter
@@ -51284,17 +51251,17 @@ export namespace Prisma {
     items?: PlayerItemListRelationFilter
     quests?: PlayerQuestListRelationFilter
     rewards?: PlayerRewardListRelationFilter
-    ranking?: XOR<RankingNullableRelationFilter, RankingWhereInput> | null
+    ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
     offers?: OfferListRelationFilter
     bids?: OfferBidListRelationFilter
     logs?: LogListRelationFilter
     usernameHistory?: UsernameHistoryListRelationFilter
     playerTracking?: PlayerTrackingListRelationFilter
-    ClanMember?: XOR<ClanMemberNullableRelationFilter, ClanMemberWhereInput> | null
+    ClanMember?: XOR<ClanMemberNullableScalarRelationFilter, ClanMemberWhereInput> | null
     ClanMessage?: ClanMessageListRelationFilter
     ClanHistory?: ClanHistoryListRelationFilter
-    leaderOf?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
-    ClanJoinRequest?: XOR<ClanJoinRequestNullableRelationFilter, ClanJoinRequestWhereInput> | null
+    leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    ClanJoinRequest?: XOR<ClanJoinRequestNullableScalarRelationFilter, ClanJoinRequestWhereInput> | null
     reportedCases?: ModerationListRelationFilter
     targetedCases?: ModerationListRelationFilter
     Pantheon?: PantheonListRelationFilter
@@ -51376,7 +51343,7 @@ export namespace Prisma {
     id?: IntFilter<"UsernameHistory"> | number
     playerId?: IntNullableFilter<"UsernameHistory"> | number | null
     username?: StringFilter<"UsernameHistory"> | string
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type UsernameHistoryOrderByWithRelationInput = {
@@ -51393,7 +51360,7 @@ export namespace Prisma {
     NOT?: UsernameHistoryWhereInput | UsernameHistoryWhereInput[]
     playerId?: IntNullableFilter<"UsernameHistory"> | number | null
     username?: StringFilter<"UsernameHistory"> | string
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
 
   export type UsernameHistoryOrderByWithAggregationInput = {
@@ -51424,7 +51391,7 @@ export namespace Prisma {
     raceId?: IntFilter<"PlayerDinozShop"> | number
     display?: StringFilter<"PlayerDinozShop"> | string
     playerId?: IntNullableFilter<"PlayerDinozShop"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type PlayerDinozShopOrderByWithRelationInput = {
@@ -51443,7 +51410,7 @@ export namespace Prisma {
     raceId?: IntFilter<"PlayerDinozShop"> | number
     display?: StringFilter<"PlayerDinozShop"> | string
     playerId?: IntNullableFilter<"PlayerDinozShop"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
 
   export type PlayerDinozShopOrderByWithAggregationInput = {
@@ -51477,7 +51444,7 @@ export namespace Prisma {
     type?: IntFilter<"PlayerGather"> | number
     grid?: IntNullableListFilter<"PlayerGather">
     playerId?: IntNullableFilter<"PlayerGather"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type PlayerGatherOrderByWithRelationInput = {
@@ -51498,7 +51465,7 @@ export namespace Prisma {
     type?: IntFilter<"PlayerGather"> | number
     grid?: IntNullableListFilter<"PlayerGather">
     playerId?: IntNullableFilter<"PlayerGather"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
 
   export type PlayerGatherOrderByWithAggregationInput = {
@@ -51533,7 +51500,7 @@ export namespace Prisma {
     ingredientId?: IntFilter<"PlayerIngredient"> | number
     quantity?: IntFilter<"PlayerIngredient"> | number
     playerId?: IntNullableFilter<"PlayerIngredient"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type PlayerIngredientOrderByWithRelationInput = {
@@ -51553,7 +51520,7 @@ export namespace Prisma {
     ingredientId?: IntFilter<"PlayerIngredient"> | number
     quantity?: IntFilter<"PlayerIngredient"> | number
     playerId?: IntNullableFilter<"PlayerIngredient"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "ingredientId_playerId">
 
   export type PlayerIngredientOrderByWithAggregationInput = {
@@ -51586,7 +51553,7 @@ export namespace Prisma {
     itemId?: IntFilter<"PlayerItem"> | number
     quantity?: IntFilter<"PlayerItem"> | number
     playerId?: IntNullableFilter<"PlayerItem"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type PlayerItemOrderByWithRelationInput = {
@@ -51606,7 +51573,7 @@ export namespace Prisma {
     itemId?: IntFilter<"PlayerItem"> | number
     quantity?: IntFilter<"PlayerItem"> | number
     playerId?: IntNullableFilter<"PlayerItem"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "itemId_playerId">
 
   export type PlayerItemOrderByWithAggregationInput = {
@@ -51639,7 +51606,7 @@ export namespace Prisma {
     questId?: IntFilter<"PlayerQuest"> | number
     progression?: IntFilter<"PlayerQuest"> | number
     playerId?: IntNullableFilter<"PlayerQuest"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type PlayerQuestOrderByWithRelationInput = {
@@ -51659,7 +51626,7 @@ export namespace Prisma {
     questId?: IntFilter<"PlayerQuest"> | number
     progression?: IntFilter<"PlayerQuest"> | number
     playerId?: IntNullableFilter<"PlayerQuest"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "questId_playerId">
 
   export type PlayerQuestOrderByWithAggregationInput = {
@@ -51691,7 +51658,7 @@ export namespace Prisma {
     id?: IntFilter<"PlayerReward"> | number
     rewardId?: IntFilter<"PlayerReward"> | number
     playerId?: IntNullableFilter<"PlayerReward"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type PlayerRewardOrderByWithRelationInput = {
@@ -51709,7 +51676,7 @@ export namespace Prisma {
     NOT?: PlayerRewardWhereInput | PlayerRewardWhereInput[]
     rewardId?: IntFilter<"PlayerReward"> | number
     playerId?: IntNullableFilter<"PlayerReward"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "rewardId_playerId">
 
   export type PlayerRewardOrderByWithAggregationInput = {
@@ -51742,7 +51709,7 @@ export namespace Prisma {
     dinozCount?: IntFilter<"Ranking"> | number
     completion?: IntFilter<"Ranking"> | number
     playerId?: IntNullableFilter<"Ranking"> | number | null
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type RankingOrderByWithRelationInput = {
@@ -51765,7 +51732,7 @@ export namespace Prisma {
     average?: IntFilter<"Ranking"> | number
     dinozCount?: IntFilter<"Ranking"> | number
     completion?: IntFilter<"Ranking"> | number
-    player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "playerId">
 
   export type RankingOrderByWithAggregationInput = {
@@ -51840,7 +51807,7 @@ export namespace Prisma {
     itemId?: IntFilter<"OfferItem"> | number
     quantity?: IntFilter<"OfferItem"> | number
     isIngredient?: BoolFilter<"OfferItem"> | boolean
-    offer?: XOR<OfferRelationFilter, OfferWhereInput>
+    offer?: XOR<OfferScalarRelationFilter, OfferWhereInput>
   }
 
   export type OfferItemOrderByWithRelationInput = {
@@ -51861,7 +51828,7 @@ export namespace Prisma {
     itemId?: IntFilter<"OfferItem"> | number
     quantity?: IntFilter<"OfferItem"> | number
     isIngredient?: BoolFilter<"OfferItem"> | boolean
-    offer?: XOR<OfferRelationFilter, OfferWhereInput>
+    offer?: XOR<OfferScalarRelationFilter, OfferWhereInput>
   }, "id">
 
   export type OfferItemOrderByWithAggregationInput = {
@@ -51896,8 +51863,8 @@ export namespace Prisma {
     offerId?: IntFilter<"OfferBid"> | number
     userId?: IntFilter<"OfferBid"> | number
     value?: IntFilter<"OfferBid"> | number
-    offer?: XOR<OfferRelationFilter, OfferWhereInput>
-    user?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    offer?: XOR<OfferScalarRelationFilter, OfferWhereInput>
+    user?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type OfferBidOrderByWithRelationInput = {
@@ -51917,8 +51884,8 @@ export namespace Prisma {
     offerId?: IntFilter<"OfferBid"> | number
     userId?: IntFilter<"OfferBid"> | number
     value?: IntFilter<"OfferBid"> | number
-    offer?: XOR<OfferRelationFilter, OfferWhereInput>
-    user?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    offer?: XOR<OfferScalarRelationFilter, OfferWhereInput>
+    user?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id">
 
   export type OfferBidOrderByWithAggregationInput = {
@@ -51954,8 +51921,8 @@ export namespace Prisma {
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
-    seller?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    seller?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     items?: OfferItemListRelationFilter
     bids?: OfferBidListRelationFilter
   }
@@ -51985,8 +51952,8 @@ export namespace Prisma {
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
-    seller?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    seller?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     items?: OfferItemListRelationFilter
     bids?: OfferBidListRelationFilter
   }, "id">
@@ -52029,8 +51996,8 @@ export namespace Prisma {
     type?: EnumLogTypeFilter<"Log"> | $Enums.LogType
     values?: StringNullableListFilter<"Log">
     createdAt?: DateTimeFilter<"Log"> | Date | string
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type LogOrderByWithRelationInput = {
@@ -52054,8 +52021,8 @@ export namespace Prisma {
     type?: EnumLogTypeFilter<"Log"> | $Enums.LogType
     values?: StringNullableListFilter<"Log">
     createdAt?: DateTimeFilter<"Log"> | Date | string
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id">
 
   export type LogOrderByWithAggregationInput = {
@@ -52092,7 +52059,7 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"DinozCatch"> | number | null
     monsterId?: StringFilter<"DinozCatch"> | string
     hp?: IntFilter<"DinozCatch"> | number
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type DinozCatchOrderByWithRelationInput = {
@@ -52111,7 +52078,7 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"DinozCatch"> | number | null
     monsterId?: StringFilter<"DinozCatch"> | string
     hp?: IntFilter<"DinozCatch"> | number
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id">
 
   export type DinozCatchOrderByWithAggregationInput = {
@@ -52144,7 +52111,7 @@ export namespace Prisma {
     playerId?: IntFilter<"PlayerTracking"> | number
     stat?: StringFilter<"PlayerTracking"> | string
     quantity?: IntFilter<"PlayerTracking"> | number
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type PlayerTrackingOrderByWithRelationInput = {
@@ -52164,7 +52131,7 @@ export namespace Prisma {
     playerId?: IntFilter<"PlayerTracking"> | number
     stat?: StringFilter<"PlayerTracking"> | string
     quantity?: IntFilter<"PlayerTracking"> | number
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id" | "stat_playerId">
 
   export type PlayerTrackingOrderByWithAggregationInput = {
@@ -52199,8 +52166,8 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Pantheon"> | number | null
     date?: DateTimeFilter<"Pantheon"> | Date | string
     indicator?: IntNullableFilter<"Pantheon"> | number | null
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type PantheonOrderByWithRelationInput = {
@@ -52224,8 +52191,8 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"Pantheon"> | number | null
     date?: DateTimeFilter<"Pantheon"> | Date | string
     indicator?: IntNullableFilter<"Pantheon"> | number | null
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id">
 
   export type PantheonOrderByWithAggregationInput = {
@@ -52264,13 +52231,13 @@ export namespace Prisma {
     creationDate?: DateTimeFilter<"Clan"> | Date | string
     clanWarId?: IntNullableFilter<"Clan"> | number | null
     leaderId?: IntFilter<"Clan"> | number
-    banner?: BytesNullableFilter<"Clan"> | Buffer | null
+    banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
     members?: ClanMemberListRelationFilter
     ingredients?: ClanIngredientListRelationFilter
     discussion?: ClanMessageListRelationFilter
     history?: ClanHistoryListRelationFilter
-    war?: XOR<ClanWarNullableRelationFilter, ClanWarWhereInput> | null
-    leader?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    war?: XOR<ClanWarNullableScalarRelationFilter, ClanWarWhereInput> | null
+    leader?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     joinRequests?: ClanJoinRequestListRelationFilter
     pages?: ClanPageListRelationFilter
   }
@@ -52303,13 +52270,13 @@ export namespace Prisma {
     treasureValue?: IntFilter<"Clan"> | number
     creationDate?: DateTimeFilter<"Clan"> | Date | string
     clanWarId?: IntNullableFilter<"Clan"> | number | null
-    banner?: BytesNullableFilter<"Clan"> | Buffer | null
+    banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
     members?: ClanMemberListRelationFilter
     ingredients?: ClanIngredientListRelationFilter
     discussion?: ClanMessageListRelationFilter
     history?: ClanHistoryListRelationFilter
-    war?: XOR<ClanWarNullableRelationFilter, ClanWarWhereInput> | null
-    leader?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    war?: XOR<ClanWarNullableScalarRelationFilter, ClanWarWhereInput> | null
+    leader?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     joinRequests?: ClanJoinRequestListRelationFilter
     pages?: ClanPageListRelationFilter
   }, "id" | "name" | "leaderId">
@@ -52339,7 +52306,7 @@ export namespace Prisma {
     creationDate?: DateTimeWithAggregatesFilter<"Clan"> | Date | string
     clanWarId?: IntNullableWithAggregatesFilter<"Clan"> | number | null
     leaderId?: IntWithAggregatesFilter<"Clan"> | number
-    banner?: BytesNullableWithAggregatesFilter<"Clan"> | Buffer | null
+    banner?: BytesNullableWithAggregatesFilter<"Clan"> | Uint8Array | null
   }
 
   export type ClanJoinRequestWhereInput = {
@@ -52350,8 +52317,8 @@ export namespace Prisma {
     clanId?: IntFilter<"ClanJoinRequest"> | number
     playerId?: IntFilter<"ClanJoinRequest"> | number
     date?: DateTimeFilter<"ClanJoinRequest"> | Date | string
-    clan?: XOR<ClanRelationFilter, ClanWhereInput>
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type ClanJoinRequestOrderByWithRelationInput = {
@@ -52371,8 +52338,8 @@ export namespace Prisma {
     NOT?: ClanJoinRequestWhereInput | ClanJoinRequestWhereInput[]
     clanId?: IntFilter<"ClanJoinRequest"> | number
     date?: DateTimeFilter<"ClanJoinRequest"> | Date | string
-    clan?: XOR<ClanRelationFilter, ClanWhereInput>
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id" | "playerId">
 
   export type ClanJoinRequestOrderByWithAggregationInput = {
@@ -52452,7 +52419,7 @@ export namespace Prisma {
     ingredientId?: IntFilter<"ClanIngredient"> | number
     quantity?: IntFilter<"ClanIngredient"> | number
     clanId?: IntNullableFilter<"ClanIngredient"> | number | null
-    clan?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
   }
 
   export type ClanIngredientOrderByWithRelationInput = {
@@ -52472,7 +52439,7 @@ export namespace Prisma {
     ingredientId?: IntFilter<"ClanIngredient"> | number
     quantity?: IntFilter<"ClanIngredient"> | number
     clanId?: IntNullableFilter<"ClanIngredient"> | number | null
-    clan?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
   }, "id" | "ingredientId_clanId">
 
   export type ClanIngredientOrderByWithAggregationInput = {
@@ -52506,8 +52473,8 @@ export namespace Prisma {
     date?: DateTimeFilter<"ClanMessage"> | Date | string
     authorId?: IntFilter<"ClanMessage"> | number
     content?: StringFilter<"ClanMessage"> | string
-    clan?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
-    author?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    author?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type ClanMessageOrderByWithRelationInput = {
@@ -52530,8 +52497,8 @@ export namespace Prisma {
     date?: DateTimeFilter<"ClanMessage"> | Date | string
     authorId?: IntFilter<"ClanMessage"> | number
     content?: StringFilter<"ClanMessage"> | string
-    clan?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
-    author?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    author?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id" | "id_clanId">
 
   export type ClanMessageOrderByWithAggregationInput = {
@@ -52567,8 +52534,8 @@ export namespace Prisma {
     date?: DateTimeFilter<"ClanHistory"> | Date | string
     authorId?: IntFilter<"ClanHistory"> | number
     type?: StringFilter<"ClanHistory"> | string
-    clan?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
-    author?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    author?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type ClanHistoryOrderByWithRelationInput = {
@@ -52590,8 +52557,8 @@ export namespace Prisma {
     date?: DateTimeFilter<"ClanHistory"> | Date | string
     authorId?: IntFilter<"ClanHistory"> | number
     type?: StringFilter<"ClanHistory"> | string
-    clan?: XOR<ClanNullableRelationFilter, ClanWhereInput> | null
-    author?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
+    author?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id">
 
   export type ClanHistoryOrderByWithAggregationInput = {
@@ -52629,8 +52596,8 @@ export namespace Prisma {
     rights?: StringNullableListFilter<"ClanMember">
     dateJoin?: DateTimeFilter<"ClanMember"> | Date | string
     nickname?: StringNullableFilter<"ClanMember"> | string | null
-    clan?: XOR<ClanRelationFilter, ClanWhereInput>
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type ClanMemberOrderByWithRelationInput = {
@@ -52656,8 +52623,8 @@ export namespace Prisma {
     rights?: StringNullableListFilter<"ClanMember">
     dateJoin?: DateTimeFilter<"ClanMember"> | Date | string
     nickname?: StringNullableFilter<"ClanMember"> | string | null
-    clan?: XOR<ClanRelationFilter, ClanWhereInput>
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id" | "playerId">
 
   export type ClanMemberOrderByWithAggregationInput = {
@@ -52698,7 +52665,7 @@ export namespace Prisma {
     name?: StringFilter<"ClanPage"> | string
     content?: StringFilter<"ClanPage"> | string
     clanId?: IntFilter<"ClanPage"> | number
-    Clan?: XOR<ClanRelationFilter, ClanWhereInput>
+    Clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
   }
 
   export type ClanPageOrderByWithRelationInput = {
@@ -52721,7 +52688,7 @@ export namespace Prisma {
     name?: StringFilter<"ClanPage"> | string
     content?: StringFilter<"ClanPage"> | string
     clanId?: IntFilter<"ClanPage"> | number
-    Clan?: XOR<ClanRelationFilter, ClanWhereInput>
+    Clan?: XOR<ClanScalarRelationFilter, ClanWhereInput>
   }, "id">
 
   export type ClanPageOrderByWithAggregationInput = {
@@ -52761,9 +52728,9 @@ export namespace Prisma {
     reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
     comment?: StringFilter<"Moderation"> | string
     sorted?: BoolFilter<"Moderation"> | boolean
-    reporter?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    target?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    reporter?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }
 
   export type ModerationOrderByWithRelationInput = {
@@ -52790,9 +52757,9 @@ export namespace Prisma {
     reason?: EnumModerationReasonFilter<"Moderation"> | $Enums.ModerationReason
     comment?: StringFilter<"Moderation"> | string
     sorted?: BoolFilter<"Moderation"> | boolean
-    reporter?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    target?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    dinoz?: XOR<DinozNullableRelationFilter, DinozWhereInput> | null
+    reporter?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
   }, "id">
 
   export type ModerationOrderByWithAggregationInput = {
@@ -52834,11 +52801,11 @@ export namespace Prisma {
     createdById?: IntFilter<"Conversation"> | number
     playerId?: IntNullableFilter<"Conversation"> | number | null
     pinnedMessageId?: IntNullableFilter<"Conversation"> | number | null
-    createdBy?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    createdBy?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     participants?: ParticipantsListRelationFilter
     messages?: MessageListRelationFilter
-    Player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
-    pinnedMessage?: XOR<MessageNullableRelationFilter, MessageWhereInput> | null
+    Player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    pinnedMessage?: XOR<MessageNullableScalarRelationFilter, MessageWhereInput> | null
   }
 
   export type ConversationOrderByWithRelationInput = {
@@ -52867,11 +52834,11 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Conversation"> | Date | string
     createdById?: IntFilter<"Conversation"> | number
     playerId?: IntNullableFilter<"Conversation"> | number | null
-    createdBy?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    createdBy?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     participants?: ParticipantsListRelationFilter
     messages?: MessageListRelationFilter
-    Player?: XOR<PlayerNullableRelationFilter, PlayerWhereInput> | null
-    pinnedMessage?: XOR<MessageNullableRelationFilter, MessageWhereInput> | null
+    Player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    pinnedMessage?: XOR<MessageNullableScalarRelationFilter, MessageWhereInput> | null
   }, "id" | "pinnedMessageId">
 
   export type ConversationOrderByWithAggregationInput = {
@@ -52910,8 +52877,8 @@ export namespace Prisma {
     playerId?: IntFilter<"Participants"> | number
     conversationId?: StringFilter<"Participants"> | string
     joinedAt?: DateTimeFilter<"Participants"> | Date | string
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    conversation?: XOR<ConversationRelationFilter, ConversationWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
   }
 
   export type ParticipantsOrderByWithRelationInput = {
@@ -52932,8 +52899,8 @@ export namespace Prisma {
     playerId?: IntFilter<"Participants"> | number
     conversationId?: StringFilter<"Participants"> | string
     joinedAt?: DateTimeFilter<"Participants"> | Date | string
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    conversation?: XOR<ConversationRelationFilter, ConversationWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
   }, "id" | "playerId_conversationId">
 
   export type ParticipantsOrderByWithAggregationInput = {
@@ -52967,9 +52934,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Message"> | Date | string
     senderId?: IntFilter<"Message"> | number
     conversationId?: StringFilter<"Message"> | string
-    sender?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    conversation?: XOR<ConversationRelationFilter, ConversationWhereInput>
-    pinnedIn?: XOR<ConversationNullableRelationFilter, ConversationWhereInput> | null
+    sender?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
+    pinnedIn?: XOR<ConversationNullableScalarRelationFilter, ConversationWhereInput> | null
   }
 
   export type MessageOrderByWithRelationInput = {
@@ -52992,9 +52959,9 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Message"> | Date | string
     senderId?: IntFilter<"Message"> | number
     conversationId?: StringFilter<"Message"> | string
-    sender?: XOR<PlayerRelationFilter, PlayerWhereInput>
-    conversation?: XOR<ConversationRelationFilter, ConversationWhereInput>
-    pinnedIn?: XOR<ConversationNullableRelationFilter, ConversationWhereInput> | null
+    sender?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
+    pinnedIn?: XOR<ConversationNullableScalarRelationFilter, ConversationWhereInput> | null
   }, "id">
 
   export type MessageOrderByWithAggregationInput = {
@@ -53032,7 +52999,7 @@ export namespace Prisma {
     link?: StringNullableFilter<"Notification"> | string | null
     read?: BoolFilter<"Notification"> | boolean
     date?: DateTimeFilter<"Notification"> | Date | string
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }
 
   export type NotificationOrderByWithRelationInput = {
@@ -53057,7 +53024,7 @@ export namespace Prisma {
     link?: StringNullableFilter<"Notification"> | string | null
     read?: BoolFilter<"Notification"> | boolean
     date?: DateTimeFilter<"Notification"> | Date | string
-    player?: XOR<PlayerRelationFilter, PlayerWhereInput>
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
   }, "id" | "id">
 
   export type NotificationOrderByWithAggregationInput = {
@@ -53678,7 +53645,7 @@ export namespace Prisma {
 
   export type NewsCreateInput = {
     title?: string | null
-    image?: Buffer | null
+    image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -53694,7 +53661,7 @@ export namespace Prisma {
   export type NewsUncheckedCreateInput = {
     id?: number
     title?: string | null
-    image?: Buffer | null
+    image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -53709,7 +53676,7 @@ export namespace Prisma {
 
   export type NewsUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53725,7 +53692,7 @@ export namespace Prisma {
   export type NewsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53741,7 +53708,7 @@ export namespace Prisma {
   export type NewsCreateManyInput = {
     id?: number
     title?: string | null
-    image?: Buffer | null
+    image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
     englishTitle?: string | null
@@ -53756,7 +53723,7 @@ export namespace Prisma {
 
   export type NewsUpdateManyMutationInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53772,7 +53739,7 @@ export namespace Prisma {
   export type NewsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
-    image?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
     englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54908,7 +54875,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
@@ -54926,7 +54893,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
@@ -54939,7 +54906,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
@@ -54957,7 +54924,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
@@ -54973,14 +54940,14 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
   }
 
   export type ClanUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type ClanUncheckedUpdateManyInput = {
@@ -54990,7 +54957,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type ClanJoinRequestCreateInput = {
@@ -55764,17 +55731,17 @@ export namespace Prisma {
     not?: NestedEnumUnavailableReasonNullableFilter<$PrismaModel> | $Enums.UnavailableReason | null
   }
 
-  export type DinozNullableRelationFilter = {
+  export type DinozNullableScalarRelationFilter = {
     is?: DinozWhereInput | null
     isNot?: DinozWhereInput | null
   }
 
-  export type PlayerRelationFilter = {
+  export type PlayerScalarRelationFilter = {
     is?: PlayerWhereInput
     isNot?: PlayerWhereInput
   }
 
-  export type ConcentrationNullableRelationFilter = {
+  export type ConcentrationNullableScalarRelationFilter = {
     is?: ConcentrationWhereInput | null
     isNot?: ConcentrationWhereInput | null
   }
@@ -56137,12 +56104,12 @@ export namespace Prisma {
     dinozId?: SortOrder
   }
 
-  export type DinozRelationFilter = {
+  export type DinozScalarRelationFilter = {
     is?: DinozWhereInput
     isNot?: DinozWhereInput
   }
 
-  export type DinozItemRelationFilter = {
+  export type DinozItemScalarRelationFilter = {
     is?: DinozItemWhereInput
     isNot?: DinozItemWhereInput
   }
@@ -56412,10 +56379,10 @@ export namespace Prisma {
   }
 
   export type BytesNullableFilter<$PrismaModel = never> = {
-    equals?: Buffer | BytesFieldRefInput<$PrismaModel> | null
-    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Buffer | null
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
   }
 
   export type NewsCountOrderByAggregateInput = {
@@ -56493,10 +56460,10 @@ export namespace Prisma {
   }
 
   export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Buffer | BytesFieldRefInput<$PrismaModel> | null
-    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Buffer | null
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
@@ -56590,7 +56557,7 @@ export namespace Prisma {
     none?: PlayerRewardWhereInput
   }
 
-  export type RankingNullableRelationFilter = {
+  export type RankingNullableScalarRelationFilter = {
     is?: RankingWhereInput | null
     isNot?: RankingWhereInput | null
   }
@@ -56613,7 +56580,7 @@ export namespace Prisma {
     none?: PlayerTrackingWhereInput
   }
 
-  export type ClanMemberNullableRelationFilter = {
+  export type ClanMemberNullableScalarRelationFilter = {
     is?: ClanMemberWhereInput | null
     isNot?: ClanMemberWhereInput | null
   }
@@ -56630,12 +56597,12 @@ export namespace Prisma {
     none?: ClanHistoryWhereInput
   }
 
-  export type ClanNullableRelationFilter = {
+  export type ClanNullableScalarRelationFilter = {
     is?: ClanWhereInput | null
     isNot?: ClanWhereInput | null
   }
 
-  export type ClanJoinRequestNullableRelationFilter = {
+  export type ClanJoinRequestNullableScalarRelationFilter = {
     is?: ClanJoinRequestWhereInput | null
     isNot?: ClanJoinRequestWhereInput | null
   }
@@ -56846,7 +56813,7 @@ export namespace Prisma {
     _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
-  export type PlayerNullableRelationFilter = {
+  export type PlayerNullableScalarRelationFilter = {
     is?: PlayerWhereInput | null
     isNot?: PlayerWhereInput | null
   }
@@ -57173,7 +57140,7 @@ export namespace Prisma {
     value?: SortOrder
   }
 
-  export type OfferRelationFilter = {
+  export type OfferScalarRelationFilter = {
     is?: OfferWhereInput
     isNot?: OfferWhereInput
   }
@@ -57525,7 +57492,7 @@ export namespace Prisma {
     none?: ClanIngredientWhereInput
   }
 
-  export type ClanWarNullableRelationFilter = {
+  export type ClanWarNullableScalarRelationFilter = {
     is?: ClanWarWhereInput | null
     isNot?: ClanWarWhereInput | null
   }
@@ -57602,7 +57569,7 @@ export namespace Prisma {
     leaderId?: SortOrder
   }
 
-  export type ClanRelationFilter = {
+  export type ClanScalarRelationFilter = {
     is?: ClanWhereInput
     isNot?: ClanWhereInput
   }
@@ -57958,7 +57925,7 @@ export namespace Prisma {
     _max?: NestedEnumModerationReasonFilter<$PrismaModel>
   }
 
-  export type MessageNullableRelationFilter = {
+  export type MessageNullableScalarRelationFilter = {
     is?: MessageWhereInput | null
     isNot?: MessageWhereInput | null
   }
@@ -58005,7 +57972,7 @@ export namespace Prisma {
     pinnedMessageId?: SortOrder
   }
 
-  export type ConversationRelationFilter = {
+  export type ConversationScalarRelationFilter = {
     is?: ConversationWhereInput
     isNot?: ConversationWhereInput
   }
@@ -58046,7 +58013,7 @@ export namespace Prisma {
     playerId?: SortOrder
   }
 
-  export type ConversationNullableRelationFilter = {
+  export type ConversationNullableScalarRelationFilter = {
     is?: ConversationWhereInput | null
     isNot?: ConversationWhereInput | null
   }
@@ -59000,7 +58967,7 @@ export namespace Prisma {
   }
 
   export type NullableBytesFieldUpdateOperationsInput = {
-    set?: Buffer | null
+    set?: Uint8Array | null
   }
 
   export type DinozCreateNestedOneWithoutNpcsInput = {
@@ -61467,10 +61434,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
-    equals?: Buffer | BytesFieldRefInput<$PrismaModel> | null
-    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableFilter<$PrismaModel> | Buffer | null
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -61491,10 +61458,10 @@ export namespace Prisma {
   }
 
   export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Buffer | BytesFieldRefInput<$PrismaModel> | null
-    in?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    notIn?: Buffer[] | ListBytesFieldRefInput<$PrismaModel> | null
-    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Buffer | null
+    equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
+    in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    notIn?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
+    not?: NestedBytesNullableWithAggregatesFilter<$PrismaModel> | Uint8Array | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
@@ -64765,7 +64732,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
@@ -64781,7 +64748,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     clanWarId?: number | null
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
@@ -65432,7 +65399,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
@@ -65448,7 +65415,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
@@ -70088,7 +70055,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
@@ -70105,7 +70072,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
@@ -70243,7 +70210,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
@@ -70260,7 +70227,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
@@ -70388,7 +70355,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
@@ -70404,7 +70371,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
@@ -70449,14 +70416,14 @@ export namespace Prisma {
     creationDate?: DateTimeFilter<"Clan"> | Date | string
     clanWarId?: IntNullableFilter<"Clan"> | number | null
     leaderId?: IntFilter<"Clan"> | number
-    banner?: BytesNullableFilter<"Clan"> | Buffer | null
+    banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
   }
 
   export type ClanCreateWithoutIngredientsInput = {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -70473,7 +70440,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
@@ -70501,7 +70468,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -70518,7 +70485,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
@@ -70530,7 +70497,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -70547,7 +70514,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
@@ -70685,7 +70652,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -70702,7 +70669,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
@@ -70830,7 +70797,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
@@ -70847,7 +70814,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
@@ -70985,7 +70952,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
@@ -71002,7 +70969,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
@@ -71130,7 +71097,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -71147,7 +71114,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
@@ -71285,7 +71252,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -71302,7 +71269,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
@@ -71430,7 +71397,7 @@ export namespace Prisma {
     name: string
     treasureValue?: number
     creationDate?: Date | string
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientCreateNestedManyWithoutClanInput
     discussion?: ClanMessageCreateNestedManyWithoutClanInput
@@ -71447,7 +71414,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     ingredients?: ClanIngredientUncheckedCreateNestedManyWithoutClanInput
     discussion?: ClanMessageUncheckedCreateNestedManyWithoutClanInput
@@ -71475,7 +71442,7 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
@@ -71492,7 +71459,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
@@ -75152,14 +75119,14 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     leaderId: number
-    banner?: Buffer | null
+    banner?: Uint8Array | null
   }
 
   export type ClanUpdateWithoutWarInput = {
     name?: StringFieldUpdateOperationsInput | string
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUpdateManyWithoutClanNestedInput
@@ -75175,7 +75142,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     ingredients?: ClanIngredientUncheckedUpdateManyWithoutClanNestedInput
     discussion?: ClanMessageUncheckedUpdateManyWithoutClanNestedInput
@@ -75190,7 +75157,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     leaderId?: IntFieldUpdateOperationsInput | number
-    banner?: NullableBytesFieldUpdateOperationsInput | Buffer | null
+    banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type ParticipantsCreateManyConversationInput = {
@@ -75246,206 +75213,6 @@ export namespace Prisma {
   }
 
 
-
-  /**
-   * Aliases for legacy arg types
-   */
-    /**
-     * @deprecated Use ConcentrationCountOutputTypeDefaultArgs instead
-     */
-    export type ConcentrationCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConcentrationCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozCountOutputTypeDefaultArgs instead
-     */
-    export type DinozCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozItemCountOutputTypeDefaultArgs instead
-     */
-    export type DinozItemCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozItemCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerCountOutputTypeDefaultArgs instead
-     */
-    export type PlayerCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use OfferCountOutputTypeDefaultArgs instead
-     */
-    export type OfferCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanCountOutputTypeDefaultArgs instead
-     */
-    export type ClanCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanWarCountOutputTypeDefaultArgs instead
-     */
-    export type ClanWarCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanWarCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ConversationCountOutputTypeDefaultArgs instead
-     */
-    export type ConversationCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConversationCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ConcentrationDefaultArgs instead
-     */
-    export type ConcentrationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConcentrationDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozDefaultArgs instead
-     */
-    export type DinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozItemDefaultArgs instead
-     */
-    export type DinozItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozItemDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozItemToDinozDefaultArgs instead
-     */
-    export type DinozItemToDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozItemToDinozDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozMissionDefaultArgs instead
-     */
-    export type DinozMissionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozMissionDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozSkillDefaultArgs instead
-     */
-    export type DinozSkillArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozSkillDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozSkillUnlockableDefaultArgs instead
-     */
-    export type DinozSkillUnlockableArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozSkillUnlockableDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozStatusDefaultArgs instead
-     */
-    export type DinozStatusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozStatusDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use migrationsDefaultArgs instead
-     */
-    export type migrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = migrationsDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use NewsDefaultArgs instead
-     */
-    export type NewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NewsDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use NPCDefaultArgs instead
-     */
-    export type NPCArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NPCDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerDefaultArgs instead
-     */
-    export type PlayerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use UsernameHistoryDefaultArgs instead
-     */
-    export type UsernameHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UsernameHistoryDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerDinozShopDefaultArgs instead
-     */
-    export type PlayerDinozShopArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerDinozShopDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerGatherDefaultArgs instead
-     */
-    export type PlayerGatherArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerGatherDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerIngredientDefaultArgs instead
-     */
-    export type PlayerIngredientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerIngredientDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerItemDefaultArgs instead
-     */
-    export type PlayerItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerItemDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerQuestDefaultArgs instead
-     */
-    export type PlayerQuestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerQuestDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerRewardDefaultArgs instead
-     */
-    export type PlayerRewardArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerRewardDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use RankingDefaultArgs instead
-     */
-    export type RankingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = RankingDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use SecretDefaultArgs instead
-     */
-    export type SecretArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SecretDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use OfferItemDefaultArgs instead
-     */
-    export type OfferItemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferItemDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use OfferBidDefaultArgs instead
-     */
-    export type OfferBidArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferBidDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use OfferDefaultArgs instead
-     */
-    export type OfferArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = OfferDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use LogDefaultArgs instead
-     */
-    export type LogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LogDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use DinozCatchDefaultArgs instead
-     */
-    export type DinozCatchArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DinozCatchDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PlayerTrackingDefaultArgs instead
-     */
-    export type PlayerTrackingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PlayerTrackingDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use PantheonDefaultArgs instead
-     */
-    export type PantheonArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PantheonDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanDefaultArgs instead
-     */
-    export type ClanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanJoinRequestDefaultArgs instead
-     */
-    export type ClanJoinRequestArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanJoinRequestDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanWarDefaultArgs instead
-     */
-    export type ClanWarArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanWarDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanIngredientDefaultArgs instead
-     */
-    export type ClanIngredientArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanIngredientDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanMessageDefaultArgs instead
-     */
-    export type ClanMessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanMessageDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanHistoryDefaultArgs instead
-     */
-    export type ClanHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanHistoryDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanMemberDefaultArgs instead
-     */
-    export type ClanMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanMemberDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ClanPageDefaultArgs instead
-     */
-    export type ClanPageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ClanPageDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ModerationDefaultArgs instead
-     */
-    export type ModerationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModerationDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ConversationDefaultArgs instead
-     */
-    export type ConversationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ConversationDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use ParticipantsDefaultArgs instead
-     */
-    export type ParticipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ParticipantsDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use MessageDefaultArgs instead
-     */
-    export type MessageArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MessageDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use NotificationDefaultArgs instead
-     */
-    export type NotificationArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NotificationDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany
