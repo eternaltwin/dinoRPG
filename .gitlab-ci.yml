@@ -27,7 +27,7 @@ container-build:
 
 front-lint:
   stage: test
-  image: "demurgos/node:2023.6"
+  image: "demurgos/node:2024.2"
   needs: [container-build]
   script:
     - yarn lint:test
