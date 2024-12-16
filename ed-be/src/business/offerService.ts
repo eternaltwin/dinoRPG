@@ -533,12 +533,12 @@ export async function checkRefund(
 		});
 
 	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
-		return 'tooMuchIngredient'
+		return 'tooMuchIngredient';
 	}
 	if (itemWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
-		return 'tooMuchItem'
+		return 'tooMuchItem';
 	}
-	return true
+	return true;
 }
 
 /**
