@@ -4,6 +4,8 @@ import { prisma } from '../prisma.js';
 import { OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import OfferOrderByWithRelationInput = Prisma.OfferOrderByWithRelationInput;
+import { GLOBAL } from '../context.js';
+
 export async function getOffers(
 	userId: number | null,
 	filter: string,
@@ -96,11 +98,11 @@ export async function insertOffer(
 	}[],
 	playerId: number
 ) {
+	const duration = GLOBAL.config.isProduction ? MARKET_OFFER_DURATION : MARKET_OFFER_DURATION_DEBUG;
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
-			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
-			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
+			endDate: new Date(Date.now() + duration),
 			dinozId,
 			items: {
 				create: itemsAndIngredient
