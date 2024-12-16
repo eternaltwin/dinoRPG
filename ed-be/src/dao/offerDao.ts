@@ -99,8 +99,8 @@ export async function insertOffer(
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
-			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
-			endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
+			endDate: new Date(Date.now() + MARKET_OFFER_DURATION),
+			// endDate: new Date(Date.now() + MARKET_OFFER_DURATION_DEBUG),
 			dinozId,
 			items: {
 				create: itemsAndIngredient
