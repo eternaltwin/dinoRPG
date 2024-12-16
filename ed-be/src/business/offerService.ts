@@ -234,8 +234,8 @@ export async function cancelOffer(req: Request) {
 
 	const refund = await checkRefund(playerId, ingredients, items, offer.dinoz !== undefined, offerId);
 
-	if (!refund) {
-		throw new ExpectedError(translate('cannotClaim', authed));
+	if (typeof refund === 'string') {
+		throw new ExpectedError(translate(refund, authed));
 	}
 
 	// Set Dinoz as not selling
@@ -414,8 +414,8 @@ export async function claimOffer(req: Request) {
 	if (offer.bids.length) {
 		const winner = await checkRefund(winnerBid.userId, ingredients, items, offer.dinoz !== undefined, offerId);
 
-		if (!winner) {
-			throw new ExpectedError(translate('cannotClaim', authed));
+		if (typeof winner === 'string') {
+			throw new ExpectedError(translate(winner, authed));
 		}
 		if (offer.dinoz) {
 			// Change Dinoz owner and set as not selling
@@ -443,8 +443,8 @@ export async function claimOffer(req: Request) {
 	} else {
 		const refund = await checkRefund(offer.sellerId, ingredients, items, false, offerId);
 
-		if (!refund) {
-			throw new ExpectedError(translate('cannotClaim', authed));
+		if (typeof refund === 'string') {
+			throw new ExpectedError(translate(refund, authed));
 		}
 		// Set Dinoz as not selling
 		if (offer.dinoz) {
@@ -482,7 +482,7 @@ export async function checkRefund(
 
 	const maxDinoz = gameConfig.dinoz.maxQuantity + (refund.leader ? 3 : 0) + (refund.messie ? 3 : 0);
 	if (dinoz && refund._count.dinoz + 1 >= maxDinoz) {
-		return false;
+		return 'tooMuchDinoz';
 	}
 
 	const shopKeeper = refund.shopKeeper;
@@ -532,10 +532,13 @@ export async function checkRefund(
 			};
 		});
 
-	return (
-		ingredientsWithMaxQuantity.every(i => i.futureQuantity <= i.maxQuantity) &&
-		itemWithMaxQuantity.every(i => i.futureQuantity <= i.maxQuantity)
-	);
+	if (ingredientsWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
+		return 'tooMuchIngredient'
+	}
+	if (itemWithMaxQuantity.some(i => i.futureQuantity >= i.maxQuantity)) {
+		return 'tooMuchItem'
+	}
+	return true
 }
 
 /**
