@@ -39,6 +39,7 @@
 	"tooMuchIngredient": "Vous avez un ingrédient risquant de dépasser la limite maximum.",
 	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
 	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
+	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 	"race": {
 		"1": "Moueffe",
 		"2": "Moueffe Démon",

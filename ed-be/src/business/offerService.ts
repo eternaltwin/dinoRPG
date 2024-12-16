@@ -226,6 +226,10 @@ export async function cancelOffer(req: Request) {
 		throw new ExpectedError('invalidOffer');
 	}
 
+	if (offer.bids.length > 0) {
+		throw new ExpectedError('offerInProgress');
+	}
+
 	const { dinoz, items: itemsAndIngredients } = offer;
 
 	// Separate items and ingredients
