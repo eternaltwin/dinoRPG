@@ -2172,7 +2172,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.STUNNED: {
-				fighter.time += FIGHT_INFINITE;
+				fighter.time -= FIGHT_INFINITE;
 				// Make sure the fighter's time is not in the past
 				if (fighter.time < fightData.time) {
 					fighter.time = fightData.time;
