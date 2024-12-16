@@ -454,6 +454,13 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 	}
 
+	// Place hypnotized fighters in the right teams
+	fightData.fighters.map(f => {
+		if (f.hypnotized && f.hypnotized > 0) {
+			f.attacker = !f.attacker;
+		}
+	});
+
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters
 		.filter(fighter => fighter.attacker && fighter.type === 'dinoz')
