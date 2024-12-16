@@ -155,6 +155,7 @@ export async function getOffer(offerId: number, status: OfferStatus) {
 					nbrUpWater: true,
 					nbrUpWood: true,
 					display: true,
+					playerId: true,
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } }
 				}

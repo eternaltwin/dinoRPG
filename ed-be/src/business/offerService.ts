@@ -20,7 +20,7 @@ import {
 	getAllIngredientsDataRequest,
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
-import { $Enums, LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
+import { $Enums, Dinoz, LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
 import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -236,7 +236,7 @@ export async function cancelOffer(req: Request) {
 	const items = itemsAndIngredients.filter(item => !item.isIngredient);
 	const ingredients = itemsAndIngredients.filter(item => item.isIngredient);
 
-	const refund = await checkRefund(playerId, ingredients, items, offer.dinoz !== undefined, offerId);
+	const refund = await checkRefund(playerId, ingredients, items, offer.dinoz, offerId);
 
 	if (typeof refund === 'string') {
 		throw new ExpectedError(translate(refund, authed));
@@ -416,7 +416,7 @@ export async function claimOffer(req: Request) {
 	const promises = [];
 
 	if (offer.bids.length) {
-		const winner = await checkRefund(winnerBid.userId, ingredients, items, offer.dinoz !== undefined, offerId);
+		const winner = await checkRefund(winnerBid.userId, ingredients, items, offer.dinoz, offerId);
 
 		if (typeof winner === 'string') {
 			throw new ExpectedError(translate(winner, authed));
@@ -445,7 +445,7 @@ export async function claimOffer(req: Request) {
 		// Add ingredients to winner inventory
 		promises.push(...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity)));
 	} else {
-		const refund = await checkRefund(offer.sellerId, ingredients, items, false, offerId);
+		const refund = await checkRefund(offer.sellerId, ingredients, items, offer.dinoz, offerId);
 
 		if (typeof refund === 'string') {
 			throw new ExpectedError(translate(refund, authed));
@@ -475,7 +475,7 @@ export async function checkRefund(
 	playerId: number,
 	ingredients: { itemId: number; quantity: number; isIngredient: boolean }[],
 	items: { itemId: number; quantity: number; isIngredient: boolean }[],
-	dinoz = false,
+	dinoz: Pick<Dinoz, 'playerId'> | null,
 	offerId: number
 ) {
 	const refund = await prepareRefund(
@@ -484,9 +484,15 @@ export async function checkRefund(
 		items.map(i => i.itemId)
 	);
 
-	const maxDinoz = gameConfig.dinoz.maxQuantity + (refund.leader ? 3 : 0) + (refund.messie ? 3 : 0);
-	if (dinoz && refund._count.dinoz + 1 >= maxDinoz) {
-		return 'tooMuchDinoz';
+	if (dinoz) {
+		const maxDinoz =
+			gameConfig.dinoz.maxQuantity +
+			(refund.leader ? 3 : 0) +
+			(refund.messie ? 3 : 0) +
+			(dinoz.playerId === playerId ? 1 : 0);
+		if (refund._count.dinoz + 1 > maxDinoz) {
+			return 'tooMuchDinoz';
+		}
 	}
 
 	const shopKeeper = refund.shopKeeper;

@@ -152,7 +152,7 @@
 						<RouterLink v-if="notification.link" @click="cleanNotif(notification.id)" class="go" :to="notification.link"
 							>Go</RouterLink
 						>
-						<a @click="cleanNotif(notification.id)" class="go">OK</a>
+						<a v-else @click="cleanNotif(notification.id)" class="go">OK</a>
 					</div>
 				</div>
 			</div>
