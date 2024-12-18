@@ -64,7 +64,9 @@
 		"itemBought": "Vous avez acheté {quantity} {itemName}.",
 		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
-		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre."
+		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
+		"finishGrid": "Félicitations ! Vous avez gagné 1000 or pour avoir terminé la grille !",
+		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
 	},
 	"dig": {
 		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",

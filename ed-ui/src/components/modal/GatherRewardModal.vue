@@ -1,20 +1,26 @@
 <template>
 	<Transition>
 		<div class="modal-background">
-			<Tippy
-				theme="normal"
-				tag="img"
-				v-for="ingredient in rewardList.ingredients"
-				:key="ingredient.ingredientId"
-				:src="getImgURL('ingredients', ingredient.name)"
-				:alt="ingredient.name"
-			>
-				<template #content>
-					<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name?.toLowerCase()}`))" />
-					<p v-html="formatContent($t(`ingredients.description.${ingredient.name?.toLowerCase()}`))" />
-				</template>
-			</Tippy>
-
+			<div v-for="ingredient in rewardList.ingredients" :key="ingredient.ingredientId" class="ingredient-container">
+				<Tippy
+					theme="normal"
+					tag="img"
+					:src="getImgURL('ingredients', ingredient.name)"
+					:alt="ingredient.name"
+					class="ingredient-image"
+				>
+					<template #content>
+						<h1 v-html="formatContent($t(`ingredients.name.${ingredient.name?.toLowerCase()}`))" />
+						<p v-html="formatContent($t(`ingredients.description.${ingredient.name?.toLowerCase()}`))" />
+					</template>
+				</Tippy>
+				<div :class="{ 'max-quantity-info': true, 'is-max': isMaxQuantity(ingredient.ingredientId).isMaxQuantity }">
+					<span :style="isMaxQuantity(ingredient.ingredientId).isMaxQuantity ? 'color: red;' : 'color: white;'">
+						{{ formatContent($t(`ingredients.name.${ingredient.name}`)) }}
+						({{ isMaxQuantity(ingredient.ingredientId).quantity }})
+					</span>
+				</div>
+			</div>
 			<Tippy
 				theme="normal"
 				tag="img"
@@ -49,6 +55,10 @@ export default defineComponent({
 	name: 'GatherRewardModal',
 	props: {
 		rewards: { type: Object as PropType<GatherRewards>, required: true },
+		ingredientsAtMaxQuantity: {
+			type: Array as PropType<{ ingredientId: number; quantity: number; isMaxQuantity: boolean }[]>,
+			required: true
+		},
 		size: Number
 	},
 	data() {
@@ -76,6 +86,18 @@ export default defineComponent({
 				this.playerStore.addMoney(item.price);
 			}
 		}
+	},
+	methods: {
+		isMaxQuantity(ingredientId: number) {
+			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);
+			if (ingredient) {
+				return {
+					isMaxQuantity: ingredient.isMaxQuantity,
+					quantity: ingredient.quantity
+				};
+			}
+			return { isMaxQuantity: false, quantity: 0 };
+		}
 	}
 });
 </script>
@@ -102,6 +124,20 @@ export default defineComponent({
 	.button {
 		margin-top: 25px;
 	}
+}
+.ingredient-container {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 50%;
+}
+.max-quantity-info {
+	margin-top: 15px;
+	font-size: 14px;
+	color: white;
+}
+.is-max {
+	color: red;
 }
 
 .v-enter-active {

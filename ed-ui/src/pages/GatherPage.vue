@@ -37,7 +37,12 @@
 				</div>
 			</div>
 		</div>
-		<GatherRewardModal v-if="gatherOver && gatherResult" :rewards="gatherResult.rewards" @close="returnToDinoz()" />
+		<GatherRewardModal
+			v-if="gatherOver && gatherResult"
+			:rewards="gatherResult.rewards"
+			:ingredientsAtMaxQuantity="gatherResult.ingredientsAtMaxQuantity"
+			@close="returnToDinoz()"
+		/>
 	</div>
 </template>
 
@@ -87,6 +92,17 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
+					console.log(this.gatherResult.ingredientsAtMaxQuantity);
+					// Check if the grid is complete
+					if (this.gatherResult.isGridComplete) {
+						// If there is a gold reward, show a success message
+						if (this.gatherResult.goldReward > 0) {
+							this.$toast.success(this.$t('toast.finishGrid'));
+						} else {
+							// If no gold reward, show an informational message about daily rewards being finished
+							this.$toast.info(this.$t('toast.dailyGridRewardsFinished'));
+						}
+					}
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
@@ -94,6 +110,7 @@ export default defineComponent({
 				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
 				EventBus.emit('isLoading', false);
+				EventBus.emit('refreshMoney', true);
 			}
 		},
 		isSelected(row: number, box: number): boolean {

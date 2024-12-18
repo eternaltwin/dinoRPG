@@ -96,6 +96,7 @@ import { updateQuest } from '../dao/questsDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
+import { ingredientList, IngredientName, IngredientNames } from '@drpg/core/models/ingredient/ingredientList';
 
 /**
  * @summary Get available action from dinoz
@@ -999,6 +1000,8 @@ export async function gatherWithDinoz(req: Request) {
 
 	for (const i of returnGrid.rewards.ingredients) {
 		const ingredientToReward = player.ingredients.find(ingre => ingre.ingredientId === i.ingredientId);
+		let isMaxQuantity = false;
+		let currentQuantity = ingredientToReward ? ingredientToReward.quantity : 0;
 
 		if (ingredientToReward && ingredientToReward.quantity < i.maxQuantity) {
 			if (!ingredientToReward.playerId) {
@@ -1006,18 +1009,37 @@ export async function gatherWithDinoz(req: Request) {
 			}
 			await increaseIngredientQuantity(ingredientToReward.playerId, ingredientToReward.ingredientId, 1);
 			// Update quantity in case multiple were obtained and the max was reached
-			ingredientToReward.quantity += 1;
+			currentQuantity += 1;
+			ingredientToReward.quantity = currentQuantity;
+
+			isMaxQuantity = ingredientToReward.quantity >= i.maxQuantity;
 		} else if (ingredientToReward && ingredientToReward.quantity >= i.maxQuantity) {
 			// Do nothing
+			currentQuantity = ingredientToReward.quantity;
+			isMaxQuantity = true;
 		} else {
+			currentQuantity = 1;
 			player.ingredients.push(
 				await setIngredient({
 					player: { connect: { id: player.id } },
 					ingredientId: i.ingredientId,
-					quantity: 1
+					quantity: currentQuantity
 				})
 			);
 		}
+		// Add or update the ingredient in ingredientsAtMaxQuantity
+		const existingEntry = returnGrid.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === i.ingredientId);
+		if (existingEntry) {
+			existingEntry.quantity = currentQuantity;
+			existingEntry.isMaxQuantity = isMaxQuantity;
+		} else {
+			returnGrid.ingredientsAtMaxQuantity.push({
+				ingredientId: i.ingredientId,
+				quantity: currentQuantity,
+				isMaxQuantity: isMaxQuantity
+			});
+		}
+		// console.log(returnGrid.ingredientsAtMaxQuantity)
 	}
 
 	if (!gatherPlace.special) {
@@ -1025,15 +1047,16 @@ export async function gatherWithDinoz(req: Request) {
 			gather: false
 		});
 
-		// Check if the grid was finished and award the player if it has not exhausted its daily grid rewards.
+		// Check if the grid was finished and award the player if it has not exhausted its daily grid rewards
 		if (myGrid.grid.every(box => box === -1)) {
+			returnGrid.isGridComplete = true;
+			// If the grid is finished, we process the rewards
 			if (player.dailyGridRewards > 0) {
-				await addMoney(player.id, GRID_FINISHED_GOLD_REWARD);
+				returnGrid.goldReward = GRID_FINISHED_GOLD_REWARD;
+				await addMoney(player.id, returnGrid.goldReward);
 				await removeDailyGridRewards(player.id, 1);
-				await createLog(LogType.GridFinished, playerId, undefined, GRID_FINISHED_GOLD_REWARD);
-			} else {
-				await createLog(LogType.GridFinished, playerId, undefined, 0);
 			}
+			await createLog(LogType.GridFinished, playerId, undefined, returnGrid.goldReward);
 		}
 	}
 

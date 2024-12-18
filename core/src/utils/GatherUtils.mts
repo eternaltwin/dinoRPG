@@ -68,9 +68,18 @@ export const discoverBox = (
 	player: PlayerForConditionCheck,
 	gridInformation: GatherData,
 	...box: [number, number][]
-): { grid: GatherResultGrid; rewards: GatherRewards } => {
+): {
+	grid: GatherResultGrid;
+	rewards: GatherRewards;
+	isGridComplete: boolean;
+	goldReward: number;
+	ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[];
+} => {
 	const flatReturnGrid = getPublicGrid(grid);
 	const rewards: GatherRewards = { item: [], ingredients: [] };
+	const isGridComplete = false;
+	const goldReward = 0;
+	const ingredientsAtMaxQuantity: { ingredientId: number; quantity: number; isMaxQuantity: boolean }[] = [];
 	for (let i = 0; i < box.length; i++) {
 		let ingredientId: number = grid.grid[box[i][0] * gridInformation.size + box[i][1]];
 		let itemCheck = false;
@@ -110,7 +119,10 @@ export const discoverBox = (
 
 	return {
 		grid: returnGrid,
-		rewards: rewards
+		rewards: rewards,
+		isGridComplete,
+		goldReward,
+		ingredientsAtMaxQuantity
 	};
 };
 
