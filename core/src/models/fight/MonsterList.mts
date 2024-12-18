@@ -196,6 +196,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 20,
 		level: 7,
+		xp: 25,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
 		skills: [Skill.M_ABSORPTION],
@@ -273,7 +274,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		id: Monster.FLAM,
 		name: 'flam',
 		hp: 10,
-		xp: 7,
 		elements: {
 			fire: 1,
 			wood: 0,
@@ -286,6 +286,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 100,
 		level: 3,
+		xp: 7,
 		zones: [MapZone.GTOUTCHAUD],
 		groups: [
 			{ quantity: 0, odds: 0 },
@@ -332,6 +333,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 20,
 		level: 10,
+		xp: 15,
 		zones: [MapZone.GTOUTCHAUD],
 		canBeCaptured: true,
 		display: 'barche'
@@ -368,6 +370,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 100,
 		level: 6,
+		xp: 5,
 		zones: [MapZone.ILES],
 		groups: [
 			{ quantity: 0, odds: 0 },
@@ -413,6 +416,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: false,
 		odds: 70,
 		level: 18,
+		xp: 15,
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
 		skills: [Skill.M_ELECTROCUTION],
@@ -509,7 +513,6 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		id: Monster.GRDIEN,
 		name: 'grdien',
 		hp: 80,
-		xp: 15,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -522,6 +525,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		balanced: true,
 		odds: 50,
 		level: 25,
+		xp: 15,
 		zones: [MapZone.JUNGLE],
 		canBeCaptured: true,
 		skills: [Skill.M_COMET],
