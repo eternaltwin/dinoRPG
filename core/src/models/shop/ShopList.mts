@@ -450,7 +450,7 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			},
 			{
 				id: ingredientList.ENERGIE_BOIS.ingredientId,
-				price: 400,
+				price: 4000,
 				type: ItemShopType.INGREDIENT
 			}
 		],
