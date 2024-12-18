@@ -128,7 +128,7 @@ export default defineComponent({
 			localStore: localStore(),
 			messageRef: null as HTMLDialogElement | null,
 			recipientName: '' as string,
-			playerId: playerStore().getPlayerId as number,
+			playerId: playerStore().getPlayerId as string,
 			threads: [] as ThreadsBasic[], // Liste des messages de la conversation
 			creationMode: false as boolean,
 			newThread: {} as NewThread,

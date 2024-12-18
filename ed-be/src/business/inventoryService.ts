@@ -46,7 +46,7 @@ import translate from '../utils/translate.js';
  */
 export async function getAllItemsData(req: Request) {
 	const authed = await auth(req);
-	const playerId: number = authed.id;
+	const playerId = authed.id;
 
 	// Get the player's data (shopKeeper)
 	const playerInventoryData = await getPlayerInventoryDataRequest(playerId);
@@ -545,4 +545,3 @@ export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
 		life: dinoz.life
 	};
 };
-

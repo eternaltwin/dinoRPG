@@ -1,7 +1,7 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-export async function getDinozFromDinozShopRequest(playerId: number) {
+export async function getDinozFromDinozShopRequest(playerId: string) {
 	const dinozShop = await prisma.playerDinozShop.findMany({
 		where: {
 			playerId
@@ -54,7 +54,7 @@ export async function getDinozShopDetailsRequest(dinozId: number) {
 	return dinozShop;
 }
 
-export async function deleteDinozInShopRequest(playerId: number) {
+export async function deleteDinozInShopRequest(playerId: string) {
 	await prisma.playerDinozShop.deleteMany({
 		where: {
 			playerId

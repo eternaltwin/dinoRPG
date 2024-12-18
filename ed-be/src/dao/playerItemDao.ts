@@ -1,7 +1,7 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-export const increaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
+export const increaseItemQuantity = async (playerId: string, itemId: number, quantity: number) => {
 	const item = await prisma.playerItem.upsert({
 		where: {
 			itemId_playerId: {
@@ -24,7 +24,7 @@ export const increaseItemQuantity = async (playerId: number, itemId: number, qua
 	return item;
 };
 
-export const decreaseItemQuantity = async (playerId: number, itemId: number, quantity: number) => {
+export const decreaseItemQuantity = async (playerId: string, itemId: number, quantity: number) => {
 	const item = await prisma.playerItem.update({
 		where: {
 			itemId_playerId: {
@@ -52,7 +52,7 @@ export const decreaseItemQuantity = async (playerId: number, itemId: number, qua
 	}
 };
 
-export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCreateInput) {
+export async function insertItem(playerId: string, newItem: Prisma.PlayerItemCreateInput) {
 	return prisma.playerItem.create({
 		data: {
 			...newItem,
@@ -61,7 +61,7 @@ export async function insertItem(playerId: number, newItem: Prisma.PlayerItemCre
 	});
 }
 
-export async function getPlayerItems(playerId: number, where?: Prisma.PlayerItemWhereInput) {
+export async function getPlayerItems(playerId: string, where?: Prisma.PlayerItemWhereInput) {
 	return prisma.playerItem.findMany({
 		where: {
 			playerId,

@@ -19,7 +19,6 @@ import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import { AdminRole } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { ModerationReasonFront } from '@drpg/core/models/enums/ModerationReasonFront';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 
 /**
@@ -162,7 +161,7 @@ export async function editDinoz(req: Request) {
 export async function setPlayerMoney(req: Request) {
 	const authed = await auth(req);
 
-	const player = await getEternalTwinId(+req.params.id);
+	const player = await getEternalTwinId(req.params.id);
 	if (!player) {
 		throw new ExpectedError(`Player ${req.params.id} doesn't exist.`);
 	}
@@ -170,11 +169,11 @@ export async function setPlayerMoney(req: Request) {
 	switch (req.body.operation) {
 		case 'add':
 			await createLog(LogType.AdminAddMoney, authed.id, undefined, +req.params.id, req.body.gold);
-			newMoney = (await addMoney(+req.params.id, +req.body.gold)).money;
+			newMoney = (await addMoney(authed.id, +req.body.gold)).money;
 			break;
 		case 'remove':
 			await createLog(LogType.AdminRemoveMoney, authed.id, undefined, +req.params.id, req.body.gold);
-			newMoney = (await removeMoney(+req.params.id, +req.body.gold)).money;
+			newMoney = (await removeMoney(authed.id, +req.body.gold)).money;
 			break;
 		default:
 			throw new ExpectedError(`You need to select an operation.`);
@@ -199,21 +198,21 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 		case 'add':
 			await addMultipleRewardToPlayer(
 				rewardList.map(reward => ({
-					playerId: +req.params.id,
+					playerId: req.params.id,
 					rewardId: +reward
 				}))
 			);
 
 			for (const reward of rewardList) {
-				await createLog(LogType.AdminAddReward, authed.id, undefined, +req.params.id, reward);
+				await createLog(LogType.AdminAddReward, authed.id, undefined, req.params.id, reward);
 			}
 			break;
 		case 'remove':
-			const promises = rewardList.map(reward => removeRewardFromPlayer(+req.params.id, +reward));
+			const promises = rewardList.map(reward => removeRewardFromPlayer(req.params.id, +reward));
 			await Promise.all(promises);
 
 			for (const reward of rewardList) {
-				await createLog(LogType.AdminRemoveReward, authed.id, undefined, +req.params.id, reward);
+				await createLog(LogType.AdminRemoveReward, authed.id, undefined, req.params.id, reward);
 			}
 			break;
 		default:
@@ -232,18 +231,18 @@ export async function givePlayerEpicReward(req: Request): Promise<void> {
 export async function modifyPlayerItems(req: Request): Promise<void> {
 	const authed = await auth(req);
 
-	const items: Array<{ id: number; quantity: number }> = req.body.items;
+	const items: { id: number; quantity: number }[] = req.body.items;
 	switch (req.body.operation) {
 		case 'increase':
 			for (const item of items) {
-				await increaseItemQuantity(+req.params.id, item.id, item.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, item.id, item.quantity);
+				await increaseItemQuantity(req.params.id, item.id, item.quantity);
+				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, item.id, item.quantity);
 			}
 			break;
 		case 'decrease':
 			for (const item of items) {
-				await decreaseItemQuantity(+req.params.id, item.id, item.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, item.id, item.quantity);
+				await decreaseItemQuantity(req.params.id, item.id, item.quantity);
+				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, item.id, item.quantity);
 			}
 			break;
 		default:
@@ -262,18 +261,18 @@ export async function modifyPlayerItems(req: Request): Promise<void> {
 export async function modifyPlayerIngredients(req: Request): Promise<void> {
 	const authed = await auth(req);
 
-	const ingredients: Array<{ id: number; quantity: number }> = req.body.ingredients;
+	const ingredients: { id: number; quantity: number }[] = req.body.ingredients;
 	switch (req.body.operation) {
 		case 'increase':
 			for (const ing of ingredients) {
-				await increaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, ing.id, ing.quantity);
+				await increaseIngredientQuantity(req.params.id, ing.id, ing.quantity);
+				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, ing.id, ing.quantity);
 			}
 			break;
 		case 'decrease':
 			for (const ing of ingredients) {
-				await decreaseIngredientQuantity(+req.params.id, ing.id, ing.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, ing.id, ing.quantity);
+				await decreaseIngredientQuantity(req.params.id, ing.id, ing.quantity);
+				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, ing.id, ing.quantity);
 			}
 			break;
 		default:
@@ -292,8 +291,7 @@ export async function modifyPlayerIngredients(req: Request): Promise<void> {
 export async function updatePlayerQuestProgression(req: Request): Promise<void> {
 	const authed = await auth(req);
 
-	const playerId = +req.params.id;
-	const quests: Array<{ questId: number; progression: number }> = req.body.quests;
+	const quests: { questId: number; progression: number }[] = req.body.quests;
 	// Validate questId and progression
 	if (quests === undefined) {
 		throw new ExpectedError(`Quest ID and progression are required.`);
@@ -301,14 +299,14 @@ export async function updatePlayerQuestProgression(req: Request): Promise<void> 
 	switch (req.body.operation) {
 		case 'increase':
 			for (const q of quests) {
-				await increaseQuestProgression(+req.params.id, q.questId, q.progression);
+				await increaseQuestProgression(req.params.id, q.questId, q.progression);
 				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, q.questId, q.progression);
 			}
 			break;
 		case 'decrease':
 			for (const q of quests) {
-				await decreaseQuestProgression(+req.params.id, q.questId, q.progression);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, q.questId, q.progression);
+				await decreaseQuestProgression(req.params.id, q.questId, q.progression);
+				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, q.questId, q.progression);
 			}
 			break;
 		default:
@@ -322,7 +320,7 @@ export async function updatePlayerQuestProgression(req: Request): Promise<void> 
  * @param req.params.id {string} PlayerId
  */
 export async function listAllDinozFromPlayer(req: Request) {
-	const dinozList = await getAllDinozFromAccount(parseInt(req.params.id));
+	const dinozList = await getAllDinozFromAccount(req.params.id);
 	const dinozListToSend = dinozList.map(dinoz => {
 		return {
 			id: dinoz.id,
@@ -395,20 +393,20 @@ export async function editPlayer(req: Request) {
 		role: role
 	};
 
-	await setPlayer(+req.params.id, player);
+	await setPlayer(req.params.id, player);
 
 	if (typeof player.hasImported !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'hasImported', player.hasImported);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'hasImported', player.hasImported);
 	}
 	if (typeof player.customText !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'customText', player.customText);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'customText', player.customText);
 	}
 	if (typeof player.quetzuBought !== 'undefined') {
 		await createLog(
 			LogType.AdminUpdatePlayer,
 			authed.id,
 			undefined,
-			+req.params.id,
+			req.params.id,
 			'quetzuBought',
 			player.quetzuBought
 		);
@@ -418,37 +416,37 @@ export async function editPlayer(req: Request) {
 			LogType.AdminUpdatePlayer,
 			authed.id,
 			undefined,
-			+req.params.id,
+			req.params.id,
 			'dailyGridRewards',
 			player.dailyGridRewards
 		);
 	}
 	if (typeof player.leader !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'leader', player.leader);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'leader', player.leader);
 	}
 	if (typeof player.engineer !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'engineer', player.engineer);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'engineer', player.engineer);
 	}
 	if (typeof player.cooker !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'cooker', player.cooker);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'cooker', player.cooker);
 	}
 	if (typeof player.shopKeeper !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'shopKeeper', player.shopKeeper);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'shopKeeper', player.shopKeeper);
 	}
 	if (typeof player.merchant !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'merchant', player.merchant);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'merchant', player.merchant);
 	}
 	if (typeof player.priest !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'priest', player.priest);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'priest', player.priest);
 	}
 	if (typeof player.teacher !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'teacher', player.teacher);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'teacher', player.teacher);
 	}
 	if (typeof player.messie !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'messie', player.messie);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'messie', player.messie);
 	}
 	if (typeof player.matelasseur !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, +req.params.id, 'matelasseur', player.matelasseur);
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'matelasseur', player.matelasseur);
 	}
 }
 
@@ -458,18 +456,16 @@ export async function editPlayer(req: Request) {
  * @param req.params.id {number} PlayerId
  */
 export async function listAllPlayerInformationForAdminDashboard(req: Request) {
-	const player = await getAllInformationFromPlayer(+req.params.id);
+	const player = await getAllInformationFromPlayer(req.params.id);
 	if (!player) {
 		throw new ExpectedError(`Player ${req.params.id} doesn't exist.`);
 	}
 
 	const playerToSend = {
 		id: player.id,
-		hasImported: player.hasImported,
 		banCase: player.banCase as ModerationAdminType,
 		customText: player.customText,
 		name: player.name,
-		eternalTwinId: player.eternalTwinId,
 		money: player.money,
 		quetzuBought: player.quetzuBought,
 		dailyGridRewards: player.dailyGridRewards,

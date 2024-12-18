@@ -1,7 +1,7 @@
 import { NotificationSeverity, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-export async function getNotification(playerId: number) {
+export async function getNotification(playerId: string) {
 	const notification = await prisma.notification.findMany({
 		where: {
 			playerId,
@@ -13,7 +13,7 @@ export async function getNotification(playerId: number) {
 	return notification;
 }
 
-export async function readNotificationFromMessages(playerId: number, thread: string) {
+export async function readNotificationFromMessages(playerId: string, thread: string) {
 	await prisma.notification.updateMany({
 		where: {
 			playerId,
@@ -26,14 +26,14 @@ export async function readNotificationFromMessages(playerId: number, thread: str
 	});
 }
 
-export async function readNotification(id: string, userId: number) {
+export async function readNotification(id: string, userId: string) {
 	await prisma.notification.update({
 		where: { id: id, playerId: userId },
 		data: { read: true }
 	});
 }
 
-export async function readAllNotification(userId: number) {
+export async function readAllNotification(userId: string) {
 	await prisma.notification.updateMany({
 		where: { playerId: userId, read: false },
 		data: { read: true }
@@ -41,7 +41,7 @@ export async function readAllNotification(userId: number) {
 }
 
 export async function createNotification(
-	userId: number,
+	userId: string,
 	message: string,
 	severity?: NotificationSeverity,
 	link?: string

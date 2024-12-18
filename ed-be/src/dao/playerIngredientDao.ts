@@ -1,7 +1,7 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-export const getAllIngredientsDataRequest = async (playerId: number) => {
+export const getAllIngredientsDataRequest = async (playerId: string) => {
 	const ingredients = await prisma.playerIngredient.findMany({
 		where: {
 			playerId
@@ -10,7 +10,7 @@ export const getAllIngredientsDataRequest = async (playerId: number) => {
 	return ingredients;
 };
 
-export const increaseIngredientQuantity = async (playerId: number, ingredientId: number, quantity: number) => {
+export const increaseIngredientQuantity = async (playerId: string, ingredientId: number, quantity: number) => {
 	const ingredient = await prisma.playerIngredient.upsert({
 		where: {
 			ingredientId_playerId: {
@@ -33,7 +33,7 @@ export const increaseIngredientQuantity = async (playerId: number, ingredientId:
 	return ingredient;
 };
 
-export const decreaseIngredientQuantity = async (playerId: number, ingredientId: number, quantity: number) => {
+export const decreaseIngredientQuantity = async (playerId: string, ingredientId: number, quantity: number) => {
 	const item = await prisma.playerIngredient.update({
 		where: {
 			ingredientId_playerId: {

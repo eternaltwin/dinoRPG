@@ -76,7 +76,7 @@ export default defineComponent({
 		selectBanUpdate(action: string) {
 			this.selectedBanUpdateAction = action;
 		},
-		async updateBan(playerId: number) {
+		async updateBan(playerId: string) {
 			EventBus.emit('isLoading', true);
 			try {
 				// Only the action can be updated here
@@ -88,7 +88,7 @@ export default defineComponent({
 				return;
 			}
 		},
-		async cancelBan(playerId: number) {
+		async cancelBan(playerId: string) {
 			EventBus.emit('isLoading', true);
 			try {
 				await AdminService.cancelBan(playerId);

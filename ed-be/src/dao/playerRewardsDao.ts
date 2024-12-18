@@ -24,13 +24,13 @@ export async function addMultipleRewardToPlayer(rewards: Prisma.PlayerRewardCrea
 	});
 }
 
-export async function removeRewardFromPlayer(playerId: number, rewardId: number) {
+export async function removeRewardFromPlayer(playerId: string, rewardId: number) {
 	await prisma.playerReward.delete({
 		where: { rewardId_playerId: { rewardId, playerId } }
 	});
 }
 
-export async function getPlayerRewards(playerId: number) {
+export async function getPlayerRewards(playerId: string) {
 	return prisma.playerReward.findMany({
 		where: {
 			playerId

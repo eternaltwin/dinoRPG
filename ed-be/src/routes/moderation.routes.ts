@@ -9,27 +9,23 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.moderation;
 
-routes.get(
-	`${commonPath}/player/:id`,
-	[param('id').exists().toInt().isNumeric()],
-	async (req: Request, res: Response) => {
-		if (!validationResult(req).isEmpty()) {
-			return res.status(400).json({ errors: validationResult(req) });
-		}
-
-		try {
-			const response = await getPlayerToReport(req);
-			return res.status(200).send(response);
-		} catch (err) {
-			sendError(res, err);
-		}
+routes.get(`${commonPath}/player/:id`, [param('id').exists().isString()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
 	}
-);
+
+	try {
+		const response = await getPlayerToReport(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 routes.post(
 	`${commonPath}/player/:id`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('reason').exists().isString(),
 		body('comment').exists().isString(),
 		body('dinozId').optional().isNumeric()

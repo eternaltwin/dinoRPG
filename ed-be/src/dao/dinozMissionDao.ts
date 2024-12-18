@@ -3,7 +3,7 @@ import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
-export const addMissionToDinoz = async (playerId: number, data: Prisma.DinozMissionCreateInput) => {
+export const addMissionToDinoz = async (playerId: string, data: Prisma.DinozMissionCreateInput) => {
 	if (!data.dinoz?.connect?.id) {
 		throw new ExpectedError('Dinoz id is required');
 	}
@@ -16,7 +16,7 @@ export const addMissionToDinoz = async (playerId: number, data: Prisma.DinozMiss
 	await createLog(LogType.MissionStep, playerId, data.dinoz.connect.id, data.missionId, data.step);
 };
 
-export const updateMissionStep = async (playerId: number, dinozIds: number[], missionId: number, step: number) => {
+export const updateMissionStep = async (playerId: string, dinozIds: number[], missionId: number, step: number) => {
 	await prisma.dinozMission.updateMany({
 		where: {
 			dinozId: { in: dinozIds },
@@ -39,7 +39,7 @@ export const updateMissionProgression = async (
 	});
 };
 
-export const finishMission = async (playerId: number, dinozId: number, missionId: number) => {
+export const finishMission = async (playerId: string, dinozId: number, missionId: number) => {
 	await prisma.dinozMission.update({
 		where: { missionId_dinozId: { dinozId, missionId } },
 		data: { isFinished: true }
@@ -48,7 +48,7 @@ export const finishMission = async (playerId: number, dinozId: number, missionId
 	await createLog(LogType.MissionFinished, playerId, dinozId, missionId.toString());
 };
 
-export const removeMissionFromDinoz = async (playerId: number, dinozId: number, missionId: number) => {
+export const removeMissionFromDinoz = async (playerId: string, dinozId: number, missionId: number) => {
 	await prisma.dinozMission.delete({
 		where: { missionId_dinozId: { dinozId, missionId } }
 	});

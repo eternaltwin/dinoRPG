@@ -24,18 +24,15 @@ import {
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { MapZone } from '@drpg/core/models/enums/MapZone';
+import { auth } from '../dao/playerDao.js';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
 	const npcName = req.params.npc;
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError(`Player is not authenticated`);
-	}
-	const playerId = +req.auth.playerId;
-	const player = await getDinozMissionsInfo(dinozId, playerId);
+	const authed = await auth(req);
+	const player = await getDinozMissionsInfo(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
@@ -71,13 +68,9 @@ export async function updateMission(req: Request) {
 	const dinozId = +req.params.dinozId;
 	const missionId = +req.params.missionId;
 	const status = req.body.status;
-	const playerId = req.auth?.playerId;
+	const authed = await auth(req);
 
-	if (!playerId) {
-		throw new ExpectedError('No player found');
-	}
-
-	const player = await getDinozMissionsInfo(dinozId, playerId);
+	const player = await getDinozMissionsInfo(dinozId, authed.id);
 	if (!player) {
 		throw new ExpectedError(`No player found.`);
 	}
@@ -108,7 +101,7 @@ export async function updateMission(req: Request) {
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ExpectedError(`This mission is unavailable`);
 			} else {
-				await addMissionToDinoz(playerId, {
+				await addMissionToDinoz(authed.id, {
 					dinoz: { connect: { id: dinozId } },
 					missionId: missionId,
 					step: 0,
@@ -125,7 +118,7 @@ export async function updateMission(req: Request) {
 			} else if (npcMissions.find(mission => mission.missionId === missionId)?.status === MissionsStatus.UNAVAILABLE) {
 				throw new ExpectedError(`This mission is unavailable`);
 			} else {
-				await removeMissionFromDinoz(playerId, dinoz.id, missionId);
+				await removeMissionFromDinoz(authed.id, dinoz.id, missionId);
 				return true;
 			}
 		default:
@@ -134,11 +127,7 @@ export async function updateMission(req: Request) {
 }
 
 export async function interactMission(req: Request) {
-	const playerId = req.auth?.playerId;
-
-	if (!playerId) {
-		throw new ExpectedError('No player found');
-	}
+	const authed = await auth(req);
 
 	const mission = await checkMission(req);
 
@@ -147,7 +136,7 @@ export async function interactMission(req: Request) {
 	switch (task) {
 		case ConditionEnum.TALKTO:
 			await updateMissionStep(
-				playerId,
+				authed.id,
 				[mission.dinoz.id],
 				mission.dinozMission.missionId,
 				mission.actualStep.stepId + 1
@@ -155,7 +144,7 @@ export async function interactMission(req: Request) {
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		case ConditionEnum.DO:
 			await updateMissionStep(
-				playerId,
+				authed.id,
 				[mission.dinoz.id],
 				mission.dinozMission.missionId,
 				mission.actualStep.stepId + 1
@@ -169,27 +158,19 @@ export async function interactMission(req: Request) {
 export async function endMission(req: Request) {
 	const mission = await checkMission(req);
 
-	const playerId = req.auth?.playerId;
+	const authed = await auth(req);
 
-	if (!playerId) {
-		throw new ExpectedError('No player found');
-	}
-
-	await rewarder(mission.missionReference.rewards, [mission.dinoz], playerId);
-	await finishMission(playerId, mission.dinoz.id, mission.dinozMission.missionId);
+	await rewarder(mission.missionReference.rewards, [mission.dinoz], authed.id);
+	await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
 
 async function checkMission(req: Request) {
 	const dinozId = +req.params.dinozId;
 	const missionId = +req.body.missionId;
-	const playerId = req.auth?.playerId;
+	const authed = await auth(req);
 
-	if (!playerId) {
-		throw new ExpectedError('No player found');
-	}
-
-	const player = await getDinozMissionsInfo(dinozId, playerId);
+	const player = await getDinozMissionsInfo(dinozId, authed.id);
 	if (!player) {
 		throw new ExpectedError(`No player found.`);
 	}
@@ -358,14 +339,10 @@ export async function checkProgressEnd(
  */
 export async function getGlobalMissions(req: Request) {
 	// Check if player is logged in
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('No player found');
-	}
-
-	const playerId = req.auth.playerId;
+	const authed = await auth(req);
 
 	// Get player rewards
-	const rewards = await getPlayerRewards(playerId);
+	const rewards = await getPlayerRewards(authed.id);
 
 	// Check if player has PMI
 	const hasPMI = rewards.some(reward => reward.rewardId === Reward.PMI);
@@ -376,7 +353,7 @@ export async function getGlobalMissions(req: Request) {
 	}
 
 	// Get player Dinoz and their missions
-	const dinozList = await getGlobalMissionsData(playerId);
+	const dinozList = await getGlobalMissionsData(authed.id);
 
 	// Get NPCs with missions
 	const npcsWithMissions = Object.values(npcList).filter(npc => npc.missions?.length);

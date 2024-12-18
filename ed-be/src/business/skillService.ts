@@ -161,7 +161,7 @@ export async function learnSkill(req: Request) {
 	await updateDinoz(newDinozData.id, newDinozData);
 
 	if (newDinozData.level % 10 === 0) {
-		checkAnnounce(PantheonMotif.race, newDinozData.id);
+		checkAnnounce(PantheonMotif.race, newDinozData.id.toString());
 	}
 
 	// Update player points
@@ -484,7 +484,7 @@ export async function unlockDoubleSkills(dinozId: number) {
 export async function applySkillEffect(
 	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
 	skill: SkillDetails,
-	playerId: number
+	playerId: string
 ) {
 	if (skill.effects) {
 		await effectParser(skill.effects, dinoz);
@@ -494,7 +494,7 @@ export async function applySkillEffect(
 	}
 }
 
-async function applyUSkillEffect(playerId: number, skill: SkillDetails) {
+async function applyUSkillEffect(playerId: string, skill: SkillDetails) {
 	const player = await getPlayerUSkills(playerId);
 	if (!player) {
 		throw new ExpectedError(`This player doesn't exist.`);

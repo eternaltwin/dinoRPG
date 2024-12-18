@@ -112,7 +112,7 @@ export default defineComponent({
 		},
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
-			const playerId: number | undefined = this.playerList.find(player => player.name === this.searchValue)?.id;
+			const playerId: string | undefined = this.playerList.find(player => player.name === this.searchValue)?.id;
 
 			if (playerId === undefined) {
 				this.displayErrorMessage = true;

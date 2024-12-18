@@ -818,10 +818,9 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.params.type.toString().toLowerCase());
 
-	const playerId = +authed.id;
-	const player = await getDinozGatherData(dinozId, playerId);
+	const player = await getDinozGatherData(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
@@ -887,10 +886,9 @@ export async function gatherWithDinoz(req: Request) {
 	const dinozId = +req.params.id;
 	const gatherPlaceArray = Object.values(gatherList).filter(g => g.action === req.body.type.toString().toLowerCase());
 
-	const playerId = +authed.id;
-	const player = await getDinozGatherData(dinozId, playerId);
+	const player = await getDinozGatherData(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
@@ -1056,7 +1054,7 @@ export async function gatherWithDinoz(req: Request) {
 				await addMoney(player.id, returnGrid.goldReward);
 				await removeDailyGridRewards(player.id, 1);
 			}
-			await createLog(LogType.GridFinished, playerId, undefined, returnGrid.goldReward);
+			await createLog(LogType.GridFinished, authed.id, undefined, returnGrid.goldReward);
 		}
 	}
 
@@ -1093,10 +1091,8 @@ export async function gatherWithDinoz(req: Request) {
 export async function getDinozToManage(req: Request) {
 	const authed = await auth(req);
 
-	const playerId = authed.id;
-
 	// Get player rewards
-	const rewards = await getPlayerRewards(playerId);
+	const rewards = await getPlayerRewards(authed.id);
 
 	// Check if player has PDA
 	const hasPDA = rewards.some(reward => reward.rewardId === Reward.PDA);
@@ -1107,7 +1103,7 @@ export async function getDinozToManage(req: Request) {
 	}
 
 	// Get Dinoz
-	const dinozList = await getManageData(playerId);
+	const dinozList = await getManageData(authed.id);
 
 	return dinozList;
 }
@@ -1154,10 +1150,9 @@ export async function followDinoz(req: Request) {
 	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const dinozToFollowId = +req.params.targetId;
-	const playerId = +authed.id;
 
-	const player_dinoz = await getDinozFicheRequest(dinozId, playerId);
-	const player_leader = await getDinozFicheRequest(dinozToFollowId, playerId);
+	const player_dinoz = await getDinozFicheRequest(dinozId, authed.id);
+	const player_leader = await getDinozFicheRequest(dinozToFollowId, authed.id);
 
 	if (!player_dinoz || !player_leader) {
 		throw new ExpectedError('No player found');

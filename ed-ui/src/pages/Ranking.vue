@@ -44,7 +44,7 @@ import { Player } from '@drpg/core/models/player/Player';
 
 interface PlayerSearch {
 	name: string;
-	id: number;
+	id: string;
 }
 
 export default defineComponent({
@@ -95,18 +95,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-/*.search {
-	background-image: url('../assets/background/form_field.webp');
-	background-repeat: no-repeat;
-	border: none;
-	color: #fce3bc;
-	height: 20px;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-top: 2px;
-	width: 185px;
-	margin-left: 1rem;
-}*/
 .search::placeholder {
 	color: #fce3bc;
 }

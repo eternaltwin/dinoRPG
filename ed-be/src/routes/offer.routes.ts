@@ -13,8 +13,8 @@ routes.get(
 	`${commonPath}/list/:filter`,
 	[
 		param('filter').exists().isString(),
-		query('sellerId').optional().isInt(),
-		query('bidderId').optional().isInt(),
+		query('sellerId').optional().isString(),
+		query('bidderId').optional().isString(),
 		query('expired').optional().isBoolean(),
 		query('onlyMines').optional().isBoolean()
 	],

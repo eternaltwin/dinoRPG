@@ -39,7 +39,7 @@ export const playerStore = defineStore('playerStore', {
 		addMoney(quantity: number): void {
 			this.money += quantity;
 		},
-		setPlayerId(playerId: number): void {
+		setPlayerId(playerId: string): void {
 			this.playerId = playerId;
 		},
 		setPlayerName(playerName: string): void {

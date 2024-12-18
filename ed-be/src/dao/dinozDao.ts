@@ -5,7 +5,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 // Getters
 
-export async function getActiveDinoz(playerId: number) {
+export async function getActiveDinoz(playerId: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
@@ -50,7 +50,7 @@ export async function getDinozForAnnounce(dinozId: number) {
 	});
 }
 
-export async function getDinozItinerantShop(dinozId: number, playerId: number) {
+export async function getDinozItinerantShop(dinozId: number, playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -85,7 +85,7 @@ export async function getDinozItinerantShop(dinozId: number, playerId: number) {
 	return player;
 }
 
-export async function getAllDinozFromAccount(playerId: number) {
+export async function getAllDinozFromAccount(playerId: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId
@@ -109,7 +109,7 @@ export async function getAllDinozFromAccount(playerId: number) {
 	return dinozList;
 }
 
-export async function getAllDinozFicheLite(playerId: number) {
+export async function getAllDinozFicheLite(playerId: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
@@ -158,7 +158,7 @@ export async function getDinozPlace(dinozId: number) {
 	return dinoz;
 }
 
-export async function getDinozFicheRequest(dinozId: number, playerId: number) {
+export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -256,7 +256,7 @@ export async function getDinozFicheRequest(dinozId: number, playerId: number) {
 }
 
 export type PlayerWithMissionData = NonNullable<Awaited<ReturnType<typeof getDinozMissionsInfo>>>;
-export async function getDinozMissionsInfo(dinozId: number, playerId: number) {
+export async function getDinozMissionsInfo(dinozId: number, playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -425,7 +425,7 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 	return dinoz;
 }
 
-export async function getDinozFightDataRequest(dinozId: number, playerId: number) {
+export async function getDinozFightDataRequest(dinozId: number, playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -546,7 +546,7 @@ export async function getDinozFightDataRequest(dinozId: number, playerId: number
 	return player;
 }
 
-export async function getDinozNPCRequest(dinozId: number, playerId: number) {
+export async function getDinozNPCRequest(dinozId: number, playerId: string) {
 	const player = prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -658,7 +658,7 @@ export async function getDinozTotalCount() {
 	return prisma.dinoz.count();
 }
 
-export async function getDinozGatherData(dinozId: number, playerId: number) {
+export async function getDinozGatherData(dinozId: number, playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -720,7 +720,7 @@ export async function updateMultipleDinoz(dinozIds: number[], dinoz: Prisma.Dino
 	});
 }
 
-export async function updateMultipleDinozPlaceId(playerId: number, dinoz: Pick<Dinoz, 'id'>[], placeId: number) {
+export async function updateMultipleDinozPlaceId(playerId: string, dinoz: Pick<Dinoz, 'id'>[], placeId: number) {
 	await prisma.dinoz.updateMany({
 		where: {
 			id: {
@@ -740,7 +740,7 @@ export async function updateMultipleDinozPlaceId(playerId: number, dinoz: Pick<D
 	);
 }
 
-export async function getGlobalMissionsData(playerId: number) {
+export async function getGlobalMissionsData(playerId: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId,
@@ -762,7 +762,7 @@ export async function getGlobalMissionsData(playerId: number) {
 	return dinozList;
 }
 
-export async function getManageData(userID: number) {
+export async function getManageData(userID: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			playerId: userID,
@@ -793,7 +793,7 @@ export async function getManageData(userID: number) {
 	return dinozList;
 }
 
-export async function updateOrderData(playerId: number, dinozList: { id: number; order: number }[]) {
+export async function updateOrderData(playerId: string, dinozList: { id: number; order: number }[]) {
 	const updates = [];
 
 	for (const dinoz of dinozList) {
@@ -815,7 +815,7 @@ export async function updateOrderData(playerId: number, dinozList: { id: number;
 	);
 }
 
-export async function getAvailableDinozToFollow(playerId: number, dinozId: number) {
+export async function getAvailableDinozToFollow(playerId: string, dinozId: number) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {
 			id: { not: dinozId },

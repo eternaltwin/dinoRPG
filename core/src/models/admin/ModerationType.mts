@@ -15,8 +15,8 @@ export type ModerationType = {
 
 export type ModerationAdminType = {
 	id: number;
-	targetId: number;
-	reporterId: number;
+	targetId: string;
+	reporterId: string;
 	comment: string;
 	reason: ModerationReasonFront;
 	sorted?: ModerationActionFront;

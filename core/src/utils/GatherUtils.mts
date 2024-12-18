@@ -9,7 +9,7 @@ import { Item, itemList } from '../models/item/ItemList.mjs';
 import { ingredientList } from '../models/ingredient/ingredientList.mjs';
 import { checkCondition } from './checkCondition.mjs';
 
-export const initializeGatherGrid = (playerId: number, placeId: number, gridInformation: GatherData) => {
+export const initializeGatherGrid = (playerId: string, placeId: number, gridInformation: GatherData) => {
 	const data: Prisma.PlayerGatherCreateInput = {
 		player: { connect: { id: playerId } },
 		place: placeId,

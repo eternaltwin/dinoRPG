@@ -52,7 +52,7 @@ export default defineComponent({
 		TwinoidGoals
 	},
 	async created(): Promise<void> {
-		const accountId = parseInt(this.$route.params.id.toString());
+		const accountId = this.$route.params.id as string;
 		EventBus.emit('isLoading', true);
 		try {
 			this.accountData = await PlayerService.getPlayerData(accountId);
@@ -68,7 +68,7 @@ export default defineComponent({
 		// Reload page if player click on 'my account' button
 		'$route.params.id': async function () {
 			if (this.$router.currentRoute.value.params.id === this.playerStore.getPlayerId!.toString()) {
-				const accountId = parseInt(this.$route.params.id.toString());
+				const accountId = this.$route.params.id as string;
 				EventBus.emit('isLoading', true);
 				try {
 					this.accountData = await PlayerService.getPlayerData(accountId);

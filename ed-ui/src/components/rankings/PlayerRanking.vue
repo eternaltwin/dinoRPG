@@ -72,7 +72,7 @@ export default defineComponent({
 			page: 1 as number,
 			me: playerStore().getPlayerId,
 			seePlayer: false,
-			selectedPlayer: undefined as undefined | number
+			selectedPlayer: undefined as undefined | string
 		};
 	},
 	props: {
@@ -82,7 +82,7 @@ export default defineComponent({
 		leave() {
 			this.seePlayer = false;
 		},
-		goToAccount(playerId: number) {
+		goToAccount(playerId: string) {
 			this.$router.push({ name: 'MyAccount', params: { id: playerId } });
 		},
 		async getRanking(): Promise<void> {

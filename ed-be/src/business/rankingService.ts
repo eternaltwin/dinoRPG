@@ -35,7 +35,7 @@ export async function getRanking(req: Request) {
 }
 
 export async function getPlayerPosition(req: Request) {
-	const playerId = +req.params.playerId;
+	const playerId = req.params.playerId;
 	const playerPosition = await getPlayerPositionDAO(playerId);
 
 	return playerPosition;

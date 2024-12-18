@@ -135,7 +135,7 @@ export async function getCommonData(req: Request) {
  * @return PlayerInfo
  */
 export async function getAccountData(req: Request) {
-	const playerId = +req.params.id;
+	const playerId = req.params.id;
 	const playerInfo = await getPlayerDataRequest(playerId);
 	if (!playerInfo) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
@@ -175,7 +175,6 @@ export async function getAccountData(req: Request) {
 		customText: playerInfo.customText,
 		completion: playerInfo.ranking.completion,
 		stats: playerInfo.playerTracking
-		// twinoid: playerInfo.twinosite.map(i => {return {siteId: i.siteId, points: i.points, npoints: i.npoints}})
 	};
 
 	return infoToSend;
@@ -228,7 +227,7 @@ export async function searchPlayers(req: Request) {
 export async function getDinozList(req: Request) {
 	const authed = await auth(req);
 
-	const playerId: number = authed.id;
+	const playerId: string = authed.id;
 	const dinozActive = await getAllDinozFicheLite(playerId);
 	if (!dinozActive) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
@@ -275,7 +274,7 @@ export async function isPlayerLeaderOfClan(req: Request) {
 }
 
 export async function playerToolTip(req: Request) {
-	const player = await getToolTipInfos(+req.params.id);
+	const player = await getToolTipInfos(req.params.id);
 
 	if (!player) {
 		throw new ExpectedError(`Missing player.`);

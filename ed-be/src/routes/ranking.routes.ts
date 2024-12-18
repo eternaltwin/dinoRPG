@@ -58,7 +58,7 @@ routes.get(
 
 routes.get(
 	`${commonPath}/:playerId/get/position`,
-	[param('playerId').exists().isNumeric()],
+	[param('playerId').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

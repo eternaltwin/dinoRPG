@@ -67,7 +67,7 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		goToAccount(paramId: number): void {
+		goToAccount(paramId: string): void {
 			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
 		},
 		async getRanking(): Promise<void> {

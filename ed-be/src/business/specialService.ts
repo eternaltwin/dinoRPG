@@ -97,7 +97,7 @@ export async function cancelConcentrate(req: Request) {
 	await updateConcentration(dinoz.concentration.id, dinoz.concentration.dinoz);
 }
 
-async function goDarkWorld(playerId: number, dinozList: Pick<Dinoz, 'id'>[]) {
+async function goDarkWorld(playerId: string, dinozList: Pick<Dinoz, 'id'>[]) {
 	await updateMultipleDinozPlaceId(playerId, dinozList, PlaceEnum.PORTAIL);
 }
 

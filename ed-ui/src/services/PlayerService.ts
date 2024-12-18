@@ -23,7 +23,7 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getPlayerData(id: number): Promise<PlayerInfo> {
+	getPlayerData(id: string): Promise<PlayerInfo> {
 		return http()
 			.get(`/player/${id}`)
 			.then(res => Promise.resolve(res.data))
@@ -81,19 +81,19 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getTwinoGeneralStat(playerId: number): Promise<Array<TwinoStat>> {
+	getTwinoGeneralStat(playerId: string): Promise<Array<TwinoStat>> {
 		return http()
 			.get(`/player/twinoStats/${playerId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getTwinoSpecificItem(playerId: number, type: 'stat' | 'achiev', site: number): Promise<Array<SiteAchiev | SiteStat>> {
+	getTwinoSpecificItem(playerId: string, type: 'stat' | 'achiev', site: number): Promise<Array<SiteAchiev | SiteStat>> {
 		return http()
 			.get(`/player/twinoStats/${playerId}/${type}/${site}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getPosition(playerId: number): Promise<{ position: number }> {
+	getPosition(playerId: string): Promise<{ position: number }> {
 		return http()
 			.get(`/ranking/${playerId}/get/position`)
 			.then(res => Promise.resolve(res.data))
@@ -111,7 +111,7 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getPlayerMenuInfos(playerId: number): Promise<Pick<Player, 'id' | 'name' | 'eternalTwinId' | 'customText'>> {
+	getPlayerMenuInfos(playerId: string): Promise<Pick<Player, 'id' | 'name' | 'eternalTwinId' | 'customText'>> {
 		return http()
 			.get(`/player/smallMenu/${playerId}`)
 			.then(res => Promise.resolve(res.data))
@@ -134,5 +134,5 @@ export const PlayerService = {
 };
 interface PlayerSearch {
 	name: string;
-	id: number;
+	id: string;
 }

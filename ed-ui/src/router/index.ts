@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { localStore } from '../store/index.js';
 import EventBus from '../events/index.js';
+import { JwtTrial } from '@drpg/core/dist/models/store/jwt.mjs';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -232,7 +233,11 @@ const router = createRouter({
 
 router.beforeEach(to => {
 	const jwt = localStore().getJwt;
-	const displayAuth = jwt === undefined;
+	let displayAuth = jwt === undefined;
+	if (jwt) {
+		const jwtParsed = JSON.parse(atob(jwt.split('.')[1])) as JwtTrial;
+		if (typeof jwtParsed.playerId === 'number') displayAuth = true;
+	}
 	// route to AuthPage if not logged and going to any page
 	if (displayAuth && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };

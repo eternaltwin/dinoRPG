@@ -92,7 +92,7 @@ export default defineComponent({
 	},
 	computed: {
 		myAccount(): boolean {
-			return playerStore().getPlayerId === parseInt(this.$route.params.id);
+			return playerStore().getPlayerId === (this.$route.params.id as string);
 		}
 	},
 	watch: {

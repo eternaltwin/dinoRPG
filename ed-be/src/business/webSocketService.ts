@@ -19,6 +19,7 @@ import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponse
 import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
 import { checkMessageCanBeDeleted } from './clanService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -29,12 +30,27 @@ export async function authenticate(req: Request) {
 	await doSpecificVerificationsForWsAuthent(req);
 
 	const uuid = randomUUID();
+	const ip = getIpAddressFromRequest(req);
+	if (!ip) {
+		throw new ExpectedError('No IP found.');
+	}
+
+	const headers = req.headers['user-agent'];
+	if (!headers) {
+		throw new ExpectedError('No headers found.');
+	}
+
+	const playerId = req.auth?.playerId;
+	if (!playerId) {
+		throw new ExpectedError('No playerId found.');
+	}
+
 	activeTickets.push({
 		uuid: uuid,
 		channel: req.body.channel,
-		userAgent: req.headers['user-agent']!,
-		ipAddress: getIpAddressFromRequest(req)!,
-		playerId: req.auth!.playerId!,
+		userAgent: headers,
+		ipAddress: ip,
+		playerId: playerId,
 		timestamp: Date.now()
 	});
 
@@ -72,9 +88,9 @@ function doGenericVerificationsForWsAuthent(req: Request) {
  */
 async function doSpecificVerificationsForWsAuthent(req: Request): Promise<void> {
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
-		const clanForPlayer = await getClanIdAndNameFromPlayerId(req.auth!.playerId as number);
+		const clanForPlayer = await getClanIdAndNameFromPlayerId(req.auth?.playerId as string);
 		if (clanForPlayer.ClanMember === null) {
-			throw new Error(`The player ${req.auth!.playerId} is not in a clan.`);
+			throw new Error(`The player is not in a clan.`);
 		}
 	}
 }
@@ -144,7 +160,7 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param wsId -> Connection identifier
  */
 async function putUserInChannel(ticket: WsTicket, wsId: string): Promise<void> {
-	let channelName = await getChannelName(ticket);
+	const channelName = await getChannelName(ticket);
 
 	const channel = channels.get(channelName);
 
@@ -158,7 +174,9 @@ async function putUserInChannel(ticket: WsTicket, wsId: string): Promise<void> {
 async function getChannelName(ticket: WsTicket): Promise<string> {
 	if (ticket.channel === WsChannel.CLAN_FORUM) {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
-		return `${ticket.channel}.${playerData.ClanMember!.clan.name}`;
+		if (!playerData.ClanMember)
+			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
+		return `${ticket.channel}.${playerData.ClanMember.clan.name}`;
 	}
 
 	throw new Error(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
@@ -200,6 +218,7 @@ export async function processIncomingMessage(
  * @returns -> The channel wanted and players connected in this channel
  */
 function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const channelData: [string, ChannelData[]] | undefined = [...channels.entries()].find(([_chanKey, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
@@ -231,7 +250,8 @@ async function saveMessageInDatabase(channel: ChannelInfos, wsId: string, messag
 
 	const playerInfos = await getClanIdAndNameFromPlayerId(wsData.playerId);
 
-	return await createClanMessageRequest(playerInfos.ClanMember!.clan.id, wsData.playerId, message.toString());
+	if (!playerInfos.ClanMember) throw new ExpectedError(`The player is not in a clan`);
+	return await createClanMessageRequest(playerInfos.ClanMember.clan.id, wsData.playerId, message.toString());
 }
 
 async function deleteMessage(channel: ChannelInfos, wsId: string, msgId: number) {

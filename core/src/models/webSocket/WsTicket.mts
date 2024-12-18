@@ -3,6 +3,6 @@ export interface WsTicket {
 	channel: string;
 	userAgent: string;
 	ipAddress: string;
-	playerId: number;
+	playerId: string;
 	timestamp: number;
 }

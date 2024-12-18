@@ -20,7 +20,7 @@ export const MessagerieService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	createThread(participants: number[], title: string, message: string): Promise<ThreadsBasic> {
+	createThread(participants: string[], title: string, message: string): Promise<ThreadsBasic> {
 		return http()
 			.post(`/messagerie/create`, {
 				participants: participants,

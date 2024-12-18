@@ -22,7 +22,7 @@ export async function rewarder(
 	team: (Pick<Dinoz, 'id' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
-	playerId: number
+	playerId: string
 ) {
 	if (!team.length) {
 		throw new ExpectedError('No player found');

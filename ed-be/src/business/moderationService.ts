@@ -21,7 +21,7 @@ import NotificationSeverity = $Enums.NotificationSeverity;
  */
 export async function getPlayerToReport(req: Request) {
 	await auth(req);
-	const playerToReport = await getPlayerInfoToReport(+req.params.id);
+	const playerToReport = await getPlayerInfoToReport(req.params.id);
 
 	if (!playerToReport) {
 		throw new ExpectedError('Inexistent player to report.');
@@ -39,7 +39,7 @@ export async function getPlayerToReport(req: Request) {
  */
 export async function reportPlayer(req: Request) {
 	const authed = await auth(req);
-	const playerToReport = await getPlayerInfoToReport(+req.params.id);
+	const playerToReport = await getPlayerInfoToReport(req.params.id);
 
 	if (!playerToReport) {
 		throw new ExpectedError('Inexistent player to report.');
@@ -191,7 +191,7 @@ export async function getPaginatedBannedPlayers(req: Request) {
  */
 export async function banPlayer(req: Request) {
 	const authed = await auth(req);
-	const playerId = +req.params.id;
+	const playerId = req.params.id;
 	const player = await getPlayerBanInfo(playerId);
 	const action = req.body.action;
 	const reason = req.body.reason;
@@ -240,7 +240,7 @@ export async function banPlayer(req: Request) {
  */
 export async function updateBan(req: Request) {
 	const authed = await auth(req);
-	const playerId = +req.params.id;
+	const playerId = req.params.id;
 	const player = await getPlayerBanInfo(playerId);
 
 	if (!player) {
@@ -283,7 +283,7 @@ export async function updateBan(req: Request) {
  */
 export async function cancelBan(req: Request) {
 	const authed = await auth(req);
-	const playerId = +req.params.id;
+	const playerId = req.params.id;
 	const player = await getPlayerBanInfo(playerId);
 
 	if (!player) {

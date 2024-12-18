@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import expressJwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
-import { getEternalTwinId, getRolePlayer } from '../dao/playerDao.js';
+import { getRolePlayer } from '../dao/playerDao.js';
 import { Config } from '../config/config.js';
 import { AdminRole } from '@drpg/prisma';
 import { GLOBAL } from '../context.js';
@@ -21,7 +21,7 @@ const jwtConfig = () => {
 	});
 };
 
-const forgeJWT = async (playerId: number): Promise<string> => {
+const forgeJWT = async (playerId: string): Promise<string> => {
 	const config = GLOBAL.config;
 	const exp: number = Math.round(Date.now() / 1000) + config.jwt.expiration;
 	const isAdmin: boolean = await isPlayerAdmin(playerId, config);
@@ -45,14 +45,11 @@ const checkIsAdmin = (req: Request, res: Response, next: () => void) => {
 	next();
 };
 
-async function isPlayerAdmin(playerId: number, config: Config): Promise<boolean> {
-	const ETId = await getEternalTwinId(playerId);
-	if (!ETId) return false;
+async function isPlayerAdmin(playerId: string, config: Config): Promise<boolean> {
 	const admin = config.administrator;
-	if (admin === ETId.eternalTwinId) return true;
+	if (admin === playerId) return true;
 	const administrators = await getRolePlayer(AdminRole.ADMIN);
-	if (administrators.some(p => p.eternalTwinId === ETId.eternalTwinId)) return true;
-	return false;
+	return administrators.some(p => p.id === playerId);
 }
 
 export { checkIsAdmin, forgeJWT, jwtConfig };

@@ -4,7 +4,7 @@ export type PantheonDisplay =
 	| {
 			motif: PantheonMotif.RACE;
 			id: number;
-			playerId: number;
+			playerId: string;
 			dinoz: {
 				id: number;
 				name: string;
@@ -21,7 +21,7 @@ export type PantheonDisplay =
 	| {
 			motif: PantheonMotif.EPIC;
 			id: number;
-			playerId: number;
+			playerId: string;
 			player: {
 				id: number;
 				name: string;

@@ -1,7 +1,7 @@
 import { prisma } from '../prisma.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
-export async function addPlayerInRanking(playerId: number) {
+export async function addPlayerInRanking(playerId: string) {
 	return prisma.ranking.create({
 		data: {
 			playerId
@@ -74,7 +74,7 @@ export async function getPlayersSumRanking(page: number) {
 	});
 }
 
-export async function updatePoints(playerId: number, points: number) {
+export async function updatePoints(playerId: string, points: number) {
 	const ranking = await prisma.ranking.findUnique({
 		where: {
 			playerId
@@ -102,7 +102,7 @@ export async function updatePoints(playerId: number, points: number) {
 	});
 }
 
-export async function updateCompletion(playerId: number, completion: number) {
+export async function updateCompletion(playerId: string, completion: number) {
 	await prisma.ranking.update({
 		where: {
 			playerId
@@ -113,7 +113,7 @@ export async function updateCompletion(playerId: number, completion: number) {
 	});
 }
 
-export async function updateDinozCount(playerId: number, dinozCount: number) {
+export async function updateDinozCount(playerId: string, dinozCount: number) {
 	const ranking = await prisma.ranking.findUnique({
 		where: {
 			playerId
@@ -138,7 +138,7 @@ export async function updateDinozCount(playerId: number, dinozCount: number) {
 	});
 }
 
-export async function getPlayerPositionDAO(playerId: number) {
+export async function getPlayerPositionDAO(playerId: string) {
 	const playerRanking = await prisma.ranking.findUnique({
 		where: {
 			playerId

@@ -79,11 +79,7 @@ routes.put(
 
 routes.put(
 	`${commonPath}/gold/:id`,
-	[
-		param('id').exists().toInt().isNumeric(),
-		body('operation').exists().isString(),
-		body('gold').exists().toInt().isNumeric()
-	],
+	[param('id').exists().isString(), body('operation').exists().isString(), body('gold').exists().toInt().isNumeric()],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -101,11 +97,7 @@ routes.put(
 
 routes.put(
 	`${commonPath}/epic/:id`,
-	[
-		param('id').exists().toInt().isNumeric(),
-		body('operation').exists().isString(),
-		body('epicRewardId').exists().isArray()
-	],
+	[param('id').exists().isString(), body('operation').exists().isString(), body('epicRewardId').exists().isArray()],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -124,7 +116,7 @@ routes.put(
 routes.put(
 	`${commonPath}/:id/items`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('operation').exists().isString().isIn(['increase', 'decrease']),
 		body('items')
 			.isArray()
@@ -153,7 +145,7 @@ routes.put(
 routes.put(
 	`${commonPath}/:id/ingredients`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('operation').exists().isString().isIn(['increase', 'decrease']),
 		body('ingredients')
 			.isArray()
@@ -182,7 +174,7 @@ routes.put(
 routes.put(
 	`${commonPath}/:id/quests`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('operation').exists().isString().isIn(['increase', 'decrease']),
 		body('quests')
 			.isArray()
@@ -208,7 +200,7 @@ routes.put(
 
 routes.get(
 	`${commonPath}/playerdinoz/:id`,
-	param('id').exists().toInt().isNumeric(),
+	param('id').exists().isString(),
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -227,7 +219,7 @@ routes.get(
 routes.put(
 	`${commonPath}/player/:id`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('hasImported').default(undefined).optional().exists().toBoolean(),
 		body('customText').default(undefined).optional().exists(),
 		body('quetzuBought').default(undefined).optional().exists().isNumeric(),
@@ -259,7 +251,7 @@ routes.put(
 
 routes.get(
 	`${commonPath}/playerinfo/:id`,
-	param('id').exists().toInt().isNumeric(),
+	param('id').exists().isString(),
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -366,7 +358,7 @@ routes.get(
 routes.post(
 	`${commonPath}/ban/:id`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('action').exists().isString().isIn(['shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
 		body('reason').exists().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
 		body('comment').exists().isString(),
@@ -390,7 +382,7 @@ routes.post(
 routes.put(
 	`${commonPath}/updateBan/:id`,
 	[
-		param('id').exists().toInt().isNumeric(),
+		param('id').exists().isString(),
 		body('action').optional().isString().isIn(['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan']),
 		body('reason').optional().isString().isIn(['multi', 'dinozName', 'accountName', 'avatar', 'customText']),
 		body('comment').optional().isString(),
@@ -413,7 +405,7 @@ routes.put(
 
 routes.put(
 	`${commonPath}/cancelBan/:id`,
-	[param('id').exists().toInt().isNumeric()],
+	[param('id').exists().isString()],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

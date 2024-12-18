@@ -22,9 +22,7 @@ export async function checkPlayerLB(req: Request) {
 
 	const remainingAction = player.dinoz.reduce((partialSum, a) => partialSum + a.remaining, 0);
 
-	if (remainingAction === 0) return true;
-
-	return false;
+	return remainingAction === 0;
 }
 
 export async function checkLB(req: Request) {
@@ -40,7 +38,7 @@ export async function checkLB(req: Request) {
 		throw new ExpectedError(translate(`alreadyClaimed`, authed));
 	}
 
-	const amIDone = await fetch(`https://brute.eternaltwin.org/api/user/${player.eternalTwinId}/done`);
+	const amIDone = await fetch(`https://brute.eternaltwin.org/api/user/${authed.id}/done`);
 	const data = await amIDone.text();
 
 	LBDone = data === 'true';

@@ -28,7 +28,7 @@ export async function startConversation(req: Request) {
 	}
 
 	const conversation = await createConversation(authed.id, participants, title, message);
-	participants.filter((p: number) => p !== authed.id).forEach((p: number) => createNotification(p, conversation.id));
+	participants.filter((p: string) => p !== authed.id).forEach((p: string) => createNotification(p, conversation.id));
 	return conversation;
 }
 
@@ -36,7 +36,7 @@ export async function getFullConversattion(req: Request) {
 	const authed = await auth(req);
 	const conversation = await getConversation(req.params.thread);
 
-	if (!conversation.participants.map(p => p.player.id).includes(authed.id)) {
+	if (!conversation.participants.map(p => p.player?.id).includes(authed.id)) {
 		throw new ExpectedError(translate(`notInConversation`, authed));
 	}
 
@@ -59,20 +59,22 @@ export async function loadMessages(req: Request) {
 export async function sendMessage(req: Request) {
 	const authed = await auth(req);
 	const conversation = await getConversation(req.params.thread);
-	if (!conversation.participants.map(p => p.player.id).includes(authed.id)) {
+	if (!conversation.participants.map(p => p.player?.id).includes(authed.id)) {
 		throw new ExpectedError(translate(`notInConversation`, authed));
 	}
 
 	conversation.participants
-		.filter(p => p.player.id !== authed.id)
-		.forEach(p => createNotification(p.player.id, conversation.id));
+		.filter(p => p.player && p.player.id !== authed.id)
+		.forEach(p => {
+			if (p.player) createNotification(p.player.id, conversation.id);
+		});
 	return await addMessage(req.params.thread, req.body.content, authed.id);
 }
 
 export async function pinMesage(req: Request) {
 	const authed = await auth(req);
 	const conversation = await getConversation(req.params.thread);
-	if (!conversation.participants.map(p => p.player.id).includes(authed.id)) {
+	if (!conversation.participants.map(p => p.player?.id).includes(authed.id)) {
 		throw new ExpectedError(translate(`notInConversation`, authed));
 	}
 	const message = +req.body.messageId;

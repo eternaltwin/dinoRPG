@@ -13,7 +13,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	givePlayerMoney(id: number, gold: number, operation: string): Promise<number> {
+	givePlayerMoney(id: string, gold: number, operation: string): Promise<number> {
 		return http()
 			.put(`/admin/gold/${id}`, {
 				gold: gold,
@@ -22,7 +22,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	givePlayerEpicRewards(id: number, epicRewardList: Array<string>, operation: string): Promise<number> {
+	givePlayerEpicRewards(id: string, epicRewardList: Array<string>, operation: string): Promise<number> {
 		return http()
 			.put(`/admin/epic/${id}`, {
 				epicRewardId: epicRewardList,
@@ -31,7 +31,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	modifyPlayerItems(id: number, itemId: number, quantity: number, operation: string): Promise<void> {
+	modifyPlayerItems(id: string, itemId: number, quantity: number, operation: string): Promise<void> {
 		return http()
 			.put(`/admin/${id}/items`, {
 				operation: operation,
@@ -40,7 +40,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	modifyPlayerIngredients(id: number, ingredientId: number, quantity: number, operation: string): Promise<void> {
+	modifyPlayerIngredients(id: string, ingredientId: number, quantity: number, operation: string): Promise<void> {
 		return http()
 			.put(`/admin/${id}/ingredients`, {
 				operation: operation,
@@ -49,7 +49,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	updateQuest(id: number, questId: number, progression: number, operation: string): Promise<void> {
+	updateQuest(id: string, questId: number, progression: number, operation: string): Promise<void> {
 		return http()
 			.put(`/admin/${id}/quests`, {
 				operation: operation,
@@ -58,14 +58,14 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getplayerInformation(id: number): Promise<PlayerTypeToSend> {
+	getplayerInformation(id: string): Promise<PlayerTypeToSend> {
 		return http()
 			.get(`/admin/playerinfo/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
 	updatePlayer(
-		id: number,
+		id: string,
 		customText?: string,
 		hasImported?: boolean,
 		quetzuBought?: number,
@@ -101,7 +101,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	listAllDinozFromPlayer(id: number): Promise<Array<DinozFiche>> {
+	listAllDinozFromPlayer(id: string): Promise<Array<DinozFiche>> {
 		return http()
 			.get(`/admin/playerdinoz/${id}`)
 			.then(res => Promise.resolve(res.data))
@@ -177,7 +177,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	banPlayer(playerId: number, reason: string, action: string, comment: string, dinozId?: number) {
+	banPlayer(playerId: string, reason: string, action: string, comment: string, dinozId?: number) {
 		return http()
 			.post(`/admin/ban/${playerId}`, {
 				reason: reason,
@@ -188,7 +188,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	updateBan(playerId: number, action?: string, reason?: string, comment?: string, dinozId?: number): Promise<void> {
+	updateBan(playerId: string, action?: string, reason?: string, comment?: string, dinozId?: number): Promise<void> {
 		return http()
 			.put(`/admin/updateBan/${playerId}`, {
 				action: action,
@@ -199,7 +199,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	cancelBan(playerId: number): Promise<void> {
+	cancelBan(playerId: string): Promise<void> {
 		return http()
 			.put(`/admin/cancelBan/${playerId}`)
 			.then(res => Promise.resolve(res.data))

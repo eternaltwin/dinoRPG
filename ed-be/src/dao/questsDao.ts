@@ -1,6 +1,6 @@
 import { prisma } from '../prisma.js';
 
-export async function createQuest(playerId: number, questId: number) {
+export async function createQuest(playerId: string, questId: number) {
 	return prisma.playerQuest.create({
 		data: {
 			questId: questId,
@@ -10,7 +10,7 @@ export async function createQuest(playerId: number, questId: number) {
 	});
 }
 
-export async function updateQuest(playerId: number, questId: number, step: number) {
+export async function updateQuest(playerId: string, questId: number, step: number) {
 	return prisma.playerQuest.update({
 		where: {
 			questId_playerId: { questId, playerId }
@@ -19,7 +19,7 @@ export async function updateQuest(playerId: number, questId: number, step: numbe
 	});
 }
 
-export async function increaseQuestProgression(playerId: number, questId: number, step: number) {
+export async function increaseQuestProgression(playerId: string, questId: number, step: number) {
 	return prisma.playerQuest.update({
 		where: {
 			questId_playerId: { questId, playerId }
@@ -32,7 +32,7 @@ export async function increaseQuestProgression(playerId: number, questId: number
 	});
 }
 
-export async function decreaseQuestProgression(playerId: number, questId: number, step: number) {
+export async function decreaseQuestProgression(playerId: string, questId: number, step: number) {
 	return prisma.playerQuest.update({
 		where: {
 			questId_playerId: { questId, playerId }

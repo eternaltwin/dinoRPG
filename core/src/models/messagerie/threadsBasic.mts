@@ -8,7 +8,7 @@ export interface ThreadsBasic {
 		name: string;
 	};
 	participants: {
-		playerId: number;
+		playerId: string;
 	}[];
 	updatedAt: Date;
 }

@@ -1,13 +1,14 @@
 import { LogType } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
-const createLog = async (type: LogType, playerId: number, dinozId?: number, ...values: (string | number)[]) => {
+const createLog = async (type: LogType, playerId: string, dinozId?: number, ...values: (string | number)[]) => {
 	await prisma.log.create({
 		data: {
 			player: { connect: { id: playerId } },
 			dinoz: dinozId ? { connect: { id: dinozId } } : undefined,
 			type,
-			values: values.map(value => value.toString())
+			values: values.map(value => value.toString()),
+			playerOldId: playerId
 		},
 		select: { id: true }
 	});
@@ -15,7 +16,7 @@ const createLog = async (type: LogType, playerId: number, dinozId?: number, ...v
 
 const createLogForMultipleDinoz = async (
 	type: LogType,
-	playerId: number,
+	playerId: string,
 	dinozIds: number[],
 	...values: (string | number)[]
 ) => {
@@ -24,22 +25,23 @@ const createLogForMultipleDinoz = async (
 			playerId,
 			dinozId,
 			type,
-			values: values.map(value => value.toString())
+			values: values.map(value => value.toString()),
+			playerOldId: playerId
 		}))
 	});
 };
 
-const getLogListAll = async () => {
-	return await prisma.log.findMany({
+async function getLogListAll() {
+	return prisma.log.findMany({
 		orderBy: { createdAt: 'desc' },
 		include: {
 			player: { select: { id: true, name: true } },
 			dinoz: { select: { id: true, name: true } }
 		}
 	});
-};
+}
 
-const getLogList = async (page: number, type?: LogType, playerId?: number, dinozId?: number) => {
+const getLogList = async (page: number, type?: LogType, playerId?: string, dinozId?: number) => {
 	return await prisma.log.findMany({
 		where: {
 			type,

@@ -145,16 +145,16 @@ exports.Prisma.DinozScalarFieldEnum = {
   nbrUpWater: 'nbrUpWater',
   nbrUpLightning: 'nbrUpLightning',
   nbrUpAir: 'nbrUpAir',
-  seed: 'seed',
+  createdDate: 'createdDate',
+  updatedDate: 'updatedDate',
+  order: 'order',
+  concentrationId: 'concentrationId',
   fight: 'fight',
   gather: 'gather',
   remaining: 'remaining',
-  createdDate: 'createdDate',
-  updatedDate: 'updatedDate',
-  playerId: 'playerId',
-  order: 'order',
-  concentrationId: 'concentrationId',
-  unavailableReason: 'unavailableReason'
+  unavailableReason: 'unavailableReason',
+  seed: 'seed',
+  playerId: 'playerId'
 };
 
 exports.Prisma.DinozItemScalarFieldEnum = {
@@ -226,12 +226,8 @@ exports.Prisma.NPCScalarFieldEnum = {
 };
 
 exports.Prisma.PlayerScalarFieldEnum = {
-  id: 'id',
-  hasImported: 'hasImported',
-  banCaseId: 'banCaseId',
   customText: 'customText',
   name: 'name',
-  eternalTwinId: 'eternalTwinId',
   money: 'money',
   quetzuBought: 'quetzuBought',
   leader: 'leader',
@@ -241,23 +237,25 @@ exports.Prisma.PlayerScalarFieldEnum = {
   merchant: 'merchant',
   priest: 'priest',
   teacher: 'teacher',
-  messie: 'messie',
-  matelasseur: 'matelasseur',
-  labruteDone: 'labruteDone',
-  dailyGridRewards: 'dailyGridRewards',
   createdDate: 'createdDate',
   updatedDate: 'updatedDate',
   lastLogin: 'lastLogin',
+  clanMemberId: 'clanMemberId',
+  leaderOfId: 'leaderOfId',
+  matelasseur: 'matelasseur',
+  messie: 'messie',
+  labruteDone: 'labruteDone',
   role: 'role',
   lang: 'lang',
-  clanMemberId: 'clanMemberId',
-  leaderOfId: 'leaderOfId'
+  dailyGridRewards: 'dailyGridRewards',
+  banCaseId: 'banCaseId',
+  id: 'id'
 };
 
 exports.Prisma.UsernameHistoryScalarFieldEnum = {
   id: 'id',
-  playerId: 'playerId',
-  username: 'username'
+  username: 'username',
+  playerId: 'playerId'
 };
 
 exports.Prisma.PlayerDinozShopScalarFieldEnum = {
@@ -304,9 +302,9 @@ exports.Prisma.PlayerRewardScalarFieldEnum = {
 
 exports.Prisma.RankingScalarFieldEnum = {
   id: 'id',
+  dinozCount: 'dinozCount',
   points: 'points',
   average: 'average',
-  dinozCount: 'dinozCount',
   completion: 'completion',
   playerId: 'playerId'
 };
@@ -327,50 +325,52 @@ exports.Prisma.OfferItemScalarFieldEnum = {
 exports.Prisma.OfferBidScalarFieldEnum = {
   id: 'id',
   offerId: 'offerId',
-  userId: 'userId',
-  value: 'value'
+  value: 'value',
+  userId: 'userId'
 };
 
 exports.Prisma.OfferScalarFieldEnum = {
   id: 'id',
-  sellerId: 'sellerId',
   endDate: 'endDate',
   dinozId: 'dinozId',
   total: 'total',
   status: 'status',
-  dinozDetails: 'dinozDetails'
+  dinozDetails: 'dinozDetails',
+  sellerId: 'sellerId'
 };
 
 exports.Prisma.LogScalarFieldEnum = {
   id: 'id',
-  playerId: 'playerId',
   dinozId: 'dinozId',
   type: 'type',
   values: 'values',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  playerId: 'playerId',
+  playerOldId: 'playerOldId'
 };
 
 exports.Prisma.DinozCatchScalarFieldEnum = {
   id: 'id',
   dinozId: 'dinozId',
-  monsterId: 'monsterId',
-  hp: 'hp'
+  hp: 'hp',
+  monsterId: 'monsterId'
 };
 
 exports.Prisma.PlayerTrackingScalarFieldEnum = {
   id: 'id',
-  playerId: 'playerId',
   stat: 'stat',
-  quantity: 'quantity'
+  quantity: 'quantity',
+  playerId: 'playerId'
 };
 
 exports.Prisma.PantheonScalarFieldEnum = {
   id: 'id',
-  playerId: 'playerId',
   motif: 'motif',
   dinozId: 'dinozId',
   date: 'date',
-  indicator: 'indicator'
+  indicator: 'indicator',
+  playerId: 'playerId',
+  playerName: 'playerName'
 };
 
 exports.Prisma.ClanScalarFieldEnum = {
@@ -379,15 +379,15 @@ exports.Prisma.ClanScalarFieldEnum = {
   treasureValue: 'treasureValue',
   creationDate: 'creationDate',
   clanWarId: 'clanWarId',
-  leaderId: 'leaderId',
-  banner: 'banner'
+  banner: 'banner',
+  leaderId: 'leaderId'
 };
 
 exports.Prisma.ClanJoinRequestScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
-  playerId: 'playerId',
-  date: 'date'
+  date: 'date',
+  playerId: 'playerId'
 };
 
 exports.Prisma.ClanWarScalarFieldEnum = {
@@ -407,26 +407,28 @@ exports.Prisma.ClanMessageScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
   date: 'date',
+  content: 'content',
   authorId: 'authorId',
-  content: 'content'
+  authorName: 'authorName'
 };
 
 exports.Prisma.ClanHistoryScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
   date: 'date',
+  type: 'type',
   authorId: 'authorId',
-  type: 'type'
+  authorMessage: 'authorMessage'
 };
 
 exports.Prisma.ClanMemberScalarFieldEnum = {
   id: 'id',
   clanId: 'clanId',
-  donation: 'donation',
-  playerId: 'playerId',
-  rights: 'rights',
   dateJoin: 'dateJoin',
-  nickname: 'nickname'
+  nickname: 'nickname',
+  rights: 'rights',
+  donation: 'donation',
+  playerId: 'playerId'
 };
 
 exports.Prisma.ClanPageScalarFieldEnum = {
@@ -440,49 +442,52 @@ exports.Prisma.ClanPageScalarFieldEnum = {
 
 exports.Prisma.ModerationScalarFieldEnum = {
   id: 'id',
-  reporterId: 'reporterId',
-  targetId: 'targetId',
   dinozId: 'dinozId',
   reason: 'reason',
   comment: 'comment',
-  sorted: 'sorted',
   banDate: 'banDate',
-  banEndDate: 'banEndDate'
+  banEndDate: 'banEndDate',
+  sorted: 'sorted',
+  reporterId: 'reporterId',
+  targetId: 'targetId'
 };
 
 exports.Prisma.ConversationScalarFieldEnum = {
   id: 'id',
-  title: 'title',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
+  title: 'title',
+  pinnedMessageId: 'pinnedMessageId',
   createdById: 'createdById',
   playerId: 'playerId',
-  pinnedMessageId: 'pinnedMessageId'
+  createdByName: 'createdByName'
 };
 
 exports.Prisma.ParticipantsScalarFieldEnum = {
   id: 'id',
-  playerId: 'playerId',
   conversationId: 'conversationId',
-  joinedAt: 'joinedAt'
+  joinedAt: 'joinedAt',
+  playerId: 'playerId',
+  playerName: 'playerName'
 };
 
 exports.Prisma.MessageScalarFieldEnum = {
   id: 'id',
   content: 'content',
   createdAt: 'createdAt',
+  conversationId: 'conversationId',
   senderId: 'senderId',
-  conversationId: 'conversationId'
+  senderName: 'senderName'
 };
 
 exports.Prisma.NotificationScalarFieldEnum = {
   id: 'id',
-  playerId: 'playerId',
   message: 'message',
   severity: 'severity',
   link: 'link',
   read: 'read',
-  date: 'date'
+  date: 'date',
+  playerId: 'playerId'
 };
 
 exports.Prisma.SortOrder = {
@@ -510,8 +515,8 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
 exports.AdminRole = exports.$Enums.AdminRole = {
   ADMIN: 'ADMIN',
   MODERATOR: 'MODERATOR',
-  BETA: 'BETA',
-  PLAYER: 'PLAYER'
+  PLAYER: 'PLAYER',
+  BETA: 'BETA'
 };
 
 exports.Lang = exports.$Enums.Lang = {
@@ -524,39 +529,26 @@ exports.Lang = exports.$Enums.Lang = {
 exports.OfferStatus = exports.$Enums.OfferStatus = {
   ONGOING: 'ONGOING',
   ENDED: 'ENDED',
-  CLAIMED: 'CLAIMED',
-  CANCELLED: 'CANCELLED'
+  CANCELLED: 'CANCELLED',
+  CLAIMED: 'CLAIMED'
 };
 
 exports.LogType = exports.$Enums.LogType = {
   ItemUsed: 'ItemUsed',
   ItemBought: 'ItemBought',
-  ItemFound: 'ItemFound',
-  IngredientSold: 'IngredientSold',
   GoldWon: 'GoldWon',
   GoldLost: 'GoldLost',
   Move: 'Move',
   LevelUp: 'LevelUp',
   Fight: 'Fight',
-  XPEarned: 'XPEarned',
-  HPLost: 'HPLost',
   Death: 'Death',
   Revive: 'Revive',
   MissionStep: 'MissionStep',
   MissionFinished: 'MissionFinished',
   MissionCanceled: 'MissionCanceled',
   Gather: 'Gather',
-  GridFinished: 'GridFinished',
   CreateDinoz: 'CreateDinoz',
   ChangeDinozOrder: 'ChangeDinozOrder',
-  PlayerCreated: 'PlayerCreated',
-  PlayerConnected: 'PlayerConnected',
-  OfferNew: 'OfferNew',
-  OfferBid: 'OfferBid',
-  OfferCancelled: 'OfferCancelled',
-  OfferExpired: 'OfferExpired',
-  OfferWon: 'OfferWon',
-  LBDone: 'LBDone',
   AdminUpdateDinoz: 'AdminUpdateDinoz',
   AdminAddStatus: 'AdminAddStatus',
   AdminRemoveStatus: 'AdminRemoveStatus',
@@ -567,7 +559,20 @@ exports.LogType = exports.$Enums.LogType = {
   AdminAddReward: 'AdminAddReward',
   AdminRemoveReward: 'AdminRemoveReward',
   AdminUpdatePlayer: 'AdminUpdatePlayer',
-  AdminUpdateSecret: 'AdminUpdateSecret'
+  AdminUpdateSecret: 'AdminUpdateSecret',
+  IngredientSold: 'IngredientSold',
+  XPEarned: 'XPEarned',
+  HPLost: 'HPLost',
+  PlayerCreated: 'PlayerCreated',
+  PlayerConnected: 'PlayerConnected',
+  LBDone: 'LBDone',
+  OfferNew: 'OfferNew',
+  OfferBid: 'OfferBid',
+  OfferCancelled: 'OfferCancelled',
+  OfferExpired: 'OfferExpired',
+  OfferWon: 'OfferWon',
+  GridFinished: 'GridFinished',
+  ItemFound: 'ItemFound'
 };
 
 exports.PantheonMotif = exports.$Enums.PantheonMotif = {

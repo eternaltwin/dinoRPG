@@ -185,7 +185,7 @@ export async function acceptJoinRequest(req: Request) {
 		throw new ExpectedError(`You cannot accept this request`);
 	}
 
-	const join = await acceptPlayerJoinRequest(Number(req.params.id));
+	const join = await acceptPlayerJoinRequest(+req.params.id, authed.id);
 	return join;
 }
 
@@ -212,8 +212,8 @@ export async function denyJoinRequest(req: Request) {
 export async function getJoinRequest(req: Request) {
 	const authed = await auth(req);
 
-	//TODO : pas besoin de playerId en param vu qu'on l'a dans requ.auth.playerId
-	const joinRequest = await getPlayerJoinRequest(Number(authed.id));
+	//pas besoin de playerId en param vu qu'on l'a dans requ.auth.playerId
+	const joinRequest = await getPlayerJoinRequest(authed.id);
 	return joinRequest;
 }
 
@@ -263,7 +263,7 @@ export async function updateClanBanner(req: Request) {
 	}
 	const clanId = +req.params.id;
 
-	const hasRight = await playerHasRightRequest(clanId, Number(authed.id), ClanMemberRight.CLAN_EDIT_BANNER);
+	const hasRight = await playerHasRightRequest(clanId, authed.id, ClanMemberRight.CLAN_EDIT_BANNER);
 
 	if (!hasRight) {
 		throw new ExpectedError(
@@ -300,11 +300,7 @@ export async function getClanBanner(req: Request) {
 export async function getClanMember(req: Request) {
 	const authed = await auth(req);
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.params.clanId),
-		Number(authed.id),
-		ClanMemberRight.MEMBER_EDIT
-	);
+	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EDIT);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.MEMBER_EDIT]}`
@@ -326,11 +322,7 @@ export async function getClanMember(req: Request) {
 export async function updateClanMember(req: Request) {
 	const authed = await auth(req);
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.params.clanId),
-		Number(authed.id),
-		ClanMemberRight.MEMBER_EDIT
-	);
+	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EDIT);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.MEMBER_EDIT]}`
@@ -357,18 +349,14 @@ export async function updateClanMember(req: Request) {
 export async function excludeClanMember(req: Request) {
 	const authed = await auth(req);
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.params.clanId),
-		Number(authed.id),
-		ClanMemberRight.MEMBER_EXCLUDE
-	);
+	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EXCLUDE);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.MEMBER_EXCLUDE]}`
 		);
 	}
 
-	const member = await excludeClanMemberRequest(Number(req.params.id));
+	const member = await excludeClanMemberRequest(+req.params.id, authed.id);
 
 	return member;
 }
@@ -381,7 +369,7 @@ export async function excludeClanMember(req: Request) {
 export async function leaveClanSelf(req: Request) {
 	const authed = await auth(req);
 
-	const member = await leaveClanSelfRequest(Number(authed.id));
+	const member = await leaveClanSelfRequest(authed.id);
 
 	return member;
 }
@@ -395,7 +383,7 @@ export async function leaveClanSelf(req: Request) {
 export async function getClanPages(req: Request) {
 	const authed = await auth(req);
 
-	const pages = await getClanPagesListRequest(Number(authed.id), Number(req.params.clanId));
+	const pages = await getClanPagesListRequest(authed.id, Number(req.params.clanId));
 
 	return pages;
 }
@@ -409,7 +397,7 @@ export async function getClanPages(req: Request) {
 export async function getClanPage(req: Request) {
 	const authed = await auth(req);
 
-	const page = await getClanPageRequest(Number(authed.id), Number(req.params.id));
+	const page = await getClanPageRequest(authed.id, Number(req.params.id));
 
 	return page;
 }
@@ -428,7 +416,7 @@ export async function createClanPage(req: Request) {
 
 	const isPublic = Boolean(req.body.isPublic);
 
-	const hasRight = await playerHasRightRequest(Number(req.body.clanId), Number(authed.id), ClanMemberRight.PAGE_MANAGE);
+	const hasRight = await playerHasRightRequest(Number(req.body.clanId), authed.id, ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
@@ -449,11 +437,7 @@ export async function createClanPage(req: Request) {
 export async function deleteClanPage(req: Request) {
 	const authed = await auth(req);
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.params.clanId),
-		Number(authed.id),
-		ClanMemberRight.PAGE_MANAGE
-	);
+	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
@@ -477,11 +461,7 @@ export async function deleteClanPage(req: Request) {
 export async function updateClanPage(req: Request) {
 	const authed = await auth(req);
 
-	const hasRight = await playerHasRightRequest(
-		Number(req.params.clanId),
-		Number(authed.id),
-		ClanMemberRight.PAGE_MANAGE
-	);
+	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
 		throw new ExpectedError(
 			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
@@ -654,7 +634,7 @@ export async function getClanTreasureDetails(req: Request) {
 	});
 }
 
-export async function checkMessageCanBeDeleted(msgId: number, playerId: number): Promise<void> {
+export async function checkMessageCanBeDeleted(msgId: number, playerId: string): Promise<void> {
 	const messageData = await getDataForMessageDeletion(msgId);
 
 	if (messageData === null || messageData.clan === null) throw new Error('The data got cannot be null.');

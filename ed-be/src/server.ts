@@ -31,7 +31,7 @@ import { checkBans } from './cron/checkBans.js';
 declare global {
 	namespace Express {
 		interface User {
-			playerId?: number;
+			playerId?: string;
 			isAdmin?: boolean;
 		}
 

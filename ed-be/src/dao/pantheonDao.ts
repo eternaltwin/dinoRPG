@@ -26,23 +26,28 @@ export async function getPantheonFromType(type: PantheonMotif) {
 	});
 }
 
-export async function addDinozToPantheon(type: PantheonMotif, dinoz: Pick<Dinoz, 'playerId' | 'id' | 'level'>) {
+export async function addDinozToPantheon(
+	type: PantheonMotif,
+	dinoz: Pick<Dinoz, 'playerId' | 'id' | 'level'> & { player: Pick<Player, 'id' | 'name'> }
+) {
 	await prisma.pantheon.create({
 		data: {
 			playerId: dinoz.playerId,
 			motif: type,
 			dinozId: dinoz.id,
-			indicator: dinoz.level
+			indicator: dinoz.level,
+			playerName: dinoz.player.name
 		}
 	});
 }
 
-export async function addPlayerToPantheon(type: PantheonMotif, player: Pick<Player, 'id'>, rewardId: number) {
+export async function addPlayerToPantheon(type: PantheonMotif, player: Pick<Player, 'id' | 'name'>, rewardId: number) {
 	await prisma.pantheon.create({
 		data: {
 			playerId: player.id,
 			motif: type,
-			indicator: rewardId
+			indicator: rewardId,
+			playerName: player.name
 		}
 	});
 }

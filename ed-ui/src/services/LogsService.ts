@@ -12,7 +12,7 @@ export const LogsService = {
 	async list(
 		page: number,
 		type: LogType | null,
-		playerId: number | null,
+		playerId: string | null,
 		dinozId: number | null
 	): Promise<LogListResponse> {
 		return http()

@@ -2,7 +2,7 @@ import { LogType, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 
-export async function getCommonGatherInfo(playerId: number) {
+export async function getCommonGatherInfo(playerId: string) {
 	const gathers = await prisma.playerGather.findMany({
 		where: {
 			playerId
@@ -29,7 +29,7 @@ export async function createGrid(grid: Prisma.PlayerGatherCreateInput) {
 }
 
 export async function updateGrid(
-	playerId: number,
+	playerId: string,
 	dinozId: number,
 	gridId: number,
 	grid: Omit<Prisma.PlayerGatherUpdateInput, 'id'>

@@ -3,7 +3,7 @@ import { Notification } from '../notifications/notification.mjs';
 
 export interface StorePlayer {
 	money: number;
-	playerId?: number;
+	playerId?: string;
 	name: string;
 	playerOptions: PlayerOptions;
 	clanId: number | undefined;

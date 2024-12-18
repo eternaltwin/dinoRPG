@@ -302,7 +302,7 @@ routes.get(`${commonPath}/labrute`, [], async (req: Request, res: Response) => {
  *       500:
  *         description: Error
  */
-routes.get(`${commonPath}/smallMenu/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
+routes.get(`${commonPath}/smallMenu/:id`, [param('id').exists().isString()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -336,7 +336,7 @@ routes.get(`${commonPath}/smallMenu/:id`, [param('id').exists().isNumeric()], as
  *       200:
  *         description: Returns a public player fiche.
  */
-routes.get(`${commonPath}/:id`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
+routes.get(`${commonPath}/:id`, [param('id').exists().isString()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -395,7 +395,8 @@ routes.delete(commonPath, [], async (req: Request, res: Response) => {
  *         description: Internal server error.
  */
 routes.put(
-	`${commonPath}/language`, [body('language').exists().isIn(Object.values(Lang))],
+	`${commonPath}/language`,
+	[body('language').exists().isIn(Object.values(Lang))],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

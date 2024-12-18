@@ -1,6 +1,7 @@
 import { prisma } from '../prisma.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
-export async function getConversationsWithPlayer(playerId: number) {
+export async function getConversationsWithPlayer(playerId: string) {
 	return await prisma.conversation.findMany({
 		where: {
 			participants: {
@@ -30,29 +31,51 @@ export async function getConversationsWithPlayer(playerId: number) {
 }
 
 export async function createConversation(
-	creatorId: number,
-	participants: number[],
+	creatorId: string,
+	participants: string[],
 	title: string,
 	firstMessageContent: string
 ) {
-	return await prisma.conversation.create({
+	// Récupérer le nom du créateur
+	const creator = await prisma.player.findUnique({
+		where: { id: creatorId },
+		select: { name: true }
+	});
+
+	if (!creator) {
+		throw new ExpectedError('Creator not found');
+	}
+
+	// Récupérer les noms des autres participants
+	const participantNames = await prisma.player.findMany({
+		where: { id: { in: participants } },
+		select: { id: true, name: true }
+	});
+
+	const conv = await prisma.conversation.create({
 		data: {
-			title: title, // Nom de la conversation ou valeur par défaut
+			title: title,
 			createdBy: {
-				connect: { id: creatorId } // Lier le créateur
+				connect: { id: creatorId }
 			},
+			createdByName: creator.name,
 			participants: {
 				create: [
-					{ player: { connect: { id: creatorId } } }, // Ajouter le créateur comme participant
-					...participants.map(id => ({
-						player: { connect: { id } } // Ajouter les autres participants
+					{
+						player: { connect: { id: creatorId } },
+						playerName: creator.name // Ajouter explicitement playerName
+					},
+					...participantNames.map(participant => ({
+						player: { connect: { id: participant.id } },
+						playerName: participant.name // Ajouter explicitement playerName
 					}))
 				]
 			},
 			messages: {
 				create: {
-					content: firstMessageContent, // Contenu du premier message
-					sender: { connect: { id: creatorId } } // Lier le créateur comme auteur du premier message
+					content: firstMessageContent,
+					sender: { connect: { id: creatorId } },
+					senderName: creator.name
 				}
 			}
 		},
@@ -69,9 +92,11 @@ export async function createConversation(
 			updatedAt: true
 		}
 	});
+
+	return conv;
 }
 
-export async function addToConversation(conversationId: string, participants: number[]) {
+/*export async function addToConversation(conversationId: string, participants: string[]) {
 	await prisma.conversation.update({
 		data: {
 			participants: {
@@ -86,9 +111,9 @@ export async function addToConversation(conversationId: string, participants: nu
 			id: conversationId
 		}
 	});
-}
+}*/
 
-export async function removeFromConversation(conversationId: string, participants: number[]) {
+export async function removeFromConversation(conversationId: string, participants: string[]) {
 	await prisma.participants.deleteMany({
 		where: {
 			conversationId: conversationId,
@@ -117,7 +142,8 @@ export async function getConversation(conversationId: string) {
 							id: true,
 							name: true
 						}
-					}
+					},
+					playerName: true
 				}
 			},
 			messages: {
@@ -207,7 +233,15 @@ export async function getMoreMessages(conversationId: string, page: number) {
 	});
 }
 
-export async function addMessage(conversationId: string, message: string, senderId: number) {
+export async function addMessage(conversationId: string, message: string, senderId: string) {
+	const sender = await prisma.player.findUnique({
+		where: { id: senderId },
+		select: { name: true }
+	});
+
+	if (!sender) {
+		throw new ExpectedError('Sender not found');
+	}
 	return prisma.conversation.update({
 		data: {
 			messages: {
@@ -217,7 +251,8 @@ export async function addMessage(conversationId: string, message: string, sender
 						connect: {
 							id: senderId
 						}
-					}
+					},
+					senderName: sender.name
 				}
 			},
 			updatedAt: new Date()

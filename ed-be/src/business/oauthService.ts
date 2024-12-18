@@ -44,8 +44,7 @@ export async function authenticateToET(req: Request) {
 	if (player === null) {
 		// Create new player in database
 		player = await createPlayer({
-			eternalTwinId: user.user.id,
-			hasImported: false,
+			id: user.user.id,
 			name: user.user.display_name.current.value,
 			money: gameConfig.general.initialMoney,
 			quetzuBought: 0,

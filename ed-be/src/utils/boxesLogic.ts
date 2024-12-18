@@ -6,7 +6,7 @@ import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemProbability } from '@drpg/core/models/item/itemProbability';
 import weightedRandom from './fight/weightedRandom.js';
 
-export async function calculatePlayerPower(playerId: number) {
+export async function calculatePlayerPower(playerId: string) {
 	const boxInfo = await getBoxHandlerInformations(playerId);
 	if (!boxInfo) throw new ExpectedError(`Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;

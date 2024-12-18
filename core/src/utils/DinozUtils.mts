@@ -361,7 +361,7 @@ export const getNumberOfGatheringTries = (
 
 export const initializeDinoz = (
 	race: DinozRace,
-	playerId: number,
+	playerId: string,
 	display: string,
 	seed?: string
 ): Prisma.DinozCreateInput => {

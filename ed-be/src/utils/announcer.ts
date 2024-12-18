@@ -6,11 +6,11 @@ import { translateAll } from './translate.js';
 import { getPlayerForAnnounce } from '../dao/playerDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 
-export async function checkAnnounce(type: PantheonMotif, id: number, rewardId?: number) {
+export async function checkAnnounce(type: PantheonMotif, id: string, rewardId?: number) {
 	const pantheon = await getPantheonFromType(type);
 	switch (type) {
 		case PantheonMotif.race:
-			const dinoz = await getDinozForAnnounce(id);
+			const dinoz = await getDinozForAnnounce(+id);
 			const raceAtThisLevel = pantheon
 				.filter(p => p.dinoz?.raceId === dinoz.raceId)
 				.filter(p => p.indicator === dinoz.level);

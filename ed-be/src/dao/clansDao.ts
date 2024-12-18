@@ -105,7 +105,15 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 	return clans;
 }
 
-export async function createClanRequest(clanName: string, clanDescription: string, playerId: number) {
+export async function createClanRequest(clanName: string, clanDescription: string, playerId: string) {
+	const creator = await prisma.player.findUnique({
+		where: { id: playerId },
+		select: { name: true }
+	});
+
+	if (!creator) {
+		throw new ExpectedError('Creator not found');
+	}
 	const clan = await prisma.clan.create({
 		data: {
 			name: clanName,
@@ -126,7 +134,8 @@ export async function createClanRequest(clanName: string, clanDescription: strin
 		data: {
 			clan: { connect: { id: clan.id } },
 			author: { connect: { id: playerId } },
-			type: ClanHistoryType[ClanHistoryType.CLAN_CREATED]
+			type: ClanHistoryType[ClanHistoryType.CLAN_CREATED],
+			authorMessage: creator.name
 		},
 		select: { id: true }
 	});
@@ -226,7 +235,7 @@ export async function getClanMembersListRequest(clanId: number) {
 	return members;
 }
 
-export async function joinClanRequest(clanId: number, playerId: number) {
+export async function joinClanRequest(clanId: number, playerId: string) {
 	const joinRequest = await prisma.clanJoinRequest.create({
 		data: {
 			player: { connect: { id: playerId } },
@@ -248,7 +257,15 @@ export async function joinClanRequest(clanId: number, playerId: number) {
 	return joinRequest;
 }
 
-export async function acceptPlayerJoinRequest(requestId: number) {
+export async function acceptPlayerJoinRequest(requestId: number, acceptorId: string) {
+	const creator = await prisma.player.findUnique({
+		where: { id: acceptorId },
+		select: { name: true }
+	});
+
+	if (!creator) {
+		throw new ExpectedError('Creator not found');
+	}
 	const joinRequest = await prisma.clanJoinRequest.delete({
 		where: {
 			id: requestId
@@ -266,7 +283,8 @@ export async function acceptPlayerJoinRequest(requestId: number) {
 		data: {
 			clan: { connect: { id: clanMember.clanId } },
 			author: { connect: { id: clanMember.playerId } },
-			type: ClanHistoryType[ClanHistoryType.PLAYER_JOIN]
+			type: ClanHistoryType[ClanHistoryType.PLAYER_JOIN],
+			authorMessage: creator.name
 		},
 		select: { id: true }
 	});
@@ -306,7 +324,7 @@ export async function getPlayerJoinListRequest(clanId: number) {
 	return joinRequestsList;
 }
 
-export async function getPlayerJoinRequest(playerId: number) {
+export async function getPlayerJoinRequest(playerId: string) {
 	const joinRequest = await prisma.clanJoinRequest.findFirst({
 		where: {
 			playerId
@@ -402,7 +420,7 @@ export async function getClanBannerRequest(clanId: number) {
 }
 
 // Return true if player is leader, or has the right.
-export async function playerHasRightRequest(clanId: number, playerId: number, right: ClanMemberRight) {
+export async function playerHasRightRequest(clanId: number, playerId: string, right: ClanMemberRight) {
 	const member = await prisma.clanMember.count({
 		where: {
 			OR: [
@@ -455,7 +473,15 @@ export async function updateClanMemberRequest(id: number, clanId: number, rights
 	return member;
 }
 
-export async function excludeClanMemberRequest(clanMemberId: number) {
+export async function excludeClanMemberRequest(clanMemberId: number, acceptorId: string) {
+	const creator = await prisma.player.findUnique({
+		where: { id: acceptorId },
+		select: { name: true }
+	});
+
+	if (!creator) {
+		throw new ExpectedError('Creator not found');
+	}
 	let member = await prisma.clanMember.findUnique({
 		where: {
 			id: clanMemberId
@@ -479,7 +505,8 @@ export async function excludeClanMemberRequest(clanMemberId: number) {
 			data: {
 				clan: { connect: { id: member.clanId } },
 				author: { connect: { id: member.playerId } },
-				type: ClanHistoryType[ClanHistoryType.PLAYER_EXCLUSION]
+				type: ClanHistoryType[ClanHistoryType.PLAYER_EXCLUSION],
+				authorMessage: creator.name
 			},
 			select: { id: true }
 		});
@@ -488,21 +515,39 @@ export async function excludeClanMemberRequest(clanMemberId: number) {
 	return member;
 }
 
-export async function leaveClanSelfRequest(playerId: number) {
-	let member = await prisma.clanMember.findUnique({
+export async function leaveClanSelfRequest(playerId: string) {
+	const member = await prisma.clanMember.findUnique({
 		where: {
 			playerId
+		},
+		select: {
+			id: true,
+			clanId: true,
+			playerId: true,
+			dateJoin: true,
+			rights: true,
+			nickname: true,
+			donation: true,
+			player: {
+				select: {
+					name: true
+				}
+			}
 		}
 	});
+
+	if (!member) {
+		throw new ExpectedError('Member not found');
+	}
 
 	const clan = await prisma.clan.findUnique({
 		where: {
-			id: member?.clanId
+			id: member.clanId
 		}
 	});
 
-	if (clan?.leaderId != member?.playerId) {
-		member = await prisma.clanMember.delete({
+	if (clan?.leaderId != member.playerId) {
+		await prisma.clanMember.delete({
 			where: {
 				playerId
 			}
@@ -512,7 +557,8 @@ export async function leaveClanSelfRequest(playerId: number) {
 			data: {
 				clan: { connect: { id: member.clanId } },
 				author: { connect: { id: playerId } },
-				type: ClanHistoryType[ClanHistoryType.PLAYER_LEAVE]
+				type: ClanHistoryType[ClanHistoryType.PLAYER_LEAVE],
+				authorMessage: member.player.name
 			}
 		});
 	}
@@ -520,7 +566,7 @@ export async function leaveClanSelfRequest(playerId: number) {
 	return member;
 }
 
-export async function getClanPagesListRequest(playerId: number, clanId: number) {
+export async function getClanPagesListRequest(playerId: string, clanId: number) {
 	const player = await prisma.clanMember.count({
 		where: {
 			playerId,
@@ -560,7 +606,7 @@ export async function getClanPagesListRequest(playerId: number, clanId: number) 
 	return pages;
 }
 
-export async function getClanPageRequest(playerId: number, id: number) {
+export async function getClanPageRequest(playerId: string, id: number) {
 	const page = await prisma.clanPage.findUnique({
 		where: {
 			id
@@ -624,7 +670,7 @@ export async function updateClanPageRequest(id: number, name: string, content: s
 	return page;
 }
 
-export async function getClanMessagesRequest(playerId: number, clanId: number, page: number) {
+export async function getClanMessagesRequest(playerId: string, clanId: number, page: number) {
 	const player = await prisma.clanMember.count({
 		where: {
 			playerId,
@@ -678,19 +724,30 @@ export async function getClanMessagesCountRequest(clanId: number) {
 
 export async function createClanMessageRequest(
 	clanId: number,
-	authorId: number,
+	authorId: string,
 	content: string
 ): Promise<CreateClanMessage> {
-	return await prisma.clanMessage.create({
+	const creator = await prisma.player.findUnique({
+		where: { id: authorId },
+		select: { name: true }
+	});
+
+	if (!creator) {
+		throw new ExpectedError('Creator not found');
+	}
+
+	const message = await prisma.clanMessage.create({
 		data: {
 			clan: { connect: { id: clanId } },
 			author: { connect: { id: authorId } },
+			authorName: creator.name,
 			content
 		},
 		select: {
 			id: true,
 			date: true,
 			content: true,
+			authorName: true,
 			author: {
 				select: {
 					id: true,
@@ -704,9 +761,11 @@ export async function createClanMessageRequest(
 			}
 		}
 	});
+
+	return message;
 }
 
-export async function deleteClanMessageRequest(id: number, playerId: number): Promise<void> {
+export async function deleteClanMessageRequest(id: number, playerId: string): Promise<void> {
 	await prisma.clanMessage.delete({
 		where: {
 			id,
@@ -724,7 +783,7 @@ export async function deleteClanMessageRequest(id: number, playerId: number): Pr
 	});
 }
 
-export async function getClanHistoryRequest(playerId: number, clanId: number, page: number) {
+export async function getClanHistoryRequest(playerId: string, clanId: number, page: number) {
 	const player = await prisma.clanMember.count({
 		where: {
 			playerId,
@@ -801,7 +860,7 @@ export async function updateClanTreasure(clanId: number, gold: number) {
 	});
 }
 
-export async function updateClanContribution(memberId: number, gold: number) {
+export async function updateClanContribution(memberId: string, gold: number) {
 	return prisma.clanMember.update({
 		where: {
 			playerId: memberId

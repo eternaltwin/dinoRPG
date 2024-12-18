@@ -12,7 +12,7 @@ export interface PlayerInfo {
 		  }
 		| undefined;
 	name: string;
-	id: number;
+	id: string;
 	dinoz: DinozPublicFiche[];
 	epicRewards: number[];
 	customText: string | null;

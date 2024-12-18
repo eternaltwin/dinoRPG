@@ -48,7 +48,7 @@ export default defineComponent({
 	},
 	props: {
 		playerId: {
-			type: Number,
+			type: String,
 			required: true
 		}
 	},

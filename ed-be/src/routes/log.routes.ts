@@ -15,7 +15,7 @@ routes.get(`${commonPath}/list/all`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const logs: LogListResponse = await getAllLogs();
+		const logs = await getAllLogs();
 		return res.status(200).send(logs);
 	} catch (err) {
 		sendError(res, err);
@@ -31,7 +31,7 @@ routes.get(
 		}
 
 		try {
-			const logs: LogListResponse = await getLogs(req);
+			const logs = await getLogs(req);
 			return res.status(200).send(logs);
 		} catch (err) {
 			sendError(res, err);
@@ -48,7 +48,7 @@ routes.get(
 		}
 
 		try {
-			const logs: LogListResponse = await getLogsByDate(req);
+			const logs = await getLogsByDate(req);
 			return res.status(200).send(logs);
 		} catch (err) {
 			sendError(res, err);

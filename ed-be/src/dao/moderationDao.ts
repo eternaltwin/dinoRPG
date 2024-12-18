@@ -2,8 +2,8 @@ import { ModerationReason, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
 export async function createModerationReport(
-	author: number,
-	target: number,
+	author: string,
+	target: string,
 	reason: ModerationReason,
 	comment: string,
 	dinozId?: number

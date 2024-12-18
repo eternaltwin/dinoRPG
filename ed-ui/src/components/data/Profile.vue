@@ -154,7 +154,7 @@ export default defineComponent({
 			return this.accountData!.epicRewards.includes(Reward.PDA);
 		},
 		isMyAccount(): boolean {
-			return this.playerStore.getPlayerId === parseInt(this.$route.params.id as string);
+			return this.playerStore.getPlayerId === (this.$route.params.id as string);
 		},
 		async goLB(): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -192,7 +192,7 @@ export default defineComponent({
 		async fetchPlayerPosition() {
 			// Fetch player position
 			try {
-				const { position } = await PlayerService.getPosition(+this.$route.params.id);
+				const { position } = await PlayerService.getPosition(this.$route.params.id as string);
 				this.playerPosition = position;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

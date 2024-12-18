@@ -42,8 +42,8 @@ export async function getOfferList(req: Request) {
 	const authed = await auth(req);
 
 	const filter = req.params.filter;
-	const sellerId = req.query.sellerId ? +req.query.sellerId : null;
-	const bidderId = req.query.bidderId ? +req.query.bidderId : null;
+	const sellerId = req.query.sellerId ? (req.query.sellerId as string) : null;
+	const bidderId = req.query.bidderId ? (req.query.bidderId as string) : null;
 	const expired = req.query.expired ? req.query.expired === 'true' : false;
 	const page = req.query.page ? +req.query.page : 1;
 	const onlyMines = req.query.onlyMines ? req.query.onlyMines === 'true' : false;
@@ -258,29 +258,10 @@ export async function cancelOffer(req: Request) {
 	await Promise.all(promises);
 
 	// Reimburse bidders
-
-	// Bids can contain multiple bids from the same user, keep only the highest one
-	const bids = offer.bids.reduce(
-		(acc, bid) => {
-			if (!acc[bid.userId] || acc[bid.userId] < bid.value) {
-				acc[bid.userId] = bid.value;
-			}
-
-			return acc;
-		},
-		{} as Record<number, number>
-	);
-
-	const ticketPromises = [];
-
-	// Add tickets to inventory
-	ticketPromises.push(
-		...Object.entries(bids).map(([userId, value]) =>
-			increaseItemQuantity(+userId, itemList[Item.TREASURE_COUPON].itemId, value)
-		)
-	);
-
-	await Promise.all(ticketPromises);
+	if (offer.bids.length > 0) {
+		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
+		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
+	}
 
 	// Delete offer
 	await deleteOffer(offerId);
@@ -472,7 +453,7 @@ export async function claimOffer(req: Request) {
 }
 
 export async function checkRefund(
-	playerId: number,
+	playerId: string,
 	ingredients: { itemId: number; quantity: number; isIngredient: boolean }[],
 	items: { itemId: number; quantity: number; isIngredient: boolean }[],
 	dinoz: Pick<Dinoz, 'playerId'> | null,

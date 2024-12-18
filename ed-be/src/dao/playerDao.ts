@@ -1,5 +1,5 @@
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { LogType, Moderation, ModerationAction, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
+import { LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
 import { AdminRole, Lang } from '@drpg/prisma';
@@ -15,14 +15,13 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	return player;
 }
 
-export async function getToolTipInfos(playerid: number) {
+export async function getToolTipInfos(playerId: string) {
 	return await prisma.player.findUnique({
 		where: {
-			id: playerid
+			id: playerId
 		},
 		select: {
 			id: true,
-			eternalTwinId: true,
 			name: true,
 			customText: true
 		}
@@ -49,7 +48,7 @@ export async function auth(request: Request, banByPass = false) {
 
 	const user = await prisma.player.findFirst({
 		where: {
-			id: +playerId
+			id: playerId
 		},
 		select: {
 			id: true,
@@ -70,34 +69,15 @@ export async function auth(request: Request, banByPass = false) {
 }
 
 //TODO : Check if it work and maybe remove some query because of the Ondelete Cascade enabled (or at least add some await)
-export async function resetUser(playerId: number) {
-	await prisma.$executeRaw`SET TRANSACTION ISOLATION LEVEL SERIALIZABLE`;
-	await prisma.$transaction([
-		// Suppression des entités associées
-		prisma.dinoz.deleteMany({ where: { playerId } }),
-		prisma.playerDinozShop.deleteMany({ where: { playerId } }),
-		prisma.playerGather.deleteMany({ where: { playerId } }),
-		prisma.playerIngredient.deleteMany({ where: { playerId } }),
-		prisma.playerItem.deleteMany({ where: { playerId } }),
-		prisma.playerQuest.deleteMany({ where: { playerId } }),
-		prisma.playerReward.deleteMany({ where: { playerId } }),
-		prisma.ranking.deleteMany({ where: { playerId } }),
-		prisma.usernameHistory.deleteMany({ where: { playerId } }),
-		prisma.playerTracking.deleteMany({ where: { playerId } }),
-		prisma.clanJoinRequest.deleteMany({ where: { playerId } }),
-
-		// Mise à jour du joueur
-		prisma.player.update({
-			where: { id: playerId },
-			data: {
-				eternalTwinId: 'DELETED',
-				name: `$user${playerId}`
-			}
-		})
-	]);
+export async function resetUser(playerId: string) {
+	await prisma.player.delete({
+		where: {
+			id: playerId
+		}
+	});
 }
 
-export async function getPlayerInfoToReport(playerId: number) {
+export async function getPlayerInfoToReport(playerId: string) {
 	return await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -115,7 +95,7 @@ export async function getPlayerInfoToReport(playerId: number) {
 		}
 	});
 }
-export async function checkBeforeDeletion(playerId: number) {
+export async function checkBeforeDeletion(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -144,8 +124,7 @@ export async function getRolePlayer(role: AdminRole) {
 			role: role
 		},
 		select: {
-			id: true,
-			eternalTwinId: true
+			id: true
 		}
 	});
 	return players;
@@ -154,7 +133,7 @@ export async function getRolePlayer(role: AdminRole) {
 export async function getPlayerId(eternalTwinId: string) {
 	const player = await prisma.player.findFirst({
 		where: {
-			eternalTwinId
+			id: eternalTwinId
 		},
 		select: {
 			id: true,
@@ -169,7 +148,7 @@ export async function getPlayerId(eternalTwinId: string) {
 export async function getLBPlayer(eternalTwinId: string) {
 	const player = await prisma.player.findFirst({
 		where: {
-			eternalTwinId
+			id: eternalTwinId
 		},
 		select: {
 			id: true,
@@ -196,7 +175,7 @@ export async function getLBPlayer(eternalTwinId: string) {
 	return player;
 }
 
-export async function getPlayerUSkills(playerId: number) {
+export async function getPlayerUSkills(playerId: string) {
 	const player = await prisma.player.findFirst({
 		where: {
 			id: playerId
@@ -218,7 +197,7 @@ export async function getPlayerUSkills(playerId: number) {
 	return player;
 }
 
-export async function getPlayerForAnnounce(playerId: number) {
+export async function getPlayerForAnnounce(playerId: string) {
 	return await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -234,26 +213,26 @@ export async function getPlayerForAnnounce(playerId: number) {
 		}
 	});
 }
-export async function getEternalTwinId(playerId: number) {
+export async function getEternalTwinId(playerId: string) {
 	const player = await prisma.player.findFirst({
 		where: {
 			id: playerId
 		},
 		select: {
-			eternalTwinId: true
+			id: true
 		}
 	});
 
 	return player;
 }
 
-export async function getLBResponseInformation(playerId: number) {
+export async function getLBResponseInformation(playerId: string) {
 	const player = await prisma.player.findFirst({
 		where: {
 			id: playerId
 		},
 		select: {
-			eternalTwinId: true,
+			id: true,
 			labruteDone: true,
 			_count: {
 				select: {
@@ -273,7 +252,7 @@ export async function getLBResponseInformation(playerId: number) {
 	return player;
 }
 
-export async function getCommonDataRequest(playerId: number) {
+export async function getCommonDataRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -339,7 +318,7 @@ export async function getCommonDataRequest(playerId: number) {
 	return player;
 }
 
-export async function getAllInformationFromPlayer(playerId: number) {
+export async function getAllInformationFromPlayer(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -356,7 +335,7 @@ export async function getAllInformationFromPlayer(playerId: number) {
 	return player;
 }
 
-export async function getPlayerMoney(playerId: number) {
+export async function getPlayerMoney(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -370,7 +349,7 @@ export async function getPlayerMoney(playerId: number) {
 	return player;
 }
 
-export async function getPlayerCompletion(playerId: number) {
+export async function getPlayerCompletion(playerId: string) {
 	return await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -384,7 +363,7 @@ export async function getPlayerCompletion(playerId: number) {
 		}
 	});
 }
-export async function getPlayerDataRequest(playerId: number) {
+export async function getPlayerDataRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -447,7 +426,7 @@ export async function getPlayerDataRequest(playerId: number) {
 	return player;
 }
 
-export async function prepareConcentration(playerId: number) {
+export async function prepareConcentration(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -479,8 +458,7 @@ export async function searchPlayersByName(playerName: string) {
 		},
 		select: {
 			id: true,
-			name: true,
-			eternalTwinId: true
+			name: true
 		}
 	});
 
@@ -493,7 +471,7 @@ export async function searchPlayersByName(playerName: string) {
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerInventoryDataRequest(playerId: number) {
+export async function getPlayerInventoryDataRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -524,7 +502,7 @@ export async function getPlayerInventoryDataRequest(playerId: number) {
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerDinozShopRequest(playerId: number) {
+export async function getPlayerDinozShopRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -545,7 +523,7 @@ export async function getPlayerDinozShopRequest(playerId: number) {
 	return player;
 }
 
-export async function getPlayerRewardsRequest(playerId: number) {
+export async function getPlayerRewardsRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -560,7 +538,7 @@ export async function getPlayerRewardsRequest(playerId: number) {
 	return player;
 }
 
-export async function getBoxHandlerInformations(playerId: number) {
+export async function getBoxHandlerInformations(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -616,7 +594,7 @@ export async function getBoxHandlerInformations(playerId: number) {
  * That includes:  platerId and the dinoz from the shop that it is trying to buy
  * @return Player
  */
-export async function getPlayerSpecificDinozShopRequest(playerId: number, dinozId: number) {
+export async function getPlayerSpecificDinozShopRequest(playerId: string, dinozId: number) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -647,7 +625,7 @@ export async function getPlayerSpecificDinozShopRequest(playerId: number, dinozI
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerShopItemsDataRequest(playerId: number) {
+export async function getPlayerShopItemsDataRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -694,7 +672,7 @@ export async function getPlayerShopItemsDataRequest(playerId: number) {
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: number) {
+export async function getPlayerShopOneItemDataRequest(playerId: string, itemId: number) {
 	const player = await prisma.player.findUniqueOrThrow({
 		where: {
 			id: playerId
@@ -739,7 +717,7 @@ export async function getPlayerShopOneItemDataRequest(playerId: number, itemId: 
  * Throws an error if the player does not exist.
  * @return Player
  */
-export async function getPlayerShopIngredientsDataRequest(playerId: number) {
+export async function getPlayerShopIngredientsDataRequest(playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -773,7 +751,7 @@ export async function getPlayerShopIngredientsDataRequest(playerId: number) {
 
 // Setters
 //TODO
-export async function addMoney(playerId: number, money: number) {
+export async function addMoney(playerId: string, money: number) {
 	const playerData = await prisma.player.update({
 		where: {
 			id: playerId
@@ -791,7 +769,7 @@ export async function addMoney(playerId: number, money: number) {
 	return playerData;
 }
 
-export async function removeMoney(playerId: number, money: number) {
+export async function removeMoney(playerId: string, money: number) {
 	const playerData = await prisma.player.update({
 		where: {
 			id: playerId
@@ -809,7 +787,7 @@ export async function removeMoney(playerId: number, money: number) {
 	return playerData;
 }
 
-export async function removeDailyGridRewards(playerId: number, rewards: number) {
+export async function removeDailyGridRewards(playerId: string, rewards: number) {
 	const playerData = await prisma.player.update({
 		where: {
 			id: playerId
@@ -825,7 +803,7 @@ export async function removeDailyGridRewards(playerId: number, rewards: number) 
 	return playerData;
 }
 
-export async function setPlayer(playerId: number, player: Prisma.PlayerUpdateInput) {
+export async function setPlayer(playerId: string, player: Prisma.PlayerUpdateInput) {
 	const playerData = await prisma.player.update({
 		where: {
 			id: playerId
@@ -836,7 +814,7 @@ export async function setPlayer(playerId: number, player: Prisma.PlayerUpdateInp
 	return playerData;
 }
 
-export async function ownsDinoz(playerId: number, ...dinozIds: number[]) {
+export async function ownsDinoz(playerId: string, ...dinozIds: number[]) {
 	const player = await prisma.player.count({
 		where: {
 			id: playerId,
@@ -853,7 +831,7 @@ export async function ownsDinoz(playerId: number, ...dinozIds: number[]) {
 	return player > 0;
 }
 
-export async function archiveOldUsername(playerId: number, username: string) {
+export async function archiveOldUsername(playerId: string, username: string) {
 	await prisma.usernameHistory.create({
 		data: {
 			playerId: playerId,
@@ -862,7 +840,7 @@ export async function archiveOldUsername(playerId: number, username: string) {
 	});
 }
 
-export async function getCanCreateClanRequest(playerId: number) {
+export async function getCanCreateClanRequest(playerId: string) {
 	const player = await prisma.player.count({
 		where: {
 			id: playerId,
@@ -881,7 +859,7 @@ export async function getCanCreateClanRequest(playerId: number) {
 	return player > 0;
 }
 
-export async function getCanJoinClanRequest(playerId: number) {
+export async function getCanJoinClanRequest(playerId: string) {
 	const player = await prisma.player.count({
 		where: {
 			id: playerId,
@@ -896,7 +874,7 @@ export async function getCanJoinClanRequest(playerId: number) {
 	return player > 0;
 }
 
-export async function isPlayerLeaderOfClanRequest(playerId: number, clanId: number) {
+export async function isPlayerLeaderOfClanRequest(playerId: string, clanId: number) {
 	const player = await prisma.clan.count({
 		where: {
 			id: clanId,
@@ -907,7 +885,7 @@ export async function isPlayerLeaderOfClanRequest(playerId: number, clanId: numb
 	return player > 0;
 }
 
-export async function getClanIdAndNameFromPlayerId(playerId: number) {
+export async function getClanIdAndNameFromPlayerId(playerId: string) {
 	return await prisma.player.findUniqueOrThrow({
 		select: {
 			ClanMember: {
@@ -927,7 +905,7 @@ export async function getClanIdAndNameFromPlayerId(playerId: number) {
 	});
 }
 
-export async function getPlayerBanInfo(playerId: number) {
+export async function getPlayerBanInfo(playerId: string) {
 	return await prisma.player.findUnique({
 		where: {
 			id: playerId
@@ -1001,15 +979,15 @@ export async function getBannedPlayers(page: number) {
  * @param language - The new language to set (default is Lang.FR).
  * @returns Updated player language.
  */
-export async function updatePlayerLanguage(playerId: number, language: Lang) {
-    const updatedPlayer = await prisma.player.update({
-        where: {
-            id: playerId
-        },
-        data: {
-            lang: language
-        }
-    });
+export async function updatePlayerLanguage(playerId: string, language: Lang) {
+	const updatedPlayer = await prisma.player.update({
+		where: {
+			id: playerId
+		},
+		data: {
+			lang: language
+		}
+	});
 
-    return updatedPlayer;
+	return updatedPlayer;
 }

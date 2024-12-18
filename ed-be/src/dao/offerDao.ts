@@ -7,13 +7,13 @@ import OfferOrderByWithRelationInput = Prisma.OfferOrderByWithRelationInput;
 import { GLOBAL } from '../context.js';
 
 export async function getOffers(
-	userId: number | null,
+	userId: string | null,
 	filter: string,
-	sellerId: number | null,
-	bidderId: number | null,
+	sellerId: string | null,
+	bidderId: string | null,
 	expired: boolean,
 	page: number
-): Promise<{ total: number, offers: OfferFromGetOffers[] }> {
+): Promise<{ total: number; offers: OfferFromGetOffers[] }> {
 	const where: Prisma.OfferWhereInput = {};
 	const pageSize = 10;
 	let orderBy: OfferOrderByWithRelationInput;
@@ -83,7 +83,7 @@ export async function getOffers(
 		orderBy
 	});
 
-	return {total: totalOffers, offers};
+	return { total: totalOffers, offers };
 }
 
 export async function insertOffer(
@@ -94,7 +94,7 @@ export async function insertOffer(
 		quantity: number;
 		isIngredient: boolean;
 	}[],
-	playerId: number
+	playerId: string
 ) {
 	const duration = GLOBAL.config.isProduction ? MARKET_OFFER_DURATION : MARKET_OFFER_DURATION_DEBUG;
 	return prisma.offer.create({
@@ -169,7 +169,7 @@ export async function getOffer(offerId: number, status: OfferStatus) {
 	return offer;
 }
 
-export async function prepareRefund(playerId: number, ingredientList: number[], itemList: number[]) {
+export async function prepareRefund(playerId: string, ingredientList: number[], itemList: number[]) {
 	const player = await prisma.player.findUniqueOrThrow({
 		where: {
 			id: playerId
@@ -211,7 +211,7 @@ export async function prepareRefund(playerId: number, ingredientList: number[], 
 	return player;
 }
 
-export async function addBid(offerId: number, userId: number, value: number) {
+export async function addBid(offerId: number, userId: string, value: number) {
 	await prisma.offerBid.create({
 		data: {
 			offerId,
