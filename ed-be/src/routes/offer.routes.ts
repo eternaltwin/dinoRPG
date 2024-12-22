@@ -3,7 +3,6 @@ import { body, param, query, validationResult } from 'express-validator';
 import { bidOffer, cancelOffer, claimOffer, createOffer, getOfferList } from '../business/offerService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
-import { totalOffers } from '../dao/offerDao.js';
 
 const routes: Router = Router();
 
@@ -32,19 +31,6 @@ routes.get(
 		}
 	}
 );
-
-routes.get(`${commonPath}/getTotal`, async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	try {
-		const response = await totalOffers();
-		return res.status(200).send(response.toString());
-	} catch (err) {
-		sendError(res, err);
-	}
-});
 
 // Create a new offer
 routes.put(

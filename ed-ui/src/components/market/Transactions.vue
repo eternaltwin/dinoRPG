@@ -1,16 +1,18 @@
 <template>
-	<template v-if="myExpiredOffers">
+	<template v-if="myExpiredOffers && myExpiredOffers.length">
 		<h4>{{ $t('market.transactionView.myExpiredOffers') }}</h4>
 		<table>
 			<tr>
 				<td>{{ $t('market.transactionView.bid') }}</td>
 				<td>
-					<DZButton @click="reclaimOffer(myExpiredOffers.id)">{{ $t('market.transactionView.claimExpired') }}</DZButton>
+					<DZButton @click="reclaimOffer(myExpiredOffers[0].id)">{{
+						$t('market.transactionView.claimExpired')
+					}}</DZButton>
 				</td>
 			</tr>
 		</table>
 		<DZTable>
-			<OfferLine :offer="myExpiredOffers" :now="now" />
+			<OfferLine :offer="myExpiredOffers[0]" :now="now" />
 		</DZTable>
 	</template>
 	<DZDisclaimer v-else help content="market.transactionView.noWonOffer" />
@@ -143,10 +145,15 @@ export default defineComponent({
 
 			// Fetch data
 			try {
-				this.offers = this.formatOffers(await OfferService.getList('all', null, userId));
-				[this.ownOffer] = this.formatOffers(await OfferService.getList('all', userId));
-				this.wonOffers = this.formatOffers(await OfferService.getList('all', null, userId, true, 1, true));
-				[this.myExpiredOffers] = this.formatOffers(await OfferService.getList('all', userId, null, true, 1, true));
+				const { offers } = await OfferService.getList('all', null, userId);
+				this.offers = this.formatOffers(offers);
+				const { offers: ownOffers } = await OfferService.getList('all', userId);
+				[this.ownOffer] = this.formatOffers(ownOffers);
+				const { offers: wonOffers } = await OfferService.getList('all', null, userId, true, 1, true);
+				this.wonOffers = this.formatOffers(wonOffers);
+				const { offers: myExpiredOffers } = await OfferService.getList('all', userId, null, true, 1, true);
+				console.log('Offres expirées : ', myExpiredOffers);
+				this.myExpiredOffers = this.formatOffers(myExpiredOffers);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;

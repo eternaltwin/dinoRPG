@@ -75,8 +75,11 @@ export default defineComponent({
 		async fetchOffers() {
 			// Fetch data
 			try {
-				this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true, this.currentPage));
-				this.currentPage = 1;
+				const { offers, total } = await OfferService.getList(this.filter, null, null, true, this.currentPage);
+
+				this.offers = this.formatOffers(offers);
+				this.totalOffer = total;
+				this.totalPages = Math.ceil(this.totalOffer / this.offersPerPage);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);
 				return;
@@ -84,13 +87,14 @@ export default defineComponent({
 		},
 		async changeFilter(event: Event) {
 			this.filter = (event.target as HTMLSelectElement).value;
+			this.currentPage = 1;
 			await this.fetchOffers();
 		},
 		async previousPage() {
 			if (this.currentPage > 1) {
 				try {
 					this.currentPage--;
-					this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true, this.currentPage));
+					await this.fetchOffers();
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
@@ -101,27 +105,16 @@ export default defineComponent({
 			if (this.currentPage < this.totalPages) {
 				try {
 					this.currentPage++;
-					this.offers = this.formatOffers(await OfferService.getList(this.filter, null, null, true, this.currentPage));
+					await this.fetchOffers();
 				} catch (error) {
 					errorHandler.handle(error, this.$toast);
 					return;
 				}
 			}
-		},
-		async totalOffers() {
-			try {
-				this.totalOffer = parseInt(await OfferService.getTotal());
-			} catch (error) {
-				errorHandler.handle(error, this.$toast);
-				return;
-			}
 		}
 	},
 	async mounted() {
-		await this.totalOffers();
 		await this.fetchOffers();
-		this.totalPages = Math.ceil(this.totalOffer / this.offersPerPage);
-
 		// Update time every second
 		setInterval(() => {
 			this.now = Math.ceil(new Date().getTime() / 1000);

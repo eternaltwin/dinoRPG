@@ -23,12 +23,6 @@ export const OfferService = {
 			.then(res => Promise.resolve<Offer[]>(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getTotal(): Promise<string> {
-		return http()
-			.get('/offer/getTotal')
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
 	createOffer(
 		total: number,
 		ingredients: { name: string; count: number }[],

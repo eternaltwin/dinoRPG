@@ -49,7 +49,7 @@ export async function getOfferList(req: Request) {
 	const onlyMines = req.query.onlyMines ? req.query.onlyMines === 'true' : false;
 
 	// Get filtered offers
-	let offers = await getOffers(authed.id, filter, sellerId, bidderId, expired, page);
+	let { total, offers } = await getOffers(authed.id, filter, sellerId, bidderId, expired, page);
 
 	if (onlyMines) {
 		offers = offers
@@ -72,7 +72,7 @@ export async function getOfferList(req: Request) {
 			}
 		});
 	}
-	return offers;
+	return { total, offers };
 }
 
 /**
@@ -93,7 +93,7 @@ export async function createOffer(req: Request) {
 		count: number;
 	}[];
 
-	const offers = await getOffers(authed.id, 'own', authed.id, null, false, 1);
+	const { offers } = await getOffers(authed.id, 'own', authed.id, null, false, 1);
 
 	if (offers.length > 0) {
 		throw new ExpectedError(translate('alreadyOffer', authed));

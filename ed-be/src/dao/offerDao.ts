@@ -13,7 +13,7 @@ export async function getOffers(
 	bidderId: number | null,
 	expired: boolean,
 	page: number
-): Promise<OfferFromGetOffers[]> {
+): Promise<{ total: number, offers: OfferFromGetOffers[] }> {
 	const where: Prisma.OfferWhereInput = {};
 	const pageSize = 10;
 	let orderBy: OfferOrderByWithRelationInput;
@@ -45,6 +45,8 @@ export async function getOffers(
 		where.status = OfferStatus.ONGOING;
 		orderBy = { endDate: 'asc' };
 	}
+
+	const totalOffers = await prisma.offer.count({ where });
 
 	const offers = await prisma.offer.findMany({
 		where,
@@ -81,11 +83,7 @@ export async function getOffers(
 		orderBy
 	});
 
-	return offers;
-}
-
-export async function totalOffers() {
-	return await prisma.offer.count({});
+	return {total: totalOffers, offers};
 }
 
 export async function insertOffer(
