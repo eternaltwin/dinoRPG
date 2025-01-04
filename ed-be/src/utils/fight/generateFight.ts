@@ -49,11 +49,7 @@ export type DetailedFight = {
 		hasCook: boolean;
 	};
 	rules: {
-		canUseEquipment: boolean;
-		canUsePermanentEquipmentOnly: boolean;
 		canUseCapture: boolean;
-		canDeleteObjects: boolean;
-		enableBalance: boolean;
 		enableStats: boolean;
 	};
 	timeManipulatorUsed?: boolean;
@@ -79,6 +75,14 @@ const orderFighters = (fightData: DetailedFight) => {
 	});
 };
 
+
+/**
+ * @summary Generate a fight.
+ *
+ * It is up to the caller to set up properly the teams that will face each other and the rules of the fight.
+ *
+ * @returns FightProcessResult
+**/
 const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedrandom.PRNG): FightProcessResult => {
 	const fightData: DetailedFight = {
 		rng,
@@ -88,17 +92,13 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		fighters: config.fighters,
 		deads: [] as number[],
 		attackerData: {
-			hasCook: config.attacker_has_cook
+			hasCook: config.attackerHasCook
 		},
 		defenderData: {
-			hasCook: config.defender_has_cook
+			hasCook: config.defenderHasCook
 		},
 		rules: {
-			canUseEquipment: config.canUseCapture,
-			canUsePermanentEquipmentOnly: config.canUsePermanentEquipmentOnly,
-			canDeleteObjects: config.canDeleteObjects,
 			canUseCapture: config.canUseCapture,
-			enableBalance: config.enableBalance,
 			enableStats: config.enableStats
 		},
 		protectedFighters: [],

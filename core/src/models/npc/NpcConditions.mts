@@ -3,7 +3,7 @@ import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { DayEnum } from '../enums/dayEnum.mjs';
 import { Scenario } from '../enums/Scenario.mjs';
 
-// Choisit le type de value en fonction de l'enum utilisée
+// Choisis le type de value en fonction de l'enum utilisée
 export type Condition = {
 	[Operator.AND]?: [Condition, Condition, ...Condition[]];
 	[Operator.OR]?: [Condition, Condition, ...Condition[]];

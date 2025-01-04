@@ -27,7 +27,7 @@ import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { mouvementListener } from './specialService.js';
+import { movementListener } from './specialService.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
@@ -73,6 +73,7 @@ export async function processFight(req: Request) {
 
 	let team = player.dinoz;
 
+	// Go through followers and make those that are unavailable leave the group.
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== null);
 
 	if (unavailableFollowers.length > 0) {
@@ -94,41 +95,51 @@ export async function processFight(req: Request) {
 		throw new ExpectedError(translate(`dead`, authed));
 	}
 
-	let fight = await mouvementListener(player, team, dinozData.placeId, dinozId);
+	// Look for a special action that happens on the fight.
+	let fight = await movementListener(player, team, dinozData.placeId, dinozId);
+
+	// If no fight happened, trigger a regular fight.
 	if (!fight) {
-		fight = await moveFight(team, dinozData.placeId, player);
+		fight = await fightMonstersAtPlace(team, dinozData.placeId, player);
 	}
 
-	//Consume fight action
+	// Consume fight action
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
 			fight: false
 		});
 	}
 
-	// Update stats
+	// Update player stats
 	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === 'monster').length);
 
 	return fight;
 }
 
-export async function moveFight(
+/**
+ * @summary Calculates a fight against monsters at a given place, award 
+ *
+ * This method generates the list of monsters encountered by the group.
+ * The group of Dinoz will earn experience and gold.
+ * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
+ *
+ * @returns FightProcessResult
+**/
+export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
 	player: Pick<Player, 'id' | 'teacher' | 'cooker'>
 ) {
 	const dayOfWeek = dayjs().day();
-	let monsters = generateMonsterList(team, placeId); //prepareFight(dinoz.level, localisation.map, localisation.placeId);
+	let monsters = generateMonsterList(team, placeId);
 
 	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
 	}
 	const fightResult = calculateFight(team, player, placeId, monsters);
-	// console.log(fightResult.steps[0])
 	const result = await rewardFight(team, monsters, fightResult, placeId, player);
 
-	// const result = getFightResult(dinoz, monsters[0], fightResult);
-	//If any dinoz is on a mission, check if the fight result progress the mission
+	// If any dinoz is on a mission, check if the fight result progress the mission
 	for (const dinoz of team) {
 		if (dinoz.missions.some(mission => !mission.isFinished)) {
 			const dinozAtFuturePlace = structuredClone(dinoz);
@@ -151,8 +162,7 @@ export async function moveFight(
  * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
  *
  * @returns FightProcessResult
- *  */
-//
+**/
 export function calculateFight(
 	team: DinozToGetFighter[],
 	player: Pick<Player, 'cooker'>,
@@ -180,16 +190,13 @@ export function calculateFight(
 		seed: rng_seed,
 
 		// Flags
-		canUseEquipment: true,
-		canUsePermanentEquipmentOnly: false,
+		castleFight: false,
 		canUseCapture: true,
-		canDeleteObjects: true,
-		enableBalance: true,
 		enableStats: false,
 
 		// Teams
-		attacker_has_cook: player.cooker,
-		defender_has_cook: false,
+		attackerHasCook: player.cooker,
+		defenderHasCook: false,
 
 		// Fighters
 		initialDinozList: team,
@@ -242,10 +249,10 @@ export async function rewardFight(
 		let xp = 0;
 		const cur = d.level / teamLevel;
 
-		/** HACK to restrict the use of low level dinoz in order to make easy money **/
+		/** Restrict the use of low level dinoz in order to make easy money **/
 		let gfact = 1.0;
 		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
-		/** HACK to make dinoz with malediction not generating gold **/
+		/** Dinoz with malediction not generating gold **/
 		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 			gfact = 0.0;
 		}
@@ -260,19 +267,13 @@ export async function rewardFight(
 			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
 			xp += monsterXp;
 		}
-		//TODO ??
-		/*if( !disableTrophies && d.life <= 0 ) {
-			if( d.owner != null )
-				d.owner.incrVar(Data.USERVARS.list.deaths, 1);
-			continue;
-		}*/
 
-		//previous xp coef computation
+		// Previous xp coef computation
 		const lvlDiff = gameConfig.dinoz.maxLevel - d.level;
 		let xpf = 1.2 + 0.8 * (lvlDiff / gameConfig.dinoz.maxLevel);
 		if (xpf < 1.0) xpf = 1.0;
 
-		//new one, applied if better
+		// New one, applied if better
 		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
 			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
 
@@ -448,134 +449,6 @@ export async function rewardFight(
 		itemWon: itemWon
 	};
 }
-
-export async function rewardFightCalculate(
-	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
-		status: Pick<DinozStatus, 'statusId'>[];
-		skills: Pick<DinozSkill, 'skillId'>[];
-	})[],
-	monsters: MonsterFiche[],
-	fightResult: FightProcessResult,
-	player: Pick<Player, 'id' | 'teacher'>
-) {
-	if (!team.length) {
-		throw new ExpectedError('No player found');
-	}
-
-	const XP_NEWB_BONUS = [15, 10, 6.6, 4.3, 2.5];
-
-	// let teamLevel = 0;
-	// teamLevel += dinozData.level;
-
-	const goldFactor = 1.0;
-	const xpFactor = 1.0;
-	let totalWinXP = 0;
-
-	//TODO use Array<MonsterFiche> input rather than MonsterFiche
-
-	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
-
-	let fgold = 0;
-
-	for (const d of team) {
-		//TODO escape
-		/*//if escaped, no XP !
-		if( Lambda.has( escaped, r.f) )
-			continue;*/
-
-		let xp = 0;
-		const cur = d.level / teamLevel;
-
-		/** HACK to restrict the use of low level dinoz in order to make easy money **/
-		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
-		/** HACK to make dinoz with malediction not generating gold **/
-		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
-			gfact = 0.0;
-		}
-
-		for (const f of monsters) {
-			const factor = f.level >= d.level ? 1 : 4 / (4 + (d.level - f.level));
-			let monsterXp = f.xp ?? 10 * factor * cur;
-			fgold += (f.gold ?? 1.0) * factor * cur * gfact;
-			// newbie bonus
-			if (d.level <= 5) monsterXp += XP_NEWB_BONUS[d.level - 1] * cur;
-			// bonus for fighters of same level of the monster
-			if (Math.abs(f.level - d.level) <= 5 && f.xpBonus) monsterXp += f.xpBonus;
-			console.log(`Monster ${f.name} gave ${monsterXp}`);
-			xp += monsterXp;
-		}
-		//TODO ??
-		/*if( !disableTrophies && d.life <= 0 ) {
-			if( d.owner != null )
-				d.owner.incrVar(Data.USERVARS.list.deaths, 1);
-			continue;
-		}*/
-
-		//previous xp coef computation
-		const lvlDiff = gameConfig.dinoz.maxLevel - d.level;
-		let xpf = 1.2 + 0.8 * (lvlDiff / gameConfig.dinoz.maxLevel);
-		if (xpf < 1.0) xpf = 1.0;
-
-		//new one, applied if better
-		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
-			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
-
-		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf), player);
-		const max = getMaxXp(d);
-		if (d.experience + xp > max) {
-			xp = max - d.experience;
-			if (xp < 0) xp = 0;
-		}
-		totalWinXP += xp;
-	}
-
-	const fprob = getRandomNumber(0, 100);
-	let goldMultiplier = 1;
-	if (fprob < 1) goldMultiplier = 10;
-	else if (fprob < 11) goldMultiplier = 3;
-
-	let gold = (getRandomNumber(0, 10) + 20) * 10;
-
-	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
-
-	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
-	gold -= goldLost;
-
-	return {
-		opponent: monsters.map(m => {
-			return m.name;
-		}),
-		goldEarned: fightResult.winner ? gold : -goldLost,
-		xpEarned: fightResult.winner ? totalWinXP : 0,
-		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
-		result: fightResult.winner,
-		history: fightResult.steps,
-		hpLost: fightResult.attackers.map(a => ({
-			id: a.dinozId,
-			hpLost: a.hpLost
-		})),
-		itemsUsed: fightResult.attackers.map(a => ({
-			id: a.dinozId,
-			itemsUsed: a.itemsUsed
-		}))
-	};
-}
-
-/*export function getFightResult(dinozData: Dinoz, monster: MonsterFiche, fightResult: FightProcessResult): FightResult {
-  //TODO use Array<MonsterFiche> input rather than MonsterFiche
-	const maxExp = levelList.find(level => level.id === dinozData.level)!.experience;
-	const experienceGained = monster.xp + dinozData.experience > maxExp ? maxExp - dinozData.experience : monster.xp;
-	return {
-		opponent: monster.name,
-		goldEarned: fightResult.winner ? monster.gold : 0,
-		xpEarned: fightResult.winner ? experienceGained : 0,
-		hpLost: fightResult.attackers[0].hp_lost,
-		result: fightResult.winner,
-		dinozId: dinozData.id,
-		history: fightResult.history
-	};
-}*/
 
 /**
  * Calculate the probability of a monster to appear

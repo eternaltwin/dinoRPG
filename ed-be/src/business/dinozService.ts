@@ -78,9 +78,9 @@ import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/p
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
-import { moveFight } from './fightService.js';
+import { fightMonstersAtPlace } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
-import { mouvementListener } from './specialService.js';
+import { movementListener } from './specialService.js';
 import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { selectBox } from '../utils/boxesLogic.js';
@@ -603,6 +603,7 @@ export async function betaMove(req: Request) {
 
 	let team = player.dinoz;
 
+	// Go through followers and make those that are unavailable leave the group.
 	const unavailableFollowers = team.filter(d => d.life <= 0 || d.unavailableReason !== null);
 
 	if (unavailableFollowers.length > 0) {
@@ -649,7 +650,7 @@ export async function betaMove(req: Request) {
 		throw new ExpectedError(`${dinozPlace.name} is not adjacent with ${desiredPlace.name}`);
 	}
 
-	// Check if condition to go to desired place are fullfilled for dinoz and followers
+	// Check if condition to go to desired place are fulfilled for dinoz and followers
 	if (desiredPlace.conditions) {
 		for (const member of team) {
 			const memberToTest: PlayerForConditionCheck = {
@@ -678,9 +679,10 @@ export async function betaMove(req: Request) {
 		throw new ExpectedError(translate('noMovement', authed));
 	}
 
-	let fight = await mouvementListener(player, team, finalPlace, dinozId);
+	// Look for a special action that happens on the fight.
+	let fight = await movementListener(player, team, finalPlace, dinozId);
 	if (!fight) {
-		fight = await moveFight(team, finalPlace, player);
+		fight = await fightMonstersAtPlace(team, finalPlace, player);
 		if (fight.result) {
 			await updateMultipleDinoz(
 				team.map(d => d.id),
@@ -696,14 +698,14 @@ export async function betaMove(req: Request) {
 		}
 	}
 
-	//Consume fight action
+	// Consume fight action
 	for (const dino of team) {
 		await updateDinoz(dino.id, {
 			fight: false
 		});
 	}
 
-	// Update stats
+	// Update player stats
 	await setSpecificStat(StatTracking.MOVES, player.id, team.length);
 	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === 'monster').length);
 

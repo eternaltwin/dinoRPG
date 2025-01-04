@@ -91,6 +91,7 @@ export interface DetailedFighter {
 	level: number;
 	display?: string;
 	type: FighterType;
+	// In case the fighter is a summon, this is the ID of the fighter that summoned them.
 	master?: number;
 	// Team side
 	attacker: boolean;
@@ -117,14 +118,12 @@ export interface DetailedFighter {
 	// Items
 	items: ItemFiche[];
 	itemsUsed: number[];
-	// Time of the fighter, determines when its turn is
-	time: number; // Lower attacks next
+	// Time of the fighter, determines whose turn it is. Fighter with the lowest time plays.
+	time: number;
 	// Available skills
 	skills: SkillDetails[];
 	// Current status
 	status: FighterStatus[];
-	// Active skills
-	activeSkills: Skill[];
 	// Poisoned
 	poisonedBy?: {
 		id: number;

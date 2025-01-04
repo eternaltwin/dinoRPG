@@ -165,7 +165,6 @@ export const initializeDinoz = (
 		time: 0,
 		skills,
 		status: [],
-		activeSkills: [],
 		elements: [],
 		element: ElementType.AIR,
 		minDamage: 1,
@@ -295,7 +294,6 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		time: dinoz.time, // Clone start with their summoner's time
 		skills: [], // No skills for clones
 		status: [], // No statuses for clones
-		activeSkills: [],
 		elements: [], // Copy exactly the elements of the original dinoz, see below
 		element: ElementType.AIR, // Temporary, is changed below
 		minDamage: dinoz.minDamage,
@@ -477,7 +475,6 @@ export const initializeMonster = (
 		time: Math.round(random() * TIME_BASE) * TIME_FACTOR,
 		skills,
 		status,
-		activeSkills: [],
 		elements: [
 			ElementType.FIRE,
 			ElementType.WOOD,

@@ -27,16 +27,13 @@ export interface FightConfiguration {
 	seed: string;
 
 	// Flags
-	canUseEquipment: boolean;
-	canUsePermanentEquipmentOnly: boolean;
+	castleFight: boolean;
 	canUseCapture: boolean;
-	canDeleteObjects: boolean;
-	enableBalance: boolean;
 	enableStats: boolean;
 
 	// Teams
-	attacker_has_cook: boolean;
-	defender_has_cook: boolean;
+	attackerHasCook: boolean;
+	defenderHasCook: boolean;
 
 	// Fighters
 	initialDinozList: DinozToGetFighter[];

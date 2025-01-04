@@ -2318,6 +2318,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.HYPNOSE: {
+			// TODO: can only be used once, does not work on bosses, nor if there is a single fighter against
 			// Get non boss opponents
 			const opponents = getOpponents(fightData, fighter, ['dinoz', 'monster', 'clone']);
 

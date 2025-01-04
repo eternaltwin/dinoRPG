@@ -101,17 +101,18 @@ async function goDarkWorld(playerId: string, dinozList: Pick<Dinoz, 'id'>[]) {
 	await updateMultipleDinozPlaceId(playerId, dinozList, PlaceEnum.PORTAIL);
 }
 
-export async function mouvementListener(
+export async function movementListener(
 	player: Pick<Player, 'id' | 'teacher' | 'cooker'> & PlayerForConditionCheck,
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToGetActualStep)[],
 	finalPlace: PlaceEnum,
 	activeDinoz: number
 ) {
-	//Specials actions
+	// Special actions
 	const potentialSpecialActions = Object.values(specialActions).find(special => special.place === finalPlace);
 
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, player, player.dinoz[0].id)) {
 		if (potentialSpecialActions.opponents) {
+			// Trigger a fight against the opponents of the special action
 			const fightResult = calculateFight(team, player, finalPlace, potentialSpecialActions.opponents);
 
 			const partyLeader = team.find(d => d.id === activeDinoz);
