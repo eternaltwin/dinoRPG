@@ -2318,16 +2318,22 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.HYPNOSE: {
-			// TODO: can only be used once, does not work on bosses, nor if there is a single fighter against
-			// Get non boss opponents
-			const opponents = getOpponents(fightData, fighter, ['dinoz', 'monster', 'clone']);
+			// TODO: using hypnose on an hypnotized target cancels it
+			// Get opponents
+			const opponents = getOpponents(fightData, fighter);
 
-			if (!opponents.length) {
+			// Hypnose does not work if there is no opponent or just a single one, or if the fighter has already used it.
+			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
 				return cancel();
 			}
 
 			// Get random opponent
 			const opponent = chooseRandomOpponent(opponents, fightData.rng);
+
+			// Hypnose does not work if opponent is a boss
+			if (opponent.type == 'boss') {
+				return cancel();
+			}
 
 			// Prevent if some opponent has CUZCUSSIAN_MASK
 			const opponentWithMask = getOpponents(fightData, fighter).find(opponent =>
@@ -2360,6 +2366,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					fighter: stepFighter(opponent)
 				});
 			}
+			fighter.hasUsedHypnose = true;
+
+			break;
 		}
 
 		// FIRE Vanila
@@ -4711,6 +4720,8 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 export const playFighterTurn = (fightData: DetailedFight) => {
 	const attacker = fightData.fighters[0];
 
+	// TODO: rework environment to use a timeout.
+	// TODO: turn counter is used to cancel the environment is the caller has played a lot of turns since it called the env.
 	// Environment
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		// Decrease turns left
@@ -4734,12 +4745,14 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
+	// TODO handle hypnosis as a status for easier handling with the cycles.
 	// Hypnosis
 	if (attacker.hypnotized) {
 		// Decrease turns left
 		attacker.hypnotized--;
 
 		// Remove hypnotize if no more turns left
+		// TODO: implement the return either via move & flip or endHypnosis
 		if (attacker.hypnotized <= 0) {
 			// Change team
 			attacker.attacker = !attacker.attacker;

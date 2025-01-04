@@ -164,8 +164,9 @@ export interface DetailedFighter {
 	canSurvive?: boolean;
 	// Costume
 	costume?: MonsterFiche;
-	// Hypnotized
+	// Hypnotized: duration (in cycles) of the hypnosis
 	hypnotized?: number;
+	hasUsedHypnose: boolean;
 	// Mud wall
 	mudWall?: number;
 	// Invocations
