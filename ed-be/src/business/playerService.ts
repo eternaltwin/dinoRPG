@@ -68,9 +68,9 @@ export async function getCommonData(req: Request) {
 			dailyGridRewards: gameConfig.general.dailyGridRewards
 		});
 
-		// Tik bracelet regen
+		// Tik bracelet regen (& alive)
 		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>
-			dinoz.items.some(item => item.itemId === Item.TIK_BRACELET)
+			dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
 		);
 
 		for (const dinoz of dinozWithTikBracelet) {

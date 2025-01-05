@@ -3920,7 +3920,7 @@ const attackTarget = (
 		};
 	}
 
-	// Note: combo counter seems to work weirdly, or may be note...
+	// Note: combo counter seems to work weirdly, or may be not...
 	// Fighter passes its turn if it has reached max combo at this step
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
 		fightData.steps.push({
