@@ -3688,9 +3688,6 @@ const poison = (
 	skill: Skill,
 	duration = StatusLength.INFINITE
 ) => {
-	// No poison if fighter is dead
-	if (fighter.hp <= 0) return;
-
 	// No poison if fighter is already poisoned
 	if (hasStatus(fighter, Status.POISONED)) return;
 
