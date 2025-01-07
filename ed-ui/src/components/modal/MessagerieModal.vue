@@ -82,7 +82,12 @@
 						v-if="!newThread.participants || (newThread.participants && newThread.participants.length < 9)"
 					>
 						<label for="player">{{ $t('messagerie.newMsgParticipants') }}</label>
-						<SearchPlayer place-holder="messagerie.addParticipants" @player="participantThead" />
+						<SearchEntity
+							background
+							entityType="player"
+							place-holder="messagerie.addParticipants"
+							@entity="participantThead"
+						/>
 					</div>
 					<p v-else>{{ $t('toast.maxParticipantInThread') }}</p>
 					<div class="participants">
@@ -108,21 +113,21 @@
 </template>
 
 <script lang="ts">
-import EventBus from '../../events/index.js';
+import { FullThread, NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
+import { Player } from '@drpg/core/models/player/Player';
 import { defineComponent } from 'vue';
+import EventBus from '../../events/index.js';
+import { MessagerieService } from '../../services/MessagerieService.js';
 import { localStore, playerStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
-import { FullThread, NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
-import { MessagerieService } from '../../services/MessagerieService.js';
-import SearchPlayer from '../data/SearchPlayer.vue';
-import DZUser from '../common/DZUser.vue';
-import { Player } from '@drpg/core/models/player/Player';
-import Thread from '../message/Thread.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZUser from '../common/DZUser.vue';
+import Thread from '../message/Thread.vue';
+import SearchEntity from '../data/SearchEntity.vue';
 
 export default defineComponent({
 	name: 'messagerie',
-	components: { DZDisclaimer, DZUser, SearchPlayer, DZButton, Thread },
+	components: { DZDisclaimer, DZUser, DZButton, Thread, SearchEntity },
 	data() {
 		return {
 			localStore: localStore(),

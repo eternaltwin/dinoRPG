@@ -3786,6 +3786,10 @@
 			"pickEpic": "Choisir une récompense",
 			"dinoz": "Dinoz",
 			"detail": "Détails"
+		},
+		"placeholder": {
+			"searchPlayer": "Rechercher un joueur",
+			"searchClan": "Rechercher un clan"
 		}
 	},
 	"clan": {

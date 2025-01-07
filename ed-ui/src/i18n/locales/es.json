@@ -3782,6 +3782,10 @@
 			"pickEpic": "Elegir una recompensa",
 			"dinoz": "Dino",
 			"detail": "Detalles"
+		},
+		"placeholder": {
+			"searchPlayer": "Buscar un Maestro",
+			"searchClan": "Buscar un Clan"
 		}
 	},
 	"clan": {

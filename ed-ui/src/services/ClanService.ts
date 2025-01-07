@@ -3,6 +3,7 @@ import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { http } from '../utils/index.js';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
+import { ClanSearch } from 'src/components/data/SearchClan.vue';
 
 export const ClanService = {
 	getClansRanking(page: number): Promise<Array<Clan>> {
@@ -20,6 +21,12 @@ export const ClanService = {
 	searchClansByName(name: string, page: number): Promise<Array<Clan>> {
 		return http()
 			.get(`/clan/search/${name}/${page}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	searchClans(name: string): Promise<Array<ClanSearch>> {
+		return http()
+			.get(`/clan/search/${name}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

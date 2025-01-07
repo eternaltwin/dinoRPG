@@ -105,6 +105,23 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 	return clans;
 }
 
+export async function searchClansByName(clanName: string) {
+	const clans = await prisma.clan.findMany({
+		where: {
+			name: {
+				contains: clanName,
+				mode: 'insensitive'
+			}
+		},
+		select: {
+			id: true,
+			name: true
+		}
+	});
+
+	return clans;
+}
+
 export async function createClanRequest(clanName: string, clanDescription: string, playerId: string) {
 	const creator = await prisma.player.findUnique({
 		where: { id: playerId },

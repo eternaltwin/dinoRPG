@@ -5,24 +5,24 @@
 			background: background
 		}"
 	>
-		<input id="player" type="text" :placeholder="$t(placeHolder)" v-model="searchValue" list="players" />
+		<input :id="entityType" type="text" :placeholder="$t(placeHolder)" v-model="searchValue" list="entities" />
 		<div>
 			<div
-				class="userSearchResultsContainer"
-				:class="{ show: playerList.length > 0, hide: playerList.length <= 0 }"
-				:key="playerList.length"
+				class="entitySearchResultsContainer"
+				:class="{ show: entityList.length > 0, hide: entityList.length <= 0 }"
+				:key="entityList.length"
 			>
 				<div
-					class="users"
-					v-for="(player, index) in playerList"
+					class="entities"
+					v-for="(entity, index) in entityList"
 					:key="index"
 					@click="
-						$emit('player', player);
-						playerList = [];
+						$emit('entity', entity);
+						entityList = [];
 						searchValue = undefined;
 					"
 				>
-					<span>{{ player.name }}</span>
+					<span>{{ entity.name }}</span>
 				</div>
 			</div>
 		</div>
@@ -30,33 +30,35 @@
 </template>
 
 <script lang="ts">
+import { EntitySearch } from '@drpg/core/models/rankings/EntitySearch';
 import { defineComponent } from 'vue';
-import { PlayerService } from '../../services/index.js';
+import { ClanService, PlayerService } from '../../services/index.js';
 
-interface PlayerSearch {
-	name: string;
-	id: number;
-}
 export default defineComponent({
-	name: 'SearchPlayer',
+	name: 'SearchEntity',
 	props: {
+		entityType: { type: String, required: true }, // 'player' or 'clan'
 		placeHolder: { type: String, required: true },
 		background: { type: Boolean, default: false }
 	},
 	data() {
 		return {
 			searchValue: undefined as string | undefined,
-			playerList: [] as Array<PlayerSearch>,
+			entityList: [] as Array<EntitySearch>,
 			awaitingSearch: false as boolean
 		};
 	},
-	emits: ['player'],
+	emits: ['entity'],
 	methods: {
 		async getResults(): Promise<void> {
 			if (this.searchValue && this.searchValue.length >= 3) {
-				this.playerList = await PlayerService.searchPlayers(this.searchValue);
+				if (this.entityType === 'player') {
+					this.entityList = await PlayerService.searchPlayers(this.searchValue);
+				} else if (this.entityType === 'clan') {
+					this.entityList = await ClanService.searchClans(this.searchValue);
+				}
 			} else {
-				this.playerList = [];
+				this.entityList = [];
 			}
 		}
 	},
@@ -96,14 +98,13 @@ input {
 	width: max-content;
 	height: auto;
 	position: relative;
-	.userSearchResultsContainer {
+	.entitySearchResultsContainer {
 		flex-direction: column;
 		max-height: calc(32px * 5);
 		position: absolute;
 		background: #5c2b20;
 		border: 1px solid #ddab76;
 		box-shadow: 0 0 3px #000;
-
 		display: block;
 		margin: 2px 0 0;
 		outline: 1px solid #000;
@@ -111,7 +112,7 @@ input {
 		width: calc(100% - 2px);
 		z-index: 1;
 	}
-	.users {
+	.entities {
 		height: 32px;
 		display: flex;
 		flex-direction: column;
@@ -134,7 +135,6 @@ input {
 	}
 	.hide {
 		opacity: 0;
-
 		height: 0;
 		transition: all 0.5s ease;
 	}
@@ -168,14 +168,13 @@ input {
 		color: #ffee92;
 		height: 100%;
 	}
-	.userSearchResultsContainer {
+	.entitySearchResultsContainer {
 		flex-direction: column;
 		max-height: calc(32px * 5);
 		position: absolute;
 		background: #5c2b20;
 		border: 1px solid #ddab76;
 		box-shadow: 0 0 3px #000;
-
 		display: block;
 		margin: 2px 0 0;
 		outline: 1px solid #000;

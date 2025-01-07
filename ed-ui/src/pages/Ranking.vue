@@ -22,73 +22,62 @@
 	<DZDisclaimer content="ranking.disclaimer.completion" v-if="tabSelected === 3" />
 	<DZDisclaimer content="ranking.disclaimer.clans" v-if="tabSelected === 4" />
 	<DZDisclaimer content="ranking.disclaimer.pantheon" v-if="tabSelected === 5" />
-	<PlayerRanking sort="classic" v-if="tabSelected === 1" />
-	<PlayerRanking sort="average" v-if="tabSelected === 2" />
-	<CompletionRanking v-if="tabSelected === 3" />
-	<ClansRanking v-if="tabSelected === 4" />
-	<Pantheon v-if="tabSelected === 5" />
-	<SearchPlayer background place-holder="Search Player" @player="goToAccount" />
+	<RouterView />
+	<SearchEntity
+		v-if="tabSelected === 1 || tabSelected === 2 || tabSelected === 3"
+		background
+		entityType="player"
+		placeHolder="ranking.placeholder.searchPlayer"
+		@entity="goToAccount"
+	/>
+	<SearchEntity
+		v-if="tabSelected === 4"
+		background
+		entityType="clan"
+		placeHolder="ranking.placeholder.searchClan"
+		@entity="goToClan"
+	/>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import PlayerRanking from '../components/rankings/PlayerRanking.vue';
-import CompletionRanking from '../components/rankings/CompletionRanking.vue';
-import { PlayerService } from '../services/index.js';
-import Pantheon from '../components/rankings/Pantheon.vue';
-import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import ClansRanking from '../components/rankings/ClansRanking.vue';
-import SearchPlayer from '../components/data/SearchPlayer.vue';
 import { Player } from '@drpg/core/models/player/Player';
-
-interface PlayerSearch {
-	name: string;
-	id: string;
-}
+import { Clan } from '@drpg/prisma';
+import { defineComponent } from 'vue';
+import { RouterView } from 'vue-router';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import SearchEntity from '../components/data/SearchEntity.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
 
 export default defineComponent({
 	name: 'Ranking',
 	components: {
-		SearchPlayer,
-		ClansRanking,
 		DZDisclaimer,
-		CompletionRanking,
 		TitleHeader,
-		PlayerRanking,
-		Pantheon
+		SearchEntity,
+		RouterView
 	},
 	data() {
 		return {
-			tabSelected: 1 as number,
-			displayErrorMessage: false as boolean,
-			awaitingSearch: false as boolean,
-			searchValue: undefined as string | undefined,
-			playerList: [] as Array<PlayerSearch>
+			tabSelected: 1 as number
 		};
 	},
 	methods: {
 		async setTab(value: number): Promise<void> {
 			this.tabSelected = value;
-		},
-		async getResults(): Promise<void> {
-			if (this.searchValue && this.searchValue.length >= 3) {
-				this.playerList = await PlayerService.searchPlayers(this.searchValue);
-			}
+			const routes = ['RankingPlayers', 'RankingAverage', 'RankingCompletion', 'RankingClans', 'RankingPantheon'];
+			this.$router.push({ name: routes[value - 1] });
 		},
 		goToAccount(p: Pick<Player, 'id' | 'name'>): void {
 			this.$router.push({ name: 'MyAccount', params: { id: p.id } });
+		},
+		goToClan(c: Pick<Clan, 'id' | 'name'>): void {
+			this.$router.push({ name: 'Clan', params: { id: c.id } });
 		}
 	},
 	watch: {
-		searchValue(): void {
-			if (!this.awaitingSearch) {
-				setTimeout(() => {
-					this.getResults();
-					this.awaitingSearch = false;
-				}, 700); // 0.7 sec delay
-			}
-			this.awaitingSearch = true;
+		tabSelected(value: number) {
+			const routes = ['RankingPlayers', 'RankingAverage', 'RankingCompletion', 'RankingClans', 'RankingPantheon'];
+			this.$router.push({ name: routes[value - 1] });
 		}
 	}
 });
@@ -109,7 +98,6 @@ a {
 	background-image: url('../assets/design/tabsBg.webp');
 	background-repeat: no-repeat;
 	border-bottom: 1px solid #ffe7aa;
-
 	li {
 		float: left;
 		position: relative;
@@ -117,7 +105,6 @@ a {
 		&.active {
 			margin-top: 1px;
 			text-shadow: 1px 1px 0px #9a4029;
-
 			a {
 				background-color: #d69e68;
 				color: white;
@@ -126,7 +113,6 @@ a {
 				border-bottom: 1px solid #d69e68;
 			}
 		}
-
 		a {
 			color: #fce3bc;
 			text-decoration: none;

@@ -26,6 +26,7 @@ import {
 	joinClanRequest,
 	leaveClanSelfRequest,
 	playerHasRightRequest,
+	searchClansByName,
 	searchClansByNameRequest,
 	updateClanBannerRequest,
 	updateClanContribution,
@@ -83,6 +84,20 @@ export async function searchClanByName(req: Request) {
 	await auth(req);
 
 	const clans = await searchClansByNameRequest(req.params.name, Number(req.params.page));
+
+	return clans;
+}
+
+/**
+ * Search clans by name
+ * @param req
+ * @param req.params.name {string} clan name
+ * @returns Array<Clan>
+ */
+export async function searchClans(req: Request) {
+	await auth(req);
+
+	const clans = await searchClansByName(req.params.name);
 
 	return clans;
 }

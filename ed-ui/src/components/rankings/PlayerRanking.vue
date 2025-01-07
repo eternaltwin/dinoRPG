@@ -51,14 +51,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
+import { defineComponent, PropType } from 'vue';
 import EventBus from '../../events/index.js';
 import { PlayerService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { playerStore } from '../../store/index.js';
-import PlayerMenu from '../modal/PlayerMenu.vue';
+import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
+import PlayerMenu from '../modal/PlayerMenu.vue';
 
 export default defineComponent({
 	name: 'PlayerRanking',
@@ -76,7 +76,10 @@ export default defineComponent({
 		};
 	},
 	props: {
-		sort: String
+		sort: {
+			type: String as PropType<'classic' | 'average'>,
+			required: true
+		}
 	},
 	methods: {
 		leave() {
@@ -94,7 +97,6 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
-			console.log(this.rankings);
 		},
 		changePage(i: number) {
 			this.page += i;
@@ -103,6 +105,9 @@ export default defineComponent({
 	},
 	async created(): Promise<void> {
 		await this.getRanking();
+	},
+	watch: {
+		sort: 'getRanking'
 	}
 });
 </script>

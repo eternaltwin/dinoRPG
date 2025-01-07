@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { localStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { JwtTrial } from '@drpg/core/dist/models/store/jwt.mjs';
+import { localStore } from '../store/index.js';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -64,7 +64,36 @@ const router = createRouter({
 				{
 					path: '/ranking',
 					name: 'Ranking',
-					component: () => import('../pages/Ranking.vue')
+					component: () => import('../pages/Ranking.vue'),
+					children: [
+						{
+							path: '',
+							name: 'RankingPlayers',
+							component: () => import('../components/rankings/PlayerRanking.vue'),
+							props: { sort: 'classic' }
+						},
+						{
+							path: 'average',
+							name: 'RankingAverage',
+							component: () => import('../components/rankings/PlayerRanking.vue'),
+							props: { sort: 'average' }
+						},
+						{
+							path: 'completion',
+							name: 'RankingCompletion',
+							component: () => import('../components/rankings/CompletionRanking.vue')
+						},
+						{
+							path: 'clans',
+							name: 'RankingClans',
+							component: () => import('../components/rankings/ClansRanking.vue')
+						},
+						{
+							path: 'pantheon',
+							name: 'RankingPantheon',
+							component: () => import('../components/rankings/Pantheon.vue')
+						}
+					]
 				},
 				{
 					path: '/dinozwithoutflash',
@@ -220,15 +249,7 @@ const router = createRouter({
 			path: '/:pathMatch(.*)',
 			redirect: '/'
 		}
-	] /*,
-	scrollBehavior(to, from, savedPosition) {
-		console.log(savedPosition)
-		if (savedPosition) {
-			return savedPosition;
-		} else {
-			return { left: 0, top: 0 };
-		}
-	}*/
+	]
 });
 
 router.beforeEach(to => {

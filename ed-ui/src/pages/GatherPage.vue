@@ -92,7 +92,6 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				try {
 					this.gatherResult = await DinozService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
-					console.log(this.gatherResult.ingredientsAtMaxQuantity);
 					// Check if the grid is complete
 					if (this.gatherResult.isGridComplete) {
 						// If there is a gold reward, show a success message

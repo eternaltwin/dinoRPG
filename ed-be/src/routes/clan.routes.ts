@@ -31,7 +31,8 @@ import {
 	getClanHistoryCount,
 	giveClanIngredients,
 	getClanTreasureDetails,
-	getRankingClans
+	getRankingClans,
+	searchClans
 } from '../business/clanService.js';
 import multer from 'multer';
 import sendError from '../utils/sendErrors.js';
@@ -146,6 +147,22 @@ routes.get(
 		}
 		try {
 			const response = await searchClanByName(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(
+	`${commonPath}/search/:name`,
+	[param('name').exists().isString().isLength({ min: 3 })],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+		try {
+			const response = await searchClans(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
