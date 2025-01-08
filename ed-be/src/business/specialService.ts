@@ -2,7 +2,10 @@ import { PlayerForConditionCheck } from '@drpg/core/constants';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, Player } from '@drpg/prisma';
@@ -20,9 +23,6 @@ import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
-import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
-import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export async function concentrate(req: Request) {
 	if (!req.auth || !req.auth.playerId) {
@@ -143,27 +143,28 @@ export async function movementListener(
 		}
 	}
 
-	// Check if all dinoz have the same unfinished mission
-	const dinozMission = team[0].missions.find(m => !m.isFinished);
+	// Check if any dinoz has an unfinished mission
+	const dinozMission = team.flatMap(dinoz => dinoz.missions).find(m => !m.isFinished);
 
-	if (
-		dinozMission &&
-		team.every(dinoz => dinoz.missions.find(m => !m.isFinished)?.missionId === dinozMission?.missionId)
-	) {
-		// Check if all dinoz are at the same step
-		const actualStep = getActualStep(team[0]);
+	if (dinozMission) {
+		// Find the dinoz with the unfinished mission
+		const dinozWithMission = team.find(dinoz => dinoz.missions.some(m => m.missionId === dinozMission.missionId));
+		if (dinozWithMission) {
+			// Check the actual step of the dinoz with the unfinished mission
+			const actualStep = getActualStep(dinozWithMission);
 
-		if (actualStep && team.every(dinoz => getActualStep(dinoz)?.stepId === actualStep.stepId)) {
-			if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
-				const fightResult = calculateFight(team, player, finalPlace, actualStep.requirement.target);
-				const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
-				if (fightResult.winner) {
-					const teamIds = team.map(dinoz => dinoz.id);
+			if (actualStep?.stepId !== undefined) {
+				if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
+					const fightResult = calculateFight(team, player, finalPlace, actualStep.requirement.target);
+					const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
+					if (fightResult.winner) {
+						const teamIds = team.map(dinoz => dinoz.id);
 
-					await updateMissionStep(player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
-					await updateMultipleDinoz(teamIds, { placeId: finalPlace });
+						await updateMissionStep(player.id, teamIds, dinozMission.missionId, actualStep.stepId + 1);
+						await updateMultipleDinoz(teamIds, { placeId: finalPlace });
+					}
+					return result;
 				}
-				return result;
 			}
 		}
 	}
