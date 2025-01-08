@@ -81,17 +81,17 @@
 </template>
 
 <script lang="ts" scoped>
+import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
+import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import { itinerantShopNameList } from '../constants/index.js';
-import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
-import { playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
-import { errorHandler } from '../utils/index.js';
-import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { IngredientsService } from '../services/IngredientsService';
-import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
+import { playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
+import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
 	name: 'ItinerantMerchantPage',
@@ -347,6 +347,13 @@ export default defineComponent({
 		display: flex;
 		justify-content: center;
 		margin-top: 20px;
+		.button {
+			background-size: cover;
+			font-size: 10pt;
+			padding-top: 9px;
+			width: 166px;
+			height: 25px;
+		}
 		.disabled {
 			opacity: 0.3;
 		}
