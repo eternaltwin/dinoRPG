@@ -314,21 +314,21 @@
 </template>
 
 <script lang="ts" scoped>
-import { defineComponent } from 'vue';
-import { ItemShopService } from '../services/index.js';
-import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { errorHandler } from '../utils/index.js';
-import { playerStore } from '../store/index.js';
-import EventBus from '../events/index.js';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import { formatText } from '../utils/formatText.js';
-import { shopList } from '@drpg/core/models/shop/ShopList';
-import { itemList } from '@drpg/core/models/item/ItemList';
-import { ItemShopFiche, ItemShopType } from '@drpg/core/models/shop/ShopFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
 import { IngredientFiche } from '@drpg/core/models/ingredient/IngredientFiche';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
-import { ShopType } from '@drpg/core/models/enums/ShopType';
-import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { ItemShopFiche, ItemShopType } from '@drpg/core/models/shop/ShopFiche';
+import { shopList } from '@drpg/core/models/shop/ShopList';
+import { defineComponent } from 'vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import EventBus from '../events/index.js';
+import { ItemShopService } from '../services/index.js';
+import { playerStore } from '../store/index.js';
+import { formatText } from '../utils/formatText.js';
+import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -765,8 +765,8 @@ export default defineComponent({
 			}
 			.stock {
 				position: absolute;
-				width: 60px;
-				margin-left: 233px;
+				width: 75px;
+				margin-left: 220px;
 				padding-right: 5px;
 				text-align: right;
 				color: #ffee92;
