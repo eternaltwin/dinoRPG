@@ -13,7 +13,7 @@ export interface DinozFiche {
 	missionId: number | undefined | null;
 	missionHUD: MissionHUD | null;
 	leaderId: number | null;
-	followers: Pick<Dinoz, 'id'>[];
+	followers: Pick<Dinoz, 'id' | 'fight'>[];
 	life: number;
 	maxLife: number;
 	experience: number;

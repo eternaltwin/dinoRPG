@@ -149,7 +149,7 @@ export const toDinozFiche = (
 			items: Pick<DinozItem, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkill, 'skillId'>[];
-			followers: Pick<Dinoz, 'id'>[];
+			followers: Pick<Dinoz, 'id' | 'fight'>[];
 			concentration: Concentration | null;
 		})[];
 	},
@@ -493,7 +493,7 @@ export const getFollowableDinoz = <
 	T extends Pick<DinozFiche, 'id' | 'placeId' | 'leaderId' | 'unavailableReason' | 'followers' | 'skills' | 'life'>
 >(
 	dinozList: T[],
-	potentialFollower: Pick<DinozFiche, 'id' | 'placeId'>
+	potentialFollower: Pick<DinozFiche, 'id' | 'placeId' | 'fight'>
 ) => {
 	return dinozList.filter(dinoz => {
 		// Filter out current dinoz

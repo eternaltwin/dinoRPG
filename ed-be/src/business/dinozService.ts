@@ -96,7 +96,6 @@ import { updateQuest } from '../dao/questsDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
-import { ingredientList, IngredientName, IngredientNames } from '@drpg/core/models/ingredient/ingredientList';
 
 /**
  * @summary Get available action from dinoz
@@ -118,7 +117,7 @@ export async function getAvailableActions(
 	> & {
 		missions: DinozMission[];
 		concentration: Concentration | null;
-		followers: Pick<Dinoz, 'id'>[];
+		followers: Pick<Dinoz, 'id' | 'fight'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
 	},
@@ -200,12 +199,15 @@ export async function getAvailableActions(
 	}
 
 	// Refresh actions in party
-	if (dinoz.followers.length > 0 && (!dinoz.fight || !dinoz.gather)) {
+	if (
+		dinoz.followers.length > 0 &&
+		(!dinoz.fight || !dinoz.gather || dinoz.followers.filter(f => !f.fight).length > 0)
+	) {
 		let index = availableActions.indexOf(actionList[Action.IRMA]);
 		if (index >= 0) {
 			availableActions.splice(index, 1);
 		}
-		if (dinoz.remaining <= 0) {
+		if (dinoz.remaining <= 0 || dinoz.followers.filter(f => !f.fight).length > 0) {
 			index = availableActions.indexOf(actionList[Action.ACTION]);
 			if (index >= 0) {
 				availableActions.splice(index, 1);
@@ -215,7 +217,7 @@ export async function getAvailableActions(
 	}
 
 	// Fight
-	if (!dinoz.leaderId && dinoz.fight) {
+	if (!dinoz.leaderId && dinoz.fight && dinoz.followers.filter(f => !f.fight).length <= 0) {
 		availableActions.push(actionList[Action.FIGHT]);
 	}
 
