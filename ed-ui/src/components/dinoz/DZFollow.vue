@@ -1,5 +1,5 @@
 <template>
-	<Tippy v-if="!display" class="act_follow" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
+	<Tippy v-if="!display" class="action" tag="div" id="act_follow" theme="normal" @click="displayFollow()">
 		<img class="arrow" :src="getImgURL('icons', 'act_follow')" alt="act_follow" />
 		<p>
 			{{ $t(`action.name.follow`) }}
@@ -115,35 +115,22 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.act_follow {
-	display: grid;
-	grid-template-areas: 'left top ' 'center center';
-	grid-template-columns: 32px 1fr;
-	grid-template-rows: 1fr auto;
-	width: 46%;
+.action {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.5rem;
+	margin-right: 5px;
+	border-radius: 7px;
 	font-size: 11pt;
 	font-variant: small-caps;
 	line-height: 10.5pt;
 	font-weight: 700;
-	.arrow {
-		grid-area: left;
-	}
-	p {
-		margin-left: 0.5rem;
-		grid-area: top;
-		align-self: center;
-	}
-	span {
-		display: flex;
-		flex-wrap: nowrap;
-		gap: 4px;
-		margin-left: 3px;
-		align-items: flex-start;
-	}
+	width: 100%;
 	&:hover {
 		background-color: #9a4029;
 		cursor: pointer;
-		.arrow {
+		img {
 			outline: 1px solid white;
 		}
 	}
