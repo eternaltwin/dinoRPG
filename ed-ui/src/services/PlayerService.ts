@@ -111,7 +111,7 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getPlayerMenuInfos(playerId: string): Promise<Pick<Player, 'id' | 'name' | 'eternalTwinId' | 'customText'>> {
+	getPlayerMenuInfos(playerId: string): Promise<Pick<Player, 'id' | 'name' | 'customText'>> {
 		return http()
 			.get(`/player/smallMenu/${playerId}`)
 			.then(res => Promise.resolve(res.data))

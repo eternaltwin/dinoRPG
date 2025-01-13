@@ -5,7 +5,7 @@
 		</RouterLink>
 		<span class="dashed"></span>
 		<div class="grid-menu">
-			<a class="link-block" :href="`https://eternaltwin.org/users/${loadedPlayer.eternalTwinId}`" target="_blank">
+			<a class="link-block" :href="`https://eternaltwin.org/users/${loadedPlayer.id}`" target="_blank">
 				<img :src="getImgURL('icons', 'small_eternaltwin')" alt="eternaltwinProfile" /><br />
 				{{ $t('playerMenu.gridMenu.pEternal') }}
 			</a>
@@ -43,7 +43,7 @@ export default defineComponent({
 	name: 'PlayerMenu',
 	data() {
 		return {
-			loadedPlayer: undefined as undefined | Pick<Player, 'id' | 'name' | 'eternalTwinId' | 'customText'>
+			loadedPlayer: undefined as undefined | Pick<Player, 'id' | 'name' | 'customText'>
 		};
 	},
 	props: {
