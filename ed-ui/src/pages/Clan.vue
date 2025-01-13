@@ -160,7 +160,6 @@ export default defineComponent({
 			}
 		},
 		async getClan(): Promise<void> {
-			if (!this.clan) return;
 			EventBus.emit('isLoading', true);
 			try {
 				this.clan = await ClanService.getClan(Number(this.$route.params.id));
