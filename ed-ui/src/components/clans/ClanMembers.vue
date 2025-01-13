@@ -9,7 +9,7 @@
 				<div class="request-date">{{ new Date(request.date).toLocaleString('fr-FR') }}</div>
 				<img :src="getImgURL('icons', 'small_follow')" alt="info_button" style="margin-right: 2px" />
 				<div>
-					<span class="player-name" @click="goToPlayer(request.player.id)">{{ request.player.name }}</span>
+					<span class="player-name" @click="goToPlayer(request.playerId)">{{ request.player.name }}</span>
 					{{ $t('clansMembers.request.line') }}
 				</div>
 				<div class="request-buttons">
@@ -40,7 +40,7 @@
 							<img
 								src="\src\assets\icons\crown.png"
 								alt="rank"
-								v-if="member.player?.leaderOf?.id"
+								v-if="member.player.leaderOfId"
 								v-tippy="{
 									content: $t('clan.icons.crown'),
 									theme: 'small'
@@ -78,7 +78,7 @@
 							</button>
 							<button
 								class="exclude"
-								v-if="hasExcludeRight && !member.player?.leaderOf?.id"
+								v-if="hasExcludeRight && !member.player?.leaderOfId"
 								@click="excludeMember(member.id)"
 							>
 								{{ $t('clansMembers.action.exclude') }}
@@ -88,7 +88,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<a class="button" @click="leaveClan()" v-if="selfMember && !selfMember?.player?.leaderOf?.id">
+		<a class="button" @click="leaveClan()" v-if="selfMember && !selfMember?.player?.leaderOfId">
 			{{ $t('clansMembers.action.leave') }}
 		</a>
 	</div>
@@ -97,7 +97,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { ClanJoinRequest, ClanMember } from '@drpg/prisma';
+import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
+import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import EventBus from '../../events/index.js';
 import { errorHandler, utils } from '../../utils/index.js';
@@ -124,7 +125,7 @@ export default defineComponent({
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
 		},
-		goToPlayer(_id: number): void {
+		goToPlayer(_id: string): void {
 			this.$router.push({ name: 'MyAccount', params: { id: _id } });
 		},
 		goToMemberEdit(_id: number): void {
@@ -136,12 +137,12 @@ export default defineComponent({
 				return false;
 			}
 			return (
-				member.clan.id == Number(this.$route.params.id) &&
-				(member.rights.includes(ClanMemberRight[right]) || member.player?.leaderOf?.id == Number(this.$route.params.id))
+				member.clan.id == +this.$route.params.id &&
+				(member.rights.includes(ClanMemberRight[right]) || member.player.leaderOfId == +this.$route.params.id)
 			);
 		},
-		dateToString(date: string) {
-			return new Date(date).toLocaleString('fr-FR');
+		dateToString(date: Date) {
+			return date.toLocaleString('fr-FR');
 		},
 		async getClanMembersList(): Promise<void> {
 			EventBus.emit('isLoading', true);

@@ -56,7 +56,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { ClanJoinRequest, ClanPage } from '@drpg/prisma';
+import { ClanPage } from '@drpg/prisma';
+import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { playerStore } from '../../store/index.js';

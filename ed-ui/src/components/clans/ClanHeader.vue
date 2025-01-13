@@ -55,7 +55,7 @@
 						theme: 'small'
 					}"
 				/>
-				<span @click="goToPlayer(clan?.leader?.id)">{{ clan?.leader?.name }}</span>
+				<span @click="goToPlayer(clan.leaderId)">{{ clan.leader?.name }}</span>
 			</div>
 		</div>
 	</div>
@@ -63,14 +63,14 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-import { Clan } from '@drpg/prisma';
+import { Clan } from '@drpg/core/models/clan/clan';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import { API_BASE, utils } from '../../utils/index.js';
 
 export default defineComponent({
 	name: 'ClanHeader',
 	props: {
-		clan: Object as PropType<Clan>
+		clan: { type: Object as PropType<Clan>, required: true }
 	},
 	data() {
 		return {
@@ -87,7 +87,7 @@ export default defineComponent({
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		},
-		goToPlayer(id: number) {
+		goToPlayer(id: string) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
 		}
 	}

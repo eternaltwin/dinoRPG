@@ -2,7 +2,7 @@
 	<div class="wrapper">
 		<DZDisclaimer
 			help
-			v-if="clanMember?.player?.name"
+			v-if="clanMember"
 			:content="$t('clansMembers.edit.disclaimer', { name: clanMember.player.name })"
 		/>
 		<div class="rights-panel">
@@ -11,7 +11,7 @@
 				{{ $t('clansMembers.edit.right.' + right.name) }}
 			</div>
 		</div>
-		<div class="nickname-container">
+		<div class="nickname-container" v-if="clanMember">
 			<label for="nickname">{{ $t('clansMembers.edit.nickname') }}</label>
 			<input id="nickname" type="text" v-model="clanMember.nickname" />
 		</div>
@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ClanMember } from '@drpg/prisma';
+import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
@@ -32,7 +32,7 @@ export default defineComponent({
 	components: { DZDisclaimer },
 	data() {
 		return {
-			clanMember: {} as ClanMember,
+			clanMember: undefined as ClanMember | undefined,
 			rights: [] as { name: string; selected: boolean }[]
 		};
 	},
@@ -51,6 +51,7 @@ export default defineComponent({
 			}
 		},
 		async updateClanMember(): Promise<void> {
+			if (!this.clanMember) return;
 			EventBus.emit('isLoading', true);
 			try {
 				this.clanMember.rights = this.rights.filter(r => r.selected).map(r => r.name.toString());
@@ -63,6 +64,7 @@ export default defineComponent({
 		},
 		fillRights() {
 			this.rights = [];
+			if (!this.clanMember) return;
 			for (const right in ClanMemberRight) {
 				if (Number(right) || Number(right) == 0) {
 					this.rights.push({
@@ -71,9 +73,6 @@ export default defineComponent({
 					});
 				}
 			}
-		},
-		goToPlayer(id: number) {
-			this.$router.push({ name: 'MyAccount', params: { id } });
 		}
 	},
 	async created() {

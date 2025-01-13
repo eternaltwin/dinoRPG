@@ -1,6 +1,3 @@
-import { Clan, ClanMessage, Player } from '@drpg/prisma';
+import { ClanMessage } from './clanMessage.mjs';
 
-export type CreateClanMessage = Omit<ClanMessage, 'clanId' | 'authorId'> & {
-	author: Pick<Player, 'id' | 'name'> | null;
-	clan: Pick<Clan, 'leaderId'> | null;
-};
+export type CreateClanMessage = Omit<ClanMessage, 'clanId' | 'authorId'>;

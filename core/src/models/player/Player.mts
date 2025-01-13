@@ -24,4 +24,6 @@ export interface Player {
 	quests: { questId: number; progression: number }[];
 	customText: string | null;
 	role: AdminRole;
+	leaderOfId: number;
+	lastLogin: Date;
 }

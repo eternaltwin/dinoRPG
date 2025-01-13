@@ -1,5 +1,6 @@
 <template>
 	<TitleHeader
+		v-if="clan"
 		:title="`${$t('pageTitle.clan')}${clan.name} ]`"
 		:header="$t('clan.header.title', { name: clan.name })"
 	></TitleHeader>
@@ -109,7 +110,7 @@ import ClanHeader from '../components/clans/ClanHeader.vue';
 import EventBus from '../events/index.js';
 import { ClanService } from '../services/ClanService.js';
 import { errorHandler } from '../utils/errorHandler.js';
-import { Clan } from '@drpg/prisma';
+import { Clan } from '@drpg/core/models/clan/clan';
 
 import { playerStore } from '../store/index.js';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
@@ -123,7 +124,7 @@ export default defineComponent({
 	data() {
 		return {
 			tabSelected: 1 as number,
-			clan: {} as Clan,
+			clan: undefined as Clan | undefined,
 			playerStore: playerStore(),
 			isClanMember: false as boolean,
 			hasBannerEditRight: false as boolean
@@ -131,6 +132,7 @@ export default defineComponent({
 	},
 	methods: {
 		setTab(value: number) {
+			if (!this.clan) return;
 			this.tabSelected = value;
 			//TODO: directement utiliser tabSelected = string, comme ça pas besoin du switch case, juste un router.push(selectedTab)
 			switch (value) {
@@ -158,6 +160,7 @@ export default defineComponent({
 			}
 		},
 		async getClan(): Promise<void> {
+			if (!this.clan) return;
 			EventBus.emit('isLoading', true);
 			try {
 				this.clan = await ClanService.getClan(Number(this.$route.params.id));

@@ -1,4 +1,6 @@
-import { ClanMember, Clan, ClanJoinRequest } from '@drpg/prisma';
+import { Clan } from '@drpg/core/models/clan/clan';
+import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
+import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { http } from '../utils/index.js';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 

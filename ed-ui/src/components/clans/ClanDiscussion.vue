@@ -28,8 +28,16 @@
 									theme: 'small'
 								}"
 							/>
-							<div class="msg-author" :class="{ self: isSelf(msg) }" @click="goToPlayer(msg.author.id)">
+							<div
+								v-if="msg.author"
+								class="msg-author"
+								:class="{ self: isSelf(msg) }"
+								@click="goToPlayer(msg.author.id)"
+							>
 								{{ msg.author.name }}
+							</div>
+							<div v-else class="msg-author" :class="{ self: isSelf(msg) }">
+								{{ msg.authorName }}
 							</div>
 						</div>
 						<div class="msg-date">{{ dateToString(msg.date) }}</div>
@@ -93,18 +101,18 @@ export default defineComponent({
 	},
 	methods: {
 		isLeader(msg: CreateClanMessage): boolean {
-			return msg.author.id == msg.clan!.leaderId;
+			return msg.author?.id == msg.clan!.leaderId;
 		},
 		isSelf(msg: CreateClanMessage): boolean {
-			return msg.author.id == this.playerStore.playerId;
+			return msg.author?.id == this.playerStore.playerId;
 		},
 		dateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		},
 		canDeleteMessage(msg: CreateClanMessage): boolean {
-			return msg.author.id == this.playerStore.playerId || msg.clan!.leaderId == this.playerStore.playerId;
+			return msg.author?.id == this.playerStore.playerId || msg.clan!.leaderId == this.playerStore.playerId;
 		},
-		goToPlayer(id: number) {
+		goToPlayer(id: string) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
 		},
 		async createNewMessage(): Promise<void> {

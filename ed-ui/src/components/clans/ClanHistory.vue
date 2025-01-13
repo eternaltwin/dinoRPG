@@ -3,7 +3,8 @@
 		<div class="history-container" v-for="evt in history" :key="evt.id">
 			<div class="history-header">
 				<img :src="getImgURL('icons', 'small_edit')" alt="Fil de discussion" />
-				<div class="author" @click="goToPlayer(evt.author.id)">{{ evt.author.name }}</div>
+				<div v-if="evt.author" class="author" @click="goToPlayer(evt.author.id)">{{ evt.author.name }}</div>
+				<div v-else class="author">{{ evt.authorName }}</div>
 				<div class="date">{{ DateToString(evt.date) }}</div>
 			</div>
 
@@ -25,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { ClanHistory } from '@drpg/prisma';
+import { ClanHistory } from '@drpg/core/models/clan/clanHistory';
 import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
 import { playerStore } from '../../store';
 import EventBus from '../../events/index.js';
@@ -51,7 +52,7 @@ export default defineComponent({
 		GetHistoryMessageFromType(type: ClanHistoryType) {
 			return this.$t('clanHistory.type.' + type);
 		},
-		goToPlayer(id: number) {
+		goToPlayer(id: string) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
 		},
 		async getClanHistory(): Promise<void> {
