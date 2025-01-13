@@ -75,14 +75,13 @@ const orderFighters = (fightData: DetailedFight) => {
 	});
 };
 
-
 /**
  * @summary Generate a fight.
  *
  * It is up to the caller to set up properly the teams that will face each other and the rules of the fight.
  *
  * @returns FightProcessResult
-**/
+ **/
 const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedrandom.PRNG): FightProcessResult => {
 	const fightData: DetailedFight = {
 		rng,

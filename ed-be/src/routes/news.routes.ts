@@ -227,6 +227,9 @@ routes.get(
 
 		try {
 			const illustration = await getNewsIllustration(req);
+			if (illustration) {
+				return res.status(200).contentType('image/webp').send(Buffer.from(illustration));
+			}
 			return res.status(200).contentType('image/webp').send(illustration);
 		} catch (err) {
 			sendError(res, err);

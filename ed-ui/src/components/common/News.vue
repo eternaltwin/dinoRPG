@@ -12,7 +12,7 @@
 				<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
 			</div>
 		</div>
-		<img :src="`${API_BASE}/news/${news.id}/illustration`" />
+		<img :src="`${API_BASE}/news/${news.id}/illustration`" :alt="news.title" />
 		<p v-html="formatContent(news.text)" />
 		<div class="newsFooter">
 			<a class="counter">

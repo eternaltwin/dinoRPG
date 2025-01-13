@@ -69,8 +69,8 @@ export async function getCommonData(req: Request) {
 		});
 
 		// Tik bracelet regen (& alive)
-		const dinozWithTikBracelet = playerCommonData.dinoz.filter(dinoz =>
-			dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
+		const dinozWithTikBracelet = playerCommonData.dinoz.filter(
+			dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
 		);
 
 		for (const dinoz of dinozWithTikBracelet) {

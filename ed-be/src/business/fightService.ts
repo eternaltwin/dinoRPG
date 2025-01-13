@@ -117,14 +117,14 @@ export async function processFight(req: Request) {
 }
 
 /**
- * @summary Calculates a fight against monsters at a given place, award 
+ * @summary Calculates a fight against monsters at a given place, award
  *
  * This method generates the list of monsters encountered by the group.
  * The group of Dinoz will earn experience and gold.
  * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
  *
  * @returns FightProcessResult
-**/
+ **/
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
@@ -162,7 +162,7 @@ export async function fightMonstersAtPlace(
  * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
  *
  * @returns FightProcessResult
-**/
+ **/
 export function calculateFight(
 	team: DinozToGetFighter[],
 	player: Pick<Player, 'cooker'>,

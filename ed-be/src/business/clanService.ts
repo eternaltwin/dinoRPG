@@ -302,7 +302,7 @@ export async function updateClanBanner(req: Request) {
 export async function getClanBanner(req: Request) {
 	const banner = await getClanBannerRequest(Number(req.params.id));
 
-	return banner;
+	return banner?.banner;
 }
 
 /**
