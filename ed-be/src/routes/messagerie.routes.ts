@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
-import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
+import { allValuesAreNumber, areAllUUIDv4 } from '../utils/helpers/ValidatorHelper.js';
 import sendError from '../utils/sendErrors.js';
 import {
 	getFullConversattion,
@@ -70,7 +70,7 @@ routes.post(
 			.exists()
 			.isArray()
 			.notEmpty()
-			.custom(value => allValuesAreNumber(value)),
+			.custom(value => areAllUUIDv4(value)),
 		body('title').exists().isString(),
 		body('message').exists().isString()
 	],
