@@ -43,13 +43,10 @@ export default defineComponent({
 				this.playerStore.setShopkeeper(commonData.shopkeeper);
 				this.playerStore.setNotificationsCounter(commonData.notifications.length);
 				this.playerStore.setNotifications(commonData.notifications);
-
-				if (!this.playerStore.getPlayerId) {
-					this.playerStore.setPlayerId(commonData.id);
-					this.playerStore.setPlayerName(commonData.name);
-					this.playerStore.setPlayerOptions(commonData.playerOptions);
-					this.playerStore.setAdmin(commonData.admin);
-				}
+				this.playerStore.setPlayerId(commonData.id);
+				this.playerStore.setPlayerName(commonData.name);
+				this.playerStore.setPlayerOptions(commonData.playerOptions);
+				this.playerStore.setAdmin(commonData.admin);
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (e) {
