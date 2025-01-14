@@ -266,6 +266,8 @@ export async function cancelOffer(req: Request) {
 	// Delete offer
 	await deleteOffer(offerId);
 	await createLog(LogType.OfferCancelled, playerId, undefined, offerId);
+	const job = scheduledJobs[offerId.toString()];
+	job.cancel();
 }
 
 /**
