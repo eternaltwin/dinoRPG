@@ -117,7 +117,7 @@ export async function getAvailableActions(
 	> & {
 		missions: DinozMission[];
 		concentration: Concentration | null;
-		followers: Pick<Dinoz, 'id' | 'fight'>[];
+		followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
 	},
@@ -212,7 +212,11 @@ export async function getAvailableActions(
 			if (index >= 0) {
 				availableActions.splice(index, 1);
 			}
-			availableActions.push(actionList[Action.IRMAS]);
+			if (dinoz.followers.some(d => d.remaining > 0)) {
+				availableActions.push(actionList[Action.ACTION]);
+			} else {
+				availableActions.push(actionList[Action.IRMAS]);
+			}
 		}
 	}
 

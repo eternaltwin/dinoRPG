@@ -197,7 +197,7 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 					status: { select: { statusId: true } },
 					missions: true,
 					skills: { select: { skillId: true } },
-					followers: { select: { id: true, fight: true } },
+					followers: { select: { id: true, fight: true, remaining: true } },
 					concentration: true
 				},
 				where: {
@@ -828,7 +828,7 @@ export async function getAvailableDinozToFollow(playerId: string, dinozId: numbe
 			leaderId: true,
 			unavailableReason: true,
 			life: true,
-			followers: { select: { id: true, fight: true } },
+			followers: { select: { id: true, fight: true, remaining: true } },
 			skills: { select: { skillId: true } }
 		}
 	});
