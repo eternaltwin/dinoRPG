@@ -159,13 +159,13 @@ export default defineComponent({
 				return;
 			}
 		},
-		cancelOffer() {
+		async cancelOffer() {
 			if (!this.ownOffer) {
 				return;
 			}
 
 			try {
-				OfferService.cancelOffer(this.ownOffer.id);
+				await OfferService.cancelOffer(this.ownOffer.id);
 				this.ownOffer = null;
 				this.$toast.open({
 					message: formatText(this.$t(`toast.market.offerCancelled`)),

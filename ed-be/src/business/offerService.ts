@@ -104,7 +104,7 @@ export async function createOffer(req: Request) {
 		const owns = await ownsDinoz(authed.id, dinozId);
 
 		if (!owns) {
-			throw new ExpectedError('invalidDinoz');
+			throw new ExpectedError(translate('invalidDinoz', authed));
 		}
 
 		const dinozPlace = await getDinozPlace(dinozId);
@@ -163,13 +163,13 @@ export async function createOffer(req: Request) {
 			);
 
 			if (!availableIngredient || availableIngredient.quantity < item.quantity) {
-				throw new ExpectedError('notEnoughIngredients');
+				throw new ExpectedError(translate('notEnoughIngredients', authed));
 			}
 		} else {
 			const availableItem = availableItems.find(availableItem => availableItem.itemId === item.itemId);
 
 			if (!availableItem || availableItem.quantity < item.quantity) {
-				throw new ExpectedError('notEnoughItems');
+				throw new ExpectedError(translate('notEnoughItems', authed));
 			}
 		}
 	}
@@ -218,16 +218,16 @@ export async function cancelOffer(req: Request) {
 
 	// Check if user is the seller
 	if (!offer || offer.seller.id !== playerId) {
-		throw new ExpectedError('invalidOffer');
+		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
 	// Check if the offer can be cancelled
 	if (offer.status !== OfferStatus.ONGOING) {
-		throw new ExpectedError('invalidOffer');
+		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
 	if (offer.bids.length > 0) {
-		throw new ExpectedError('offerInProgress');
+		throw new ExpectedError(translate('offerInProgress', authed));
 	}
 
 	const { dinoz, items: itemsAndIngredients } = offer;
