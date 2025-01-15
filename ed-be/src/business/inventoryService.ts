@@ -431,7 +431,9 @@ async function useSpecialItem(
 			await updateDinoz(dinoz.id, healed);
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList[Item.PAMPLEBOUM_PIT].itemId, quantity: 1 });
-			else await increaseItemQuantity(dinoz.player.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
+			else if (pamp.quantity < itemList[Item.PAMPLEBOUM_PIT].maxQuantity) {
+				await increaseItemQuantity(dinoz.player.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1)
+			};
 
 			//Update stats
 			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, healed.life);
