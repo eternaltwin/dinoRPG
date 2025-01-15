@@ -78,18 +78,18 @@
 
 <script lang="ts">
 import { FighterRecap, FightResult } from '@drpg/core/models/fight/FightResult';
-import { FightService } from '../services/index.js';
-import { localStore, playerStore, dinozStore, sessionStore } from '../store/index.js';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import { errorHandler } from '../utils/index.js';
-import EventBus from '../events/index.js';
-import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
-import translateFightStep from '../utils/translateFightStep.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
-import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
-import DZButton from '../components/common/DZButton.vue';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { defineAsyncComponent, defineComponent, PropType, toRaw } from 'vue';
+import DZButton from '../components/common/DZButton.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import EventBus from '../events/index.js';
+import { FightService } from '../services/index.js';
+import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
+import { errorHandler } from '../utils/index.js';
+import translateFightStep from '../utils/translateFightStep.js';
+import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
 
 export default defineComponent({
 	name: 'Fight',
@@ -229,17 +229,12 @@ export default defineComponent({
 }
 
 .debrief {
-	// position: absolute;
 	display: flex;
 	align-self: center;
 	width: 100%;
 	justify-content: space-around;
 	align-items: center;
-	//width: 377px;
 	height: 56px;
-	//margin-left: 66px;
-	//padding-left: 10px;
-	//padding-right: 10px;
 	color: #ffee92;
 	background: url('../assets/background/debriefing_left.webp'), url('../assets/background/debriefing_right.webp'),
 		url('../assets/background/debriefing_center.webp');
@@ -251,7 +246,7 @@ export default defineComponent({
 	}
 	.result {
 		background-color: #cc8a51;
-		width: 85px;
+		width: 87px;
 		height: 40px;
 		border-radius: 8px;
 		display: grid;
@@ -271,36 +266,18 @@ export default defineComponent({
 		.data {
 			grid-area: center;
 			align-self: center;
-			padding-left: 5px;
 			text-align: left;
-			font-size: 15pt;
+			font-size: 13.5pt;
 			color: #fff;
 		}
 		img {
 			grid-area: left;
 			align-self: center;
 			justify-self: center;
-			padding-left: 8px;
+			padding-left: 1px;
 		}
 	}
 }
-
-/*.fr {
-	background-image: url('../assets/background/debriefing_fr.webp');
-	background-repeat: no-repeat;
-}
-.es {
-	background-image: url('../assets/background/debriefing_es.webp');
-	background-repeat: no-repeat;
-}
-.en {
-	background-image: url('../assets/background/debriefing_en.webp');
-	background-repeat: no-repeat;
-}
-.de {
-	background-image: url('../assets/background/debriefing_de.webp');
-	background-repeat: no-repeat;
-}*/
 .filler {
 	height: 180px;
 	width: 550px;
@@ -313,7 +290,6 @@ export default defineComponent({
 	margin-top: -4px;
 	max-width: 488px;
 }
-
 .fight-history {
 	border: 1px solid black;
 	padding: 10px;
