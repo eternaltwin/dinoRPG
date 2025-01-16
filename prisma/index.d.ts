@@ -17721,7 +17721,6 @@ export namespace Prisma {
     money: number | null
     quetzuBought: number | null
     clanMemberId: number | null
-    leaderOfId: number | null
     dailyGridRewards: number | null
     banCaseId: number | null
   }
@@ -17730,7 +17729,6 @@ export namespace Prisma {
     money: number | null
     quetzuBought: number | null
     clanMemberId: number | null
-    leaderOfId: number | null
     dailyGridRewards: number | null
     banCaseId: number | null
   }
@@ -17751,7 +17749,6 @@ export namespace Prisma {
     updatedDate: Date | null
     lastLogin: Date | null
     clanMemberId: number | null
-    leaderOfId: number | null
     matelasseur: boolean | null
     messie: boolean | null
     labruteDone: boolean | null
@@ -17778,7 +17775,6 @@ export namespace Prisma {
     updatedDate: Date | null
     lastLogin: Date | null
     clanMemberId: number | null
-    leaderOfId: number | null
     matelasseur: boolean | null
     messie: boolean | null
     labruteDone: boolean | null
@@ -17805,7 +17801,6 @@ export namespace Prisma {
     updatedDate: number
     lastLogin: number
     clanMemberId: number
-    leaderOfId: number
     matelasseur: number
     messie: number
     labruteDone: number
@@ -17822,7 +17817,6 @@ export namespace Prisma {
     money?: true
     quetzuBought?: true
     clanMemberId?: true
-    leaderOfId?: true
     dailyGridRewards?: true
     banCaseId?: true
   }
@@ -17831,7 +17825,6 @@ export namespace Prisma {
     money?: true
     quetzuBought?: true
     clanMemberId?: true
-    leaderOfId?: true
     dailyGridRewards?: true
     banCaseId?: true
   }
@@ -17852,7 +17845,6 @@ export namespace Prisma {
     updatedDate?: true
     lastLogin?: true
     clanMemberId?: true
-    leaderOfId?: true
     matelasseur?: true
     messie?: true
     labruteDone?: true
@@ -17879,7 +17871,6 @@ export namespace Prisma {
     updatedDate?: true
     lastLogin?: true
     clanMemberId?: true
-    leaderOfId?: true
     matelasseur?: true
     messie?: true
     labruteDone?: true
@@ -17906,7 +17897,6 @@ export namespace Prisma {
     updatedDate?: true
     lastLogin?: true
     clanMemberId?: true
-    leaderOfId?: true
     matelasseur?: true
     messie?: true
     labruteDone?: true
@@ -18020,7 +18010,6 @@ export namespace Prisma {
     updatedDate: Date
     lastLogin: Date
     clanMemberId: number | null
-    leaderOfId: number | null
     matelasseur: boolean
     messie: boolean
     labruteDone: boolean
@@ -18066,7 +18055,6 @@ export namespace Prisma {
     updatedDate?: boolean
     lastLogin?: boolean
     clanMemberId?: boolean
-    leaderOfId?: boolean
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -18123,7 +18111,6 @@ export namespace Prisma {
     updatedDate?: boolean
     lastLogin?: boolean
     clanMemberId?: boolean
-    leaderOfId?: boolean
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -18151,7 +18138,6 @@ export namespace Prisma {
     updatedDate?: boolean
     lastLogin?: boolean
     clanMemberId?: boolean
-    leaderOfId?: boolean
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -18162,7 +18148,7 @@ export namespace Prisma {
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "leaderOfId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "banCaseId" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "banCaseId" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -18248,7 +18234,6 @@ export namespace Prisma {
       updatedDate: Date
       lastLogin: Date
       clanMemberId: number | null
-      leaderOfId: number | null
       matelasseur: boolean
       messie: boolean
       labruteDone: boolean
@@ -18694,7 +18679,6 @@ export namespace Prisma {
     readonly updatedDate: FieldRef<"Player", 'DateTime'>
     readonly lastLogin: FieldRef<"Player", 'DateTime'>
     readonly clanMemberId: FieldRef<"Player", 'Int'>
-    readonly leaderOfId: FieldRef<"Player", 'Int'>
     readonly matelasseur: FieldRef<"Player", 'Boolean'>
     readonly messie: FieldRef<"Player", 'Boolean'>
     readonly labruteDone: FieldRef<"Player", 'Boolean'>
@@ -55710,7 +55694,6 @@ export namespace Prisma {
     updatedDate: 'updatedDate',
     lastLogin: 'lastLogin',
     clanMemberId: 'clanMemberId',
-    leaderOfId: 'leaderOfId',
     matelasseur: 'matelasseur',
     messie: 'messie',
     labruteDone: 'labruteDone',
@@ -57133,7 +57116,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
     clanMemberId?: IntNullableFilter<"Player"> | number | null
-    leaderOfId?: IntNullableFilter<"Player"> | number | null
     matelasseur?: BoolFilter<"Player"> | boolean
     messie?: BoolFilter<"Player"> | boolean
     labruteDone?: BoolFilter<"Player"> | boolean
@@ -57189,7 +57171,6 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     clanMemberId?: SortOrderInput | SortOrder
-    leaderOfId?: SortOrderInput | SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
     labruteDone?: SortOrder
@@ -57250,7 +57231,6 @@ export namespace Prisma {
     createdDate?: DateTimeFilter<"Player"> | Date | string
     updatedDate?: DateTimeFilter<"Player"> | Date | string
     lastLogin?: DateTimeFilter<"Player"> | Date | string
-    leaderOfId?: IntNullableFilter<"Player"> | number | null
     matelasseur?: BoolFilter<"Player"> | boolean
     messie?: BoolFilter<"Player"> | boolean
     labruteDone?: BoolFilter<"Player"> | boolean
@@ -57304,7 +57284,6 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     clanMemberId?: SortOrderInput | SortOrder
-    leaderOfId?: SortOrderInput | SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
     labruteDone?: SortOrder
@@ -57339,7 +57318,6 @@ export namespace Prisma {
     updatedDate?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     lastLogin?: DateTimeWithAggregatesFilter<"Player"> | Date | string
     clanMemberId?: IntNullableWithAggregatesFilter<"Player"> | number | null
-    leaderOfId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     matelasseur?: BoolWithAggregatesFilter<"Player"> | boolean
     messie?: BoolWithAggregatesFilter<"Player"> | boolean
     labruteDone?: BoolWithAggregatesFilter<"Player"> | boolean
@@ -60194,7 +60172,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -60249,7 +60226,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -60304,7 +60280,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -60359,7 +60334,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -60414,7 +60388,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -60441,7 +60414,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -60467,7 +60439,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -63529,7 +63500,6 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     clanMemberId?: SortOrder
-    leaderOfId?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
     labruteDone?: SortOrder
@@ -63544,7 +63514,6 @@ export namespace Prisma {
     money?: SortOrder
     quetzuBought?: SortOrder
     clanMemberId?: SortOrder
-    leaderOfId?: SortOrder
     dailyGridRewards?: SortOrder
     banCaseId?: SortOrder
   }
@@ -63565,7 +63534,6 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     clanMemberId?: SortOrder
-    leaderOfId?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
     labruteDone?: SortOrder
@@ -63592,7 +63560,6 @@ export namespace Prisma {
     updatedDate?: SortOrder
     lastLogin?: SortOrder
     clanMemberId?: SortOrder
-    leaderOfId?: SortOrder
     matelasseur?: SortOrder
     messie?: SortOrder
     labruteDone?: SortOrder
@@ -63607,7 +63574,6 @@ export namespace Prisma {
     money?: SortOrder
     quetzuBought?: SortOrder
     clanMemberId?: SortOrder
-    leaderOfId?: SortOrder
     dailyGridRewards?: SortOrder
     banCaseId?: SortOrder
   }
@@ -69411,7 +69377,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -69465,7 +69430,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -70075,7 +70039,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -70129,7 +70092,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -73511,7 +73473,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -73565,7 +73526,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -73709,7 +73669,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -73763,7 +73722,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -74434,7 +74392,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -74488,7 +74445,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -74558,7 +74514,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -74612,7 +74567,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -74666,7 +74620,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -74720,7 +74673,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -74790,7 +74742,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -74844,7 +74795,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -74898,7 +74848,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -74952,7 +74901,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75022,7 +74970,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75076,7 +75023,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75130,7 +75076,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75184,7 +75129,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75254,7 +75198,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75308,7 +75251,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75362,7 +75304,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75416,7 +75357,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75486,7 +75426,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75540,7 +75479,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75594,7 +75532,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75648,7 +75585,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75718,7 +75654,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75772,7 +75707,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -75826,7 +75760,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75880,7 +75813,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -75950,7 +75882,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -76004,7 +75935,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -76058,7 +75988,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -76112,7 +76041,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -76182,7 +76110,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -76236,7 +76163,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -76374,7 +76300,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -76428,7 +76353,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -76530,7 +76454,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -76584,7 +76507,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -76732,7 +76654,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -76786,7 +76707,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -77000,7 +76920,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -77054,7 +76973,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -77245,7 +77163,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -77299,7 +77216,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -77469,7 +77385,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -77523,7 +77438,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -77771,7 +77685,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -77825,7 +77738,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -77895,7 +77807,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -77949,7 +77860,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -78097,7 +78007,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -78151,7 +78060,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -78321,7 +78229,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -78375,7 +78282,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -78445,7 +78351,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -78499,7 +78404,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -78735,7 +78639,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -78789,7 +78692,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -79018,7 +78920,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -79072,7 +78973,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -79182,7 +79082,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -79236,7 +79135,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -79432,7 +79330,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -79486,7 +79383,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -79590,7 +79486,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -79644,7 +79539,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -79738,7 +79632,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -79792,7 +79685,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -79896,7 +79788,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -79950,7 +79841,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -80078,7 +79968,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80132,7 +80021,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80242,7 +80130,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -80296,7 +80183,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -80518,7 +80404,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80572,7 +80457,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80631,7 +80515,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80685,7 +80568,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80744,7 +80626,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80798,7 +80679,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -80968,7 +80848,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81022,7 +80901,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81087,7 +80965,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81141,7 +81018,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81206,7 +81082,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81260,7 +81135,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81314,7 +81188,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -81368,7 +81241,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -81449,7 +81321,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -81503,7 +81374,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -81623,7 +81493,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81677,7 +81546,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81770,7 +81638,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81824,7 +81691,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -81939,7 +81805,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -81993,7 +81858,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82098,7 +81962,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82152,7 +82015,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82264,7 +82126,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82318,7 +82179,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82458,7 +82318,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82512,7 +82371,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82566,7 +82424,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82620,7 +82477,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82690,7 +82546,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82744,7 +82599,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82798,7 +82652,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82852,7 +82705,6 @@ export namespace Prisma {
     updatedDate?: Date | string
     lastLogin?: Date | string
     clanMemberId?: number | null
-    leaderOfId?: number | null
     matelasseur?: boolean
     messie?: boolean
     labruteDone?: boolean
@@ -82922,7 +82774,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean
@@ -82976,7 +82827,6 @@ export namespace Prisma {
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
     lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
     clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
-    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
     matelasseur?: BoolFieldUpdateOperationsInput | boolean
     messie?: BoolFieldUpdateOperationsInput | boolean
     labruteDone?: BoolFieldUpdateOperationsInput | boolean

@@ -190,7 +190,6 @@ model Player {
   updatedDate          DateTime           @default(now()) @updatedAt @db.Timestamp(6)
   lastLogin            DateTime           @default(now()) @db.Timestamp(6)
   clanMemberId         Int?               @unique
-  leaderOfId           Int?
   matelasseur          Boolean            @default(false)
   messie               Boolean            @default(false)
   labruteDone          Boolean            @default(false)

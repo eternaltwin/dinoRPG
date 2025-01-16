@@ -53,7 +53,12 @@
 			</tr>
 		</table>
 		<div class="bottom-elements">
-			<input type="text" class="bottom-element" v-model="searchClanName" />
+			<SearchEntity
+				background
+				entityType="clan"
+				placeHolder="ranking.placeholder.searchClan"
+				@entity="goToSearchedClan"
+			/>
 			<a class="button bottom-element" @click="search()">
 				{{ $t('clansList.button.search') }}
 			</a>
@@ -89,10 +94,12 @@ import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS } from '@drpg/core/consta
 import { formatNumber } from '../utils/formatText';
 import { formatText } from '../utils/formatText.js';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import SearchEntity from '../components/data/SearchEntity.vue';
 
 export default defineComponent({
 	name: 'ClansList',
 	components: {
+		SearchEntity,
 		DZDisclaimer,
 		TitleHeader
 	},
@@ -127,6 +134,9 @@ export default defineComponent({
 					name: 'CreateClan'
 				});
 			}
+		},
+		goToSearchedClan(c: Pick<Clan, 'id' | 'name'>): void {
+			this.$router.push({ name: 'Clan', params: { id: c.id } });
 		},
 		goToHelp() {
 			this.$router.push({

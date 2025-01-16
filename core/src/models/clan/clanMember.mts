@@ -9,6 +9,6 @@ export interface ClanMember {
 	rights: string[];
 	donation: number;
 	playerId: string;
-	player: Pick<Player, 'id' | 'name' | 'leaderOfId' | 'lastLogin'>;
+	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: { id: number } };
 	clan: Pick<Clan, 'id'>;
 }

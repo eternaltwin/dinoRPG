@@ -40,7 +40,7 @@
 							<img
 								src="\src\assets\icons\crown.png"
 								alt="rank"
-								v-if="member.player.leaderOfId"
+								v-if="member.player.leaderOf?.id"
 								v-tippy="{
 									content: $t('clan.icons.crown'),
 									theme: 'small'
@@ -78,7 +78,7 @@
 							</button>
 							<button
 								class="exclude"
-								v-if="hasExcludeRight && !member.player?.leaderOfId"
+								v-if="hasExcludeRight && !member.player?.leaderOf?.id"
 								@click="excludeMember(member.id)"
 							>
 								{{ $t('clansMembers.action.exclude') }}
@@ -88,7 +88,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<a class="button" @click="leaveClan()" v-if="selfMember && !selfMember?.player?.leaderOfId">
+		<a class="button" @click="leaveClan()" v-if="selfMember && !selfMember?.player?.leaderOf?.id">
 			{{ $t('clansMembers.action.leave') }}
 		</a>
 	</div>
@@ -138,7 +138,7 @@ export default defineComponent({
 			}
 			return (
 				member.clan.id == +this.$route.params.id &&
-				(member.rights.includes(ClanMemberRight[right]) || member.player.leaderOfId == +this.$route.params.id)
+				(member.rights.includes(ClanMemberRight[right]) || member.player.leaderOf?.id == +this.$route.params.id)
 			);
 		},
 		dateToString(date: Date) {
@@ -218,7 +218,7 @@ export default defineComponent({
 			}
 		}
 	},
-	async created(): Promise<void> {
+	async mounted(): Promise<void> {
 		await this.getClanMembersList();
 		this.hasEditRight = this.getHasRight(ClanMemberRight.MEMBER_EDIT);
 		this.hasExcludeRight = this.getHasRight(ClanMemberRight.MEMBER_EXCLUDE);

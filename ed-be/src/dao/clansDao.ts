@@ -226,6 +226,7 @@ export async function getClanMembersListRequest(clanId: number) {
 			nickname: true,
 			rights: true,
 			donation: true,
+			playerId: true,
 			player: {
 				select: {
 					id: true,

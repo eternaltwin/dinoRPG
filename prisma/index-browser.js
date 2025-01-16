@@ -241,7 +241,6 @@ exports.Prisma.PlayerScalarFieldEnum = {
   updatedDate: 'updatedDate',
   lastLogin: 'lastLogin',
   clanMemberId: 'clanMemberId',
-  leaderOfId: 'leaderOfId',
   matelasseur: 'matelasseur',
   messie: 'messie',
   labruteDone: 'labruteDone',
