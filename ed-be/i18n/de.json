@@ -34,6 +34,12 @@
 	"DinozNotDead": "Dein Dinoz ist nicht tot.",
 	"tooManyMagicItemEquiped": "Dein Dinoz kann keine weiteren magischen Gegenstände ausrüsten.",
 	"maxQuantityInventory": "Dein Inventar ist bereits vollends mit diesem Gegenstand gefüllt.",
+	"cannotClaim": "Vous ne pouvez pas actuellement récupérez vos gains.",
+	"tooMuchDinoz": "Vous avez déjà atteint le maximum de dinoz actifs.",
+	"tooMuchIngredient": "Vous avez un ingrédient risquant de dépasser la limite maximum.",
+	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
+	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
+	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 	"race": {
 		"1": "Möffe",
 		"2": "Dämonen-Möffe",

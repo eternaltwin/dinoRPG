@@ -13,7 +13,8 @@
 		"api": "API",
 		"logout": "Log out",
 		"guide": "Game Guide",
-		"faq": "FAQ"
+		"faq": "FAQ",
+		"cinema": "Cinéma"
 	},
 	"toast": {
 		"maxParticipantInThread": "You cannot add more than 9 participants to a conversation.",
@@ -40,7 +41,8 @@
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
 			"offerCreated": "Your offer has been created.",
 			"offerCancelled": "Your offer has been cancelled.",
-			"notEnoughItems": "You don't have enough of this item."
+			"notEnoughItems": "You don't have enough of this item.",
+			"offerClaimed": "Vos gains ont été récupérés"
 		},
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"heal": "Your dinoz has received {value} :hp:.",
@@ -62,7 +64,9 @@
 		"itemBought": "You bought {quantity} {itemName}.",
 		"resting": "Your Dinoz is currently resting. It will regain {hp} :pv: in {min} minutes.",
 		"ingredientSold": "You sold your ingredients for a total of {value} :gold:.",
-		"needIngredientToSell": "You need to have the ingredients you want to sell."
+		"needIngredientToSell": "You need to have the ingredients you want to sell.",
+		"finishGrid": "Félicitations ! Vous avez gagné 1000 or pour avoir terminé la grille !",
+		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -4032,6 +4036,9 @@
 			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy.",
 			"newTurn": "It is **{fighter}**'s turn.",
 			"tired": "**{fighter}** is tired and passed its turn."
+		},
+		"event": {
+			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
 		}
 	},
 	"ingredients": {
@@ -4168,7 +4175,12 @@
 		},
 		"transactionView": {
 			"yourOngoingOffer": "Your ongoing offer",
+			"yourWonOffer": "Vos offres gagnées",
+			"myExpiredOffers": "Vos ventes expirées",
+			"claimExpired": "Récupérer ma vente",
 			"noOnGoingOffer": "You have no ongoing offer.",
+			"noWonOffer": "Vous n'avez aucune offre à récupérer",
+			"claim": "Récupérer mes gains",
 			"bid": "Bids",
 			"noBidYet": "No bet yet.",
 			"cancel": "Cancel",
@@ -4184,14 +4196,16 @@
 		"following": "Ce Dinoz suit son chef de groupe.",
 		"gather": "Ce dinoz peut récolter en ce lieu.",
 		"rest": "Ce dinoz se repose.",
+		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
 		"follow": "Le chef de groupe est {leader}.",
-		"followed": "Ce Dinoz est chef de groupe."
+		"followed": "Ce Dinoz est chef de groupe.",
+		"restEnd": "Votre dinoz a déjà récupéré le maximum de point de vie en se reposant."
 	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "",
+		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
 		"GoldWon": "**{player} ({playerId})** a gagné **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** a perdu **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** a bougé son Dinoz **{dinoz} ({dinozId})** à **{location}**.",
@@ -4631,6 +4645,15 @@
 			"dinozName": "Inappropriate dinoz name",
 			"multi": "This player has multiple accounts"
 		},
+		"sorted": {
+			"open": "À traiter",
+			"closed": "Fermé",
+			"warning": "Avertissement",
+			"shortBan": "Ban court",
+			"mediumBan": "Ban moyen",
+			"longBan": "Ban long",
+			"infiniteBan": "Ban infini"
+		},
 		"arguments": "Explain why this is inappropriate.",
 		"report": "Report content",
 		"cancel": "Cancel",
@@ -4663,5 +4686,18 @@
 		"deletedConv": "Delete",
 		"participantsConv": "Participants",
 		"blockSender": "Block sender"
+	},
+	"notification": {
+		"reasons": {
+			"customText": "votre description personnalisée",
+			"multi": "une suspiscion de multicompte",
+			"dinozName": "un nom de dinoz offensant",
+			"avatar": "un avatar offensant"
+		},
+		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
+		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
+		"offerWon": "Vous avez gagné l'enchère avec {value} :ticket:",
+		"warning": "Attention vous avez reçu un avertissement concernant {reason}.",
+		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}."
 	}
 }
