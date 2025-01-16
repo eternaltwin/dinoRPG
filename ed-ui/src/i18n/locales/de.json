@@ -14,7 +14,7 @@
 		"logout": "Ausloggen",
 		"guide": "Spielhandbuch",
 		"faq": "FAQ",
-		"cinema": "Cinéma"
+		"cinema": "Kino"
 	},
 	"toast": {
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
@@ -42,7 +42,7 @@
 			"offerCreated": "Angebot wurde erstellt.",
 			"offerCancelled": "Angeboterstellung abgebrochen.",
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
-			"offerClaimed": "Vos gains ont été récupérés"
+			"offerClaimed": "Der Gewinn wurde bereits abgeholt"
 		},
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
@@ -65,8 +65,8 @@
 		"resting": "Dein Dinoz ruht sich derzeit aus. Er wird in {min} Minuten {hp} :pv: wiederherstellen.",
 		"ingredientSold": "Du hast deine Zutaten zu einem Gesamtpreis von {value} :gold: verkauft.",
 		"needIngredientToSell": "Du benötigst die Zutaten, die du verkaufen möchtest.",
-		"finishGrid": "Félicitations ! Vous avez gagné 1000 or pour avoir terminé la grille !",
-		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
+		"finishGrid": "Glückwunsch! Du hast für das Freiräumen des Rasters 1000 Gold erhalten!",
+		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht."
 	},
 	"dig": {
 		"gold": "Dein Dinoz hat {gold} :gold: ausgegraben.",
@@ -2457,7 +2457,8 @@
 		"faq": "Dino-RPG [ FAQ ]",
 		"clan": "Dino-RPG [ Klan: ",
 		"clansList": "Dino-RPG [ Liste der Klane ]",
-		"createClan": "Dino-RPG [ Klan gründen ]"
+		"createClan": "Dino-RPG [ Klan gründen ]",
+		"challengeFriend": "Dino-RPG [ Freundschaftsscharmützel ]"
 	},
 	"gather": {
 		"action": {
@@ -3734,7 +3735,7 @@
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
 			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
-			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La médaille zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses dinoz .... !!",
+			"tid1": "Herzlichen Glückwunsch zum Sieg im Inter-Dojo Turnier! Die Zen-Medaille kürt das beste Dojo, das es im Dinoland gibt und kein Dinoz-Meister kann dir das Wasser reichen! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"tid2": "Félicitation pour avoir gagné le Tournoi des dinoz ! La figurine de maître Zenit en or massif est l'équivalent de l'Oscar du plus vaillant maîtres dinoz de tous Dinoland, aucun maître ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses dinoz .... !!",
 			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres dinoz vanteront les mérites de votre prose à travers le monde !",
 			"hunt1": "Vos exploits durant la chasse aux monstres vous ont rendu célèbre. L'âme du chasseur brûle en vous et rappelle à chaque monstres qui foulent les terres de Dinoland que vous les tenez à l'oeil.",
@@ -3788,8 +3789,8 @@
 			"detail": "Details"
 		},
 		"placeholder": {
-			"searchPlayer": "Rechercher un joueur",
-			"searchClan": "Rechercher un clan"
+			"searchPlayer": "Spielersuche",
+			"searchClan": "Klansuche"
 		}
 	},
 	"clan": {
@@ -4038,7 +4039,7 @@
 			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus."
 		},
 		"event": {
-			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
+			"christmas_ticket": "Anscheinend hatte das Monster einen Weihnachtsgutschein dabei. Was für ein Schnäppchen!"
 		}
 	},
 	"ingredients": {
@@ -4175,12 +4176,12 @@
 		},
 		"transactionView": {
 			"yourOngoingOffer": "Meine aktiven Angebote",
-			"yourWonOffer": "Vos offres gagnées",
-			"myExpiredOffers": "Vos ventes expirées",
-			"claimExpired": "Récupérer ma vente",
+			"yourWonOffer": "Gewonnene Auktionen",
+			"myExpiredOffers": "Abgelaufene Angebote",
+			"claimExpired": "Artikel einsammeln",
 			"noOnGoingOffer": "Du hast keine laufenden Angebote.",
-			"noWonOffer": "Vous n'avez aucune offre à récupérer",
-			"claim": "Récupérer mes gains",
+			"noWonOffer": "Du hast keine Angebote zum Abholen",
+			"claim": "Gewinn einsammeln",
 			"bid": "Meuterei",
 			"noBidYet": "Noch keine Gebote erhalten.",
 			"cancel": "Abbrechen",
@@ -4196,16 +4197,16 @@
 		"following": "Dieser Dinoz folgt seinem Gruppenführer.",
 		"gather": "Dieser Dinoz kann hier etwas sammeln.",
 		"rest": "Dieser Dinoz ruht sich aus.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+		"resting": "Dein Dinoz ruht sich derzeit aus. Er wird in {min} Minuten {hp} :pv: wiederherstellen.",
 		"remainingActions": "Deine Dinoz haben noch freie Aktionen übrig.",
 		"follow": "Der Gruppenführer ist {leader}.",
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
-		"restEnd": "Votre dinoz a déjà récupéré le maximum de point de vie en se reposant."
+		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt."
 	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** hat **{quantity}x {item}** mit dem Dinoz **{dinoz} ({dinozId})** benutzt.",
 		"ItemBought": "**{player} ({playerId})** hat **{quantity}x {item}** gekauft (Gesamt: {total}).",
-		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
+		"IngredientSold": "**{player} ({playerId})** hat **{quantity}x {item}** verkauft (Übrig: {amount}).",
 		"GoldWon": "**{player} ({playerId})** hat **{quantity} :gold:** erhalten (Gesamt: {total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** hat **{quantity} :gold:** verloren (Übrig: {total} :gold:).",
 		"Move": "**{player} ({playerId})** hat seinen Dinoz **{dinoz} ({dinozId})** nach **{location}** bewegt.",
@@ -4235,16 +4236,17 @@
 		"selectChampions": "Wähle deine Mitstreiter",
 		"selectTeam": "Stelle deine Dinoz-Mannschaft zusammen, um an den heutigen Herausforderungen teilzunehmen",
 		"disclaimer": "Du kannst deine Mannschaft aus bis zu **10** Dinoz bilden. Wähle mit Bedacht, denn du wirst die Auswahl bis morgen nicht mehr ändern können.",
-		"validate": "Auswahl bestätigen"
+		"validate": "Auswahl bestätigen",
+		"edit": "Auswahl bearbeiten"
 	},
 	"dojo": {
 		"welcome": "Willkommen in deinem Dojo",
 		"accessTournament": "An Wettkampf teilnehmen",
 		"disclaimer": "**Es gibt kein Entkommen!**&&Die Fähigkeit „Schwarzes Loch“ und der Gegenstand „Dimensionales Pulver“ sind weder in Wettkämpfen, noch in weiteren Herausforderungen verfügbar!",
-		"tidInProgress": "Der letzte Abschnitt des Inter-Dojo-Wettkampfes ist im Gange.",
+		"tidInProgress": "Der letzte Abschnitt des Inter-Dojo Turniers ist im Gange.",
 		"reputation": "Ruf",
 		"points": "Punkte",
-		"worth": "Meuterei",
+		"worth": "Vergütung",
 		"ranking": "Platzierung",
 		"accessChallenges": "Herausforderungen ansehen",
 		"testDinoz": "Probekampf",
@@ -4256,7 +4258,41 @@
 		"seeFinal": "Finale ansehen",
 		"seeFight": "Kampf ansehen",
 		"nextTournament": "Der nächste Wettkampf findet nächsten **{next}** statt. Sei Bereit! Die Qualifizierungsrunden enden am **{qualif}**.",
-		"tournamentInfo": "**ACHTUNG**:&&Deine Position wird in Grün dargestellt und du kannst die Teilnehmer anklicken, um den Kampf nochmals anzusehen. **Nur Gruppensieger können am Finale teilnehmen**."
+		"tournamentInfo": "**ACHTUNG:** &&Deine Position wird in Grün angezeigt. Du kannst die Teilnehmer jedes Kampfes anklicken, um sie zu betrachten. **Nur Gruppensieger werden am Finale teilnehmen.**",
+		"challengeFriend": {
+			"disclaimer": "Hier kannst du bis zu **5 deiner Dinoz** auswählen, um gegen ein Mitglied deines Klans zu kämpfen. Wähle dann einen Mitstreiter und bis zu **5 seiner Dinoz** aus, bevor du den Kampf startest. Es werden keine :pv: verloren, keine :xp: erhalten und keine Gegenstände verbraucht.&&Der Preis für einen Kampf beträgt **50 :gold: pro Dinoz-Kämpfer**. Die verwendeten Goldmünzen :gold: werden zur Finanzierung der nächsten Wettkämpfe verwendet.",
+			"friend": "Wähle hier die Dinoz deines Mitstreiters zum Gegenübertreten aus.",
+			"startFight": "{gold} :gold:"
+		},
+		"history": {
+			"myDinoz": "Meine Kämpfer",
+			"ennemis": "Gegner",
+			"seeFight": "Kampf ansehen",
+			"link": "Link",
+			"copyLink": "Link kopieren"
+		},
+		"fightRecap": {
+			"hpLost": "Anzahl verlorener Lebenspunkte :pv:",
+			"hpHealed": "Anzahl wiederhergestellter Lebenspunkte",
+			"attacks": "Anzahl der Schläge",
+			"groupAttacks": "Anzahl der Gruppenangriffe",
+			"multiHit": "Anzahl der Mehrfachschläge",
+			"assaults": "Anzahl der Angriffe",
+			"counters": "Anzahl der Gegenangriffe",
+			"petrified": "Anzahl versteinerter Dinoz",
+			"damageFire": ":fire:-Schaden verursacht",
+			"assaultFire": ":fire:-Angriffe ausgeführt",
+			"damageWater": ":water:-Schaden verursacht",
+			"assaultWater": ":water:-Angriffe ausgeführt",
+			"damageWood": ":wood:-Schaden verursacht",
+			"assaultWood": ":wood:-Angriffe ausgeführt",
+			"damageLightning": ":lightning:-Schaden verursacht",
+			"assaultLightning": ":lightning:-Angriffe ausgeführt",
+			"damageAir": ":air:-Schaden verursacht",
+			"assaultAir": ":air:-Angriffe ausgeführt",
+			"damageVoid": ":void:-Schaden verursacht",
+			"assaultVoid": ":void:-Angriffe ausgeführt"
+		}
 	},
 	"guide": {
 		"sections": {
@@ -4646,13 +4682,13 @@
 			"multi": "Dieser Spieler hat mehrere Konten"
 		},
 		"sorted": {
-			"open": "À traiter",
-			"closed": "Fermé",
-			"warning": "Avertissement",
-			"shortBan": "Ban court",
-			"mediumBan": "Ban moyen",
-			"longBan": "Ban long",
-			"infiniteBan": "Ban infini"
+			"open": "Offen",
+			"closed": "Abgeschlossen",
+			"warning": "Warnung",
+			"shortBan": "Kurzer Bann",
+			"mediumBan": "Mittlerer Bann",
+			"longBan": "Langer Bann",
+			"infiniteBan": "Permanenter Bann"
 		},
 		"arguments": "Verdeutliche, weshalb du es unangemessen findest.",
 		"report": "Inhalt melden",
@@ -4689,15 +4725,15 @@
 	},
 	"notification": {
 		"reasons": {
-			"customText": "votre description personnalisée",
-			"multi": "une suspiscion de multicompte",
-			"dinozName": "un nom de dinoz offensant",
-			"avatar": "un avatar offensant"
+			"customText": "persönliche Beschreibung",
+			"multi": "Verdacht auf Mehrfachkonten",
+			"dinozName": "unangemessener Name eines Dinoz",
+			"avatar": "unangemessener Avatar"
 		},
-		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
-		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
-		"offerWon": "Vous avez gagné l'enchère avec {value} :ticket:",
-		"warning": "Attention vous avez reçu un avertissement concernant {reason}.",
-		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}."
+		"offerExpired": "Es hat sich für dein Angebot kein Käufer gefunden.",
+		"offerEnded": "Du hast dein Angebot für {value} :ticket: verkauft",
+		"offerWon": "Du hast die Auktion für {value} :ticket: gewonnen",
+		"warning": "Achtung, du hast aufgrund von „{reason}“ eine Warnung erhalten.",
+		"ban": "Du wurdest aufgrund von „{reason}“ bis zum {date} gebannt."
 	}
 }

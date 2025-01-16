@@ -4258,10 +4258,10 @@
 		"seeFinal": "Voir la finale",
 		"seeFight": "Voir le combat",
 		"nextTournament": "Le prochain tournoi commencera le **{next}**, soyez prêt ! Les phases de qualifications se terminent le **{qualif}**.",
-		"tournamentInfo": "**ATTENTION :**&&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
+		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
 		"challengeFriend": {
 			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
-			"friend": "Sélectionnez ici les dinoz de votre camarade à affronter.",
+			"friend": "Sélectionnez ici les Dinoz de votre camarade à affronter.",
 			"startFight": "{gold}    :gold:"
 		},
 		"history": {
