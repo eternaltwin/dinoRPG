@@ -74,6 +74,7 @@ export default defineComponent({
 		},
 		async refreshNotif() {
 			if (!this.isLogged) return;
+
 			const notification = await NotificationService.getNotifications();
 			this.playerStore.setNotifications(notification);
 			this.playerStore.setNotificationsCounter(notification.length);
@@ -82,7 +83,9 @@ export default defineComponent({
 			if (!rawJwt) return;
 			const jwt = JSON.parse(atob(rawJwt.split('.')[1])) as JwtTrial;
 			if (typeof jwt.playerId === 'number') {
-				this.isLogged = false;
+				this.localStore.setJwt(undefined);
+				this.playerStore.$reset();
+				this.$router.go(0);
 			}
 		}
 	},
