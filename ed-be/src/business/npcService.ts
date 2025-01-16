@@ -7,7 +7,7 @@ import { Request } from 'express';
 import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js';
 import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { rewarder } from '../utils/rewarder.js';
-import { calculateFight, rewardFight } from './fightService.js';
+import { calculateFightVsMonsters, rewardFight } from './fightService.js';
 import { isAlive } from '@drpg/core/utils/DinozUtils';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
@@ -140,7 +140,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			if (!isAlive(dinozData)) {
 				throw new ExpectedError(translate('dead', authed));
 			}
-			const fightResult = calculateFight(team, playerData, dinozData.placeId, nextStepWantedData.fight);
+			const fightResult = calculateFightVsMonsters(team, playerData, dinozData.placeId, nextStepWantedData.fight);
 
 			const result = await rewardFight(team, nextStepWantedData.fight, fightResult, dinozData.placeId, playerData);
 			// Reward statement

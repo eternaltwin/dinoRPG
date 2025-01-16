@@ -136,7 +136,7 @@ export async function fightMonstersAtPlace(
 	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
 	}
-	const fightResult = calculateFight(team, player, placeId, monsters);
+	const fightResult = calculateFightVsMonsters(team, player, placeId, monsters);
 	const result = await rewardFight(team, monsters, fightResult, placeId, player);
 
 	// If any dinoz is on a mission, check if the fight result progress the mission
@@ -154,16 +154,14 @@ export async function fightMonstersAtPlace(
  * @summary Calculates a fight against monsters
  * If a seed is provided, the fight will be played using said seed. If not a seed will be generated.
  * Rules are:
- * - objects (including magic) can be used and will be consumed, (not the magic ones)
  * - capture is authorized
- * - the balance item is enabled,
  * - stats are disabled
  *
  * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
  *
  * @returns FightProcessResult
  **/
-export function calculateFight(
+export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
 	player: Pick<Player, 'cooker'>,
 	place: PlaceEnum,
@@ -200,6 +198,66 @@ export function calculateFight(
 
 		// Fighters
 		initialDinozList: team,
+		fighters,
+
+		// Place
+		place
+	};
+
+	return generateFight(fightConfiguration, place, rng);
+}
+
+/**
+ * @summary Calculates a fight between two teams
+ * If a seed is provided, the fight will be played using said seed. If not a seed will be generated.
+ * Rules are:
+ * - capture is not authorized
+ * - stats are enabled
+ *
+ * The monsters are considered the defending team and in case of draw, the monsters (defenders) are considered as winners.
+ *
+ * @returns FightProcessResult
+ **/
+export function calculateFightBetweenPlayers(
+	teamA: DinozToGetFighter[],
+	playerA: Pick<Player, 'cooker'>,
+	teamB: DinozToGetFighter[],
+	playerB: Pick<Player, 'cooker'>,
+	place: PlaceEnum,
+	seed?: string
+): FightProcessResult {
+	const rng_seed = seed ?? generateString(20);
+	const rng = seedrandom(rng_seed);
+
+	const fighters = getFighters(
+		{
+			dinozList: teamA,
+			monsterList: []
+		},
+		{
+			dinozList: teamB,
+			monsterList: []
+		},
+		place,
+		rng
+	);
+
+	const initialDinozList = [...teamA, ...teamB];
+
+	const fightConfiguration: FightConfiguration = {
+		seed: rng_seed,
+
+		// Flags
+		castleFight: false,
+		canUseCapture: false,
+		enableStats: true,
+
+		// Teams
+		attackerHasCook: playerA.cooker,
+		defenderHasCook: playerB.cooker,
+
+		// Fighters
+		initialDinozList,
 		fighters,
 
 		// Place

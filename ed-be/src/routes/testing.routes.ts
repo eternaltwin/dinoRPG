@@ -4,7 +4,7 @@ import { validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { checkIsAdmin } from '../utils/jwt.js';
-import { calculateFight, generateMonsterList, rewardFight } from '../business/fightService.js';
+import { calculateFightVsMonsters, generateMonsterList, rewardFight } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
 import { sendJSONToDiscord } from '../utils/discord.js';
 import sendError from '../utils/sendErrors.js';
@@ -43,7 +43,7 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 		const results = [];
 		for (let i = 0; i < 600; i++) {
 			const monstersGenerated = generateMonsterList(team, player.dinoz[0].placeId);
-			const fightResult = calculateFight(team, player, player.dinoz[0].placeId, monstersGenerated);
+			const fightResult = calculateFightVsMonsters(team, player, player.dinoz[0].placeId, monstersGenerated);
 			const result = await rewardFight(team, monstersGenerated, fightResult, player.dinoz[0].placeId, player);
 
 			const flattedMonsters = monstersGenerated.map(a => a.name);

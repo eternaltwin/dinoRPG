@@ -22,7 +22,7 @@ import { getDinozConcentrationRequest, updateMultipleDinoz, updateMultipleDinozP
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
 import { prepareConcentration } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
-import { DinozToRewardFight, calculateFight, rewardFight } from './fightService.js';
+import { DinozToRewardFight, calculateFightVsMonsters, rewardFight } from './fightService.js';
 
 export async function concentrate(req: Request) {
 	if (!req.auth || !req.auth.playerId) {
@@ -113,7 +113,7 @@ export async function movementListener(
 	if (potentialSpecialActions && checkCondition(potentialSpecialActions.condition, player, player.dinoz[0].id)) {
 		if (potentialSpecialActions.opponents) {
 			// Trigger a fight against the opponents of the special action
-			const fightResult = calculateFight(team, player, finalPlace, potentialSpecialActions.opponents);
+			const fightResult = calculateFightVsMonsters(team, player, finalPlace, potentialSpecialActions.opponents);
 
 			const partyLeader = team.find(d => d.id === activeDinoz);
 			if (!partyLeader) {
@@ -155,7 +155,7 @@ export async function movementListener(
 
 			if (actualStep?.stepId !== undefined) {
 				if (actualStep.place === finalPlace && actualStep.requirement.actionType === ConditionEnum.KILL_BOSS) {
-					const fightResult = calculateFight(team, player, finalPlace, actualStep.requirement.target);
+					const fightResult = calculateFightVsMonsters(team, player, finalPlace, actualStep.requirement.target);
 					const result = await rewardFight(team, actualStep.requirement.target, fightResult, finalPlace, player);
 					if (fightResult.winner) {
 						const teamIds = team.map(dinoz => dinoz.id);

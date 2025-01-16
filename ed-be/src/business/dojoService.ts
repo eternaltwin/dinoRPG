@@ -14,6 +14,7 @@ import seedrandom from 'seedrandom';
 import { archiveFight, getAllArchivedFightRequest, getArchivedFightRequest } from '../dao/archiveDao.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { calculateFightBetweenPlayers } from './fightService.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -80,44 +81,7 @@ export async function fightFriend(req: Request) {
 		d.life = d.maxLife;
 	});
 
-	const rng_seed = generateString(20);
-	const rng = seedrandom(rng_seed);
-
-	const place = PlaceEnum.DOJO;
-	const fighters = getFighters(
-		{
-			dinozList: leftTeam,
-			monsterList: []
-		},
-		{
-			dinozList: rightTeam,
-			monsterList: []
-		},
-		place,
-		rng
-	);
-
-	const fightConfiguration: FightConfiguration = {
-		seed: rng_seed,
-
-		// Flags
-		castleFight: false,
-		canUseCapture: true,
-		enableStats: false,
-
-		// Teams
-		attackerHasCook: leftPlayer.cooker,
-		defenderHasCook: rightPlayer.cooker,
-
-		// Fighters
-		initialDinozList: leftTeam,
-		fighters,
-
-		// Place
-		place
-	};
-
-	const fightResult = generateFight(fightConfiguration, place, rng);
+	const fightResult = calculateFightBetweenPlayers(leftTeam, leftPlayer, rightTeam, rightPlayer, PlaceEnum.DOJO);
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 	return { fight: fightArchive, stats: fightResult.stats };
