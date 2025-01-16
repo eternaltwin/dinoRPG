@@ -5,34 +5,37 @@
 			<img :src="getImgURL('icons', 'small_gold')" alt="or" />
 		</div>
 		<div class="iconMenu">
-			<a
-				id="menu_shop"
-				@click="goToPageWithParam('ItemShopPage', 'flying')"
-				class="iconboutik"
+			<RouterLink
+				to="/shop/flying"
+				class="link"
 				v-tippy="{
 					content: formatContent($t('layout.shopButton')),
 					theme: 'small'
 				}"
-			></a>
-			<a
-				id="menu_clan"
-				@click="goToPlayerClan()"
-				class="iconclan"
-				:class="{ disabled: !clanId }"
+			>
+				<img :src="getImgURL('icons', 'act_boutique')" alt="shop" />
+			</RouterLink>
+			<RouterLink
+				:to="`/clan/${clanId}`"
+				class="link"
+				v-if="clanId"
 				v-tippy="{
 					content: formatContent($t('layout.clanButton')),
 					theme: 'small'
 				}"
-			></a>
-			<!--			<a
-				id="menu_dojo"
-				@click="goToPage('DojoHome')"
-				class="icondojo"
+			>
+				<img :src="getImgURL('icons', 'act_castle')" alt="dojo" />
+			</RouterLink>
+			<RouterLink
+				class="link"
+				:to="`/dojo`"
 				v-tippy="{
 					content: formatContent($t('layout.dojoButton')),
 					theme: 'small'
 				}"
-			></a>-->
+			>
+				<img :src="getImgURL('icons', 'act_dojo')" alt="dojo" />
+			</RouterLink>
 			<a
 				id="menu_cine"
 				@click="goToCine()"
@@ -113,20 +116,6 @@ export default defineComponent({
 				params: { id: this.currentDinozId() }
 			});
 		},
-		goToPageWithId(pageName: string, _id: number) {
-			this.$router.push({
-				name: pageName,
-				params: { id: _id }
-			});
-		},
-		goToPlayerClan() {
-			if (this.clanId) {
-				this.$router.push({
-					name: 'Clan',
-					params: { id: this.clanId }
-				});
-			}
-		},
 		isDevEnv(): boolean {
 			return import.meta.env.MODE === 'development';
 		},
@@ -192,6 +181,18 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.link {
+	display: flex;
+	flex-direction: column;
+	-moz-box-pack: center;
+	justify-content: center;
+	-moz-box-align: center;
+	align-items: center;
+	cursor: pointer;
+	&:hover {
+		filter: brightness(130%);
+	}
+}
 .overviewButton {
 	color: #8e3e26;
 	font-variant: small-caps;
@@ -269,59 +270,6 @@ export default defineComponent({
 			background-repeat: no-repeat;
 			border-radius: 0px;
 
-			&.iconor {
-				margin-right: 5px;
-				background-image: url('../../assets/icons/act_shop.webp');
-				width: 32px;
-				height: 32px;
-				float: left;
-
-				&:hover {
-					background-image: url('../../assets/icons/act_shop2.webp');
-				}
-			}
-
-			&.iconboutik {
-				margin-right: 5px;
-				background-image: url('../../assets/icons/act_boutique.webp');
-				width: 32px;
-				height: 32px;
-				float: left;
-
-				&:hover {
-					background-image: url('../../assets/icons/act_boutique2.webp');
-				}
-			}
-
-			&.iconclan {
-				margin-right: 5px;
-				background-image: url('../../assets/icons/act_castle.webp');
-				width: 32px;
-				height: 32px;
-				float: left;
-
-				&:hover {
-					background-image: url('../../assets/icons/act_castle2.webp');
-				}
-
-				&.disabled {
-					filter: grayscale(100%);
-					&:hover {
-						cursor: auto;
-					}
-				}
-			}
-
-			&.icondojo {
-				background-image: url('../../assets/icons/act_dojo.webp');
-				width: 32px;
-				height: 32px;
-				float: left;
-
-				&:hover {
-					background-image: url('../../assets/icons/act_dojo2.webp');
-				}
-			}
 			&.iconcine {
 				background-image: url('../../assets/icons/act_historique.webp');
 				width: 32px;

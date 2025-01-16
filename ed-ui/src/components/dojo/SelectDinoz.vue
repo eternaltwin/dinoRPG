@@ -1,7 +1,4 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.selectDinoz')" :header="$t(`selectDinoz.selectChampions`)" />
-	<p class="subtitle">{{ $t('selectDinoz.selectTeam') }}</p>
-	<DZDisclaimer :content="$t('selectDinoz.disclaimer')" />
 	<div class="wrapper">
 		<div
 			v-for="dinoz in dinozList"
@@ -9,7 +6,10 @@
 			:class="['dinoz-button', { 'not-selected': !selectedDinoz.includes(dinoz.id) }]"
 			@click="toggleDinoz(dinoz.id)"
 		>
-			<DinozMini :display="dinoz.display" class="background" />
+			<div class="background">
+				<DinozMini :display="dinoz.display" />
+			</div>
+
 			<div class="textbox">
 				<p class="name">{{ dinoz.name }}</p>
 				<p class="level">{{ $t('myAccount.level') }} {{ dinoz.level }}</p>
@@ -17,44 +17,53 @@
 		</div>
 	</div>
 	<div class="df jcc mt-1" v-if="selectedDinoz.length">
-		<DZButton @click="validate">{{ $t('selectDinoz.validate') }}</DZButton>
+		<DZButton @click="validate" :off="selectionOver">{{
+			selectionOver ? $t('selectDinoz.edit') : $t('selectDinoz.validate')
+		}}</DZButton>
 	</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import TitleHeader from '../../components/utils/TitleHeader.vue';
+import { defineComponent, PropType } from 'vue';
 import { dinozStore, playerStore } from '../../store/index.js';
-import { errorHandler } from '../../utils/index.js';
-import DZButton from '../../components/common/DZButton.vue';
-import DinozMini from '../../components/dinoz/DinozMini.vue';
-import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import DZButton from '../common/DZButton.vue';
+import DinozMini from '../dinoz/DinozMini.vue';
+import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { formatText } from '../../utils/formatText.js';
 
 export default defineComponent({
 	name: 'SelectDinoz',
 	components: {
 		DinozMini,
-		TitleHeader,
-		DZButton,
-		DZDisclaimer
+		DZButton
 	},
 	data() {
 		return {
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: [] as DinozFiche[],
+			selectionOver: false,
 			selectedDinoz: [] as number[]
 		};
 	},
+	props: {
+		dinozList: {
+			type: Object as PropType<DinozDojoFiche[]>,
+			required: true
+		},
+		selectLimit: {
+			type: Number,
+			default: 10
+		}
+	},
+	emits: ['validate'],
 	methods: {
 		toggleDinoz(dinozId: number) {
+			if (this.selectionOver) return;
 			if (this.selectedDinoz.includes(dinozId)) {
 				this.selectedDinoz = this.selectedDinoz.filter(id => id !== dinozId);
 			} else {
-				// Max 10
-				if (this.selectedDinoz.length >= 10) {
+				// Max selectLimit
+				if (this.selectedDinoz.length >= this.selectLimit) {
 					this.$toast.open({ message: formatText(this.$t(`toast.maxDinozSelected`)), type: 'error' });
 					return;
 				}
@@ -68,14 +77,8 @@ export default defineComponent({
 				this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
 				return;
 			}
-
-			try {
-				// TODO
-				// await DojoService.selectDinoz(this.selectedDinoz);
-				// this.$router.push({ name: 'DojoChallenge' });
-			} catch (error) {
-				errorHandler.handle(error, this.$toast);
-			}
+			this.$emit('validate', this.selectedDinoz);
+			this.selectionOver = !this.selectionOver;
 		}
 	},
 	async mounted() {
@@ -83,7 +86,6 @@ export default defineComponent({
 			this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
 			return;
 		}
-		this.dinozList = this.dinozStore.dinozList;
 	}
 });
 </script>
@@ -108,11 +110,16 @@ export default defineComponent({
 		border: 1px solid #874b2e;
 		cursor: pointer;
 		user-select: none;
+		display: flex;
+		flex-direction: column;
 
 		.background {
 			background-image: url('../../assets/battle/forcebrut.webp');
 			background-repeat: no-repeat;
 			background-size: cover;
+			width: 100%;
+			display: flex;
+			justify-content: center;
 		}
 
 		.textbox {

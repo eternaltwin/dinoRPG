@@ -546,6 +546,41 @@ export async function getDinozFightDataRequest(dinozId: number, playerId: string
 	return player;
 }
 
+export async function getDinozForDojoFight(dinozIds: number[]) {
+	const dinoz = await prisma.dinoz.findMany({
+		where: { id: { in: dinozIds } },
+		select: {
+			id: true,
+			display: true,
+			name: true,
+			level: true,
+			life: true,
+			maxLife: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			skills: {
+				select: { skillId: true },
+				where: { state: { equals: true } }
+			},
+			items: {
+				select: {
+					itemId: true
+				}
+			},
+			status: {
+				select: {
+					statusId: true
+				}
+			},
+			catches: { select: { id: true, hp: true, monsterId: true } }
+		}
+	});
+	return dinoz;
+}
+
 export async function getDinozNPCRequest(dinozId: number, playerId: string) {
 	const player = prisma.player.findUnique({
 		where: { id: playerId },

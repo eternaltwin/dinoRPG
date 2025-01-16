@@ -999,6 +999,20 @@ export const placeList: Record<
 		borderPlace: [103, 112],
 		map: MapZone.DARKWORLD
 	},
+	[PlaceEnum.DOJO]: {
+		placeId: PlaceEnum.DOJO,
+		name: 'dojo',
+		borderPlace: [],
+		background: 'dojo_arene',
+		map: MapZone.ALL
+	},
+	[PlaceEnum.DOJO_WINNER]: {
+		placeId: PlaceEnum.DOJO_WINNER,
+		name: 'dojo_win',
+		borderPlace: [],
+		background: 'dojo_champion',
+		map: MapZone.ALL
+	},
 	[PlaceEnum.NOWHERE]: {
 		placeId: PlaceEnum.NOWHERE,
 		name: 'nowhere',

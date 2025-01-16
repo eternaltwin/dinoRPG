@@ -74,6 +74,26 @@ export type NPC = $Result.DefaultSelection<Prisma.$NPCPayload>
  */
 export type Player = $Result.DefaultSelection<Prisma.$PlayerPayload>
 /**
+ * Model Dojo
+ * 
+ */
+export type Dojo = $Result.DefaultSelection<Prisma.$DojoPayload>
+/**
+ * Model DojoTeam
+ * 
+ */
+export type DojoTeam = $Result.DefaultSelection<Prisma.$DojoTeamPayload>
+/**
+ * Model DojoOpponents
+ * 
+ */
+export type DojoOpponents = $Result.DefaultSelection<Prisma.$DojoOpponentsPayload>
+/**
+ * Model DojoChallengeHistory
+ * 
+ */
+export type DojoChallengeHistory = $Result.DefaultSelection<Prisma.$DojoChallengeHistoryPayload>
+/**
  * Model UsernameHistory
  * 
  */
@@ -218,6 +238,11 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
  * 
  */
 export type Notification = $Result.DefaultSelection<Prisma.$NotificationPayload>
+/**
+ * Model FightArchive
+ * 
+ */
+export type FightArchive = $Result.DefaultSelection<Prisma.$FightArchivePayload>
 
 /**
  * Enums
@@ -637,6 +662,46 @@ export class PrismaClient<
   get player(): Prisma.PlayerDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.dojo`: Exposes CRUD operations for the **Dojo** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dojos
+    * const dojos = await prisma.dojo.findMany()
+    * ```
+    */
+  get dojo(): Prisma.DojoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dojoTeam`: Exposes CRUD operations for the **DojoTeam** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DojoTeams
+    * const dojoTeams = await prisma.dojoTeam.findMany()
+    * ```
+    */
+  get dojoTeam(): Prisma.DojoTeamDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dojoOpponents`: Exposes CRUD operations for the **DojoOpponents** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DojoOpponents
+    * const dojoOpponents = await prisma.dojoOpponents.findMany()
+    * ```
+    */
+  get dojoOpponents(): Prisma.DojoOpponentsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dojoChallengeHistory`: Exposes CRUD operations for the **DojoChallengeHistory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DojoChallengeHistories
+    * const dojoChallengeHistories = await prisma.dojoChallengeHistory.findMany()
+    * ```
+    */
+  get dojoChallengeHistory(): Prisma.DojoChallengeHistoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.usernameHistory`: Exposes CRUD operations for the **UsernameHistory** model.
     * Example usage:
     * ```ts
@@ -925,6 +990,16 @@ export class PrismaClient<
     * ```
     */
   get notification(): Prisma.NotificationDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.fightArchive`: Exposes CRUD operations for the **FightArchive** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FightArchives
+    * const fightArchives = await prisma.fightArchive.findMany()
+    * ```
+    */
+  get fightArchive(): Prisma.FightArchiveDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1377,6 +1452,10 @@ export namespace Prisma {
     News: 'News',
     NPC: 'NPC',
     Player: 'Player',
+    Dojo: 'Dojo',
+    DojoTeam: 'DojoTeam',
+    DojoOpponents: 'DojoOpponents',
+    DojoChallengeHistory: 'DojoChallengeHistory',
     UsernameHistory: 'UsernameHistory',
     PlayerDinozShop: 'PlayerDinozShop',
     PlayerGather: 'PlayerGather',
@@ -1405,7 +1484,8 @@ export namespace Prisma {
     Conversation: 'Conversation',
     Participants: 'Participants',
     Message: 'Message',
-    Notification: 'Notification'
+    Notification: 'Notification',
+    FightArchive: 'FightArchive'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1421,7 +1501,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "nPC" | "player" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2262,6 +2342,286 @@ export namespace Prisma {
           count: {
             args: Prisma.PlayerCountArgs<ExtArgs>
             result: $Utils.Optional<PlayerCountAggregateOutputType> | number
+          }
+        }
+      }
+      Dojo: {
+        payload: Prisma.$DojoPayload<ExtArgs>
+        fields: Prisma.DojoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DojoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DojoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>
+          }
+          findFirst: {
+            args: Prisma.DojoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DojoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>
+          }
+          findMany: {
+            args: Prisma.DojoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>[]
+          }
+          create: {
+            args: Prisma.DojoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>
+          }
+          createMany: {
+            args: Prisma.DojoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DojoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>[]
+          }
+          delete: {
+            args: Prisma.DojoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>
+          }
+          update: {
+            args: Prisma.DojoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>
+          }
+          deleteMany: {
+            args: Prisma.DojoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DojoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DojoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoPayload>
+          }
+          aggregate: {
+            args: Prisma.DojoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDojo>
+          }
+          groupBy: {
+            args: Prisma.DojoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DojoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DojoCountArgs<ExtArgs>
+            result: $Utils.Optional<DojoCountAggregateOutputType> | number
+          }
+        }
+      }
+      DojoTeam: {
+        payload: Prisma.$DojoTeamPayload<ExtArgs>
+        fields: Prisma.DojoTeamFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DojoTeamFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DojoTeamFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>
+          }
+          findFirst: {
+            args: Prisma.DojoTeamFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DojoTeamFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>
+          }
+          findMany: {
+            args: Prisma.DojoTeamFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>[]
+          }
+          create: {
+            args: Prisma.DojoTeamCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>
+          }
+          createMany: {
+            args: Prisma.DojoTeamCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DojoTeamCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>[]
+          }
+          delete: {
+            args: Prisma.DojoTeamDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>
+          }
+          update: {
+            args: Prisma.DojoTeamUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>
+          }
+          deleteMany: {
+            args: Prisma.DojoTeamDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DojoTeamUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DojoTeamUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoTeamPayload>
+          }
+          aggregate: {
+            args: Prisma.DojoTeamAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDojoTeam>
+          }
+          groupBy: {
+            args: Prisma.DojoTeamGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DojoTeamGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DojoTeamCountArgs<ExtArgs>
+            result: $Utils.Optional<DojoTeamCountAggregateOutputType> | number
+          }
+        }
+      }
+      DojoOpponents: {
+        payload: Prisma.$DojoOpponentsPayload<ExtArgs>
+        fields: Prisma.DojoOpponentsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DojoOpponentsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DojoOpponentsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>
+          }
+          findFirst: {
+            args: Prisma.DojoOpponentsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DojoOpponentsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>
+          }
+          findMany: {
+            args: Prisma.DojoOpponentsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>[]
+          }
+          create: {
+            args: Prisma.DojoOpponentsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>
+          }
+          createMany: {
+            args: Prisma.DojoOpponentsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DojoOpponentsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>[]
+          }
+          delete: {
+            args: Prisma.DojoOpponentsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>
+          }
+          update: {
+            args: Prisma.DojoOpponentsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>
+          }
+          deleteMany: {
+            args: Prisma.DojoOpponentsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DojoOpponentsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DojoOpponentsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoOpponentsPayload>
+          }
+          aggregate: {
+            args: Prisma.DojoOpponentsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDojoOpponents>
+          }
+          groupBy: {
+            args: Prisma.DojoOpponentsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DojoOpponentsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DojoOpponentsCountArgs<ExtArgs>
+            result: $Utils.Optional<DojoOpponentsCountAggregateOutputType> | number
+          }
+        }
+      }
+      DojoChallengeHistory: {
+        payload: Prisma.$DojoChallengeHistoryPayload<ExtArgs>
+        fields: Prisma.DojoChallengeHistoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DojoChallengeHistoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DojoChallengeHistoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>
+          }
+          findFirst: {
+            args: Prisma.DojoChallengeHistoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DojoChallengeHistoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>
+          }
+          findMany: {
+            args: Prisma.DojoChallengeHistoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>[]
+          }
+          create: {
+            args: Prisma.DojoChallengeHistoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>
+          }
+          createMany: {
+            args: Prisma.DojoChallengeHistoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DojoChallengeHistoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>[]
+          }
+          delete: {
+            args: Prisma.DojoChallengeHistoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>
+          }
+          update: {
+            args: Prisma.DojoChallengeHistoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.DojoChallengeHistoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DojoChallengeHistoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DojoChallengeHistoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DojoChallengeHistoryPayload>
+          }
+          aggregate: {
+            args: Prisma.DojoChallengeHistoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDojoChallengeHistory>
+          }
+          groupBy: {
+            args: Prisma.DojoChallengeHistoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DojoChallengeHistoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DojoChallengeHistoryCountArgs<ExtArgs>
+            result: $Utils.Optional<DojoChallengeHistoryCountAggregateOutputType> | number
           }
         }
       }
@@ -4295,6 +4655,76 @@ export namespace Prisma {
           }
         }
       }
+      FightArchive: {
+        payload: Prisma.$FightArchivePayload<ExtArgs>
+        fields: Prisma.FightArchiveFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.FightArchiveFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.FightArchiveFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>
+          }
+          findFirst: {
+            args: Prisma.FightArchiveFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.FightArchiveFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>
+          }
+          findMany: {
+            args: Prisma.FightArchiveFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>[]
+          }
+          create: {
+            args: Prisma.FightArchiveCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>
+          }
+          createMany: {
+            args: Prisma.FightArchiveCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.FightArchiveCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>[]
+          }
+          delete: {
+            args: Prisma.FightArchiveDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>
+          }
+          update: {
+            args: Prisma.FightArchiveUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>
+          }
+          deleteMany: {
+            args: Prisma.FightArchiveDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.FightArchiveUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.FightArchiveUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FightArchivePayload>
+          }
+          aggregate: {
+            args: Prisma.FightArchiveAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateFightArchive>
+          }
+          groupBy: {
+            args: Prisma.FightArchiveGroupByArgs<ExtArgs>
+            result: $Utils.Optional<FightArchiveGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.FightArchiveCountArgs<ExtArgs>
+            result: $Utils.Optional<FightArchiveCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -4391,6 +4821,10 @@ export namespace Prisma {
     news?: NewsOmit
     nPC?: NPCOmit
     player?: PlayerOmit
+    dojo?: DojoOmit
+    dojoTeam?: DojoTeamOmit
+    dojoOpponents?: DojoOpponentsOmit
+    dojoChallengeHistory?: DojoChallengeHistoryOmit
     usernameHistory?: UsernameHistoryOmit
     playerDinozShop?: PlayerDinozShopOmit
     playerGather?: PlayerGatherOmit
@@ -4420,6 +4854,7 @@ export namespace Prisma {
     participants?: ParticipantsOmit
     message?: MessageOmit
     notification?: NotificationOmit
+    fightArchive?: FightArchiveOmit
   }
 
   /* Types for Logging */
@@ -4557,6 +4992,8 @@ export namespace Prisma {
     unlockableSkills: number
     status: number
     npcs: number
+    DojoOpponents: number
+    DojoTeam: number
   }
 
   export type DinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4573,6 +5010,8 @@ export namespace Prisma {
     unlockableSkills?: boolean | DinozCountOutputTypeCountUnlockableSkillsArgs
     status?: boolean | DinozCountOutputTypeCountStatusArgs
     npcs?: boolean | DinozCountOutputTypeCountNpcsArgs
+    DojoOpponents?: boolean | DinozCountOutputTypeCountDojoOpponentsArgs
+    DojoTeam?: boolean | DinozCountOutputTypeCountDojoTeamArgs
   }
 
   // Custom InputTypes
@@ -4677,6 +5116,20 @@ export namespace Prisma {
     where?: NPCWhereInput
   }
 
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountDojoOpponentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoOpponentsWhereInput
+  }
+
+  /**
+   * DinozCountOutputType without action
+   */
+  export type DinozCountOutputTypeCountDojoTeamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoTeamWhereInput
+  }
+
 
   /**
    * Count Type DinozItemCountOutputType
@@ -4736,6 +5189,7 @@ export namespace Prisma {
     items: number
     quests: number
     rewards: number
+    FightArchive: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4761,6 +5215,7 @@ export namespace Prisma {
     items?: boolean | PlayerCountOutputTypeCountItemsArgs
     quests?: boolean | PlayerCountOutputTypeCountQuestsArgs
     rewards?: boolean | PlayerCountOutputTypeCountRewardsArgs
+    FightArchive?: boolean | PlayerCountOutputTypeCountFightArchiveArgs
   }
 
   // Custom InputTypes
@@ -4926,6 +5381,62 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountRewardsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PlayerRewardWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountFightArchiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+  }
+
+
+  /**
+   * Count Type DojoCountOutputType
+   */
+
+  export type DojoCountOutputType = {
+    team: number
+    DojoChallengeHistory: number
+    DojoOpponents: number
+  }
+
+  export type DojoCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    team?: boolean | DojoCountOutputTypeCountTeamArgs
+    DojoChallengeHistory?: boolean | DojoCountOutputTypeCountDojoChallengeHistoryArgs
+    DojoOpponents?: boolean | DojoCountOutputTypeCountDojoOpponentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DojoCountOutputType without action
+   */
+  export type DojoCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoCountOutputType
+     */
+    select?: DojoCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DojoCountOutputType without action
+   */
+  export type DojoCountOutputTypeCountTeamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoTeamWhereInput
+  }
+
+  /**
+   * DojoCountOutputType without action
+   */
+  export type DojoCountOutputTypeCountDojoChallengeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoChallengeHistoryWhereInput
+  }
+
+  /**
+   * DojoCountOutputType without action
+   */
+  export type DojoCountOutputTypeCountDojoOpponentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoOpponentsWhereInput
   }
 
 
@@ -6578,6 +7089,8 @@ export namespace Prisma {
     unlockableSkills?: boolean | Dinoz$unlockableSkillsArgs<ExtArgs>
     status?: boolean | Dinoz$statusArgs<ExtArgs>
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
+    DojoOpponents?: boolean | Dinoz$DojoOpponentsArgs<ExtArgs>
+    DojoTeam?: boolean | Dinoz$DojoTeamArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinoz"]>
 
@@ -6664,6 +7177,8 @@ export namespace Prisma {
     unlockableSkills?: boolean | Dinoz$unlockableSkillsArgs<ExtArgs>
     status?: boolean | Dinoz$statusArgs<ExtArgs>
     npcs?: boolean | Dinoz$npcsArgs<ExtArgs>
+    DojoOpponents?: boolean | Dinoz$DojoOpponentsArgs<ExtArgs>
+    DojoTeam?: boolean | Dinoz$DojoTeamArgs<ExtArgs>
     _count?: boolean | DinozCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6691,6 +7206,8 @@ export namespace Prisma {
       unlockableSkills: Prisma.$DinozSkillUnlockablePayload<ExtArgs>[]
       status: Prisma.$DinozStatusPayload<ExtArgs>[]
       npcs: Prisma.$NPCPayload<ExtArgs>[]
+      DojoOpponents: Prisma.$DojoOpponentsPayload<ExtArgs>[]
+      DojoTeam: Prisma.$DojoTeamPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -7101,6 +7618,8 @@ export namespace Prisma {
     unlockableSkills<T extends Dinoz$unlockableSkillsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$unlockableSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     status<T extends Dinoz$statusArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$statusArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     npcs<T extends Dinoz$npcsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$npcsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    DojoOpponents<T extends Dinoz$DojoOpponentsArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$DojoOpponentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    DojoTeam<T extends Dinoz$DojoTeamArgs<ExtArgs> = {}>(args?: Subset<T, Dinoz$DojoTeamArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7872,6 +8391,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NPCScalarFieldEnum | NPCScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.DojoOpponents
+   */
+  export type Dinoz$DojoOpponentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    where?: DojoOpponentsWhereInput
+    orderBy?: DojoOpponentsOrderByWithRelationInput | DojoOpponentsOrderByWithRelationInput[]
+    cursor?: DojoOpponentsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoOpponentsScalarFieldEnum | DojoOpponentsScalarFieldEnum[]
+  }
+
+  /**
+   * Dinoz.DojoTeam
+   */
+  export type Dinoz$DojoTeamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    where?: DojoTeamWhereInput
+    orderBy?: DojoTeamOrderByWithRelationInput | DojoTeamOrderByWithRelationInput[]
+    cursor?: DojoTeamWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
   }
 
   /**
@@ -17535,6 +18102,8 @@ export namespace Prisma {
     quests?: boolean | Player$questsArgs<ExtArgs>
     rewards?: boolean | Player$rewardsArgs<ExtArgs>
     ranking?: boolean | Player$rankingArgs<ExtArgs>
+    Dojo?: boolean | Player$DojoArgs<ExtArgs>
+    FightArchive?: boolean | Player$FightArchiveArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -17622,6 +18191,8 @@ export namespace Prisma {
     quests?: boolean | Player$questsArgs<ExtArgs>
     rewards?: boolean | Player$rewardsArgs<ExtArgs>
     ranking?: boolean | Player$rankingArgs<ExtArgs>
+    Dojo?: boolean | Player$DojoArgs<ExtArgs>
+    FightArchive?: boolean | Player$FightArchiveArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -17658,6 +18229,8 @@ export namespace Prisma {
       quests: Prisma.$PlayerQuestPayload<ExtArgs>[]
       rewards: Prisma.$PlayerRewardPayload<ExtArgs>[]
       ranking: Prisma.$RankingPayload<ExtArgs> | null
+      Dojo: Prisma.$DojoPayload<ExtArgs> | null
+      FightArchive: Prisma.$FightArchivePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -18075,6 +18648,8 @@ export namespace Prisma {
     quests<T extends Player$questsArgs<ExtArgs> = {}>(args?: Subset<T, Player$questsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     rewards<T extends Player$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, Player$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     ranking<T extends Player$rankingArgs<ExtArgs> = {}>(args?: Subset<T, Player$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    Dojo<T extends Player$DojoArgs<ExtArgs> = {}>(args?: Subset<T, Player$DojoArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    FightArchive<T extends Player$FightArchiveArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightArchiveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -19118,6 +19693,49 @@ export namespace Prisma {
   }
 
   /**
+   * Player.Dojo
+   */
+  export type Player$DojoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    where?: DojoWhereInput
+  }
+
+  /**
+   * Player.FightArchive
+   */
+  export type Player$FightArchiveArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+  }
+
+  /**
    * Player without action
    */
   export type PlayerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19133,6 +19751,4212 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PlayerInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Dojo
+   */
+
+  export type AggregateDojo = {
+    _count: DojoCountAggregateOutputType | null
+    _avg: DojoAvgAggregateOutputType | null
+    _sum: DojoSumAggregateOutputType | null
+    _min: DojoMinAggregateOutputType | null
+    _max: DojoMaxAggregateOutputType | null
+  }
+
+  export type DojoAvgAggregateOutputType = {
+    activeChallenge: number | null
+    reputation: number | null
+  }
+
+  export type DojoSumAggregateOutputType = {
+    activeChallenge: number | null
+    reputation: number | null
+  }
+
+  export type DojoMinAggregateOutputType = {
+    id: string | null
+    playerId: string | null
+    activeChallenge: number | null
+    reputation: number | null
+    teamUpdate: Date | null
+  }
+
+  export type DojoMaxAggregateOutputType = {
+    id: string | null
+    playerId: string | null
+    activeChallenge: number | null
+    reputation: number | null
+    teamUpdate: Date | null
+  }
+
+  export type DojoCountAggregateOutputType = {
+    id: number
+    playerId: number
+    activeChallenge: number
+    reputation: number
+    teamUpdate: number
+    _all: number
+  }
+
+
+  export type DojoAvgAggregateInputType = {
+    activeChallenge?: true
+    reputation?: true
+  }
+
+  export type DojoSumAggregateInputType = {
+    activeChallenge?: true
+    reputation?: true
+  }
+
+  export type DojoMinAggregateInputType = {
+    id?: true
+    playerId?: true
+    activeChallenge?: true
+    reputation?: true
+    teamUpdate?: true
+  }
+
+  export type DojoMaxAggregateInputType = {
+    id?: true
+    playerId?: true
+    activeChallenge?: true
+    reputation?: true
+    teamUpdate?: true
+  }
+
+  export type DojoCountAggregateInputType = {
+    id?: true
+    playerId?: true
+    activeChallenge?: true
+    reputation?: true
+    teamUpdate?: true
+    _all?: true
+  }
+
+  export type DojoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dojo to aggregate.
+     */
+    where?: DojoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dojos to fetch.
+     */
+    orderBy?: DojoOrderByWithRelationInput | DojoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DojoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dojos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dojos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dojos
+    **/
+    _count?: true | DojoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DojoAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DojoSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DojoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DojoMaxAggregateInputType
+  }
+
+  export type GetDojoAggregateType<T extends DojoAggregateArgs> = {
+        [P in keyof T & keyof AggregateDojo]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDojo[P]>
+      : GetScalarType<T[P], AggregateDojo[P]>
+  }
+
+
+
+
+  export type DojoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoWhereInput
+    orderBy?: DojoOrderByWithAggregationInput | DojoOrderByWithAggregationInput[]
+    by: DojoScalarFieldEnum[] | DojoScalarFieldEnum
+    having?: DojoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DojoCountAggregateInputType | true
+    _avg?: DojoAvgAggregateInputType
+    _sum?: DojoSumAggregateInputType
+    _min?: DojoMinAggregateInputType
+    _max?: DojoMaxAggregateInputType
+  }
+
+  export type DojoGroupByOutputType = {
+    id: string
+    playerId: string
+    activeChallenge: number
+    reputation: number
+    teamUpdate: Date | null
+    _count: DojoCountAggregateOutputType | null
+    _avg: DojoAvgAggregateOutputType | null
+    _sum: DojoSumAggregateOutputType | null
+    _min: DojoMinAggregateOutputType | null
+    _max: DojoMaxAggregateOutputType | null
+  }
+
+  type GetDojoGroupByPayload<T extends DojoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DojoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DojoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DojoGroupByOutputType[P]>
+            : GetScalarType<T[P], DojoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DojoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    activeChallenge?: boolean
+    reputation?: boolean
+    teamUpdate?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    team?: boolean | Dojo$teamArgs<ExtArgs>
+    DojoChallengeHistory?: boolean | Dojo$DojoChallengeHistoryArgs<ExtArgs>
+    DojoOpponents?: boolean | Dojo$DojoOpponentsArgs<ExtArgs>
+    _count?: boolean | DojoCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojo"]>
+
+  export type DojoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    playerId?: boolean
+    activeChallenge?: boolean
+    reputation?: boolean
+    teamUpdate?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojo"]>
+
+  export type DojoSelectScalar = {
+    id?: boolean
+    playerId?: boolean
+    activeChallenge?: boolean
+    reputation?: boolean
+    teamUpdate?: boolean
+  }
+
+  export type DojoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "activeChallenge" | "reputation" | "teamUpdate", ExtArgs["result"]["dojo"]>
+  export type DojoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    team?: boolean | Dojo$teamArgs<ExtArgs>
+    DojoChallengeHistory?: boolean | Dojo$DojoChallengeHistoryArgs<ExtArgs>
+    DojoOpponents?: boolean | Dojo$DojoOpponentsArgs<ExtArgs>
+    _count?: boolean | DojoCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DojoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $DojoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dojo"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+      team: Prisma.$DojoTeamPayload<ExtArgs>[]
+      DojoChallengeHistory: Prisma.$DojoChallengeHistoryPayload<ExtArgs>[]
+      DojoOpponents: Prisma.$DojoOpponentsPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      playerId: string
+      activeChallenge: number
+      reputation: number
+      teamUpdate: Date | null
+    }, ExtArgs["result"]["dojo"]>
+    composites: {}
+  }
+
+  type DojoGetPayload<S extends boolean | null | undefined | DojoDefaultArgs> = $Result.GetResult<Prisma.$DojoPayload, S>
+
+  type DojoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DojoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DojoCountAggregateInputType | true
+    }
+
+  export interface DojoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dojo'], meta: { name: 'Dojo' } }
+    /**
+     * Find zero or one Dojo that matches the filter.
+     * @param {DojoFindUniqueArgs} args - Arguments to find a Dojo
+     * @example
+     * // Get one Dojo
+     * const dojo = await prisma.dojo.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DojoFindUniqueArgs>(args: SelectSubset<T, DojoFindUniqueArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one Dojo that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DojoFindUniqueOrThrowArgs} args - Arguments to find a Dojo
+     * @example
+     * // Get one Dojo
+     * const dojo = await prisma.dojo.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DojoFindUniqueOrThrowArgs>(args: SelectSubset<T, DojoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Dojo that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoFindFirstArgs} args - Arguments to find a Dojo
+     * @example
+     * // Get one Dojo
+     * const dojo = await prisma.dojo.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DojoFindFirstArgs>(args?: SelectSubset<T, DojoFindFirstArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first Dojo that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoFindFirstOrThrowArgs} args - Arguments to find a Dojo
+     * @example
+     * // Get one Dojo
+     * const dojo = await prisma.dojo.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DojoFindFirstOrThrowArgs>(args?: SelectSubset<T, DojoFindFirstOrThrowArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more Dojos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dojos
+     * const dojos = await prisma.dojo.findMany()
+     * 
+     * // Get first 10 Dojos
+     * const dojos = await prisma.dojo.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dojoWithIdOnly = await prisma.dojo.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DojoFindManyArgs>(args?: SelectSubset<T, DojoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a Dojo.
+     * @param {DojoCreateArgs} args - Arguments to create a Dojo.
+     * @example
+     * // Create one Dojo
+     * const Dojo = await prisma.dojo.create({
+     *   data: {
+     *     // ... data to create a Dojo
+     *   }
+     * })
+     * 
+     */
+    create<T extends DojoCreateArgs>(args: SelectSubset<T, DojoCreateArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many Dojos.
+     * @param {DojoCreateManyArgs} args - Arguments to create many Dojos.
+     * @example
+     * // Create many Dojos
+     * const dojo = await prisma.dojo.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DojoCreateManyArgs>(args?: SelectSubset<T, DojoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Dojos and returns the data saved in the database.
+     * @param {DojoCreateManyAndReturnArgs} args - Arguments to create many Dojos.
+     * @example
+     * // Create many Dojos
+     * const dojo = await prisma.dojo.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Dojos and only return the `id`
+     * const dojoWithIdOnly = await prisma.dojo.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DojoCreateManyAndReturnArgs>(args?: SelectSubset<T, DojoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a Dojo.
+     * @param {DojoDeleteArgs} args - Arguments to delete one Dojo.
+     * @example
+     * // Delete one Dojo
+     * const Dojo = await prisma.dojo.delete({
+     *   where: {
+     *     // ... filter to delete one Dojo
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DojoDeleteArgs>(args: SelectSubset<T, DojoDeleteArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one Dojo.
+     * @param {DojoUpdateArgs} args - Arguments to update one Dojo.
+     * @example
+     * // Update one Dojo
+     * const dojo = await prisma.dojo.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DojoUpdateArgs>(args: SelectSubset<T, DojoUpdateArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more Dojos.
+     * @param {DojoDeleteManyArgs} args - Arguments to filter Dojos to delete.
+     * @example
+     * // Delete a few Dojos
+     * const { count } = await prisma.dojo.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DojoDeleteManyArgs>(args?: SelectSubset<T, DojoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dojos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dojos
+     * const dojo = await prisma.dojo.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DojoUpdateManyArgs>(args: SelectSubset<T, DojoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Dojo.
+     * @param {DojoUpsertArgs} args - Arguments to update or create a Dojo.
+     * @example
+     * // Update or create a Dojo
+     * const dojo = await prisma.dojo.upsert({
+     *   create: {
+     *     // ... data to create a Dojo
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dojo we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DojoUpsertArgs>(args: SelectSubset<T, DojoUpsertArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of Dojos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoCountArgs} args - Arguments to filter Dojos to count.
+     * @example
+     * // Count the number of Dojos
+     * const count = await prisma.dojo.count({
+     *   where: {
+     *     // ... the filter for the Dojos we want to count
+     *   }
+     * })
+    **/
+    count<T extends DojoCountArgs>(
+      args?: Subset<T, DojoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DojoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dojo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DojoAggregateArgs>(args: Subset<T, DojoAggregateArgs>): Prisma.PrismaPromise<GetDojoAggregateType<T>>
+
+    /**
+     * Group by Dojo.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DojoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DojoGroupByArgs['orderBy'] }
+        : { orderBy?: DojoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DojoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDojoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dojo model
+   */
+  readonly fields: DojoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dojo.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DojoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    team<T extends Dojo$teamArgs<ExtArgs> = {}>(args?: Subset<T, Dojo$teamArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    DojoChallengeHistory<T extends Dojo$DojoChallengeHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Dojo$DojoChallengeHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    DojoOpponents<T extends Dojo$DojoOpponentsArgs<ExtArgs> = {}>(args?: Subset<T, Dojo$DojoOpponentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dojo model
+   */ 
+  interface DojoFieldRefs {
+    readonly id: FieldRef<"Dojo", 'String'>
+    readonly playerId: FieldRef<"Dojo", 'String'>
+    readonly activeChallenge: FieldRef<"Dojo", 'Int'>
+    readonly reputation: FieldRef<"Dojo", 'Int'>
+    readonly teamUpdate: FieldRef<"Dojo", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dojo findUnique
+   */
+  export type DojoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * Filter, which Dojo to fetch.
+     */
+    where: DojoWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo findUniqueOrThrow
+   */
+  export type DojoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * Filter, which Dojo to fetch.
+     */
+    where: DojoWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo findFirst
+   */
+  export type DojoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * Filter, which Dojo to fetch.
+     */
+    where?: DojoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dojos to fetch.
+     */
+    orderBy?: DojoOrderByWithRelationInput | DojoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dojos.
+     */
+    cursor?: DojoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dojos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dojos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dojos.
+     */
+    distinct?: DojoScalarFieldEnum | DojoScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo findFirstOrThrow
+   */
+  export type DojoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * Filter, which Dojo to fetch.
+     */
+    where?: DojoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dojos to fetch.
+     */
+    orderBy?: DojoOrderByWithRelationInput | DojoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dojos.
+     */
+    cursor?: DojoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dojos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dojos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dojos.
+     */
+    distinct?: DojoScalarFieldEnum | DojoScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo findMany
+   */
+  export type DojoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * Filter, which Dojos to fetch.
+     */
+    where?: DojoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dojos to fetch.
+     */
+    orderBy?: DojoOrderByWithRelationInput | DojoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dojos.
+     */
+    cursor?: DojoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dojos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dojos.
+     */
+    skip?: number
+    distinct?: DojoScalarFieldEnum | DojoScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo create
+   */
+  export type DojoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dojo.
+     */
+    data: XOR<DojoCreateInput, DojoUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo createMany
+   */
+  export type DojoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dojos.
+     */
+    data: DojoCreateManyInput | DojoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dojo createManyAndReturn
+   */
+  export type DojoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * The data used to create many Dojos.
+     */
+    data: DojoCreateManyInput | DojoCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Dojo update
+   */
+  export type DojoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dojo.
+     */
+    data: XOR<DojoUpdateInput, DojoUncheckedUpdateInput>
+    /**
+     * Choose, which Dojo to update.
+     */
+    where: DojoWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo updateMany
+   */
+  export type DojoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dojos.
+     */
+    data: XOR<DojoUpdateManyMutationInput, DojoUncheckedUpdateManyInput>
+    /**
+     * Filter which Dojos to update
+     */
+    where?: DojoWhereInput
+  }
+
+  /**
+   * Dojo upsert
+   */
+  export type DojoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dojo to update in case it exists.
+     */
+    where: DojoWhereUniqueInput
+    /**
+     * In case the Dojo found by the `where` argument doesn't exist, create a new Dojo with this data.
+     */
+    create: XOR<DojoCreateInput, DojoUncheckedCreateInput>
+    /**
+     * In case the Dojo was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DojoUpdateInput, DojoUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo delete
+   */
+  export type DojoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+    /**
+     * Filter which Dojo to delete.
+     */
+    where: DojoWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Dojo deleteMany
+   */
+  export type DojoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dojos to delete
+     */
+    where?: DojoWhereInput
+  }
+
+  /**
+   * Dojo.team
+   */
+  export type Dojo$teamArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    where?: DojoTeamWhereInput
+    orderBy?: DojoTeamOrderByWithRelationInput | DojoTeamOrderByWithRelationInput[]
+    cursor?: DojoTeamWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
+  }
+
+  /**
+   * Dojo.DojoChallengeHistory
+   */
+  export type Dojo$DojoChallengeHistoryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    where?: DojoChallengeHistoryWhereInput
+    orderBy?: DojoChallengeHistoryOrderByWithRelationInput | DojoChallengeHistoryOrderByWithRelationInput[]
+    cursor?: DojoChallengeHistoryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoChallengeHistoryScalarFieldEnum | DojoChallengeHistoryScalarFieldEnum[]
+  }
+
+  /**
+   * Dojo.DojoOpponents
+   */
+  export type Dojo$DojoOpponentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    where?: DojoOpponentsWhereInput
+    orderBy?: DojoOpponentsOrderByWithRelationInput | DojoOpponentsOrderByWithRelationInput[]
+    cursor?: DojoOpponentsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DojoOpponentsScalarFieldEnum | DojoOpponentsScalarFieldEnum[]
+  }
+
+  /**
+   * Dojo without action
+   */
+  export type DojoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dojo
+     */
+    select?: DojoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dojo
+     */
+    omit?: DojoOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DojoTeam
+   */
+
+  export type AggregateDojoTeam = {
+    _count: DojoTeamCountAggregateOutputType | null
+    _avg: DojoTeamAvgAggregateOutputType | null
+    _sum: DojoTeamSumAggregateOutputType | null
+    _min: DojoTeamMinAggregateOutputType | null
+    _max: DojoTeamMaxAggregateOutputType | null
+  }
+
+  export type DojoTeamAvgAggregateOutputType = {
+    dinozId: number | null
+  }
+
+  export type DojoTeamSumAggregateOutputType = {
+    dinozId: number | null
+  }
+
+  export type DojoTeamMinAggregateOutputType = {
+    id: string | null
+    dojoId: string | null
+    dinozId: number | null
+    fighted: boolean | null
+  }
+
+  export type DojoTeamMaxAggregateOutputType = {
+    id: string | null
+    dojoId: string | null
+    dinozId: number | null
+    fighted: boolean | null
+  }
+
+  export type DojoTeamCountAggregateOutputType = {
+    id: number
+    dojoId: number
+    dinozId: number
+    fighted: number
+    _all: number
+  }
+
+
+  export type DojoTeamAvgAggregateInputType = {
+    dinozId?: true
+  }
+
+  export type DojoTeamSumAggregateInputType = {
+    dinozId?: true
+  }
+
+  export type DojoTeamMinAggregateInputType = {
+    id?: true
+    dojoId?: true
+    dinozId?: true
+    fighted?: true
+  }
+
+  export type DojoTeamMaxAggregateInputType = {
+    id?: true
+    dojoId?: true
+    dinozId?: true
+    fighted?: true
+  }
+
+  export type DojoTeamCountAggregateInputType = {
+    id?: true
+    dojoId?: true
+    dinozId?: true
+    fighted?: true
+    _all?: true
+  }
+
+  export type DojoTeamAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoTeam to aggregate.
+     */
+    where?: DojoTeamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoTeams to fetch.
+     */
+    orderBy?: DojoTeamOrderByWithRelationInput | DojoTeamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DojoTeamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoTeams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoTeams.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DojoTeams
+    **/
+    _count?: true | DojoTeamCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DojoTeamAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DojoTeamSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DojoTeamMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DojoTeamMaxAggregateInputType
+  }
+
+  export type GetDojoTeamAggregateType<T extends DojoTeamAggregateArgs> = {
+        [P in keyof T & keyof AggregateDojoTeam]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDojoTeam[P]>
+      : GetScalarType<T[P], AggregateDojoTeam[P]>
+  }
+
+
+
+
+  export type DojoTeamGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoTeamWhereInput
+    orderBy?: DojoTeamOrderByWithAggregationInput | DojoTeamOrderByWithAggregationInput[]
+    by: DojoTeamScalarFieldEnum[] | DojoTeamScalarFieldEnum
+    having?: DojoTeamScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DojoTeamCountAggregateInputType | true
+    _avg?: DojoTeamAvgAggregateInputType
+    _sum?: DojoTeamSumAggregateInputType
+    _min?: DojoTeamMinAggregateInputType
+    _max?: DojoTeamMaxAggregateInputType
+  }
+
+  export type DojoTeamGroupByOutputType = {
+    id: string
+    dojoId: string
+    dinozId: number
+    fighted: boolean
+    _count: DojoTeamCountAggregateOutputType | null
+    _avg: DojoTeamAvgAggregateOutputType | null
+    _sum: DojoTeamSumAggregateOutputType | null
+    _min: DojoTeamMinAggregateOutputType | null
+    _max: DojoTeamMaxAggregateOutputType | null
+  }
+
+  type GetDojoTeamGroupByPayload<T extends DojoTeamGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DojoTeamGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DojoTeamGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DojoTeamGroupByOutputType[P]>
+            : GetScalarType<T[P], DojoTeamGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DojoTeamSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dojoId?: boolean
+    dinozId?: boolean
+    fighted?: boolean
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoTeam"]>
+
+  export type DojoTeamSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dojoId?: boolean
+    dinozId?: boolean
+    fighted?: boolean
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoTeam"]>
+
+  export type DojoTeamSelectScalar = {
+    id?: boolean
+    dojoId?: boolean
+    dinozId?: boolean
+    fighted?: boolean
+  }
+
+  export type DojoTeamOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dojoId" | "dinozId" | "fighted", ExtArgs["result"]["dojoTeam"]>
+  export type DojoTeamInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+  export type DojoTeamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+
+  export type $DojoTeamPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DojoTeam"
+    objects: {
+      dojo: Prisma.$DojoPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      dojoId: string
+      dinozId: number
+      fighted: boolean
+    }, ExtArgs["result"]["dojoTeam"]>
+    composites: {}
+  }
+
+  type DojoTeamGetPayload<S extends boolean | null | undefined | DojoTeamDefaultArgs> = $Result.GetResult<Prisma.$DojoTeamPayload, S>
+
+  type DojoTeamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DojoTeamFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DojoTeamCountAggregateInputType | true
+    }
+
+  export interface DojoTeamDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DojoTeam'], meta: { name: 'DojoTeam' } }
+    /**
+     * Find zero or one DojoTeam that matches the filter.
+     * @param {DojoTeamFindUniqueArgs} args - Arguments to find a DojoTeam
+     * @example
+     * // Get one DojoTeam
+     * const dojoTeam = await prisma.dojoTeam.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DojoTeamFindUniqueArgs>(args: SelectSubset<T, DojoTeamFindUniqueArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one DojoTeam that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DojoTeamFindUniqueOrThrowArgs} args - Arguments to find a DojoTeam
+     * @example
+     * // Get one DojoTeam
+     * const dojoTeam = await prisma.dojoTeam.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DojoTeamFindUniqueOrThrowArgs>(args: SelectSubset<T, DojoTeamFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first DojoTeam that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamFindFirstArgs} args - Arguments to find a DojoTeam
+     * @example
+     * // Get one DojoTeam
+     * const dojoTeam = await prisma.dojoTeam.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DojoTeamFindFirstArgs>(args?: SelectSubset<T, DojoTeamFindFirstArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first DojoTeam that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamFindFirstOrThrowArgs} args - Arguments to find a DojoTeam
+     * @example
+     * // Get one DojoTeam
+     * const dojoTeam = await prisma.dojoTeam.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DojoTeamFindFirstOrThrowArgs>(args?: SelectSubset<T, DojoTeamFindFirstOrThrowArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more DojoTeams that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DojoTeams
+     * const dojoTeams = await prisma.dojoTeam.findMany()
+     * 
+     * // Get first 10 DojoTeams
+     * const dojoTeams = await prisma.dojoTeam.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dojoTeamWithIdOnly = await prisma.dojoTeam.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DojoTeamFindManyArgs>(args?: SelectSubset<T, DojoTeamFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a DojoTeam.
+     * @param {DojoTeamCreateArgs} args - Arguments to create a DojoTeam.
+     * @example
+     * // Create one DojoTeam
+     * const DojoTeam = await prisma.dojoTeam.create({
+     *   data: {
+     *     // ... data to create a DojoTeam
+     *   }
+     * })
+     * 
+     */
+    create<T extends DojoTeamCreateArgs>(args: SelectSubset<T, DojoTeamCreateArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many DojoTeams.
+     * @param {DojoTeamCreateManyArgs} args - Arguments to create many DojoTeams.
+     * @example
+     * // Create many DojoTeams
+     * const dojoTeam = await prisma.dojoTeam.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DojoTeamCreateManyArgs>(args?: SelectSubset<T, DojoTeamCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DojoTeams and returns the data saved in the database.
+     * @param {DojoTeamCreateManyAndReturnArgs} args - Arguments to create many DojoTeams.
+     * @example
+     * // Create many DojoTeams
+     * const dojoTeam = await prisma.dojoTeam.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DojoTeams and only return the `id`
+     * const dojoTeamWithIdOnly = await prisma.dojoTeam.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DojoTeamCreateManyAndReturnArgs>(args?: SelectSubset<T, DojoTeamCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a DojoTeam.
+     * @param {DojoTeamDeleteArgs} args - Arguments to delete one DojoTeam.
+     * @example
+     * // Delete one DojoTeam
+     * const DojoTeam = await prisma.dojoTeam.delete({
+     *   where: {
+     *     // ... filter to delete one DojoTeam
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DojoTeamDeleteArgs>(args: SelectSubset<T, DojoTeamDeleteArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one DojoTeam.
+     * @param {DojoTeamUpdateArgs} args - Arguments to update one DojoTeam.
+     * @example
+     * // Update one DojoTeam
+     * const dojoTeam = await prisma.dojoTeam.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DojoTeamUpdateArgs>(args: SelectSubset<T, DojoTeamUpdateArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more DojoTeams.
+     * @param {DojoTeamDeleteManyArgs} args - Arguments to filter DojoTeams to delete.
+     * @example
+     * // Delete a few DojoTeams
+     * const { count } = await prisma.dojoTeam.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DojoTeamDeleteManyArgs>(args?: SelectSubset<T, DojoTeamDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DojoTeams.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DojoTeams
+     * const dojoTeam = await prisma.dojoTeam.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DojoTeamUpdateManyArgs>(args: SelectSubset<T, DojoTeamUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DojoTeam.
+     * @param {DojoTeamUpsertArgs} args - Arguments to update or create a DojoTeam.
+     * @example
+     * // Update or create a DojoTeam
+     * const dojoTeam = await prisma.dojoTeam.upsert({
+     *   create: {
+     *     // ... data to create a DojoTeam
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DojoTeam we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DojoTeamUpsertArgs>(args: SelectSubset<T, DojoTeamUpsertArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of DojoTeams.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamCountArgs} args - Arguments to filter DojoTeams to count.
+     * @example
+     * // Count the number of DojoTeams
+     * const count = await prisma.dojoTeam.count({
+     *   where: {
+     *     // ... the filter for the DojoTeams we want to count
+     *   }
+     * })
+    **/
+    count<T extends DojoTeamCountArgs>(
+      args?: Subset<T, DojoTeamCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DojoTeamCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DojoTeam.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DojoTeamAggregateArgs>(args: Subset<T, DojoTeamAggregateArgs>): Prisma.PrismaPromise<GetDojoTeamAggregateType<T>>
+
+    /**
+     * Group by DojoTeam.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoTeamGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DojoTeamGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DojoTeamGroupByArgs['orderBy'] }
+        : { orderBy?: DojoTeamGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DojoTeamGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDojoTeamGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DojoTeam model
+   */
+  readonly fields: DojoTeamFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DojoTeam.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DojoTeamClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dojo<T extends DojoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DojoDefaultArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozDefaultArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DojoTeam model
+   */ 
+  interface DojoTeamFieldRefs {
+    readonly id: FieldRef<"DojoTeam", 'String'>
+    readonly dojoId: FieldRef<"DojoTeam", 'String'>
+    readonly dinozId: FieldRef<"DojoTeam", 'Int'>
+    readonly fighted: FieldRef<"DojoTeam", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DojoTeam findUnique
+   */
+  export type DojoTeamFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoTeam to fetch.
+     */
+    where: DojoTeamWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam findUniqueOrThrow
+   */
+  export type DojoTeamFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoTeam to fetch.
+     */
+    where: DojoTeamWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam findFirst
+   */
+  export type DojoTeamFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoTeam to fetch.
+     */
+    where?: DojoTeamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoTeams to fetch.
+     */
+    orderBy?: DojoTeamOrderByWithRelationInput | DojoTeamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoTeams.
+     */
+    cursor?: DojoTeamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoTeams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoTeams.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoTeams.
+     */
+    distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam findFirstOrThrow
+   */
+  export type DojoTeamFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoTeam to fetch.
+     */
+    where?: DojoTeamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoTeams to fetch.
+     */
+    orderBy?: DojoTeamOrderByWithRelationInput | DojoTeamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoTeams.
+     */
+    cursor?: DojoTeamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoTeams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoTeams.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoTeams.
+     */
+    distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam findMany
+   */
+  export type DojoTeamFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoTeams to fetch.
+     */
+    where?: DojoTeamWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoTeams to fetch.
+     */
+    orderBy?: DojoTeamOrderByWithRelationInput | DojoTeamOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DojoTeams.
+     */
+    cursor?: DojoTeamWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoTeams from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoTeams.
+     */
+    skip?: number
+    distinct?: DojoTeamScalarFieldEnum | DojoTeamScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam create
+   */
+  export type DojoTeamCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DojoTeam.
+     */
+    data: XOR<DojoTeamCreateInput, DojoTeamUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam createMany
+   */
+  export type DojoTeamCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DojoTeams.
+     */
+    data: DojoTeamCreateManyInput | DojoTeamCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DojoTeam createManyAndReturn
+   */
+  export type DojoTeamCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * The data used to create many DojoTeams.
+     */
+    data: DojoTeamCreateManyInput | DojoTeamCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DojoTeam update
+   */
+  export type DojoTeamUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DojoTeam.
+     */
+    data: XOR<DojoTeamUpdateInput, DojoTeamUncheckedUpdateInput>
+    /**
+     * Choose, which DojoTeam to update.
+     */
+    where: DojoTeamWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam updateMany
+   */
+  export type DojoTeamUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DojoTeams.
+     */
+    data: XOR<DojoTeamUpdateManyMutationInput, DojoTeamUncheckedUpdateManyInput>
+    /**
+     * Filter which DojoTeams to update
+     */
+    where?: DojoTeamWhereInput
+  }
+
+  /**
+   * DojoTeam upsert
+   */
+  export type DojoTeamUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DojoTeam to update in case it exists.
+     */
+    where: DojoTeamWhereUniqueInput
+    /**
+     * In case the DojoTeam found by the `where` argument doesn't exist, create a new DojoTeam with this data.
+     */
+    create: XOR<DojoTeamCreateInput, DojoTeamUncheckedCreateInput>
+    /**
+     * In case the DojoTeam was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DojoTeamUpdateInput, DojoTeamUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam delete
+   */
+  export type DojoTeamDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+    /**
+     * Filter which DojoTeam to delete.
+     */
+    where: DojoTeamWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoTeam deleteMany
+   */
+  export type DojoTeamDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoTeams to delete
+     */
+    where?: DojoTeamWhereInput
+  }
+
+  /**
+   * DojoTeam without action
+   */
+  export type DojoTeamDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoTeam
+     */
+    select?: DojoTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoTeam
+     */
+    omit?: DojoTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoTeamInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DojoOpponents
+   */
+
+  export type AggregateDojoOpponents = {
+    _count: DojoOpponentsCountAggregateOutputType | null
+    _avg: DojoOpponentsAvgAggregateOutputType | null
+    _sum: DojoOpponentsSumAggregateOutputType | null
+    _min: DojoOpponentsMinAggregateOutputType | null
+    _max: DojoOpponentsMaxAggregateOutputType | null
+  }
+
+  export type DojoOpponentsAvgAggregateOutputType = {
+    dinozId: number | null
+  }
+
+  export type DojoOpponentsSumAggregateOutputType = {
+    dinozId: number | null
+  }
+
+  export type DojoOpponentsMinAggregateOutputType = {
+    id: string | null
+    dojoId: string | null
+    dinozId: number | null
+    fighted: boolean | null
+    achieved: boolean | null
+  }
+
+  export type DojoOpponentsMaxAggregateOutputType = {
+    id: string | null
+    dojoId: string | null
+    dinozId: number | null
+    fighted: boolean | null
+    achieved: boolean | null
+  }
+
+  export type DojoOpponentsCountAggregateOutputType = {
+    id: number
+    dojoId: number
+    dinozId: number
+    fighted: number
+    achieved: number
+    _all: number
+  }
+
+
+  export type DojoOpponentsAvgAggregateInputType = {
+    dinozId?: true
+  }
+
+  export type DojoOpponentsSumAggregateInputType = {
+    dinozId?: true
+  }
+
+  export type DojoOpponentsMinAggregateInputType = {
+    id?: true
+    dojoId?: true
+    dinozId?: true
+    fighted?: true
+    achieved?: true
+  }
+
+  export type DojoOpponentsMaxAggregateInputType = {
+    id?: true
+    dojoId?: true
+    dinozId?: true
+    fighted?: true
+    achieved?: true
+  }
+
+  export type DojoOpponentsCountAggregateInputType = {
+    id?: true
+    dojoId?: true
+    dinozId?: true
+    fighted?: true
+    achieved?: true
+    _all?: true
+  }
+
+  export type DojoOpponentsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoOpponents to aggregate.
+     */
+    where?: DojoOpponentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoOpponents to fetch.
+     */
+    orderBy?: DojoOpponentsOrderByWithRelationInput | DojoOpponentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DojoOpponentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DojoOpponents
+    **/
+    _count?: true | DojoOpponentsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DojoOpponentsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DojoOpponentsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DojoOpponentsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DojoOpponentsMaxAggregateInputType
+  }
+
+  export type GetDojoOpponentsAggregateType<T extends DojoOpponentsAggregateArgs> = {
+        [P in keyof T & keyof AggregateDojoOpponents]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDojoOpponents[P]>
+      : GetScalarType<T[P], AggregateDojoOpponents[P]>
+  }
+
+
+
+
+  export type DojoOpponentsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoOpponentsWhereInput
+    orderBy?: DojoOpponentsOrderByWithAggregationInput | DojoOpponentsOrderByWithAggregationInput[]
+    by: DojoOpponentsScalarFieldEnum[] | DojoOpponentsScalarFieldEnum
+    having?: DojoOpponentsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DojoOpponentsCountAggregateInputType | true
+    _avg?: DojoOpponentsAvgAggregateInputType
+    _sum?: DojoOpponentsSumAggregateInputType
+    _min?: DojoOpponentsMinAggregateInputType
+    _max?: DojoOpponentsMaxAggregateInputType
+  }
+
+  export type DojoOpponentsGroupByOutputType = {
+    id: string
+    dojoId: string
+    dinozId: number
+    fighted: boolean
+    achieved: boolean
+    _count: DojoOpponentsCountAggregateOutputType | null
+    _avg: DojoOpponentsAvgAggregateOutputType | null
+    _sum: DojoOpponentsSumAggregateOutputType | null
+    _min: DojoOpponentsMinAggregateOutputType | null
+    _max: DojoOpponentsMaxAggregateOutputType | null
+  }
+
+  type GetDojoOpponentsGroupByPayload<T extends DojoOpponentsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DojoOpponentsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DojoOpponentsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DojoOpponentsGroupByOutputType[P]>
+            : GetScalarType<T[P], DojoOpponentsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DojoOpponentsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dojoId?: boolean
+    dinozId?: boolean
+    fighted?: boolean
+    achieved?: boolean
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoOpponents"]>
+
+  export type DojoOpponentsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dojoId?: boolean
+    dinozId?: boolean
+    fighted?: boolean
+    achieved?: boolean
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoOpponents"]>
+
+  export type DojoOpponentsSelectScalar = {
+    id?: boolean
+    dojoId?: boolean
+    dinozId?: boolean
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoOpponentsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dojoId" | "dinozId" | "fighted" | "achieved", ExtArgs["result"]["dojoOpponents"]>
+  export type DojoOpponentsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+  export type DojoOpponentsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+    dinoz?: boolean | DinozDefaultArgs<ExtArgs>
+  }
+
+  export type $DojoOpponentsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DojoOpponents"
+    objects: {
+      dojo: Prisma.$DojoPayload<ExtArgs>
+      dinoz: Prisma.$DinozPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      dojoId: string
+      dinozId: number
+      fighted: boolean
+      achieved: boolean
+    }, ExtArgs["result"]["dojoOpponents"]>
+    composites: {}
+  }
+
+  type DojoOpponentsGetPayload<S extends boolean | null | undefined | DojoOpponentsDefaultArgs> = $Result.GetResult<Prisma.$DojoOpponentsPayload, S>
+
+  type DojoOpponentsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DojoOpponentsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DojoOpponentsCountAggregateInputType | true
+    }
+
+  export interface DojoOpponentsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DojoOpponents'], meta: { name: 'DojoOpponents' } }
+    /**
+     * Find zero or one DojoOpponents that matches the filter.
+     * @param {DojoOpponentsFindUniqueArgs} args - Arguments to find a DojoOpponents
+     * @example
+     * // Get one DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DojoOpponentsFindUniqueArgs>(args: SelectSubset<T, DojoOpponentsFindUniqueArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one DojoOpponents that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DojoOpponentsFindUniqueOrThrowArgs} args - Arguments to find a DojoOpponents
+     * @example
+     * // Get one DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DojoOpponentsFindUniqueOrThrowArgs>(args: SelectSubset<T, DojoOpponentsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first DojoOpponents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsFindFirstArgs} args - Arguments to find a DojoOpponents
+     * @example
+     * // Get one DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DojoOpponentsFindFirstArgs>(args?: SelectSubset<T, DojoOpponentsFindFirstArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first DojoOpponents that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsFindFirstOrThrowArgs} args - Arguments to find a DojoOpponents
+     * @example
+     * // Get one DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DojoOpponentsFindFirstOrThrowArgs>(args?: SelectSubset<T, DojoOpponentsFindFirstOrThrowArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more DojoOpponents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.findMany()
+     * 
+     * // Get first 10 DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dojoOpponentsWithIdOnly = await prisma.dojoOpponents.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DojoOpponentsFindManyArgs>(args?: SelectSubset<T, DojoOpponentsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a DojoOpponents.
+     * @param {DojoOpponentsCreateArgs} args - Arguments to create a DojoOpponents.
+     * @example
+     * // Create one DojoOpponents
+     * const DojoOpponents = await prisma.dojoOpponents.create({
+     *   data: {
+     *     // ... data to create a DojoOpponents
+     *   }
+     * })
+     * 
+     */
+    create<T extends DojoOpponentsCreateArgs>(args: SelectSubset<T, DojoOpponentsCreateArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many DojoOpponents.
+     * @param {DojoOpponentsCreateManyArgs} args - Arguments to create many DojoOpponents.
+     * @example
+     * // Create many DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DojoOpponentsCreateManyArgs>(args?: SelectSubset<T, DojoOpponentsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DojoOpponents and returns the data saved in the database.
+     * @param {DojoOpponentsCreateManyAndReturnArgs} args - Arguments to create many DojoOpponents.
+     * @example
+     * // Create many DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DojoOpponents and only return the `id`
+     * const dojoOpponentsWithIdOnly = await prisma.dojoOpponents.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DojoOpponentsCreateManyAndReturnArgs>(args?: SelectSubset<T, DojoOpponentsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a DojoOpponents.
+     * @param {DojoOpponentsDeleteArgs} args - Arguments to delete one DojoOpponents.
+     * @example
+     * // Delete one DojoOpponents
+     * const DojoOpponents = await prisma.dojoOpponents.delete({
+     *   where: {
+     *     // ... filter to delete one DojoOpponents
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DojoOpponentsDeleteArgs>(args: SelectSubset<T, DojoOpponentsDeleteArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one DojoOpponents.
+     * @param {DojoOpponentsUpdateArgs} args - Arguments to update one DojoOpponents.
+     * @example
+     * // Update one DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DojoOpponentsUpdateArgs>(args: SelectSubset<T, DojoOpponentsUpdateArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more DojoOpponents.
+     * @param {DojoOpponentsDeleteManyArgs} args - Arguments to filter DojoOpponents to delete.
+     * @example
+     * // Delete a few DojoOpponents
+     * const { count } = await prisma.dojoOpponents.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DojoOpponentsDeleteManyArgs>(args?: SelectSubset<T, DojoOpponentsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DojoOpponents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DojoOpponentsUpdateManyArgs>(args: SelectSubset<T, DojoOpponentsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DojoOpponents.
+     * @param {DojoOpponentsUpsertArgs} args - Arguments to update or create a DojoOpponents.
+     * @example
+     * // Update or create a DojoOpponents
+     * const dojoOpponents = await prisma.dojoOpponents.upsert({
+     *   create: {
+     *     // ... data to create a DojoOpponents
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DojoOpponents we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DojoOpponentsUpsertArgs>(args: SelectSubset<T, DojoOpponentsUpsertArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of DojoOpponents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsCountArgs} args - Arguments to filter DojoOpponents to count.
+     * @example
+     * // Count the number of DojoOpponents
+     * const count = await prisma.dojoOpponents.count({
+     *   where: {
+     *     // ... the filter for the DojoOpponents we want to count
+     *   }
+     * })
+    **/
+    count<T extends DojoOpponentsCountArgs>(
+      args?: Subset<T, DojoOpponentsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DojoOpponentsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DojoOpponents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DojoOpponentsAggregateArgs>(args: Subset<T, DojoOpponentsAggregateArgs>): Prisma.PrismaPromise<GetDojoOpponentsAggregateType<T>>
+
+    /**
+     * Group by DojoOpponents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoOpponentsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DojoOpponentsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DojoOpponentsGroupByArgs['orderBy'] }
+        : { orderBy?: DojoOpponentsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DojoOpponentsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDojoOpponentsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DojoOpponents model
+   */
+  readonly fields: DojoOpponentsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DojoOpponents.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DojoOpponentsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dojo<T extends DojoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DojoDefaultArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozDefaultArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DojoOpponents model
+   */ 
+  interface DojoOpponentsFieldRefs {
+    readonly id: FieldRef<"DojoOpponents", 'String'>
+    readonly dojoId: FieldRef<"DojoOpponents", 'String'>
+    readonly dinozId: FieldRef<"DojoOpponents", 'Int'>
+    readonly fighted: FieldRef<"DojoOpponents", 'Boolean'>
+    readonly achieved: FieldRef<"DojoOpponents", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DojoOpponents findUnique
+   */
+  export type DojoOpponentsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoOpponents to fetch.
+     */
+    where: DojoOpponentsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents findUniqueOrThrow
+   */
+  export type DojoOpponentsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoOpponents to fetch.
+     */
+    where: DojoOpponentsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents findFirst
+   */
+  export type DojoOpponentsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoOpponents to fetch.
+     */
+    where?: DojoOpponentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoOpponents to fetch.
+     */
+    orderBy?: DojoOpponentsOrderByWithRelationInput | DojoOpponentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoOpponents.
+     */
+    cursor?: DojoOpponentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoOpponents.
+     */
+    distinct?: DojoOpponentsScalarFieldEnum | DojoOpponentsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents findFirstOrThrow
+   */
+  export type DojoOpponentsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoOpponents to fetch.
+     */
+    where?: DojoOpponentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoOpponents to fetch.
+     */
+    orderBy?: DojoOpponentsOrderByWithRelationInput | DojoOpponentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoOpponents.
+     */
+    cursor?: DojoOpponentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoOpponents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoOpponents.
+     */
+    distinct?: DojoOpponentsScalarFieldEnum | DojoOpponentsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents findMany
+   */
+  export type DojoOpponentsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoOpponents to fetch.
+     */
+    where?: DojoOpponentsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoOpponents to fetch.
+     */
+    orderBy?: DojoOpponentsOrderByWithRelationInput | DojoOpponentsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DojoOpponents.
+     */
+    cursor?: DojoOpponentsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoOpponents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoOpponents.
+     */
+    skip?: number
+    distinct?: DojoOpponentsScalarFieldEnum | DojoOpponentsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents create
+   */
+  export type DojoOpponentsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DojoOpponents.
+     */
+    data: XOR<DojoOpponentsCreateInput, DojoOpponentsUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents createMany
+   */
+  export type DojoOpponentsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DojoOpponents.
+     */
+    data: DojoOpponentsCreateManyInput | DojoOpponentsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DojoOpponents createManyAndReturn
+   */
+  export type DojoOpponentsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * The data used to create many DojoOpponents.
+     */
+    data: DojoOpponentsCreateManyInput | DojoOpponentsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DojoOpponents update
+   */
+  export type DojoOpponentsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DojoOpponents.
+     */
+    data: XOR<DojoOpponentsUpdateInput, DojoOpponentsUncheckedUpdateInput>
+    /**
+     * Choose, which DojoOpponents to update.
+     */
+    where: DojoOpponentsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents updateMany
+   */
+  export type DojoOpponentsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DojoOpponents.
+     */
+    data: XOR<DojoOpponentsUpdateManyMutationInput, DojoOpponentsUncheckedUpdateManyInput>
+    /**
+     * Filter which DojoOpponents to update
+     */
+    where?: DojoOpponentsWhereInput
+  }
+
+  /**
+   * DojoOpponents upsert
+   */
+  export type DojoOpponentsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DojoOpponents to update in case it exists.
+     */
+    where: DojoOpponentsWhereUniqueInput
+    /**
+     * In case the DojoOpponents found by the `where` argument doesn't exist, create a new DojoOpponents with this data.
+     */
+    create: XOR<DojoOpponentsCreateInput, DojoOpponentsUncheckedCreateInput>
+    /**
+     * In case the DojoOpponents was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DojoOpponentsUpdateInput, DojoOpponentsUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents delete
+   */
+  export type DojoOpponentsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+    /**
+     * Filter which DojoOpponents to delete.
+     */
+    where: DojoOpponentsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoOpponents deleteMany
+   */
+  export type DojoOpponentsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoOpponents to delete
+     */
+    where?: DojoOpponentsWhereInput
+  }
+
+  /**
+   * DojoOpponents without action
+   */
+  export type DojoOpponentsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoOpponents
+     */
+    select?: DojoOpponentsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoOpponents
+     */
+    omit?: DojoOpponentsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoOpponentsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DojoChallengeHistory
+   */
+
+  export type AggregateDojoChallengeHistory = {
+    _count: DojoChallengeHistoryCountAggregateOutputType | null
+    _avg: DojoChallengeHistoryAvgAggregateOutputType | null
+    _sum: DojoChallengeHistorySumAggregateOutputType | null
+    _min: DojoChallengeHistoryMinAggregateOutputType | null
+    _max: DojoChallengeHistoryMaxAggregateOutputType | null
+  }
+
+  export type DojoChallengeHistoryAvgAggregateOutputType = {
+    myDinozId: number | null
+    opponentId: number | null
+    challenge: number | null
+  }
+
+  export type DojoChallengeHistorySumAggregateOutputType = {
+    myDinozId: number | null
+    opponentId: number | null
+    challenge: number | null
+  }
+
+  export type DojoChallengeHistoryMinAggregateOutputType = {
+    id: string | null
+    dojoId: string | null
+    myDinozId: number | null
+    opponentId: number | null
+    challenge: number | null
+    victory: boolean | null
+    achieved: boolean | null
+  }
+
+  export type DojoChallengeHistoryMaxAggregateOutputType = {
+    id: string | null
+    dojoId: string | null
+    myDinozId: number | null
+    opponentId: number | null
+    challenge: number | null
+    victory: boolean | null
+    achieved: boolean | null
+  }
+
+  export type DojoChallengeHistoryCountAggregateOutputType = {
+    id: number
+    dojoId: number
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: number
+    achieved: number
+    _all: number
+  }
+
+
+  export type DojoChallengeHistoryAvgAggregateInputType = {
+    myDinozId?: true
+    opponentId?: true
+    challenge?: true
+  }
+
+  export type DojoChallengeHistorySumAggregateInputType = {
+    myDinozId?: true
+    opponentId?: true
+    challenge?: true
+  }
+
+  export type DojoChallengeHistoryMinAggregateInputType = {
+    id?: true
+    dojoId?: true
+    myDinozId?: true
+    opponentId?: true
+    challenge?: true
+    victory?: true
+    achieved?: true
+  }
+
+  export type DojoChallengeHistoryMaxAggregateInputType = {
+    id?: true
+    dojoId?: true
+    myDinozId?: true
+    opponentId?: true
+    challenge?: true
+    victory?: true
+    achieved?: true
+  }
+
+  export type DojoChallengeHistoryCountAggregateInputType = {
+    id?: true
+    dojoId?: true
+    myDinozId?: true
+    opponentId?: true
+    challenge?: true
+    victory?: true
+    achieved?: true
+    _all?: true
+  }
+
+  export type DojoChallengeHistoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoChallengeHistory to aggregate.
+     */
+    where?: DojoChallengeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoChallengeHistories to fetch.
+     */
+    orderBy?: DojoChallengeHistoryOrderByWithRelationInput | DojoChallengeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DojoChallengeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoChallengeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoChallengeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DojoChallengeHistories
+    **/
+    _count?: true | DojoChallengeHistoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DojoChallengeHistoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DojoChallengeHistorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DojoChallengeHistoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DojoChallengeHistoryMaxAggregateInputType
+  }
+
+  export type GetDojoChallengeHistoryAggregateType<T extends DojoChallengeHistoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateDojoChallengeHistory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDojoChallengeHistory[P]>
+      : GetScalarType<T[P], AggregateDojoChallengeHistory[P]>
+  }
+
+
+
+
+  export type DojoChallengeHistoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DojoChallengeHistoryWhereInput
+    orderBy?: DojoChallengeHistoryOrderByWithAggregationInput | DojoChallengeHistoryOrderByWithAggregationInput[]
+    by: DojoChallengeHistoryScalarFieldEnum[] | DojoChallengeHistoryScalarFieldEnum
+    having?: DojoChallengeHistoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DojoChallengeHistoryCountAggregateInputType | true
+    _avg?: DojoChallengeHistoryAvgAggregateInputType
+    _sum?: DojoChallengeHistorySumAggregateInputType
+    _min?: DojoChallengeHistoryMinAggregateInputType
+    _max?: DojoChallengeHistoryMaxAggregateInputType
+  }
+
+  export type DojoChallengeHistoryGroupByOutputType = {
+    id: string
+    dojoId: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+    _count: DojoChallengeHistoryCountAggregateOutputType | null
+    _avg: DojoChallengeHistoryAvgAggregateOutputType | null
+    _sum: DojoChallengeHistorySumAggregateOutputType | null
+    _min: DojoChallengeHistoryMinAggregateOutputType | null
+    _max: DojoChallengeHistoryMaxAggregateOutputType | null
+  }
+
+  type GetDojoChallengeHistoryGroupByPayload<T extends DojoChallengeHistoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DojoChallengeHistoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DojoChallengeHistoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DojoChallengeHistoryGroupByOutputType[P]>
+            : GetScalarType<T[P], DojoChallengeHistoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DojoChallengeHistorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dojoId?: boolean
+    myDinozId?: boolean
+    opponentId?: boolean
+    challenge?: boolean
+    victory?: boolean
+    achieved?: boolean
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoChallengeHistory"]>
+
+  export type DojoChallengeHistorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dojoId?: boolean
+    myDinozId?: boolean
+    opponentId?: boolean
+    challenge?: boolean
+    victory?: boolean
+    achieved?: boolean
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dojoChallengeHistory"]>
+
+  export type DojoChallengeHistorySelectScalar = {
+    id?: boolean
+    dojoId?: boolean
+    myDinozId?: boolean
+    opponentId?: boolean
+    challenge?: boolean
+    victory?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoChallengeHistoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dojoId" | "myDinozId" | "opponentId" | "challenge" | "victory" | "achieved", ExtArgs["result"]["dojoChallengeHistory"]>
+  export type DojoChallengeHistoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+  }
+  export type DojoChallengeHistoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dojo?: boolean | DojoDefaultArgs<ExtArgs>
+  }
+
+  export type $DojoChallengeHistoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DojoChallengeHistory"
+    objects: {
+      dojo: Prisma.$DojoPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      dojoId: string
+      myDinozId: number
+      opponentId: number
+      challenge: number
+      victory: boolean
+      achieved: boolean
+    }, ExtArgs["result"]["dojoChallengeHistory"]>
+    composites: {}
+  }
+
+  type DojoChallengeHistoryGetPayload<S extends boolean | null | undefined | DojoChallengeHistoryDefaultArgs> = $Result.GetResult<Prisma.$DojoChallengeHistoryPayload, S>
+
+  type DojoChallengeHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DojoChallengeHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: DojoChallengeHistoryCountAggregateInputType | true
+    }
+
+  export interface DojoChallengeHistoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DojoChallengeHistory'], meta: { name: 'DojoChallengeHistory' } }
+    /**
+     * Find zero or one DojoChallengeHistory that matches the filter.
+     * @param {DojoChallengeHistoryFindUniqueArgs} args - Arguments to find a DojoChallengeHistory
+     * @example
+     * // Get one DojoChallengeHistory
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DojoChallengeHistoryFindUniqueArgs>(args: SelectSubset<T, DojoChallengeHistoryFindUniqueArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one DojoChallengeHistory that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DojoChallengeHistoryFindUniqueOrThrowArgs} args - Arguments to find a DojoChallengeHistory
+     * @example
+     * // Get one DojoChallengeHistory
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DojoChallengeHistoryFindUniqueOrThrowArgs>(args: SelectSubset<T, DojoChallengeHistoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first DojoChallengeHistory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryFindFirstArgs} args - Arguments to find a DojoChallengeHistory
+     * @example
+     * // Get one DojoChallengeHistory
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DojoChallengeHistoryFindFirstArgs>(args?: SelectSubset<T, DojoChallengeHistoryFindFirstArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first DojoChallengeHistory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryFindFirstOrThrowArgs} args - Arguments to find a DojoChallengeHistory
+     * @example
+     * // Get one DojoChallengeHistory
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DojoChallengeHistoryFindFirstOrThrowArgs>(args?: SelectSubset<T, DojoChallengeHistoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more DojoChallengeHistories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DojoChallengeHistories
+     * const dojoChallengeHistories = await prisma.dojoChallengeHistory.findMany()
+     * 
+     * // Get first 10 DojoChallengeHistories
+     * const dojoChallengeHistories = await prisma.dojoChallengeHistory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dojoChallengeHistoryWithIdOnly = await prisma.dojoChallengeHistory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DojoChallengeHistoryFindManyArgs>(args?: SelectSubset<T, DojoChallengeHistoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a DojoChallengeHistory.
+     * @param {DojoChallengeHistoryCreateArgs} args - Arguments to create a DojoChallengeHistory.
+     * @example
+     * // Create one DojoChallengeHistory
+     * const DojoChallengeHistory = await prisma.dojoChallengeHistory.create({
+     *   data: {
+     *     // ... data to create a DojoChallengeHistory
+     *   }
+     * })
+     * 
+     */
+    create<T extends DojoChallengeHistoryCreateArgs>(args: SelectSubset<T, DojoChallengeHistoryCreateArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many DojoChallengeHistories.
+     * @param {DojoChallengeHistoryCreateManyArgs} args - Arguments to create many DojoChallengeHistories.
+     * @example
+     * // Create many DojoChallengeHistories
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DojoChallengeHistoryCreateManyArgs>(args?: SelectSubset<T, DojoChallengeHistoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DojoChallengeHistories and returns the data saved in the database.
+     * @param {DojoChallengeHistoryCreateManyAndReturnArgs} args - Arguments to create many DojoChallengeHistories.
+     * @example
+     * // Create many DojoChallengeHistories
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DojoChallengeHistories and only return the `id`
+     * const dojoChallengeHistoryWithIdOnly = await prisma.dojoChallengeHistory.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DojoChallengeHistoryCreateManyAndReturnArgs>(args?: SelectSubset<T, DojoChallengeHistoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a DojoChallengeHistory.
+     * @param {DojoChallengeHistoryDeleteArgs} args - Arguments to delete one DojoChallengeHistory.
+     * @example
+     * // Delete one DojoChallengeHistory
+     * const DojoChallengeHistory = await prisma.dojoChallengeHistory.delete({
+     *   where: {
+     *     // ... filter to delete one DojoChallengeHistory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DojoChallengeHistoryDeleteArgs>(args: SelectSubset<T, DojoChallengeHistoryDeleteArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one DojoChallengeHistory.
+     * @param {DojoChallengeHistoryUpdateArgs} args - Arguments to update one DojoChallengeHistory.
+     * @example
+     * // Update one DojoChallengeHistory
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DojoChallengeHistoryUpdateArgs>(args: SelectSubset<T, DojoChallengeHistoryUpdateArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more DojoChallengeHistories.
+     * @param {DojoChallengeHistoryDeleteManyArgs} args - Arguments to filter DojoChallengeHistories to delete.
+     * @example
+     * // Delete a few DojoChallengeHistories
+     * const { count } = await prisma.dojoChallengeHistory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DojoChallengeHistoryDeleteManyArgs>(args?: SelectSubset<T, DojoChallengeHistoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DojoChallengeHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DojoChallengeHistories
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DojoChallengeHistoryUpdateManyArgs>(args: SelectSubset<T, DojoChallengeHistoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DojoChallengeHistory.
+     * @param {DojoChallengeHistoryUpsertArgs} args - Arguments to update or create a DojoChallengeHistory.
+     * @example
+     * // Update or create a DojoChallengeHistory
+     * const dojoChallengeHistory = await prisma.dojoChallengeHistory.upsert({
+     *   create: {
+     *     // ... data to create a DojoChallengeHistory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DojoChallengeHistory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DojoChallengeHistoryUpsertArgs>(args: SelectSubset<T, DojoChallengeHistoryUpsertArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of DojoChallengeHistories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryCountArgs} args - Arguments to filter DojoChallengeHistories to count.
+     * @example
+     * // Count the number of DojoChallengeHistories
+     * const count = await prisma.dojoChallengeHistory.count({
+     *   where: {
+     *     // ... the filter for the DojoChallengeHistories we want to count
+     *   }
+     * })
+    **/
+    count<T extends DojoChallengeHistoryCountArgs>(
+      args?: Subset<T, DojoChallengeHistoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DojoChallengeHistoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DojoChallengeHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DojoChallengeHistoryAggregateArgs>(args: Subset<T, DojoChallengeHistoryAggregateArgs>): Prisma.PrismaPromise<GetDojoChallengeHistoryAggregateType<T>>
+
+    /**
+     * Group by DojoChallengeHistory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DojoChallengeHistoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DojoChallengeHistoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DojoChallengeHistoryGroupByArgs['orderBy'] }
+        : { orderBy?: DojoChallengeHistoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DojoChallengeHistoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDojoChallengeHistoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DojoChallengeHistory model
+   */
+  readonly fields: DojoChallengeHistoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DojoChallengeHistory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DojoChallengeHistoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dojo<T extends DojoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DojoDefaultArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DojoChallengeHistory model
+   */ 
+  interface DojoChallengeHistoryFieldRefs {
+    readonly id: FieldRef<"DojoChallengeHistory", 'String'>
+    readonly dojoId: FieldRef<"DojoChallengeHistory", 'String'>
+    readonly myDinozId: FieldRef<"DojoChallengeHistory", 'Int'>
+    readonly opponentId: FieldRef<"DojoChallengeHistory", 'Int'>
+    readonly challenge: FieldRef<"DojoChallengeHistory", 'Int'>
+    readonly victory: FieldRef<"DojoChallengeHistory", 'Boolean'>
+    readonly achieved: FieldRef<"DojoChallengeHistory", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DojoChallengeHistory findUnique
+   */
+  export type DojoChallengeHistoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoChallengeHistory to fetch.
+     */
+    where: DojoChallengeHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory findUniqueOrThrow
+   */
+  export type DojoChallengeHistoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoChallengeHistory to fetch.
+     */
+    where: DojoChallengeHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory findFirst
+   */
+  export type DojoChallengeHistoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoChallengeHistory to fetch.
+     */
+    where?: DojoChallengeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoChallengeHistories to fetch.
+     */
+    orderBy?: DojoChallengeHistoryOrderByWithRelationInput | DojoChallengeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoChallengeHistories.
+     */
+    cursor?: DojoChallengeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoChallengeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoChallengeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoChallengeHistories.
+     */
+    distinct?: DojoChallengeHistoryScalarFieldEnum | DojoChallengeHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory findFirstOrThrow
+   */
+  export type DojoChallengeHistoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoChallengeHistory to fetch.
+     */
+    where?: DojoChallengeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoChallengeHistories to fetch.
+     */
+    orderBy?: DojoChallengeHistoryOrderByWithRelationInput | DojoChallengeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DojoChallengeHistories.
+     */
+    cursor?: DojoChallengeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoChallengeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoChallengeHistories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DojoChallengeHistories.
+     */
+    distinct?: DojoChallengeHistoryScalarFieldEnum | DojoChallengeHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory findMany
+   */
+  export type DojoChallengeHistoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter, which DojoChallengeHistories to fetch.
+     */
+    where?: DojoChallengeHistoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DojoChallengeHistories to fetch.
+     */
+    orderBy?: DojoChallengeHistoryOrderByWithRelationInput | DojoChallengeHistoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DojoChallengeHistories.
+     */
+    cursor?: DojoChallengeHistoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DojoChallengeHistories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DojoChallengeHistories.
+     */
+    skip?: number
+    distinct?: DojoChallengeHistoryScalarFieldEnum | DojoChallengeHistoryScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory create
+   */
+  export type DojoChallengeHistoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DojoChallengeHistory.
+     */
+    data: XOR<DojoChallengeHistoryCreateInput, DojoChallengeHistoryUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory createMany
+   */
+  export type DojoChallengeHistoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DojoChallengeHistories.
+     */
+    data: DojoChallengeHistoryCreateManyInput | DojoChallengeHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DojoChallengeHistory createManyAndReturn
+   */
+  export type DojoChallengeHistoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many DojoChallengeHistories.
+     */
+    data: DojoChallengeHistoryCreateManyInput | DojoChallengeHistoryCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DojoChallengeHistory update
+   */
+  export type DojoChallengeHistoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DojoChallengeHistory.
+     */
+    data: XOR<DojoChallengeHistoryUpdateInput, DojoChallengeHistoryUncheckedUpdateInput>
+    /**
+     * Choose, which DojoChallengeHistory to update.
+     */
+    where: DojoChallengeHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory updateMany
+   */
+  export type DojoChallengeHistoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DojoChallengeHistories.
+     */
+    data: XOR<DojoChallengeHistoryUpdateManyMutationInput, DojoChallengeHistoryUncheckedUpdateManyInput>
+    /**
+     * Filter which DojoChallengeHistories to update
+     */
+    where?: DojoChallengeHistoryWhereInput
+  }
+
+  /**
+   * DojoChallengeHistory upsert
+   */
+  export type DojoChallengeHistoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DojoChallengeHistory to update in case it exists.
+     */
+    where: DojoChallengeHistoryWhereUniqueInput
+    /**
+     * In case the DojoChallengeHistory found by the `where` argument doesn't exist, create a new DojoChallengeHistory with this data.
+     */
+    create: XOR<DojoChallengeHistoryCreateInput, DojoChallengeHistoryUncheckedCreateInput>
+    /**
+     * In case the DojoChallengeHistory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DojoChallengeHistoryUpdateInput, DojoChallengeHistoryUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory delete
+   */
+  export type DojoChallengeHistoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
+    /**
+     * Filter which DojoChallengeHistory to delete.
+     */
+    where: DojoChallengeHistoryWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * DojoChallengeHistory deleteMany
+   */
+  export type DojoChallengeHistoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DojoChallengeHistories to delete
+     */
+    where?: DojoChallengeHistoryWhereInput
+  }
+
+  /**
+   * DojoChallengeHistory without action
+   */
+  export type DojoChallengeHistoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DojoChallengeHistory
+     */
+    select?: DojoChallengeHistorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DojoChallengeHistory
+     */
+    omit?: DojoChallengeHistoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DojoChallengeHistoryInclude<ExtArgs> | null
   }
 
 
@@ -49702,6 +54526,1017 @@ export namespace Prisma {
 
 
   /**
+   * Model FightArchive
+   */
+
+  export type AggregateFightArchive = {
+    _count: FightArchiveCountAggregateOutputType | null
+    _min: FightArchiveMinAggregateOutputType | null
+    _max: FightArchiveMaxAggregateOutputType | null
+  }
+
+  export type FightArchiveMinAggregateOutputType = {
+    id: string | null
+    fighters: string | null
+    steps: string | null
+    seed: string | null
+    result: boolean | null
+    playerId: string | null
+    createdDate: Date | null
+  }
+
+  export type FightArchiveMaxAggregateOutputType = {
+    id: string | null
+    fighters: string | null
+    steps: string | null
+    seed: string | null
+    result: boolean | null
+    playerId: string | null
+    createdDate: Date | null
+  }
+
+  export type FightArchiveCountAggregateOutputType = {
+    id: number
+    fighters: number
+    steps: number
+    seed: number
+    result: number
+    playerId: number
+    createdDate: number
+    _all: number
+  }
+
+
+  export type FightArchiveMinAggregateInputType = {
+    id?: true
+    fighters?: true
+    steps?: true
+    seed?: true
+    result?: true
+    playerId?: true
+    createdDate?: true
+  }
+
+  export type FightArchiveMaxAggregateInputType = {
+    id?: true
+    fighters?: true
+    steps?: true
+    seed?: true
+    result?: true
+    playerId?: true
+    createdDate?: true
+  }
+
+  export type FightArchiveCountAggregateInputType = {
+    id?: true
+    fighters?: true
+    steps?: true
+    seed?: true
+    result?: true
+    playerId?: true
+    createdDate?: true
+    _all?: true
+  }
+
+  export type FightArchiveAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FightArchive to aggregate.
+     */
+    where?: FightArchiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FightArchives to fetch.
+     */
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: FightArchiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FightArchives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FightArchives.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned FightArchives
+    **/
+    _count?: true | FightArchiveCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: FightArchiveMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: FightArchiveMaxAggregateInputType
+  }
+
+  export type GetFightArchiveAggregateType<T extends FightArchiveAggregateArgs> = {
+        [P in keyof T & keyof AggregateFightArchive]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateFightArchive[P]>
+      : GetScalarType<T[P], AggregateFightArchive[P]>
+  }
+
+
+
+
+  export type FightArchiveGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithAggregationInput | FightArchiveOrderByWithAggregationInput[]
+    by: FightArchiveScalarFieldEnum[] | FightArchiveScalarFieldEnum
+    having?: FightArchiveScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: FightArchiveCountAggregateInputType | true
+    _min?: FightArchiveMinAggregateInputType
+    _max?: FightArchiveMaxAggregateInputType
+  }
+
+  export type FightArchiveGroupByOutputType = {
+    id: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId: string
+    createdDate: Date
+    _count: FightArchiveCountAggregateOutputType | null
+    _min: FightArchiveMinAggregateOutputType | null
+    _max: FightArchiveMaxAggregateOutputType | null
+  }
+
+  type GetFightArchiveGroupByPayload<T extends FightArchiveGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<FightArchiveGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof FightArchiveGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], FightArchiveGroupByOutputType[P]>
+            : GetScalarType<T[P], FightArchiveGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type FightArchiveSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fighters?: boolean
+    steps?: boolean
+    seed?: boolean
+    result?: boolean
+    playerId?: boolean
+    createdDate?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["fightArchive"]>
+
+  export type FightArchiveSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    fighters?: boolean
+    steps?: boolean
+    seed?: boolean
+    result?: boolean
+    playerId?: boolean
+    createdDate?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["fightArchive"]>
+
+  export type FightArchiveSelectScalar = {
+    id?: boolean
+    fighters?: boolean
+    steps?: boolean
+    seed?: boolean
+    result?: boolean
+    playerId?: boolean
+    createdDate?: boolean
+  }
+
+  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "createdDate", ExtArgs["result"]["fightArchive"]>
+  export type FightArchiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type FightArchiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $FightArchivePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "FightArchive"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      fighters: string
+      steps: string
+      seed: string
+      result: boolean
+      playerId: string
+      createdDate: Date
+    }, ExtArgs["result"]["fightArchive"]>
+    composites: {}
+  }
+
+  type FightArchiveGetPayload<S extends boolean | null | undefined | FightArchiveDefaultArgs> = $Result.GetResult<Prisma.$FightArchivePayload, S>
+
+  type FightArchiveCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<FightArchiveFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: FightArchiveCountAggregateInputType | true
+    }
+
+  export interface FightArchiveDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FightArchive'], meta: { name: 'FightArchive' } }
+    /**
+     * Find zero or one FightArchive that matches the filter.
+     * @param {FightArchiveFindUniqueArgs} args - Arguments to find a FightArchive
+     * @example
+     * // Get one FightArchive
+     * const fightArchive = await prisma.fightArchive.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends FightArchiveFindUniqueArgs>(args: SelectSubset<T, FightArchiveFindUniqueArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find one FightArchive that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {FightArchiveFindUniqueOrThrowArgs} args - Arguments to find a FightArchive
+     * @example
+     * // Get one FightArchive
+     * const fightArchive = await prisma.fightArchive.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends FightArchiveFindUniqueOrThrowArgs>(args: SelectSubset<T, FightArchiveFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first FightArchive that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveFindFirstArgs} args - Arguments to find a FightArchive
+     * @example
+     * // Get one FightArchive
+     * const fightArchive = await prisma.fightArchive.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends FightArchiveFindFirstArgs>(args?: SelectSubset<T, FightArchiveFindFirstArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+
+    /**
+     * Find the first FightArchive that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveFindFirstOrThrowArgs} args - Arguments to find a FightArchive
+     * @example
+     * // Get one FightArchive
+     * const fightArchive = await prisma.fightArchive.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends FightArchiveFindFirstOrThrowArgs>(args?: SelectSubset<T, FightArchiveFindFirstOrThrowArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Find zero or more FightArchives that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all FightArchives
+     * const fightArchives = await prisma.fightArchive.findMany()
+     * 
+     * // Get first 10 FightArchives
+     * const fightArchives = await prisma.fightArchive.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const fightArchiveWithIdOnly = await prisma.fightArchive.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends FightArchiveFindManyArgs>(args?: SelectSubset<T, FightArchiveFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", ClientOptions>>
+
+    /**
+     * Create a FightArchive.
+     * @param {FightArchiveCreateArgs} args - Arguments to create a FightArchive.
+     * @example
+     * // Create one FightArchive
+     * const FightArchive = await prisma.fightArchive.create({
+     *   data: {
+     *     // ... data to create a FightArchive
+     *   }
+     * })
+     * 
+     */
+    create<T extends FightArchiveCreateArgs>(args: SelectSubset<T, FightArchiveCreateArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Create many FightArchives.
+     * @param {FightArchiveCreateManyArgs} args - Arguments to create many FightArchives.
+     * @example
+     * // Create many FightArchives
+     * const fightArchive = await prisma.fightArchive.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends FightArchiveCreateManyArgs>(args?: SelectSubset<T, FightArchiveCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many FightArchives and returns the data saved in the database.
+     * @param {FightArchiveCreateManyAndReturnArgs} args - Arguments to create many FightArchives.
+     * @example
+     * // Create many FightArchives
+     * const fightArchive = await prisma.fightArchive.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many FightArchives and only return the `id`
+     * const fightArchiveWithIdOnly = await prisma.fightArchive.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends FightArchiveCreateManyAndReturnArgs>(args?: SelectSubset<T, FightArchiveCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+
+    /**
+     * Delete a FightArchive.
+     * @param {FightArchiveDeleteArgs} args - Arguments to delete one FightArchive.
+     * @example
+     * // Delete one FightArchive
+     * const FightArchive = await prisma.fightArchive.delete({
+     *   where: {
+     *     // ... filter to delete one FightArchive
+     *   }
+     * })
+     * 
+     */
+    delete<T extends FightArchiveDeleteArgs>(args: SelectSubset<T, FightArchiveDeleteArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Update one FightArchive.
+     * @param {FightArchiveUpdateArgs} args - Arguments to update one FightArchive.
+     * @example
+     * // Update one FightArchive
+     * const fightArchive = await prisma.fightArchive.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends FightArchiveUpdateArgs>(args: SelectSubset<T, FightArchiveUpdateArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+
+    /**
+     * Delete zero or more FightArchives.
+     * @param {FightArchiveDeleteManyArgs} args - Arguments to filter FightArchives to delete.
+     * @example
+     * // Delete a few FightArchives
+     * const { count } = await prisma.fightArchive.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends FightArchiveDeleteManyArgs>(args?: SelectSubset<T, FightArchiveDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more FightArchives.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many FightArchives
+     * const fightArchive = await prisma.fightArchive.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends FightArchiveUpdateManyArgs>(args: SelectSubset<T, FightArchiveUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one FightArchive.
+     * @param {FightArchiveUpsertArgs} args - Arguments to update or create a FightArchive.
+     * @example
+     * // Update or create a FightArchive
+     * const fightArchive = await prisma.fightArchive.upsert({
+     *   create: {
+     *     // ... data to create a FightArchive
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the FightArchive we want to update
+     *   }
+     * })
+     */
+    upsert<T extends FightArchiveUpsertArgs>(args: SelectSubset<T, FightArchiveUpsertArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+
+
+    /**
+     * Count the number of FightArchives.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveCountArgs} args - Arguments to filter FightArchives to count.
+     * @example
+     * // Count the number of FightArchives
+     * const count = await prisma.fightArchive.count({
+     *   where: {
+     *     // ... the filter for the FightArchives we want to count
+     *   }
+     * })
+    **/
+    count<T extends FightArchiveCountArgs>(
+      args?: Subset<T, FightArchiveCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], FightArchiveCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a FightArchive.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends FightArchiveAggregateArgs>(args: Subset<T, FightArchiveAggregateArgs>): Prisma.PrismaPromise<GetFightArchiveAggregateType<T>>
+
+    /**
+     * Group by FightArchive.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {FightArchiveGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends FightArchiveGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: FightArchiveGroupByArgs['orderBy'] }
+        : { orderBy?: FightArchiveGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, FightArchiveGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetFightArchiveGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the FightArchive model
+   */
+  readonly fields: FightArchiveFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for FightArchive.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__FightArchiveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the FightArchive model
+   */ 
+  interface FightArchiveFieldRefs {
+    readonly id: FieldRef<"FightArchive", 'String'>
+    readonly fighters: FieldRef<"FightArchive", 'String'>
+    readonly steps: FieldRef<"FightArchive", 'String'>
+    readonly seed: FieldRef<"FightArchive", 'String'>
+    readonly result: FieldRef<"FightArchive", 'Boolean'>
+    readonly playerId: FieldRef<"FightArchive", 'String'>
+    readonly createdDate: FieldRef<"FightArchive", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * FightArchive findUnique
+   */
+  export type FightArchiveFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * Filter, which FightArchive to fetch.
+     */
+    where: FightArchiveWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive findUniqueOrThrow
+   */
+  export type FightArchiveFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * Filter, which FightArchive to fetch.
+     */
+    where: FightArchiveWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive findFirst
+   */
+  export type FightArchiveFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * Filter, which FightArchive to fetch.
+     */
+    where?: FightArchiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FightArchives to fetch.
+     */
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FightArchives.
+     */
+    cursor?: FightArchiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FightArchives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FightArchives.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FightArchives.
+     */
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive findFirstOrThrow
+   */
+  export type FightArchiveFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * Filter, which FightArchive to fetch.
+     */
+    where?: FightArchiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FightArchives to fetch.
+     */
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for FightArchives.
+     */
+    cursor?: FightArchiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FightArchives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FightArchives.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of FightArchives.
+     */
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive findMany
+   */
+  export type FightArchiveFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * Filter, which FightArchives to fetch.
+     */
+    where?: FightArchiveWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of FightArchives to fetch.
+     */
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing FightArchives.
+     */
+    cursor?: FightArchiveWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` FightArchives from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` FightArchives.
+     */
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive create
+   */
+  export type FightArchiveCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * The data needed to create a FightArchive.
+     */
+    data: XOR<FightArchiveCreateInput, FightArchiveUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive createMany
+   */
+  export type FightArchiveCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many FightArchives.
+     */
+    data: FightArchiveCreateManyInput | FightArchiveCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * FightArchive createManyAndReturn
+   */
+  export type FightArchiveCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * The data used to create many FightArchives.
+     */
+    data: FightArchiveCreateManyInput | FightArchiveCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * FightArchive update
+   */
+  export type FightArchiveUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * The data needed to update a FightArchive.
+     */
+    data: XOR<FightArchiveUpdateInput, FightArchiveUncheckedUpdateInput>
+    /**
+     * Choose, which FightArchive to update.
+     */
+    where: FightArchiveWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive updateMany
+   */
+  export type FightArchiveUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update FightArchives.
+     */
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyInput>
+    /**
+     * Filter which FightArchives to update
+     */
+    where?: FightArchiveWhereInput
+  }
+
+  /**
+   * FightArchive upsert
+   */
+  export type FightArchiveUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * The filter to search for the FightArchive to update in case it exists.
+     */
+    where: FightArchiveWhereUniqueInput
+    /**
+     * In case the FightArchive found by the `where` argument doesn't exist, create a new FightArchive with this data.
+     */
+    create: XOR<FightArchiveCreateInput, FightArchiveUncheckedCreateInput>
+    /**
+     * In case the FightArchive was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<FightArchiveUpdateInput, FightArchiveUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive delete
+   */
+  export type FightArchiveDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    /**
+     * Filter which FightArchive to delete.
+     */
+    where: FightArchiveWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * FightArchive deleteMany
+   */
+  export type FightArchiveDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which FightArchives to delete
+     */
+    where?: FightArchiveWhereInput
+  }
+
+  /**
+   * FightArchive without action
+   */
+  export type FightArchiveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -49887,6 +55722,51 @@ export namespace Prisma {
   };
 
   export type PlayerScalarFieldEnum = (typeof PlayerScalarFieldEnum)[keyof typeof PlayerScalarFieldEnum]
+
+
+  export const DojoScalarFieldEnum: {
+    id: 'id',
+    playerId: 'playerId',
+    activeChallenge: 'activeChallenge',
+    reputation: 'reputation',
+    teamUpdate: 'teamUpdate'
+  };
+
+  export type DojoScalarFieldEnum = (typeof DojoScalarFieldEnum)[keyof typeof DojoScalarFieldEnum]
+
+
+  export const DojoTeamScalarFieldEnum: {
+    id: 'id',
+    dojoId: 'dojoId',
+    dinozId: 'dinozId',
+    fighted: 'fighted'
+  };
+
+  export type DojoTeamScalarFieldEnum = (typeof DojoTeamScalarFieldEnum)[keyof typeof DojoTeamScalarFieldEnum]
+
+
+  export const DojoOpponentsScalarFieldEnum: {
+    id: 'id',
+    dojoId: 'dojoId',
+    dinozId: 'dinozId',
+    fighted: 'fighted',
+    achieved: 'achieved'
+  };
+
+  export type DojoOpponentsScalarFieldEnum = (typeof DojoOpponentsScalarFieldEnum)[keyof typeof DojoOpponentsScalarFieldEnum]
+
+
+  export const DojoChallengeHistoryScalarFieldEnum: {
+    id: 'id',
+    dojoId: 'dojoId',
+    myDinozId: 'myDinozId',
+    opponentId: 'opponentId',
+    challenge: 'challenge',
+    victory: 'victory',
+    achieved: 'achieved'
+  };
+
+  export type DojoChallengeHistoryScalarFieldEnum = (typeof DojoChallengeHistoryScalarFieldEnum)[keyof typeof DojoChallengeHistoryScalarFieldEnum]
 
 
   export const UsernameHistoryScalarFieldEnum: {
@@ -50212,6 +56092,19 @@ export namespace Prisma {
   };
 
   export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+  export const FightArchiveScalarFieldEnum: {
+    id: 'id',
+    fighters: 'fighters',
+    steps: 'steps',
+    seed: 'seed',
+    result: 'result',
+    playerId: 'playerId',
+    createdDate: 'createdDate'
+  };
+
+  export type FightArchiveScalarFieldEnum = (typeof FightArchiveScalarFieldEnum)[keyof typeof FightArchiveScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -50548,6 +56441,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableListRelationFilter
     status?: DinozStatusListRelationFilter
     npcs?: NPCListRelationFilter
+    DojoOpponents?: DojoOpponentsListRelationFilter
+    DojoTeam?: DojoTeamListRelationFilter
   }
 
   export type DinozOrderByWithRelationInput = {
@@ -50595,6 +56490,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableOrderByRelationAggregateInput
     status?: DinozStatusOrderByRelationAggregateInput
     npcs?: NPCOrderByRelationAggregateInput
+    DojoOpponents?: DojoOpponentsOrderByRelationAggregateInput
+    DojoTeam?: DojoTeamOrderByRelationAggregateInput
   }
 
   export type DinozWhereUniqueInput = Prisma.AtLeast<{
@@ -50645,6 +56542,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableListRelationFilter
     status?: DinozStatusListRelationFilter
     npcs?: NPCListRelationFilter
+    DojoOpponents?: DojoOpponentsListRelationFilter
+    DojoTeam?: DojoTeamListRelationFilter
   }, "id">
 
   export type DinozOrderByWithAggregationInput = {
@@ -51270,6 +57169,8 @@ export namespace Prisma {
     quests?: PlayerQuestListRelationFilter
     rewards?: PlayerRewardListRelationFilter
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
+    Dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
+    FightArchive?: FightArchiveListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -51324,6 +57225,8 @@ export namespace Prisma {
     quests?: PlayerQuestOrderByRelationAggregateInput
     rewards?: PlayerRewardOrderByRelationAggregateInput
     ranking?: RankingOrderByWithRelationInput
+    Dojo?: DojoOrderByWithRelationInput
+    FightArchive?: FightArchiveOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -51381,6 +57284,8 @@ export namespace Prisma {
     quests?: PlayerQuestListRelationFilter
     rewards?: PlayerRewardListRelationFilter
     ranking?: XOR<RankingNullableScalarRelationFilter, RankingWhereInput> | null
+    Dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
+    FightArchive?: FightArchiveListRelationFilter
   }, "id" | "clanMemberId" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -51443,6 +57348,254 @@ export namespace Prisma {
     dailyGridRewards?: IntWithAggregatesFilter<"Player"> | number
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     id?: UuidWithAggregatesFilter<"Player"> | string
+  }
+
+  export type DojoWhereInput = {
+    AND?: DojoWhereInput | DojoWhereInput[]
+    OR?: DojoWhereInput[]
+    NOT?: DojoWhereInput | DojoWhereInput[]
+    id?: UuidFilter<"Dojo"> | string
+    playerId?: UuidFilter<"Dojo"> | string
+    activeChallenge?: IntFilter<"Dojo"> | number
+    reputation?: IntFilter<"Dojo"> | number
+    teamUpdate?: DateTimeNullableFilter<"Dojo"> | Date | string | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    team?: DojoTeamListRelationFilter
+    DojoChallengeHistory?: DojoChallengeHistoryListRelationFilter
+    DojoOpponents?: DojoOpponentsListRelationFilter
+  }
+
+  export type DojoOrderByWithRelationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+    teamUpdate?: SortOrderInput | SortOrder
+    player?: PlayerOrderByWithRelationInput
+    team?: DojoTeamOrderByRelationAggregateInput
+    DojoChallengeHistory?: DojoChallengeHistoryOrderByRelationAggregateInput
+    DojoOpponents?: DojoOpponentsOrderByRelationAggregateInput
+  }
+
+  export type DojoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    playerId?: string
+    AND?: DojoWhereInput | DojoWhereInput[]
+    OR?: DojoWhereInput[]
+    NOT?: DojoWhereInput | DojoWhereInput[]
+    activeChallenge?: IntFilter<"Dojo"> | number
+    reputation?: IntFilter<"Dojo"> | number
+    teamUpdate?: DateTimeNullableFilter<"Dojo"> | Date | string | null
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    team?: DojoTeamListRelationFilter
+    DojoChallengeHistory?: DojoChallengeHistoryListRelationFilter
+    DojoOpponents?: DojoOpponentsListRelationFilter
+  }, "id" | "playerId">
+
+  export type DojoOrderByWithAggregationInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+    teamUpdate?: SortOrderInput | SortOrder
+    _count?: DojoCountOrderByAggregateInput
+    _avg?: DojoAvgOrderByAggregateInput
+    _max?: DojoMaxOrderByAggregateInput
+    _min?: DojoMinOrderByAggregateInput
+    _sum?: DojoSumOrderByAggregateInput
+  }
+
+  export type DojoScalarWhereWithAggregatesInput = {
+    AND?: DojoScalarWhereWithAggregatesInput | DojoScalarWhereWithAggregatesInput[]
+    OR?: DojoScalarWhereWithAggregatesInput[]
+    NOT?: DojoScalarWhereWithAggregatesInput | DojoScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"Dojo"> | string
+    playerId?: UuidWithAggregatesFilter<"Dojo"> | string
+    activeChallenge?: IntWithAggregatesFilter<"Dojo"> | number
+    reputation?: IntWithAggregatesFilter<"Dojo"> | number
+    teamUpdate?: DateTimeNullableWithAggregatesFilter<"Dojo"> | Date | string | null
+  }
+
+  export type DojoTeamWhereInput = {
+    AND?: DojoTeamWhereInput | DojoTeamWhereInput[]
+    OR?: DojoTeamWhereInput[]
+    NOT?: DojoTeamWhereInput | DojoTeamWhereInput[]
+    id?: UuidFilter<"DojoTeam"> | string
+    dojoId?: UuidFilter<"DojoTeam"> | string
+    dinozId?: IntFilter<"DojoTeam"> | number
+    fighted?: BoolFilter<"DojoTeam"> | boolean
+    dojo?: XOR<DojoScalarRelationFilter, DojoWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }
+
+  export type DojoTeamOrderByWithRelationInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    dojo?: DojoOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type DojoTeamWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DojoTeamWhereInput | DojoTeamWhereInput[]
+    OR?: DojoTeamWhereInput[]
+    NOT?: DojoTeamWhereInput | DojoTeamWhereInput[]
+    dojoId?: UuidFilter<"DojoTeam"> | string
+    dinozId?: IntFilter<"DojoTeam"> | number
+    fighted?: BoolFilter<"DojoTeam"> | boolean
+    dojo?: XOR<DojoScalarRelationFilter, DojoWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }, "id">
+
+  export type DojoTeamOrderByWithAggregationInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    _count?: DojoTeamCountOrderByAggregateInput
+    _avg?: DojoTeamAvgOrderByAggregateInput
+    _max?: DojoTeamMaxOrderByAggregateInput
+    _min?: DojoTeamMinOrderByAggregateInput
+    _sum?: DojoTeamSumOrderByAggregateInput
+  }
+
+  export type DojoTeamScalarWhereWithAggregatesInput = {
+    AND?: DojoTeamScalarWhereWithAggregatesInput | DojoTeamScalarWhereWithAggregatesInput[]
+    OR?: DojoTeamScalarWhereWithAggregatesInput[]
+    NOT?: DojoTeamScalarWhereWithAggregatesInput | DojoTeamScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DojoTeam"> | string
+    dojoId?: UuidWithAggregatesFilter<"DojoTeam"> | string
+    dinozId?: IntWithAggregatesFilter<"DojoTeam"> | number
+    fighted?: BoolWithAggregatesFilter<"DojoTeam"> | boolean
+  }
+
+  export type DojoOpponentsWhereInput = {
+    AND?: DojoOpponentsWhereInput | DojoOpponentsWhereInput[]
+    OR?: DojoOpponentsWhereInput[]
+    NOT?: DojoOpponentsWhereInput | DojoOpponentsWhereInput[]
+    id?: UuidFilter<"DojoOpponents"> | string
+    dojoId?: UuidFilter<"DojoOpponents"> | string
+    dinozId?: IntFilter<"DojoOpponents"> | number
+    fighted?: BoolFilter<"DojoOpponents"> | boolean
+    achieved?: BoolFilter<"DojoOpponents"> | boolean
+    dojo?: XOR<DojoScalarRelationFilter, DojoWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }
+
+  export type DojoOpponentsOrderByWithRelationInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    achieved?: SortOrder
+    dojo?: DojoOrderByWithRelationInput
+    dinoz?: DinozOrderByWithRelationInput
+  }
+
+  export type DojoOpponentsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DojoOpponentsWhereInput | DojoOpponentsWhereInput[]
+    OR?: DojoOpponentsWhereInput[]
+    NOT?: DojoOpponentsWhereInput | DojoOpponentsWhereInput[]
+    dojoId?: UuidFilter<"DojoOpponents"> | string
+    dinozId?: IntFilter<"DojoOpponents"> | number
+    fighted?: BoolFilter<"DojoOpponents"> | boolean
+    achieved?: BoolFilter<"DojoOpponents"> | boolean
+    dojo?: XOR<DojoScalarRelationFilter, DojoWhereInput>
+    dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
+  }, "id">
+
+  export type DojoOpponentsOrderByWithAggregationInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    achieved?: SortOrder
+    _count?: DojoOpponentsCountOrderByAggregateInput
+    _avg?: DojoOpponentsAvgOrderByAggregateInput
+    _max?: DojoOpponentsMaxOrderByAggregateInput
+    _min?: DojoOpponentsMinOrderByAggregateInput
+    _sum?: DojoOpponentsSumOrderByAggregateInput
+  }
+
+  export type DojoOpponentsScalarWhereWithAggregatesInput = {
+    AND?: DojoOpponentsScalarWhereWithAggregatesInput | DojoOpponentsScalarWhereWithAggregatesInput[]
+    OR?: DojoOpponentsScalarWhereWithAggregatesInput[]
+    NOT?: DojoOpponentsScalarWhereWithAggregatesInput | DojoOpponentsScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DojoOpponents"> | string
+    dojoId?: UuidWithAggregatesFilter<"DojoOpponents"> | string
+    dinozId?: IntWithAggregatesFilter<"DojoOpponents"> | number
+    fighted?: BoolWithAggregatesFilter<"DojoOpponents"> | boolean
+    achieved?: BoolWithAggregatesFilter<"DojoOpponents"> | boolean
+  }
+
+  export type DojoChallengeHistoryWhereInput = {
+    AND?: DojoChallengeHistoryWhereInput | DojoChallengeHistoryWhereInput[]
+    OR?: DojoChallengeHistoryWhereInput[]
+    NOT?: DojoChallengeHistoryWhereInput | DojoChallengeHistoryWhereInput[]
+    id?: UuidFilter<"DojoChallengeHistory"> | string
+    dojoId?: UuidFilter<"DojoChallengeHistory"> | string
+    myDinozId?: IntFilter<"DojoChallengeHistory"> | number
+    opponentId?: IntFilter<"DojoChallengeHistory"> | number
+    challenge?: IntFilter<"DojoChallengeHistory"> | number
+    victory?: BoolFilter<"DojoChallengeHistory"> | boolean
+    achieved?: BoolFilter<"DojoChallengeHistory"> | boolean
+    dojo?: XOR<DojoScalarRelationFilter, DojoWhereInput>
+  }
+
+  export type DojoChallengeHistoryOrderByWithRelationInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
+    victory?: SortOrder
+    achieved?: SortOrder
+    dojo?: DojoOrderByWithRelationInput
+  }
+
+  export type DojoChallengeHistoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DojoChallengeHistoryWhereInput | DojoChallengeHistoryWhereInput[]
+    OR?: DojoChallengeHistoryWhereInput[]
+    NOT?: DojoChallengeHistoryWhereInput | DojoChallengeHistoryWhereInput[]
+    dojoId?: UuidFilter<"DojoChallengeHistory"> | string
+    myDinozId?: IntFilter<"DojoChallengeHistory"> | number
+    opponentId?: IntFilter<"DojoChallengeHistory"> | number
+    challenge?: IntFilter<"DojoChallengeHistory"> | number
+    victory?: BoolFilter<"DojoChallengeHistory"> | boolean
+    achieved?: BoolFilter<"DojoChallengeHistory"> | boolean
+    dojo?: XOR<DojoScalarRelationFilter, DojoWhereInput>
+  }, "id">
+
+  export type DojoChallengeHistoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
+    victory?: SortOrder
+    achieved?: SortOrder
+    _count?: DojoChallengeHistoryCountOrderByAggregateInput
+    _avg?: DojoChallengeHistoryAvgOrderByAggregateInput
+    _max?: DojoChallengeHistoryMaxOrderByAggregateInput
+    _min?: DojoChallengeHistoryMinOrderByAggregateInput
+    _sum?: DojoChallengeHistorySumOrderByAggregateInput
+  }
+
+  export type DojoChallengeHistoryScalarWhereWithAggregatesInput = {
+    AND?: DojoChallengeHistoryScalarWhereWithAggregatesInput | DojoChallengeHistoryScalarWhereWithAggregatesInput[]
+    OR?: DojoChallengeHistoryScalarWhereWithAggregatesInput[]
+    NOT?: DojoChallengeHistoryScalarWhereWithAggregatesInput | DojoChallengeHistoryScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"DojoChallengeHistory"> | string
+    dojoId?: UuidWithAggregatesFilter<"DojoChallengeHistory"> | string
+    myDinozId?: IntWithAggregatesFilter<"DojoChallengeHistory"> | number
+    opponentId?: IntWithAggregatesFilter<"DojoChallengeHistory"> | number
+    challenge?: IntWithAggregatesFilter<"DojoChallengeHistory"> | number
+    victory?: BoolWithAggregatesFilter<"DojoChallengeHistory"> | boolean
+    achieved?: BoolWithAggregatesFilter<"DojoChallengeHistory"> | boolean
   }
 
   export type UsernameHistoryWhereInput = {
@@ -53210,6 +59363,71 @@ export namespace Prisma {
     playerId?: UuidWithAggregatesFilter<"Notification"> | string
   }
 
+  export type FightArchiveWhereInput = {
+    AND?: FightArchiveWhereInput | FightArchiveWhereInput[]
+    OR?: FightArchiveWhereInput[]
+    NOT?: FightArchiveWhereInput | FightArchiveWhereInput[]
+    id?: UuidFilter<"FightArchive"> | string
+    fighters?: StringFilter<"FightArchive"> | string
+    steps?: StringFilter<"FightArchive"> | string
+    seed?: StringFilter<"FightArchive"> | string
+    result?: BoolFilter<"FightArchive"> | boolean
+    playerId?: UuidFilter<"FightArchive"> | string
+    createdDate?: DateTimeFilter<"FightArchive"> | Date | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }
+
+  export type FightArchiveOrderByWithRelationInput = {
+    id?: SortOrder
+    fighters?: SortOrder
+    steps?: SortOrder
+    seed?: SortOrder
+    result?: SortOrder
+    playerId?: SortOrder
+    createdDate?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type FightArchiveWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FightArchiveWhereInput | FightArchiveWhereInput[]
+    OR?: FightArchiveWhereInput[]
+    NOT?: FightArchiveWhereInput | FightArchiveWhereInput[]
+    fighters?: StringFilter<"FightArchive"> | string
+    steps?: StringFilter<"FightArchive"> | string
+    seed?: StringFilter<"FightArchive"> | string
+    result?: BoolFilter<"FightArchive"> | boolean
+    playerId?: UuidFilter<"FightArchive"> | string
+    createdDate?: DateTimeFilter<"FightArchive"> | Date | string
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }, "id">
+
+  export type FightArchiveOrderByWithAggregationInput = {
+    id?: SortOrder
+    fighters?: SortOrder
+    steps?: SortOrder
+    seed?: SortOrder
+    result?: SortOrder
+    playerId?: SortOrder
+    createdDate?: SortOrder
+    _count?: FightArchiveCountOrderByAggregateInput
+    _max?: FightArchiveMaxOrderByAggregateInput
+    _min?: FightArchiveMinOrderByAggregateInput
+  }
+
+  export type FightArchiveScalarWhereWithAggregatesInput = {
+    AND?: FightArchiveScalarWhereWithAggregatesInput | FightArchiveScalarWhereWithAggregatesInput[]
+    OR?: FightArchiveScalarWhereWithAggregatesInput[]
+    NOT?: FightArchiveScalarWhereWithAggregatesInput | FightArchiveScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"FightArchive"> | string
+    fighters?: StringWithAggregatesFilter<"FightArchive"> | string
+    steps?: StringWithAggregatesFilter<"FightArchive"> | string
+    seed?: StringWithAggregatesFilter<"FightArchive"> | string
+    result?: BoolWithAggregatesFilter<"FightArchive"> | boolean
+    playerId?: UuidWithAggregatesFilter<"FightArchive"> | string
+    createdDate?: DateTimeWithAggregatesFilter<"FightArchive"> | Date | string
+  }
+
   export type ConcentrationCreateInput = {
     dinoz?: DinozCreateNestedManyWithoutConcentrationInput
   }
@@ -53281,6 +59499,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateInput = {
@@ -53325,6 +59545,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUpdateInput = {
@@ -53368,6 +59590,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateInput = {
@@ -53412,6 +59636,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateManyInput = {
@@ -54003,6 +60229,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -54056,6 +60284,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -54109,6 +60339,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -54162,6 +60394,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -54242,6 +60476,243 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DojoCreateInput = {
+    id?: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    player: PlayerCreateNestedOneWithoutDojoInput
+    team?: DojoTeamCreateNestedManyWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoUncheckedCreateInput = {
+    id?: string
+    playerId: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
+    team?: DojoTeamUpdateManyWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DojoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DojoCreateManyInput = {
+    id?: string
+    playerId: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+  }
+
+  export type DojoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type DojoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type DojoTeamCreateInput = {
+    id?: string
+    fighted?: boolean
+    dojo: DojoCreateNestedOneWithoutTeamInput
+    dinoz: DinozCreateNestedOneWithoutDojoTeamInput
+  }
+
+  export type DojoTeamUncheckedCreateInput = {
+    id?: string
+    dojoId: string
+    dinozId: number
+    fighted?: boolean
+  }
+
+  export type DojoTeamUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    dojo?: DojoUpdateOneRequiredWithoutTeamNestedInput
+    dinoz?: DinozUpdateOneRequiredWithoutDojoTeamNestedInput
+  }
+
+  export type DojoTeamUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoTeamCreateManyInput = {
+    id?: string
+    dojoId: string
+    dinozId: number
+    fighted?: boolean
+  }
+
+  export type DojoTeamUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoTeamUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoOpponentsCreateInput = {
+    id?: string
+    fighted?: boolean
+    achieved?: boolean
+    dojo: DojoCreateNestedOneWithoutDojoOpponentsInput
+    dinoz: DinozCreateNestedOneWithoutDojoOpponentsInput
+  }
+
+  export type DojoOpponentsUncheckedCreateInput = {
+    id?: string
+    dojoId: string
+    dinozId: number
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoOpponentsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+    dojo?: DojoUpdateOneRequiredWithoutDojoOpponentsNestedInput
+    dinoz?: DinozUpdateOneRequiredWithoutDojoOpponentsNestedInput
+  }
+
+  export type DojoOpponentsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoOpponentsCreateManyInput = {
+    id?: string
+    dojoId: string
+    dinozId: number
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoOpponentsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoOpponentsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoChallengeHistoryCreateInput = {
+    id?: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+    dojo: DojoCreateNestedOneWithoutDojoChallengeHistoryInput
+  }
+
+  export type DojoChallengeHistoryUncheckedCreateInput = {
+    id?: string
+    dojoId: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+  }
+
+  export type DojoChallengeHistoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+    dojo?: DojoUpdateOneRequiredWithoutDojoChallengeHistoryNestedInput
+  }
+
+  export type DojoChallengeHistoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoChallengeHistoryCreateManyInput = {
+    id?: string
+    dojoId: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+  }
+
+  export type DojoChallengeHistoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoChallengeHistoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UsernameHistoryCreateInput = {
@@ -55842,6 +62313,75 @@ export namespace Prisma {
     playerId?: StringFieldUpdateOperationsInput | string
   }
 
+  export type FightArchiveCreateInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    createdDate?: Date | string
+    player: PlayerCreateNestedOneWithoutFightArchiveInput
+  }
+
+  export type FightArchiveUncheckedCreateInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId: string
+    createdDate?: Date | string
+  }
+
+  export type FightArchiveUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    player?: PlayerUpdateOneRequiredWithoutFightArchiveNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FightArchiveCreateManyInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId: string
+    createdDate?: Date | string
+  }
+
+  export type FightArchiveUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FightArchiveUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -56047,6 +62587,18 @@ export namespace Prisma {
     none?: NPCWhereInput
   }
 
+  export type DojoOpponentsListRelationFilter = {
+    every?: DojoOpponentsWhereInput
+    some?: DojoOpponentsWhereInput
+    none?: DojoOpponentsWhereInput
+  }
+
+  export type DojoTeamListRelationFilter = {
+    every?: DojoTeamWhereInput
+    some?: DojoTeamWhereInput
+    none?: DojoTeamWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -56097,6 +62649,14 @@ export namespace Prisma {
   }
 
   export type NPCOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DojoOpponentsOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DojoTeamOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -56878,6 +63438,17 @@ export namespace Prisma {
     isNot?: RankingWhereInput | null
   }
 
+  export type DojoNullableScalarRelationFilter = {
+    is?: DojoWhereInput | null
+    isNot?: DojoWhereInput | null
+  }
+
+  export type FightArchiveListRelationFilter = {
+    every?: FightArchiveWhereInput
+    some?: FightArchiveWhereInput
+    none?: FightArchiveWhereInput
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -56935,6 +63506,10 @@ export namespace Prisma {
   }
 
   export type PlayerRewardOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FightArchiveOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -57055,6 +63630,183 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumLangFilter<$PrismaModel>
     _max?: NestedEnumLangFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type DojoChallengeHistoryListRelationFilter = {
+    every?: DojoChallengeHistoryWhereInput
+    some?: DojoChallengeHistoryWhereInput
+    none?: DojoChallengeHistoryWhereInput
+  }
+
+  export type DojoChallengeHistoryOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DojoCountOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+    teamUpdate?: SortOrder
+  }
+
+  export type DojoAvgOrderByAggregateInput = {
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+  }
+
+  export type DojoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+    teamUpdate?: SortOrder
+  }
+
+  export type DojoMinOrderByAggregateInput = {
+    id?: SortOrder
+    playerId?: SortOrder
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+    teamUpdate?: SortOrder
+  }
+
+  export type DojoSumOrderByAggregateInput = {
+    activeChallenge?: SortOrder
+    reputation?: SortOrder
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DojoScalarRelationFilter = {
+    is?: DojoWhereInput
+    isNot?: DojoWhereInput
+  }
+
+  export type DojoTeamCountOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+  }
+
+  export type DojoTeamAvgOrderByAggregateInput = {
+    dinozId?: SortOrder
+  }
+
+  export type DojoTeamMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+  }
+
+  export type DojoTeamMinOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+  }
+
+  export type DojoTeamSumOrderByAggregateInput = {
+    dinozId?: SortOrder
+  }
+
+  export type DojoOpponentsCountOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    achieved?: SortOrder
+  }
+
+  export type DojoOpponentsAvgOrderByAggregateInput = {
+    dinozId?: SortOrder
+  }
+
+  export type DojoOpponentsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    achieved?: SortOrder
+  }
+
+  export type DojoOpponentsMinOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    dinozId?: SortOrder
+    fighted?: SortOrder
+    achieved?: SortOrder
+  }
+
+  export type DojoOpponentsSumOrderByAggregateInput = {
+    dinozId?: SortOrder
+  }
+
+  export type DojoChallengeHistoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
+    victory?: SortOrder
+    achieved?: SortOrder
+  }
+
+  export type DojoChallengeHistoryAvgOrderByAggregateInput = {
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
+  }
+
+  export type DojoChallengeHistoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
+    victory?: SortOrder
+    achieved?: SortOrder
+  }
+
+  export type DojoChallengeHistoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    dojoId?: SortOrder
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
+    victory?: SortOrder
+    achieved?: SortOrder
+  }
+
+  export type DojoChallengeHistorySumOrderByAggregateInput = {
+    myDinozId?: SortOrder
+    opponentId?: SortOrder
+    challenge?: SortOrder
   }
 
   export type UuidNullableFilter<$PrismaModel = never> = {
@@ -57854,17 +64606,6 @@ export namespace Prisma {
     clanId?: SortOrder
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type ClanListRelationFilter = {
     every?: ClanWhereInput
     some?: ClanWhereInput
@@ -57899,20 +64640,6 @@ export namespace Prisma {
 
   export type ClanWarSumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type ClanIngredientIngredientIdClanIdCompoundUniqueInput = {
@@ -58366,6 +65093,36 @@ export namespace Prisma {
     _max?: NestedEnumNotificationSeverityFilter<$PrismaModel>
   }
 
+  export type FightArchiveCountOrderByAggregateInput = {
+    id?: SortOrder
+    fighters?: SortOrder
+    steps?: SortOrder
+    seed?: SortOrder
+    result?: SortOrder
+    playerId?: SortOrder
+    createdDate?: SortOrder
+  }
+
+  export type FightArchiveMaxOrderByAggregateInput = {
+    id?: SortOrder
+    fighters?: SortOrder
+    steps?: SortOrder
+    seed?: SortOrder
+    result?: SortOrder
+    playerId?: SortOrder
+    createdDate?: SortOrder
+  }
+
+  export type FightArchiveMinOrderByAggregateInput = {
+    id?: SortOrder
+    fighters?: SortOrder
+    steps?: SortOrder
+    seed?: SortOrder
+    result?: SortOrder
+    playerId?: SortOrder
+    createdDate?: SortOrder
+  }
+
   export type DinozCreateNestedManyWithoutConcentrationInput = {
     create?: XOR<DinozCreateWithoutConcentrationInput, DinozUncheckedCreateWithoutConcentrationInput> | DinozCreateWithoutConcentrationInput[] | DinozUncheckedCreateWithoutConcentrationInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutConcentrationInput | DinozCreateOrConnectWithoutConcentrationInput[]
@@ -58525,6 +65282,20 @@ export namespace Prisma {
     connect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
   }
 
+  export type DojoOpponentsCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDinozInput, DojoOpponentsUncheckedCreateWithoutDinozInput> | DojoOpponentsCreateWithoutDinozInput[] | DojoOpponentsUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDinozInput | DojoOpponentsCreateOrConnectWithoutDinozInput[]
+    createMany?: DojoOpponentsCreateManyDinozInputEnvelope
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+  }
+
+  export type DojoTeamCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DojoTeamCreateWithoutDinozInput, DojoTeamUncheckedCreateWithoutDinozInput> | DojoTeamCreateWithoutDinozInput[] | DojoTeamUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDinozInput | DojoTeamCreateOrConnectWithoutDinozInput[]
+    createMany?: DojoTeamCreateManyDinozInputEnvelope
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+  }
+
   export type DinozCatchUncheckedCreateNestedManyWithoutDinozInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -58614,6 +65385,20 @@ export namespace Prisma {
     connectOrCreate?: NPCCreateOrConnectWithoutDinozInput | NPCCreateOrConnectWithoutDinozInput[]
     createMany?: NPCCreateManyDinozInputEnvelope
     connect?: NPCWhereUniqueInput | NPCWhereUniqueInput[]
+  }
+
+  export type DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDinozInput, DojoOpponentsUncheckedCreateWithoutDinozInput> | DojoOpponentsCreateWithoutDinozInput[] | DojoOpponentsUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDinozInput | DojoOpponentsCreateOrConnectWithoutDinozInput[]
+    createMany?: DojoOpponentsCreateManyDinozInputEnvelope
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+  }
+
+  export type DojoTeamUncheckedCreateNestedManyWithoutDinozInput = {
+    create?: XOR<DojoTeamCreateWithoutDinozInput, DojoTeamUncheckedCreateWithoutDinozInput> | DojoTeamCreateWithoutDinozInput[] | DojoTeamUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDinozInput | DojoTeamCreateOrConnectWithoutDinozInput[]
+    createMany?: DojoTeamCreateManyDinozInputEnvelope
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -58850,6 +65635,34 @@ export namespace Prisma {
     deleteMany?: NPCScalarWhereInput | NPCScalarWhereInput[]
   }
 
+  export type DojoOpponentsUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDinozInput, DojoOpponentsUncheckedCreateWithoutDinozInput> | DojoOpponentsCreateWithoutDinozInput[] | DojoOpponentsUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDinozInput | DojoOpponentsCreateOrConnectWithoutDinozInput[]
+    upsert?: DojoOpponentsUpsertWithWhereUniqueWithoutDinozInput | DojoOpponentsUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DojoOpponentsCreateManyDinozInputEnvelope
+    set?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    disconnect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    delete?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    update?: DojoOpponentsUpdateWithWhereUniqueWithoutDinozInput | DojoOpponentsUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DojoOpponentsUpdateManyWithWhereWithoutDinozInput | DojoOpponentsUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DojoOpponentsScalarWhereInput | DojoOpponentsScalarWhereInput[]
+  }
+
+  export type DojoTeamUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DojoTeamCreateWithoutDinozInput, DojoTeamUncheckedCreateWithoutDinozInput> | DojoTeamCreateWithoutDinozInput[] | DojoTeamUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDinozInput | DojoTeamCreateOrConnectWithoutDinozInput[]
+    upsert?: DojoTeamUpsertWithWhereUniqueWithoutDinozInput | DojoTeamUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DojoTeamCreateManyDinozInputEnvelope
+    set?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    disconnect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    delete?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    update?: DojoTeamUpdateWithWhereUniqueWithoutDinozInput | DojoTeamUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DojoTeamUpdateManyWithWhereWithoutDinozInput | DojoTeamUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
+  }
+
   export type DinozCatchUncheckedUpdateManyWithoutDinozNestedInput = {
     create?: XOR<DinozCatchCreateWithoutDinozInput, DinozCatchUncheckedCreateWithoutDinozInput> | DinozCatchCreateWithoutDinozInput[] | DinozCatchUncheckedCreateWithoutDinozInput[]
     connectOrCreate?: DinozCatchCreateOrConnectWithoutDinozInput | DinozCatchCreateOrConnectWithoutDinozInput[]
@@ -59030,6 +65843,34 @@ export namespace Prisma {
     update?: NPCUpdateWithWhereUniqueWithoutDinozInput | NPCUpdateWithWhereUniqueWithoutDinozInput[]
     updateMany?: NPCUpdateManyWithWhereWithoutDinozInput | NPCUpdateManyWithWhereWithoutDinozInput[]
     deleteMany?: NPCScalarWhereInput | NPCScalarWhereInput[]
+  }
+
+  export type DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDinozInput, DojoOpponentsUncheckedCreateWithoutDinozInput> | DojoOpponentsCreateWithoutDinozInput[] | DojoOpponentsUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDinozInput | DojoOpponentsCreateOrConnectWithoutDinozInput[]
+    upsert?: DojoOpponentsUpsertWithWhereUniqueWithoutDinozInput | DojoOpponentsUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DojoOpponentsCreateManyDinozInputEnvelope
+    set?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    disconnect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    delete?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    update?: DojoOpponentsUpdateWithWhereUniqueWithoutDinozInput | DojoOpponentsUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DojoOpponentsUpdateManyWithWhereWithoutDinozInput | DojoOpponentsUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DojoOpponentsScalarWhereInput | DojoOpponentsScalarWhereInput[]
+  }
+
+  export type DojoTeamUncheckedUpdateManyWithoutDinozNestedInput = {
+    create?: XOR<DojoTeamCreateWithoutDinozInput, DojoTeamUncheckedCreateWithoutDinozInput> | DojoTeamCreateWithoutDinozInput[] | DojoTeamUncheckedCreateWithoutDinozInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDinozInput | DojoTeamCreateOrConnectWithoutDinozInput[]
+    upsert?: DojoTeamUpsertWithWhereUniqueWithoutDinozInput | DojoTeamUpsertWithWhereUniqueWithoutDinozInput[]
+    createMany?: DojoTeamCreateManyDinozInputEnvelope
+    set?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    disconnect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    delete?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    update?: DojoTeamUpdateWithWhereUniqueWithoutDinozInput | DojoTeamUpdateWithWhereUniqueWithoutDinozInput[]
+    updateMany?: DojoTeamUpdateManyWithWhereWithoutDinozInput | DojoTeamUpdateManyWithWhereWithoutDinozInput[]
+    deleteMany?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
   }
 
   export type DinozCreateNestedOneWithoutItemsInput = {
@@ -59402,6 +66243,19 @@ export namespace Prisma {
     connect?: RankingWhereUniqueInput
   }
 
+  export type DojoCreateNestedOneWithoutPlayerInput = {
+    create?: XOR<DojoCreateWithoutPlayerInput, DojoUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutPlayerInput
+    connect?: DojoWhereUniqueInput
+  }
+
+  export type FightArchiveCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput> | FightArchiveCreateWithoutPlayerInput[] | FightArchiveUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutPlayerInput | FightArchiveCreateOrConnectWithoutPlayerInput[]
+    createMany?: FightArchiveCreateManyPlayerInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -59578,6 +66432,19 @@ export namespace Prisma {
     create?: XOR<RankingCreateWithoutPlayerInput, RankingUncheckedCreateWithoutPlayerInput>
     connectOrCreate?: RankingCreateOrConnectWithoutPlayerInput
     connect?: RankingWhereUniqueInput
+  }
+
+  export type DojoUncheckedCreateNestedOneWithoutPlayerInput = {
+    create?: XOR<DojoCreateWithoutPlayerInput, DojoUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutPlayerInput
+    connect?: DojoWhereUniqueInput
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput> | FightArchiveCreateWithoutPlayerInput[] | FightArchiveUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutPlayerInput | FightArchiveCreateOrConnectWithoutPlayerInput[]
+    createMany?: FightArchiveCreateManyPlayerInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -59946,6 +66813,30 @@ export namespace Prisma {
     update?: XOR<XOR<RankingUpdateToOneWithWhereWithoutPlayerInput, RankingUpdateWithoutPlayerInput>, RankingUncheckedUpdateWithoutPlayerInput>
   }
 
+  export type DojoUpdateOneWithoutPlayerNestedInput = {
+    create?: XOR<DojoCreateWithoutPlayerInput, DojoUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutPlayerInput
+    upsert?: DojoUpsertWithoutPlayerInput
+    disconnect?: DojoWhereInput | boolean
+    delete?: DojoWhereInput | boolean
+    connect?: DojoWhereUniqueInput
+    update?: XOR<XOR<DojoUpdateToOneWithWhereWithoutPlayerInput, DojoUpdateWithoutPlayerInput>, DojoUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type FightArchiveUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput> | FightArchiveCreateWithoutPlayerInput[] | FightArchiveUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutPlayerInput | FightArchiveCreateOrConnectWithoutPlayerInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutPlayerInput | FightArchiveUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: FightArchiveCreateManyPlayerInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutPlayerInput | FightArchiveUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -60292,6 +67183,244 @@ export namespace Prisma {
     delete?: RankingWhereInput | boolean
     connect?: RankingWhereUniqueInput
     update?: XOR<XOR<RankingUpdateToOneWithWhereWithoutPlayerInput, RankingUpdateWithoutPlayerInput>, RankingUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type DojoUncheckedUpdateOneWithoutPlayerNestedInput = {
+    create?: XOR<DojoCreateWithoutPlayerInput, DojoUncheckedCreateWithoutPlayerInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutPlayerInput
+    upsert?: DojoUpsertWithoutPlayerInput
+    disconnect?: DojoWhereInput | boolean
+    delete?: DojoWhereInput | boolean
+    connect?: DojoWhereUniqueInput
+    update?: XOR<XOR<DojoUpdateToOneWithWhereWithoutPlayerInput, DojoUpdateWithoutPlayerInput>, DojoUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput> | FightArchiveCreateWithoutPlayerInput[] | FightArchiveUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutPlayerInput | FightArchiveCreateOrConnectWithoutPlayerInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutPlayerInput | FightArchiveUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: FightArchiveCreateManyPlayerInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutPlayerInput | FightArchiveUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutPlayerInput | FightArchiveUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type PlayerCreateNestedOneWithoutDojoInput = {
+    create?: XOR<PlayerCreateWithoutDojoInput, PlayerUncheckedCreateWithoutDojoInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDojoInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DojoTeamCreateNestedManyWithoutDojoInput = {
+    create?: XOR<DojoTeamCreateWithoutDojoInput, DojoTeamUncheckedCreateWithoutDojoInput> | DojoTeamCreateWithoutDojoInput[] | DojoTeamUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDojoInput | DojoTeamCreateOrConnectWithoutDojoInput[]
+    createMany?: DojoTeamCreateManyDojoInputEnvelope
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+  }
+
+  export type DojoChallengeHistoryCreateNestedManyWithoutDojoInput = {
+    create?: XOR<DojoChallengeHistoryCreateWithoutDojoInput, DojoChallengeHistoryUncheckedCreateWithoutDojoInput> | DojoChallengeHistoryCreateWithoutDojoInput[] | DojoChallengeHistoryUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoChallengeHistoryCreateOrConnectWithoutDojoInput | DojoChallengeHistoryCreateOrConnectWithoutDojoInput[]
+    createMany?: DojoChallengeHistoryCreateManyDojoInputEnvelope
+    connect?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+  }
+
+  export type DojoOpponentsCreateNestedManyWithoutDojoInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDojoInput, DojoOpponentsUncheckedCreateWithoutDojoInput> | DojoOpponentsCreateWithoutDojoInput[] | DojoOpponentsUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDojoInput | DojoOpponentsCreateOrConnectWithoutDojoInput[]
+    createMany?: DojoOpponentsCreateManyDojoInputEnvelope
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+  }
+
+  export type DojoTeamUncheckedCreateNestedManyWithoutDojoInput = {
+    create?: XOR<DojoTeamCreateWithoutDojoInput, DojoTeamUncheckedCreateWithoutDojoInput> | DojoTeamCreateWithoutDojoInput[] | DojoTeamUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDojoInput | DojoTeamCreateOrConnectWithoutDojoInput[]
+    createMany?: DojoTeamCreateManyDojoInputEnvelope
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+  }
+
+  export type DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput = {
+    create?: XOR<DojoChallengeHistoryCreateWithoutDojoInput, DojoChallengeHistoryUncheckedCreateWithoutDojoInput> | DojoChallengeHistoryCreateWithoutDojoInput[] | DojoChallengeHistoryUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoChallengeHistoryCreateOrConnectWithoutDojoInput | DojoChallengeHistoryCreateOrConnectWithoutDojoInput[]
+    createMany?: DojoChallengeHistoryCreateManyDojoInputEnvelope
+    connect?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+  }
+
+  export type DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDojoInput, DojoOpponentsUncheckedCreateWithoutDojoInput> | DojoOpponentsCreateWithoutDojoInput[] | DojoOpponentsUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDojoInput | DojoOpponentsCreateOrConnectWithoutDojoInput[]
+    createMany?: DojoOpponentsCreateManyDojoInputEnvelope
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
+  export type PlayerUpdateOneRequiredWithoutDojoNestedInput = {
+    create?: XOR<PlayerCreateWithoutDojoInput, PlayerUncheckedCreateWithoutDojoInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutDojoInput
+    upsert?: PlayerUpsertWithoutDojoInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutDojoInput, PlayerUpdateWithoutDojoInput>, PlayerUncheckedUpdateWithoutDojoInput>
+  }
+
+  export type DojoTeamUpdateManyWithoutDojoNestedInput = {
+    create?: XOR<DojoTeamCreateWithoutDojoInput, DojoTeamUncheckedCreateWithoutDojoInput> | DojoTeamCreateWithoutDojoInput[] | DojoTeamUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDojoInput | DojoTeamCreateOrConnectWithoutDojoInput[]
+    upsert?: DojoTeamUpsertWithWhereUniqueWithoutDojoInput | DojoTeamUpsertWithWhereUniqueWithoutDojoInput[]
+    createMany?: DojoTeamCreateManyDojoInputEnvelope
+    set?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    disconnect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    delete?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    update?: DojoTeamUpdateWithWhereUniqueWithoutDojoInput | DojoTeamUpdateWithWhereUniqueWithoutDojoInput[]
+    updateMany?: DojoTeamUpdateManyWithWhereWithoutDojoInput | DojoTeamUpdateManyWithWhereWithoutDojoInput[]
+    deleteMany?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
+  }
+
+  export type DojoChallengeHistoryUpdateManyWithoutDojoNestedInput = {
+    create?: XOR<DojoChallengeHistoryCreateWithoutDojoInput, DojoChallengeHistoryUncheckedCreateWithoutDojoInput> | DojoChallengeHistoryCreateWithoutDojoInput[] | DojoChallengeHistoryUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoChallengeHistoryCreateOrConnectWithoutDojoInput | DojoChallengeHistoryCreateOrConnectWithoutDojoInput[]
+    upsert?: DojoChallengeHistoryUpsertWithWhereUniqueWithoutDojoInput | DojoChallengeHistoryUpsertWithWhereUniqueWithoutDojoInput[]
+    createMany?: DojoChallengeHistoryCreateManyDojoInputEnvelope
+    set?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    disconnect?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    delete?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    connect?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    update?: DojoChallengeHistoryUpdateWithWhereUniqueWithoutDojoInput | DojoChallengeHistoryUpdateWithWhereUniqueWithoutDojoInput[]
+    updateMany?: DojoChallengeHistoryUpdateManyWithWhereWithoutDojoInput | DojoChallengeHistoryUpdateManyWithWhereWithoutDojoInput[]
+    deleteMany?: DojoChallengeHistoryScalarWhereInput | DojoChallengeHistoryScalarWhereInput[]
+  }
+
+  export type DojoOpponentsUpdateManyWithoutDojoNestedInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDojoInput, DojoOpponentsUncheckedCreateWithoutDojoInput> | DojoOpponentsCreateWithoutDojoInput[] | DojoOpponentsUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDojoInput | DojoOpponentsCreateOrConnectWithoutDojoInput[]
+    upsert?: DojoOpponentsUpsertWithWhereUniqueWithoutDojoInput | DojoOpponentsUpsertWithWhereUniqueWithoutDojoInput[]
+    createMany?: DojoOpponentsCreateManyDojoInputEnvelope
+    set?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    disconnect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    delete?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    update?: DojoOpponentsUpdateWithWhereUniqueWithoutDojoInput | DojoOpponentsUpdateWithWhereUniqueWithoutDojoInput[]
+    updateMany?: DojoOpponentsUpdateManyWithWhereWithoutDojoInput | DojoOpponentsUpdateManyWithWhereWithoutDojoInput[]
+    deleteMany?: DojoOpponentsScalarWhereInput | DojoOpponentsScalarWhereInput[]
+  }
+
+  export type DojoTeamUncheckedUpdateManyWithoutDojoNestedInput = {
+    create?: XOR<DojoTeamCreateWithoutDojoInput, DojoTeamUncheckedCreateWithoutDojoInput> | DojoTeamCreateWithoutDojoInput[] | DojoTeamUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoTeamCreateOrConnectWithoutDojoInput | DojoTeamCreateOrConnectWithoutDojoInput[]
+    upsert?: DojoTeamUpsertWithWhereUniqueWithoutDojoInput | DojoTeamUpsertWithWhereUniqueWithoutDojoInput[]
+    createMany?: DojoTeamCreateManyDojoInputEnvelope
+    set?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    disconnect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    delete?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    connect?: DojoTeamWhereUniqueInput | DojoTeamWhereUniqueInput[]
+    update?: DojoTeamUpdateWithWhereUniqueWithoutDojoInput | DojoTeamUpdateWithWhereUniqueWithoutDojoInput[]
+    updateMany?: DojoTeamUpdateManyWithWhereWithoutDojoInput | DojoTeamUpdateManyWithWhereWithoutDojoInput[]
+    deleteMany?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
+  }
+
+  export type DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput = {
+    create?: XOR<DojoChallengeHistoryCreateWithoutDojoInput, DojoChallengeHistoryUncheckedCreateWithoutDojoInput> | DojoChallengeHistoryCreateWithoutDojoInput[] | DojoChallengeHistoryUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoChallengeHistoryCreateOrConnectWithoutDojoInput | DojoChallengeHistoryCreateOrConnectWithoutDojoInput[]
+    upsert?: DojoChallengeHistoryUpsertWithWhereUniqueWithoutDojoInput | DojoChallengeHistoryUpsertWithWhereUniqueWithoutDojoInput[]
+    createMany?: DojoChallengeHistoryCreateManyDojoInputEnvelope
+    set?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    disconnect?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    delete?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    connect?: DojoChallengeHistoryWhereUniqueInput | DojoChallengeHistoryWhereUniqueInput[]
+    update?: DojoChallengeHistoryUpdateWithWhereUniqueWithoutDojoInput | DojoChallengeHistoryUpdateWithWhereUniqueWithoutDojoInput[]
+    updateMany?: DojoChallengeHistoryUpdateManyWithWhereWithoutDojoInput | DojoChallengeHistoryUpdateManyWithWhereWithoutDojoInput[]
+    deleteMany?: DojoChallengeHistoryScalarWhereInput | DojoChallengeHistoryScalarWhereInput[]
+  }
+
+  export type DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput = {
+    create?: XOR<DojoOpponentsCreateWithoutDojoInput, DojoOpponentsUncheckedCreateWithoutDojoInput> | DojoOpponentsCreateWithoutDojoInput[] | DojoOpponentsUncheckedCreateWithoutDojoInput[]
+    connectOrCreate?: DojoOpponentsCreateOrConnectWithoutDojoInput | DojoOpponentsCreateOrConnectWithoutDojoInput[]
+    upsert?: DojoOpponentsUpsertWithWhereUniqueWithoutDojoInput | DojoOpponentsUpsertWithWhereUniqueWithoutDojoInput[]
+    createMany?: DojoOpponentsCreateManyDojoInputEnvelope
+    set?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    disconnect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    delete?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
+    update?: DojoOpponentsUpdateWithWhereUniqueWithoutDojoInput | DojoOpponentsUpdateWithWhereUniqueWithoutDojoInput[]
+    updateMany?: DojoOpponentsUpdateManyWithWhereWithoutDojoInput | DojoOpponentsUpdateManyWithWhereWithoutDojoInput[]
+    deleteMany?: DojoOpponentsScalarWhereInput | DojoOpponentsScalarWhereInput[]
+  }
+
+  export type DojoCreateNestedOneWithoutTeamInput = {
+    create?: XOR<DojoCreateWithoutTeamInput, DojoUncheckedCreateWithoutTeamInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutTeamInput
+    connect?: DojoWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutDojoTeamInput = {
+    create?: XOR<DinozCreateWithoutDojoTeamInput, DinozUncheckedCreateWithoutDojoTeamInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDojoTeamInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type DojoUpdateOneRequiredWithoutTeamNestedInput = {
+    create?: XOR<DojoCreateWithoutTeamInput, DojoUncheckedCreateWithoutTeamInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutTeamInput
+    upsert?: DojoUpsertWithoutTeamInput
+    connect?: DojoWhereUniqueInput
+    update?: XOR<XOR<DojoUpdateToOneWithWhereWithoutTeamInput, DojoUpdateWithoutTeamInput>, DojoUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type DinozUpdateOneRequiredWithoutDojoTeamNestedInput = {
+    create?: XOR<DinozCreateWithoutDojoTeamInput, DinozUncheckedCreateWithoutDojoTeamInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDojoTeamInput
+    upsert?: DinozUpsertWithoutDojoTeamInput
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutDojoTeamInput, DinozUpdateWithoutDojoTeamInput>, DinozUncheckedUpdateWithoutDojoTeamInput>
+  }
+
+  export type DojoCreateNestedOneWithoutDojoOpponentsInput = {
+    create?: XOR<DojoCreateWithoutDojoOpponentsInput, DojoUncheckedCreateWithoutDojoOpponentsInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutDojoOpponentsInput
+    connect?: DojoWhereUniqueInput
+  }
+
+  export type DinozCreateNestedOneWithoutDojoOpponentsInput = {
+    create?: XOR<DinozCreateWithoutDojoOpponentsInput, DinozUncheckedCreateWithoutDojoOpponentsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDojoOpponentsInput
+    connect?: DinozWhereUniqueInput
+  }
+
+  export type DojoUpdateOneRequiredWithoutDojoOpponentsNestedInput = {
+    create?: XOR<DojoCreateWithoutDojoOpponentsInput, DojoUncheckedCreateWithoutDojoOpponentsInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutDojoOpponentsInput
+    upsert?: DojoUpsertWithoutDojoOpponentsInput
+    connect?: DojoWhereUniqueInput
+    update?: XOR<XOR<DojoUpdateToOneWithWhereWithoutDojoOpponentsInput, DojoUpdateWithoutDojoOpponentsInput>, DojoUncheckedUpdateWithoutDojoOpponentsInput>
+  }
+
+  export type DinozUpdateOneRequiredWithoutDojoOpponentsNestedInput = {
+    create?: XOR<DinozCreateWithoutDojoOpponentsInput, DinozUncheckedCreateWithoutDojoOpponentsInput>
+    connectOrCreate?: DinozCreateOrConnectWithoutDojoOpponentsInput
+    upsert?: DinozUpsertWithoutDojoOpponentsInput
+    connect?: DinozWhereUniqueInput
+    update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutDojoOpponentsInput, DinozUpdateWithoutDojoOpponentsInput>, DinozUncheckedUpdateWithoutDojoOpponentsInput>
+  }
+
+  export type DojoCreateNestedOneWithoutDojoChallengeHistoryInput = {
+    create?: XOR<DojoCreateWithoutDojoChallengeHistoryInput, DojoUncheckedCreateWithoutDojoChallengeHistoryInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutDojoChallengeHistoryInput
+    connect?: DojoWhereUniqueInput
+  }
+
+  export type DojoUpdateOneRequiredWithoutDojoChallengeHistoryNestedInput = {
+    create?: XOR<DojoCreateWithoutDojoChallengeHistoryInput, DojoUncheckedCreateWithoutDojoChallengeHistoryInput>
+    connectOrCreate?: DojoCreateOrConnectWithoutDojoChallengeHistoryInput
+    upsert?: DojoUpsertWithoutDojoChallengeHistoryInput
+    connect?: DojoWhereUniqueInput
+    update?: XOR<XOR<DojoUpdateToOneWithWhereWithoutDojoChallengeHistoryInput, DojoUpdateWithoutDojoChallengeHistoryInput>, DojoUncheckedUpdateWithoutDojoChallengeHistoryInput>
   }
 
   export type PlayerCreateNestedOneWithoutUsernameHistoryInput = {
@@ -61024,10 +68153,6 @@ export namespace Prisma {
     connect?: ClanWhereUniqueInput | ClanWhereUniqueInput[]
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type ClanUpdateManyWithoutWarNestedInput = {
     create?: XOR<ClanCreateWithoutWarInput, ClanUncheckedCreateWithoutWarInput> | ClanCreateWithoutWarInput[] | ClanUncheckedCreateWithoutWarInput[]
     connectOrCreate?: ClanCreateOrConnectWithoutWarInput | ClanCreateOrConnectWithoutWarInput[]
@@ -61507,6 +68632,20 @@ export namespace Prisma {
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutNotificationsInput, PlayerUpdateWithoutNotificationsInput>, PlayerUncheckedUpdateWithoutNotificationsInput>
   }
 
+  export type PlayerCreateNestedOneWithoutFightArchiveInput = {
+    create?: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutFightArchiveInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type PlayerUpdateOneRequiredWithoutFightArchiveNestedInput = {
+    create?: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutFightArchiveInput
+    upsert?: PlayerUpsertWithoutFightArchiveInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutFightArchiveInput, PlayerUpdateWithoutFightArchiveInput>, PlayerUncheckedUpdateWithoutFightArchiveInput>
+  }
+
   export type NestedIntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -61816,6 +68955,31 @@ export namespace Prisma {
     _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -61890,31 +69054,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumPantheonMotifFilter<$PrismaModel>
     _max?: NestedEnumPantheonMotifFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumModerationReasonFilter<$PrismaModel = never> = {
@@ -62008,6 +69147,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutConcentrationInput = {
@@ -62051,6 +69192,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutConcentrationInput = {
@@ -62302,6 +69445,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -62354,6 +69499,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -62414,6 +69561,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutFollowersInput = {
@@ -62457,6 +69606,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutFollowersInput = {
@@ -62504,6 +69655,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLeaderInput = {
@@ -62547,6 +69700,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLeaderInput = {
@@ -62700,6 +69855,52 @@ export namespace Prisma {
 
   export type NPCCreateManyDinozInputEnvelope = {
     data: NPCCreateManyDinozInput | NPCCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DojoOpponentsCreateWithoutDinozInput = {
+    id?: string
+    fighted?: boolean
+    achieved?: boolean
+    dojo: DojoCreateNestedOneWithoutDojoOpponentsInput
+  }
+
+  export type DojoOpponentsUncheckedCreateWithoutDinozInput = {
+    id?: string
+    dojoId: string
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoOpponentsCreateOrConnectWithoutDinozInput = {
+    where: DojoOpponentsWhereUniqueInput
+    create: XOR<DojoOpponentsCreateWithoutDinozInput, DojoOpponentsUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DojoOpponentsCreateManyDinozInputEnvelope = {
+    data: DojoOpponentsCreateManyDinozInput | DojoOpponentsCreateManyDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DojoTeamCreateWithoutDinozInput = {
+    id?: string
+    fighted?: boolean
+    dojo: DojoCreateNestedOneWithoutTeamInput
+  }
+
+  export type DojoTeamUncheckedCreateWithoutDinozInput = {
+    id?: string
+    dojoId: string
+    fighted?: boolean
+  }
+
+  export type DojoTeamCreateOrConnectWithoutDinozInput = {
+    where: DojoTeamWhereUniqueInput
+    create: XOR<DojoTeamCreateWithoutDinozInput, DojoTeamUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DojoTeamCreateManyDinozInputEnvelope = {
+    data: DojoTeamCreateManyDinozInput | DojoTeamCreateManyDinozInput[]
     skipDuplicates?: boolean
   }
 
@@ -62908,6 +70109,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -62960,6 +70163,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -63032,6 +70237,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutFollowersInput = {
@@ -63075,6 +70282,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUpsertWithWhereUniqueWithoutLeaderInput = {
@@ -63272,6 +70481,59 @@ export namespace Prisma {
     dinozId?: IntNullableFilter<"NPC"> | number | null
   }
 
+  export type DojoOpponentsUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DojoOpponentsWhereUniqueInput
+    update: XOR<DojoOpponentsUpdateWithoutDinozInput, DojoOpponentsUncheckedUpdateWithoutDinozInput>
+    create: XOR<DojoOpponentsCreateWithoutDinozInput, DojoOpponentsUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DojoOpponentsUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DojoOpponentsWhereUniqueInput
+    data: XOR<DojoOpponentsUpdateWithoutDinozInput, DojoOpponentsUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DojoOpponentsUpdateManyWithWhereWithoutDinozInput = {
+    where: DojoOpponentsScalarWhereInput
+    data: XOR<DojoOpponentsUpdateManyMutationInput, DojoOpponentsUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DojoOpponentsScalarWhereInput = {
+    AND?: DojoOpponentsScalarWhereInput | DojoOpponentsScalarWhereInput[]
+    OR?: DojoOpponentsScalarWhereInput[]
+    NOT?: DojoOpponentsScalarWhereInput | DojoOpponentsScalarWhereInput[]
+    id?: UuidFilter<"DojoOpponents"> | string
+    dojoId?: UuidFilter<"DojoOpponents"> | string
+    dinozId?: IntFilter<"DojoOpponents"> | number
+    fighted?: BoolFilter<"DojoOpponents"> | boolean
+    achieved?: BoolFilter<"DojoOpponents"> | boolean
+  }
+
+  export type DojoTeamUpsertWithWhereUniqueWithoutDinozInput = {
+    where: DojoTeamWhereUniqueInput
+    update: XOR<DojoTeamUpdateWithoutDinozInput, DojoTeamUncheckedUpdateWithoutDinozInput>
+    create: XOR<DojoTeamCreateWithoutDinozInput, DojoTeamUncheckedCreateWithoutDinozInput>
+  }
+
+  export type DojoTeamUpdateWithWhereUniqueWithoutDinozInput = {
+    where: DojoTeamWhereUniqueInput
+    data: XOR<DojoTeamUpdateWithoutDinozInput, DojoTeamUncheckedUpdateWithoutDinozInput>
+  }
+
+  export type DojoTeamUpdateManyWithWhereWithoutDinozInput = {
+    where: DojoTeamScalarWhereInput
+    data: XOR<DojoTeamUpdateManyMutationInput, DojoTeamUncheckedUpdateManyWithoutDinozInput>
+  }
+
+  export type DojoTeamScalarWhereInput = {
+    AND?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
+    OR?: DojoTeamScalarWhereInput[]
+    NOT?: DojoTeamScalarWhereInput | DojoTeamScalarWhereInput[]
+    id?: UuidFilter<"DojoTeam"> | string
+    dojoId?: UuidFilter<"DojoTeam"> | string
+    dinozId?: IntFilter<"DojoTeam"> | number
+    fighted?: BoolFilter<"DojoTeam"> | boolean
+  }
+
   export type DinozCreateWithoutItemsInput = {
     name: string
     raceId: number
@@ -63312,6 +70574,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutItemsInput = {
@@ -63355,6 +70619,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutItemsInput = {
@@ -63431,6 +70697,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutItemsInput = {
@@ -63474,6 +70742,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinoz_itemInput = {
@@ -63532,6 +70802,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -63575,6 +70847,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -63649,6 +70923,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -63692,6 +70968,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozItemUpsertWithoutDinozItemToDinozInput = {
@@ -63756,6 +71034,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutMissionsInput = {
@@ -63799,6 +71079,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutMissionsInput = {
@@ -63857,6 +71139,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutMissionsInput = {
@@ -63900,6 +71184,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutSkillsInput = {
@@ -63942,6 +71228,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutSkillsInput = {
@@ -63985,6 +71273,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutSkillsInput = {
@@ -64043,6 +71333,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutSkillsInput = {
@@ -64086,6 +71378,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -64128,6 +71422,8 @@ export namespace Prisma {
     skills?: DinozSkillCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -64171,6 +71467,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -64229,6 +71527,8 @@ export namespace Prisma {
     skills?: DinozSkillUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -64272,6 +71572,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -64314,6 +71616,8 @@ export namespace Prisma {
     skills?: DinozSkillCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutStatusInput = {
@@ -64357,6 +71661,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutStatusInput = {
@@ -64415,6 +71721,8 @@ export namespace Prisma {
     skills?: DinozSkillUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutStatusInput = {
@@ -64458,6 +71766,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -64500,6 +71810,8 @@ export namespace Prisma {
     skills?: DinozSkillCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutNpcsInput = {
@@ -64543,6 +71855,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutNpcsInput = {
@@ -64601,6 +71915,8 @@ export namespace Prisma {
     skills?: DinozSkillUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutNpcsInput = {
@@ -64644,6 +71960,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type ClanCreateWithoutLeaderInput = {
@@ -65145,6 +72463,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPlayerInput = {
@@ -65188,6 +72508,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPlayerInput = {
@@ -65393,6 +72715,59 @@ export namespace Prisma {
   export type RankingCreateOrConnectWithoutPlayerInput = {
     where: RankingWhereUniqueInput
     create: XOR<RankingCreateWithoutPlayerInput, RankingUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type DojoCreateWithoutPlayerInput = {
+    id?: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    team?: DojoTeamCreateNestedManyWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoUncheckedCreateWithoutPlayerInput = {
+    id?: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoCreateOrConnectWithoutPlayerInput = {
+    where: DojoWhereUniqueInput
+    create: XOR<DojoCreateWithoutPlayerInput, DojoUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type FightArchiveCreateWithoutPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    createdDate?: Date | string
+  }
+
+  export type FightArchiveUncheckedCreateWithoutPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    createdDate?: Date | string
+  }
+
+  export type FightArchiveCreateOrConnectWithoutPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type FightArchiveCreateManyPlayerInputEnvelope = {
+    data: FightArchiveCreateManyPlayerInput | FightArchiveCreateManyPlayerInput[]
+    skipDuplicates?: boolean
   }
 
   export type ClanUpsertWithoutLeaderInput = {
@@ -66060,6 +73435,989 @@ export namespace Prisma {
     completion?: IntFieldUpdateOperationsInput | number
   }
 
+  export type DojoUpsertWithoutPlayerInput = {
+    update: XOR<DojoUpdateWithoutPlayerInput, DojoUncheckedUpdateWithoutPlayerInput>
+    create: XOR<DojoCreateWithoutPlayerInput, DojoUncheckedCreateWithoutPlayerInput>
+    where?: DojoWhereInput
+  }
+
+  export type DojoUpdateToOneWithWhereWithoutPlayerInput = {
+    where?: DojoWhereInput
+    data: XOR<DojoUpdateWithoutPlayerInput, DojoUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type DojoUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    team?: DojoTeamUpdateManyWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DojoUncheckedUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutPlayerInput, FightArchiveUncheckedUpdateWithoutPlayerInput>
+    create: XOR<FightArchiveCreateWithoutPlayerInput, FightArchiveUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutPlayerInput, FightArchiveUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutPlayerInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type FightArchiveScalarWhereInput = {
+    AND?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+    OR?: FightArchiveScalarWhereInput[]
+    NOT?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+    id?: UuidFilter<"FightArchive"> | string
+    fighters?: StringFilter<"FightArchive"> | string
+    steps?: StringFilter<"FightArchive"> | string
+    seed?: StringFilter<"FightArchive"> | string
+    result?: BoolFilter<"FightArchive"> | boolean
+    playerId?: UuidFilter<"FightArchive"> | string
+    createdDate?: DateTimeFilter<"FightArchive"> | Date | string
+  }
+
+  export type PlayerCreateWithoutDojoInput = {
+    customText?: string | null
+    name: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    id: string
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutDojoInput = {
+    customText?: string | null
+    name: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    banCaseId?: number | null
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutDojoInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutDojoInput, PlayerUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoTeamCreateWithoutDojoInput = {
+    id?: string
+    fighted?: boolean
+    dinoz: DinozCreateNestedOneWithoutDojoTeamInput
+  }
+
+  export type DojoTeamUncheckedCreateWithoutDojoInput = {
+    id?: string
+    dinozId: number
+    fighted?: boolean
+  }
+
+  export type DojoTeamCreateOrConnectWithoutDojoInput = {
+    where: DojoTeamWhereUniqueInput
+    create: XOR<DojoTeamCreateWithoutDojoInput, DojoTeamUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoTeamCreateManyDojoInputEnvelope = {
+    data: DojoTeamCreateManyDojoInput | DojoTeamCreateManyDojoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DojoChallengeHistoryCreateWithoutDojoInput = {
+    id?: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+  }
+
+  export type DojoChallengeHistoryUncheckedCreateWithoutDojoInput = {
+    id?: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+  }
+
+  export type DojoChallengeHistoryCreateOrConnectWithoutDojoInput = {
+    where: DojoChallengeHistoryWhereUniqueInput
+    create: XOR<DojoChallengeHistoryCreateWithoutDojoInput, DojoChallengeHistoryUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoChallengeHistoryCreateManyDojoInputEnvelope = {
+    data: DojoChallengeHistoryCreateManyDojoInput | DojoChallengeHistoryCreateManyDojoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DojoOpponentsCreateWithoutDojoInput = {
+    id?: string
+    fighted?: boolean
+    achieved?: boolean
+    dinoz: DinozCreateNestedOneWithoutDojoOpponentsInput
+  }
+
+  export type DojoOpponentsUncheckedCreateWithoutDojoInput = {
+    id?: string
+    dinozId: number
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoOpponentsCreateOrConnectWithoutDojoInput = {
+    where: DojoOpponentsWhereUniqueInput
+    create: XOR<DojoOpponentsCreateWithoutDojoInput, DojoOpponentsUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoOpponentsCreateManyDojoInputEnvelope = {
+    data: DojoOpponentsCreateManyDojoInput | DojoOpponentsCreateManyDojoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PlayerUpsertWithoutDojoInput = {
+    update: XOR<PlayerUpdateWithoutDojoInput, PlayerUncheckedUpdateWithoutDojoInput>
+    create: XOR<PlayerCreateWithoutDojoInput, PlayerUncheckedCreateWithoutDojoInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutDojoInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutDojoInput, PlayerUncheckedUpdateWithoutDojoInput>
+  }
+
+  export type PlayerUpdateWithoutDojoInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutDojoInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
+    where: DojoTeamWhereUniqueInput
+    update: XOR<DojoTeamUpdateWithoutDojoInput, DojoTeamUncheckedUpdateWithoutDojoInput>
+    create: XOR<DojoTeamCreateWithoutDojoInput, DojoTeamUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoTeamUpdateWithWhereUniqueWithoutDojoInput = {
+    where: DojoTeamWhereUniqueInput
+    data: XOR<DojoTeamUpdateWithoutDojoInput, DojoTeamUncheckedUpdateWithoutDojoInput>
+  }
+
+  export type DojoTeamUpdateManyWithWhereWithoutDojoInput = {
+    where: DojoTeamScalarWhereInput
+    data: XOR<DojoTeamUpdateManyMutationInput, DojoTeamUncheckedUpdateManyWithoutDojoInput>
+  }
+
+  export type DojoChallengeHistoryUpsertWithWhereUniqueWithoutDojoInput = {
+    where: DojoChallengeHistoryWhereUniqueInput
+    update: XOR<DojoChallengeHistoryUpdateWithoutDojoInput, DojoChallengeHistoryUncheckedUpdateWithoutDojoInput>
+    create: XOR<DojoChallengeHistoryCreateWithoutDojoInput, DojoChallengeHistoryUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoChallengeHistoryUpdateWithWhereUniqueWithoutDojoInput = {
+    where: DojoChallengeHistoryWhereUniqueInput
+    data: XOR<DojoChallengeHistoryUpdateWithoutDojoInput, DojoChallengeHistoryUncheckedUpdateWithoutDojoInput>
+  }
+
+  export type DojoChallengeHistoryUpdateManyWithWhereWithoutDojoInput = {
+    where: DojoChallengeHistoryScalarWhereInput
+    data: XOR<DojoChallengeHistoryUpdateManyMutationInput, DojoChallengeHistoryUncheckedUpdateManyWithoutDojoInput>
+  }
+
+  export type DojoChallengeHistoryScalarWhereInput = {
+    AND?: DojoChallengeHistoryScalarWhereInput | DojoChallengeHistoryScalarWhereInput[]
+    OR?: DojoChallengeHistoryScalarWhereInput[]
+    NOT?: DojoChallengeHistoryScalarWhereInput | DojoChallengeHistoryScalarWhereInput[]
+    id?: UuidFilter<"DojoChallengeHistory"> | string
+    dojoId?: UuidFilter<"DojoChallengeHistory"> | string
+    myDinozId?: IntFilter<"DojoChallengeHistory"> | number
+    opponentId?: IntFilter<"DojoChallengeHistory"> | number
+    challenge?: IntFilter<"DojoChallengeHistory"> | number
+    victory?: BoolFilter<"DojoChallengeHistory"> | boolean
+    achieved?: BoolFilter<"DojoChallengeHistory"> | boolean
+  }
+
+  export type DojoOpponentsUpsertWithWhereUniqueWithoutDojoInput = {
+    where: DojoOpponentsWhereUniqueInput
+    update: XOR<DojoOpponentsUpdateWithoutDojoInput, DojoOpponentsUncheckedUpdateWithoutDojoInput>
+    create: XOR<DojoOpponentsCreateWithoutDojoInput, DojoOpponentsUncheckedCreateWithoutDojoInput>
+  }
+
+  export type DojoOpponentsUpdateWithWhereUniqueWithoutDojoInput = {
+    where: DojoOpponentsWhereUniqueInput
+    data: XOR<DojoOpponentsUpdateWithoutDojoInput, DojoOpponentsUncheckedUpdateWithoutDojoInput>
+  }
+
+  export type DojoOpponentsUpdateManyWithWhereWithoutDojoInput = {
+    where: DojoOpponentsScalarWhereInput
+    data: XOR<DojoOpponentsUpdateManyMutationInput, DojoOpponentsUncheckedUpdateManyWithoutDojoInput>
+  }
+
+  export type DojoCreateWithoutTeamInput = {
+    id?: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    player: PlayerCreateNestedOneWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoUncheckedCreateWithoutTeamInput = {
+    id?: string
+    playerId: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoCreateOrConnectWithoutTeamInput = {
+    where: DojoWhereUniqueInput
+    create: XOR<DojoCreateWithoutTeamInput, DojoUncheckedCreateWithoutTeamInput>
+  }
+
+  export type DinozCreateWithoutDojoTeamInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutDojoTeamInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    playerId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutDojoTeamInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutDojoTeamInput, DinozUncheckedCreateWithoutDojoTeamInput>
+  }
+
+  export type DojoUpsertWithoutTeamInput = {
+    update: XOR<DojoUpdateWithoutTeamInput, DojoUncheckedUpdateWithoutTeamInput>
+    create: XOR<DojoCreateWithoutTeamInput, DojoUncheckedCreateWithoutTeamInput>
+    where?: DojoWhereInput
+  }
+
+  export type DojoUpdateToOneWithWhereWithoutTeamInput = {
+    where?: DojoWhereInput
+    data: XOR<DojoUpdateWithoutTeamInput, DojoUncheckedUpdateWithoutTeamInput>
+  }
+
+  export type DojoUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DojoUncheckedUpdateWithoutTeamInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DinozUpsertWithoutDojoTeamInput = {
+    update: XOR<DinozUpdateWithoutDojoTeamInput, DinozUncheckedUpdateWithoutDojoTeamInput>
+    create: XOR<DinozCreateWithoutDojoTeamInput, DinozUncheckedCreateWithoutDojoTeamInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutDojoTeamInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutDojoTeamInput, DinozUncheckedUpdateWithoutDojoTeamInput>
+  }
+
+  export type DinozUpdateWithoutDojoTeamInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutDojoTeamInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DojoCreateWithoutDojoOpponentsInput = {
+    id?: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    player: PlayerCreateNestedOneWithoutDojoInput
+    team?: DojoTeamCreateNestedManyWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoUncheckedCreateWithoutDojoOpponentsInput = {
+    id?: string
+    playerId: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoCreateOrConnectWithoutDojoOpponentsInput = {
+    where: DojoWhereUniqueInput
+    create: XOR<DojoCreateWithoutDojoOpponentsInput, DojoUncheckedCreateWithoutDojoOpponentsInput>
+  }
+
+  export type DinozCreateWithoutDojoOpponentsInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    catches?: DinozCatchCreateNestedManyWithoutDinozInput
+    logs?: LogCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationCreateNestedManyWithoutDinozInput
+    offers?: OfferCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonCreateNestedManyWithoutDinozInput
+    player: PlayerCreateNestedOneWithoutDinozInput
+    concentration?: ConcentrationCreateNestedOneWithoutDinozInput
+    leader?: DinozCreateNestedOneWithoutFollowersInput
+    followers?: DinozCreateNestedManyWithoutLeaderInput
+    items?: DinozItemCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
+    status?: DinozStatusCreateNestedManyWithoutDinozInput
+    npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozUncheckedCreateWithoutDojoOpponentsInput = {
+    id?: number
+    leaderId?: number | null
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    placeId: number
+    canChangeName: boolean
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    order?: number | null
+    concentrationId?: number | null
+    fight?: boolean
+    gather?: boolean
+    remaining?: number
+    unavailableReason?: $Enums.UnavailableReason | null
+    seed?: string
+    playerId: string
+    catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
+    logs?: LogUncheckedCreateNestedManyWithoutDinozInput
+    Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
+    offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutDinozInput
+    followers?: DinozUncheckedCreateNestedManyWithoutLeaderInput
+    items?: DinozItemUncheckedCreateNestedManyWithoutDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinozInput
+    missions?: DinozMissionUncheckedCreateNestedManyWithoutDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
+    npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
+  }
+
+  export type DinozCreateOrConnectWithoutDojoOpponentsInput = {
+    where: DinozWhereUniqueInput
+    create: XOR<DinozCreateWithoutDojoOpponentsInput, DinozUncheckedCreateWithoutDojoOpponentsInput>
+  }
+
+  export type DojoUpsertWithoutDojoOpponentsInput = {
+    update: XOR<DojoUpdateWithoutDojoOpponentsInput, DojoUncheckedUpdateWithoutDojoOpponentsInput>
+    create: XOR<DojoCreateWithoutDojoOpponentsInput, DojoUncheckedCreateWithoutDojoOpponentsInput>
+    where?: DojoWhereInput
+  }
+
+  export type DojoUpdateToOneWithWhereWithoutDojoOpponentsInput = {
+    where?: DojoWhereInput
+    data: XOR<DojoUpdateWithoutDojoOpponentsInput, DojoUncheckedUpdateWithoutDojoOpponentsInput>
+  }
+
+  export type DojoUpdateWithoutDojoOpponentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
+    team?: DojoTeamUpdateManyWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DojoUncheckedUpdateWithoutDojoOpponentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
+    DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DinozUpsertWithoutDojoOpponentsInput = {
+    update: XOR<DinozUpdateWithoutDojoOpponentsInput, DinozUncheckedUpdateWithoutDojoOpponentsInput>
+    create: XOR<DinozCreateWithoutDojoOpponentsInput, DinozUncheckedCreateWithoutDojoOpponentsInput>
+    where?: DinozWhereInput
+  }
+
+  export type DinozUpdateToOneWithWhereWithoutDojoOpponentsInput = {
+    where?: DinozWhereInput
+    data: XOR<DinozUpdateWithoutDojoOpponentsInput, DinozUncheckedUpdateWithoutDojoOpponentsInput>
+  }
+
+  export type DinozUpdateWithoutDojoOpponentsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUpdateManyWithoutDinozNestedInput
+    logs?: LogUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUpdateManyWithoutDinozNestedInput
+    offers?: OfferUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUpdateManyWithoutDinozNestedInput
+    player?: PlayerUpdateOneRequiredWithoutDinozNestedInput
+    concentration?: ConcentrationUpdateOneWithoutDinozNestedInput
+    leader?: DinozUpdateOneWithoutFollowersNestedInput
+    followers?: DinozUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DinozUncheckedUpdateWithoutDojoOpponentsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    leaderId?: NullableIntFieldUpdateOperationsInput | number | null
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    placeId?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    order?: NullableIntFieldUpdateOperationsInput | number | null
+    concentrationId?: NullableIntFieldUpdateOperationsInput | number | null
+    fight?: BoolFieldUpdateOperationsInput | boolean
+    gather?: BoolFieldUpdateOperationsInput | boolean
+    remaining?: IntFieldUpdateOperationsInput | number
+    unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
+    seed?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
+    logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
+    Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutDinozNestedInput
+    followers?: DinozUncheckedUpdateManyWithoutLeaderNestedInput
+    items?: DinozItemUncheckedUpdateManyWithoutDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinozNestedInput
+    missions?: DinozMissionUncheckedUpdateManyWithoutDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
+    npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type DojoCreateWithoutDojoChallengeHistoryInput = {
+    id?: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    player: PlayerCreateNestedOneWithoutDojoInput
+    team?: DojoTeamCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoUncheckedCreateWithoutDojoChallengeHistoryInput = {
+    id?: string
+    playerId: string
+    activeChallenge?: number
+    reputation?: number
+    teamUpdate?: Date | string | null
+    team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
+  }
+
+  export type DojoCreateOrConnectWithoutDojoChallengeHistoryInput = {
+    where: DojoWhereUniqueInput
+    create: XOR<DojoCreateWithoutDojoChallengeHistoryInput, DojoUncheckedCreateWithoutDojoChallengeHistoryInput>
+  }
+
+  export type DojoUpsertWithoutDojoChallengeHistoryInput = {
+    update: XOR<DojoUpdateWithoutDojoChallengeHistoryInput, DojoUncheckedUpdateWithoutDojoChallengeHistoryInput>
+    create: XOR<DojoCreateWithoutDojoChallengeHistoryInput, DojoUncheckedCreateWithoutDojoChallengeHistoryInput>
+    where?: DojoWhereInput
+  }
+
+  export type DojoUpdateToOneWithWhereWithoutDojoChallengeHistoryInput = {
+    where?: DojoWhereInput
+    data: XOR<DojoUpdateWithoutDojoChallengeHistoryInput, DojoUncheckedUpdateWithoutDojoChallengeHistoryInput>
+  }
+
+  export type DojoUpdateWithoutDojoChallengeHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
+    team?: DojoTeamUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
+  }
+
+  export type DojoUncheckedUpdateWithoutDojoChallengeHistoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    playerId?: StringFieldUpdateOperationsInput | string
+    activeChallenge?: IntFieldUpdateOperationsInput | number
+    reputation?: IntFieldUpdateOperationsInput | number
+    teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
+  }
+
   export type PlayerCreateWithoutUsernameHistoryInput = {
     customText?: string | null
     name: string
@@ -66110,6 +74468,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -66162,6 +74522,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -66230,6 +74592,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -66282,6 +74646,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -66334,6 +74700,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -66386,6 +74754,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -66454,6 +74824,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -66506,6 +74878,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -66558,6 +74932,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -66610,6 +74986,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -66678,6 +75056,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -66730,6 +75110,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -66782,6 +75164,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -66834,6 +75218,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -66902,6 +75288,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -66954,6 +75342,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -67006,6 +75396,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -67058,6 +75450,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -67126,6 +75520,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -67178,6 +75574,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -67230,6 +75628,8 @@ export namespace Prisma {
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -67282,6 +75682,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -67350,6 +75752,8 @@ export namespace Prisma {
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -67402,6 +75806,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -67454,6 +75860,8 @@ export namespace Prisma {
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -67506,6 +75914,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -67574,6 +75984,8 @@ export namespace Prisma {
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -67626,6 +76038,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -67678,6 +76092,8 @@ export namespace Prisma {
     items?: PlayerItemCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -67730,6 +76146,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -67798,6 +76216,8 @@ export namespace Prisma {
     items?: PlayerItemUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -67850,6 +76270,8 @@ export namespace Prisma {
     items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -67986,6 +76408,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -68038,6 +76462,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -68138,6 +76564,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -68190,6 +76618,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -68232,6 +76662,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutOffersInput = {
@@ -68275,6 +76707,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutOffersInput = {
@@ -68332,6 +76766,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -68384,6 +76820,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -68486,6 +76924,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutOffersInput = {
@@ -68529,6 +76969,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutOffersInput = {
@@ -68592,6 +77034,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -68644,6 +77088,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -68729,6 +77175,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutLogsInput = {
@@ -68772,6 +77220,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutLogsInput = {
@@ -68829,6 +77279,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -68881,6 +77333,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -68939,6 +77393,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLogsInput = {
@@ -68982,6 +77438,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutLogsInput = {
@@ -69045,6 +77503,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -69097,6 +77557,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -69139,6 +77601,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutCatchesInput = {
@@ -69182,6 +77646,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutCatchesInput = {
@@ -69240,6 +77706,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutCatchesInput = {
@@ -69283,6 +77751,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerCreateWithoutPlayerTrackingInput = {
@@ -69335,6 +77805,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -69387,6 +77859,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -69455,6 +77929,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -69507,6 +77983,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -69549,6 +78027,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutPantheonInput = {
@@ -69592,6 +78072,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutPantheonInput = {
@@ -69649,6 +78131,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -69701,6 +78185,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -69759,6 +78245,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPantheonInput = {
@@ -69802,6 +78290,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutPantheonInput = {
@@ -69865,6 +78355,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -69917,6 +78409,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanWarCreateWithoutClansInput = {
@@ -69985,6 +78479,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -70037,6 +78533,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -70271,6 +78769,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -70323,6 +78823,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -70550,6 +79052,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -70602,6 +79106,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -70710,6 +79216,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -70762,6 +79270,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -70956,6 +79466,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -71008,6 +79520,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -71110,6 +79624,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -71162,6 +79678,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -71254,6 +79772,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -71306,6 +79826,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -71408,6 +79930,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -71460,6 +79984,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -71586,6 +80112,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -71638,6 +80166,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -71746,6 +80276,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -71798,6 +80330,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -71914,6 +80448,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutDinozInput
     status?: DinozStatusCreateNestedManyWithoutDinozInput
     npcs?: NPCCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamCreateNestedManyWithoutDinozInput
   }
 
   export type DinozUncheckedCreateWithoutModerationInput = {
@@ -71957,6 +80493,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutDinozInput
     npcs?: NPCUncheckedCreateNestedManyWithoutDinozInput
+    DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDinozInput
+    DojoTeam?: DojoTeamUncheckedCreateNestedManyWithoutDinozInput
   }
 
   export type DinozCreateOrConnectWithoutModerationInput = {
@@ -72014,6 +80552,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -72066,6 +80606,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -72123,6 +80665,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -72175,6 +80719,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -72232,6 +80778,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -72284,6 +80832,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -72342,6 +80892,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutModerationInput = {
@@ -72385,6 +80937,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type PlayerUpsertWithoutReportedCasesInput = {
@@ -72448,6 +81002,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -72500,6 +81056,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -72563,6 +81121,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -72615,6 +81175,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -72678,6 +81240,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -72730,6 +81294,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutCreatedConversationsInput = {
@@ -72782,6 +81348,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -72834,6 +81402,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -72913,6 +81483,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -72965,6 +81537,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -73083,6 +81657,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -73135,6 +81711,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -73226,6 +81804,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -73278,6 +81858,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -73391,6 +81973,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -73443,6 +82027,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -73546,6 +82132,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -73598,6 +82186,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -73708,6 +82298,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -73760,6 +82352,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -73898,6 +82492,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -73950,6 +82546,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -74002,6 +82600,8 @@ export namespace Prisma {
     quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
     ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -74054,6 +82654,8 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
     rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -74122,6 +82724,8 @@ export namespace Prisma {
     quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -74174,6 +82778,240 @@ export namespace Prisma {
     quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
     rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerCreateWithoutFightArchiveInput = {
+    customText?: string | null
+    name: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    id: string
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutFightArchiveInput = {
+    customText?: string | null
+    name: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    leaderOfId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    banCaseId?: number | null
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutFightArchiveInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
+  }
+
+  export type PlayerUpsertWithoutFightArchiveInput = {
+    update: XOR<PlayerUpdateWithoutFightArchiveInput, PlayerUncheckedUpdateWithoutFightArchiveInput>
+    create: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutFightArchiveInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutFightArchiveInput, PlayerUncheckedUpdateWithoutFightArchiveInput>
+  }
+
+  export type PlayerUpdateWithoutFightArchiveInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    leaderOfId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -74246,6 +83084,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutConcentrationInput = {
@@ -74289,6 +83129,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutConcentrationInput = {
@@ -74432,6 +83274,19 @@ export namespace Prisma {
     id?: number
     npcId: number
     step: string
+  }
+
+  export type DojoOpponentsCreateManyDinozInput = {
+    id?: string
+    dojoId: string
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoTeamCreateManyDinozInput = {
+    id?: string
+    dojoId: string
+    fighted?: boolean
   }
 
   export type DinozCatchUpdateWithoutDinozInput = {
@@ -74607,6 +83462,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutLeaderInput = {
@@ -74650,6 +83507,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutLeaderInput = {
@@ -74793,6 +83652,45 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     npcId?: IntFieldUpdateOperationsInput | number
     step?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type DojoOpponentsUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+    dojo?: DojoUpdateOneRequiredWithoutDojoOpponentsNestedInput
+  }
+
+  export type DojoOpponentsUncheckedUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoOpponentsUncheckedUpdateManyWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoTeamUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    dojo?: DojoUpdateOneRequiredWithoutTeamNestedInput
+  }
+
+  export type DojoTeamUncheckedUpdateWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoTeamUncheckedUpdateManyWithoutDinozInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
@@ -75001,6 +83899,15 @@ export namespace Prisma {
   export type PlayerRewardCreateManyPlayerInput = {
     id?: number
     rewardId: number
+  }
+
+  export type FightArchiveCreateManyPlayerInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    createdDate?: Date | string
   }
 
   export type ClanHistoryUpdateWithoutAuthorInput = {
@@ -75410,6 +84317,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUpdateManyWithoutDinozNestedInput
     npcs?: NPCUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateWithoutPlayerInput = {
@@ -75453,6 +84362,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutDinozNestedInput
     npcs?: NPCUncheckedUpdateManyWithoutDinozNestedInput
+    DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
+    DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
   export type DinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -75602,6 +84513,121 @@ export namespace Prisma {
   export type PlayerRewardUncheckedUpdateManyWithoutPlayerInput = {
     id?: IntFieldUpdateOperationsInput | number
     rewardId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type FightArchiveUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutPlayerInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DojoTeamCreateManyDojoInput = {
+    id?: string
+    dinozId: number
+    fighted?: boolean
+  }
+
+  export type DojoChallengeHistoryCreateManyDojoInput = {
+    id?: string
+    myDinozId: number
+    opponentId: number
+    challenge: number
+    victory: boolean
+    achieved: boolean
+  }
+
+  export type DojoOpponentsCreateManyDojoInput = {
+    id?: string
+    dinozId: number
+    fighted?: boolean
+    achieved?: boolean
+  }
+
+  export type DojoTeamUpdateWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    dinoz?: DinozUpdateOneRequiredWithoutDojoTeamNestedInput
+  }
+
+  export type DojoTeamUncheckedUpdateWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoTeamUncheckedUpdateManyWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoChallengeHistoryUpdateWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoChallengeHistoryUncheckedUpdateWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoChallengeHistoryUncheckedUpdateManyWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    myDinozId?: IntFieldUpdateOperationsInput | number
+    opponentId?: IntFieldUpdateOperationsInput | number
+    challenge?: IntFieldUpdateOperationsInput | number
+    victory?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoOpponentsUpdateWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+    dinoz?: DinozUpdateOneRequiredWithoutDojoOpponentsNestedInput
+  }
+
+  export type DojoOpponentsUncheckedUpdateWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type DojoOpponentsUncheckedUpdateManyWithoutDojoInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dinozId?: IntFieldUpdateOperationsInput | number
+    fighted?: BoolFieldUpdateOperationsInput | boolean
+    achieved?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type OfferBidCreateManyOfferInput = {

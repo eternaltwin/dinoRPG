@@ -86,10 +86,12 @@ export interface FightProcessResult {
 	// History of the fight
 	steps: FightStep[];
 	// Stats
-	stats: {
-		attack: FightStats;
-		defense: FightStats;
-	};
+	stats: FullFightStats;
 	place: PlaceEnum;
 	fighters: FighterRecap[];
+}
+
+export interface FullFightStats {
+	attack: FightStats;
+	defense: FightStats;
 }

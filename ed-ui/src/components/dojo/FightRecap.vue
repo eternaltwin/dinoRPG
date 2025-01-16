@@ -1,0 +1,128 @@
+<template>
+	<DZTable>
+		<tr>
+			<th></th>
+			<th>Mon équipe</th>
+			<th>Equipe adverse</th>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.hpLost'))" />
+			<td>{{ stats.attack.hpLost }}</td>
+			<td>{{ stats.defense.hpLost }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.hpHealed'))" />
+			<td>{{ stats.attack.hpHealed }}</td>
+			<td>{{ stats.defense.hpHealed }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.attacks'))" />
+			<td>{{ stats.attack.attacks }}</td>
+			<td>{{ stats.defense.attacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.groupAttacks'))" />
+			<td>{{ stats.attack.groupAttacks }}</td>
+			<td>{{ stats.defense.groupAttacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.multiHit'))" />
+			<td>{{ stats.attack.multiHits }}</td>
+			<td>{{ stats.defense.multiHits }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaults'))" />
+			<td>{{ stats.attack.assaults }}</td>
+			<td>{{ stats.defense.assaults }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.counters'))" />
+			<td>{{ stats.attack.counters }}</td>
+			<td>{{ stats.defense.counters }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.petrified'))" />
+			<td>{{ stats.attack.petrified }}</td>
+			<td>{{ stats.defense.petrified }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.damageFire'))" />
+			<td>{{ stats.attack.elements['1'].damage_dealt }}</td>
+			<td>{{ stats.defense.elements['1'].damage_dealt }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaultFire'))" />
+			<td>{{ stats.attack.elements['1'].attacks }}</td>
+			<td>{{ stats.defense.elements['1'].attacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.damageWood'))" />
+			<td>{{ stats.attack.elements['2'].damage_dealt }}</td>
+			<td>{{ stats.defense.elements['2'].damage_dealt }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaultWood'))" />
+			<td>{{ stats.attack.elements['2'].attacks }}</td>
+			<td>{{ stats.defense.elements['2'].attacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.damageWater'))" />
+			<td>{{ stats.attack.elements['3'].damage_dealt }}</td>
+			<td>{{ stats.defense.elements['3'].damage_dealt }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaultWater'))" />
+			<td>{{ stats.attack.elements['3'].attacks }}</td>
+			<td>{{ stats.defense.elements['3'].attacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.damageLightning'))" />
+			<td>{{ stats.attack.elements['4'].damage_dealt }}</td>
+			<td>{{ stats.defense.elements['4'].damage_dealt }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaultLightning'))" />
+			<td>{{ stats.attack.elements['4'].attacks }}</td>
+			<td>{{ stats.defense.elements['4'].attacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.damageAir'))" />
+			<td>{{ stats.attack.elements['5'].damage_dealt }}</td>
+			<td>{{ stats.defense.elements['5'].damage_dealt }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaultAir'))" />
+			<td>{{ stats.attack.elements['5'].attacks }}</td>
+			<td>{{ stats.defense.elements['5'].attacks }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.damageVoid'))" />
+			<td>{{ stats.attack.elements['6'].damage_dealt }}</td>
+			<td>{{ stats.defense.elements['6'].damage_dealt }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.assaultVoid'))" />
+			<td>{{ stats.attack.elements['6'].attacks }}</td>
+			<td>{{ stats.defense.elements['6'].attacks }}</td>
+		</tr>
+	</DZTable>
+</template>
+
+<script lang="ts">
+import { defineComponent, PropType } from 'vue';
+import DZTable from '../common/DZTable.vue';
+import { FullFightStats } from '@drpg/core/models/fight/FightResult';
+
+export default defineComponent({
+	name: 'FightRecap',
+	props: {
+		stats: {
+			type: Object as PropType<FullFightStats>,
+			required: true
+		}
+	},
+	components: { DZTable }
+});
+</script>
+
+<style scoped lang="scss"></style>

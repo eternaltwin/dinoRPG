@@ -23,7 +23,8 @@ export const apiRoutes = {
 	moderation: '/api/v1/moderation',
 	pantheon: '/api/v1/pantheon',
 	messagerie: '/api/v1/messagerie',
-	notification: '/api/v1/notifications'
+	notification: '/api/v1/notifications',
+	dojo: '/api/v1/dojo'
 };
 
 export const regex = {

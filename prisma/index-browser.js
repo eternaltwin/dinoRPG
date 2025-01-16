@@ -252,6 +252,39 @@ exports.Prisma.PlayerScalarFieldEnum = {
   id: 'id'
 };
 
+exports.Prisma.DojoScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  activeChallenge: 'activeChallenge',
+  reputation: 'reputation',
+  teamUpdate: 'teamUpdate'
+};
+
+exports.Prisma.DojoTeamScalarFieldEnum = {
+  id: 'id',
+  dojoId: 'dojoId',
+  dinozId: 'dinozId',
+  fighted: 'fighted'
+};
+
+exports.Prisma.DojoOpponentsScalarFieldEnum = {
+  id: 'id',
+  dojoId: 'dojoId',
+  dinozId: 'dinozId',
+  fighted: 'fighted',
+  achieved: 'achieved'
+};
+
+exports.Prisma.DojoChallengeHistoryScalarFieldEnum = {
+  id: 'id',
+  dojoId: 'dojoId',
+  myDinozId: 'myDinozId',
+  opponentId: 'opponentId',
+  challenge: 'challenge',
+  victory: 'victory',
+  achieved: 'achieved'
+};
+
 exports.Prisma.UsernameHistoryScalarFieldEnum = {
   id: 'id',
   username: 'username',
@@ -490,6 +523,16 @@ exports.Prisma.NotificationScalarFieldEnum = {
   playerId: 'playerId'
 };
 
+exports.Prisma.FightArchiveScalarFieldEnum = {
+  id: 'id',
+  fighters: 'fighters',
+  steps: 'steps',
+  seed: 'seed',
+  result: 'result',
+  playerId: 'playerId',
+  createdDate: 'createdDate'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -621,6 +664,10 @@ exports.Prisma.ModelName = {
   News: 'News',
   NPC: 'NPC',
   Player: 'Player',
+  Dojo: 'Dojo',
+  DojoTeam: 'DojoTeam',
+  DojoOpponents: 'DojoOpponents',
+  DojoChallengeHistory: 'DojoChallengeHistory',
   UsernameHistory: 'UsernameHistory',
   PlayerDinozShop: 'PlayerDinozShop',
   PlayerGather: 'PlayerGather',
@@ -649,7 +696,8 @@ exports.Prisma.ModelName = {
   Conversation: 'Conversation',
   Participants: 'Participants',
   Message: 'Message',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  FightArchive: 'FightArchive'
 };
 
 /**

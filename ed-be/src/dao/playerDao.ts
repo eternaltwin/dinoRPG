@@ -840,6 +840,25 @@ export async function archiveOldUsername(playerId: string, username: string) {
 	});
 }
 
+export async function getDojoFightPreparationRequest(playerId: string) {
+	const player = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			money: true,
+			cooker: true,
+			dinoz: {
+				select: {
+					id: true,
+					unavailableReason: true
+				}
+			}
+		}
+	});
+	return player;
+}
+
 export async function getCanCreateClanRequest(playerId: string) {
 	const player = await prisma.player.count({
 		where: {

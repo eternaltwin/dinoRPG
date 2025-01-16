@@ -53,3 +53,10 @@ export interface DinozPublicFiche {
 	race: DinozRace;
 	status: number[];
 }
+
+export interface DinozDojoFiche {
+	id: number;
+	name: string;
+	display: string;
+	level: number;
+}

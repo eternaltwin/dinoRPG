@@ -142,19 +142,36 @@ const router = createRouter({
 					component: () => import('../pages/FAQPage.vue')
 				},
 				{
-					path: '/dojo/qual/select-dinoz',
-					name: 'SelectDinoz',
-					component: () => import('../pages/dojo/SelectDinoz.vue')
-				},
-				{
 					path: '/dojo',
 					name: 'DojoHome',
-					component: () => import('../pages/dojo/DojoHome.vue')
-				},
-				{
-					path: '/dojo/tournament/:id?',
-					name: 'DojoTournament',
-					component: () => import('../pages/dojo/DojoTournament.vue')
+					component: () => import('../pages/DojoHome.vue'),
+					children: [
+						/*{
+							path: '/dojo/qual/select-dinoz',
+							name: 'SelectDinoz',
+							component: () => import('../components/dojo/SelectDinoz.vue')
+						},*/
+						/*{
+							path: '/dojo/tournament/:id?',
+							name: 'DojoTournament',
+							component: () => import('../components/dojo/DojoTournament.vue')
+						},*/
+						{
+							path: '/dojo/friends/',
+							name: 'ChallengeFriend',
+							component: () => import('../components/dojo/ChallengeFriend.vue')
+						},
+						{
+							path: '/dojo/share/:archive',
+							name: 'ShareFight',
+							component: () => import('../components/dojo/ShareFight.vue')
+						},
+						{
+							path: '/dojo/history',
+							name: 'DojoHistory',
+							component: () => import('../components/dojo/DojoHistory.vue')
+						}
+					]
 				},
 				{
 					path: '/clans',

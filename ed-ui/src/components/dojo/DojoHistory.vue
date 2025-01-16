@@ -1,0 +1,153 @@
+<template>
+	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
+	<DZTable>
+		<tr>
+			<th class="dinoz-header">{{ $t('dojo.history.myDinoz') }}</th>
+			<th class="items-header">{{ $t('dojo.history.ennemis') }}</th>
+			<th class="items-header">{{ $t('dojo.history.link') }}</th>
+		</tr>
+		<tr v-for="fight in history" :key="fight.id">
+			<td>
+				<li v-for="dino in fight.fighters.filter(f => f.attacker && f.type === 'dinoz')" :key="dino.id">
+					{{ dino.name }}
+				</li>
+			</td>
+			<td>
+				<li v-for="dino in fight.fighters.filter(f => !f.attacker && f.type === 'dinoz')" :key="dino.id">
+					{{ dino.name }}
+				</li>
+			</td>
+			<td class="icons">
+				<img
+					:src="getImgURL('icons', 'clipboard')"
+					@click="copyToClipBoard(fight.id)"
+					v-tippy="{
+						content: formatContent($t('dojo.history.copyLink')),
+						theme: 'small'
+					}"
+				/>
+				<RouterLink :to="`/dojo/share/${fight.id}`">
+					<img
+						:src="getImgURL('icons', 'small_follow')"
+						v-tippy="{
+							content: formatContent($t('dojo.history.seeFight')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
+			</td>
+		</tr>
+	</DZTable>
+	<tr class="pagination-controls">
+		<button @click="previousPage" :disabled="currentPage === 1">
+			<img class="left" :src="getImgURL('button', 'button-back-arrow')" />
+		</button>
+		<span>{{ currentPage }} / {{ totalPages }}</span>
+		<button @click="nextPage" :disabled="currentPage === totalPages">
+			<img class="right" :src="getImgURL('button', 'button-back-arrow')" />
+		</button>
+	</tr>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import TitleHeader from '../utils/TitleHeader.vue';
+import { errorHandler } from '../../utils/index.js';
+import EventBus from '../../events/index.js';
+import { DojoService } from '../../services/DojoService.js';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import DZTable from '../common/DZTable.vue';
+
+export default defineComponent({
+	name: 'DojoHistory',
+	components: {
+		TitleHeader,
+		DZTable
+	},
+	data() {
+		return {
+			currentPage: 1,
+			history: [] as { id: string; fighters: FighterRecap[] }[],
+			totalPages: 0
+		};
+	},
+	methods: {
+		copyToClipBoard(id: string) {
+			navigator.clipboard.writeText(`${window.location.origin}/dojo/share/${id}`);
+		},
+		async getHistory() {
+			EventBus.emit('loading', true);
+			try {
+				const archive = await DojoService.getMyHistory(this.currentPage);
+				this.history = archive.archive;
+				this.totalPages = Math.ceil(archive.quantity / 10);
+				EventBus.emit('loading', false);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async previousPage() {
+			if (this.currentPage > 1) {
+				try {
+					this.currentPage--;
+					await this.getHistory();
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
+					return;
+				}
+			}
+		},
+		async nextPage() {
+			if (this.currentPage < this.totalPages) {
+				try {
+					this.currentPage++;
+					await this.getHistory();
+				} catch (error) {
+					errorHandler.handle(error, this.$toast);
+					return;
+				}
+			}
+		}
+	},
+	async mounted() {
+		await this.getHistory();
+	}
+});
+</script>
+
+<style lang="scss" scoped>
+li {
+	list-style-type: none;
+}
+.icons {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	height: 100%;
+	padding: 5px;
+}
+.pagination-controls {
+	margin-top: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	button {
+		background-color: transparent;
+		margin: 0 10px;
+		padding: 5px 10px;
+		border: none;
+		cursor: pointer;
+		&:disabled {
+			cursor: not-allowed;
+		}
+		.left,
+		.right {
+			height: auto;
+			width: 10px;
+		}
+		.right {
+			transform: rotate(180deg);
+		}
+	}
+}
+</style>

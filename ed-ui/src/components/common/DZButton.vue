@@ -3,7 +3,8 @@
 		:class="{
 			'button-component': true,
 			[size]: true,
-			back
+			back,
+			off
 		}"
 	>
 		<img v-if="back && size === 'normal'" :src="getImgURL('button', 'button-back-arrow')" alt="button-back" />
@@ -24,6 +25,10 @@ export default defineComponent({
 			default: 'normal'
 		},
 		back: {
+			type: Boolean,
+			default: false
+		},
+		off: {
 			type: Boolean,
 			default: false
 		}
@@ -94,6 +99,10 @@ export default defineComponent({
 				top: 0;
 			}
 		}
+	}
+
+	&.off {
+		filter: grayscale(100%);
 	}
 }
 </style>

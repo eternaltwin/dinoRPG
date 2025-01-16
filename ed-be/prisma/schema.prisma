@@ -62,6 +62,8 @@ model Dinoz {
   unlockableSkills   DinozSkillUnlockable[]
   status             DinozStatus[]
   npcs               NPC[]
+  DojoOpponents      DojoOpponents[]
+  DojoTeam           DojoTeam[]
 
   @@index([playerId], map: "idx_playerId")
   @@map("dinoz")
@@ -224,8 +226,61 @@ model Player {
   quests               PlayerQuest[]
   rewards              PlayerReward[]
   ranking              Ranking?
+  Dojo                 Dojo?
+  FightArchive         FightArchive[]
 
   @@map("player")
+}
+
+model Dojo {
+  id                   String                 @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  playerId             String                 @unique() @db.Uuid
+  player               Player                 @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  team                 DojoTeam[]
+  activeChallenge      Int                    @default(0)
+  DojoChallengeHistory DojoChallengeHistory[]
+  reputation           Int                    @default(0)
+  DojoOpponents        DojoOpponents[]
+  teamUpdate           DateTime?
+
+  @@index([playerId])
+  @@map("dojo")
+}
+
+model DojoTeam {
+  id      String  @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  dojoId  String  @db.Uuid
+  dojo    Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId Int
+  dinoz   Dinoz   @relation(fields: [dinozId], references: [id])
+  fighted Boolean @default(false)
+
+  @@index([dojoId])
+}
+
+model DojoOpponents {
+  id       String  @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  dojoId   String  @db.Uuid
+  dojo     Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId  Int
+  dinoz    Dinoz   @relation(fields: [dinozId], references: [id])
+  fighted  Boolean @default(false)
+  achieved Boolean @default(false)
+
+  @@index([dojoId])
+}
+
+model DojoChallengeHistory {
+  id         String  @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  dojoId     String  @db.Uuid
+  dojo       Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  myDinozId  Int
+  opponentId Int
+  challenge  Int
+  victory    Boolean
+  achieved   Boolean
+
+  @@index([dojoId])
 }
 
 model UsernameHistory {
@@ -567,6 +622,17 @@ model Notification {
 
   @@index([playerId, read])
   @@index([date])
+}
+
+model FightArchive {
+  id          String   @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fighters    String   @db.Text
+  steps       String   @db.Text
+  seed        String   @db.VarChar(255)
+  result      Boolean  @db.Boolean
+  playerId    String   @db.Uuid
+  player      Player   @relation(fields: [playerId], references: [id])
+  createdDate DateTime @default(now()) @db.Timestamp(6)
 }
 
 enum UnavailableReason {

@@ -24,6 +24,10 @@
 						<img :src="getImgURL('icons', 'act_treasure')" alt="shop" />
 						<span>Enclos</span>
 					</RouterLink>
+					<RouterLink class="link" :to="`/dojo`">
+						<img :src="getImgURL('icons', 'act_dojo')" alt="dojo" />
+						<span>Dojo</span>
+					</RouterLink>
 					<RouterLink class="link" :to="`/manage`" v-if="playerStore.playerOptions.hasPDA">
 						<img :src="getImgURL('epicRewards', 'collec_pda')" alt="shop" />
 						<span>Ordonner</span>

@@ -2457,7 +2457,8 @@
 		"faq": "Dino-RPG [ FAQ ]",
 		"clan": "Dino-RPG [ Clan : ",
 		"clansList": "Dino-RPG [ Liste des Clans ]",
-		"createClan": "Dino-RPG [ Créer un Clan ]"
+		"createClan": "Dino-RPG [ Créer un Clan ]",
+		"challengeFriend": "Dino-RPG [ Affronte un ami ]"
 	},
 	"gather": {
 		"action": {
@@ -4235,7 +4236,8 @@
 		"selectChampions": "Choisis tes champions",
 		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
 		"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
-		"validate": "Valider ma sélection"
+		"validate": "Valider ma sélection",
+		"edit": "Modifier ma sélection"
 	},
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
@@ -4256,7 +4258,41 @@
 		"seeFinal": "Voir la finale",
 		"seeFight": "Voir le combat",
 		"nextTournament": "Le prochain tournoi commencera le **{next}**, soyez prêt ! Les phases de qualifications se terminent le **{qualif}**.",
-		"tournamentInfo": "**ATTENTION :**&&Votre position est indiqué en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**"
+		"tournamentInfo": "**ATTENTION :**&&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
+		"challengeFriend": {
+			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
+			"friend": "Sélectionnez ici les dinoz de votre camarade à affronter.",
+			"startFight": "{gold}    :gold:"
+		},
+		"history": {
+			"myDinoz": "Mes combattants",
+			"ennemis": "Adversaires",
+			"seeFight": "Voir le combat",
+			"link": "Lien",
+			"copyLink": "Copier le lien"
+		},
+		"fightRecap": {
+			"hpLost": "Quantité de points de vie perdus :pv:",
+			"hpHealed": "Quantité de points de vie gagnés",
+			"attacks": "Quantité d'attaque",
+			"groupAttacks": "Quantité d'attaque de groupe",
+			"multiHit": "Nombre de multi-coup",
+			"assaults": "Nombre d'assauts",
+			"counters": "Nombre de contres",
+			"petrified": "Nombre de dinoz pétrifiés",
+			"damageFire": "Dégats de :fire: infligés",
+			"assaultFire": "Nombre d'assaut :fire: réalisés",
+			"damageWater": "Dégats de :water: infligés",
+			"assaultWater": "Nombre d'assaut :water: réalisés",
+			"damageWood": "Dégats de :wood: infligés",
+			"assaultWood": "Nombre d'assaut :wood: réalisés",
+			"damageLightning": "Dégats de :lightning: infligés",
+			"assaultLightning": "Nombre d'assaut :lightning: réalisés",
+			"damageAir": "Dégats de :air: infligés",
+			"assaultAir": "Nombre d'assaut :air: réalisés",
+			"damageVoid": "Dégats de :void: infligés",
+			"assaultVoid": "Nombre d'assaut :void: réalisés"
+		}
 	},
 	"guide": {
 		"sections": {

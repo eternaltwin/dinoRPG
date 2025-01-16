@@ -45,11 +45,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import TitleHeader from '../../components/utils/TitleHeader.vue';
+import TitleHeader from '../utils/TitleHeader.vue';
 import { playerStore } from '../../store/index.js';
-import DZButton from '../../components/common/DZButton.vue';
-import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
-import DinozMini from '../../components/dinoz/DinozMini.vue';
+import DZButton from '../common/DZButton.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DinozMini from '../dinoz/DinozMini.vue';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
