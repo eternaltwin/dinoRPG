@@ -4427,7 +4427,11 @@ const checkAfterDefenseEffects = (
 		!hasStatus(attacker, Status.POISONED) &&
 		target.skills.find(skill => skill.id === Skill.AURA_PUANTE)
 	) {
-		// TODO announce the skill
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.AURA_PUANTE
+		});
 		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.MEDIUM);
 	}
 
