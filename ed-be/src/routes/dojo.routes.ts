@@ -68,7 +68,7 @@ routes.put(
 			.isArray()
 			.notEmpty()
 			.custom(value => allValuesAreNumber(value)),
-		body('rightId').exists().isNumeric()
+		body('rightId').exists().toInt().isNumeric()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
@@ -97,18 +97,22 @@ routes.get(`${commonPath}/share/:id`, [param('id').exists()], async (req: Reques
 	}
 });
 
-routes.get(`${commonPath}/history/:page`, [param('id').exists().isNumeric()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/history/:page`,
+	[param('page').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response = await getAllArchivedFight(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await getAllArchivedFight(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 routes.get(`${commonPath}/challenge`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
@@ -125,7 +129,7 @@ routes.get(`${commonPath}/challenge`, async (req: Request, res: Response) => {
 
 routes.put(
 	`${commonPath}/challenge`,
-	[body('myDinoz').exists().isNumeric(), body('opponent').exists().isNumeric()],
+	[body('myDinoz').exists().toInt().isNumeric(), body('opponent').exists().toInt().isNumeric()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -142,7 +146,7 @@ routes.put(
 
 routes.put(
 	`${commonPath}/challenge/skip`,
-	[body('opponent').exists().isNumeric()],
+	[body('opponent').exists().toInt().isNumeric()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
