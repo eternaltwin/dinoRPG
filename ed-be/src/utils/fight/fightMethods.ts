@@ -4803,7 +4803,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			// Time bar movement is handled on the front side
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
-				return;
+				const left =
+					(fightData.stats.attack.hpLost + fightData.stats.attack.hpHealed) / fightData.stats.attack.startingHp;
+				const right =
+					(fightData.stats.defense.hpLost + fightData.stats.defense.hpHealed) / fightData.stats.defense.startingHp;
+				fightData.loser = left > right ? 'attackers' : 'defenders';
 			}
 		}
 
