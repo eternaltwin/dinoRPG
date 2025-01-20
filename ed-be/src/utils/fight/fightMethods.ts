@@ -39,7 +39,7 @@ import {
 	TIME_BASE,
 	TIME_FACTOR,
 	VOID_ASSAULT_POWER
-} from './fightConstants.js';
+} from '@drpg/core/utils/fightConstants';
 import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,
@@ -4780,8 +4780,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Calculate the elapsed time
 	const deltaTime = attacker.time - fightData.time;
 
-	// Set current time to first fighter time
-	fightData.time = fightData.fighters[0].time;
+	// Set the new current time to fighter's turn
+	fightData.time = attacker.time;
 
 	// Recover energy for all fighters except the current one
 	getFighters(fightData).forEach(f => {
@@ -4796,6 +4796,17 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		delta: deltaTime
 	});
 	if (deltaTime > 0) {
+		// Handle timeout
+		if (fightData.timeout) {
+			// Decrement time
+			fightData.timeout -= deltaTime;
+			// Time bar movement is handled on the front side
+			// If timeout elapsed, return and end the fight.
+			if (fightData.timeout <= 0) {
+				return;
+			}
+		}
+
 		// Handle statuses
 		getFighters(fightData).forEach(fighter => {
 			fighter.status.forEach(status => {

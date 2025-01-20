@@ -18,6 +18,7 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
+import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -129,6 +130,7 @@ export function transpileFight(
 ) {
 	const history: transpiled[] = [];
 	let myFighter: FighterRecap | undefined;
+	let timeout: number | undefined;
 	if (startText) {
 		history.push({
 			action: DinoAction.TEXT,
@@ -139,6 +141,13 @@ export function transpileFight(
 		const step = fight[i];
 
 		switch (step.action) {
+			case 'timeLimit':
+				timeout = step.time;
+				history.push({
+					action: DinoAction.TIMELIMIT,
+					time: step.time
+				});
+				break;
 			case 'arrive':
 				myFighter = fighters.find(f => f.id === step.fid);
 				if (!myFighter) {
@@ -313,26 +322,34 @@ export function transpileFight(
 				}
 				break;
 			// TODO: more infrastructure needed to support this otherwise this errors because "fighters" is all fighters, even dead ones
-			// case `newTurn`:
-			// 	// eslint-disable-next-line no-case-declarations
-			// 	let energyStep = {
-			// 		action: DinoAction.ENERGY,
-			// 		fighters: [] as {
-			// 			fid: number;
-			// 			energy: number;
-			// 		}[]
-			// 	};
-			// 	fighters.forEach(f => {
-			// 			if (f.id !== step.fighter.id) {
-			// 				let newEnergy = Math.round(f.energy + f.energyRecovery * step.delta * 0.5);
-			// 				energyStep.fighters.push({ fid: f.id, energy: newEnergy });
-			// 				console.log(`f: ${f.id}, e: ${newEnergy}`);
-			// 			}
-			// 		}
-			// 	);
-			// 	// Update energy of fighters except the one that is playing a new turn.
-			// 	history.push(energyStep as transpiled);
-			// 	break;
+			case `newTurn`:
+				// Decrement the time bar if a time limit and time bar were set
+				if (timeout) {
+					timeout -= step.delta;
+					history.push({
+						action: DinoAction.PAUSE,
+						time: step.delta / TIME_FACTOR
+					});
+				}
+				// 	// eslint-disable-next-line no-case-declarations
+				// 	let energyStep = {
+				// 		action: DinoAction.ENERGY,
+				// 		fighters: [] as {
+				// 			fid: number;
+				// 			energy: number;
+				// 		}[]
+				// 	};
+				// 	fighters.forEach(f => {
+				// 			if (f.id !== step.fighter.id) {
+				// 				let newEnergy = Math.round(f.energy + f.energyRecovery * step.delta * 0.5);
+				// 				energyStep.fighters.push({ fid: f.id, energy: newEnergy });
+				// 				console.log(`f: ${f.id}, e: ${newEnergy}`);
+				// 			}
+				// 		}
+				// 	);
+				// 	// Update energy of fighters except the one that is playing a new turn.
+				// 	history.push(energyStep as transpiled);
+				break;
 			case 'reduceEnergy':
 				break;
 			case 'removeCostume':

@@ -12,7 +12,7 @@ import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
+import { TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus, setMaxEnergy } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';

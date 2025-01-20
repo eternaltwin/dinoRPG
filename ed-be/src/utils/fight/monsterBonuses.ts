@@ -3,10 +3,8 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Boss } from '@drpg/core/models/fight/BossList';
 import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { Monster } from '@drpg/core/models/fight/MonsterList';
-import { TIME_FACTOR } from './fightConstants.js';
-import { randomBetweenSeeded } from './randomBetween.js';
+import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus } from './fightMethods.js';
-import seedrandom from 'seedrandom';
 
 const worm = (monster: DetailedFighter) => {
 	monster.stats.special.armor += 1;

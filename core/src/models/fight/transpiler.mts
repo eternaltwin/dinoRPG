@@ -177,6 +177,14 @@ export enum NotificationList {
 
 export type transpiled =
 	| {
+		action: DinoAction.TIMELIMIT,
+		time: number,
+	}
+	| {
+		action: DinoAction.PAUSE,
+		time: number,
+	}
+	| {
 			action: DinoAction.ADD;
 			fighter: {
 				props: any[];

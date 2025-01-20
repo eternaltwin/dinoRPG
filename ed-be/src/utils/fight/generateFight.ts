@@ -19,11 +19,12 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
-import randomBetween, { randomBetweenSeeded } from './randomBetween.js';
+import { randomBetweenSeeded } from './randomBetween.js';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import seedrandom from 'seedrandom';
 import { LifeEffect } from '@drpg/core/models/fight/transpiler';
+import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -31,6 +32,7 @@ export type DetailedFight = {
 	place: PlaceEnum;
 	loser: 'attackers' | 'defenders' | null;
 	steps: FightStep[];
+	timeout?: number;
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
@@ -83,10 +85,17 @@ const orderFighters = (fightData: DetailedFight) => {
  * @returns FightProcessResult
  **/
 const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedrandom.PRNG): FightProcessResult => {
+	let timeout = config.timeout;
+	// Adjust the timeout with the time factor
+	if (timeout) {
+		timeout = timeout * TIME_FACTOR;
+	}
+
 	const fightData: DetailedFight = {
 		rng,
 		loser: null,
 		steps: [] as FightStep[],
+		timeout: timeout,
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		deads: [] as number[],
@@ -209,6 +218,14 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			}
 		}
 	};
+
+	// If a timeout is present, display it.
+	if (fightData.timeout) {
+		fightData.steps.push({
+			action: 'timeLimit',
+			time: fightData.timeout
+		});
+	}
 
 	fightData.fighters.forEach(fighter => {
 		// HP stats
@@ -354,8 +371,13 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	// Fight loop
 	while (!fightData.loser) {
+		// No fighters left, stop the fight.
 		if (!fightData.fighters.length) {
-			// No fighters left
+			break;
+		}
+
+		// Timeout hit, stop the fight.
+		if (fightData.timeout && fightData.timeout <= 0) {
 			break;
 		}
 

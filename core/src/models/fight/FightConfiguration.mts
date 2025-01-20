@@ -26,6 +26,9 @@ export interface FightConfiguration {
 	// Seed
 	seed: string;
 
+	// (Optional) Timeout, forces the fight to end after some time has elapsed
+	timeout?: number;
+
 	// Flags
 	castleFight: boolean;
 	canUseCapture: boolean;

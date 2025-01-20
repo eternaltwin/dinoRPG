@@ -224,6 +224,7 @@ export function calculateFightBetweenPlayers(
 	teamB: DinozToGetFighter[],
 	playerB: Pick<Player, 'cooker'>,
 	place: PlaceEnum,
+	timeout?: number,
 	seed?: string
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
@@ -246,6 +247,9 @@ export function calculateFightBetweenPlayers(
 
 	const fightConfiguration: FightConfiguration = {
 		seed: rng_seed,
+
+		// Timeout
+		timeout: 1000,
 
 		// Flags
 		castleFight: false,

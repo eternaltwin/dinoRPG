@@ -2,7 +2,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
 import { Item } from '@drpg/core/models/item/ItemList';
-import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from './fightConstants.js';
+import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConstants';
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
 
