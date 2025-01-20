@@ -14,7 +14,7 @@
 		"logout": "Desconectarse",
 		"guide": "Guía del Juego",
 		"faq": "Preguntas frecuentes",
-		"cinema": "Cinéma"
+		"cinema": "Cine"
 	},
 	"toast": {
 		"maxParticipantInThread": "No puedes agregar más de 9 participantes a una conversación",
@@ -42,7 +42,7 @@
 			"offerCreated": "Tu oferta ha sido creada.",
 			"offerCancelled": "Su oferta ha sido cancelada.",
 			"notEnoughItems": "No tienes suficiente de este artículo.",
-			"offerClaimed": "Vos gains ont été récupérés"
+			"offerClaimed": "Has obtenido lo que ganaste"
 		},
 		"isSelling": "Tu Dino está actualmente a la venta en el Mercado de los Maestros.",
 		"heal": "Tu Dino ha recuperado {value} :hp:",
@@ -65,8 +65,8 @@
 		"resting": "Tu Dino está actualmente descansando. Regenera {hp} :pv: cada {min} minutos.",
 		"ingredientSold": "Vendiste tus ingredientes por un total de {value} :gold:.",
 		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
-		"finishGrid": "Félicitations ! Vous avez gagné 1000 or pour avoir terminé la grille !",
-		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
+		"finishGrid": "¡Felicidades! ¡Has ganado 1000 de oro por completar el tablero!",
+		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados."
 	},
 	"dig": {
 		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
@@ -2458,7 +2458,7 @@
 		"clan": "Dino-RPG [ Clan : ",
 		"clansList": "Dino-RPG [ Lista de Clanes ]",
 		"createClan": "Dino-RPG [ Crear Clan ]",
-		"challengeFriend": "Dino-RPG [ Affronte un ami ]"
+		"challengeFriend": "Dino-RPG [ Enfrentar a un amigo ]"
 	},
 	"gather": {
 		"action": {
@@ -4039,7 +4039,7 @@
 			"tired": "**{fighter}** está cansado y pierde su turno."
 		},
 		"event": {
-			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
+			"christmas_ticket": "Parece que este monstruo tenía un ticket de Navidad consigo. ¡Qué suerte!"
 		}
 	},
 	"ingredients": {
@@ -4176,12 +4176,12 @@
 		},
 		"transactionView": {
 			"yourOngoingOffer": "Tu oferta en curso",
-			"yourWonOffer": "Vos offres gagnées",
-			"myExpiredOffers": "Vos ventes expirées",
-			"claimExpired": "Récupérer ma vente",
+			"yourWonOffer": "Tus ofertas ganadas",
+			"myExpiredOffers": "Tus ventas expiradas",
+			"claimExpired": "Recuperar mi venta",
 			"noOnGoingOffer": "No tienes ninguna oferta en curso.",
-			"noWonOffer": "Vous n'avez aucune offre à récupérer",
-			"claim": "Récupérer mes gains",
+			"noWonOffer": "No tienes ofertas para reclamar",
+			"claim": "Reclamar oferta",
 			"bid": "Puja",
 			"noBidYet": "Aún no hay pujas.",
 			"cancel": "Cancelar",
@@ -4197,16 +4197,16 @@
 		"following": "Este Dino sigue a su líder de grupo.",
 		"gather": "Este Dino puede recolectar en este lugar.",
 		"rest": "Este Dino está descansando.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
+		"resting": "Tu Dino está actualmente descansando. Regenera {hp} :pv: cada {min} minutos.",
 		"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
 		"follow": "El líder del grupo es {leader}.",
 		"followed": "Este Dino es el líder del grupo.",
-		"restEnd": "Votre dinoz a déjà récupéré le maximum de point de vie en se reposant."
+		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando."
 	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** usó **{quantity}x {item}** con Dino **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** ha comprado **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
+		"IngredientSold": "**{player} ({playerId})** ha vendido **{quantity}x {item}** (restante {amount}).",
 		"GoldWon": "**{player} ({playerId})** ha ganado **{quantity} :gold:** ({total} :gold:).",
 		"GoldLost": "**{player} ({playerId})** ha perdido **{quantity} :gold:** ({total} :gold:).",
 		"Move": "**{player} ({playerId})** movió al Dino **{dinoz} ({dinozId})** a **{location}**.",
@@ -4237,7 +4237,7 @@
 		"selectTeam": "Selecciona tu equipo Dinos para los desafíos de hoy",
 		"disclaimer": "Puedes seleccionar hasta **10** Dinos para tu equipo. Elige con cuidado, sólo podrás cambiar tu selección mañana.",
 		"validate": "Validar mi selección",
-		"edit": "Modifier ma sélection"
+		"edit": "Modificar mi selección"
 	},
 	"dojo": {
 		"welcome": "Bienvenido a tu Dojo",
@@ -4258,40 +4258,40 @@
 		"seeFinal": "Ver la final",
 		"seeFight": "Artes Marciales",
 		"nextTournament": "El próximo torneo comenzará el **{next}**, ¡prepárate! La fase de clasificación termina el **{qualif}**.",
-		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
+		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
-			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
-			"friend": "Sélectionnez ici les Dinoz de votre camarade à affronter.",
-			"startFight": "{gold}    :gold:"
+			"disclaimer": "Aquí puedes seleccionar **5 de tus Dinos** para enfrentarte a un miembro de tu clan. Luego elige a un amigo y hasta **5 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50:gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",
+			"friend": "Selecciona aquí el Dino de tu amigo a enfrentar.",
+			"startFight": "{gold} :gold:"
 		},
 		"history": {
-			"myDinoz": "Mes combattants",
-			"ennemis": "Adversaires",
-			"seeFight": "Voir le combat",
-			"link": "Lien",
-			"copyLink": "Copier le lien"
+			"myDinoz": "Mis combatientes",
+			"ennemis": "Adversarios",
+			"seeFight": "Ver el combate",
+			"link": "Link",
+			"copyLink": "Copiar el link"
 		},
 		"fightRecap": {
-			"hpLost": "Quantité de points de vie perdus :pv:",
-			"hpHealed": "Quantité de points de vie gagnés",
-			"attacks": "Quantité d'attaque",
-			"groupAttacks": "Quantité d'attaque de groupe",
-			"multiHit": "Nombre de multi-coup",
-			"assaults": "Nombre d'assauts",
-			"counters": "Nombre de contres",
-			"petrified": "Nombre de dinoz pétrifiés",
-			"damageFire": "Dégats de :fire: infligés",
-			"assaultFire": "Nombre d'assaut :fire: réalisés",
-			"damageWater": "Dégats de :water: infligés",
-			"assaultWater": "Nombre d'assaut :water: réalisés",
-			"damageWood": "Dégats de :wood: infligés",
-			"assaultWood": "Nombre d'assaut :wood: réalisés",
-			"damageLightning": "Dégats de :lightning: infligés",
-			"assaultLightning": "Nombre d'assaut :lightning: réalisés",
-			"damageAir": "Dégats de :air: infligés",
-			"assaultAir": "Nombre d'assaut :air: réalisés",
-			"damageVoid": "Dégats de :void: infligés",
-			"assaultVoid": "Nombre d'assaut :void: réalisés"
+			"hpLost": "Cantidad de puntos de vida perdidos :pv:",
+			"hpHealed": "Cantidad de puntos de vida ganados",
+			"attacks": "Cantidad de ataques",
+			"groupAttacks": "Cantidad de ataques grupales",
+			"multiHit": "Número de multi-golpes",
+			"assaults": "Número de asaltos",
+			"counters": "Número de contraataques",
+			"petrified": "Número de Dinos petrificados",
+			"damageFire": "Daño de :fire: infligido",
+			"assaultFire": "Número de asaltos :fire: realizados",
+			"damageWater": "Daño de :water: infligido",
+			"assaultWater": "Número de asaltos :water: realizados",
+			"damageWood": "Daño de :wood: infligido",
+			"assaultWood": "Número de asaltos :wood: realizados",
+			"damageLightning": "Daño de :lightning: infligido",
+			"assaultLightning": "Número de asaltos :lightning: realizados",
+			"damageAir": "Daño de :air: infligido",
+			"assaultAir": "Número de asaltos :air: realizados",
+			"damageVoid": "Daño de :void: infligido",
+			"assaultVoid": "Número de asaltos :void: realizados"
 		}
 	},
 	"guide": {
@@ -4682,13 +4682,13 @@
 			"multi": "Este jugador utiliza varias cuentas"
 		},
 		"sorted": {
-			"open": "À traiter",
-			"closed": "Fermé",
-			"warning": "Avertissement",
-			"shortBan": "Ban court",
-			"mediumBan": "Ban moyen",
-			"longBan": "Ban long",
-			"infiniteBan": "Ban infini"
+			"open": "Por procesar",
+			"closed": "Procesado",
+			"warning": "Advertencia",
+			"shortBan": "Ban corto",
+			"mediumBan": "Ban medio",
+			"longBan": "Ban largo",
+			"infiniteBan": "Ban infinito"
 		},
 		"arguments": "Especifique por qué considera que esto es inapropiado.",
 		"report": "Reportar",
@@ -4725,15 +4725,15 @@
 	},
 	"notification": {
 		"reasons": {
-			"customText": "votre description personnalisée",
-			"multi": "une suspiscion de multicompte",
-			"dinozName": "un nom de dinoz offensant",
-			"avatar": "un avatar offensant"
+			"customText": "tu descripción personalizada",
+			"multi": "una sospecha de multi-cuentas",
+			"dinozName": "un nombre de Dino ofensivo",
+			"avatar": "un avatar ofensivo"
 		},
-		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
-		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
-		"offerWon": "Vous avez gagné l'enchère avec {value} :ticket:",
-		"warning": "Attention vous avez reçu un avertissement concernant {reason}.",
-		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}."
+		"offerExpired": "Su oferta no encontró comprador.",
+		"offerEnded": "Tu oferta fue comprada por {value} :ticket:",
+		"offerWon": "Ganaste la subasta con {value} :ticket:",
+		"warning": "Atención. Has recibido una advertencia relacionada con {reason}.",
+		"ban": "Has sido baneado debido a {reason} hasta el {date}."
 	}
 }
