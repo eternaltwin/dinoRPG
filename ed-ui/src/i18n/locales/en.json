@@ -65,7 +65,7 @@
 		"resting": "Your Dinoz is currently resting. It will regain {hp} :pv: in {min} minutes.",
 		"ingredientSold": "You sold your ingredients for a total of {value} :gold:.",
 		"needIngredientToSell": "You need to have the ingredients you want to sell.",
-		"finishGrid": "Félicitations ! Vous avez gagné 1000 or pour avoir terminé la grille !",
+		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
 	},
 	"dig": {
@@ -4232,13 +4232,6 @@
 		"OfferExpired": "L'**offre {offer}** de **{player} ({playerId})** a **expiré** et n'a pas été remportée.",
 		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
 	},
-	"selectDinoz": {
-		"selectChampions": "Select your champions",
-		"selectTeam": "Select your team of dinoz for today's challenges",
-		"disclaimer": "You can select up to **10** dinoz for your team. Choose carefully, you won't be able to change your selection until tomorrow.",
-		"validate": "Validate my selection",
-		"edit": "Modifier ma sélection"
-	},
 	"dojo": {
 		"welcome": "Welcome to your Dojo",
 		"accessTournament": "Access tournament",
@@ -4262,7 +4255,7 @@
 		"challengeFriend": {
 			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
 			"friend": "Sélectionnez ici les Dinoz de votre camarade à affronter.",
-			"startFight": "{gold}    :gold:"
+			"startFight": "{gold} :gold:"
 		},
 		"history": {
 			"myDinoz": "Mes combattants",
@@ -4274,12 +4267,15 @@
 		"fightRecap": {
 			"hpLost": "Quantité de points de vie perdus :pv:",
 			"hpHealed": "Quantité de points de vie gagnés",
-			"attacks": "Quantité d'attaque",
-			"groupAttacks": "Quantité d'attaque de groupe",
+			"attacks": "Quantité d'attaques",
 			"multiHit": "Nombre de multi-coup",
 			"assaults": "Nombre d'assauts",
 			"counters": "Nombre de contres",
-			"petrified": "Nombre de dinoz pétrifiés",
+			"poisoned": "Nombre d'adversaires empoisonnés",
+			"poison_damage": "Dégâts de poison infligés",
+			"burn_damage": "Dégâts de brûlure infligés",
+			"reinforcements": "Nombre de renforts appelés",
+			"petrified": "Nombre d'adversaires pétrifiés",
 			"damageFire": "Dégats de :fire: infligés",
 			"assaultFire": "Nombre d'assaut :fire: réalisés",
 			"damageWater": "Dégats de :water: infligés",
@@ -4292,6 +4288,29 @@
 			"assaultAir": "Nombre d'assaut :air: réalisés",
 			"damageVoid": "Dégats de :void: infligés",
 			"assaultVoid": "Nombre d'assaut :void: réalisés"
+		},
+		"challenge": {
+			"selectChampions": "Choisis tes champions",
+			"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
+			"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
+			"validate": "Valider ma sélection",
+			"edit": "Modifier ma sélection",
+			"launch": "Lancer le combat",
+			"challenge": {
+				"kill": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
+				"takeAttack": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
+				"takeRawDmg": "Remportez la victoire en encaissant au maximum {goal} points de vie.",
+				"takePrctDmg": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
+				"assault": "Remportez la victoire en réalisant au minimum {goal} assauts.",
+				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmis l'ensemble de vos attaques.",
+				"maxDmg": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
+				"minPrctDmg": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
+				"counter": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
+				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
+				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
+				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
+				"undefined": "No challenge was selected."
+			}
 		}
 	},
 	"guide": {

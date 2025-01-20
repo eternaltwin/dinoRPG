@@ -65,7 +65,7 @@
 		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
 		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
-		"finishGrid": "Félicitations ! Vous avez gagné 1000 or pour avoir terminé la grille !",
+		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
 	},
 	"dig": {
@@ -2065,7 +2065,7 @@
 			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6, le maximum de vie de 50 et la vitesse de 15%",
 			"Planificateur": "Permet au Dinoz de chercher une case supplémentaire",
 			"HeritageFaroe": "Augmente la puissance des assauts Bois de 12 et l'armure de 1",
-			"PrintempsPrecoce": "Tous les autres Dinoz du groupe regagnent jusqu'à autant de points de vie que l'élément Bois du Dinoz",
+			"PrintempsPrecoce": "Tous les autres combattants alliés regagnent jusqu'à autant de points de vie que l'élément Bois du Dinoz",
 			"EspritGorilloz": "Appelle un esprit Gorilloz pour aider à combattre",
 			"GardeForestier": "Augmente de 3 la défense Bois de tous les Dinoz du groupe",
 			"Fouille": "Permet au Dinoz de trouver des artefacts dans certains lieux",
@@ -4163,7 +4163,7 @@
 		"by": "par",
 		"details": "Détails",
 		"time": "{days}j {hours}h {minutes}m {seconds}s",
-		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus pour l'équivalent de **1** :ticket: **= 1000** :gold: à partir de la **Banque de Dinoland**",
+		"currency": "Les **Bons du Trésor** nécessaires aux achats sur le Marché des Éleveurs peuvent être obtenus de diverses façons dans Dinoland. La **Banque de Dinoland** peut vous les racheter au taux de **1** :ticket: **= 1000** :gold: mais elle n'en émet plus.",
 		"back": "Retour",
 		"bid": "Enchérir",
 		"detail": "Voir détails",
@@ -4317,7 +4317,7 @@
 				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
 				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
 				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
-				"undefined": "No challenge was selected."
+				"undefined": "Erreur: aucun challenge sélectionné"
 			},
 			"challengeExplanation": {
 				"kill": "Dommage, vous n'avez pas réussi à vaincre votre adversaire avant la fin du temps imparti.",

@@ -42,7 +42,7 @@
 			"offerCreated": "Angebot wurde erstellt.",
 			"offerCancelled": "Angeboterstellung abgebrochen.",
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
-			"offerClaimed": "Der Gewinn wurde bereits abgeholt"
+			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
 		"isSelling": "Auf den Dinoz kann ein weiterer Dinoz folgen.",
 		"heal": "Dein Dinoz hat {value} :hp: wiederhergestellt.",
@@ -4232,13 +4232,6 @@
 		"OfferExpired": "Das **Angebot {offer}** von **{player} ({playerId})** ist ohne gewonnen zu werden **abgelaufen**.",
 		"OfferWon": "**{winner}** hat das **Angebot {offer}** von **{player} ({playerId})** für den **Betrag von {amount}** Schatzbriefen **gewonnen**."
 	},
-	"selectDinoz": {
-		"selectChampions": "Wähle deine Mitstreiter",
-		"selectTeam": "Stelle deine Dinoz-Mannschaft zusammen, um an den heutigen Herausforderungen teilzunehmen",
-		"disclaimer": "Du kannst deine Mannschaft aus bis zu **10** Dinoz bilden. Wähle mit Bedacht, denn du wirst die Auswahl bis morgen nicht mehr ändern können.",
-		"validate": "Auswahl bestätigen",
-		"edit": "Auswahl bearbeiten"
-	},
 	"dojo": {
 		"welcome": "Willkommen in deinem Dojo",
 		"accessTournament": "An Wettkampf teilnehmen",
@@ -4275,11 +4268,14 @@
 			"hpLost": "Anzahl verlorener Lebenspunkte :pv:",
 			"hpHealed": "Anzahl wiederhergestellter Lebenspunkte",
 			"attacks": "Anzahl der Schläge",
-			"groupAttacks": "Anzahl der Gruppenangriffe",
 			"multiHit": "Anzahl der Mehrfachschläge",
 			"assaults": "Anzahl der Angriffe",
 			"counters": "Anzahl der Gegenangriffe",
-			"petrified": "Anzahl versteinerter Dinoz",
+			"poisoned": "Anzahl vergifteter Gegner",
+			"poison_damage": "Giftschaden verursacht",
+			"burn_damage": "Brandschaden verursacht",
+			"reinforcements": "Anzahl herbeigerufener Verstärkung",
+			"petrified": "Anzahl versteinerter Gegner",
 			"damageFire": ":fire:-Schaden verursacht",
 			"assaultFire": ":fire:-Angriffe ausgeführt",
 			"damageWater": ":water:-Schaden verursacht",
@@ -4292,6 +4288,29 @@
 			"assaultAir": ":air:-Angriffe ausgeführt",
 			"damageVoid": ":void:-Schaden verursacht",
 			"assaultVoid": ":void:-Angriffe ausgeführt"
+		},
+		"challenge": {
+			"selectChampions": "Wähle deine Mitstreiter",
+			"selectTeam": "Stelle deine Dinoz-Mannschaft zusammen, um an den heutigen Herausforderungen teilzunehmen",
+			"disclaimer": "Du kannst deine Mannschaft aus bis zu **10** Dinoz bilden. Wähle mit Bedacht, denn du wirst die Auswahl bis morgen nicht mehr ändern können.",
+			"validate": "Auswahl bestätigen",
+			"edit": "Auswahl bearbeiten",
+			"launch": "Kampf starten",
+			"challenge": {
+				"kill": "Bezwinge deinen Gegner, bevor die Zeit abläuft. Lass ihnen keine Chance!",
+				"takeAttack": "Besiege deinen Gegner, indem du ihn nicht mehr als {goal} Mal angreifen lässt.",
+				"takeRawDmg": "Bezwinge deinen Gegner, während du nicht mehr, als {goal} Lebenspunkte verlierst.",
+				"takePrctDmg": "Bezwinge deinen Gegner, während du nicht mehr, als {goal}% Lebenspunkte verlierst.",
+				"assault": "Bezwinge deinen Gegner, während du mindestens {goal} Angriffsfähigkeiten einsetzt.",
+				"assaultPrct": "Besiege deinen Gegner, während mindestens {goal}% deiner Angriffe, Angriffsfähigkeiten sind.",
+				"maxDmg": "Bezwinge deinen Gegner, während du ihm nicht mehr, als {goal} seiner Lebenspunkte an Schaden zufügst.",
+				"minPrctDmg": "Bezwinge deinen Gegner, während du ihm mindestens {goal}% seiner Lebenspunkte an Schaden zufügst.",
+				"counter": "Bezwinge deinen Gegner, während du mindestens {goal} Gegenangriff(e) ausführst.",
+				"dodge": "Bezwinge deinen Gegner, während du mindestens {goal} Mal ausweichst.",
+				"noPoison": "Bezwinge deinen Gegner, ohne dabei vergiftet zu werden.",
+				"poison": "Bezwinge deinen Gegner, während du ihn im Kampf vergiftest.",
+				"undefined": "Es wurde keine Herausforderung ausgewählt."
+			}
 		}
 	},
 	"guide": {

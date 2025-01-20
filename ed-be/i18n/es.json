@@ -40,6 +40,16 @@
 	"tooMuchItem": "Tienes un objeto que podría superar el límite máximo.",
 	"equipedItems": "No puede vender un Dino con objetos equipados.",
 	"offerInProgress": "No puedes cancelar una subasta que tenga al menos una oferta.",
+	"dojo": {
+		"inexistantDojo": "El dojo seleccionado no existe.",
+		"dinozNotPlayer": "Estos Dinos no pueden combatir",
+		"alreadyFighted": "Este Dino ya ha combatido",
+		"wrongDinozInTeam": "Tu equipo solo puede estar formado por una cantidad de Dinos entre 5 y 10.",
+		"notEnoughGold": "No tienes suficiente oro para esta pelea",
+		"archiveNotFound": "El archivo no fue encontrado",
+		"inexistantOpponent": "Adversario no encontrado",
+		"notFightedOpponent": "Adversario ya derrotado"
+	},
 	"race": {
 		"1": "Moueffe",
 		"2": "Moueffe Demonio",

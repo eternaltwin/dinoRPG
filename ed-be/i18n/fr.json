@@ -43,9 +43,9 @@
 	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
-		"dinozNotPlayer": "Ces dinoz ne peuvent pas combattre",
-		"alreadyFighted": "Ce dinoz a déjà combattu",
-		"wrongDinozInTeam": "Votre équipe ne peut être consitutuée que de 5 à 10 dinoz.",
+		"dinozNotPlayer": "Ces Dinoz ne peuvent pas combattre",
+		"alreadyFighted": "Ce Dinoz a déjà combattu",
+		"wrongDinozInTeam": "Votre équipe ne peut être constituée que de 5 à 10 Dinoz.",
 		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
 		"archiveNotFound": "L'archive n'a pas été trouvée",
 		"inexistantOpponent": "Adversaire non trouvé",

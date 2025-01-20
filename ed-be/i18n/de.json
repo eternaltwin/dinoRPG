@@ -40,6 +40,16 @@
 	"tooMuchItem": "Du hast einen Gegenstand, der dabei ist, die Obergrenze zu überschreiten.",
 	"equipedItems": "Du kannst einen Dinoz mit ausgerüsteten Gegenständen nicht verkaufen.",
 	"offerInProgress": "Du kannst eine Auktion nicht abbrechen, wenn darauf mindestens ein Gebot besteht.",
+	"dojo": {
+		"inexistantDojo": "Das ausgewählte Dojo existiert nicht",
+		"dinozNotPlayer": "Diese Dinoz sind kampfunfähig",
+		"alreadyFighted": "Dieser Dinoz hat bereits gekämpft",
+		"wrongDinozInTeam": "Deine Mannschaft muss aus 5-10 Dinoz bestehen",
+		"notEnoughGold": "Du hast nicht genügend Gold, um diesen Kampf zu starten",
+		"archiveNotFound": "Archiv nicht gefunden",
+		"inexistantOpponent": "Gegner nicht gefunden",
+		"notFightedOpponent": "Dieser Gegner wurde bereits bezwungen"
+	},
 	"race": {
 		"1": "Möffe",
 		"2": "Dämonen-Möffe",

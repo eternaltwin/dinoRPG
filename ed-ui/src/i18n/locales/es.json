@@ -65,7 +65,7 @@
 		"resting": "Tu Dino está actualmente descansando. Regenera {hp} :pv: cada {min} minutos.",
 		"ingredientSold": "Vendiste tus ingredientes por un total de {value} :gold:.",
 		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
-		"finishGrid": "¡Felicidades! ¡Has ganado 1000 de oro por completar el tablero!",
+		"finishGrid": "¡Felicidades! ¡Has ganado 1000 :gold: por completar el tablero!",
 		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados."
 	},
 	"dig": {
@@ -863,7 +863,7 @@
 			"speech": {
 				"begin": "En la biblioteca de la Universidad te encuentras con el famoso profesor Eugenio. Es conocido por su gran interés en los Maestros de Dinos. Es un tipo muy curioso que no dudará en preguntarte muchas cosas pero a cambio te puede enseñar algunas técnicas muy útiles para tus Dinos y revelarte información importante.",
 				"talk": "Hola chavalito, ¿cómo te va? De aventuras y todo eso, ¿no? ¡Ja! Me recuerda a cuando yo tenía tu edad. Me he recorrido kilómetros alrededor de todo Dinoland. No dudes en venir a preguntarme lo que quieras sobre las historias que te intriguen en Dinoland.&& Además, puedo enseñarle algunas cosas útiles a tu Dino. A condición de que esté listo, pues mi aprendizaje no es para nada tranquilo y podría serle fatal si no está lo suficientemente preparado.",
-				"nothing": "Bien. Siéntate ahí y pon a tu Dino aquí... Perfecto. (Saca una pequeña linterna de su bolsillo)... la pupila reacciona correctamente... Voyons la dentition, fais \"haaaa !\"...  Mmmm... tu Dino sigue siendo un poco joven... De momento no puedo enseñarle nada. Vuelve a verme cuando haya alcanzado el nivel 5.",
+				"nothing": "Bien. Siéntate ahí y pon a tu Dino aquí... Vale. Perfecto. (Saca una pequeña linterna de su bolsillo)... la pupila reacciona correctamente... Veamos la dentadura, di \"¡aaaa!\"...  Mmmm... tu Dino sigue siendo un poco joven... De momento no puedo enseñarle nada. Vuelve a verme cuando haya alcanzado el nivel 5.",
 				"nothing2": "Vamos a ver... (examina tu Dino...) Bien, yo diría que tu Dino ha mejorado mucho desde la última vez. Sin embargo, no es lo suficientemente fuerte para aprender la segunda técnica... su cuerpo no lo soportaría. Yo diría que hay que esperar al nivel 6... Mmmm no, el nivel 7 mejor. Es más seguro.",
 				"learn": "¿Entonces parece que tu Dino quiere aprender una nueva técnica? Para ello tu Dino tiene que combatir un monstruo. Lo entrenaré sólo si gana el combate. ¿Qué técnica quieres que le enseñe?",
 				"water": "Muy bien. Si tu Dino supera este desafío, le enseñaré a nadar con un salvavidas. Gracias a eso, tu Dino podrá atravesar cortas distancias por agua.",
@@ -874,9 +874,9 @@
 				"learn_fire": "¿Has venido por el Material de Escalada? Para ello, tendrás que derrotar a este monstruo.",
 				"learn_done": "No tengo nada que enseñar a tu Dino. Pero no te preocupes, hay otras personas en Dinoland que podrán enseñarle numerosas técnicas.",
 				"question": "Ah, ¡me encaaaaaaantan las preguntas! ¿Qué quieres saber, chavalín?",
-				"dinoville": "El Reino de Dinovilla ha sido destruido y reconstruido varias veces desde hace mucho tiempo. Hoy en día es un lugar próspero y civilizado, especialmente comparado con los otros lugares que lo rodean. ¡Es por ello que Dinovilla es un lugar perfecto para un pequeño Maestro de Dinos como tú! No dudes en entrenar a tu Dino antes de llevarlo a otros lugares de Dinoland, ¡pues los monstruos de por allí son más peligrosos que aquí!",
-				"atlante": "Hace mucho tiempo, existió una isla al sur de Dinoland. Había sido propulsada a la cima del pico de una roca volcánica, a varias centenas de metros de altura por encima del océano. Se le llamó la Isla de Jazz... Sin embargo, poco a poco, las olas del océano erosionaron el pilar de roca y finalmente la isla se hundió en el océano. Poco después, un gigantesco tsunami engulló una buena mitad de Dinoland, llevándose con él una gran parte de las antiguas civilizaciones humanas. Hoy en día, después de varios cientos de años, las cosas empiezan al fin a organizarse, pero una gran parte de Dinoland sigue siendo salvaje y peligrosa. Las Islas Atlanteidas son fragmentos de la Isla de Jazz. On dit que seul le Marais Collant n'a pas changé.",
-				"gtc": "Ey chavalín, ¿ves el pequeño triángulo negro allí, en el norte? Es un inmenso volcán que se llama el Gran Señor-Todo-Quema. Je te conseille d'aller y faire un tour, on y mange de très bonnes merguez, grillées\n\t\tà point. Cuando era joven estudié mucho las ruinas de las antiguas civilizaciones. ¿Sabías que en la cima del Gran Señor-Todo-Quema existía una civilización llamada Ashpuk? Y un día, ¡bum! una erupción volcánica y, ¡todo desaparecido! ¿No te parece triste? En todo caso, te aconsejo que vayas a rebuscar un poquito en las ruinas. Seguro que encuentras una antigua reliquia.",
+				"dinoville": "El Reino de Dinovilla ha sido destruido y reconstruido varias veces desde hace mucho tiempo. Hoy en día es un lugar próspero y civilizado, especialmente comparado con los otros lugares que lo rodean. ¡Es por ello que Dinovilla es un lugar perfecto para un pequeño Maestro de Dinos como tú!&& No dudes en entrenar a tu Dino antes de llevarlo a otros lugares de Dinoland, ¡pues los monstruos de por allí son más peligrosos que aquí!",
+				"atlante": "Hace mucho tiempo, existió una isla al sur de Dinoland. Había sido propulsada a la cima del pico de una roca volcánica, a varias centenas de metros de altura por encima del océano. Se le llamó la Isla de Jazz...&& Sin embargo, poco a poco, las olas del océano erosionaron el pilar de roca y finalmente la isla se hundió en el océano. Poco después, un gigantesco tsunami engulló una buena mitad de Dinoland, llevándose con él una gran parte de las antiguas civilizaciones humanas. Hoy en día, después de varios cientos de años, las cosas empiezan al fin a organizarse, pero una gran parte de Dinoland sigue siendo salvaje y peligrosa.&& Las Islas Atlanteidas son fragmentos de la Isla de Jazz. Se dice que sólo el Pantano Pegajoso no ha cambiado.",
+				"gtc": "Ey chavalín, ¿ves el pequeño triángulo negro allí, en el norte? Es un inmenso volcán que se llama el Gran Señor-Todo-Quema. Te aconsejo que te des una vuelta por allí. Ponen buenas salchichas.&& Cuando era joven estudié mucho las ruinas de las antiguas civilizaciones. ¿Sabías que en la cima del Gran Señor-Todo-Quema existía una civilización llamada Ashpuk? Y un día, ¡bum! una erupción volcánica y, ¡todo desaparecido! ¿No te parece triste?&& En todo caso, te aconsejo que vayas a rebuscar un poquito en las ruinas. Seguro que encuentras una antigua reliquia. Y no olvides probar las salchichas, ¡eh!",
 				"gant": "¡¡Oh!! ¡¡El Guante de Zors!! ¡Es un objeto muy raro lo que tu Dino tiene ahí! Se dice que el Guante de Zors tiene una relación con las Caídas Mutantes y que permite acceder a la Jungla de Grumhel, aunque no se sabe cómo usarlos...",
 				"stone": "¡¡¡Ohhhhhh!!! Pero mira qué cosa más interesante, me parece que se trata de .... uhmmuhu.... no estoy seguro... (mira la piedra fijamente)... ¿Puedes enseñarme esta Piedra para examinarla?",
 				"stone_yes": "¡¡Ooooooohhhhh!! Sí.... es lo que pensaba.... ¡Mira! (limpia la piedra con delicadeza)... ¡es un Tótem Ashpuk! Esto tiene mucho valor... ¡cuídalo bien!",
@@ -912,7 +912,7 @@
 				"begin": "Recostada en la tumbona de Mandrágora, Sofía bebe un cóctel. Disfruta del sol y se broncea en la playa...",
 				"slurp": "Slurpp....",
 				"nouvelle": "Sluuuuuuuuurpp.... No me puedo quejar, pero estaba bastante tranquila hasta que llegaste. ¿Por qué no vas a jugar por otro lugar? Slurpp.... Y no molestes a mi marido, no le vayas a dar ideas extrañas...",
-				"bien": "Es mejor dejarla tranquila, si ni siquiera el mismísimo Mandrágora no se atreve a contrariarla, ¿quién sería tan tonto para hacerlo?",
+				"bien": "Es mejor dejarla tranquila, si ni siquiera el mismísimo Mandrágora se atreve a contrariarla, ¿quién sería tan tonto para hacerlo?",
 				"troph": "Slurpp.... Caushemesh no le teme a nada... Le encargué a las chicas vigilar la grieta del Mundo Sombra. En caso de problemas, enviaré a mi esposo a hacerse cargo.",
 				"palais": "De todos modos no hay nada interesante por allá... Excepto por un objeto. Hmm... No tengo ganas de ir a buscarlo... ¿Sabes qué?, te lo doy, ya no lo necesito, ahora que tengo el \"verdadero\", jeje... Puedes quedarte con él como recompensa por haberme devuelto a mi marido.",
 				"retour": "Ahora puedes irte, tengo asuntos pendientes... ... ¡¡Mandrichúúú!! Ven a masajearme... ¡RÁPIDO!",
@@ -941,8 +941,8 @@
 		"mmex": {
 			"speech": {
 				"begin": "Paseas por Fuerzabruta con tranquilidad y te encuentras con una mujer que aparenta estar precisamente esperándote.",
-				"talk": "Tiens donc, voilà donc ce jeune Maître Eleveur dont j'ai tant entendu parler ? Parece que Papy Jose dice muchas cosas buenas de ti, ¿porque trabajas tan duro para cumplir sus misiones?",
-				"talk2": "Como pareces alguien en quien se puede confiar, a mí también me hubiera gustado confiarte algunas misiones, ¡tú decides si las aceptas o no!",
+				"talk": "¡Anda! ¡Mira por dónde! Estoy ante este gran joven Maestro del que tanto he oído hablar. Papy Jose habla muy bien de ti. ¿Tanto te aplicas para realizar sus misiones?",
+				"talk2": "Puesto que pareces ser alguien en quien se puede confiar, me gustaría darte algunas misiones. ¡Eres libre de aceptarlas o no!",
 				"missions": "Ah, lo siento, esta parte aún no se ha desarrollado. Ven a verme más tarde.",
 				"question": "¿Quién soy? ¡Ja, ja, ja! Perdóname joven, había olvidado presentarme. Soy... ... ...",
 				"question2": "... lo siento... perdona. Acabo de acordarme justamente de que no puedo revelar mi identidad. De lo contrario podría suponerme un grave problema. Ya sé que no es precisamente muy educado, así que al menos te diré algo interesante...",
@@ -950,7 +950,7 @@
 				"double2": "Pues... ¡esto es falso! Hay competencias especiales que no están asociadas a un solo elemento sino a DOS elementos. Se llaman competencias-doble. Una competencia-doble se puede aprender a partir de uno de los dos elementos que la compone. Sin embargo es necesario conocer al menos una competencia de cada uno de estos dos elementos.",
 				"double3": "Sí, comprendo tu sorpresa. Es un secreto muy bien guardado. Sin embargo para poder aprender estas competencias es necesario controlar la competencia-doble. Es una competencia secreta que solo los Drag... ¡Hablo demasiado!",
 				"learn": "Oh, bueno. Es más bien simple. Mira, es suficiente con hacer \"esto\" y...",
-				"already": "A ton avis ? .... Il me semble que tu l'as déjà appris ! Ah ah ah !",
+				"already": "¿Tú qué piensas?... Pues me parece que ya la has aprendido, ¿no? ¡Ja, ja, ja!",
 				"no": "No... no funciona... si sientes un picor cuando hago \"esto\" o si tu Dino no ha aprendido todavía las competencias que te permitan controlar la Competencia-Doble, no funcionará. ¡Vuelve a verme más adelante para intentarlo de nuevo!",
 				"dolearn": "¡Guau! ¡Funcionó! ¿Ves cómo era fácil? Tu Dino ya controla la Competencia-Doble. ¡Enhorabuena!"
 			},
@@ -959,8 +959,8 @@
 				"talk2": "...",
 				"missions": "Lista de misiones",
 				"question": "¿Pero quién es usted?",
-				"question2": "¿Usted es?",
-				"double": "¿Oh?",
+				"question2": "¿Usted es...?",
+				"double": "¿Y qué es?",
 				"double2": "¡Sí!",
 				"double3": "!!!",
 				"learn": "¿Cómo lo aprendo?",
@@ -989,7 +989,7 @@
 		},
 		"mineur": {
 			"speech": {
-				"begin": "¡Pinc! ¡Pinc! ¡Pinc! Pffff este coral es más duro que la piedra, ¿lo sabías?",
+				"begin": "¡Pinc! ¡Pinc! ¡Pinc! Pffff este coral está más duro que el cemento, ¿sabías eso?",
 				"thanks": "¡Eres muy agradable! Vuelve aquí cuando se te rompa la pala, yo la arreglaré.",
 				"yes": "Ah, ¿sabías? Toma, te prestaré una pala vieja para que también puedas cavar. Está en muy mal estado por lo que a la primera se romperá, pero es mi pala de la suerte,\n¡con ella podrás encontrar los mayores tesoros de Dinoland! Entonces, ¿qué se dice?",
 				"nothing": "Entonces, ¿te gusta mi pala? ¿Qué se dice?",
@@ -1000,8 +1000,8 @@
 				"next": "¡Sí, bastante! ¡Mira esos músculos! Estoy nominado a los Premios Coral, categoría \"Minero Brazo Grande\" este año.",
 				"next2": "¡Sí, ya lo digo! Voy a tener que trabajar mucho más si quiero parecerme a mi ídolo algún día...",
 				"next3": "¡¿Y entonces?! ¿No me preguntas por mi ídolo?",
-				"qui": "¡Pues vamos a ver! ¡Silverter Staline, por supuesto! Tres veces ganador de los Premios Coral, en las categorías \"Músculos definitivos\" y \"Réplica que mata\". 'Él es realmente genial, y siempre se las arreglaba para eliminar todos sus oponentes!",
-				"ok": "¡Sí, es el más fuerte! Adiós, los buenos viejos tiempos, podría hablar de ellos durante horas... Pero bueno, los dejo, ¡tengo trabajo que hacer! ¡Pinc! ¡Pinc! ¡Pinc!"
+				"qui": "¡Pues vamos a ver! ¡Sylverter Staline, por supuesto! Tres veces ganador de los Premios Coral, en las categorías \"Músculos definitivos\" y \"Réplica que mata\". ¡Él es realmente genial, y siempre se las arreglaba para eliminar todos sus oponentes!",
+				"ok": "Sí, es el más fuerte. ¡Aquellos buenos tiempos! Podría hablar de eso durante horas... Pero bueno, tengo que dejarte. ¡A trabajar! ¡Pinc! ¡Pinc! ¡Pinc!"
 			},
 			"playerChoice": {
 				"thanks": "¡Gracias!",
@@ -1011,17 +1011,17 @@
 				"nothing2": "Sí",
 				"repair2": "Sí",
 				"no": "No",
-				"next": "Ah bueno...",
-				"next2": "En realidad...",
+				"next": "Pues sí...",
+				"next2": "¿De verdad...?",
 				"next3": "...",
-				"qui": "Uh... ¿Y quién es tu ídolo?",
-				"ok": "¡Se ve fuerte!"
+				"qui": "(suspiro)... ¿y quién es tu ídolo?",
+				"ok": "¡Pues entonces sí que es fuerte!"
 			}
 		},
 		"bob": {
 			"speech": {
 				"begin": "Hola, hola, holita. ¿Qué deseas, Maestro de Dinos?",
-				"question": "Une question ? Mmmmmm.... ¿Qué tal una pequeña misión para tu Dino? Avec des amis, on\n\t\torganise des rallyes tout autour de Dinoland !",
+				"question": "¿Una pregunta? Mmmmmm.... ¿Qué dirías de una pequeña Misión para tu Dino? Organizamos un rally con unos amigos por todo Dinoland.",
 				"nothing": "¿Ah sí? Entonces perfecto... ¡Buen viaje!",
 				"quest2": "Vuelve cuando hayas conseguido las Aletas de Korgones de la Jungla de Grumhel. Entonces te responderé a lo que me solicites.",
 				"quest3": "¿Una pregunta? Mmmmm... Veo que tienes las Aletas de Korgones. Eso quiere decir que quizás seas capaz de sobrevivir... \"allí\"... quizás...",
@@ -1035,17 +1035,17 @@
 				"ingr": "¡Pum pum palalam pum pum pam pum pum palalam pam! ¡Ea! Aquí tienes una magnífica Poción Anti Sedh para ti...",
 				"potion": "Mmmm... hasta la próxima amigo, ¡vuelve cuando quieras!",
 				"ok": "Tu Dino ahora se está concentrando. Cuando haya suficientes, serán teletransportados a otro mundo.",
-				"bye": "A la prochaine et amuse toi bien !"
+				"bye": "¡Hasta la próxima y diviértete!"
 			},
 			"playerChoice": {
 				"question": "Tengo una pregunta para ti...",
 				"nothing": "Nada de nada",
 				"missions": "Sí quiero",
-				"no": "No gracias",
+				"no": "No, gracias",
 				"quest2": "¿Y mi pregunta?",
 				"quest3": "¿Y mi pregunta?",
-				"bye": "Debo partir",
-				"where": "¿Allí?",
+				"bye": "Me tengo que ir",
+				"where": "¿\"Allí\"?",
 				"where2": "Pero, ¿a dónde exactamente?",
 				"how": "¿Cómo tengo que hacerlo?",
 				"danger": "¿Y es peligroso?",
@@ -1070,17 +1070,17 @@
 			},
 			"playerChoice": {
 				"ok": "Ehh... sí",
-				"wah": "¡¡Waaaahh!!",
+				"wah": "¡¡Guaauuhh!!",
 				"yes": "¡Ok!",
 				"nothing": "¡Ok!",
-				"no": "No gracias",
+				"no": "No, gracias",
 				"spirit": "¿Quieres decir \"Espiritual\"?",
 				"thanks": "Bueno, tengo que irme. ¡Gracias por el Talismán Bao!"
 			}
 		},
 		"forgeron": {
 			"speech": {
-				"begin": "Vous entrez dans les forges de Fosselave. la chaleur qui règne ici n'a rien à envier à l'intérieur du cratère du Grand Tout Chaud. Ici rien ne se crée, tout se transforme, à grand coup de marteau !  100 pièces d'or pour réparer une pelle, c'est donné  non ?",
+				"begin": "Entras en la herrería de Fosalava. El calor que reina aquí no tiene nada que envidiar a los cráteres del Gran Todo Quema. Aquí nada se crea, todo se transforma, ¡a martillazos!&&100 monedas de oro por reparar una pala, ¿buen precio, no?",
 				"pelle": "¿No prefieres un palazo en la cabeza?",
 				"repair": "¡Listo, tu pala está reparada, Maestro! Son 100 monedas de oro. No olvides pasar por la caja.",
 				"repair2": "¡Listo, tu pala está reparada, Maestro! Son 100 monedas de oro. No olvides pasar por la caja.",
@@ -1088,10 +1088,10 @@
 				"no": "Vuelve cuando tengas algo en los bolsillos, muchacho. ¡Hasta pronto!"
 			},
 			"playerChoice": {
-				"pelle": "¿Podrías conseguirme uno de esos...?",
+				"pelle": "¿Quieres ser mi novia...?",
 				"repair": "¿Puedes arreglar mi pala?",
-				"repair2": "¿Puedes arreglar mi Pala Mejorada?",
-				"thanks": "¡Ay, sí, señora!",
+				"repair2": "¿Puedes arreglar mi super pala?",
+				"thanks": "¡Estupendo!",
 				"no": "Nada en particular"
 			}
 		},
@@ -2288,7 +2288,7 @@
 			"13": "Hojas de Nenúfar",
 			"4": "Pala de la Buena Suerte",
 			"5": "Piel",
-			"6": "Piel de Mamut",
+			"6": "Pala rota",
 			"22": "Flauta de Rascafandro",
 			"25": "Aletas de Korgones",
 			"34": "La estrategia en 130 lecciones",
@@ -2804,7 +2804,7 @@
 			"arbre": "Validar la Misión",
 			"pickfigo": "Figonicia Forúncula",
 			"pickpuru": "Purulenta Negra",
-			"pickvisqueuse": "Zarpas punzantes",
+			"pickvisqueuse": "Viscosa de Barro",
 			"moinemedecin": "Monje médico",
 			"pickherbs": "Coger las plantas",
 			"pickCoral": "Trozo de coral",
@@ -3801,23 +3801,23 @@
 		},
 		"header": {
 			"title": "Clan: {name}",
-			"infos": "Clan information",
-			"creation_date": "Created the {date}"
+			"infos": "Información del clan",
+			"creation_date": "Creado el {date}"
 		},
 		"tabs": {
-			"pages": "Clan pages",
-			"members": "Members list",
-			"treasure": "Clan treasure",
-			"war": "War informations",
-			"discussion": "Discussion thread",
-			"history": "Clan history",
-			"parameters": "Settings"
+			"pages": "Páginas del clan",
+			"members": "Lista de miembros",
+			"treasure": "Tesoro del Clan",
+			"war": "Información de guerra",
+			"discussion": "Foro",
+			"history": "Histórico",
+			"parameters": "Configuración"
 		},
 		"icons": {
-			"members": "Number of members",
-			"gold": "Treasure value",
-			"rank": "Rank",
-			"crown": "Clan leader"
+			"members": "Número de miembros",
+			"gold": "Valor del tesoro",
+			"rank": "Rango",
+			"crown": "Líder del Clan"
 		},
 		"forum": {
 			"connectionFailed": "¡Se produjo un error al conectarse al chat del clan!",
@@ -3837,23 +3837,23 @@
 			"see_help": "Más información sobre los clanes",
 			"see_ranking": "Ver el ranking de los mejores Clanes"
 		},
-		"cannot_create_info": "Creating a clan costs {money} :gold:, and requires you to have {points} ranking points.",
+		"cannot_create_info": "Crear un clan cuesta {money} :gold:, y requiere que tengas {points} puntos en la clasificación.",
 		"button": {
 			"search": "Buscar",
-			"create": "Create clan"
+			"create": "Crear clan"
 		}
 	},
 	"clansMembers": {
 		"th": {
 			"name": "Nombre",
-			"donation": "Donations",
+			"donation": "Donaciones",
 			"stats": "Estadísticas",
 			"actions": "Acciones"
 		},
 		"edit": {
 			"disclaimer": "Esta página le permite modificar los derechos del jugador <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> en el Clan.",
 			"right": {
-				"MEMBER_EDIT": "Can edit rights and surname of other members",
+				"MEMBER_EDIT": "Puede cambiar los derechos y apodos de los miembros",
 				"PAGE_MANAGE": "Puede gestionar las páginas del Clan",
 				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Puede aceptar y rechazar nuevos miembros",
 				"MEMBER_EXCLUDE": "Puede expulsar miembros",
@@ -3881,58 +3881,58 @@
 	},
 	"clanPages": {
 		"button": {
-			"join_clan": "Join clan",
-			"delete": "Delete page",
-			"create": "Create new page",
-			"edit": "Edit page"
+			"join_clan": "Unirse al clan",
+			"delete": "Eliminar página",
+			"create": "Crear nueva página",
+			"edit": "Editar página"
 		},
 		"tip": {
 			"join_clan": "Unirse a este clan te costará {money} :gold:. Esta cantidad te será devuelta en caso de rechazo."
 		},
 		"request": {
-			"info": "You have a waiting request for joining the clan ",
-			"cancel": "Cancel request."
+			"info": "Tienes una solicitud pendiente para unirte al clan ",
+			"cancel": "Cancelar solicitud."
 		},
 		"creation": {
-			"new": "New clan page",
-			"edit": "Edition of clan page",
-			"title": "Title",
-			"content": "Content",
-			"public": "Public page",
+			"new": "Nueva página del clan",
+			"edit": "Modificación de una página del clan",
+			"title": "Título",
+			"content": "Contenido",
+			"public": "Página pública",
 			"action": {
-				"create": "Create",
-				"edit": "Edit",
-				"cancel": "Cancel"
+				"create": "Crear",
+				"edit": "Editar",
+				"cancel": "Cancelar"
 			}
 		}
 	},
 	"clanDiscussion": {
 		"action": {
-			"create": "New message",
-			"refresh": "Refresh"
+			"create": "Nuevo mensaje",
+			"refresh": "Refrescar"
 		},
 		"pagination": {
 			"page": "Página",
-			"go_to": "Go to page"
+			"go_to": "Ir a la página"
 		}
 	},
 	"clanHistory": {
 		"type": {
-			"CLAN_CREATED": "Clan has been created.",
-			"PLAYER_JOIN": "A player has joined the clan.",
-			"PLAYER_LEAVE": "This player decided to leave the clan.",
-			"PLAYER_EXCLUSION": "This player has been excluded from the clan.",
-			"UNKNOWN": "Unknown event."
+			"CLAN_CREATED": "El clan ha sido creado.",
+			"PLAYER_JOIN": "Un jugador se ha unido al clan.",
+			"PLAYER_LEAVE": "Este jugador decidió dejar el clan.",
+			"PLAYER_EXCLUSION": "Este jugador ha sido expulsado del clan.",
+			"UNKNOWN": "Evento desconocido."
 		}
 	},
 	"clanSettings": {
 		"action": {
-			"delete": "Delete clan",
+			"delete": "Eliminar clan",
 			"save": "Save"
 		},
 		"banner": {
-			"title": "Edit clan banner URL :",
-			"info": "Clan banner has a ratio of 448px large by 100px long."
+			"title": "Editar URL del banner del clan:",
+			"info": "El banner tiene un ratio de 448px de ancho por 100px de largo."
 		}
 	},
 	"createClan": {
@@ -4232,13 +4232,6 @@
 		"OfferExpired": "La **oferta {offer}** de **{player} ({playerId})** ha **expirado** y no ha sido reclamada.",
 		"OfferWon": "La **oferta {offer}** de **{player} ({playerId})** ha sido **ganada por {winner}** por el **monto de {amount}** bonos."
 	},
-	"selectDinoz": {
-		"selectChampions": "Elige a tus campeones",
-		"selectTeam": "Selecciona tu equipo Dinos para los desafíos de hoy",
-		"disclaimer": "Puedes seleccionar hasta **10** Dinos para tu equipo. Elige con cuidado, sólo podrás cambiar tu selección mañana.",
-		"validate": "Validar mi selección",
-		"edit": "Modificar mi selección"
-	},
 	"dojo": {
 		"welcome": "Bienvenido a tu Dojo",
 		"accessTournament": "Accede al torneo",
@@ -4246,17 +4239,17 @@
 		"tidInProgress": "Las fases finales del torneo inter-dojo están en curso.",
 		"reputation": "Reputación",
 		"points": "Puntos",
-		"worth": "Carisma",
-		"ranking": "Clasificación",
+		"worth": "Mérito",
+		"ranking": "Posición",
 		"accessChallenges": "Accede a los desafíos",
 		"testDinoz": "Pon a prueba tu Dino",
-		"fightHistory": "Ración de Combate",
+		"fightHistory": "Historial de combates",
 		"team": "Mi Equipo",
 		"tournaments": "Torneos",
 		"build": "Construir mi dojo",
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
-		"seeFight": "Artes Marciales",
+		"seeFight": "Ver el combate",
 		"nextTournament": "El próximo torneo comenzará el **{next}**, ¡prepárate! La fase de clasificación termina el **{qualif}**.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
@@ -4275,11 +4268,14 @@
 			"hpLost": "Cantidad de puntos de vida perdidos :pv:",
 			"hpHealed": "Cantidad de puntos de vida ganados",
 			"attacks": "Cantidad de ataques",
-			"groupAttacks": "Cantidad de ataques grupales",
 			"multiHit": "Número de multi-golpes",
 			"assaults": "Número de asaltos",
 			"counters": "Número de contraataques",
-			"petrified": "Número de Dinos petrificados",
+			"poisoned": "Número de adversarios envenenados",
+			"poison_damage": "Daño de veneno infligido",
+			"burn_damage": "Daño por antorcha infligido",
+			"reinforcements": "Número de refuerzos invocados",
+			"petrified": "Número de adversarios petrificados",
 			"damageFire": "Daño de :fire: infligido",
 			"assaultFire": "Número de asaltos :fire: realizados",
 			"damageWater": "Daño de :water: infligido",
@@ -4292,6 +4288,29 @@
 			"assaultAir": "Número de asaltos :air: realizados",
 			"damageVoid": "Daño de :void: infligido",
 			"assaultVoid": "Número de asaltos :void: realizados"
+		},
+		"challenge": {
+			"selectChampions": "Elige a tus campeones",
+			"selectTeam": "Selecciona tu equipo de Dinos para los desafíos de hoy",
+			"disclaimer": "Puedes seleccionar hasta **10** Dinos para tu equipo. Elige con cuidado, no podrás modificar tu selección hasta mañana.",
+			"validate": "Validar mi selección",
+			"edit": "Modificar mi selección",
+			"launch": "Comenzar el combate",
+			"challenge": {
+				"kill": "Vence a tu adversario y mátalo antes de que se acabe el tiempo, ¡no le des ni una oportunidad!",
+				"takeAttack": "Gana este combate sufriendo como máximo {goal} ataques de tu adversario.",
+				"takeRawDmg": "Gana este combate perdiendo como máximo de {goal} puntos de vida.",
+				"takePrctDmg": "Gana este combate perdiendo como máximo {goal}% de puntos de vida.",
+				"assault": "Gana este combate realizando como mínimo {goal} asaltos.",
+				"assaultPrct": "Gana este combate realizando por lo menos {goal}% de asaltos del total de tus ataques.",
+				"maxDmg": "Vence a tu oponente haciéndole perder no más de {goal} puntos de vida.",
+				"minPrctDmg": "Gana el combate haciendo perder como mínimo {goal}% de puntos de vida a tu adversario.",
+				"counter": "Gana este combate realizando {goal} contraataque(s) o más.",
+				"dodge": "Gana este combate esquivando por lo menos {goal} ataque(s).",
+				"noPoison": "Gana este combate sin hacerte envenenar.",
+				"poison": "Vence a tu adversario envenenándolo durante el combate.",
+				"undefined": "Ningún desafío fue elegido."
+			}
 		}
 	},
 	"guide": {
