@@ -220,9 +220,9 @@ export function calculateFightVsMonsters(
  **/
 export function calculateFightBetweenPlayers(
 	teamA: DinozToGetFighter[],
-	playerA: Pick<Player, 'cooker'>,
+	cookerA: boolean,
 	teamB: DinozToGetFighter[],
-	playerB: Pick<Player, 'cooker'>,
+	cookerB: boolean,
 	place: PlaceEnum,
 	timeout?: number,
 	seed?: string
@@ -249,7 +249,7 @@ export function calculateFightBetweenPlayers(
 		seed: rng_seed,
 
 		// Timeout
-		timeout: 1000,
+		timeout: timeout ?? 1000,
 
 		// Flags
 		castleFight: false,
@@ -257,8 +257,8 @@ export function calculateFightBetweenPlayers(
 		enableStats: true,
 
 		// Teams
-		attackerHasCook: playerA.cooker,
-		defenderHasCook: playerB.cooker,
+		attackerHasCook: cookerA,
+		defenderHasCook: cookerB,
 
 		// Fighters
 		initialDinozList,

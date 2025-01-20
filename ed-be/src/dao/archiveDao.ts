@@ -45,6 +45,27 @@ export async function archiveFight(fight: FightProcessResult, playerId: string) 
 	};
 }
 
+export async function archiveChallenge(
+	myDinozId: number,
+	opponentId: number,
+	challenge: string,
+	victory: boolean,
+	achieved: boolean,
+	dojoId: string
+) {
+	const archive = await prisma.dojoChallengeHistory.create({
+		data: {
+			myDinozId,
+			opponentId,
+			challenge,
+			victory,
+			achieved,
+			dojo: { connect: { id: dojoId } }
+		}
+	});
+	return archive;
+}
+
 export async function getArchivedFightRequest(archiveId: string) {
 	const archive = await prisma.fightArchive.findFirst({
 		where: {

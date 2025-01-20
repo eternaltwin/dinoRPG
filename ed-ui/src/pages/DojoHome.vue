@@ -3,14 +3,14 @@
 	<div class="wrapper" v-if="myDojo">
 		<div class="header df">
 			<div class="buttons">
-				<!--			<img
-					@click="goToPage('DojoChallenges')"
+				<img
+					@click="goToPage('DojoChallenge')"
 					:src="getImgURL('icons', 'act_dojo')"
 					v-tippy="{
 						content: formatContent($t('dojo.accessChallenges')),
 						theme: 'small'
 					}"
-				/>-->
+				/>
 				<img
 					@click="goToPage('ChallengeFriend')"
 					:src="getImgURL('design', 'dojo_test')"
@@ -54,9 +54,10 @@
 			</div>
 			<div class="header-text df jcsb">
 				<p class="ttu">
-					{{ $t('dojo.reputation') }} : {{ myDojo.reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} : 0%
+					{{ $t('dojo.reputation') }} : {{ myDojo.reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} :
+					{{ worth }}%
 				</p>
-				<p>{{ $t('dojo.ranking') }} : 29</p>
+				<p>{{ $t('dojo.ranking') }} : --</p>
 			</div>
 		</div>
 	</div>
@@ -83,22 +84,37 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			myDojo: undefined as undefined | DojoBasic
+			myDojo: undefined as undefined | DojoBasic,
+			worth: 0
 		};
 	},
 	methods: {
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
+		},
+		async refresh() {
+			EventBus.emit('isLoading', true);
+			try {
+				this.myDojo = await DojoService.getMyDojo();
+				EventBus.emit('isLoading', false);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+			if (this.myDojo) {
+				const totalVictory = this.myDojo.DojoChallengeHistory.filter(f => f.victory).length;
+				const totalFight = this.myDojo.DojoChallengeHistory.length;
+				this.worth = Math.round((totalVictory / totalFight) * 100);
+			}
 		}
 	},
 	async mounted() {
-		EventBus.emit('isLoading', true);
-		try {
-			this.myDojo = await DojoService.getMyDojo();
-			EventBus.emit('isLoading', false);
-		} catch (e) {
-			errorHandler.handle(e, this.$toast);
-		}
+		EventBus.on('refreshDojo', async e => {
+			if (e) await this.refresh();
+		});
+		await this.refresh();
+	},
+	unmounted() {
+		EventBus.off('refreshDojo');
 	}
 });
 </script>

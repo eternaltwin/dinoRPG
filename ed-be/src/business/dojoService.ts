@@ -1,20 +1,40 @@
 import { Request } from 'express';
-import { auth, getDojoFightPreparationRequest, removeMoney } from '../dao/playerDao.js';
-import { createMyDojo, createMyTeamDao, getMyDojoDao } from '../dao/dojoDao.js';
-import dayjs from 'dayjs';
+import {
+	auth,
+	getDojoChallengePreparationRequest,
+	getDojoFightPreparationRequest,
+	getPlayerDinozInformationForTeam,
+	removeMoney
+} from '../dao/playerDao.js';
+import {
+	addOpponent,
+	cleanCurrentOpponentTeam,
+	createChallengeRequest,
+	createMyDojo,
+	createMyTeamDao,
+	getChallengeRequest,
+	getMyDojoDao,
+	getMyTeamDao,
+	giveReputation,
+	setFightedOpponent,
+	setFightedTeam
+} from '../dao/dojoDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
-import { getDinozForDojoFight } from '../dao/dinozDao.js';
-import generateFight from '../utils/fight/generateFight.js';
-import { FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
-import { generateString } from '../utils/index.js';
-import getFighters from '../utils/fight/getFighters.js';
+import { getDinozForDojoFight, getRandomDinozFromLevel } from '../dao/dinozDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import seedrandom from 'seedrandom';
-import { archiveFight, getAllArchivedFightRequest, getArchivedFightRequest } from '../dao/archiveDao.js';
-import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import {
+	archiveChallenge,
+	archiveFight,
+	getAllArchivedFightRequest,
+	getArchivedFightRequest
+} from '../dao/archiveDao.js';
+import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { calculateFightBetweenPlayers } from './fightService.js';
+import { Challenge, challengeRanges, ChallengeType } from '@drpg/core/models/dojo/challenge';
+import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
+import { Dojo } from '@drpg/prisma';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -38,12 +58,53 @@ export async function createMyTeam(req: Request) {
 		myDojo = await createMyDojo(authed.id);
 	}
 
-	if (myDojo.teamUpdate && dayjs().isSame(myDojo.teamUpdate, 'day')) {
-		throw new ExpectedError(translate('teamAlreadyUpdated', authed));
+	if (teamIds.length < 5 || teamIds.length > 10) {
+		throw new ExpectedError(translate('dojo.wrongDinozInTeam', authed));
 	}
-	const dojo = await createMyTeamDao(teamIds, myDojo.id);
+
+	const playerDinoz = await getPlayerDinozInformationForTeam(authed.id);
+
+	if (!teamIds.every(id => playerDinoz.dinoz.map(d => d.id).includes(id))) {
+		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
+	}
+
+	// Create challenge
+	const newChallenge = generateRandomChallenge();
+	await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
+
+	// Fill 5 opponents
+	const team = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
+
+	await createOpponentTeam(team, myDojo);
+
+	const dojo: myTeam = await createMyTeamDao(teamIds, myDojo.id);
 
 	return dojo;
+}
+
+export async function getMyTeam(req: Request) {
+	const authed = await auth(req);
+
+	const myDojo = await getMyTeamDao(authed.id);
+
+	if (!myDojo) {
+		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
+	}
+
+	if (myDojo.DojoOpponents.length > 0 && myDojo.DojoOpponents.every(d => d.achieved)) {
+		await cleanCurrentOpponentTeam(myDojo.id);
+		myDojo.DojoOpponents = await createOpponentTeam(
+			myDojo.team.map(d => {
+				return {
+					id: d.dinoz.id,
+					level: d.dinoz.level
+				};
+			}),
+			myDojo
+		);
+	}
+
+	return myDojo;
 }
 
 export async function fightFriend(req: Request) {
@@ -81,7 +142,13 @@ export async function fightFriend(req: Request) {
 		d.life = d.maxLife;
 	});
 
-	const fightResult = calculateFightBetweenPlayers(leftTeam, leftPlayer, rightTeam, rightPlayer, PlaceEnum.DOJO);
+	const fightResult = calculateFightBetweenPlayers(
+		leftTeam,
+		leftPlayer.cooker,
+		rightTeam,
+		rightPlayer.cooker,
+		PlaceEnum.DOJO
+	);
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 	return { fight: fightArchive, stats: fightResult.stats };
@@ -119,4 +186,174 @@ export async function getAllArchivedFight(req: Request) {
 	});
 
 	return { archive: fights, quantity: totalArchive };
+}
+
+export async function getChallenge(req: Request) {
+	const authed = await auth(req);
+	const dojo = await getChallengeRequest(authed.id);
+	if (!dojo || !dojo.activeChallenge) {
+		const newChallenge = generateRandomChallenge();
+		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
+		return newChallenge;
+	}
+	return JSON.parse(dojo.activeChallenge) as Challenge;
+}
+
+/**
+ * Generate a random challenge
+ * @returns {Challenge}
+ */
+function generateRandomChallenge(): Challenge {
+	// Get all challenge types from the enum
+	const challengeTypes = Object.values(ChallengeType).filter(value => typeof value === 'number'); // Filter out reverse mappings
+
+	// Select a random challenge type
+	const randomType = challengeTypes[Math.floor(Math.random() * challengeTypes.length)] as ChallengeType;
+
+	// Get the range for this challenge type
+	const [min, max] = challengeRanges[randomType];
+
+	// Generate a random number within the range (inclusive)
+	const randomGoal = Math.floor(Math.random() * (max - min + 1)) + min;
+
+	return {
+		type: randomType,
+		goal: randomGoal
+	};
+}
+
+export async function fightChallenge(req: Request) {
+	const myDinozId = +req.body.myDinoz;
+	const opponentId = +req.body.opponent;
+
+	const authed = await auth(req);
+	const player = await getDojoChallengePreparationRequest(authed.id);
+
+	if (!player.Dojo) {
+		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
+	}
+	const myDinoz = player.Dojo.team.find(d => d.dinozId === myDinozId);
+	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
+	if (!myDinoz || !opponent) {
+		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
+	}
+
+	if (myDinoz.fighted || opponent.achieved) {
+		throw new ExpectedError(translate('dojo.alreadyFighted', authed));
+	}
+
+	const leftTeam = await getDinozForDojoFight([myDinozId]);
+	const rightTeam = await getDinozForDojoFight([opponentId]);
+
+	// Remove items from dinoz for the fight and set life to maxLife
+	rightTeam.map(d => {
+		d.items = [];
+		d.life = d.maxLife;
+	});
+	leftTeam.map(d => {
+		d.items = [];
+		d.life = d.maxLife;
+	});
+
+	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 60);
+
+	const fightArchive = await archiveFight(fightResult, authed.id);
+
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const activeChallenge = JSON.parse(player.Dojo.activeChallenge!) as Challenge;
+	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) && fightResult.winner;
+
+	const promises = [];
+	promises.push(setFightedTeam(myDinozId, player.Dojo.id));
+	promises.push(setFightedOpponent(opponentId, player.Dojo.id, fightArchive.result));
+
+	const newChallenge = generateRandomChallenge();
+	promises.push(createChallengeRequest(authed.id, JSON.stringify(newChallenge)));
+
+	//Reputation
+	const reputation = fightResult.winner ? 2 + (challengeWon ? 2 : 0) : 0;
+	promises.push(giveReputation(reputation, player.Dojo.id));
+	// DOJO challenge history
+	promises.push(
+		archiveChallenge(
+			myDinozId,
+			opponentId,
+			JSON.stringify(activeChallenge),
+			fightArchive.result,
+			challengeWon,
+			player.Dojo.id
+		)
+	);
+
+	await Promise.all(promises);
+
+	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon };
+}
+
+function parseChallenge(challenge: Challenge, stats: FullFightStats) {
+	switch (challenge.type) {
+		case ChallengeType.Assault:
+			return stats.attack.assaults >= challenge.goal;
+		case ChallengeType.AssaultPercentage:
+			return (stats.attack.assaults / stats.attack.attacks) * 100 >= challenge.goal;
+		case ChallengeType.CounterAttack:
+			return stats.attack.counters >= challenge.goal;
+		case ChallengeType.DealDamage:
+			return stats.defense.hpLost <= challenge.goal;
+		case ChallengeType.DealPercentDamage:
+			return (stats.defense.hpLost / stats.defense.startingHp) * 100 >= challenge.goal;
+		case ChallengeType.Dodge:
+			return stats.attack.evasions >= challenge.goal;
+		case ChallengeType.DodgePoison:
+			return stats.defense.poisoned === 0;
+		case ChallengeType.Kill:
+			return stats.defense.startingHp - stats.defense.hpLost + stats.defense.hpHealed <= 0;
+		case ChallengeType.PoisonOpponent:
+			return stats.attack.poisoned > 0;
+		case ChallengeType.TakeAttackQuantity:
+			return stats.defense.attacks <= challenge.goal;
+		case ChallengeType.TakePercentDamage:
+			return (stats.attack.hpLost / stats.attack.startingHp) * 100 <= challenge.goal;
+		case ChallengeType.TakeRawDamage:
+			return stats.attack.hpLost <= challenge.goal;
+		default:
+			return false;
+	}
+}
+
+export async function skipOpponent(req: Request) {
+	const opponentId = +req.body.opponent;
+
+	const authed = await auth(req);
+	const player = await getDojoChallengePreparationRequest(authed.id);
+
+	if (!player.Dojo) {
+		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
+	}
+
+	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
+	if (!opponent) {
+		throw new ExpectedError(translate('dojo.inexistantOpponent', authed));
+	}
+
+	if (!opponent.fighted) {
+		throw new ExpectedError(translate('dojo.notFightedOpponent', authed));
+	}
+
+	await setFightedOpponent(opponentId, player.Dojo.id, true);
+	await archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id);
+}
+
+async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id'>) {
+	const opponentLevels = team
+		.map(d => d.level)
+		.sort((a, b) => b - a)
+		.slice(0, 5);
+	const opponents = [];
+	for (const level of opponentLevels) {
+		const ennemi = await getRandomDinozFromLevel(level);
+		const newOpponent = await addOpponent(ennemi.id, myDojo.id);
+		opponents.push(newOpponent);
+	}
+	return opponents;
 }

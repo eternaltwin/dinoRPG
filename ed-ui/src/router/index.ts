@@ -170,6 +170,11 @@ const router = createRouter({
 							path: '/dojo/history',
 							name: 'DojoHistory',
 							component: () => import('../components/dojo/DojoHistory.vue')
+						},
+						{
+							path: '/dojo/challenge',
+							name: 'DojoChallenge',
+							component: () => import('../components/dojo/DojoChallenge.vue')
 						}
 					]
 				},

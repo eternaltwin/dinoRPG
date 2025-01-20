@@ -236,7 +236,7 @@ model Dojo {
   playerId             String                 @unique() @db.Uuid
   player               Player                 @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   team                 DojoTeam[]
-  activeChallenge      Int                    @default(0)
+  activeChallenge      String?
   DojoChallengeHistory DojoChallengeHistory[]
   reputation           Int                    @default(0)
   DojoOpponents        DojoOpponents[]
@@ -254,6 +254,7 @@ model DojoTeam {
   dinoz   Dinoz   @relation(fields: [dinozId], references: [id])
   fighted Boolean @default(false)
 
+  @@unique([dojoId, dinozId])
   @@index([dojoId])
 }
 
@@ -266,18 +267,20 @@ model DojoOpponents {
   fighted  Boolean @default(false)
   achieved Boolean @default(false)
 
+  @@unique([dojoId, dinozId])
   @@index([dojoId])
 }
 
 model DojoChallengeHistory {
-  id         String  @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  dojoId     String  @db.Uuid
-  dojo       Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  id         String   @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  dojoId     String   @db.Uuid
+  dojo       Dojo     @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   myDinozId  Int
   opponentId Int
-  challenge  Int
+  challenge  String
   victory    Boolean
   achieved   Boolean
+  archivedAt DateTime @default(now()) @db.Date
 
   @@index([dojoId])
 }

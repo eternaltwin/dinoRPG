@@ -5,6 +5,28 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 // Getters
 
+export async function getRandomDinozFromLevel(level: number) {
+	const count = await prisma.dinoz.count({
+		where: {
+			level: { gte: level - 1, lte: level + 1 }
+		}
+	});
+	const random = Math.round(Math.random() * count);
+	const dinoz = await prisma.dinoz.findFirstOrThrow({
+		skip: random,
+		where: {
+			level: { gte: level - 1, lte: level + 1 }
+		},
+		select: {
+			id: true,
+			display: true,
+			name: true,
+			level: true
+		}
+	});
+	return dinoz;
+}
+
 export async function getActiveDinoz(playerId: string) {
 	const dinozList = await prisma.dinoz.findMany({
 		where: {

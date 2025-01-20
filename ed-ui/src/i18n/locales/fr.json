@@ -4232,13 +4232,6 @@
 		"OfferExpired": "L'**offre {offer}** de **{player} ({playerId})** a **expiré** et n'a pas été remportée.",
 		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
 	},
-	"selectDinoz": {
-		"selectChampions": "Choisis tes champions",
-		"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
-		"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
-		"validate": "Valider ma sélection",
-		"edit": "Modifier ma sélection"
-	},
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
 		"accessTournament": "Accéder au tournoi",
@@ -4292,6 +4285,28 @@
 			"assaultAir": "Nombre d'assaut :air: réalisés",
 			"damageVoid": "Dégats de :void: infligés",
 			"assaultVoid": "Nombre d'assaut :void: réalisés"
+		},
+		"challenge": {
+			"selectChampions": "Choisis tes champions",
+			"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
+			"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
+			"validate": "Valider ma sélection",
+			"edit": "Modifier ma sélection",
+			"launch": "Lancer le combat",
+			"challenge": {
+				"0": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
+				"1": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
+				"2": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
+				"3": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
+				"4": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
+				"5": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
+				"6": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
+				"7": "Remportez la victoire en réalisant au minimum {goal} assauts.",
+				"8": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmis l'ensemble de vos attaques.",
+				"9": "Remportez la victoire sans vous faire empoisonner.",
+				"10": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
+				"11": "Remportez la victoire en encaissant au maximum {goal} points de vie ."
+			}
 		}
 	},
 	"guide": {

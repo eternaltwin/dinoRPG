@@ -40,6 +40,16 @@
 	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
 	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
 	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
+	"dojo": {
+		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
+		"dinozNotPlayer": "Ces dinoz ne peuvent pas combattre",
+		"alreadyFighted": "Ce dinoz a déjà combattu",
+		"wrongDinozInTeam": "Votre équipe ne peut être consitutuée que de 5 à 10 dinoz.",
+		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
+		"archiveNotFound": "L'archive n'a pas été trouvée",
+		"inexistantOpponent": "Adversaire non trouvé",
+		"notFightedOpponent": "Adversaire déjà vaincu"
+	},
 	"race": {
 		"1": "Moueffe",
 		"2": "Moueffe Démon",

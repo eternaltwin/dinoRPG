@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "DojoChallengeHistory" ADD COLUMN     "archivedAt" TIMESTAMP(6) NOT NULL DEFAULT CURRENT_TIMESTAMP;

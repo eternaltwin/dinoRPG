@@ -6,6 +6,7 @@ import { AdminRole, Lang } from '@drpg/prisma';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import type { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { dino } from '@drpg/dino-animation';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -315,6 +316,29 @@ export async function getCommonDataRequest(playerId: string) {
 		}
 	});
 
+	return player;
+}
+
+export async function getPlayerDinozInformationForTeam(playerId: string) {
+	const player = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			dinoz: {
+				where: {
+					OR: [
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+					]
+				},
+				select: {
+					id: true,
+					level: true
+				}
+			}
+		}
+	});
 	return player;
 }
 
@@ -852,6 +876,43 @@ export async function getDojoFightPreparationRequest(playerId: string) {
 				select: {
 					id: true,
 					unavailableReason: true
+				}
+			}
+		}
+	});
+	return player;
+}
+
+export async function getDojoChallengePreparationRequest(playerId: string) {
+	const player = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			money: true,
+			dinoz: {
+				select: {
+					id: true,
+					unavailableReason: true
+				}
+			},
+			Dojo: {
+				select: {
+					id: true,
+					activeChallenge: true,
+					team: {
+						select: {
+							dinozId: true,
+							fighted: true
+						}
+					},
+					DojoOpponents: {
+						select: {
+							dinozId: true,
+							fighted: true,
+							achieved: true
+						}
+					}
 				}
 			}
 		}

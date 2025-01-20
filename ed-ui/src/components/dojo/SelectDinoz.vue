@@ -16,9 +16,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="df jcc mt-1" v-if="selectedDinoz.length">
+	<div class="df jcc mt-1" v-if="selectedDinoz.length && selectedDinoz.length >= minLimit">
 		<DZButton @click="validate" :off="selectionOver">{{
-			selectionOver ? $t('selectDinoz.edit') : $t('selectDinoz.validate')
+			selectionOver ? $t('dojo.challenge.edit') : $t('dojo.challenge.validate')
 		}}</DZButton>
 	</div>
 </template>
@@ -53,6 +53,10 @@ export default defineComponent({
 		selectLimit: {
 			type: Number,
 			default: 10
+		},
+		minLimit: {
+			type: Number,
+			default: 0
 		}
 	},
 	emits: ['validate'],
@@ -75,6 +79,10 @@ export default defineComponent({
 			// Do nothing if no dinoz selected
 			if (this.selectedDinoz.length === 0) {
 				this.$toast.open({ message: formatText(this.$t(`toast.noDinozSelected`)), type: 'error' });
+				return;
+			}
+			if (this.selectedDinoz.length < this.minLimit) {
+				this.$toast.open({ message: formatText(this.$t(`toast.maxDinozSelected`)), type: 'error' });
 				return;
 			}
 			this.$emit('validate', this.selectedDinoz);

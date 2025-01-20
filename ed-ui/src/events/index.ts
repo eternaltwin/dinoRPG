@@ -18,6 +18,7 @@ type Events = {
 	twinoMenu: boolean;
 	dinozMenu: boolean;
 	messageToPlayer: { name: string; id: number };
+	refreshDojo: boolean;
 };
 
 type toast = {
