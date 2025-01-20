@@ -21,11 +21,6 @@
 			<td>{{ stats.defense.attacks }}</td>
 		</tr>
 		<tr>
-			<td v-html="formatContent($t('dojo.fightRecap.groupAttacks'))" />
-			<td>{{ stats.attack.groupAttacks }}</td>
-			<td>{{ stats.defense.groupAttacks }}</td>
-		</tr>
-		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.multiHit'))" />
 			<td>{{ stats.attack.multiHits }}</td>
 			<td>{{ stats.defense.multiHits }}</td>
@@ -36,9 +31,24 @@
 			<td>{{ stats.defense.assaults }}</td>
 		</tr>
 		<tr>
-			<td v-html="formatContent($t('dojo.fightRecap.counters'))" />
-			<td>{{ stats.attack.counters }}</td>
-			<td>{{ stats.defense.counters }}</td>
+			<td v-html="formatContent($t('dojo.fightRecap.poisoned'))" />
+			<td>{{ stats.attack.poisoned }}</td>
+			<td>{{ stats.defense.poisoned }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.poison_damage'))" />
+			<td>{{ stats.attack.poison_damage }}</td>
+			<td>{{ stats.defense.poison_damage }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.burn_damage'))" />
+			<td>{{ stats.attack.burn_damage }}</td>
+			<td>{{ stats.defense.burn_damage }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.reinforcements'))" />
+			<td>{{ stats.attack.reinforcements }}</td>
+			<td>{{ stats.defense.reinforcements }}</td>
 		</tr>
 		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.petrified'))" />

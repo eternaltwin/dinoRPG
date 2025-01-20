@@ -267,6 +267,14 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 	return randomOpponent;
 };
 
+/**
+ * @summary Update the stats of a team.
+ * @param fightData The global fight data where the stats are.
+ * @param fighter The current fighter to determine the team it is on.
+ * @param stat The stat to update.
+ * @param value The quantity to increase the stat by.
+ * @param element The element if any, related to the stat.
+ **/
 export const updateStat = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
@@ -274,6 +282,7 @@ export const updateStat = (
 	value: number,
 	element?: ElementType
 ) => {
+	// Determine which stat to pick from
 	const stats = fighter.attacker ? fightData.stats.attack : fightData.stats.defense;
 
 	if (stat === 'el.damage_dealt') {
@@ -936,12 +945,13 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 		fid: monster.id
 	});
 
-	checkInvocationBan(fightData, monster);
+	checkReinforcementBan(fightData, monster);
+	updateStat(fightData, fighter, 'reinforcements', 1);
 
 	return monster;
 };
 
-const checkInvocationBan = (fightData: DetailedFight, invocation: DetailedFighter) => {
+const checkReinforcementBan = (fightData: DetailedFight, invocation: DetailedFighter) => {
 	// Get fighters
 	const fighters = getFighters(fightData);
 
@@ -1252,7 +1262,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					fid: clone.id
 				});
 
-				checkInvocationBan(fightData, clone);
+				checkReinforcementBan(fightData, clone);
+				updateStat(fightData, fighter, 'reinforcements', 1);
 				break;
 			}
 			case Skill.DIETE_CHROMATIQUE: {
@@ -1607,7 +1618,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					fid: clone.id
 				});
 
-				checkInvocationBan(fightData, clone);
 				break;
 			}
 			case Skill.M_CURSED_WAND: {
@@ -2073,6 +2083,7 @@ export const addStatus = (
 		case Status.PETRIFIED: {
 			fighter.stats.special.armor += 5;
 			fighter.time += FIGHT_INFINITE;
+			updateStat(fightData, fighter, 'petrified', 1);
 			break;
 		}
 		case Status.SHIELDED: {
@@ -2104,11 +2115,6 @@ export const addStatus = (
 		fighter: stepFighter(fighter),
 		status
 	});
-
-	// Petrified stat
-	if (status === Status.PETRIFIED) {
-		updateStat(fightData, fighter, 'petrified', 1);
-	}
 };
 
 const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...statusList: Status[]) => {
@@ -3661,24 +3667,31 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 };
 
 const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
-	loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
+	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
 };
 
 const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
+	let hp_lost = damage;
+	const initial_hp = fighter.hp;
 	fighter.hp -= damage;
 
 	// Note: This is not in MT's code. May affect resurrection skills and how much overkill an attack does.
 	if (fighter.hp < 0) {
 		fighter.hp = 0;
+		hp_lost = initial_hp;
 	}
 
 	fightData.steps.push({
 		action: 'looseHp',
 		fid: fighter.id,
-		hp: damage,
+		hp: hp_lost,
 		fx
 	});
+
+	updateStat(fightData, fighter, 'hpLost', hp_lost);
+
+	return hp_lost;
 };
 
 const poison = (
@@ -3781,7 +3794,7 @@ const poison = (
 	addStatus(fightData, fighter, Status.POISONED, duration);
 
 	// Poison stats
-	updateStat(fightData, fighter, 'poisoned', 1);
+	updateStat(fightData, poisoner, 'poisoned', 1);
 };
 
 // Helper method to heal a fighter
@@ -4129,7 +4142,7 @@ const attackTarget = (
 	});
 	updateStat(fightData, target, 'hpLost', totalDamage);
 	updateStat(fightData, attacker, 'attacks', 1);
-	if (!skill) {
+	if (!isAssault) {
 		updateStat(fightData, attacker, 'assaults', 1);
 	}
 
@@ -4395,12 +4408,14 @@ const checkAfterDefenseEffects = (
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible,
 	// Torch: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
-		loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+		let hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+		updateStat(fightData, target, 'burn_damage', hp_lost);
 	}
 
-	// Burn
+	// Burn: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.BURNED)) {
 		loseHpBalanced(fightData, attacker, 1, LifeEffect.Fire);
+		updateStat(fightData, target, 'burn_damage', 1);
 	}
 
 	// Skills:
@@ -4435,7 +4450,7 @@ const checkAfterDefenseEffects = (
 		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.MEDIUM);
 	}
 
-	// Bulle (add fx?)
+	// TODO Bulle (add fx?)
 
 	// Electrocution (Anguilloz)
 	if (isCloseCombat && damage > 0 && target.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
@@ -4830,11 +4845,22 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 								if (!poisonedBy) {
 									sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
-									throw new Error('Missing poison data');
+									throw new Error('Missing poisonedBy data');
+								}
+
+								// Get poisoner
+								const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
+
+								if (!poisoner) {
+									sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
+									throw new Error('Poisoner not found');
 								}
 
 								// Register the hp lost from poison
-								loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+								let hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+
+								// Update stat
+								updateStat(fightData, poisoner, 'poison_damage', hp_lost);
 								break;
 							}
 							case Status.BURNED: {
@@ -4843,7 +4869,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 								if (!burnedBy) {
 									sendJSONToDiscord('Error `Missing burn data` in `playFighterTurn`.', { fightData: fightData });
-									throw new Error('Missing burn data');
+									throw new Error('Missing burnedBy data');
 								}
 
 								// Get burner
@@ -4855,7 +4881,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								}
 
 								// Register the hp lost from burn
-								loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
+								let hp_lost = loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
+
+
+								// Update stat
+								updateStat(fightData, burner, 'burn_damage', hp_lost);
 								break;
 							}
 							case Status.HEALING: {

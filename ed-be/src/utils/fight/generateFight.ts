@@ -119,13 +119,15 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				hpLost: 0,
 				hpHealed: 0,
 				attacks: 0,
-				groupAttacks: 0,
 				multiHits: 0,
 				assaults: 0,
 				evasions: 0,
 				counters: 0,
 				poisoned: 0,
+				poison_damage: 0,
+				burn_damage: 0,
 				petrified: 0,
+				reinforcements: 0,
 				elements: {
 					[ElementType.FIRE]: {
 						damage_dealt: 0,
@@ -170,13 +172,15 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				hpLost: 0,
 				hpHealed: 0,
 				attacks: 0,
-				groupAttacks: 0,
 				multiHits: 0,
 				assaults: 0,
 				evasions: 0,
 				counters: 0,
 				poisoned: 0,
+				poison_damage: 0,
+				burn_damage: 0,
 				petrified: 0,
+				reinforcements: 0,
 				elements: {
 					[ElementType.FIRE]: {
 						damage_dealt: 0,

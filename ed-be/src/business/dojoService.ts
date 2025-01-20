@@ -292,30 +292,45 @@ export async function fightChallenge(req: Request) {
 
 function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 	switch (challenge.type) {
+		case ChallengeType.Kill:
+			// Beat the opponent
+			// BUG: reinforcements can alter that
+			return stats.defense.startingHp - stats.defense.hpLost + stats.defense.hpHealed <= 0;
+		case ChallengeType.TakeAttackQuantity:
+			// Receive less than N attacks
+			return stats.defense.attacks <= challenge.goal;
+		case ChallengeType.TakeRawDamage:
+			// Lose les than N hp
+			return stats.attack.hpLost <= challenge.goal;
+		case ChallengeType.TakePercentDamage:
+			// Lose less than X% of hp
+			// BUG: reinforcements can alter that
+			return (stats.attack.hpLost / stats.attack.startingHp) * 100 <= challenge.goal;
 		case ChallengeType.Assault:
+			// Do at least N assaults
 			return stats.attack.assaults >= challenge.goal;
 		case ChallengeType.AssaultPercentage:
+			// X% of attacks are assaults
 			return (stats.attack.assaults / stats.attack.attacks) * 100 >= challenge.goal;
-		case ChallengeType.CounterAttack:
-			return stats.attack.counters >= challenge.goal;
 		case ChallengeType.DealDamage:
+			// Deal up to N damage
 			return stats.defense.hpLost <= challenge.goal;
 		case ChallengeType.DealPercentDamage:
+			// Deal at least X% of starting hp
+			// BUG: reinforcements can alter that
 			return (stats.defense.hpLost / stats.defense.startingHp) * 100 >= challenge.goal;
+		case ChallengeType.CounterAttack:
+			// Counter a minimum of N times
+			return stats.attack.counters >= challenge.goal;
 		case ChallengeType.Dodge:
+			// Dodge a minimum of N times
 			return stats.attack.evasions >= challenge.goal;
 		case ChallengeType.DodgePoison:
+			// Never get poisoned
 			return stats.defense.poisoned === 0;
-		case ChallengeType.Kill:
-			return stats.defense.startingHp - stats.defense.hpLost + stats.defense.hpHealed <= 0;
 		case ChallengeType.PoisonOpponent:
+			// Poison the opponent at least once
 			return stats.attack.poisoned > 0;
-		case ChallengeType.TakeAttackQuantity:
-			return stats.defense.attacks <= challenge.goal;
-		case ChallengeType.TakePercentDamage:
-			return (stats.attack.hpLost / stats.attack.startingHp) * 100 <= challenge.goal;
-		case ChallengeType.TakeRawDamage:
-			return stats.attack.hpLost <= challenge.goal;
 		default:
 			return false;
 	}

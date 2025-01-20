@@ -1,16 +1,28 @@
 export enum ChallengeType {
+	// Beat the opponent
 	Kill,
-	PoisonOpponent,
-	TakePercentDamage,
-	DealDamage,
-	DealPercentDamage,
-	CounterAttack,
-	Dodge,
-	Assault,
-	AssaultPercentage,
-	DodgePoison,
+	// Receive less than N attacks
 	TakeAttackQuantity,
-	TakeRawDamage
+	// Lose less than N hp
+	TakeRawDamage,
+	// Lose less than X% of hp
+	TakePercentDamage,
+	// Do at least N assaults
+	Assault,
+	// X% of attacks are assaults
+	AssaultPercentage,
+	// Deal up to N damage
+	DealDamage,
+	// Deal at least X% of starting hp
+	DealPercentDamage,
+	// Counter a minimum of N times
+	CounterAttack,
+	// Dodge a minimum of N times
+	Dodge,
+	// Never get poisoned
+	DodgePoison,
+	// Poison the opponent at least once
+	PoisonOpponent,
 }
 
 export type Challenge = {
