@@ -294,8 +294,7 @@ function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 	switch (challenge.type) {
 		case ChallengeType.Kill:
 			// Beat the opponent
-			// BUG: reinforcements can alter that
-			return stats.defense.startingHp - stats.defense.hpLost + stats.defense.hpHealed <= 0;
+			return stats.defense.endingHp <= 0;
 		case ChallengeType.TakeAttackQuantity:
 			// Receive less than N attacks
 			return stats.defense.attacks <= challenge.goal;
@@ -304,8 +303,7 @@ function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 			return stats.attack.hpLost <= challenge.goal;
 		case ChallengeType.TakePercentDamage:
 			// Lose less than X% of hp
-			// BUG: reinforcements can alter that
-			return (stats.attack.hpLost / stats.attack.startingHp) * 100 <= challenge.goal;
+			return ((stats.defense.startingHp - stats.defense.endingHp)/ stats.attack.startingHp) * 100 <= challenge.goal;
 		case ChallengeType.Assault:
 			// Do at least N assaults
 			return stats.attack.assaults >= challenge.goal;
@@ -316,9 +314,8 @@ function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 			// Deal up to N damage
 			return stats.defense.hpLost <= challenge.goal;
 		case ChallengeType.DealPercentDamage:
-			// Deal at least X% of starting hp
-			// BUG: reinforcements can alter that
-			return (stats.defense.hpLost / stats.defense.startingHp) * 100 >= challenge.goal;
+			// Deal at least X% of opponent hp
+			return ((stats.defense.startingHp - stats.defense.endingHp) / stats.defense.startingHp) * 100 >= challenge.goal;
 		case ChallengeType.CounterAttack:
 			// Counter a minimum of N times
 			return stats.attack.counters >= challenge.goal;

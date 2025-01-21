@@ -52,6 +52,8 @@ export interface CatchResult {
 export type FightStats = {
 	// Total starting HP
 	startingHp: number;
+	// Total ending HP
+	endingHp: number;
 	// Total HP lost
 	hpLost: number;
 	// Total HP healed

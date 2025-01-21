@@ -116,6 +116,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		stats: {
 			attack: {
 				startingHp: 0,
+				endingHp: 0,
 				hpLost: 0,
 				hpHealed: 0,
 				attacks: 0,
@@ -169,6 +170,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			},
 			defense: {
 				startingHp: 0,
+				endingHp: 0,
 				hpLost: 0,
 				hpHealed: 0,
 				attacks: 0,
@@ -232,7 +234,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	}
 
 	fightData.fighters.forEach(fighter => {
-		// HP stats
+		// Total the starting HP of all fighters
 		updateStat(fightData, fighter, 'startingHp', fighter.startingHp);
 
 		// Handle costumes
@@ -424,6 +426,15 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === 'monster' && fighter.name === monsterList[Monster.BAOBOB].name
 	);
+
+	// Total end of fight hp (before end of fight regeneration)
+	fightData.fighters.forEach(fighter => {
+		// Ignore reinforcements
+		if (fighter.master) {
+			return;
+		}
+		updateStat(fightData, fighter, 'endingHp', fighter.hp);
+	});
 
 	// After fight regeneration
 	fightData.fighters.forEach(fighter => {
