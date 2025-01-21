@@ -1,28 +1,28 @@
 export enum ChallengeType {
 	// Beat the opponent
-	Kill,
+	Kill = 'kill',
 	// Receive less than N attacks
-	TakeAttackQuantity,
+	TakeAttackQuantity = 'takeAttack',
 	// Lose less than N hp
-	TakeRawDamage,
+	TakeRawDamage = 'takeRawDmg',
 	// Lose less than X% of hp
-	TakePercentDamage,
+	TakePercentDamage = 'takePrctDmg',
 	// Do at least N assaults
-	Assault,
+	Assault = 'assault',
 	// X% of attacks are assaults
-	AssaultPercentage,
+	AssaultPercentage = 'assaultPrct',
 	// Deal up to N damage
-	DealDamage,
+	DealDamage = 'maxDmg',
 	// Deal at least X% of starting hp
-	DealPercentDamage,
+	DealPercentDamage = 'minPrctDmg',
 	// Counter a minimum of N times
-	CounterAttack,
+	CounterAttack = 'counter',
 	// Dodge a minimum of N times
-	Dodge,
+	Dodge = 'dodge',
 	// Never get poisoned
-	DodgePoison,
+	DodgePoison = 'noPoison',
 	// Poison the opponent at least once
-	PoisonOpponent,
+	PoisonOpponent = 'poison',
 }
 
 export type Challenge = {
@@ -31,16 +31,16 @@ export type Challenge = {
 };
 
 export const challengeRanges: Readonly<Record<ChallengeType, [number, number]>> = {
-	[ChallengeType.Kill]: [1, 1], //Kill oponent
-	[ChallengeType.PoisonOpponent]: [1, 1], // Poison opponent at least once
-	[ChallengeType.TakePercentDamage]: [5, 50], //Take less damage than x% of your life
-	[ChallengeType.DealDamage]: [30, 100], //Inflict less than x damage to the opponent
-	[ChallengeType.DealPercentDamage]: [10, 50], //Inflict at least x% of damage to the opponent
-	[ChallengeType.CounterAttack]: [1, 3], //Do at least x counter attack
-	[ChallengeType.Dodge]: [1, 3], //Do at least x dodge
-	[ChallengeType.Assault]: [2, 10], //Do at least x assault
-	[ChallengeType.AssaultPercentage]: [10, 50], //Do at least x% of assault among your attack
+	[ChallengeType.Kill]: [1, 1], // Kill opponent
+	[ChallengeType.TakeAttackQuantity]: [2, 10], // Take at max x attack from enemy
+	[ChallengeType.TakeRawDamage]: [10, 80], // Take at max x damage from enemy
+	[ChallengeType.TakePercentDamage]: [5, 50], // Take less damage than x% of your life
+	[ChallengeType.Assault]: [2, 10], // Do at least x assault
+	[ChallengeType.AssaultPercentage]: [10, 50], // Do at least x% of assault among your attack
+	[ChallengeType.DealDamage]: [30, 100], // Inflict less than x damage to the opponent
+	[ChallengeType.DealPercentDamage]: [10, 50], // Inflict at least x% of damage to the opponent
+	[ChallengeType.CounterAttack]: [1, 3], // Do at least x counter attack
+	[ChallengeType.Dodge]: [1, 3], // Do at least x dodge
 	[ChallengeType.DodgePoison]: [1, 1], // Don't be poisoned
-	[ChallengeType.TakeAttackQuantity]: [2, 10], // Take at max x attack from ennemi
-	[ChallengeType.TakeRawDamage]: [10, 80] // Take at max x damage from ennemi
+	[ChallengeType.PoisonOpponent]: [1, 1], // Poison opponent at least once
 };

@@ -205,7 +205,7 @@ export async function getChallenge(req: Request) {
  */
 function generateRandomChallenge(): Challenge {
 	// Get all challenge types from the enum
-	const challengeTypes = Object.values(ChallengeType).filter(value => typeof value === 'number'); // Filter out reverse mappings
+	const challengeTypes = Object.values(ChallengeType); // .filter(value => typeof value === 'number'); // Filter out reverse mappings
 
 	// Select a random challenge type
 	const randomType = challengeTypes[Math.floor(Math.random() * challengeTypes.length)] as ChallengeType;
@@ -255,7 +255,7 @@ export async function fightChallenge(req: Request) {
 		d.life = d.maxLife;
 	});
 
-	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 60);
+	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 

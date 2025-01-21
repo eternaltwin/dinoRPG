@@ -4297,18 +4297,19 @@
 			"edit": "Modifier ma sélection",
 			"launch": "Lancer le combat",
 			"challenge": {
-				"0": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
-				"1": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
-				"2": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
-				"3": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
-				"4": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
-				"5": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
-				"6": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
-				"7": "Remportez la victoire en réalisant au minimum {goal} assauts.",
-				"8": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmis l'ensemble de vos attaques.",
-				"9": "Remportez la victoire sans vous faire empoisonner.",
-				"10": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
-				"11": "Remportez la victoire en encaissant au maximum {goal} points de vie ."
+				"kill": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
+				"takeAttack": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
+				"takeRawDmg": "Remportez la victoire en encaissant au maximum {goal} points de vie.",
+				"takePrctDmg": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
+				"assault": "Remportez la victoire en réalisant au minimum {goal} assauts.",
+				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmis l'ensemble de vos attaques.",
+				"maxDmg": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
+				"minPrctDmg": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
+				"counter": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
+				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
+				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
+				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
+				"undefined": "No challenge was selected."
 			}
 		}
 	},
