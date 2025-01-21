@@ -1,11 +1,3 @@
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
-import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
-import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
-import { FightStep } from '@drpg/core/models/fight/FightStep';
-import { Item } from '@drpg/core/models/item/ItemList';
 import {
 	addStatus,
 	applyStrategy,
@@ -20,11 +12,19 @@ import {
 } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { randomBetweenSeeded } from './randomBetween.js';
+import { TIME_FACTOR } from './fightConstants.js';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
+import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
+import { Item } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
-import seedrandom from 'seedrandom';
 import { LifeEffect } from '@drpg/core/models/fight/transpiler';
-import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
+import seedrandom from 'seedrandom';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.

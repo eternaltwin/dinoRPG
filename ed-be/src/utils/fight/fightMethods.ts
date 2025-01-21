@@ -39,7 +39,7 @@ import {
 	TIME_BASE,
 	TIME_FACTOR,
 	VOID_ASSAULT_POWER
-} from '@drpg/core/utils/fightConstants';
+} from './fightConstants.js';
 import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,

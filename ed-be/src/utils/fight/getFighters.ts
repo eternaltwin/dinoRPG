@@ -12,14 +12,14 @@ import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
-import { TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
+import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
 import { createStatus, setMaxEnergy } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
-import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { DetailedFight } from './generateFight.js';
-import seedrandom from 'seedrandom';
 import { randomBetweenSeeded } from './randomBetween.js';
+import seedrandom from 'seedrandom';
 
 interface Team {
 	dinozList: DinozToGetFighter[];

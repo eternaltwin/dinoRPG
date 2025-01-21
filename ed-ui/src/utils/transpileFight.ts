@@ -18,7 +18,6 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
-import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -130,7 +129,7 @@ export function transpileFight(
 ) {
 	const history: transpiled[] = [];
 	let myFighter: FighterRecap | undefined;
-	let timeout: number | undefined;
+	let timelimit: number | undefined;
 	if (startText) {
 		history.push({
 			action: DinoAction.TEXT,
@@ -142,7 +141,7 @@ export function transpileFight(
 
 		switch (step.action) {
 			case 'timeLimit':
-				timeout = step.time;
+				timelimit = step.time;
 				history.push({
 					action: DinoAction.TIMELIMIT,
 					time: step.time
@@ -324,11 +323,11 @@ export function transpileFight(
 			// TODO: more infrastructure needed to support this otherwise this errors because "fighters" is all fighters, even dead ones
 			case `newTurn`:
 				// Decrement the time bar if a time limit and time bar were set
-				if (timeout) {
-					timeout -= step.delta;
+				if (timelimit) {
+					timelimit -= step.delta;
 					history.push({
 						action: DinoAction.PAUSE,
-						time: step.delta / TIME_FACTOR
+						time: step.delta
 					});
 				}
 				// 	// eslint-disable-next-line no-case-declarations
