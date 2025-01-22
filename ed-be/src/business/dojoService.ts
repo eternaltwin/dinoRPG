@@ -289,11 +289,9 @@ export async function fightChallenge(req: Request) {
 		)
 	);
 	const ranking = await getDojoDataForRanking(authed.id);
-	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length;
-	const worth = isNaN(victory / ranking.DojoChallengeHistory.length)
-		? 0
-		: victory / ranking.DojoChallengeHistory.length;
-	promises.push(updateDojoPoints(authed.id, Math.round(worth * ranking.reputation)));
+	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
+	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
+	promises.push(updateDojoPoints(authed.id, Math.round(worth * (ranking.reputation + reputation))));
 	await Promise.all(promises);
 
 	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon };
