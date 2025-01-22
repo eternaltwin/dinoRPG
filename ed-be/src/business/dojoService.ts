@@ -294,7 +294,7 @@ export async function fightChallenge(req: Request) {
 	promises.push(updateDojoPoints(authed.id, Math.round(worth * (ranking.reputation + reputation))));
 	await Promise.all(promises);
 
-	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon };
+	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory:  fightResult.winner};
 }
 
 function parseChallenge(challenge: Challenge, stats: FullFightStats) {

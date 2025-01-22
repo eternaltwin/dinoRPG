@@ -6,6 +6,11 @@
 			<th>Equipe adverse</th>
 		</tr>
 		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.hpRemaining'))" />
+			<td>{{ Math.round((stats.attack.endingHp / stats.attack.startingHp) * 100) }}%</td>
+			<td>{{ Math.round((stats.defense.endingHp / stats.defense.startingHp) * 100) }}%</td>
+		</tr>
+		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.hpLost'))" />
 			<td>{{ stats.attack.hpLost }}</td>
 			<td>{{ stats.defense.hpLost }}</td>
@@ -49,6 +54,11 @@
 			<td v-html="formatContent($t('dojo.fightRecap.poisoned'))" />
 			<td>{{ stats.attack.poisoned }}</td>
 			<td>{{ stats.defense.poisoned }}</td>
+		</tr>
+		<tr>
+			<td v-html="formatContent($t('dojo.fightRecap.times_poisoned'))" />
+			<td>{{ stats.attack.times_poisoned }}</td>
+			<td>{{ stats.defense.times_poisoned }}</td>
 		</tr>
 		<tr>
 			<td v-html="formatContent($t('dojo.fightRecap.poison_damage'))" />

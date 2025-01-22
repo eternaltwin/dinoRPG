@@ -60,7 +60,7 @@ export const DojoService = {
 	fightChallenge(
 		myDinoz: number,
 		opponent: number
-	): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean }> {
+	): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
 		return http()
 			.put(`/dojo/challenge`, {
 				myDinoz,

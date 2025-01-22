@@ -3745,6 +3745,8 @@ const poison = (
 		return;
 	}
 
+	if (fighter.skills.find(skill => skill.id === Skill.SELF_CONTROL)) return;
+
 	// Get poison damage
 	let poisonDamage = 0;
 	switch (skill) {
@@ -3795,6 +3797,9 @@ const poison = (
 
 	// Poison stats
 	updateStat(fightData, poisoner, 'poisoned', 1);
+	if (fighter.type === 'dinoz') {
+		updateStat(fightData, fighter, 'times_poisoned', 1);
+	}
 };
 
 // Helper method to heal a fighter

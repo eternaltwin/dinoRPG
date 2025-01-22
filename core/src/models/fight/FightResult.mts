@@ -72,6 +72,8 @@ export type FightStats = {
 	poisoned: number;
 	// Total damage dealt with poison to an opponent
 	poison_damage: number;
+	// Total times an opponent poisoned
+	times_poisoned: number;
 	// Total damage dealt with burn to an opponent
 	burn_damage: number;
 	// Total reinforcements called (e.g. clone, korgon, etc.)

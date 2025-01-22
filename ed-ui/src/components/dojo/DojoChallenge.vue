@@ -10,6 +10,17 @@
 	<div class="challenge" v-if="fightTransformed" :class="challengeWon ? 'won' : 'lost'">
 		<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
 	</div>
+	<div v-if="fightTransformed && !challengeWon" class="debrief">
+		<p v-if="!victory" v-html="$t(`dojo.challenge.challengeExplanation.looseFight`)" />
+		<p
+			v-if="victory && !challengeWon"
+			v-html="
+				$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
+					goal: calculateMissedGoal(activeChallenge)
+				})
+			"
+		/>
+	</div>
 	<template v-if="!fightTransformed">
 		<CarousselDinoz
 			v-if="!opponent.id"
@@ -57,7 +68,7 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
-import { Challenge } from '@drpg/core/models/dojo/challenge';
+import { Challenge, ChallengeType } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore } from '../../store/index.js';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
@@ -98,7 +109,8 @@ export default defineComponent({
 			fightTransformed: undefined as undefined | preFightLoader,
 			loaded: false,
 			fightStat: {} as FullFightStats,
-			challengeWon: false
+			challengeWon: false,
+			victory: false
 		};
 	},
 	methods: {
@@ -113,6 +125,60 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+			}
+		},
+		calculateMissedGoal(challenge: Challenge) {
+			switch (challenge.type) {
+				case ChallengeType.Kill:
+					return 0;
+				case ChallengeType.TakeAttackQuantity:
+					// Receive less than N attacks
+					return this.fightStat.defense.attacks - challenge.goal;
+				case ChallengeType.TakeRawDamage:
+					// Lose les than N hp
+					return this.fightStat.attack.hpLost - challenge.goal;
+				case ChallengeType.TakePercentDamage:
+					// Lose less than X% of hp
+					return (
+						Math.round(
+							((this.fightStat.defense.startingHp - this.fightStat.defense.endingHp) /
+								this.fightStat.attack.startingHp) *
+								100
+						) - challenge.goal
+					);
+				case ChallengeType.Assault:
+					// Do at least N assaults
+					return challenge.goal - this.fightStat.attack.assaults;
+				case ChallengeType.AssaultPercentage:
+					// X% of attacks are assaults
+					return challenge.goal - Math.round((this.fightStat.attack.assaults / this.fightStat.attack.attacks) * 100);
+				case ChallengeType.DealDamage:
+					// Deal up to N damage
+					return this.fightStat.defense.hpLost - challenge.goal;
+				case ChallengeType.DealPercentDamage:
+					// Deal at least X% of opponent hp
+					return (
+						challenge.goal -
+						Math.round(
+							((this.fightStat.defense.startingHp - this.fightStat.defense.endingHp) /
+								this.fightStat.defense.startingHp) *
+								100
+						)
+					);
+				case ChallengeType.CounterAttack:
+					// Counter a minimum of N times
+					return challenge.goal - this.fightStat.attack.counters;
+				case ChallengeType.Dodge:
+					// Dodge a minimum of N times
+					return challenge.goal - this.fightStat.attack.evasions;
+				case ChallengeType.DodgePoison:
+					// Never get poisoned
+					return this.fightStat.attack.times_poisoned;
+				case ChallengeType.PoisonOpponent:
+					// Poison the opponent at least once
+					return 0;
+				default:
+					return false;
 			}
 		},
 		selectOpponent(data: number) {
@@ -133,6 +199,7 @@ export default defineComponent({
 				const fightResult = rawFight.fight;
 				this.fightStat = rawFight.stats;
 				this.challengeWon = rawFight.challengeWon;
+				this.victory = rawFight.victory;
 				const fightSteps = fightResult.history as FightStep[];
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
@@ -200,6 +267,65 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.debrief {
+	// position: absolute;
+	display: flex;
+	align-self: center;
+	width: 530px;
+	margin-bottom: 5px;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+	//width: 377px;
+	height: 56px;
+	//margin-left: 66px;
+	//padding-left: 10px;
+	//padding-right: 10px;
+	color: white;
+	background: url('../../assets/background/debriefing_left.webp'), url('../../assets/background/debriefing_right.webp'),
+		url('../../assets/background/debriefing_center.webp');
+	background-position-x: left, right, center;
+	background-repeat: no-repeat, no-repeat, repeat-x;
+	font-variant: small-caps;
+	img {
+		flex-shrink: 0;
+		align-self: center;
+	}
+	.result {
+		background-color: #cc8a51;
+		width: 85px;
+		height: 40px;
+		border-radius: 8px;
+		display: grid;
+		grid-template-columns: 30% 1fr;
+		grid-template-rows: 35% 1fr;
+		grid-template-areas: 'top top' 'left center';
+		.text {
+			grid-area: top;
+			align-self: center;
+			justify-self: center;
+			white-space: nowrap;
+			font-weight: 1000;
+			font-variant: all-petite-caps;
+			font-size: smaller;
+			color: #ffda97;
+		}
+		.data {
+			grid-area: center;
+			align-self: center;
+			padding-left: 5px;
+			text-align: left;
+			font-size: 15pt;
+			color: #fff;
+		}
+		img {
+			grid-area: left;
+			align-self: center;
+			justify-self: center;
+			padding-left: 8px;
+		}
+	}
+}
 .challenge {
 	background-image: url('../../assets/design/dojo_challenge.webp');
 	background-repeat: no-repeat;

@@ -4290,7 +4290,9 @@
 			"damageAir": "Dégats de :air: infligés",
 			"assaultAir": "Nombre d'assaut :air: réalisés",
 			"damageVoid": "Dégats de :void: infligés",
-			"assaultVoid": "Nombre d'assaut :void: réalisés"
+			"assaultVoid": "Nombre d'assaut :void: réalisés",
+			"hpRemaining": "Vie restante",
+			"times_poisoned": "Nombre de fois qu'un dinoz est empoisonné"
 		},
 		"challenge": {
 			"selectChampions": "Choisis tes champions",
@@ -4313,6 +4315,21 @@
 				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
 				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
 				"undefined": "No challenge was selected."
+			},
+			"challengeExplanation": {
+				"kill": "Dommage, vous n'avez pas réussi à vaincre votre adversaire avant la fin du temps imparti.",
+				"takeAttack": "Dommage, vous avez subis {goal} attaques de trop.",
+				"takeRawDmg": "Dommage, vous avez encaissé {goal} dégats de trop.",
+				"takePrctDmg": "Dommage, vous avez perdu {goal}% de vie en trop.",
+				"assault": "Dommage, il vous manquait {goal} assaut pour réussir.",
+				"assaultPrct": "Dommage, il vous manque {goal}% d'assauts.",
+				"maxDmg": "Dommage, vous avez infligé {goal} dégats en trop.",
+				"minPrctDmg": "Dommage, il fallait faire {goal}% de dégats en plus.",
+				"counter": "Dommage, il fallait faire {goal} contres supplémentaires.",
+				"dodge": "Dommage, il fallait faire {goal} esquives supplémentaires.",
+				"noPoison": "Dommage, vous avez été empoisonné {goal} fois.",
+				"poison": "Dommage, vous n'avez pas réussi à empoisonner votre adversaire.",
+				"looseFight": "Vous n'avez pas réussi à gagner le combat."
 			}
 		}
 	},
