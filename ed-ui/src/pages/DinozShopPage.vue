@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.dinozShop')" header="Enclos des dinoz" />
+	<TitleHeader :title="$t('pageTitle.dinozShop')" :header="$t(`shop.dinoz.header`)" />
 	<DZDisclaimer help round :content="$t('shop.dinoz.help')" />
 	<div class="sheets">
 		<div class="sheet" :id="'detail_' + index" v-for="(dinoz, index) in dinozList" :key="dinoz.id">
@@ -14,7 +14,7 @@
 				<div class="row1">
 					<div class="race">
 						<Tippy theme="normal">
-							<strong>Race :</strong>
+							<strong>{{ $t(`race.race`) }}</strong>
 							{{ $t(`race.name.${raceList[dinoz.race].name}`) }}
 							<template #content>
 								<h1>{{ $t(`race.name.${raceList[dinoz.race].name}`) }}</h1>

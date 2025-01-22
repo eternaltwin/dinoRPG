@@ -766,6 +766,7 @@
 		}
 	},
 	"race": {
+		"race": "Race :",
 		"name": {
 			"winks": "Winks",
 			"sirain": "Sirain",
@@ -1575,6 +1576,7 @@
 	},
 	"shop": {
 		"dinoz": {
+			"header": "Enclos des dinoz",
 			"help": "Bienvenue dans l'enclos à Dinoz ! Ici, **chaque jour**,  vous pouvez découvrir les différents Dinoz disponibles à l'adoption. Choisissez celui qui vous convient le plus."
 		},
 		"confirm": {
