@@ -37,6 +37,7 @@ import { Challenge, challengeRanges, ChallengeType } from '@drpg/core/models/doj
 import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { Dojo } from '@drpg/prisma';
 import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -253,10 +254,18 @@ export async function fightChallenge(req: Request) {
 	rightTeam.map(d => {
 		d.items = [];
 		d.life = d.maxLife;
+		// Remove Trou noir and Hypnose
+		d.skills = d.skills.filter(
+			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+		);
 	});
 	leftTeam.map(d => {
 		d.items = [];
 		d.life = d.maxLife;
+		// Remove Trou noir and Hypnose
+		d.skills = d.skills.filter(
+			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+		);
 	});
 
 	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
@@ -294,7 +303,7 @@ export async function fightChallenge(req: Request) {
 	promises.push(updateDojoPoints(authed.id, Math.round(worth * (ranking.reputation + reputation))));
 	await Promise.all(promises);
 
-	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory:  fightResult.winner};
+	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory: fightResult.winner };
 }
 
 function parseChallenge(challenge: Challenge, stats: FullFightStats) {
