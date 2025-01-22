@@ -103,7 +103,8 @@ export default defineComponent({
 			if (this.myDojo) {
 				const totalVictory = this.myDojo.DojoChallengeHistory.filter(f => f.victory).length;
 				const totalFight = this.myDojo.DojoChallengeHistory.length;
-				this.worth = Math.round((totalVictory / totalFight) * 100);
+				const worth = Math.round((totalVictory / totalFight) * 100);
+				this.worth = isNaN(worth) ? 0 : worth;
 			}
 		}
 	},
