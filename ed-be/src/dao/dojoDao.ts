@@ -28,6 +28,7 @@ export async function getMyTeamDao(playerId: string) {
 		},
 		select: {
 			id: true,
+			playerId: true,
 			team: {
 				select: {
 					dinoz: {

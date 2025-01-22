@@ -303,7 +303,7 @@ function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 			return stats.attack.hpLost <= challenge.goal;
 		case ChallengeType.TakePercentDamage:
 			// Lose less than X% of hp
-			return ((stats.defense.startingHp - stats.defense.endingHp)/ stats.attack.startingHp) * 100 <= challenge.goal;
+			return ((stats.defense.startingHp - stats.defense.endingHp) / stats.attack.startingHp) * 100 <= challenge.goal;
 		case ChallengeType.Assault:
 			// Do at least N assaults
 			return stats.attack.assaults >= challenge.goal;
@@ -356,16 +356,16 @@ export async function skipOpponent(req: Request) {
 	await archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id);
 }
 
-async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id'>) {
-	const opponentLevels = team
-		.map(d => d.level)
-		.sort((a, b) => b - a)
-		.slice(0, 5);
+async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
+	const opponentLevels = team.sort((a, b) => b.level - a.level).slice(0, 5);
 	const opponents = [];
-	for (const level of opponentLevels) {
-		const ennemi = await getRandomDinozFromLevel(level);
+	const parsedId = opponentLevels.map(o => o.level);
+	for (const dinoz of opponentLevels) {
+		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, myDojo.playerId);
 		const newOpponent = await addOpponent(ennemi.id, myDojo.id);
 		opponents.push(newOpponent);
+		// Prevent a picked to opponent to be picked again
+		parsedId.push(newOpponent.dinoz.id);
 	}
 	return opponents;
 }

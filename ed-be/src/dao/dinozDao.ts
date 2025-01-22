@@ -5,10 +5,12 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 // Getters
 
-export async function getRandomDinozFromLevel(level: number) {
+export async function getRandomDinozFromLevel(level: number, team: number[], playerId: string) {
 	const count = await prisma.dinoz.count({
 		where: {
-			level: { gte: level - 1, lte: level + 1 }
+			level: { gte: level - 1, lte: level + 1 },
+			id: { not: { in: team } },
+			playerId: { not: playerId }
 		}
 	});
 	const random = Math.round(Math.random() * count);

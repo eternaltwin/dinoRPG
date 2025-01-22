@@ -22,7 +22,7 @@ export enum ChallengeType {
 	// Never get poisoned
 	DodgePoison = 'noPoison',
 	// Poison the opponent at least once
-	PoisonOpponent = 'poison',
+	PoisonOpponent = 'poison'
 }
 
 export type Challenge = {
@@ -42,5 +42,5 @@ export const challengeRanges: Readonly<Record<ChallengeType, [number, number]>> 
 	[ChallengeType.CounterAttack]: [1, 3], // Do at least x counter attack
 	[ChallengeType.Dodge]: [1, 3], // Do at least x dodge
 	[ChallengeType.DodgePoison]: [1, 1], // Don't be poisoned
-	[ChallengeType.PoisonOpponent]: [1, 1], // Poison opponent at least once
+	[ChallengeType.PoisonOpponent]: [1, 1] // Poison opponent at least once
 };

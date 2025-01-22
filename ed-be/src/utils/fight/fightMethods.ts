@@ -4883,7 +4883,6 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								// Register the hp lost from burn
 								let hp_lost = loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
 
-
 								// Update stat
 								updateStat(fightData, burner, 'burn_damage', hp_lost);
 								break;
