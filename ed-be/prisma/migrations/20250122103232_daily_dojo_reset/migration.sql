@@ -1,0 +1,3 @@
+-- AlterTable
+TRUNCATE TABLE "dojo" CASCADE ;
+ALTER TABLE "dojo" ADD COLUMN     "dailyReset" INTEGER NOT NULL DEFAULT 0;

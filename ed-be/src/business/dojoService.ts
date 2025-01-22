@@ -91,8 +91,8 @@ export async function getMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
 	}
 
-	if (myDojo.DojoOpponents.length > 0 && myDojo.DojoOpponents.every(d => d.achieved)) {
-		await cleanCurrentOpponentTeam(myDojo.id);
+	if (myDojo.DojoOpponents.length > 0 && myDojo.DojoOpponents.every(d => d.achieved) && myDojo.dailyReset < 10) {
+		myDojo.team = await cleanCurrentOpponentTeam(myDojo.id);
 		myDojo.DojoOpponents = await createOpponentTeam(
 			myDojo.team.map(d => {
 				return {

@@ -241,6 +241,7 @@ model Dojo {
   reputation           Int                    @default(0)
   DojoOpponents        DojoOpponents[]
   teamUpdate           DateTime?
+  dailyReset           Int                    @default(0)
 
   @@index([playerId])
   @@map("dojo")

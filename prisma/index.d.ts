@@ -19752,10 +19752,12 @@ export namespace Prisma {
 
   export type DojoAvgAggregateOutputType = {
     reputation: number | null
+    dailyReset: number | null
   }
 
   export type DojoSumAggregateOutputType = {
     reputation: number | null
+    dailyReset: number | null
   }
 
   export type DojoMinAggregateOutputType = {
@@ -19764,6 +19766,7 @@ export namespace Prisma {
     activeChallenge: string | null
     reputation: number | null
     teamUpdate: Date | null
+    dailyReset: number | null
   }
 
   export type DojoMaxAggregateOutputType = {
@@ -19772,6 +19775,7 @@ export namespace Prisma {
     activeChallenge: string | null
     reputation: number | null
     teamUpdate: Date | null
+    dailyReset: number | null
   }
 
   export type DojoCountAggregateOutputType = {
@@ -19780,16 +19784,19 @@ export namespace Prisma {
     activeChallenge: number
     reputation: number
     teamUpdate: number
+    dailyReset: number
     _all: number
   }
 
 
   export type DojoAvgAggregateInputType = {
     reputation?: true
+    dailyReset?: true
   }
 
   export type DojoSumAggregateInputType = {
     reputation?: true
+    dailyReset?: true
   }
 
   export type DojoMinAggregateInputType = {
@@ -19798,6 +19805,7 @@ export namespace Prisma {
     activeChallenge?: true
     reputation?: true
     teamUpdate?: true
+    dailyReset?: true
   }
 
   export type DojoMaxAggregateInputType = {
@@ -19806,6 +19814,7 @@ export namespace Prisma {
     activeChallenge?: true
     reputation?: true
     teamUpdate?: true
+    dailyReset?: true
   }
 
   export type DojoCountAggregateInputType = {
@@ -19814,6 +19823,7 @@ export namespace Prisma {
     activeChallenge?: true
     reputation?: true
     teamUpdate?: true
+    dailyReset?: true
     _all?: true
   }
 
@@ -19909,6 +19919,7 @@ export namespace Prisma {
     activeChallenge: string | null
     reputation: number
     teamUpdate: Date | null
+    dailyReset: number
     _count: DojoCountAggregateOutputType | null
     _avg: DojoAvgAggregateOutputType | null
     _sum: DojoSumAggregateOutputType | null
@@ -19936,6 +19947,7 @@ export namespace Prisma {
     activeChallenge?: boolean
     reputation?: boolean
     teamUpdate?: boolean
+    dailyReset?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     team?: boolean | Dojo$teamArgs<ExtArgs>
     DojoChallengeHistory?: boolean | Dojo$DojoChallengeHistoryArgs<ExtArgs>
@@ -19949,6 +19961,7 @@ export namespace Prisma {
     activeChallenge?: boolean
     reputation?: boolean
     teamUpdate?: boolean
+    dailyReset?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dojo"]>
 
@@ -19958,9 +19971,10 @@ export namespace Prisma {
     activeChallenge?: boolean
     reputation?: boolean
     teamUpdate?: boolean
+    dailyReset?: boolean
   }
 
-  export type DojoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "activeChallenge" | "reputation" | "teamUpdate", ExtArgs["result"]["dojo"]>
+  export type DojoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "playerId" | "activeChallenge" | "reputation" | "teamUpdate" | "dailyReset", ExtArgs["result"]["dojo"]>
   export type DojoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     team?: boolean | Dojo$teamArgs<ExtArgs>
@@ -19986,6 +20000,7 @@ export namespace Prisma {
       activeChallenge: string | null
       reputation: number
       teamUpdate: Date | null
+      dailyReset: number
     }, ExtArgs["result"]["dojo"]>
     composites: {}
   }
@@ -20388,6 +20403,7 @@ export namespace Prisma {
     readonly activeChallenge: FieldRef<"Dojo", 'String'>
     readonly reputation: FieldRef<"Dojo", 'Int'>
     readonly teamUpdate: FieldRef<"Dojo", 'DateTime'>
+    readonly dailyReset: FieldRef<"Dojo", 'Int'>
   }
     
 
@@ -55716,7 +55732,8 @@ export namespace Prisma {
     playerId: 'playerId',
     activeChallenge: 'activeChallenge',
     reputation: 'reputation',
-    teamUpdate: 'teamUpdate'
+    teamUpdate: 'teamUpdate',
+    dailyReset: 'dailyReset'
   };
 
   export type DojoScalarFieldEnum = (typeof DojoScalarFieldEnum)[keyof typeof DojoScalarFieldEnum]
@@ -57342,6 +57359,7 @@ export namespace Prisma {
     activeChallenge?: StringNullableFilter<"Dojo"> | string | null
     reputation?: IntFilter<"Dojo"> | number
     teamUpdate?: DateTimeNullableFilter<"Dojo"> | Date | string | null
+    dailyReset?: IntFilter<"Dojo"> | number
     player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     team?: DojoTeamListRelationFilter
     DojoChallengeHistory?: DojoChallengeHistoryListRelationFilter
@@ -57354,6 +57372,7 @@ export namespace Prisma {
     activeChallenge?: SortOrderInput | SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrderInput | SortOrder
+    dailyReset?: SortOrder
     player?: PlayerOrderByWithRelationInput
     team?: DojoTeamOrderByRelationAggregateInput
     DojoChallengeHistory?: DojoChallengeHistoryOrderByRelationAggregateInput
@@ -57369,6 +57388,7 @@ export namespace Prisma {
     activeChallenge?: StringNullableFilter<"Dojo"> | string | null
     reputation?: IntFilter<"Dojo"> | number
     teamUpdate?: DateTimeNullableFilter<"Dojo"> | Date | string | null
+    dailyReset?: IntFilter<"Dojo"> | number
     player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     team?: DojoTeamListRelationFilter
     DojoChallengeHistory?: DojoChallengeHistoryListRelationFilter
@@ -57381,6 +57401,7 @@ export namespace Prisma {
     activeChallenge?: SortOrderInput | SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrderInput | SortOrder
+    dailyReset?: SortOrder
     _count?: DojoCountOrderByAggregateInput
     _avg?: DojoAvgOrderByAggregateInput
     _max?: DojoMaxOrderByAggregateInput
@@ -57397,6 +57418,7 @@ export namespace Prisma {
     activeChallenge?: StringNullableWithAggregatesFilter<"Dojo"> | string | null
     reputation?: IntWithAggregatesFilter<"Dojo"> | number
     teamUpdate?: DateTimeNullableWithAggregatesFilter<"Dojo"> | Date | string | null
+    dailyReset?: IntWithAggregatesFilter<"Dojo"> | number
   }
 
   export type DojoTeamWhereInput = {
@@ -60466,6 +60488,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     player: PlayerCreateNestedOneWithoutDojoInput
     team?: DojoTeamCreateNestedManyWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
@@ -60478,6 +60501,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
@@ -60488,6 +60512,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
     team?: DojoTeamUpdateManyWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
@@ -60500,6 +60525,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
@@ -60511,6 +60537,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
   }
 
   export type DojoUpdateManyMutationInput = {
@@ -60518,6 +60545,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
   }
 
   export type DojoUncheckedUpdateManyInput = {
@@ -60526,6 +60554,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
   }
 
   export type DojoTeamCreateInput = {
@@ -63644,10 +63673,12 @@ export namespace Prisma {
     activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrder
+    dailyReset?: SortOrder
   }
 
   export type DojoAvgOrderByAggregateInput = {
     reputation?: SortOrder
+    dailyReset?: SortOrder
   }
 
   export type DojoMaxOrderByAggregateInput = {
@@ -63656,6 +63687,7 @@ export namespace Prisma {
     activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrder
+    dailyReset?: SortOrder
   }
 
   export type DojoMinOrderByAggregateInput = {
@@ -63664,10 +63696,12 @@ export namespace Prisma {
     activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrder
+    dailyReset?: SortOrder
   }
 
   export type DojoSumOrderByAggregateInput = {
     reputation?: SortOrder
+    dailyReset?: SortOrder
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -72712,6 +72746,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     team?: DojoTeamCreateNestedManyWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
@@ -72722,6 +72757,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
@@ -73441,6 +73477,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     team?: DojoTeamUpdateManyWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
@@ -73451,6 +73488,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
@@ -73856,6 +73894,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     player: PlayerCreateNestedOneWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
@@ -73867,6 +73906,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
   }
@@ -73986,6 +74026,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
@@ -73997,6 +74038,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
   }
@@ -74106,6 +74148,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     player: PlayerCreateNestedOneWithoutDojoInput
     team?: DojoTeamCreateNestedManyWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryCreateNestedManyWithoutDojoInput
@@ -74117,6 +74160,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedCreateNestedManyWithoutDojoInput
   }
@@ -74236,6 +74280,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
     team?: DojoTeamUpdateManyWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUpdateManyWithoutDojoNestedInput
@@ -74247,6 +74292,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
     DojoChallengeHistory?: DojoChallengeHistoryUncheckedUpdateManyWithoutDojoNestedInput
   }
@@ -74356,6 +74402,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     player: PlayerCreateNestedOneWithoutDojoInput
     team?: DojoTeamCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsCreateNestedManyWithoutDojoInput
@@ -74367,6 +74414,7 @@ export namespace Prisma {
     activeChallenge?: string | null
     reputation?: number
     teamUpdate?: Date | string | null
+    dailyReset?: number
     team?: DojoTeamUncheckedCreateNestedManyWithoutDojoInput
     DojoOpponents?: DojoOpponentsUncheckedCreateNestedManyWithoutDojoInput
   }
@@ -74392,6 +74440,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneRequiredWithoutDojoNestedInput
     team?: DojoTeamUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUpdateManyWithoutDojoNestedInput
@@ -74403,6 +74452,7 @@ export namespace Prisma {
     activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    dailyReset?: IntFieldUpdateOperationsInput | number
     team?: DojoTeamUncheckedUpdateManyWithoutDojoNestedInput
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDojoNestedInput
   }

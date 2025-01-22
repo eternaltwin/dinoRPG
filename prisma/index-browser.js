@@ -256,7 +256,8 @@ exports.Prisma.DojoScalarFieldEnum = {
   playerId: 'playerId',
   activeChallenge: 'activeChallenge',
   reputation: 'reputation',
-  teamUpdate: 'teamUpdate'
+  teamUpdate: 'teamUpdate',
+  dailyReset: 'dailyReset'
 };
 
 exports.Prisma.DojoTeamScalarFieldEnum = {

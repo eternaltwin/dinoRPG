@@ -29,6 +29,7 @@ export async function getMyTeamDao(playerId: string) {
 		select: {
 			id: true,
 			playerId: true,
+			dailyReset: true,
 			team: {
 				select: {
 					dinoz: {
@@ -67,6 +68,38 @@ export async function cleanCurrentOpponentTeam(dojoId: string) {
 			dojoId: dojoId
 		}
 	});
+	await prisma.dojoTeam.updateMany({
+		where: {
+			dojoId: dojoId
+		},
+		data: {
+			fighted: false
+		}
+	})
+	await prisma.dojo.update({
+		where: {
+			id: dojoId
+		},
+		data: {
+			dailyReset: {increment: 1}
+		}
+	})
+	return await prisma.dojoTeam.findMany({
+		where: {
+			dojoId: dojoId
+		},
+		select: {
+			dinoz: {
+				select: {
+					id: true,
+					name: true,
+					level: true,
+					display: true
+				}
+			},
+			fighted: true
+		}
+	})
 }
 
 export async function createMyDojo(playerId: string) {
