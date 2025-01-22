@@ -133,4 +133,3 @@ export default defineComponent({
 	justify-content: center;
 }
 </style>
-<script setup lang="ts"></script>

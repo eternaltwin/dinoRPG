@@ -49,6 +49,7 @@ import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import FightRecap from './FightRecap.vue';
 
 export default defineComponent({
 	name: 'ChallengeFriend',
@@ -57,6 +58,7 @@ export default defineComponent({
 		TitleHeader,
 		DZDisclaimer,
 		SelectDinoz,
+		FightRecap,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FullFightAnimation.vue'))
 	},
 	data() {
@@ -246,6 +248,3 @@ export default defineComponent({
 	justify-content: center;
 }
 </style>
-<script setup lang="ts">
-import FightRecap from './FightRecap.vue';
-</script>
