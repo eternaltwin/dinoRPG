@@ -4408,7 +4408,7 @@ const checkAfterDefenseEffects = (
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible,
 	// Torch: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
-		let hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+		const hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
 		updateStat(fightData, target, 'burn_damage', hp_lost);
 	}
 
@@ -4857,7 +4857,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								}
 
 								// Register the hp lost from poison
-								let hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+								const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
 
 								// Update stat
 								updateStat(fightData, poisoner, 'poison_damage', hp_lost);
@@ -4881,7 +4881,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 								}
 
 								// Register the hp lost from burn
-								let hp_lost = loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
+								const hp_lost = loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
 
 								// Update stat
 								updateStat(fightData, burner, 'burn_damage', hp_lost);

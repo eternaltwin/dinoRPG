@@ -14,7 +14,7 @@ export async function archiveFight(fight: FightProcessResult, playerId: string) 
 						display: f.display,
 						attacker: f.attacker,
 						maxHp: f.maxHp,
-						startingHp: f.maxHp,
+						startingHp: f.startingHp,
 						energy: f.energy,
 						maxEnergy: f.maxEnergy,
 						energyRecovery: f.energyRecovery,
