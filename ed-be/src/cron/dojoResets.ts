@@ -8,6 +8,11 @@ const dojoResets = () => {
 		try {
 			await prisma.dojoOpponents.deleteMany();
 			await prisma.dojoTeam.deleteMany();
+			await prisma.dojo.updateMany({
+				data: {
+					dailyReset: 0
+				}
+			})
 		} catch (err) {
 			console.error(`Cannot reset team and opponents team: ${err}`);
 		}
