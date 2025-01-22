@@ -377,7 +377,7 @@ export async function skipOpponent(req: Request) {
 async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
 	const opponentLevels = team.sort((a, b) => b.level - a.level).slice(0, 5);
 	const opponents = [];
-	const parsedId = opponentLevels.map(o => o.level);
+	const parsedId = opponentLevels.map(o => o.id);
 	for (const dinoz of opponentLevels) {
 		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, myDojo.playerId);
 		const newOpponent = await addOpponent(ennemi.id, myDojo.id);
