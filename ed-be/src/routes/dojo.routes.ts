@@ -68,7 +68,7 @@ routes.put(
 			.isArray()
 			.notEmpty()
 			.custom(value => allValuesAreNumber(value)),
-		body('rightId').exists().toInt().isNumeric()
+		body('rightId').exists()
 	],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
