@@ -48,6 +48,7 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'ChallengeFriend',
@@ -146,14 +147,16 @@ export default defineComponent({
 			this.$router.push({ name: 'DojoHome' });
 			return;
 		}
-		this.myDinoz = this.dinozStore.getDinozList.map(d => {
-			return {
-				id: d.id,
-				name: d.name,
-				display: d.display,
-				level: d.level
-			};
-		});
+		this.myDinoz = this.dinozStore.getDinozList
+			.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
+			.map(d => {
+				return {
+					id: d.id,
+					name: d.name,
+					display: d.display,
+					level: d.level
+				};
+			});
 		EventBus.emit('loading', true);
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
