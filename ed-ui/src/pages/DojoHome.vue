@@ -27,6 +27,14 @@
 						theme: 'small'
 					}"
 				/>
+				<img
+					@click="goToPage('DojoRanking')"
+					:src="getImgURL('design', 'dojo_ranking')"
+					v-tippy="{
+						content: formatContent($t('dojo.ranking')),
+						theme: 'small'
+					}"
+				/>
 				<!--			<img
 					@click="goToPage('DojoTeam')"
 					:src="getImgURL('icons', 'act_dojo')"
@@ -57,7 +65,7 @@
 					{{ $t('dojo.reputation') }} : {{ myDojo.reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} :
 					{{ worth }}%
 				</p>
-				<p>{{ $t('dojo.ranking') }} : --</p>
+				<p>{{ $t('dojo.ranking') }} : {{ rank }}</p>
 			</div>
 		</div>
 	</div>
@@ -85,7 +93,8 @@ export default defineComponent({
 		return {
 			playerStore: playerStore(),
 			myDojo: undefined as undefined | DojoBasic,
-			worth: 0
+			worth: 0,
+			rank: 0
 		};
 	},
 	methods: {
@@ -95,7 +104,9 @@ export default defineComponent({
 		async refresh() {
 			EventBus.emit('isLoading', true);
 			try {
-				this.myDojo = await DojoService.getMyDojo();
+				const response = await DojoService.getMyDojo();
+				this.myDojo = response.dojo;
+				this.rank = response.rank;
 				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

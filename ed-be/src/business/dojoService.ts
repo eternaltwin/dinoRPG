@@ -2,6 +2,7 @@ import { Request } from 'express';
 import {
 	auth,
 	getDojoChallengePreparationRequest,
+	getDojoDataForRanking,
 	getDojoFightPreparationRequest,
 	getPlayerDinozInformationForTeam,
 	removeMoney
@@ -35,6 +36,7 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { Challenge, challengeRanges, ChallengeType } from '@drpg/core/models/dojo/challenge';
 import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { Dojo } from '@drpg/prisma';
+import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -45,7 +47,9 @@ export async function getDojo(req: Request) {
 		myDojo = await createMyDojo(authed.id);
 	}
 
-	return myDojo;
+	const rank = await getPlayerPositionDojoDAO(authed.id);
+
+	return { dojo: myDojo, rank: rank };
 }
 
 export async function createMyTeam(req: Request) {
@@ -284,7 +288,12 @@ export async function fightChallenge(req: Request) {
 			player.Dojo.id
 		)
 	);
-
+	const ranking = await getDojoDataForRanking(authed.id);
+	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length;
+	const worth = isNaN(victory / ranking.DojoChallengeHistory.length)
+		? 0
+		: victory / ranking.DojoChallengeHistory.length;
+	promises.push(updateDojoPoints(authed.id, Math.round(worth * ranking.reputation)));
 	await Promise.all(promises);
 
 	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon };
@@ -352,8 +361,19 @@ export async function skipOpponent(req: Request) {
 		throw new ExpectedError(translate('dojo.notFightedOpponent', authed));
 	}
 
-	await setFightedOpponent(opponentId, player.Dojo.id, true);
-	await archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id);
+	const ranking = await getDojoDataForRanking(authed.id);
+	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length;
+	const worth = isNaN(victory / ranking.DojoChallengeHistory.length)
+		? 0
+		: victory / ranking.DojoChallengeHistory.length;
+
+	const promises = [];
+	promises.push(setFightedOpponent(opponentId, player.Dojo.id, true));
+	promises.push(
+		archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id)
+	);
+	promises.push(updateDojoPoints(authed.id, Math.round(worth * ranking.reputation)));
+	await Promise.all(promises);
 }
 
 async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {

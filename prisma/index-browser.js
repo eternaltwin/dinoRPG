@@ -340,6 +340,7 @@ exports.Prisma.RankingScalarFieldEnum = {
   points: 'points',
   average: 'average',
   completion: 'completion',
+  dojo: 'dojo',
   playerId: 'playerId'
 };
 

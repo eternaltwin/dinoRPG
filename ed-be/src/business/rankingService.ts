@@ -3,6 +3,7 @@ import {
 	getPlayerPositionDAO,
 	getPlayersAverageRanking,
 	getPlayersCompletionRanking,
+	getPlayersDojoRanking,
 	getPlayersSumRanking
 } from '../dao/rankingDao.js';
 
@@ -25,6 +26,9 @@ export async function getRanking(req: Request) {
 			break;
 		case 'completion':
 			playersRanking = await getPlayersCompletionRanking(page);
+			break;
+		case 'dojo':
+			playersRanking = await getPlayersDojoRanking(page);
 			break;
 		default:
 			playersRanking = await getPlayersSumRanking(page);

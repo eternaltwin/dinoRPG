@@ -75,15 +75,15 @@ export async function cleanCurrentOpponentTeam(dojoId: string) {
 		data: {
 			fighted: false
 		}
-	})
+	});
 	await prisma.dojo.update({
 		where: {
 			id: dojoId
 		},
 		data: {
-			dailyReset: {increment: 1}
+			dailyReset: { increment: 1 }
 		}
-	})
+	});
 	return await prisma.dojoTeam.findMany({
 		where: {
 			dojoId: dojoId
@@ -99,7 +99,7 @@ export async function cleanCurrentOpponentTeam(dojoId: string) {
 			},
 			fighted: true
 		}
-	})
+	});
 }
 
 export async function createMyDojo(playerId: string) {

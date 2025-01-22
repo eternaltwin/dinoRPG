@@ -31206,6 +31206,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     completion: number | null
+    dojo: number | null
   }
 
   export type RankingSumAggregateOutputType = {
@@ -31214,6 +31215,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     completion: number | null
+    dojo: number | null
   }
 
   export type RankingMinAggregateOutputType = {
@@ -31222,6 +31224,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     completion: number | null
+    dojo: number | null
     playerId: string | null
   }
 
@@ -31231,6 +31234,7 @@ export namespace Prisma {
     points: number | null
     average: number | null
     completion: number | null
+    dojo: number | null
     playerId: string | null
   }
 
@@ -31240,6 +31244,7 @@ export namespace Prisma {
     points: number
     average: number
     completion: number
+    dojo: number
     playerId: number
     _all: number
   }
@@ -31251,6 +31256,7 @@ export namespace Prisma {
     points?: true
     average?: true
     completion?: true
+    dojo?: true
   }
 
   export type RankingSumAggregateInputType = {
@@ -31259,6 +31265,7 @@ export namespace Prisma {
     points?: true
     average?: true
     completion?: true
+    dojo?: true
   }
 
   export type RankingMinAggregateInputType = {
@@ -31267,6 +31274,7 @@ export namespace Prisma {
     points?: true
     average?: true
     completion?: true
+    dojo?: true
     playerId?: true
   }
 
@@ -31276,6 +31284,7 @@ export namespace Prisma {
     points?: true
     average?: true
     completion?: true
+    dojo?: true
     playerId?: true
   }
 
@@ -31285,6 +31294,7 @@ export namespace Prisma {
     points?: true
     average?: true
     completion?: true
+    dojo?: true
     playerId?: true
     _all?: true
   }
@@ -31381,6 +31391,7 @@ export namespace Prisma {
     points: number
     average: number
     completion: number
+    dojo: number
     playerId: string | null
     _count: RankingCountAggregateOutputType | null
     _avg: RankingAvgAggregateOutputType | null
@@ -31409,6 +31420,7 @@ export namespace Prisma {
     points?: boolean
     average?: boolean
     completion?: boolean
+    dojo?: boolean
     playerId?: boolean
     player?: boolean | Ranking$playerArgs<ExtArgs>
   }, ExtArgs["result"]["ranking"]>
@@ -31419,6 +31431,7 @@ export namespace Prisma {
     points?: boolean
     average?: boolean
     completion?: boolean
+    dojo?: boolean
     playerId?: boolean
     player?: boolean | Ranking$playerArgs<ExtArgs>
   }, ExtArgs["result"]["ranking"]>
@@ -31429,10 +31442,11 @@ export namespace Prisma {
     points?: boolean
     average?: boolean
     completion?: boolean
+    dojo?: boolean
     playerId?: boolean
   }
 
-  export type RankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozCount" | "points" | "average" | "completion" | "playerId", ExtArgs["result"]["ranking"]>
+  export type RankingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozCount" | "points" | "average" | "completion" | "dojo" | "playerId", ExtArgs["result"]["ranking"]>
   export type RankingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | Ranking$playerArgs<ExtArgs>
   }
@@ -31451,6 +31465,7 @@ export namespace Prisma {
       points: number
       average: number
       completion: number
+      dojo: number
       playerId: string | null
     }, ExtArgs["result"]["ranking"]>
     composites: {}
@@ -31851,6 +31866,7 @@ export namespace Prisma {
     readonly points: FieldRef<"Ranking", 'Int'>
     readonly average: FieldRef<"Ranking", 'Int'>
     readonly completion: FieldRef<"Ranking", 'Int'>
+    readonly dojo: FieldRef<"Ranking", 'Int'>
     readonly playerId: FieldRef<"Ranking", 'String'>
   }
     
@@ -55849,6 +55865,7 @@ export namespace Prisma {
     points: 'points',
     average: 'average',
     completion: 'completion',
+    dojo: 'dojo',
     playerId: 'playerId'
   };
 
@@ -57982,6 +57999,7 @@ export namespace Prisma {
     points?: IntFilter<"Ranking"> | number
     average?: IntFilter<"Ranking"> | number
     completion?: IntFilter<"Ranking"> | number
+    dojo?: IntFilter<"Ranking"> | number
     playerId?: UuidNullableFilter<"Ranking"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
@@ -57992,6 +58010,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
     playerId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
   }
@@ -58006,6 +58025,7 @@ export namespace Prisma {
     points?: IntFilter<"Ranking"> | number
     average?: IntFilter<"Ranking"> | number
     completion?: IntFilter<"Ranking"> | number
+    dojo?: IntFilter<"Ranking"> | number
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "playerId">
 
@@ -58015,6 +58035,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
     playerId?: SortOrderInput | SortOrder
     _count?: RankingCountOrderByAggregateInput
     _avg?: RankingAvgOrderByAggregateInput
@@ -58032,6 +58053,7 @@ export namespace Prisma {
     points?: IntWithAggregatesFilter<"Ranking"> | number
     average?: IntWithAggregatesFilter<"Ranking"> | number
     completion?: IntWithAggregatesFilter<"Ranking"> | number
+    dojo?: IntWithAggregatesFilter<"Ranking"> | number
     playerId?: UuidNullableWithAggregatesFilter<"Ranking"> | string | null
   }
 
@@ -61047,6 +61069,7 @@ export namespace Prisma {
     points?: number
     average?: number
     completion?: number
+    dojo?: number
     player?: PlayerCreateNestedOneWithoutRankingInput
   }
 
@@ -61056,6 +61079,7 @@ export namespace Prisma {
     points?: number
     average?: number
     completion?: number
+    dojo?: number
     playerId?: string | null
   }
 
@@ -61064,6 +61088,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneWithoutRankingNestedInput
   }
 
@@ -61073,6 +61098,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -61082,6 +61108,7 @@ export namespace Prisma {
     points?: number
     average?: number
     completion?: number
+    dojo?: number
     playerId?: string | null
   }
 
@@ -61090,6 +61117,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
   }
 
   export type RankingUncheckedUpdateManyInput = {
@@ -61098,6 +61126,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -64123,6 +64152,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
     playerId?: SortOrder
   }
 
@@ -64132,6 +64162,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
   }
 
   export type RankingMaxOrderByAggregateInput = {
@@ -64140,6 +64171,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
     playerId?: SortOrder
   }
 
@@ -64149,6 +64181,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
     playerId?: SortOrder
   }
 
@@ -64158,6 +64191,7 @@ export namespace Prisma {
     points?: SortOrder
     average?: SortOrder
     completion?: SortOrder
+    dojo?: SortOrder
   }
 
   export type SecretCountOrderByAggregateInput = {
@@ -72726,6 +72760,7 @@ export namespace Prisma {
     points?: number
     average?: number
     completion?: number
+    dojo?: number
   }
 
   export type RankingUncheckedCreateWithoutPlayerInput = {
@@ -72734,6 +72769,7 @@ export namespace Prisma {
     points?: number
     average?: number
     completion?: number
+    dojo?: number
   }
 
   export type RankingCreateOrConnectWithoutPlayerInput = {
@@ -73451,6 +73487,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
   }
 
   export type RankingUncheckedUpdateWithoutPlayerInput = {
@@ -73459,6 +73496,7 @@ export namespace Prisma {
     points?: IntFieldUpdateOperationsInput | number
     average?: IntFieldUpdateOperationsInput | number
     completion?: IntFieldUpdateOperationsInput | number
+    dojo?: IntFieldUpdateOperationsInput | number
   }
 
   export type DojoUpsertWithoutPlayerInput = {

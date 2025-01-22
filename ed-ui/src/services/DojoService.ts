@@ -5,7 +5,7 @@ import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResul
 import { Challenge } from '@drpg/core/models/dojo/challenge';
 
 export const DojoService = {
-	getMyDojo(): Promise<DojoBasic> {
+	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number }> {
 		return http()
 			.get(`/dojo/`)
 			.then(res => Promise.resolve(res.data))

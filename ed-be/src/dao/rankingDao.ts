@@ -55,6 +55,23 @@ export async function getPlayersCompletionRanking(page: number) {
 	});
 }
 
+export async function getPlayersDojoRanking(page: number) {
+	return prisma.ranking.findMany({
+		select: {
+			dojo: true,
+			player: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
+		},
+		orderBy: [{ dojo: 'desc' }, { player: { name: 'asc' } }],
+		take: 20,
+		skip: (page - 1) * 20
+	});
+}
+
 export async function getPlayersSumRanking(page: number) {
 	return prisma.ranking.findMany({
 		select: {
@@ -109,6 +126,17 @@ export async function updateCompletion(playerId: string, completion: number) {
 		},
 		data: {
 			completion: completion
+		}
+	});
+}
+
+export async function updateDojoPoints(playerId: string, dojo: number) {
+	await prisma.ranking.update({
+		where: {
+			playerId
+		},
+		data: {
+			dojo: dojo
 		}
 	});
 }
@@ -168,6 +196,50 @@ export async function getPlayerPositionDAO(playerId: string) {
 				{
 					points: {
 						equals: playerRanking.points
+					},
+					player: {
+						name: {
+							lt: playerRanking.player?.name ?? ''
+						}
+					}
+				}
+			]
+		}
+	});
+
+	return above + 1;
+}
+
+export async function getPlayerPositionDojoDAO(playerId: string) {
+	const playerRanking = await prisma.ranking.findUnique({
+		where: {
+			playerId
+		},
+		select: {
+			dojo: true,
+			player: {
+				select: {
+					name: true
+				}
+			}
+		}
+	});
+
+	if (playerRanking === null) {
+		throw new ExpectedError('Player ranking not found');
+	}
+
+	const above = await prisma.ranking.count({
+		where: {
+			OR: [
+				{
+					dojo: {
+						gt: playerRanking.dojo
+					}
+				},
+				{
+					dojo: {
+						equals: playerRanking.dojo
 					},
 					player: {
 						name: {

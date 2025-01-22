@@ -920,6 +920,18 @@ export async function getDojoChallengePreparationRequest(playerId: string) {
 	return player;
 }
 
+export async function getDojoDataForRanking(playerId: string) {
+	return await prisma.dojo.findFirstOrThrow({
+		where: {
+			playerId
+		},
+		select: {
+			reputation: true,
+			DojoChallengeHistory: true
+		}
+	});
+}
+
 export async function getCanCreateClanRequest(playerId: string) {
 	const player = await prisma.player.count({
 		where: {
