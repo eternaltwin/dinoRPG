@@ -4828,9 +4828,9 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
 				const left =
-					(fightData.stats.attack.hpLost + fightData.stats.attack.hpHealed) / fightData.stats.attack.startingHp;
+					(fightData.stats.attack.startingHp - fightData.stats.attack.endingHp) / fightData.stats.attack.startingHp;
 				const right =
-					(fightData.stats.defense.hpLost + fightData.stats.defense.hpHealed) / fightData.stats.defense.startingHp;
+					(fightData.stats.defense.startingHp - fightData.stats.defense.endingHp) / fightData.stats.defense.startingHp;
 				fightData.loser = left > right ? 'attackers' : 'defenders';
 			}
 		}
