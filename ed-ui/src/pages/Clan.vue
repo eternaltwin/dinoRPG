@@ -258,7 +258,7 @@ export default defineComponent({
 	align-self: center;
 	height: auto;
 	max-height: none;
-	overflow: hidden;
+	//overflow: hidden;
 	margin-bottom: 10px;
 	h3 {
 		display: flex;
