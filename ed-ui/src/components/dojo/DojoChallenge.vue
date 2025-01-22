@@ -19,8 +19,8 @@
 		></CarousselDinoz>
 		<div class="versus" v-if="opponent.id">
 			<div class="dinozHolder">
-				<DinozWithoutFlash :display="opponent.display" :life="1" flip />
-				<p class="name">{{ opponent.name }}</p>
+				<DinozWithoutFlash v-if="myFighter.id" :display="myFighter.display" flip :life="1" />
+				<p class="name">{{ myFighter.name }}</p>
 			</div>
 			<div
 				class="fight"
@@ -28,9 +28,10 @@
 				v-html="$t('dojo.challenge.launch')"
 				@click="launchChallenge()"
 			/>
+
 			<div class="dinozHolder">
-				<DinozWithoutFlash v-if="myFighter.id" :display="myFighter.display" :life="1" />
-				<p class="name">{{ myFighter.name }}</p>
+				<DinozWithoutFlash :display="opponent.display" :life="1" />
+				<p class="name">{{ opponent.name }}</p>
 			</div>
 		</div>
 		<CarousselDinoz

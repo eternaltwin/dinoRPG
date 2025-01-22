@@ -7,7 +7,7 @@
 				:class="['dinoz-button', { fighted: dinoz.fighted }]"
 				@click="toggleDinoz(dinoz)"
 			>
-				<DinozWithoutFlash :display="dinoz.dinoz.display" :life="1" />
+				<DinozWithoutFlash :display="dinoz.dinoz.display" flip :life="1" />
 
 				<div class="textbox">
 					<p class="name">{{ dinoz.dinoz.name }}</p>
@@ -29,7 +29,7 @@
 					alt="skip"
 					@click.stop="skipOpponent(dinoz.dinoz.id)"
 				/>
-				<DinozWithoutFlash :display="dinoz.dinoz.display" :life="1" flip />
+				<DinozWithoutFlash :display="dinoz.dinoz.display" :life="1" />
 
 				<div class="textbox">
 					<p class="name">{{ dinoz.dinoz.name }}</p>
