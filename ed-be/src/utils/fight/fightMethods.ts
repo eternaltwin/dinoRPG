@@ -4147,7 +4147,7 @@ const attackTarget = (
 	});
 	updateStat(fightData, target, 'hpLost', totalDamage);
 	updateStat(fightData, attacker, 'attacks', 1);
-	if (!isAssault) {
+	if (isAssault) {
 		updateStat(fightData, attacker, 'assaults', 1);
 	}
 
