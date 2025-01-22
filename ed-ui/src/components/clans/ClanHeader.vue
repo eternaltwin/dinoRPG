@@ -47,15 +47,7 @@
 		<div class="bottom-info">
 			<p class="creation-date">{{ $t('clan.header.creation_date', { date: DateToString(clan?.creationDate) }) }}</p>
 			<div class="leader-name">
-				<img
-					src="\src\assets\icons\crown.png"
-					alt="rank"
-					v-tippy="{
-						content: formatContent($t('clan.icons.crown')),
-						theme: 'small'
-					}"
-				/>
-				<span @click="goToPlayer(clan.leaderId)">{{ clan.leader?.name }}</span>
+				<DZUser :user="clan.leader" leader />
 			</div>
 		</div>
 	</div>
@@ -66,6 +58,7 @@ import { PropType, defineComponent } from 'vue';
 import { Clan } from '@drpg/core/models/clan/clan';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import { API_BASE, utils } from '../../utils/index.js';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'ClanHeader',
@@ -79,16 +72,13 @@ export default defineComponent({
 			teeeest: ''
 		};
 	},
-	components: {},
+	components: { DZUser },
 	methods: {
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
 		},
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
-		},
-		goToPlayer(id: string) {
-			this.$router.push({ name: 'MyAccount', params: { id } });
 		}
 	}
 });

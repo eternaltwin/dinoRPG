@@ -9,7 +9,8 @@
 				<div class="request-date">{{ new Date(request.date).toLocaleString('fr-FR') }}</div>
 				<img :src="getImgURL('icons', 'small_follow')" alt="info_button" style="margin-right: 2px" />
 				<div>
-					<span class="player-name" @click="goToPlayer(request.playerId)">{{ request.player.name }}</span>
+					<span class="player-name"><DZUser :user="request.player" /></span>
+
 					{{ $t('clansMembers.request.line') }}
 				</div>
 				<div class="request-buttons">
@@ -35,18 +36,9 @@
 					<th class="actions" v-if="selfMember">{{ $t('clansMembers.th.actions') }}</th>
 				</tr>
 				<tr v-for="member in clanMembersList" :key="member.id" :class="(member.id + 1) % 2 === 0 ? 'even' : ''">
-					<td class="name-column" @click="goToPlayer(member.player.id)">
+					<td class="name-column">
 						<div class="name-container">
-							<img
-								src="\src\assets\icons\crown.png"
-								alt="rank"
-								v-if="member.player.leaderOf?.id"
-								v-tippy="{
-									content: $t('clan.icons.crown'),
-									theme: 'small'
-								}"
-							/>
-							<div class="name">{{ member.player.name }}</div>
+							<div class="name"><DZUser :user="member.player" :leader="member.player.leaderOf?.id" /></div>
 							<div class="nickname">{{ member.nickname }}</div>
 						</div>
 					</td>
@@ -105,10 +97,11 @@ import { errorHandler, utils } from '../../utils/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { playerStore } from '../../store';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
+import DZUser from '../common/DZUser.vue';
 
 export default defineComponent({
 	name: 'ClanMembers',
-	components: {},
+	components: { DZUser },
 	data() {
 		return {
 			clanMembersList: {} as Array<ClanMember>,
@@ -124,9 +117,6 @@ export default defineComponent({
 	methods: {
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
-		},
-		goToPlayer(_id: string): void {
-			this.$router.push({ name: 'MyAccount', params: { id: _id } });
 		},
 		goToMemberEdit(_id: number): void {
 			this.$router.push({ name: 'ClanMemberEdit', params: { memberId: _id } });

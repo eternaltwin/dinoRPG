@@ -9,7 +9,16 @@
 			@click="toggleMenu"
 			v-click-outside="leave"
 		>
-			<img src="../../assets/design/small_member.webp" :alt="user.name" />
+			<img v-if="!leader" :src="getImgURL('design', 'small_member')" :alt="user.name" />
+			<img
+				v-else
+				src="\src\assets\icons\crown.png"
+				alt="rank"
+				v-tippy="{
+					content: formatContent($t('clan.icons.crown')),
+					theme: 'small'
+				}"
+			/>
 			<span>{{ user.name }}</span>
 		</span>
 		<PlayerMenu v-if="seePlayer" :playerId="user.id" />
@@ -36,6 +45,10 @@ export default defineComponent({
 			default: false
 		},
 		friend: {
+			type: Boolean,
+			default: false
+		},
+		leader: {
 			type: Boolean,
 			default: false
 		}
