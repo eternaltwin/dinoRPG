@@ -4067,7 +4067,7 @@ const attackTarget = (
 
 		if (isDodged || isSuperDodged) {
 			evasion = true;
-			updateStat(fightData, attacker, 'evasions', 1);
+			updateStat(fightData, target, 'evasions', 1);
 		}
 
 		if (isDodged || isSuperDodged || noDamage) {
