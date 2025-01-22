@@ -52,12 +52,13 @@ export default defineComponent({
 				this.$t,
 				undefined,
 				undefined,
-				fightResult.result
+				fightResult.result,
+				true
 			);
 			if (!nexFight) {
 				return;
 			}
-			const initPlace = resolveFightingPlace(4);
+			const initPlace = resolveFightingPlace(116);
 			this.fightTransformed = {
 				...initPlace,
 				history: nexFight.filter(n => n != undefined)

@@ -145,7 +145,8 @@ export default defineComponent({
 					this.$t,
 					undefined,
 					undefined,
-					fightResult.result
+					fightResult.result,
+					true
 				);
 				if (!nexFight) {
 					return;

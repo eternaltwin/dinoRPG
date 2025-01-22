@@ -125,7 +125,8 @@ export function transpileFight(
 	t: TFunction,
 	startText: FightText | undefined,
 	endText: FightText | undefined,
-	victory: boolean
+	victory: boolean,
+	dojo?: boolean
 ) {
 	const history: transpiled[] = [];
 	let myFighter: FighterRecap | undefined;
@@ -470,10 +471,25 @@ export function transpileFight(
 			message: t(`quest.${endText.text}`)
 		});
 	}
-	history.push({
-		action: DinoAction.FINISH,
-		right: FinishState.GUARD,
-		left: FinishState.RUN
-	});
+	if (dojo) {
+		history.push({
+			action: DinoAction.FINISH,
+			right: FinishState.STAND,
+			left: FinishState.STAND
+		});
+	} else if (victory) {
+		history.push({
+			action: DinoAction.FINISH,
+			right: FinishState.STAND,
+			left: FinishState.RUN
+		});
+	} else {
+		history.push({
+			action: DinoAction.FINISH,
+			right: FinishState.STAND,
+			left: FinishState.STAND
+		});
+	}
+
 	return history;
 }
