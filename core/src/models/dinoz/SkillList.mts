@@ -739,6 +739,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 2,
 		probability: 15,
+		lifeEffect: {
+			fx: LifeEffect.Fire
+		},
 		gotoEffect: GotoEffect.Normal
 	},
 	[Skill.COEUR_DU_PHOENIX]: {
