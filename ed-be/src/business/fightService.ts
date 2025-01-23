@@ -495,7 +495,7 @@ export async function rewardFight(
 		fighters: fighters,
 		goldEarned: fightResult.winner ? gold : -goldLost,
 		xpEarned: fightResult.winner ? totalWinXP : 0,
-		levelUp: levelup,
+		levelUp: fightResult.winner ? levelup : false,
 		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
 		result: fightResult.winner,
 		history: fightResult.steps,
