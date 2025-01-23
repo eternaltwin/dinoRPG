@@ -217,7 +217,7 @@ export async function cancelOffer(req: Request) {
 	const offer = await getOffer(offerId, OfferStatus.ONGOING);
 
 	// Check if user is the seller
-	if (!offer || offer.seller.id !== playerId) {
+	if (!offer || !offer.seller || offer.seller.id !== playerId) {
 		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
@@ -284,7 +284,7 @@ export async function bidOffer(req: Request) {
 	const offer = await getOffer(offerId, OfferStatus.ONGOING);
 
 	// Check if user is the seller
-	if (!offer || offer.seller.id === authed.id) {
+	if (!offer || !offer.seller || offer.seller.id === authed.id) {
 		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
@@ -345,7 +345,7 @@ export async function bidOffer(req: Request) {
 export const expireOffer = async (offerId: number) => {
 	const offer = await getOffer(offerId, OfferStatus.ONGOING);
 
-	if (!offer) {
+	if (!offer || !offer.seller) {
 		throw new ExpectedError('Offer not found');
 	}
 
@@ -387,10 +387,11 @@ export const expireOffer = async (offerId: number) => {
 export async function claimOffer(req: Request) {
 	const offerId = +req.params.offerId;
 	const offer = await getOffer(offerId, OfferStatus.ENDED);
-	if (!offer) {
+	if (!offer || !offer.seller || !offer.sellerId) {
 		throw new ExpectedError('Offer not found');
 	}
 	const authed = await auth(req);
+	const sellerId = offer.sellerId;
 
 	// Separate items and ingredients
 	const items = offer.items.filter(item => !item.isIngredient);
@@ -428,7 +429,7 @@ export async function claimOffer(req: Request) {
 		// Add ingredients to winner inventory
 		promises.push(...ingredients.map(item => increaseIngredientQuantity(winnerBid.userId, item.itemId, item.quantity)));
 	} else {
-		const refund = await checkRefund(offer.sellerId, ingredients, items, offer.dinoz, offerId);
+		const refund = await checkRefund(sellerId, ingredients, items, offer.dinoz, offerId);
 
 		if (typeof refund === 'string') {
 			throw new ExpectedError(translate(refund, authed));
@@ -438,14 +439,14 @@ export async function claimOffer(req: Request) {
 			updateDinoz(offer.dinoz.id, { unavailableReason: null });
 		}
 		// Add items to inventory
-		promises.push(...items.map(item => increaseItemQuantity(offer.seller.id, item.itemId, item.quantity)));
+		promises.push(...items.map(item => increaseItemQuantity(sellerId, item.itemId, item.quantity)));
 
 		// Add ingredients to inventory
-		promises.push(...ingredients.map(item => increaseIngredientQuantity(offer.seller.id, item.itemId, item.quantity)));
+		promises.push(...ingredients.map(item => increaseIngredientQuantity(sellerId, item.itemId, item.quantity)));
 
 		// Send Discord notification
 		LOGGER.log(`Offer ${offerId} expired`);
-		await createLog(LogType.OfferExpired, offer.seller.id, undefined, offer.id);
+		await createLog(LogType.OfferExpired, sellerId, undefined, offer.id);
 	}
 
 	// Update offer status

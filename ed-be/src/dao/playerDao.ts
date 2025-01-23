@@ -112,7 +112,8 @@ export async function checkBeforeDeletion(playerId: string) {
 					}
 				}
 			},
-			ClanMember: true
+			ClanMember: true,
+			targetedCases: true
 		}
 	});
 	return player;
