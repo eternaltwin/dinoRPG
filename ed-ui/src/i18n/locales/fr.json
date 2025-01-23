@@ -4236,6 +4236,7 @@
 	},
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
+		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis!",
 		"tidInProgress": "Les phases finales du tournoi inter-dojo sont actuellement en cours.",
