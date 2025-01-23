@@ -4147,8 +4147,14 @@ const attackTarget = (
 	});
 	updateStat(fightData, target, 'hpLost', totalDamage);
 	updateStat(fightData, attacker, 'attacks', 1);
+	if (target.type === 'dinoz') {
+		updateStat(fightData, target, 'times_attacked', 1);
+	}
 	if (isAssault) {
 		updateStat(fightData, attacker, 'assaults', 1);
+		if (target.type === 'dinoz') {
+			updateStat(fightData, target, 'times_assaulted', 1);
+		}
 	}
 
 	// The target can counter if it's still alive and the attack was in close combat

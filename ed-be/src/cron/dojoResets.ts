@@ -12,7 +12,7 @@ const dojoResets = () => {
 				data: {
 					dailyReset: 0
 				}
-			})
+			});
 		} catch (err) {
 			console.error(`Cannot reset team and opponents team: ${err}`);
 		}

@@ -52,32 +52,52 @@ export interface CatchResult {
 export type FightStats = {
 	// Total starting HP
 	startingHp: number;
+
 	// Total ending HP
 	endingHp: number;
+
 	// Total HP lost
 	hpLost: number;
+
 	// Total HP healed
 	hpHealed: number;
-	// Total attacks
+
+	// Total attacks by me
 	attacks: number;
+
+	// Total attacks on me
+	times_attacked: number;
+
 	// Total multi-hits
 	multiHits: number;
-	// Total assaults
+
+	// Total assaults by me
 	assaults: number;
+
+	// Total assaults on me
+	times_assaulted: number;
+
 	// Total evasions
 	evasions: number;
+
 	// Total counters
 	counters: number;
+
 	// Total times poison was applied to an opponent
 	poisoned: number;
+
 	// Total damage dealt with poison to an opponent
 	poison_damage: number;
+
 	// Total times an opponent poisoned
 	times_poisoned: number;
-	// Total damage dealt with burn to an opponent
+
+	// Total damage dealt with burn to opponents
 	burn_damage: number;
+
 	// Total reinforcements called (e.g. clone, korgon, etc.)
 	reinforcements: number;
+
 	// Total times (not total duration) petrification was applied to an opponent
 	petrified: number;
 	elements: Record<
