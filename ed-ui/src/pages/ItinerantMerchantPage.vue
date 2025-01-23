@@ -89,7 +89,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { itinerantShopNameList } from '../constants/index.js';
 import EventBus from '../events/index.js';
 import { IngredientsService } from '../services/IngredientsService';
-import { playerStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
 
@@ -100,7 +100,8 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			playerStore: playerStore(),
+			dinozStore: dinozStore(),
+			playerSotre: playerStore(),
 			itinerantShopNameList: itinerantShopNameList,
 			ingredientNameList: ingredientNameList,
 			ingredientList: [] as Array<IngredientFiche>,
@@ -112,7 +113,7 @@ export default defineComponent({
 	methods: {
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
-			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+			const currentDinozId = this.dinozStore.currentDinozId;
 			const sellingItems = this.inputValues
 				.filter(i => i.quantity > 0)
 				.filter(i => (this.ingredientList.find(a => a.ingredientId === i.itemId)?.quantity ?? 0) >= i.quantity);
@@ -159,7 +160,7 @@ export default defineComponent({
 		EventBus.emit('isLoading', true);
 		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
-			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+			const currentDinozId = this.dinozStore.currentDinozId;
 			this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
 			const tempo: ShopDTO[] = this.ingredientList.map(i => {
 				return { itemId: i.ingredientId, quantity: 0 };

@@ -120,7 +120,7 @@ export default defineComponent({
 			return import.meta.env.MODE === 'development';
 		},
 		currentDinozId(): number | undefined {
-			return this.playerStore.playerOptions.currentDinozId;
+			return this.dinozStore.getCurrentDinozId;
 		},
 		getPlaceImage(place: string | null) {
 			if (!place) return;

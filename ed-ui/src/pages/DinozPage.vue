@@ -112,9 +112,9 @@ export default defineComponent({
 			}
 			this.dinozStore.setDinozList(dinozList);
 			this.playerStore.setPlayerOptions({
-				...this.playerStore.playerOptions,
-				currentDinozId: parseInt(dinozId)
+				...this.playerStore.playerOptions
 			});
+			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
 			this.isReady = true;
 		},
 		updateActions(actions: ActionFiche[]) {
