@@ -141,8 +141,7 @@ export default defineComponent({
 					// Lose less than X% of hp
 					return (
 						Math.round(
-							((this.fightStat.defense.startingHp - this.fightStat.defense.endingHp) /
-								this.fightStat.attack.startingHp) *
+							((this.fightStat.attack.startingHp - this.fightStat.attack.endingHp) / this.fightStat.attack.startingHp) *
 								100
 						) - challenge.goal
 					);
