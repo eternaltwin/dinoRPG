@@ -164,7 +164,7 @@ export default defineComponent({
 					return 0;
 				case ChallengeType.TakeAttackQuantity:
 					// Receive less than N attacks
-					return this.fightStat.defense.attacks - challenge.goal;
+					return this.fightStat.attack.times_attacked - challenge.goal;
 				case ChallengeType.TakeRawDamage:
 					// Lose les than N hp
 					return this.fightStat.attack.hpLost - challenge.goal;

@@ -313,7 +313,7 @@ function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 			return stats.defense.endingHp <= 0;
 		case ChallengeType.TakeAttackQuantity:
 			// Receive less than N attacks
-			return stats.defense.attacks <= challenge.goal;
+			return stats.attack.times_attacked <= challenge.goal;
 		case ChallengeType.TakeRawDamage:
 			// Lose les than N hp
 			return stats.attack.hpLost <= challenge.goal;
