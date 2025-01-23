@@ -19,7 +19,11 @@ export async function getRandomDinozFromLevel(level: number, team: number[], pla
 	const dinoz = await prisma.dinoz.findFirstOrThrow({
 		skip: random,
 		where: {
-			level: { gte: level - 1, lte: level + 1 }
+			AND: [
+				{ level: { gte: level - 1, lte: level + 1 } },
+				{ id: { not: { in: team } } },
+				{ playerId: { not: playerId } }
+			]
 		},
 		select: {
 			id: true,
