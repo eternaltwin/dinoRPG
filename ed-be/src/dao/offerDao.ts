@@ -97,9 +97,18 @@ export async function insertOffer(
 	playerId: string
 ) {
 	const duration = GLOBAL.config.isProduction ? MARKET_OFFER_DURATION : MARKET_OFFER_DURATION_DEBUG;
+	const playerName = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			name: true
+		}
+	});
 	return prisma.offer.create({
 		data: {
 			sellerId: playerId,
+			sellerName: playerName.name,
 			endDate: new Date(Date.now() + duration),
 			dinozId,
 			items: {

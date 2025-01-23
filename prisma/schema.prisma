@@ -252,7 +252,7 @@ model DojoTeam {
   dojoId  String  @db.Uuid
   dojo    Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   dinozId Int
-  dinoz   Dinoz   @relation(fields: [dinozId], references: [id])
+  dinoz   Dinoz   @relation(fields: [dinozId], onDelete: Cascade, references: [id])
   fighted Boolean @default(false)
 
   @@unique([dojoId, dinozId])
@@ -264,7 +264,7 @@ model DojoOpponents {
   dojoId   String  @db.Uuid
   dojo     Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   dinozId  Int
-  dinoz    Dinoz   @relation(fields: [dinozId], references: [id])
+  dinoz    Dinoz   @relation(fields: [dinozId], onDelete: Cascade, references: [id])
   fighted  Boolean @default(false)
   achieved Boolean @default(false)
 
@@ -408,9 +408,10 @@ model Offer {
   total        Int
   status       OfferStatus @default(ONGOING)
   dinozDetails String?
-  sellerId     String      @db.Uuid
+  sellerId     String?     @db.Uuid
+  sellerName   String
   dinoz        Dinoz?      @relation(fields: [dinozId], references: [id])
-  seller       Player      @relation(fields: [sellerId], references: [id])
+  seller       Player?     @relation(fields: [sellerId], references: [id], onDelete: SetNull)
   bids         OfferBid[]
   items        OfferItem[]
 }
@@ -566,10 +567,10 @@ model Moderation {
   banDate    DateTime?
   banEndDate DateTime?
   sorted     ModerationAction?
-  reporterId String            @db.Uuid
+  reporterId String?           @db.Uuid
   targetId   String            @db.Uuid
   dinoz      Dinoz?            @relation(fields: [dinozId], references: [id])
-  reporter   Player            @relation("ReporterRelation", fields: [reporterId], references: [id])
+  reporter   Player?           @relation("ReporterRelation", fields: [reporterId], references: [id])
   target     Player            @relation("TargetRelation", fields: [targetId], references: [id])
   bannedUser Player?           @relation("AcceptedBan")
 }
@@ -634,8 +635,8 @@ model FightArchive {
   steps       String   @db.Text
   seed        String   @db.VarChar(255)
   result      Boolean  @db.Boolean
-  playerId    String   @db.Uuid
-  player      Player   @relation(fields: [playerId], references: [id])
+  playerId    String?  @db.Uuid
+  player      Player?  @relation(fields: [playerId], references: [id])
   createdDate DateTime @default(now()) @db.Timestamp(6)
 }
 

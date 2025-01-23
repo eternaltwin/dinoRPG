@@ -300,5 +300,9 @@ export async function resetAccount(req: Request) {
 		throw new ExpectedError(translate(`inClan`, authed));
 	}
 
+	if (playerToDelete && playerToDelete.targetedCases.length > 0) {
+		throw new ExpectedError(translate(`inClan`, authed));
+	}
+
 	await resetUser(authed.id);
 }

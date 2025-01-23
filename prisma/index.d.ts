@@ -35256,6 +35256,7 @@ export namespace Prisma {
     status: $Enums.OfferStatus | null
     dinozDetails: string | null
     sellerId: string | null
+    sellerName: string | null
   }
 
   export type OfferMaxAggregateOutputType = {
@@ -35266,6 +35267,7 @@ export namespace Prisma {
     status: $Enums.OfferStatus | null
     dinozDetails: string | null
     sellerId: string | null
+    sellerName: string | null
   }
 
   export type OfferCountAggregateOutputType = {
@@ -35276,6 +35278,7 @@ export namespace Prisma {
     status: number
     dinozDetails: number
     sellerId: number
+    sellerName: number
     _all: number
   }
 
@@ -35300,6 +35303,7 @@ export namespace Prisma {
     status?: true
     dinozDetails?: true
     sellerId?: true
+    sellerName?: true
   }
 
   export type OfferMaxAggregateInputType = {
@@ -35310,6 +35314,7 @@ export namespace Prisma {
     status?: true
     dinozDetails?: true
     sellerId?: true
+    sellerName?: true
   }
 
   export type OfferCountAggregateInputType = {
@@ -35320,6 +35325,7 @@ export namespace Prisma {
     status?: true
     dinozDetails?: true
     sellerId?: true
+    sellerName?: true
     _all?: true
   }
 
@@ -35416,7 +35422,8 @@ export namespace Prisma {
     total: number
     status: $Enums.OfferStatus
     dinozDetails: string | null
-    sellerId: string
+    sellerId: string | null
+    sellerName: string
     _count: OfferCountAggregateOutputType | null
     _avg: OfferAvgAggregateOutputType | null
     _sum: OfferSumAggregateOutputType | null
@@ -35446,8 +35453,9 @@ export namespace Prisma {
     status?: boolean
     dinozDetails?: boolean
     sellerId?: boolean
+    sellerName?: boolean
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
-    seller?: boolean | PlayerDefaultArgs<ExtArgs>
+    seller?: boolean | Offer$sellerArgs<ExtArgs>
     bids?: boolean | Offer$bidsArgs<ExtArgs>
     items?: boolean | Offer$itemsArgs<ExtArgs>
     _count?: boolean | OfferCountOutputTypeDefaultArgs<ExtArgs>
@@ -35461,8 +35469,9 @@ export namespace Prisma {
     status?: boolean
     dinozDetails?: boolean
     sellerId?: boolean
+    sellerName?: boolean
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
-    seller?: boolean | PlayerDefaultArgs<ExtArgs>
+    seller?: boolean | Offer$sellerArgs<ExtArgs>
   }, ExtArgs["result"]["offer"]>
 
   export type OfferSelectScalar = {
@@ -35473,26 +35482,27 @@ export namespace Prisma {
     status?: boolean
     dinozDetails?: boolean
     sellerId?: boolean
+    sellerName?: boolean
   }
 
-  export type OfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "endDate" | "dinozId" | "total" | "status" | "dinozDetails" | "sellerId", ExtArgs["result"]["offer"]>
+  export type OfferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "endDate" | "dinozId" | "total" | "status" | "dinozDetails" | "sellerId" | "sellerName", ExtArgs["result"]["offer"]>
   export type OfferInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
-    seller?: boolean | PlayerDefaultArgs<ExtArgs>
+    seller?: boolean | Offer$sellerArgs<ExtArgs>
     bids?: boolean | Offer$bidsArgs<ExtArgs>
     items?: boolean | Offer$itemsArgs<ExtArgs>
     _count?: boolean | OfferCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type OfferIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Offer$dinozArgs<ExtArgs>
-    seller?: boolean | PlayerDefaultArgs<ExtArgs>
+    seller?: boolean | Offer$sellerArgs<ExtArgs>
   }
 
   export type $OfferPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Offer"
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
-      seller: Prisma.$PlayerPayload<ExtArgs>
+      seller: Prisma.$PlayerPayload<ExtArgs> | null
       bids: Prisma.$OfferBidPayload<ExtArgs>[]
       items: Prisma.$OfferItemPayload<ExtArgs>[]
     }
@@ -35503,7 +35513,8 @@ export namespace Prisma {
       total: number
       status: $Enums.OfferStatus
       dinozDetails: string | null
-      sellerId: string
+      sellerId: string | null
+      sellerName: string
     }, ExtArgs["result"]["offer"]>
     composites: {}
   }
@@ -35869,7 +35880,7 @@ export namespace Prisma {
   export interface Prisma__OfferClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     dinoz<T extends Offer$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Offer$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    seller<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    seller<T extends Offer$sellerArgs<ExtArgs> = {}>(args?: Subset<T, Offer$sellerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     bids<T extends Offer$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Offer$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     items<T extends Offer$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Offer$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
@@ -35908,6 +35919,7 @@ export namespace Prisma {
     readonly status: FieldRef<"Offer", 'OfferStatus'>
     readonly dinozDetails: FieldRef<"Offer", 'String'>
     readonly sellerId: FieldRef<"Offer", 'String'>
+    readonly sellerName: FieldRef<"Offer", 'String'>
   }
     
 
@@ -36291,6 +36303,25 @@ export namespace Prisma {
      */
     include?: DinozInclude<ExtArgs> | null
     where?: DinozWhereInput
+  }
+
+  /**
+   * Offer.seller
+   */
+  export type Offer$sellerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
   }
 
   /**
@@ -49297,7 +49328,7 @@ export namespace Prisma {
     banDate: Date | null
     banEndDate: Date | null
     sorted: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId: string | null
     targetId: string
     _count: ModerationCountAggregateOutputType | null
     _avg: ModerationAvgAggregateOutputType | null
@@ -49331,7 +49362,7 @@ export namespace Prisma {
     reporterId?: boolean
     targetId?: boolean
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
-    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
     bannedUser?: boolean | Moderation$bannedUserArgs<ExtArgs>
   }, ExtArgs["result"]["moderation"]>
@@ -49347,7 +49378,7 @@ export namespace Prisma {
     reporterId?: boolean
     targetId?: boolean
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
-    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["moderation"]>
 
@@ -49366,13 +49397,13 @@ export namespace Prisma {
   export type ModerationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dinozId" | "reason" | "comment" | "banDate" | "banEndDate" | "sorted" | "reporterId" | "targetId", ExtArgs["result"]["moderation"]>
   export type ModerationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
-    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
     bannedUser?: boolean | Moderation$bannedUserArgs<ExtArgs>
   }
   export type ModerationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Moderation$dinozArgs<ExtArgs>
-    reporter?: boolean | PlayerDefaultArgs<ExtArgs>
+    reporter?: boolean | Moderation$reporterArgs<ExtArgs>
     target?: boolean | PlayerDefaultArgs<ExtArgs>
   }
 
@@ -49380,7 +49411,7 @@ export namespace Prisma {
     name: "Moderation"
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
-      reporter: Prisma.$PlayerPayload<ExtArgs>
+      reporter: Prisma.$PlayerPayload<ExtArgs> | null
       target: Prisma.$PlayerPayload<ExtArgs>
       bannedUser: Prisma.$PlayerPayload<ExtArgs> | null
     }
@@ -49392,7 +49423,7 @@ export namespace Prisma {
       banDate: Date | null
       banEndDate: Date | null
       sorted: $Enums.ModerationAction | null
-      reporterId: string
+      reporterId: string | null
       targetId: string
     }, ExtArgs["result"]["moderation"]>
     composites: {}
@@ -49759,7 +49790,7 @@ export namespace Prisma {
   export interface Prisma__ModerationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     dinoz<T extends Moderation$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Moderation$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    reporter<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    reporter<T extends Moderation$reporterArgs<ExtArgs> = {}>(args?: Subset<T, Moderation$reporterArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     target<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
     bannedUser<T extends Moderation$bannedUserArgs<ExtArgs> = {}>(args?: Subset<T, Moderation$bannedUserArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
@@ -50183,6 +50214,25 @@ export namespace Prisma {
      */
     include?: DinozInclude<ExtArgs> | null
     where?: DinozWhereInput
+  }
+
+  /**
+   * Moderation.reporter
+   */
+  export type Moderation$reporterArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
   }
 
   /**
@@ -54696,7 +54746,7 @@ export namespace Prisma {
     steps: string
     seed: string
     result: boolean
-    playerId: string
+    playerId: string | null
     createdDate: Date
     _count: FightArchiveCountAggregateOutputType | null
     _min: FightArchiveMinAggregateOutputType | null
@@ -54725,7 +54775,7 @@ export namespace Prisma {
     result?: boolean
     playerId?: boolean
     createdDate?: boolean
-    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    player?: boolean | FightArchive$playerArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -54736,7 +54786,7 @@ export namespace Prisma {
     result?: boolean
     playerId?: boolean
     createdDate?: boolean
-    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    player?: boolean | FightArchive$playerArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectScalar = {
@@ -54751,16 +54801,16 @@ export namespace Prisma {
 
   export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "createdDate", ExtArgs["result"]["fightArchive"]>
   export type FightArchiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    player?: boolean | FightArchive$playerArgs<ExtArgs>
   }
   export type FightArchiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    player?: boolean | PlayerDefaultArgs<ExtArgs>
+    player?: boolean | FightArchive$playerArgs<ExtArgs>
   }
 
   export type $FightArchivePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FightArchive"
     objects: {
-      player: Prisma.$PlayerPayload<ExtArgs>
+      player: Prisma.$PlayerPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -54768,7 +54818,7 @@ export namespace Prisma {
       steps: string
       seed: string
       result: boolean
-      playerId: string
+      playerId: string | null
       createdDate: Date
     }, ExtArgs["result"]["fightArchive"]>
     composites: {}
@@ -55134,7 +55184,7 @@ export namespace Prisma {
    */
   export interface Prisma__FightArchiveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
+    player<T extends FightArchive$playerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -55538,6 +55588,25 @@ export namespace Prisma {
   }
 
   /**
+   * FightArchive.player
+   */
+  export type FightArchive$playerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
+  }
+
+  /**
    * FightArchive without action
    */
   export type FightArchiveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -55908,7 +55977,8 @@ export namespace Prisma {
     total: 'total',
     status: 'status',
     dinozDetails: 'dinozDetails',
-    sellerId: 'sellerId'
+    sellerId: 'sellerId',
+    sellerName: 'sellerName'
   };
 
   export type OfferScalarFieldEnum = (typeof OfferScalarFieldEnum)[keyof typeof OfferScalarFieldEnum]
@@ -58216,9 +58286,10 @@ export namespace Prisma {
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
-    sellerId?: UuidFilter<"Offer"> | string
+    sellerId?: UuidNullableFilter<"Offer"> | string | null
+    sellerName?: StringFilter<"Offer"> | string
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
-    seller?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    seller?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     bids?: OfferBidListRelationFilter
     items?: OfferItemListRelationFilter
   }
@@ -58230,7 +58301,8 @@ export namespace Prisma {
     total?: SortOrder
     status?: SortOrder
     dinozDetails?: SortOrderInput | SortOrder
-    sellerId?: SortOrder
+    sellerId?: SortOrderInput | SortOrder
+    sellerName?: SortOrder
     dinoz?: DinozOrderByWithRelationInput
     seller?: PlayerOrderByWithRelationInput
     bids?: OfferBidOrderByRelationAggregateInput
@@ -58247,9 +58319,10 @@ export namespace Prisma {
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
-    sellerId?: UuidFilter<"Offer"> | string
+    sellerId?: UuidNullableFilter<"Offer"> | string | null
+    sellerName?: StringFilter<"Offer"> | string
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
-    seller?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    seller?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     bids?: OfferBidListRelationFilter
     items?: OfferItemListRelationFilter
   }, "id">
@@ -58261,7 +58334,8 @@ export namespace Prisma {
     total?: SortOrder
     status?: SortOrder
     dinozDetails?: SortOrderInput | SortOrder
-    sellerId?: SortOrder
+    sellerId?: SortOrderInput | SortOrder
+    sellerName?: SortOrder
     _count?: OfferCountOrderByAggregateInput
     _avg?: OfferAvgOrderByAggregateInput
     _max?: OfferMaxOrderByAggregateInput
@@ -58279,7 +58353,8 @@ export namespace Prisma {
     total?: IntWithAggregatesFilter<"Offer"> | number
     status?: EnumOfferStatusWithAggregatesFilter<"Offer"> | $Enums.OfferStatus
     dinozDetails?: StringNullableWithAggregatesFilter<"Offer"> | string | null
-    sellerId?: UuidWithAggregatesFilter<"Offer"> | string
+    sellerId?: UuidNullableWithAggregatesFilter<"Offer"> | string | null
+    sellerName?: StringWithAggregatesFilter<"Offer"> | string
   }
 
   export type LogWhereInput = {
@@ -59044,10 +59119,10 @@ export namespace Prisma {
     banDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     banEndDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     sorted?: EnumModerationActionNullableFilter<"Moderation"> | $Enums.ModerationAction | null
-    reporterId?: UuidFilter<"Moderation"> | string
+    reporterId?: UuidNullableFilter<"Moderation"> | string | null
     targetId?: UuidFilter<"Moderation"> | string
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
-    reporter?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    reporter?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     bannedUser?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
@@ -59060,7 +59135,7 @@ export namespace Prisma {
     banDate?: SortOrderInput | SortOrder
     banEndDate?: SortOrderInput | SortOrder
     sorted?: SortOrderInput | SortOrder
-    reporterId?: SortOrder
+    reporterId?: SortOrderInput | SortOrder
     targetId?: SortOrder
     dinoz?: DinozOrderByWithRelationInput
     reporter?: PlayerOrderByWithRelationInput
@@ -59079,10 +59154,10 @@ export namespace Prisma {
     banDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     banEndDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     sorted?: EnumModerationActionNullableFilter<"Moderation"> | $Enums.ModerationAction | null
-    reporterId?: UuidFilter<"Moderation"> | string
+    reporterId?: UuidNullableFilter<"Moderation"> | string | null
     targetId?: UuidFilter<"Moderation"> | string
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
-    reporter?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    reporter?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     target?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     bannedUser?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
@@ -59095,7 +59170,7 @@ export namespace Prisma {
     banDate?: SortOrderInput | SortOrder
     banEndDate?: SortOrderInput | SortOrder
     sorted?: SortOrderInput | SortOrder
-    reporterId?: SortOrder
+    reporterId?: SortOrderInput | SortOrder
     targetId?: SortOrder
     _count?: ModerationCountOrderByAggregateInput
     _avg?: ModerationAvgOrderByAggregateInput
@@ -59115,7 +59190,7 @@ export namespace Prisma {
     banDate?: DateTimeNullableWithAggregatesFilter<"Moderation"> | Date | string | null
     banEndDate?: DateTimeNullableWithAggregatesFilter<"Moderation"> | Date | string | null
     sorted?: EnumModerationActionNullableWithAggregatesFilter<"Moderation"> | $Enums.ModerationAction | null
-    reporterId?: UuidWithAggregatesFilter<"Moderation"> | string
+    reporterId?: UuidNullableWithAggregatesFilter<"Moderation"> | string | null
     targetId?: UuidWithAggregatesFilter<"Moderation"> | string
   }
 
@@ -59406,9 +59481,9 @@ export namespace Prisma {
     steps?: StringFilter<"FightArchive"> | string
     seed?: StringFilter<"FightArchive"> | string
     result?: BoolFilter<"FightArchive"> | boolean
-    playerId?: UuidFilter<"FightArchive"> | string
+    playerId?: UuidNullableFilter<"FightArchive"> | string | null
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
-    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type FightArchiveOrderByWithRelationInput = {
@@ -59417,7 +59492,7 @@ export namespace Prisma {
     steps?: SortOrder
     seed?: SortOrder
     result?: SortOrder
-    playerId?: SortOrder
+    playerId?: SortOrderInput | SortOrder
     createdDate?: SortOrder
     player?: PlayerOrderByWithRelationInput
   }
@@ -59431,9 +59506,9 @@ export namespace Prisma {
     steps?: StringFilter<"FightArchive"> | string
     seed?: StringFilter<"FightArchive"> | string
     result?: BoolFilter<"FightArchive"> | boolean
-    playerId?: UuidFilter<"FightArchive"> | string
+    playerId?: UuidNullableFilter<"FightArchive"> | string | null
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
-    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
 
   export type FightArchiveOrderByWithAggregationInput = {
@@ -59442,7 +59517,7 @@ export namespace Prisma {
     steps?: SortOrder
     seed?: SortOrder
     result?: SortOrder
-    playerId?: SortOrder
+    playerId?: SortOrderInput | SortOrder
     createdDate?: SortOrder
     _count?: FightArchiveCountOrderByAggregateInput
     _max?: FightArchiveMaxOrderByAggregateInput
@@ -59458,7 +59533,7 @@ export namespace Prisma {
     steps?: StringWithAggregatesFilter<"FightArchive"> | string
     seed?: StringWithAggregatesFilter<"FightArchive"> | string
     result?: BoolWithAggregatesFilter<"FightArchive"> | boolean
-    playerId?: UuidWithAggregatesFilter<"FightArchive"> | string
+    playerId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     createdDate?: DateTimeWithAggregatesFilter<"FightArchive"> | Date | string
   }
 
@@ -61266,8 +61341,9 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
+    sellerName: string
     dinoz?: DinozCreateNestedOneWithoutOffersInput
-    seller: PlayerCreateNestedOneWithoutOffersInput
+    seller?: PlayerCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
   }
@@ -61279,7 +61355,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    sellerId: string
+    sellerId?: string | null
+    sellerName: string
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -61289,8 +61366,9 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
-    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    seller?: PlayerUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
   }
@@ -61302,7 +61380,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    sellerId?: StringFieldUpdateOperationsInput | string
+    sellerId?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -61314,7 +61393,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    sellerId: string
+    sellerId?: string | null
+    sellerName: string
   }
 
   export type OfferUpdateManyMutationInput = {
@@ -61322,6 +61402,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferUncheckedUpdateManyInput = {
@@ -61331,7 +61412,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    sellerId?: StringFieldUpdateOperationsInput | string
+    sellerId?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
   }
 
   export type LogCreateInput = {
@@ -62022,7 +62104,7 @@ export namespace Prisma {
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
     dinoz?: DinozCreateNestedOneWithoutModerationInput
-    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
     bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
@@ -62035,7 +62117,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
     targetId: string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
@@ -62047,7 +62129,7 @@ export namespace Prisma {
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
-    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
     bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
@@ -62060,7 +62142,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
@@ -62073,7 +62155,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
     targetId: string
   }
 
@@ -62093,7 +62175,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -62368,7 +62450,7 @@ export namespace Prisma {
     seed: string
     result: boolean
     createdDate?: Date | string
-    player: PlayerCreateNestedOneWithoutFightArchiveInput
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
   }
 
   export type FightArchiveUncheckedCreateInput = {
@@ -62377,7 +62459,7 @@ export namespace Prisma {
     steps: string
     seed: string
     result: boolean
-    playerId: string
+    playerId?: string | null
     createdDate?: Date | string
   }
 
@@ -62388,7 +62470,7 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
-    player?: PlayerUpdateOneRequiredWithoutFightArchiveNestedInput
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
   }
 
   export type FightArchiveUncheckedUpdateInput = {
@@ -62397,7 +62479,7 @@ export namespace Prisma {
     steps?: StringFieldUpdateOperationsInput | string
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
-    playerId?: StringFieldUpdateOperationsInput | string
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -62407,7 +62489,7 @@ export namespace Prisma {
     steps: string
     seed: string
     result: boolean
-    playerId: string
+    playerId?: string | null
     createdDate?: Date | string
   }
 
@@ -62426,7 +62508,7 @@ export namespace Prisma {
     steps?: StringFieldUpdateOperationsInput | string
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
-    playerId?: StringFieldUpdateOperationsInput | string
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -64310,6 +64392,7 @@ export namespace Prisma {
     status?: SortOrder
     dinozDetails?: SortOrder
     sellerId?: SortOrder
+    sellerName?: SortOrder
   }
 
   export type OfferAvgOrderByAggregateInput = {
@@ -64326,6 +64409,7 @@ export namespace Prisma {
     status?: SortOrder
     dinozDetails?: SortOrder
     sellerId?: SortOrder
+    sellerName?: SortOrder
   }
 
   export type OfferMinOrderByAggregateInput = {
@@ -64336,6 +64420,7 @@ export namespace Prisma {
     status?: SortOrder
     dinozDetails?: SortOrder
     sellerId?: SortOrder
+    sellerName?: SortOrder
   }
 
   export type OfferSumOrderByAggregateInput = {
@@ -67718,10 +67803,12 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutOffersInput, DinozUpdateWithoutOffersInput>, DinozUncheckedUpdateWithoutOffersInput>
   }
 
-  export type PlayerUpdateOneRequiredWithoutOffersNestedInput = {
+  export type PlayerUpdateOneWithoutOffersNestedInput = {
     create?: XOR<PlayerCreateWithoutOffersInput, PlayerUncheckedCreateWithoutOffersInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutOffersInput
     upsert?: PlayerUpsertWithoutOffersInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutOffersInput, PlayerUpdateWithoutOffersInput>, PlayerUncheckedUpdateWithoutOffersInput>
   }
@@ -68416,10 +68503,12 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutModerationInput, DinozUpdateWithoutModerationInput>, DinozUncheckedUpdateWithoutModerationInput>
   }
 
-  export type PlayerUpdateOneRequiredWithoutReportedCasesNestedInput = {
+  export type PlayerUpdateOneWithoutReportedCasesNestedInput = {
     create?: XOR<PlayerCreateWithoutReportedCasesInput, PlayerUncheckedCreateWithoutReportedCasesInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutReportedCasesInput
     upsert?: PlayerUpsertWithoutReportedCasesInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutReportedCasesInput, PlayerUpdateWithoutReportedCasesInput>, PlayerUncheckedUpdateWithoutReportedCasesInput>
   }
@@ -68700,10 +68789,12 @@ export namespace Prisma {
     connect?: PlayerWhereUniqueInput
   }
 
-  export type PlayerUpdateOneRequiredWithoutFightArchiveNestedInput = {
+  export type PlayerUpdateOneWithoutFightArchiveNestedInput = {
     create?: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutFightArchiveInput
     upsert?: PlayerUpsertWithoutFightArchiveInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutFightArchiveInput, PlayerUpdateWithoutFightArchiveInput>, PlayerUncheckedUpdateWithoutFightArchiveInput>
   }
@@ -69372,7 +69463,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
     bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
@@ -69384,7 +69475,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
     targetId: string
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
@@ -69404,7 +69495,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    seller: PlayerCreateNestedOneWithoutOffersInput
+    sellerName: string
+    seller?: PlayerCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
   }
@@ -69415,7 +69507,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    sellerId: string
+    sellerId?: string | null
+    sellerName: string
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -70046,7 +70139,7 @@ export namespace Prisma {
     banDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     banEndDate?: DateTimeNullableFilter<"Moderation"> | Date | string | null
     sorted?: EnumModerationActionNullableFilter<"Moderation"> | $Enums.ModerationAction | null
-    reporterId?: UuidFilter<"Moderation"> | string
+    reporterId?: UuidNullableFilter<"Moderation"> | string | null
     targetId?: UuidFilter<"Moderation"> | string
   }
 
@@ -70076,7 +70169,8 @@ export namespace Prisma {
     total?: IntFilter<"Offer"> | number
     status?: EnumOfferStatusFilter<"Offer"> | $Enums.OfferStatus
     dinozDetails?: StringNullableFilter<"Offer"> | string | null
-    sellerId?: UuidFilter<"Offer"> | string
+    sellerId?: UuidNullableFilter<"Offer"> | string | null
+    sellerName?: StringFilter<"Offer"> | string
   }
 
   export type PantheonUpsertWithWhereUniqueWithoutDinozInput = {
@@ -72281,7 +72375,7 @@ export namespace Prisma {
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
     dinoz?: DinozCreateNestedOneWithoutModerationInput
-    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     bannedUser?: PlayerCreateNestedOneWithoutBanCaseInput
   }
 
@@ -72293,7 +72387,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
     bannedUser?: PlayerUncheckedCreateNestedOneWithoutBanCaseInput
   }
 
@@ -72340,6 +72434,7 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
+    sellerName: string
     dinoz?: DinozCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
@@ -72352,6 +72447,7 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
+    sellerName: string
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
@@ -72587,7 +72683,7 @@ export namespace Prisma {
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
     dinoz?: DinozCreateNestedOneWithoutModerationInput
-    reporter: PlayerCreateNestedOneWithoutReportedCasesInput
+    reporter?: PlayerCreateNestedOneWithoutReportedCasesInput
     target: PlayerCreateNestedOneWithoutTargetedCasesInput
   }
 
@@ -72599,7 +72695,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
     targetId: string
   }
 
@@ -73273,7 +73369,7 @@ export namespace Prisma {
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
-    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
   }
 
@@ -73285,7 +73381,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -73557,7 +73653,7 @@ export namespace Prisma {
     steps?: StringFilter<"FightArchive"> | string
     seed?: StringFilter<"FightArchive"> | string
     result?: BoolFilter<"FightArchive"> | boolean
-    playerId?: UuidFilter<"FightArchive"> | string
+    playerId?: UuidNullableFilter<"FightArchive"> | string | null
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
   }
 
@@ -76324,8 +76420,9 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
+    sellerName: string
     dinoz?: DinozCreateNestedOneWithoutOffersInput
-    seller: PlayerCreateNestedOneWithoutOffersInput
+    seller?: PlayerCreateNestedOneWithoutOffersInput
     bids?: OfferBidCreateNestedManyWithoutOfferInput
   }
 
@@ -76336,7 +76433,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    sellerId: string
+    sellerId?: string | null
+    sellerName: string
     bids?: OfferBidUncheckedCreateNestedManyWithoutOfferInput
   }
 
@@ -76361,8 +76459,9 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
-    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    seller?: PlayerUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
   }
 
@@ -76373,7 +76472,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    sellerId?: StringFieldUpdateOperationsInput | string
+    sellerId?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
   }
 
@@ -76382,8 +76482,9 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
+    sellerName: string
     dinoz?: DinozCreateNestedOneWithoutOffersInput
-    seller: PlayerCreateNestedOneWithoutOffersInput
+    seller?: PlayerCreateNestedOneWithoutOffersInput
     items?: OfferItemCreateNestedManyWithoutOfferInput
   }
 
@@ -76394,7 +76495,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    sellerId: string
+    sellerId?: string | null
+    sellerName: string
     items?: OfferItemUncheckedCreateNestedManyWithoutOfferInput
   }
 
@@ -76530,8 +76632,9 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
-    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    seller?: PlayerUpdateOneWithoutOffersNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
   }
 
@@ -76542,7 +76645,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    sellerId?: StringFieldUpdateOperationsInput | string
+    sellerId?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
 
@@ -83154,7 +83258,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
     targetId: string
   }
 
@@ -83164,7 +83268,8 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
-    sellerId: string
+    sellerId?: string | null
+    sellerName: string
   }
 
   export type PantheonCreateManyDinozInput = {
@@ -83307,7 +83412,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     target?: PlayerUpdateOneRequiredWithoutTargetedCasesNestedInput
     bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
@@ -83319,7 +83424,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
@@ -83331,7 +83436,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     targetId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -83340,7 +83445,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    seller?: PlayerUpdateOneRequiredWithoutOffersNestedInput
+    sellerName?: StringFieldUpdateOperationsInput | string
+    seller?: PlayerUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
   }
@@ -83351,7 +83457,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    sellerId?: StringFieldUpdateOperationsInput | string
+    sellerId?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -83362,7 +83469,8 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
-    sellerId?: StringFieldUpdateOperationsInput | string
+    sellerId?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
   }
 
   export type PantheonUpdateWithoutDinozInput = {
@@ -83742,7 +83850,7 @@ export namespace Prisma {
     banDate?: Date | string | null
     banEndDate?: Date | string | null
     sorted?: $Enums.ModerationAction | null
-    reporterId: string
+    reporterId?: string | null
   }
 
   export type NotificationCreateManyPlayerInput = {
@@ -83761,6 +83869,7 @@ export namespace Prisma {
     total: number
     status?: $Enums.OfferStatus
     dinozDetails?: string | null
+    sellerName: string
   }
 
   export type OfferBidCreateManyUserInput = {
@@ -84062,7 +84171,7 @@ export namespace Prisma {
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
     dinoz?: DinozUpdateOneWithoutModerationNestedInput
-    reporter?: PlayerUpdateOneRequiredWithoutReportedCasesNestedInput
+    reporter?: PlayerUpdateOneWithoutReportedCasesNestedInput
     bannedUser?: PlayerUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -84074,7 +84183,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
     bannedUser?: PlayerUncheckedUpdateOneWithoutBanCaseNestedInput
   }
 
@@ -84086,7 +84195,7 @@ export namespace Prisma {
     banDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     banEndDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sorted?: NullableEnumModerationActionFieldUpdateOperationsInput | $Enums.ModerationAction | null
-    reporterId?: StringFieldUpdateOperationsInput | string
+    reporterId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type NotificationUpdateWithoutPlayerInput = {
@@ -84121,6 +84230,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     dinoz?: DinozUpdateOneWithoutOffersNestedInput
     bids?: OfferBidUpdateManyWithoutOfferNestedInput
     items?: OfferItemUpdateManyWithoutOfferNestedInput
@@ -84133,6 +84243,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
     bids?: OfferBidUncheckedUpdateManyWithoutOfferNestedInput
     items?: OfferItemUncheckedUpdateManyWithoutOfferNestedInput
   }
@@ -84144,6 +84255,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     status?: EnumOfferStatusFieldUpdateOperationsInput | $Enums.OfferStatus
     dinozDetails?: NullableStringFieldUpdateOperationsInput | string | null
+    sellerName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferBidUpdateWithoutUserInput = {

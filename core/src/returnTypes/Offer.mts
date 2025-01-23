@@ -1,7 +1,7 @@
 import { Dinoz, DinozSkill, DinozStatus, Offer, OfferBid, OfferItem, Player } from '@drpg/prisma';
 
 export type OfferFromGetOffers = Offer & {
-	seller: Pick<Player, 'id' | 'name'>;
+	seller: Pick<Player, 'id' | 'name'> | null;
 	dinoz:
 		| (Pick<
 				Dinoz,
