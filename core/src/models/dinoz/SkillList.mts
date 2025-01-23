@@ -1354,6 +1354,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [21201],
 		isBaseSkill: false,
 		isSphereSkill: false,
+		priority: 3,
+		probability: 10,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xAAFF00',
 		fxType: AuraFxType.Line
