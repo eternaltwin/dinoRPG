@@ -102,12 +102,10 @@ export default defineComponent({
 			this.$router.push({ name: pageName });
 		},
 		async refresh() {
-			EventBus.emit('isLoading', true);
 			try {
 				const response = await DojoService.getMyDojo();
 				this.myDojo = response.dojo;
 				this.rank = response.rank;
-				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

@@ -1,65 +1,79 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
-	<template v-if="composeTeam">
-		<DZDisclaimer content="dojo.challenge.disclaimer" help round />
-		<SelectDinoz :dinozList="myDinoz" :selectLimit="10" :minLimit="5" @validate="composeMyTeam"></SelectDinoz>
-	</template>
-	<div class="challenge" v-if="!fightTransformed">
-		<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
-	</div>
-	<div class="challenge" v-if="fightTransformed" :class="challengeWon ? 'won' : 'lost'">
-		<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
-	</div>
-	<div v-if="fightTransformed && !challengeWon" class="debrief">
-		<p v-if="!victory" v-html="$t(`dojo.challenge.challengeExplanation.looseFight`)" />
-		<p
-			v-if="victory && !challengeWon"
-			v-html="
-				$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
-					goal: calculateMissedGoal(activeChallenge)
-				})
-			"
-		/>
-	</div>
-	<template v-if="!fightTransformed">
-		<CarousselDinoz
-			v-if="!opponent.id"
-			:ennemyList="opponents"
-			@validate="selectOpponent"
-			@refresh="refresh()"
-		></CarousselDinoz>
-		<div class="versus" v-if="opponent.id">
-			<div class="dinozHolder">
-				<DinozWithoutFlash v-if="myFighter.id" :display="myFighter.display" flip :life="1" />
-				<p class="name">{{ myFighter.name }}</p>
-			</div>
+	<div id="dojoChallenge">
+		<template v-if="composeTeam">
+			<DZDisclaimer content="dojo.challenge.disclaimer" help round />
+			<SelectDinoz :dinozList="myDinoz" :selectLimit="10" :minLimit="5" @validate="composeMyTeam"></SelectDinoz>
+		</template>
+		<div class="challenge" v-if="!fightTransformed">
+			<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
+		</div>
+		<div v-if="fightTransformed" class="recap">
 			<div
-				class="fight"
-				:class="opponent.id && myFighter.id ? 'show' : 'hidden'"
-				v-html="$t('dojo.challenge.launch')"
-				@click="launchChallenge()"
-			/>
-
-			<div class="dinozHolder">
-				<DinozWithoutFlash :display="opponent.display" :life="1" />
-				<p class="name">{{ opponent.name }}</p>
+				class="challenge"
+				:class="[
+					{
+						won: challengeWon && fightAnimationEnded,
+						lost: !challengeWon && fightAnimationEnded
+					}
+				]"
+			>
+				<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
+			</div>
+			<div v-if="!challengeWon && fightAnimationEnded" class="debrief">
+				<p v-if="!victory" v-html="$t(`dojo.challenge.challengeExplanation.looseFight`)" />
+				<p
+					v-if="victory && !challengeWon"
+					v-html="
+						$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
+							goal: calculateMissedGoal(activeChallenge)
+						})
+					"
+				/>
 			</div>
 		</div>
-		<CarousselDinoz
-			v-if="opponent.id && !myFighter.id"
-			:dinozList="myTeam"
-			@validate="selectMyFighter"
-		></CarousselDinoz>
-	</template>
-	<template v-if="fightTransformed">
-		<div v-show="loaded" class="content">
-			<Suspense>
-				<FullFightAnimation :fight="fightTransformed" />
-				<template #fallback> <Loading /> </template>
-			</Suspense>
-		</div>
-		<FightRecap :stats="fightStat" />
-	</template>
+		<template v-if="!fightTransformed">
+			<CarousselDinoz
+				v-if="!opponent.id"
+				:ennemyList="opponents"
+				@validate="selectOpponent"
+				@refresh="refresh()"
+			></CarousselDinoz>
+			<div class="versus" v-if="opponent.id">
+				<div class="dinozHolder">
+					<DinozWithoutFlash v-if="myFighter.id" :display="myFighter.display" flip :life="1" />
+					<p class="name">{{ myFighter.name }}</p>
+				</div>
+				<div
+					class="fight"
+					:class="opponent.id && myFighter.id ? 'show' : 'hidden'"
+					v-html="$t('dojo.challenge.launch')"
+					@click="launchChallenge()"
+				/>
+
+				<div class="dinozHolder">
+					<DinozWithoutFlash :display="opponent.display" :life="1" />
+					<p class="name">{{ opponent.name }}</p>
+				</div>
+			</div>
+			<CarousselDinoz
+				v-if="opponent.id && !myFighter.id"
+				:dinozList="myTeam"
+				@validate="selectMyFighter"
+			></CarousselDinoz>
+		</template>
+		<template v-if="fightTransformed && fightStat">
+			<div v-show="loaded" class="content">
+				<Suspense>
+					<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
+					<template #fallback> <Loading /> </template>
+				</Suspense>
+			</div>
+
+			<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
+		</template>
+		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
+	</div>
 </template>
 
 <script lang="ts">
@@ -82,10 +96,12 @@ import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'DojoChallenge',
 	components: {
+		DZButton,
 		FightRecap,
 		DinozWithoutFlash,
 		DZDisclaimer,
@@ -108,9 +124,10 @@ export default defineComponent({
 			myFighter: {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>,
 			fightTransformed: undefined as undefined | preFightLoader,
 			loaded: false,
-			fightStat: {} as FullFightStats,
+			fightStat: undefined as undefined | FullFightStats,
 			challengeWon: false,
-			victory: false
+			victory: false,
+			fightAnimationEnded: false
 		};
 	},
 	methods: {
@@ -127,7 +144,18 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
+		async nextChallenge() {
+			this.fightAnimationEnded = false;
+			this.victory = false;
+			this.challengeWon = false;
+			this.fightStat = undefined;
+			this.fightTransformed = undefined;
+			this.opponent = {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
+			this.myFighter = {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
+			await this.refresh();
+		},
 		calculateMissedGoal(challenge: Challenge) {
+			if (!this.fightStat) return 0;
 			switch (challenge.type) {
 				case ChallengeType.Kill:
 					return 0;
@@ -225,7 +253,7 @@ export default defineComponent({
 					// lang: this.lang
 				};
 				this.loaded = true;
-				EventBus.emit('refreshDojo', true);
+
 				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -261,17 +289,29 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.refresh();
+	},
+	watch: {
+		fightAnimationEnded() {
+			EventBus.emit('refreshDojo', true);
+		}
 	}
 });
 </script>
 
 <style lang="scss" scoped>
+#dojoChallenge {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	.recap {
+		align-self: center;
+	}
+}
 .debrief {
 	// position: absolute;
 	display: flex;
 	align-self: center;
 	width: 530px;
-	margin-bottom: 5px;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
@@ -341,7 +381,6 @@ export default defineComponent({
 	}
 }
 .versus {
-	margin-top: 5px;
 	background-image: url('../../assets/design/dojo_vs.webp');
 	background-repeat: no-repeat;
 	align-self: center;
