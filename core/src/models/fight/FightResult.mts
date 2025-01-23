@@ -50,10 +50,10 @@ export interface CatchResult {
 }
 
 export type FightStats = {
-	// Total starting HP
+	// Total starting HP (initial fighters only)
 	startingHp: number;
 
-	// Total ending HP
+	// Total ending HP (not counting reinforcements)
 	endingHp: number;
 
 	// Total HP lost
@@ -89,17 +89,18 @@ export type FightStats = {
 	// Total damage dealt with poison to an opponent
 	poison_damage: number;
 
-	// Total times an opponent poisoned
+	// Total times the Dinoz on the team were poisoned (not counting reinforcements)
 	times_poisoned: number;
 
 	// Total damage dealt with burn to opponents
 	burn_damage: number;
 
-	// Total reinforcements called (e.g. clone, korgon, etc.)
+	// Number of reinforcements called (e.g. clone, korgon, etc.)
 	reinforcements: number;
 
-	// Total times (not total duration) petrification was applied to an opponent
+	// Total times (not total duration) an opponent was petrified
 	petrified: number;
+
 	elements: Record<
 		ElementType,
 		{

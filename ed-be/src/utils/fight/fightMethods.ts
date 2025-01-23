@@ -2041,8 +2041,21 @@ export const createStatus = (type: Status, length?: number): FighterStatus => {
 	};
 };
 
+/**
+ * Check if a fighter has a status
+ * @param fighter The fighter to check the status for
+ * @param status The status to check for
+ * @returns bool true if the fighter has the status, false if it does not
+ */
 export const hasStatus = (fighter: DetailedFighter, status: Status) => fighter.status.some(s => s.type === status);
 
+/**
+ * Add a status to the fighter. The method checks if the fighter already has the status and also for immunities from skills and objects.
+ * @param {DetailedFight} fightData The data of the fight (to handle history and other)
+ * @param {DetailedFighter} fighter The fighter that receives the status
+ * @param {Status} status The status to apply
+ * @returns {boolean} `true` if the status was applied, `false` if the fighter did not receive the status
+ */
 export const addStatus = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
@@ -2050,13 +2063,13 @@ export const addStatus = (
 	length?: StatusLength
 ) => {
 	// Check if fighter already has the status
-	if (hasStatus(fighter, status)) return;
+	if (hasStatus(fighter, status)) return false;
 
 	// Bad status
 	const isBad = BadStatus.includes(status);
 
 	// Negate if SELF_CONTROL
-	if (isBad && fighter.skills.find(skill => skill.id === Skill.SELF_CONTROL)) return;
+	if (isBad && fighter.skills.find(skill => skill.id === Skill.SELF_CONTROL)) return false;
 
 	// Handle the immediate effect of the status
 	switch (status) {
@@ -2083,7 +2096,6 @@ export const addStatus = (
 		case Status.PETRIFIED: {
 			fighter.stats.special.armor += 5;
 			fighter.time += FIGHT_INFINITE;
-			updateStat(fightData, fighter, 'petrified', 1);
 			break;
 		}
 		case Status.SHIELDED: {
@@ -2115,8 +2127,16 @@ export const addStatus = (
 		fighter: stepFighter(fighter),
 		status
 	});
+
+	return true;
 };
 
+/**
+ * Remove one or more statuses from a fighter.
+ * @param {DetailedFight} fightData The data of the fight (to handle history and other)
+ * @param {DetailedFighter} fighter The fighter that receives the status
+ * @param {Status[]} statusList The list of status to remove
+ */
 const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...statusList: Status[]) => {
 	statusList.forEach(status => {
 		// Check if fighter has the status
@@ -2616,9 +2636,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Add target
 			activate_step.targets.push({ tid: opponent.id });
 
-			// Petrify opponent
+			// Petrification removes flying and intangible.
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
-			addStatus(fightData, opponent, Status.PETRIFIED, StatusLength.MEDIUM);
+
+			// Apply petrification, increment stat if properly applied.
+			if (addStatus(fightData, opponent, Status.PETRIFIED, StatusLength.MEDIUM)) {
+				updateStat(fightData, fighter, 'petrified', 1);
+			}
 
 			// Instantly cancel if boss
 			if (opponent.type === 'boss') {
@@ -3733,8 +3757,6 @@ const poison = (
 		return;
 	}
 
-	if (fighter.skills.find(skill => skill.id === Skill.SELF_CONTROL)) return;
-
 	// Get poison damage
 	let poisonDamage = 0;
 	switch (skill) {
@@ -3781,12 +3803,12 @@ const poison = (
 		damage: poisonDamage
 	};
 
-	addStatus(fightData, fighter, Status.POISONED, duration);
-
-	// Poison stats
-	updateStat(fightData, poisoner, 'poisoned', 1);
-	if (fighter.type === 'dinoz') {
-		updateStat(fightData, fighter, 'times_poisoned', 1);
+	if (addStatus(fightData, fighter, Status.POISONED, duration)) {
+		// If the poison was properly applied, update stats.
+		updateStat(fightData, poisoner, 'poisoned', 1);
+		if (fighter.type === 'dinoz') {
+			updateStat(fightData, fighter, 'times_poisoned', 1);
+		}
 	}
 };
 

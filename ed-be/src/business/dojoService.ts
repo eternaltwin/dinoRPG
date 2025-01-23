@@ -275,7 +275,7 @@ export async function fightChallenge(req: Request) {
 	rightTeam.map(d => {
 		d.items = [];
 		d.life = d.maxLife;
-		// Remove Trou noir and Hypnose
+		// Remove Trou noir, Sylphides and Hypnose
 		d.skills = d.skills.filter(
 			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
 		);
@@ -283,7 +283,7 @@ export async function fightChallenge(req: Request) {
 	leftTeam.map(d => {
 		d.items = [];
 		d.life = d.maxLife;
-		// Remove Trou noir and Hypnose
+		// Remove Trou noir, Sylphides and Hypnose
 		d.skills = d.skills.filter(
 			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
 		);
@@ -306,7 +306,7 @@ export async function fightChallenge(req: Request) {
 	const newChallenge = generateRandomChallenge();
 	promises.push(createChallengeRequest(authed.id, JSON.stringify(newChallenge)));
 
-	//Reputation
+	// Reputation
 	const reputation = fightResult.winner ? 2 + (challengeWon ? 2 : 0) : 0;
 	promises.push(giveReputation(reputation, player.Dojo.id));
 	// DOJO challenge history
