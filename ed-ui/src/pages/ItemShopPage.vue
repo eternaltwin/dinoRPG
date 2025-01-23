@@ -326,7 +326,7 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
 import { ItemShopService } from '../services/index.js';
-import { playerStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
 
@@ -335,6 +335,7 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
+			dinozStore: dinozStore(),
 			itemList: [] as Array<ItemFiche>,
 			ingredientList: [] as IngredientFiche[],
 			fullItems: [] as ItemShopFiche[],
@@ -525,7 +526,7 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				this.$router.push({
 					name: 'DinozPage',
-					params: { id: this.playerStore.getPlayerOptions().currentDinozId }
+					params: { id: this.dinozStore.getCurrentDinozId }
 				});
 				return;
 			}

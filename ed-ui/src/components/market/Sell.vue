@@ -276,7 +276,7 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		try {
-			const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+			const currentDinozId = this.dinozStore.getCurrentDinozId;
 
 			// Check if we have a dinoz selected
 			if (!currentDinozId) {

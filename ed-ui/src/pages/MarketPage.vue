@@ -67,16 +67,13 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		this.tab = +this.$route.params.tab;
 
-		const currentDinozId = this.playerStore.playerOptions.currentDinozId;
+		const currentDinozId = this.dinozStore.getCurrentDinozId;
 
 		// Check if we have a dinoz selected
 		if (!currentDinozId) {
 			const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
 			if (dinozList.length >= 0) {
-				this.playerStore.setPlayerOptions({
-					...this.playerStore.playerOptions,
-					currentDinozId: dinozList[0].id
-				});
+				this.dinozStore.setCurrentDinozId(dinozList[0].id);
 				EventBus.emit('isLoading', false);
 				return;
 			}
@@ -101,10 +98,7 @@ export default defineComponent({
 		}
 		const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
 		if (dinozList.length >= 0) {
-			this.playerStore.setPlayerOptions({
-				...this.playerStore.playerOptions,
-				currentDinozId: dinozList[0].id
-			});
+			this.dinozStore.setCurrentDinozId(dinozList[0].id);
 			EventBus.emit('isLoading', false);
 			return;
 		}

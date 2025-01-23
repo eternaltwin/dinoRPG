@@ -5,7 +5,8 @@ import { StoreDinoz } from '@drpg/core/models/store/StoreDinoz';
 export const dinozStore = defineStore('dinozStore', {
 	state: (): StoreDinoz => ({
 		dinozList: [],
-		dinozCount: undefined
+		dinozCount: undefined,
+		currentDinozId: undefined
 	}),
 	getters: {
 		getDinozList: (state: StoreDinoz) => state.dinozList,
@@ -15,7 +16,8 @@ export const dinozStore = defineStore('dinozStore', {
 		},
 		getNpc: (state: StoreDinoz) => {
 			return (dinozId: number) => state.dinozList?.find((dinoz: DinozFiche) => dinoz.id === dinozId)?.npcAwait;
-		}
+		},
+		getCurrentDinozId: (state: StoreDinoz) => state.currentDinozId
 	},
 	actions: {
 		setDinozList(dinozList: Array<DinozFiche>): void {
@@ -40,6 +42,9 @@ export const dinozStore = defineStore('dinozStore', {
 			const dinozToUpdate = this.dinozList?.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 			dinozToUpdate.npcAwait = undefined;
+		},
+		setCurrentDinozId(dinozId: number): void {
+			this.currentDinozId = dinozId;
 		}
 	},
 	persist: {
