@@ -62,6 +62,7 @@
 				@validate="selectMyFighter"
 			></CarousselDinoz>
 		</template>
+
 		<template v-if="fightTransformed && fightStat">
 			<div v-show="loaded" class="content">
 				<Suspense>
@@ -69,9 +70,11 @@
 					<template #fallback> <Loading /> </template>
 				</Suspense>
 			</div>
-
-			<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
+			<Transition name="bounce">
+				<FightRecap :stats="fightStat" v-if="fightAnimationEnded" />
+			</Transition>
 		</template>
+
 		<DZButton style="align-self: center" @click="nextChallenge()">{{ $t('dojo.return') }}</DZButton>
 	</div>
 </template>
@@ -442,5 +445,32 @@ export default defineComponent({
 }
 .lost {
 	filter: hue-rotate(-90deg);
+}
+.bounce-enter-active {
+	animation: bounce2 1s;
+}
+@keyframes bounce2 {
+	0% {
+		transform: translateY(-30px);
+		opacity: 0;
+	}
+	20% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	40% {
+		transform: translateY(-15px);
+		opacity: 0.8;
+	}
+	60% {
+		transform: translateY(0);
+		opacity: 1;
+	}
+	80% {
+		transform: translateY(-5px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
 }
 </style>
