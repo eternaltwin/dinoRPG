@@ -2460,7 +2460,8 @@
 		"clan": "Dino-RPG [ Clan : ",
 		"clansList": "Dino-RPG [ Liste des Clans ]",
 		"createClan": "Dino-RPG [ Créer un Clan ]",
-		"challengeFriend": "Dino-RPG [ Affronte un ami ]"
+		"challengeFriend": "Dino-RPG [ Affronte un ami ]",
+		"forum": "Dino-RPG [ Forums ]"
 	},
 	"gather": {
 		"action": {

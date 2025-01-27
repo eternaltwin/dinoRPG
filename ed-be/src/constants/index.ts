@@ -24,7 +24,8 @@ export const apiRoutes = {
 	pantheon: '/api/v1/pantheon',
 	messagerie: '/api/v1/messagerie',
 	notification: '/api/v1/notifications',
-	dojo: '/api/v1/dojo'
+	dojo: '/api/v1/dojo',
+	forum: '/api/v1/forum'
 };
 
 export const regex = {

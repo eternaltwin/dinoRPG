@@ -41,6 +41,13 @@ export interface EternaltwinConfig {
 	 * (Second part of the client key).
 	 */
 	readonly channel: string;
+
+	/**
+	 * Id of the DinoRPG section's forum
+	 *
+	 *
+	 */
+	readonly section: string;
 }
 
 /**
@@ -210,13 +217,15 @@ export function config(env: Record<string, string | undefined>): Config {
 	const eternaltwinSecret: string = env.ETERNALTWIN_SECRET ?? env.ETWIN_CLIENT_SECRET ?? 'dev_secret';
 	const eternaltwinApp: string = env.ETERNALTWIN_APP ?? 'dinorpg';
 	const eternaltwinChannel: string = env.ETERNALTWIN_CHANNEL ?? 'dev';
+	const eternaltwinSection: string = env.ETERNALTWIN_SECTION ?? 'e99e23b8-3b70-4238-9846-aab8b0c49e4c';
 
 	const eternaltwin: EternaltwinConfig = {
 		url: eternaltwinUrl,
 		clientRef: eternaltwinClientRef,
 		secret: eternaltwinSecret,
 		app: eternaltwinApp,
-		channel: eternaltwinChannel
+		channel: eternaltwinChannel,
+		section: eternaltwinSection
 	};
 
 	const rawDiscordNotifId = env.DISCORD_WEBHOOK_ID;

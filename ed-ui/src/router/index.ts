@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import EventBus from '../events/index.js';
-import { JwtTrial } from '@drpg/core/dist/models/store/jwt.mjs';
+import { JwtTrial } from '@drpg/core/models/store/jwt';
 import { localStore } from '../store/index.js';
 
 const router = createRouter({
@@ -16,6 +16,22 @@ const router = createRouter({
 					name: 'News',
 					component: () => import('../components/common/News.vue')
 				},
+				{
+					path: '/forum',
+					name: 'Forum',
+					component: () => import('../pages/ForumPage.vue')
+				},
+				{
+					path: '/forum/:threadId/:page',
+					name: 'ForumThread',
+					component: () => import('../components/forum/ForumThread.vue')
+				},
+				// Disable for now
+				/*{
+					path: '/forum/newThread',
+					name: 'ForumNewMessage',
+					component: () => import('../components/forum/ForumNewMessage.vue')
+				},*/
 				{
 					path: '/dino/:id',
 					name: 'DinozPage',
