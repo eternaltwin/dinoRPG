@@ -56,7 +56,8 @@ export async function getMyTeamDao(playerId: string) {
 						}
 					}
 				}
-			}
+			},
+			activeChallenge: true
 		}
 	});
 	return dojo;

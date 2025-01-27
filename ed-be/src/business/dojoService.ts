@@ -13,7 +13,6 @@ import {
 	createChallengeRequest,
 	createMyDojo,
 	createMyTeamDao,
-	getChallengeRequest,
 	getMyDojoDao,
 	getMyTeamDao,
 	giveReputation,
@@ -193,16 +192,6 @@ export async function getAllArchivedFight(req: Request) {
 	return { archive: fights, quantity: totalArchive };
 }
 
-export async function getChallenge(req: Request) {
-	const authed = await auth(req);
-	const dojo = await getChallengeRequest(authed.id);
-	if (!dojo || !dojo.activeChallenge) {
-		const newChallenge = generateRandomChallenge();
-		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
-		return newChallenge;
-	}
-	return JSON.parse(dojo.activeChallenge) as Challenge;
-}
 
 /**
  * Generate a random challenge

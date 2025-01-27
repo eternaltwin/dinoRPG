@@ -13,4 +13,5 @@ export interface myTeam {
 	DojoOpponents: (Pick<DojoOpponents, 'fighted' | 'achieved'> & {
 		dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 	})[];
+	activeChallenge: string | null
 }

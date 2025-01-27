@@ -152,6 +152,7 @@ export default defineComponent({
 			this.victory = false;
 			this.challengeWon = false;
 			this.fightStat = undefined;
+			this.loaded = false;
 			this.fightTransformed = undefined;
 			this.opponent = {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 			this.myFighter = {} as Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
@@ -282,7 +283,7 @@ export default defineComponent({
 					this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
 					this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				}
-				this.activeChallenge = await DojoService.getMyChallenge();
+				this.activeChallenge = JSON.parse(dojo.activeChallenge) as Challenge;
 				EventBus.emit('refreshDojo', true);
 				EventBus.emit('isLoading', false);
 			} catch (e) {

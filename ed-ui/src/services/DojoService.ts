@@ -2,7 +2,6 @@ import { http } from '../utils/index.js';
 import { DojoBasic, myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
-import { Challenge } from '@drpg/core/models/dojo/challenge';
 
 export const DojoService = {
 	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number }> {
@@ -34,12 +33,6 @@ export const DojoService = {
 	getMyHistory(page: number): Promise<{ archive: { id: string; fighters: FighterRecap[] }[]; quantity: number }> {
 		return http()
 			.get(`/dojo/history/${page}`)
-			.then(res => Promise.resolve(res.data))
-			.catch(err => Promise.reject(err));
-	},
-	getMyChallenge(): Promise<Challenge> {
-		return http()
-			.get(`/dojo/challenge`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
