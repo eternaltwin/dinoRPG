@@ -37,9 +37,12 @@ import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { Dojo } from '@drpg/prisma';
 import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { handleTournament } from './tournamentService.js';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
+
+	await handleTournament();
 
 	let myDojo = await getMyDojoDao(authed.id);
 
@@ -47,13 +50,13 @@ export async function getDojo(req: Request) {
 		myDojo = await createMyDojo(authed.id);
 		const newChallenge = generateRandomChallenge();
 		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
-		myDojo.activeChallenge = JSON.stringify(newChallenge)
+		myDojo.activeChallenge = JSON.stringify(newChallenge);
 	}
 
 	if (!myDojo.activeChallenge) {
 		const newChallenge = generateRandomChallenge();
 		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
-		myDojo.activeChallenge = JSON.stringify(newChallenge)
+		myDojo.activeChallenge = JSON.stringify(newChallenge);
 	}
 
 	const rank = await getPlayerPositionDojoDAO(authed.id);
@@ -200,7 +203,6 @@ export async function getAllArchivedFight(req: Request) {
 
 	return { archive: fights, quantity: totalArchive };
 }
-
 
 /**
  * Generate a random challenge

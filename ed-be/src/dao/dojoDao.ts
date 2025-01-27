@@ -15,7 +15,8 @@ export async function getMyDojoDao(playerId: string) {
 			id: true,
 			playerId: true,
 			reputation: true,
-			activeChallenge: true
+			activeChallenge: true,
+			TournamentTeam: true
 		}
 	});
 	return dojo;
@@ -118,7 +119,8 @@ export async function createMyDojo(playerId: string) {
 			id: true,
 			playerId: true,
 			reputation: true,
-			activeChallenge: true
+			activeChallenge: true,
+			TournamentTeam: true
 		}
 	});
 	return dojo;

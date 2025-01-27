@@ -335,7 +335,13 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 				},
 				select: {
 					id: true,
-					level: true
+					level: true,
+					raceId: true
+				}
+			},
+			Dojo: {
+				select: {
+					id: true
 				}
 			}
 		}

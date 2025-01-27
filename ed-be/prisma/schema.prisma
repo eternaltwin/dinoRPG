@@ -64,6 +64,7 @@ model Dinoz {
   npcs               NPC[]
   DojoOpponents      DojoOpponents[]
   DojoTeam           DojoTeam[]
+  TournamentTeam     TournamentTeam[]
 
   @@index([playerId], map: "idx_playerId")
   @@map("dinoz")
@@ -242,6 +243,8 @@ model Dojo {
   DojoOpponents        DojoOpponents[]
   teamUpdate           DateTime?
   dailyReset           Int                    @default(0)
+  TournamentTeam       TournamentTeam?        @relation(fields: [tournamentTeamId], references: [id])
+  tournamentTeamId     String?                @unique @db.Uuid
 
   @@index([playerId])
   @@map("dojo")
@@ -630,14 +633,42 @@ model Notification {
 }
 
 model FightArchive {
-  id          String   @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  fighters    String   @db.Text
-  steps       String   @db.Text
-  seed        String   @db.VarChar(255)
-  result      Boolean  @db.Boolean
-  playerId    String?  @db.Uuid
-  player      Player?  @relation(fields: [playerId], references: [id])
-  createdDate DateTime @default(now()) @db.Timestamp(6)
+  id             String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fighters       String      @db.Text
+  steps          String      @db.Text
+  seed           String      @db.VarChar(255)
+  result         Boolean     @db.Boolean
+  playerId       String?     @db.Uuid
+  player         Player?     @relation(fields: [playerId], references: [id])
+  tournamentStep Int         @default(0)
+  createdDate    DateTime    @default(now()) @db.Timestamp(6)
+  Tournament     Tournament? @relation(fields: [tournamentId], references: [id])
+  tournamentId   String?     @db.Uuid
+}
+
+model Tournament {
+  id           String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date         DateTime         @default(now()) @db.Timestamp(6)
+  teamSize     Int              @default(1)
+  teamRace     String           @db.Text
+  levelLimit   Int              @default(50)
+  participants TournamentTeam[]
+  fights       FightArchive[]
+
+  @@index([id, date])
+}
+
+model TournamentTeam {
+  id           String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  dojoId       String?     @db.Uuid
+  dojo         Dojo?
+  dinoz        Dinoz[]
+  teamCount    Int         @default(1)
+  Tournament   Tournament? @relation(fields: [tournamentId], references: [id])
+  tournamentId String?     @db.Uuid
+
+  @@unique([dojoId, tournamentId])
+  @@index([dojoId])
 }
 
 enum UnavailableReason {

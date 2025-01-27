@@ -66,6 +66,16 @@ export function fromBase62(s: string) {
 	return result;
 }
 
+export function shuffle(array: any[]) {
+	const shuffledArray = [...array];
+	for (let i = array.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+	}
+
+	return shuffledArray;
+}
+
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 export { getRandomNumber, getRandomLetter, generateString, getLetter, sleep };

@@ -257,7 +257,8 @@ exports.Prisma.DojoScalarFieldEnum = {
   activeChallenge: 'activeChallenge',
   reputation: 'reputation',
   teamUpdate: 'teamUpdate',
-  dailyReset: 'dailyReset'
+  dailyReset: 'dailyReset',
+  tournamentTeamId: 'tournamentTeamId'
 };
 
 exports.Prisma.DojoTeamScalarFieldEnum = {
@@ -533,7 +534,24 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   seed: 'seed',
   result: 'result',
   playerId: 'playerId',
-  createdDate: 'createdDate'
+  tournamentStep: 'tournamentStep',
+  createdDate: 'createdDate',
+  tournamentId: 'tournamentId'
+};
+
+exports.Prisma.TournamentScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  teamSize: 'teamSize',
+  teamRace: 'teamRace',
+  levelLimit: 'levelLimit'
+};
+
+exports.Prisma.TournamentTeamScalarFieldEnum = {
+  id: 'id',
+  dojoId: 'dojoId',
+  teamCount: 'teamCount',
+  tournamentId: 'tournamentId'
 };
 
 exports.Prisma.SortOrder = {
@@ -700,7 +718,9 @@ exports.Prisma.ModelName = {
   Participants: 'Participants',
   Message: 'Message',
   Notification: 'Notification',
-  FightArchive: 'FightArchive'
+  FightArchive: 'FightArchive',
+  Tournament: 'Tournament',
+  TournamentTeam: 'TournamentTeam'
 };
 
 /**

@@ -69,6 +69,15 @@
 			</div>
 		</div>
 	</div>
+	<div
+		class="tournament"
+		v-if="myDojo && tournamentInfo && (!myDojo.TournamentTeam || myDojo.TournamentTeam.teamCount === 0)"
+	>
+		<DZDisclaimer
+			:content="$t(`dojo.createTournamentTeam`, { team: tournamentInfo.teamSize, level: tournamentInfo.levelLimit })"
+		></DZDisclaimer>
+		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
+	</div>
 	<RouterView />
 	<!--	<p class="subtitle">{{ $t('dojo.tidInProgress') }}</p>
 	<DZButton @click="goToPage('DojoTournament')">{{ $t('dojo.accessTournament') }}</DZButton>
@@ -78,15 +87,21 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { playerStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { DojoBasic } from '@drpg/core/models/dojo/dojoBasic';
 import { DojoService } from '../services/DojoService.js';
 import { errorHandler } from '../utils/index.js';
+import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import SelectDinoz from '../components/dojo/SelectDinoz.vue';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
+import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'DojoHome',
 	components: {
+		SelectDinoz,
+		DZDisclaimer,
 		TitleHeader
 	},
 	data() {
@@ -94,12 +109,23 @@ export default defineComponent({
 			playerStore: playerStore(),
 			myDojo: undefined as undefined | DojoBasic,
 			worth: 0,
-			rank: 0
+			rank: 0,
+			myDinoz: [] as DinozDojoFiche[],
+			dinozStore: dinozStore(),
+			tournamentInfo: {} as { id: string; teamRace: number[]; teamSize: number; levelLimit: number }
 		};
 	},
 	methods: {
 		goToPage(pageName: string) {
 			this.$router.push({ name: pageName });
+		},
+		async composeMyTeam(data) {
+			try {
+				await DojoService.createTournamentTeam(data);
+				await this.refresh();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		},
 		async refresh() {
 			try {
@@ -122,6 +148,27 @@ export default defineComponent({
 			if (e) await this.refresh();
 		});
 		await this.refresh();
+		if (this.myDojo && !this.myDojo.TournamentTeam) {
+			const tournamentInfo = await DojoService.getTournamentInfo();
+			const races = tournamentInfo.teamRace.split(',').map(d => parseInt(d));
+			this.tournamentInfo.id = tournamentInfo.id;
+			this.tournamentInfo.levelLimit = tournamentInfo.levelLimit;
+			this.tournamentInfo.teamRace = races;
+			this.tournamentInfo.teamSize = tournamentInfo.teamSize;
+
+			this.myDinoz = this.dinozStore.getDinozList
+				.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
+				.filter(d => races.includes(d.race.raceId))
+				.filter(d => d.level <= tournamentInfo.levelLimit)
+				.map(d => {
+					return {
+						id: d.id,
+						name: d.name,
+						display: d.display,
+						level: d.level
+					};
+				});
+		}
 	},
 	unmounted() {
 		EventBus.off('refreshDojo');

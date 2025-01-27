@@ -1,4 +1,4 @@
-import { DojoTeam, DojoOpponents, Dinoz, DojoChallengeHistory } from '@drpg/prisma';
+import { DojoTeam, DojoOpponents, Dinoz, DojoChallengeHistory, TournamentTeam } from '@drpg/prisma';
 
 export interface DojoBasic {
 	id: string;
@@ -6,6 +6,7 @@ export interface DojoBasic {
 	activeChallenge: number;
 	reputation: number;
 	DojoChallengeHistory: Pick<DojoChallengeHistory, 'victory' | 'achieved'>[];
+	TournamentTeam: Pick<TournamentTeam, 'teamCount'> | null;
 }
 
 export interface myTeam {
@@ -13,5 +14,5 @@ export interface myTeam {
 	DojoOpponents: (Pick<DojoOpponents, 'fighted' | 'achieved'> & {
 		dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 	})[];
-	activeChallenge: string | null
+	activeChallenge: string | null;
 }

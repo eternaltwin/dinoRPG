@@ -4255,6 +4255,7 @@
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
 		"seeFight": "Voir le combat",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} dinoz étant au maximum niveau {level}. Les races de dinoz disponibles sont déjà filtrées.",
 		"nextTournament": "Le prochain tournoi commencera le **{next}**, soyez prêt ! Les phases de qualifications se terminent le **{qualif}**.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
 		"challengeFriend": {

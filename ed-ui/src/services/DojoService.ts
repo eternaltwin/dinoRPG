@@ -69,5 +69,19 @@ export const DojoService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	getTournamentInfo(): Promise<{ id: string; teamRace: string; teamSize: number; levelLimit: number }> {
+		return http()
+			.get(`/dojo/tournament/`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	createTournamentTeam(team: number[]): Promise<void> {
+		return http()
+			.put(`/dojo/tournament/`, {
+				team: team
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
