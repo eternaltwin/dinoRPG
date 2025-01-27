@@ -15,7 +15,7 @@ export async function getRandomDinozFromLevel(level: number, team: number[], pla
 			]
 		}
 	});
-	const random = Math.round(Math.random() * count);
+	const random = Math.floor(Math.random() * count);
 	const dinoz = await prisma.dinoz.findFirstOrThrow({
 		skip: random,
 		where: {
