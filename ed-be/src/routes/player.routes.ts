@@ -336,7 +336,7 @@ routes.get(`${commonPath}/smallMenu/:id`, [param('id').exists().isString()], asy
  *       200:
  *         description: Returns a public player fiche.
  */
-routes.get(`${commonPath}/:id`, [param('id').exists().isString()], async (req: Request, res: Response) => {
+routes.get(`${commonPath}/:id`, [param('id').exists().isUUID()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
