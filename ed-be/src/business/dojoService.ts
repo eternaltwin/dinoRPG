@@ -45,6 +45,15 @@ export async function getDojo(req: Request) {
 
 	if (!myDojo) {
 		myDojo = await createMyDojo(authed.id);
+		const newChallenge = generateRandomChallenge();
+		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
+		myDojo.activeChallenge = JSON.stringify(newChallenge)
+	}
+
+	if (!myDojo.activeChallenge) {
+		const newChallenge = generateRandomChallenge();
+		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
+		myDojo.activeChallenge = JSON.stringify(newChallenge)
 	}
 
 	const rank = await getPlayerPositionDojoDAO(authed.id);
