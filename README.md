@@ -21,7 +21,7 @@ $ git checkout staging
 Copier les fichiers de configuration locale
 ```bash
 $ cp ./ed-be/.env.sample ./ed-be/.env
-$ cp ./Eternaltwin/eternaltwin.local.toml.example ./Eternaltwin/eternaltwin.local.toml
+$ cp ./Eternaltwin/eternaltwin.local.example ./Eternaltwin/eternaltwin.local.toml
 ```
 Puis modifier les à votre guise afin qu'ils correspondent à votre configuration locale
 
