@@ -4827,17 +4827,14 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	});
 	if (deltaTime > 0) {
 		// Handle timeout
-		if (fightData.timeout) {
+		if (fightData.timeout !== undefined) {
 			// Decrement time
 			fightData.timeout -= deltaTime;
 			// Time bar movement is handled on the front side
 			// If timeout elapsed, return and end the fight.
 			if (fightData.timeout <= 0) {
-				const left =
-					(fightData.stats.attack.startingHp - fightData.stats.attack.endingHp) / fightData.stats.attack.startingHp;
-				const right =
-					(fightData.stats.defense.startingHp - fightData.stats.defense.endingHp) / fightData.stats.defense.startingHp;
-				fightData.loser = left > right ? 'attackers' : 'defenders';
+				fightData.endedByTimeout = true;
+				return;
 			}
 		}
 

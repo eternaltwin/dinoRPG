@@ -33,6 +33,7 @@ export type DetailedFight = {
 	loser: 'attackers' | 'defenders' | null;
 	steps: FightStep[];
 	timeout?: number;
+	endedByTimeout: boolean;
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
@@ -96,6 +97,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		loser: null,
 		steps: [] as FightStep[],
 		timeout: timeout,
+		endedByTimeout: false,
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		deads: [] as number[],
@@ -389,7 +391,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 
 		// Timeout hit, stop the fight.
-		if (fightData.timeout && fightData.timeout <= 0) {
+		if (fightData.endedByTimeout) {
 			break;
 		}
 
@@ -427,8 +429,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		turn += 1;
 	}
 
-	const winner = fightData.loser === 'defenders';
-
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === 'monster' && fighter.name === monsterList[Monster.BAOBOB].name
 	);
@@ -441,6 +441,21 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 		updateStat(fightData, fighter, 'endingHp', fighter.hp);
 	});
+
+	if (!fightData.loser) {
+		// The winner and loser will be calculated based on the remaining hp (%)
+		// That is, the loser will be the one with lowest endingHp / startingHp
+		// To avoid comparing non-integer numbers, instead of comparing
+		// attack.endingHp / attack.startingHp < defense.endingHp / defense.startingHp
+		// We can compare: attack.endingHp * defense.startingHp < defense.endingHp * attack.startingHp
+		// Note that, for this formula to work, we need to do it after processing `endingHp` stat
+		const left = fightData.stats.attack.endingHp * fightData.stats.defense.startingHp;
+		const right = fightData.stats.defense.endingHp * fightData.stats.attack.startingHp;
+
+		fightData.loser = left < right ? 'attackers' : 'defenders';
+	}
+
+	const winner = fightData.loser === 'defenders';
 
 	// After fight regeneration
 	fightData.fighters.forEach(fighter => {
