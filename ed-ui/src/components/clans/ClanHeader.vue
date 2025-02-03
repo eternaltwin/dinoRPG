@@ -89,7 +89,7 @@ export default defineComponent({
 	//background-size: 550px;
 	height: auto;
 	max-height: 600px;
-	overflow: hidden;
+	//overflow: hidden;
 	margin-bottom: 10px;
 	background: url('../../assets/background/desc_shop_top_left.webp'),
 		url('../../assets/background/desc_shop_top_right.webp'), url('../../assets/background/desc_shop_top_center.webp'),
