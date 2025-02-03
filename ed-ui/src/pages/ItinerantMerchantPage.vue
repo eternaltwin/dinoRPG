@@ -101,7 +101,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			playerSotre: playerStore(),
+			playerStore: playerStore(),
 			itinerantShopNameList: itinerantShopNameList,
 			ingredientNameList: ingredientNameList,
 			ingredientList: [] as Array<IngredientFiche>,
