@@ -342,19 +342,19 @@ function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 			return stats.attack.hpLost <= challenge.goal;
 		case ChallengeType.TakePercentDamage:
 			// Lose less than X% of hp
-			return ((stats.attack.startingHp - stats.attack.endingHp) / stats.attack.startingHp) * 100 <= challenge.goal;
+			return Math.round((stats.attack.startingHp - stats.attack.endingHp) / stats.attack.startingHp) * 100 <= challenge.goal;
 		case ChallengeType.Assault:
 			// Do at least N assaults
 			return stats.attack.assaults >= challenge.goal;
 		case ChallengeType.AssaultPercentage:
 			// X% of attacks are assaults
-			return (stats.attack.assaults / stats.attack.attacks) * 100 >= challenge.goal;
+			return Math.round(stats.attack.assaults / stats.attack.attacks) * 100 >= challenge.goal;
 		case ChallengeType.DealDamage:
 			// Deal up to N damage
 			return stats.defense.hpLost <= challenge.goal;
 		case ChallengeType.DealPercentDamage:
 			// Deal at least X% of opponent hp
-			return ((stats.defense.startingHp - stats.defense.endingHp) / stats.defense.startingHp) * 100 >= challenge.goal;
+			return Math.round((stats.defense.startingHp - stats.defense.endingHp) / stats.defense.startingHp) * 100 >= challenge.goal;
 		case ChallengeType.CounterAttack:
 			// Counter a minimum of N times
 			return stats.attack.counters >= challenge.goal;
