@@ -40,7 +40,7 @@
 			"minimalValueError": "Der Gesamtpreis deines Angebots liegt unter dem Minimalwert.",
 			"tooManyItems": "Du kannst nicht mehr als {items} verschiedene Gegenstände am Stück anbieten.",
 			"offerCreated": "Angebot wurde erstellt.",
-			"offerCancelled": "Angeboterstellung abgebrochen.",
+			"offerCancelled": "Angebot abgebrochen.",
 			"notEnoughItems": "Du hast nicht genug von diesem Gegenstand.",
 			"offerClaimed": "Der Gewinn wurde abgeholt"
 		},
@@ -766,6 +766,7 @@
 		}
 	},
 	"race": {
+		"race": "Rasse:",
 		"name": {
 			"winks": "Winks",
 			"sirain": "Sirän",
@@ -1575,6 +1576,7 @@
 	},
 	"shop": {
 		"dinoz": {
+			"header": "Dinoz-Gehege",
 			"help": "Willkommen im Dinoz-Gehege! Hier kannst du **jeden Tag** unterschiedliche Dinoz begutachten, die zur Adoption freigegeben sind. Suche dir einen aus, der am besten zu dir passt!"
 		},
 		"confirm": {
@@ -2458,7 +2460,8 @@
 		"clan": "Dino-RPG [ Klan: ",
 		"clansList": "Dino-RPG [ Liste der Klane ]",
 		"createClan": "Dino-RPG [ Klan gründen ]",
-		"challengeFriend": "Dino-RPG [ Freundschaftsscharmützel ]"
+		"challengeFriend": "Dino-RPG [ Freundschaftsscharmützel ]",
+		"forum": "Dino-RPG [ Foren ]"
 	},
 	"gather": {
 		"action": {
@@ -3983,6 +3986,7 @@
 			"gardien": "Baumkronwächter",
 			"grdien": "Baumkronwächter",
 			"rkrgns": "Korgonenverstärkung",
+			"egrllz": "Gorillo-Geist",
 			"borg": "Borg",
 			"ewater": "Wasserelementar",
 			"efire": "Feuerelementar",
@@ -4234,6 +4238,7 @@
 	},
 	"dojo": {
 		"welcome": "Willkommen in deinem Dojo",
+		"return": "Zurück",
 		"accessTournament": "An Wettkampf teilnehmen",
 		"disclaimer": "**Es gibt kein Entkommen!**&&Die Fähigkeit „Schwarzes Loch“ und der Gegenstand „Dimensionales Pulver“ sind weder in Wettkämpfen, noch in weiteren Herausforderungen verfügbar!",
 		"tidInProgress": "Der letzte Abschnitt des Inter-Dojo Turniers ist im Gange.",
@@ -4267,9 +4272,10 @@
 		"fightRecap": {
 			"hpLost": "Anzahl verlorener Lebenspunkte :pv:",
 			"hpHealed": "Anzahl wiederhergestellter Lebenspunkte",
-			"attacks": "Anzahl der Schläge",
+			"attacks": "Anzahl der Angriffe",
 			"multiHit": "Anzahl der Mehrfachschläge",
-			"assaults": "Anzahl der Angriffe",
+			"assaults": "Anzahl der Angriffsfähigkeiten",
+			"evasions": "Anzahl ausgewichener Schläge",
 			"counters": "Anzahl der Gegenangriffe",
 			"poisoned": "Anzahl vergifteter Gegner",
 			"poison_damage": "Giftschaden verursacht",
@@ -4287,7 +4293,9 @@
 			"damageAir": ":air:-Schaden verursacht",
 			"assaultAir": ":air:-Angriffe ausgeführt",
 			"damageVoid": ":void:-Schaden verursacht",
-			"assaultVoid": ":void:-Angriffe ausgeführt"
+			"assaultVoid": ":void:-Angriffe ausgeführt",
+			"hpRemaining": "Lebenspunkte übrig",
+			"times_poisoned": "Anzahl vergifteter Dinoz"
 		},
 		"challenge": {
 			"selectChampions": "Wähle deine Mitstreiter",
@@ -4298,18 +4306,33 @@
 			"launch": "Kampf starten",
 			"challenge": {
 				"kill": "Bezwinge deinen Gegner, bevor die Zeit abläuft. Lass ihnen keine Chance!",
-				"takeAttack": "Besiege deinen Gegner, indem du ihn nicht mehr als {goal} Mal angreifen lässt.",
+				"takeAttack": "Bezwinge deinen Gegner, während du von ihm nicht mehr, als {goal} Treffer einsteckst.",
 				"takeRawDmg": "Bezwinge deinen Gegner, während du nicht mehr, als {goal} Lebenspunkte verlierst.",
 				"takePrctDmg": "Bezwinge deinen Gegner, während du nicht mehr, als {goal}% Lebenspunkte verlierst.",
 				"assault": "Bezwinge deinen Gegner, während du mindestens {goal} Angriffsfähigkeiten einsetzt.",
-				"assaultPrct": "Besiege deinen Gegner, während mindestens {goal}% deiner Angriffe, Angriffsfähigkeiten sind.",
+				"assaultPrct": "Bezwinge deinen Gegner, während mindestens {goal}% deiner Angriffe, Angriffsfähigkeiten sind.",
 				"maxDmg": "Bezwinge deinen Gegner, während du ihm nicht mehr, als {goal} seiner Lebenspunkte an Schaden zufügst.",
 				"minPrctDmg": "Bezwinge deinen Gegner, während du ihm mindestens {goal}% seiner Lebenspunkte an Schaden zufügst.",
 				"counter": "Bezwinge deinen Gegner, während du mindestens {goal} Gegenangriff(e) ausführst.",
 				"dodge": "Bezwinge deinen Gegner, während du mindestens {goal} Mal ausweichst.",
 				"noPoison": "Bezwinge deinen Gegner, ohne dabei vergiftet zu werden.",
 				"poison": "Bezwinge deinen Gegner, während du ihn im Kampf vergiftest.",
-				"undefined": "Es wurde keine Herausforderung ausgewählt."
+				"undefined": "Fehler: Es wurde keine Herausforderung ausgewählt"
+			},
+			"challengeExplanation": {
+				"kill": "Schade! Du hast deinen Gegner nicht bezwingen können, bevor die Zeit abgelaufen ist.",
+				"takeAttack": "Schade! Du hast {goal} Treffer zu viel eingesteckt.",
+				"takeRawDmg": "Schade! Du hast {goal} Lebenspunkte zu viel verloren.",
+				"takePrctDmg": "Schade! Du hast {goal}% Lebenspunkte zu viel verloren.",
+				"assault": "Schade! Dir haben {goal} Angriffsfähigkeiten gefehlt.",
+				"assaultPrct": "Schade! Dir haben {goal}% Angriffsfähigkeiten gefehlt.",
+				"maxDmg": "Schade! Du hast {goal} Schaden zu viel zugefügt.",
+				"minPrctDmg": "Schade! Du hast {goal}% Schaden zu wenig zugefügt.",
+				"counter": "Schade! Es haben {goal} weitere Gegenangriffe gefehlt.",
+				"dodge": "Schade! Du hättest {goal} weiteren Schlägen ausweichen müssen.",
+				"noPoison": "Schade! Du wurdest {goal} Mal vergiftet.",
+				"poison": "Schade! Es ist dir nicht gelungen, deinen Gegner zu vergiften.",
+				"looseFight": "Es ist dir nicht gelungen, den Kampf zu gewinnen."
 			}
 		}
 	},

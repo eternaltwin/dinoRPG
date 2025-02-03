@@ -766,6 +766,7 @@
 		}
 	},
 	"race": {
+		"race": "Raza:",
 		"name": {
 			"winks": "Winks",
 			"sirain": "Sirain",
@@ -1575,6 +1576,7 @@
 	},
 	"shop": {
 		"dinoz": {
+			"header": "Tienda de Dinos",
 			"help": "¡Bienvenido a la Tienda de Dinos! **Cada día** puedes descubrir Dinos nuevos disponibles. Elige y llévate el que más te guste."
 		},
 		"confirm": {
@@ -2458,7 +2460,8 @@
 		"clan": "Dino-RPG [ Clan : ",
 		"clansList": "Dino-RPG [ Lista de Clanes ]",
 		"createClan": "Dino-RPG [ Crear Clan ]",
-		"challengeFriend": "Dino-RPG [ Enfrentar a un amigo ]"
+		"challengeFriend": "Dino-RPG [ Enfrentar a un amigo ]",
+		"forum": "Dino-RPG [ Foro ]"
 	},
 	"gather": {
 		"action": {
@@ -3983,6 +3986,7 @@
 			"gardien": "Guardián Arbólico",
 			"grdien": "Guardián Arbólico",
 			"rkrgns": "Refuerzos Korgon",
+			"egrllz": "Espíritu Gorilos",
 			"borg": "Borg",
 			"ewater": "Elemental de Agua",
 			"efire": "Talismán de Fuego",
@@ -4234,6 +4238,7 @@
 	},
 	"dojo": {
 		"welcome": "Bienvenido a tu Dojo",
+		"return": "Regresar",
 		"accessTournament": "Accede al torneo",
 		"disclaimer": "**¡No hay forma de escapar!** && ¡La habilidad Agujero negro y el objeto Dimensión Paralela no se activan durante las batallas del torneo ni en desafíos futuros!",
 		"tidInProgress": "Las fases finales del torneo inter-dojo están en curso.",
@@ -4270,6 +4275,7 @@
 			"attacks": "Cantidad de ataques",
 			"multiHit": "Número de multi-golpes",
 			"assaults": "Número de asaltos",
+			"evasions": "Número de ataques esquivados",
 			"counters": "Número de contraataques",
 			"poisoned": "Número de adversarios envenenados",
 			"poison_damage": "Daño de veneno infligido",
@@ -4287,7 +4293,9 @@
 			"damageAir": "Daño de :air: infligido",
 			"assaultAir": "Número de asaltos :air: realizados",
 			"damageVoid": "Daño de :void: infligido",
-			"assaultVoid": "Número de asaltos :void: realizados"
+			"assaultVoid": "Número de asaltos :void: realizados",
+			"hpRemaining": "Vida restante",
+			"times_poisoned": "Número de veces que un Dino fue envenenado"
 		},
 		"challenge": {
 			"selectChampions": "Elige a tus campeones",
@@ -4299,7 +4307,7 @@
 			"challenge": {
 				"kill": "Vence a tu adversario y mátalo antes de que se acabe el tiempo, ¡no le des ni una oportunidad!",
 				"takeAttack": "Gana este combate sufriendo como máximo {goal} ataques de tu adversario.",
-				"takeRawDmg": "Gana este combate perdiendo como máximo de {goal} puntos de vida.",
+				"takeRawDmg": "Gana este combate perdiendo como máximo {goal} puntos de vida.",
 				"takePrctDmg": "Gana este combate perdiendo como máximo {goal}% de puntos de vida.",
 				"assault": "Gana este combate realizando como mínimo {goal} asaltos.",
 				"assaultPrct": "Gana este combate realizando por lo menos {goal}% de asaltos del total de tus ataques.",
@@ -4309,7 +4317,22 @@
 				"dodge": "Gana este combate esquivando por lo menos {goal} ataque(s).",
 				"noPoison": "Gana este combate sin hacerte envenenar.",
 				"poison": "Vence a tu adversario envenenándolo durante el combate.",
-				"undefined": "Ningún desafío fue elegido."
+				"undefined": "Ningún desafío fue elegido"
+			},
+			"challengeExplanation": {
+				"kill": "Lástima, no pudiste derrotar a tu oponente antes que se acabara el tiempo.",
+				"takeAttack": "Lástima, has recibido {goal} ataques de más.",
+				"takeRawDmg": "Lástima, has recibido {goal} de daño de más.",
+				"takePrctDmg": "Lástima, has perdido {goal}% de puntos de vida de más.",
+				"assault": "Lástima, te faltó {goal} asaltos para lograrlo.",
+				"assaultPrct": "Lástima, te faltó {goal}% de asaltos.",
+				"maxDmg": "Lástima, infligiste {goal} de daño de más.",
+				"minPrctDmg": "Lástima, hacía falta hacer {goal}% más de daño.",
+				"counter": "Lástima, hacía falta hacer {goal} contraataques adicionales.",
+				"dodge": "Lástima, hacía falta esquivar {goal} ataques adicionales.",
+				"noPoison": "Lástima, fuiste envenenado {goal} veces.",
+				"poison": "Lástima, no lograste envenenar a tu adversario.",
+				"looseFight": "No lograste ganar el combate."
 			}
 		}
 	},
