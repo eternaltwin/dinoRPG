@@ -200,6 +200,17 @@ export async function isDinozInTournament(dinozId: number, tournamentId?: string
 	return dinoz?.TournamentTeam.some(t => t.tournamentId === tournamentId);
 }
 
+export async function isDinozSelling(dinozId: number, playerId: string) {
+	const dinoz = await prisma.offer.findMany({
+		where: { sellerId: playerId },
+		select: {
+			status: true,
+			dinozId: true
+		}
+	});
+	return dinoz?.some(t => t.dinozId === dinozId && t.status !== 'CLAIMED');
+}
+
 export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },

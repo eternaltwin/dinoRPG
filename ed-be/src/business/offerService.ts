@@ -13,7 +13,13 @@ import {
 } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { getDinozEquipItemRequest, getDinozPlace, isDinozInTournament, updateDinoz } from '../dao/dinozDao.js';
+import {
+	getDinozEquipItemRequest,
+	getDinozPlace,
+	isDinozInTournament,
+	isDinozSelling,
+	updateDinoz
+} from '../dao/dinozDao.js';
 import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
 import {
 	decreaseIngredientQuantity,
@@ -122,6 +128,11 @@ export async function createOffer(req: Request) {
 		const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
 		if (dinozTournament) {
 			throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
+		}
+
+		const selling = await isDinozSelling(dinozId, authed.id)
+		if (selling) {
+			throw new ExpectedError(`Your dinoz is already selling.`);
 		}
 	}
 
