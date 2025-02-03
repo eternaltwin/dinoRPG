@@ -83,24 +83,24 @@ const router = createRouter({
 					component: () => import('../pages/Ranking.vue'),
 					children: [
 						{
-							path: '',
+							path: 'player/:pageLoaded',
 							name: 'RankingPlayers',
 							component: () => import('../components/rankings/PlayerRanking.vue'),
 							props: { sort: 'classic' }
 						},
 						{
-							path: 'average',
+							path: 'average/:pageLoaded',
 							name: 'RankingAverage',
 							component: () => import('../components/rankings/PlayerRanking.vue'),
 							props: { sort: 'average' }
 						},
 						{
-							path: 'completion',
+							path: 'completion/:pageLoaded',
 							name: 'RankingCompletion',
 							component: () => import('../components/rankings/CompletionRanking.vue')
 						},
 						{
-							path: 'clans',
+							path: 'clans/:pageLoaded',
 							name: 'RankingClans',
 							component: () => import('../components/rankings/ClansRanking.vue')
 						},

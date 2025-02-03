@@ -60,7 +60,13 @@
 							></path></svg
 						><span>{{ $t('rightMenu.ingredients') }}</span></RouterLink
 					>
-					<RouterLink class="link" to="/ranking">
+					<RouterLink
+						class="link"
+						:to="{
+							name: 'RankingPlayers',
+							params: { pageLoaded: 1 }
+						}"
+					>
 						<svg
 							class="svgLinkIcon"
 							focusable="false"

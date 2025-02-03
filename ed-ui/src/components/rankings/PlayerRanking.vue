@@ -99,15 +99,23 @@ export default defineComponent({
 			}
 		},
 		changePage(i: number) {
-			this.page += i;
-			this.getRanking();
+			this.$router.push({ name: 'RankingPlayers', params: { pageLoaded: (this.page += i) } });
 		}
 	},
 	async created(): Promise<void> {
+		this.page = +this.$route.params.pageLoaded;
 		await this.getRanking();
 	},
 	watch: {
-		sort: 'getRanking'
+		sort: 'getRanking',
+		'$route.params.pageLoaded': async function (to) {
+			if (to !== undefined && this.$route.name === 'RankingPlayers') {
+				this.page = +this.$route.params.pageLoaded;
+			}
+		},
+		page() {
+			this.getRanking();
+		}
 	}
 });
 </script>

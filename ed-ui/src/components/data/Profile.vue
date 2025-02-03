@@ -24,7 +24,14 @@
 					{{ $t(`myAccount.ranking`) }}
 				</dt>
 				<dd>
-					<a v-if="playerPosition" href="/ranking" @click="goToRankingPage">{{ playerPosition }}</a>
+					<RouterLink
+						v-if="playerPosition"
+						:to="{
+							name: 'RankingPlayers',
+							params: { pageLoaded: Math.floor(playerPosition / 20) + 1 }
+						}"
+						>{{ playerPosition }}</RouterLink
+					>
 					({{ accountData.pointCount }} points)
 				</dd>
 				<dt>
