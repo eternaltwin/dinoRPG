@@ -1639,7 +1639,7 @@
 			},
 			"chens": {
 				"name": "Tienda de Chen",
-				"description": "Chen pone a tu disposición competencias consumibles. Son tan poderosas que se destruyen después de su utilización. Elles sont à utiliser avec parcimonie."
+				"description": "Chen pone a tu disposición competencias consumibles. Son tan poderosas que se destruyen después de su utilización. A utilizar con moderación."
 			},
 			"merchant": {
 				"name": "Mercader ambulante",
@@ -2134,7 +2134,7 @@
 			"Specialiste": "Elimina el elemento más débil del ciclo de ataques",
 			"TalonDAchille": "Aumenta la potencia de todos los asaltos en 2",
 			"OeilDeLynx": "Permite al Dino recolectar plantas exóticas en ciertos lugares",
-			"NuageToxique": "Envenena a todos los enemigos Envenena a todos los enemigos Les dégats par tour sont strictement égaux à l'élément air du lanceur.",
+			"NuageToxique": "Envenena a todos los enemigos. El daño por turno es estrictamente igual al elemento Aire del Dino que lanza la habilidad",
 			"HaleineFetive": "Envenena a los enemigos tocados por un asalto",
 			"Mistral": "Ataca a todos los enemigos con un poder de Aire 3",
 			"TaiChi": "Aumenta la potencia de todos los asaltos de Aire en 15. Disminuye la velocidad de los ataques Aire en 20%",
@@ -2284,12 +2284,12 @@
 		"name": {
 			"2": "Material de Escalada",
 			"1": "Salvavidas",
-			"65": "Maldición de Cuzcus",
+			"65": "Maldición de Cuzcús",
 			"63": "Demonio",
 			"3": "Linterna",
 			"13": "Hojas de Nenúfar",
 			"4": "Pala de la Buena Suerte",
-			"5": "Piel",
+			"5": "Pala mejorada",
 			"6": "Pala rota",
 			"22": "Flauta de Rascafandro",
 			"25": "Aletas de Korgones",
@@ -2298,7 +2298,7 @@
 			"27": "Tótem Ashpuk",
 			"10": "Trozo de Basalto",
 			"9": "Agua pura",
-			"8": "Amague Maradoniano",
+			"8": "Fango del Pantano",
 			"11": "Guante de los Zors",
 			"40": "Mochila Práctica",
 			"32": "Tarjeta de Miembro",
@@ -2336,7 +2336,7 @@
 		"description": {
 			"2": "El Material de Escalada permite a tu Dino escalar las Colinas Escarpadas.",
 			"1": "El salvavidas permite atravesar algunas superficies de agua sin arriesgar la vida de tu Dino.",
-			"65": "Tu Dino ha sido maldecido por el Guardián de Cuzcus...",
+			"65": "Tu Dino ha sido maldecido por el Guardián de Cuzcús...",
 			"63": "Este Dino es un verdadero Demonio. ¿De dónde salen estos?",
 			"3": "La linterna le permite a tu Dino explorar las más profundas cavernas sin el menor riesgo.",
 			"13": "Estas hojas de Nenúfar son muy apreciadas por los monjes Zenzen.",
@@ -2358,10 +2358,10 @@
 			"60": "Esta Medalla de Plata es una recompensa otorgada a tu Dino por superar la etapa 20 del Torneo de Fuerzabruta.",
 			"61": "Esta Medalla de Bronce es una recompensa otorgada a tu Dino por superar la etapa 10 del Torneo de Fuerzabruta.",
 			"54": "Este pedazo de coral parece ser tan duro que no se puede romper...",
-			"44": "¡Esta copa reconoce al líder del equipo por su participación en el Torneo SuperDom!",
-			"45": "¡Esta copa felicita al líder del equipo por sus victorias en el Torneo SuperDom!",
-			"46": "¡Esta copa felicita al líder del equipo por sus hazañas en el Torneo SuperDom!",
-			"47": "¡Esta copa reconoce al líder del equipo por su dominación en el Torneo SuperDom!",
+			"44": "¡Esta copa premia al líder del equipo por su participación en el Torneo SuperDom!",
+			"45": "¡Esta copa premia al líder del equipo por sus victorias en el Torneo SuperDom!",
+			"46": "¡Esta copa premia al líder del equipo por sus hazañas en el Torneo SuperDom!",
+			"47": "¡Esta copa premia al líder del equipo por su dominación en el Torneo SuperDom!",
 			"39": "Esta rama llena de flores te ha sido entregada por el Guardián de la Jungla para mostrarte su gratitud. Gracias a esta rama, ¡ahora puedes acceder a la Tienda de Frutas!",
 			"55": "Este trozo de hielo está tan frío que parece que nunca podrá descongelarse...",
 			"50": "Tu Dino avanza en su evolución, ¡ahora puede llegar hasta el nivel 60!",
@@ -2803,7 +2803,7 @@
 			"liftrock": "Levantar las rocas",
 			"bucket": "Examinar el cubo",
 			"talkingorchide": "Orquídea Quidea que habla",
-			"benevole": "Bénévole «Paix Verte»",
+			"benevole": "Voluntario «Paz Verde»",
 			"arbre": "Validar la Misión",
 			"pickfigo": "Figonicia Forúncula",
 			"pickpuru": "Purulenta Negra",
@@ -3555,7 +3555,7 @@
 			"msg": "Este almacén ilimitado de sellos homologados por los Servicios Postales Dinonianos permite enviar mensajes privados.",
 			"magnet": "¡El Rey de los Rokkys en persona te ha ofrecido este trozo de Magnetita Negativa! A saber los misteriosos poderes que esconde...",
 			"plume": "Esta pluma es un regalo de procedencia muy lejana. Permite editar la presentación de la ficha del jugador.",
-			"kaura": "Cette aura permet d'accéder à l'Ile du Totem et d'y retrouver - peut-être - des Kabuki ayant survécu au Grand Cataclysme !",
+			"kaura": "Esta aura permite acceder a la Isla del Tótem. ¡Quizás encuentres allí a Kabukis que hayan sobrevivido al Gran Cataclismo!",
 			"demon": "Este antiguo pergamino te permite acceder a la Tienda Demoníaca en el Cementerio del Crepúsculo.",
 			"pmi": "El Pequeño Misionario Ilustrado te da acceso en todo momento a la lista de misiones efectuadas por tu Dino y las que le quedan por hacer.",
 			"pda": "La PDA es una piedra producida con una tecnología especial que permite al maestro que la posea tener una visión general de todos sus Dinos. Lo del Diamantito es sólo para chulear.",
@@ -3588,7 +3588,7 @@
 			"warjc": "Son muy raros los casos en los que una gota de maná se cristaliza. Cuando esto sucede, el maná ya no puede ser utilizado como energía, pero el objeto es suficientemente valorado por los coleccionistas. Es un bellísimo trofeo por tu valiosa participación en la 1ra. Guerra de Maná.",
 			"warka": "Le bébé Djinn est un être surpuissant, précieux allié dans les champs de batailles, il décimera vos adversaires quand il aura atteint l'âge adulte... dans quelques centaines d'années ! Il vous est offert pour avoir triomphé lors de la 2nd Guerre du Mana.",
 			"warkb": "Le bébé Ifrit a le sang chaud, il plongera vos adversaires dans un ocean de flamme quand il aura atteint l'âge adulte... dans quelques centaines d'années !Il vous est offert pour féliciter votre performance lors de la 2nd Guerre du Mana !",
-			"warkc": "Une jeune pousse du puissant Yggdrasil est tombé à vos pieds lors d'une des farouches batailles de cette 2nd Guerre du Mana. Puisse-t'il grandir, atteindre des sommets en vous portant toujours plus vers le haut !",
+			"warkc": "Un pequeño brote del poderoso Yggdrasil cayó a tus pies en una de las feroces batallas de la 2da Guerra de Maná. ¡Crecerá y llegará hasta el cielo!",
 			"warla": "El Rey te confía este vestigio de una antigua civilización para que lo protejas. Ahora eres su guardián de honor. Solo cuida que no se estrelle sobre Dinoland. Tus victorias en la 3ra Guerra de Maná no podrían tener mejor premio.",
 			"warlb": "Has ganado una estadía excepcional en la cima de la Torre de Jade, desde donde se puede apreciar todo Dinoland. Recibe este trofeo por tu buen desempeño en la 3ra. Guerra de Maná.",
 			"warlc": "Por tus destacada participación en la 3ra. Guerra de Maná, el Rey te ofrece un descanso en esta isla paradisíaca. No olvides regar las plantas.",
@@ -3667,7 +3667,7 @@
 			"chfx2": "Tu clan ha logrado 6 victorias en el V Campeonato de Clanes. Este trofeo recompensa vuestra admirable fuerza. Habéis demostrado que sóis unos de los más grandes clanes en DinoRPG.",
 			"chfx3": "Las 5 victorias de tu clan en el V Campeonato de Clanes son la prueba de vuestro creciente poder. Que nadie se atreva a oponerse a vuestros Dinos.",
 			"chfx4": "Con nada menos que 4 victorias, tu clan se posiciona como uno de los más hábiles y dinámicos a la hora de combatir. ¡Habéis dejado una huella imborrable en el V Campeonato de Clanes!",
-			"chgx1a": "Cette figurine d'un mercenaire, vendant ses services pour de nobles causes, vous a été remise pour avoir participé aux phases finales de la ligue Elite du 7ème Championnat des clans.",
+			"chgx1a": "Esta estatuilla de plata con forma de soldado y alma de roble se ve muy bien entre tus trofeos por haber logrado 6 victorias en el VI Campeonato de Clanes.",
 			"chgx1b": "Una estatuilla de oro puro y madera fina que representa a los Maestros de Dinos que obtuvieron 7 victorias en el VI Campeonato de Clanes.",
 			"chgx2a": "Su poder mágico guió a tus Dinos para obtener 5 victorias en el VI Campeonato de Clanes. ¡Es un buen presagio para tu próxima participación!",
 			"chgx2b": "Un personaje con poderes mágicos ha protegido a tu clan de derrotas desastrosas, sin ella no hubieses podido alcanzar las 4 victorias que te honran en el VI Campeonato de Clanes.",
@@ -3931,7 +3931,7 @@
 	"clanSettings": {
 		"action": {
 			"delete": "Eliminar clan",
-			"save": "Save"
+			"save": "Guardar"
 		},
 		"banner": {
 			"title": "Editar URL del banner del clan:",
@@ -4255,7 +4255,10 @@
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
 		"seeFight": "Ver el combate",
-		"nextTournament": "El próximo torneo comenzará el **{next}**, ¡prepárate! La fase de clasificación termina el **{qualif}**.",
+		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
+		"qualification": "El próximo torneo comenzará el **{poolsStart}**, ¡prepárate! Las fases de clasificación terminan el **{qualificationEnd}**.&&El premio en oro actualmente es de **{cashPrice}** :gold:.",
+		"pools": "Las fases de grupos están en curso y terminarán el {finalsStart}. &&El premio en oro ahora es de **{cashPrice}** :gold:.",
+		"finals": "Y aquí están las, tan esperadas, fases finales.&&El premio en efectivo ahora es de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATENCIÓN:** &&Tu posición está indicada en verde. Puedes hacer clic en los participantes de cada combate para verlo. **Solo los ganadores de cada grupo participarán en la final.**",
 		"challengeFriend": {
 			"disclaimer": "Aquí puedes seleccionar **5 de tus Dinos** para enfrentarte a un miembro de tu clan. Luego elige a un amigo y hasta **5 de sus Dinos** antes de iniciar el combate. No se perderán :pv:, no se ganará :xp: y no se consumirá ningún objeto. &&El precio de un combate es de **50:gold: por Dino combatiente**. Estas monedas de oro :gold: utilizadas servirán para financiar los próximos torneos.",

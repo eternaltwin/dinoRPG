@@ -4255,7 +4255,10 @@
 		"group": "Group {group}",
 		"seeFinal": "See the final",
 		"seeFight": "See the fight",
-		"nextTournament": "The next tournament will start on **{next}**, be ready! The qualifying phases end on **{qualif}**.",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
+		"qualification": "Le prochain tournoi commencera le **{poolsStart}**, soyez prêt ! Les phases de qualifications se terminent le **{qualificationEnd}**.&&Le cash price est actuellement à **{cashPrice}** :gold:.",
+		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash price est maintenant de **{cashPrice}** :gold:.",
+		"finals": "Et voici les phases finales tant attendues.&&Le cash price est à présent de **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
 		"challengeFriend": {
 			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",

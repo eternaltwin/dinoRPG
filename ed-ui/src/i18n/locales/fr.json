@@ -69,8 +69,8 @@
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
 	},
 	"dig": {
-		"gold": "Votre dinoz a trouvé {gold} :gold: en creusant ici.",
-		"status": "En creusant, votre dinoz a trouvé l'objet {item}. Il apparaîtra dans ses statuts. Félicitations !"
+		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
+		"status": "En creusant, votre Dinoz a trouvé l'objet {item}. Il apparaîtra dans ses statuts. Félicitations !"
 	},
 	"api": "Il vous est possible de consulter notre API afin de la tester. N'oubliez pas de prendre vos tokens d'authentification JWT :",
 	"alpha": {
@@ -141,7 +141,7 @@
 			"party": "Utilisez vos pétards magiques pour déclencher un grand feu d'artifice et gagner des trésors par dizaines !",
 			"concentrate": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
 			"market": "Bienvenue au Marché des éleveurs ! Ici, vous pouvez acheter et vendre des Dinoz, des ingrédients et quelques objets rares provenant de tout Dinoland !",
-			"disband": "Ordonne à vos autres dinoz de ne plus suivre ce dinoz.",
+			"disband": "Ordonne à vos autres Dinoz de ne plus suivre ce dinoz.",
 			"daily": "Vous pouvez utiliser ici votre ticket quotidien de connexion afin d'obtenir des récompenses spéciales !",
 			"irma": "Votre Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma* pour faire une action supplémentaire immédiatement.",
 			"irmas": "Votre groupe de Dinoz a déjà combattu ou s'est déjà déplacé aujourd'hui. Vous pouvez utiliser une *Potion de Madame Irma par Dinoz* pour faire une action supplémentaire immédiatement.&&Si des actions gratuites sont disponibles pour un des Dinoz, elles seront consommées en priorité.",
@@ -229,7 +229,7 @@
 				"A": "Cette compétence **peut remplacer** une attaque",
 				"S": "Cette compétence a un **effet particulier**",
 				"U": "Cette compétence ne s'appliquera qu'**une seule fois pour l'ensemble des Dinoz**",
-				"I": "Cette compétence permet d'**invoquer la divinité** avec laquelle le dinoz a pactisé pendant le combat",
+				"I": "Cette compétence permet d'**invoquer la divinité** avec laquelle le Dinoz a pactisé pendant le combat",
 				"C": "Cette compétence **permet de collecter des ingrédients** dans différents lieux"
 			}
 		},
@@ -438,11 +438,11 @@
 			"danger_detector": "Cet objet permet de protéger une fois votre Dinoz contre un effet indirect entrainant la perte de plus de 10 PV.",
 			"pirhanoz_in_bag": "Un Pirhanoz enfermé dans son sachet, prêt à être déployé en combat quand on a besoin de lui !",
 			"devil_ointment": "Un puissant onguent, pâteux, de couleur sombre, et à l'odeur extrêmement désagréable. Il faut s'en enduire le corps pour faire disparaître certaines malédictions !",
-			"land_of_ashes": "Cet objet plonge la zone de combat dans une fournaise suffocante. Tous les dinoz n'ayant pas au moins 10 points en élément feu n'utilisent plus de compétences A et E pendant les 3 prochains tours du lanceur.",
-			"abyss": "Cet objet plonge la zone de combat dans les abysses. Tous les dinoz n'ayant pas au moins 10 points en élément eau voient la puissance de leurs attaques et assauts diminuer de 25% pendant les 3 prochains tours du lanceur.",
-			"amazon": "Cet objet plonge la zone de combat en pleine jungle tropicale. Tous les dinoz n'ayant pas au moins 10 points en élément bois s'endorment durant les 3 prochains tours du lanceur à moins qu'ils subissent une attaque faisant perdre plus de 10 PV.",
-			"st_elmas_fire": "Cet objet plonge la zone de combat dans un champ magnétique puissant. Tous les dinoz n'ayant pas au moins 10 points en élément foudre subissent 5% PV pendant les 3 prochains tours du lanceur.",
-			"uvavu": "Cet objet plonge la zone de combat dans un ouragan dévastateur. Tous les dinoz n'ayant pas au moins 10 points en élément air voient leur vitesse diminuer de 50% pendant les 3 prochains tours du lanceur.",
+			"land_of_ashes": "Cet objet plonge la zone de combat dans une fournaise suffocante. Tous les Dinoz n'ayant pas au moins 10 points en élément feu n'utilisent plus de compétences A et E pendant les 3 prochains tours du lanceur.",
+			"abyss": "Cet objet plonge la zone de combat dans les abysses. Tous les Dinoz n'ayant pas au moins 10 points en élément eau voient la puissance de leurs attaques et assauts diminuer de 25% pendant les 3 prochains tours du lanceur.",
+			"amazon": "Cet objet plonge la zone de combat en pleine jungle tropicale. Tous les Dinoz n'ayant pas au moins 10 points en élément bois s'endorment durant les 3 prochains tours du lanceur à moins qu'ils subissent une attaque faisant perdre plus de 10 PV.",
+			"st_elmas_fire": "Cet objet plonge la zone de combat dans un champ magnétique puissant. Tous les Dinoz n'ayant pas au moins 10 points en élément foudre subissent 5% PV pendant les 3 prochains tours du lanceur.",
+			"uvavu": "Cet objet plonge la zone de combat dans un ouragan dévastateur. Tous les Dinoz n'ayant pas au moins 10 points en élément air voient leur vitesse diminuer de 50% pendant les 3 prochains tours du lanceur.",
 			"strong_tea": "Ce thé ultra concentré, préparé par Chen elle-même, vous permet d'annuler les effets de l'objet bière sur votre équipe.",
 			"temporal_stabiliser": "La technologie Dorogon a permis de mettre au point un objet capable de briser l'objet manipulateur temporel. Malheureusement, il est trop fragile pour supporter plus d'une utilisation.",
 			"elixir": "Un remède surpuissant utilisé par les plus puissants maîtres Dinoz pour guérir leurs fidèles compagnons. Un élixir va rendre 200 points de vie.",
@@ -543,7 +543,7 @@
 			"empty": "Il n'y a aucun objet dans cette case.",
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
-		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre dinoz en combat.//"
+		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//"
 	},
 	"news": {
 		"actualites": "L'actualité de Dinoland",
@@ -1991,7 +1991,7 @@
 			"CoeurArdent": "Augmente la puissance de tous les assauts de Feu de 12 et augmente le maximum de points de vie de 20",
 			"Kamikaze": "Attaque un ennemi avec un pouvoir de Feu 15 puis le Dinoz perd la moitié de sa vie",
 			"Sprint": "Augmente l'initiative de 6",
-			"ProteinesDinozienne": "Augmente l'endurance du dinoz de 30%",
+			"ProteinesDinozienne": "Augmente l'endurance du Dinoz de 30%",
 			"Extenuation": "Diminue de 25% la capacité de récupération d'un adversaire lors d'un assaut",
 			"CarapaceDeMagma": "Augmente les PV max de 30 et la puissance des assauts feu de 5",
 			"Carapace": "Augmente l'armure de 1",
@@ -2070,10 +2070,10 @@
 			"GardeForestier": "Augmente de 3 la défense Bois de tous les Dinoz du groupe",
 			"Fouille": "Permet au Dinoz de trouver des artefacts dans certains lieux",
 			"Detective": "Permet au Dinoz de chercher des artefacts rares à certains endroits",
-			"ExpertEnFouille": "Permet au dinoz de chercher une case supplémentaire",
+			"ExpertEnFouille": "Permet au Dinoz de chercher une case supplémentaire",
 			"Cocon": "Augmente la rapidité de la récupération des points de vie lors du repos",
 			"Geant": "Augmente la puissance de tous les assauts de 5, augmente les PV max de 30 et diminue la vitesse du Dinoz de 20%",
-			"Archeologue": "Permet au dinoz de trouver des artefacts rares ou exceptionnels à certains endroits",
+			"Archeologue": "Permet au Dinoz de trouver des artefacts rares ou exceptionnels à certains endroits",
 			"Colosse": "Augmente la puissance de tous les assauts de 15 et les PV max de 50. Réduit la vitesse de 20%.",
 			"Tenacite": "Augmente le minimum de dégâts de 1",
 			"Charisme": "Le Dinoz peut être suivi par un Dinoz supplémentaire",
@@ -2090,7 +2090,7 @@
 			"Magasinier": "Augmente la capacité maximale de l'inventaire de 50%",
 			"Perception": "Augmente la puissance de tous les assauts Eau de 4, et permet au Dinoz d'attaquer les ennemis intangibles",
 			"CoupsSournois": "Attaque un ennemi. En cas de réussite l'ennemi perd la moitié de ses points de vie.",
-			"ApprentiPecheur": "Permet au dinoz de pêcher de petits poissons à certains endroits",
+			"ApprentiPecheur": "Permet au Dinoz de pêcher de petits poissons à certains endroits",
 			"CoupFatal": "Attaque un ennemi. S'il est touché, il perd tous ses points de vie.",
 			"EntrainementSousMarin": "Augmente les PV max de 10",
 			"PecheurConfirme": "Permet au Dinoz de pêcher de gros poissons à certains endroits",
@@ -2140,22 +2140,22 @@
 			"TaiChi": "Augmente la puissance des assauts Air de 15. Diminue la vitesse des attaques Air de 20%",
 			"Tornade": "Attaque tous les ennemis avec un pouvoir air de 5",
 			"Eveil": "Diminue la vitesse des attaques Air de 20%",
-			"PaumeEjectable": "Attaque avec un assaut de puissance doublée, puis le dinoz perd 15 en initiative",
+			"PaumeEjectable": "Attaque avec un assaut de puissance doublée, puis le Dinoz perd 15 en initiative",
 			"VentVif": "Donne le statut accéléré (Augmente la vitesse de 50%)",
 			"FormeVaporeuse": "Chance de gagner le statut intangible en se défendant",
 			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5%",
 			"MeditationSolitaire": "Augmente la défense Air de 3, diminue la vitesse des attaques Air de 50%",
 			"MeditationTranscendantale": "Augmente la défense Air de 6, diminue la vitesse des attaques Air de 50%",
-			"SouffleDeVie": "Le dinoz est immunisé au poison et aux malédictions",
+			"SouffleDeVie": "Le Dinoz est immunisé au poison et aux malédictions",
 			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible",
 			"Brasero": "Attaque tous les ennemis avec un pouvoir Feu de 3",
-			"Detonation": "Le dinoz perd 5 PV et gagne 15 d'initiative",
+			"Detonation": "Le Dinoz perd 5 PV et gagne 15 d'initiative",
 			"CoeurDuPhenix": "Augmente le nombre de PV récupérés lors du repos de 15%",
 			"LanceurDeGland": "Lance un gland sur un ennemi avec un pouvoir Bois de 5",
-			"Gratteur": "Permet au dinoz de chercher une case supplémentaire",
+			"Gratteur": "Permet au Dinoz de chercher une case supplémentaire",
 			"GrosseBeigne": "Double la puissance du prochain assaut",
 			"Vitalite": "Augmente les PV max de 10",
-			"MoignonsLiquides": "Diminue l'initiative d'un dinoz ennemi de 25",
+			"MoignonsLiquides": "Diminue l'initiative d'un Dinoz ennemi de 25",
 			"Deluge": "Attaque tous les ennemis avec un pouvoir eau de 10, et diminue leur initiative de 8",
 			"Reflex": "Augmente l'initiative de 5",
 			"EclairSinueux": "Frappe 3 ennemis avec un pouvoir Foudre de 10",
@@ -2190,7 +2190,7 @@
 			"ArmureDeFeu": "Augmente la défense Bois de 20",
 			"PaysDeCendre": "Les Dinoz (alliés et ennemis) avec un élément Feu inférieur à 10 ne pourront plus utiliser de compétences A et E durant les 3 prochains tours du lanceur",
 			"ReceptacleRocheux": "Annule les compétences sphériques A et E de type Bois sur un Dinoz",
-			"PlumesDePhoenix": "Le dinoz est ramené une fois à la vie avec 12 PV et gagne +10 en vitesse et en initiative, mais ne peut plus se régénérer",
+			"PlumesDePhoenix": "Le Dinoz est ramené une fois à la vie avec 12 PV et gagne +10 en vitesse et en initiative, mais ne peut plus se régénérer",
 			"AcclamationFraternelle": "Augmente la récupération d'énergie de tous les Dinoz de 30%",
 			"PoingDeFeu": "Augmente de 20 la puissance des assauts feu",
 			"VideEnergetique": "Diminue de 15% la capacité de récupération d’un adversaire lors d'un assaut",
@@ -2211,14 +2211,14 @@
 			"Nemo": "Le Dinoz peut pêcher dans une case supplémentaire",
 			"Cleptomane": "Empêche un des Dinoz adverses d'utiliser des objets non magiques pendant le combat. Se lance au début du combat.",
 			"Abysse": "Tous les Dinoz (alliés et ennemis) avec un élément Eau inférieur à 10 verront la puissance de tous leurs assauts et attaques diminuée de 25% pour les 3 prochains tours du lanceur",
-			"BanniDesDieux": "Le dinoz ciblé ne peut plus utiliser son invocation",
+			"BanniDesDieux": "Le Dinoz ciblé ne peut plus utiliser son invocation",
 			"TourbillonMagique": "Augmente la puissance des assauts eau de 20",
 			"Hyperventilation": "Diminue l'endurance de tous les Dinoz ennemis de 20%",
 			"TherapieDeGroupe": "Récupère autant de PV que l'équipe adverse lorsqu'elle utilise une compétence de soin sur le Dinoz lanceur",
 			"ReceptacleTesla": "Annule les compétences sphériques A et E de type Foudre d'un Dinoz",
 			"VitaliteMarine": "Augmente les PV max de 80",
 			"StimulationCardiaque": "Augmente la capacité de récupération du Dinoz de 20%",
-			"MorsureDuSoleil": "Éblouit le dinoz adverse. Ses assauts auront une chance sur 3 de toucher leur cible.",
+			"MorsureDuSoleil": "Éblouit le Dinoz adverse. Ses assauts auront une chance sur 3 de toucher leur cible.",
 			"BatterieSupplementaire": "Augmente les PV max de 50 et réduit l'initiative de 15",
 			"Einstein": "Permet au Dinoz d'énergétiser une case supplémentaire",
 			"ReceptacleAerien": "Annule les compétences sphériques A et E de type Air d'un Dinoz",
@@ -2227,13 +2227,13 @@
 			"ForceDeZeus": "Augmente la puissance de tous les assauts foudre de 20",
 			"RemanenceHertzienne": "Augmente les chances d'esquive de 20%",
 			"Blanc": "Augmente les assauts de 20 du Dinoz s'il se trouve à Nimbao",
-			"Anaerobie": "Augmente la puissance de tous les assauts de 20 lorsque le dinoz est à Nimbao",
+			"Anaerobie": "Augmente la puissance de tous les assauts de 20 lorsque le Dinoz est à Nimbao",
 			"DoubleFace": "50% de chance d'augmenter ou réduire l'initiative du lanceur de 10 au début d'un combat",
 			"Flagellation": "Réduit de 15% la vitesse de récupération",
 			"SouffleDange": "Augmente la défense Feu de 20",
 			"Ouragan": "Augmente la puissance des assauts Air de 20",
 			"Ouranos": "Les Dinoz (alliés et ennemis) ayant un élément Air inférieur à 10 voient la vitesse de leurs assauts diminuée de 50% pour les 3 prochains tours du lanceur",
-			"Twinoid500mg": "Augmente l'endurance du dinoz de 50%",
+			"Twinoid500mg": "Augmente l'endurance du Dinoz de 50%",
 			"LonDuhaut": "Permet au Dinoz de cueillir une case supplémentaire",
 			"SurplisDhades": "Permet au Dinoz d'être équipé avec un objet de combat supplémentaire",
 			"ReceptacleThermique": "Annule les compétences sphériques Feu de type A et E d'un Dinoz",
@@ -2243,12 +2243,12 @@
 			"Mutinerie": "Les clones adverses attaquent leurs propres maîtres",
 			"MainsCollantes": "Annule la capacité d'esquive d'un adversaire",
 			"GrosCostaud": "Augmente la puissance de tous les assauts de 5",
-			"OrigineCaushemeshenne": "Augmente la puissance de tous les assauts de 30 si le dinoz se trouve à Cauchemesh",
+			"OrigineCaushemeshenne": "Augmente la puissance de tous les assauts de 30 si le Dinoz se trouve à Cauchemesh",
 			"Ecrasement": "Propulse une onde de choc sur tous les adversaires environnants",
-			"ForceDeLumiere": "Augmente la puissance de tous les assauts de 30 si le dinoz se trouve dans le monde sombre",
+			"ForceDeLumiere": "Augmente la puissance de tous les assauts de 30 si le Dinoz se trouve dans le monde sombre",
 			"ChargePigmou": "Attaque un ennemi avec un pouvoir de Feu 5 + Bois 3",
-			"ForceDesTenebres": "Augmente l’endurance et la récupération du dinoz de 25%",
-			"Bigmagnon": "Le dinoz charge son adversaire et l'étourdit pendant plusieurs tours",
+			"ForceDesTenebres": "Augmente l’endurance et la récupération du Dinoz de 25%",
+			"Bigmagnon": "Le Dinoz charge son adversaire et l'étourdit pendant plusieurs tours",
 			"DurACuire": "Augmente toutes les défenses de 6",
 			"LoupGarou": "Attaque tous les ennemis avec une invocation de Bois 30",
 			"Salamandre": "Attaque un ennemi avec une invocation de Feu 30",
@@ -2271,13 +2271,13 @@
 			"BigMama": " Vide l’énergie des dinozs adverses et leur inflige 20 points de dégats",
 			"Yggdrasil": "Les alliés gagnent 20 en défense bois",
 			"BaleineBlanche": "Les alliés gagnent 20 en défense eau",
-			"Invocateur": "Permet au dinoz d'apprendre les compétences d'invocation",
-			"Envol": "Le dinoz effectue un assaut puis s'envole. Réservé aux dinozs volants.",
+			"Invocateur": "Permet au Dinoz d'apprendre les compétences d'invocation",
+			"Envol": "Le Dinoz effectue un assaut puis s'envole. Réservé aux dinozs volants.",
 			"PoingDeBraise": "Augmente la puissance des assauts feu de 20",
-			"Leader": "Augmente le nombre maximum de dinoz de 3",
-			"GrosDormeur": "Permet à votre dinoz de récupérer une action supplémentaire chaque jour.",
-			"Veilleuse": "Permet à tous les dinoz suivant votre dinoz de récupérer également une action supplémentaire chaque jour.",
-			"Matelasseur": "Tous vos dinoz récupèrent une action supplémentaire chaque jour."
+			"Leader": "Augmente le nombre maximum de Dinoz de 3",
+			"GrosDormeur": "Permet à votre Dinoz de récupérer une action supplémentaire chaque jour.",
+			"Veilleuse": "Permet à tous les Dinoz suivant votre Dinoz de récupérer également une action supplémentaire chaque jour.",
+			"Matelasseur": "Tous vos Dinoz récupèrent une action supplémentaire chaque jour."
 		}
 	},
 	"status": {
@@ -2401,7 +2401,7 @@
 		"elements": "Informations",
 		"action": "Actions",
 		"level": "Ce niveau reflète la puissance de votre dinoz.",
-		"slot": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre dinoz en combat.//",
+		"slot": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper. &&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
 		"shopButton": "Accéder à la boutique",
 		"clanButton": "Mon clan",
 		"dojoButton": "Mon dojo",
@@ -3318,7 +3318,7 @@
 		"confirmUnlock": "Désirez-vous débloquer {quantity} nouvelles compétences ?",
 		"unlock2": " compétences supplémentaires",
 		"unlock": "Une fois débloquée, cette compétence pourra être choisie dès le prochain niveau",
-		"small": "Ce dinoz a gagné un niveau !",
+		"small": "Ce Dinoz a gagné un niveau !",
 		"pdc": "Grâce à la compétence Plan de Carrière, vous pouvez choisir librement entre deux possibilités de gain de niveau.&& //Attention, il est possible que ces deux possibilités soient identiques.//",
 		"helperUnlock": {
 			"title": "Débloquer",
@@ -3550,7 +3550,7 @@
 			"tour": "Ce maillot jaune vous récompense pour votre magnifique Tour de Dinoland ! Vous faites désormais partie des grands explorateurs de Dinoland.",
 			"vener": "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
 			"taurus": "Vous avez aidé Baobob à refouler le puissant Moueffe infernal Taurus dans les profondeurs du Monde Sombre. Vous n'êtes pas prêt de le revoir, votre courage commence déjà à traverser les frontières de Dinoland.",
-			"belius": "Vous avez supprimé le puissant Santaz infernal Belius. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de dinoz démons dans la boutique démoniaque.",
+			"belius": "Vous avez supprimé le puissant Santaz infernal Belius. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de Dinoz démons dans la boutique démoniaque.",
 			"scorp": "Vous avez expulsé le puissant Winks infernal Scorpus. Il est reparti dans les profondeurs du Monde Sombre.",
 			"msg": "Ce stock illimité de timbres homologués par les Services Postaux Dinoziens valide votre séjour à Dinoville",
 			"magnet": "Cet éclat de Magnétite Négative vous a été offert par le Roi des Rockys en personne ! Qui sait quels pouvoirs mystérieux il possède...",
@@ -3738,19 +3738,19 @@
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
 			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
-			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La médaille zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses dinoz .... !!",
-			"tid2": "Félicitation pour avoir gagné le Tournoi des dinoz ! La figurine de maître Zenit en or massif est l'équivalent de l'Oscar du plus vaillant maîtres dinoz de tous Dinoland, aucun maître ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses dinoz .... !!",
-			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres dinoz vanteront les mérites de votre prose à travers le monde !",
+			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La médaille zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
+			"tid2": "Félicitation pour avoir gagné le Tournoi des Dinoz ! La figurine de maître Zenit en or massif est l'équivalent de l'Oscar du plus vaillant maîtres Dinoz de tous Dinoland, aucun maître ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
+			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres Dinoz vanteront les mérites de votre prose à travers le monde !",
 			"hunt1": "Vos exploits durant la chasse aux monstres vous ont rendu célèbre. L'âme du chasseur brûle en vous et rappelle à chaque monstres qui foulent les terres de Dinoland que vous les tenez à l'oeil.",
-			"hunint": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"xhunt3": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"xhunt2": "Vous avez été le second plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"xhunt1": "Vous avez été l'un des plus redoutables chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"hunint": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"xhunt3": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"xhunt2": "Vous avez été le second plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"xhunt1": "Vous avez été l'un des plus redoutables chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
 			"cinema": "Votre film a été sélectionné par le jury du festival du film de Dinoville en temps que meilleur film d'aventuro/mélodrama/comédino/époustouflo/rocambolesque. Vous faîtes partie de la caste des meilleurs réalisateurs qui délivrent notre imaginaire en nous emportant dans un monde onirique dont vous seul avez le secret !",
 			"cinem2": "Prix spécial du jury du festival du film de Dinoville.",
 			"eugene": "Votre créativité sans pareille vous a fait gagner cette magnifique médaille, seuls les maîtres Dinoz ayant une intelligence hors du commun se permettent de la porter. Certains disent que vous êtes un génie, d'autres que vous êtes un vrai tordu, le plus important c'est qu'ils parlent de vous !",
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe telle que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
-			"clover": "Ce prix vous a été remis pour avoir été le maître dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
+			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"import": "Félicitations ! Vous avez importé votre compte sur DinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet Importasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},
@@ -3768,8 +3768,8 @@
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
 			"average": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la moyenne des niveaux de tous les Dinoz du joueur.",
-			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu.",
-			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels dinoz sont parvenus les premiers à accomplir des hauts faits.",
+			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les Dinoz actifs et la progression dans l'histoire du jeu.",
+			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels Dinoz sont parvenus les premiers à accomplir des hauts faits.",
 			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan.",
 			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
 			"clansCreationLink": "page de recherche des clans"
@@ -3950,7 +3950,7 @@
 		"pageName": "Combat !",
 		"win": "Vous **remportez** ce combat !",
 		"lose": "Vous avez **perdu**...",
-		"lvlup": "Un dinoz a gagné un **niveau supplémentaire** !",
+		"lvlup": "Un Dinoz a gagné un **niveau supplémentaire** !",
 		"continue": "Continuer",
 		"display": "Afficher le combat",
 		"resume": "Vous avez combattu un {enemy}",
@@ -4199,16 +4199,16 @@
 	},
 	"hud": {
 		"following": "Ce Dinoz suit son chef de groupe.",
-		"gather": "Ce dinoz peut récolter en ce lieu.",
-		"rest": "Ce dinoz se repose.",
+		"gather": "Ce Dinoz peut récolter en ce lieu.",
+		"rest": "Ce Dinoz se repose.",
 		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
-		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
+		"remainingActions": "Votre Dinoz peut encore effectuer des actions gratuites.",
 		"follow": "Le chef de groupe est {leader}.",
 		"followed": "Ce Dinoz est chef de groupe.",
-		"restEnd": "Votre dinoz a déjà récupéré le maximum de point de vie en se reposant."
+		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant."
 	},
 	"logs": {
-		"ItemUsed": "**{player} ({playerId})** a utilisé **{quantity}x {item}** avec le dinoz **{dinoz} ({dinozId})**.",
+		"ItemUsed": "**{player} ({playerId})** a utilisé **{quantity}x {item}** avec le Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",
 		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
 		"GoldWon": "**{player} ({playerId})** a gagné **{quantity} :gold:** ({total} :gold:).",
@@ -4255,7 +4255,7 @@
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
 		"seeFight": "Voir le combat",
-		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} dinoz étant au maximum niveau {level}. Les races de dinoz disponibles sont déjà filtrées.",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
 		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojo afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash price est actuellement à **{cashPrice}** :gold:.",
 		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash price est maintenant de **{cashPrice}** :gold:.",
 		"finals": "Et voici les phases finales tant attendues.&&Le cash price est à présent de **{cashPrice}** :gold:.",
@@ -4298,7 +4298,7 @@
 			"damageVoid": "Dégats de :void: infligés",
 			"assaultVoid": "Nombre d'assaut :void: réalisés",
 			"hpRemaining": "Vie restante",
-			"times_poisoned": "Nombre de fois qu'un dinoz est empoisonné"
+			"times_poisoned": "Nombre de fois qu'un Dinoz est empoisonné"
 		},
 		"challenge": {
 			"selectChampions": "Choisis tes champions",
@@ -4409,7 +4409,7 @@
 			"fight6": "Gains",
 			"fight6-1": "À la fin du combat, votre Dinoz gagne des **pièces d'or** :gold qui vont lui permettre de se soigner et des **points d'expérience** qui vont lui permettre de changer de niveau.",
 			"fight7": "L'Énergie",
-			"fight7-1": "Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le dinoz détient. _L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance._ && && Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres. && && Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de **récupération**. _La récupération d'un Dinoz peut varier en fonction de certaines compétences apprises._ Le Dinoz doit donc attendre d'avoir refait le plein d'énergie avant de lancer une compétence.",
+			"fight7-1": "Chaque Dinoz possède une barre d'énergie bleue, à côté de sa barre de vie. Cette barre représente l'**énergie** que le Dinoz possède, elle est remplie à moitié au début du combat. Comme pour la barre de vie, elle dépend de l'énergie maximale appelée **endurance**, que le Dinoz détient. _L'endurance d'un Dinoz peut varier en fonction de certaines compétences apprises. Des bonus peuvent aussi augmenter l'endurance._ && && Chaque compétence a un coût en énergie. À chaque compétence utilisée, la barre d'énergie diminue. Une fois vide, le Dinoz passe obligatoirement son tour. Certaines compétences extraordinairement fortes demandent d'ailleurs beaucoup plus d'énergie que les autres. && && Cette barre d'énergie se remplit petit à petit pendant le combat, on parle de **récupération**. _La récupération d'un Dinoz peut varier en fonction de certaines compétences apprises._ Le Dinoz doit donc attendre d'avoir refait le plein d'énergie avant de lancer une compétence.",
 			"fight8": "Les Statuts en Combats",
 			"fight8-1": "Pendant le combat, différents statuts affecteront vos Dinoz, en bonus ou en malus, vous pouvez retrouver la liste de ses statuts ci-dessous :",
 			"fight8-1-1": "_Le Dinoz est endormi, il ne peut pas bouger_",
@@ -4491,7 +4491,7 @@
 			"gdc1-3": "_La déclaration de guerre contre un autre Clan_",
 			"gdc1-4": "_Le paiement du percepteur_",
 			"gdc2": "...Le Château du Clan :",
-			"gdc2-1": "Chaque Clan peut construire son propre Château à partir de l'onglet **'Château'**. Pour le construire, vous avez besoin d'**ingrédients** qui seront retirés de votre Trésor. Seul le leader du Clan peut lancer la première construction du Château. && && Une fois le château construit, il est possible de lui assigner des défenseurs qui assureront la protection du château lors des attaques ennemies. Pour assigner un de vos dinoz à la défense du château, il vous faut vous rendre à l'emplacement de votre château et faire l'action **'Défendre le château'**. && && Si tous les défenseurs se font tuer lors d'un combat ou qu'il n'y a plus de défenseurs, le château subira des dégâts et sera donc endommagé. && && Voici un exemple de l'onglet Château :",
+			"gdc2-1": "Chaque Clan peut construire son propre Château à partir de l'onglet **'Château'**. Pour le construire, vous avez besoin d'**ingrédients** qui seront retirés de votre Trésor. Seul le leader du Clan peut lancer la première construction du Château. && && Une fois le château construit, il est possible de lui assigner des défenseurs qui assureront la protection du château lors des attaques ennemies. Pour assigner un de vos Dinoz à la défense du château, il vous faut vous rendre à l'emplacement de votre château et faire l'action **'Défendre le château'**. && && Si tous les défenseurs se font tuer lors d'un combat ou qu'il n'y a plus de défenseurs, le château subira des dégâts et sera donc endommagé. && && Voici un exemple de l'onglet Château :",
 			"gdc2-2": "La page du Château résume ce qui suit :",
 			"gdc2-2-1": "_L'emplacement du Château_",
 			"gdc2-2-2": "_Son état : les points de vie, comme indiqué sur l'image ci-dessus. De base, le Château possède 300:pv: points de vie._",
@@ -4556,7 +4556,7 @@
 		},
 		"faq3": {
 			"question": "Comment avoir plus de 18 Dinoz ?",
-			"answer": "La compétence U Leader :bois: permet d’avoir 3 dinoz de plus sur votre compte. && Il en va de même pour Messie :air: sur le nouvel arbre de compétences 50+. && && Les compétences U (unique) ne fonctionnent qu'une seule fois par compte. && Après, il est possible d’en avoir beaucoup plus en congelant certains de vos dinoz."
+			"answer": "La compétence U Leader :bois: permet d’avoir 3 Dinoz de plus sur votre compte. && Il en va de même pour Messie :air: sur le nouvel arbre de compétences 50+. && && Les compétences U (unique) ne fonctionnent qu'une seule fois par compte. && Après, il est possible d’en avoir beaucoup plus en congelant certains de vos dinoz."
 		},
 		"faq4": {
 			"question": "Comment obtenir la Perle de la Fontaine ?",
@@ -4591,8 +4591,8 @@
 			"answer": "Le dictionnaire est à l'Université."
 		},
 		"faq12": {
-			"question": "Est-ce que je peux faire combattre mes dinoz ensemble ?",
-			"answer": "Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible. && && Sélectionnez l'action 'Faire suivre' : vos dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois dinoz, la limite peut passer à cinq si le dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme."
+			"question": "Est-ce que je peux faire combattre mes Dinoz ensemble ?",
+			"answer": "Vous ne pouvez pas les faire s'affronter mais vous pouvez les faire se battre les uns aux cotés des autres. Pour grouper vos dinoz, ils doivent se trouver aux même endroit et posséder chacun une action disponible. && && Sélectionnez l'action 'Faire suivre' : vos Dinoz sont désormais en équipe. Vous pouvez grouper jusqu'à trois dinoz, la limite peut passer à cinq si le Dinoz chef de groupe a appris les compétences :bois: Sympathie et Charisme."
 		},
 		"faq13": {
 			"question": "J'ai fini les missions de Papy Joe, comment puis-je en avoir d'autres ?",
@@ -4600,7 +4600,7 @@
 		},
 		"faq14": {
 			"question": "Comment accéder aux Steppes Magnétiques ?",
-			"answer": "Vous, ou les personnes de votre clan si vous en avez un, devez faire concentrer 7 dinoz chez Bao Bob (équipés des Palmes de korgon, c'est obligatoire). && && Une fois les 7 dinoz en concentration, vous aurez accès à un portail qui vous mènera vers un monde dans lequel, après un petit périple et un gros gardien à abattre, vous obtiendrez une clé. && && Cette clé, celle de la Porte de Sylvenoire, vous donnera accès aux Steppes Magnétiques... Accessible à partir de la forêt de Grumhel. && && Conseil : destiné avant tout aux dinoz de haut LVL, genre 30 et +... Les dinoz à Élement Majeur d'Eau sont défavorisés."
+			"answer": "Vous, ou les personnes de votre clan si vous en avez un, devez faire concentrer 7 Dinoz chez Bao Bob (équipés des Palmes de korgon, c'est obligatoire). && && Une fois les 7 Dinoz en concentration, vous aurez accès à un portail qui vous mènera vers un monde dans lequel, après un petit périple et un gros gardien à abattre, vous obtiendrez une clé. && && Cette clé, celle de la Porte de Sylvenoire, vous donnera accès aux Steppes Magnétiques... Accessible à partir de la forêt de Grumhel. && && Conseil : destiné avant tout aux Dinoz de haut LVL, genre 30 et +... Les Dinoz à Élement Majeur d'Eau sont défavorisés."
 		},
 		"faq15": {
 			"question": "Où trouve-t-on Yakuzi ?",
@@ -4620,7 +4620,7 @@
 		},
 		"faq19": {
 			"question": "Comment accéder au Dome Soulaflotte ?",
-			"answer": "Avec l'Appeau à Rascaphandre à partir des Chutes Mutantes. && && Pour obtenir l'appeau, il vous faudra la Bouée et un dinoz assez fort. Rendez-vous aux Îles Atlantéinées à partir du Port de Prêche, et allez aux Chutes Mutantes. Parlez au Garde Atlante, il vous parlera d'un ami pêcheur se trouvant au Port de Prêche. Retournez donc au Port de Prêche et parlez à Jovébozé. && && Ce dernier vous emmènera combattre un Rascaphandre, et si vous réussissez à le tuer, il vous donnera un appeau à rascaphandre."
+			"answer": "Avec l'Appeau à Rascaphandre à partir des Chutes Mutantes. && && Pour obtenir l'appeau, il vous faudra la Bouée et un Dinoz assez fort. Rendez-vous aux Îles Atlantéinées à partir du Port de Prêche, et allez aux Chutes Mutantes. Parlez au Garde Atlante, il vous parlera d'un ami pêcheur se trouvant au Port de Prêche. Retournez donc au Port de Prêche et parlez à Jovébozé. && && Ce dernier vous emmènera combattre un Rascaphandre, et si vous réussissez à le tuer, il vous donnera un appeau à rascaphandre."
 		},
 		"faq20": {
 			"question": "Où trouver les Étoiles Magiques ?",
@@ -4640,11 +4640,11 @@
 		},
 		"faq24": {
 			"question": "Dinoz sombres et Trophées Hippoclamp, Pteroz et Rocky",
-			"answer": "L'Hippoclamp Sombre se trouve sur l'île Waïkiki, accessible depuis le Port de Prêche grâce à la Bouée. Le vaincre vous rapportera le Trophée des Hippoclamps. Et il faut au minimum être au niveau 8 pour le voir. && && Le Ptéroz Sombre se trouve aux Pentes de Basalte, accessible depuis les Collines Escarpées avec le Matériel d'Escalade. Vous obtiendrez le Trophée des Pteroz en le battant. && && Le Rocky se trouve à Forcebrut. Il n'est pas visible avant le niveau 13 et difficile à vaincre avant le niveau 15 mais vous rapportera le Trophée des Rocky. && && Les Trophées sont des objets épiques visibles sur votre compte. Ils vous permettent d'acheter dans l'Enclos le dinoz correspondant au Trophée : Hippoclamp si vous avez le Trophée Hippoclamp, etc."
+			"answer": "L'Hippoclamp Sombre se trouve sur l'île Waïkiki, accessible depuis le Port de Prêche grâce à la Bouée. Le vaincre vous rapportera le Trophée des Hippoclamps. Et il faut au minimum être au niveau 8 pour le voir. && && Le Ptéroz Sombre se trouve aux Pentes de Basalte, accessible depuis les Collines Escarpées avec le Matériel d'Escalade. Vous obtiendrez le Trophée des Pteroz en le battant. && && Le Rocky se trouve à Forcebrut. Il n'est pas visible avant le niveau 13 et difficile à vaincre avant le niveau 15 mais vous rapportera le Trophée des Rocky. && && Les Trophées sont des objets épiques visibles sur votre compte. Ils vous permettent d'acheter dans l'Enclos le Dinoz correspondant au Trophée : Hippoclamp si vous avez le Trophée Hippoclamp, etc."
 		},
 		"faq25": {
-			"question": "Comment fait-on pour congeler un dinoz ?",
-			"answer": "Rendez vous aux Gorges Profondes puis parlez avec le Spéléléologue. Il vous proposera de congeler votre dinoz. && Ceci vous permettra d'élever un dinoz supplémentaire à la place. && && Il vous faudra bien évidemment la lanterne pour accéder aux gorges."
+			"question": "Comment fait-on pour congeler un Dinoz ?",
+			"answer": "Rendez vous aux Gorges Profondes puis parlez avec le Spéléléologue. Il vous proposera de congeler votre dinoz. && Ceci vous permettra d'élever un Dinoz supplémentaire à la place. && && Il vous faudra bien évidemment la lanterne pour accéder aux gorges."
 		},
 		"faq26": {
 			"question": "Comment obtenir un Kabuki ?",
@@ -4739,7 +4739,7 @@
 		"report": "Reporter le contenu",
 		"cancel": "Annuler",
 		"error": "Vous devez spécifier une raison et une explication à votre complainte.",
-		"errorDinoz": "Vous devez spécifier un dinoz à reporter",
+		"errorDinoz": "Vous devez spécifier un Dinoz à reporter",
 		"success": "Plainte envoyée avec succès."
 	},
 	"messagerie": {
@@ -4775,7 +4775,7 @@
 		"reasons": {
 			"customText": "votre description personnalisée",
 			"multi": "une suspiscion de multicompte",
-			"dinozName": "un nom de dinoz offensant",
+			"dinozName": "un nom de Dinoz offensant",
 			"avatar": "un avatar offensant"
 		},
 		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
