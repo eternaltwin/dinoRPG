@@ -130,7 +130,7 @@ export async function createOffer(req: Request) {
 			throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 		}
 
-		const selling = await isDinozSelling(dinozId, authed.id)
+		const selling = await isDinozSelling(dinozId, authed.id);
 		if (selling) {
 			throw new ExpectedError(`Your dinoz is already selling.`);
 		}
