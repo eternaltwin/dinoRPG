@@ -22,6 +22,7 @@ export interface TournamentState {
 	nextScheduledMatch?: Date;
 	schedule: TournamentSchedule;
 	cashPrice: number;
+	levelLimit: number;
 }
 
 export type MetaData = {

@@ -2,7 +2,7 @@ import { getDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { getSelectedDojo } from '../business/tournamentService.js';
-import { PismaClientLocal, prisma } from '../prisma.js';
+import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
 import { raceList } from '@drpg/core/models/dinoz/RaceList';
@@ -500,7 +500,8 @@ class TournamentManager {
 			id: tournament.id,
 			...state,
 			schedule,
-			cashPrice: tournament.cashPrice
+			cashPrice: tournament.cashPrice,
+			levelLimit: tournament.levelLimit
 		};
 	}
 

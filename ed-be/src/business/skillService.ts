@@ -58,7 +58,9 @@ export async function getLearnableAndUnlockableSkills(req: Request) {
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
-	if (dinozTournament) {
+
+	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
+	if (!canLevelUp) {
 		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 	}
 
@@ -103,7 +105,9 @@ export async function learnSkill(req: Request) {
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
-	if (dinozTournament) {
+
+	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
+	if (!canLevelUp) {
 		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 	}
 
