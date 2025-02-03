@@ -1,6 +1,6 @@
 <template>
 	<div class="equip">
-		<template v-for="item in items" :key="item">
+		<template v-for="(item, index) in items" :key="index">
 			<Tippy
 				@click="unequip(item)"
 				theme="normal"
