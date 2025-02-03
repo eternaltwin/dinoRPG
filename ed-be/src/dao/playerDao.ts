@@ -6,7 +6,6 @@ import { AdminRole, Lang } from '@drpg/prisma';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import type { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { dino } from '@drpg/dino-animation';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -300,6 +299,7 @@ export async function getCommonDataRequest(playerId: string) {
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },
 					followers: { select: { id: true, fight: true, remaining: true } },
+					TournamentTeam: { select: { tournamentId: true } },
 					concentration: true
 				},
 				where: {
@@ -330,7 +330,11 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 				where: {
 					OR: [
 						{ unavailableReason: null },
-						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+						{
+							unavailableReason: {
+								not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed, UnavailableReason.selling] }
+							}
+						}
 					]
 				},
 				select: {
@@ -935,6 +939,19 @@ export async function getDojoDataForRanking(playerId: string) {
 		select: {
 			reputation: true,
 			DojoChallengeHistory: true
+		}
+	});
+}
+
+export async function increaseCashPrice(tournamentId: string, value: number) {
+	return await prisma.tournament.update({
+		where: {
+			id: tournamentId
+		},
+		data: {
+			cashPrice: {
+				increment: value
+			}
 		}
 	});
 }

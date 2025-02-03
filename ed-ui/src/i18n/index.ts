@@ -48,7 +48,16 @@ export const initI18n = async () => {
 		fallbackLocale: defaultLocale,
 		silentFallbackWarn: true,
 		silentTranslationWarn: true,
-		messages: { fr: {}, en: {}, es: {}, de: {} }
+		messages: { fr: {}, en: {}, es: {}, de: {} },
+		datetimeFormats: {
+			fr: {
+				long: {
+					year: 'numeric',
+					month: 'long',
+					day: 'numeric'
+				}
+			}
+		}
 	});
 
 	// load default language

@@ -5856,10 +5856,14 @@ export namespace Prisma {
 
   export type TournamentTeamCountOutputType = {
     dinoz: number
+    FightArchiveLeft: number
+    FightArchiveRight: number
   }
 
   export type TournamentTeamCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | TournamentTeamCountOutputTypeCountDinozArgs
+    FightArchiveLeft?: boolean | TournamentTeamCountOutputTypeCountFightArchiveLeftArgs
+    FightArchiveRight?: boolean | TournamentTeamCountOutputTypeCountFightArchiveRightArgs
   }
 
   // Custom InputTypes
@@ -5878,6 +5882,20 @@ export namespace Prisma {
    */
   export type TournamentTeamCountOutputTypeCountDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozWhereInput
+  }
+
+  /**
+   * TournamentTeamCountOutputType without action
+   */
+  export type TournamentTeamCountOutputTypeCountFightArchiveLeftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+  }
+
+  /**
+   * TournamentTeamCountOutputType without action
+   */
+  export type TournamentTeamCountOutputTypeCountFightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
   }
 
 
@@ -54928,10 +54946,12 @@ export namespace Prisma {
 
   export type FightArchiveAvgAggregateOutputType = {
     tournamentStep: number | null
+    slot: number | null
   }
 
   export type FightArchiveSumAggregateOutputType = {
     tournamentStep: number | null
+    slot: number | null
   }
 
   export type FightArchiveMinAggregateOutputType = {
@@ -54942,8 +54962,12 @@ export namespace Prisma {
     result: boolean | null
     playerId: string | null
     tournamentStep: number | null
+    slot: number | null
     createdDate: Date | null
+    tournamentTeamLeftId: string | null
+    tournamentTeamRightId: string | null
     tournamentId: string | null
+    metadata: string | null
   }
 
   export type FightArchiveMaxAggregateOutputType = {
@@ -54954,8 +54978,12 @@ export namespace Prisma {
     result: boolean | null
     playerId: string | null
     tournamentStep: number | null
+    slot: number | null
     createdDate: Date | null
+    tournamentTeamLeftId: string | null
+    tournamentTeamRightId: string | null
     tournamentId: string | null
+    metadata: string | null
   }
 
   export type FightArchiveCountAggregateOutputType = {
@@ -54966,18 +54994,24 @@ export namespace Prisma {
     result: number
     playerId: number
     tournamentStep: number
+    slot: number
     createdDate: number
+    tournamentTeamLeftId: number
+    tournamentTeamRightId: number
     tournamentId: number
+    metadata: number
     _all: number
   }
 
 
   export type FightArchiveAvgAggregateInputType = {
     tournamentStep?: true
+    slot?: true
   }
 
   export type FightArchiveSumAggregateInputType = {
     tournamentStep?: true
+    slot?: true
   }
 
   export type FightArchiveMinAggregateInputType = {
@@ -54988,8 +55022,12 @@ export namespace Prisma {
     result?: true
     playerId?: true
     tournamentStep?: true
+    slot?: true
     createdDate?: true
+    tournamentTeamLeftId?: true
+    tournamentTeamRightId?: true
     tournamentId?: true
+    metadata?: true
   }
 
   export type FightArchiveMaxAggregateInputType = {
@@ -55000,8 +55038,12 @@ export namespace Prisma {
     result?: true
     playerId?: true
     tournamentStep?: true
+    slot?: true
     createdDate?: true
+    tournamentTeamLeftId?: true
+    tournamentTeamRightId?: true
     tournamentId?: true
+    metadata?: true
   }
 
   export type FightArchiveCountAggregateInputType = {
@@ -55012,8 +55054,12 @@ export namespace Prisma {
     result?: true
     playerId?: true
     tournamentStep?: true
+    slot?: true
     createdDate?: true
+    tournamentTeamLeftId?: true
+    tournamentTeamRightId?: true
     tournamentId?: true
+    metadata?: true
     _all?: true
   }
 
@@ -55111,8 +55157,12 @@ export namespace Prisma {
     result: boolean
     playerId: string | null
     tournamentStep: number
+    slot: number
     createdDate: Date
+    tournamentTeamLeftId: string | null
+    tournamentTeamRightId: string | null
     tournamentId: string | null
+    metadata: string | null
     _count: FightArchiveCountAggregateOutputType | null
     _avg: FightArchiveAvgAggregateOutputType | null
     _sum: FightArchiveSumAggregateOutputType | null
@@ -55142,10 +55192,16 @@ export namespace Prisma {
     result?: boolean
     playerId?: boolean
     tournamentStep?: boolean
+    slot?: boolean
     createdDate?: boolean
+    tournamentTeamLeftId?: boolean
+    tournamentTeamRightId?: boolean
     tournamentId?: boolean
+    metadata?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
+    tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
+    tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -55156,10 +55212,16 @@ export namespace Prisma {
     result?: boolean
     playerId?: boolean
     tournamentStep?: boolean
+    slot?: boolean
     createdDate?: boolean
+    tournamentTeamLeftId?: boolean
+    tournamentTeamRightId?: boolean
     tournamentId?: boolean
+    metadata?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
+    tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
+    tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectScalar = {
@@ -55170,18 +55232,26 @@ export namespace Prisma {
     result?: boolean
     playerId?: boolean
     tournamentStep?: boolean
+    slot?: boolean
     createdDate?: boolean
+    tournamentTeamLeftId?: boolean
+    tournamentTeamRightId?: boolean
     tournamentId?: boolean
+    metadata?: boolean
   }
 
-  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "createdDate" | "tournamentId", ExtArgs["result"]["fightArchive"]>
+  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata", ExtArgs["result"]["fightArchive"]>
   export type FightArchiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
+    tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
+    tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
   }
   export type FightArchiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
+    tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
+    tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
   }
 
   export type $FightArchivePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -55189,6 +55259,8 @@ export namespace Prisma {
     objects: {
       player: Prisma.$PlayerPayload<ExtArgs> | null
       Tournament: Prisma.$TournamentPayload<ExtArgs> | null
+      tournamentTeamLeft: Prisma.$TournamentTeamPayload<ExtArgs> | null
+      tournamentTeamRight: Prisma.$TournamentTeamPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -55198,8 +55270,12 @@ export namespace Prisma {
       result: boolean
       playerId: string | null
       tournamentStep: number
+      slot: number
       createdDate: Date
+      tournamentTeamLeftId: string | null
+      tournamentTeamRightId: string | null
       tournamentId: string | null
+      metadata: string | null
     }, ExtArgs["result"]["fightArchive"]>
     composites: {}
   }
@@ -55566,6 +55642,8 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     player<T extends FightArchive$playerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     Tournament<T extends FightArchive$TournamentArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$TournamentArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    tournamentTeamLeft<T extends FightArchive$tournamentTeamLeftArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamLeftArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    tournamentTeamRight<T extends FightArchive$tournamentTeamRightArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamRightArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -55602,8 +55680,12 @@ export namespace Prisma {
     readonly result: FieldRef<"FightArchive", 'Boolean'>
     readonly playerId: FieldRef<"FightArchive", 'String'>
     readonly tournamentStep: FieldRef<"FightArchive", 'Int'>
+    readonly slot: FieldRef<"FightArchive", 'Int'>
     readonly createdDate: FieldRef<"FightArchive", 'DateTime'>
+    readonly tournamentTeamLeftId: FieldRef<"FightArchive", 'String'>
+    readonly tournamentTeamRightId: FieldRef<"FightArchive", 'String'>
     readonly tournamentId: FieldRef<"FightArchive", 'String'>
+    readonly metadata: FieldRef<"FightArchive", 'String'>
   }
     
 
@@ -56009,6 +56091,44 @@ export namespace Prisma {
   }
 
   /**
+   * FightArchive.tournamentTeamLeft
+   */
+  export type FightArchive$tournamentTeamLeftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TournamentTeam
+     */
+    select?: TournamentTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TournamentTeam
+     */
+    omit?: TournamentTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TournamentTeamInclude<ExtArgs> | null
+    where?: TournamentTeamWhereInput
+  }
+
+  /**
+   * FightArchive.tournamentTeamRight
+   */
+  export type FightArchive$tournamentTeamRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TournamentTeam
+     */
+    select?: TournamentTeamSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TournamentTeam
+     */
+    omit?: TournamentTeamOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TournamentTeamInclude<ExtArgs> | null
+    where?: TournamentTeamWhereInput
+  }
+
+  /**
    * FightArchive without action
    */
   export type FightArchiveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -56042,11 +56162,13 @@ export namespace Prisma {
   export type TournamentAvgAggregateOutputType = {
     teamSize: number | null
     levelLimit: number | null
+    cashPrice: number | null
   }
 
   export type TournamentSumAggregateOutputType = {
     teamSize: number | null
     levelLimit: number | null
+    cashPrice: number | null
   }
 
   export type TournamentMinAggregateOutputType = {
@@ -56055,6 +56177,8 @@ export namespace Prisma {
     teamSize: number | null
     teamRace: string | null
     levelLimit: number | null
+    cashPrice: number | null
+    nextRound: Date | null
   }
 
   export type TournamentMaxAggregateOutputType = {
@@ -56063,6 +56187,8 @@ export namespace Prisma {
     teamSize: number | null
     teamRace: string | null
     levelLimit: number | null
+    cashPrice: number | null
+    nextRound: Date | null
   }
 
   export type TournamentCountAggregateOutputType = {
@@ -56071,6 +56197,8 @@ export namespace Prisma {
     teamSize: number
     teamRace: number
     levelLimit: number
+    cashPrice: number
+    nextRound: number
     _all: number
   }
 
@@ -56078,11 +56206,13 @@ export namespace Prisma {
   export type TournamentAvgAggregateInputType = {
     teamSize?: true
     levelLimit?: true
+    cashPrice?: true
   }
 
   export type TournamentSumAggregateInputType = {
     teamSize?: true
     levelLimit?: true
+    cashPrice?: true
   }
 
   export type TournamentMinAggregateInputType = {
@@ -56091,6 +56221,8 @@ export namespace Prisma {
     teamSize?: true
     teamRace?: true
     levelLimit?: true
+    cashPrice?: true
+    nextRound?: true
   }
 
   export type TournamentMaxAggregateInputType = {
@@ -56099,6 +56231,8 @@ export namespace Prisma {
     teamSize?: true
     teamRace?: true
     levelLimit?: true
+    cashPrice?: true
+    nextRound?: true
   }
 
   export type TournamentCountAggregateInputType = {
@@ -56107,6 +56241,8 @@ export namespace Prisma {
     teamSize?: true
     teamRace?: true
     levelLimit?: true
+    cashPrice?: true
+    nextRound?: true
     _all?: true
   }
 
@@ -56202,6 +56338,8 @@ export namespace Prisma {
     teamSize: number
     teamRace: string
     levelLimit: number
+    cashPrice: number
+    nextRound: Date
     _count: TournamentCountAggregateOutputType | null
     _avg: TournamentAvgAggregateOutputType | null
     _sum: TournamentSumAggregateOutputType | null
@@ -56229,6 +56367,8 @@ export namespace Prisma {
     teamSize?: boolean
     teamRace?: boolean
     levelLimit?: boolean
+    cashPrice?: boolean
+    nextRound?: boolean
     participants?: boolean | Tournament$participantsArgs<ExtArgs>
     fights?: boolean | Tournament$fightsArgs<ExtArgs>
     _count?: boolean | TournamentCountOutputTypeDefaultArgs<ExtArgs>
@@ -56240,6 +56380,8 @@ export namespace Prisma {
     teamSize?: boolean
     teamRace?: boolean
     levelLimit?: boolean
+    cashPrice?: boolean
+    nextRound?: boolean
   }, ExtArgs["result"]["tournament"]>
 
   export type TournamentSelectScalar = {
@@ -56248,9 +56390,11 @@ export namespace Prisma {
     teamSize?: boolean
     teamRace?: boolean
     levelLimit?: boolean
+    cashPrice?: boolean
+    nextRound?: boolean
   }
 
-  export type TournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamSize" | "teamRace" | "levelLimit", ExtArgs["result"]["tournament"]>
+  export type TournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamSize" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound", ExtArgs["result"]["tournament"]>
   export type TournamentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | Tournament$participantsArgs<ExtArgs>
     fights?: boolean | Tournament$fightsArgs<ExtArgs>
@@ -56270,6 +56414,8 @@ export namespace Prisma {
       teamSize: number
       teamRace: string
       levelLimit: number
+      cashPrice: number
+      nextRound: Date
     }, ExtArgs["result"]["tournament"]>
     composites: {}
   }
@@ -56670,6 +56816,8 @@ export namespace Prisma {
     readonly teamSize: FieldRef<"Tournament", 'Int'>
     readonly teamRace: FieldRef<"Tournament", 'String'>
     readonly levelLimit: FieldRef<"Tournament", 'Int'>
+    readonly cashPrice: FieldRef<"Tournament", 'Int'>
+    readonly nextRound: FieldRef<"Tournament", 'DateTime'>
   }
     
 
@@ -57292,6 +57440,8 @@ export namespace Prisma {
     dojo?: boolean | TournamentTeam$dojoArgs<ExtArgs>
     dinoz?: boolean | TournamentTeam$dinozArgs<ExtArgs>
     Tournament?: boolean | TournamentTeam$TournamentArgs<ExtArgs>
+    FightArchiveLeft?: boolean | TournamentTeam$FightArchiveLeftArgs<ExtArgs>
+    FightArchiveRight?: boolean | TournamentTeam$FightArchiveRightArgs<ExtArgs>
     _count?: boolean | TournamentTeamCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tournamentTeam"]>
 
@@ -57315,6 +57465,8 @@ export namespace Prisma {
     dojo?: boolean | TournamentTeam$dojoArgs<ExtArgs>
     dinoz?: boolean | TournamentTeam$dinozArgs<ExtArgs>
     Tournament?: boolean | TournamentTeam$TournamentArgs<ExtArgs>
+    FightArchiveLeft?: boolean | TournamentTeam$FightArchiveLeftArgs<ExtArgs>
+    FightArchiveRight?: boolean | TournamentTeam$FightArchiveRightArgs<ExtArgs>
     _count?: boolean | TournamentTeamCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TournamentTeamIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -57327,6 +57479,8 @@ export namespace Prisma {
       dojo: Prisma.$DojoPayload<ExtArgs> | null
       dinoz: Prisma.$DinozPayload<ExtArgs>[]
       Tournament: Prisma.$TournamentPayload<ExtArgs> | null
+      FightArchiveLeft: Prisma.$FightArchivePayload<ExtArgs>[]
+      FightArchiveRight: Prisma.$FightArchivePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -57700,6 +57854,8 @@ export namespace Prisma {
     dojo<T extends TournamentTeam$dojoArgs<ExtArgs> = {}>(args?: Subset<T, TournamentTeam$dojoArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
     dinoz<T extends TournamentTeam$dinozArgs<ExtArgs> = {}>(args?: Subset<T, TournamentTeam$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     Tournament<T extends TournamentTeam$TournamentArgs<ExtArgs> = {}>(args?: Subset<T, TournamentTeam$TournamentArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    FightArchiveLeft<T extends TournamentTeam$FightArchiveLeftArgs<ExtArgs> = {}>(args?: Subset<T, TournamentTeam$FightArchiveLeftArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    FightArchiveRight<T extends TournamentTeam$FightArchiveRightArgs<ExtArgs> = {}>(args?: Subset<T, TournamentTeam$FightArchiveRightArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -58159,6 +58315,54 @@ export namespace Prisma {
      */
     include?: TournamentInclude<ExtArgs> | null
     where?: TournamentWhereInput
+  }
+
+  /**
+   * TournamentTeam.FightArchiveLeft
+   */
+  export type TournamentTeam$FightArchiveLeftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+  }
+
+  /**
+   * TournamentTeam.FightArchiveRight
+   */
+  export type TournamentTeam$FightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
   }
 
   /**
@@ -58750,8 +58954,12 @@ export namespace Prisma {
     result: 'result',
     playerId: 'playerId',
     tournamentStep: 'tournamentStep',
+    slot: 'slot',
     createdDate: 'createdDate',
-    tournamentId: 'tournamentId'
+    tournamentTeamLeftId: 'tournamentTeamLeftId',
+    tournamentTeamRightId: 'tournamentTeamRightId',
+    tournamentId: 'tournamentId',
+    metadata: 'metadata'
   };
 
   export type FightArchiveScalarFieldEnum = (typeof FightArchiveScalarFieldEnum)[keyof typeof FightArchiveScalarFieldEnum]
@@ -58762,7 +58970,9 @@ export namespace Prisma {
     date: 'date',
     teamSize: 'teamSize',
     teamRace: 'teamRace',
-    levelLimit: 'levelLimit'
+    levelLimit: 'levelLimit',
+    cashPrice: 'cashPrice',
+    nextRound: 'nextRound'
   };
 
   export type TournamentScalarFieldEnum = (typeof TournamentScalarFieldEnum)[keyof typeof TournamentScalarFieldEnum]
@@ -62073,10 +62283,16 @@ export namespace Prisma {
     result?: BoolFilter<"FightArchive"> | boolean
     playerId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentStep?: IntFilter<"FightArchive"> | number
+    slot?: IntFilter<"FightArchive"> | number
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
+    tournamentTeamLeftId?: UuidNullableFilter<"FightArchive"> | string | null
+    tournamentTeamRightId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
+    metadata?: StringNullableFilter<"FightArchive"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
+    tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
+    tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
   }
 
   export type FightArchiveOrderByWithRelationInput = {
@@ -62087,10 +62303,16 @@ export namespace Prisma {
     result?: SortOrder
     playerId?: SortOrderInput | SortOrder
     tournamentStep?: SortOrder
+    slot?: SortOrder
     createdDate?: SortOrder
+    tournamentTeamLeftId?: SortOrderInput | SortOrder
+    tournamentTeamRightId?: SortOrderInput | SortOrder
     tournamentId?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
     Tournament?: TournamentOrderByWithRelationInput
+    tournamentTeamLeft?: TournamentTeamOrderByWithRelationInput
+    tournamentTeamRight?: TournamentTeamOrderByWithRelationInput
   }
 
   export type FightArchiveWhereUniqueInput = Prisma.AtLeast<{
@@ -62104,10 +62326,16 @@ export namespace Prisma {
     result?: BoolFilter<"FightArchive"> | boolean
     playerId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentStep?: IntFilter<"FightArchive"> | number
+    slot?: IntFilter<"FightArchive"> | number
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
+    tournamentTeamLeftId?: UuidNullableFilter<"FightArchive"> | string | null
+    tournamentTeamRightId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
+    metadata?: StringNullableFilter<"FightArchive"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
+    tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
+    tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
   }, "id">
 
   export type FightArchiveOrderByWithAggregationInput = {
@@ -62118,8 +62346,12 @@ export namespace Prisma {
     result?: SortOrder
     playerId?: SortOrderInput | SortOrder
     tournamentStep?: SortOrder
+    slot?: SortOrder
     createdDate?: SortOrder
+    tournamentTeamLeftId?: SortOrderInput | SortOrder
+    tournamentTeamRightId?: SortOrderInput | SortOrder
     tournamentId?: SortOrderInput | SortOrder
+    metadata?: SortOrderInput | SortOrder
     _count?: FightArchiveCountOrderByAggregateInput
     _avg?: FightArchiveAvgOrderByAggregateInput
     _max?: FightArchiveMaxOrderByAggregateInput
@@ -62138,8 +62370,12 @@ export namespace Prisma {
     result?: BoolWithAggregatesFilter<"FightArchive"> | boolean
     playerId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     tournamentStep?: IntWithAggregatesFilter<"FightArchive"> | number
+    slot?: IntWithAggregatesFilter<"FightArchive"> | number
     createdDate?: DateTimeWithAggregatesFilter<"FightArchive"> | Date | string
+    tournamentTeamLeftId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
+    tournamentTeamRightId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
+    metadata?: StringNullableWithAggregatesFilter<"FightArchive"> | string | null
   }
 
   export type TournamentWhereInput = {
@@ -62151,6 +62387,8 @@ export namespace Prisma {
     teamSize?: IntFilter<"Tournament"> | number
     teamRace?: StringFilter<"Tournament"> | string
     levelLimit?: IntFilter<"Tournament"> | number
+    cashPrice?: IntFilter<"Tournament"> | number
+    nextRound?: DateTimeFilter<"Tournament"> | Date | string
     participants?: TournamentTeamListRelationFilter
     fights?: FightArchiveListRelationFilter
   }
@@ -62161,6 +62399,8 @@ export namespace Prisma {
     teamSize?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
     participants?: TournamentTeamOrderByRelationAggregateInput
     fights?: FightArchiveOrderByRelationAggregateInput
   }
@@ -62174,6 +62414,8 @@ export namespace Prisma {
     teamSize?: IntFilter<"Tournament"> | number
     teamRace?: StringFilter<"Tournament"> | string
     levelLimit?: IntFilter<"Tournament"> | number
+    cashPrice?: IntFilter<"Tournament"> | number
+    nextRound?: DateTimeFilter<"Tournament"> | Date | string
     participants?: TournamentTeamListRelationFilter
     fights?: FightArchiveListRelationFilter
   }, "id" | "id">
@@ -62184,6 +62426,8 @@ export namespace Prisma {
     teamSize?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
     _count?: TournamentCountOrderByAggregateInput
     _avg?: TournamentAvgOrderByAggregateInput
     _max?: TournamentMaxOrderByAggregateInput
@@ -62200,6 +62444,8 @@ export namespace Prisma {
     teamSize?: IntWithAggregatesFilter<"Tournament"> | number
     teamRace?: StringWithAggregatesFilter<"Tournament"> | string
     levelLimit?: IntWithAggregatesFilter<"Tournament"> | number
+    cashPrice?: IntWithAggregatesFilter<"Tournament"> | number
+    nextRound?: DateTimeWithAggregatesFilter<"Tournament"> | Date | string
   }
 
   export type TournamentTeamWhereInput = {
@@ -62213,6 +62459,8 @@ export namespace Prisma {
     dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
     dinoz?: DinozListRelationFilter
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
+    FightArchiveLeft?: FightArchiveListRelationFilter
+    FightArchiveRight?: FightArchiveListRelationFilter
   }
 
   export type TournamentTeamOrderByWithRelationInput = {
@@ -62223,6 +62471,8 @@ export namespace Prisma {
     dojo?: DojoOrderByWithRelationInput
     dinoz?: DinozOrderByRelationAggregateInput
     Tournament?: TournamentOrderByWithRelationInput
+    FightArchiveLeft?: FightArchiveOrderByRelationAggregateInput
+    FightArchiveRight?: FightArchiveOrderByRelationAggregateInput
   }
 
   export type TournamentTeamWhereUniqueInput = Prisma.AtLeast<{
@@ -62237,6 +62487,8 @@ export namespace Prisma {
     dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
     dinoz?: DinozListRelationFilter
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
+    FightArchiveLeft?: FightArchiveListRelationFilter
+    FightArchiveRight?: FightArchiveListRelationFilter
   }, "id" | "dojoId_tournamentId">
 
   export type TournamentTeamOrderByWithAggregationInput = {
@@ -65184,9 +65436,13 @@ export namespace Prisma {
     seed: string
     result: boolean
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateInput = {
@@ -65197,8 +65453,12 @@ export namespace Prisma {
     result: boolean
     playerId?: string | null
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
     tournamentId?: string | null
+    metadata?: string | null
   }
 
   export type FightArchiveUpdateInput = {
@@ -65208,9 +65468,13 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateInput = {
@@ -65221,8 +65485,12 @@ export namespace Prisma {
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveCreateManyInput = {
@@ -65233,8 +65501,12 @@ export namespace Prisma {
     result: boolean
     playerId?: string | null
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
     tournamentId?: string | null
+    metadata?: string | null
   }
 
   export type FightArchiveUpdateManyMutationInput = {
@@ -65244,7 +65516,9 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveUncheckedUpdateManyInput = {
@@ -65255,8 +65529,12 @@ export namespace Prisma {
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TournamentCreateInput = {
@@ -65265,6 +65543,8 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
     participants?: TournamentTeamCreateNestedManyWithoutTournamentInput
     fights?: FightArchiveCreateNestedManyWithoutTournamentInput
   }
@@ -65275,6 +65555,8 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
     participants?: TournamentTeamUncheckedCreateNestedManyWithoutTournamentInput
     fights?: FightArchiveUncheckedCreateNestedManyWithoutTournamentInput
   }
@@ -65285,6 +65567,8 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     participants?: TournamentTeamUpdateManyWithoutTournamentNestedInput
     fights?: FightArchiveUpdateManyWithoutTournamentNestedInput
   }
@@ -65295,6 +65579,8 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     participants?: TournamentTeamUncheckedUpdateManyWithoutTournamentNestedInput
     fights?: FightArchiveUncheckedUpdateManyWithoutTournamentNestedInput
   }
@@ -65305,6 +65591,8 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
   }
 
   export type TournamentUpdateManyMutationInput = {
@@ -65313,6 +65601,8 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TournamentUncheckedUpdateManyInput = {
@@ -65321,6 +65611,8 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TournamentTeamCreateInput = {
@@ -65330,6 +65622,8 @@ export namespace Prisma {
     dojo?: DojoCreateNestedOneWithoutTournamentTeamInput
     dinoz?: DinozCreateNestedManyWithoutTournamentTeamInput
     Tournament?: TournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamUncheckedCreateInput = {
@@ -65339,6 +65633,8 @@ export namespace Prisma {
     tournamentId?: string | null
     dojo?: DojoUncheckedCreateNestedOneWithoutTournamentTeamInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutTournamentTeamInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamUpdateInput = {
@@ -65348,6 +65644,8 @@ export namespace Prisma {
     dojo?: DojoUpdateOneWithoutTournamentTeamNestedInput
     dinoz?: DinozUpdateManyWithoutTournamentTeamNestedInput
     Tournament?: TournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamUncheckedUpdateInput = {
@@ -65357,6 +65655,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     dojo?: DojoUncheckedUpdateOneWithoutTournamentTeamNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutTournamentTeamNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamCreateManyInput = {
@@ -68138,12 +68438,17 @@ export namespace Prisma {
     result?: SortOrder
     playerId?: SortOrder
     tournamentStep?: SortOrder
+    slot?: SortOrder
     createdDate?: SortOrder
+    tournamentTeamLeftId?: SortOrder
+    tournamentTeamRightId?: SortOrder
     tournamentId?: SortOrder
+    metadata?: SortOrder
   }
 
   export type FightArchiveAvgOrderByAggregateInput = {
     tournamentStep?: SortOrder
+    slot?: SortOrder
   }
 
   export type FightArchiveMaxOrderByAggregateInput = {
@@ -68154,8 +68459,12 @@ export namespace Prisma {
     result?: SortOrder
     playerId?: SortOrder
     tournamentStep?: SortOrder
+    slot?: SortOrder
     createdDate?: SortOrder
+    tournamentTeamLeftId?: SortOrder
+    tournamentTeamRightId?: SortOrder
     tournamentId?: SortOrder
+    metadata?: SortOrder
   }
 
   export type FightArchiveMinOrderByAggregateInput = {
@@ -68166,12 +68475,17 @@ export namespace Prisma {
     result?: SortOrder
     playerId?: SortOrder
     tournamentStep?: SortOrder
+    slot?: SortOrder
     createdDate?: SortOrder
+    tournamentTeamLeftId?: SortOrder
+    tournamentTeamRightId?: SortOrder
     tournamentId?: SortOrder
+    metadata?: SortOrder
   }
 
   export type FightArchiveSumOrderByAggregateInput = {
     tournamentStep?: SortOrder
+    slot?: SortOrder
   }
 
   export type TournamentCountOrderByAggregateInput = {
@@ -68180,11 +68494,14 @@ export namespace Prisma {
     teamSize?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
   }
 
   export type TournamentAvgOrderByAggregateInput = {
     teamSize?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
   }
 
   export type TournamentMaxOrderByAggregateInput = {
@@ -68193,6 +68510,8 @@ export namespace Prisma {
     teamSize?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
   }
 
   export type TournamentMinOrderByAggregateInput = {
@@ -68201,11 +68520,14 @@ export namespace Prisma {
     teamSize?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
   }
 
   export type TournamentSumOrderByAggregateInput = {
     teamSize?: SortOrder
     levelLimit?: SortOrder
+    cashPrice?: SortOrder
   }
 
   export type TournamentTeamDojoIdTournamentIdCompoundUniqueInput = {
@@ -71821,6 +72143,18 @@ export namespace Prisma {
     connect?: TournamentWhereUniqueInput
   }
 
+  export type TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput = {
+    create?: XOR<TournamentTeamCreateWithoutFightArchiveLeftInput, TournamentTeamUncheckedCreateWithoutFightArchiveLeftInput>
+    connectOrCreate?: TournamentTeamCreateOrConnectWithoutFightArchiveLeftInput
+    connect?: TournamentTeamWhereUniqueInput
+  }
+
+  export type TournamentTeamCreateNestedOneWithoutFightArchiveRightInput = {
+    create?: XOR<TournamentTeamCreateWithoutFightArchiveRightInput, TournamentTeamUncheckedCreateWithoutFightArchiveRightInput>
+    connectOrCreate?: TournamentTeamCreateOrConnectWithoutFightArchiveRightInput
+    connect?: TournamentTeamWhereUniqueInput
+  }
+
   export type PlayerUpdateOneWithoutFightArchiveNestedInput = {
     create?: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutFightArchiveInput
@@ -71839,6 +72173,26 @@ export namespace Prisma {
     delete?: TournamentWhereInput | boolean
     connect?: TournamentWhereUniqueInput
     update?: XOR<XOR<TournamentUpdateToOneWithWhereWithoutFightsInput, TournamentUpdateWithoutFightsInput>, TournamentUncheckedUpdateWithoutFightsInput>
+  }
+
+  export type TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput = {
+    create?: XOR<TournamentTeamCreateWithoutFightArchiveLeftInput, TournamentTeamUncheckedCreateWithoutFightArchiveLeftInput>
+    connectOrCreate?: TournamentTeamCreateOrConnectWithoutFightArchiveLeftInput
+    upsert?: TournamentTeamUpsertWithoutFightArchiveLeftInput
+    disconnect?: TournamentTeamWhereInput | boolean
+    delete?: TournamentTeamWhereInput | boolean
+    connect?: TournamentTeamWhereUniqueInput
+    update?: XOR<XOR<TournamentTeamUpdateToOneWithWhereWithoutFightArchiveLeftInput, TournamentTeamUpdateWithoutFightArchiveLeftInput>, TournamentTeamUncheckedUpdateWithoutFightArchiveLeftInput>
+  }
+
+  export type TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput = {
+    create?: XOR<TournamentTeamCreateWithoutFightArchiveRightInput, TournamentTeamUncheckedCreateWithoutFightArchiveRightInput>
+    connectOrCreate?: TournamentTeamCreateOrConnectWithoutFightArchiveRightInput
+    upsert?: TournamentTeamUpsertWithoutFightArchiveRightInput
+    disconnect?: TournamentTeamWhereInput | boolean
+    delete?: TournamentTeamWhereInput | boolean
+    connect?: TournamentTeamWhereUniqueInput
+    update?: XOR<XOR<TournamentTeamUpdateToOneWithWhereWithoutFightArchiveRightInput, TournamentTeamUpdateWithoutFightArchiveRightInput>, TournamentTeamUncheckedUpdateWithoutFightArchiveRightInput>
   }
 
   export type TournamentTeamCreateNestedManyWithoutTournamentInput = {
@@ -71943,6 +72297,20 @@ export namespace Prisma {
     connect?: TournamentWhereUniqueInput
   }
 
+  export type FightArchiveCreateNestedManyWithoutTournamentTeamLeftInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamLeftInput, FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput> | FightArchiveCreateWithoutTournamentTeamLeftInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput | FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamLeftInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveCreateNestedManyWithoutTournamentTeamRightInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamRightInput, FightArchiveUncheckedCreateWithoutTournamentTeamRightInput> | FightArchiveCreateWithoutTournamentTeamRightInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamRightInput | FightArchiveCreateOrConnectWithoutTournamentTeamRightInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamRightInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
   export type DojoUncheckedCreateNestedOneWithoutTournamentTeamInput = {
     create?: XOR<DojoCreateWithoutTournamentTeamInput, DojoUncheckedCreateWithoutTournamentTeamInput>
     connectOrCreate?: DojoCreateOrConnectWithoutTournamentTeamInput
@@ -71953,6 +72321,20 @@ export namespace Prisma {
     create?: XOR<DinozCreateWithoutTournamentTeamInput, DinozUncheckedCreateWithoutTournamentTeamInput> | DinozCreateWithoutTournamentTeamInput[] | DinozUncheckedCreateWithoutTournamentTeamInput[]
     connectOrCreate?: DinozCreateOrConnectWithoutTournamentTeamInput | DinozCreateOrConnectWithoutTournamentTeamInput[]
     connect?: DinozWhereUniqueInput | DinozWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamLeftInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamLeftInput, FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput> | FightArchiveCreateWithoutTournamentTeamLeftInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput | FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamLeftInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamRightInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamRightInput, FightArchiveUncheckedCreateWithoutTournamentTeamRightInput> | FightArchiveCreateWithoutTournamentTeamRightInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamRightInput | FightArchiveCreateOrConnectWithoutTournamentTeamRightInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamRightInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
   }
 
   export type DojoUpdateOneWithoutTournamentTeamNestedInput = {
@@ -71988,6 +72370,34 @@ export namespace Prisma {
     update?: XOR<XOR<TournamentUpdateToOneWithWhereWithoutParticipantsInput, TournamentUpdateWithoutParticipantsInput>, TournamentUncheckedUpdateWithoutParticipantsInput>
   }
 
+  export type FightArchiveUpdateManyWithoutTournamentTeamLeftNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamLeftInput, FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput> | FightArchiveCreateWithoutTournamentTeamLeftInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput | FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamLeftInput | FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamLeftInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamLeftInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamLeftInput | FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamLeftInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutTournamentTeamLeftInput | FightArchiveUpdateManyWithWhereWithoutTournamentTeamLeftInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUpdateManyWithoutTournamentTeamRightNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamRightInput, FightArchiveUncheckedCreateWithoutTournamentTeamRightInput> | FightArchiveCreateWithoutTournamentTeamRightInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamRightInput | FightArchiveCreateOrConnectWithoutTournamentTeamRightInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamRightInput | FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamRightInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamRightInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput | FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput | FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
   export type DojoUncheckedUpdateOneWithoutTournamentTeamNestedInput = {
     create?: XOR<DojoCreateWithoutTournamentTeamInput, DojoUncheckedCreateWithoutTournamentTeamInput>
     connectOrCreate?: DojoCreateOrConnectWithoutTournamentTeamInput
@@ -72009,6 +72419,34 @@ export namespace Prisma {
     update?: DinozUpdateWithWhereUniqueWithoutTournamentTeamInput | DinozUpdateWithWhereUniqueWithoutTournamentTeamInput[]
     updateMany?: DinozUpdateManyWithWhereWithoutTournamentTeamInput | DinozUpdateManyWithWhereWithoutTournamentTeamInput[]
     deleteMany?: DinozScalarWhereInput | DinozScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamLeftInput, FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput> | FightArchiveCreateWithoutTournamentTeamLeftInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput | FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamLeftInput | FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamLeftInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamLeftInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamLeftInput | FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamLeftInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutTournamentTeamLeftInput | FightArchiveUpdateManyWithWhereWithoutTournamentTeamLeftInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutTournamentTeamRightInput, FightArchiveUncheckedCreateWithoutTournamentTeamRightInput> | FightArchiveCreateWithoutTournamentTeamRightInput[] | FightArchiveUncheckedCreateWithoutTournamentTeamRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutTournamentTeamRightInput | FightArchiveCreateOrConnectWithoutTournamentTeamRightInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamRightInput | FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamRightInput[]
+    createMany?: FightArchiveCreateManyTournamentTeamRightInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput | FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput | FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -73281,6 +73719,8 @@ export namespace Prisma {
     teamCount?: number
     dojo?: DojoCreateNestedOneWithoutTournamentTeamInput
     Tournament?: TournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamUncheckedCreateWithoutDinozInput = {
@@ -73289,6 +73729,8 @@ export namespace Prisma {
     teamCount?: number
     tournamentId?: string | null
     dojo?: DojoUncheckedCreateNestedOneWithoutTournamentTeamInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamCreateOrConnectWithoutDinozInput = {
@@ -76206,8 +76648,12 @@ export namespace Prisma {
     seed: string
     result: boolean
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    metadata?: string | null
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutPlayerInput = {
@@ -76217,8 +76663,12 @@ export namespace Prisma {
     seed: string
     result: boolean
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
     tournamentId?: string | null
+    metadata?: string | null
   }
 
   export type FightArchiveCreateOrConnectWithoutPlayerInput = {
@@ -76960,8 +77410,12 @@ export namespace Prisma {
     result?: BoolFilter<"FightArchive"> | boolean
     playerId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentStep?: IntFilter<"FightArchive"> | number
+    slot?: IntFilter<"FightArchive"> | number
     createdDate?: DateTimeFilter<"FightArchive"> | Date | string
+    tournamentTeamLeftId?: UuidNullableFilter<"FightArchive"> | string | null
+    tournamentTeamRightId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
+    metadata?: StringNullableFilter<"FightArchive"> | string | null
   }
 
   export type PlayerCreateWithoutDojoInput = {
@@ -77157,6 +77611,8 @@ export namespace Prisma {
     teamCount?: number
     dinoz?: DinozCreateNestedManyWithoutTournamentTeamInput
     Tournament?: TournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamUncheckedCreateWithoutDojoInput = {
@@ -77165,6 +77621,8 @@ export namespace Prisma {
     teamCount?: number
     tournamentId?: string | null
     dinoz?: DinozUncheckedCreateNestedManyWithoutTournamentTeamInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamCreateOrConnectWithoutDojoInput = {
@@ -77368,6 +77826,8 @@ export namespace Prisma {
     teamCount?: IntFieldUpdateOperationsInput | number
     dinoz?: DinozUpdateManyWithoutTournamentTeamNestedInput
     Tournament?: TournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamUncheckedUpdateWithoutDojoInput = {
@@ -77376,6 +77836,8 @@ export namespace Prisma {
     teamCount?: IntFieldUpdateOperationsInput | number
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     dinoz?: DinozUncheckedUpdateManyWithoutTournamentTeamNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type DojoCreateWithoutTeamInput = {
@@ -86371,6 +86833,8 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
     participants?: TournamentTeamCreateNestedManyWithoutTournamentInput
   }
 
@@ -86380,12 +86844,64 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
     participants?: TournamentTeamUncheckedCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentCreateOrConnectWithoutFightsInput = {
     where: TournamentWhereUniqueInput
     create: XOR<TournamentCreateWithoutFightsInput, TournamentUncheckedCreateWithoutFightsInput>
+  }
+
+  export type TournamentTeamCreateWithoutFightArchiveLeftInput = {
+    id?: string
+    dojoId?: string | null
+    teamCount?: number
+    dojo?: DojoCreateNestedOneWithoutTournamentTeamInput
+    dinoz?: DinozCreateNestedManyWithoutTournamentTeamInput
+    Tournament?: TournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutTournamentTeamRightInput
+  }
+
+  export type TournamentTeamUncheckedCreateWithoutFightArchiveLeftInput = {
+    id?: string
+    dojoId?: string | null
+    teamCount?: number
+    tournamentId?: string | null
+    dojo?: DojoUncheckedCreateNestedOneWithoutTournamentTeamInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutTournamentTeamInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamRightInput
+  }
+
+  export type TournamentTeamCreateOrConnectWithoutFightArchiveLeftInput = {
+    where: TournamentTeamWhereUniqueInput
+    create: XOR<TournamentTeamCreateWithoutFightArchiveLeftInput, TournamentTeamUncheckedCreateWithoutFightArchiveLeftInput>
+  }
+
+  export type TournamentTeamCreateWithoutFightArchiveRightInput = {
+    id?: string
+    dojoId?: string | null
+    teamCount?: number
+    dojo?: DojoCreateNestedOneWithoutTournamentTeamInput
+    dinoz?: DinozCreateNestedManyWithoutTournamentTeamInput
+    Tournament?: TournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutTournamentTeamLeftInput
+  }
+
+  export type TournamentTeamUncheckedCreateWithoutFightArchiveRightInput = {
+    id?: string
+    dojoId?: string | null
+    teamCount?: number
+    tournamentId?: string | null
+    dojo?: DojoUncheckedCreateNestedOneWithoutTournamentTeamInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutTournamentTeamInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamLeftInput
+  }
+
+  export type TournamentTeamCreateOrConnectWithoutFightArchiveRightInput = {
+    where: TournamentTeamWhereUniqueInput
+    create: XOR<TournamentTeamCreateWithoutFightArchiveRightInput, TournamentTeamUncheckedCreateWithoutFightArchiveRightInput>
   }
 
   export type PlayerUpsertWithoutFightArchiveInput = {
@@ -86522,6 +87038,8 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     participants?: TournamentTeamUpdateManyWithoutTournamentNestedInput
   }
 
@@ -86531,7 +87049,71 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     participants?: TournamentTeamUncheckedUpdateManyWithoutTournamentNestedInput
+  }
+
+  export type TournamentTeamUpsertWithoutFightArchiveLeftInput = {
+    update: XOR<TournamentTeamUpdateWithoutFightArchiveLeftInput, TournamentTeamUncheckedUpdateWithoutFightArchiveLeftInput>
+    create: XOR<TournamentTeamCreateWithoutFightArchiveLeftInput, TournamentTeamUncheckedCreateWithoutFightArchiveLeftInput>
+    where?: TournamentTeamWhereInput
+  }
+
+  export type TournamentTeamUpdateToOneWithWhereWithoutFightArchiveLeftInput = {
+    where?: TournamentTeamWhereInput
+    data: XOR<TournamentTeamUpdateWithoutFightArchiveLeftInput, TournamentTeamUncheckedUpdateWithoutFightArchiveLeftInput>
+  }
+
+  export type TournamentTeamUpdateWithoutFightArchiveLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: NullableStringFieldUpdateOperationsInput | string | null
+    teamCount?: IntFieldUpdateOperationsInput | number
+    dojo?: DojoUpdateOneWithoutTournamentTeamNestedInput
+    dinoz?: DinozUpdateManyWithoutTournamentTeamNestedInput
+    Tournament?: TournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutTournamentTeamRightNestedInput
+  }
+
+  export type TournamentTeamUncheckedUpdateWithoutFightArchiveLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: NullableStringFieldUpdateOperationsInput | string | null
+    teamCount?: IntFieldUpdateOperationsInput | number
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    dojo?: DojoUncheckedUpdateOneWithoutTournamentTeamNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutTournamentTeamNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightNestedInput
+  }
+
+  export type TournamentTeamUpsertWithoutFightArchiveRightInput = {
+    update: XOR<TournamentTeamUpdateWithoutFightArchiveRightInput, TournamentTeamUncheckedUpdateWithoutFightArchiveRightInput>
+    create: XOR<TournamentTeamCreateWithoutFightArchiveRightInput, TournamentTeamUncheckedCreateWithoutFightArchiveRightInput>
+    where?: TournamentTeamWhereInput
+  }
+
+  export type TournamentTeamUpdateToOneWithWhereWithoutFightArchiveRightInput = {
+    where?: TournamentTeamWhereInput
+    data: XOR<TournamentTeamUpdateWithoutFightArchiveRightInput, TournamentTeamUncheckedUpdateWithoutFightArchiveRightInput>
+  }
+
+  export type TournamentTeamUpdateWithoutFightArchiveRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: NullableStringFieldUpdateOperationsInput | string | null
+    teamCount?: IntFieldUpdateOperationsInput | number
+    dojo?: DojoUpdateOneWithoutTournamentTeamNestedInput
+    dinoz?: DinozUpdateManyWithoutTournamentTeamNestedInput
+    Tournament?: TournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutTournamentTeamLeftNestedInput
+  }
+
+  export type TournamentTeamUncheckedUpdateWithoutFightArchiveRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dojoId?: NullableStringFieldUpdateOperationsInput | string | null
+    teamCount?: IntFieldUpdateOperationsInput | number
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    dojo?: DojoUncheckedUpdateOneWithoutTournamentTeamNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutTournamentTeamNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -86540,6 +87122,8 @@ export namespace Prisma {
     teamCount?: number
     dojo?: DojoCreateNestedOneWithoutTournamentTeamInput
     dinoz?: DinozCreateNestedManyWithoutTournamentTeamInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamUncheckedCreateWithoutTournamentInput = {
@@ -86548,6 +87132,8 @@ export namespace Prisma {
     teamCount?: number
     dojo?: DojoUncheckedCreateNestedOneWithoutTournamentTeamInput
     dinoz?: DinozUncheckedCreateNestedManyWithoutTournamentTeamInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutTournamentTeamRightInput
   }
 
   export type TournamentTeamCreateOrConnectWithoutTournamentInput = {
@@ -86567,8 +87153,12 @@ export namespace Prisma {
     seed: string
     result: boolean
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    metadata?: string | null
     player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentInput = {
@@ -86579,7 +87169,11 @@ export namespace Prisma {
     result: boolean
     playerId?: string | null
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    metadata?: string | null
   }
 
   export type FightArchiveCreateOrConnectWithoutTournamentInput = {
@@ -86755,6 +87349,8 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
     fights?: FightArchiveCreateNestedManyWithoutTournamentInput
   }
 
@@ -86764,12 +87360,94 @@ export namespace Prisma {
     teamSize?: number
     teamRace: string
     levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
     fights?: FightArchiveUncheckedCreateNestedManyWithoutTournamentInput
   }
 
   export type TournamentCreateOrConnectWithoutParticipantsInput = {
     where: TournamentWhereUniqueInput
     create: XOR<TournamentCreateWithoutParticipantsInput, TournamentUncheckedCreateWithoutParticipantsInput>
+  }
+
+  export type FightArchiveCreateWithoutTournamentTeamLeftInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+  }
+
+  export type FightArchiveCreateOrConnectWithoutTournamentTeamLeftInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutTournamentTeamLeftInput, FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput>
+  }
+
+  export type FightArchiveCreateManyTournamentTeamLeftInputEnvelope = {
+    data: FightArchiveCreateManyTournamentTeamLeftInput | FightArchiveCreateManyTournamentTeamLeftInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FightArchiveCreateWithoutTournamentTeamRightInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutTournamentTeamRightInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+  }
+
+  export type FightArchiveCreateOrConnectWithoutTournamentTeamRightInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutTournamentTeamRightInput, FightArchiveUncheckedCreateWithoutTournamentTeamRightInput>
+  }
+
+  export type FightArchiveCreateManyTournamentTeamRightInputEnvelope = {
+    data: FightArchiveCreateManyTournamentTeamRightInput | FightArchiveCreateManyTournamentTeamRightInput[]
+    skipDuplicates?: boolean
   }
 
   export type DojoUpsertWithoutTournamentTeamInput = {
@@ -86840,6 +87518,8 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     fights?: FightArchiveUpdateManyWithoutTournamentNestedInput
   }
 
@@ -86849,7 +87529,41 @@ export namespace Prisma {
     teamSize?: IntFieldUpdateOperationsInput | number
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     fights?: FightArchiveUncheckedUpdateManyWithoutTournamentNestedInput
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamLeftInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutTournamentTeamLeftInput, FightArchiveUncheckedUpdateWithoutTournamentTeamLeftInput>
+    create: XOR<FightArchiveCreateWithoutTournamentTeamLeftInput, FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamLeftInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutTournamentTeamLeftInput, FightArchiveUncheckedUpdateWithoutTournamentTeamLeftInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutTournamentTeamLeftInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftInput>
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutTournamentTeamRightInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutTournamentTeamRightInput, FightArchiveUncheckedUpdateWithoutTournamentTeamRightInput>
+    create: XOR<FightArchiveCreateWithoutTournamentTeamRightInput, FightArchiveUncheckedCreateWithoutTournamentTeamRightInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutTournamentTeamRightInput, FightArchiveUncheckedUpdateWithoutTournamentTeamRightInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightInput>
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -87545,6 +88259,8 @@ export namespace Prisma {
     teamCount?: IntFieldUpdateOperationsInput | number
     dojo?: DojoUpdateOneWithoutTournamentTeamNestedInput
     Tournament?: TournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamUncheckedUpdateWithoutDinozInput = {
@@ -87553,6 +88269,8 @@ export namespace Prisma {
     teamCount?: IntFieldUpdateOperationsInput | number
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     dojo?: DojoUncheckedUpdateOneWithoutTournamentTeamNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamUncheckedUpdateManyWithoutDinozInput = {
@@ -87778,8 +88496,12 @@ export namespace Prisma {
     seed: string
     result: boolean
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
     tournamentId?: string | null
+    metadata?: string | null
   }
 
   export type ClanHistoryUpdateWithoutAuthorInput = {
@@ -88399,8 +89121,12 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutPlayerInput = {
@@ -88410,8 +89136,12 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveUncheckedUpdateManyWithoutPlayerInput = {
@@ -88421,8 +89151,12 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DojoTeamCreateManyDojoInput = {
@@ -88862,7 +89596,11 @@ export namespace Prisma {
     result: boolean
     playerId?: string | null
     tournamentStep?: number
+    slot?: number
     createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    metadata?: string | null
   }
 
   export type TournamentTeamUpdateWithoutTournamentInput = {
@@ -88871,6 +89609,8 @@ export namespace Prisma {
     teamCount?: IntFieldUpdateOperationsInput | number
     dojo?: DojoUpdateOneWithoutTournamentTeamNestedInput
     dinoz?: DinozUpdateManyWithoutTournamentTeamNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamUncheckedUpdateWithoutTournamentInput = {
@@ -88879,6 +89619,8 @@ export namespace Prisma {
     teamCount?: IntFieldUpdateOperationsInput | number
     dojo?: DojoUncheckedUpdateOneWithoutTournamentTeamNestedInput
     dinoz?: DinozUncheckedUpdateManyWithoutTournamentTeamNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightNestedInput
   }
 
   export type TournamentTeamUncheckedUpdateManyWithoutTournamentInput = {
@@ -88894,8 +89636,12 @@ export namespace Prisma {
     seed?: StringFieldUpdateOperationsInput | string
     result?: BoolFieldUpdateOperationsInput | boolean
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
     player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentInput = {
@@ -88906,7 +89652,11 @@ export namespace Prisma {
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveUncheckedUpdateManyWithoutTournamentInput = {
@@ -88917,7 +89667,41 @@ export namespace Prisma {
     result?: BoolFieldUpdateOperationsInput | boolean
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FightArchiveCreateManyTournamentTeamLeftInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+  }
+
+  export type FightArchiveCreateManyTournamentTeamRightInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
   }
 
   export type DinozUpdateWithoutTournamentTeamInput = {
@@ -89040,6 +89824,96 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FightArchiveUpdateWithoutTournamentTeamLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutTournamentTeamLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutTournamentTeamLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FightArchiveUpdateWithoutTournamentTeamRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutTournamentTeamRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

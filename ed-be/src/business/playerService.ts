@@ -98,8 +98,8 @@ export async function getCommonData(req: Request) {
 		await createLog(LogType.PlayerConnected, playerCommonData.id, undefined, playerCommonData.name.toString());
 	}
 
-	const dinoz = playerCommonData.dinoz.map(dinoz => {
-		return toDinozFiche(playerCommonData, dinoz.id);
+	const dinoz = playerCommonData.dinoz.map(d => {
+		return { ...toDinozFiche(playerCommonData, d.id) };
 	});
 	for (const d of dinoz) {
 		d.actions = await getAvailableActions(d, playerCommonData);

@@ -535,8 +535,12 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   result: 'result',
   playerId: 'playerId',
   tournamentStep: 'tournamentStep',
+  slot: 'slot',
   createdDate: 'createdDate',
-  tournamentId: 'tournamentId'
+  tournamentTeamLeftId: 'tournamentTeamLeftId',
+  tournamentTeamRightId: 'tournamentTeamRightId',
+  tournamentId: 'tournamentId',
+  metadata: 'metadata'
 };
 
 exports.Prisma.TournamentScalarFieldEnum = {
@@ -544,7 +548,9 @@ exports.Prisma.TournamentScalarFieldEnum = {
   date: 'date',
   teamSize: 'teamSize',
   teamRace: 'teamRace',
-  levelLimit: 'levelLimit'
+  levelLimit: 'levelLimit',
+  cashPrice: 'cashPrice',
+  nextRound: 'nextRound'
 };
 
 exports.Prisma.TournamentTeamScalarFieldEnum = {

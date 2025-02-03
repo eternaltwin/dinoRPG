@@ -4,10 +4,20 @@
 		<div class="header df">
 			<div class="buttons">
 				<img
+					v-if="tournamentState.phase === TournamentPhase.QUALIFICATION"
 					@click="goToPage('DojoChallenge')"
 					:src="getImgURL('icons', 'act_dojo')"
 					v-tippy="{
 						content: formatContent($t('dojo.accessChallenges')),
+						theme: 'small'
+					}"
+				/>
+				<img
+					v-else
+					@click="goToPage('DojoTournament', tournamentState.id)"
+					:src="getImgURL('icons', 'act_dojo')"
+					v-tippy="{
+						content: formatContent($t('dojo.tournaments')),
 						theme: 'small'
 					}"
 				/>
@@ -35,6 +45,7 @@
 						theme: 'small'
 					}"
 				/>
+
 				<!--			<img
 					@click="goToPage('DojoTeam')"
 					:src="getImgURL('icons', 'act_dojo')"
@@ -69,6 +80,18 @@
 			</div>
 		</div>
 	</div>
+	<DZDisclaimer
+		v-if="tournamentState.schedule"
+		:content="
+			$t(`dojo.${tournamentState.phase}`, {
+				qualificationStart: formatDate(tournamentState.schedule.qualificationStart),
+				qualificationEnd: formatDate(tournamentState.schedule.qualificationEnd),
+				poolsStart: formatDate(tournamentState.schedule.poolsStart),
+				finalsStart: formatDate(tournamentState.schedule.finalsStart),
+				cashPrice: utils.beautifulNumber(tournamentState.cashPrice.toString())
+			})
+		"
+	></DZDisclaimer>
 	<div
 		class="tournament"
 		v-if="myDojo && tournamentInfo && (!myDojo.TournamentTeam || myDojo.TournamentTeam.teamCount === 0)"
@@ -78,6 +101,7 @@
 		></DZDisclaimer>
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
 	</div>
+
 	<RouterView />
 	<!--	<p class="subtitle">{{ $t('dojo.tidInProgress') }}</p>
 	<DZButton @click="goToPage('DojoTournament')">{{ $t('dojo.accessTournament') }}</DZButton>
@@ -87,18 +111,27 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
-import { dinozStore, playerStore } from '../store/index.js';
+import { dinozStore, localStore, playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { DojoBasic } from '@drpg/core/models/dojo/dojoBasic';
 import { DojoService } from '../services/DojoService.js';
-import { errorHandler } from '../utils/index.js';
+import { errorHandler, utils } from '../utils/index.js';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import SelectDinoz from '../components/dojo/SelectDinoz.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
 
 export default defineComponent({
 	name: 'DojoHome',
+	computed: {
+		utils() {
+			return utils;
+		},
+		TournamentPhase() {
+			return TournamentPhase;
+		}
+	},
 	components: {
 		SelectDinoz,
 		DZDisclaimer,
@@ -112,12 +145,14 @@ export default defineComponent({
 			rank: 0,
 			myDinoz: [] as DinozDojoFiche[],
 			dinozStore: dinozStore(),
-			tournamentInfo: {} as { id: string; teamRace: number[]; teamSize: number; levelLimit: number }
+			tournamentInfo: {} as { id: string; teamRace: number[]; teamSize: number; levelLimit: number },
+			tournamentState: {} as TournamentState,
+			localStore: localStore()
 		};
 	},
 	methods: {
-		goToPage(pageName: string) {
-			this.$router.push({ name: pageName });
+		goToPage(pageName: string, params?: string) {
+			this.$router.push({ name: pageName, params: { id: params } });
 		},
 		async composeMyTeam(data) {
 			try {
@@ -132,6 +167,7 @@ export default defineComponent({
 				const response = await DojoService.getMyDojo();
 				this.myDojo = response.dojo;
 				this.rank = response.rank;
+				this.tournamentState = response.tournament;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -141,6 +177,26 @@ export default defineComponent({
 				const worth = Math.round((totalVictory / totalFight) * 100);
 				this.worth = isNaN(worth) ? 0 : worth;
 			}
+		},
+		formatDate(oldDate: Date) {
+			const date = new Date(oldDate.toString());
+			const lang = this.localStore.getLanguage ?? 'fr';
+
+			// Formatter pour la date (jour, mois, année)
+			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
+			const formattedDate = dateFormatter.format(date);
+
+			// Formatter pour l'heure (heure, minute, seconde)
+			const timeFormatter = new Intl.DateTimeFormat(lang, {
+				hour: '2-digit',
+				minute: '2-digit',
+				second: '2-digit',
+				hour12: false
+			});
+			const formattedTime = timeFormatter.format(date);
+
+			// Combinaison date + heure
+			return `${formattedDate}, ${formattedTime}`;
 		}
 	},
 	async mounted() {

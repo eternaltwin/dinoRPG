@@ -1,29 +1,13 @@
 import { prisma } from '../prisma.js';
-import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import { getRandomNumber, shuffle } from '../utils/index.js';
 import { Request } from 'express';
 import { auth, getPlayerDinozInformationForTeam } from '../dao/playerDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
+import { PublicMetada, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 
-export async function handleTournament() {
-	const latestTournament = await prisma.tournament.findFirst({
-		orderBy: {
-			date: 'desc'
-		}
-	});
-	if (!latestTournament) {
-		throw new Error('No tournament found');
-	}
-	// Get selected Dojo and their teams
-	const selectedDojo = await getSelectedDojo(latestTournament.teamSize);
-	const shuffledDojos = shuffle(selectedDojo);
-}
-
-async function getSelectedDojo(teamLimit: number) {
+export async function getSelectedDojo(teamLimit: number, qualified: number) {
 	const topDojos = await prisma.dojo.findMany({
-		take: 64,
+		take: qualified,
 		where: {
 			TournamentTeam: {
 				teamCount: {
@@ -31,13 +15,13 @@ async function getSelectedDojo(teamLimit: number) {
 				}
 			}
 		},
-		include: {
+		select: {
+			tournamentTeamId: true,
 			player: {
 				include: {
 					ranking: true
 				}
-			},
-			TournamentTeam: true
+			}
 		},
 		orderBy: {
 			player: {
@@ -51,43 +35,6 @@ async function getSelectedDojo(teamLimit: number) {
 	return topDojos;
 }
 
-export async function createTournament() {
-	const teamSize = getRandomNumber(1, 6);
-	const teamRace = [] as number[];
-
-	const availableRaces: DinozRace[] = [
-		raceList.WINKS,
-		raceList.SIRAIN,
-		raceList.CASTIVORE,
-		raceList.NUAGOZ,
-		raceList.GORILLOZ,
-		raceList.WANWAN,
-		raceList.PLANAILLE,
-		raceList.MOUEFFE,
-		raceList.PIGMOU
-	];
-
-	while (teamRace.length < 4) {
-		const randomRace = availableRaces[getRandomNumber(0, availableRaces.length)];
-		if (!teamRace.includes(randomRace.raceId)) {
-			teamRace.push(randomRace.raceId);
-		}
-	}
-
-	const levelLimit = getRandomNumber(20, 50);
-
-	return prisma.tournament.create({
-		data: {
-			teamSize: teamSize,
-			teamRace: teamRace.toString(),
-			levelLimit: levelLimit
-		},
-		select: {
-			id: true
-		}
-	});
-}
-
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
 	const teamIds = req.body.team as number[];
@@ -98,16 +45,19 @@ export async function createTournamentTeam(req: Request) {
 		}
 	});
 
+	// This shouldn't happen
 	if (!latestTournament) {
 		throw new Error('No tournament found.');
 	}
 
+	// Check if player select the right number of dinoz
 	if (teamIds.length !== latestTournament.teamSize) {
 		throw new ExpectedError(translate('dojo.wrongDinozInTeam', authed));
 	}
 
 	const playerDinoz = await getPlayerDinozInformationForTeam(authed.id);
 
+	// Check if player possess all the selected dinoz
 	if (!teamIds.every(id => playerDinoz.dinoz.map(d => d.id).includes(id))) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
@@ -116,7 +66,18 @@ export async function createTournamentTeam(req: Request) {
 
 	const authorizedRaces = latestTournament.teamRace.split(',').map(r => parseInt(r)) as number[];
 
+	// Check if dinoz races are authorized for this tournament
 	if (!playerFilteredDinoz.every(d => authorizedRaces.includes(d.raceId))) {
+		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
+	}
+
+	//Check if dinoz are under max level
+	if (playerFilteredDinoz.some(d => d.level > latestTournament.levelLimit)) {
+		throw new ExpectedError(translate('dojo.dinozTooHighLevel', authed));
+	}
+
+	// Check filtered dinoz is equal to asked dinoz
+	if (playerFilteredDinoz.length !== teamIds.length) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
 
@@ -156,4 +117,55 @@ export async function tournamentInfo(req: Request) {
 		}
 	});
 	return latestTournament;
+}
+
+export async function tournamentTargetInfo(req: Request) {
+	const tournamentId = req.params.id as string;
+	const phase = req.params.phase as TournamentPhase;
+	const fights = await prisma.fightArchive.findMany({
+		where: {
+			tournamentId
+		},
+		select: {
+			id: true,
+			tournamentTeamLeft: {
+				select: {
+					dinoz: {
+						take: 1,
+						select: {
+							id: true,
+							display: true,
+							name: true
+						}
+					}
+				}
+			},
+			tournamentTeamRight: {
+				select: {
+					dinoz: {
+						take: 1,
+						select: {
+							id: true,
+							display: true,
+							name: true
+						}
+					}
+				}
+			},
+			metadata: true,
+			result: true
+		}
+	});
+
+	return fights
+		.map(f => {
+			return {
+				id: f.id,
+				tournamentTeamLeft: f.tournamentTeamLeft?.dinoz[0],
+				tournamentTeamRight: f.tournamentTeamRight?.dinoz[0],
+				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+				result: f.result
+			};
+		})
+		.filter(t => t.metadata.phase === phase);
 }

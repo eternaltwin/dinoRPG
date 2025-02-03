@@ -167,11 +167,11 @@ const router = createRouter({
 							name: 'SelectDinoz',
 							component: () => import('../components/dojo/SelectDinoz.vue')
 						},*/
-						/*{
-							path: '/dojo/tournament/:id?',
+						{
+							path: '/dojo/tournament/:id',
 							name: 'DojoTournament',
 							component: () => import('../components/dojo/DojoTournament.vue')
-						},*/
+						},
 						{
 							path: '/dojo/friends/',
 							name: 'ChallengeFriend',

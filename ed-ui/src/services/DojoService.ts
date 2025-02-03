@@ -2,9 +2,10 @@ import { http } from '../utils/index.js';
 import { DojoBasic, myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { DojoFightResume } from '@drpg/core/models/dojo/dojoFightResume';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
+import { PublicTournament, TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
 
 export const DojoService = {
-	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number }> {
+	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState }> {
 		return http()
 			.get(`/dojo/`)
 			.then(res => Promise.resolve(res.data))
@@ -81,6 +82,12 @@ export const DojoService = {
 			.put(`/dojo/tournament/`, {
 				team: team
 			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getTournamentFights(id: string, phase: TournamentPhase): Promise<PublicTournament[]> {
+		return http()
+			.get(`/dojo/tournament/${phase}/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

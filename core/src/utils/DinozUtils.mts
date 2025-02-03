@@ -9,7 +9,8 @@ import {
 	PlayerQuest,
 	type Dinoz,
 	Prisma,
-	Concentration
+	Concentration,
+	TournamentTeam
 } from '@drpg/prisma';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';

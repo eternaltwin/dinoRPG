@@ -14,6 +14,7 @@ import {
 	getDinozForLevelUp,
 	getDinozSkillsLearnableAndUnlockable,
 	getDinozToReincarnate,
+	isDinozInTournament,
 	updateDinoz
 } from '../dao/dinozDao.js';
 import { addSkillToDinoz, removeAllSkillFromDinoz } from '../dao/dinozSkillDao.js';
@@ -36,6 +37,8 @@ import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { checkAnnounce } from '../utils/announcer.js';
 import { PantheonMotif } from '@drpg/prisma';
+import TournamentManager from '../utils/tournamentManager.js';
+import { prisma } from '../prisma.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -52,6 +55,11 @@ export async function getLearnableAndUnlockableSkills(req: Request) {
 	const dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+	}
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
+	if (dinozTournament) {
+		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 	}
 
 	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
@@ -92,6 +100,11 @@ export async function learnSkill(req: Request) {
 	}
 	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+	}
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
+	if (dinozTournament) {
+		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 	}
 
 	if (dinozSkills.canChangeName) {

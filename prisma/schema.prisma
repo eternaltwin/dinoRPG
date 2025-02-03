@@ -633,17 +633,23 @@ model Notification {
 }
 
 model FightArchive {
-  id             String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  fighters       String      @db.Text
-  steps          String      @db.Text
-  seed           String      @db.VarChar(255)
-  result         Boolean     @db.Boolean
-  playerId       String?     @db.Uuid
-  player         Player?     @relation(fields: [playerId], references: [id])
-  tournamentStep Int         @default(0)
-  createdDate    DateTime    @default(now()) @db.Timestamp(6)
-  Tournament     Tournament? @relation(fields: [tournamentId], references: [id])
-  tournamentId   String?     @db.Uuid
+  id                    String          @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fighters              String          @db.Text
+  steps                 String          @db.Text
+  seed                  String          @db.VarChar(255)
+  result                Boolean         @db.Boolean
+  playerId              String?         @db.Uuid
+  player                Player?         @relation(fields: [playerId], references: [id])
+  tournamentStep        Int             @default(0)
+  slot                  Int             @default(0)
+  createdDate           DateTime        @default(now()) @db.Timestamp(6)
+  Tournament            Tournament?     @relation(fields: [tournamentId], references: [id])
+  tournamentTeamLeftId  String?         @db.Uuid
+  tournamentTeamLeft    TournamentTeam? @relation("LeftTeamRelation", fields: [tournamentTeamLeftId], references: [id])
+  tournamentTeamRightId String?         @db.Uuid
+  tournamentTeamRight   TournamentTeam? @relation("RightTeamRelation", fields: [tournamentTeamRightId], references: [id])
+  tournamentId          String?         @db.Uuid
+  metadata              String?         @db.Text
 }
 
 model Tournament {
@@ -654,18 +660,22 @@ model Tournament {
   levelLimit   Int              @default(50)
   participants TournamentTeam[]
   fights       FightArchive[]
+  cashPrice    Int              @default(0)
+  nextRound    DateTime         @default(now())
 
   @@index([id, date])
 }
 
 model TournamentTeam {
-  id           String      @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  dojoId       String?     @db.Uuid
-  dojo         Dojo?
-  dinoz        Dinoz[]
-  teamCount    Int         @default(1)
-  Tournament   Tournament? @relation(fields: [tournamentId], references: [id])
-  tournamentId String?     @db.Uuid
+  id                String         @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  dojoId            String?        @db.Uuid
+  dojo              Dojo?
+  dinoz             Dinoz[]
+  teamCount         Int            @default(1)
+  Tournament        Tournament?    @relation(fields: [tournamentId], references: [id])
+  tournamentId      String?        @db.Uuid
+  FightArchiveLeft  FightArchive[] @relation("LeftTeamRelation")
+  FightArchiveRight FightArchive[] @relation("RightTeamRelation")
 
   @@unique([dojoId, tournamentId])
   @@index([dojoId])

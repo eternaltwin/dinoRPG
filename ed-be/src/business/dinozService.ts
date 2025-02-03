@@ -36,7 +36,16 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission, LogType, DinozStatus, UnavailableReason, DinozSkill } from '@drpg/prisma';
+import {
+	Concentration,
+	Dinoz,
+	DinozMission,
+	LogType,
+	DinozStatus,
+	UnavailableReason,
+	DinozSkill,
+	TournamentTeam
+} from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -57,6 +66,7 @@ import {
 	getFollowingDinoz,
 	getIrmaUsageInfo,
 	getManageData,
+	isDinozInTournament,
 	updateDinoz,
 	updateMultipleDinoz,
 	updateOrderData
@@ -96,6 +106,8 @@ import { updateQuest } from '../dao/questsDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
+import TournamentManager from '../utils/tournamentManager.js';
+import { prisma } from '../prisma.js';
 
 /**
  * @summary Get available action from dinoz
@@ -325,7 +337,11 @@ export async function getAvailableActions(
 	}
 
 	if (canLevelUp(dinoz, gameConfig)) {
-		availableActions.push(actionList[Action.LEVEL_UP]);
+		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+		const dinozTournament = await isDinozInTournament(dinoz.id, tournament?.id);
+		if (!dinozTournament) {
+			availableActions.push(actionList[Action.LEVEL_UP]);
+		}
 	}
 
 	// Market if dinoz is in market

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@drpg/prisma';
 
+export type PismaClientLocal = typeof prisma;
 export const prisma = new PrismaClient({
 	omit: {
 		dinoz: {
@@ -8,3 +9,4 @@ export const prisma = new PrismaClient({
 	}
 	// log: ['query', 'info', 'warn', 'error']
 });
+// export type IngredientName = (typeof IngredientNames)[number];

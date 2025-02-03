@@ -5,6 +5,7 @@ import {
 	getDojoDataForRanking,
 	getDojoFightPreparationRequest,
 	getPlayerDinozInformationForTeam,
+	increaseCashPrice,
 	removeMoney
 } from '../dao/playerDao.js';
 import {
@@ -37,12 +38,14 @@ import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { Dojo } from '@drpg/prisma';
 import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { handleTournament } from './tournamentService.js';
+import TournamentManager from '../utils/tournamentManager.js';
+import { prisma } from '../prisma.js';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
+import { Item } from '@drpg/core/models/item/ItemList';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
-
-	await handleTournament();
 
 	let myDojo = await getMyDojoDao(authed.id);
 
@@ -61,12 +64,19 @@ export async function getDojo(req: Request) {
 
 	const rank = await getPlayerPositionDojoDAO(authed.id);
 
-	return { dojo: myDojo, rank: rank };
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	return { dojo: myDojo, rank: rank, tournament };
 }
 
 export async function createMyTeam(req: Request) {
 	const authed = await auth(req);
 	const teamIds = req.body.team as number[];
+
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError(translate('dojo.qualificationOver', authed));
+	}
 
 	let myDojo = await getMyDojoDao(authed.id);
 
@@ -109,6 +119,7 @@ export async function getMyTeam(req: Request) {
 
 	if (myDojo.DojoOpponents.length > 0 && myDojo.DojoOpponents.every(d => d.achieved) && myDojo.dailyReset < 10) {
 		myDojo.team = await cleanCurrentOpponentTeam(myDojo.id);
+		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
 		myDojo.DojoOpponents = await createOpponentTeam(
 			myDojo.team.map(d => {
 				return {
@@ -232,10 +243,20 @@ export async function fightChallenge(req: Request) {
 	const opponentId = +req.body.opponent;
 
 	const authed = await auth(req);
+
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError(translate('dojo.qualificationOver', authed));
+	}
+
 	const player = await getDojoChallengePreparationRequest(authed.id);
 
 	if (!player.Dojo) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
+	}
+	if (player.money < 200) {
+		throw new ExpectedError(translate('dojo.notEnoughMoney', authed));
 	}
 	const myDinoz = player.Dojo.team.find(d => d.dinozId === myDinozId);
 	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
@@ -277,6 +298,8 @@ export async function fightChallenge(req: Request) {
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) && fightResult.winner;
 
 	const promises = [];
+	promises.push(removeMoney(authed.id, 200));
+	promises.push(increaseCashPrice(tournament.id, 200));
 	promises.push(setFightedTeam(myDinozId, player.Dojo.id));
 	promises.push(setFightedOpponent(opponentId, player.Dojo.id, fightArchive.result));
 
@@ -353,10 +376,19 @@ export async function skipOpponent(req: Request) {
 	const opponentId = +req.body.opponent;
 
 	const authed = await auth(req);
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError(translate('dojo.qualificationOver', authed));
+	}
+
 	const player = await getDojoChallengePreparationRequest(authed.id);
 
 	if (!player.Dojo) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
+	}
+	if (player.money < 200) {
+		throw new ExpectedError(translate('dojo.notEnoughMoney', authed));
 	}
 
 	const opponent = player.Dojo.DojoOpponents.find(d => d.dinozId === opponentId);
@@ -375,6 +407,8 @@ export async function skipOpponent(req: Request) {
 		: victory / ranking.DojoChallengeHistory.length;
 
 	const promises = [];
+	promises.push(removeMoney(authed.id, 200));
+	promises.push(increaseCashPrice(tournament.id, 200));
 	promises.push(setFightedOpponent(opponentId, player.Dojo.id, true));
 	promises.push(
 		archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id)

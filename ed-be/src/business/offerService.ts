@@ -13,7 +13,7 @@ import {
 } from '../dao/offerDao.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { getDinozEquipItemRequest, getDinozPlace, updateDinoz } from '../dao/dinozDao.js';
+import { getDinozEquipItemRequest, getDinozPlace, isDinozInTournament, updateDinoz } from '../dao/dinozDao.js';
 import { decreaseItemQuantity, getPlayerItems, increaseItemQuantity } from '../dao/playerItemDao.js';
 import {
 	decreaseIngredientQuantity,
@@ -34,6 +34,8 @@ import { createLog } from '../dao/logDao.js';
 import gameConfig from '../config/game.config.js';
 import { createNotification } from '../dao/notificationDao.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
+import TournamentManager from '../utils/tournamentManager.js';
+import { prisma } from '../prisma.js';
 
 /**
  * Get the list of current offers
@@ -114,6 +116,12 @@ export async function createOffer(req: Request) {
 		const dinozItems = await getDinozEquipItemRequest(dinozId);
 		if (dinozItems && dinozItems.items.length >= 1) {
 			throw new ExpectedError(translate('equipedItems', authed));
+		}
+
+		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+		const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
+		if (dinozTournament) {
+			throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 		}
 	}
 

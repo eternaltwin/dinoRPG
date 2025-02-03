@@ -1,27 +1,27 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.dojo')" :header="$t(`dojo.tournaments`)" />
-	<ul class="tournament-list">
-		<li v-for="(_, group) in Array(GROUP_COUNT).fill(0)" :key="group" class="group">
-			<a @click="goToPage('DojoTournament', { id: group.toString() })">
+	<ul class="tournament-list" v-if="!displayFinal">
+		<li v-for="(_, group) in pools" :key="group" class="group">
+			<a @click="activeGroup = group">
 				{{ $t('dojo.group', { group: ALPHABET[group] }) }}
 			</a>
 		</li>
 	</ul>
-	<div class="wrapper">
+	<div class="wrapper tournament" v-if="!displayFinal">
 		<div class="header">
-			<DZButton @click="goToPage('DojoTournamentFight')">{{ $t('dojo.seeFinal') }}</DZButton>
+			<DZButton @click="showFinal()">{{ $t('dojo.seeFinal') }}</DZButton>
 		</div>
 		<div class="rounds">
 			<Tippy
 				tag="div"
 				theme="normal"
 				class="dinoz"
-				v-for="dinoz in dinozInFights"
-				:key="dinoz.id"
+				v-for="(dinoz, count) in pools[activeGroup]"
+				:key="`${count}${dinoz.id}`"
 				:class="{ lost: !dinoz.won }"
-				@click="goToPage('DojoTournamentFight', { id: (dinoz.fight || 0).toString() })"
+				@click="goToPage('ShareFight', { archive: dinoz.fight })"
 			>
-				<DinozMini :display="dinoz.display" :width="60" :height="60" class="dinoz-display" />
+				<DinozMini :display="dinoz.display" :width="50" :height="50" :flip="isFlipped(count)" class="dinoz-display" />
 				<span class="name">{{ dinoz.name }}</span>
 				<template #content>
 					<h1>{{ dinoz.name }}</h1>
@@ -30,16 +30,27 @@
 			</Tippy>
 		</div>
 	</div>
-	<DZButton @click="accessTournament">{{ $t('dojo.accessTournament') }}</DZButton>
-	<DZDisclaimer
-		help
-		:content="
-			$t('dojo.nextTournament', {
-				next: NEXT_TOURNAMENT.toLocaleDateString(),
-				qualif: NEXT_TOURNAMENT_QUALIF.toLocaleString()
-			})
-		"
-	/>
+	<div class="wrapper final" v-if="displayFinal">
+		<div class="header final"></div>
+		<div class="rounds">
+			<Tippy
+				tag="div"
+				theme="normal"
+				class="dinoz"
+				v-for="(dinoz, index) in dinozInFights"
+				:key="`${index}${dinoz.id}`"
+				:class="{ lost: !dinoz.won }"
+				@click="goToPage('ShareFight', { archive: dinoz.fight })"
+			>
+				<DinozMini :display="dinoz.display" v-if="dinoz.display" :width="50" :height="50" class="dinoz-display" />
+				<span class="name">{{ dinoz.name }}</span>
+				<template #content>
+					<h1>{{ dinoz.name }}</h1>
+					<p>{{ $t('dojo.seeFight') }}</p>
+				</template>
+			</Tippy>
+		</div>
+	</div>
 	<DZDisclaimer help :content="$t('dojo.tournamentInfo')" />
 </template>
 
@@ -50,217 +61,10 @@ import { playerStore } from '../../store/index.js';
 import DZButton from '../common/DZButton.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DinozMini from '../dinoz/DinozMini.vue';
-
+import { DojoService } from '../../services/DojoService.js';
+import { DisplayedLeader, PublicTournament, TeamLeader, TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { errorHandler } from '../../utils/index.js';
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-// Temp variables until we have a backend structure
-const GROUP_COUNT = 16;
-const NEXT_TOURNAMENT = new Date();
-NEXT_TOURNAMENT.setDate(NEXT_TOURNAMENT.getDate() + 7);
-const NEXT_TOURNAMENT_QUALIF = new Date();
-NEXT_TOURNAMENT_QUALIF.setDate(NEXT_TOURNAMENT_QUALIF.getDate() + 3);
-
-const DINOZ: {
-	id: number;
-	display: string;
-	name: string;
-	fight?: number;
-	won?: boolean;
-}[] = [
-	{
-		id: 1,
-		display: 'E9QU92QJ7Ccxi000',
-		name: 'Kaby'
-	},
-	{
-		id: 2,
-		display: '89xsZY2Pcvqx7000',
-		name: 'chivas 7'
-	},
-	{
-		id: 3,
-		display: '89z53G4MA4oYL000',
-		name: 'siry'
-	},
-	{
-		id: 4,
-		display: '894ur5tfqXgmd010',
-		name: 'Frisquet'
-	},
-	{
-		id: 5,
-		display: '59Er3Lu8gcRIM000',
-		name: 'Rocky'
-	},
-	{
-		id: 6,
-		display: '299Hk1DNPaT37000',
-		name: 'Sharpy'
-	},
-	{
-		id: 7,
-		display: '293hjPJkq7e8s000',
-		name: 'Croky'
-	},
-	{
-		id: 8,
-		display: '59owjLMvX17jM000',
-		name: 'Hardy'
-	},
-	{
-		id: 9,
-		display: '59lEj9mnKAsIJ000',
-		name: 'Holy'
-	},
-	{
-		id: 10,
-		display: '1AmkbhyWEFmyD000',
-		name: 'Picky'
-	},
-	{
-		id: 11,
-		display: 'E97fzDHPL2Ia1000',
-		name: 'Kujaku'
-	},
-	{
-		id: 12,
-		display: '49k6gLRZbi2Ug000',
-		name: 'Castok'
-	},
-	{
-		id: 13,
-		display: '49Y1LoLsgxn2e000',
-		name: 'Casty'
-	},
-	{
-		id: 14,
-		display: '4990u52LJlPPv000',
-		name: 'Cast'
-	},
-	{
-		id: 15,
-		display: '59GnSj5mOyLIj100',
-		name: 'Dropy'
-	},
-	{
-		id: 16,
-		display: 'F9frjga5ugAKa000',
-		name: 'Mahy'
-	}
-];
-const FIGHTS: {
-	id: number;
-	round: number;
-	dinoz1: (typeof DINOZ)[number];
-	dinoz2: (typeof DINOZ)[number];
-	winner?: number;
-}[] = [
-	{
-		id: 1,
-		round: 0,
-		dinoz1: DINOZ[0],
-		dinoz2: DINOZ[1],
-		winner: 2
-	},
-	{
-		id: 2,
-		round: 0,
-		dinoz1: DINOZ[2],
-		dinoz2: DINOZ[3],
-		winner: 3
-	},
-	{
-		id: 5,
-		round: 0,
-		dinoz1: DINOZ[8],
-		dinoz2: DINOZ[9],
-		winner: 9
-	},
-	{
-		id: 6,
-		round: 0,
-		dinoz1: DINOZ[10],
-		dinoz2: DINOZ[11],
-		winner: 12
-	},
-	{
-		id: 3,
-		round: 0,
-		dinoz1: DINOZ[4],
-		dinoz2: DINOZ[5],
-		winner: 5
-	},
-	{
-		id: 4,
-		round: 0,
-		dinoz1: DINOZ[6],
-		dinoz2: DINOZ[7],
-		winner: 7
-	},
-	{
-		id: 7,
-		round: 0,
-		dinoz1: DINOZ[12],
-		dinoz2: DINOZ[13],
-		winner: 13
-	},
-	{
-		id: 8,
-		round: 0,
-		dinoz1: DINOZ[14],
-		dinoz2: DINOZ[15],
-		winner: 16
-	},
-	{
-		id: 9,
-		round: 1,
-		dinoz1: DINOZ[1],
-		dinoz2: DINOZ[2],
-		winner: 3
-	},
-	{
-		id: 11,
-		round: 1,
-		dinoz1: DINOZ[8],
-		dinoz2: DINOZ[11],
-		winner: 12
-	},
-	{
-		id: 10,
-		round: 1,
-		dinoz1: DINOZ[4],
-		dinoz2: DINOZ[6],
-		winner: 7
-	},
-	{
-		id: 12,
-		round: 1,
-		dinoz1: DINOZ[12],
-		dinoz2: DINOZ[15],
-		winner: 16
-	},
-	{
-		id: 13,
-		round: 2,
-		dinoz1: DINOZ[2],
-		dinoz2: DINOZ[11],
-		winner: 12
-	},
-	{
-		id: 14,
-		round: 2,
-		dinoz1: DINOZ[6],
-		dinoz2: DINOZ[15],
-		winner: 7
-	},
-	{
-		id: 15,
-		round: 3,
-		dinoz1: DINOZ[11],
-		dinoz2: DINOZ[6],
-		winner: 12
-	}
-];
 
 export default defineComponent({
 	name: 'DojoTournament',
@@ -273,50 +77,183 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			GROUP_COUNT,
+			GROUP_COUNT: 0 as number,
 			ALPHABET,
-			dinozInFights: [] as (typeof DINOZ)[number][],
-			NEXT_TOURNAMENT,
-			NEXT_TOURNAMENT_QUALIF
+			dinozInFights: [] as DisplayedLeader[],
+			tournament: [] as PublicTournament[],
+			final: [] as PublicTournament[],
+			pools: [] as DisplayedLeader[][],
+			activeGroup: 0,
+			displayFinal: false
 		};
 	},
 	methods: {
 		goToPage(pageName: string, params?: Record<string, string>) {
+			if (!params) return;
 			this.$router.push({
 				name: pageName,
 				params
 			});
+		},
+		async showFinal() {
+			this.displayFinal = true;
+			try {
+				const tournamentId = this.$route.params.id as string;
+				this.final = await DojoService.getTournamentFights(tournamentId, TournamentPhase.FINALS);
+				this.dinozInFights = this.final.reduce((acc, fight) => {
+					const d1 = {
+						...fight.tournamentTeamLeft,
+						fight: fight.id,
+						won: fight.result,
+						round: fight.metadata.round,
+						pool: fight.metadata.poolNumber,
+						matchNumber: fight.metadata.matchNumber
+					};
+					const d2 = {
+						...fight.tournamentTeamRight,
+						fight: fight.id,
+						won: !fight.result,
+						round: fight.metadata.round,
+						pool: fight.metadata.poolNumber,
+						matchNumber: fight.metadata.matchNumber
+					};
+
+					acc.push(d1, d2);
+
+					// Add final winner
+					if (fight.metadata.round === 3) {
+						const winner = fight.result ? d1 : d2;
+						acc.push({ ...winner });
+					}
+
+					return acc;
+				}, [] as DisplayedLeader[]);
+
+				this.dinozInFights.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
+				this.dinozInFights.sort((d1, d2) => d1.round - d2.round);
+				console.log(this.dinozInFights);
+				this.GROUP_COUNT = 0;
+				if (this.dinozInFights[this.dinozInFights.length - 1].round === 4) {
+					const winner1 = this.final[0].result
+						? this.formatDinoz(this.final[0], this.final[0].tournamentTeamLeft)
+						: this.formatDinoz(this.final[0], this.final[0].tournamentTeamRight);
+					const looser1 = this.final[0].result
+						? this.formatDinoz(this.final[0], this.final[0].tournamentTeamRight)
+						: this.formatDinoz(this.final[0], this.final[0].tournamentTeamLeft);
+					const winner2 = this.final[1].result
+						? this.formatDinoz(this.final[1], this.final[1].tournamentTeamLeft)
+						: this.formatDinoz(this.final[1], this.final[1].tournamentTeamRight);
+					const looser2 = this.final[1].result
+						? this.formatDinoz(this.final[1], this.final[1].tournamentTeamRight)
+						: this.formatDinoz(this.final[1], this.final[1].tournamentTeamLeft);
+					this.dinozInFights.push(winner1, winner2, looser1, looser2);
+				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 5) {
+					const winnerWinnerBracket = this.final[2].result
+						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft)
+						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight);
+					const looserWinnerBracket = this.final[2].result
+						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight)
+						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft);
+					const winnerLooserBracket = this.final[3].result
+						? this.formatDinoz(this.final[3], this.final[3].tournamentTeamLeft)
+						: this.formatDinoz(this.final[3], this.final[3].tournamentTeamRight);
+					this.dinozInFights.push(looserWinnerBracket, winnerLooserBracket, {}, winnerWinnerBracket);
+				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 6) {
+					const winnerWinnerBracket = this.final[2].result
+						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft)
+						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight);
+					const winnerLooserBracket = this.final[4].result
+						? this.formatDinoz(this.final[4], this.final[4].tournamentTeamLeft)
+						: this.formatDinoz(this.final[4], this.final[4].tournamentTeamRight);
+					this.dinozInFights.push(winnerLooserBracket, winnerWinnerBracket);
+				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 7) {
+					const winnerWinnerBracket = this.final[5].result
+						? this.formatDinoz(this.final[5], this.final[5].tournamentTeamLeft)
+						: this.formatDinoz(this.final[5], this.final[5].tournamentTeamRight);
+					this.dinozInFights.push(winnerWinnerBracket);
+				}
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		formatDinoz(match: PublicTournament, leader: TeamLeader): DisplayedLeader {
+			return {
+				...leader,
+				fight: match.id,
+				won: true,
+				round: match.metadata.round,
+				pool: match.metadata.poolNumber,
+				matchNumber: match.metadata.matchNumber
+			};
+		},
+		isFlipped(index: number) {
+			if (index < 16) {
+				return Math.floor(index / 4) % 2 === 1;
+			} else if (index < 24) {
+				return Math.floor(index / 2) % 2 === 1;
+			} else {
+				return index % 2 === 1;
+			}
 		},
 		async accessTournament() {
 			// Do nothing for now
 		}
 	},
 	async mounted() {
-		this.dinozInFights = FIGHTS.reduce(
-			(acc, fight) => {
+		const tournamentId = this.$route.params.id as string;
+		try {
+			this.tournament = await DojoService.getTournamentFights(tournamentId, TournamentPhase.POOLS);
+			this.dinozInFights = this.tournament.reduce((acc, fight) => {
 				const d1 = {
-					...fight.dinoz1,
+					...fight.tournamentTeamLeft,
 					fight: fight.id,
-					won: fight.winner === fight.dinoz1.id
+					won: fight.result,
+					round: fight.metadata.round,
+					pool: fight.metadata.poolNumber,
+					matchNumber: fight.metadata.matchNumber
 				};
 				const d2 = {
-					...fight.dinoz2,
+					...fight.tournamentTeamRight,
 					fight: fight.id,
-					won: fight.winner === fight.dinoz2.id
+					won: !fight.result,
+					round: fight.metadata.round,
+					pool: fight.metadata.poolNumber,
+					matchNumber: fight.metadata.matchNumber
 				};
 
 				acc.push(d1, d2);
 
 				// Add final winner
-				if (fight.round === 3) {
-					const winner = fight.winner === fight.dinoz1.id ? d1 : d2;
+				if (fight.metadata.round === 3) {
+					const winner = fight.result ? d1 : d2;
 					acc.push({ ...winner });
 				}
 
 				return acc;
-			},
-			[] as (typeof DINOZ)[number][]
-		);
+			}, [] as DisplayedLeader[]);
+			this.GROUP_COUNT = this.dinozInFights.filter(d => d.round === 0).length / 16;
+			this.pools = Array.from({ length: this.GROUP_COUNT }, () => []);
+			this.dinozInFights.forEach(d => {
+				this.pools[d.pool].push(d);
+			});
+			this.pools.map(p => {
+				p.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
+				p.sort((d1, d2) => d1.round - d2.round);
+			});
+			this.pools.forEach(p => {
+				const currentRound = p[p.length - 1].round;
+				const winners = 16 / Math.pow(2, currentRound);
+				const addedWinners = [] as DisplayedLeader[];
+				for (let i = winners; i >= 1; i--) {
+					if (p[p.length - i].won && p[p.length - i].round < 3) {
+						addedWinners.push({ ...p[p.length - i], won: true });
+					}
+				}
+				p.push(...addedWinners);
+			});
+		} catch (e) {
+			errorHandler.handle(e, this.$toast);
+		}
 	}
 });
 </script>
@@ -352,7 +289,7 @@ export default defineComponent({
 	width: 495px;
 	height: 531px;
 	margin: 10px auto;
-	background-image: url('../../assets/design/dojo_tournament_bg.webp');
+
 	background-repeat: no-repeat;
 
 	.header {
@@ -361,7 +298,9 @@ export default defineComponent({
 		justify-content: center;
 		align-items: center;
 	}
-
+}
+.tournament {
+	background-image: url('../../assets/design/dojo_tournament_bg.webp');
 	.rounds {
 		position: relative;
 		height: 486px;
@@ -374,13 +313,13 @@ export default defineComponent({
 			justify-content: center;
 			align-items: center;
 			flex-direction: column;
-			background-image: url('../../assets/design/dojo_tournament_dinoz_bg.gif');
+			background-image: url('../../assets/design/dojo_dino_available.webp');
 			top: 200px;
 			left: 100px;
 			cursor: pointer;
 
 			&.lost {
-				background-image: url('../../assets/design/dojo_tournament_dinoz_lost_bg.gif');
+				filter: grayscale(100%);
 			}
 
 			.name {
@@ -512,6 +451,90 @@ export default defineComponent({
 			&:nth-child(31) {
 				top: 215px;
 				left: 223px;
+			}
+		}
+	}
+}
+.final {
+	background-image: url('../../assets/design/dojo_final_bg.webp');
+	.rounds {
+		position: relative;
+		height: 486px;
+
+		.dinoz {
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			background-image: url('../../assets/design/dojo_dino_available.webp');
+			top: 200px;
+			left: 100px;
+			cursor: pointer;
+
+			&.lost {
+				filter: grayscale(100%);
+			}
+
+			.name {
+				text-shadow: #000000 0px 0px 5px;
+				color: white;
+				font-size: 10px;
+			}
+
+			&:nth-child(1) {
+				top: 4px;
+				left: 10px;
+			}
+			&:nth-child(2) {
+				top: 64px;
+				left: 10px;
+			}
+			&:nth-child(3) {
+				top: 124px;
+				left: 10px;
+			}
+			&:nth-child(4) {
+				top: 184px;
+				left: 10px;
+			}
+			&:nth-child(5) {
+				top: 39px;
+				left: 81px;
+			}
+			&:nth-child(6) {
+				top: 153px;
+				left: 81px;
+			}
+			&:nth-child(7) {
+				top: 275px;
+				left: 10px;
+			}
+			&:nth-child(8) {
+				top: 335px;
+				left: 10px;
+			}
+			&:nth-child(9) {
+				top: 365px;
+				left: 81px;
+			}
+			&:nth-child(10) {
+				top: 304px;
+				left: 81px;
+			}
+			&:nth-child(11) {
+				top: 335px;
+				left: 175px;
+			}
+			&:nth-child(12) {
+				top: 100px;
+				left: 175px;
+			}
+			&:nth-child(13) {
+				top: 210px;
+				left: 222px;
 			}
 		}
 	}

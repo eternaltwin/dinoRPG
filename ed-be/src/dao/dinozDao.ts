@@ -1,4 +1,4 @@
-import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
+import { Dinoz, LogType, Prisma, TournamentTeam, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -186,6 +186,18 @@ export async function getDinozPlace(dinozId: number) {
 		}
 	});
 	return dinoz;
+}
+
+export async function isDinozInTournament(dinozId: number, tournamentId?: string) {
+	if (!tournamentId) return false;
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			TournamentTeam: { select: { tournamentId: true } }
+		}
+	});
+	return dinoz?.TournamentTeam.some(t => t.tournamentId === tournamentId);
 }
 
 export async function getDinozFicheRequest(dinozId: number, playerId: string) {
