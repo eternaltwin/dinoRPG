@@ -2211,6 +2211,8 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 	fighter.status = fighter.status.filter(s => !statusList.includes(s.type));
 };
 
+export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
+
 const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
@@ -4423,7 +4425,8 @@ const checkAfterDefenseEffects = (
 	// Objet: costume
 	// TODO
 
-	// Statuses: sleep, flames Torche (competence ou briqué), intangible,
+	// Statuses: sleep, flames Torche (competence ou briqué), intangible, ...
+
 	// Torch: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
 		const hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
@@ -4437,8 +4440,8 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Skills:
-	// Accupuncture (through a status): close combat and hit landed
-	if (isCloseCombat && damage > 0 && hasStatus(target, Status.HEALING)) {
+	// Accupuncture (*not* tied to the healing status): close combat and hit landed
+	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.ACUPUNCTURE)) {
 		loseHp(fightData, attacker, 1, LifeEffect.Normal);
 	}
 
@@ -4446,7 +4449,7 @@ const checkAfterDefenseEffects = (
 	if (
 		isCloseCombat &&
 		damage > 0 &&
-		target.skills.find(skill => skill.id === Skill.SANG_ACIDE) &&
+		hasSkill(target, Skill.SANG_ACIDE) &&
 		// 1/2 chance
 		randomBetweenSeeded(fightData.rng, 0, 1) === 0
 	) {
@@ -4471,12 +4474,12 @@ const checkAfterDefenseEffects = (
 	// TODO Bulle (add fx?)
 
 	// Electrocution (Anguilloz)
-	if (isCloseCombat && damage > 0 && target.skills.find(skill => skill.id === Skill.M_ELECTROCUTION)) {
+	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.M_ELECTROCUTION)) {
 		loseHp(fightData, attacker, randomBetweenSeeded(fightData.rng, 1, 3), LifeEffect.Lightning);
 	}
 
 	// Worm (or any absorb?): heal the damage absorbed
-	if (target.absorbed && target.skills.find(skill => skill.id === Skill.M_WORM)) {
+	if (target.absorbed && hasSkill(target, Skill.M_WORM)) {
 		heal(fightData, target, target.absorbed, undefined, LifeEffect.Water);
 	}
 
@@ -4493,7 +4496,7 @@ const checkAfterDefenseEffects = (
 	if (
 		isCloseCombat &&
 		damage > 0 &&
-		target.skills.some(skill => skill.id === Skill.M_CONTAMINATION) &&
+		hasSkill(target, Skill.M_CONTAMINATION) &&
 		// 1/5 chance
 		randomBetweenSeeded(fightData.rng, 0, 4) === 0
 	) {
