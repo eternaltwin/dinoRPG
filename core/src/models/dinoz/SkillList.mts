@@ -4531,7 +4531,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		priority: 8,
-		probability: 15
+		probability: 15,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFF8800,
+			col2: 0x66FF00
+		}
 	},
 	[Skill.DUR_A_CUIRE]: {
 		id: Skill.DUR_A_CUIRE,

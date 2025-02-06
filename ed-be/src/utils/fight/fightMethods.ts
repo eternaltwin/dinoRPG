@@ -3384,32 +3384,20 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		// More race skills
 		case Skill.BIGMAGNON: {
-			// Attack opponent with a classic assault
-			// Note: in MT code it calls directly `attackTarget` but with all descriptors of an assault and with a non-assault specific target
-			const target = getRandomOpponent(fightData, fighter);
+			// Note: The skill has been reworked compared to the MT's code
+			// ---
+			// Original behavior: call "attackTarget" with all descriptors of an assault but without using "attackFrom".
+			// Then remove fly, intangible and stun the target whatever the outcome of the skill (even if it's dodged)
+			// ---
+			// New behavior: use "attackFrom". Does not remove fly and intangible. Stun the target if not a boss.
 
-			// Add moveTo step
-			fightData.steps.push({
-				action: 'moveTo',
-				fid: fighter.id,
-				tid: target.id
-			});
+			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			attackTarget(fightData, fighter, target, true, undefined, Skill.BIGMAGNON);
-
-			// Cancel FLYING and INTANGIBLE
-			removeStatus(fightData, target, Status.FLYING, Status.INTANGIBLE);
-
-			// Add STUNNED if not boss
-			if (target.type !== 'boss') {
-				addStatus(fightData, target, Status.STUNNED, StatusLength.MEDIUM);
+			if (hit && hit.hpLost > 0) {
+				if (hit.target.type !== 'boss') {
+					addStatus(fightData, hit.target, Status.STUNNED, StatusLength.MEDIUM);
+				}
 			}
-
-			// Add moveBack step
-			fightData.steps.push({
-				action: 'moveBack',
-				fid: fighter.id
-			});
 
 			break;
 		}
