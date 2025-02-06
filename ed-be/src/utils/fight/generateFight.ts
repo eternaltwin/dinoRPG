@@ -12,7 +12,7 @@ import {
 } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { randomBetweenSeeded } from './randomBetween.js';
-import { TIME_FACTOR } from './fightConstants.js';
+import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -369,6 +369,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	});
 
 	let turn = 0;
+
+
+	// Order a first time fighters by initiative (random if equal)
+	orderFighters(fightData);
 
 	// Zero the time origin to start from clean origin
 	const firstFighterTime = fightData.fighters[0].time;

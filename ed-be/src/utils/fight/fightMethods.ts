@@ -28,6 +28,7 @@ import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { Item } from '@drpg/core/models/item/ItemList';
 import {
 	ASSAULT_POWER,
+	BASE_ASSAULT_ENERGY_COST,
 	BASE_ENERGY_COST,
 	CYCLE,
 	DEFAULT_MAX_ENERGY,
@@ -39,7 +40,7 @@ import {
 	TIME_BASE,
 	TIME_FACTOR,
 	VOID_ASSAULT_POWER
-} from './fightConstants.js';
+} from '@drpg/core/utils/fightConstants';
 import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,
@@ -352,27 +353,23 @@ export const updateStat = (
 	stats[stat] += value;
 };
 
-export const setEnergy = (fighter: DetailedFighter, new_energy: number) => {
-	let delta = 0;
-	if (new_energy > fighter.maxEnergy) {
-		delta = fighter.maxEnergy - fighter.energy;
+export const setEnergy = (fighter: DetailedFighter, newEnergy: number) => {
+	if (newEnergy > fighter.maxEnergy) {
 		fighter.energy = fighter.maxEnergy;
-	} else if (new_energy < 0) {
-		delta = -fighter.energy;
+	} else if (newEnergy < 0) {
 		fighter.energy = 0;
 	} else {
-		delta = new_energy - fighter.energy;
-		fighter.energy = new_energy;
+		fighter.energy = newEnergy;
 	}
 };
 
-export const setMaxEnergy = (fighter: DetailedFighter, new_max: number) => {
-	if (new_max > MAXIMUM_MAX_ENERGY) {
+export const setMaxEnergy = (fighter: DetailedFighter, newMax: number) => {
+	if (newMax > MAXIMUM_MAX_ENERGY) {
 		fighter.maxEnergy = MAXIMUM_MAX_ENERGY;
-	} else if (new_max < 0) {
+	} else if (newMax < 0) {
 		fighter.maxEnergy = 1;
 	} else {
-		fighter.maxEnergy = new_max;
+		fighter.maxEnergy = newMax;
 	}
 
 	// Don't go below DEFAULT_MAX_ENERGY if fighter has Item.ENCHANTED_STEROID
@@ -3998,7 +3995,7 @@ const attackTarget = (
 	const { attack, defense, elements } = getAttackDefense(attacker, target, power, isAssault);
 
 	let totalDamage = 0;
-	let totalEnergyCost = energyCost;
+	let totalEnergyCost = 0;
 	let evasion = false;
 
 	// TODO: rework multiple attackers (part of whistle rework)
@@ -4123,7 +4120,7 @@ const attackTarget = (
 			removeStatus(fightData, target, Status.INTANGIBLE);
 		}
 
-		// Update the attacker's energy
+		// Update the total energy spent
 		totalEnergyCost += energyCost;
 
 		// Check for after attack effects of the attacker
@@ -4758,7 +4755,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	const attacker = fightData.fighters[0];
 
 	// TODO: rework environment to use a timeout.
-	// TODO: turn counter is used to cancel the environment is the caller has played a lot of turns since it called the env.
+	// TODO: turn counter is currently used to cancel the environment. But it is based on cycles I think. Double check.
 	// Environment
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		// Decrease turns left
@@ -5001,8 +4998,8 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// At this point this is an assault
 	// Fighter attacks opponent
 	launchAssault(fightData, attacker, true);
-	// Remove an extra 4 energy for the assault
-	setEnergy(attacker, attacker.energy - 4);
+	// Remove base energy cost for the assault
+	setEnergy(attacker, attacker.energy - BASE_ASSAULT_ENERGY_COST);
 
 	endTurnChecks(fightData, attacker);
 };

@@ -13,7 +13,7 @@ import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat'
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
 import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
-import { TIME_BASE, TIME_FACTOR } from './fightConstants.js';
+import { TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus, setMaxEnergy } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { MonsterBonus } from './monsterBonuses.js';
@@ -508,6 +508,30 @@ export const initializeMonster = (
 		hasRock: false,
 		hasUsedHypnose: false
 	};
+
+	// Order skills by priority, random if equal
+	fighter.skills.sort((a, b) => {
+		const aPriority = a.priority ?? 0;
+		const bPriority = b.priority ?? 0;
+
+		if (aPriority !== bPriority) {
+			return bPriority - aPriority;
+		}
+
+		return random() > 0.5 ? 1 : -1;
+	});
+
+	// Time
+	let initiative = fighter.stats.special.initiative;
+
+	// Deduct the time from the fighter's initial time
+	fighter.time -= initiative * TIME_FACTOR;
+	// Add a random amount of time between 0 and 10 to randomize the first fighter
+	fighter.time += Math.round(random() * TIME_BASE) * TIME_FACTOR;
+
+	// Energy
+	setMaxEnergy(fighter, fighter.stats.special.energy ?? 100);
+	fighter.energy = fighter.maxEnergy;
 
 	// Handle elements (from highest to lowest)
 	const elements = [

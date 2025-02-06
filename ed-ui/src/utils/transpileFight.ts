@@ -10,7 +10,7 @@ import {
 	StatusEffect,
 	transpiled
 } from '@drpg/core/models/fight/transpiler';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Status } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
@@ -18,6 +18,11 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
+import {
+	BASE_ASSAULT_ENERGY_COST,
+	BASE_ENERGY_COST,
+	ENERGY_RECOVERY_BASE_FACTOR
+} from '@drpg/core/utils/fightConstants';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -72,6 +77,16 @@ export function getSkillEnergy(skillId: number) {
 	const skill = Object.values(skillList).find(skill => skill.id === skillId);
 	if (!skill) return 0;
 	return skill.energy;
+}
+
+export function setFighterEnergy(fighter: FighterRecap, newEnergy: number) {
+	if (newEnergy > fighter.maxEnergy) {
+		fighter.energy = fighter.maxEnergy;
+	} else if (newEnergy < 0) {
+		fighter.energy = 0;
+	} else {
+		fighter.energy = newEnergy;
+	}
 }
 
 export function resolveMonsterName(monster: string, t: TFunction) {
@@ -129,8 +144,18 @@ export function transpileFight(
 	dojo?: boolean
 ) {
 	const history: transpiled[] = [];
+	// Basic tracking of active fighters, this may not cover all cases.
+	const activeFighters: FighterRecap[] = [];
+	// ID of the fighter whose turn it is
+	let currentFighterId = 0;
+	// Assault combo counter of the current fighter
+	let currentFighterCombo = 0;
+	// ID of the fighter countering an assault
+	let counteringFighterId = 0;
+	// Assault combo of the fighter countering
+	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
-	let timelimit: number | undefined;
+	let timeLimit: number | undefined;
 	if (startText) {
 		history.push({
 			action: DinoAction.TEXT,
@@ -142,7 +167,7 @@ export function transpileFight(
 
 		switch (step.action) {
 			case 'timeLimit':
-				timelimit = step.time;
+				timeLimit = step.time;
 				history.push({
 					action: DinoAction.TIMELIMIT,
 					time: step.time
@@ -154,6 +179,7 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fid}`);
 					return;
 				}
+				activeFighters.push(myFighter);
 				history.push({
 					action: DinoAction.ADD,
 					fighter: {
@@ -184,7 +210,7 @@ export function transpileFight(
 				});
 				history.push({
 					action: DinoAction.MAXENERGY,
-					fighters: [{ fid: myFighter.id, maxEnergy: myFighter.maxEnergy }]
+					fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 				});
 				myFighter = undefined;
 				break;
@@ -212,8 +238,6 @@ export function transpileFight(
 					});
 				}
 				break;
-			case 'counter':
-				break;
 			case 'cursed':
 				break;
 			case 'death':
@@ -221,6 +245,7 @@ export function transpileFight(
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
+				activeFighters.filter(f => f.id != step.fighter.id);
 				break;
 			case 'disabledItems':
 				break;
@@ -239,6 +264,7 @@ export function transpileFight(
 					action: DinoAction.ENERGY,
 					fighters: [{ fid: step.fighter.id, energy: step.energy }]
 				});
+				myFighter = undefined;
 				break;
 			case 'hypnotize':
 				break;
@@ -274,6 +300,37 @@ export function transpileFight(
 					lifeFx: hitFx,
 					effect: damageFx
 				});
+
+				myFighter = fighters.find(f => f.id === step.fighter.id);
+				if (!myFighter) {
+					console.warn(`Cannot find fighter ${step.fighter.id}`);
+					return;
+				}
+				if (currentFighterId === myFighter.id && currentFighterCombo === 0) {
+					// First assault of fighter whose turn it is
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ASSAULT_ENERGY_COST - BASE_ENERGY_COST);
+					currentFighterCombo++;
+				} else if (currentFighterId === myFighter.id && currentFighterCombo > 0) {
+					// Subsequent assault combo of fighter whose turn it is
+					// Each combo increases the cost by 1, in other words the combo number
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST - currentFighterCombo);
+					currentFighterCombo++;
+				} else {
+					// It is a counter
+					// Update the ID of the fighter countering and reset the counter combo
+					if (counteringFighterId !== myFighter.id) {
+						counteringFighterId = myFighter.id;
+						counteringFighterCombo = 0;
+					}
+					// Each combo increases the cost by 1, in other words the combo number
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST - counteringFighterCombo);
+					counteringFighterCombo++;
+				}
+				history.push({
+					action: DinoAction.ENERGY,
+					fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+				});
+				myFighter = undefined;
 				break;
 			case 'itemUse':
 				history.push({
@@ -323,32 +380,42 @@ export function transpileFight(
 				break;
 			// TODO: more infrastructure needed to support this otherwise this errors because "fighters" is all fighters, even dead ones
 			case `newTurn`:
+				// Note the ID of the fighter playing a turn and reset the combo and counter stats
+				currentFighterId = step.fighter.id;
+				currentFighterCombo = 0;
+				counteringFighterId = 0;
+				counteringFighterCombo = 0;
 				// Decrement the time bar if a time limit and time bar were set
-				if (timelimit) {
-					timelimit -= step.delta;
+				if (timeLimit) {
+					timeLimit -= step.delta;
 					history.push({
 						action: DinoAction.PAUSE,
 						time: step.delta
 					});
 				}
-				// 	// eslint-disable-next-line no-case-declarations
-				// 	let energyStep = {
-				// 		action: DinoAction.ENERGY,
-				// 		fighters: [] as {
-				// 			fid: number;
-				// 			energy: number;
-				// 		}[]
-				// 	};
-				// 	fighters.forEach(f => {
-				// 			if (f.id !== step.fighter.id) {
-				// 				let newEnergy = Math.round(f.energy + f.energyRecovery * step.delta * 0.5);
-				// 				energyStep.fighters.push({ fid: f.id, energy: newEnergy });
-				// 				console.log(`f: ${f.id}, e: ${newEnergy}`);
-				// 			}
-				// 		}
-				// 	);
-				// 	// Update energy of fighters except the one that is playing a new turn.
-				// 	history.push(energyStep as transpiled);
+				// eslint-disable-next-line no-case-declarations
+				const energyStep = {
+					action: DinoAction.ENERGY,
+					fighters: [] as {
+						fid: number;
+						energy: number;
+					}[]
+				};
+				activeFighters.forEach(activeF => {
+					if (activeF.id !== step.fighter.id) {
+						const myFighter = fighters.find(f => activeF.id === f.id);
+						if (!myFighter) {
+							return;
+						}
+						setFighterEnergy(
+							myFighter,
+							Math.round(myFighter.energy + myFighter.energyRecovery * step.delta * ENERGY_RECOVERY_BASE_FACTOR)
+						);
+						energyStep.fighters.push({ fid: myFighter.id, energy: myFighter.energy });
+					}
+				});
+				// Update energy of fighters except the one that is playing a new turn.
+				history.push(energyStep as transpiled);
 				break;
 			case 'reduceEnergy':
 				break;
@@ -377,12 +444,24 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fid}`);
 					return;
 				}
-				myFighter.energy -= getSkillEnergy(step.skill);
+				// Announce the skill
 				history.push({
 					action: DinoAction.ANNOUNCE,
 					fid: step.fid,
 					message: resolveSkillName(step.skill, t)
 				});
+				// Update the energy
+				setFighterEnergy(myFighter, myFighter.energy - getSkillEnergy(step.skill));
+				history.push({
+					action: DinoAction.ENERGY,
+					fighters: [
+						{
+							fid: step.fid,
+							energy: myFighter.energy
+						}
+					]
+				});
+				myFighter = undefined;
 				break;
 			case 'skillActivate':
 				myFighter = fighters.find(f => f.id === step.fid);
@@ -425,6 +504,13 @@ export function transpileFight(
 							}
 						});
 					}
+					// Remove energy per target hit
+					setFighterEnergy(myFighter, myFighter.energy - step.targets.length * BASE_ENERGY_COST);
+					history.push({
+						action: DinoAction.ENERGY,
+						fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+					});
+					myFighter = undefined;
 				} else {
 					history.push({
 						action: DinoAction.SKILL,
@@ -438,15 +524,10 @@ export function transpileFight(
 						}
 					});
 				}
-				history.push({
-					action: DinoAction.ENERGY,
-					fighters: [
-						{
-							fid: step.fid,
-							energy: myFighter.energy
-						}
-					]
-				});
+				// Black hole and sylphide extract the fighter from the fight so extract it from the list of actives too
+				if (step.skill && (step.skill == Skill.TROU_NOIR || step.skill == Skill.SYLPHIDES)) {
+					activeFighters.filter(f => f.id != step.fid);
+				}
 				myFighter = undefined;
 				break;
 			case 'skillExpire':
