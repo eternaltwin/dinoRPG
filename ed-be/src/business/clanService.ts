@@ -593,22 +593,22 @@ export async function giveClanIngredients(req: Request) {
 		.filter(i => {
 			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
 			if (!givenIngredient) {
-				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donnation.`);
+				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donation.`);
 				throw new ExpectedError('Error');
 			}
 			return i.quantity >= givenIngredient.quantity;
 		})
 		.map(i => {
 			const givenIngredient = ingredients.find(a => a.itemId === i.ingredientId);
-			const ingredientRefence = Object.values(ingredientList).find(a => a.ingredientId === i.ingredientId);
-			if (!givenIngredient || !ingredientRefence) {
-				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donnation.`);
+			const ingredientReference = Object.values(ingredientList).find(a => a.ingredientId === i.ingredientId);
+			if (!givenIngredient || !ingredientReference) {
+				LOGGER.error(`Cannot find ingredient ${i.ingredientId} in database for player ${authed.id} donation.`);
 				throw new ExpectedError('Error');
 			}
 			return {
 				ingredientId: i.ingredientId,
 				quantity: givenIngredient.quantity,
-				gold: i.quantity * ingredientRefence.price
+				gold: givenIngredient.quantity * ingredientReference.price
 			};
 		});
 
