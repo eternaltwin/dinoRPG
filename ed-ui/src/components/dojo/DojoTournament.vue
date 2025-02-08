@@ -128,10 +128,11 @@ export default defineComponent({
 
 					return acc;
 				}, [] as DisplayedLeader[]);
+				this.final.sort((a, b) => a.metadata.matchNumber - b.metadata.matchNumber);
+				this.final.sort((a, b) => a.metadata.round - b.metadata.round);
 
 				this.dinozInFights.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
 				this.dinozInFights.sort((d1, d2) => d1.round - d2.round);
-				console.log(this.dinozInFights);
 				this.GROUP_COUNT = 0;
 				if (this.dinozInFights[this.dinozInFights.length - 1].round === 4) {
 					const winner1 = this.final[0].result

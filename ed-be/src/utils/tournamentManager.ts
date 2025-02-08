@@ -19,7 +19,7 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { addMoney } from '../dao/playerDao.js';
 import { LOGGER } from '../context.js';
-import { scheduleJob } from 'node-schedule';
+import { scheduledJobs, scheduleJob } from 'node-schedule';
 import dayjs from 'dayjs';
 
 class TournamentManager {
@@ -293,21 +293,12 @@ class TournamentManager {
 					select: {
 						tournamentTeamLeft: {
 							select: {
-								dojoId: true,
-								dojo: {
-									select: {
-										player: true
-									}
-								}
+								dojoId: true
 							}
 						},
 						tournamentTeamRight: {
 							select: {
-								dojo: {
-									select: {
-										player: true
-									}
-								}
+								dojoId: true
 							}
 						},
 						metadata: true,
@@ -324,13 +315,13 @@ class TournamentManager {
 		allTournamentParticipants.forEach(match => {
 			if (
 				!match.tournamentTeamLeft ||
-				!match.tournamentTeamLeft.dojo ||
+				!match.tournamentTeamLeft.dojoId ||
 				!match.tournamentTeamRight ||
-				!match.tournamentTeamRight.dojo
+				!match.tournamentTeamRight.dojoId
 			) {
 				throw new Error('Player cannot be rewarded');
 			}
-			ranking.add(match.result ? match.tournamentTeamLeft.dojo.player.id : match.tournamentTeamRight.dojo.player.id);
+			ranking.add(match.result ? match.tournamentTeamLeft.dojoId : match.tournamentTeamRight.dojoId);
 		});
 		// Fill with all looser from first round
 		allTournamentParticipants.forEach(match => {
@@ -338,20 +329,33 @@ class TournamentManager {
 			if (metadata.round === 0) {
 				if (
 					!match.tournamentTeamLeft ||
-					!match.tournamentTeamLeft.dojo ||
+					!match.tournamentTeamLeft.dojoId ||
 					!match.tournamentTeamRight ||
-					!match.tournamentTeamRight.dojo
+					!match.tournamentTeamRight.dojoId
 				) {
 					throw new Error('Player cannot be rewarded');
 				}
-				ranking.add(match.result ? match.tournamentTeamRight.dojo.player.id : match.tournamentTeamLeft.dojo.player.id);
+				ranking.add(match.result ? match.tournamentTeamRight.dojoId : match.tournamentTeamLeft.dojoId);
 			}
 		});
+
+		const players: string[] = [];
+		for (const dojo of ranking) {
+			const player = await prisma.dojo.findUnique({
+				where: {
+					id: dojo
+				},
+				select: {
+					playerId: true
+				}
+			});
+			if (player) players.push(player.playerId);
+		}
 
 		let index = 1;
 
 		const promises = [];
-		for (const playerId of ranking) {
+		for (const playerId of players) {
 			if (index === 1) {
 				//Zen medal
 				promises.push(
@@ -526,12 +530,20 @@ class TournamentManager {
 		// Vérifier si le tournoi est toujours en cours
 		const currentState = await manager.getCurrentState(prisma);
 		if (currentState.nextScheduledMatch && currentState.round <= 7) {
+			if (currentState.nextScheduledMatch <= new Date()) {
+				await manager.generateNextRound(prisma);
+				return manager;
+			}
 			LOGGER.log(
 				`Reprise du tournoi ${activeTournament.id} à la phase ${currentState.phase}, round ${currentState.round} prévu pour ${currentState.nextScheduledMatch}`
 			);
 			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.generateNextRound(prisma));
 			return manager;
 		} else if (currentState.nextScheduledMatch && currentState.round === 8) {
+			if (currentState.nextScheduledMatch <= new Date()) {
+				await manager.initializeTournament(prisma);
+				return manager;
+			}
 			LOGGER.log(`Création du prochain tournois prévu pour ${currentState.nextScheduledMatch}`);
 			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.initializeTournament(prisma));
 			return manager;
