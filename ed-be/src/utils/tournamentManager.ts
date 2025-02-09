@@ -21,6 +21,12 @@ import { addMoney } from '../dao/playerDao.js';
 import { LOGGER } from '../context.js';
 import { scheduledJobs, scheduleJob } from 'node-schedule';
 import dayjs from 'dayjs';
+import { createNews } from '../dao/newsDao.js';
+import translate, { translateTarget } from './translate.js';
+import 'dayjs/locale/de.js';
+import 'dayjs/locale/fr.js';
+import 'dayjs/locale/es.js';
+import 'dayjs/locale/en.js';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -468,6 +474,50 @@ class TournamentManager {
 			}
 		});
 		this.tournamentId = newTournament.id;
+
+		console.log(translateTarget('dojo.teamSize', 'fr', { nb: teamSize }));
+		const frTrad = {
+			endQualif: dayjs(firstRound).locale('fr').format('ddd DD MMMM mm:hh'),
+			rule1: translateTarget('dojo.teamSize', 'fr', { nb: teamSize }),
+			rule2: translateTarget('dojo.raceLimit', 'fr', {
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
+			})
+		};
+		const esTrad = {
+			endQualif: dayjs(firstRound).locale('es').format('ddd DD MMMM mm:hh'),
+			rule1: translateTarget('dojo.teamSize', 'es', { nb: teamSize }),
+			rule2: translateTarget('dojo.raceLimit', 'es', {
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
+			})
+		};
+		const enTrad = {
+			endQualif: dayjs(firstRound).locale('en').format('ddd DD MMMM mm:hh'),
+			rule1: translateTarget('dojo.teamSize', 'en', { nb: teamSize }),
+			rule2: translateTarget('dojo.raceLimit', 'en', {
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
+			})
+		};
+		const deTrad = {
+			endQualif: dayjs(firstRound).locale('de').format('ddd DD MMMM mm:hh'),
+			rule1: translateTarget('dojo.teamSize', 'de', { nb: teamSize }),
+			rule2: translateTarget('dojo.raceLimit', 'de', {
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
+			})
+		};
+
+		await createNews({
+			title: this.tournamentId,
+			// image: req.file?.buffer,
+			frenchTitle: translateTarget('dojo.newsTitle', 'fr'),
+			englishTitle: translateTarget('dojo.newsTitle', 'en'),
+			spanishTitle: translateTarget('dojo.newsTitle', 'es'),
+			germanTitle: translateTarget('dojo.newsTitle', 'de'),
+			frenchText: translateTarget('dojo.newsCorpus', 'fr', frTrad),
+			englishText: translateTarget('dojo.newsCorpus', 'en', esTrad),
+			spanishText: translateTarget('dojo.newsCorpus', 'es', enTrad),
+			germanText: translateTarget('dojo.newsCorpus', 'de', deTrad)
+		});
+
 		return new TournamentManager(this.tournamentId, new Date());
 	}
 

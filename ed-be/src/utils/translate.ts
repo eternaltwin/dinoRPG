@@ -14,3 +14,7 @@ export function translateAll(key: string, options?: Record<string, unknown>) {
 	return ret;
 }
 export default translate;
+
+export function translateTarget(key: string, lang: Lang, options?: Record<string, unknown>) {
+	return i18next.t(key, { lng: lang, ...options });
+}

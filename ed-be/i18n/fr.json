@@ -49,7 +49,11 @@
 		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
 		"archiveNotFound": "L'archive n'a pas été trouvée",
 		"inexistantOpponent": "Adversaire non trouvé",
-		"notFightedOpponent": "Adversaire déjà vaincu"
+		"notFightedOpponent": "Adversaire déjà vaincu",
+		"teamSize": "Les équipes sont constituées de {{nb}} membres.",
+		"raceLimit": "Les races autorisées à participer sont les{{races}}.",
+		"newsTitle": "Nouveau Tournoi inter Dojo",
+		"newsCorpus": "Un nouveau TiD a commencé !<br/><br/>Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>Les récompenses seront les suivantes:<br/>- Pour le premier, un oeuf de Toufufu rare, une boîtee légendaire et 12% du cash price.<br/>- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.<br/>- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.<br/>- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.<br/>- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.<br/>- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.<br/><br/>Bon tournois à tous ! "
 	},
 	"race": {
 		"1": "Moueffe",
