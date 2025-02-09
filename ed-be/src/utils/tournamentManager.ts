@@ -481,7 +481,7 @@ class TournamentManager {
 				// (12 jours de tournoi + 1 jour de marge)
 				date: {
 					lte: currentDate,
-					gte: new Date(currentDate.getTime() - 13 * 24 * 60 * 60 * 1000)
+					gte: dayjs().subtract(14, 'day').toDate()
 				}
 			},
 			orderBy: {
