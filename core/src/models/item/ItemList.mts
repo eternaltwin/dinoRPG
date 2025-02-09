@@ -3,7 +3,7 @@ import { ElementType } from '../enums/ElementType.mjs';
 import { ItemEffect } from '../enums/ItemEffect.mjs';
 import { ItemType } from '../enums/ItemType.mjs';
 import { ItemFiche } from './ItemFiche.mjs';
-import { boxType } from './boxOpening.mjs';
+import { BoxType } from './boxOpening.mjs';
 
 export enum Item {
 	POTION_IRMA = 1,
@@ -2540,7 +2540,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Common Box
 	[Item.BOX_COMMON]: {
-		name: boxType.COMMON,
+		name: BoxType.COMMON,
 		itemId: 993,
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2557,7 +2557,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Rare Box
 	[Item.BOX_RARE]: {
-		name: boxType.RARE,
+		name: BoxType.RARE,
 		itemId: 994,
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2574,7 +2574,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Epic Box
 	[Item.BOX_EPIC]: {
-		name: boxType.EPIC,
+		name: BoxType.EPIC,
 		itemId: 995,
 		canBeEquipped: false,
 		canBeUsedNow: true,
@@ -2591,7 +2591,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	},
 	// Legendary Box
 	[Item.BOX_LEGENDARY]: {
-		name: boxType.LEGENDARY,
+		name: BoxType.LEGENDARY,
 		itemId: 996,
 		canBeEquipped: false,
 		canBeUsedNow: true,

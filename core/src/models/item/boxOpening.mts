@@ -1,16 +1,17 @@
 import { ItemFiche } from './ItemFiche.mjs';
 
 export interface BoxOpening {
-	boxType: boxType;
-	items: itemProbability[];
+	boxType: BoxType;
+	items: ItemProbability[];
 }
 
-export interface itemProbability {
+export interface ItemProbability {
 	item: ItemFiche;
-	probability: number;
+	odds: number;
+	quantity: number;
 }
 
-export enum boxType {
+export enum BoxType {
 	COMMON = 'BOX_COMMON',
 	RARE = 'BOX_RARE',
 	EPIC = 'BOX_EPIC',

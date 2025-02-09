@@ -445,6 +445,7 @@ async function useSpecialItem(
 			const boxOpened = boxOpening(item);
 			const newItem = dinoz.player.items.find(item => item.itemId === boxOpened.item.itemId);
 			if (!newItem) await insertItem(dinoz.player.id, { itemId: boxOpened.item.itemId, quantity: boxOpened.quantity });
+			// TODO: check for max quantity ?
 			else await increaseItemQuantity(dinoz.player.id, boxOpened.item.itemId, boxOpened.quantity);
 			const wonItem = itemList[boxOpened.item.itemId as Item];
 			return wonItem.name.toLowerCase();

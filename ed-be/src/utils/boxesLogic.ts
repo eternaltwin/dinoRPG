@@ -3,7 +3,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import gameConfig from '../config/game.config.js';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
-import { itemProbability } from '@drpg/core/models/item/itemProbability';
+import { boxProbabilities } from '@drpg/core/models/item/itemProbability';
 import weightedRandom from './fight/weightedRandom.js';
 
 /**
@@ -88,32 +88,13 @@ export function selectBox(completion: number) {
 
 export function boxOpening(box: ItemFiche) {
 	const myBox = Object.values(itemList).find(i => i.itemId === box.itemId);
-	const myProba = itemProbability.find(b => b.boxType === myBox?.name);
+	const myProba = boxProbabilities.find(b => b.boxType === myBox?.name);
 	if (!myProba) {
 		throw new ExpectedError(`Special item ${box.itemId} is not implemented`);
 	}
 
-	const flattenLoto: ItemFiche[] = myProba.items.flatMap(i => {
-		return new Array(i.probability).fill(i.item);
-	});
-	for (let i = flattenLoto.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[flattenLoto[i], flattenLoto[j]] = [flattenLoto[j], flattenLoto[i]];
-	}
+	const totalOdds = myProba.items.reduce((acc, box) => acc + box.odds, 0);
+	const myItem = weightedRandom(myProba.items, totalOdds);
 
-	const myItem = flattenLoto[Math.round(Math.random() * (flattenLoto.length - 1))];
-
-	if (myItem.itemId === Item.COUPONS_TREASURE_HANDLER) {
-		const couponsOdds = [
-			{ quantity: 1, odds: 2 },
-			{ quantity: 2, odds: 3 },
-			{ quantity: 3, odds: 5 },
-			{ quantity: 4, odds: 3 },
-			{ quantity: 5, odds: 3 }
-		];
-		const total = couponsOdds.reduce((acc, item) => acc + item.odds, 0);
-		return { item: itemList[Item.TREASURE_COUPON], quantity: weightedRandom(couponsOdds, total).quantity };
-	}
-
-	return { item: myItem, quantity: 1 };
+	return { item: myItem.item, quantity: myItem.quantity };
 }
