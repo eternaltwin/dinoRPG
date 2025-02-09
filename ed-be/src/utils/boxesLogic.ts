@@ -6,7 +6,14 @@ import { ItemFiche } from '@drpg/core/models/item/ItemFiche';
 import { itemProbability } from '@drpg/core/models/item/itemProbability';
 import weightedRandom from './fight/weightedRandom.js';
 
-export async function calculatePlayerPower(playerId: string) {
+/**
+ * Calculate a player completion, an approximate score of its progress in the game and its content
+ * The completion score depends on the epic rewards of the player, the average level of its active dinoz and
+ * their average mission completion rate.
+ * @param playerId {number} id of the player
+ * @returns Completion score
+ */
+export async function calculatePlayerCompletion(playerId: string) {
 	const boxInfo = await getBoxHandlerInformations(playerId);
 	if (!boxInfo) throw new ExpectedError(`Player doesn't exist`);
 	const dinozCount = boxInfo._count.dinoz;
@@ -51,33 +58,32 @@ export async function calculatePlayerPower(playerId: string) {
 	return completion;
 }
 
+/**
+ * Roll and pick a random box.
+ * Every 10th of completion, an extra roll is made. The roll with the highest tier is returned.
+ * @param completion {number} completion of the player
+ * @returns Box type
+ */
 export function selectBox(completion: number) {
-	const randomBonus = randomNumberWithMedian(0, 20, 6);
-	const fullCompletion = randomBonus + completion;
-	if (fullCompletion < 45) {
-		return itemList[Item.BOX_COMMON];
-	} else if (fullCompletion < 75) {
-		return itemList[Item.BOX_RARE];
-	} else if (fullCompletion < 95) {
-		return itemList[Item.BOX_EPIC];
-	} else {
-		return itemList[Item.BOX_LEGENDARY];
+	const boxOdds = [
+		{ tier: 1, type: Item.BOX_COMMON, odds: 900 },
+		{ tier: 2, type: Item.BOX_RARE, odds: 75 },
+		{ tier: 3, type: Item.BOX_EPIC, odds: 24 },
+		{ tier: 4, type: Item.BOX_LEGENDARY, odds: 1 }
+	];
+	const totalOdds = boxOdds.reduce((acc, box) => acc + box.odds, 0);
+	const maxRolls = Math.floor(completion / 10) + 1;
+	let reward = boxOdds[0]; // Pick common box as initial reward.
+	let currentRoll = 0;
+	while (currentRoll < maxRolls) {
+		currentRoll++;
+		const boxRoll = weightedRandom(boxOdds, totalOdds);
+		// Use the rank to make this ID-agnostic
+		if (boxRoll.tier > reward.tier) {
+			reward = boxRoll;
+		}
 	}
-}
-
-function randomNumberWithMedian(min: number, max: number, median: number): number {
-	// Calcul de la probabilité cumulative pour le médian
-	const medianProb = (median - min) / (max - min);
-
-	// Génération d'un nombre aléatoire entre 0 et 1
-	const random = Math.random();
-
-	// Application de la distribution triangulaire
-	if (random <= medianProb) {
-		return min + Math.sqrt(random * (max - min) * (median - min));
-	} else {
-		return max - Math.sqrt((1 - random) * (max - min) * (max - median));
-	}
+	return itemList[reward.type];
 }
 
 export function boxOpening(box: ItemFiche) {

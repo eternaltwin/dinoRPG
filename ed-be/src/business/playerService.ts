@@ -21,7 +21,7 @@ import {
 	setPlayer
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { calculatePlayerPower } from '../utils/boxesLogic.js';
+import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import { updateCompletion } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -54,7 +54,7 @@ export async function getCommonData(req: Request) {
 		await increaseItemQuantity(authed.id, Item.DAILY_TICKET, 1);
 
 		// Update completion
-		const completion = await calculatePlayerPower(playerCommonData.id);
+		const completion = await calculatePlayerCompletion(playerCommonData.id);
 		try {
 			await updateCompletion(authed.id, completion);
 		} catch (e) {

@@ -4534,8 +4534,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 15,
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFF8800,
-			col2: 0x66FF00
+			col1: 0xff8800,
+			col2: 0x66ff00
 		}
 	},
 	[Skill.DUR_A_CUIRE]: {

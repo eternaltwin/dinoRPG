@@ -21,7 +21,7 @@ export type Condition = {
 	[ConditionEnum.CURRENT_MISSION]?: number;
 	[ConditionEnum.POSSESS_INGREDIENT]?: string;
 	[ConditionEnum.ACTIVE]?: boolean;
-	[ConditionEnum.PLAYER_EPIC]?: string;
+	[ConditionEnum.PLAYER_EPIC]?: number;
 	[ConditionEnum.HOUR]?: number;
 	[ConditionEnum.TAG]?: string;
 	[ConditionEnum.GVAR]?: string;

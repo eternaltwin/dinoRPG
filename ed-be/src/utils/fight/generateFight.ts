@@ -370,7 +370,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	let turn = 0;
 
-
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
 

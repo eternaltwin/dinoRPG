@@ -18,6 +18,7 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 	const SKILL = condition[ConditionEnum.SKILL];
 	const SCENARIO = condition[ConditionEnum.SCENARIO];
 	const POSSESS_OBJECT = condition[ConditionEnum.POSSESS_OBJECT];
+	const PLAYER_EPIC = condition[ConditionEnum.PLAYER_EPIC];
 	const RANDOM = condition[ConditionEnum.RANDOM];
 	const COLLEC = condition[ConditionEnum.COLLEC];
 	const DINOZ_LIFE = condition[ConditionEnum.DINOZ_LIFE];
@@ -82,6 +83,8 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 		result =
 			player.items.some(item => item.itemId === POSSESS_OBJECT) ||
 			player.dinoz.some(dinoz => dinoz.items.some(item => item.itemId === POSSESS_OBJECT));
+	} else if (PLAYER_EPIC) {
+		result = player.rewards.some(reward => reward.rewardId === PLAYER_EPIC);
 	} else if (RANDOM) {
 		const score = Math.floor(Math.random() * RANDOM);
 		const target = 0;
