@@ -24,7 +24,7 @@ import {
 	removeUnlockableSkillsFromDinoz
 } from '../dao/dinozSkillUnlockableDao.js';
 import { effectParser, fromBase62 } from '../utils/index.js';
-import { getMaxXp, getRace, getRandomUpElement, reincarnateDinoz } from '@drpg/core/utils/DinozUtils';
+import { getMaxXp, getRace } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
 import { SkillType } from '@drpg/core/models/enums/SkillType';
@@ -39,6 +39,7 @@ import { checkAnnounce } from '../utils/announcer.js';
 import { PantheonMotif } from '@drpg/prisma';
 import TournamentManager from '../utils/tournamentManager.js';
 import { prisma } from '../prisma.js';
+import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
 
 /**
  * @summary Get all learnables and unlockables skills

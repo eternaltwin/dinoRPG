@@ -4,11 +4,11 @@ import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, Player } from '@drpg/prisma';
+import { actualPlace, possessStatus } from '@drpg/core/utils/DinozUtils';
 import { Request } from 'express';
 import { specialActions } from '../constants/specialActions.js';
 import {

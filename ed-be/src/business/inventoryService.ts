@@ -1,4 +1,23 @@
 import { Request } from 'express';
+import dayjs from 'dayjs';
+import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
+import { DinozItems } from '@drpg/core/models/item/DinozItems';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
+import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { backpackSlot, useRice } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import gameConfig from '../config/game.config.js';
 import { addMoney, auth, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import {
 	createDinoz,
@@ -7,38 +26,19 @@ import {
 	getDinozFicheItemRequest,
 	updateDinoz
 } from '../dao/dinozDao.js';
-import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
-import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
-import { ItemType } from '@drpg/core/models/enums/ItemType';
-import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
-import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { DinozItems } from '@drpg/core/models/item/DinozItems';
-import gameConfig from '../config/game.config.js';
-import { getRandomNumber, getLetter, getRandomLetter } from '../utils/index.js';
-import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.js';
-import { applySkillEffect } from './skillService.js';
-import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { backpackSlot, initializeDinoz, learnNextSphereSkill, useRice } from '@drpg/core/utils/DinozUtils';
-import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
+import { updateQuest } from '../dao/questsDao.js';
+import { setSpecificStat } from '../dao/trackingDao.js';
 import { createLog } from '../dao/logDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
-import { boxOpening } from '../utils/boxesLogic.js';
-import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
-import { raceList } from '@drpg/core/models/dinoz/RaceList';
-import { setSpecificStat } from '../dao/trackingDao.js';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { Scenario } from '@drpg/core/models/enums/Scenario';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import dayjs from 'dayjs';
-import { updateQuest } from '../dao/questsDao.js';
-import { GLOBAL } from '../context.js';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.js';
+import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import translate from '../utils/translate.js';
+import { initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
+import { boxOpening } from '../utils/boxesLogic.js';
+import { getRandomNumber, getLetter, getRandomLetter } from '../utils/index.js';
+import { applySkillEffect } from './skillService.js';
 
 /**
  * @summary Get all items from the inventory of a player
@@ -365,9 +365,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	}
 
 	// Create a new dinoz that belongs to player
-	const dinozCreated = await createDinoz(
-		initializeDinoz(race, authed.id, randomDisplay, authed.id + GLOBAL.config.salt)
-	);
+	const dinozCreated = await createDinoz(initializeDinoz(race, authed.id, randomDisplay));
 
 	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
 		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill

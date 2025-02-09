@@ -1,19 +1,19 @@
+import { Request } from 'express';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Request } from 'express';
-import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js';
-import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
-import { rewarder } from '../utils/rewarder.js';
-import { calculateFightVsMonsters, rewardFight } from './fightService.js';
-import { isAlive } from '@drpg/core/utils/DinozUtils';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { isAlive } from '@drpg/core/utils/DinozUtils';
+import { getDinozFightDataRequest, getDinozNPCRequest } from '../dao/dinozDao.js';
+import { createDinozStep, updateDinozStep } from '../dao/npcDao.js';
 import { auth } from '../dao/playerDao.js';
+import { rewarder } from '../utils/rewarder.js';
 import translate from '../utils/translate.js';
+import { calculateFightVsMonsters, rewardFight } from './fightService.js';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;

@@ -17,14 +17,12 @@ import {
 	canChangeSkillState,
 	canGoToThisPlace,
 	canLevelUp,
-	PlayerForDinozFiche,
 	getFollowableDinoz,
 	getMaxFollowers,
-	getNumberOfGatheringTries,
 	getRace,
-	initializeDinoz,
 	isAlive,
 	knowSkillId,
+	PlayerForDinozFiche,
 	toDinozFiche,
 	toSkillDetails
 } from '@drpg/core/utils/DinozUtils';
@@ -36,16 +34,7 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import {
-	Concentration,
-	Dinoz,
-	DinozMission,
-	LogType,
-	DinozStatus,
-	UnavailableReason,
-	DinozSkill,
-	TournamentTeam
-} from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, LogType, DinozStatus, UnavailableReason, DinozSkill } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -108,6 +97,7 @@ import translate from '../utils/translate.js';
 import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
 import TournamentManager from '../utils/tournamentManager.js';
 import { prisma } from '../prisma.js';
+import { getNumberOfGatheringTries, initializeDinoz } from '../utils/dinoz.js';
 
 /**
  * @summary Get available action from dinoz
