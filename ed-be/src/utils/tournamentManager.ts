@@ -578,7 +578,7 @@ class TournamentManager {
 			}
 		}
 
-		const firstRound = dayjs().add(10, 'days').set('hour', 12).set('minutes', 0).set('second', 0).toDate();
+		const firstRound = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
 				teamSize: teamSize,
