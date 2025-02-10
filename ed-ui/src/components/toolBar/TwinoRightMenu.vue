@@ -196,6 +196,7 @@ import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
@@ -312,11 +313,20 @@ export default defineComponent({
 							default:
 								return;
 							case RewardEnum.EPIC:
-								return ' ' + this.$t(`rewards.name.${rewardList[r.value].name.toLocaleLowerCase()}`);
+								return ' **' + this.$t(`rewards.name.${rewardList[r.value].name.toLocaleLowerCase()}`) + '**';
 							case RewardEnum.ITEM:
-								return ' ' + r.quantity + ' ' + this.$t(`item.name.${itemList[r.value].name.toLocaleLowerCase()}`);
+								return (
+									' ' + r.quantity + ' **' + this.$t(`item.name.${itemList[r.value].name.toLocaleLowerCase()}`) + '**'
+								);
 							case RewardEnum.GOLD:
-								return ' ' + this.$t(`notification.rewardGold`, { quantity: r.value });
+								return ' **' + this.$t(`notification.rewardGold`, { quantity: r.value }) + '**';
+							case RewardEnum.SCENARIO:
+								return (
+									' ' +
+									this.$t(`notification.rewardScenario`, {
+										scenario: ' ' + this.$t(`scenario.${ScenarioDetails[r.value].name.toLocaleLowerCase()}`)
+									})
+								);
 						}
 					});
 					return {

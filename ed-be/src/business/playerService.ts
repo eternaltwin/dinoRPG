@@ -27,7 +27,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { createLog } from '../dao/logDao.js';
-import { LogType, NotificationSeverity, OfferStatus } from '@drpg/prisma';
+import { LogType, OfferStatus } from '@drpg/prisma';
 import sanitizeHtml from 'sanitize-html';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
@@ -35,8 +35,6 @@ import gameConfig from '../config/game.config.js';
 import { getAvailableActions } from './dinozService.js';
 import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { LOGGER } from '../context.js';
-import { createNotification } from '../dao/notificationDao.js';
-import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 
 /**
  * @summary Get data from player on login
@@ -106,9 +104,6 @@ export async function getCommonData(req: Request) {
 	for (const d of dinoz) {
 		d.actions = await getAvailableActions(d, playerCommonData);
 	}
-
-	console.log(tournamentQualifRewards[0].rewards)
-	// await createNotification(authed.id, JSON.stringify(tournamentQualifRewards[0].rewards), NotificationSeverity.reward)
 
 	const commonData: PlayerCommonData = {
 		money: playerCommonData.money,

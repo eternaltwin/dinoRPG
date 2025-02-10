@@ -4768,6 +4768,9 @@
 		"participantsConv": "Participants",
 		"blockSender": "Bloquer l'expéditeur"
 	},
+	"scenario": {
+		"star": "L'être étrange"
+	},
 	"notification": {
 		"reasons": {
 			"customText": "votre description personnalisée",
@@ -4781,6 +4784,7 @@
 		"warning": "Attention vous avez reçu un avertissement concernant {reason}.",
 		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}.",
 		"reward": "Vous avez obtenu{rewards}",
-		"rewardGold": "{quantity} :gold:"
+		"rewardGold": "{quantity} :gold:",
+		"rewardScenario": "Vous avez progressé dans le scénario**{scenario}**."
 	}
 }

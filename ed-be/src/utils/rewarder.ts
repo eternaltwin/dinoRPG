@@ -10,12 +10,14 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Dinoz, DinozStatus, LogType } from '@drpg/prisma';
+import { Dinoz, DinozStatus, LogType, NotificationSeverity } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
 import { createQuest, updateQuest } from '../dao/questsDao.js';
 import { checkAnnounce } from './announcer.js';
 import { PantheonMotif } from '@drpg/prisma';
+import { createNotification } from '../dao/notificationDao.js';
+import { LOGGER } from '../context.js';
 
 export type RewarderPromise = ReturnType<typeof rewarder>
 export async function rewarder(
@@ -64,6 +66,7 @@ export async function rewarder(
 					break;
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
 					break;
 				case RewardEnum.ITEM:
 					const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
@@ -95,6 +98,7 @@ export async function rewarder(
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 					}
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
 					break;
 				case RewardEnum.EPIC:
 					const testRewards = await getPlayerRewardsRequest(playerId);
@@ -108,6 +112,7 @@ export async function rewarder(
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
 					}
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
 					break;
 				case RewardEnum.SCENARIO:
 					if (reward.step === 1) {
@@ -115,12 +120,13 @@ export async function rewarder(
 					} else {
 						await updateQuest(playerId, reward.value, reward.step);
 					}
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
 					break;
 				case RewardEnum.TELEPORT:
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
 					break;
 				default:
-					console.log('Not implemented yet', reward.rewardType);
+					LOGGER.log(`Reward ${reward.rewardType} not yet implemented.`);
 			}
 		}
 	}
