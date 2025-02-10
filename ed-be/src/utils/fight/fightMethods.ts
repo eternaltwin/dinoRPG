@@ -4005,6 +4005,12 @@ const attackTarget = (
 	// }
 	// NOTE: combo counter seems to work weirdly, or may be not
 	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+		// Initialize all variables here to avoid confusion between iterations of the loop
+		let isDodged = false;
+		let isSuperDodged = false;
+		let noDamage = false;
+		let break_intangible = false;
+
 		// Increment the attacker's combo counter
 		// Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
 		// Note: this would prevent infinite counter too...
@@ -4025,13 +4031,11 @@ const attackTarget = (
 		);
 
 		// Check for assault dodge
-		let isDodged = false;
 		if (isAssault && !hasStatus(target, Status.PETRIFIED) && fightData.rng() < target.stats.special.evasion - 1) {
 			isDodged = true;
 		}
 
 		// Check for skill evasion
-		let isSuperDodged = false;
 		if (
 			!isAssault &&
 			!(
@@ -4046,7 +4050,6 @@ const attackTarget = (
 		}
 
 		// Check for special statuses: flying, intangible, dazzled
-		let noDamage = false;
 		// FLYING
 		if (
 			isAssault &&
@@ -4061,7 +4064,6 @@ const attackTarget = (
 		}
 
 		// INTANGIBLE
-		let break_intangible = false;
 		if (hasStatus(target, Status.INTANGIBLE)) {
 			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
 				damage = 1;
@@ -4079,8 +4081,8 @@ const attackTarget = (
 			}
 		}
 
+		evasion = isDodged || isSuperDodged;
 		if (isDodged || isSuperDodged) {
-			evasion = true;
 			updateStat(fightData, target, 'evasions', 1);
 		}
 

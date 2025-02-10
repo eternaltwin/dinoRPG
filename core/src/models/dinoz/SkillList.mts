@@ -4523,7 +4523,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.BIGMAGNON,
 		name: 'Bigmagnon',
 		type: SkillType.S,
-		energy: Energy.NONE, // TODO confirmer
+		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTree.VANILLA,
