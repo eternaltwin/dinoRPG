@@ -51,7 +51,7 @@
 					@click="launchChallenge()"
 				/>
 
-				<div class="dinozHolder">
+				<div class="dinozHolder right">
 					<DinozWithoutFlash :display="opponent.display" :life="1" />
 					<p class="name">{{ opponent.name }}</p>
 				</div>
@@ -373,7 +373,11 @@ export default defineComponent({
 	background-image: url('../../assets/design/dojo_challenge.webp');
 	background-repeat: no-repeat;
 	height: 64px;
-	width: 530px;
+	max-width: 75%;
+	background-position: center;
+	background-size: contain;
+	padding-left: 50px;
+	padding-right: 50px;
 	align-self: center;
 	display: flex;
 	justify-content: space-around;
@@ -382,19 +386,24 @@ export default defineComponent({
 		align-self: center;
 		max-width: 430px;
 		text-align: center;
+		padding-top: 5px;
+		padding-bottom: 5px;
 	}
 }
 .versus {
 	background-image: url('../../assets/design/dojo_vs.webp');
 	background-repeat: no-repeat;
 	align-self: center;
-	width: 527px;
-	height: 247px;
+	width: 95%;
+	background-position: center;
+	background-size: contain;
+	//height: 247px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-height: 247px;
 	.dinozHolder {
-		width: 190px;
+		width: 36%;
 		display: grid;
 		padding-top: 35px;
 		grid-template-rows: 165px 40px;
@@ -418,6 +427,9 @@ export default defineComponent({
 	}
 	.show {
 		background-image: url('../../assets/icons/combat.webp');
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: cover;
 		cursor: pointer;
 		display: flex;
 		justify-content: center;
@@ -435,6 +447,13 @@ export default defineComponent({
 	}
 	.hidden {
 		filter: opacity(0);
+	}
+}
+@media (max-width: 539px) {
+	.versus .dinozHolder {
+		margin-left: -45px;
+		grid-template-rows: 75% 25%;
+		padding-top: 0;
 	}
 }
 .content {
