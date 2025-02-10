@@ -439,7 +439,7 @@ class TournamentManager {
 			}
 		});
 
-		const teamSize = getRandomNumber(1, 6);
+		const teamSize = getRandomNumber(2, 6);
 		const teamRace = [] as number[];
 		const levelLimit = getRandomNumber(5, 10) * 5;
 
