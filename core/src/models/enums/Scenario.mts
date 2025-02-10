@@ -5,12 +5,12 @@ export enum Scenario {
 }
 
 export type ScenarioType = {
-	id: number,
-	name: string,
-	totalStep: number
-}
+	id: number;
+	name: string;
+	totalStep: number;
+};
 
-export const ScenarioDetails: Readonly<Record<Scenario,ScenarioType>> = {
+export const ScenarioDetails: Readonly<Record<Scenario, ScenarioType>> = {
 	[Scenario.STAR]: {
 		id: Scenario.STAR,
 		name: 'star',
@@ -26,4 +26,4 @@ export const ScenarioDetails: Readonly<Record<Scenario,ScenarioType>> = {
 		name: 'smog',
 		totalStep: 8
 	}
-}
+};

@@ -6,6 +6,7 @@ import {
 	getPlayersDojoRanking,
 	getPlayersSumRanking
 } from '../dao/rankingDao.js';
+import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 
 /**
  * @summary Get all the players from a specified page to display their ranking
@@ -28,7 +29,20 @@ export async function getRanking(req: Request) {
 			playersRanking = await getPlayersCompletionRanking(page);
 			break;
 		case 'dojo':
-			playersRanking = await getPlayersDojoRanking(page);
+			const rank = await getPlayersDojoRanking(page);
+			playersRanking = rank.map(p => {
+				const victory = p.player?.Dojo?.DojoChallengeHistory.filter(h => h.victory).length ?? 0;
+				const totalMatch = p.player?.Dojo?.DojoChallengeHistory.length ?? 0;
+				const worth = Math.round(victory / totalMatch);
+				return {
+					dojo: p.dojo,
+					player: {
+						id: p.player?.id,
+						name: p.player?.name,
+						worth
+					}
+				};
+			});
 			break;
 		default:
 			playersRanking = await getPlayersSumRanking(page);

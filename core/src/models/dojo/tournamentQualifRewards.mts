@@ -84,9 +84,9 @@ export const tournamentQualifRewards: QualifReward[] = [
 			}
 		]
 	}
-]
+];
 
 export type QualifReward = {
 	floor: number;
 	rewards: Rewarder[];
-}
+};

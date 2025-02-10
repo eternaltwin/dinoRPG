@@ -19,7 +19,7 @@ import { PantheonMotif } from '@drpg/prisma';
 import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
 
-export type RewarderPromise = ReturnType<typeof rewarder>
+export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
 	rewards: Rewarder[],
 	team: (Pick<Dinoz, 'id' | 'level'> & {
@@ -66,7 +66,7 @@ export async function rewarder(
 					break;
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
 					break;
 				case RewardEnum.ITEM:
 					const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
@@ -98,7 +98,7 @@ export async function rewarder(
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 					}
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
 					break;
 				case RewardEnum.EPIC:
 					const testRewards = await getPlayerRewardsRequest(playerId);
@@ -112,7 +112,7 @@ export async function rewarder(
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
 					}
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
 					break;
 				case RewardEnum.SCENARIO:
 					if (reward.step === 1) {
@@ -120,7 +120,7 @@ export async function rewarder(
 					} else {
 						await updateQuest(playerId, reward.value, reward.step);
 					}
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward)
+					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
 					break;
 				case RewardEnum.TELEPORT:
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });

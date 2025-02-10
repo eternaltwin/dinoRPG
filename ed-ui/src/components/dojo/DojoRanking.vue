@@ -3,6 +3,7 @@
 		<tr>
 			<th class="pos">{{ $t('ranking.th.pos') }}</th>
 			<th class="player">{{ $t('ranking.th.player') }}</th>
+			<th>{{ $t('dojo.worth') }}</th>
 			<th>Points</th>
 		</tr>
 		<tr
@@ -17,6 +18,7 @@
 				{{ (page - 1) * 20 + (index + 1) }}
 			</td>
 			<td><DZUser :user="ranking.player" :me="ranking.player.id === me" :friend="false" /></td>
+			<td>{{ Math.trunc(ranking.player.worth * 10000) / 100 }}%</td>
 			<td>{{ ranking.dojo }}</td>
 		</tr>
 	</DZTable>

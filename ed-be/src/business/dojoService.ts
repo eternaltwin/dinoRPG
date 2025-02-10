@@ -106,8 +106,6 @@ export async function createMyTeam(req: Request) {
 	const newChallenge = generateRandomChallenge();
 	await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
 
-
-
 	const dojo: myTeam = await createMyTeamDao(teamIds, myDojo.id);
 
 	return dojo;

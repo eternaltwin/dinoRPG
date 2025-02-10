@@ -62,7 +62,12 @@ export async function getPlayersDojoRanking(page: number) {
 			player: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					Dojo: {
+						select: {
+							DojoChallengeHistory: true
+						}
+					}
 				}
 			}
 		},

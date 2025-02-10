@@ -382,26 +382,32 @@ class TournamentManager {
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.12)));
 				//Notification
-				promises.push(createNotification(playerId, JSON.stringify([
-					{
-						rewardType: RewardEnum.EPIC,
-						value: Reward.TID1
-					},
-					{
-						rewardType: RewardEnum.GOLD,
-						value: Math.floor(tournament.cashPrice * 0.12)
-					},
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TOUFUFU_BABY_RARE,
-						quantity: 1
-					},
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.BOX_LEGENDARY,
-						quantity: 1
-					}
-				]) , NotificationSeverity.reward))
+				promises.push(
+					createNotification(
+						playerId,
+						JSON.stringify([
+							{
+								rewardType: RewardEnum.EPIC,
+								value: Reward.TID1
+							},
+							{
+								rewardType: RewardEnum.GOLD,
+								value: Math.floor(tournament.cashPrice * 0.12)
+							},
+							{
+								rewardType: RewardEnum.ITEM,
+								value: Item.TOUFUFU_BABY_RARE,
+								quantity: 1
+							},
+							{
+								rewardType: RewardEnum.ITEM,
+								value: Item.BOX_LEGENDARY,
+								quantity: 1
+							}
+						]),
+						NotificationSeverity.reward
+					)
+				);
 			} else if (index <= 4) {
 				// Dinoz egg (rare)
 				promises.push(increaseItemQuantity(playerId, Item.TOUFUFU_BABY, 1));
@@ -410,76 +416,106 @@ class TournamentManager {
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.06)));
 				//Notification
-				promises.push(createNotification(playerId, JSON.stringify([
-					{
-						rewardType: RewardEnum.GOLD,
-						value: Math.floor(tournament.cashPrice * 0.06)
-					},
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TOUFUFU_BABY,
-						quantity: 1
-					},
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.BOX_EPIC,
-						quantity: 1
-					}
-				]) , NotificationSeverity.reward))
+				promises.push(
+					createNotification(
+						playerId,
+						JSON.stringify([
+							{
+								rewardType: RewardEnum.GOLD,
+								value: Math.floor(tournament.cashPrice * 0.06)
+							},
+							{
+								rewardType: RewardEnum.ITEM,
+								value: Item.TOUFUFU_BABY,
+								quantity: 1
+							},
+							{
+								rewardType: RewardEnum.ITEM,
+								value: Item.BOX_EPIC,
+								quantity: 1
+							}
+						]),
+						NotificationSeverity.reward
+					)
+				);
 			} else if (index <= 8) {
 				// Rare box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0375)));
 				//Notification
-				promises.push(createNotification(playerId, JSON.stringify([
-					{
-						rewardType: RewardEnum.GOLD,
-						value: Math.floor(tournament.cashPrice * 0.0375)
-					},
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.BOX_RARE,
-						quantity: 1
-					}
-				]) , NotificationSeverity.reward))
+				promises.push(
+					createNotification(
+						playerId,
+						JSON.stringify([
+							{
+								rewardType: RewardEnum.GOLD,
+								value: Math.floor(tournament.cashPrice * 0.0375)
+							},
+							{
+								rewardType: RewardEnum.ITEM,
+								value: Item.BOX_RARE,
+								quantity: 1
+							}
+						]),
+						NotificationSeverity.reward
+					)
+				);
 			} else if (index <= 16) {
 				// Rare box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.01875)));
 				//Notification
-				promises.push(createNotification(playerId, JSON.stringify([
-					{
-						rewardType: RewardEnum.GOLD,
-						value: Math.floor(tournament.cashPrice * 0.01875)
-					},
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.BOX_RARE,
-						quantity: 1
-					}
-				]) , NotificationSeverity.reward))
+				promises.push(
+					createNotification(
+						playerId,
+						JSON.stringify([
+							{
+								rewardType: RewardEnum.GOLD,
+								value: Math.floor(tournament.cashPrice * 0.01875)
+							},
+							{
+								rewardType: RewardEnum.ITEM,
+								value: Item.BOX_RARE,
+								quantity: 1
+							}
+						]),
+						NotificationSeverity.reward
+					)
+				);
 			} else if (index <= 32) {
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0075)));
 				//Notification
-				promises.push(createNotification(playerId, JSON.stringify([
-					{
-						rewardType: RewardEnum.GOLD,
-						value: Math.floor(tournament.cashPrice * 0.0075)
-					}
-				]) , NotificationSeverity.reward))
+				promises.push(
+					createNotification(
+						playerId,
+						JSON.stringify([
+							{
+								rewardType: RewardEnum.GOLD,
+								value: Math.floor(tournament.cashPrice * 0.0075)
+							}
+						]),
+						NotificationSeverity.reward
+					)
+				);
 			} else {
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0025)));
 				//Notification
-				promises.push(createNotification(playerId, JSON.stringify([
-					{
-						rewardType: RewardEnum.GOLD,
-						value: Math.floor(tournament.cashPrice * 0.0025)
-					}
-				]) , NotificationSeverity.reward))
+				promises.push(
+					createNotification(
+						playerId,
+						JSON.stringify([
+							{
+								rewardType: RewardEnum.GOLD,
+								value: Math.floor(tournament.cashPrice * 0.0025)
+							}
+						]),
+						NotificationSeverity.reward
+					)
+				);
 			}
 			index++;
 		}
@@ -746,7 +782,7 @@ class TournamentManager {
 						select: {
 							teamSize: true
 						}
-					})
+					});
 					// Premier round : on prend les équipes qualifiées
 					const qualifiedTeams = await getSelectedDojo(teamSize.teamSize, this.QUALIFIED_TEAMS);
 					teamsToMatch = qualifiedTeams.map(t => t.tournamentTeamId).filter(t => t !== null);
@@ -974,15 +1010,17 @@ class TournamentManager {
 					}
 				}
 			}
-		})
-		const promises: RewarderPromise[] = []
+		});
+		const promises: RewarderPromise[] = [];
 		tournamentQualifRewards.forEach(floor => {
-			allRewarded.filter(player => player.dojo >= floor.floor).forEach(player => {
-				if (!player.player || !player.player.dinoz || !player.playerId) return
-				promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId))
-			})
-		})
-		await Promise.all(promises)
+			allRewarded
+				.filter(player => player.dojo >= floor.floor)
+				.forEach(player => {
+					if (!player.player || !player.player.dinoz || !player.playerId) return;
+					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId));
+				});
+		});
+		await Promise.all(promises);
 	}
 }
 
