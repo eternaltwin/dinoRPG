@@ -17,6 +17,7 @@ import { createQuest, updateQuest } from '../dao/questsDao.js';
 import { checkAnnounce } from './announcer.js';
 import { PantheonMotif } from '@drpg/prisma';
 
+export type RewarderPromise = ReturnType<typeof rewarder>
 export async function rewarder(
 	rewards: Rewarder[],
 	team: (Pick<Dinoz, 'id' | 'level'> & {

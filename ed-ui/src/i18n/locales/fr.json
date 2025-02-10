@@ -4779,6 +4779,8 @@
 		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
 		"offerWon": "Vous avez gagné l'enchère avec {value} :ticket:",
 		"warning": "Attention vous avez reçu un avertissement concernant {reason}.",
-		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}."
+		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}.",
+		"reward": "Vous avez obtenu{rewards}",
+		"rewardGold": "{quantity} :gold:"
 	}
 }

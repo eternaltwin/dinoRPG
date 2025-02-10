@@ -19,14 +19,19 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { addMoney } from '../dao/playerDao.js';
 import { LOGGER } from '../context.js';
-import { scheduledJobs, scheduleJob } from 'node-schedule';
+import { scheduleJob } from 'node-schedule';
 import dayjs from 'dayjs';
 import { createNews } from '../dao/newsDao.js';
-import translate, { translateTarget } from './translate.js';
+import { translateTarget } from './translate.js';
 import 'dayjs/locale/de.js';
 import 'dayjs/locale/fr.js';
 import 'dayjs/locale/es.js';
 import 'dayjs/locale/en.js';
+import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
+import { rewarder, RewarderPromise } from './rewarder.js';
+import { createNotification } from '../dao/notificationDao.js';
+import { NotificationSeverity } from '@drpg/prisma';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -376,6 +381,23 @@ class TournamentManager {
 				promises.push(increaseItemQuantity(playerId, Item.BOX_LEGENDARY, 1));
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.12)));
+				//Notification
+				promises.push(createNotification(playerId, [
+					{
+						rewardType: RewardEnum.GOLD,
+						value: tournament.cashPrice * 0.12
+					},
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TOUFUFU_BABY_RARE,
+						quantity: 1
+					},
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.BOX_LEGENDARY,
+						quantity: 1
+					}
+				].toString() , NotificationSeverity.reward))
 			} else if (index <= 4) {
 				// Dinoz egg (rare)
 				promises.push(increaseItemQuantity(playerId, Item.TOUFUFU_BABY, 1));
@@ -383,22 +405,77 @@ class TournamentManager {
 				promises.push(increaseItemQuantity(playerId, Item.BOX_EPIC, 1));
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.06)));
+				//Notification
+				promises.push(createNotification(playerId, [
+					{
+						rewardType: RewardEnum.GOLD,
+						value: tournament.cashPrice * 0.06
+					},
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TOUFUFU_BABY,
+						quantity: 1
+					},
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.BOX_EPIC,
+						quantity: 1
+					}
+				].toString() , NotificationSeverity.reward))
 			} else if (index <= 8) {
 				// Rare box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0375)));
+				//Notification
+				promises.push(createNotification(playerId, [
+					{
+						rewardType: RewardEnum.GOLD,
+						value: tournament.cashPrice * 0.0375
+					},
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.BOX_RARE,
+						quantity: 1
+					}
+				].toString() , NotificationSeverity.reward))
 			} else if (index <= 16) {
 				// Rare box
 				promises.push(increaseItemQuantity(playerId, Item.BOX_RARE, 1));
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.01875)));
+				//Notification
+				promises.push(createNotification(playerId, [
+					{
+						rewardType: RewardEnum.GOLD,
+						value: tournament.cashPrice * 0.01875
+					},
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.BOX_RARE,
+						quantity: 1
+					}
+				].toString() , NotificationSeverity.reward))
 			} else if (index <= 32) {
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0075)));
+				//Notification
+				promises.push(createNotification(playerId, [
+					{
+						rewardType: RewardEnum.GOLD,
+						value: tournament.cashPrice * 0.0075
+					}
+				].toString() , NotificationSeverity.reward))
 			} else {
 				// Cash price
 				promises.push(addMoney(playerId, Math.floor(tournament.cashPrice * 0.0025)));
+				//Notification
+				promises.push(createNotification(playerId, [
+					{
+						rewardType: RewardEnum.GOLD,
+						value: tournament.cashPrice * 0.0025
+					}
+				].toString() , NotificationSeverity.reward))
 			}
 			index++;
 		}
@@ -659,8 +736,16 @@ class TournamentManager {
 				let teamsToMatch: string[] = [];
 
 				if (currentState.round === 0) {
+					const teamSize = await prisma.tournament.findUniqueOrThrow({
+						where: {
+							id: this.tournamentId
+						},
+						select: {
+							teamSize: true
+						}
+					})
 					// Premier round : on prend les équipes qualifiées
-					const qualifiedTeams = await getSelectedDojo(2, this.QUALIFIED_TEAMS);
+					const qualifiedTeams = await getSelectedDojo(teamSize.teamSize, this.QUALIFIED_TEAMS);
 					teamsToMatch = qualifiedTeams.map(t => t.tournamentTeamId).filter(t => t !== null);
 				} else {
 					// Rounds suivants : on ne prend que les gagnants du round précédent
@@ -857,6 +942,45 @@ class TournamentManager {
 			`Generated ${matches.length} fights for round ${currentState.round}. Next round is for ${nextPlannedMatch.time}`
 		);
 		scheduleJob(this.tournamentId, nextPlannedMatch.time, () => this.generateNextRound(prisma));
+	}
+
+	async rewardQualification(prisma: PismaClientLocal): Promise<void> {
+		const allRewarded = await prisma.ranking.findMany({
+			where: {
+				dojo: {
+					gte: 750
+				}
+			},
+			select: {
+				playerId: true,
+				dojo: true,
+				player: {
+					select: {
+						dinoz: {
+							take: 1,
+							select: {
+								id: true,
+								level: true,
+								status: {
+									select: {
+										statusId: true
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		})
+		const promises: RewarderPromise[] = []
+		tournamentQualifRewards.forEach(floor => {
+			allRewarded.filter(player => player.dojo >= floor.floor).forEach(player => {
+				if (!player.player || !player.player.dinoz || !player.playerId) return
+				promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId))
+				promises.push(createNotification(player.playerId, JSON.stringify(floor.rewards), NotificationSeverity.reward))
+			})
+		})
+		await Promise.all(promises)
 	}
 }
 

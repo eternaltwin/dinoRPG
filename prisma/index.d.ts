@@ -383,7 +383,8 @@ export const NotificationSeverity: {
   offerWon: 'offerWon',
   offerExpired: 'offerExpired',
   offerEnded: 'offerEnded',
-  ban: 'ban'
+  ban: 'ban',
+  reward: 'reward'
 };
 
 export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]

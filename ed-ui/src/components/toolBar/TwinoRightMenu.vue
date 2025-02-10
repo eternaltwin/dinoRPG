@@ -192,6 +192,10 @@ import LocaleChange from '../utils/LocaleChange.vue';
 import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
 import { NotificationService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
@@ -295,6 +299,29 @@ export default defineComponent({
 							reason: this.$t(`notification.reasons.${messageBan.reason}`),
 							date: this.formatDate(messageBan.banEndDate)
 						}),
+						severity: notification.severity,
+						link: null,
+						date: notification.date
+					};
+				case 'reward':
+					// eslint-disable-next-line no-case-declarations
+					const reward = JSON.parse(notification.message) as Rewarder[];
+					// eslint-disable-next-line no-case-declarations
+					const text = reward.map(r => {
+						switch (r.rewardType) {
+							default:
+								return;
+							case RewardEnum.EPIC:
+								return ' ' + this.$t(`rewards.name.${rewardList[r.value].name.toLocaleLowerCase()}`);
+							case RewardEnum.ITEM:
+								return ' ' + r.quantity + ' ' + this.$t(`item.name.${itemList[r.value].name.toLocaleLowerCase()}`);
+							case RewardEnum.GOLD:
+								return ' ' + this.$t(`notification.rewardGold`, { quantity: r.value });
+						}
+					});
+					return {
+						id: notification.id,
+						message: this.$t(`notification.reward`, { rewards: text.toString() }),
 						severity: notification.severity,
 						link: null,
 						date: notification.date

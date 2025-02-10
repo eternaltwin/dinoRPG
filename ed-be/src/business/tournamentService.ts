@@ -5,6 +5,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { PublicMetada, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 
+export type selectedDojoType = Awaited<ReturnType<typeof getSelectedDojo>>
 export async function getSelectedDojo(teamLimit: number, qualified: number) {
 	const topDojos = await prisma.dojo.findMany({
 		take: qualified,
