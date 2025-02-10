@@ -4,12 +4,13 @@ import { getLogs, getAllLogs, getLogsByDate } from '../business/logService.js';
 import { apiRoutes } from '../constants/index.js';
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
 import sendError from '../utils/sendErrors.js';
+import { checkIsAdmin } from '../utils/index.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.logRoute;
 
-routes.get(`${commonPath}/list/all`, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/list/all`, checkIsAdmin, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -25,6 +26,7 @@ routes.get(`${commonPath}/list/all`, async (req: Request, res: Response) => {
 routes.get(
 	`${commonPath}/list/:page/:type/:playerId/:dinozId`,
 	[param('type').exists(), param('playerId').exists(), param('dinozId').exists(), param('page').isInt({ min: 1 })],
+	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -42,6 +44,7 @@ routes.get(
 routes.get(
 	`${commonPath}/list/:type/:fromDate/:toDate`,
 	[param('type').exists(), param('fromDate').exists(), param('toDate').exists()],
+	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

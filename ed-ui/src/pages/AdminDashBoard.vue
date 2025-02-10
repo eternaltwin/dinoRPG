@@ -69,6 +69,7 @@ import Moderation from '../components/admin/Moderation.vue';
 import Banned from '../components/admin/Banned.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Player } from '@drpg/core/models/player/Player';
+import { playerStore } from '../store/index.js';
 
 interface PlayerSearch {
 	name: string;
@@ -135,6 +136,12 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
+
+		if (!playerStore().isAdmin) {
+			this.$router.push({
+				name: 'News'
+			});
+		}
 		try {
 			await AdminService.getDashBoard();
 			EventBus.emit('isLoading', false);
