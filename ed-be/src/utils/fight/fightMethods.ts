@@ -152,7 +152,7 @@ const chooseRandomOpponentForAssault = (
 
 	// First: find best target based on defense if ANALYSE
 	// Keep only the fighters with the worst defense for the current element of the attacker
-	if (attacker.skills.find(skill => skill.id === Skill.ANALYSE)) {
+	if (hasSkill(attacker, Skill.ANALYSE)) {
 		let worstDefense = Infinity;
 
 		filtered_opponents.forEach(opponent => {
@@ -170,7 +170,7 @@ const chooseRandomOpponentForAssault = (
 
 	// Second: target lowest HP opponent if Skill.SANS_PITIE
 	// Keep only the fighters with the lowest HP
-	if (attacker.skills.find(skill => skill.id === Skill.SANS_PITIE)) {
+	if (hasSkill(attacker, Skill.SANS_PITIE)) {
 		let lowestHp = Infinity;
 
 		filtered_opponents.forEach(opponent => {
@@ -184,7 +184,7 @@ const chooseRandomOpponentForAssault = (
 
 	// Last: same target as before if CONCENTRATION
 	// Focus only on the same target as the previous attacks, if that target still exists in the filtered list
-	if (attacker.skills.find(skill => skill.id === Skill.CONCENTRATION)) {
+	if (hasSkill(attacker, Skill.CONCENTRATION)) {
 		if (attacker.previousTarget) {
 			const target = filtered_opponents.find(opponent => opponent.id === attacker.previousTarget);
 
@@ -2066,7 +2066,7 @@ export const addStatus = (
 	const isBad = BadStatus.includes(status);
 
 	// Negate if SELF_CONTROL
-	if (isBad && fighter.skills.find(skill => skill.id === Skill.SELF_CONTROL)) return false;
+	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
 
 	// Handle the immediate effect of the status
 	switch (status) {
@@ -4228,7 +4228,7 @@ const checkDefensiveEffects = (
 	// FORME VAPOREUSE
 	if (
 		// Opponent has FORME_VAPOREUSE
-		target.skills.find(skill => skill.id === Skill.FORME_VAPOREUSE) &&
+		hasSkill(target, Skill.FORME_VAPOREUSE) &&
 		// 6% chance
 		randomBetweenSeeded(fightData.rng, 0, 99) < 6
 	) {
@@ -4244,7 +4244,7 @@ const checkDefensiveEffects = (
 	// CUIRASSE
 	if (
 		isCloseCombat &&
-		target.skills.find(s => s.id === Skill.CUIRASSE) &&
+		hasSkill(target, Skill.CUIRASSE) &&
 		// 5 % chance
 		randomBetweenSeeded(fightData.rng, 0, 99) < 5
 	) {
@@ -4289,7 +4289,7 @@ const checkDefensiveEffects = (
 
 	// M_RESISTANCE
 	// Cancels any non assault attacks
-	if (!isCloseCombat && target.skills.find(s => s.id === Skill.M_RESISTANCE)) {
+	if (!isCloseCombat && hasSkill(target, Skill.M_RESISTANCE)) {
 		// 0 damage if skill
 		damage = 0;
 
@@ -4301,13 +4301,13 @@ const checkDefensiveEffects = (
 	}
 
 	// M_PROTECTION
-	if (isCloseCombat && target.skills.find(s => s.id === Skill.M_PROTECTION)) {
+	if (isCloseCombat && hasSkill(target, Skill.M_PROTECTION)) {
 		// Only take 1/3 damage on assaults
 		damage = Math.ceil(damage / 3);
 	}
 
 	// M_ELEMENTAL
-	if (target.skills.find(s => s.id === Skill.M_ELEMENTAL)) {
+	if (hasSkill(target, Skill.M_ELEMENTAL)) {
 		if (elements.find(e => e === target.element)) {
 			// Take 29 + 0-3 damage if the attack contains the element of the opposing fighter
 			const random = randomBetweenSeeded(fightData.rng, 0, 3);
@@ -4320,12 +4320,12 @@ const checkDefensiveEffects = (
 	}
 
 	// M_DISABLE
-	if (damage && target.skills.find(s => s.id === Skill.M_DISABLE)) {
+	if (damage && hasSkill(target, Skill.M_DISABLE)) {
 		damage = 1;
 	}
 
 	// M_WORM: absorb all water damage
-	if (elements.includes(ElementType.WATER) && target.skills.find(s => s.id === Skill.M_WORM)) {
+	if (elements.includes(ElementType.WATER) && hasSkill(target, Skill.M_WORM)) {
 		target.absorbed = damage;
 		damage = 0;
 	}
@@ -4354,7 +4354,7 @@ const checkAfterAttackEffects = (
 		isCloseCombat &&
 		damage > 0 &&
 		elements.find(element => element === ElementType.WATER) &&
-		attacker.skills.find(skill => skill.id === Skill.GRIFFES_EMPOISONNEES)
+		hasSkill(attacker, Skill.GRIFFES_EMPOISONNEES)
 	) {
 		poison(fightData, target, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
 	}
@@ -4363,25 +4363,25 @@ const checkAfterAttackEffects = (
 	if (
 		isCloseCombat &&
 		attacker.attacker != target.attacker &&
-		attacker.skills.find(skill => skill.id === Skill.CONCENTRATION)
+		hasSkill(attacker, Skill.CONCENTRATION)
 	) {
 		attacker.previousTarget = target.id;
 	}
 
 	// Poison opponent if fighter has Skill.HALEINE_FETIVE and landed a hit with an assault
-	if (isCloseCombat && damage > 0 && attacker.skills.find(skill => skill.id === Skill.HALEINE_FETIVE)) {
+	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.HALEINE_FETIVE)) {
 		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
 	}
 
 	// TODO
 	// "M_FEBREZ" skill for Valentine?
-	// 		if (realOpponent.type === 'dinoz' && attacker.skills.find(skill => skill.id === Skill.M_FEBREZ)) {
+	// 		if (realOpponent.type === 'dinoz' && hasSkill(attacker, Skill.M_FEBREZ)) {
 	// 			// Regen 5% HP
 	// 			heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
 	// 		}
 
 	// Burn opponent if fighter has Skill.GRIFFES_INFERNALES and landed a hit with an assault that was not dodged
-	if (isCloseCombat && !isDodged && attacker.skills.find(skill => skill.id === Skill.GRIFFES_INFERNALES)) {
+	if (isCloseCombat && !isDodged && hasSkill(attacker, Skill.GRIFFES_INFERNALES)) {
 		const damage = attacker.stats.base[ElementType.FIRE];
 
 		target.burnedBy = {
@@ -4461,7 +4461,7 @@ const checkAfterDefenseEffects = (
 		isCloseCombat &&
 		damage > 0 &&
 		!hasStatus(attacker, Status.POISONED) &&
-		target.skills.find(skill => skill.id === Skill.AURA_PUANTE)
+		hasSkill(target, Skill.AURA_PUANTE)
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
