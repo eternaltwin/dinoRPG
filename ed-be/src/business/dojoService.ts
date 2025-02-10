@@ -94,14 +94,19 @@ export async function createMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
 
+	// Fill 5 opponents
+	const team = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
+
+	if (team.some(d => d.level < 10)) {
+		throw new ExpectedError(translate('dojo.dinozTooLowLevel', authed));
+	}
+	await createOpponentTeam(team, myDojo);
+
 	// Create challenge
 	const newChallenge = generateRandomChallenge();
 	await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
 
-	// Fill 5 opponents
-	const team = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
 
-	await createOpponentTeam(team, myDojo);
 
 	const dojo: myTeam = await createMyTeamDao(teamIds, myDojo.id);
 

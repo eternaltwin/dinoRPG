@@ -4303,7 +4303,7 @@
 		"challenge": {
 			"selectChampions": "Choisis tes champions",
 			"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
-			"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
+			"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz d'un niveau supérieur ou égal à 10 pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
 			"validate": "Valider ma sélection",
 			"edit": "Modifier ma sélection",
 			"launch": "Lancer le combat",
