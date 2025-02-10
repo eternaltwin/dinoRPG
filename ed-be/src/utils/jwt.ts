@@ -27,7 +27,7 @@ const forgeJWT = async (playerId: string): Promise<string> => {
 	const isAdmin: boolean = await isPlayerAdmin(playerId, config);
 	return jsonwebtoken.sign(
 		{
-			playerId: '715b7ff3-8147-4522-ac40-91239a337177', //playerId,
+			playerId: playerId,
 			exp: exp,
 			isAdmin: isAdmin
 		},
