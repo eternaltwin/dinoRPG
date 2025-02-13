@@ -2,6 +2,7 @@ import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { Request } from 'express';
 import { getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { auth } from '../dao/playerDao.js';
 
 /**
  * Get all the ingredients from a player
@@ -10,8 +11,8 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
  * 				An array with all ingredients that player owns
  */
 export async function getAllIngredientsData(req: Request) {
-	if (!req.auth?.playerId) throw new ExpectedError('No auth data');
-	const allIngredientsData = await getAllIngredientsDataRequest(req.auth.playerId);
+	const authed = await auth(req)
+	const allIngredientsData = await getAllIngredientsDataRequest(authed.id);
 
 	const ingredients = allIngredientsData.map(ingr => {
 		const ingredientFound = Object.entries(ingredientList).find(

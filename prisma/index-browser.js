@@ -228,6 +228,7 @@ exports.Prisma.NPCScalarFieldEnum = {
 exports.Prisma.PlayerScalarFieldEnum = {
   customText: 'customText',
   name: 'name',
+  connexionToken: 'connexionToken',
   money: 'money',
   quetzuBought: 'quetzuBought',
   leader: 'leader',

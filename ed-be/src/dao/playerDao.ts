@@ -6,10 +6,69 @@ import { AdminRole, Lang } from '@drpg/prisma';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import type { Request } from 'express';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { isUuid } from '@drpg/core/utils/isUuid';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
-		data: newPlayer
+		data: newPlayer,
+		select: {
+			id: true,
+			name: true,
+			connexionToken: true,
+			money: true,
+			lang: true,
+			engineer: true,
+			priest: true,
+			shopKeeper: true,
+			lastLogin: true,
+			ClanMember: { select: { clanId: true } },
+			notifications: {
+				select: { id: true, message: true, severity: true, link: true, date: true },
+				where: { read: false }
+			},
+			dinoz: {
+				select: {
+					id: true,
+					leaderId: true,
+					display: true,
+					name: true,
+					life: true,
+					maxLife: true,
+					experience: true,
+					placeId: true,
+					level: true,
+					order: true,
+					raceId: true,
+					unavailableReason: true,
+					missions: true,
+					nbrUpFire: true,
+					nbrUpWood: true,
+					nbrUpWater: true,
+					nbrUpLightning: true,
+					nbrUpAir: true,
+					remaining: true,
+					fight: true,
+					gather: true,
+					items: { select: { itemId: true } },
+					status: { select: { statusId: true } },
+					skills: { select: { skillId: true } },
+					followers: { select: { id: true, fight: true, remaining: true } },
+					TournamentTeam: { select: { tournamentId: true } },
+					concentration: true
+				},
+				where: {
+					OR: [
+						{ unavailableReason: null },
+						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+					]
+				},
+				orderBy: [{ order: 'asc' }, { name: 'asc' }]
+			},
+			rewards: true,
+			matelasseur: true,
+			items: { select: { itemId: true, quantity: true } },
+			quests: { select: { questId: true, progression: true } }
+		}
 	});
 
 	return player;
@@ -40,15 +99,20 @@ export async function auth(request: Request, banByPass = false) {
 		throw new ExpectedError('Invalid authorization header');
 	}
 
-	const playerId = request.auth?.playerId;
+	const [id, token] = Buffer.from(authorization.split(' ')[1] || '', 'base64')
+		.toString().split(':');
 
-	if (!playerId) {
+	if (!id || !token || id === 'null' || token === 'null') {
 		throw new ExpectedError('Invalid authorization header content');
+	}
+
+	if (!isUuid(id)) {
+		throw new ExpectedError('Invalid user ID');
 	}
 
 	const user = await prisma.player.findFirst({
 		where: {
-			id: playerId
+			id
 		},
 		select: {
 			id: true,
@@ -260,6 +324,7 @@ export async function getCommonDataRequest(playerId: string) {
 		},
 		select: {
 			id: true,
+			connexionToken: true,
 			name: true,
 			money: true,
 			lang: true,

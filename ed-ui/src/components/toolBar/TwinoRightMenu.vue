@@ -197,6 +197,7 @@ import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
+import { deleteCookie } from '../../utils/cookies.js';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
@@ -212,7 +213,7 @@ export default defineComponent({
 	},
 	methods: {
 		logOff(): void {
-			this.localStore.setJwt(undefined);
+			deleteCookie('token');
 			this.dinozStore.$reset();
 			this.playerStore.$reset();
 			this.menuCalled = false;

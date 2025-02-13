@@ -28,8 +28,7 @@ import { defineComponent } from 'vue';
 import { localStore, playerStore } from '../../store/index.js';
 import EventBus from '../../events/index.js';
 import { NotificationService, OauthService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { JwtTrial } from '@drpg/core/models/store/jwt';
+import { getCookie } from '../../utils/cookies.js';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -43,24 +42,10 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		async authenticateToET(): Promise<void> {
-			EventBus.emit('isLoading', true);
-			let jwt: string;
-			try {
-				jwt = await OauthService.authenticateUser(this.$route.query.code as string);
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
-
-			this.localStore.setJwt(jwt);
-			this.$router.push({ name: 'News' });
-		},
 		async getRedirectUri(): Promise<void> {
-			const urlToRedirect: string = await OauthService.getRedirectUri();
+			const urlToRedirect = await OauthService.getRedirectUri();
 
-			window.location.replace(urlToRedirect);
+			window.location.href = urlToRedirect.url;
 		},
 		getTime(): void {
 			const day = new Date();
@@ -78,29 +63,15 @@ export default defineComponent({
 			const notification = await NotificationService.getNotifications();
 			this.playerStore.setNotifications(notification);
 			this.playerStore.setNotificationsCounter(notification.length);
-		},
-		parseJWT(rawJwt: string | undefined) {
-			if (!rawJwt) return;
-			const jwt = JSON.parse(atob(rawJwt.split('.')[1])) as JwtTrial;
-			if (typeof jwt.playerId === 'number') {
-				this.localStore.setJwt(undefined);
-				this.playerStore.$reset();
-				this.$router.go(0);
-			}
 		}
 	},
 	watch: {
-		'localStore.getJwt': function (jwt: string | undefined) {
-			this.isLogged = typeof jwt === 'string';
-			this.parseJWT(jwt);
-		},
 		'playerStore.getNotificationsCounter': function (notification: number) {
 			this.notification = notification;
 		}
 	},
 	mounted() {
-		this.isLogged = typeof this.localStore.getJwt === 'string';
-		this.parseJWT(this.localStore.getJwt);
+		this.isLogged = getCookie('token') !== null;
 		this.notification = this.playerStore.getNotificationsCounter;
 		setInterval(() => {
 			this.getTime();

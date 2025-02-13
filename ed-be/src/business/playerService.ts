@@ -110,6 +110,7 @@ export async function getCommonData(req: Request) {
 		dinozCount: await getDinozTotalCount(),
 		dinoz: dinoz,
 		id: playerCommonData.id,
+		connexionToken: playerCommonData.connexionToken,
 		name: playerCommonData.name,
 		clanId: playerCommonData.ClanMember?.clanId,
 		playerOptions: {

@@ -11,7 +11,7 @@ import {
 	setCustomText
 } from '../business/playerService.js';
 import { apiRoutes } from '../constants/index.js';
-import { getPlayerMoney, updatePlayerLanguage } from '../dao/playerDao.js';
+import { auth, getPlayerMoney, updatePlayerLanguage } from '../dao/playerDao.js';
 import { checkLB } from '../business/eternaltwinService.js';
 import sendError from '../utils/sendErrors.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -68,10 +68,8 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		if (!req.auth?.playerId) {
-			throw new ExpectedError('No player ID found');
-		}
-		const response = await getPlayerMoney(req.auth.playerId);
+		const authed = await auth(req)
+		const response = await getPlayerMoney(authed.id);
 
 		if (!response) {
 			throw new ExpectedError('No player found');
@@ -402,11 +400,9 @@ routes.put(
 			return res.status(400).json({ errors: validationResult(req) });
 		}
 		try {
-			if (!req.auth?.playerId) {
-				throw new ExpectedError('No player ID found');
-			}
+			const authed = await auth(req)
 			const { language } = req.body;
-			const response = await updatePlayerLanguage(req.auth.playerId, language);
+			const response = await updatePlayerLanguage(authed.id, language);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

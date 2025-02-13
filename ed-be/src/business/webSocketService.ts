@@ -9,7 +9,7 @@ import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
 import { ChannelInfos } from '@drpg/core/models/webSocket/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
 import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
-import { getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
+import { auth, getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
 import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WsMsgRequest } from '@drpg/core/models/webSocket/WsMsgRequest';
@@ -87,8 +87,9 @@ function doGenericVerificationsForWsAuthent(req: Request) {
  * @param req -> Express request
  */
 async function doSpecificVerificationsForWsAuthent(req: Request): Promise<void> {
+	const authed = await auth(req)
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
-		const clanForPlayer = await getClanIdAndNameFromPlayerId(req.auth?.playerId as string);
+		const clanForPlayer = await getClanIdAndNameFromPlayerId(authed.id);
 		if (clanForPlayer.ClanMember === null) {
 			throw new Error(`The player is not in a clan.`);
 		}

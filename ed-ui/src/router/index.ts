@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import EventBus from '../events/index.js';
-import { JwtTrial } from '@drpg/core/models/store/jwt';
-import { localStore } from '../store/index.js';
+import { getCookie } from '../utils/cookies.js';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -296,23 +295,13 @@ const router = createRouter({
 });
 
 router.beforeEach(to => {
-	const jwt = localStore().getJwt;
-	let displayAuth = jwt === undefined;
-	if (jwt) {
-		const jwtParsed = JSON.parse(atob(jwt.split('.')[1])) as JwtTrial;
-		if (typeof jwtParsed.playerId === 'number') displayAuth = true;
-	}
+	const isLogged = getCookie('token') !== null;
 	// route to AuthPage if not logged and going to any page
-	if (displayAuth && to.name !== 'AuthenticationPage') {
+	if (!isLogged && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };
 	}
-	if (!displayAuth) {
-		const expiry = JSON.parse(atob(jwt.split('.')[1])).exp;
-		if (Math.floor(new Date().getTime() / 1000) >= expiry) {
-			localStore().setJwt(undefined);
-			return { name: 'AuthenticationPage' };
-		}
-		// route to MainPage if looged and trying to go to AuthPage (it's the case when user just login)
+	if (isLogged) {
+		// route to MainPage if logged and trying to go to AuthPage (it's the case when user just login)
 		if (to.name == 'AuthenticationPage') {
 			return { name: 'MainPage' };
 		}

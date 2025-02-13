@@ -26,10 +26,16 @@ import messagerieRoutes from './messagerie.routes.js';
 import notificationsRoutes from './notifications.routes.js';
 import dojoRoutes from './dojo.routes.js';
 import forumRoutes from './forum.routes.js';
-import { jwtConfig } from '../utils/index.js';
+import { OAuth } from '../business/oauthService.js';
+import { prisma } from '../prisma.js';
+import { apiRoutes } from '../constants/index.js';
 
 export default function initRoutes(app: Express, config: Config) {
-	app.use(jwtConfig());
+	// OAuth
+	const oauth = new OAuth(config, prisma);
+	app.get(`${apiRoutes.oauthRoute}/redirect`, oauth.redirect.bind(oauth));
+	app.get(`${apiRoutes.oauthRoute}/authenticate/eternal-twin`, oauth.token.bind(oauth));
+
 
 	app.use(adminRoutes);
 	app.use(dinozRoutes);
@@ -40,7 +46,7 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(missionsRoutes);
 	app.use(newsRoutes);
 	app.use(npcRoutes);
-	app.use(oauthRoutes);
+	// app.use(oauthRoutes);
 	app.use(playerRoutes);
 	app.use(shopRoutes);
 	app.use(rankingRoutes);

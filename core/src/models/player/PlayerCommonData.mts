@@ -7,6 +7,7 @@ export interface PlayerCommonData {
 	dinoz: DinozFiche[];
 	dinozCount: number;
 	id: string;
+	connexionToken: string;
 	name: string;
 	clanId: number | undefined;
 	playerOptions: PlayerOptions;

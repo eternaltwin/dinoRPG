@@ -1815,16 +1815,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/core@npm:0.14.2, @eternaltwin/core@npm:^0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/core@npm:0.14.2"
+"@eternaltwin/client-node@npm:0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/client-node@npm:0.16.4"
+  dependencies:
+    "@eternaltwin/core": "npm:^0.16.0"
+    "@types/jsonwebtoken": "npm:^9.0.2"
+    axios: "npm:^1.6.8"
+    jsonwebtoken: "npm:^9.0.2"
+    kryo: "npm:^0.15.1"
+    kryo-json: "npm:^0.15.1"
+    kryo-search-params: "npm:^0.15.1"
+    tslib: "npm:^2.6.2"
+    url-join: "npm:^5.0.0"
+  checksum: 10/fbc294500cf8310542f161dfed67bcaf71cb30f686d2726c1f64981c818e29bf0050ad3b7438781e19b09aa1f9ddbb70d0d6a2b46ab416ea40239151f4f95d7b
+  languageName: node
+  linkType: hard
+
+"@eternaltwin/core@npm:0.16.0, @eternaltwin/core@npm:^0.16.0":
+  version: 0.16.0
+  resolution: "@eternaltwin/core@npm:0.16.0"
   dependencies:
     "@types/jsonwebtoken": "npm:^9.0.2"
     jsonwebtoken: "npm:^9.0.2"
     kryo: "npm:^0.15.1"
     rxjs: "npm:^7.8.1"
     tslib: "npm:^2.6.2"
-  checksum: 10/7b504e2ec9e471b6f3f442603dc477dd93cb2d94a1eba76344ee015743c97a3ae44426f9ae4eff841bc54e89b5988bfb1bb59b30a6425dde58ebd35a1467cd65
+  checksum: 10/51e5d3bb6aaa5f2b967ea63a1e0ad1db6e165325df26b6e7bcb8239a08468109fabf2a1a00d8b528da720d16cf1cb068d795697e7f4918e7415740090252bc3b
   languageName: node
   linkType: hard
 
@@ -1901,11 +1918,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/oauth-client-http@npm:^0.14.2":
-  version: 0.14.2
-  resolution: "@eternaltwin/oauth-client-http@npm:0.14.2"
+"@eternaltwin/oauth-client-http@npm:^0.16.1":
+  version: 0.16.1
+  resolution: "@eternaltwin/oauth-client-http@npm:0.16.1"
   dependencies:
-    "@eternaltwin/core": "npm:0.14.2"
+    "@eternaltwin/core": "npm:0.16.0"
     "@types/auth-header": "npm:^1.0.6"
     "@types/jsonwebtoken": "npm:^9.0.5"
     "@types/jws": "npm:^3.2.9"
@@ -1917,7 +1934,7 @@ __metadata:
     kryo-json: "npm:^0.15.1"
     superagent: "npm:^8.1.2"
     tslib: "npm:^2.6.2"
-  checksum: 10/31b6cb13c912ddbed87b5bae0fd83bf0a1cdb54d659eeb633d373559bd86d7f0ef880443215c272afc72ac1c0871544474abc04bd7354f26da1c875a7090b6f0
+  checksum: 10/68790ef344b70f2c84e03576fd13c1ea017526bf18475610e05a6e7b7ed897ef316ef7a27e89a70a4dbd486b72eaadfb099caf9af4526730b57f937202a2e800
   languageName: node
   linkType: hard
 
@@ -3714,15 +3731,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express-jwt@npm:^7.4.4":
-  version: 7.4.4
-  resolution: "@types/express-jwt@npm:7.4.4"
-  dependencies:
-    express-jwt: "npm:*"
-  checksum: 10/a7bdd1f127650196a85bc8588bde26cb97fc90971a5784778ab677e0f6dbb53cbeaedc0d1c7454200de9f3296f5fb60e4958d62c0aaf7fd4b2e44d37a6a0e0d4
-  languageName: node
-  linkType: hard
-
 "@types/express-serve-static-core@npm:*, @types/express-serve-static-core@npm:^4.17.33":
   version: 4.17.41
   resolution: "@types/express-serve-static-core@npm:4.17.41"
@@ -3781,15 +3789,6 @@ __metadata:
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
   checksum: 10/4e5aed58cabb2bbf6f725da13421aa50a49abb6bc17bfab6c31b8774b073fa7b50d557c61f961a09a85f6056151190f8ac95f13f5b48136ba5841f7d4484ec56
-  languageName: node
-  linkType: hard
-
-"@types/jsonwebtoken@npm:^9":
-  version: 9.0.5
-  resolution: "@types/jsonwebtoken@npm:9.0.5"
-  dependencies:
-    "@types/node": "npm:*"
-  checksum: 10/48493129464b88b8ab3c3be7931d41da3ffba6efe97fc138b2b5aa42141725dd9086b0494cc069abd5c41ed7ca86d3cfd8efb256cec063853313c75f6179d066
   languageName: node
   linkType: hard
 
@@ -5217,6 +5216,17 @@ __metadata:
     form-data: "npm:^4.0.0"
     proxy-from-env: "npm:^1.1.0"
   checksum: 10/612bc93f8f738a518e7c5f9de9cc782bcd36aac6bae279160ef6a10260378e21c1786520eab3336898e3d66e0839ebdf739f327fb6d0431baa4d3235703a7652
+  languageName: node
+  linkType: hard
+
+"axios@npm:^1.6.8":
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
+  dependencies:
+    follow-redirects: "npm:^1.15.6"
+    form-data: "npm:^4.0.0"
+    proxy-from-env: "npm:^1.1.0"
+  checksum: 10/b7a5f660ea53ba9c2a745bf5ad77ad8bf4f1338e13ccc3f9f09f810267d6c638c03dac88b55dae8dc98b79c57d2d6835be651d58d2af97c174f43d289a9fd007
   languageName: node
   linkType: hard
 
@@ -6777,8 +6787,9 @@ __metadata:
   resolution: "ed-be@workspace:ed-be"
   dependencies:
     "@drpg/core": "workspace:^"
-    "@eternaltwin/core": "npm:^0.14.2"
-    "@eternaltwin/oauth-client-http": "npm:^0.14.2"
+    "@eternaltwin/client-node": "npm:0.16.4"
+    "@eternaltwin/core": "npm:^0.16.0"
+    "@eternaltwin/oauth-client-http": "npm:^0.16.1"
     "@opentelemetry/api": "npm:^1.9.0"
     "@opentelemetry/exporter-trace-otlp-proto": "npm:^0.56.0"
     "@opentelemetry/instrumentation": "npm:^0.56.0"
@@ -6794,7 +6805,6 @@ __metadata:
     "@types/cors": "npm:^2.8.17"
     "@types/cron": "npm:^2.4.3"
     "@types/express": "npm:^4.17.21"
-    "@types/express-jwt": "npm:^7.4.4"
     "@types/multer": "npm:^1.4.12"
     "@types/node": "npm:^22.10.2"
     "@types/node-fetch": "npm:^2.6.12"
@@ -6813,7 +6823,6 @@ __metadata:
     discord.js: "npm:^14.13.0"
     dotenv: "npm:^16.4.5"
     express: "npm:^4.21.2"
-    express-jwt: "npm:^8.5.1"
     express-validator: "npm:^7.2.0"
     i18next: "npm:^23.12.2"
     i18next-fs-backend: "npm:^2.3.1"
@@ -7741,35 +7750,6 @@ __metadata:
   version: 3.1.1
   resolution: "exponential-backoff@npm:3.1.1"
   checksum: 10/2d9bbb6473de7051f96790d5f9a678f32e60ed0aa70741dc7fdc96fec8d631124ec3374ac144387604f05afff9500f31a1d45bd9eee4cdc2e4f9ad2d9b9d5dbd
-  languageName: node
-  linkType: hard
-
-"express-jwt@npm:*":
-  version: 8.4.1
-  resolution: "express-jwt@npm:8.4.1"
-  dependencies:
-    "@types/jsonwebtoken": "npm:^9"
-    express-unless: "npm:^2.1.3"
-    jsonwebtoken: "npm:^9.0.0"
-  checksum: 10/931ad8e98ef86ce73fb4fa37c4fec4dd6d806657d622ae9e5d296182edbb049f578b7a00b746ef762ea016987cba6a5600d191f55a553507e4c1c4543d7783d5
-  languageName: node
-  linkType: hard
-
-"express-jwt@npm:^8.5.1":
-  version: 8.5.1
-  resolution: "express-jwt@npm:8.5.1"
-  dependencies:
-    "@types/jsonwebtoken": "npm:^9"
-    express-unless: "npm:^2.1.3"
-    jsonwebtoken: "npm:^9.0.0"
-  checksum: 10/62f9df1f0876c685c54f24fb8203589edb31e48af3b4f9e581f43e7a6018d918b6329500d0c2d011b48abc2e8c004121a404e5b6b8ae389a7e3c72e5950ffb3e
-  languageName: node
-  linkType: hard
-
-"express-unless@npm:^2.1.3":
-  version: 2.1.3
-  resolution: "express-unless@npm:2.1.3"
-  checksum: 10/c34d4e71740c36586fcdf3d126c1f13af894b0d8bde829d32d072f024344af7077b204f698a07eb9329bf97b076d93047cd0a8bae5902f050376ae29af9122f6
   languageName: node
   linkType: hard
 
@@ -9794,7 +9774,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:^9.0.0, jsonwebtoken@npm:^9.0.2":
+"jsonwebtoken@npm:^9.0.2":
   version: 9.0.2
   resolution: "jsonwebtoken@npm:9.0.2"
   dependencies:
@@ -9883,6 +9863,16 @@ __metadata:
   dependencies:
     kryo: "npm:^0.15.1"
   checksum: 10/2df5c3d2e9335d24a18da1c698fe4f64db757024f22c78214905358c544b5719f43a0466f50760d97aa6ca8bcaeecf77443db8eaae6355f206ea54fb9d4eb081
+  languageName: node
+  linkType: hard
+
+"kryo-search-params@npm:^0.15.1":
+  version: 0.15.1
+  resolution: "kryo-search-params@npm:0.15.1"
+  dependencies:
+    kryo: "npm:^0.15.1"
+    kryo-json: "npm:^0.15.1"
+  checksum: 10/00fd39f611acfa26c0ce458bb7fe5577e21adde928773645e4235c01148606742943919689c422270b339944fc53ee6615c1b082cfe256470761d7ebf8426550
   languageName: node
   linkType: hard
 

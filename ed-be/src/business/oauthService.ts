@@ -1,156 +1,256 @@
-import { Request } from 'express';
-import { archiveOldUsername, createPlayer, getPlayerId, setPlayer } from '../dao/playerDao.js';
-import { forgeJWT } from '../utils/index.js';
-import { RfcOauthClient } from '@eternaltwin/oauth-client-http/rfc-oauth-client';
-import { OauthAccessToken } from '@eternaltwin/core/oauth/oauth-access-token';
-import fetch from 'node-fetch';
-import { addPlayerInRanking } from '../dao/rankingDao.js';
+import { Request, Response } from 'express';
+import { archiveOldUsername, createPlayer, getCommonDataRequest, setPlayer } from '../dao/playerDao.js';
+import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import gameConfig from '../config/game.config.js';
-import { getSpecificSecret } from '../dao/secretDao.js';
 import { createLog } from '../dao/logDao.js';
 import { LogType } from '@drpg/prisma';
 import urlJoin from 'url-join';
 import { AdminRole } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { GLOBAL } from '../context.js';
+import { LOGGER } from '../context.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import dayjs from 'dayjs';
+import { PismaClientLocal } from '../prisma.js';
+import { Config } from 'release-it';
+import { EternaltwinNodeClient } from '@eternaltwin/client-node';
+import { AuthType } from '@eternaltwin/core/auth/auth-type';
+import sendError from '../utils/sendErrors.js';
+import { trace } from '@opentelemetry/api';
+import { GetAccessTokenError, RfcOauthClient } from '@eternaltwin/oauth-client-http/rfc-oauth-client';
+import { ErrorCode } from '@eternaltwin/client-node/error';
+import { getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
+import { Reward } from '@drpg/core/models/reward/RewardList';
+import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { orderDinozList, toDinozFiche } from '@drpg/core/utils/DinozUtils';
+import { getAvailableActions } from './dinozService.js';
+import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 
-/**
- * @summary Forge a JWT with EternalTwin authentication
- * @param req
- * @param req.body.code {string}
- * @param res {string}
- * @return string
- */
-export async function authenticateToET(req: Request) {
-	let token: OauthAccessToken;
-	let user: User;
-	const config = GLOBAL.config;
+export class OAuth {
+	#oauthClient: RfcOauthClient;
 
-	try {
-		token = await getAuthorizationToken(req.body.code);
-		user = await getUser(token.accessToken, config.eternaltwin.url);
-	} catch (err) {
-		console.error(err);
-		throw new ExpectedError('An error occurred');
-	}
+	#eternaltwinClient: EternaltwinNodeClient;
 
-	// Check if player already exists in database
-	let player = await getPlayerId(user.user.id);
+	#prisma: PismaClientLocal;
 
-	// If player isn't found in database, create a new one
-	if (player === null) {
-		// Create new player in database
-		player = await createPlayer({
-			id: user.user.id,
-			name: user.user.display_name.current.value,
-			money: gameConfig.general.initialMoney,
-			quetzuBought: 0,
-			leader: false,
-			engineer: false,
-			cooker: false,
-			shopKeeper: false,
-			merchant: false,
-			priest: false,
-			teacher: false,
-			role: AdminRole.PLAYER
+	public constructor(config: Config, prisma: PismaClientLocal) {
+		this.#oauthClient = new RfcOauthClient({
+			authorizationEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/authorize')),
+			tokenEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/token')),
+			callbackEndpoint: new URL(urlJoin(config.selfUrl.toString(), 'authentication')),
+			clientId: config.eternaltwin.clientRef,
+			clientSecret: config.eternaltwin.secret
 		});
-		// Create player at position 0 in ranking
-		await addPlayerInRanking(player.id);
-
-		await increaseItemQuantity(player.id, Item.DAILY_TICKET, 1);
-		if (dayjs().month() === 11) {
-			await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
-		}
-		await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
+		this.#eternaltwinClient = new EternaltwinNodeClient(new URL(config.eternaltwin.url));
+		this.#prisma = prisma;
 	}
 
-	// Update display name if changed on ET side
-	if (player && player.name !== user.user.display_name.current.value) {
-		await setPlayer(player.id, { name: user.user.display_name.current.value });
-		await archiveOldUsername(player.id, player.name);
-	}
+	public redirect(_req: Request, res: Response) {
+		// Disable CORS
+		res.header('Access-Control-Allow-Origin', '*');
 
-	const beta = await getSpecificSecret('beta');
-
-	if (beta) {
-		const admin = config.administrator;
-		if (!(admin === user.user.id) && player.role === AdminRole.PLAYER) {
-			throw new ExpectedError(
-				`User ${user.user.id} (${user.user.display_name.current.value}), you are not allowed to enter the beta website.`
-			);
+		try {
+			res.send({
+				url: this.#oauthClient.getAuthorizationUri('base', 'authenticate'),
+			});
+		} catch (error) {
+			sendError(res, error);
 		}
 	}
 
-	// Forge JWT with playerId
-	return await forgeJWT(player.id);
-}
+	public async token(
+		req: Request,
+		res: Response<PlayerCommonData>,
+	) {
+		// Disable CORS
+		res.header('Access-Control-Allow-Origin', '*');
 
-async function getUser(accessToken: string, eternalTwinURI: string) {
-	let res;
-
-	try {
-		res = await fetch(`${eternalTwinURI}api/v1/auth/self`, {
-			method: 'GET',
-			headers: {
-				Authorization: `Bearer ${accessToken}`
+		try {
+			if (!req.query.code || typeof req.query.code !== 'string') {
+				throw new ExpectedError('Invalid code');
 			}
-		});
-	} catch (err) {
-		console.error(err);
-		return Promise.reject(err);
-	}
 
-	return (await res.json()) as User;
-}
+			// ETwin Token
+			const token = await this.#oauthClient.getAccessToken(req.query.code);
 
-async function getAuthorizationToken(code: string) {
-	const oauthClient: RfcOauthClient = getRfcOauthClient();
+			// ETWin User
+			const self = await this.#eternaltwinClient.getAuthSelf({ auth: token.accessToken });
 
-	return oauthClient.getAccessToken(code);
-}
+			if (self.type !== AuthType.AccessToken) {
+				throw new Error('Invalid auth type');
+			}
+			trace.getActiveSpan()?.addEvent('getAuthSelf', { 'user.id': self.user.id });
 
-/**
- * @summary Get the URI from the backend
- * @param _req
- * @return URL
- */
-export async function getAuthorizationUri() {
-	const oauthClient: RfcOauthClient = getRfcOauthClient();
+			// Get user's IP
+			// const ip = req.headers['x-forwarded-for']?.toString().split(', ')[0] || req.headers['x-real-ip']?.toString().split(', ')[0] || req.socket.remoteAddress;
 
-	return oauthClient.getAuthorizationUri('base', 'authenticate');
-}
+/*			if (ip) {
+				// Check if the IP is banned
+				const bannedIp = await ServerState.isIpBanned(this.#prisma, ip);
 
-function getRfcOauthClient() {
-	const config = GLOBAL.config;
+				if (bannedIp) {
+					throw new ForbiddenError(translate('ipBanned', null));
+				}
+			}*/
 
-	return new RfcOauthClient({
-		authorizationEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/authorize')),
-		tokenEndpoint: new URL(urlJoin(config.eternaltwin.url, 'oauth/token')),
-		callbackEndpoint: new URL(urlJoin(config.selfUrl.toString(), 'authentication')),
-		clientId: config.eternaltwin.clientRef,
-		clientSecret: config.eternaltwin.secret
-	});
-}
+			const { user: etwinUser } = self;
+			// Check if player already exists in database
+			let player = await getCommonDataRequest( etwinUser.id);
 
-interface User {
-	type: string;
-	scope: string;
-	client: {
-		type: string;
-		id: string;
-		key: string;
-		display_name: string;
-	};
-	user: {
-		type: string;
-		id: string;
-		display_name: {
-			current: {
-				value: string;
+			// If player isn't found in database, create a new one
+			if (player === null) {
+				// Create new player in database
+				player = await createPlayer({
+					id:  etwinUser.id,
+					name:  etwinUser.displayName.current.value,
+					money: gameConfig.general.initialMoney,
+					quetzuBought: 0,
+					leader: false,
+					engineer: false,
+					cooker: false,
+					shopKeeper: false,
+					merchant: false,
+					priest: false,
+					teacher: false,
+					role: AdminRole.PLAYER
+				});
+				// Create player at position 0 in ranking
+				await addPlayerInRanking(player.id);
+
+				await increaseItemQuantity(player.id, Item.DAILY_TICKET, 1);
+				if (dayjs().month() === 11) {
+					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
+				}
+				await createLog(LogType.PlayerCreated, player.id, undefined, player.name.toString(), player.id);
+				return {
+					money: player.money,
+					dinozCount: await getDinozTotalCount(),
+					dinoz: [],
+					id: player.id,
+					name: player.name,
+					clanId: player.ClanMember?.clanId,
+					playerOptions: {
+						hasPDA: false,
+						hasPMI: false
+					},
+					admin: false,
+					priest: false,
+					shopkeeper: false,
+					notifications: false
+				}
+			}
+
+			// Update display name if changed on ET side
+			if (player && player.name !== etwinUser.displayName.current.value) {
+				await setPlayer(player.id, { name: etwinUser.displayName.current.value });
+				await archiveOldUsername(player.id, player.name);
+			}
+
+
+/*			// Check if user is banned
+			if (user.bannedAt) {
+				throw new Error(translate('bannedAccount', user, { reason: translate(`banReason.${user.banReason || ''}`, user) }));
+			}*/
+
+			if (!dayjs().isSame(player.lastLogin, 'day')) {
+				// Add 1 daily ticket
+				await increaseItemQuantity(player.id, Item.DAILY_TICKET, 1);
+
+				// Update completion
+				const completion = await calculatePlayerCompletion(player.id);
+				try {
+					await updateCompletion(player.id, completion);
+				} catch (e) {
+					LOGGER.error(`UpdateCompletion crash with id: ${player.id} and completion score of ${completion}`);
+				}
+
+				// Update last login: refresh Labrute flag and daily grid reward limit
+				await setPlayer(player.id, {
+					lastLogin: new Date(),
+					labruteDone: false,
+					dailyGridRewards: gameConfig.general.dailyGridRewards
+				});
+
+				// Tik bracelet regen (& alive)
+				const dinozWithTikBracelet = player.dinoz.filter(
+					dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
+				);
+
+				for (const dinoz of dinozWithTikBracelet) {
+					// Regen 10 HP
+					const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
+					await updateDinoz(dinoz.id, { life: newHp });
+				}
+
+				if (currentEvents()[0] === GameEvent.CHRISTMAS) {
+					await increaseItemQuantity(player.id, Item.CHRISTMAS_TICKET, 1);
+				}
+
+				// Give 2 action for active dinoz
+				const leaderWithVeilleuse = player.dinoz.filter(d => d.skills.some(s => s.skillId === Skill.VEILLEUSE));
+				for (const dinoz of player.dinoz) {
+					let remaning = 2;
+					if (player.matelasseur) remaning++;
+					if (dinoz.skills.some(s => s.skillId === Skill.GROS_DORMEUR)) remaning++;
+					if (leaderWithVeilleuse.some(d => d.followers.some(di => di.id === dinoz.id))) remaning++;
+					await updateDinoz(dinoz.id, { remaining: remaning });
+				}
+
+				// Update stat
+				await setSpecificStat(StatTracking.P_DAYS, player.id, 1);
+				await createLog(LogType.PlayerConnected, player.id, undefined, player.name.toString());
+			}
+
+			const dinoz = player.dinoz.map(d => {
+				return { ...toDinozFiche(player, d.id) };
+			});
+			for (const d of dinoz) {
+				d.actions = await getAvailableActions(d, player);
+			}
+
+			const commonData: PlayerCommonData = {
+				money: player.money,
+				dinozCount: await getDinozTotalCount(),
+				dinoz: dinoz,
+				id: player.id,
+				name: player.name,
+				connexionToken: player.connexionToken,
+				clanId: player.ClanMember?.clanId,
+				playerOptions: {
+					hasPDA: player.rewards.some(reward => reward.rewardId === Reward.PDA),
+					hasPMI: player.rewards.some(reward => reward.rewardId === Reward.PMI)
+				},
+				admin: req?.auth?.isAdmin || false,
+				priest: player.priest,
+				shopkeeper: player.shopKeeper,
+				notifications: player.notifications
 			};
-		};
-	};
+
+			// Order dinoz
+			commonData.dinoz = orderDinozList(commonData.dinoz);
+
+
+			res.send(commonData);
+		} catch (error: unknown) {
+			if (error instanceof GetAccessTokenError) {
+				switch (error?.eternaltwin?.code) {
+					case ErrorCode.OauthCodeTimeError:
+					case ErrorCode.OauthCodeFormatError:
+						// Skip logging the error when the token is expired or the format
+						// is invalid. This can happen if an old token is reused. This
+						// usually happens when the JS redirects fails and the original
+						// URL with the token remains in the browser history.
+						break;
+					default:
+						sendError(res, error);
+				}
+			} else {
+				sendError(res, error);
+			}
+		}
+	}
 }

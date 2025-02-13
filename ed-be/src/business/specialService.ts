@@ -20,23 +20,21 @@ import {
 } from '../dao/concentrationDao.js';
 import { getDinozConcentrationRequest, updateMultipleDinoz, updateMultipleDinozPlaceId } from '../dao/dinozDao.js';
 import { updateMissionStep } from '../dao/dinozMissionDao.js';
-import { prepareConcentration } from '../dao/playerDao.js';
+import { auth, prepareConcentration } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { DinozToRewardFight, calculateFightVsMonsters, rewardFight } from './fightService.js';
 
 export async function concentrate(req: Request) {
-	if (!req.auth || !req.auth.playerId) {
-		throw new ExpectedError('Unauthorized');
-	}
-	const player = await prepareConcentration(req.auth.playerId);
+	const authed = await auth(req)
+	const player = await prepareConcentration(authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${req.auth.playerId} doesn't exist.`);
+		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 	const dinozList = player.dinoz;
 	const dinoz = player.dinoz.find(d => d.id === parseInt(req.params.id));
 
 	if (!dinoz) {
-		throw new ExpectedError(`Dinoz ${req.params.id} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${req.params.id} doesn't belong to player ${authed.id}`);
 	}
 
 	//Check if dinoz is at Bao Bob's location
@@ -79,13 +77,14 @@ export async function concentrate(req: Request) {
 }
 
 export async function cancelConcentrate(req: Request) {
+	const authed = await auth(req)
 	const dinoz = await getDinozConcentrationRequest(+req.params.id);
 	if (!dinoz) {
 		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist.`);
 	}
 
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+	if (!dinoz.player || dinoz.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
 	}
 
 	if (!dinoz.concentration) {

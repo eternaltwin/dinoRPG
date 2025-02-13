@@ -464,7 +464,7 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 	const itemToEquip = Object.values(itemList).find(item => item.itemId === itemId);
 
 	if (!dinoz.player || dinoz.player.id !== authed.id) {
-		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${req.auth?.playerId}`);
+		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
 	}
 
 	if (!itemToEquip) {

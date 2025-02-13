@@ -1,5 +1,5 @@
 <template>
-	<p v-if="!isCodePresent" @click="getRedirectUri()">
+	<p v-if="!isLogged" @click="getRedirectUri()">
 		{{ $t('alpha.login') }}
 	</p>
 </template>
@@ -7,16 +7,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { OauthService } from '../services/index.js';
-import { localStore } from '../store/index.js';
+import { dinozStore, localStore, playerStore } from '../store/index.js';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
+import { setCookie } from '../utils/cookies.js';
 
 export default defineComponent({
 	name: 'Authentication',
 	data() {
 		return {
 			localStore: localStore(),
-			isCodePresent: false as boolean
+			playerStore: playerStore(),
+			dinozStore: dinozStore(),
+			isLogged: false as boolean
 		};
 	},
 	props: {
@@ -27,22 +30,37 @@ export default defineComponent({
 	methods: {
 		async authenticateToET(): Promise<void> {
 			EventBus.emit('isLoading', true);
-			let jwt: string;
 			try {
-				jwt = await OauthService.authenticateUser(this.$route.query.code as string);
+				const commonData = await OauthService.authenticateUser(this.$route.query.code as string);
+				// Set cookies
+				setCookie('user', commonData.id, 7);
+				setCookie('token', commonData.connexionToken, 7);
+				// Set data in sessionStore
+				this.playerStore.setMoney(commonData.money);
+				this.dinozStore.setDinozList(commonData.dinoz);
+				this.dinozStore.setDinozCount(commonData.dinozCount);
+				this.playerStore.setClanId(commonData.clanId);
+				this.playerStore.setPriest(commonData.priest);
+				this.playerStore.setShopkeeper(commonData.shopkeeper);
+				this.playerStore.setNotificationsCounter(commonData.notifications.length);
+				this.playerStore.setNotifications(commonData.notifications);
+				this.playerStore.setPlayerId(commonData.id);
+				this.playerStore.setPlayerName(commonData.name);
+				this.playerStore.setPlayerOptions(commonData.playerOptions);
+				this.playerStore.setAdmin(commonData.admin);
 				EventBus.emit('isLoading', false);
+				this.isLogged = true;
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
 
-			this.localStore.setJwt(jwt);
 			this.$router.push({ name: 'News' });
 		},
 		async getRedirectUri(): Promise<void> {
-			const urlToRedirect: string = await OauthService.getRedirectUri();
+			const urlToRedirect = await OauthService.getRedirectUri();
 
-			window.location.replace(urlToRedirect);
+			window.location.href = urlToRedirect.url;
 		}
 	},
 	mounted(): void {

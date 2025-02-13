@@ -52,6 +52,7 @@ import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
  */
 export async function getLearnableAndUnlockableSkills(req: Request) {
 	const dinozId = +req.params.id;
+	const authed = await auth(req)
 
 	const dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
@@ -65,8 +66,8 @@ export async function getLearnableAndUnlockableSkills(req: Request) {
 		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 	}
 
-	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+	if (!dinozSkills.player || dinozSkills.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`);
 	}
 
 	if (dinozSkills.canChangeName) {
@@ -101,8 +102,8 @@ export async function learnSkill(req: Request) {
 	if (!dinozSkills) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
-	if (!dinozSkills.player || !req.auth || dinozSkills.player.id !== req.auth.playerId) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
+	if (!dinozSkills.player || dinozSkills.player.id !== authed.id) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`);
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
@@ -244,9 +245,6 @@ function getDinozLearnableSkills(
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
 
-	if (!dinoz.player || !req.auth || dinoz.player.id !== req.auth.playerId) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${req.auth?.playerId}`);
-	}
 
 	const level = levelList.find(level => level.id === dinoz.level);
 	if (!level) {

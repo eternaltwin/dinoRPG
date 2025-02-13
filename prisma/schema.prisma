@@ -178,6 +178,7 @@ model NPC {
 model Player {
   customText           String?
   name                 String             @db.VarChar
+  connexionToken       String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   money                Int
   quetzuBought         Int
   leader               Boolean            @default(false)

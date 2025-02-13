@@ -111,6 +111,7 @@ import DZButton from '../common/DZButton.vue';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { formatText } from '../../utils/formatText.js';
 import DZUser from '../common/DZUser.vue';
+import { deleteCookie } from '../../utils/cookies.js';
 
 export default defineComponent({
 	name: 'Profile',
@@ -146,7 +147,7 @@ export default defineComponent({
 			if (res) {
 				try {
 					await PlayerService.resetAccount();
-					this.localStore.setJwt(undefined);
+					deleteCookie('token');
 					this.dinozStore.$reset();
 					this.playerStore.$reset();
 					this.$router.go(0);

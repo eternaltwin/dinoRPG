@@ -18037,6 +18037,7 @@ export namespace Prisma {
   export type PlayerMinAggregateOutputType = {
     customText: string | null
     name: string | null
+    connexionToken: string | null
     money: number | null
     quetzuBought: number | null
     leader: boolean | null
@@ -18063,6 +18064,7 @@ export namespace Prisma {
   export type PlayerMaxAggregateOutputType = {
     customText: string | null
     name: string | null
+    connexionToken: string | null
     money: number | null
     quetzuBought: number | null
     leader: boolean | null
@@ -18089,6 +18091,7 @@ export namespace Prisma {
   export type PlayerCountAggregateOutputType = {
     customText: number
     name: number
+    connexionToken: number
     money: number
     quetzuBought: number
     leader: number
@@ -18133,6 +18136,7 @@ export namespace Prisma {
   export type PlayerMinAggregateInputType = {
     customText?: true
     name?: true
+    connexionToken?: true
     money?: true
     quetzuBought?: true
     leader?: true
@@ -18159,6 +18163,7 @@ export namespace Prisma {
   export type PlayerMaxAggregateInputType = {
     customText?: true
     name?: true
+    connexionToken?: true
     money?: true
     quetzuBought?: true
     leader?: true
@@ -18185,6 +18190,7 @@ export namespace Prisma {
   export type PlayerCountAggregateInputType = {
     customText?: true
     name?: true
+    connexionToken?: true
     money?: true
     quetzuBought?: true
     leader?: true
@@ -18298,6 +18304,7 @@ export namespace Prisma {
   export type PlayerGroupByOutputType = {
     customText: string | null
     name: string
+    connexionToken: string
     money: number
     quetzuBought: number
     leader: boolean
@@ -18343,6 +18350,7 @@ export namespace Prisma {
   export type PlayerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     customText?: boolean
     name?: boolean
+    connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
     leader?: boolean
@@ -18399,6 +18407,7 @@ export namespace Prisma {
   export type PlayerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     customText?: boolean
     name?: boolean
+    connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
     leader?: boolean
@@ -18426,6 +18435,7 @@ export namespace Prisma {
   export type PlayerSelectScalar = {
     customText?: boolean
     name?: boolean
+    connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
     leader?: boolean
@@ -18449,7 +18459,7 @@ export namespace Prisma {
     id?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "banCaseId" | "id", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "banCaseId" | "id", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -18522,6 +18532,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
       name: string
+      connexionToken: string
       money: number
       quetzuBought: number
       leader: boolean
@@ -18967,6 +18978,7 @@ export namespace Prisma {
   interface PlayerFieldRefs {
     readonly customText: FieldRef<"Player", 'String'>
     readonly name: FieldRef<"Player", 'String'>
+    readonly connexionToken: FieldRef<"Player", 'String'>
     readonly money: FieldRef<"Player", 'Int'>
     readonly quetzuBought: FieldRef<"Player", 'Int'>
     readonly leader: FieldRef<"Player", 'Boolean'>
@@ -58546,6 +58558,7 @@ export namespace Prisma {
   export const PlayerScalarFieldEnum: {
     customText: 'customText',
     name: 'name',
+    connexionToken: 'connexionToken',
     money: 'money',
     quetzuBought: 'quetzuBought',
     leader: 'leader',
@@ -60005,6 +60018,7 @@ export namespace Prisma {
     NOT?: PlayerWhereInput | PlayerWhereInput[]
     customText?: StringNullableFilter<"Player"> | string | null
     name?: StringFilter<"Player"> | string
+    connexionToken?: UuidFilter<"Player"> | string
     money?: IntFilter<"Player"> | number
     quetzuBought?: IntFilter<"Player"> | number
     leader?: BoolFilter<"Player"> | boolean
@@ -60060,6 +60074,7 @@ export namespace Prisma {
   export type PlayerOrderByWithRelationInput = {
     customText?: SortOrderInput | SortOrder
     name?: SortOrder
+    connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     leader?: SortOrder
@@ -60121,6 +60136,7 @@ export namespace Prisma {
     NOT?: PlayerWhereInput | PlayerWhereInput[]
     customText?: StringNullableFilter<"Player"> | string | null
     name?: StringFilter<"Player"> | string
+    connexionToken?: UuidFilter<"Player"> | string
     money?: IntFilter<"Player"> | number
     quetzuBought?: IntFilter<"Player"> | number
     leader?: BoolFilter<"Player"> | boolean
@@ -60173,6 +60189,7 @@ export namespace Prisma {
   export type PlayerOrderByWithAggregationInput = {
     customText?: SortOrderInput | SortOrder
     name?: SortOrder
+    connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     leader?: SortOrder
@@ -60207,6 +60224,7 @@ export namespace Prisma {
     NOT?: PlayerScalarWhereWithAggregatesInput | PlayerScalarWhereWithAggregatesInput[]
     customText?: StringNullableWithAggregatesFilter<"Player"> | string | null
     name?: StringWithAggregatesFilter<"Player"> | string
+    connexionToken?: UuidWithAggregatesFilter<"Player"> | string
     money?: IntWithAggregatesFilter<"Player"> | number
     quetzuBought?: IntWithAggregatesFilter<"Player"> | number
     leader?: BoolWithAggregatesFilter<"Player"> | boolean
@@ -63271,6 +63289,7 @@ export namespace Prisma {
   export type PlayerCreateInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -63325,6 +63344,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -63379,6 +63399,7 @@ export namespace Prisma {
   export type PlayerUpdateInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -63433,6 +63454,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -63487,6 +63509,7 @@ export namespace Prisma {
   export type PlayerCreateManyInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -63513,6 +63536,7 @@ export namespace Prisma {
   export type PlayerUpdateManyMutationInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -63538,6 +63562,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateManyInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -66824,6 +66849,7 @@ export namespace Prisma {
   export type PlayerCountOrderByAggregateInput = {
     customText?: SortOrder
     name?: SortOrder
+    connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     leader?: SortOrder
@@ -66858,6 +66884,7 @@ export namespace Prisma {
   export type PlayerMaxOrderByAggregateInput = {
     customText?: SortOrder
     name?: SortOrder
+    connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     leader?: SortOrder
@@ -66884,6 +66911,7 @@ export namespace Prisma {
   export type PlayerMinOrderByAggregateInput = {
     customText?: SortOrder
     name?: SortOrder
+    connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
     leader?: SortOrder
@@ -73206,6 +73234,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutDinozInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -73259,6 +73288,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutDinozInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -73898,6 +73928,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutDinozInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -73951,6 +73982,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutDinozInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -77422,6 +77454,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutDojoInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -77475,6 +77508,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutDojoInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -77645,6 +77679,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutDojoInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -77698,6 +77733,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutDojoInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -78432,6 +78468,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutUsernameHistoryInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -78485,6 +78522,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -78554,6 +78592,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutUsernameHistoryInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -78607,6 +78646,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -78660,6 +78700,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutDinozShopInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -78713,6 +78754,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -78782,6 +78824,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutDinozShopInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -78835,6 +78878,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -78888,6 +78932,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutGathersInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -78941,6 +78986,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutGathersInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79010,6 +79056,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutGathersInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79063,6 +79110,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutGathersInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79116,6 +79164,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutIngredientsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79169,6 +79218,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79238,6 +79288,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutIngredientsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79291,6 +79342,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79344,6 +79396,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutItemsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79397,6 +79450,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutItemsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79466,6 +79520,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutItemsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79519,6 +79574,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutItemsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79572,6 +79628,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutQuestsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79625,6 +79682,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutQuestsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79694,6 +79752,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutQuestsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79747,6 +79806,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79800,6 +79860,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutRewardsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79853,6 +79914,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutRewardsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -79922,6 +79984,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutRewardsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -79975,6 +80038,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -80028,6 +80092,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutRankingInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -80081,6 +80146,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutRankingInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -80150,6 +80216,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutRankingInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -80203,6 +80270,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutRankingInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -80346,6 +80414,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutBidsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -80399,6 +80468,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutBidsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -80502,6 +80572,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutBidsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -80555,6 +80626,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutBidsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -80704,6 +80776,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutOffersInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -80757,6 +80830,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutOffersInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -80972,6 +81046,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutOffersInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -81025,6 +81100,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutOffersInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -81217,6 +81293,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutLogsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -81270,6 +81347,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutLogsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -81441,6 +81519,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutLogsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -81494,6 +81573,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutLogsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -81745,6 +81825,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutPlayerTrackingInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -81798,6 +81879,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -81867,6 +81949,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutPlayerTrackingInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -81920,6 +82003,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -82069,6 +82153,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutPantheonInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -82122,6 +82207,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutPantheonInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -82293,6 +82379,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutPantheonInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -82346,6 +82433,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -82415,6 +82503,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutLeaderOfInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -82468,6 +82557,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -82703,6 +82793,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutLeaderOfInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -82756,6 +82847,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -82984,6 +83076,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutClanJoinRequestInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -83037,6 +83130,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -83146,6 +83240,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutClanJoinRequestInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -83199,6 +83294,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -83394,6 +83490,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutClanMessageInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -83447,6 +83544,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -83550,6 +83648,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutClanMessageInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -83603,6 +83702,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -83696,6 +83796,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutClanHistoryInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -83749,6 +83850,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -83852,6 +83954,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutClanHistoryInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -83905,6 +84008,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -84032,6 +84136,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutClanMemberInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84085,6 +84190,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84194,6 +84300,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutClanMemberInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -84247,6 +84354,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -84470,6 +84578,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutReportedCasesInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84523,6 +84632,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84581,6 +84691,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutTargetedCasesInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84634,6 +84745,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84692,6 +84804,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutBanCaseInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84745,6 +84858,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -84916,6 +85030,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutReportedCasesInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -84969,6 +85084,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85033,6 +85149,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutTargetedCasesInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85086,6 +85203,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85150,6 +85268,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutBanCaseInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85203,6 +85322,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85256,6 +85376,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutCreatedConversationsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -85309,6 +85430,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -85389,6 +85511,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutConversationInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -85442,6 +85565,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutConversationInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -85561,6 +85685,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutCreatedConversationsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85614,6 +85739,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85706,6 +85832,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutConversationInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85759,6 +85886,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutConversationInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -85873,6 +86001,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutConversationsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -85926,6 +86055,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutConversationsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86030,6 +86160,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutConversationsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86083,6 +86214,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86194,6 +86326,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutMessagesInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86247,6 +86380,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutMessagesInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86386,6 +86520,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutMessagesInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86439,6 +86574,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86492,6 +86628,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutNotificationsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86545,6 +86682,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86614,6 +86752,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutNotificationsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86667,6 +86806,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86720,6 +86860,7 @@ export namespace Prisma {
   export type PlayerCreateWithoutFightArchiveInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86773,6 +86914,7 @@ export namespace Prisma {
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
     customText?: string | null
     name: string
+    connexionToken?: string
     money: number
     quetzuBought: number
     leader?: boolean
@@ -86919,6 +87061,7 @@ export namespace Prisma {
   export type PlayerUpdateWithoutFightArchiveInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean
@@ -86972,6 +87115,7 @@ export namespace Prisma {
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
     customText?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
     leader?: BoolFieldUpdateOperationsInput | boolean

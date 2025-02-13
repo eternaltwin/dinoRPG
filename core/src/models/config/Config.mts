@@ -2,7 +2,6 @@ export interface Config {
 	general: GeneralConfig;
 	oauth: OauthConfig;
 	db: DbConfig;
-	jwt: JwtConfig;
 	admin: AdminsConfig;
 	discord: Discord;
 }
@@ -29,10 +28,6 @@ interface DbConfig {
 	readonly dbName: string;
 }
 
-interface JwtConfig {
-	readonly secretKey: string;
-	readonly expiration: number;
-}
 
 interface AdminsConfig {
 	readonly biocat: string;

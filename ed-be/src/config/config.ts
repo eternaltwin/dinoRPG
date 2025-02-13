@@ -67,22 +67,6 @@ export interface DiscordConfig {
 	readonly webhookToken: string;
 }
 
-/**
- * Configuration for the JWT.
- *
- * The JWT is used for users authentication.
- */
-export interface JWTConfig {
-	/**
-	 * JWT secret key
-	 */
-	readonly secretKey: string;
-
-	/**
-	 * JWT lifetime
-	 */
-	readonly expiration: number;
-}
 
 /**
  * Server configuration
@@ -112,11 +96,6 @@ export interface Config {
 	 * Configuration for the Eternaltwin client.
 	 */
 	readonly eternaltwin: EternaltwinConfig;
-
-	/**
-	 * Configuration for the JWT.
-	 */
-	readonly jwt: JWTConfig;
 
 	/**
 	 * Application administrator.
@@ -248,12 +227,7 @@ export function config(env: Record<string, string | undefined>): Config {
 		};
 	}
 
-	const rawJWTSecretKey = env.SECRETKEY ?? '6d927010-33ef-418b-9630-2faed53cbe5e';
-	const rawJWTExpiration = readExpiration(env.EXPIRATION);
-	const jwt: JWTConfig = {
-		secretKey: rawJWTSecretKey,
-		expiration: rawJWTExpiration
-	};
+
 
 	const administrator = env.ADMIN ?? 'eb989f16-94a4-47ab-a4bb-151c3f529fac';
 
@@ -267,7 +241,6 @@ export function config(env: Record<string, string | undefined>): Config {
 		eternaltwin,
 		discordNotifications,
 		discordLogs,
-		jwt,
 		administrator,
 		salt
 	};
