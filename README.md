@@ -30,6 +30,12 @@ Installer les dépendances du projet
 $ yarn install
 ```
 
+*Optionnellement, il est possible d'importer une DB avec un extract de la beta afin d'avoir des données de jeu.*
+```bash
+$ pg_restore -U <username> -h <host> -p <port> -d <databasename> -c default.dump
+```
+
+
 Synchroniser les schéma des DB
 ```bash
 $ yarn etwin
@@ -44,20 +50,6 @@ $ yarn dev:windows
 Une fois le lancement terminé vous devriez pouvoir accéder à :
   - DinoRPG_Front : http://localhost:8080
   - Eternal Twin local : http://localhost:50320
-
-# Utilisation du container de DB
-
-Il est possible d'utiliser un container pré-configurer avec postgres et les deux bases de données nécessaires configurées.
-
-Pour se faire, il faut lancer le container une première fois en étant dans le répertoire `./docker`
-```bash
-$ docker-compose up drpg_database
-```
-
-Les fois suivantes il devrait suffire de faire
-```bash
-$ docker start drpg_database
-```
 
 # Erreurs possibles
 En cas d'erreurs, il est recommendé de lancer chaque partie indépendemment des autres pour mieux diagnostiquer les problèmes.
