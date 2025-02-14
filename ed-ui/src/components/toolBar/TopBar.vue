@@ -73,12 +73,19 @@ export default defineComponent({
 	mounted() {
 		this.isLogged = getCookie('token') !== null;
 		this.notification = this.playerStore.getNotificationsCounter;
+		EventBus.on('connected', async e => {
+			console.log('connected', e);
+			this.isLogged = e;
+		});
 		setInterval(() => {
 			this.getTime();
 		}, 1000);
 		setInterval(() => {
 			this.refreshNotif();
 		}, 60 * 1000);
+	},
+	unmounted() {
+		EventBus.off('connected');
 	}
 });
 </script>

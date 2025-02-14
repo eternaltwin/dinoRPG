@@ -4362,11 +4362,7 @@ const checkAfterAttackEffects = (
 	}
 
 	// CONCENTRATION: save last target ID if it was an assault and the target is not the same as the original side of the attacker
-	if (
-		isCloseCombat &&
-		attacker.attacker != target.attacker &&
-		hasSkill(attacker, Skill.CONCENTRATION)
-	) {
+	if (isCloseCombat && attacker.attacker != target.attacker && hasSkill(attacker, Skill.CONCENTRATION)) {
 		attacker.previousTarget = target.id;
 	}
 
@@ -4459,12 +4455,7 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Aura puante: close combat and hit landed, the attacker must not be poisoned
-	if (
-		isCloseCombat &&
-		damage > 0 &&
-		!hasStatus(attacker, Status.POISONED) &&
-		hasSkill(target, Skill.AURA_PUANTE)
-	) {
+	if (isCloseCombat && damage > 0 && !hasStatus(attacker, Status.POISONED) && hasSkill(target, Skill.AURA_PUANTE)) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,

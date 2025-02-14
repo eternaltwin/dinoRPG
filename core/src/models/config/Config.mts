@@ -28,7 +28,6 @@ interface DbConfig {
 	readonly dbName: string;
 }
 
-
 interface AdminsConfig {
 	readonly biocat: string;
 	readonly jahaa: string;

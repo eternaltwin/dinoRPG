@@ -52,7 +52,7 @@ import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
  */
 export async function getLearnableAndUnlockableSkills(req: Request) {
 	const dinozId = +req.params.id;
-	const authed = await auth(req)
+	const authed = await auth(req);
 
 	const dinozSkills = await getDinozForLevelUp(dinozId);
 	if (!dinozSkills) {
@@ -244,7 +244,6 @@ function getDinozLearnableSkills(
 	if (dinoz.level === gameConfig.dinoz.maxLevel) {
 		throw new ExpectedError(`Dinoz ${dinozId} is already at max level.`);
 	}
-
 
 	const level = levelList.find(level => level.id === dinoz.level);
 	if (!level) {

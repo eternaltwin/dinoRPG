@@ -25,7 +25,7 @@ import { rewarder } from '../utils/rewarder.js';
 import { DinozToRewardFight, calculateFightVsMonsters, rewardFight } from './fightService.js';
 
 export async function concentrate(req: Request) {
-	const authed = await auth(req)
+	const authed = await auth(req);
 	const player = await prepareConcentration(authed.id);
 	if (!player) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
@@ -77,7 +77,7 @@ export async function concentrate(req: Request) {
 }
 
 export async function cancelConcentrate(req: Request) {
-	const authed = await auth(req)
+	const authed = await auth(req);
 	const dinoz = await getDinozConcentrationRequest(+req.params.id);
 	if (!dinoz) {
 		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist.`);

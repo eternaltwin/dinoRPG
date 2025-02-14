@@ -68,7 +68,7 @@ routes.get(`${commonPath}/getmoney`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const authed = await auth(req)
+		const authed = await auth(req);
 		const response = await getPlayerMoney(authed.id);
 
 		if (!response) {
@@ -400,7 +400,7 @@ routes.put(
 			return res.status(400).json({ errors: validationResult(req) });
 		}
 		try {
-			const authed = await auth(req)
+			const authed = await auth(req);
 			const { language } = req.body;
 			const response = await updatePlayerLanguage(authed.id, language);
 			return res.status(200).send(response);

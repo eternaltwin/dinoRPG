@@ -67,7 +67,6 @@ export interface DiscordConfig {
 	readonly webhookToken: string;
 }
 
-
 /**
  * Server configuration
  */
@@ -226,8 +225,6 @@ export function config(env: Record<string, string | undefined>): Config {
 			webhookToken: rawDiscordLogToken
 		};
 	}
-
-
 
 	const administrator = env.ADMIN ?? 'eb989f16-94a4-47ab-a4bb-151c3f529fac';
 

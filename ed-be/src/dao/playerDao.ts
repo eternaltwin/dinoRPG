@@ -100,7 +100,8 @@ export async function auth(request: Request, banByPass = false) {
 	}
 
 	const [id, token] = Buffer.from(authorization.split(' ')[1] || '', 'base64')
-		.toString().split(':');
+		.toString()
+		.split(':');
 
 	if (!id || !token || id === 'null' || token === 'null') {
 		throw new ExpectedError('Invalid authorization header content');

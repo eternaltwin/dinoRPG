@@ -40,17 +40,14 @@ export async function authenticate(req: Request) {
 		throw new ExpectedError('No headers found.');
 	}
 
-	const playerId = req.auth?.playerId;
-	if (!playerId) {
-		throw new ExpectedError('No playerId found.');
-	}
+	const authed = await auth(req);
 
 	activeTickets.push({
 		uuid: uuid,
 		channel: req.body.channel,
 		userAgent: headers,
 		ipAddress: ip,
-		playerId: playerId,
+		playerId: authed.id,
 		timestamp: Date.now()
 	});
 
@@ -87,7 +84,7 @@ function doGenericVerificationsForWsAuthent(req: Request) {
  * @param req -> Express request
  */
 async function doSpecificVerificationsForWsAuthent(req: Request): Promise<void> {
-	const authed = await auth(req)
+	const authed = await auth(req);
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
 		const clanForPlayer = await getClanIdAndNameFromPlayerId(authed.id);
 		if (clanForPlayer.ClanMember === null) {

@@ -55,17 +55,14 @@ export class OAuth {
 
 		try {
 			res.send({
-				url: this.#oauthClient.getAuthorizationUri('base', 'authenticate'),
+				url: this.#oauthClient.getAuthorizationUri('base', 'authenticate')
 			});
 		} catch (error) {
 			sendError(res, error);
 		}
 	}
 
-	public async token(
-		req: Request,
-		res: Response<PlayerCommonData>,
-	) {
+	public async token(req: Request, res: Response<PlayerCommonData>) {
 		// Disable CORS
 		res.header('Access-Control-Allow-Origin', '*');
 
@@ -88,7 +85,7 @@ export class OAuth {
 			// Get user's IP
 			// const ip = req.headers['x-forwarded-for']?.toString().split(', ')[0] || req.headers['x-real-ip']?.toString().split(', ')[0] || req.socket.remoteAddress;
 
-/*			if (ip) {
+			/*			if (ip) {
 				// Check if the IP is banned
 				const bannedIp = await ServerState.isIpBanned(this.#prisma, ip);
 
@@ -99,14 +96,14 @@ export class OAuth {
 
 			const { user: etwinUser } = self;
 			// Check if player already exists in database
-			let player = await getCommonDataRequest( etwinUser.id);
+			let player = await getCommonDataRequest(etwinUser.id);
 
 			// If player isn't found in database, create a new one
 			if (player === null) {
 				// Create new player in database
 				player = await createPlayer({
-					id:  etwinUser.id,
-					name:  etwinUser.displayName.current.value,
+					id: etwinUser.id,
+					name: etwinUser.displayName.current.value,
 					money: gameConfig.general.initialMoney,
 					quetzuBought: 0,
 					leader: false,
@@ -141,7 +138,7 @@ export class OAuth {
 					priest: false,
 					shopkeeper: false,
 					notifications: false
-				}
+				};
 			}
 
 			// Update display name if changed on ET side
@@ -150,8 +147,7 @@ export class OAuth {
 				await archiveOldUsername(player.id, player.name);
 			}
 
-
-/*			// Check if user is banned
+			/*			// Check if user is banned
 			if (user.bannedAt) {
 				throw new Error(translate('bannedAccount', user, { reason: translate(`banReason.${user.banReason || ''}`, user) }));
 			}*/
@@ -232,7 +228,6 @@ export class OAuth {
 
 			// Order dinoz
 			commonData.dinoz = orderDinozList(commonData.dinoz);
-
 
 			res.send(commonData);
 		} catch (error: unknown) {

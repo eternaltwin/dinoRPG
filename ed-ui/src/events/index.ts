@@ -19,6 +19,7 @@ type Events = {
 	dinozMenu: boolean;
 	messageToPlayer: { name: string; id: number };
 	refreshDojo: boolean;
+	connected: boolean;
 };
 
 type toast = {

@@ -11,7 +11,7 @@ import { auth } from '../dao/playerDao.js';
  * 				An array with all ingredients that player owns
  */
 export async function getAllIngredientsData(req: Request) {
-	const authed = await auth(req)
+	const authed = await auth(req);
 	const allIngredientsData = await getAllIngredientsDataRequest(authed.id);
 
 	const ingredients = allIngredientsData.map(ingr => {

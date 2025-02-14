@@ -36,7 +36,6 @@ export default function initRoutes(app: Express, config: Config) {
 	app.get(`${apiRoutes.oauthRoute}/redirect`, oauth.redirect.bind(oauth));
 	app.get(`${apiRoutes.oauthRoute}/authenticate/eternal-twin`, oauth.token.bind(oauth));
 
-
 	app.use(adminRoutes);
 	app.use(dinozRoutes);
 	app.use(fightRoutes);
