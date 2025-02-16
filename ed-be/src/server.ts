@@ -27,10 +27,8 @@ import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServ
 import { IncomingMessage } from 'http';
 import { checkBans } from './cron/checkBans.js';
 import { dojoResets } from './cron/dojoResets.js';
-import { tournamentCron } from './cron/tournamentCron.js';
 import TournamentManager from './utils/tournamentManager.js';
 import { prisma } from './prisma.js';
-import { scheduledJobs } from 'node-schedule';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -88,10 +86,8 @@ export function main(cx: ServerContext) {
 	itinerantMerchant().start();
 	checkBans().start();
 	dojoResets().start();
-	tournamentCron().start();
 
 	scheduleOffersExpiration();
-	// resumeTournament();
 	TournamentManager.resume(prisma);
 
 	initRoutes(app, cx.config);
