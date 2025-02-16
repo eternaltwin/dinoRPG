@@ -18,7 +18,7 @@
 				{{ (page - 1) * 20 + (index + 1) }}
 			</td>
 			<td><DZUser :user="ranking.player" :me="ranking.player.id === me" :friend="false" /></td>
-			<td>{{ Math.trunc(ranking.player.worth * 10000) / 100 }}%</td>
+			<td>{{ ranking.player.worth }}%</td>
 			<td>{{ ranking.dojo }}</td>
 		</tr>
 	</DZTable>

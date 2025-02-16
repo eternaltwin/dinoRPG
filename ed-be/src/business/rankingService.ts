@@ -33,13 +33,13 @@ export async function getRanking(req: Request) {
 			playersRanking = rank.map(p => {
 				const victory = p.player?.Dojo?.DojoChallengeHistory.filter(h => h.victory).length ?? 0;
 				const totalMatch = p.player?.Dojo?.DojoChallengeHistory.length ?? 0;
-				const worth = Math.round(victory / totalMatch);
+				const worth = victory / totalMatch;
 				return {
 					dojo: p.dojo,
 					player: {
 						id: p.player?.id,
 						name: p.player?.name,
-						worth
+						worth: Math.trunc(worth * 10000) / 100
 					}
 				};
 			});
