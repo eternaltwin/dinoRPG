@@ -8,7 +8,7 @@ export const tournamentQualifRewards: QualifReward[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
-				value: 50000
+				value: 150000
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -37,7 +37,7 @@ export const tournamentQualifRewards: QualifReward[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
-				value: 20000
+				value: 75000
 			},
 			{
 				rewardType: RewardEnum.ITEM,
@@ -55,17 +55,8 @@ export const tournamentQualifRewards: QualifReward[] = [
 		floor: 1000,
 		rewards: [
 			{
-				rewardType: RewardEnum.GOLD,
-				value: 10000
-			},
-			{
 				rewardType: RewardEnum.ITEM,
 				value: Item.TOUFUFU_BABY,
-				quantity: 1
-			},
-			{
-				rewardType: RewardEnum.ITEM,
-				value: Item.BOX_EPIC,
 				quantity: 1
 			}
 		]
@@ -75,11 +66,25 @@ export const tournamentQualifRewards: QualifReward[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
-				value: 5000
+				value: 50000
 			},
 			{
 				rewardType: RewardEnum.ITEM,
 				value: Item.VOID_SPHERE,
+				quantity: 1
+			}
+		]
+	},
+	{
+		floor: 500,
+		rewards: [
+			{
+				rewardType: RewardEnum.GOLD,
+				value: 25000
+			},
+			{
+				rewardType: RewardEnum.ITEM,
+				value: Item.BOX_EPIC,
 				quantity: 1
 			}
 		]
