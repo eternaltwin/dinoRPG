@@ -994,7 +994,7 @@ class TournamentManager {
 		const allRewarded = await prisma.ranking.findMany({
 			where: {
 				dojo: {
-					gte: 750
+					gte: 500
 				}
 			},
 			select: {
