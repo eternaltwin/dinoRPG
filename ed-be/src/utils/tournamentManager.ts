@@ -578,13 +578,13 @@ class TournamentManager {
 			}
 		}
 
-		const firstRound = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
+		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
 				teamSize: teamSize,
 				teamRace: teamRace.toString(),
 				levelLimit: levelLimit,
-				nextRound: firstRound
+				nextRound: endQualif
 			},
 			select: {
 				id: true
@@ -593,28 +593,28 @@ class TournamentManager {
 		this.tournamentId = newTournament.id;
 
 		const frTrad = {
-			endQualif: dayjs(firstRound).locale('fr').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM mm:hh'),
 			rule1: translateTarget('dojo.teamSize', 'fr', { nb: teamSize }),
 			rule2: translateTarget('dojo.raceLimit', 'fr', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
 			})
 		};
 		const esTrad = {
-			endQualif: dayjs(firstRound).locale('es').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM mm:hh'),
 			rule1: translateTarget('dojo.teamSize', 'es', { nb: teamSize }),
 			rule2: translateTarget('dojo.raceLimit', 'es', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
 			})
 		};
 		const enTrad = {
-			endQualif: dayjs(firstRound).locale('en').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM mm:hh'),
 			rule1: translateTarget('dojo.teamSize', 'en', { nb: teamSize }),
 			rule2: translateTarget('dojo.raceLimit', 'en', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
 			})
 		};
 		const deTrad = {
-			endQualif: dayjs(firstRound).locale('de').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM mm:hh'),
 			rule1: translateTarget('dojo.teamSize', 'de', { nb: teamSize }),
 			rule2: translateTarget('dojo.raceLimit', 'de', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
@@ -695,7 +695,14 @@ class TournamentManager {
 
 		// Vérifier si le tournoi est toujours en cours
 		const currentState = await manager.getCurrentState(prisma);
-		if (currentState.nextScheduledMatch && currentState.round <= 7) {
+		const schedule = manager.getSchedule();
+		if (currentState.nextScheduledMatch && new Date() <= schedule.poolsStart) {
+			LOGGER.log(
+				`Reprise du tournoi ${activeTournament.id} à la phase de qualification, récompenses prévu pour ${currentState.nextScheduledMatch}`
+			);
+			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.rewardQualification(prisma));
+			return manager;
+		} else if (currentState.nextScheduledMatch && currentState.round <= 7) {
 			if (currentState.nextScheduledMatch <= new Date()) {
 				await manager.generateNextRound(prisma);
 				return manager;
@@ -1020,7 +1027,24 @@ class TournamentManager {
 					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId));
 				});
 		});
+		LOGGER.log(`Rewarded ${allRewarded.length} players.`);
 		await Promise.all(promises);
+		const nextPlannedMatch = this.getMatchTimes().find(m => m.round === 0);
+		if (!nextPlannedMatch) {
+			LOGGER.error('nextPlannedMatch is not found');
+			return;
+		}
+		// Record next round time
+		await prisma.tournament.update({
+			where: {
+				id: this.tournamentId
+			},
+			data: {
+				nextRound: nextPlannedMatch.time
+			}
+		});
+		scheduleJob(this.tournamentId, nextPlannedMatch.time, () => this.generateNextRound(prisma));
+		LOGGER.log(`First round is for ${nextPlannedMatch.time}.`);
 	}
 }
 
