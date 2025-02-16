@@ -1,7 +1,8 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
-import { TriggerEnum, RewardEnum, ConditionEnum } from '../../enums/Parser.mjs';
+import { TriggerEnum, RewardEnum, ConditionEnum, Operator } from '../../enums/Parser.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
 
 export const FOU: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -46,7 +47,10 @@ export const FOU: Readonly<Record<string, NpcData>> = {
 		nextStep: ['fight_win'],
 		fight: [monsterList.KORGON],
 		condition: {
-			[ConditionEnum.MINLEVEL]: 18
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 18 },
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.LANTERN } }
+			]
 		},
 		reward: [
 			{
