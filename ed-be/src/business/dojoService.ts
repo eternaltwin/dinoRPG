@@ -410,9 +410,7 @@ export async function skipOpponent(req: Request) {
 
 	const ranking = await getDojoDataForRanking(authed.id);
 	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length;
-	const worth = isNaN(victory / ranking.DojoChallengeHistory.length)
-		? 0
-		: victory / ranking.DojoChallengeHistory.length;
+	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
 
 	const promises = [];
 	promises.push(removeMoney(authed.id, 200));
