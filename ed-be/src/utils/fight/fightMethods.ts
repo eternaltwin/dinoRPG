@@ -2473,7 +2473,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Heal each fighter of the caster's group
 			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 2 + fighter.stats.base[ElementType.WOOD] * 2;
 			getAllies(fightData, fighter).forEach(ally => {
-				heal(fightData, ally, hpHealed, activate_step);
+				heal(fightData, ally, randomBetweenSeeded(fightData.rng, 1, hpHealed), activate_step);
 			});
 			// Add step for fx
 			fightData.steps.push(activate_step);
