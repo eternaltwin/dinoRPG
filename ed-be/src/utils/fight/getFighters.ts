@@ -188,7 +188,8 @@ export const initializeDinoz = (
 		canHitFlying: false,
 		canHitIntangible: false,
 		hasRock: false,
-		hasUsedHypnose: false
+		hasUsedHypnose: false,
+		hasUsedHyperventilation: false
 	};
 
 	handleSkills(random, team, fighter, place);
@@ -313,7 +314,8 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		canHitIntangible: dinoz.canHitIntangible,
 		cancelArmor: dinoz.cancelArmor,
 		hasRock: dinoz.hasRock,
-		hasUsedHypnose: false
+		hasUsedHypnose: false,
+		hasUsedHyperventilation: false
 	};
 
 	// Redo the element ordering because the original dinoz may have altered elements
@@ -506,7 +508,8 @@ export const initializeMonster = (
 		canHitFlying: false,
 		canHitIntangible: false,
 		hasRock: false,
-		hasUsedHypnose: false
+		hasUsedHypnose: false,
+		hasUsedHyperventilation: false
 	};
 
 	// Order skills by priority, random if equal

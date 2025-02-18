@@ -167,6 +167,7 @@ export interface DetailedFighter {
 	// Hypnotized: duration (in cycles) of the hypnosis
 	hypnotized?: number;
 	hasUsedHypnose: boolean;
+	hasUsedHyperventilation: boolean;
 	// Mud wall
 	mudWall?: number;
 	// Invocations

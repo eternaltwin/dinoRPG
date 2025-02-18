@@ -1105,7 +1105,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
-	// Cancel method to use if the item ends up not being triggered
+	// Cancel method to use if the item or event ends up not being triggered
 	const cancel = () => {
 		// Remove last step
 		fightData.steps.pop();
@@ -1189,6 +1189,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
+				if (hasStatus(fighter, Status.SHIELDED)) cancel();
 				addStatus(fightData, fighter, Status.SHIELDED);
 				break;
 			}
@@ -1274,6 +1275,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.HYPERVENTILATION: {
+				if (fighter.hasUsedHyperventilation) cancel();
+
+				fighter.hasUsedHyperventilation = true;
+
 				// Add step for fx
 				fightData.steps.push(activate_step);
 
@@ -1282,11 +1287,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				opponents.forEach(opponent => {
 					// Reduce max energy by 20%
 					const newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
-
-					// Cancel if no change
-					if (newMaxEnergy === opponent.maxEnergy) {
-						return cancel();
-					}
 
 					setMaxEnergy(opponent, newMaxEnergy);
 
@@ -1441,11 +1441,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Reduce max energy by 30%
 				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
 
-				// Cancel if no change
-				if (newMaxEnergy === opponent.maxEnergy) {
-					return cancel();
-				}
-
 				setMaxEnergy(opponent, newMaxEnergy);
 
 				// Add reduce energy step
@@ -1519,6 +1514,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.MAINS_COLLANTES: {
+				// TODO wrong implementation, it triggers once and gives the fighter the ability to cancel dodge
 				// Get random opponent
 				const opponent = getRandomOpponent(fightData, fighter);
 
@@ -1537,11 +1533,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.MUTINERIE: {
 				// Get clones
 				const clones = getFighters(fightData, ['clone']);
-
-				// Cancel if no clones
-				if (!clones.length) {
-					return cancel();
-				}
 
 				clones.forEach(clone => {
 					// TODO add effect
@@ -1654,15 +1645,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.M_UNTOUCHABLE: {
 				const tangibleAllies = getAllies(fightData, fighter).filter(f => !hasStatus(f, Status.INTANGIBLE));
 
-				if (!tangibleAllies.length) {
-					return cancel();
+				if (tangibleAllies.length > 0) {
+					// Get random ally
+					const ally = tangibleAllies[randomBetweenSeeded(fightData.rng, 0, tangibleAllies.length - 1)];
+
+					// Add status
+					addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.MEDIUM);
 				}
-
-				// Get random ally
-				const ally = tangibleAllies[randomBetweenSeeded(fightData.rng, 0, tangibleAllies.length - 1)];
-
-				// Add status
-				addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.M_FASTER: {
@@ -1679,15 +1668,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Get non flying allies
 				const nonFlyingAllies = getAllies(fightData, fighter).filter(f => !hasStatus(f, Status.FLYING));
 
-				if (!nonFlyingAllies.length) {
-					return cancel();
+				if (nonFlyingAllies.length > 0) {
+					// Get random ally
+					const ally = nonFlyingAllies[randomBetweenSeeded(fightData.rng, 0, nonFlyingAllies.length - 1)];
+
+					// Add status
+					addStatus(fightData, ally, Status.FLYING);
 				}
-
-				// Get random ally
-				const ally = nonFlyingAllies[randomBetweenSeeded(fightData.rng, 0, nonFlyingAllies.length - 1)];
-
-				// Add status
-				addStatus(fightData, ally, Status.FLYING);
 				break;
 			}
 			default:
@@ -1789,6 +1776,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Check if an opponent is flying
 				const opponent = getOpponents(fightData, fighter).find(f => hasStatus(f, Status.FLYING));
 
+				// Never use the item if no opponent is flying
 				if (!opponent) {
 					return cancel();
 				}
@@ -1899,6 +1887,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					return cancel();
 				}
 
+				// TODO rework
 				// Remove BEER status
 				allies.forEach(f => {
 					removeStatus(fightData, f, Status.BEER);
@@ -1960,7 +1949,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				if (hpDelta < 0) hpDelta = 0;
 
 				// Less chance to heal if lost HP is less than 50. Sure to heal if lost HP is 50+
-				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
+				// Will not heal if lost less than 10 HP.
+				if ((fighter.startingHp - fighter.hp) <= 10 || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
 					return cancel();
 				}
 
@@ -2793,6 +2783,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		// Other
 		case Skill.CATCH: {
+			// TODO check the monster can be caught
+			// TODO can only save up to 3 monsters
 			// Get monster opponents
 			const opponents = getOpponents(fightData, fighter, ['monster']);
 
@@ -3388,21 +3380,19 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get dinoz opponents
 			const opponents = getOpponents(fightData, fighter, ['dinoz']);
 
-			if (!opponents.length) {
-				return cancel();
+			if (opponents.length > 0) {
+				// Get random opponent
+				const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
+
+				// Add leave step
+				fightData.steps.push({
+					action: 'leave',
+					fighter: stepFighter(opponent),
+					animation: LeaveAnimation.FLYING
+				});
+
+				opponent.escaped = true;
 			}
-
-			// Get random opponent
-			const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
-
-			// Add leave step
-			fightData.steps.push({
-				action: 'leave',
-				fighter: stepFighter(opponent),
-				animation: LeaveAnimation.FLYING
-			});
-
-			opponent.escaped = true;
 			break;
 		}
 		// More race skills
