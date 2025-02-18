@@ -1514,20 +1514,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.MAINS_COLLANTES: {
-				// TODO wrong implementation, it triggers once and gives the fighter the ability to cancel dodge
-				// Get random opponent
-				const opponent = getRandomOpponent(fightData, fighter);
-
-				// Add target
-				activate_step.targets.push({ tid: opponent.id });
-
-				// Check if NO_DODGE
-				if (hasStatus(opponent, Status.NO_DODGE)) {
+				// TODO probably want to rework this so it's a passive skill and does not use up a skill slot
+				// TODO because the skill has high priority and high proba, but can only be used once so it uses a skill slot
+				// The fighter learns to cancel dodge.
+				if (fighter.cancelAssaultDodge) {
 					return cancel();
 				}
 
-				// Add status
-				addStatus(fightData, opponent, Status.NO_DODGE);
+				fighter.cancelAssaultDodge = true;
 				break;
 			}
 			case Skill.MUTINERIE: {
@@ -4021,7 +4015,7 @@ const attackTarget = (
 		);
 
 		// Check for assault dodge
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && fightData.rng() < target.stats.special.evasion - 1) {
+		if (isAssault && !hasStatus(target, Status.PETRIFIED) && !attacker.cancelAssaultDodge && fightData.rng() < target.stats.special.evasion - 1) {
 			isDodged = true;
 		}
 

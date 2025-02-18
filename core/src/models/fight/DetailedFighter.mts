@@ -26,7 +26,6 @@ export enum Status {
 	BLESSED = 'blessed',
 	HEALING = 'healing',
 	// Skills
-	NO_DODGE = 'noDodge',
 	COPY_HEAL = 'copyHeal',
 	NO_INVOCATION = 'noInvocation',
 	USED_FUJIN = 'usedFujin',
@@ -159,7 +158,9 @@ export interface DetailedFighter {
 	nextAssaultBonus: number;
 	nextAssaultMultiplier: number;
 	// Cancel armor
-	cancelArmor?: boolean;
+	cancelArmor: boolean;
+	// Cancel dodge
+	cancelAssaultDodge: boolean;
 	// Survival
 	canSurvive?: boolean;
 	// Costume

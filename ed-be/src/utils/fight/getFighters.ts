@@ -187,6 +187,8 @@ export const initializeDinoz = (
 		perception: false,
 		canHitFlying: false,
 		canHitIntangible: false,
+		cancelArmor: false,
+		cancelAssaultDodge: false,
 		hasRock: false,
 		hasUsedHypnose: false,
 		hasUsedHyperventilation: false
@@ -314,6 +316,8 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		canHitIntangible: dinoz.canHitIntangible,
 		cancelArmor: dinoz.cancelArmor,
 		hasRock: dinoz.hasRock,
+		// Cancel dodge is not copied
+		cancelAssaultDodge: false,
 		hasUsedHypnose: false,
 		hasUsedHyperventilation: false
 	};
@@ -507,6 +511,8 @@ export const initializeMonster = (
 		perception: false,
 		canHitFlying: false,
 		canHitIntangible: false,
+		cancelArmor: false,
+		cancelAssaultDodge: false,
 		hasRock: false,
 		hasUsedHypnose: false,
 		hasUsedHyperventilation: false
