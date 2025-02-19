@@ -166,6 +166,13 @@ target = "eternaltwin://stdout"
 # - `secret`: Shared secret, used for oauth authentication
 [seed.app]
 
+# Add user with specific uuid
+[seed.user.dino]
+username = "dino"
+password = "dino"
+id = "43f8c954-3841-47f9-96dc-b3f29a0063b3"
+
+
 [seed.app.emush_dev]
 display_name = "eMush"
 uri = "http://emush.localhost/"

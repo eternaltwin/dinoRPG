@@ -1802,16 +1802,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eternaltwin/cli@npm:^0.14.3":
-  version: 0.14.3
-  resolution: "@eternaltwin/cli@npm:0.14.3"
+"@eternaltwin/cli@npm:^0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/cli@npm:0.16.4"
   dependencies:
-    "@eternaltwin/exe": "npm:0.14.3"
+    "@eternaltwin/exe": "npm:0.16.4"
     foreground-child: "npm:^3.1.1"
     tslib: "npm:^2.6.2"
   bin:
     eternaltwin: ./bin/eternaltwin.mjs
-  checksum: 10/adfef14392e72df341d0d9dad7476876b64859b4b38756397d24e5679fa3165454574b9c8386875f525cc03369b3eeb3577de34ae348614a05686606cace00f0
+  checksum: 10/a32d9bb45eb7810994a1e35fce99b344dc02c0c3598577ab88700e33111adbc5e6868ea8a8d09d982e32a1262985e95820e490eacf9ba156472b4ba9447a8328
   languageName: node
   linkType: hard
 
@@ -1859,50 +1859,50 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@eternaltwin/exe-x86_64-apple-darwin@npm:0.14.3":
-  version: 0.14.3
-  resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.14.3"
+"@eternaltwin/exe-x86_64-apple-darwin@npm:0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/exe-x86_64-apple-darwin@npm:0.16.4"
   bin:
     eternaltwin-x86_64-apple-darwin: ./eternaltwin
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.14.3":
-  version: 0.14.3
-  resolution: "@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.14.3"
+"@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/exe-x86_64-pc-windows-gnu@npm:0.16.4"
   bin:
     eternaltwin-x86_64-pc-windows-gnu: ./eternaltwin.exe
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.14.3":
-  version: 0.14.3
-  resolution: "@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.14.3"
+"@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/exe-x86_64-unknown-linux-gnu@npm:0.16.4"
   bin:
     eternaltwin-x86_64-unknown-linux-gnu: ./eternaltwin
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.14.3":
-  version: 0.14.3
-  resolution: "@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.14.3"
+"@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/exe-x86_64-unknown-linux-musl@npm:0.16.4"
   bin:
     eternaltwin-x86_64-unknown-linux-gnu: ./eternaltwin
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@eternaltwin/exe@npm:0.14.3":
-  version: 0.14.3
-  resolution: "@eternaltwin/exe@npm:0.14.3"
+"@eternaltwin/exe@npm:0.16.4":
+  version: 0.16.4
+  resolution: "@eternaltwin/exe@npm:0.16.4"
   dependencies:
-    "@eternaltwin/exe-x86_64-apple-darwin": "npm:0.14.3"
-    "@eternaltwin/exe-x86_64-pc-windows-gnu": "npm:0.14.3"
-    "@eternaltwin/exe-x86_64-unknown-linux-gnu": "npm:0.14.3"
-    "@eternaltwin/exe-x86_64-unknown-linux-musl": "npm:0.14.3"
+    "@eternaltwin/exe-x86_64-apple-darwin": "npm:0.16.4"
+    "@eternaltwin/exe-x86_64-pc-windows-gnu": "npm:0.16.4"
+    "@eternaltwin/exe-x86_64-unknown-linux-gnu": "npm:0.16.4"
+    "@eternaltwin/exe-x86_64-unknown-linux-musl": "npm:0.16.4"
     furi: "npm:^3.0.0"
     tslib: "npm:^2.6.2"
   dependenciesMeta:
@@ -1914,7 +1914,7 @@ __metadata:
       optional: true
     "@eternaltwin/exe-x86_64-unknown-linux-musl":
       optional: true
-  checksum: 10/2b9ef3b511bd958970df25b0b6b63307ca3460377e7a9bce0332cddcd0df3e650e784c7192aa04a3945a57ae79674bc7d142c2afef0dad7c12f4848ec083f99c
+  checksum: 10/1f45f07e6109fa6bfa6f056f44fc8f99e0d1f3ab297b6309f16512e055b527d53b84f1900c47ba2a1ccbd8f74db984f30b0995c19a08425c21d06cfd4edf80cd
   languageName: node
   linkType: hard
 
@@ -7633,7 +7633,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "eternal-twin@workspace:Eternaltwin"
   dependencies:
-    "@eternaltwin/cli": "npm:^0.14.3"
+    "@eternaltwin/cli": "npm:^0.16.4"
   languageName: unknown
   linkType: soft
 
@@ -13686,7 +13686,7 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A^5.7.2#optional!builtin<compat/typescript>":
   version: 5.7.2
-  resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=b45daf"
+  resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=d69c25"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
