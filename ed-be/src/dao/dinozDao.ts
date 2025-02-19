@@ -1,7 +1,7 @@
-import { Dinoz, LogType, Prisma, TournamentTeam, UnavailableReason } from '@drpg/prisma';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 // Getters
 
@@ -932,6 +932,17 @@ export async function getFollowingDinoz(dinozId: number) {
 		select: {
 			id: true,
 			followers: { select: { id: true } }
+		}
+	});
+}
+
+export async function getLeaderWithFollowers(dinozId: number) {
+	return await prisma.dinoz.findFirst({
+		where: { followers: { some: { id: dinozId } } },
+		select: {
+			id: true,
+			followers: { select: { id: true, skills: true } },
+			skills: true
 		}
 	});
 }

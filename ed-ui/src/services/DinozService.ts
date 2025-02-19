@@ -1,13 +1,13 @@
-import { http } from '../utils/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
-import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
+import { http } from '../utils/index.js';
 
 export const DinozService = {
 	buyDinoz(id: number): Promise<DinozFiche> {
@@ -129,6 +129,16 @@ export const DinozService = {
 			.post(`/dinoz/${dinozId}/unfollow`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	changeLeader(followerId: number, currentLeaderId: number): Promise<void> {
+		return http()
+			.post(`/dinoz/${followerId}/change/${currentLeaderId}`)
+			.then(res => {
+				return Promise.resolve(res.data);
+			})
+			.catch(err => {
+				return Promise.reject(err);
+			});
 	},
 	disband(dinozId: number): Promise<void> {
 		return http()

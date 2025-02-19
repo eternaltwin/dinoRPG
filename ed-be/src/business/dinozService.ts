@@ -3,15 +3,21 @@ import { Action, ActionFiche, actionList } from '@drpg/core/models/dinoz/ActionL
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { GatherType } from '@drpg/core/models/enums/GatherType';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { ShopType } from '@drpg/core/models/enums/ShopType';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { gatherList } from '@drpg/core/models/gather/gatherList';
 import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
+import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { shopList } from '@drpg/core/models/shop/ShopList';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { shopList } from '@drpg/core/models/shop/ShopList';
 import {
 	actualPlace,
 	canChangeSkillState,
@@ -26,6 +32,7 @@ import {
 	toDinozFiche,
 	toSkillDetails
 } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import {
 	discoverBox,
 	getGridSize,
@@ -34,7 +41,8 @@ import {
 	saveGrid
 } from '@drpg/core/utils/GatherUtils';
 import { checkCondition } from '@drpg/core/utils/checkCondition';
-import { Concentration, Dinoz, DinozMission, LogType, DinozStatus, UnavailableReason, DinozSkill } from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, LogType, UnavailableReason } from '@drpg/prisma';
+import dayjs from 'dayjs';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { digTreasures } from '../constants/digTreasures.js';
@@ -54,6 +62,7 @@ import {
 	getDinozSkillRequest,
 	getFollowingDinoz,
 	getIrmaUsageInfo,
+	getLeaderWithFollowers,
 	getManageData,
 	isDinozInTournament,
 	updateDinoz,
@@ -62,6 +71,7 @@ import {
 } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, setSkillStateRequest } from '../dao/dinozSkillDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
 import {
 	addMoney,
 	auth,
@@ -75,29 +85,20 @@ import { createGrid, getCommonGatherInfo, updateGrid } from '../dao/playerGather
 import { increaseIngredientQuantity, setIngredient } from '../dao/playerIngredientDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { getPlayerRewards } from '../dao/playerRewardsDao.js';
+import { updateQuest } from '../dao/questsDao.js';
+import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
+import { getSpecificSecret } from '../dao/secretDao.js';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { prisma } from '../prisma.js';
+import { selectBox } from '../utils/boxesLogic.js';
+import { getNumberOfGatheringTries, initializeDinoz } from '../utils/dinoz.js';
 import { getRandomNumber } from '../utils/index.js';
 import { rewarder } from '../utils/rewarder.js';
+import TournamentManager from '../utils/tournamentManager.js';
+import translate from '../utils/translate.js';
 import { fightMonstersAtPlace } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
-import { createLog, createLogForMultipleDinoz } from '../dao/logDao.js';
-import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
-import { selectBox } from '../utils/boxesLogic.js';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
-import dayjs from 'dayjs';
-import { getSpecificSecret } from '../dao/secretDao.js';
-import { ShopType } from '@drpg/core/models/enums/ShopType';
-import { setSpecificStat } from '../dao/trackingDao.js';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { Scenario } from '@drpg/core/models/enums/Scenario';
-import { updateQuest } from '../dao/questsDao.js';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
-import { GRID_FINISHED_GOLD_REWARD } from '@drpg/core/models/gather/gatherRewards';
-import TournamentManager from '../utils/tournamentManager.js';
-import { prisma } from '../prisma.js';
-import { getNumberOfGatheringTries, initializeDinoz } from '../utils/dinoz.js';
 
 /**
  * @summary Get available action from dinoz
@@ -147,6 +148,7 @@ export async function getAvailableActions(
 	// Leaders actions
 	if (dinoz.leaderId) {
 		availableActions.push(actionList[Action.UNFOLLOW]);
+		availableActions.push(actionList[Action.CHANGE_LEADER]);
 	} else {
 		// Check if there is a dinoz to follow
 		const potentialDinozToFollow = await getAvailableDinozToFollow(player.id, dinoz.id);
@@ -1188,7 +1190,7 @@ export async function followDinoz(req: Request) {
 	//Check if leader is not at max followers
 	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id));
 	if (leader.followers.length >= max) {
-		throw new ExpectedError('Dinoz cannot be followed by any dinoz');
+		throw new ExpectedError(translate('maxFollowers', authed));
 	}
 
 	if (dinoz.leaderId || dinoz.followers.length > 0) {
@@ -1226,6 +1228,49 @@ export async function unfollowDinoz(req: Request) {
 
 	// Update dinoz
 	await updateDinoz(dinozId, { leader: { disconnect: true } });
+}
+
+/**
+ * Change the leader of a group
+ */
+export async function changeLeaderDinoz(req: Request) {
+	const authed = await auth(req);
+	const dinozId = +req.params.id;
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(authed.id, dinozId))) {
+		throw new ExpectedError('Player does not own this dinoz');
+	}
+
+	// Retrieve the dinoz and its group (followers + skills)
+	const currentLeader = await getLeaderWithFollowers(dinozId);
+
+	if (!currentLeader) {
+		throw new ExpectedError('No leader found for this dinoz');
+	}
+
+	// Retrieve the follower who will become the new leader directly from currentLeader.followers
+	const newLeader = currentLeader.followers.find(f => f.id === dinozId);
+
+	if (!newLeader) {
+		throw new ExpectedError('Dinoz not found as a follower of the current leader');
+	}
+
+	// Check if the new leader can have this many followers
+	const maxFollowers = getMaxFollowers(newLeader);
+	if (currentLeader.followers.length > maxFollowers) {
+		throw new ExpectedError(translate('maxFollowers', authed));
+	}
+
+	// Update leader/follower relationships
+	await updateDinoz(newLeader.id, { leader: { disconnect: true } }); // The new leader no longer has a leader
+
+	await updateDinoz(currentLeader.id, { leader: { connect: { id: newLeader.id } } }); // The former leader becomes a follower of the new leader
+
+	await prisma.dinoz.updateMany({
+		where: { leaderId: currentLeader.id },
+		data: { leaderId: newLeader.id } // All former followers now follow the new leader
+	});
 }
 
 export async function disband(req: Request) {

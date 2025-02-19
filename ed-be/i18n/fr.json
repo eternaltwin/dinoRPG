@@ -41,6 +41,7 @@
 	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
 	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
 	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
+	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
 		"dinozNotPlayer": "Ces Dinoz ne peuvent pas combattre",

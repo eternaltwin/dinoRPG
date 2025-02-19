@@ -83,31 +83,31 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
-import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
-import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
-import EventBus from '../../events/index.js';
-import { DinozService, FightService, MissionService } from '../../services/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { formatText } from '../../utils/formatText.js';
-import { mixin } from '../../mixin/mixin.js';
-import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { npcList } from '@drpg/core/models/npc/NpcList';
-import Resurect from '../../components/modal/ResurrectModal.vue';
-import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
-import NPCModal from '../../components/modal/NPCModal.vue';
-import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
 import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
-import { GatherType } from '@drpg/core/models/enums/GatherType';
-import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
-import DZDisclaimer from '../common/DZDisclaimer.vue';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
-import DZFollow from '../../components/dinoz/DZFollow.vue';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
-import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { GatherType } from '@drpg/core/models/enums/GatherType';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
+import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
+import { npcList } from '@drpg/core/models/npc/NpcList';
+import { Rewarder } from '@drpg/core/models/reward/Rewarder';
+import { orderDinozList } from '@drpg/core/utils/DinozUtils';
+import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { defineComponent, PropType } from 'vue';
+import DZFollow from '../../components/dinoz/DZFollow.vue';
+import MissionHUDVue from '../../components/dinoz/MissionHUD.vue';
+import MissionRewardModal from '../../components/modal/MissionRewardModal.vue';
+import NPCModal from '../../components/modal/NPCModal.vue';
+import Resurect from '../../components/modal/ResurrectModal.vue';
+import { itinerantShopNameList, missionsList, shopNameList } from '../../constants/index.js';
+import EventBus from '../../events/index.js';
+import { mixin } from '../../mixin/mixin.js';
+import { DinozService, FightService, MissionService } from '../../services/index.js';
+import { dinozStore, playerStore, sessionStore } from '../../store/index.js';
+import { formatText } from '../../utils/formatText.js';
+import { errorHandler } from '../../utils/index.js';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -385,6 +385,33 @@ export default defineComponent({
 						});
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
+						EventBus.emit('refreshDinoz', true);
+					} catch (e) {
+						errorHandler.handle(e, this.$toast);
+					}
+					break;
+				case Action.CHANGE_LEADER:
+					try {
+						const followerId = +this.$route.params.id;
+						const currentLeader = this.dinozStore.getDinozList.find(d => d.id === followerId)?.leaderId;
+
+						if (!currentLeader) {
+							this.$toast.open({ message: formatText(this.$t(`toast.noFollowers`)), type: 'error' });
+							return;
+						}
+
+						await DinozService.changeLeader(followerId, currentLeader);
+
+						const dinozList = this.dinozStore.getDinozList;
+						if (!dinozList) {
+							this.$toast.open({ message: formatText(this.$t(`toast.dinozListMissing`)), type: 'error' });
+							return;
+						}
+
+						this.dinozStore.setDinozList(orderDinozList(dinozList));
+
+						this.$toast.open({ message: formatText(this.$t(`toast.leaderChanged`)), type: 'success' });
+
 						EventBus.emit('refreshDinoz', true);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);

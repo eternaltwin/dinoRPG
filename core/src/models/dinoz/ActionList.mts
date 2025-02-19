@@ -4,6 +4,8 @@ export enum Action {
 	FIGHT = 'fight',
 	FOLLOW = 'follow',
 	UNFOLLOW = 'unfollow',
+	CHANGE_LEADER = 'change_leader',
+	DISBAND = 'disband',
 	SHOP = 'shop',
 	ITINERANTSHOP = 'itinerant_shop',
 	LEVEL_UP = 'levelup',
@@ -21,7 +23,6 @@ export enum Action {
 	ANNIV = 'anniv',
 	DAILY = 'daily',
 	XMAS = 'xmas',
-	DISBAND = 'disband',
 	IRMA = 'irma',
 	IRMAS = 'irmas',
 	ACTION = 'action',
@@ -50,6 +51,14 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.UNFOLLOW]: {
 		name: Action.UNFOLLOW,
+		imgName: 'act_follow_stop'
+	},
+	[Action.CHANGE_LEADER]: {
+		name: Action.CHANGE_LEADER,
+		imgName: 'act_leader'
+	},
+	[Action.DISBAND]: {
+		name: Action.DISBAND,
 		imgName: 'act_follow_stop'
 	},
 	[Action.SHOP]: {
@@ -121,10 +130,6 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 		name: Action.XMAS,
 		imgName: 'act_default'
 	},
-	[Action.DISBAND]: {
-		name: Action.DISBAND,
-		imgName: 'act_follow_stop'
-	},
 	[Action.IRMA]: {
 		name: Action.IRMA,
 		imgName: 'act_irma'
@@ -147,7 +152,7 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.REST]: {
 		name: Action.REST,
-		imgName: 'act_default'
+		imgName: 'act_rest'
 	},
 	[Action.STOP_REST]: {
 		name: Action.STOP_REST,

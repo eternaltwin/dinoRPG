@@ -31,6 +31,8 @@
 		"dinozDataMissing": "Données du Dinoz manquantes.",
 		"selectADinozAtMarketFirst": "Vous devez d'abord sélectionner un Dinoz au marché.",
 		"unknownDinoz": "Dinoz inconnu.",
+		"noFollowers": "Le Dinoz n'est pas suivi.",
+		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
 		"missingUser": "Utilisateur manquant.",
 		"missingData": "Données manquantes.",
 		"AlreadySphere": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
@@ -151,7 +153,8 @@
 			"rest": "Votre Dinoz peut **se reposer** pour regagner des points de vie. Pendant ce temps, il ne pourra effectuer aucune autre action !",
 			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
-			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments."
+			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
+			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -182,7 +185,8 @@
 			"rest": "Se Reposer",
 			"stop_rest": "Arrêter de se reposer",
 			"itinerant_shop": "Marchand Ambulant",
-			"reincarnation": "Réincarnation"
+			"reincarnation": "Réincarnation",
+			"change_leader": "Devenir Leader"
 		}
 	},
 	"button": {

@@ -6,6 +6,7 @@ import { body, param, validationResult } from 'express-validator';
 import {
 	betaMove,
 	buyDinoz,
+	changeLeaderDinoz,
 	digWithDinoz,
 	disband,
 	followDinoz,
@@ -24,9 +25,9 @@ import {
 	updateOrders,
 	useIrma
 } from '../business/dinozService.js';
-import { cancelConcentrate, concentrate } from '../business/specialService.js';
-import { apiRoutes, regex } from '../constants/index.js';
 import { reincarnate } from '../business/skillService.js';
+import { cancelConcentrate, concentrate } from '../business/specialService.js';
+import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
@@ -541,6 +542,26 @@ routes.post(
 			await unfollowDinoz(req);
 			return res.status(200).send({
 				message: 'Dinoz unfollowed'
+			});
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+// Change Leader
+routes.post(
+	`${commonPath}/:id/change/:targetId`,
+	[param('id').exists().toInt().isNumeric(), param('targetId').exists().toInt().isNumeric()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await changeLeaderDinoz(req);
+			return res.status(200).send({
+				message: 'Leader changed successfully'
 			});
 		} catch (err) {
 			sendError(res, err);
