@@ -53,6 +53,11 @@ export interface PublicTournament {
 	result: boolean;
 }
 
+export interface TournamentHistory {
+	id: string;
+	date: string;
+}
+
 export type TournamentTeam = {
 	fight: string;
 	won: boolean;

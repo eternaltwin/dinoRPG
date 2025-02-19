@@ -170,3 +170,22 @@ export async function tournamentTargetInfo(req: Request) {
 		})
 		.filter(t => t.metadata.phase === phase);
 }
+
+export async function tournamentsHistory(req: Request) {
+	const page = +req.params.page;
+	const [count, history] = await prisma.$transaction([
+		prisma.tournament.count(),
+		prisma.tournament.findMany({
+			take: 10,
+			skip: 10 * (page - 1),
+			orderBy: {
+				date: 'desc'
+			},
+			select: {
+				id: true,
+				date: true
+			}
+		})
+	]);
+	return { count, history };
+}

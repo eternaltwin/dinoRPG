@@ -13,7 +13,12 @@ import {
 	skipOpponent
 } from '../business/dojoService.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
-import { createTournamentTeam, tournamentInfo, tournamentTargetInfo } from '../business/tournamentService.js';
+import {
+	createTournamentTeam,
+	tournamentInfo,
+	tournamentsHistory,
+	tournamentTargetInfo
+} from '../business/tournamentService.js';
 
 const routes: Router = Router();
 
@@ -177,6 +182,19 @@ routes.get(
 		}
 	}
 );
+
+routes.get(`${commonPath}/tournaments/:page`, [param('page').exists().toInt()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await tournamentsHistory(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 routes.put(
 	`${commonPath}/tournament`,

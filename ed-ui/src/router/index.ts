@@ -111,12 +111,6 @@ const router = createRouter({
 					]
 				},
 				{
-					path: '/dinozwithoutflash',
-					name: 'DinozWithoutFlash',
-					component: () => import('../components/dinoz/DinozWithoutFlash.vue'),
-					props: { display: '3000010000000000', flip: -1, life: 100 }
-				},
-				{
 					path: '/admin',
 					name: 'Admin',
 					component: () => import('../pages/AdminDashBoard.vue')
@@ -161,11 +155,6 @@ const router = createRouter({
 					name: 'DojoHome',
 					component: () => import('../pages/DojoHome.vue'),
 					children: [
-						/*{
-							path: '/dojo/qual/select-dinoz',
-							name: 'SelectDinoz',
-							component: () => import('../components/dojo/SelectDinoz.vue')
-						},*/
 						{
 							path: '/dojo/tournament/:id',
 							name: 'DojoTournament',
@@ -195,6 +184,11 @@ const router = createRouter({
 							path: '/dojo/ranking',
 							name: 'DojoRanking',
 							component: () => import('../components/dojo/DojoRanking.vue')
+						},
+						{
+							path: '/dojo/tournaments',
+							name: 'TournamentHistory',
+							component: () => import('../components/dojo/TournamentHistory.vue')
 						}
 					]
 				},
