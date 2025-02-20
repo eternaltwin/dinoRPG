@@ -656,7 +656,10 @@ model FightArchive {
 model Tournament {
   id           String           @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   date         DateTime         @default(now()) @db.Timestamp(6)
+  formatName   String           @default("ffa") @db.Text
   teamSize     Int              @default(1)
+  raceMinimum  Int              @default(1)
+  poison       Boolean          @default(true)
   teamRace     String           @db.Text
   levelLimit   Int              @default(50)
   participants TournamentTeam[]

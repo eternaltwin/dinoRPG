@@ -32,6 +32,7 @@ import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { NotificationSeverity } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -556,32 +557,20 @@ class TournamentManager {
 			}
 		});
 
-		const teamSize = getRandomNumber(2, 6);
-		const teamRace = [] as number[];
-		const levelLimit = getRandomNumber(5, 10) * 5;
+		const tournamentFormat = formatTID[getRandomNumber(0, 12) as formatName];
 
-		const availableRaces: DinozRace[] = [
-			raceList.WINKS,
-			raceList.SIRAIN,
-			raceList.CASTIVORE,
-			raceList.NUAGOZ,
-			raceList.GORILLOZ,
-			raceList.WANWAN,
-			raceList.PLANAILLE,
-			raceList.MOUEFFE,
-			raceList.PIGMOU
-		];
-		while (teamRace.length < 4) {
-			const randomRace = availableRaces[getRandomNumber(0, availableRaces.length)];
-			if (!teamRace.includes(randomRace.raceId)) {
-				teamRace.push(randomRace.raceId);
-			}
-		}
+		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(3, 6);
+		const teamRace = tournamentFormat.teamRace;
+		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
+		const levelLimit = tournamentFormat.levelLimit ?? getRandomNumber(5, 10) * 5;
 
 		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
+				formatName: tournamentFormat.name,
 				teamSize: teamSize,
+				raceMinimum: raceMinimum,
+				poison: tournamentFormat.poison,
 				teamRace: teamRace.toString(),
 				levelLimit: levelLimit,
 				nextRound: endQualif
@@ -593,32 +582,44 @@ class TournamentManager {
 		this.tournamentId = newTournament.id;
 
 		const frTrad = {
+			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
 			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM mm:hh'),
-			rule1: translateTarget('dojo.teamSize', 'fr', { nb: teamSize }),
+			rule1: translateTarget('dojo.teamSize', 'fr', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'fr', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
-			})
+			}),
+			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
+			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit })
 		};
 		const esTrad = {
+			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
 			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM mm:hh'),
-			rule1: translateTarget('dojo.teamSize', 'es', { nb: teamSize }),
+			rule1: translateTarget('dojo.teamSize', 'es', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'es', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
-			})
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'es'))
+			}),
+			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
+			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit })
 		};
 		const enTrad = {
+			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
 			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM mm:hh'),
-			rule1: translateTarget('dojo.teamSize', 'en', { nb: teamSize }),
+			rule1: translateTarget('dojo.teamSize', 'en', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'en', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
-			})
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'en'))
+			}),
+			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
+			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit })
 		};
 		const deTrad = {
+			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
 			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM mm:hh'),
-			rule1: translateTarget('dojo.teamSize', 'de', { nb: teamSize }),
+			rule1: translateTarget('dojo.teamSize', 'de', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'de', {
-				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
-			})
+				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'de'))
+			}),
+			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
+			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit })
 		};
 
 		await createNews({

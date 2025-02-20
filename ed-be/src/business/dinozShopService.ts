@@ -1,5 +1,5 @@
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceList, raceList } from '@drpg/core/models/dinoz/RaceList';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
@@ -34,15 +34,15 @@ export async function getDinozFromDinozShop(req: Request) {
 		let randomRace: DinozRace;
 		let randomDisplay: string;
 		const availableRaces: DinozRace[] = [
-			raceList.WINKS,
-			raceList.SIRAIN,
-			raceList.CASTIVORE,
-			raceList.NUAGOZ,
-			raceList.GORILLOZ,
-			raceList.WANWAN,
-			raceList.PLANAILLE,
-			raceList.MOUEFFE,
-			raceList.PIGMOU
+			raceList[RaceList.WINKS],
+			raceList[RaceList.SIRAIN],
+			raceList[RaceList.CASTIVORE],
+			raceList[RaceList.NUAGOZ],
+			raceList[RaceList.GORILLOZ],
+			raceList[RaceList.WANWAN],
+			raceList[RaceList.PLANAILLE],
+			raceList[RaceList.MOUEFFE],
+			raceList[RaceList.PIGMOU]
 		];
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
@@ -54,16 +54,16 @@ export async function getDinozFromDinozShop(req: Request) {
 
 		player.rewards.forEach(playerReward => {
 			if (playerReward.rewardId === Reward.ROCKY) {
-				availableRaces.push(raceList.ROCKY);
+				availableRaces.push(raceList[RaceList.ROCKY]);
 			}
 			if (playerReward.rewardId === Reward.HIPPO) {
-				availableRaces.push(raceList.HIPPOCLAMP);
+				availableRaces.push(raceList[RaceList.HIPPOCLAMP]);
 			}
 			if (playerReward.rewardId === Reward.PTEROZ) {
-				availableRaces.push(raceList.PTEROZ);
+				availableRaces.push(raceList[RaceList.PTEROZ]);
 			}
 			if (playerReward.rewardId === Reward.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
-				availableRaces.push(raceList.QUETZU);
+				availableRaces.push(raceList[RaceList.QUETZU]);
 			}
 		});
 

@@ -11,7 +11,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
-import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { raceList, RaceList } from '@drpg/core/models/dinoz/RaceList';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -167,7 +167,7 @@ export async function useItem(req: Request) {
 			const race = await hatchEgg(item, authed);
 			feedback = {
 				category: ItemEffect.EGG,
-				value: race.name
+				value: raceList[race].name
 			};
 			break;
 		case ItemEffect.SPHERE:
@@ -239,136 +239,136 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	switch (item.itemId) {
 		case itemList[Item.MOUEFFE_EGG_RARE].itemId:
 			// Suit
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.PIGMOU_EGG_RARE].itemId:
 			// Body tatoo
-			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
 			break;
 		case itemList[Item.WINKS_EGG_RARE].itemId:
 			// Fore-head horn thingy
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.PLANAILLE_EGG_RARE].itemId:
 			// More hair and big eyes
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.CASTIVORE_EGG_RARE].itemId:
 			// Bow-tie
-			randomDisplay = generateDinozDisplay(race, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', getLetter(1 + getRandomNumber(0, 2)), '0');
 			break;
 		case itemList[Item.ROCKY_EGG_RARE].itemId:
 			// Just color palette, no other graphical rare stuff in swf
-			randomDisplay = generateDinozDisplay(race, '1', '0', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '0', '0');
 			break;
 		case itemList[Item.PTEROZ_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or remove. Currently placeholder.
 			// Note: there does not seem to be a rare thingy for the pteroz in the swf
 			// Color palette has no effect
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.NUAGOZ_EGG_RARE].itemId:
 			// Just color palette
-			randomDisplay = generateDinozDisplay(race, '1', '0', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '0', '0');
 			break;
 		case itemList[Item.SIRAIN_EGG_RARE].itemId:
 			// Scarf & tatoo
-			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
 			break;
 		case itemList[Item.HIPPOCLAMP_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or remove. Currently placeholder.
 			// Note: there does not seem to be a rare thingy for the hippoclamp in the swf
 			// Color palette has no effect
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.GORILLOZ_EGG_RARE].itemId:
 			// Elvis Presley hairstyle
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.WANWAN_EGG_RARE].itemId:
 			// TODO does not exist in MT's code: invent or just use the baby rare. Currently placeholder
 			// Note: there does not seem to be another rare thingy for the wanwan in the swf
 			// Note 2: Could go for color palette 1 and rare 1, instead of 2,1
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.WANWAN_BABY_RARE].itemId:
 			// Naruto 9-tail style
-			randomDisplay = generateDinozDisplay(race, '2', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '2', '1', '0');
 			break;
 		case itemList[Item.SANTAZ_EGG_RARE].itemId:
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.FEROSS_EGG_RARE].itemId:
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.FEROSS_EGG_CHRISTMAS].itemId:
-			randomDisplay = generateDinozDisplay(race, '2', '2', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '2', '2', '0');
 			break;
 		case itemList[Item.RARE_KABUKI_EGG].itemId:
-			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 5) === 0 ? '1' : '0', '1', '0');
 			break;
 		case itemList[Item.RARE_MAHAMUTI_EGG].itemId:
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.SOUFFLET_EGG_RARE].itemId:
 			// TODO: does not exist in MT's code: remove or check swf. Currently a placeholder
 			// Note: there does not seem to be a rare thingy for the hippoclamp in the swf
 			// Color palette has no effect
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.TOUFUFU_BABY_RARE].itemId:
-			randomDisplay = generateDinozDisplay(race, '0', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '0', '1', '0');
 			break;
 		case itemList[Item.QUETZU_EGG_RARE].itemId:
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		// Classic smog egg can get color palette to 0 or 1
 		case itemList[Item.SMOG_EGG].itemId:
-			randomDisplay = generateDinozDisplay(race, getRandomNumber(0, 2) === 0 ? '1' : '0', '0', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], getRandomNumber(0, 2) === 0 ? '1' : '0', '0', '0');
 			break;
 		case itemList[Item.SMOG_EGG_RARE].itemId:
 			// TODO: does not exist in MT's code: invent or just use the anniversary format. Currently placeholder
-			randomDisplay = generateDinozDisplay(race, '0', '2', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '0', '2', '0');
 			break;
 		case itemList[Item.SMOG_EGG_ANNIVERSARY].itemId:
 			// Wings and goggles
-			randomDisplay = generateDinozDisplay(race, '0', '2', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '0', '2', '0');
 			break;
 		case itemList[Item.SMOG_EGG_CHRISTMAS_BLUE].itemId:
 			// Elf-like boots
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.SMOG_EGG_CHRISTMAS_GREEN].itemId:
 			// Ear-warmer
-			randomDisplay = generateDinozDisplay(race, '1', '3', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '3', '0');
 			break;
 		case itemList[Item.TRICERAGNON_EGG_BABY].itemId:
 			// Note: does not exist in MT's code, but does in the swf
 			// Saddle and motorbike handles
-			randomDisplay = generateDinozDisplay(race, '1', '1', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '1', '1', '0');
 			break;
 		case itemList[Item.CHRISTMAS_EGG].itemId:
 			// MT is [0,3], we switched to [0,10] to increase trice rarity
 			if (getRandomNumber(0, 10) === 0) {
-				race = raceList.TRICERAGNON;
-				randomDisplay = generateDinozDisplay(race, '0', '0', '0');
+				race = RaceList.TRICERAGNON;
+				randomDisplay = generateDinozDisplay(raceList[race], '0', '0', '0');
 			} else {
-				race = raceList.SANTAZ;
-				randomDisplay = generateDinozDisplay(race, '0', getRandomLetter('1'), '0');
+				race = RaceList.SANTAZ;
+				randomDisplay = generateDinozDisplay(raceList[race], '0', getRandomLetter('1'), '0');
 			}
 			break;
 		default:
 			// Same hatching for non rare eggs that just uses the race
 			// We know it's an egg at this point and not any item
-			randomDisplay = generateDinozDisplay(race, '0', '0', '0');
+			randomDisplay = generateDinozDisplay(raceList[race], '0', '0', '0');
 			break;
 	}
 
 	// Create a new dinoz that belongs to player
-	const dinozCreated = await createDinoz(initializeDinoz(race, authed.id, randomDisplay));
+	const dinozCreated = await createDinoz(initializeDinoz(raceList[race], authed.id, randomDisplay));
 
 	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
-		skill => skill.raceId?.some(raceId => raceId === race.raceId) && skill.isBaseSkill
+		skill => skill.raceId?.some(raceId => raceId === raceList[race].raceId) && skill.isBaseSkill
 	);
 
 	// Add base skills to created dinoz

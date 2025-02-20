@@ -56174,12 +56174,14 @@ export namespace Prisma {
 
   export type TournamentAvgAggregateOutputType = {
     teamSize: number | null
+    raceMinimum: number | null
     levelLimit: number | null
     cashPrice: number | null
   }
 
   export type TournamentSumAggregateOutputType = {
     teamSize: number | null
+    raceMinimum: number | null
     levelLimit: number | null
     cashPrice: number | null
   }
@@ -56187,7 +56189,10 @@ export namespace Prisma {
   export type TournamentMinAggregateOutputType = {
     id: string | null
     date: Date | null
+    formatName: string | null
     teamSize: number | null
+    raceMinimum: number | null
+    poison: boolean | null
     teamRace: string | null
     levelLimit: number | null
     cashPrice: number | null
@@ -56197,7 +56202,10 @@ export namespace Prisma {
   export type TournamentMaxAggregateOutputType = {
     id: string | null
     date: Date | null
+    formatName: string | null
     teamSize: number | null
+    raceMinimum: number | null
+    poison: boolean | null
     teamRace: string | null
     levelLimit: number | null
     cashPrice: number | null
@@ -56207,7 +56215,10 @@ export namespace Prisma {
   export type TournamentCountAggregateOutputType = {
     id: number
     date: number
+    formatName: number
     teamSize: number
+    raceMinimum: number
+    poison: number
     teamRace: number
     levelLimit: number
     cashPrice: number
@@ -56218,12 +56229,14 @@ export namespace Prisma {
 
   export type TournamentAvgAggregateInputType = {
     teamSize?: true
+    raceMinimum?: true
     levelLimit?: true
     cashPrice?: true
   }
 
   export type TournamentSumAggregateInputType = {
     teamSize?: true
+    raceMinimum?: true
     levelLimit?: true
     cashPrice?: true
   }
@@ -56231,7 +56244,10 @@ export namespace Prisma {
   export type TournamentMinAggregateInputType = {
     id?: true
     date?: true
+    formatName?: true
     teamSize?: true
+    raceMinimum?: true
+    poison?: true
     teamRace?: true
     levelLimit?: true
     cashPrice?: true
@@ -56241,7 +56257,10 @@ export namespace Prisma {
   export type TournamentMaxAggregateInputType = {
     id?: true
     date?: true
+    formatName?: true
     teamSize?: true
+    raceMinimum?: true
+    poison?: true
     teamRace?: true
     levelLimit?: true
     cashPrice?: true
@@ -56251,7 +56270,10 @@ export namespace Prisma {
   export type TournamentCountAggregateInputType = {
     id?: true
     date?: true
+    formatName?: true
     teamSize?: true
+    raceMinimum?: true
+    poison?: true
     teamRace?: true
     levelLimit?: true
     cashPrice?: true
@@ -56348,7 +56370,10 @@ export namespace Prisma {
   export type TournamentGroupByOutputType = {
     id: string
     date: Date
+    formatName: string
     teamSize: number
+    raceMinimum: number
+    poison: boolean
     teamRace: string
     levelLimit: number
     cashPrice: number
@@ -56377,7 +56402,10 @@ export namespace Prisma {
   export type TournamentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     date?: boolean
+    formatName?: boolean
     teamSize?: boolean
+    raceMinimum?: boolean
+    poison?: boolean
     teamRace?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
@@ -56390,7 +56418,10 @@ export namespace Prisma {
   export type TournamentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     date?: boolean
+    formatName?: boolean
     teamSize?: boolean
+    raceMinimum?: boolean
+    poison?: boolean
     teamRace?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
@@ -56400,14 +56431,17 @@ export namespace Prisma {
   export type TournamentSelectScalar = {
     id?: boolean
     date?: boolean
+    formatName?: boolean
     teamSize?: boolean
+    raceMinimum?: boolean
+    poison?: boolean
     teamRace?: boolean
     levelLimit?: boolean
     cashPrice?: boolean
     nextRound?: boolean
   }
 
-  export type TournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "teamSize" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound", ExtArgs["result"]["tournament"]>
+  export type TournamentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "formatName" | "teamSize" | "raceMinimum" | "poison" | "teamRace" | "levelLimit" | "cashPrice" | "nextRound", ExtArgs["result"]["tournament"]>
   export type TournamentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     participants?: boolean | Tournament$participantsArgs<ExtArgs>
     fights?: boolean | Tournament$fightsArgs<ExtArgs>
@@ -56424,7 +56458,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       date: Date
+      formatName: string
       teamSize: number
+      raceMinimum: number
+      poison: boolean
       teamRace: string
       levelLimit: number
       cashPrice: number
@@ -56826,7 +56863,10 @@ export namespace Prisma {
   interface TournamentFieldRefs {
     readonly id: FieldRef<"Tournament", 'String'>
     readonly date: FieldRef<"Tournament", 'DateTime'>
+    readonly formatName: FieldRef<"Tournament", 'String'>
     readonly teamSize: FieldRef<"Tournament", 'Int'>
+    readonly raceMinimum: FieldRef<"Tournament", 'Int'>
+    readonly poison: FieldRef<"Tournament", 'Boolean'>
     readonly teamRace: FieldRef<"Tournament", 'String'>
     readonly levelLimit: FieldRef<"Tournament", 'Int'>
     readonly cashPrice: FieldRef<"Tournament", 'Int'>
@@ -58982,7 +59022,10 @@ export namespace Prisma {
   export const TournamentScalarFieldEnum: {
     id: 'id',
     date: 'date',
+    formatName: 'formatName',
     teamSize: 'teamSize',
+    raceMinimum: 'raceMinimum',
+    poison: 'poison',
     teamRace: 'teamRace',
     levelLimit: 'levelLimit',
     cashPrice: 'cashPrice',
@@ -62403,7 +62446,10 @@ export namespace Prisma {
     NOT?: TournamentWhereInput | TournamentWhereInput[]
     id?: UuidFilter<"Tournament"> | string
     date?: DateTimeFilter<"Tournament"> | Date | string
+    formatName?: StringFilter<"Tournament"> | string
     teamSize?: IntFilter<"Tournament"> | number
+    raceMinimum?: IntFilter<"Tournament"> | number
+    poison?: BoolFilter<"Tournament"> | boolean
     teamRace?: StringFilter<"Tournament"> | string
     levelLimit?: IntFilter<"Tournament"> | number
     cashPrice?: IntFilter<"Tournament"> | number
@@ -62415,7 +62461,10 @@ export namespace Prisma {
   export type TournamentOrderByWithRelationInput = {
     id?: SortOrder
     date?: SortOrder
+    formatName?: SortOrder
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
+    poison?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
@@ -62430,7 +62479,10 @@ export namespace Prisma {
     OR?: TournamentWhereInput[]
     NOT?: TournamentWhereInput | TournamentWhereInput[]
     date?: DateTimeFilter<"Tournament"> | Date | string
+    formatName?: StringFilter<"Tournament"> | string
     teamSize?: IntFilter<"Tournament"> | number
+    raceMinimum?: IntFilter<"Tournament"> | number
+    poison?: BoolFilter<"Tournament"> | boolean
     teamRace?: StringFilter<"Tournament"> | string
     levelLimit?: IntFilter<"Tournament"> | number
     cashPrice?: IntFilter<"Tournament"> | number
@@ -62442,7 +62494,10 @@ export namespace Prisma {
   export type TournamentOrderByWithAggregationInput = {
     id?: SortOrder
     date?: SortOrder
+    formatName?: SortOrder
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
+    poison?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
@@ -62460,7 +62515,10 @@ export namespace Prisma {
     NOT?: TournamentScalarWhereWithAggregatesInput | TournamentScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Tournament"> | string
     date?: DateTimeWithAggregatesFilter<"Tournament"> | Date | string
+    formatName?: StringWithAggregatesFilter<"Tournament"> | string
     teamSize?: IntWithAggregatesFilter<"Tournament"> | number
+    raceMinimum?: IntWithAggregatesFilter<"Tournament"> | number
+    poison?: BoolWithAggregatesFilter<"Tournament"> | boolean
     teamRace?: StringWithAggregatesFilter<"Tournament"> | string
     levelLimit?: IntWithAggregatesFilter<"Tournament"> | number
     cashPrice?: IntWithAggregatesFilter<"Tournament"> | number
@@ -65566,7 +65624,10 @@ export namespace Prisma {
   export type TournamentCreateInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -65578,7 +65639,10 @@ export namespace Prisma {
   export type TournamentUncheckedCreateInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -65590,7 +65654,10 @@ export namespace Prisma {
   export type TournamentUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -65602,7 +65669,10 @@ export namespace Prisma {
   export type TournamentUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -65614,7 +65684,10 @@ export namespace Prisma {
   export type TournamentCreateManyInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -65624,7 +65697,10 @@ export namespace Prisma {
   export type TournamentUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -65634,7 +65710,10 @@ export namespace Prisma {
   export type TournamentUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -68520,7 +68599,10 @@ export namespace Prisma {
   export type TournamentCountOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
+    formatName?: SortOrder
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
+    poison?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
@@ -68529,6 +68611,7 @@ export namespace Prisma {
 
   export type TournamentAvgOrderByAggregateInput = {
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
   }
@@ -68536,7 +68619,10 @@ export namespace Prisma {
   export type TournamentMaxOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
+    formatName?: SortOrder
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
+    poison?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
@@ -68546,7 +68632,10 @@ export namespace Prisma {
   export type TournamentMinOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
+    formatName?: SortOrder
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
+    poison?: SortOrder
     teamRace?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
@@ -68555,6 +68644,7 @@ export namespace Prisma {
 
   export type TournamentSumOrderByAggregateInput = {
     teamSize?: SortOrder
+    raceMinimum?: SortOrder
     levelLimit?: SortOrder
     cashPrice?: SortOrder
   }
@@ -86973,7 +87063,10 @@ export namespace Prisma {
   export type TournamentCreateWithoutFightsInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -86984,7 +87077,10 @@ export namespace Prisma {
   export type TournamentUncheckedCreateWithoutFightsInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -87180,7 +87276,10 @@ export namespace Prisma {
   export type TournamentUpdateWithoutFightsInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -87191,7 +87290,10 @@ export namespace Prisma {
   export type TournamentUncheckedUpdateWithoutFightsInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -87491,7 +87593,10 @@ export namespace Prisma {
   export type TournamentCreateWithoutParticipantsInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -87502,7 +87607,10 @@ export namespace Prisma {
   export type TournamentUncheckedCreateWithoutParticipantsInput = {
     id?: string
     date?: Date | string
+    formatName?: string
     teamSize?: number
+    raceMinimum?: number
+    poison?: boolean
     teamRace: string
     levelLimit?: number
     cashPrice?: number
@@ -87660,7 +87768,10 @@ export namespace Prisma {
   export type TournamentUpdateWithoutParticipantsInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number
@@ -87671,7 +87782,10 @@ export namespace Prisma {
   export type TournamentUncheckedUpdateWithoutParticipantsInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
+    formatName?: StringFieldUpdateOperationsInput | string
     teamSize?: IntFieldUpdateOperationsInput | number
+    raceMinimum?: IntFieldUpdateOperationsInput | number
+    poison?: BoolFieldUpdateOperationsInput | boolean
     teamRace?: StringFieldUpdateOperationsInput | string
     levelLimit?: IntFieldUpdateOperationsInput | number
     cashPrice?: IntFieldUpdateOperationsInput | number

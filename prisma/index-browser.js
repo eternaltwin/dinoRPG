@@ -547,7 +547,10 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
 exports.Prisma.TournamentScalarFieldEnum = {
   id: 'id',
   date: 'date',
+  formatName: 'formatName',
   teamSize: 'teamSize',
+  raceMinimum: 'raceMinimum',
+  poison: 'poison',
   teamRace: 'teamRace',
   levelLimit: 'levelLimit',
   cashPrice: 'cashPrice',
