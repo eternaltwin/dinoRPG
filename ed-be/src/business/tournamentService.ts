@@ -82,6 +82,13 @@ export async function createTournamentTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
 
+	// Check if number of race is at least equal to the limit
+	const playerRaces = new Set<number>();
+	playerFilteredDinoz.forEach(d => playerRaces.add(d.raceId));
+	if (playerRaces.size < latestTournament.raceMinimum) {
+		throw new ExpectedError(translate('dojo.notEnoughDiversity', authed));
+	}
+
 	await prisma.tournamentTeam.create({
 		data: {
 			dinoz: {
@@ -183,7 +190,8 @@ export async function tournamentsHistory(req: Request) {
 			},
 			select: {
 				id: true,
-				date: true
+				date: true,
+				formatName: true
 			}
 		})
 	]);

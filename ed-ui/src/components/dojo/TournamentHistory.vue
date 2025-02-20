@@ -2,12 +2,12 @@
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<DZTable>
 		<tr>
-			<th class="dinoz-header">ID du tournois</th>
+			<th class="dinoz-header">Type de tournois</th>
 			<th class="items-header">Date du début</th>
 			<th class="items-header">{{ $t('dojo.history.link') }}</th>
 		</tr>
 		<tr v-for="tournament in history" :key="tournament.id">
-			<td>{{ tournament.id }}</td>
+			<td>{{ $t(`dojo.tournamentFormats.${tournament.formatName}`) }}</td>
 			<td>{{ new Date(tournament.date).toLocaleDateString() }}</td>
 			<td class="icons">
 				<RouterLink :to="`/dojo/tournament/${tournament.id}`">

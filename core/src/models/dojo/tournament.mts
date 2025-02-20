@@ -56,6 +56,7 @@ export interface PublicTournament {
 export interface TournamentHistory {
 	id: string;
 	date: string;
+	formatName: string;
 }
 
 export type TournamentTeam = {
