@@ -12,15 +12,21 @@
 						theme: 'small'
 					}"
 				/>
-				<img
+				<RouterLink
 					v-else
-					@click="goToPage('DojoTournament', tournamentState.id)"
-					:src="getImgURL('icons', 'act_dojo')"
-					v-tippy="{
-						content: formatContent($t('dojo.tournaments')),
-						theme: 'small'
+					:to="{
+						name: 'DojoTournament',
+						params: { id: tournamentState.id, group: '0' }
 					}"
-				/>
+				>
+					<img
+						:src="getImgURL('icons', 'act_dojo')"
+						v-tippy="{
+							content: formatContent($t('dojo.tournaments')),
+							theme: 'small'
+						}"
+					/>
+				</RouterLink>
 				<img
 					@click="goToPage('ChallengeFriend')"
 					:src="getImgURL('design', 'dojo_test')"

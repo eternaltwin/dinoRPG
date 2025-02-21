@@ -156,7 +156,7 @@ const router = createRouter({
 					component: () => import('../pages/DojoHome.vue'),
 					children: [
 						{
-							path: '/dojo/tournament/:id',
+							path: '/dojo/tournament/:id/:group',
 							name: 'DojoTournament',
 							component: () => import('../components/dojo/DojoTournament.vue')
 						},

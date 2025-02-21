@@ -69,6 +69,10 @@ export type TeamLeader = {
 	id: number;
 	display: string;
 	name: string;
+	player: {
+		id: string;
+		name: string;
+	};
 };
 
 export type DisplayedLeader = {
@@ -80,6 +84,10 @@ export type DisplayedLeader = {
 	round: number;
 	pool: number;
 	matchNumber: number;
+	player: {
+		id: string;
+		name: string;
+	};
 };
 
 export enum TournamentPhase {

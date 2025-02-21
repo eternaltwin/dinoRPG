@@ -143,7 +143,13 @@ export async function tournamentTargetInfo(req: Request) {
 						select: {
 							id: true,
 							display: true,
-							name: true
+							name: true,
+							player: {
+								select: {
+									id: true,
+									name: true
+								}
+							}
 						}
 					}
 				}
@@ -155,7 +161,13 @@ export async function tournamentTargetInfo(req: Request) {
 						select: {
 							id: true,
 							display: true,
-							name: true
+							name: true,
+							player: {
+								select: {
+									id: true,
+									name: true
+								}
+							}
 						}
 					}
 				}

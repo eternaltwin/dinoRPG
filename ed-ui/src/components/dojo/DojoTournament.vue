@@ -2,14 +2,16 @@
 	<TitleHeader :title="$t('pageTitle.dojo')" :header="$t(`dojo.tournaments`)" />
 	<ul class="tournament-list" v-if="!displayFinal">
 		<li v-for="(_, group) in pools" :key="group" class="group">
-			<a @click="activeGroup = group">
+			<RouterLink :to="`/dojo/tournament/${tournamentId}/${group}`">
 				{{ $t('dojo.group', { group: ALPHABET[group] }) }}
-			</a>
+			</RouterLink>
 		</li>
 	</ul>
 	<div class="wrapper tournament" v-if="!displayFinal">
 		<div class="header">
-			<DZButton @click="showFinal()">{{ $t('dojo.seeFinal') }}</DZButton>
+			<RouterLink :to="`/dojo/tournament/${tournamentId}/5`">
+				<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
+			</RouterLink>
 		</div>
 		<div class="rounds">
 			<Tippy
@@ -18,11 +20,11 @@
 				class="dinoz"
 				v-for="(dinoz, count) in pools[activeGroup]"
 				:key="`${count}${dinoz.id}`"
-				:class="{ lost: !dinoz.won }"
+				:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won }"
 				@click="goToPage('ShareFight', { archive: dinoz.fight })"
 			>
 				<DinozMini :display="dinoz.display" :width="50" :height="50" :flip="isFlipped(count)" class="dinoz-display" />
-				<span class="name">{{ dinoz.name }}</span>
+				<span class="name">{{ dinoz.player.name }}</span>
 				<template #content>
 					<h1>{{ dinoz.name }}</h1>
 					<p>{{ $t('dojo.seeFight') }}</p>
@@ -31,7 +33,11 @@
 		</div>
 	</div>
 	<div class="wrapper final" v-if="displayFinal">
-		<div class="header final"></div>
+		<div class="header">
+			<RouterLink :to="`/dojo/tournament/${tournamentId}/0`">
+				<DZButton>{{ $t('dojo.return') }}</DZButton>
+			</RouterLink>
+		</div>
 		<div class="rounds">
 			<Tippy
 				tag="div"
@@ -84,7 +90,8 @@ export default defineComponent({
 			final: [] as PublicTournament[],
 			pools: [] as DisplayedLeader[][],
 			activeGroup: 0,
-			displayFinal: false
+			displayFinal: false,
+			tournamentId: undefined as undefined | string
 		};
 	},
 	methods: {
@@ -98,8 +105,7 @@ export default defineComponent({
 		async showFinal() {
 			this.displayFinal = true;
 			try {
-				const tournamentId = this.$route.params.id as string;
-				this.final = await DojoService.getTournamentFights(tournamentId, TournamentPhase.FINALS);
+				this.final = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.FINALS);
 				this.dinozInFights = this.final.reduce((acc, fight) => {
 					const d1 = {
 						...fight.tournamentTeamLeft,
@@ -196,64 +202,83 @@ export default defineComponent({
 				return index % 2 === 1;
 			}
 		},
-		async accessTournament() {
-			// Do nothing for now
+		async loadPage() {
+			try {
+				this.tournament = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.POOLS);
+				this.dinozInFights = this.tournament.reduce((acc, fight) => {
+					const d1 = {
+						...fight.tournamentTeamLeft,
+						fight: fight.id,
+						won: fight.result,
+						round: fight.metadata.round,
+						pool: fight.metadata.poolNumber,
+						matchNumber: fight.metadata.matchNumber
+					};
+					const d2 = {
+						...fight.tournamentTeamRight,
+						fight: fight.id,
+						won: !fight.result,
+						round: fight.metadata.round,
+						pool: fight.metadata.poolNumber,
+						matchNumber: fight.metadata.matchNumber
+					};
+
+					acc.push(d1, d2);
+
+					// Add final winner
+					if (fight.metadata.round === 3) {
+						const winner = fight.result ? d1 : d2;
+						acc.push({ ...winner });
+					}
+
+					return acc;
+				}, [] as DisplayedLeader[]);
+				this.GROUP_COUNT = this.dinozInFights.filter(d => d.round === 0).length / 16;
+				this.pools = Array.from({ length: this.GROUP_COUNT }, () => []);
+				this.dinozInFights.forEach(d => {
+					this.pools[d.pool].push(d);
+				});
+				this.pools.map(p => {
+					p.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
+					p.sort((d1, d2) => d1.round - d2.round);
+				});
+				this.pools.forEach(p => {
+					const currentRound = p[p.length - 1].round;
+					const winners = 16 / Math.pow(2, currentRound);
+					const addedWinners = [] as DisplayedLeader[];
+					for (let i = winners; i >= 1; i--) {
+						if (p[p.length - i].won && p[p.length - i].round < 3) {
+							addedWinners.push({ ...p[p.length - i], won: true });
+						}
+					}
+					p.push(...addedWinners);
+				});
+				this.displayFinal = false;
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		}
 	},
 	async mounted() {
-		const tournamentId = this.$route.params.id as string;
-		try {
-			this.tournament = await DojoService.getTournamentFights(tournamentId, TournamentPhase.POOLS);
-			this.dinozInFights = this.tournament.reduce((acc, fight) => {
-				const d1 = {
-					...fight.tournamentTeamLeft,
-					fight: fight.id,
-					won: fight.result,
-					round: fight.metadata.round,
-					pool: fight.metadata.poolNumber,
-					matchNumber: fight.metadata.matchNumber
-				};
-				const d2 = {
-					...fight.tournamentTeamRight,
-					fight: fight.id,
-					won: !fight.result,
-					round: fight.metadata.round,
-					pool: fight.metadata.poolNumber,
-					matchNumber: fight.metadata.matchNumber
-				};
-
-				acc.push(d1, d2);
-
-				// Add final winner
-				if (fight.metadata.round === 3) {
-					const winner = fight.result ? d1 : d2;
-					acc.push({ ...winner });
-				}
-
-				return acc;
-			}, [] as DisplayedLeader[]);
-			this.GROUP_COUNT = this.dinozInFights.filter(d => d.round === 0).length / 16;
-			this.pools = Array.from({ length: this.GROUP_COUNT }, () => []);
-			this.dinozInFights.forEach(d => {
-				this.pools[d.pool].push(d);
-			});
-			this.pools.map(p => {
-				p.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
-				p.sort((d1, d2) => d1.round - d2.round);
-			});
-			this.pools.forEach(p => {
-				const currentRound = p[p.length - 1].round;
-				const winners = 16 / Math.pow(2, currentRound);
-				const addedWinners = [] as DisplayedLeader[];
-				for (let i = winners; i >= 1; i--) {
-					if (p[p.length - i].won && p[p.length - i].round < 3) {
-						addedWinners.push({ ...p[p.length - i], won: true });
-					}
-				}
-				p.push(...addedWinners);
-			});
-		} catch (e) {
-			errorHandler.handle(e, this.$toast);
+		this.tournamentId = this.$route.params.id as string;
+		this.activeGroup = +(this.$route.params.group as string);
+		await this.loadPage();
+	},
+	watch: {
+		'$route.params.group': async function (to) {
+			if (to !== undefined && this.$route.name === 'DojoTournament') {
+				this.activeGroup = +(this.$route.params.group as string);
+			}
+		},
+		activeGroup: {
+			handler(newValue, oldValue) {
+				// Note: `newValue` will be equal to `oldValue` here
+				// on nested mutations as long as the object itself
+				// hasn't been replaced.
+				if (newValue === 5) this.showFinal();
+				if (oldValue === 5) this.loadPage();
+			},
+			deep: true
 		}
 	}
 });
@@ -321,6 +346,10 @@ export default defineComponent({
 
 			&.lost {
 				filter: grayscale(100%);
+			}
+
+			&.me {
+				background-image: url('../../assets/design/dojo_dino_selected.webp');
 			}
 
 			.name {
