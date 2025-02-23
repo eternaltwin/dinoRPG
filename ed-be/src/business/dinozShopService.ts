@@ -99,7 +99,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			.map(dinozShop => {
 				return {
 					id: dinozShop.id.toString(),
-					race: getRace(dinozShop).name.toUpperCase(),
+					race: dinozShop.raceId,
 					display: dinozShop.display
 				};
 			})
@@ -111,7 +111,7 @@ export async function getDinozFromDinozShop(req: Request) {
 			.map(dinozShop => {
 				return {
 					id: dinozShop.id.toString(),
-					race: getRace(dinozShop).name.toUpperCase(),
+					race: dinozShop.raceId,
 					display: dinozShop.display
 				};
 			})
