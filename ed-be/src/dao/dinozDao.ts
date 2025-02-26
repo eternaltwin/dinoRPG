@@ -136,8 +136,14 @@ export async function getAllDinozFromAccount(playerId: string) {
 			life: true,
 			maxLife: true,
 			experience: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
 			status: true,
-			skills: true
+			skills: true,
+			unlockableSkills: true
 		}
 	});
 

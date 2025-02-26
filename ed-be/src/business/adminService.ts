@@ -27,6 +27,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { Item } from '@drpg/core/models/item/ItemList';
+import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -80,7 +81,12 @@ export async function editDinoz(req: Request) {
 		placeId: req.body.placeId,
 		life: req.body.life,
 		maxLife: req.body.maxLife,
-		experience: req.body.experience
+		experience: req.body.experience,
+		nbrUpFire: req.body.nbrUpFire,
+		nbrUpWood: req.body.nbrUpWood,
+		nbrUpWater: req.body.nbrUpWater,
+		nbrUpLightning: req.body.nbrUpLightning,
+		nbrUpAir: req.body.nbrUpAir
 	};
 
 	await updateDinoz(+req.params.id, dinoz);
@@ -109,6 +115,21 @@ export async function editDinoz(req: Request) {
 	if (typeof dinoz.experience !== 'undefined') {
 		await createLog(LogType.AdminUpdateDinoz, authed.id, +req.params.id, 'experience', dinoz.experience);
 	}
+	if (typeof dinoz.nbrUpFire !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, authed.id, +req.params.id, 'nbrUpFire', dinoz.nbrUpFire);
+	}
+	if (typeof dinoz.nbrUpWood !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, authed.id, +req.params.id, 'nbrUpWood', dinoz.nbrUpWood);
+	}
+	if (typeof dinoz.nbrUpWater !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, authed.id, +req.params.id, 'nbrUpWater', dinoz.nbrUpWater);
+	}
+	if (typeof dinoz.nbrUpLightning !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, authed.id, +req.params.id, 'nbrUpLightning', dinoz.nbrUpLightning);
+	}
+	if (typeof dinoz.nbrUpAir !== 'undefined') {
+		await createLog(LogType.AdminUpdateDinoz, authed.id, +req.params.id, 'nbrUpAir', dinoz.nbrUpAir);
+	}
 
 	const statusListAsString: string[] = req.body.status;
 	const statusList = statusListAsString.map(status => +status);
@@ -133,13 +154,14 @@ export async function editDinoz(req: Request) {
 		}
 	}
 
-	const skillList: number[] = req.body.skill;
+	const skillList: number[] = req.body.skills;
 	if (skillList.length > 0 && req.body.skillOperation) {
 		switch (req.body.skillOperation) {
 			case 'add':
 				await addMultipleSkillToDinoz(+req.params.id, skillList);
 
 				for (const skill of skillList) {
+					// await applySkillEffect(dinoz, skill, authed.id);
 					await createLog(LogType.AdminAddSkill, authed.id, +req.params.id, skill);
 				}
 				break;
@@ -148,6 +170,32 @@ export async function editDinoz(req: Request) {
 				await Promise.all(promises);
 
 				for (const skill of skillList) {
+					await createLog(LogType.AdminRemoveSkill, authed.id, +req.params.id, skill);
+				}
+				break;
+			default:
+				throw new ExpectedError(`You need to select an operation.`);
+		}
+	}
+
+	const unlockableSkillList: number[] = req.body.unlockableSkills;
+	if (unlockableSkillList.length > 0 && req.body.unlockableSkillOperation) {
+		switch (req.body.unlockableSkillOperation) {
+			case 'add':
+				const unlockableSkillListData = unlockableSkillList.map(s => ({
+					skillId: s,
+					dinozId: +req.params.id,
+				}));
+				await addMultipleUnlockableSkills(unlockableSkillListData);
+
+				for (const skill of unlockableSkillList) {
+					await createLog(LogType.AdminAddSkill, authed.id, +req.params.id, skill);
+				}
+				break;
+			case 'remove':
+				await removeUnlockableSkillsFromDinoz(+req.params.id, unlockableSkillList);
+
+				for (const skill of unlockableSkillList) {
 					await createLog(LogType.AdminRemoveSkill, authed.id, +req.params.id, skill);
 				}
 				break;
@@ -340,8 +388,14 @@ export async function listAllDinozFromPlayer(req: Request) {
 			maxLife: dinoz.maxLife,
 			experience: dinoz.experience,
 			placeId: dinoz.placeId,
+			nbrUpFire: dinoz.nbrUpFire,
+			nbrUpWood: dinoz.nbrUpWood,
+			nbrUpWater: dinoz.nbrUpWater,
+			nbrUpLightning: dinoz.nbrUpLightning,
+			nbrUpAir: dinoz.nbrUpAir,
 			status: dinoz.status.map(status => status.statusId),
-			skills: dinoz.skills.map(skill => skill.skillId)
+			skills: dinoz.skills.map(skill => skill.skillId),
+			unlockableSkills: dinoz.unlockableSkills.map(skill => skill.skillId)
 		};
 	});
 	return dinozListToSend;

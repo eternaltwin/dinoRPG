@@ -117,10 +117,17 @@ export const AdminService = {
 		life?: number,
 		maxLife?: number,
 		experience?: number,
+		nbrUpFire?: number,
+		nbrUpWood?: number,
+		nbrUpWater?: number,
+		nbrUpLightning?: number,
+		nbrUpAir?: number,
 		status?: Array<string>,
 		statusOperation?: string,
-		skill?: Array<string>,
-		skillOperation?: string
+		skills?: Array<string>,
+		skillOperation?: string,
+		unlockableSkills?: Array<string>,
+		unlockableSkillOperation?: string
 	): Promise<void> {
 		return http()
 			.put(`/admin/dinoz/${id}`, {
@@ -133,10 +140,17 @@ export const AdminService = {
 				life: life,
 				maxLife: maxLife,
 				experience: experience,
+				nbrUpFire: nbrUpFire,
+				nbrUpWood: nbrUpWood,
+				nbrUpWater: nbrUpWater,
+				nbrUpLightning: nbrUpLightning,
+				nbrUpAir: nbrUpAir,
 				status: status,
 				statusOperation: statusOperation,
-				skill: skill,
-				skillOperation: skillOperation
+				skills: skills,
+				skillOperation: skillOperation,
+				unlockableSkills: unlockableSkills,
+				unlockableSkillOperation: unlockableSkillOperation
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));

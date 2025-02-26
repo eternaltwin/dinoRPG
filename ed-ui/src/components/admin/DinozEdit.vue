@@ -42,6 +42,31 @@
 				<input id="dinozMaxLife" type="text" v-model="dinoz.maxLife" disabled />
 				<input type="number" min="0" v-model="dinozField.maxLife" />
 			</div>
+			<div>
+				<label class="title" for="dinozMaxLife">Fire :</label>
+				<input id="dinozMaxLife" type="text" v-model="dinoz.nbrUpFire" disabled />
+				<input type="number" min="0" v-model="dinozField.nbrUpFire" />
+			</div>
+			<div>
+				<label class="title" for="dinozMaxLife">Wood :</label>
+				<input id="dinozMaxLife" type="text" v-model="dinoz.nbrUpWood" disabled />
+				<input type="number" min="0" v-model="dinozField.nbrUpWood" />
+			</div>
+			<div>
+				<label class="title" for="dinozMaxLife">Water :</label>
+				<input id="dinozMaxLife" type="text" v-model="dinoz.nbrUpWater" disabled />
+				<input type="number" min="0" v-model="dinozField.nbrUpWater" />
+			</div>
+			<div>
+				<label class="title" for="dinozMaxLife">Lightning :</label>
+				<input id="dinozMaxLife" type="text" v-model="dinoz.nbrUpLightning" disabled />
+				<input type="number" min="0" v-model="dinozField.nbrUpLightning" />
+			</div>
+			<div>
+				<label class="title" for="dinozMaxLife">Air :</label>
+				<input id="dinozMaxLife" type="text" v-model="dinoz.nbrUpAir" disabled />
+				<input type="number" min="0" v-model="dinozField.nbrUpAir" />
+			</div>
 		</fieldset>
 		<fieldset>
 			<legend>Dinoz Statuses</legend>
@@ -155,6 +180,42 @@
 				<label class="radio">remove</label>
 			</div>
 		</fieldset>
+		<fieldset>
+			<legend>Dinoz Unlockable Skills</legend>
+			<div class="unlockable_skills">
+				<template v-for="skillId in dinoz.unlockableSkills" :key="skillId">
+					<div class="skills" />
+					{{ $t(`skill.name.${skillList[skillId].name}`) }}
+				</template>
+			</div>
+			<div class="unlockable_skills">
+				<select v-model="dinozField.unlockableSkillList" multiple size="10">
+					<template v-for="skill in unlockableSkillListFiltered" :key="skill.id">
+						<option :value="skill.id">
+							{{ $t(`skill.name.${skill.name}`) }}
+						</option>
+					</template>
+				</select>
+				<input
+					class="radio"
+					type="radio"
+					value="add"
+					name="addSkill"
+					@click="filterUnlockableSkillList('add')"
+					v-model="unlockableSkillOperation"
+				/>
+				<label class="radio">add</label>
+				<input
+					class="radio"
+					type="radio"
+					value="remove"
+					name="removeSkill"
+					@click="filterUnlockableSkillList('remove')"
+					v-model="unlockableSkillOperation"
+				/>
+				<label class="radio">remove</label>
+			</div>
+		</fieldset>
 		<input type="submit" />
 	</form>
 </template>
@@ -178,7 +239,8 @@ export default defineComponent({
 			UnavailableReasonFront,
 			dinozField: {
 				skillList: [],
-				statusList: []
+				statusList: [],
+				unlockableSkillList: []
 			} as DinozEdit,
 			dinoz: {} as DinozFiche,
 			statusList: statusList,
@@ -186,7 +248,9 @@ export default defineComponent({
 			statusListFiltered: [] as Array<string>,
 			skillList,
 			skillListFiltered: [] as SkillDetails[],
+			unlockableSkillListFiltered: [] as SkillDetails[],
 			skillOperation: '' as string,
+			unlockableSkillOperation: '' as string,
 			unavailableReasonOperation: '' as '' | 'add' | 'remove',
 			unavailableReasonListFiltered: [] as Array<UnavailableReasonFront>
 		};
@@ -212,8 +276,14 @@ export default defineComponent({
 					this.dinozField.life! > -1 ||
 					this.dinozField.maxLife ||
 					this.dinozField.experience ||
+					this.dinozField.nbrUpFire ||
+					this.dinozField.nbrUpWood ||
+					this.dinozField.nbrUpWater ||
+					this.dinozField.nbrUpLightning ||
+					this.dinozField.nbrUpAir ||
 					(this.dinozField.statusList.length > 0 && this.statusOperation) ||
-					(this.dinozField.skillList.length > 0 && this.skillOperation)
+					(this.dinozField.skillList.length > 0 && this.skillOperation) ||
+					(this.dinozField.unlockableSkillList.length > 0 && this.unlockableSkillOperation)
 				) {
 					await AdminService.updateDinoz(
 						this.dinoz.id!,
@@ -226,10 +296,17 @@ export default defineComponent({
 						this.dinozField.life,
 						this.dinozField.maxLife,
 						this.dinozField.experience,
+						this.dinozField.nbrUpFire,
+						this.dinozField.nbrUpWood,
+						this.dinozField.nbrUpWater,
+						this.dinozField.nbrUpLightning,
+						this.dinozField.nbrUpAir,
 						this.dinozField.statusList,
 						this.statusOperation,
 						this.dinozField.skillList,
-						this.skillOperation
+						this.skillOperation,
+						this.dinozField.unlockableSkillList,
+						this.unlockableSkillOperation
 					);
 				}
 
@@ -255,6 +332,17 @@ export default defineComponent({
 				this.skillListFiltered = Object.values(skillList).filter(skill => !this.dinoz.skills?.includes(skill.id));
 			} else {
 				this.skillListFiltered = Object.values(skillList).filter(skill => this.dinoz.skills?.includes(skill.id));
+			}
+		},
+		filterUnlockableSkillList(operation: string): void {
+			if (operation === 'add') {
+				this.unlockableSkillListFiltered = Object.values(skillList).filter(
+					skill => !this.dinoz.unlockableSkills?.includes(skill.id)
+				);
+			} else {
+				this.unlockableSkillListFiltered = Object.values(skillList).filter(skill =>
+					this.dinoz.unlockableSkills?.includes(skill.id)
+				);
 			}
 		},
 		filterStatusList(operation: string): void {
@@ -283,6 +371,9 @@ export default defineComponent({
 
 		this.skillOperation = 'add';
 		this.filterSkillList(this.skillOperation);
+
+		this.unlockableSkillOperation = 'add';
+		this.filterUnlockableSkillList(this.unlockableSkillOperation);
 
 		this.statusOperation = 'add';
 		this.filterStatusList(this.statusOperation);

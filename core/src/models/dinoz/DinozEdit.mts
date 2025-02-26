@@ -8,10 +8,16 @@ export interface DinozEdit {
 	canChangeName?: boolean;
 	life?: number;
 	maxLife?: number;
+	nbrUpFire?: number;
+	nbrUpWood?: number;
+	nbrUpWater?: number;
+	nbrUpLightning?: number;
+	nbrUpAir?: number;
 	experience?: number;
 	maxExperience?: number;
 	status?: number[];
 	skillList: string[];
+	unlockableSkillList: string[];
 	placeId?: number;
 	statusList: string[];
 	borderPlace?: number[];

@@ -59,10 +59,17 @@ routes.put(
 		body('life').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
 		body('maxLife').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
 		body('experience').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('nbrUpFire').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('nbrUpWood').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('nbrUpWater').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('nbrUpLightning').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
+		body('nbrUpAir').default(undefined).optional({ nullable: true }).exists().toInt().isInt(),
 		body('status').default(undefined).optional({ nullable: true }).exists().isArray(),
 		body('statusOperation').default(undefined).optional({ nullable: true }).exists().isString(),
-		body('skill').default(undefined).optional({ nullable: true }).exists().isArray(),
-		body('skillOperation').default(undefined).optional({ nullable: true }).exists().isString()
+		body('skills').default(undefined).optional({ nullable: true }).exists().isArray(),
+		body('skillOperation').default(undefined).optional({ nullable: true }).exists().isString(),
+		body('unlockableSkills').default(undefined).optional({ nullable: true }).exists().isArray(),
+		body('unlockableSkillOperation').default(undefined).optional({ nullable: true }).exists().isString()
 	],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
