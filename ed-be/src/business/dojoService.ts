@@ -28,7 +28,8 @@ import {
 	archiveChallenge,
 	archiveFight,
 	getAllArchivedFightRequest,
-	getArchivedFightRequest
+	getArchivedFightRequest,
+	viewFight
 } from '../dao/archiveDao.js';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
@@ -191,6 +192,8 @@ export async function getArchivedFight(req: Request) {
 	if (!fight) {
 		throw new ExpectedError(translate('dojo.archiveNotFound', authed));
 	}
+
+	await viewFight(authed.id, req.params.id);
 
 	return {
 		fighters: JSON.parse(fight.fighters) as FighterRecap[],

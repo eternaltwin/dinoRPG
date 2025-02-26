@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.dojo')" :header="$t(`dojo.tournaments`)" />
 	<ul class="tournament-list" v-if="!displayFinal">
-		<li v-for="(_, group) in pools" :key="group" class="group">
+		<li v-for="(_, group) in GROUP_COUNT" :key="group" class="group">
 			<RouterLink :to="`/dojo/tournament/${tournamentId}/${group}`">
 				{{ $t('dojo.group', { group: ALPHABET[group] }) }}
 			</RouterLink>
@@ -12,24 +12,35 @@
 			<RouterLink :to="`/dojo/tournament/${tournamentId}/5`">
 				<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
 			</RouterLink>
+			<DZButton @click="viewAll()">Mark as read</DZButton>
 		</div>
 		<div class="rounds">
-			<Tippy
-				tag="div"
-				theme="normal"
-				class="dinoz"
-				v-for="(dinoz, count) in pools[activeGroup]"
-				:key="`${count}${dinoz.id}`"
-				:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won }"
-				@click="goToPage('ShareFight', { archive: dinoz.fight })"
-			>
-				<DinozMini :display="dinoz.display" :width="50" :height="50" :flip="isFlipped(count)" class="dinoz-display" />
-				<span class="name">{{ dinoz.player.name }}</span>
-				<template #content>
-					<h1>{{ dinoz.name }}</h1>
-					<p>{{ $t('dojo.seeFight') }}</p>
-				</template>
-			</Tippy>
+			<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
+				<Tippy
+					tag="div"
+					theme="normal"
+					class="dinoz"
+					v-if="dinoz.player"
+					:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
+					@click="goToPage('ShareFight', { archive: dinoz.fight })"
+				>
+					<DinozMini :display="dinoz.display" :width="50" :height="50" :flip="isFlipped(count)" class="dinoz-display" />
+					<span class="name">{{ dinoz.player.name }}</span>
+
+					<template #content>
+						<h1>{{ dinoz.name }}</h1>
+						<p>{{ $t('dojo.seeFight') }}</p>
+					</template>
+				</Tippy>
+				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: dinoz.fight })">
+					<span class="name">Soon</span>
+
+					<template #content>
+						<h1>{{ dinoz.name }}</h1>
+						<p>{{ $t('dojo.seeFight') }}</p>
+					</template>
+				</Tippy>
+			</template>
 		</div>
 	</div>
 	<div class="wrapper final" v-if="displayFinal">
@@ -39,22 +50,31 @@
 			</RouterLink>
 		</div>
 		<div class="rounds">
-			<Tippy
-				tag="div"
-				theme="normal"
-				class="dinoz"
-				v-for="(dinoz, index) in dinozInFights"
-				:key="`${index}${dinoz.id}`"
-				:class="{ lost: !dinoz.won }"
-				@click="goToPage('ShareFight', { archive: dinoz.fight })"
-			>
-				<DinozMini :display="dinoz.display" v-if="dinoz.display" :width="50" :height="50" class="dinoz-display" />
-				<span class="name">{{ dinoz.name }}</span>
-				<template #content>
-					<h1>{{ dinoz.name }}</h1>
-					<p>{{ $t('dojo.seeFight') }}</p>
-				</template>
-			</Tippy>
+			<template v-for="(dinoz, count) in dinozInFights" :key="`${count}${dinoz.id}`">
+				<Tippy
+					tag="div"
+					theme="normal"
+					class="dinoz"
+					v-if="dinoz.player"
+					:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
+					@click="goToPage('ShareFight', { archive: dinoz.fight })"
+				>
+					<DinozMini :display="dinoz.display" v-if="dinoz.display" :width="50" :height="50" class="dinoz-display" />
+					<span class="name">{{ dinoz.player.name }}</span>
+					<template #content>
+						<h1>{{ dinoz.name }}</h1>
+						<p>{{ $t('dojo.seeFight') }}</p>
+					</template>
+				</Tippy>
+				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: dinoz.fight })">
+					<span class="name">Soon</span>
+
+					<template #content>
+						<h1>{{ dinoz.name }}</h1>
+						<p>{{ $t('dojo.seeFight') }}</p>
+					</template>
+				</Tippy>
+			</template>
 		</div>
 	</div>
 	<DZDisclaimer help :content="$t('dojo.tournamentInfo')" />
@@ -83,13 +103,13 @@ export default defineComponent({
 	data() {
 		return {
 			playerStore: playerStore(),
-			GROUP_COUNT: 0 as number,
+			GROUP_COUNT: 4 as number,
 			ALPHABET,
 			dinozInFights: [] as DisplayedLeader[],
 			tournament: [] as PublicTournament[],
 			final: [] as PublicTournament[],
-			pools: [] as DisplayedLeader[][],
-			activeGroup: 0,
+			pool: [] as DisplayedLeader[],
+			activeGroup: 10,
 			displayFinal: false,
 			tournamentId: undefined as undefined | string
 		};
@@ -105,7 +125,7 @@ export default defineComponent({
 		async showFinal() {
 			this.displayFinal = true;
 			try {
-				this.final = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.FINALS);
+				this.final = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.FINALS, 0);
 				this.dinozInFights = this.final.reduce((acc, fight) => {
 					const d1 = {
 						...fight.tournamentTeamLeft,
@@ -113,27 +133,26 @@ export default defineComponent({
 						won: fight.result,
 						round: fight.metadata.round,
 						pool: fight.metadata.poolNumber,
-						matchNumber: fight.metadata.matchNumber
-					};
+						matchNumber: fight.metadata.matchNumber,
+						watched: fight.watched,
+						slot: 'left'
+					} as DisplayedLeader;
 					const d2 = {
 						...fight.tournamentTeamRight,
 						fight: fight.id,
 						won: !fight.result,
 						round: fight.metadata.round,
 						pool: fight.metadata.poolNumber,
-						matchNumber: fight.metadata.matchNumber
-					};
+						matchNumber: fight.metadata.matchNumber,
+						watched: fight.watched,
+						slot: 'right'
+					} as DisplayedLeader;
 
 					acc.push(d1, d2);
 
-					// Add final winner
-					if (fight.metadata.round === 3) {
-						const winner = fight.result ? d1 : d2;
-						acc.push({ ...winner });
-					}
-
 					return acc;
 				}, [] as DisplayedLeader[]);
+				// const maxRound = Math.max(...this.dinozInFights.map(f => f.round));
 				this.final.sort((a, b) => a.metadata.matchNumber - b.metadata.matchNumber);
 				this.final.sort((a, b) => a.metadata.round - b.metadata.round);
 
@@ -153,8 +172,30 @@ export default defineComponent({
 					const looser2 = this.final[1].result
 						? this.formatDinoz(this.final[1], this.final[1].tournamentTeamRight)
 						: this.formatDinoz(this.final[1], this.final[1].tournamentTeamLeft);
-					this.dinozInFights.push(winner1, winner2, looser1, looser2);
-				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 5) {
+					if (winner1.watched) {
+						this.dinozInFights.push(winner1);
+					} else {
+						this.dinozInFights.push({ fight: winner1.fight });
+					}
+					if (winner2.watched) {
+						this.dinozInFights.push(winner2);
+					} else {
+						this.dinozInFights.push({ fight: winner2.fight });
+					}
+					if (looser1.watched) {
+						this.dinozInFights.push(looser1);
+					} else {
+						this.dinozInFights.push({ fight: looser1.fight });
+					}
+					if (looser2.watched) {
+						this.dinozInFights.push(looser2);
+					} else {
+						this.dinozInFights.push({ fight: looser2.fight });
+					}
+				} else if (
+					this.dinozInFights[this.dinozInFights.length - 1].round === 5 &&
+					this.dinozInFights[this.dinozInFights.length - 1].watched
+				) {
 					const winnerWinnerBracket = this.final[2].result
 						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft)
 						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight);
@@ -164,8 +205,27 @@ export default defineComponent({
 					const winnerLooserBracket = this.final[3].result
 						? this.formatDinoz(this.final[3], this.final[3].tournamentTeamLeft)
 						: this.formatDinoz(this.final[3], this.final[3].tournamentTeamRight);
-					this.dinozInFights.push(looserWinnerBracket, winnerLooserBracket, {}, winnerWinnerBracket);
-				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 6) {
+					if (looserWinnerBracket.watched) {
+						this.dinozInFights.push(looserWinnerBracket);
+					} else {
+						this.dinozInFights.push({ fight: looserWinnerBracket.fight });
+					}
+					if (winnerLooserBracket.watched) {
+						this.dinozInFights.push(winnerLooserBracket);
+					} else {
+						this.dinozInFights.push({ fight: winnerLooserBracket.fight });
+					}
+					this.dinozInFights.push({ fight: winnerWinnerBracket.fight });
+					if (winnerWinnerBracket.watched) {
+						this.dinozInFights.push(winnerWinnerBracket);
+					} else {
+						this.dinozInFights.push({ fight: winnerWinnerBracket.fight });
+					}
+					// this.dinozInFights.push(looserWinnerBracket, winnerLooserBracket, {}, winnerWinnerBracket);
+				} else if (
+					this.dinozInFights[this.dinozInFights.length - 1].round === 6 &&
+					this.dinozInFights[this.dinozInFights.length - 1].watched
+				) {
 					const winnerWinnerBracket = this.final[2].result
 						? this.formatDinoz(this.final[2], this.final[2].tournamentTeamLeft)
 						: this.formatDinoz(this.final[2], this.final[2].tournamentTeamRight);
@@ -173,7 +233,10 @@ export default defineComponent({
 						? this.formatDinoz(this.final[4], this.final[4].tournamentTeamLeft)
 						: this.formatDinoz(this.final[4], this.final[4].tournamentTeamRight);
 					this.dinozInFights.push(winnerLooserBracket, winnerWinnerBracket);
-				} else if (this.dinozInFights[this.dinozInFights.length - 1].round === 7) {
+				} else if (
+					this.dinozInFights[this.dinozInFights.length - 1].round === 7 &&
+					this.dinozInFights[this.dinozInFights.length - 1].watched
+				) {
 					const winnerWinnerBracket = this.final[5].result
 						? this.formatDinoz(this.final[5], this.final[5].tournamentTeamLeft)
 						: this.formatDinoz(this.final[5], this.final[5].tournamentTeamRight);
@@ -190,7 +253,8 @@ export default defineComponent({
 				won: true,
 				round: match.metadata.round,
 				pool: match.metadata.poolNumber,
-				matchNumber: match.metadata.matchNumber
+				matchNumber: match.metadata.matchNumber,
+				watched: match.watched
 			};
 		},
 		isFlipped(index: number) {
@@ -203,8 +267,14 @@ export default defineComponent({
 			}
 		},
 		async loadPage() {
+			this.GROUP_COUNT = 4;
 			try {
-				this.tournament = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.POOLS);
+				this.tournament = await DojoService.getTournamentFights(
+					this.tournamentId,
+					TournamentPhase.POOLS,
+					this.activeGroup
+				);
+				this.pool = Array.from({ length: 31 });
 				this.dinozInFights = this.tournament.reduce((acc, fight) => {
 					const d1 = {
 						...fight.tournamentTeamLeft,
@@ -212,48 +282,84 @@ export default defineComponent({
 						won: fight.result,
 						round: fight.metadata.round,
 						pool: fight.metadata.poolNumber,
-						matchNumber: fight.metadata.matchNumber
-					};
+						matchNumber: fight.metadata.matchNumber,
+						watched: fight.watched,
+						slot: 'left'
+					} as DisplayedLeader;
 					const d2 = {
 						...fight.tournamentTeamRight,
 						fight: fight.id,
 						won: !fight.result,
 						round: fight.metadata.round,
 						pool: fight.metadata.poolNumber,
-						matchNumber: fight.metadata.matchNumber
-					};
+						matchNumber: fight.metadata.matchNumber,
+						watched: fight.watched,
+						slot: 'right'
+					} as DisplayedLeader;
 
 					acc.push(d1, d2);
 
-					// Add final winner
-					if (fight.metadata.round === 3) {
-						const winner = fight.result ? d1 : d2;
-						acc.push({ ...winner });
-					}
-
 					return acc;
 				}, [] as DisplayedLeader[]);
-				this.GROUP_COUNT = this.dinozInFights.filter(d => d.round === 0).length / 16;
-				this.pools = Array.from({ length: this.GROUP_COUNT }, () => []);
+				const maxRound = Math.max(...this.dinozInFights.map(f => f.round));
+				this.dinozInFights.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
+				this.dinozInFights.sort((d1, d2) => d1.round - d2.round);
+
+				// Place base fighters
 				this.dinozInFights.forEach(d => {
-					this.pools[d.pool].push(d);
-				});
-				this.pools.map(p => {
-					p.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
-					p.sort((d1, d2) => d1.round - d2.round);
-				});
-				this.pools.forEach(p => {
-					const currentRound = p[p.length - 1].round;
-					const winners = 16 / Math.pow(2, currentRound);
-					const addedWinners = [] as DisplayedLeader[];
-					for (let i = winners; i >= 1; i--) {
-						if (p[p.length - i].won && p[p.length - i].round < 3) {
-							addedWinners.push({ ...p[p.length - i], won: true });
-						}
+					if (d.round === 0) {
+						this.pool[d.matchNumber * 2 + (d.slot === 'left' ? 0 : 1)] = d;
+					} else if (d.round === 1) {
+						this.pool[16 + d.matchNumber + (d.slot === 'left' ? 0 : 1) - this.activeGroup * 8] = d;
+					} else if (d.round === 2) {
+						this.pool[24 + d.matchNumber + (d.slot === 'left' ? 0 : 1) - this.activeGroup * 2] = d;
+					} else if (d.round === 3) {
+						this.pool[28 + d.matchNumber + (d.slot === 'left' ? 0 : 1)] = d;
 					}
-					p.push(...addedWinners);
 				});
+				this.pool.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
+				this.pool.sort((d1, d2) => d1.round - d2.round);
+
+				// Place watched fight
+				this.dinozInFights
+					.filter(d => d.won)
+					.filter(d => d.round === maxRound)
+					.forEach(dinoz => {
+						if (maxRound === 0) {
+							if (dinoz.watched) {
+								this.pool[16 + dinoz.matchNumber] = dinoz;
+							} else {
+								this.pool[16 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
+							}
+						} else if (maxRound === 1) {
+							if (dinoz.watched) {
+								this.pool[24 + dinoz.matchNumber] = dinoz;
+							} else {
+								this.pool[24 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
+							}
+						} else if (maxRound === 2) {
+							if (dinoz.watched) {
+								this.pool[28 + dinoz.matchNumber] = dinoz;
+							} else {
+								this.pool[28 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
+							}
+						} else if (maxRound === 3) {
+							if (dinoz.watched) {
+								this.pool[30 + dinoz.matchNumber] = dinoz;
+							} else {
+								this.pool[30 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
+							}
+						}
+					});
+
 				this.displayFinal = false;
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async viewAll() {
+			try {
+				await DojoService.viewAllFightFromPool(this.tournamentId, TournamentPhase.POOLS, this.activeGroup);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -262,7 +368,6 @@ export default defineComponent({
 	async mounted() {
 		this.tournamentId = this.$route.params.id as string;
 		this.activeGroup = +(this.$route.params.group as string);
-		await this.loadPage();
 	},
 	watch: {
 		'$route.params.group': async function (to) {
@@ -271,12 +376,12 @@ export default defineComponent({
 			}
 		},
 		activeGroup: {
-			handler(newValue, oldValue) {
+			handler(newValue) {
 				// Note: `newValue` will be equal to `oldValue` here
 				// on nested mutations as long as the object itself
 				// hasn't been replaced.
 				if (newValue === 5) this.showFinal();
-				if (oldValue === 5) this.loadPage();
+				if (newValue < 5) this.loadPage();
 			},
 			deep: true
 		}

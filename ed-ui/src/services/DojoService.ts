@@ -90,9 +90,15 @@ export const DojoService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getTournamentFights(id: string, phase: TournamentPhase): Promise<PublicTournament[]> {
+	getTournamentFights(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
 		return http()
-			.get(`/dojo/tournament/${phase}/${id}`)
+			.get(`/dojo/tournament/${phase}/${id}/${pool}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	viewAllFightFromPool(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
+		return http()
+			.patch(`/dojo/tournament/${phase}/${id}/${pool}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

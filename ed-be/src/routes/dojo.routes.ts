@@ -15,6 +15,7 @@ import {
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 import {
 	createTournamentTeam,
+	readAllFightFromPool,
 	tournamentInfo,
 	tournamentsHistory,
 	tournamentTargetInfo
@@ -167,8 +168,8 @@ routes.get(`${commonPath}/tournament`, async (req: Request, res: Response) => {
 });
 
 routes.get(
-	`${commonPath}/tournament/:phase/:id`,
-	[param('phase').exists(), param('id').exists().isUUID()],
+	`${commonPath}/tournament/:phase/:id/:pool`,
+	[param('phase').exists(), param('id').exists().isUUID(), param('pool').exists().toInt()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -176,6 +177,23 @@ routes.get(
 
 		try {
 			const response = await tournamentTargetInfo(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.patch(
+	`${commonPath}/tournament/:phase/:id/:pool`,
+	[param('phase').exists(), param('id').exists().isUUID(), param('pool').exists().toInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await readAllFightFromPool(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

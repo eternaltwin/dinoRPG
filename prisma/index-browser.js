@@ -544,6 +544,13 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   metadata: 'metadata'
 };
 
+exports.Prisma.FightWatchedScalarFieldEnum = {
+  id: 'id',
+  playerId: 'playerId',
+  favorite: 'favorite',
+  fightArchiveId: 'fightArchiveId'
+};
+
 exports.Prisma.TournamentScalarFieldEnum = {
   id: 'id',
   date: 'date',
@@ -730,6 +737,7 @@ exports.Prisma.ModelName = {
   Message: 'Message',
   Notification: 'Notification',
   FightArchive: 'FightArchive',
+  FightWatched: 'FightWatched',
   Tournament: 'Tournament',
   TournamentTeam: 'TournamentTeam'
 };
@@ -751,7 +759,7 @@ class PrismaClient {
         } else {
           message = 'PrismaClient is unable to run in this browser environment, or has been bundled for the browser (running in `' + runtime.prettyName + '`).'
         }
-        
+
         message += `
 If this is unexpected, please open an issue: https://pris.ly/prisma-prisma-bug-report`
 

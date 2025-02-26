@@ -3,7 +3,8 @@ import { Request } from 'express';
 import { auth, getPlayerDinozInformationForTeam } from '../dao/playerDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
-import { PublicMetada, TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
 
 export type selectedDojoType = Awaited<ReturnType<typeof getSelectedDojo>>;
 export async function getSelectedDojo(teamLimit: number, qualified: number) {
@@ -128,7 +129,129 @@ export async function tournamentInfo(req: Request) {
 }
 
 export async function tournamentTargetInfo(req: Request) {
+	const authed = await auth(req);
 	const tournamentId = req.params.id as string;
+	let pool = +req.params.pool;
+	const phase = req.params.phase as TournamentPhase;
+	const fights = await prisma.fightArchive.findMany({
+		where: {
+			tournamentId
+		},
+		select: {
+			id: true,
+			tournamentTeamLeft: {
+				select: {
+					dinoz: {
+						take: 1,
+						select: {
+							id: true,
+							display: true,
+							name: true,
+							player: {
+								select: {
+									id: true,
+									name: true
+								}
+							}
+						}
+					}
+				}
+			},
+			tournamentTeamRight: {
+				select: {
+					dinoz: {
+						take: 1,
+						select: {
+							id: true,
+							display: true,
+							name: true,
+							player: {
+								select: {
+									id: true,
+									name: true
+								}
+							}
+						}
+					}
+				}
+			},
+			metadata: true,
+			result: true
+		}
+	});
+	if (phase === TournamentPhase.FINALS) {
+		pool = 5;
+	}
+	const returnData = fights
+		.map(f => {
+			return {
+				id: f.id,
+				tournamentTeamLeft: f.tournamentTeamLeft?.dinoz[0],
+				tournamentTeamRight: f.tournamentTeamRight?.dinoz[0],
+				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+				result: f.result
+			};
+		})
+		.filter(t => t.metadata.phase === phase)
+		.filter(t => t.metadata.poolNumber === pool) as PublicTournament[];
+
+	const watchedFight = await getViewedTournamentFight(
+		authed.id,
+		returnData.map(f => f.id)
+	);
+
+	let mostAdvancedStep = 0;
+	if (watchedFight.length === 0 && phase === TournamentPhase.POOLS) {
+		return returnData.filter(t => t.metadata.round === 0);
+	} else if (watchedFight.length === 0 && phase === TournamentPhase.FINALS) {
+		return fights
+			.map(f => {
+				return {
+					id: f.id,
+					tournamentTeamLeft: f.tournamentTeamLeft?.dinoz[0],
+					tournamentTeamRight: f.tournamentTeamRight?.dinoz[0],
+					metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+					result: f.result
+				};
+			})
+			.filter(t => t.metadata.phase === phase)
+			.filter(t => t.metadata.round === 4);
+	}
+
+	const poolMatchViewed = watchedFight
+		.map(f => {
+			const a = returnData.find(t => t.id === f.fightArchiveId);
+			if (a) return a;
+		})
+		.filter(f => f !== undefined);
+	mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
+
+	// Reach next round if all match from this round for this pool ahve been view
+	if (
+		(phase === TournamentPhase.POOLS &&
+			16 / Math.pow(2, mostAdvancedStep + 1) ===
+				poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) ||
+		(phase === TournamentPhase.FINALS && poolMatchViewed.length >= 2)
+	) {
+		mostAdvancedStep++;
+	}
+
+	return returnData
+		.filter(t => {
+			if (t.metadata.round <= mostAdvancedStep || watchedFight.map(f => f.fightArchiveId).includes(t.id)) return true;
+		})
+		.map(fight => {
+			return {
+				...fight,
+				watched: watchedFight.map(f => f.fightArchiveId).includes(fight.id)
+			};
+		});
+}
+
+export async function readAllFightFromPool(req: Request) {
+	const authed = await auth(req);
+	const tournamentId = req.params.id as string;
+	const pool = +req.params.pool;
 	const phase = req.params.phase as TournamentPhase;
 	const fights = await prisma.fightArchive.findMany({
 		where: {
@@ -177,7 +300,7 @@ export async function tournamentTargetInfo(req: Request) {
 		}
 	});
 
-	return fights
+	const poolFights = fights
 		.map(f => {
 			return {
 				id: f.id,
@@ -187,7 +310,13 @@ export async function tournamentTargetInfo(req: Request) {
 				result: f.result
 			};
 		})
-		.filter(t => t.metadata.phase === phase);
+		.filter(t => t.metadata.phase === phase)
+		.filter(t => t.metadata.poolNumber === pool)
+		.map(f => f.id);
+
+	for (const poolFight of poolFights) {
+		await viewFight(authed.id, poolFight);
+	}
 }
 
 export async function tournamentsHistory(req: Request) {

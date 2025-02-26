@@ -229,6 +229,7 @@ model Player {
   ranking              Ranking?
   Dojo                 Dojo?
   FightArchive         FightArchive[]
+  FightWatched         FightWatched[]
 
   @@map("player")
 }
@@ -651,6 +652,19 @@ model FightArchive {
   tournamentTeamRight   TournamentTeam? @relation("RightTeamRelation", fields: [tournamentTeamRightId], references: [id])
   tournamentId          String?         @db.Uuid
   metadata              String?         @db.Text
+  FightWatched          FightWatched[]
+}
+
+model FightWatched {
+  id             String       @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  fight          FightArchive @relation(fields: [fightArchiveId], references: [id])
+  player         Player       @relation(fields: [playerId], references: [id])
+  playerId       String       @db.Uuid
+  favorite       Boolean
+  fightArchiveId String       @db.Uuid
+
+  @@unique([playerId, fightArchiveId])
+  @@index([playerId, fightArchiveId])
 }
 
 model Tournament {

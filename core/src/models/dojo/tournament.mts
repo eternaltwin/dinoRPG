@@ -51,6 +51,7 @@ export interface PublicTournament {
 	tournamentTeamRight: TeamLeader;
 	metadata: PublicMetada;
 	result: boolean;
+	watched: boolean;
 }
 
 export interface TournamentHistory {
@@ -84,6 +85,8 @@ export type DisplayedLeader = {
 	round: number;
 	pool: number;
 	matchNumber: number;
+	watched: boolean;
+	slot: 'left' | 'right';
 	player: {
 		id: string;
 		name: string;

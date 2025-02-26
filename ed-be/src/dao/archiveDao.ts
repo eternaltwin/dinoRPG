@@ -66,6 +66,37 @@ export async function archiveChallenge(
 	return archive;
 }
 
+export async function viewFight(playerId: string, fightArchiveId: string) {
+	await prisma.fightWatched.upsert({
+		where: {
+			playerId_fightArchiveId: { playerId, fightArchiveId }
+		},
+		create: {
+			playerId,
+			fightArchiveId,
+			favorite: false
+		},
+		update: {
+			// Do nothing
+		}
+	});
+}
+
+export async function getViewedTournamentFight(playerId: string, tournamentFights: string[]) {
+	return await prisma.fightWatched.findMany({
+		where: {
+			AND: [
+				{
+					fightArchiveId: {
+						in: tournamentFights
+					}
+				},
+				{ playerId: playerId }
+			]
+		}
+	});
+}
+
 export async function getArchivedFightRequest(archiveId: string) {
 	const archive = await prisma.fightArchive.findFirst({
 		where: {
