@@ -1,12 +1,11 @@
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
-import { prisma } from '../prisma.js';
-import { createLog } from './logDao.js';
-import { AdminRole, Lang } from '@drpg/prisma';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
-import type { Request } from 'express';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { isUuid } from '@drpg/core/utils/isUuid';
+import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
+import type { Request } from 'express';
+import { prisma } from '../prisma.js';
+import { createLog } from './logDao.js';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -67,7 +66,8 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 			rewards: true,
 			matelasseur: true,
 			items: { select: { itemId: true, quantity: true } },
-			quests: { select: { questId: true, progression: true } }
+			quests: { select: { questId: true, progression: true } },
+			role: true
 		}
 	});
 
@@ -379,7 +379,8 @@ export async function getCommonDataRequest(playerId: string) {
 			rewards: true,
 			matelasseur: true,
 			items: { select: { itemId: true, quantity: true } },
-			quests: { select: { questId: true, progression: true } }
+			quests: { select: { questId: true, progression: true } },
+			role: true
 		}
 	});
 

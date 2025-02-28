@@ -1,11 +1,20 @@
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { PlayerInfo } from '@drpg/core/models/player/PlayerInfo';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche, toDinozFicheLite, toDinozPublicFiche } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { AdminRole, LogType, OfferStatus } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
+import sanitizeHtml from 'sanitize-html';
+import gameConfig from '../config/game.config.js';
+import { LOGGER } from '../context.js';
 import { getAllDinozFicheLite, getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
+import { createLog } from '../dao/logDao.js';
 import {
 	auth,
 	checkBeforeDeletion,
@@ -21,20 +30,11 @@ import {
 	setPlayer
 } from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import { updateCompletion } from '../dao/rankingDao.js';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { setSpecificStat } from '../dao/trackingDao.js';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { createLog } from '../dao/logDao.js';
-import { LogType, OfferStatus } from '@drpg/prisma';
-import sanitizeHtml from 'sanitize-html';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import translate from '../utils/translate.js';
-import gameConfig from '../config/game.config.js';
 import { getAvailableActions } from './dinozService.js';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
-import { LOGGER } from '../context.js';
 
 /**
  * @summary Get data from player on login
@@ -117,7 +117,7 @@ export async function getCommonData(req: Request) {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PDA),
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI)
 		},
-		admin: req?.auth?.isAdmin || false,
+		admin: playerCommonData.role === AdminRole.ADMIN,
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper,
 		notifications: playerCommonData.notifications
