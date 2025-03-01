@@ -1,5 +1,5 @@
-import { PlayerOptions } from '../player/PlayerOptions.mjs';
 import { Notification } from '../notifications/notification.mjs';
+import { PlayerOptions } from '../player/PlayerOptions.mjs';
 
 export interface StorePlayer {
 	money: number;
@@ -10,6 +10,7 @@ export interface StorePlayer {
 	admin: boolean;
 	priest: boolean;
 	shopkeeper: boolean;
+	sortOption: string;
 	notificationCounter: number;
 	notifications: Notification[];
 }

@@ -1,5 +1,17 @@
 <template>
 	<div class="inventory">
+		<div class="sort-menu">
+			<label for="sort">{{ $t('inventory.sortBy') }}</label>
+			<select id="sort" v-model="sortOption" @change="sortItems">
+				<option value="default">{{ $t('inventory.sort.default') }}</option>
+				<option value="nameAsc">{{ $t('inventory.sort.nameAsc') }}</option>
+				<option value="nameDesc">{{ $t('inventory.sort.nameDesc') }}</option>
+				<option value="priceAsc">{{ $t('inventory.sort.priceAsc') }}</option>
+				<option value="priceDesc">{{ $t('inventory.sort.priceDesc') }}</option>
+				<option value="qtyAsc">{{ $t('inventory.sort.qtyAsc') }}</option>
+				<option value="qtyDesc">{{ $t('inventory.sort.qtyDesc') }}</option>
+			</select>
+		</div>
 		<table>
 			<tbody>
 				<tr>
@@ -95,6 +107,7 @@ import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -102,7 +115,8 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			allItemsData: [] as Array<ItemFiche>,
-			itemNameList: itemNameList
+			itemNameList: itemNameList,
+			playerStore: playerStore()
 		};
 	},
 	methods: {
@@ -185,6 +199,39 @@ export default defineComponent({
 				}
 			}
 		},
+		sortItems() {
+			switch (this.sortOption) {
+				case 'nameAsc':
+					this.allItemsData.sort((a, b) =>
+						this.$t(`item.name.${this.itemNameList[a.itemId]}`).localeCompare(
+							this.$t(`item.name.${this.itemNameList[b.itemId]}`)
+						)
+					);
+					break;
+				case 'nameDesc':
+					this.allItemsData.sort((a, b) =>
+						this.$t(`item.name.${this.itemNameList[b.itemId]}`).localeCompare(
+							this.$t(`item.name.${this.itemNameList[a.itemId]}`)
+						)
+					);
+					break;
+				case 'priceAsc':
+					this.allItemsData.sort((a, b) => a.price - b.price);
+					break;
+				case 'priceDesc':
+					this.allItemsData.sort((a, b) => b.price - a.price);
+					break;
+				case 'qtyAsc':
+					this.allItemsData.sort((a, b) => a.quantity - b.quantity);
+					break;
+				case 'qtyDesc':
+					this.allItemsData.sort((a, b) => b.quantity - a.quantity);
+					break;
+				default:
+					this.allItemsData.sort((a, b) => a.itemId - b.itemId);
+			}
+			this.playerStore.setSortOption(this.sortOption);
+		},
 		async resfreshInventory(): Promise<void> {
 			const items = await InventoryService.getAllItemsData();
 			this.allItemsData = items.map(i => {
@@ -194,7 +241,8 @@ export default defineComponent({
 					quantity: i.quantity
 				};
 			});
-			this.allItemsData = this.allItemsData.sort((a, b) => a.itemId - b.itemId);
+			this.sortOption = this.playerStore.getSortOption;
+			this.sortItems();
 		}
 	},
 	async mounted(): Promise<void> {
@@ -219,6 +267,25 @@ export default defineComponent({
 <style lang="scss" scoped>
 .inventory {
 	width: 95%;
+	.sort-menu {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		gap: 5px;
+		font-size: 10pt;
+		label {
+			color: white;
+			font-weight: bold;
+		}
+		select {
+			background: #9f5841;
+			color: white;
+			border: 2px solid #9a4029;
+			padding: 3px 5px;
+			cursor: pointer;
+			font-size: 9pt;
+		}
+	}
 	table {
 		width: 100%;
 		margin-top: 10px;

@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia';
+import { Notification } from '@drpg/core/models/notifications/notification';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
-import { Notification } from '@drpg/core/models/notifications/notification';
+import { defineStore } from 'pinia';
 
 export const playerStore = defineStore('playerStore', {
 	state: (): StorePlayer => ({
@@ -17,6 +17,7 @@ export const playerStore = defineStore('playerStore', {
 		admin: false,
 		priest: false,
 		shopkeeper: false,
+		sortOption: 'default',
 		notificationCounter: 0,
 		notifications: []
 	}),
@@ -28,6 +29,7 @@ export const playerStore = defineStore('playerStore', {
 		getClanId: (state: StorePlayer) => state.clanId,
 		isPriest: (state: StorePlayer) => state.priest,
 		isShopkeeper: (state: StorePlayer) => state.shopkeeper,
+		getSortOption: (state: StorePlayer) => state.sortOption,
 		isAdmin: (state: StorePlayer) => state.admin,
 		getNotificationsCounter: (state: StorePlayer) => state.notificationCounter,
 		getNotifications: (state: StorePlayer) => state.notifications
@@ -56,6 +58,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setShopkeeper(shopkeeper: boolean): void {
 			this.shopkeeper = shopkeeper;
+		},
+		setSortOption(sortOption: string): void {
+			this.sortOption = sortOption;
 		},
 		setClanId(clanId: number | undefined): void {
 			this.clanId = clanId;

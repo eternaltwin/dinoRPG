@@ -205,7 +205,17 @@
 		"itemName": "Nom de l'objet",
 		"stock": "Stock",
 		"actions": "Actions",
-		"full": "Stock plein"
+		"full": "Stock plein",
+		"sortBy": "Trier par",
+		"sort": {
+			"default": "Par défaut",
+			"nameAsc": "Nom (A → Z)",
+			"nameDesc": "Nom (Z → A)",
+			"priceAsc": "Prix (croissant)",
+			"priceDesc": "Prix (décroissant)",
+			"qtyAsc": "Quantité (croissante)",
+			"qtyDesc": "Quantité (décroissante)"
+		}
 	},
 	"details": {
 		"th": {
