@@ -13,6 +13,9 @@
 	&.fww{
 		flex-wrap: wrap;
 	}
+	&.fdc{
+		flex-direction: column;
+	}
 
 	&.center {
 		width: 95%;

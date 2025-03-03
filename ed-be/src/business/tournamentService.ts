@@ -5,6 +5,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
+import TournamentManager from '../utils/tournamentManager.js';
 
 export type selectedDojoType = Awaited<ReturnType<typeof getSelectedDojo>>;
 export async function getSelectedDojo(teamLimit: number, qualified: number) {
@@ -39,6 +40,12 @@ export async function getSelectedDojo(teamLimit: number, qualified: number) {
 
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
+
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError(translate('dojo.qualificationOver', authed));
+	}
+
 	const teamIds = req.body.team as number[];
 
 	const latestTournament = await prisma.tournament.findFirst({
@@ -110,6 +117,64 @@ export async function createTournamentTeam(req: Request) {
 	});
 
 	return;
+}
+
+export async function deleteTournamentTeam(req: Request) {
+	const authed = await auth(req);
+
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError(translate('dojo.qualificationOver', authed));
+	}
+
+	const myTeam = await prisma.dojo.findUnique({
+		where: {
+			playerId: authed.id
+		},
+		select: {
+			tournamentTeamId: true
+		}
+	});
+
+	if (!myTeam || !myTeam.tournamentTeamId) {
+		throw new ExpectedError('Team inexistant');
+	}
+
+	await prisma.tournamentTeam.delete({
+		where: {
+			id: myTeam.tournamentTeamId
+		}
+	});
+}
+
+export async function getTournamentTeam(req: Request) {
+	const authed = await auth(req);
+
+	const myTeam = await prisma.dojo.findUnique({
+		where: {
+			playerId: authed.id
+		},
+		select: {
+			TournamentTeam: {
+				select: {
+					dinoz: {
+						select: {
+							id: true,
+							name: true,
+							display: true,
+							level: true
+						}
+					}
+				}
+			}
+		}
+	});
+
+	if (!myTeam || !myTeam.TournamentTeam) {
+		throw new ExpectedError('No team found');
+	}
+
+	return myTeam.TournamentTeam.dinoz;
 }
 
 export async function tournamentInfo(req: Request) {

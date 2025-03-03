@@ -114,11 +114,22 @@
 		></DZDisclaimer>
 		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
 	</div>
+	<div class="df aic fdc" v-if="myDojo && tournamentInfo && myDojo.TournamentTeam">
+		<DZButton @click="displayTeam" v-if="myTeam.length === 0">{{ $t('dojo.team') }}</DZButton>
+		<div class="df" v-if="myTeam.length > 0">
+			<div v-for="dinoz in myTeam" :key="dinoz.id" class="dinoz-button">
+				<DinozWithoutFlash :display="dinoz.display" :life="1" />
+
+				<div class="textbox">
+					<p class="name">{{ dinoz.name }}</p>
+					<p class="level">{{ $t('myAccount.level') }} {{ dinoz.level }}</p>
+				</div>
+			</div>
+		</div>
+		<DZButton @click="deleteTeam" v-if="myTeam.length > 0">{{ $t('dojo.deleteTeam') }}</DZButton>
+	</div>
 
 	<RouterView />
-	<!--	<p class="subtitle">{{ $t('dojo.tidInProgress') }}</p>
-	<DZButton @click="goToPage('DojoTournament')">{{ $t('dojo.accessTournament') }}</DZButton>
-	<DZDisclaimer round help :content="$t('dojo.disclaimer')" />-->
 </template>
 
 <script lang="ts">
@@ -134,6 +145,8 @@ import SelectDinoz from '../components/dojo/SelectDinoz.vue';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
+import DZButton from '../components/common/DZButton.vue';
+import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 
 export default defineComponent({
 	name: 'DojoHome',
@@ -146,6 +159,8 @@ export default defineComponent({
 		}
 	},
 	components: {
+		DinozWithoutFlash,
+		DZButton,
 		SelectDinoz,
 		DZDisclaimer,
 		TitleHeader
@@ -160,12 +175,30 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			tournamentInfo: {} as { id: string; teamRace: number[]; teamSize: number; levelLimit: number },
 			tournamentState: {} as TournamentState,
-			localStore: localStore()
+			localStore: localStore(),
+			myTeam: [] as DinozDojoFiche[]
 		};
 	},
 	methods: {
 		goToPage(pageName: string, params?: string) {
 			this.$router.push({ name: pageName, params: { id: params } });
+		},
+		async displayTeam() {
+			try {
+				this.myTeam = await DojoService.getTournamentTeam();
+				await this.refresh();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async deleteTeam() {
+			try {
+				this.myTeam = [] as DinozDojoFiche[];
+				await DojoService.deleteTournamentTeam();
+				await this.refresh();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
 		},
 		async composeMyTeam(data) {
 			try {
@@ -189,6 +222,27 @@ export default defineComponent({
 				const totalFight = this.myDojo.DojoChallengeHistory.length;
 				const worth = Math.round((totalVictory / totalFight) * 100);
 				this.worth = isNaN(worth) ? 0 : worth;
+				if (!this.myDojo.TournamentTeam) {
+					const tournamentInfo = await DojoService.getTournamentInfo();
+					const races = tournamentInfo.teamRace.split(',').map(d => parseInt(d));
+					this.tournamentInfo.id = tournamentInfo.id;
+					this.tournamentInfo.levelLimit = tournamentInfo.levelLimit;
+					this.tournamentInfo.teamRace = races;
+					this.tournamentInfo.teamSize = tournamentInfo.teamSize;
+
+					this.myDinoz = this.dinozStore.getDinozList
+						.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
+						.filter(d => races.includes(d.race.raceId))
+						.filter(d => d.level <= tournamentInfo.levelLimit)
+						.map(d => {
+							return {
+								id: d.id,
+								name: d.name,
+								display: d.display,
+								level: d.level
+							};
+						});
+				}
 			}
 		},
 		formatDate(oldDate: Date) {
@@ -217,27 +271,6 @@ export default defineComponent({
 			if (e) await this.refresh();
 		});
 		await this.refresh();
-		if (this.myDojo && !this.myDojo.TournamentTeam) {
-			const tournamentInfo = await DojoService.getTournamentInfo();
-			const races = tournamentInfo.teamRace.split(',').map(d => parseInt(d));
-			this.tournamentInfo.id = tournamentInfo.id;
-			this.tournamentInfo.levelLimit = tournamentInfo.levelLimit;
-			this.tournamentInfo.teamRace = races;
-			this.tournamentInfo.teamSize = tournamentInfo.teamSize;
-
-			this.myDinoz = this.dinozStore.getDinozList
-				.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen)
-				.filter(d => races.includes(d.race.raceId))
-				.filter(d => d.level <= tournamentInfo.levelLimit)
-				.map(d => {
-					return {
-						id: d.id,
-						name: d.name,
-						display: d.display,
-						level: d.level
-					};
-				});
-		}
 	},
 	unmounted() {
 		EventBus.off('refreshDojo');
@@ -297,6 +330,50 @@ export default defineComponent({
 			&.disabled {
 				filter: grayscale(100%);
 			}
+		}
+	}
+}
+.dinoz-button {
+	max-width: 96px;
+	margin: 4px;
+	border-radius: 5px;
+	text-align: center;
+	border: 1px solid #874b2e;
+	cursor: pointer;
+	user-select: none;
+	display: flex;
+	flex-direction: column;
+	background-image: url('../assets/battle/forcebrut.webp');
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position-x: center;
+	background-position-y: -4px;
+	position: relative;
+
+	.delete {
+		position: absolute;
+		right: 3px;
+		top: 3px;
+
+		&:hover {
+			filter: brightness(120%);
+		}
+	}
+	.textbox {
+		background: rgb(255 249 0);
+		background: linear-gradient(180deg, rgb(255 249 0) 0%, rgb(176 153 20) 100%);
+		border-top: 1px solid #874b2e;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		font-size: 10px;
+		font-weight: bold;
+
+		.name {
+			color: #874b2e;
+		}
+
+		.level {
+			color: #fce3bc;
 		}
 	}
 }

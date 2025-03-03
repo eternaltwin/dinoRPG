@@ -8,6 +8,7 @@ import {
 	TournamentPhase,
 	TournamentState
 } from '@drpg/core/models/dojo/tournament';
+import { DinozDojoFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
 
 export const DojoService = {
 	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState }> {
@@ -87,6 +88,18 @@ export const DojoService = {
 			.put(`/dojo/tournament/`, {
 				team: team
 			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	deleteTournamentTeam(): Promise<void> {
+		return http()
+			.delete(`/dojo/tournament/team`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getTournamentTeam(): Promise<DinozDojoFiche[]> {
+		return http()
+			.get(`/dojo/tournament/team`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
