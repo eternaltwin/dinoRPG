@@ -1944,7 +1944,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Less chance to heal if lost HP is less than 50. Sure to heal if lost HP is 50+
 				// Will not heal if lost less than 10 HP.
-				if ((fighter.startingHp - fighter.hp) <= 10 || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
+				if (fighter.startingHp - fighter.hp <= 10 || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
 					return cancel();
 				}
 
@@ -4015,7 +4015,12 @@ const attackTarget = (
 		);
 
 		// Check for assault dodge
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && !attacker.cancelAssaultDodge && fightData.rng() < target.stats.special.evasion - 1) {
+		if (
+			isAssault &&
+			!hasStatus(target, Status.PETRIFIED) &&
+			!attacker.cancelAssaultDodge &&
+			fightData.rng() < target.stats.special.evasion - 1
+		) {
 			isDodged = true;
 		}
 

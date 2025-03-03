@@ -4,7 +4,7 @@
 		<div class="header df">
 			<div class="buttons">
 				<img
-					v-if="tournamentState.phase === TournamentPhase.QUALIFICATION"
+					v-if="tournamentState && tournamentState.phase === TournamentPhase.QUALIFICATION"
 					@click="goToPage('DojoChallenge')"
 					:src="getImgURL('icons', 'act_dojo')"
 					v-tippy="{
@@ -13,7 +13,7 @@
 					}"
 				/>
 				<RouterLink
-					v-else
+					v-else-if="tournamentState"
 					:to="{
 						name: 'DojoTournament',
 						params: { id: tournamentState.id, group: '0' }
@@ -94,7 +94,7 @@
 		</div>
 	</div>
 	<DZDisclaimer
-		v-if="tournamentState.schedule"
+		v-if="tournamentState && tournamentState.schedule"
 		:content="
 			$t(`dojo.${tournamentState.phase}`, {
 				qualificationStart: formatDate(tournamentState.schedule.qualificationStart),
@@ -107,7 +107,9 @@
 	></DZDisclaimer>
 	<div
 		class="tournament"
-		v-if="myDojo && tournamentInfo && (!myDojo.TournamentTeam || myDojo.TournamentTeam.teamCount === 0)"
+		v-if="
+			myDojo && tournamentState && tournamentInfo && (!myDojo.TournamentTeam || myDojo.TournamentTeam.teamCount === 0)
+		"
 	>
 		<DZDisclaimer
 			:content="$t(`dojo.createTournamentTeam`, { team: tournamentInfo.teamSize, level: tournamentInfo.levelLimit })"
@@ -128,6 +130,7 @@
 		</div>
 		<DZButton @click="deleteTeam" v-if="myTeam.length > 0">{{ $t('dojo.deleteTeam') }}</DZButton>
 	</div>
+	<DZDisclaimer v-if="!tournamentState" :content="$t(`dojo.noTournament`)"></DZDisclaimer>
 
 	<RouterView />
 </template>
@@ -174,7 +177,7 @@ export default defineComponent({
 			myDinoz: [] as DinozDojoFiche[],
 			dinozStore: dinozStore(),
 			tournamentInfo: {} as { id: string; teamRace: number[]; teamSize: number; levelLimit: number },
-			tournamentState: {} as TournamentState,
+			tournamentState: undefined as undefined | TournamentState,
 			localStore: localStore(),
 			myTeam: [] as DinozDojoFiche[]
 		};
@@ -213,7 +216,9 @@ export default defineComponent({
 				const response = await DojoService.getMyDojo();
 				this.myDojo = response.dojo;
 				this.rank = response.rank;
-				this.tournamentState = response.tournament;
+				if (response.tournament) {
+					this.tournamentState = response.tournament;
+				}
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -222,7 +227,7 @@ export default defineComponent({
 				const totalFight = this.myDojo.DojoChallengeHistory.length;
 				const worth = Math.round((totalVictory / totalFight) * 100);
 				this.worth = isNaN(worth) ? 0 : worth;
-				if (!this.myDojo.TournamentTeam) {
+				if (!this.myDojo.TournamentTeam && this.tournamentState) {
 					const tournamentInfo = await DojoService.getTournamentInfo();
 					const races = tournamentInfo.teamRace.split(',').map(d => parseInt(d));
 					this.tournamentInfo.id = tournamentInfo.id;

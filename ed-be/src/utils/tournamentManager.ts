@@ -1,11 +1,9 @@
 import { getDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { getSelectedDojo } from '../business/tournamentService.js';
+import { createFirstTournament, getLevelLimits, getSelectedDojo } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
-import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import {
 	MetaData,
 	TournamentMatch,
@@ -30,7 +28,7 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { NotificationSeverity } from '@drpg/prisma';
+import { NotificationSeverity, UnavailableReason } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 
@@ -562,7 +560,7 @@ class TournamentManager {
 		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(3, 6);
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
-		const levelLimit = tournamentFormat.levelLimit ?? getRandomNumber(5, 10) * 5;
+		const levelLimit = tournamentFormat.levelLimit ?? (await getLevelLimits(tournamentFormat.teamRace));
 
 		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.tournament.create({
@@ -688,7 +686,13 @@ class TournamentManager {
 		});
 
 		if (!activeTournament) {
-			LOGGER.error('No tournament found.');
+			const nextMonday = dayjs()
+				.day(1)
+				.add(dayjs().day() === 1 ? 1 : 0, 'week')
+				.startOf('day')
+				.add(1, 'second');
+			LOGGER.error(`No tournament found, schedule a creation for ${nextMonday}.`);
+			scheduleJob('createFirstTournament', nextMonday.toDate(), () => createFirstTournament(prisma));
 			return null;
 		}
 

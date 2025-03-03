@@ -4252,6 +4252,7 @@
 	},
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
+		"noTournament": "Il n'y a pas encore assez de dinoz pour pouvoir faire un tournois, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
 		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",
 		"disclaimer": "**Aucun moyen de vous échapper !** && La compétence Trou Noir ainsi que l'objet Poudre Dimensionnelle ne sont pas activés durant les combats du tournoi, ni dans les prochains défis!",

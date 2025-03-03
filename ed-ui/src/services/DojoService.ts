@@ -8,10 +8,10 @@ import {
 	TournamentPhase,
 	TournamentState
 } from '@drpg/core/models/dojo/tournament';
-import { DinozDojoFiche } from '@drpg/core/dist/models/dinoz/DinozFiche.mjs';
+import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export const DojoService = {
-	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState }> {
+	getMyDojo(): Promise<{ dojo: DojoBasic; rank: number; tournament: TournamentState | null }> {
 		return http()
 			.get(`/dojo/`)
 			.then(res => Promise.resolve(res.data))
