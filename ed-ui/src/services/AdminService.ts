@@ -67,7 +67,6 @@ export const AdminService = {
 	updatePlayer(
 		id: string,
 		customText?: string,
-		hasImported?: boolean,
 		quetzuBought?: number,
 		dailyGridRewards?: number,
 		leader?: boolean | null,
@@ -84,7 +83,6 @@ export const AdminService = {
 		return http()
 			.put(`/admin/player/${id}`, {
 				customText: customText,
-				hasImported: hasImported,
 				quetzuBought: quetzuBought,
 				dailyGridRewards: dailyGridRewards,
 				leader: leader,

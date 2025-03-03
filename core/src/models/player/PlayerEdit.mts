@@ -1,6 +1,5 @@
 export interface PlayerEdit {
 	customText?: string;
-	hasImported?: boolean;
 	rewards?: string[];
 	items?: string[];
 	ingredients?: string[];

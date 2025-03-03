@@ -344,7 +344,6 @@ export async function listAllDinozFromPlayer(req: Request) {
  * @summary Edit a selected player
  * @param req
  * @param req.params.id {number} PlayerId
- * @param req.body.hasImported {boolean}
  * @param req.body.customText {string}
  * @param req.body.quetzuBought {number}
  * @param req.body.leader {boolean}
@@ -377,7 +376,6 @@ export async function editPlayer(req: Request) {
 	}
 
 	const player = {
-		hasImported: req.body.hasImported,
 		customText: req.body.customText,
 		quetzuBought: req.body.quetzuBought,
 		dailyGridRewards: req.body.dailyGridRewards,
@@ -395,9 +393,6 @@ export async function editPlayer(req: Request) {
 
 	await setPlayer(req.params.id, player);
 
-	if (typeof player.hasImported !== 'undefined') {
-		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'hasImported', player.hasImported);
-	}
 	if (typeof player.customText !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'customText', player.customText);
 	}

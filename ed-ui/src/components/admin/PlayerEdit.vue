@@ -8,30 +8,6 @@
 				<input type="text" id="playerName" v-model="player.eternalTwinId" disabled />
 			</div>
 			<div>
-				<label class="title" for="playerHasImported">HasImported :</label>
-				<input id="playerHasImported" type="text" disabled v-model="player.hasImported" />
-				<div class="hasImported">
-					<input
-						class="radio"
-						type="radio"
-						id="true"
-						value="true"
-						name="hasImported"
-						v-model="playerFields.hasImported"
-					/>
-					<label class="radio" for="true">true</label>
-					<input
-						class="radio"
-						type="radio"
-						id="false"
-						value="false"
-						name="hasImported"
-						v-model="playerFields.hasImported"
-					/>
-					<label class="radio" for="false">false</label>
-				</div>
-			</div>
-			<div>
 				<label class="title" for="playerCustomText">CustomText :</label>
 				<input type="text" disabled v-model="player.customText" />
 				<input type="text" id="playerCustomText" v-model="playerFields.customText" />
@@ -187,8 +163,12 @@
 			</div>
 			<div class="items">
 				<div>
-					<label class="title" for="itemId">Item ID:</label>
-					<input type="number" id="itemId" v-model="playerFields.selectedItem" min="1" />
+					<label class="title" for="itemId">Item :</label>
+					<select id="itemId" v-model.number="playerFields.selectedItem">
+						<option v-for="(name, id) in itemNameList" :key="id" :value="id">
+							{{ $t(`item.name.${name}`) }}
+						</option>
+					</select>
 				</div>
 				<div>
 					<label class="title" for="itemQuantity">Quantity:</label>
@@ -237,8 +217,12 @@
 			</div>
 			<div class="ingredients">
 				<div>
-					<label class="title" for="ingredientId">Ingredient ID:</label>
-					<input type="number" id="ingredientId" v-model="playerFields.selectedIngredient" min="1" />
+					<label class="title" for="ingredientId">Ingredient :</label>
+					<select id="itemId" v-model.number="playerFields.selectedIngredient">
+						<option v-for="(name, id) in ingredientNameList" :key="id" :value="id">
+							{{ $t(`ingredients.name.${name}`) }}
+						</option>
+					</select>
 				</div>
 				<div>
 					<label class="title" for="ingredientQuantity">Quantity:</label>
@@ -365,11 +349,16 @@
 				<template v-for="(quest, index) in player.quests" :key="index">
 					<label class="title" for="selectedQuestId">Quest ID :</label>
 					<select id="questIdSelect" v-model="quest.questId" @change="updateProgression(quest)">
-						<option v-for="questID in player.quests" :key="questID.questId" :value="questID.questId">
-							{{ quest.questId }}
+						<option v-for="(scenario, id) in ScenarioDetails" :key="id" :value="id">
+							{{ $t(`scenario.${scenario.name}`) }}
 						</option>
 					</select>
-					<input type="number" id="selectedQuestId" v-model="playerFields.selectedQuestId" />
+					<label class="title" for="selectedQuestIdSelect">Sélectionner une quête :</label>
+					<select id="selectedQuestIdSelect" v-model.number="playerFields.selectedQuestId">
+						<option v-for="(scenario, id) in ScenarioDetails" :key="id" :value="id">
+							{{ $t(`scenario.${scenario.name}`) }}
+						</option>
+					</select>
 					<label class="title" for="progressionInput">Progression :</label>
 					<input type="text" disabled v-model="quest.progression" />
 					<input type="number" id="progressionInput" v-model="playerFields.progressionQuest" />
@@ -410,6 +399,7 @@ import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameL
 import { Player } from '@drpg/core/models/player/Player';
 import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
+import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
 
 const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName'];
@@ -446,6 +436,7 @@ export default defineComponent({
 			epicListFiltered: {} as Array<string>,
 			itemNameList: itemNameList,
 			ingredientNameList: ingredientNameList,
+			ScenarioDetails,
 			player: {} as Player,
 			banReasons,
 			banActions
@@ -459,7 +450,6 @@ export default defineComponent({
 			// General player update
 			if (
 				this.playerFields.customText ||
-				this.playerFields.hasImported ||
 				this.playerFields.quetzuBought ||
 				this.playerFields.dailyGridRewards !== undefined ||
 				this.playerFields.leader !== undefined ||
@@ -476,7 +466,6 @@ export default defineComponent({
 				await AdminService.updatePlayer(
 					this.player.id,
 					this.playerFields.customText,
-					this.playerFields.hasImported,
 					this.playerFields.quetzuBought,
 					this.playerFields.dailyGridRewards,
 					this.playerFields.leader,
@@ -732,7 +721,6 @@ form {
 	margin-left: 3px;
 	margin-top: 3px;
 }
-.hasImported,
 .money,
 .rewards,
 .items,

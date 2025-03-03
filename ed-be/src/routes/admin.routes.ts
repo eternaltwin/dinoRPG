@@ -220,7 +220,6 @@ routes.put(
 	`${commonPath}/player/:id`,
 	[
 		param('id').exists().isString(),
-		body('hasImported').default(undefined).optional().exists().toBoolean(),
 		body('customText').default(undefined).optional().exists(),
 		body('quetzuBought').default(undefined).optional().exists().isNumeric(),
 		body('dailyGridRewards').default(undefined).optional().exists().isNumeric(),
