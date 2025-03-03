@@ -4280,7 +4280,8 @@
 		"challengeFriend": {
 			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
 			"friend": "Sélectionnez ici les Dinoz de votre camarade à affronter.",
-			"startFight": "{gold} :gold:"
+			"startFight": "{gold} :gold:",
+			"doubleDinoz": "Vous ne pouvez faire combattre le même dinoz"
 		},
 		"tournamentFormats": {
 			"uncommon": "Dinoz non communs",

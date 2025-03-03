@@ -100,6 +100,10 @@ export default defineComponent({
 		},
 		async startFight() {
 			if (!this.opponentId) return;
+			if (this.myTeam.some(dinoz => this.opponentTeam.includes(dinoz))) {
+				this.$toast.open({ message: this.$t('dojo.doubleDinoz'), type: 'error' });
+				return;
+			}
 			try {
 				const rawFight = await DojoService.fightMyFriend(this.myTeam, this.opponentTeam, this.opponentId);
 				const fightResult = rawFight.fight;
@@ -162,7 +166,7 @@ export default defineComponent({
 		EventBus.emit('loading', true);
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
-			this.clanMembers = this.clanMembers.filter(p => p.player.id !== this.playerStore.getPlayerId);
+			// this.clanMembers = this.clanMembers.filter(p => p.player.id !== this.playerStore.getPlayerId);
 			EventBus.emit('loading', false);
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
