@@ -33,6 +33,13 @@
 			</div>
 		</div>
 		<template v-if="!fightTransformed">
+			<Tippy theme="small" tag="progress" :value="dailyReset" max="10">
+				<template #content>
+					<div v-html="formatContent($t('dojo.dailyReset', { qty: dailyReset }))" />
+				</template>
+				{{ $t(`shop.item.buy`) }}
+			</Tippy>
+			<!--			<progress ></progress>-->
 			<CarousselDinoz
 				v-if="!opponent.id"
 				:ennemyList="opponents"
@@ -130,7 +137,8 @@ export default defineComponent({
 			fightStat: undefined as undefined | FullFightStats,
 			challengeWon: false,
 			victory: false,
-			fightAnimationEnded: false
+			fightAnimationEnded: false,
+			dailyReset: 0
 		};
 	},
 	methods: {
@@ -283,6 +291,7 @@ export default defineComponent({
 				} else {
 					this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
 					this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
+					this.dailyReset = dojo.dailyReset;
 				}
 				this.activeChallenge = JSON.parse(dojo.activeChallenge) as Challenge;
 				EventBus.emit('refreshDojo', true);
@@ -304,6 +313,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+$h: 25px;
+$r: 0.5 * $h;
+$b: 3px;
+@mixin val() {
+	border-radius: $r - $b;
+	box-shadow: inset 0 0.05em 0.05em rgba(#fff, 0.35);
+	background: var(--fill);
+}
 #dojoChallenge {
 	display: flex;
 	flex-direction: column;
@@ -448,6 +465,30 @@ export default defineComponent({
 	}
 	.hidden {
 		filter: opacity(0);
+	}
+}
+
+progress {
+	box-sizing: border-box;
+	border: solid $b #6e3a1e;
+	width: 95%;
+	align-self: center;
+	height: $h;
+	border-radius: $r;
+	background: linear-gradient(#2d1309, #6e3a1e);
+	font: clamp(0.625em, 7.5vw, 5em) monospace;
+	--fill: linear-gradient(#{rgba(#e2664c, 0.65)}, transparent),
+		repeating-linear-gradient(135deg, #a22215 0 #{0.5 * $r}, #be2a20 0 #{$r});
+
+	&::-webkit-progress-bar {
+		background: transparent;
+	}
+
+	&::-webkit-progress-value {
+		@include val();
+	}
+	&::-moz-progress-bar {
+		@include val();
 	}
 }
 @media (max-width: 539px) {

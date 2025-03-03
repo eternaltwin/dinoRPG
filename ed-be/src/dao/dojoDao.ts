@@ -141,6 +141,7 @@ export async function createMyTeamDao(dinozList: number[], dojoId: string) {
 		},
 		select: {
 			id: true,
+			dailyReset: true,
 			player: {
 				select: {
 					id: true,

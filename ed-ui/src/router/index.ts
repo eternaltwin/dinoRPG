@@ -161,6 +161,11 @@ const router = createRouter({
 							component: () => import('../components/dojo/DojoTournament.vue')
 						},
 						{
+							path: '/dojo/tournament/info',
+							name: 'TournamentInfo',
+							component: () => import('../components/dojo/TournamentInfo.vue')
+						},
+						{
 							path: '/dojo/friends/',
 							name: 'ChallengeFriend',
 							component: () => import('../components/dojo/ChallengeFriend.vue')

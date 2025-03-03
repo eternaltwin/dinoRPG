@@ -15,4 +15,5 @@ export interface myTeam {
 		dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 	})[];
 	activeChallenge: string | null;
+	dailyReset: number;
 }
