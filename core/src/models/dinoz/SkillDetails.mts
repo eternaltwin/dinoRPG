@@ -21,8 +21,34 @@ export type SkillEffects = {
 	[Stat.INITIATIVE]?: number;
 	[Stat.ENERGY]?: ['x', number];
 	[Stat.ENERGY_RECOVERY]?: ['x', number];
+	// Elements
+	[Stat.FIRE_ELEMENT]?: number;
+	[Stat.WOOD_ELEMENT]?: number;
+	[Stat.WATER_ELEMENT]?: number;
+	[Stat.LIGHTNING_ELEMENT]?: number;
+	[Stat.AIR_ELEMENT]?: number;
+	// Speeds
+	[Stat.SPEED]?: ['x', number];
+	[Stat.FIRE_SPEED]?: ['x', number];
+	[Stat.WOOD_SPEED]?: ['x', number];
+	[Stat.WATER_SPEED]?: ['x', number];
+	[Stat.LIGHTNING_SPEED]?: ['x', number];
+	[Stat.AIR_SPEED]?: ['x', number];
+	// [Stat.VOID_SPEED]?: ['x', number];
+	// Defenses
+	[Stat.FIRE_DEFENSE]?: number;
+	[Stat.WOOD_DEFENSE]?: number;
+	[Stat.WATER_DEFENSE]?: number;
+	[Stat.LIGHTNING_DEFENSE]?: number;
+	[Stat.AIR_DEFENSE]?: number;
+	// Assaults
+	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
+	[Stat.WOOD_ASSAULT]?: number | OtherAssaults<Stat.WOOD_ASSAULT>;
+	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
+	[Stat.LIGHTNING_ASSAULT]?: number | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
+	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;
 	// Armors
-	[Stat.ARMOR]?: number;
+	[Stat.ARMOR]?: ['x', number];
 	// [Stat.FIRE_ARMOR]?: ['x', number];
 	// [Stat.WOOD_ARMOR]?: ['x', number];
 	// [Stat.WATER_ARMOR]?: ['x', number];
@@ -70,32 +96,6 @@ export type SkillEffects = {
 	// [Stat.LIGHTNING_MULTIHIT]?: ['x', number];
 	// [Stat.AIR_MULTIHIT]?: ['x', number];
 	// [Stat.VOID_MULTIHIT]?: ['x', number];
-	// Assaults
-	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
-	[Stat.WOOD_ASSAULT]?: number | OtherAssaults<Stat.WOOD_ASSAULT>;
-	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
-	[Stat.LIGHTNING_ASSAULT]?: number | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
-	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;
-	// Speeds
-	[Stat.SPEED]?: ['x', number];
-	[Stat.FIRE_SPEED]?: ['x', number];
-	[Stat.WOOD_SPEED]?: ['x', number];
-	[Stat.WATER_SPEED]?: ['x', number];
-	[Stat.LIGHTNING_SPEED]?: ['x', number];
-	[Stat.AIR_SPEED]?: ['x', number];
-	// [Stat.VOID_SPEED]?: ['x', number];
-	// Defenses
-	[Stat.FIRE_DEFENSE]?: number;
-	[Stat.WOOD_DEFENSE]?: number;
-	[Stat.WATER_DEFENSE]?: number;
-	[Stat.LIGHTNING_DEFENSE]?: number;
-	[Stat.AIR_DEFENSE]?: number;
-	// Elements
-	[Stat.FIRE_ELEMENT]?: number;
-	[Stat.WOOD_ELEMENT]?: number;
-	[Stat.WATER_ELEMENT]?: number;
-	[Stat.LIGHTNING_ELEMENT]?: number;
-	[Stat.AIR_ELEMENT]?: number;
 };
 
 export interface SkillDetails {

@@ -70,7 +70,7 @@ export enum SpecialStat {
 	WOOD_SPEED = 'woodSpeed',
 	WATER_SPEED = 'waterSpeed',
 	LIGHTNING_SPEED = 'lightningSpeed',
-	AIR_SPEED = 'airSpeed',
+	AIR_SPEED = 'airSpeed'
 	// VOID_SPEED = 'voidSpeed'
 }
 
@@ -89,7 +89,7 @@ export enum SpecialStatAsPercent {
 	// AIR_COUNTER = 'airCounter',
 	// VOID_COUNTER = 'voidCounter',
 	// Armors
-	// ARMOR = 'armor',
+	ARMOR = 'armor',
 	// FIRE_ARMOR = 'fireArmor',
 	// WOOD_ARMOR = 'woodArmor',
 	// WATER_ARMOR = 'waterArmor',
@@ -122,7 +122,7 @@ export enum SpecialStatAsPercent {
 	// AIR_SUPER_EVASION = 'airSuperEvasion',
 	// VOID_SUPER_EVASION = 'voidSuperEvasion',
 	// Multihits
-	MULTIHIT = 'multihit',
+	MULTIHIT = 'multihit'
 	// FIRE_MULTIHIT = 'fireMultihit',
 	// WOOD_MULTIHIT = 'woodMultihit',
 	// WATER_MULTIHIT = 'waterMultihit',
@@ -137,9 +137,8 @@ export enum UniqueSpecialStatUsedInFights {
 	ENERGY_RECOVERY = 'energyRecovery',
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
-	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+	ACID_BLOOD_DAMAGE = 'acidBloodDamage'
 }
-
 
 export type SpecialStatUsedInFights = Exclude<SpecialStat, SpecialStat.HP_REGEN | SpecialStat.MAX_FOLLOWERS>;
 
@@ -161,7 +160,7 @@ export const BaseSpecialStats = {
 	[SpecialStat.WOOD_SPEED]: 1,
 	[SpecialStat.WATER_SPEED]: 1,
 	[SpecialStat.LIGHTNING_SPEED]: 1,
-	[SpecialStat.AIR_SPEED]: 1,
+	[SpecialStat.AIR_SPEED]: 1
 	// [SpecialStat.VOID_SPEED]: 1
 };
 
@@ -284,15 +283,15 @@ export const getSpecialStat = (
 		switch (status) {
 			case DinozStatusId.CUSCOUZ_MALEDICTION: {
 				if (stat === SpecialStat.ARMOR) {
-					value -= 3;
+					value *= 0.7;
 
 					details.push({
 						type: 'status',
 						name: DinozStatusId.CUSCOUZ_MALEDICTION.toString(),
-						percent: false,
-						multiplier: false,
+						percent: true,
+						multiplier: true,
 						elements: [],
-						value: -3
+						value: 0.7
 					});
 				}
 				break;

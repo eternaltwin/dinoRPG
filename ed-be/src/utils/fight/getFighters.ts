@@ -147,7 +147,8 @@ export const initializeDinoz = (
 				[SpecialStat.FIRE_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.FIRE_SPEED)?.value ?? 0,
 				[SpecialStat.WOOD_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.WOOD_SPEED)?.value ?? 0,
 				[SpecialStat.WATER_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.WATER_SPEED)?.value ?? 0,
-				[SpecialStat.LIGHTNING_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? 0,
+				[SpecialStat.LIGHTNING_SPEED]:
+					getSpecialStat(dinozWithItems, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? 0,
 				[SpecialStat.AIR_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.AIR_SPEED)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
