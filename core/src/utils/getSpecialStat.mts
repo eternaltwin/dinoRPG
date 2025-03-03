@@ -22,6 +22,7 @@ export enum SpecialStat {
 }
 
 export enum SpecialStatAsPercent {
+	ARMOR = 'armor',
 	MULTIHIT = 'multihit',
 	EVASION = 'evasion',
 	SUPER_EVASION = 'superEvasion',

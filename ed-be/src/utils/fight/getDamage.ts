@@ -131,11 +131,6 @@ export const getAttackDefense = (
 		defense /= sum_of_elements;
 	}
 
-	// Add armor to the defense unless the attacker cancels it
-	if (!attacker.cancelArmor) {
-		defense += target.stats.special.armor;
-	}
-
 	return {
 		attack,
 		defense,
@@ -163,6 +158,13 @@ export const calculateDamage = (
 	attack *= ATTACK_GLOBAL_FACTOR;
 
 	let damage = attack - defense;
+
+	// Apply target's armor to the result unless the attacker cancels it
+	// Capped at 90% reduction
+	if (!attacker.cancelArmor) {
+		const armor_factor = (Math.min(target.stats.special.armor, 1.9) - 1)
+		damage *= (1 - armor_factor)	;
+	}
 
 	// Apply balance effect if both fighters needs to be balanced
 	if (attacker.balanced && target.balanced) {
