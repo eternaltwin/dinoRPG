@@ -17,7 +17,7 @@ export type SkillEffects = {
 	[Stat.HP_REGEN]?: number | ['x', number];
 	[Stat.COUNTER]?: ['x', number];
 	[Stat.INITIATIVE]?: number;
-	[Stat.ARMOR]?: number;
+	[Stat.ARMOR]?: ['x', number];
 	[Stat.EVASION]?: ['x', number];
 	[Stat.SUPER_EVASION]?: ['x', number];
 	[Stat.MULTIHIT]?: ['x', number];
