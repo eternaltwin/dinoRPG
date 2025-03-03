@@ -36,7 +36,7 @@ import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { Challenge, challengeRanges, ChallengeType } from '@drpg/core/models/dojo/challenge';
 import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
-import { Dojo } from '@drpg/prisma';
+import { Dojo, NotificationSeverity } from '@drpg/prisma';
 import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import TournamentManager from '../utils/tournamentManager.js';
@@ -44,6 +44,8 @@ import { prisma } from '../prisma.js';
 import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
+import { createNotification } from '../dao/notificationDao.js';
+import { RewardEnum } from '@drpg/core/models/enums/Parser';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -124,6 +126,17 @@ export async function getMyTeam(req: Request) {
 	if (myDojo.DojoOpponents.length > 0 && myDojo.DojoOpponents.every(d => d.achieved) && myDojo.dailyReset < 10) {
 		myDojo.team = await cleanCurrentOpponentTeam(myDojo.id);
 		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
+		await createNotification(
+			authed.id,
+			JSON.stringify([
+				{
+					rewardType: RewardEnum.ITEM,
+					value: Item.TREASURE_COUPON,
+					quantity: 1
+				}
+			]),
+			NotificationSeverity.reward
+		);
 		myDojo.DojoOpponents = await createOpponentTeam(
 			myDojo.team.map(d => {
 				return {
