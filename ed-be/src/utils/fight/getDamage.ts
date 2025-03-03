@@ -129,11 +129,6 @@ export const getAttackDefense = (
 		defense /= sum_of_elements;
 	}
 
-	// Add armor to the defense unless the attacker cancels it
-	if (!attacker.cancelArmor) {
-		defense += target.stats.special.armor;
-	}
-
 	return {
 		attack,
 		defense,
@@ -159,7 +154,19 @@ export const calculateDamage = (
 	// Apply global factor
 	attack *= ATTACK_GLOBAL_FACTOR;
 
-	let damage = attack - defense;
+	// Start damage calculation
+	let damage = attack;
+
+	// Apply target's armor to the attack unless the attacker cancels it
+	// Capped at 90% reduction
+	// 10% armor, means the attack is multiplied by 0,9
+	if (!attacker.cancelArmor) {
+		const armor_factor = Math.min(target.stats.special.armor, 1.9) - 1;
+		damage *= 1 - armor_factor;
+	}
+
+	// Substract the defense
+	damage -= defense;
 
 	// If the attacker or target is a monster, reinforcement, or boss, apply the attacker's resilience.
 	// Else, apply the target resilience by default.

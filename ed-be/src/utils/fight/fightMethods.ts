@@ -1767,7 +1767,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor += 1;
+				fighter.stats.special.armor *= 1.1;
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -2165,12 +2165,12 @@ export const addStatus = (
 			break;
 		}
 		case FightStatus.PETRIFIED: {
-			fighter.stats.special.armor += 5;
+			fighter.stats.special.armor *= 1.5;
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
 		case FightStatus.SHIELDED: {
-			fighter.stats.special.armor += 5;
+			fighter.stats.special.armor *= 1.5;
 			break;
 		}
 		case FightStatus.BLESSED: {
@@ -2257,7 +2257,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case FightStatus.PETRIFIED: {
-				fighter.stats.special.armor -= 5;
+				fighter.stats.special.armor /= 1.5;
 				fighter.time -= FIGHT_INFINITE;
 				// Make sure the fighter's time is not in the past
 				if (fighter.time < fightData.time) {
@@ -2266,7 +2266,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case FightStatus.SHIELDED: {
-				fighter.stats.special.armor -= 5;
+				fighter.stats.special.armor /= 1.5;
 				break;
 			}
 			case FightStatus.BLESSED: {

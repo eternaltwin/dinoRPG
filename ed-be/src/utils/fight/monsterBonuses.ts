@@ -7,7 +7,7 @@ import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus } from './fightMethods.js';
 
 const worm = (monster: DetailedFighter) => {
-	monster.stats.special.armor += 1;
+	monster.stats.special.armor *= 1.1;
 	monster.canHitFlying = true;
 	monster.hp = monster.startingHp / 2;
 };
