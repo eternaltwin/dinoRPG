@@ -1,10 +1,9 @@
 import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
-import { getLogs, getAllLogs, getLogsByDate } from '../business/logService.js';
+import { getAllLogs, getLogs, getLogsByDate } from '../business/logService.js';
 import { apiRoutes } from '../constants/index.js';
-import { LogListResponse } from '@drpg/core/returnTypes/Log';
-import sendError from '../utils/sendErrors.js';
 import { checkIsAdmin } from '../utils/index.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -42,8 +41,8 @@ routes.get(
 );
 
 routes.get(
-	`${commonPath}/list/:type/:fromDate/:toDate`,
-	[param('type').exists(), param('fromDate').exists(), param('toDate').exists()],
+	`${commonPath}/list/:type/:fromDate`,
+	[param('type').exists(), param('fromDate').exists()],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {

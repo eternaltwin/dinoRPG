@@ -1,4 +1,5 @@
 <template>
+	<TitleHeader :title="$t('pageTitle.admin')"></TitleHeader>
 	<div class="search">
 		<input type="text" placeholder="Search Player" v-model="searchValue" list="players" @keyup.enter="getPlayer()" />
 		<datalist id="players">
@@ -55,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import TitleHeader from '../components/utils/TitleHeader.vue';
 import { defineComponent } from 'vue';
 import EventBus from '../events/index.js';
 import { errorHandler } from '../utils/index.js';
@@ -78,7 +80,7 @@ interface PlayerSearch {
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	components: { NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, GameStats, Moderation, Banned },
+	components: { TitleHeader, NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, GameStats, Moderation, Banned },
 	data() {
 		return {
 			searchValue: undefined as string | undefined,

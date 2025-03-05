@@ -1,55 +1,35 @@
 <template>
 	<select v-model="type">
-		<option value="null">All</option>
 		<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
 	</select>
 	<input type="datetime-local" v-model="fromDate" placeholder="fromDate" />
-	<input type="datetime-local" v-model="toDate" placeholder="toDate" />
 	<button @click="reload" :disabled="!logs.length">Reload</button>
 	<div v-if="type !== 'null' && type !== null">
 		<Line v-if="loaded" :data="chartData" :options="chartOptions" :width="400" :height="400" />
 	</div>
-	<table>
-		<tbody>
-			<tr v-for="(log, index) in paginatedLogs" :key="index">
-				<td>[{{ formatDate(log.createdAt as unknown as string) }}]</td>
-				<td v-html="formatContent($t(`logs.${log.type}`, getLogPropsForTranslation($t, log)))" />
-			</tr>
-		</tbody>
-	</table>
-	<button @click="page--" :disabled="page <= 1">Previous</button>
-	<button @click="page++" :disabled="logs.length < 100">Next</button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import EventBus from '../../events/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { LogsService } from '../../services/index.js';
 import { LogListResponse } from '@drpg/core/returnTypes/Log';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { missionsList } from '../../constants/missions.js';
-import { placeList } from '../../constants/place.js';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
-import { mixin } from '../../mixin/mixin.js';
-import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
 import {
-	Chart as ChartJS,
 	CategoryScale,
+	Chart as ChartJS,
+	Legend,
 	LinearScale,
-	PointElement,
 	LineElement,
+	PointElement,
+	TimeScale,
 	Title,
-	Tooltip,
-	Legend
+	Tooltip
 } from 'chart.js';
+import { defineComponent } from 'vue';
 import { Line } from 'vue-chartjs';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import EventBus from '../../events/index.js';
+import { mixin } from '../../mixin/mixin.js';
+import { LogsService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-// Permet la gestion des totaux du graph par jour / par heure
-const diffDays = 0;
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, TimeScale);
 
 const LogTypes = [
 	'ItemUsed',
@@ -68,6 +48,7 @@ const LogTypes = [
 	'MissionFinished',
 	'MissionCanceled',
 	'Gather',
+	'GridFinished',
 	'CreateDinoz',
 	'ChangeDinozOrder',
 	'PlayerCreated',
@@ -91,220 +72,7 @@ const LogTypes = [
 	'AdminUpdateSecret'
 ] as const;
 
-const getLogPropsForTranslation = (
-	$t: (key: string, options?: Record<string, string>) => string,
-	log: LogListResponse[number]
-) => {
-	let values: Record<string, string> = {};
-
-	switch (log.type) {
-		case 'ItemUsed':
-			values = {
-				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
-				quantity: log.values[1]
-			};
-			break;
-		case 'ItemBought':
-			values = {
-				item: $t(`item.name.${itemNameList[+log.values[0]]}`),
-				quantity: log.values[1],
-				total: log.values[2]
-			};
-			break;
-		case 'IngredientSold':
-			values = {
-				item: $t(`ingredients.name.${ingredientNameList[+log.values[0]]}`),
-				quantity: log.values[1],
-				amount: log.values[2]
-			};
-			break;
-		case 'GoldWon':
-			values = {
-				quantity: log.values[0],
-				total: log.values[1]
-			};
-			break;
-		case 'GoldLost':
-			values = {
-				quantity: log.values[0],
-				total: log.values[1]
-			};
-			break;
-		case 'Move':
-			values = {
-				location: $t(`place.name.${placeList[+log.values[0]].name}`)
-			};
-			break;
-		case 'LevelUp':
-			values = {
-				level: log.values[0]
-			};
-			break;
-		case 'Fight':
-			values = {
-				gold: log.values[0],
-				xp: log.values[1],
-				hpLost: log.values[2]
-			};
-			break;
-		case 'XPEarned':
-			values = {
-				xp: log.values[0]
-			};
-			break;
-		case 'HPLost':
-			values = {
-				hpLost: log.values[0]
-			};
-			break;
-		case 'Death':
-			values = {};
-			break;
-		case 'Revive':
-			values = {};
-			break;
-		case 'MissionStep':
-			values = {
-				mission: $t(`missions.name.${missionsList[+log.values[0]]}`),
-				step: log.values[1]
-			};
-			break;
-		case 'MissionFinished':
-			values = {
-				mission: $t(`missions.name.${missionsList[+log.values[0]]}`)
-			};
-			break;
-		case 'MissionCanceled':
-			values = {
-				mission: $t(`missions.name.${missionsList[+log.values[0]]}`)
-			};
-			break;
-		case 'Gather':
-			values = {
-				quantity: log.values[0]
-			};
-			break;
-		case 'CreateDinoz':
-			values = {};
-			break;
-		case 'ChangeDinozOrder':
-			values = {};
-			break;
-		case 'PlayerCreated':
-			values = {
-				name: log.values[0],
-				id: log.values[1]
-			};
-			break;
-		case 'PlayerConnected':
-			values = {
-				name: log.values[0]
-			};
-			break;
-		case 'OfferNew':
-			values = {
-				offer: log.values[0],
-				amount: log.values[1]
-			};
-			break;
-		case 'OfferBid':
-			values = {
-				offer: log.values[0],
-				amount: log.values[1]
-			};
-			break;
-		case 'OfferCancelled':
-			values = {
-				offer: log.values[0]
-			};
-			break;
-		case 'OfferExpired':
-			values = {
-				offer: log.values[0]
-			};
-			break;
-		case 'OfferWon':
-			values = {
-				offer: log.values[0],
-				winner: log.values[1],
-				amount: log.values[2]
-			};
-			break;
-		case 'AdminUpdateDinoz':
-			values = {
-				stat: log.values[0],
-				value: log.values[1]
-			};
-			break;
-		case 'AdminAddStatus':
-			values = {
-				status: $t(`status.name.${+log.values[0]}`)
-			};
-			break;
-		case 'AdminRemoveStatus':
-			values = {
-				status: $t(`status.name.${+log.values[0]}`)
-			};
-			break;
-		case 'AdminAddSkill':
-			values = {
-				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
-			};
-			break;
-		case 'AdminRemoveSkill':
-			values = {
-				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
-			};
-			break;
-		case 'AdminAddMoney':
-			values = {
-				targetId: log.values[0],
-				quantity: log.values[1]
-			};
-			break;
-		case 'AdminRemoveMoney':
-			values = {
-				targetId: log.values[0],
-				quantity: log.values[1]
-			};
-			break;
-		case 'AdminAddReward':
-			values = {
-				targetId: log.values[0],
-				reward: $t(`rewards.name.${rewardList[+log.values[1]].name}`)
-			};
-			break;
-		case 'AdminRemoveReward':
-			values = {
-				targetId: log.values[0],
-				reward: $t(`rewards.name.${rewardList[+log.values[1]].name}`)
-			};
-			break;
-		case 'AdminUpdatePlayer':
-			values = {
-				targetId: log.values[0],
-				stat: log.values[1],
-				value: log.values[2]
-			};
-			break;
-		case 'AdminUpdateSecret':
-			values = {
-				key: log.values[0],
-				value: log.values[1]
-			};
-			break;
-		default:
-			break;
-	}
-
-	return {
-		player: log.player.name,
-		playerId: log.playerId,
-		dinoz: log.dinoz?.name,
-		dinozId: log.dinozId,
-		...values
-	};
-};
+const diffDays = 0;
 
 export default defineComponent({
 	name: 'GameStats',
@@ -313,16 +81,20 @@ export default defineComponent({
 		Line
 	},
 	data() {
+		const now = new Date();
+		const todayAtMidnight = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0, 0));
+
 		return {
-			page: 1,
 			logs: [] as LogListResponse,
 			type: null as LogListResponse[number]['type'] | string | null,
 			LogTypes,
-			getLogPropsForTranslation,
-			fromDate: null as Date | null,
-			toDate: null as Date | null,
+			fromDate: todayAtMidnight.toISOString().slice(0, 16),
 			loaded: false,
-			chartData: null,
+			chartData: {
+				labels: [] as string[],
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				datasets: [] as any[]
+			},
 			chartOptions: {
 				scales: {
 					x: {
@@ -343,21 +115,22 @@ export default defineComponent({
 		};
 	},
 	computed: {
-		paginatedLogs() {
-			const startIndex = (this.page - 1) * 100;
-			const endIndex = this.page * 100;
-			return this.logs.slice(startIndex, endIndex);
+		isReloadDisabled(): boolean {
+			return !this.type || !this.fromDate;
 		}
 	},
 	methods: {
 		async reload() {
+			if (this.isReloadDisabled) {
+				EventBus.emit('isLoading', false);
+				return;
+			}
 			EventBus.emit('isLoading', true);
 			try {
-				const fromDate = this.fromDate || null;
-				const toDate = this.toDate || null;
+				const fromDate = new Date(this.fromDate);
 				const type = this.type || null;
-				const logType = type as LogListResponse[number]['type'];
-				this.logs = await LogsService.listByDate(logType, fromDate, toDate);
+
+				this.logs = await LogsService.listByDate(type, fromDate);
 				this.generateChart();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -367,57 +140,26 @@ export default defineComponent({
 		},
 		generateChart() {
 			this.loaded = false;
-			const fromDate = this.fromDate ? new Date(this.fromDate) : null; // TODO: set minus 1 week instead of null
-			const toDate = this.toDate ? new Date(this.toDate) : null; // TODO: set surrent date instead of null
-			const diffTime = fromDate && toDate ? Math.abs(toDate.getTime() - fromDate.getTime()) : 0;
-			const diffDays = diffTime > 0 ? Math.ceil(diffTime / (1000 * 60 * 60 * 24)) : 0;
-			const totalsByPeriod = {};
-			this.logs.forEach(log => {
-				const logDate = new Date(log.createdAt);
-				let formattedPeriod;
-				if (!fromDate || !toDate || diffDays > 1) {
-					formattedPeriod = logDate.toLocaleDateString();
-				} else {
-					const formattedDate = logDate.toLocaleDateString();
-					const formattedHour = logDate.getHours().toString().padStart(2, '0') + ':00';
-					formattedPeriod = `${formattedDate} ${formattedHour}`;
-				}
 
-				if (!totalsByPeriod[formattedPeriod]) {
-					totalsByPeriod[formattedPeriod] = 0;
-				}
-				totalsByPeriod[formattedPeriod] += this.getLogTypeTotal(log.type, log.values);
-			});
-			const labels = Object.keys(totalsByPeriod).reverse();
-			const data = Object.values(totalsByPeriod).reverse();
+			const totalsByPeriod = this.logs;
+			const labels = Object.keys(totalsByPeriod);
+			const data = Object.values(totalsByPeriod);
+
 			const chartData = {
 				labels: labels,
 				datasets: [
 					{
-						label: this.type,
+						label: this.type || 'All Types',
 						data: data,
 						borderColor: '#c88f44',
 						fill: false
 					}
 				]
 			};
+
 			this.chartData = chartData;
 			this.chartOptions = {};
 			this.loaded = true;
-		},
-		getLogTypeTotal(type, values) {
-			switch (type) {
-				case 'GoldWon':
-				case 'GoldLost':
-				case 'XPEarned':
-				case 'HPLost':
-					return Number(values[0]);
-				case 'ItemBought':
-				case 'IngredientSold':
-					return Number(values[1]);
-				default:
-					return 1;
-			}
 		}
 	},
 	mixins: [errorHandler, mixin],
@@ -426,12 +168,6 @@ export default defineComponent({
 			this.reload();
 		},
 		fromDate() {
-			this.reload();
-		},
-		toDate() {
-			this.reload();
-		},
-		page() {
 			this.reload();
 		}
 	}

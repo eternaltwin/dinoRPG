@@ -1,24 +1,23 @@
-import { Request } from 'express';
-import dayjs from 'dayjs';
-import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
-import { ItemType } from '@drpg/core/models/enums/ItemType';
-import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { DinozItems } from '@drpg/core/models/item/DinozItems';
-import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
-import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { raceList, RaceList } from '@drpg/core/models/dinoz/RaceList';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { DinozItems } from '@drpg/core/models/item/DinozItems';
+import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
+import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { backpackSlot, useRice } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
+import dayjs from 'dayjs';
+import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { addMoney, auth, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import {
 	createDinoz,
 	getActiveDinoz,
@@ -27,17 +26,18 @@ import {
 	updateDinoz
 } from '../dao/dinozDao.js';
 import { addItemToDinoz, removeItemFromDinoz } from '../dao/dinozItemDao.js';
-import { updateQuest } from '../dao/questsDao.js';
-import { setSpecificStat } from '../dao/trackingDao.js';
-import { createLog } from '../dao/logDao.js';
-import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
-import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import { addMultipleSkillToDinoz, addSkillToDinoz } from '../dao/dinozSkillDao.js';
+import { removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
+import { createLog } from '../dao/logDao.js';
+import { addMoney, auth, getPlayerInventoryDataRequest } from '../dao/playerDao.js';
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
-import translate from '../utils/translate.js';
-import { initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
+import { updateQuest } from '../dao/questsDao.js';
+import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
+import { setSpecificStat } from '../dao/trackingDao.js';
 import { boxOpening } from '../utils/boxesLogic.js';
-import { getRandomNumber, getLetter, getRandomLetter } from '../utils/index.js';
+import { initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
+import { getLetter, getRandomLetter, getRandomNumber } from '../utils/index.js';
+import translate from '../utils/translate.js';
 import { applySkillEffect } from './skillService.js';
 
 /**
@@ -162,6 +162,7 @@ export async function useItem(req: Request) {
 			};
 			//Update stats
 			await setSpecificStat(StatTracking.DEATHS, dinoz.player.id, 1);
+			await createLog(LogType.Revive, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
 			break;
 		case ItemEffect.EGG:
 			const race = await hatchEgg(item, authed);

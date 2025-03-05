@@ -3,7 +3,7 @@
 		<option value="null">All</option>
 		<option v-for="(type, index) in LogTypes" :key="index" :value="type">{{ type }}</option>
 	</select>
-	<input type="number" v-model="userId" placeholder="userId" />
+	<input type="text" v-model="userId" placeholder="userId" />
 	<input type="number" v-model="dinozId" placeholder="dinozId" />
 	<table>
 		<tbody>
@@ -14,22 +14,22 @@
 		</tbody>
 	</table>
 	<button @click="page--" :disabled="page <= 1">Previous</button>
-	<button @click="page++" :disabled="logs.length < 100">Next</button>
+	<button @click="page++" :disabled="logs.length < 20">Next</button>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { LogsService } from '../../services/index.js';
-import EventBus from '../../events/index.js';
-import { errorHandler } from '../../utils/index.js';
-import { LogListResponse } from '@drpg/core/returnTypes/Log';
-import { itemNameList } from '@drpg/core/models/item/ItemNameList';
-import { missionsList } from '../../constants/missions.js';
-import { placeList } from '../../constants/place.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
-import { mixin } from '../../mixin/mixin.js';
+import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { LogListResponse } from '@drpg/core/returnTypes/Log';
+import { defineComponent } from 'vue';
+import { missionsList } from '../../constants/missions.js';
+import { placeList } from '../../constants/place.js';
+import EventBus from '../../events/index.js';
+import { mixin } from '../../mixin/mixin.js';
+import { LogsService } from '../../services/index.js';
+import { errorHandler } from '../../utils/index.js';
 
 const LogTypes = [
 	'ItemUsed',
@@ -77,6 +77,9 @@ const getLogPropsForTranslation = (
 	log: LogListResponse[number]
 ) => {
 	let values: Record<string, string> = {};
+
+	const player = log.player ? log.player.name : null;
+	const playerId = log.playerId || null;
 
 	switch (log.type) {
 		case 'ItemUsed':
@@ -179,7 +182,7 @@ const getLogPropsForTranslation = (
 		case 'PlayerCreated':
 			values = {
 				name: log.values[0],
-				id: log.values[1]
+				playerId: log.values[1]
 			};
 			break;
 		case 'PlayerConnected':
@@ -284,8 +287,8 @@ const getLogPropsForTranslation = (
 	}
 
 	return {
-		player: log.player.name,
-		playerId: log.playerId,
+		player,
+		playerId,
 		dinoz: log.dinoz?.name,
 		dinozId: log.dinozId,
 		...values
@@ -299,14 +302,23 @@ export default defineComponent({
 			logs: [] as LogListResponse,
 			page: 1,
 			type: null as LogListResponse[number]['type'] | null,
-			userId: null as number | null,
+			userId: null as string | null,
 			dinozId: null as number | null,
 			LogTypes,
 			getLogPropsForTranslation
 		};
 	},
+	computed: {
+		isReloadDisabled(): boolean {
+			return !this.type;
+		}
+	},
 	methods: {
 		async reload() {
+			if (this.isReloadDisabled) {
+				EventBus.emit('isLoading', false);
+				return;
+			}
 			EventBus.emit('isLoading', true);
 			try {
 				const page = this.page;
@@ -344,6 +356,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 input[type='number'],
+input[type='text'],
 select {
 	padding: 2px;
 	margin-top: 5px;
