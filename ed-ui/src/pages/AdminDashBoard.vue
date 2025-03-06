@@ -164,11 +164,11 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
 
-		// if (!playerStore().isAdmin) {
-		// 	this.$router.push({
-		// 		name: 'News'
-		// 	});
-		// }
+		if (!playerStore().isAdmin) {
+			this.$router.push({
+				name: 'News'
+			});
+		}
 		try {
 			await AdminService.getDashBoard();
 			EventBus.emit('isLoading', false);

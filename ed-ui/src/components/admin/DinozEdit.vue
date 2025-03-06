@@ -1,7 +1,7 @@
 <template>
 	<form @submit.prevent="dinozUpdate()">
 		<fieldset>
-			<legend>Dinoz Details</legend>
+			<legend>Details</legend>
 			<div>
 				<label class="title" for="dinozName">Name :</label>
 				<input id="dinozName" type="text" v-model="dinoz.name" disabled />
@@ -69,7 +69,7 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>Dinoz Statuses</legend>
+			<legend>Statuses</legend>
 			<div>
 				<label class="title" for="dinozUnavailableReason">Unavailable Reason :</label>
 				<input id="dinozUnavailableReason" type="text" v-model="dinoz.unavailableReason" disabled />
@@ -145,7 +145,7 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>Dinoz Skills</legend>
+			<legend>Skills</legend>
 			<div class="skills">
 				<template v-for="skillId in dinoz.skills" :key="skillId">
 					<div class="skills" />
@@ -181,7 +181,7 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>Dinoz Unlockable Skills</legend>
+			<legend>Unlockable Skills</legend>
 			<div class="unlockable_skills">
 				<template v-for="skillId in dinoz.unlockableSkills" :key="skillId">
 					<div class="skills" />
@@ -200,7 +200,7 @@
 					class="radio"
 					type="radio"
 					value="add"
-					name="addSkill"
+					name="addUnlockableSkill"
 					@click="filterUnlockableSkillList('add')"
 					v-model="unlockableSkillOperation"
 				/>
@@ -209,7 +209,7 @@
 					class="radio"
 					type="radio"
 					value="remove"
-					name="removeSkill"
+					name="removeUnlockableSkill"
 					@click="filterUnlockableSkillList('remove')"
 					v-model="unlockableSkillOperation"
 				/>
@@ -461,6 +461,14 @@ form {
 .unavailableReason,
 .statuses,
 .skills {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 5px;
+	margin-bottom: 5px;
+}
+.unlockable_skills {
 	align-items: center;
 	display: flex;
 	flex-direction: row;

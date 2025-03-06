@@ -860,6 +860,8 @@ enum LogType {
   AdminRemoveStatus
   AdminAddSkill
   AdminRemoveSkill
+  AdminAddUnlockableSkill
+  AdminRemoveUnlockableSkill
   AdminAddMoney
   AdminRemoveMoney
   AdminAddReward

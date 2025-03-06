@@ -391,6 +391,8 @@ export const LogType: {
   AdminRemoveStatus: 'AdminRemoveStatus',
   AdminAddSkill: 'AdminAddSkill',
   AdminRemoveSkill: 'AdminRemoveSkill',
+  AdminAddUnlockableSkill: 'AdminAddUnlockableSkill',
+  AdminRemoveUnlockableSkill: 'AdminRemoveUnlockableSkill',
   AdminAddMoney: 'AdminAddMoney',
   AdminRemoveMoney: 'AdminRemoveMoney',
   AdminAddReward: 'AdminAddReward',
@@ -479,7 +481,7 @@ export const NotificationSeverity: typeof $Enums.NotificationSeverity
 
 /**
  * ##  Prisma Client ʲˢ
- *
+ * 
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
@@ -488,7 +490,7 @@ export const NotificationSeverity: typeof $Enums.NotificationSeverity
  * const concentrations = await prisma.concentration.findMany()
  * ```
  *
- *
+ * 
  * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export class PrismaClient<
@@ -500,7 +502,7 @@ export class PrismaClient<
 
     /**
    * ##  Prisma Client ʲˢ
-   *
+   * 
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
@@ -509,7 +511,7 @@ export class PrismaClient<
    * const concentrations = await prisma.concentration.findMany()
    * ```
    *
-   *
+   * 
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
@@ -539,7 +541,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
-   *
+   * 
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -551,7 +553,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
-   *
+   * 
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
@@ -562,7 +564,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
-   *
+   * 
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -574,7 +576,7 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
-   *
+   * 
    * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
@@ -1161,7 +1163,7 @@ export namespace Prisma {
   export type DecimalJsLike = runtime.DecimalJsLike
 
   /**
-   * Metrics
+   * Metrics 
    */
   export type Metrics = runtime.Metrics
   export type Metric<T> = runtime.Metric<T>
@@ -1186,7 +1188,7 @@ export namespace Prisma {
     client: string
   }
 
-  export const prismaVersion: PrismaVersion
+  export const prismaVersion: PrismaVersion 
 
   /**
    * Utility Types
@@ -1202,15 +1204,15 @@ export namespace Prisma {
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   namespace NullTypes {
     /**
     * Type of `Prisma.DbNull`.
-    *
+    * 
     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    *
+    * 
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class DbNull {
@@ -1220,9 +1222,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.JsonNull`.
-    *
+    * 
     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    *
+    * 
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class JsonNull {
@@ -1232,9 +1234,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.AnyNull`.
-    *
+    * 
     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    *
+    * 
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class AnyNull {
@@ -1245,21 +1247,21 @@ export namespace Prisma {
 
   /**
    * Helper for filtering JSON entries that have `null` on the database (empty on the db)
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const DbNull: NullTypes.DbNull
 
   /**
    * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const JsonNull: NullTypes.JsonNull
 
   /**
    * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const AnyNull: NullTypes.AnyNull
@@ -6871,7 +6873,7 @@ export namespace Prisma {
 
   type ConcentrationGetPayload<S extends boolean | null | undefined | ConcentrationDefaultArgs> = $Result.GetResult<Prisma.$ConcentrationPayload, S>
 
-  type ConcentrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ConcentrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ConcentrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ConcentrationCountAggregateInputType | true
     }
@@ -6892,7 +6894,7 @@ export namespace Prisma {
     findUnique<T extends ConcentrationFindUniqueArgs>(args: SelectSubset<T, ConcentrationFindUniqueArgs<ExtArgs>>): Prisma__ConcentrationClient<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Concentration that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Concentration that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ConcentrationFindUniqueOrThrowArgs} args - Arguments to find a Concentration
      * @example
@@ -6994,7 +6996,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Concentrations and only return the `id`
-     * const concentrationWithIdOnly = await prisma.concentration.createManyAndReturn({
+     * const concentrationWithIdOnly = await prisma.concentration.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -8392,7 +8394,7 @@ export namespace Prisma {
 
   type DinozGetPayload<S extends boolean | null | undefined | DinozDefaultArgs> = $Result.GetResult<Prisma.$DinozPayload, S>
 
-  type DinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozCountAggregateInputType | true
     }
@@ -8413,7 +8415,7 @@ export namespace Prisma {
     findUnique<T extends DinozFindUniqueArgs>(args: SelectSubset<T, DinozFindUniqueArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Dinoz that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Dinoz that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozFindUniqueOrThrowArgs} args - Arguments to find a Dinoz
      * @example
@@ -8515,7 +8517,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Dinozs and only return the `id`
-     * const dinozWithIdOnly = await prisma.dinoz.createManyAndReturn({
+     * const dinozWithIdOnly = await prisma.dinoz.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -9968,7 +9970,7 @@ export namespace Prisma {
 
   type DinozItemGetPayload<S extends boolean | null | undefined | DinozItemDefaultArgs> = $Result.GetResult<Prisma.$DinozItemPayload, S>
 
-  type DinozItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozItemCountAggregateInputType | true
     }
@@ -9989,7 +9991,7 @@ export namespace Prisma {
     findUnique<T extends DinozItemFindUniqueArgs>(args: SelectSubset<T, DinozItemFindUniqueArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozItem that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozItem that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozItemFindUniqueOrThrowArgs} args - Arguments to find a DinozItem
      * @example
@@ -10091,7 +10093,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozItems and only return the `id`
-     * const dinozItemWithIdOnly = await prisma.dinozItem.createManyAndReturn({
+     * const dinozItemWithIdOnly = await prisma.dinozItem.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -11130,7 +11132,7 @@ export namespace Prisma {
 
   type DinozItemToDinozGetPayload<S extends boolean | null | undefined | DinozItemToDinozDefaultArgs> = $Result.GetResult<Prisma.$DinozItemToDinozPayload, S>
 
-  type DinozItemToDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozItemToDinozCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozItemToDinozFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozItemToDinozCountAggregateInputType | true
     }
@@ -11151,7 +11153,7 @@ export namespace Prisma {
     findUnique<T extends DinozItemToDinozFindUniqueArgs>(args: SelectSubset<T, DinozItemToDinozFindUniqueArgs<ExtArgs>>): Prisma__DinozItemToDinozClient<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozItemToDinoz that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozItemToDinoz that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozItemToDinozFindUniqueOrThrowArgs} args - Arguments to find a DinozItemToDinoz
      * @example
@@ -11253,7 +11255,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozItemToDinozs and only return the `dinozId`
-     * const dinozItemToDinozWithDinozIdOnly = await prisma.dinozItemToDinoz.createManyAndReturn({
+     * const dinozItemToDinozWithDinozIdOnly = await prisma.dinozItemToDinoz.createManyAndReturn({ 
      *   select: { dinozId: true },
      *   data: [
      *     // ... provide data here
@@ -12278,7 +12280,7 @@ export namespace Prisma {
 
   type DinozMissionGetPayload<S extends boolean | null | undefined | DinozMissionDefaultArgs> = $Result.GetResult<Prisma.$DinozMissionPayload, S>
 
-  type DinozMissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozMissionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozMissionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozMissionCountAggregateInputType | true
     }
@@ -12299,7 +12301,7 @@ export namespace Prisma {
     findUnique<T extends DinozMissionFindUniqueArgs>(args: SelectSubset<T, DinozMissionFindUniqueArgs<ExtArgs>>): Prisma__DinozMissionClient<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozMission that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozMission that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozMissionFindUniqueOrThrowArgs} args - Arguments to find a DinozMission
      * @example
@@ -12401,7 +12403,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozMissions and only return the `id`
-     * const dinozMissionWithIdOnly = await prisma.dinozMission.createManyAndReturn({
+     * const dinozMissionWithIdOnly = await prisma.dinozMission.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -13418,7 +13420,7 @@ export namespace Prisma {
 
   type DinozSkillGetPayload<S extends boolean | null | undefined | DinozSkillDefaultArgs> = $Result.GetResult<Prisma.$DinozSkillPayload, S>
 
-  type DinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozSkillCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozSkillFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozSkillCountAggregateInputType | true
     }
@@ -13439,7 +13441,7 @@ export namespace Prisma {
     findUnique<T extends DinozSkillFindUniqueArgs>(args: SelectSubset<T, DinozSkillFindUniqueArgs<ExtArgs>>): Prisma__DinozSkillClient<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozSkill that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozSkill that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozSkillFindUniqueOrThrowArgs} args - Arguments to find a DinozSkill
      * @example
@@ -13541,7 +13543,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozSkills and only return the `id`
-     * const dinozSkillWithIdOnly = await prisma.dinozSkill.createManyAndReturn({
+     * const dinozSkillWithIdOnly = await prisma.dinozSkill.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -14565,7 +14567,7 @@ export namespace Prisma {
 
   type DinozSkillUnlockableGetPayload<S extends boolean | null | undefined | DinozSkillUnlockableDefaultArgs> = $Result.GetResult<Prisma.$DinozSkillUnlockablePayload, S>
 
-  type DinozSkillUnlockableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozSkillUnlockableCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozSkillUnlockableFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozSkillUnlockableCountAggregateInputType | true
     }
@@ -14586,7 +14588,7 @@ export namespace Prisma {
     findUnique<T extends DinozSkillUnlockableFindUniqueArgs>(args: SelectSubset<T, DinozSkillUnlockableFindUniqueArgs<ExtArgs>>): Prisma__DinozSkillUnlockableClient<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozSkillUnlockable that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozSkillUnlockable that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozSkillUnlockableFindUniqueOrThrowArgs} args - Arguments to find a DinozSkillUnlockable
      * @example
@@ -14688,7 +14690,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozSkillUnlockables and only return the `id`
-     * const dinozSkillUnlockableWithIdOnly = await prisma.dinozSkillUnlockable.createManyAndReturn({
+     * const dinozSkillUnlockableWithIdOnly = await prisma.dinozSkillUnlockable.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -15711,7 +15713,7 @@ export namespace Prisma {
 
   type DinozStatusGetPayload<S extends boolean | null | undefined | DinozStatusDefaultArgs> = $Result.GetResult<Prisma.$DinozStatusPayload, S>
 
-  type DinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozStatusCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozStatusFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozStatusCountAggregateInputType | true
     }
@@ -15732,7 +15734,7 @@ export namespace Prisma {
     findUnique<T extends DinozStatusFindUniqueArgs>(args: SelectSubset<T, DinozStatusFindUniqueArgs<ExtArgs>>): Prisma__DinozStatusClient<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozStatus that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozStatus that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozStatusFindUniqueOrThrowArgs} args - Arguments to find a DinozStatus
      * @example
@@ -15834,7 +15836,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozStatuses and only return the `id`
-     * const dinozStatusWithIdOnly = await prisma.dinozStatus.createManyAndReturn({
+     * const dinozStatusWithIdOnly = await prisma.dinozStatus.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -16816,7 +16818,7 @@ export namespace Prisma {
 
   type migrationsGetPayload<S extends boolean | null | undefined | migrationsDefaultArgs> = $Result.GetResult<Prisma.$migrationsPayload, S>
 
-  type migrationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type migrationsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<migrationsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: MigrationsCountAggregateInputType | true
     }
@@ -16837,7 +16839,7 @@ export namespace Prisma {
     findUnique<T extends migrationsFindUniqueArgs>(args: SelectSubset<T, migrationsFindUniqueArgs<ExtArgs>>): Prisma__migrationsClient<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Migrations that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Migrations that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {migrationsFindUniqueOrThrowArgs} args - Arguments to find a Migrations
      * @example
@@ -16939,7 +16941,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Migrations and only return the `id`
-     * const migrationsWithIdOnly = await prisma.migrations.createManyAndReturn({
+     * const migrationsWithIdOnly = await prisma.migrations.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -17948,7 +17950,7 @@ export namespace Prisma {
 
   type NewsGetPayload<S extends boolean | null | undefined | NewsDefaultArgs> = $Result.GetResult<Prisma.$NewsPayload, S>
 
-  type NewsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type NewsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<NewsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: NewsCountAggregateInputType | true
     }
@@ -17969,7 +17971,7 @@ export namespace Prisma {
     findUnique<T extends NewsFindUniqueArgs>(args: SelectSubset<T, NewsFindUniqueArgs<ExtArgs>>): Prisma__NewsClient<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one News that matches the filter or throw an error with `error.code='P2025'`
+     * Find one News that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {NewsFindUniqueOrThrowArgs} args - Arguments to find a News
      * @example
@@ -18071,7 +18073,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many News and only return the `id`
-     * const newsWithIdOnly = await prisma.news.createManyAndReturn({
+     * const newsWithIdOnly = await prisma.news.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -19004,7 +19006,7 @@ export namespace Prisma {
 
   type NPCGetPayload<S extends boolean | null | undefined | NPCDefaultArgs> = $Result.GetResult<Prisma.$NPCPayload, S>
 
-  type NPCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type NPCCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<NPCFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: NPCCountAggregateInputType | true
     }
@@ -19025,7 +19027,7 @@ export namespace Prisma {
     findUnique<T extends NPCFindUniqueArgs>(args: SelectSubset<T, NPCFindUniqueArgs<ExtArgs>>): Prisma__NPCClient<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one NPC that matches the filter or throw an error with `error.code='P2025'`
+     * Find one NPC that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {NPCFindUniqueOrThrowArgs} args - Arguments to find a NPC
      * @example
@@ -19127,7 +19129,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many NPCS and only return the `id`
-     * const nPCWithIdOnly = await prisma.nPC.createManyAndReturn({
+     * const nPCWithIdOnly = await prisma.nPC.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -20491,7 +20493,7 @@ export namespace Prisma {
 
   type PlayerGetPayload<S extends boolean | null | undefined | PlayerDefaultArgs> = $Result.GetResult<Prisma.$PlayerPayload, S>
 
-  type PlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerCountAggregateInputType | true
     }
@@ -20512,7 +20514,7 @@ export namespace Prisma {
     findUnique<T extends PlayerFindUniqueArgs>(args: SelectSubset<T, PlayerFindUniqueArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Player that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Player that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerFindUniqueOrThrowArgs} args - Arguments to find a Player
      * @example
@@ -20614,7 +20616,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Players and only return the `customText`
-     * const playerWithCustomTextOnly = await prisma.player.createManyAndReturn({
+     * const playerWithCustomTextOnly = await prisma.player.createManyAndReturn({ 
      *   select: { customText: true },
      *   data: [
      *     // ... provide data here
@@ -22400,7 +22402,7 @@ export namespace Prisma {
 
   type DojoGetPayload<S extends boolean | null | undefined | DojoDefaultArgs> = $Result.GetResult<Prisma.$DojoPayload, S>
 
-  type DojoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DojoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DojoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DojoCountAggregateInputType | true
     }
@@ -22421,7 +22423,7 @@ export namespace Prisma {
     findUnique<T extends DojoFindUniqueArgs>(args: SelectSubset<T, DojoFindUniqueArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Dojo that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Dojo that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DojoFindUniqueOrThrowArgs} args - Arguments to find a Dojo
      * @example
@@ -22523,7 +22525,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Dojos and only return the `id`
-     * const dojoWithIdOnly = await prisma.dojo.createManyAndReturn({
+     * const dojoWithIdOnly = await prisma.dojo.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -23593,7 +23595,7 @@ export namespace Prisma {
 
   type DojoTeamGetPayload<S extends boolean | null | undefined | DojoTeamDefaultArgs> = $Result.GetResult<Prisma.$DojoTeamPayload, S>
 
-  type DojoTeamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DojoTeamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DojoTeamFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DojoTeamCountAggregateInputType | true
     }
@@ -23614,7 +23616,7 @@ export namespace Prisma {
     findUnique<T extends DojoTeamFindUniqueArgs>(args: SelectSubset<T, DojoTeamFindUniqueArgs<ExtArgs>>): Prisma__DojoTeamClient<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DojoTeam that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DojoTeam that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DojoTeamFindUniqueOrThrowArgs} args - Arguments to find a DojoTeam
      * @example
@@ -23716,7 +23718,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DojoTeams and only return the `id`
-     * const dojoTeamWithIdOnly = await prisma.dojoTeam.createManyAndReturn({
+     * const dojoTeamWithIdOnly = await prisma.dojoTeam.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -24701,7 +24703,7 @@ export namespace Prisma {
 
   type DojoOpponentsGetPayload<S extends boolean | null | undefined | DojoOpponentsDefaultArgs> = $Result.GetResult<Prisma.$DojoOpponentsPayload, S>
 
-  type DojoOpponentsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DojoOpponentsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DojoOpponentsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DojoOpponentsCountAggregateInputType | true
     }
@@ -24722,7 +24724,7 @@ export namespace Prisma {
     findUnique<T extends DojoOpponentsFindUniqueArgs>(args: SelectSubset<T, DojoOpponentsFindUniqueArgs<ExtArgs>>): Prisma__DojoOpponentsClient<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DojoOpponents that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DojoOpponents that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DojoOpponentsFindUniqueOrThrowArgs} args - Arguments to find a DojoOpponents
      * @example
@@ -24824,7 +24826,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DojoOpponents and only return the `id`
-     * const dojoOpponentsWithIdOnly = await prisma.dojoOpponents.createManyAndReturn({
+     * const dojoOpponentsWithIdOnly = await prisma.dojoOpponents.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -25843,7 +25845,7 @@ export namespace Prisma {
 
   type DojoChallengeHistoryGetPayload<S extends boolean | null | undefined | DojoChallengeHistoryDefaultArgs> = $Result.GetResult<Prisma.$DojoChallengeHistoryPayload, S>
 
-  type DojoChallengeHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DojoChallengeHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DojoChallengeHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DojoChallengeHistoryCountAggregateInputType | true
     }
@@ -25864,7 +25866,7 @@ export namespace Prisma {
     findUnique<T extends DojoChallengeHistoryFindUniqueArgs>(args: SelectSubset<T, DojoChallengeHistoryFindUniqueArgs<ExtArgs>>): Prisma__DojoChallengeHistoryClient<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DojoChallengeHistory that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DojoChallengeHistory that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DojoChallengeHistoryFindUniqueOrThrowArgs} args - Arguments to find a DojoChallengeHistory
      * @example
@@ -25966,7 +25968,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DojoChallengeHistories and only return the `id`
-     * const dojoChallengeHistoryWithIdOnly = await prisma.dojoChallengeHistory.createManyAndReturn({
+     * const dojoChallengeHistoryWithIdOnly = await prisma.dojoChallengeHistory.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -26923,7 +26925,7 @@ export namespace Prisma {
 
   type UsernameHistoryGetPayload<S extends boolean | null | undefined | UsernameHistoryDefaultArgs> = $Result.GetResult<Prisma.$UsernameHistoryPayload, S>
 
-  type UsernameHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type UsernameHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<UsernameHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: UsernameHistoryCountAggregateInputType | true
     }
@@ -26944,7 +26946,7 @@ export namespace Prisma {
     findUnique<T extends UsernameHistoryFindUniqueArgs>(args: SelectSubset<T, UsernameHistoryFindUniqueArgs<ExtArgs>>): Prisma__UsernameHistoryClient<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one UsernameHistory that matches the filter or throw an error with `error.code='P2025'`
+     * Find one UsernameHistory that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {UsernameHistoryFindUniqueOrThrowArgs} args - Arguments to find a UsernameHistory
      * @example
@@ -27046,7 +27048,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many UsernameHistories and only return the `id`
-     * const usernameHistoryWithIdOnly = await prisma.usernameHistory.createManyAndReturn({
+     * const usernameHistoryWithIdOnly = await prisma.usernameHistory.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -28033,7 +28035,7 @@ export namespace Prisma {
 
   type PlayerDinozShopGetPayload<S extends boolean | null | undefined | PlayerDinozShopDefaultArgs> = $Result.GetResult<Prisma.$PlayerDinozShopPayload, S>
 
-  type PlayerDinozShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerDinozShopCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerDinozShopFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerDinozShopCountAggregateInputType | true
     }
@@ -28054,7 +28056,7 @@ export namespace Prisma {
     findUnique<T extends PlayerDinozShopFindUniqueArgs>(args: SelectSubset<T, PlayerDinozShopFindUniqueArgs<ExtArgs>>): Prisma__PlayerDinozShopClient<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerDinozShop that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerDinozShop that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerDinozShopFindUniqueOrThrowArgs} args - Arguments to find a PlayerDinozShop
      * @example
@@ -28156,7 +28158,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerDinozShops and only return the `id`
-     * const playerDinozShopWithIdOnly = await prisma.playerDinozShop.createManyAndReturn({
+     * const playerDinozShopWithIdOnly = await prisma.playerDinozShop.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -29160,7 +29162,7 @@ export namespace Prisma {
 
   type PlayerGatherGetPayload<S extends boolean | null | undefined | PlayerGatherDefaultArgs> = $Result.GetResult<Prisma.$PlayerGatherPayload, S>
 
-  type PlayerGatherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerGatherCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerGatherFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerGatherCountAggregateInputType | true
     }
@@ -29181,7 +29183,7 @@ export namespace Prisma {
     findUnique<T extends PlayerGatherFindUniqueArgs>(args: SelectSubset<T, PlayerGatherFindUniqueArgs<ExtArgs>>): Prisma__PlayerGatherClient<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerGather that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerGather that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerGatherFindUniqueOrThrowArgs} args - Arguments to find a PlayerGather
      * @example
@@ -29283,7 +29285,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerGathers and only return the `id`
-     * const playerGatherWithIdOnly = await prisma.playerGather.createManyAndReturn({
+     * const playerGatherWithIdOnly = await prisma.playerGather.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -30276,7 +30278,7 @@ export namespace Prisma {
 
   type PlayerIngredientGetPayload<S extends boolean | null | undefined | PlayerIngredientDefaultArgs> = $Result.GetResult<Prisma.$PlayerIngredientPayload, S>
 
-  type PlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerIngredientCountAggregateInputType | true
     }
@@ -30297,7 +30299,7 @@ export namespace Prisma {
     findUnique<T extends PlayerIngredientFindUniqueArgs>(args: SelectSubset<T, PlayerIngredientFindUniqueArgs<ExtArgs>>): Prisma__PlayerIngredientClient<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerIngredient that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerIngredient that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerIngredientFindUniqueOrThrowArgs} args - Arguments to find a PlayerIngredient
      * @example
@@ -30399,7 +30401,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerIngredients and only return the `id`
-     * const playerIngredientWithIdOnly = await prisma.playerIngredient.createManyAndReturn({
+     * const playerIngredientWithIdOnly = await prisma.playerIngredient.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -31391,7 +31393,7 @@ export namespace Prisma {
 
   type PlayerItemGetPayload<S extends boolean | null | undefined | PlayerItemDefaultArgs> = $Result.GetResult<Prisma.$PlayerItemPayload, S>
 
-  type PlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerItemCountAggregateInputType | true
     }
@@ -31412,7 +31414,7 @@ export namespace Prisma {
     findUnique<T extends PlayerItemFindUniqueArgs>(args: SelectSubset<T, PlayerItemFindUniqueArgs<ExtArgs>>): Prisma__PlayerItemClient<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerItem that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerItem that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerItemFindUniqueOrThrowArgs} args - Arguments to find a PlayerItem
      * @example
@@ -31514,7 +31516,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerItems and only return the `id`
-     * const playerItemWithIdOnly = await prisma.playerItem.createManyAndReturn({
+     * const playerItemWithIdOnly = await prisma.playerItem.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -32506,7 +32508,7 @@ export namespace Prisma {
 
   type PlayerQuestGetPayload<S extends boolean | null | undefined | PlayerQuestDefaultArgs> = $Result.GetResult<Prisma.$PlayerQuestPayload, S>
 
-  type PlayerQuestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerQuestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerQuestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerQuestCountAggregateInputType | true
     }
@@ -32527,7 +32529,7 @@ export namespace Prisma {
     findUnique<T extends PlayerQuestFindUniqueArgs>(args: SelectSubset<T, PlayerQuestFindUniqueArgs<ExtArgs>>): Prisma__PlayerQuestClient<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerQuest that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerQuest that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerQuestFindUniqueOrThrowArgs} args - Arguments to find a PlayerQuest
      * @example
@@ -32629,7 +32631,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerQuests and only return the `id`
-     * const playerQuestWithIdOnly = await prisma.playerQuest.createManyAndReturn({
+     * const playerQuestWithIdOnly = await prisma.playerQuest.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -33605,7 +33607,7 @@ export namespace Prisma {
 
   type PlayerRewardGetPayload<S extends boolean | null | undefined | PlayerRewardDefaultArgs> = $Result.GetResult<Prisma.$PlayerRewardPayload, S>
 
-  type PlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerRewardCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerRewardFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerRewardCountAggregateInputType | true
     }
@@ -33626,7 +33628,7 @@ export namespace Prisma {
     findUnique<T extends PlayerRewardFindUniqueArgs>(args: SelectSubset<T, PlayerRewardFindUniqueArgs<ExtArgs>>): Prisma__PlayerRewardClient<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerReward that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerReward that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerRewardFindUniqueOrThrowArgs} args - Arguments to find a PlayerReward
      * @example
@@ -33728,7 +33730,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerRewards and only return the `id`
-     * const playerRewardWithIdOnly = await prisma.playerReward.createManyAndReturn({
+     * const playerRewardWithIdOnly = await prisma.playerReward.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -34767,7 +34769,7 @@ export namespace Prisma {
 
   type RankingGetPayload<S extends boolean | null | undefined | RankingDefaultArgs> = $Result.GetResult<Prisma.$RankingPayload, S>
 
-  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type RankingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<RankingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: RankingCountAggregateInputType | true
     }
@@ -34788,7 +34790,7 @@ export namespace Prisma {
     findUnique<T extends RankingFindUniqueArgs>(args: SelectSubset<T, RankingFindUniqueArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Ranking that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {RankingFindUniqueOrThrowArgs} args - Arguments to find a Ranking
      * @example
@@ -34890,7 +34892,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Rankings and only return the `id`
-     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({
+     * const rankingWithIdOnly = await prisma.ranking.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -35805,7 +35807,7 @@ export namespace Prisma {
 
   type SecretGetPayload<S extends boolean | null | undefined | SecretDefaultArgs> = $Result.GetResult<Prisma.$SecretPayload, S>
 
-  type SecretCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type SecretCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<SecretFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: SecretCountAggregateInputType | true
     }
@@ -35826,7 +35828,7 @@ export namespace Prisma {
     findUnique<T extends SecretFindUniqueArgs>(args: SelectSubset<T, SecretFindUniqueArgs<ExtArgs>>): Prisma__SecretClient<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Secret that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Secret that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {SecretFindUniqueOrThrowArgs} args - Arguments to find a Secret
      * @example
@@ -35928,7 +35930,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Secrets and only return the `key`
-     * const secretWithKeyOnly = await prisma.secret.createManyAndReturn({
+     * const secretWithKeyOnly = await prisma.secret.createManyAndReturn({ 
      *   select: { key: true },
      *   data: [
      *     // ... provide data here
@@ -36866,7 +36868,7 @@ export namespace Prisma {
 
   type OfferItemGetPayload<S extends boolean | null | undefined | OfferItemDefaultArgs> = $Result.GetResult<Prisma.$OfferItemPayload, S>
 
-  type OfferItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type OfferItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<OfferItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: OfferItemCountAggregateInputType | true
     }
@@ -36887,7 +36889,7 @@ export namespace Prisma {
     findUnique<T extends OfferItemFindUniqueArgs>(args: SelectSubset<T, OfferItemFindUniqueArgs<ExtArgs>>): Prisma__OfferItemClient<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one OfferItem that matches the filter or throw an error with `error.code='P2025'`
+     * Find one OfferItem that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {OfferItemFindUniqueOrThrowArgs} args - Arguments to find a OfferItem
      * @example
@@ -36989,7 +36991,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many OfferItems and only return the `id`
-     * const offerItemWithIdOnly = await prisma.offerItem.createManyAndReturn({
+     * const offerItemWithIdOnly = await prisma.offerItem.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -37970,7 +37972,7 @@ export namespace Prisma {
 
   type OfferBidGetPayload<S extends boolean | null | undefined | OfferBidDefaultArgs> = $Result.GetResult<Prisma.$OfferBidPayload, S>
 
-  type OfferBidCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type OfferBidCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<OfferBidFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: OfferBidCountAggregateInputType | true
     }
@@ -37991,7 +37993,7 @@ export namespace Prisma {
     findUnique<T extends OfferBidFindUniqueArgs>(args: SelectSubset<T, OfferBidFindUniqueArgs<ExtArgs>>): Prisma__OfferBidClient<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one OfferBid that matches the filter or throw an error with `error.code='P2025'`
+     * Find one OfferBid that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {OfferBidFindUniqueOrThrowArgs} args - Arguments to find a OfferBid
      * @example
@@ -38093,7 +38095,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many OfferBids and only return the `id`
-     * const offerBidWithIdOnly = await prisma.offerBid.createManyAndReturn({
+     * const offerBidWithIdOnly = await prisma.offerBid.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -39130,7 +39132,7 @@ export namespace Prisma {
 
   type OfferGetPayload<S extends boolean | null | undefined | OfferDefaultArgs> = $Result.GetResult<Prisma.$OfferPayload, S>
 
-  type OfferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type OfferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<OfferFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: OfferCountAggregateInputType | true
     }
@@ -39151,7 +39153,7 @@ export namespace Prisma {
     findUnique<T extends OfferFindUniqueArgs>(args: SelectSubset<T, OfferFindUniqueArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Offer that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Offer that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {OfferFindUniqueOrThrowArgs} args - Arguments to find a Offer
      * @example
@@ -39253,7 +39255,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Offers and only return the `id`
-     * const offerWithIdOnly = await prisma.offer.createManyAndReturn({
+     * const offerWithIdOnly = await prisma.offer.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -40354,7 +40356,7 @@ export namespace Prisma {
 
   type LogGetPayload<S extends boolean | null | undefined | LogDefaultArgs> = $Result.GetResult<Prisma.$LogPayload, S>
 
-  type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type LogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<LogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: LogCountAggregateInputType | true
     }
@@ -40375,7 +40377,7 @@ export namespace Prisma {
     findUnique<T extends LogFindUniqueArgs>(args: SelectSubset<T, LogFindUniqueArgs<ExtArgs>>): Prisma__LogClient<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Log that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Log that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {LogFindUniqueOrThrowArgs} args - Arguments to find a Log
      * @example
@@ -40477,7 +40479,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Logs and only return the `id`
-     * const logWithIdOnly = await prisma.log.createManyAndReturn({
+     * const logWithIdOnly = await prisma.log.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -41492,7 +41494,7 @@ export namespace Prisma {
 
   type DinozCatchGetPayload<S extends boolean | null | undefined | DinozCatchDefaultArgs> = $Result.GetResult<Prisma.$DinozCatchPayload, S>
 
-  type DinozCatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type DinozCatchCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<DinozCatchFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: DinozCatchCountAggregateInputType | true
     }
@@ -41513,7 +41515,7 @@ export namespace Prisma {
     findUnique<T extends DinozCatchFindUniqueArgs>(args: SelectSubset<T, DinozCatchFindUniqueArgs<ExtArgs>>): Prisma__DinozCatchClient<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one DinozCatch that matches the filter or throw an error with `error.code='P2025'`
+     * Find one DinozCatch that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {DinozCatchFindUniqueOrThrowArgs} args - Arguments to find a DinozCatch
      * @example
@@ -41615,7 +41617,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many DinozCatches and only return the `id`
-     * const dinozCatchWithIdOnly = await prisma.dinozCatch.createManyAndReturn({
+     * const dinozCatchWithIdOnly = await prisma.dinozCatch.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -42584,7 +42586,7 @@ export namespace Prisma {
 
   type PlayerTrackingGetPayload<S extends boolean | null | undefined | PlayerTrackingDefaultArgs> = $Result.GetResult<Prisma.$PlayerTrackingPayload, S>
 
-  type PlayerTrackingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PlayerTrackingCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PlayerTrackingFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PlayerTrackingCountAggregateInputType | true
     }
@@ -42605,7 +42607,7 @@ export namespace Prisma {
     findUnique<T extends PlayerTrackingFindUniqueArgs>(args: SelectSubset<T, PlayerTrackingFindUniqueArgs<ExtArgs>>): Prisma__PlayerTrackingClient<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one PlayerTracking that matches the filter or throw an error with `error.code='P2025'`
+     * Find one PlayerTracking that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PlayerTrackingFindUniqueOrThrowArgs} args - Arguments to find a PlayerTracking
      * @example
@@ -42707,7 +42709,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many PlayerTrackings and only return the `id`
-     * const playerTrackingWithIdOnly = await prisma.playerTracking.createManyAndReturn({
+     * const playerTrackingWithIdOnly = await prisma.playerTracking.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -43723,7 +43725,7 @@ export namespace Prisma {
 
   type PantheonGetPayload<S extends boolean | null | undefined | PantheonDefaultArgs> = $Result.GetResult<Prisma.$PantheonPayload, S>
 
-  type PantheonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type PantheonCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<PantheonFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: PantheonCountAggregateInputType | true
     }
@@ -43744,7 +43746,7 @@ export namespace Prisma {
     findUnique<T extends PantheonFindUniqueArgs>(args: SelectSubset<T, PantheonFindUniqueArgs<ExtArgs>>): Prisma__PantheonClient<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Pantheon that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Pantheon that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {PantheonFindUniqueOrThrowArgs} args - Arguments to find a Pantheon
      * @example
@@ -43846,7 +43848,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Pantheons and only return the `id`
-     * const pantheonWithIdOnly = await prisma.pantheon.createManyAndReturn({
+     * const pantheonWithIdOnly = await prisma.pantheon.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -44924,7 +44926,7 @@ export namespace Prisma {
 
   type ClanGetPayload<S extends boolean | null | undefined | ClanDefaultArgs> = $Result.GetResult<Prisma.$ClanPayload, S>
 
-  type ClanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanCountAggregateInputType | true
     }
@@ -44945,7 +44947,7 @@ export namespace Prisma {
     findUnique<T extends ClanFindUniqueArgs>(args: SelectSubset<T, ClanFindUniqueArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Clan that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Clan that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanFindUniqueOrThrowArgs} args - Arguments to find a Clan
      * @example
@@ -45047,7 +45049,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Clans and only return the `id`
-     * const clanWithIdOnly = await prisma.clan.createManyAndReturn({
+     * const clanWithIdOnly = await prisma.clan.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -46196,7 +46198,7 @@ export namespace Prisma {
 
   type ClanJoinRequestGetPayload<S extends boolean | null | undefined | ClanJoinRequestDefaultArgs> = $Result.GetResult<Prisma.$ClanJoinRequestPayload, S>
 
-  type ClanJoinRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanJoinRequestCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanJoinRequestFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanJoinRequestCountAggregateInputType | true
     }
@@ -46217,7 +46219,7 @@ export namespace Prisma {
     findUnique<T extends ClanJoinRequestFindUniqueArgs>(args: SelectSubset<T, ClanJoinRequestFindUniqueArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanJoinRequest that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanJoinRequest that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanJoinRequestFindUniqueOrThrowArgs} args - Arguments to find a ClanJoinRequest
      * @example
@@ -46319,7 +46321,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanJoinRequests and only return the `id`
-     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.createManyAndReturn({
+     * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -47269,7 +47271,7 @@ export namespace Prisma {
 
   type ClanWarGetPayload<S extends boolean | null | undefined | ClanWarDefaultArgs> = $Result.GetResult<Prisma.$ClanWarPayload, S>
 
-  type ClanWarCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanWarCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanWarFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanWarCountAggregateInputType | true
     }
@@ -47290,7 +47292,7 @@ export namespace Prisma {
     findUnique<T extends ClanWarFindUniqueArgs>(args: SelectSubset<T, ClanWarFindUniqueArgs<ExtArgs>>): Prisma__ClanWarClient<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanWar that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanWar that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanWarFindUniqueOrThrowArgs} args - Arguments to find a ClanWar
      * @example
@@ -47392,7 +47394,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanWars and only return the `id`
-     * const clanWarWithIdOnly = await prisma.clanWar.createManyAndReturn({
+     * const clanWarWithIdOnly = await prisma.clanWar.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -48384,7 +48386,7 @@ export namespace Prisma {
 
   type ClanIngredientGetPayload<S extends boolean | null | undefined | ClanIngredientDefaultArgs> = $Result.GetResult<Prisma.$ClanIngredientPayload, S>
 
-  type ClanIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanIngredientCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanIngredientFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanIngredientCountAggregateInputType | true
     }
@@ -48405,7 +48407,7 @@ export namespace Prisma {
     findUnique<T extends ClanIngredientFindUniqueArgs>(args: SelectSubset<T, ClanIngredientFindUniqueArgs<ExtArgs>>): Prisma__ClanIngredientClient<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanIngredient that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanIngredient that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanIngredientFindUniqueOrThrowArgs} args - Arguments to find a ClanIngredient
      * @example
@@ -48507,7 +48509,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanIngredients and only return the `id`
-     * const clanIngredientWithIdOnly = await prisma.clanIngredient.createManyAndReturn({
+     * const clanIngredientWithIdOnly = await prisma.clanIngredient.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -49507,7 +49509,7 @@ export namespace Prisma {
 
   type ClanMessageGetPayload<S extends boolean | null | undefined | ClanMessageDefaultArgs> = $Result.GetResult<Prisma.$ClanMessagePayload, S>
 
-  type ClanMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanMessageCountAggregateInputType | true
     }
@@ -49528,7 +49530,7 @@ export namespace Prisma {
     findUnique<T extends ClanMessageFindUniqueArgs>(args: SelectSubset<T, ClanMessageFindUniqueArgs<ExtArgs>>): Prisma__ClanMessageClient<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanMessage that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanMessage that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanMessageFindUniqueOrThrowArgs} args - Arguments to find a ClanMessage
      * @example
@@ -49630,7 +49632,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanMessages and only return the `id`
-     * const clanMessageWithIdOnly = await prisma.clanMessage.createManyAndReturn({
+     * const clanMessageWithIdOnly = await prisma.clanMessage.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -50652,7 +50654,7 @@ export namespace Prisma {
 
   type ClanHistoryGetPayload<S extends boolean | null | undefined | ClanHistoryDefaultArgs> = $Result.GetResult<Prisma.$ClanHistoryPayload, S>
 
-  type ClanHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanHistoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanHistoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanHistoryCountAggregateInputType | true
     }
@@ -50673,7 +50675,7 @@ export namespace Prisma {
     findUnique<T extends ClanHistoryFindUniqueArgs>(args: SelectSubset<T, ClanHistoryFindUniqueArgs<ExtArgs>>): Prisma__ClanHistoryClient<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanHistory that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanHistory that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanHistoryFindUniqueOrThrowArgs} args - Arguments to find a ClanHistory
      * @example
@@ -50775,7 +50777,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanHistories and only return the `id`
-     * const clanHistoryWithIdOnly = await prisma.clanHistory.createManyAndReturn({
+     * const clanHistoryWithIdOnly = await prisma.clanHistory.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -51809,7 +51811,7 @@ export namespace Prisma {
 
   type ClanMemberGetPayload<S extends boolean | null | undefined | ClanMemberDefaultArgs> = $Result.GetResult<Prisma.$ClanMemberPayload, S>
 
-  type ClanMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanMemberCountAggregateInputType | true
     }
@@ -51830,7 +51832,7 @@ export namespace Prisma {
     findUnique<T extends ClanMemberFindUniqueArgs>(args: SelectSubset<T, ClanMemberFindUniqueArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanMember that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanMember that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanMemberFindUniqueOrThrowArgs} args - Arguments to find a ClanMember
      * @example
@@ -51932,7 +51934,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanMembers and only return the `id`
-     * const clanMemberWithIdOnly = await prisma.clanMember.createManyAndReturn({
+     * const clanMemberWithIdOnly = await prisma.clanMember.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -52929,7 +52931,7 @@ export namespace Prisma {
 
   type ClanPageGetPayload<S extends boolean | null | undefined | ClanPageDefaultArgs> = $Result.GetResult<Prisma.$ClanPagePayload, S>
 
-  type ClanPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ClanPageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ClanPageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ClanPageCountAggregateInputType | true
     }
@@ -52950,7 +52952,7 @@ export namespace Prisma {
     findUnique<T extends ClanPageFindUniqueArgs>(args: SelectSubset<T, ClanPageFindUniqueArgs<ExtArgs>>): Prisma__ClanPageClient<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one ClanPage that matches the filter or throw an error with `error.code='P2025'`
+     * Find one ClanPage that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ClanPageFindUniqueOrThrowArgs} args - Arguments to find a ClanPage
      * @example
@@ -53052,7 +53054,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many ClanPages and only return the `id`
-     * const clanPageWithIdOnly = await prisma.clanPage.createManyAndReturn({
+     * const clanPageWithIdOnly = await prisma.clanPage.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -54100,7 +54102,7 @@ export namespace Prisma {
 
   type ModerationGetPayload<S extends boolean | null | undefined | ModerationDefaultArgs> = $Result.GetResult<Prisma.$ModerationPayload, S>
 
-  type ModerationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ModerationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ModerationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ModerationCountAggregateInputType | true
     }
@@ -54121,7 +54123,7 @@ export namespace Prisma {
     findUnique<T extends ModerationFindUniqueArgs>(args: SelectSubset<T, ModerationFindUniqueArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Moderation that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Moderation that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ModerationFindUniqueOrThrowArgs} args - Arguments to find a Moderation
      * @example
@@ -54223,7 +54225,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Moderations and only return the `id`
-     * const moderationWithIdOnly = await prisma.moderation.createManyAndReturn({
+     * const moderationWithIdOnly = await prisma.moderation.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -55323,7 +55325,7 @@ export namespace Prisma {
 
   type ConversationGetPayload<S extends boolean | null | undefined | ConversationDefaultArgs> = $Result.GetResult<Prisma.$ConversationPayload, S>
 
-  type ConversationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ConversationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ConversationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ConversationCountAggregateInputType | true
     }
@@ -55344,7 +55346,7 @@ export namespace Prisma {
     findUnique<T extends ConversationFindUniqueArgs>(args: SelectSubset<T, ConversationFindUniqueArgs<ExtArgs>>): Prisma__ConversationClient<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Conversation that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Conversation that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ConversationFindUniqueOrThrowArgs} args - Arguments to find a Conversation
      * @example
@@ -55446,7 +55448,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Conversations and only return the `id`
-     * const conversationWithIdOnly = await prisma.conversation.createManyAndReturn({
+     * const conversationWithIdOnly = await prisma.conversation.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -56543,7 +56545,7 @@ export namespace Prisma {
 
   type ParticipantsGetPayload<S extends boolean | null | undefined | ParticipantsDefaultArgs> = $Result.GetResult<Prisma.$ParticipantsPayload, S>
 
-  type ParticipantsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type ParticipantsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<ParticipantsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: ParticipantsCountAggregateInputType | true
     }
@@ -56564,7 +56566,7 @@ export namespace Prisma {
     findUnique<T extends ParticipantsFindUniqueArgs>(args: SelectSubset<T, ParticipantsFindUniqueArgs<ExtArgs>>): Prisma__ParticipantsClient<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Participants that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Participants that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {ParticipantsFindUniqueOrThrowArgs} args - Arguments to find a Participants
      * @example
@@ -56666,7 +56668,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Participants and only return the `id`
-     * const participantsWithIdOnly = await prisma.participants.createManyAndReturn({
+     * const participantsWithIdOnly = await prisma.participants.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -57686,7 +57688,7 @@ export namespace Prisma {
 
   type MessageGetPayload<S extends boolean | null | undefined | MessageDefaultArgs> = $Result.GetResult<Prisma.$MessagePayload, S>
 
-  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type MessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<MessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: MessageCountAggregateInputType | true
     }
@@ -57707,7 +57709,7 @@ export namespace Prisma {
     findUnique<T extends MessageFindUniqueArgs>(args: SelectSubset<T, MessageFindUniqueArgs<ExtArgs>>): Prisma__MessageClient<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Message that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Message that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {MessageFindUniqueOrThrowArgs} args - Arguments to find a Message
      * @example
@@ -57809,7 +57811,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Messages and only return the `id`
-     * const messageWithIdOnly = await prisma.message.createManyAndReturn({
+     * const messageWithIdOnly = await prisma.message.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -58818,7 +58820,7 @@ export namespace Prisma {
 
   type NotificationGetPayload<S extends boolean | null | undefined | NotificationDefaultArgs> = $Result.GetResult<Prisma.$NotificationPayload, S>
 
-  type NotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type NotificationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<NotificationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: NotificationCountAggregateInputType | true
     }
@@ -58839,7 +58841,7 @@ export namespace Prisma {
     findUnique<T extends NotificationFindUniqueArgs>(args: SelectSubset<T, NotificationFindUniqueArgs<ExtArgs>>): Prisma__NotificationClient<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Notification that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Notification that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {NotificationFindUniqueOrThrowArgs} args - Arguments to find a Notification
      * @example
@@ -58941,7 +58943,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Notifications and only return the `id`
-     * const notificationWithIdOnly = await prisma.notification.createManyAndReturn({
+     * const notificationWithIdOnly = await prisma.notification.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -60112,7 +60114,7 @@ export namespace Prisma {
 
   type FightArchiveGetPayload<S extends boolean | null | undefined | FightArchiveDefaultArgs> = $Result.GetResult<Prisma.$FightArchivePayload, S>
 
-  type FightArchiveCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type FightArchiveCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<FightArchiveFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: FightArchiveCountAggregateInputType | true
     }
@@ -60133,7 +60135,7 @@ export namespace Prisma {
     findUnique<T extends FightArchiveFindUniqueArgs>(args: SelectSubset<T, FightArchiveFindUniqueArgs<ExtArgs>>): Prisma__FightArchiveClient<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one FightArchive that matches the filter or throw an error with `error.code='P2025'`
+     * Find one FightArchive that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {FightArchiveFindUniqueOrThrowArgs} args - Arguments to find a FightArchive
      * @example
@@ -60235,7 +60237,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many FightArchives and only return the `id`
-     * const fightArchiveWithIdOnly = await prisma.fightArchive.createManyAndReturn({
+     * const fightArchiveWithIdOnly = await prisma.fightArchive.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -61349,7 +61351,7 @@ export namespace Prisma {
 
   type FightWatchedGetPayload<S extends boolean | null | undefined | FightWatchedDefaultArgs> = $Result.GetResult<Prisma.$FightWatchedPayload, S>
 
-  type FightWatchedCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type FightWatchedCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<FightWatchedFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: FightWatchedCountAggregateInputType | true
     }
@@ -61370,7 +61372,7 @@ export namespace Prisma {
     findUnique<T extends FightWatchedFindUniqueArgs>(args: SelectSubset<T, FightWatchedFindUniqueArgs<ExtArgs>>): Prisma__FightWatchedClient<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one FightWatched that matches the filter or throw an error with `error.code='P2025'`
+     * Find one FightWatched that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {FightWatchedFindUniqueOrThrowArgs} args - Arguments to find a FightWatched
      * @example
@@ -61472,7 +61474,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many FightWatcheds and only return the `id`
-     * const fightWatchedWithIdOnly = await prisma.fightWatched.createManyAndReturn({
+     * const fightWatchedWithIdOnly = await prisma.fightWatched.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -62521,7 +62523,7 @@ export namespace Prisma {
 
   type TournamentGetPayload<S extends boolean | null | undefined | TournamentDefaultArgs> = $Result.GetResult<Prisma.$TournamentPayload, S>
 
-  type TournamentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type TournamentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<TournamentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: TournamentCountAggregateInputType | true
     }
@@ -62542,7 +62544,7 @@ export namespace Prisma {
     findUnique<T extends TournamentFindUniqueArgs>(args: SelectSubset<T, TournamentFindUniqueArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one Tournament that matches the filter or throw an error with `error.code='P2025'`
+     * Find one Tournament that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {TournamentFindUniqueOrThrowArgs} args - Arguments to find a Tournament
      * @example
@@ -62644,7 +62646,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many Tournaments and only return the `id`
-     * const tournamentWithIdOnly = await prisma.tournament.createManyAndReturn({
+     * const tournamentWithIdOnly = await prisma.tournament.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -63670,7 +63672,7 @@ export namespace Prisma {
 
   type TournamentTeamGetPayload<S extends boolean | null | undefined | TournamentTeamDefaultArgs> = $Result.GetResult<Prisma.$TournamentTeamPayload, S>
 
-  type TournamentTeamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+  type TournamentTeamCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
     Omit<TournamentTeamFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
       select?: TournamentTeamCountAggregateInputType | true
     }
@@ -63691,7 +63693,7 @@ export namespace Prisma {
     findUnique<T extends TournamentTeamFindUniqueArgs>(args: SelectSubset<T, TournamentTeamFindUniqueArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one TournamentTeam that matches the filter or throw an error with `error.code='P2025'`
+     * Find one TournamentTeam that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {TournamentTeamFindUniqueOrThrowArgs} args - Arguments to find a TournamentTeam
      * @example
@@ -63793,7 +63795,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many TournamentTeams and only return the `id`
-     * const tournamentTeamWithIdOnly = await prisma.tournamentTeam.createManyAndReturn({
+     * const tournamentTeamWithIdOnly = await prisma.tournamentTeam.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -69210,7 +69212,6 @@ export namespace Prisma {
   export type ListEnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang[]'>
     
 
-
   /**
    * Reference to a field of type 'Json'
    */
@@ -69307,7 +69308,10 @@ export namespace Prisma {
    */
   export type ListEnumNotificationSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationSeverity[]'>
     
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2850ddf4a (fix: add translation strings, fix  admin gold operation)
 
   /**
    * Reference to a field of type 'GameDinozUsage'

@@ -704,6 +704,8 @@ exports.LogType = exports.$Enums.LogType = {
   AdminRemoveStatus: 'AdminRemoveStatus',
   AdminAddSkill: 'AdminAddSkill',
   AdminRemoveSkill: 'AdminRemoveSkill',
+  AdminAddUnlockableSkill: 'AdminAddUnlockableSkill',
+  AdminRemoveUnlockableSkill: 'AdminRemoveUnlockableSkill',
   AdminAddMoney: 'AdminAddMoney',
   AdminRemoveMoney: 'AdminRemoveMoney',
   AdminAddReward: 'AdminAddReward',
@@ -899,6 +901,10 @@ path.join(process.cwd(), "../prisma/libquery_engine-debian-openssl-3.0.x.so.node
 // file annotations for bundling tools to include these files
 path.join(__dirname, "libquery_engine-debian-openssl-1.1.x.so.node");
 path.join(process.cwd(), "../prisma/libquery_engine-debian-openssl-1.1.x.so.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-debian-openssl-3.0.x.so.node");
+path.join(process.cwd(), "../prisma/libquery_engine-debian-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "../prisma/schema.prisma")

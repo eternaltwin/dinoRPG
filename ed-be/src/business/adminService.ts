@@ -52,10 +52,17 @@ export async function getAdminDashBoard(req: Request): Promise<boolean> {
  * @param req.body.life {number} New Dinoz life
  * @param req.body.maxLife {number} New Dinoz maximum life
  * @param req.body.experience {number} New Dinoz experience
+ * @param req.body.nbrUpFire {number} New fire up for dinoz
+ * @param req.body.nbrUpWood {number} New wood up for dinoz
+ * @param req.body.nbrUpWater {number} New new water up for dinoz
+ * @param req.body.nbrUpLightning {number} New lightning up for dinoz
+ * @param req.body.nbrUpAir {number} New air up for dinoz
  * @param req.body.addStatus {number} Status to add to the dinoz
  * @param req.body.removeStatus {number} Status to remove to the dinoz
  * @param req.body.addSkill {number} Skill to add to the dinoz
  * @param req.body.removeSkill {number} Skill to remove to the dinoz
+ * @param req.body.addUnlockableSkill {number} Unlockable skill to add to the dinoz
+ * @param req.body.removeUnlockableSkill {number} Unlockable skill to remove to the dinoz
  */
 export async function editDinoz(req: Request) {
 	const authed = await auth(req);
@@ -189,14 +196,14 @@ export async function editDinoz(req: Request) {
 				await addMultipleUnlockableSkills(unlockableSkillListData);
 
 				for (const skill of unlockableSkillList) {
-					await createLog(LogType.AdminAddSkill, authed.id, +req.params.id, skill);
+					await createLog(LogType.AdminAddUnlockableSkill, authed.id, +req.params.id, skill);
 				}
 				break;
 			case 'remove':
 				await removeUnlockableSkillsFromDinoz(+req.params.id, unlockableSkillList);
 
 				for (const skill of unlockableSkillList) {
-					await createLog(LogType.AdminRemoveSkill, authed.id, +req.params.id, skill);
+					await createLog(LogType.AdminRemoveUnlockableSkill, authed.id, +req.params.id, skill);
 				}
 				break;
 			default:
@@ -223,12 +230,12 @@ export async function setPlayerMoney(req: Request) {
 	let newMoney = 0;
 	switch (req.body.operation) {
 		case 'add':
-			await createLog(LogType.AdminAddMoney, authed.id, undefined, +req.params.id, req.body.gold);
-			newMoney = (await addMoney(authed.id, +req.body.gold)).money;
+			await createLog(LogType.AdminAddMoney, authed.id, undefined, req.params.id, req.body.gold);
+			newMoney = (await addMoney(req.params.id, +req.body.gold)).money;
 			break;
 		case 'remove':
-			await createLog(LogType.AdminRemoveMoney, authed.id, undefined, +req.params.id, req.body.gold);
-			newMoney = (await removeMoney(authed.id, +req.body.gold)).money;
+			await createLog(LogType.AdminRemoveMoney, authed.id, undefined, req.params.id, req.body.gold);
+			newMoney = (await removeMoney(req.params.id, +req.body.gold)).money;
 			break;
 		default:
 			throw new ExpectedError(`You need to select an operation.`);
@@ -355,7 +362,7 @@ export async function updatePlayerQuestProgression(req: Request): Promise<void> 
 		case 'increase':
 			for (const q of quests) {
 				await increaseQuestProgression(req.params.id, q.questId, q.progression);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, q.questId, q.progression);
+				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, q.questId, q.progression);
 			}
 			break;
 		case 'decrease':

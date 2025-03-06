@@ -695,6 +695,8 @@ exports.LogType = exports.$Enums.LogType = {
   AdminRemoveStatus: 'AdminRemoveStatus',
   AdminAddSkill: 'AdminAddSkill',
   AdminRemoveSkill: 'AdminRemoveSkill',
+  AdminAddUnlockableSkill: 'AdminAddUnlockableSkill',
+  AdminRemoveUnlockableSkill: 'AdminRemoveUnlockableSkill',
   AdminAddMoney: 'AdminAddMoney',
   AdminRemoveMoney: 'AdminRemoveMoney',
   AdminAddReward: 'AdminAddReward',

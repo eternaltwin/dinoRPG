@@ -64,6 +64,8 @@ const LogTypes = [
 	'AdminRemoveStatus',
 	'AdminAddSkill',
 	'AdminRemoveSkill',
+	'AdminAddUnlockableSkill',
+	'AdminRemoveUnlockableSkill',
 	'AdminAddMoney',
 	'AdminRemoveMoney',
 	'AdminAddReward',
@@ -241,6 +243,16 @@ const getLogPropsForTranslation = (
 			};
 			break;
 		case 'AdminRemoveSkill':
+			values = {
+				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
+			};
+			break;
+		case 'AdminAddUnlockableSkill':
+			values = {
+				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
+			};
+			break;
+		case 'AdminRemoveUnlockableSkill':
 			values = {
 				skill: $t(`skill.name.${skillList[+log.values[0]].name}`)
 			};
