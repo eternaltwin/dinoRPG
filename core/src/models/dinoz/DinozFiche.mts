@@ -8,6 +8,7 @@ export interface DinozFiche {
 	id: number;
 	name: string;
 	display: string;
+	canChangeName: boolean;
 	unavailableReason: UnavailableReason | null;
 	level: number;
 	missionId: number | undefined | null;
@@ -24,6 +25,7 @@ export interface DinozFiche {
 	items: number[];
 	maxItems: number;
 	skills: Pick<DinozSkill, 'skillId'>[];
+	unlockableSkills: Pick<DinozSkill, 'skillId'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
 	borderPlace: number[];
 	nbrUpFire: number;

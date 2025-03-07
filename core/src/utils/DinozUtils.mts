@@ -81,6 +81,7 @@ export const toDinozFiche = (
 	return {
 		id: dinoz.id,
 		name: dinoz.name,
+		canChangeName: false,
 		display: dinoz.display,
 		unavailableReason: dinoz.unavailableReason,
 		level: dinoz.level,
@@ -117,6 +118,7 @@ export const toDinozFiche = (
 		missionHUD: getHUDObjective(dinoz),
 		actions: [],
 		skills: dinoz.skills,
+		unlockableSkills: [],
 		order: dinoz.order,
 		remaining: dinoz.remaining,
 		fight: dinoz.fight,
