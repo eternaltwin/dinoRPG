@@ -1,34 +1,33 @@
-import { Request, Response } from 'express';
-import { archiveOldUsername, createPlayer, getCommonDataRequest, setPlayer } from '../dao/playerDao.js';
-import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
-import gameConfig from '../config/game.config.js';
-import { createLog } from '../dao/logDao.js';
-import { LogType } from '@drpg/prisma';
-import urlJoin from 'url-join';
-import { AdminRole } from '@drpg/prisma';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { LOGGER } from '../context.js';
-import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { Item } from '@drpg/core/models/item/ItemList';
-import dayjs from 'dayjs';
-import { PismaClientLocal } from '../prisma.js';
-import { Config } from 'release-it';
-import { EternaltwinNodeClient } from '@eternaltwin/client-node';
-import { AuthType } from '@eternaltwin/core/auth/auth-type';
-import sendError from '../utils/sendErrors.js';
-import { trace } from '@opentelemetry/api';
-import { GetAccessTokenError, RfcOauthClient } from '@eternaltwin/oauth-client-http/rfc-oauth-client';
-import { ErrorCode } from '@eternaltwin/client-node/error';
-import { getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
-import { Reward } from '@drpg/core/models/reward/RewardList';
-import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { setSpecificStat } from '../dao/trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { orderDinozList, toDinozFiche } from '@drpg/core/utils/DinozUtils';
-import { getAvailableActions } from './dinozService.js';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { Item } from '@drpg/core/models/item/ItemList';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
+import { Reward } from '@drpg/core/models/reward/RewardList';
+import { orderDinozList, toDinozFiche } from '@drpg/core/utils/DinozUtils';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { AdminRole, LogType } from '@drpg/prisma';
+import { EternaltwinNodeClient } from '@eternaltwin/client-node';
+import { ErrorCode } from '@eternaltwin/client-node/error';
+import { AuthType } from '@eternaltwin/core/auth/auth-type';
+import { GetAccessTokenError, RfcOauthClient } from '@eternaltwin/oauth-client-http/rfc-oauth-client';
+import { trace } from '@opentelemetry/api';
+import dayjs from 'dayjs';
+import { Request, Response } from 'express';
+import { Config } from 'release-it';
+import urlJoin from 'url-join';
+import gameConfig from '../config/game.config.js';
+import { LOGGER } from '../context.js';
+import { getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
+import { createLog } from '../dao/logDao.js';
+import { archiveOldUsername, createPlayer, getCommonDataRequest, setPlayer } from '../dao/playerDao.js';
+import { increaseItemQuantity } from '../dao/playerItemDao.js';
+import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
+import { setSpecificStat } from '../dao/trackingDao.js';
+import { PismaClientLocal } from '../prisma.js';
+import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
+import sendError from '../utils/sendErrors.js';
+import { getAvailableActions } from './dinozService.js';
 
 export class OAuth {
 	#oauthClient: RfcOauthClient;
@@ -83,7 +82,10 @@ export class OAuth {
 			trace.getActiveSpan()?.addEvent('getAuthSelf', { 'user.id': self.user.id });
 
 			// Get user's IP
-			// const ip = req.headers['x-forwarded-for']?.toString().split(', ')[0] || req.headers['x-real-ip']?.toString().split(', ')[0] || req.socket.remoteAddress;
+			const ip =
+				req.headers['x-forwarded-for']?.toString().split(', ')[0] ||
+				req.headers['x-real-ip']?.toString().split(', ')[0] ||
+				req.socket.remoteAddress;
 
 			/*			if (ip) {
 				// Check if the IP is banned
@@ -145,6 +147,11 @@ export class OAuth {
 			if (player && player.name !== etwinUser.displayName.current.value) {
 				await setPlayer(player.id, { name: etwinUser.displayName.current.value });
 				await archiveOldUsername(player.id, player.name);
+			}
+
+			// Update ip address
+			if (ip && !player.ips.includes(ip)) {
+				await setPlayer(player.id, { ips: [...player.ips, ip] });
 			}
 
 			/*			// Check if user is banned

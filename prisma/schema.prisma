@@ -230,6 +230,7 @@ model Player {
   Dojo                 Dojo?
   FightArchive         FightArchive[]
   FightWatched         FightWatched[]
+  ips                  String[]           @db.Inet
 
   @@map("player")
 }
