@@ -4,7 +4,6 @@ import { ModerationAdminType } from '../admin/ModerationType.mjs';
 export interface Player {
 	id: string;
 	name: string;
-	eternalTwinId: string;
 	banCase: ModerationAdminType;
 	money: number;
 	quetzuBought: number;

@@ -5,7 +5,7 @@
 			<div>
 				<label class="title" for="playerName">Player :</label>
 				<input type="text" id="playerName" v-model="player.name" disabled />
-				<input type="text" id="playerName" v-model="player.eternalTwinId" disabled />
+				<input type="text" id="playerId" v-model="player.id" disabled />
 			</div>
 			<div>
 				<label class="title" for="playerCustomText">CustomText :</label>
