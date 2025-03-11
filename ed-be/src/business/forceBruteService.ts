@@ -44,7 +44,7 @@ export async function checkFBCreation(level: number) {
 }
 
 export async function getCurrentTournament() {
-	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
+	const activeTournament = await prisma.fBTournament.findFirst({
 		orderBy: {
 			date: 'desc'
 		}
@@ -122,6 +122,18 @@ export async function createTournamentDinoz(req: Request) {
 
 	if (lastDinoz && dayjs().isSame(lastDinoz.createdDate, 'day')) {
 		throw new ExpectedError(translate('fb.alreadyCreatedDinoz', authed));
+	}
+
+	const dinozCount = await prisma.gameDinoz.count({
+		where: {
+			FBTournamentId: activeTournament.id,
+			usage: GameDinozUsage.FBTournament,
+			level: activeTournament.levelLimit
+		}
+	});
+
+	if (dinozCount >= 256) {
+		throw new ExpectedError(translate('fb.maxDinozReached', authed));
 	}
 
 	const seed = randomUUID();

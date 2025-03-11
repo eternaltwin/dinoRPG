@@ -18,6 +18,7 @@
 		"events": "Evénements"
 	},
 	"toast": {
+		"noFBTournament": "Il n'y a pas encore de phase de qualification pour le tournois de ForceBrute.",
 		"maxParticipantInThread": "Vous ne pouvez ajouter plus de 9 participants à une conversation.",
 		"dinozAlreadySelling": "Votre Dinoz est déjà en vente.",
 		"DinozIsDead": "Votre Dinoz est mort et ne peut pas être soigné.",

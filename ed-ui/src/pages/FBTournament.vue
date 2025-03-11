@@ -35,6 +35,7 @@ import { FBParticipation, PublicFBTournament } from '@drpg/core/models/dojo/Forc
 import DZButton from '../components/common/DZButton.vue';
 import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'FBTournament',
@@ -52,6 +53,12 @@ export default defineComponent({
 				this.currentTournament = await FBService.getCurrentTournament();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
+			}
+			if (!this.currentTournament) {
+				this.$toast.open({ message: formatText(this.$t(`toast.noFBTournament`)), type: 'error' });
+				this.$router.push({
+					name: 'News'
+				});
 			}
 		},
 		async myParticipation() {
