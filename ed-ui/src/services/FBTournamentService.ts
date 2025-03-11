@@ -1,0 +1,41 @@
+import { http } from '../utils/index.js';
+import { FBParticipation, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
+import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
+
+export const FBService = {
+	getCurrentTournament(): Promise<PublicFBTournament | undefined> {
+		return http()
+			.get(`/events/tournament/current`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getTournamentParticipation(): Promise<FBParticipation[]> {
+		return http()
+			.get(`/events/tournament/participation`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	createTournamentDinoz(name: string) {
+		return http()
+			.post(`/events/tournament/participation`, {
+				name: name
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	levelUp(dinozId: number, tryNumber: number, event: string): Promise<DinozSkillOwnAndUnlockable> {
+		return http()
+			.get(`/events/${event}/${dinozId}/${tryNumber}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number, event: string): Promise<string> {
+		return http()
+			.post(`/events/${event}/learnskill/${dinozId}`, {
+				skillIdList: skillIdList,
+				tryNumber: tryNumber
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	}
+};

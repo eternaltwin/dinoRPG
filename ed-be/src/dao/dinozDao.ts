@@ -200,6 +200,23 @@ export async function isDinozInTournament(dinozId: number, tournamentId?: string
 	return dinoz?.TournamentTeam.some(t => t.tournamentId === tournamentId);
 }
 
+export async function tournamentDinoz(dinozId: number) {
+	const dinoz = await prisma.gameDinoz.findFirstOrThrow({
+		where: {
+			id: dinozId
+		},
+		select: {
+			level: true,
+			FBTournament: {
+				select: {
+					levelLimit: true
+				}
+			}
+		}
+	});
+	return dinoz;
+}
+
 export async function isDinozSelling(dinozId: number, playerId: string) {
 	const dinoz = await prisma.offer.findMany({
 		where: { sellerId: playerId },
@@ -700,6 +717,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			id: true,
 			maxLife: true,
 			raceId: true,
+			name: true,
 			display: true,
 			experience: true,
 			level: true,
@@ -725,6 +743,43 @@ export async function getDinozForLevelUp(dinozId: number) {
 		}
 	});
 
+	return dinoz;
+}
+
+export async function getEventDinozForLevelUp(dinozId: number) {
+	const dinoz = await prisma.gameDinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			name: true,
+			maxLife: true,
+			raceId: true,
+			display: true,
+			experience: true,
+			level: true,
+			nextUpElementId: true,
+			nextUpAltElementId: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			canChangeName: true,
+			seed: true,
+			player: {
+				select: {
+					id: true,
+					ranking: { select: { points: true, average: true, dinozCount: true } }
+				}
+			},
+			items: { select: { itemId: true } },
+			skills: { select: { skillId: true } },
+			unlockableSkills: { select: { skillId: true } },
+			status: { select: { statusId: true } }
+		}
+	});
+	// { id: string; ranking: { dinozCount: number; points: number; average: number; } | null; } | null'
+	// '{ id: string; ranking: { dinozCount: number; points: number; average: number; } | null; }'
 	return dinoz;
 }
 
@@ -796,6 +851,13 @@ export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 
 export async function updateDinoz(dinozId: number, dinoz: Prisma.DinozUpdateInput) {
 	await prisma.dinoz.update({
+		where: { id: dinozId },
+		data: dinoz
+	});
+}
+
+export async function updateEventDinoz(dinozId: number, dinoz: Prisma.GameDinozUpdateInput) {
+	await prisma.gameDinoz.update({
 		where: { id: dinozId },
 		data: dinoz
 	});

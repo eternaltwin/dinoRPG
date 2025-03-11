@@ -14,7 +14,8 @@
 		"logout": "Déconnexion",
 		"guide": "Guide du Jeu",
 		"faq": "FAQ",
-		"cinema": "Cinéma"
+		"cinema": "Cinéma",
+		"events": "Evénements"
 	},
 	"toast": {
 		"maxParticipantInThread": "Vous ne pouvez ajouter plus de 9 participants à une conversation.",
@@ -4792,5 +4793,10 @@
 		"reward": "Vous avez obtenu {rewards}",
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "Vous avez progressé dans le scénario **{scenario}**."
+	},
+	"events": {
+		"tournament": {
+			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un dinoz par jour durant les trois jours de qualification.&&Votre dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître dinoz !"
+		}
 	}
 }

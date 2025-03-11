@@ -26,6 +26,7 @@ import messagerieRoutes from './messagerie.routes.js';
 import notificationsRoutes from './notifications.routes.js';
 import dojoRoutes from './dojo.routes.js';
 import forumRoutes from './forum.routes.js';
+import eventsRoutes from './events.routes.js';
 import { OAuth } from '../business/oauthService.js';
 import { prisma } from '../prisma.js';
 import { apiRoutes } from '../constants/index.js';
@@ -60,6 +61,7 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(notificationsRoutes);
 	app.use(dojoRoutes);
 	app.use(forumRoutes);
+	app.use(eventsRoutes);
 	if (!config.isProduction) {
 		app.use(testingRoutes);
 	}

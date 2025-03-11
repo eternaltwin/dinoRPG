@@ -160,12 +160,14 @@ exports.Prisma.DinozScalarFieldEnum = {
 exports.Prisma.DinozItemScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
-  dinozId: 'dinozId'
+  dinozId: 'dinozId',
+  gameDinozId: 'gameDinozId'
 };
 
 exports.Prisma.DinozItemToDinozScalarFieldEnum = {
   dinozId: 'dinozId',
-  dinozItemId: 'dinozItemId'
+  dinozItemId: 'dinozItemId',
+  gameDinozId: 'gameDinozId'
 };
 
 exports.Prisma.DinozMissionScalarFieldEnum = {
@@ -181,19 +183,22 @@ exports.Prisma.DinozSkillScalarFieldEnum = {
   id: 'id',
   skillId: 'skillId',
   state: 'state',
-  dinozId: 'dinozId'
+  dinozId: 'dinozId',
+  gameDinozId: 'gameDinozId'
 };
 
 exports.Prisma.DinozSkillUnlockableScalarFieldEnum = {
   id: 'id',
   skillId: 'skillId',
-  dinozId: 'dinozId'
+  dinozId: 'dinozId',
+  gameDinozId: 'gameDinozId'
 };
 
 exports.Prisma.DinozStatusScalarFieldEnum = {
   id: 'id',
   statusId: 'statusId',
-  dinozId: 'dinozId'
+  dinozId: 'dinozId',
+  gameDinozId: 'gameDinozId'
 };
 
 exports.Prisma.MigrationsScalarFieldEnum = {
@@ -542,7 +547,8 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   tournamentTeamLeftId: 'tournamentTeamLeftId',
   tournamentTeamRightId: 'tournamentTeamRightId',
   tournamentId: 'tournamentId',
-  metadata: 'metadata'
+  metadata: 'metadata',
+  FBTournamentId: 'FBTournamentId'
 };
 
 exports.Prisma.FightWatchedScalarFieldEnum = {
@@ -570,6 +576,40 @@ exports.Prisma.TournamentTeamScalarFieldEnum = {
   dojoId: 'dojoId',
   teamCount: 'teamCount',
   tournamentId: 'tournamentId'
+};
+
+exports.Prisma.FBTournamentScalarFieldEnum = {
+  id: 'id',
+  date: 'date',
+  teamRace: 'teamRace',
+  levelLimit: 'levelLimit',
+  cashPrice: 'cashPrice',
+  nextRound: 'nextRound',
+  winnerId: 'winnerId'
+};
+
+exports.Prisma.GameDinozScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  raceId: 'raceId',
+  level: 'level',
+  nextUpElementId: 'nextUpElementId',
+  nextUpAltElementId: 'nextUpAltElementId',
+  display: 'display',
+  life: 'life',
+  maxLife: 'maxLife',
+  experience: 'experience',
+  nbrUpFire: 'nbrUpFire',
+  nbrUpWood: 'nbrUpWood',
+  nbrUpWater: 'nbrUpWater',
+  nbrUpLightning: 'nbrUpLightning',
+  nbrUpAir: 'nbrUpAir',
+  canChangeName: 'canChangeName',
+  createdDate: 'createdDate',
+  seed: 'seed',
+  usage: 'usage',
+  playerId: 'playerId',
+  FBTournamentId: 'FBTournamentId'
 };
 
 exports.Prisma.SortOrder = {
@@ -691,6 +731,10 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
   reward: 'reward'
 };
 
+exports.GameDinozUsage = exports.$Enums.GameDinozUsage = {
+  FBTournament: 'FBTournament'
+};
+
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
   Dinoz: 'Dinoz',
@@ -740,7 +784,9 @@ exports.Prisma.ModelName = {
   FightArchive: 'FightArchive',
   FightWatched: 'FightWatched',
   Tournament: 'Tournament',
-  TournamentTeam: 'TournamentTeam'
+  TournamentTeam: 'TournamentTeam',
+  FBTournament: 'FBTournament',
+  GameDinoz: 'GameDinoz'
 };
 
 /**

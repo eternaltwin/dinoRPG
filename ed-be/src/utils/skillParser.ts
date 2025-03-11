@@ -1,11 +1,12 @@
 import { SkillEffects } from '@drpg/core/models/dinoz/SkillDetails';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
-import { updateDinoz } from '../dao/dinozDao.js';
-import { Dinoz } from '@drpg/prisma';
+import { updateDinoz, updateEventDinoz } from '../dao/dinozDao.js';
+import { Dinoz, GameDinozUsage } from '@drpg/prisma';
 
 async function effectParser(
 	effects: SkillEffects,
-	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>
+	dinoz: Pick<Dinoz, 'id' | 'maxLife' | 'nbrUpFire' | 'nbrUpAir' | 'nbrUpLightning' | 'nbrUpWater' | 'nbrUpWood'>,
+	event?: GameDinozUsage
 ) {
 	for (const [stat, value] of Object.entries(effects)) {
 		switch (stat) {
@@ -31,7 +32,25 @@ async function effectParser(
 				break;
 		}
 	}
-	await updateDinoz(dinoz.id, { maxLife: dinoz.maxLife });
+	if (event) {
+		await updateEventDinoz(dinoz.id, {
+			maxLife: dinoz.maxLife,
+			nbrUpFire: dinoz.nbrUpFire,
+			nbrUpWood: dinoz.nbrUpWood,
+			nbrUpWater: dinoz.nbrUpWater,
+			nbrUpLightning: dinoz.nbrUpLightning,
+			nbrUpAir: dinoz.nbrUpAir
+		});
+	} else {
+		await updateDinoz(dinoz.id, {
+			maxLife: dinoz.maxLife,
+			nbrUpFire: dinoz.nbrUpFire,
+			nbrUpWood: dinoz.nbrUpWood,
+			nbrUpWater: dinoz.nbrUpWater,
+			nbrUpLightning: dinoz.nbrUpLightning,
+			nbrUpAir: dinoz.nbrUpAir
+		});
+	}
 }
 
 export { effectParser };

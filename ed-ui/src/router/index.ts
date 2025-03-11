@@ -69,7 +69,11 @@ const router = createRouter({
 				{
 					path: '/levelup/:id',
 					name: 'Leveling',
-					component: () => import('../pages/LevelUp.vue')
+					component: () => import('../pages/LevelUp.vue'),
+					props: route => ({
+						id: route.params.id,
+						event: route.query.event // Récupéré depuis l'URL query
+					})
 				},
 				{
 					path: '/fight/:dinozId',
@@ -149,6 +153,11 @@ const router = createRouter({
 					path: '/faq',
 					name: 'FAQ',
 					component: () => import('../pages/FAQPage.vue')
+				},
+				{
+					path: '/events',
+					name: 'FBTournament',
+					component: () => import('../pages/FBTournament.vue')
 				},
 				{
 					path: '/dojo',

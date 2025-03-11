@@ -25,7 +25,8 @@ export const apiRoutes = {
 	messagerie: '/api/v1/messagerie',
 	notification: '/api/v1/notifications',
 	dojo: '/api/v1/dojo',
-	forum: '/api/v1/forum'
+	forum: '/api/v1/forum',
+	events: '/api/v1/events'
 };
 
 export const regex = {

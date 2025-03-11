@@ -1,4 +1,5 @@
 import { prisma } from '../prisma.js';
+import { GameDinozUsage } from '@drpg/prisma';
 
 export async function setSkillStateRequest(dinozId: number, skillId: number, state: boolean) {
 	await prisma.dinozSkill.update({
@@ -8,13 +9,22 @@ export async function setSkillStateRequest(dinozId: number, skillId: number, sta
 }
 
 //TODO
-export async function addSkillToDinoz(dinozId: number, skillId: number) {
-	await prisma.dinozSkill.create({
-		data: {
-			dinozId,
-			skillId
-		}
-	});
+export async function addSkillToDinoz(dinozId: number, skillId: number, event?: GameDinozUsage) {
+	if (event) {
+		await prisma.dinozSkill.create({
+			data: {
+				gameDinozId: dinozId,
+				skillId
+			}
+		});
+	} else {
+		await prisma.dinozSkill.create({
+			data: {
+				dinozId,
+				skillId
+			}
+		});
+	}
 }
 
 //TODO

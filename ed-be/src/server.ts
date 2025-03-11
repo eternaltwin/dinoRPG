@@ -29,6 +29,7 @@ import { checkBans } from './cron/checkBans.js';
 import { dojoResets } from './cron/dojoResets.js';
 import TournamentManager from './utils/tournamentManager.js';
 import { prisma } from './prisma.js';
+import { resumeTournaments } from './business/forceBruteService.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -89,6 +90,7 @@ export function main(cx: ServerContext) {
 
 	scheduleOffersExpiration();
 	TournamentManager.resume(prisma);
+	resumeTournaments();
 
 	initRoutes(app, cx.config);
 }

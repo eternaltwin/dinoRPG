@@ -258,12 +258,29 @@ export type Tournament = $Result.DefaultSelection<Prisma.$TournamentPayload>
  *
  */
 export type TournamentTeam = $Result.DefaultSelection<Prisma.$TournamentTeamPayload>
+/**
+ * Model FBTournament
+ *
+ */
+export type FBTournament = $Result.DefaultSelection<Prisma.$FBTournamentPayload>
+/**
+ * Model GameDinoz
+ *
+ */
+export type GameDinoz = $Result.DefaultSelection<Prisma.$GameDinozPayload>
 
 /**
  * Enums
  */
 export namespace $Enums {
-  export const UnavailableReason: {
+  export const GameDinozUsage: {
+  FBTournament: 'FBTournament'
+};
+
+export type GameDinozUsage = (typeof GameDinozUsage)[keyof typeof GameDinozUsage]
+
+
+export const UnavailableReason: {
   frozen: 'frozen',
   sacrificed: 'sacrificed',
   selling: 'selling',
@@ -395,6 +412,10 @@ export const NotificationSeverity: {
 export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]
 
 }
+
+export type GameDinozUsage = $Enums.GameDinozUsage
+
+export const GameDinozUsage: typeof $Enums.GameDinozUsage
 
 export type UnavailableReason = $Enums.UnavailableReason
 
@@ -1046,6 +1067,26 @@ export class PrismaClient<
     * ```
     */
   get tournamentTeam(): Prisma.TournamentTeamDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.fBTournament`: Exposes CRUD operations for the **FBTournament** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more FBTournaments
+    * const fBTournaments = await prisma.fBTournament.findMany()
+    * ```
+    */
+  get fBTournament(): Prisma.FBTournamentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.gameDinoz`: Exposes CRUD operations for the **GameDinoz** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more GameDinozs
+    * const gameDinozs = await prisma.gameDinoz.findMany()
+    * ```
+    */
+  get gameDinoz(): Prisma.GameDinozDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1534,7 +1575,9 @@ export namespace Prisma {
     FightArchive: 'FightArchive',
     FightWatched: 'FightWatched',
     Tournament: 'Tournament',
-    TournamentTeam: 'TournamentTeam'
+    TournamentTeam: 'TournamentTeam',
+    FBTournament: 'FBTournament',
+    GameDinoz: 'GameDinoz'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1553,7 +1596,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5456,6 +5499,8 @@ export namespace Prisma {
     fightWatched?: FightWatchedOmit
     tournament?: TournamentOmit
     tournamentTeam?: TournamentTeamOmit
+    fBTournament?: FBTournamentOmit
+    gameDinoz?: GameDinozOmit
   }
 
   /* Types for Logging */
@@ -5802,6 +5847,7 @@ export namespace Prisma {
     rewards: number
     FightArchive: number
     FightWatched: number
+    GameDinoz: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5829,6 +5875,7 @@ export namespace Prisma {
     rewards?: boolean | PlayerCountOutputTypeCountRewardsArgs
     FightArchive?: boolean | PlayerCountOutputTypeCountFightArchiveArgs
     FightWatched?: boolean | PlayerCountOutputTypeCountFightWatchedArgs
+    GameDinoz?: boolean | PlayerCountOutputTypeCountGameDinozArgs
   }
 
   // Custom InputTypes
@@ -6008,6 +6055,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountFightWatchedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FightWatchedWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountGameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameDinozWhereInput
   }
 
 
@@ -6364,6 +6418,113 @@ export namespace Prisma {
    */
   export type TournamentTeamCountOutputTypeCountFightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FightArchiveWhereInput
+  }
+
+
+  /**
+   * Count Type FBTournamentCountOutputType
+   */
+
+  export type FBTournamentCountOutputType = {
+    participants: number
+    fights: number
+  }
+
+  export type FBTournamentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    participants?: boolean | FBTournamentCountOutputTypeCountParticipantsArgs
+    fights?: boolean | FBTournamentCountOutputTypeCountFightsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * FBTournamentCountOutputType without action
+   */
+  export type FBTournamentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FBTournamentCountOutputType
+     */
+    select?: FBTournamentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * FBTournamentCountOutputType without action
+   */
+  export type FBTournamentCountOutputTypeCountParticipantsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: GameDinozWhereInput
+  }
+
+  /**
+   * FBTournamentCountOutputType without action
+   */
+  export type FBTournamentCountOutputTypeCountFightsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+  }
+
+
+  /**
+   * Count Type GameDinozCountOutputType
+   */
+
+  export type GameDinozCountOutputType = {
+    items: number
+    dinozItemsToDinoz: number
+    skills: number
+    unlockableSkills: number
+    status: number
+  }
+
+  export type GameDinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    items?: boolean | GameDinozCountOutputTypeCountItemsArgs
+    dinozItemsToDinoz?: boolean | GameDinozCountOutputTypeCountDinozItemsToDinozArgs
+    skills?: boolean | GameDinozCountOutputTypeCountSkillsArgs
+    unlockableSkills?: boolean | GameDinozCountOutputTypeCountUnlockableSkillsArgs
+    status?: boolean | GameDinozCountOutputTypeCountStatusArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinozCountOutputType
+     */
+    select?: GameDinozCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozItemWhereInput
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountDinozItemsToDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozItemToDinozWhereInput
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozSkillWhereInput
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountUnlockableSkillsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozSkillUnlockableWhereInput
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountStatusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DinozStatusWhereInput
   }
 
 
@@ -9420,30 +9581,35 @@ export namespace Prisma {
     id: number | null
     itemId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemSumAggregateOutputType = {
     id: number | null
     itemId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemMinAggregateOutputType = {
     id: number | null
     itemId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemMaxAggregateOutputType = {
     id: number | null
     itemId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemCountAggregateOutputType = {
     id: number
     itemId: number
     dinozId: number
+    gameDinozId: number
     _all: number
   }
 
@@ -9452,30 +9618,35 @@ export namespace Prisma {
     id?: true
     itemId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemSumAggregateInputType = {
     id?: true
     itemId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemMinAggregateInputType = {
     id?: true
     itemId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemMaxAggregateInputType = {
     id?: true
     itemId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemCountAggregateInputType = {
     id?: true
     itemId?: true
     dinozId?: true
+    gameDinozId?: true
     _all?: true
   }
 
@@ -9569,6 +9740,7 @@ export namespace Prisma {
     id: number
     itemId: number
     dinozId: number | null
+    gameDinozId: number | null
     _count: DinozItemCountAggregateOutputType | null
     _avg: DinozItemAvgAggregateOutputType | null
     _sum: DinozItemSumAggregateOutputType | null
@@ -9594,8 +9766,10 @@ export namespace Prisma {
     id?: boolean
     itemId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozItem$dinozArgs<ExtArgs>
     dinozItemToDinoz?: boolean | DinozItem$dinozItemToDinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItem$GameDinozArgs<ExtArgs>
     _count?: boolean | DinozItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dinozItem"]>
 
@@ -9603,7 +9777,9 @@ export namespace Prisma {
     id?: boolean
     itemId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozItem$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItem$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozItem"]>
 
   export type DinozItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -9619,16 +9795,19 @@ export namespace Prisma {
     id?: boolean
     itemId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
   }
 
-  export type DinozItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "dinozId", ExtArgs["result"]["dinozItem"]>
+  export type DinozItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "dinozId" | "gameDinozId", ExtArgs["result"]["dinozItem"]>
   export type DinozItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozItem$dinozArgs<ExtArgs>
     dinozItemToDinoz?: boolean | DinozItem$dinozItemToDinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItem$GameDinozArgs<ExtArgs>
     _count?: boolean | DinozItemCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DinozItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozItem$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItem$GameDinozArgs<ExtArgs>
   }
   export type DinozItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozItem$dinozArgs<ExtArgs>
@@ -9640,11 +9819,13 @@ export namespace Prisma {
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
       dinozItemToDinoz: Prisma.$DinozItemToDinozPayload<ExtArgs>[]
+      GameDinoz: Prisma.$GameDinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       itemId: number
       dinozId: number | null
+      gameDinozId: number | null
     }, ExtArgs["result"]["dinozItem"]>
     composites: {}
   }
@@ -10074,6 +10255,7 @@ export namespace Prisma {
     readonly id: FieldRef<"DinozItem", 'Int'>
     readonly itemId: FieldRef<"DinozItem", 'Int'>
     readonly dinozId: FieldRef<"DinozItem", 'Int'>
+    readonly gameDinozId: FieldRef<"DinozItem", 'Int'>
   }
 
 
@@ -10522,6 +10704,25 @@ export namespace Prisma {
   }
 
   /**
+   * DinozItem.GameDinoz
+   */
+  export type DinozItem$GameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
+  }
+
+  /**
    * DinozItem without action
    */
   export type DinozItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10555,26 +10756,31 @@ export namespace Prisma {
   export type DinozItemToDinozAvgAggregateOutputType = {
     dinozId: number | null
     dinozItemId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemToDinozSumAggregateOutputType = {
     dinozId: number | null
     dinozItemId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemToDinozMinAggregateOutputType = {
     dinozId: number | null
     dinozItemId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemToDinozMaxAggregateOutputType = {
     dinozId: number | null
     dinozItemId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozItemToDinozCountAggregateOutputType = {
     dinozId: number
     dinozItemId: number
+    gameDinozId: number
     _all: number
   }
 
@@ -10582,26 +10788,31 @@ export namespace Prisma {
   export type DinozItemToDinozAvgAggregateInputType = {
     dinozId?: true
     dinozItemId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemToDinozSumAggregateInputType = {
     dinozId?: true
     dinozItemId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemToDinozMinAggregateInputType = {
     dinozId?: true
     dinozItemId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemToDinozMaxAggregateInputType = {
     dinozId?: true
     dinozItemId?: true
+    gameDinozId?: true
   }
 
   export type DinozItemToDinozCountAggregateInputType = {
     dinozId?: true
     dinozItemId?: true
+    gameDinozId?: true
     _all?: true
   }
 
@@ -10694,6 +10905,7 @@ export namespace Prisma {
   export type DinozItemToDinozGroupByOutputType = {
     dinozId: number
     dinozItemId: number
+    gameDinozId: number | null
     _count: DinozItemToDinozCountAggregateOutputType | null
     _avg: DinozItemToDinozAvgAggregateOutputType | null
     _sum: DinozItemToDinozSumAggregateOutputType | null
@@ -10718,15 +10930,19 @@ export namespace Prisma {
   export type DinozItemToDinozSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     dinozId?: boolean
     dinozItemId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozDefaultArgs<ExtArgs>
     dinoz_item?: boolean | DinozItemDefaultArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItemToDinoz$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozItemToDinoz"]>
 
   export type DinozItemToDinozSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     dinozId?: boolean
     dinozItemId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozDefaultArgs<ExtArgs>
     dinoz_item?: boolean | DinozItemDefaultArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItemToDinoz$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozItemToDinoz"]>
 
   export type DinozItemToDinozSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10741,16 +10957,19 @@ export namespace Prisma {
   export type DinozItemToDinozSelectScalar = {
     dinozId?: boolean
     dinozItemId?: boolean
+    gameDinozId?: boolean
   }
 
-  export type DinozItemToDinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"dinozId" | "dinozItemId", ExtArgs["result"]["dinozItemToDinoz"]>
+  export type DinozItemToDinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"dinozId" | "dinozItemId" | "gameDinozId", ExtArgs["result"]["dinozItemToDinoz"]>
   export type DinozItemToDinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozDefaultArgs<ExtArgs>
     dinoz_item?: boolean | DinozItemDefaultArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItemToDinoz$GameDinozArgs<ExtArgs>
   }
   export type DinozItemToDinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozDefaultArgs<ExtArgs>
     dinoz_item?: boolean | DinozItemDefaultArgs<ExtArgs>
+    GameDinoz?: boolean | DinozItemToDinoz$GameDinozArgs<ExtArgs>
   }
   export type DinozItemToDinozIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozDefaultArgs<ExtArgs>
@@ -10763,10 +10982,12 @@ export namespace Prisma {
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs>
       dinoz_item: Prisma.$DinozItemPayload<ExtArgs>
+      GameDinoz: Prisma.$GameDinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       dinozId: number
       dinozItemId: number
+      gameDinozId: number | null
     }, ExtArgs["result"]["dinozItemToDinoz"]>
     composites: {}
   }
@@ -11195,6 +11416,7 @@ export namespace Prisma {
   interface DinozItemToDinozFieldRefs {
     readonly dinozId: FieldRef<"DinozItemToDinoz", 'Int'>
     readonly dinozItemId: FieldRef<"DinozItemToDinoz", 'Int'>
+    readonly gameDinozId: FieldRef<"DinozItemToDinoz", 'Int'>
   }
 
 
@@ -11597,6 +11819,25 @@ export namespace Prisma {
      * Limit how many DinozItemToDinozs to delete.
      */
     limit?: number
+  }
+
+  /**
+   * DinozItemToDinoz.GameDinoz
+   */
+  export type DinozItemToDinoz$GameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
   }
 
   /**
@@ -12783,12 +13024,14 @@ export namespace Prisma {
     id: number | null
     skillId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillSumAggregateOutputType = {
     id: number | null
     skillId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillMinAggregateOutputType = {
@@ -12796,6 +13039,7 @@ export namespace Prisma {
     skillId: number | null
     state: boolean | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillMaxAggregateOutputType = {
@@ -12803,6 +13047,7 @@ export namespace Prisma {
     skillId: number | null
     state: boolean | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillCountAggregateOutputType = {
@@ -12810,6 +13055,7 @@ export namespace Prisma {
     skillId: number
     state: number
     dinozId: number
+    gameDinozId: number
     _all: number
   }
 
@@ -12818,12 +13064,14 @@ export namespace Prisma {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillSumAggregateInputType = {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillMinAggregateInputType = {
@@ -12831,6 +13079,7 @@ export namespace Prisma {
     skillId?: true
     state?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillMaxAggregateInputType = {
@@ -12838,6 +13087,7 @@ export namespace Prisma {
     skillId?: true
     state?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillCountAggregateInputType = {
@@ -12845,6 +13095,7 @@ export namespace Prisma {
     skillId?: true
     state?: true
     dinozId?: true
+    gameDinozId?: true
     _all?: true
   }
 
@@ -12939,6 +13190,7 @@ export namespace Prisma {
     skillId: number
     state: boolean
     dinozId: number | null
+    gameDinozId: number | null
     _count: DinozSkillCountAggregateOutputType | null
     _avg: DinozSkillAvgAggregateOutputType | null
     _sum: DinozSkillSumAggregateOutputType | null
@@ -12965,7 +13217,9 @@ export namespace Prisma {
     skillId?: boolean
     state?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozSkill$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkill$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozSkill"]>
 
   export type DinozSkillSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12973,7 +13227,9 @@ export namespace Prisma {
     skillId?: boolean
     state?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozSkill$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkill$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozSkill"]>
 
   export type DinozSkillSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12991,14 +13247,17 @@ export namespace Prisma {
     skillId?: boolean
     state?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
   }
 
-  export type DinozSkillOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillId" | "state" | "dinozId", ExtArgs["result"]["dinozSkill"]>
+  export type DinozSkillOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillId" | "state" | "dinozId" | "gameDinozId", ExtArgs["result"]["dinozSkill"]>
   export type DinozSkillInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozSkill$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkill$GameDinozArgs<ExtArgs>
   }
   export type DinozSkillIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozSkill$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkill$GameDinozArgs<ExtArgs>
   }
   export type DinozSkillIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozSkill$dinozArgs<ExtArgs>
@@ -13009,12 +13268,14 @@ export namespace Prisma {
     name: "DinozSkill"
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
+      GameDinoz: Prisma.$GameDinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       skillId: number
       state: boolean
       dinozId: number | null
+      gameDinozId: number | null
     }, ExtArgs["result"]["dinozSkill"]>
     composites: {}
   }
@@ -13444,6 +13705,7 @@ export namespace Prisma {
     readonly skillId: FieldRef<"DinozSkill", 'Int'>
     readonly state: FieldRef<"DinozSkill", 'Boolean'>
     readonly dinozId: FieldRef<"DinozSkill", 'Int'>
+    readonly gameDinozId: FieldRef<"DinozSkill", 'Int'>
   }
 
 
@@ -13868,6 +14130,25 @@ export namespace Prisma {
   }
 
   /**
+   * DinozSkill.GameDinoz
+   */
+  export type DinozSkill$GameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
+  }
+
+  /**
    * DinozSkill without action
    */
   export type DinozSkillDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -13902,30 +14183,35 @@ export namespace Prisma {
     id: number | null
     skillId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillUnlockableSumAggregateOutputType = {
     id: number | null
     skillId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillUnlockableMinAggregateOutputType = {
     id: number | null
     skillId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillUnlockableMaxAggregateOutputType = {
     id: number | null
     skillId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozSkillUnlockableCountAggregateOutputType = {
     id: number
     skillId: number
     dinozId: number
+    gameDinozId: number
     _all: number
   }
 
@@ -13934,30 +14220,35 @@ export namespace Prisma {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillUnlockableSumAggregateInputType = {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillUnlockableMinAggregateInputType = {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillUnlockableMaxAggregateInputType = {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozSkillUnlockableCountAggregateInputType = {
     id?: true
     skillId?: true
     dinozId?: true
+    gameDinozId?: true
     _all?: true
   }
 
@@ -14051,6 +14342,7 @@ export namespace Prisma {
     id: number
     skillId: number
     dinozId: number | null
+    gameDinozId: number | null
     _count: DinozSkillUnlockableCountAggregateOutputType | null
     _avg: DinozSkillUnlockableAvgAggregateOutputType | null
     _sum: DinozSkillUnlockableSumAggregateOutputType | null
@@ -14076,14 +14368,18 @@ export namespace Prisma {
     id?: boolean
     skillId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozSkillUnlockable$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkillUnlockable$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozSkillUnlockable"]>
 
   export type DinozSkillUnlockableSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     skillId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozSkillUnlockable$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkillUnlockable$GameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozSkillUnlockable"]>
 
   export type DinozSkillUnlockableSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -14099,14 +14395,17 @@ export namespace Prisma {
     id?: boolean
     skillId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
   }
 
-  export type DinozSkillUnlockableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillId" | "dinozId", ExtArgs["result"]["dinozSkillUnlockable"]>
+  export type DinozSkillUnlockableOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "skillId" | "dinozId" | "gameDinozId", ExtArgs["result"]["dinozSkillUnlockable"]>
   export type DinozSkillUnlockableInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozSkillUnlockable$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkillUnlockable$GameDinozArgs<ExtArgs>
   }
   export type DinozSkillUnlockableIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozSkillUnlockable$dinozArgs<ExtArgs>
+    GameDinoz?: boolean | DinozSkillUnlockable$GameDinozArgs<ExtArgs>
   }
   export type DinozSkillUnlockableIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozSkillUnlockable$dinozArgs<ExtArgs>
@@ -14117,11 +14416,13 @@ export namespace Prisma {
     name: "DinozSkillUnlockable"
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
+      GameDinoz: Prisma.$GameDinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       skillId: number
       dinozId: number | null
+      gameDinozId: number | null
     }, ExtArgs["result"]["dinozSkillUnlockable"]>
     composites: {}
   }
@@ -14550,6 +14851,7 @@ export namespace Prisma {
     readonly id: FieldRef<"DinozSkillUnlockable", 'Int'>
     readonly skillId: FieldRef<"DinozSkillUnlockable", 'Int'>
     readonly dinozId: FieldRef<"DinozSkillUnlockable", 'Int'>
+    readonly gameDinozId: FieldRef<"DinozSkillUnlockable", 'Int'>
   }
 
 
@@ -14974,6 +15276,25 @@ export namespace Prisma {
   }
 
   /**
+   * DinozSkillUnlockable.GameDinoz
+   */
+  export type DinozSkillUnlockable$GameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
+  }
+
+  /**
    * DinozSkillUnlockable without action
    */
   export type DinozSkillUnlockableDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -15008,30 +15329,35 @@ export namespace Prisma {
     id: number | null
     statusId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozStatusSumAggregateOutputType = {
     id: number | null
     statusId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozStatusMinAggregateOutputType = {
     id: number | null
     statusId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozStatusMaxAggregateOutputType = {
     id: number | null
     statusId: number | null
     dinozId: number | null
+    gameDinozId: number | null
   }
 
   export type DinozStatusCountAggregateOutputType = {
     id: number
     statusId: number
     dinozId: number
+    gameDinozId: number
     _all: number
   }
 
@@ -15040,30 +15366,35 @@ export namespace Prisma {
     id?: true
     statusId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozStatusSumAggregateInputType = {
     id?: true
     statusId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozStatusMinAggregateInputType = {
     id?: true
     statusId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozStatusMaxAggregateInputType = {
     id?: true
     statusId?: true
     dinozId?: true
+    gameDinozId?: true
   }
 
   export type DinozStatusCountAggregateInputType = {
     id?: true
     statusId?: true
     dinozId?: true
+    gameDinozId?: true
     _all?: true
   }
 
@@ -15157,6 +15488,7 @@ export namespace Prisma {
     id: number
     statusId: number
     dinozId: number | null
+    gameDinozId: number | null
     _count: DinozStatusCountAggregateOutputType | null
     _avg: DinozStatusAvgAggregateOutputType | null
     _sum: DinozStatusSumAggregateOutputType | null
@@ -15182,14 +15514,18 @@ export namespace Prisma {
     id?: boolean
     statusId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozStatus$dinozArgs<ExtArgs>
+    gameDinoz?: boolean | DinozStatus$gameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozStatus"]>
 
   export type DinozStatusSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     statusId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
     dinoz?: boolean | DinozStatus$dinozArgs<ExtArgs>
+    gameDinoz?: boolean | DinozStatus$gameDinozArgs<ExtArgs>
   }, ExtArgs["result"]["dinozStatus"]>
 
   export type DinozStatusSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -15205,14 +15541,17 @@ export namespace Prisma {
     id?: boolean
     statusId?: boolean
     dinozId?: boolean
+    gameDinozId?: boolean
   }
 
-  export type DinozStatusOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "statusId" | "dinozId", ExtArgs["result"]["dinozStatus"]>
+  export type DinozStatusOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "statusId" | "dinozId" | "gameDinozId", ExtArgs["result"]["dinozStatus"]>
   export type DinozStatusInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozStatus$dinozArgs<ExtArgs>
+    gameDinoz?: boolean | DinozStatus$gameDinozArgs<ExtArgs>
   }
   export type DinozStatusIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozStatus$dinozArgs<ExtArgs>
+    gameDinoz?: boolean | DinozStatus$gameDinozArgs<ExtArgs>
   }
   export type DinozStatusIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | DinozStatus$dinozArgs<ExtArgs>
@@ -15223,11 +15562,13 @@ export namespace Prisma {
     name: "DinozStatus"
     objects: {
       dinoz: Prisma.$DinozPayload<ExtArgs> | null
+      gameDinoz: Prisma.$GameDinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       statusId: number
       dinozId: number | null
+      gameDinozId: number | null
     }, ExtArgs["result"]["dinozStatus"]>
     composites: {}
   }
@@ -15656,6 +15997,7 @@ export namespace Prisma {
     readonly id: FieldRef<"DinozStatus", 'Int'>
     readonly statusId: FieldRef<"DinozStatus", 'Int'>
     readonly dinozId: FieldRef<"DinozStatus", 'Int'>
+    readonly gameDinozId: FieldRef<"DinozStatus", 'Int'>
   }
 
 
@@ -16077,6 +16419,25 @@ export namespace Prisma {
      */
     include?: DinozInclude<ExtArgs> | null
     where?: DinozWhereInput
+  }
+
+  /**
+   * DinozStatus.gameDinoz
+   */
+  export type DinozStatus$gameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
   }
 
   /**
@@ -19771,6 +20132,7 @@ export namespace Prisma {
     Dojo?: boolean | Player$DojoArgs<ExtArgs>
     FightArchive?: boolean | Player$FightArchiveArgs<ExtArgs>
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
+    GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -19891,6 +20253,7 @@ export namespace Prisma {
     Dojo?: boolean | Player$DojoArgs<ExtArgs>
     FightArchive?: boolean | Player$FightArchiveArgs<ExtArgs>
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
+    GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -19933,6 +20296,7 @@ export namespace Prisma {
       Dojo: Prisma.$DojoPayload<ExtArgs> | null
       FightArchive: Prisma.$FightArchivePayload<ExtArgs>[]
       FightWatched: Prisma.$FightWatchedPayload<ExtArgs>[]
+      GameDinoz: Prisma.$GameDinozPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -21531,6 +21895,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FightWatchedScalarFieldEnum | FightWatchedScalarFieldEnum[]
+  }
+
+  /**
+   * Player.GameDinoz
+   */
+  export type Player$GameDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
+    orderBy?: GameDinozOrderByWithRelationInput | GameDinozOrderByWithRelationInput[]
+    cursor?: GameDinozWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: GameDinozScalarFieldEnum | GameDinozScalarFieldEnum[]
   }
 
   /**
@@ -59155,6 +59543,7 @@ export namespace Prisma {
     tournamentTeamRightId: string | null
     tournamentId: string | null
     metadata: string | null
+    FBTournamentId: string | null
   }
 
   export type FightArchiveMaxAggregateOutputType = {
@@ -59171,6 +59560,7 @@ export namespace Prisma {
     tournamentTeamRightId: string | null
     tournamentId: string | null
     metadata: string | null
+    FBTournamentId: string | null
   }
 
   export type FightArchiveCountAggregateOutputType = {
@@ -59187,6 +59577,7 @@ export namespace Prisma {
     tournamentTeamRightId: number
     tournamentId: number
     metadata: number
+    FBTournamentId: number
     _all: number
   }
 
@@ -59215,6 +59606,7 @@ export namespace Prisma {
     tournamentTeamRightId?: true
     tournamentId?: true
     metadata?: true
+    FBTournamentId?: true
   }
 
   export type FightArchiveMaxAggregateInputType = {
@@ -59231,6 +59623,7 @@ export namespace Prisma {
     tournamentTeamRightId?: true
     tournamentId?: true
     metadata?: true
+    FBTournamentId?: true
   }
 
   export type FightArchiveCountAggregateInputType = {
@@ -59247,6 +59640,7 @@ export namespace Prisma {
     tournamentTeamRightId?: true
     tournamentId?: true
     metadata?: true
+    FBTournamentId?: true
     _all?: true
   }
 
@@ -59350,6 +59744,7 @@ export namespace Prisma {
     tournamentTeamRightId: string | null
     tournamentId: string | null
     metadata: string | null
+    FBTournamentId: string | null
     _count: FightArchiveCountAggregateOutputType | null
     _avg: FightArchiveAvgAggregateOutputType | null
     _sum: FightArchiveSumAggregateOutputType | null
@@ -59385,11 +59780,13 @@ export namespace Prisma {
     tournamentTeamRightId?: boolean
     tournamentId?: boolean
     metadata?: boolean
+    FBTournamentId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FightWatched?: boolean | FightArchive$FightWatchedArgs<ExtArgs>
+    FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
     _count?: boolean | FightArchiveCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
@@ -59407,10 +59804,12 @@ export namespace Prisma {
     tournamentTeamRightId?: boolean
     tournamentId?: boolean
     metadata?: boolean
+    FBTournamentId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
+    FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -59449,15 +59848,17 @@ export namespace Prisma {
     tournamentTeamRightId?: boolean
     tournamentId?: boolean
     metadata?: boolean
+    FBTournamentId?: boolean
   }
 
-  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata", ExtArgs["result"]["fightArchive"]>
+  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata" | "FBTournamentId", ExtArgs["result"]["fightArchive"]>
   export type FightArchiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FightWatched?: boolean | FightArchive$FightWatchedArgs<ExtArgs>
+    FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
     _count?: boolean | FightArchiveCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FightArchiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -59465,6 +59866,7 @@ export namespace Prisma {
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
+    FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
   }
   export type FightArchiveIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
@@ -59482,6 +59884,7 @@ export namespace Prisma {
       tournamentTeamLeft: Prisma.$TournamentTeamPayload<ExtArgs> | null
       tournamentTeamRight: Prisma.$TournamentTeamPayload<ExtArgs> | null
       FightWatched: Prisma.$FightWatchedPayload<ExtArgs>[]
+      FBTournament: Prisma.$FBTournamentPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -59497,6 +59900,7 @@ export namespace Prisma {
       tournamentTeamRightId: string | null
       tournamentId: string | null
       metadata: string | null
+      FBTournamentId: string | null
     }, ExtArgs["result"]["fightArchive"]>
     composites: {}
   }
@@ -59939,6 +60343,7 @@ export namespace Prisma {
     readonly tournamentTeamRightId: FieldRef<"FightArchive", 'String'>
     readonly tournamentId: FieldRef<"FightArchive", 'String'>
     readonly metadata: FieldRef<"FightArchive", 'String'>
+    readonly FBTournamentId: FieldRef<"FightArchive", 'String'>
   }
 
 
@@ -60441,6 +60846,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FightWatchedScalarFieldEnum | FightWatchedScalarFieldEnum[]
+  }
+
+  /**
+   * FightArchive.FBTournament
+   */
+  export type FightArchive$FBTournamentArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FBTournament
+     */
+    select?: FBTournamentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FBTournament
+     */
+    omit?: FBTournamentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FBTournamentInclude<ExtArgs> | null
+    where?: FBTournamentWhereInput
   }
 
   /**
@@ -66571,7 +66995,8 @@ export namespace Prisma {
   export const DinozItemScalarFieldEnum: {
     id: 'id',
     itemId: 'itemId',
-    dinozId: 'dinozId'
+    dinozId: 'dinozId',
+    gameDinozId: 'gameDinozId'
   };
 
   export type DinozItemScalarFieldEnum = (typeof DinozItemScalarFieldEnum)[keyof typeof DinozItemScalarFieldEnum]
@@ -66579,7 +67004,8 @@ export namespace Prisma {
 
   export const DinozItemToDinozScalarFieldEnum: {
     dinozId: 'dinozId',
-    dinozItemId: 'dinozItemId'
+    dinozItemId: 'dinozItemId',
+    gameDinozId: 'gameDinozId'
   };
 
   export type DinozItemToDinozScalarFieldEnum = (typeof DinozItemToDinozScalarFieldEnum)[keyof typeof DinozItemToDinozScalarFieldEnum]
@@ -66601,7 +67027,8 @@ export namespace Prisma {
     id: 'id',
     skillId: 'skillId',
     state: 'state',
-    dinozId: 'dinozId'
+    dinozId: 'dinozId',
+    gameDinozId: 'gameDinozId'
   };
 
   export type DinozSkillScalarFieldEnum = (typeof DinozSkillScalarFieldEnum)[keyof typeof DinozSkillScalarFieldEnum]
@@ -66610,7 +67037,8 @@ export namespace Prisma {
   export const DinozSkillUnlockableScalarFieldEnum: {
     id: 'id',
     skillId: 'skillId',
-    dinozId: 'dinozId'
+    dinozId: 'dinozId',
+    gameDinozId: 'gameDinozId'
   };
 
   export type DinozSkillUnlockableScalarFieldEnum = (typeof DinozSkillUnlockableScalarFieldEnum)[keyof typeof DinozSkillUnlockableScalarFieldEnum]
@@ -66619,7 +67047,8 @@ export namespace Prisma {
   export const DinozStatusScalarFieldEnum: {
     id: 'id',
     statusId: 'statusId',
-    dinozId: 'dinozId'
+    dinozId: 'dinozId',
+    gameDinozId: 'gameDinozId'
   };
 
   export type DinozStatusScalarFieldEnum = (typeof DinozStatusScalarFieldEnum)[keyof typeof DinozStatusScalarFieldEnum]
@@ -67082,7 +67511,8 @@ export namespace Prisma {
     tournamentTeamLeftId: 'tournamentTeamLeftId',
     tournamentTeamRightId: 'tournamentTeamRightId',
     tournamentId: 'tournamentId',
-    metadata: 'metadata'
+    metadata: 'metadata',
+    FBTournamentId: 'FBTournamentId'
   };
 
   export type FightArchiveScalarFieldEnum = (typeof FightArchiveScalarFieldEnum)[keyof typeof FightArchiveScalarFieldEnum]
@@ -67122,6 +67552,46 @@ export namespace Prisma {
   };
 
   export type TournamentTeamScalarFieldEnum = (typeof TournamentTeamScalarFieldEnum)[keyof typeof TournamentTeamScalarFieldEnum]
+
+
+  export const FBTournamentScalarFieldEnum: {
+    id: 'id',
+    date: 'date',
+    teamRace: 'teamRace',
+    levelLimit: 'levelLimit',
+    cashPrice: 'cashPrice',
+    nextRound: 'nextRound',
+    winnerId: 'winnerId'
+  };
+
+  export type FBTournamentScalarFieldEnum = (typeof FBTournamentScalarFieldEnum)[keyof typeof FBTournamentScalarFieldEnum]
+
+
+  export const GameDinozScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    raceId: 'raceId',
+    level: 'level',
+    nextUpElementId: 'nextUpElementId',
+    nextUpAltElementId: 'nextUpAltElementId',
+    display: 'display',
+    life: 'life',
+    maxLife: 'maxLife',
+    experience: 'experience',
+    nbrUpFire: 'nbrUpFire',
+    nbrUpWood: 'nbrUpWood',
+    nbrUpWater: 'nbrUpWater',
+    nbrUpLightning: 'nbrUpLightning',
+    nbrUpAir: 'nbrUpAir',
+    canChangeName: 'canChangeName',
+    createdDate: 'createdDate',
+    seed: 'seed',
+    usage: 'usage',
+    playerId: 'playerId',
+    FBTournamentId: 'FBTournamentId'
+  };
+
+  export type GameDinozScalarFieldEnum = (typeof GameDinozScalarFieldEnum)[keyof typeof GameDinozScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -67353,6 +67823,19 @@ export namespace Prisma {
    * Reference to a field of type 'NotificationSeverity[]'
    */
   export type ListEnumNotificationSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationSeverity[]'>
+
+
+  /**
+   * Reference to a field of type 'GameDinozUsage'
+   */
+  export type EnumGameDinozUsageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameDinozUsage'>
+
+
+
+  /**
+   * Reference to a field of type 'GameDinozUsage[]'
+   */
+  export type ListEnumGameDinozUsageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameDinozUsage[]'>
 
 
 
@@ -67643,16 +68126,20 @@ export namespace Prisma {
     id?: IntFilter<"DinozItem"> | number
     itemId?: IntFilter<"DinozItem"> | number
     dinozId?: IntNullableFilter<"DinozItem"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozItem"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     dinozItemToDinoz?: DinozItemToDinozListRelationFilter
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }
 
   export type DinozItemOrderByWithRelationInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     dinoz?: DinozOrderByWithRelationInput
     dinozItemToDinoz?: DinozItemToDinozOrderByRelationAggregateInput
+    GameDinoz?: GameDinozOrderByWithRelationInput
   }
 
   export type DinozItemWhereUniqueInput = Prisma.AtLeast<{
@@ -67662,14 +68149,17 @@ export namespace Prisma {
     NOT?: DinozItemWhereInput | DinozItemWhereInput[]
     itemId?: IntFilter<"DinozItem"> | number
     dinozId?: IntNullableFilter<"DinozItem"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozItem"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     dinozItemToDinoz?: DinozItemToDinozListRelationFilter
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }, "id">
 
   export type DinozItemOrderByWithAggregationInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     _count?: DinozItemCountOrderByAggregateInput
     _avg?: DinozItemAvgOrderByAggregateInput
     _max?: DinozItemMaxOrderByAggregateInput
@@ -67684,6 +68174,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"DinozItem"> | number
     itemId?: IntWithAggregatesFilter<"DinozItem"> | number
     dinozId?: IntNullableWithAggregatesFilter<"DinozItem"> | number | null
+    gameDinozId?: IntNullableWithAggregatesFilter<"DinozItem"> | number | null
   }
 
   export type DinozItemToDinozWhereInput = {
@@ -67692,15 +68183,19 @@ export namespace Prisma {
     NOT?: DinozItemToDinozWhereInput | DinozItemToDinozWhereInput[]
     dinozId?: IntFilter<"DinozItemToDinoz"> | number
     dinozItemId?: IntFilter<"DinozItemToDinoz"> | number
+    gameDinozId?: IntNullableFilter<"DinozItemToDinoz"> | number | null
     dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
     dinoz_item?: XOR<DinozItemScalarRelationFilter, DinozItemWhereInput>
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }
 
   export type DinozItemToDinozOrderByWithRelationInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     dinoz?: DinozOrderByWithRelationInput
     dinoz_item?: DinozItemOrderByWithRelationInput
+    GameDinoz?: GameDinozOrderByWithRelationInput
   }
 
   export type DinozItemToDinozWhereUniqueInput = Prisma.AtLeast<{
@@ -67710,13 +68205,16 @@ export namespace Prisma {
     NOT?: DinozItemToDinozWhereInput | DinozItemToDinozWhereInput[]
     dinozId?: IntFilter<"DinozItemToDinoz"> | number
     dinozItemId?: IntFilter<"DinozItemToDinoz"> | number
+    gameDinozId?: IntNullableFilter<"DinozItemToDinoz"> | number | null
     dinoz?: XOR<DinozScalarRelationFilter, DinozWhereInput>
     dinoz_item?: XOR<DinozItemScalarRelationFilter, DinozItemWhereInput>
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }, "dinozId_dinozItemId">
 
   export type DinozItemToDinozOrderByWithAggregationInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     _count?: DinozItemToDinozCountOrderByAggregateInput
     _avg?: DinozItemToDinozAvgOrderByAggregateInput
     _max?: DinozItemToDinozMaxOrderByAggregateInput
@@ -67730,6 +68228,7 @@ export namespace Prisma {
     NOT?: DinozItemToDinozScalarWhereWithAggregatesInput | DinozItemToDinozScalarWhereWithAggregatesInput[]
     dinozId?: IntWithAggregatesFilter<"DinozItemToDinoz"> | number
     dinozItemId?: IntWithAggregatesFilter<"DinozItemToDinoz"> | number
+    gameDinozId?: IntNullableWithAggregatesFilter<"DinozItemToDinoz"> | number | null
   }
 
   export type DinozMissionWhereInput = {
@@ -67803,7 +68302,9 @@ export namespace Prisma {
     skillId?: IntFilter<"DinozSkill"> | number
     state?: BoolFilter<"DinozSkill"> | boolean
     dinozId?: IntNullableFilter<"DinozSkill"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozSkill"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }
 
   export type DinozSkillOrderByWithRelationInput = {
@@ -67811,7 +68312,9 @@ export namespace Prisma {
     skillId?: SortOrder
     state?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     dinoz?: DinozOrderByWithRelationInput
+    GameDinoz?: GameDinozOrderByWithRelationInput
   }
 
   export type DinozSkillWhereUniqueInput = Prisma.AtLeast<{
@@ -67823,7 +68326,9 @@ export namespace Prisma {
     skillId?: IntFilter<"DinozSkill"> | number
     state?: BoolFilter<"DinozSkill"> | boolean
     dinozId?: IntNullableFilter<"DinozSkill"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozSkill"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }, "id" | "skillId_dinozId">
 
   export type DinozSkillOrderByWithAggregationInput = {
@@ -67831,6 +68336,7 @@ export namespace Prisma {
     skillId?: SortOrder
     state?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     _count?: DinozSkillCountOrderByAggregateInput
     _avg?: DinozSkillAvgOrderByAggregateInput
     _max?: DinozSkillMaxOrderByAggregateInput
@@ -67846,6 +68352,7 @@ export namespace Prisma {
     skillId?: IntWithAggregatesFilter<"DinozSkill"> | number
     state?: BoolWithAggregatesFilter<"DinozSkill"> | boolean
     dinozId?: IntNullableWithAggregatesFilter<"DinozSkill"> | number | null
+    gameDinozId?: IntNullableWithAggregatesFilter<"DinozSkill"> | number | null
   }
 
   export type DinozSkillUnlockableWhereInput = {
@@ -67855,14 +68362,18 @@ export namespace Prisma {
     id?: IntFilter<"DinozSkillUnlockable"> | number
     skillId?: IntFilter<"DinozSkillUnlockable"> | number
     dinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }
 
   export type DinozSkillUnlockableOrderByWithRelationInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     dinoz?: DinozOrderByWithRelationInput
+    GameDinoz?: GameDinozOrderByWithRelationInput
   }
 
   export type DinozSkillUnlockableWhereUniqueInput = Prisma.AtLeast<{
@@ -67872,13 +68383,16 @@ export namespace Prisma {
     NOT?: DinozSkillUnlockableWhereInput | DinozSkillUnlockableWhereInput[]
     skillId?: IntFilter<"DinozSkillUnlockable"> | number
     dinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    GameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }, "id">
 
   export type DinozSkillUnlockableOrderByWithAggregationInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     _count?: DinozSkillUnlockableCountOrderByAggregateInput
     _avg?: DinozSkillUnlockableAvgOrderByAggregateInput
     _max?: DinozSkillUnlockableMaxOrderByAggregateInput
@@ -67893,6 +68407,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"DinozSkillUnlockable"> | number
     skillId?: IntWithAggregatesFilter<"DinozSkillUnlockable"> | number
     dinozId?: IntNullableWithAggregatesFilter<"DinozSkillUnlockable"> | number | null
+    gameDinozId?: IntNullableWithAggregatesFilter<"DinozSkillUnlockable"> | number | null
   }
 
   export type DinozStatusWhereInput = {
@@ -67902,14 +68417,18 @@ export namespace Prisma {
     id?: IntFilter<"DinozStatus"> | number
     statusId?: IntFilter<"DinozStatus"> | number
     dinozId?: IntNullableFilter<"DinozStatus"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozStatus"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    gameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }
 
   export type DinozStatusOrderByWithRelationInput = {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     dinoz?: DinozOrderByWithRelationInput
+    gameDinoz?: GameDinozOrderByWithRelationInput
   }
 
   export type DinozStatusWhereUniqueInput = Prisma.AtLeast<{
@@ -67920,13 +68439,16 @@ export namespace Prisma {
     NOT?: DinozStatusWhereInput | DinozStatusWhereInput[]
     statusId?: IntFilter<"DinozStatus"> | number
     dinozId?: IntNullableFilter<"DinozStatus"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozStatus"> | number | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
+    gameDinoz?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }, "id" | "statusId_dinozId">
 
   export type DinozStatusOrderByWithAggregationInput = {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrderInput | SortOrder
+    gameDinozId?: SortOrderInput | SortOrder
     _count?: DinozStatusCountOrderByAggregateInput
     _avg?: DinozStatusAvgOrderByAggregateInput
     _max?: DinozStatusMaxOrderByAggregateInput
@@ -67941,6 +68463,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"DinozStatus"> | number
     statusId?: IntWithAggregatesFilter<"DinozStatus"> | number
     dinozId?: IntNullableWithAggregatesFilter<"DinozStatus"> | number | null
+    gameDinozId?: IntNullableWithAggregatesFilter<"DinozStatus"> | number | null
   }
 
   export type migrationsWhereInput = {
@@ -68193,6 +68716,7 @@ export namespace Prisma {
     Dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
     FightArchive?: FightArchiveListRelationFilter
     FightWatched?: FightWatchedListRelationFilter
+    GameDinoz?: GameDinozListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -68251,6 +68775,7 @@ export namespace Prisma {
     Dojo?: DojoOrderByWithRelationInput
     FightArchive?: FightArchiveOrderByRelationAggregateInput
     FightWatched?: FightWatchedOrderByRelationAggregateInput
+    GameDinoz?: GameDinozOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -68312,6 +68837,7 @@ export namespace Prisma {
     Dojo?: XOR<DojoNullableScalarRelationFilter, DojoWhereInput> | null
     FightArchive?: FightArchiveListRelationFilter
     FightWatched?: FightWatchedListRelationFilter
+    GameDinoz?: GameDinozListRelationFilter
   }, "id" | "clanMemberId" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -70438,11 +70964,13 @@ export namespace Prisma {
     tournamentTeamRightId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     metadata?: StringNullableFilter<"FightArchive"> | string | null
+    FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
     tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     FightWatched?: FightWatchedListRelationFilter
+    FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
   }
 
   export type FightArchiveOrderByWithRelationInput = {
@@ -70459,11 +70987,13 @@ export namespace Prisma {
     tournamentTeamRightId?: SortOrderInput | SortOrder
     tournamentId?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
+    FBTournamentId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
     Tournament?: TournamentOrderByWithRelationInput
     tournamentTeamLeft?: TournamentTeamOrderByWithRelationInput
     tournamentTeamRight?: TournamentTeamOrderByWithRelationInput
     FightWatched?: FightWatchedOrderByRelationAggregateInput
+    FBTournament?: FBTournamentOrderByWithRelationInput
   }
 
   export type FightArchiveWhereUniqueInput = Prisma.AtLeast<{
@@ -70483,11 +71013,13 @@ export namespace Prisma {
     tournamentTeamRightId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     metadata?: StringNullableFilter<"FightArchive"> | string | null
+    FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
     tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     FightWatched?: FightWatchedListRelationFilter
+    FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
   }, "id">
 
   export type FightArchiveOrderByWithAggregationInput = {
@@ -70504,6 +71036,7 @@ export namespace Prisma {
     tournamentTeamRightId?: SortOrderInput | SortOrder
     tournamentId?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
+    FBTournamentId?: SortOrderInput | SortOrder
     _count?: FightArchiveCountOrderByAggregateInput
     _avg?: FightArchiveAvgOrderByAggregateInput
     _max?: FightArchiveMaxOrderByAggregateInput
@@ -70528,6 +71061,7 @@ export namespace Prisma {
     tournamentTeamRightId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     metadata?: StringNullableWithAggregatesFilter<"FightArchive"> | string | null
+    FBTournamentId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
   }
 
   export type FightWatchedWhereInput = {
@@ -70732,6 +71266,231 @@ export namespace Prisma {
     dojoId?: UuidNullableWithAggregatesFilter<"TournamentTeam"> | string | null
     teamCount?: IntWithAggregatesFilter<"TournamentTeam"> | number
     tournamentId?: UuidNullableWithAggregatesFilter<"TournamentTeam"> | string | null
+  }
+
+  export type FBTournamentWhereInput = {
+    AND?: FBTournamentWhereInput | FBTournamentWhereInput[]
+    OR?: FBTournamentWhereInput[]
+    NOT?: FBTournamentWhereInput | FBTournamentWhereInput[]
+    id?: UuidFilter<"FBTournament"> | string
+    date?: DateTimeFilter<"FBTournament"> | Date | string
+    teamRace?: StringFilter<"FBTournament"> | string
+    levelLimit?: IntFilter<"FBTournament"> | number
+    cashPrice?: IntFilter<"FBTournament"> | number
+    nextRound?: DateTimeFilter<"FBTournament"> | Date | string
+    winnerId?: IntNullableFilter<"FBTournament"> | number | null
+    participants?: GameDinozListRelationFilter
+    fights?: FightArchiveListRelationFilter
+  }
+
+  export type FBTournamentOrderByWithRelationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    teamRace?: SortOrder
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
+    winnerId?: SortOrderInput | SortOrder
+    participants?: GameDinozOrderByRelationAggregateInput
+    fights?: FightArchiveOrderByRelationAggregateInput
+  }
+
+  export type FBTournamentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: FBTournamentWhereInput | FBTournamentWhereInput[]
+    OR?: FBTournamentWhereInput[]
+    NOT?: FBTournamentWhereInput | FBTournamentWhereInput[]
+    date?: DateTimeFilter<"FBTournament"> | Date | string
+    teamRace?: StringFilter<"FBTournament"> | string
+    levelLimit?: IntFilter<"FBTournament"> | number
+    cashPrice?: IntFilter<"FBTournament"> | number
+    nextRound?: DateTimeFilter<"FBTournament"> | Date | string
+    winnerId?: IntNullableFilter<"FBTournament"> | number | null
+    participants?: GameDinozListRelationFilter
+    fights?: FightArchiveListRelationFilter
+  }, "id" | "id">
+
+  export type FBTournamentOrderByWithAggregationInput = {
+    id?: SortOrder
+    date?: SortOrder
+    teamRace?: SortOrder
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
+    winnerId?: SortOrderInput | SortOrder
+    _count?: FBTournamentCountOrderByAggregateInput
+    _avg?: FBTournamentAvgOrderByAggregateInput
+    _max?: FBTournamentMaxOrderByAggregateInput
+    _min?: FBTournamentMinOrderByAggregateInput
+    _sum?: FBTournamentSumOrderByAggregateInput
+  }
+
+  export type FBTournamentScalarWhereWithAggregatesInput = {
+    AND?: FBTournamentScalarWhereWithAggregatesInput | FBTournamentScalarWhereWithAggregatesInput[]
+    OR?: FBTournamentScalarWhereWithAggregatesInput[]
+    NOT?: FBTournamentScalarWhereWithAggregatesInput | FBTournamentScalarWhereWithAggregatesInput[]
+    id?: UuidWithAggregatesFilter<"FBTournament"> | string
+    date?: DateTimeWithAggregatesFilter<"FBTournament"> | Date | string
+    teamRace?: StringWithAggregatesFilter<"FBTournament"> | string
+    levelLimit?: IntWithAggregatesFilter<"FBTournament"> | number
+    cashPrice?: IntWithAggregatesFilter<"FBTournament"> | number
+    nextRound?: DateTimeWithAggregatesFilter<"FBTournament"> | Date | string
+    winnerId?: IntNullableWithAggregatesFilter<"FBTournament"> | number | null
+  }
+
+  export type GameDinozWhereInput = {
+    AND?: GameDinozWhereInput | GameDinozWhereInput[]
+    OR?: GameDinozWhereInput[]
+    NOT?: GameDinozWhereInput | GameDinozWhereInput[]
+    id?: IntFilter<"GameDinoz"> | number
+    name?: StringFilter<"GameDinoz"> | string
+    raceId?: IntFilter<"GameDinoz"> | number
+    level?: IntFilter<"GameDinoz"> | number
+    nextUpElementId?: IntFilter<"GameDinoz"> | number
+    nextUpAltElementId?: IntFilter<"GameDinoz"> | number
+    display?: StringFilter<"GameDinoz"> | string
+    life?: IntFilter<"GameDinoz"> | number
+    maxLife?: IntFilter<"GameDinoz"> | number
+    experience?: IntFilter<"GameDinoz"> | number
+    nbrUpFire?: IntFilter<"GameDinoz"> | number
+    nbrUpWood?: IntFilter<"GameDinoz"> | number
+    nbrUpWater?: IntFilter<"GameDinoz"> | number
+    nbrUpLightning?: IntFilter<"GameDinoz"> | number
+    nbrUpAir?: IntFilter<"GameDinoz"> | number
+    canChangeName?: BoolFilter<"GameDinoz"> | boolean
+    createdDate?: DateTimeFilter<"GameDinoz"> | Date | string
+    seed?: StringFilter<"GameDinoz"> | string
+    usage?: EnumGameDinozUsageFilter<"GameDinoz"> | $Enums.GameDinozUsage
+    playerId?: UuidNullableFilter<"GameDinoz"> | string | null
+    FBTournamentId?: UuidNullableFilter<"GameDinoz"> | string | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    items?: DinozItemListRelationFilter
+    dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
+    skills?: DinozSkillListRelationFilter
+    unlockableSkills?: DinozSkillUnlockableListRelationFilter
+    status?: DinozStatusListRelationFilter
+    FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
+  }
+
+  export type GameDinozOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    display?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    canChangeName?: SortOrder
+    createdDate?: SortOrder
+    seed?: SortOrder
+    usage?: SortOrder
+    playerId?: SortOrderInput | SortOrder
+    FBTournamentId?: SortOrderInput | SortOrder
+    player?: PlayerOrderByWithRelationInput
+    items?: DinozItemOrderByRelationAggregateInput
+    dinozItemsToDinoz?: DinozItemToDinozOrderByRelationAggregateInput
+    skills?: DinozSkillOrderByRelationAggregateInput
+    unlockableSkills?: DinozSkillUnlockableOrderByRelationAggregateInput
+    status?: DinozStatusOrderByRelationAggregateInput
+    FBTournament?: FBTournamentOrderByWithRelationInput
+  }
+
+  export type GameDinozWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: GameDinozWhereInput | GameDinozWhereInput[]
+    OR?: GameDinozWhereInput[]
+    NOT?: GameDinozWhereInput | GameDinozWhereInput[]
+    name?: StringFilter<"GameDinoz"> | string
+    raceId?: IntFilter<"GameDinoz"> | number
+    level?: IntFilter<"GameDinoz"> | number
+    nextUpElementId?: IntFilter<"GameDinoz"> | number
+    nextUpAltElementId?: IntFilter<"GameDinoz"> | number
+    display?: StringFilter<"GameDinoz"> | string
+    life?: IntFilter<"GameDinoz"> | number
+    maxLife?: IntFilter<"GameDinoz"> | number
+    experience?: IntFilter<"GameDinoz"> | number
+    nbrUpFire?: IntFilter<"GameDinoz"> | number
+    nbrUpWood?: IntFilter<"GameDinoz"> | number
+    nbrUpWater?: IntFilter<"GameDinoz"> | number
+    nbrUpLightning?: IntFilter<"GameDinoz"> | number
+    nbrUpAir?: IntFilter<"GameDinoz"> | number
+    canChangeName?: BoolFilter<"GameDinoz"> | boolean
+    createdDate?: DateTimeFilter<"GameDinoz"> | Date | string
+    seed?: StringFilter<"GameDinoz"> | string
+    usage?: EnumGameDinozUsageFilter<"GameDinoz"> | $Enums.GameDinozUsage
+    playerId?: UuidNullableFilter<"GameDinoz"> | string | null
+    FBTournamentId?: UuidNullableFilter<"GameDinoz"> | string | null
+    player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
+    items?: DinozItemListRelationFilter
+    dinozItemsToDinoz?: DinozItemToDinozListRelationFilter
+    skills?: DinozSkillListRelationFilter
+    unlockableSkills?: DinozSkillUnlockableListRelationFilter
+    status?: DinozStatusListRelationFilter
+    FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
+  }, "id">
+
+  export type GameDinozOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    display?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    canChangeName?: SortOrder
+    createdDate?: SortOrder
+    seed?: SortOrder
+    usage?: SortOrder
+    playerId?: SortOrderInput | SortOrder
+    FBTournamentId?: SortOrderInput | SortOrder
+    _count?: GameDinozCountOrderByAggregateInput
+    _avg?: GameDinozAvgOrderByAggregateInput
+    _max?: GameDinozMaxOrderByAggregateInput
+    _min?: GameDinozMinOrderByAggregateInput
+    _sum?: GameDinozSumOrderByAggregateInput
+  }
+
+  export type GameDinozScalarWhereWithAggregatesInput = {
+    AND?: GameDinozScalarWhereWithAggregatesInput | GameDinozScalarWhereWithAggregatesInput[]
+    OR?: GameDinozScalarWhereWithAggregatesInput[]
+    NOT?: GameDinozScalarWhereWithAggregatesInput | GameDinozScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"GameDinoz"> | number
+    name?: StringWithAggregatesFilter<"GameDinoz"> | string
+    raceId?: IntWithAggregatesFilter<"GameDinoz"> | number
+    level?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nextUpElementId?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nextUpAltElementId?: IntWithAggregatesFilter<"GameDinoz"> | number
+    display?: StringWithAggregatesFilter<"GameDinoz"> | string
+    life?: IntWithAggregatesFilter<"GameDinoz"> | number
+    maxLife?: IntWithAggregatesFilter<"GameDinoz"> | number
+    experience?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nbrUpFire?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nbrUpWood?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nbrUpWater?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nbrUpLightning?: IntWithAggregatesFilter<"GameDinoz"> | number
+    nbrUpAir?: IntWithAggregatesFilter<"GameDinoz"> | number
+    canChangeName?: BoolWithAggregatesFilter<"GameDinoz"> | boolean
+    createdDate?: DateTimeWithAggregatesFilter<"GameDinoz"> | Date | string
+    seed?: StringWithAggregatesFilter<"GameDinoz"> | string
+    usage?: EnumGameDinozUsageWithAggregatesFilter<"GameDinoz"> | $Enums.GameDinozUsage
+    playerId?: UuidNullableWithAggregatesFilter<"GameDinoz"> | string | null
+    FBTournamentId?: UuidNullableWithAggregatesFilter<"GameDinoz"> | string | null
   }
 
   export type ConcentrationCreateInput = {
@@ -71043,12 +71802,14 @@ export namespace Prisma {
     itemId: number
     dinoz?: DinozCreateNestedOneWithoutItemsInput
     dinozItemToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinoz_itemInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutItemsInput
   }
 
   export type DinozItemUncheckedCreateInput = {
     id?: number
     itemId: number
     dinozId?: number | null
+    gameDinozId?: number | null
     dinozItemToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinoz_itemInput
   }
 
@@ -71056,12 +71817,14 @@ export namespace Prisma {
     itemId?: IntFieldUpdateOperationsInput | number
     dinoz?: DinozUpdateOneWithoutItemsNestedInput
     dinozItemToDinoz?: DinozItemToDinozUpdateManyWithoutDinoz_itemNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutItemsNestedInput
   }
 
   export type DinozItemUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
     dinozItemToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemNestedInput
   }
 
@@ -71069,6 +71832,7 @@ export namespace Prisma {
     id?: number
     itemId: number
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozItemUpdateManyMutationInput = {
@@ -71079,31 +71843,37 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozCreateInput = {
     dinoz: DinozCreateNestedOneWithoutDinozItemsToDinozInput
     dinoz_item: DinozItemCreateNestedOneWithoutDinozItemToDinozInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutDinozItemsToDinozInput
   }
 
   export type DinozItemToDinozUncheckedCreateInput = {
     dinozId: number
     dinozItemId: number
+    gameDinozId?: number | null
   }
 
   export type DinozItemToDinozUpdateInput = {
     dinoz?: DinozUpdateOneRequiredWithoutDinozItemsToDinozNestedInput
     dinoz_item?: DinozItemUpdateOneRequiredWithoutDinozItemToDinozNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutDinozItemsToDinozNestedInput
   }
 
   export type DinozItemToDinozUncheckedUpdateInput = {
     dinozId?: IntFieldUpdateOperationsInput | number
     dinozItemId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozCreateManyInput = {
     dinozId: number
     dinozItemId: number
+    gameDinozId?: number | null
   }
 
   export type DinozItemToDinozUpdateManyMutationInput = {
@@ -71113,6 +71883,7 @@ export namespace Prisma {
   export type DinozItemToDinozUncheckedUpdateManyInput = {
     dinozId?: IntFieldUpdateOperationsInput | number
     dinozItemId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozMissionCreateInput = {
@@ -71178,6 +71949,7 @@ export namespace Prisma {
     skillId: number
     state?: boolean
     dinoz?: DinozCreateNestedOneWithoutSkillsInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutSkillsInput
   }
 
   export type DinozSkillUncheckedCreateInput = {
@@ -71185,12 +71957,14 @@ export namespace Prisma {
     skillId: number
     state?: boolean
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozSkillUpdateInput = {
     skillId?: IntFieldUpdateOperationsInput | number
     state?: BoolFieldUpdateOperationsInput | boolean
     dinoz?: DinozUpdateOneWithoutSkillsNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutSkillsNestedInput
   }
 
   export type DinozSkillUncheckedUpdateInput = {
@@ -71198,6 +71972,7 @@ export namespace Prisma {
     skillId?: IntFieldUpdateOperationsInput | number
     state?: BoolFieldUpdateOperationsInput | boolean
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozSkillCreateManyInput = {
@@ -71205,6 +71980,7 @@ export namespace Prisma {
     skillId: number
     state?: boolean
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozSkillUpdateManyMutationInput = {
@@ -71217,34 +71993,40 @@ export namespace Prisma {
     skillId?: IntFieldUpdateOperationsInput | number
     state?: BoolFieldUpdateOperationsInput | boolean
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozSkillUnlockableCreateInput = {
     skillId: number
     dinoz?: DinozCreateNestedOneWithoutUnlockableSkillsInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutUnlockableSkillsInput
   }
 
   export type DinozSkillUnlockableUncheckedCreateInput = {
     id?: number
     skillId: number
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozSkillUnlockableUpdateInput = {
     skillId?: IntFieldUpdateOperationsInput | number
     dinoz?: DinozUpdateOneWithoutUnlockableSkillsNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutUnlockableSkillsNestedInput
   }
 
   export type DinozSkillUnlockableUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     skillId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozSkillUnlockableCreateManyInput = {
     id?: number
     skillId: number
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozSkillUnlockableUpdateManyMutationInput = {
@@ -71255,34 +72037,40 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     skillId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozStatusCreateInput = {
     statusId: number
     dinoz?: DinozCreateNestedOneWithoutStatusInput
+    gameDinoz?: GameDinozCreateNestedOneWithoutStatusInput
   }
 
   export type DinozStatusUncheckedCreateInput = {
     id?: number
     statusId: number
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozStatusUpdateInput = {
     statusId?: IntFieldUpdateOperationsInput | number
     dinoz?: DinozUpdateOneWithoutStatusNestedInput
+    gameDinoz?: GameDinozUpdateOneWithoutStatusNestedInput
   }
 
   export type DinozStatusUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozStatusCreateManyInput = {
     id?: number
     statusId: number
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozStatusUpdateManyMutationInput = {
@@ -71293,6 +72081,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type migrationsCreateInput = {
@@ -71543,6 +72332,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -71600,6 +72390,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -71657,6 +72448,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -71714,6 +72506,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -73683,6 +74476,7 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
   }
 
   export type FightArchiveUncheckedCreateInput = {
@@ -73699,6 +74493,7 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -73717,6 +74512,7 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
   }
 
   export type FightArchiveUncheckedUpdateInput = {
@@ -73733,6 +74529,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -73750,6 +74547,7 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
   }
 
   export type FightArchiveUpdateManyMutationInput = {
@@ -73778,6 +74576,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightWatchedCreateInput = {
@@ -73988,6 +74787,267 @@ export namespace Prisma {
     dojoId?: NullableStringFieldUpdateOperationsInput | string | null
     teamCount?: IntFieldUpdateOperationsInput | number
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FBTournamentCreateInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+    participants?: GameDinozCreateNestedManyWithoutFBTournamentInput
+    fights?: FightArchiveCreateNestedManyWithoutFBTournamentInput
+  }
+
+  export type FBTournamentUncheckedCreateInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+    participants?: GameDinozUncheckedCreateNestedManyWithoutFBTournamentInput
+    fights?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentInput
+  }
+
+  export type FBTournamentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: GameDinozUpdateManyWithoutFBTournamentNestedInput
+    fights?: FightArchiveUpdateManyWithoutFBTournamentNestedInput
+  }
+
+  export type FBTournamentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: GameDinozUncheckedUpdateManyWithoutFBTournamentNestedInput
+    fights?: FightArchiveUncheckedUpdateManyWithoutFBTournamentNestedInput
+  }
+
+  export type FBTournamentCreateManyInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+  }
+
+  export type FBTournamentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FBTournamentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type GameDinozCreateInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+  }
+
+  export type GameDinozCreateManyInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+  }
+
+  export type GameDinozUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+  }
+
+  export type GameDinozUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -74494,34 +75554,44 @@ export namespace Prisma {
     _max?: NestedStringFilter<$PrismaModel>
   }
 
+  export type GameDinozNullableScalarRelationFilter = {
+    is?: GameDinozWhereInput | null
+    isNot?: GameDinozWhereInput | null
+  }
+
   export type DinozItemCountOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemAvgOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemMaxOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemMinOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemSumOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozScalarRelationFilter = {
@@ -74542,26 +75612,31 @@ export namespace Prisma {
   export type DinozItemToDinozCountOrderByAggregateInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemToDinozAvgOrderByAggregateInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemToDinozMaxOrderByAggregateInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemToDinozMinOrderByAggregateInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozItemToDinozSumOrderByAggregateInput = {
     dinozId?: SortOrder
     dinozItemId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type BoolNullableFilter<$PrismaModel = never> = {
@@ -74635,12 +75710,14 @@ export namespace Prisma {
     skillId?: SortOrder
     state?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillAvgOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillMaxOrderByAggregateInput = {
@@ -74648,6 +75725,7 @@ export namespace Prisma {
     skillId?: SortOrder
     state?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillMinOrderByAggregateInput = {
@@ -74655,42 +75733,49 @@ export namespace Prisma {
     skillId?: SortOrder
     state?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillSumOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillUnlockableCountOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillUnlockableAvgOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillUnlockableMaxOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillUnlockableMinOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozSkillUnlockableSumOrderByAggregateInput = {
     id?: SortOrder
     skillId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozStatusStatusIdDinozIdCompoundUniqueInput = {
@@ -74702,30 +75787,35 @@ export namespace Prisma {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozStatusAvgOrderByAggregateInput = {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozStatusMaxOrderByAggregateInput = {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozStatusMinOrderByAggregateInput = {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type DinozStatusSumOrderByAggregateInput = {
     id?: SortOrder
     statusId?: SortOrder
     dinozId?: SortOrder
+    gameDinozId?: SortOrder
   }
 
   export type BigIntFilter<$PrismaModel = never> = {
@@ -75081,6 +76171,12 @@ export namespace Prisma {
     none?: FightWatchedWhereInput
   }
 
+  export type GameDinozListRelationFilter = {
+    every?: GameDinozWhereInput
+    some?: GameDinozWhereInput
+    none?: GameDinozWhereInput
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -75146,6 +76242,10 @@ export namespace Prisma {
   }
 
   export type FightWatchedOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type GameDinozOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -76755,6 +77855,11 @@ export namespace Prisma {
     isNot?: TournamentWhereInput | null
   }
 
+  export type FBTournamentNullableScalarRelationFilter = {
+    is?: FBTournamentWhereInput | null
+    isNot?: FBTournamentWhereInput | null
+  }
+
   export type FightArchiveCountOrderByAggregateInput = {
     id?: SortOrder
     fighters?: SortOrder
@@ -76769,6 +77874,7 @@ export namespace Prisma {
     tournamentTeamRightId?: SortOrder
     tournamentId?: SortOrder
     metadata?: SortOrder
+    FBTournamentId?: SortOrder
   }
 
   export type FightArchiveAvgOrderByAggregateInput = {
@@ -76790,6 +77896,7 @@ export namespace Prisma {
     tournamentTeamRightId?: SortOrder
     tournamentId?: SortOrder
     metadata?: SortOrder
+    FBTournamentId?: SortOrder
   }
 
   export type FightArchiveMinOrderByAggregateInput = {
@@ -76806,6 +77913,7 @@ export namespace Prisma {
     tournamentTeamRightId?: SortOrder
     tournamentId?: SortOrder
     metadata?: SortOrder
+    FBTournamentId?: SortOrder
   }
 
   export type FightArchiveSumOrderByAggregateInput = {
@@ -76929,6 +78037,169 @@ export namespace Prisma {
 
   export type TournamentTeamSumOrderByAggregateInput = {
     teamCount?: SortOrder
+  }
+
+  export type FBTournamentCountOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    teamRace?: SortOrder
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
+    winnerId?: SortOrder
+  }
+
+  export type FBTournamentAvgOrderByAggregateInput = {
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    winnerId?: SortOrder
+  }
+
+  export type FBTournamentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    teamRace?: SortOrder
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
+    winnerId?: SortOrder
+  }
+
+  export type FBTournamentMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    teamRace?: SortOrder
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    nextRound?: SortOrder
+    winnerId?: SortOrder
+  }
+
+  export type FBTournamentSumOrderByAggregateInput = {
+    levelLimit?: SortOrder
+    cashPrice?: SortOrder
+    winnerId?: SortOrder
+  }
+
+  export type EnumGameDinozUsageFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameDinozUsage | EnumGameDinozUsageFieldRefInput<$PrismaModel>
+    in?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameDinozUsageFilter<$PrismaModel> | $Enums.GameDinozUsage
+  }
+
+  export type GameDinozCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    display?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    canChangeName?: SortOrder
+    createdDate?: SortOrder
+    seed?: SortOrder
+    usage?: SortOrder
+    playerId?: SortOrder
+    FBTournamentId?: SortOrder
+  }
+
+  export type GameDinozAvgOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+  }
+
+  export type GameDinozMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    display?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    canChangeName?: SortOrder
+    createdDate?: SortOrder
+    seed?: SortOrder
+    usage?: SortOrder
+    playerId?: SortOrder
+    FBTournamentId?: SortOrder
+  }
+
+  export type GameDinozMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    display?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+    canChangeName?: SortOrder
+    createdDate?: SortOrder
+    seed?: SortOrder
+    usage?: SortOrder
+    playerId?: SortOrder
+    FBTournamentId?: SortOrder
+  }
+
+  export type GameDinozSumOrderByAggregateInput = {
+    id?: SortOrder
+    raceId?: SortOrder
+    level?: SortOrder
+    nextUpElementId?: SortOrder
+    nextUpAltElementId?: SortOrder
+    life?: SortOrder
+    maxLife?: SortOrder
+    experience?: SortOrder
+    nbrUpFire?: SortOrder
+    nbrUpWood?: SortOrder
+    nbrUpWater?: SortOrder
+    nbrUpLightning?: SortOrder
+    nbrUpAir?: SortOrder
+  }
+
+  export type EnumGameDinozUsageWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameDinozUsage | EnumGameDinozUsageFieldRefInput<$PrismaModel>
+    in?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameDinozUsageWithAggregatesFilter<$PrismaModel> | $Enums.GameDinozUsage
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGameDinozUsageFilter<$PrismaModel>
+    _max?: NestedEnumGameDinozUsageFilter<$PrismaModel>
   }
 
   export type DinozCreateNestedManyWithoutConcentrationInput = {
@@ -77732,6 +79003,12 @@ export namespace Prisma {
     connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
   }
 
+  export type GameDinozCreateNestedOneWithoutItemsInput = {
+    create?: XOR<GameDinozCreateWithoutItemsInput, GameDinozUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutItemsInput
+    connect?: GameDinozWhereUniqueInput
+  }
+
   export type DinozItemToDinozUncheckedCreateNestedManyWithoutDinoz_itemInput = {
     create?: XOR<DinozItemToDinozCreateWithoutDinoz_itemInput, DinozItemToDinozUncheckedCreateWithoutDinoz_itemInput> | DinozItemToDinozCreateWithoutDinoz_itemInput[] | DinozItemToDinozUncheckedCreateWithoutDinoz_itemInput[]
     connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutDinoz_itemInput | DinozItemToDinozCreateOrConnectWithoutDinoz_itemInput[]
@@ -77763,6 +79040,16 @@ export namespace Prisma {
     deleteMany?: DinozItemToDinozScalarWhereInput | DinozItemToDinozScalarWhereInput[]
   }
 
+  export type GameDinozUpdateOneWithoutItemsNestedInput = {
+    create?: XOR<GameDinozCreateWithoutItemsInput, GameDinozUncheckedCreateWithoutItemsInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutItemsInput
+    upsert?: GameDinozUpsertWithoutItemsInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutItemsInput, GameDinozUpdateWithoutItemsInput>, GameDinozUncheckedUpdateWithoutItemsInput>
+  }
+
   export type DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemNestedInput = {
     create?: XOR<DinozItemToDinozCreateWithoutDinoz_itemInput, DinozItemToDinozUncheckedCreateWithoutDinoz_itemInput> | DinozItemToDinozCreateWithoutDinoz_itemInput[] | DinozItemToDinozUncheckedCreateWithoutDinoz_itemInput[]
     connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutDinoz_itemInput | DinozItemToDinozCreateOrConnectWithoutDinoz_itemInput[]
@@ -77789,6 +79076,12 @@ export namespace Prisma {
     connect?: DinozItemWhereUniqueInput
   }
 
+  export type GameDinozCreateNestedOneWithoutDinozItemsToDinozInput = {
+    create?: XOR<GameDinozCreateWithoutDinozItemsToDinozInput, GameDinozUncheckedCreateWithoutDinozItemsToDinozInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutDinozItemsToDinozInput
+    connect?: GameDinozWhereUniqueInput
+  }
+
   export type DinozUpdateOneRequiredWithoutDinozItemsToDinozNestedInput = {
     create?: XOR<DinozCreateWithoutDinozItemsToDinozInput, DinozUncheckedCreateWithoutDinozItemsToDinozInput>
     connectOrCreate?: DinozCreateOrConnectWithoutDinozItemsToDinozInput
@@ -77803,6 +79096,16 @@ export namespace Prisma {
     upsert?: DinozItemUpsertWithoutDinozItemToDinozInput
     connect?: DinozItemWhereUniqueInput
     update?: XOR<XOR<DinozItemUpdateToOneWithWhereWithoutDinozItemToDinozInput, DinozItemUpdateWithoutDinozItemToDinozInput>, DinozItemUncheckedUpdateWithoutDinozItemToDinozInput>
+  }
+
+  export type GameDinozUpdateOneWithoutDinozItemsToDinozNestedInput = {
+    create?: XOR<GameDinozCreateWithoutDinozItemsToDinozInput, GameDinozUncheckedCreateWithoutDinozItemsToDinozInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutDinozItemsToDinozInput
+    upsert?: GameDinozUpsertWithoutDinozItemsToDinozInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutDinozItemsToDinozInput, GameDinozUpdateWithoutDinozItemsToDinozInput>, GameDinozUncheckedUpdateWithoutDinozItemsToDinozInput>
   }
 
   export type DinozCreateNestedOneWithoutMissionsInput = {
@@ -77831,6 +79134,12 @@ export namespace Prisma {
     connect?: DinozWhereUniqueInput
   }
 
+  export type GameDinozCreateNestedOneWithoutSkillsInput = {
+    create?: XOR<GameDinozCreateWithoutSkillsInput, GameDinozUncheckedCreateWithoutSkillsInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutSkillsInput
+    connect?: GameDinozWhereUniqueInput
+  }
+
   export type DinozUpdateOneWithoutSkillsNestedInput = {
     create?: XOR<DinozCreateWithoutSkillsInput, DinozUncheckedCreateWithoutSkillsInput>
     connectOrCreate?: DinozCreateOrConnectWithoutSkillsInput
@@ -77841,10 +79150,26 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutSkillsInput, DinozUpdateWithoutSkillsInput>, DinozUncheckedUpdateWithoutSkillsInput>
   }
 
+  export type GameDinozUpdateOneWithoutSkillsNestedInput = {
+    create?: XOR<GameDinozCreateWithoutSkillsInput, GameDinozUncheckedCreateWithoutSkillsInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutSkillsInput
+    upsert?: GameDinozUpsertWithoutSkillsInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutSkillsInput, GameDinozUpdateWithoutSkillsInput>, GameDinozUncheckedUpdateWithoutSkillsInput>
+  }
+
   export type DinozCreateNestedOneWithoutUnlockableSkillsInput = {
     create?: XOR<DinozCreateWithoutUnlockableSkillsInput, DinozUncheckedCreateWithoutUnlockableSkillsInput>
     connectOrCreate?: DinozCreateOrConnectWithoutUnlockableSkillsInput
     connect?: DinozWhereUniqueInput
+  }
+
+  export type GameDinozCreateNestedOneWithoutUnlockableSkillsInput = {
+    create?: XOR<GameDinozCreateWithoutUnlockableSkillsInput, GameDinozUncheckedCreateWithoutUnlockableSkillsInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutUnlockableSkillsInput
+    connect?: GameDinozWhereUniqueInput
   }
 
   export type DinozUpdateOneWithoutUnlockableSkillsNestedInput = {
@@ -77857,10 +79182,26 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutUnlockableSkillsInput, DinozUpdateWithoutUnlockableSkillsInput>, DinozUncheckedUpdateWithoutUnlockableSkillsInput>
   }
 
+  export type GameDinozUpdateOneWithoutUnlockableSkillsNestedInput = {
+    create?: XOR<GameDinozCreateWithoutUnlockableSkillsInput, GameDinozUncheckedCreateWithoutUnlockableSkillsInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutUnlockableSkillsInput
+    upsert?: GameDinozUpsertWithoutUnlockableSkillsInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutUnlockableSkillsInput, GameDinozUpdateWithoutUnlockableSkillsInput>, GameDinozUncheckedUpdateWithoutUnlockableSkillsInput>
+  }
+
   export type DinozCreateNestedOneWithoutStatusInput = {
     create?: XOR<DinozCreateWithoutStatusInput, DinozUncheckedCreateWithoutStatusInput>
     connectOrCreate?: DinozCreateOrConnectWithoutStatusInput
     connect?: DinozWhereUniqueInput
+  }
+
+  export type GameDinozCreateNestedOneWithoutStatusInput = {
+    create?: XOR<GameDinozCreateWithoutStatusInput, GameDinozUncheckedCreateWithoutStatusInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutStatusInput
+    connect?: GameDinozWhereUniqueInput
   }
 
   export type DinozUpdateOneWithoutStatusNestedInput = {
@@ -77871,6 +79212,16 @@ export namespace Prisma {
     delete?: DinozWhereInput | boolean
     connect?: DinozWhereUniqueInput
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutStatusInput, DinozUpdateWithoutStatusInput>, DinozUncheckedUpdateWithoutStatusInput>
+  }
+
+  export type GameDinozUpdateOneWithoutStatusNestedInput = {
+    create?: XOR<GameDinozCreateWithoutStatusInput, GameDinozUncheckedCreateWithoutStatusInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutStatusInput
+    upsert?: GameDinozUpsertWithoutStatusInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutStatusInput, GameDinozUpdateWithoutStatusInput>, GameDinozUncheckedUpdateWithoutStatusInput>
   }
 
   export type BigIntFieldUpdateOperationsInput = {
@@ -78113,6 +79464,13 @@ export namespace Prisma {
     connect?: FightWatchedWhereUniqueInput | FightWatchedWhereUniqueInput[]
   }
 
+  export type GameDinozCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<GameDinozCreateWithoutPlayerInput, GameDinozUncheckedCreateWithoutPlayerInput> | GameDinozCreateWithoutPlayerInput[] | GameDinozUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutPlayerInput | GameDinozCreateOrConnectWithoutPlayerInput[]
+    createMany?: GameDinozCreateManyPlayerInputEnvelope
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+  }
+
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -78309,6 +79667,13 @@ export namespace Prisma {
     connectOrCreate?: FightWatchedCreateOrConnectWithoutPlayerInput | FightWatchedCreateOrConnectWithoutPlayerInput[]
     createMany?: FightWatchedCreateManyPlayerInputEnvelope
     connect?: FightWatchedWhereUniqueInput | FightWatchedWhereUniqueInput[]
+  }
+
+  export type GameDinozUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<GameDinozCreateWithoutPlayerInput, GameDinozUncheckedCreateWithoutPlayerInput> | GameDinozCreateWithoutPlayerInput[] | GameDinozUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutPlayerInput | GameDinozCreateOrConnectWithoutPlayerInput[]
+    createMany?: GameDinozCreateManyPlayerInputEnvelope
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -78720,6 +80085,20 @@ export namespace Prisma {
     deleteMany?: FightWatchedScalarWhereInput | FightWatchedScalarWhereInput[]
   }
 
+  export type GameDinozUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<GameDinozCreateWithoutPlayerInput, GameDinozUncheckedCreateWithoutPlayerInput> | GameDinozCreateWithoutPlayerInput[] | GameDinozUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutPlayerInput | GameDinozCreateOrConnectWithoutPlayerInput[]
+    upsert?: GameDinozUpsertWithWhereUniqueWithoutPlayerInput | GameDinozUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: GameDinozCreateManyPlayerInputEnvelope
+    set?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    disconnect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    delete?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    update?: GameDinozUpdateWithWhereUniqueWithoutPlayerInput | GameDinozUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: GameDinozUpdateManyWithWhereWithoutPlayerInput | GameDinozUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
+  }
+
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -79104,6 +80483,20 @@ export namespace Prisma {
     update?: FightWatchedUpdateWithWhereUniqueWithoutPlayerInput | FightWatchedUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: FightWatchedUpdateManyWithWhereWithoutPlayerInput | FightWatchedUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: FightWatchedScalarWhereInput | FightWatchedScalarWhereInput[]
+  }
+
+  export type GameDinozUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<GameDinozCreateWithoutPlayerInput, GameDinozUncheckedCreateWithoutPlayerInput> | GameDinozCreateWithoutPlayerInput[] | GameDinozUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutPlayerInput | GameDinozCreateOrConnectWithoutPlayerInput[]
+    upsert?: GameDinozUpsertWithWhereUniqueWithoutPlayerInput | GameDinozUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: GameDinozCreateManyPlayerInputEnvelope
+    set?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    disconnect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    delete?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    update?: GameDinozUpdateWithWhereUniqueWithoutPlayerInput | GameDinozUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: GameDinozUpdateManyWithWhereWithoutPlayerInput | GameDinozUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutDojoInput = {
@@ -80580,6 +81973,12 @@ export namespace Prisma {
     connect?: FightWatchedWhereUniqueInput | FightWatchedWhereUniqueInput[]
   }
 
+  export type FBTournamentCreateNestedOneWithoutFightsInput = {
+    create?: XOR<FBTournamentCreateWithoutFightsInput, FBTournamentUncheckedCreateWithoutFightsInput>
+    connectOrCreate?: FBTournamentCreateOrConnectWithoutFightsInput
+    connect?: FBTournamentWhereUniqueInput
+  }
+
   export type FightWatchedUncheckedCreateNestedManyWithoutFightInput = {
     create?: XOR<FightWatchedCreateWithoutFightInput, FightWatchedUncheckedCreateWithoutFightInput> | FightWatchedCreateWithoutFightInput[] | FightWatchedUncheckedCreateWithoutFightInput[]
     connectOrCreate?: FightWatchedCreateOrConnectWithoutFightInput | FightWatchedCreateOrConnectWithoutFightInput[]
@@ -80639,6 +82038,16 @@ export namespace Prisma {
     update?: FightWatchedUpdateWithWhereUniqueWithoutFightInput | FightWatchedUpdateWithWhereUniqueWithoutFightInput[]
     updateMany?: FightWatchedUpdateManyWithWhereWithoutFightInput | FightWatchedUpdateManyWithWhereWithoutFightInput[]
     deleteMany?: FightWatchedScalarWhereInput | FightWatchedScalarWhereInput[]
+  }
+
+  export type FBTournamentUpdateOneWithoutFightsNestedInput = {
+    create?: XOR<FBTournamentCreateWithoutFightsInput, FBTournamentUncheckedCreateWithoutFightsInput>
+    connectOrCreate?: FBTournamentCreateOrConnectWithoutFightsInput
+    upsert?: FBTournamentUpsertWithoutFightsInput
+    disconnect?: FBTournamentWhereInput | boolean
+    delete?: FBTournamentWhereInput | boolean
+    connect?: FBTournamentWhereUniqueInput
+    update?: XOR<XOR<FBTournamentUpdateToOneWithWhereWithoutFightsInput, FBTournamentUpdateWithoutFightsInput>, FBTournamentUncheckedUpdateWithoutFightsInput>
   }
 
   export type FightWatchedUncheckedUpdateManyWithoutFightNestedInput = {
@@ -80935,6 +82344,336 @@ export namespace Prisma {
     update?: FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput | FightArchiveUpdateWithWhereUniqueWithoutTournamentTeamRightInput[]
     updateMany?: FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput | FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput[]
     deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type GameDinozCreateNestedManyWithoutFBTournamentInput = {
+    create?: XOR<GameDinozCreateWithoutFBTournamentInput, GameDinozUncheckedCreateWithoutFBTournamentInput> | GameDinozCreateWithoutFBTournamentInput[] | GameDinozUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFBTournamentInput | GameDinozCreateOrConnectWithoutFBTournamentInput[]
+    createMany?: GameDinozCreateManyFBTournamentInputEnvelope
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+  }
+
+  export type FightArchiveCreateNestedManyWithoutFBTournamentInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentInput, FightArchiveUncheckedCreateWithoutFBTournamentInput> | FightArchiveCreateWithoutFBTournamentInput[] | FightArchiveUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentInput | FightArchiveCreateOrConnectWithoutFBTournamentInput[]
+    createMany?: FightArchiveCreateManyFBTournamentInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type GameDinozUncheckedCreateNestedManyWithoutFBTournamentInput = {
+    create?: XOR<GameDinozCreateWithoutFBTournamentInput, GameDinozUncheckedCreateWithoutFBTournamentInput> | GameDinozCreateWithoutFBTournamentInput[] | GameDinozUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFBTournamentInput | GameDinozCreateOrConnectWithoutFBTournamentInput[]
+    createMany?: GameDinozCreateManyFBTournamentInputEnvelope
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutFBTournamentInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentInput, FightArchiveUncheckedCreateWithoutFBTournamentInput> | FightArchiveCreateWithoutFBTournamentInput[] | FightArchiveUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentInput | FightArchiveCreateOrConnectWithoutFBTournamentInput[]
+    createMany?: FightArchiveCreateManyFBTournamentInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type GameDinozUpdateManyWithoutFBTournamentNestedInput = {
+    create?: XOR<GameDinozCreateWithoutFBTournamentInput, GameDinozUncheckedCreateWithoutFBTournamentInput> | GameDinozCreateWithoutFBTournamentInput[] | GameDinozUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFBTournamentInput | GameDinozCreateOrConnectWithoutFBTournamentInput[]
+    upsert?: GameDinozUpsertWithWhereUniqueWithoutFBTournamentInput | GameDinozUpsertWithWhereUniqueWithoutFBTournamentInput[]
+    createMany?: GameDinozCreateManyFBTournamentInputEnvelope
+    set?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    disconnect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    delete?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    update?: GameDinozUpdateWithWhereUniqueWithoutFBTournamentInput | GameDinozUpdateWithWhereUniqueWithoutFBTournamentInput[]
+    updateMany?: GameDinozUpdateManyWithWhereWithoutFBTournamentInput | GameDinozUpdateManyWithWhereWithoutFBTournamentInput[]
+    deleteMany?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
+  }
+
+  export type FightArchiveUpdateManyWithoutFBTournamentNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentInput, FightArchiveUncheckedCreateWithoutFBTournamentInput> | FightArchiveCreateWithoutFBTournamentInput[] | FightArchiveUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentInput | FightArchiveCreateOrConnectWithoutFBTournamentInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutFBTournamentInput | FightArchiveUpsertWithWhereUniqueWithoutFBTournamentInput[]
+    createMany?: FightArchiveCreateManyFBTournamentInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutFBTournamentInput | FightArchiveUpdateWithWhereUniqueWithoutFBTournamentInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutFBTournamentInput | FightArchiveUpdateManyWithWhereWithoutFBTournamentInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type GameDinozUncheckedUpdateManyWithoutFBTournamentNestedInput = {
+    create?: XOR<GameDinozCreateWithoutFBTournamentInput, GameDinozUncheckedCreateWithoutFBTournamentInput> | GameDinozCreateWithoutFBTournamentInput[] | GameDinozUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFBTournamentInput | GameDinozCreateOrConnectWithoutFBTournamentInput[]
+    upsert?: GameDinozUpsertWithWhereUniqueWithoutFBTournamentInput | GameDinozUpsertWithWhereUniqueWithoutFBTournamentInput[]
+    createMany?: GameDinozCreateManyFBTournamentInputEnvelope
+    set?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    disconnect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    delete?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    connect?: GameDinozWhereUniqueInput | GameDinozWhereUniqueInput[]
+    update?: GameDinozUpdateWithWhereUniqueWithoutFBTournamentInput | GameDinozUpdateWithWhereUniqueWithoutFBTournamentInput[]
+    updateMany?: GameDinozUpdateManyWithWhereWithoutFBTournamentInput | GameDinozUpdateManyWithWhereWithoutFBTournamentInput[]
+    deleteMany?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutFBTournamentNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentInput, FightArchiveUncheckedCreateWithoutFBTournamentInput> | FightArchiveCreateWithoutFBTournamentInput[] | FightArchiveUncheckedCreateWithoutFBTournamentInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentInput | FightArchiveCreateOrConnectWithoutFBTournamentInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutFBTournamentInput | FightArchiveUpsertWithWhereUniqueWithoutFBTournamentInput[]
+    createMany?: FightArchiveCreateManyFBTournamentInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutFBTournamentInput | FightArchiveUpdateWithWhereUniqueWithoutFBTournamentInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutFBTournamentInput | FightArchiveUpdateManyWithWhereWithoutFBTournamentInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type PlayerCreateNestedOneWithoutGameDinozInput = {
+    create?: XOR<PlayerCreateWithoutGameDinozInput, PlayerUncheckedCreateWithoutGameDinozInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutGameDinozInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type DinozItemCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput> | DinozItemCreateWithoutGameDinozInput[] | DinozItemUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemCreateOrConnectWithoutGameDinozInput | DinozItemCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozItemCreateManyGameDinozInputEnvelope
+    connect?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+  }
+
+  export type DinozItemToDinozCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozItemToDinozCreateWithoutGameDinozInput, DinozItemToDinozUncheckedCreateWithoutGameDinozInput> | DinozItemToDinozCreateWithoutGameDinozInput[] | DinozItemToDinozUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutGameDinozInput | DinozItemToDinozCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozItemToDinozCreateManyGameDinozInputEnvelope
+    connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+  }
+
+  export type DinozSkillCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozSkillCreateWithoutGameDinozInput, DinozSkillUncheckedCreateWithoutGameDinozInput> | DinozSkillCreateWithoutGameDinozInput[] | DinozSkillUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillCreateOrConnectWithoutGameDinozInput | DinozSkillCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozSkillCreateManyGameDinozInputEnvelope
+    connect?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+  }
+
+  export type DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozSkillUnlockableCreateWithoutGameDinozInput, DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput> | DinozSkillUnlockableCreateWithoutGameDinozInput[] | DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput | DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozSkillUnlockableCreateManyGameDinozInputEnvelope
+    connect?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+  }
+
+  export type DinozStatusCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozStatusCreateWithoutGameDinozInput, DinozStatusUncheckedCreateWithoutGameDinozInput> | DinozStatusCreateWithoutGameDinozInput[] | DinozStatusUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozStatusCreateOrConnectWithoutGameDinozInput | DinozStatusCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozStatusCreateManyGameDinozInputEnvelope
+    connect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+  }
+
+  export type FBTournamentCreateNestedOneWithoutParticipantsInput = {
+    create?: XOR<FBTournamentCreateWithoutParticipantsInput, FBTournamentUncheckedCreateWithoutParticipantsInput>
+    connectOrCreate?: FBTournamentCreateOrConnectWithoutParticipantsInput
+    connect?: FBTournamentWhereUniqueInput
+  }
+
+  export type DinozItemUncheckedCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput> | DinozItemCreateWithoutGameDinozInput[] | DinozItemUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemCreateOrConnectWithoutGameDinozInput | DinozItemCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozItemCreateManyGameDinozInputEnvelope
+    connect?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+  }
+
+  export type DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozItemToDinozCreateWithoutGameDinozInput, DinozItemToDinozUncheckedCreateWithoutGameDinozInput> | DinozItemToDinozCreateWithoutGameDinozInput[] | DinozItemToDinozUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutGameDinozInput | DinozItemToDinozCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozItemToDinozCreateManyGameDinozInputEnvelope
+    connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+  }
+
+  export type DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozSkillCreateWithoutGameDinozInput, DinozSkillUncheckedCreateWithoutGameDinozInput> | DinozSkillCreateWithoutGameDinozInput[] | DinozSkillUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillCreateOrConnectWithoutGameDinozInput | DinozSkillCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozSkillCreateManyGameDinozInputEnvelope
+    connect?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+  }
+
+  export type DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozSkillUnlockableCreateWithoutGameDinozInput, DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput> | DinozSkillUnlockableCreateWithoutGameDinozInput[] | DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput | DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozSkillUnlockableCreateManyGameDinozInputEnvelope
+    connect?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+  }
+
+  export type DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput = {
+    create?: XOR<DinozStatusCreateWithoutGameDinozInput, DinozStatusUncheckedCreateWithoutGameDinozInput> | DinozStatusCreateWithoutGameDinozInput[] | DinozStatusUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozStatusCreateOrConnectWithoutGameDinozInput | DinozStatusCreateOrConnectWithoutGameDinozInput[]
+    createMany?: DinozStatusCreateManyGameDinozInputEnvelope
+    connect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+  }
+
+  export type EnumGameDinozUsageFieldUpdateOperationsInput = {
+    set?: $Enums.GameDinozUsage
+  }
+
+  export type PlayerUpdateOneWithoutGameDinozNestedInput = {
+    create?: XOR<PlayerCreateWithoutGameDinozInput, PlayerUncheckedCreateWithoutGameDinozInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutGameDinozInput
+    upsert?: PlayerUpsertWithoutGameDinozInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutGameDinozInput, PlayerUpdateWithoutGameDinozInput>, PlayerUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type DinozItemUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput> | DinozItemCreateWithoutGameDinozInput[] | DinozItemUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemCreateOrConnectWithoutGameDinozInput | DinozItemCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozItemUpsertWithWhereUniqueWithoutGameDinozInput | DinozItemUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozItemCreateManyGameDinozInputEnvelope
+    set?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    disconnect?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    delete?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    connect?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    update?: DinozItemUpdateWithWhereUniqueWithoutGameDinozInput | DinozItemUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozItemUpdateManyWithWhereWithoutGameDinozInput | DinozItemUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozItemScalarWhereInput | DinozItemScalarWhereInput[]
+  }
+
+  export type DinozItemToDinozUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozItemToDinozCreateWithoutGameDinozInput, DinozItemToDinozUncheckedCreateWithoutGameDinozInput> | DinozItemToDinozCreateWithoutGameDinozInput[] | DinozItemToDinozUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutGameDinozInput | DinozItemToDinozCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozItemToDinozUpsertWithWhereUniqueWithoutGameDinozInput | DinozItemToDinozUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozItemToDinozCreateManyGameDinozInputEnvelope
+    set?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    disconnect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    delete?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    update?: DinozItemToDinozUpdateWithWhereUniqueWithoutGameDinozInput | DinozItemToDinozUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozItemToDinozUpdateManyWithWhereWithoutGameDinozInput | DinozItemToDinozUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozItemToDinozScalarWhereInput | DinozItemToDinozScalarWhereInput[]
+  }
+
+  export type DinozSkillUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozSkillCreateWithoutGameDinozInput, DinozSkillUncheckedCreateWithoutGameDinozInput> | DinozSkillCreateWithoutGameDinozInput[] | DinozSkillUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillCreateOrConnectWithoutGameDinozInput | DinozSkillCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozSkillUpsertWithWhereUniqueWithoutGameDinozInput | DinozSkillUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozSkillCreateManyGameDinozInputEnvelope
+    set?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    disconnect?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    delete?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    connect?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    update?: DinozSkillUpdateWithWhereUniqueWithoutGameDinozInput | DinozSkillUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozSkillUpdateManyWithWhereWithoutGameDinozInput | DinozSkillUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozSkillScalarWhereInput | DinozSkillScalarWhereInput[]
+  }
+
+  export type DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozSkillUnlockableCreateWithoutGameDinozInput, DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput> | DinozSkillUnlockableCreateWithoutGameDinozInput[] | DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput | DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozSkillUnlockableUpsertWithWhereUniqueWithoutGameDinozInput | DinozSkillUnlockableUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozSkillUnlockableCreateManyGameDinozInputEnvelope
+    set?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    disconnect?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    delete?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    connect?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    update?: DinozSkillUnlockableUpdateWithWhereUniqueWithoutGameDinozInput | DinozSkillUnlockableUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozSkillUnlockableUpdateManyWithWhereWithoutGameDinozInput | DinozSkillUnlockableUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozSkillUnlockableScalarWhereInput | DinozSkillUnlockableScalarWhereInput[]
+  }
+
+  export type DinozStatusUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozStatusCreateWithoutGameDinozInput, DinozStatusUncheckedCreateWithoutGameDinozInput> | DinozStatusCreateWithoutGameDinozInput[] | DinozStatusUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozStatusCreateOrConnectWithoutGameDinozInput | DinozStatusCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozStatusUpsertWithWhereUniqueWithoutGameDinozInput | DinozStatusUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozStatusCreateManyGameDinozInputEnvelope
+    set?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    disconnect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    delete?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    connect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    update?: DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput | DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozStatusUpdateManyWithWhereWithoutGameDinozInput | DinozStatusUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozStatusScalarWhereInput | DinozStatusScalarWhereInput[]
+  }
+
+  export type FBTournamentUpdateOneWithoutParticipantsNestedInput = {
+    create?: XOR<FBTournamentCreateWithoutParticipantsInput, FBTournamentUncheckedCreateWithoutParticipantsInput>
+    connectOrCreate?: FBTournamentCreateOrConnectWithoutParticipantsInput
+    upsert?: FBTournamentUpsertWithoutParticipantsInput
+    disconnect?: FBTournamentWhereInput | boolean
+    delete?: FBTournamentWhereInput | boolean
+    connect?: FBTournamentWhereUniqueInput
+    update?: XOR<XOR<FBTournamentUpdateToOneWithWhereWithoutParticipantsInput, FBTournamentUpdateWithoutParticipantsInput>, FBTournamentUncheckedUpdateWithoutParticipantsInput>
+  }
+
+  export type DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput> | DinozItemCreateWithoutGameDinozInput[] | DinozItemUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemCreateOrConnectWithoutGameDinozInput | DinozItemCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozItemUpsertWithWhereUniqueWithoutGameDinozInput | DinozItemUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozItemCreateManyGameDinozInputEnvelope
+    set?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    disconnect?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    delete?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    connect?: DinozItemWhereUniqueInput | DinozItemWhereUniqueInput[]
+    update?: DinozItemUpdateWithWhereUniqueWithoutGameDinozInput | DinozItemUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozItemUpdateManyWithWhereWithoutGameDinozInput | DinozItemUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozItemScalarWhereInput | DinozItemScalarWhereInput[]
+  }
+
+  export type DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozItemToDinozCreateWithoutGameDinozInput, DinozItemToDinozUncheckedCreateWithoutGameDinozInput> | DinozItemToDinozCreateWithoutGameDinozInput[] | DinozItemToDinozUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozItemToDinozCreateOrConnectWithoutGameDinozInput | DinozItemToDinozCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozItemToDinozUpsertWithWhereUniqueWithoutGameDinozInput | DinozItemToDinozUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozItemToDinozCreateManyGameDinozInputEnvelope
+    set?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    disconnect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    delete?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    connect?: DinozItemToDinozWhereUniqueInput | DinozItemToDinozWhereUniqueInput[]
+    update?: DinozItemToDinozUpdateWithWhereUniqueWithoutGameDinozInput | DinozItemToDinozUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozItemToDinozUpdateManyWithWhereWithoutGameDinozInput | DinozItemToDinozUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozItemToDinozScalarWhereInput | DinozItemToDinozScalarWhereInput[]
+  }
+
+  export type DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozSkillCreateWithoutGameDinozInput, DinozSkillUncheckedCreateWithoutGameDinozInput> | DinozSkillCreateWithoutGameDinozInput[] | DinozSkillUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillCreateOrConnectWithoutGameDinozInput | DinozSkillCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozSkillUpsertWithWhereUniqueWithoutGameDinozInput | DinozSkillUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozSkillCreateManyGameDinozInputEnvelope
+    set?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    disconnect?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    delete?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    connect?: DinozSkillWhereUniqueInput | DinozSkillWhereUniqueInput[]
+    update?: DinozSkillUpdateWithWhereUniqueWithoutGameDinozInput | DinozSkillUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozSkillUpdateManyWithWhereWithoutGameDinozInput | DinozSkillUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozSkillScalarWhereInput | DinozSkillScalarWhereInput[]
+  }
+
+  export type DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozSkillUnlockableCreateWithoutGameDinozInput, DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput> | DinozSkillUnlockableCreateWithoutGameDinozInput[] | DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput | DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozSkillUnlockableUpsertWithWhereUniqueWithoutGameDinozInput | DinozSkillUnlockableUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozSkillUnlockableCreateManyGameDinozInputEnvelope
+    set?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    disconnect?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    delete?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    connect?: DinozSkillUnlockableWhereUniqueInput | DinozSkillUnlockableWhereUniqueInput[]
+    update?: DinozSkillUnlockableUpdateWithWhereUniqueWithoutGameDinozInput | DinozSkillUnlockableUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozSkillUnlockableUpdateManyWithWhereWithoutGameDinozInput | DinozSkillUnlockableUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozSkillUnlockableScalarWhereInput | DinozSkillUnlockableScalarWhereInput[]
+  }
+
+  export type DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput = {
+    create?: XOR<DinozStatusCreateWithoutGameDinozInput, DinozStatusUncheckedCreateWithoutGameDinozInput> | DinozStatusCreateWithoutGameDinozInput[] | DinozStatusUncheckedCreateWithoutGameDinozInput[]
+    connectOrCreate?: DinozStatusCreateOrConnectWithoutGameDinozInput | DinozStatusCreateOrConnectWithoutGameDinozInput[]
+    upsert?: DinozStatusUpsertWithWhereUniqueWithoutGameDinozInput | DinozStatusUpsertWithWhereUniqueWithoutGameDinozInput[]
+    createMany?: DinozStatusCreateManyGameDinozInputEnvelope
+    set?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    disconnect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    delete?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    connect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+    update?: DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput | DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput[]
+    updateMany?: DinozStatusUpdateManyWithWhereWithoutGameDinozInput | DinozStatusUpdateManyWithWhereWithoutGameDinozInput[]
+    deleteMany?: DinozStatusScalarWhereInput | DinozStatusScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -81398,6 +83137,23 @@ export namespace Prisma {
     _max?: NestedEnumNotificationSeverityFilter<$PrismaModel>
   }
 
+  export type NestedEnumGameDinozUsageFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameDinozUsage | EnumGameDinozUsageFieldRefInput<$PrismaModel>
+    in?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameDinozUsageFilter<$PrismaModel> | $Enums.GameDinozUsage
+  }
+
+  export type NestedEnumGameDinozUsageWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.GameDinozUsage | EnumGameDinozUsageFieldRefInput<$PrismaModel>
+    in?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    notIn?: $Enums.GameDinozUsage[] | ListEnumGameDinozUsageFieldRefInput<$PrismaModel>
+    not?: NestedEnumGameDinozUsageWithAggregatesFilter<$PrismaModel> | $Enums.GameDinozUsage
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumGameDinozUsageFilter<$PrismaModel>
+    _max?: NestedEnumGameDinozUsageFilter<$PrismaModel>
+  }
+
   export type DinozCreateWithoutConcentrationInput = {
     name: string
     raceId: number
@@ -81744,6 +83500,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -81800,6 +83557,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -82020,11 +83778,13 @@ export namespace Prisma {
   export type DinozItemCreateWithoutDinozInput = {
     itemId: number
     dinozItemToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinoz_itemInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutItemsInput
   }
 
   export type DinozItemUncheckedCreateWithoutDinozInput = {
     id?: number
     itemId: number
+    gameDinozId?: number | null
     dinozItemToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinoz_itemInput
   }
 
@@ -82040,10 +83800,12 @@ export namespace Prisma {
 
   export type DinozItemToDinozCreateWithoutDinozInput = {
     dinoz_item: DinozItemCreateNestedOneWithoutDinozItemToDinozInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutDinozItemsToDinozInput
   }
 
   export type DinozItemToDinozUncheckedCreateWithoutDinozInput = {
     dinozItemId: number
+    gameDinozId?: number | null
   }
 
   export type DinozItemToDinozCreateOrConnectWithoutDinozInput = {
@@ -82084,12 +83846,14 @@ export namespace Prisma {
   export type DinozSkillCreateWithoutDinozInput = {
     skillId: number
     state?: boolean
+    GameDinoz?: GameDinozCreateNestedOneWithoutSkillsInput
   }
 
   export type DinozSkillUncheckedCreateWithoutDinozInput = {
     id?: number
     skillId: number
     state?: boolean
+    gameDinozId?: number | null
   }
 
   export type DinozSkillCreateOrConnectWithoutDinozInput = {
@@ -82104,11 +83868,13 @@ export namespace Prisma {
 
   export type DinozSkillUnlockableCreateWithoutDinozInput = {
     skillId: number
+    GameDinoz?: GameDinozCreateNestedOneWithoutUnlockableSkillsInput
   }
 
   export type DinozSkillUnlockableUncheckedCreateWithoutDinozInput = {
     id?: number
     skillId: number
+    gameDinozId?: number | null
   }
 
   export type DinozSkillUnlockableCreateOrConnectWithoutDinozInput = {
@@ -82123,11 +83889,13 @@ export namespace Prisma {
 
   export type DinozStatusCreateWithoutDinozInput = {
     statusId: number
+    gameDinoz?: GameDinozCreateNestedOneWithoutStatusInput
   }
 
   export type DinozStatusUncheckedCreateWithoutDinozInput = {
     id?: number
     statusId: number
+    gameDinozId?: number | null
   }
 
   export type DinozStatusCreateOrConnectWithoutDinozInput = {
@@ -82442,6 +84210,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -82498,6 +84267,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -82660,6 +84430,7 @@ export namespace Prisma {
     id?: IntFilter<"DinozItem"> | number
     itemId?: IntFilter<"DinozItem"> | number
     dinozId?: IntNullableFilter<"DinozItem"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozItem"> | number | null
   }
 
   export type DinozItemToDinozUpsertWithWhereUniqueWithoutDinozInput = {
@@ -82684,6 +84455,7 @@ export namespace Prisma {
     NOT?: DinozItemToDinozScalarWhereInput | DinozItemToDinozScalarWhereInput[]
     dinozId?: IntFilter<"DinozItemToDinoz"> | number
     dinozItemId?: IntFilter<"DinozItemToDinoz"> | number
+    gameDinozId?: IntNullableFilter<"DinozItemToDinoz"> | number | null
   }
 
   export type DinozMissionUpsertWithWhereUniqueWithoutDinozInput = {
@@ -82738,6 +84510,7 @@ export namespace Prisma {
     skillId?: IntFilter<"DinozSkill"> | number
     state?: BoolFilter<"DinozSkill"> | boolean
     dinozId?: IntNullableFilter<"DinozSkill"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozSkill"> | number | null
   }
 
   export type DinozSkillUnlockableUpsertWithWhereUniqueWithoutDinozInput = {
@@ -82763,6 +84536,7 @@ export namespace Prisma {
     id?: IntFilter<"DinozSkillUnlockable"> | number
     skillId?: IntFilter<"DinozSkillUnlockable"> | number
     dinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozSkillUnlockable"> | number | null
   }
 
   export type DinozStatusUpsertWithWhereUniqueWithoutDinozInput = {
@@ -82788,6 +84562,7 @@ export namespace Prisma {
     id?: IntFilter<"DinozStatus"> | number
     statusId?: IntFilter<"DinozStatus"> | number
     dinozId?: IntNullableFilter<"DinozStatus"> | number | null
+    gameDinozId?: IntNullableFilter<"DinozStatus"> | number | null
   }
 
   export type NPCUpsertWithWhereUniqueWithoutDinozInput = {
@@ -82993,10 +84768,12 @@ export namespace Prisma {
 
   export type DinozItemToDinozCreateWithoutDinoz_itemInput = {
     dinoz: DinozCreateNestedOneWithoutDinozItemsToDinozInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutDinozItemsToDinozInput
   }
 
   export type DinozItemToDinozUncheckedCreateWithoutDinoz_itemInput = {
     dinozId: number
+    gameDinozId?: number | null
   }
 
   export type DinozItemToDinozCreateOrConnectWithoutDinoz_itemInput = {
@@ -83007,6 +84784,66 @@ export namespace Prisma {
   export type DinozItemToDinozCreateManyDinoz_itemInputEnvelope = {
     data: DinozItemToDinozCreateManyDinoz_itemInput | DinozItemToDinozCreateManyDinoz_itemInput[]
     skipDuplicates?: boolean
+  }
+
+  export type GameDinozCreateWithoutItemsInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutItemsInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutItemsInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutItemsInput, GameDinozUncheckedCreateWithoutItemsInput>
   }
 
   export type DinozUpsertWithoutItemsInput = {
@@ -83127,6 +84964,72 @@ export namespace Prisma {
     data: XOR<DinozItemToDinozUpdateManyMutationInput, DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemInput>
   }
 
+  export type GameDinozUpsertWithoutItemsInput = {
+    update: XOR<GameDinozUpdateWithoutItemsInput, GameDinozUncheckedUpdateWithoutItemsInput>
+    create: XOR<GameDinozCreateWithoutItemsInput, GameDinozUncheckedCreateWithoutItemsInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutItemsInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutItemsInput, GameDinozUncheckedUpdateWithoutItemsInput>
+  }
+
+  export type GameDinozUpdateWithoutItemsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutItemsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+  }
+
   export type DinozCreateWithoutDinozItemsToDinozInput = {
     name: string
     raceId: number
@@ -83226,17 +85129,79 @@ export namespace Prisma {
   export type DinozItemCreateWithoutDinozItemToDinozInput = {
     itemId: number
     dinoz?: DinozCreateNestedOneWithoutItemsInput
+    GameDinoz?: GameDinozCreateNestedOneWithoutItemsInput
   }
 
   export type DinozItemUncheckedCreateWithoutDinozItemToDinozInput = {
     id?: number
     itemId: number
     dinozId?: number | null
+    gameDinozId?: number | null
   }
 
   export type DinozItemCreateOrConnectWithoutDinozItemToDinozInput = {
     where: DinozItemWhereUniqueInput
     create: XOR<DinozItemCreateWithoutDinozItemToDinozInput, DinozItemUncheckedCreateWithoutDinozItemToDinozInput>
+  }
+
+  export type GameDinozCreateWithoutDinozItemsToDinozInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutDinozItemsToDinozInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutDinozItemsToDinozInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutDinozItemsToDinozInput, GameDinozUncheckedCreateWithoutDinozItemsToDinozInput>
   }
 
   export type DinozUpsertWithoutDinozItemsToDinozInput = {
@@ -83355,12 +85320,80 @@ export namespace Prisma {
   export type DinozItemUpdateWithoutDinozItemToDinozInput = {
     itemId?: IntFieldUpdateOperationsInput | number
     dinoz?: DinozUpdateOneWithoutItemsNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutItemsNestedInput
   }
 
   export type DinozItemUncheckedUpdateWithoutDinozItemToDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type GameDinozUpsertWithoutDinozItemsToDinozInput = {
+    update: XOR<GameDinozUpdateWithoutDinozItemsToDinozInput, GameDinozUncheckedUpdateWithoutDinozItemsToDinozInput>
+    create: XOR<GameDinozCreateWithoutDinozItemsToDinozInput, GameDinozUncheckedCreateWithoutDinozItemsToDinozInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutDinozItemsToDinozInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutDinozItemsToDinozInput, GameDinozUncheckedUpdateWithoutDinozItemsToDinozInput>
+  }
+
+  export type GameDinozUpdateWithoutDinozItemsToDinozInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
   }
 
   export type DinozCreateWithoutMissionsInput = {
@@ -83657,6 +85690,66 @@ export namespace Prisma {
     create: XOR<DinozCreateWithoutSkillsInput, DinozUncheckedCreateWithoutSkillsInput>
   }
 
+  export type GameDinozCreateWithoutSkillsInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutSkillsInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutSkillsInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutSkillsInput, GameDinozUncheckedCreateWithoutSkillsInput>
+  }
+
   export type DinozUpsertWithoutSkillsInput = {
     update: XOR<DinozUpdateWithoutSkillsInput, DinozUncheckedUpdateWithoutSkillsInput>
     create: XOR<DinozCreateWithoutSkillsInput, DinozUncheckedCreateWithoutSkillsInput>
@@ -83759,6 +85852,72 @@ export namespace Prisma {
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
+  export type GameDinozUpsertWithoutSkillsInput = {
+    update: XOR<GameDinozUpdateWithoutSkillsInput, GameDinozUncheckedUpdateWithoutSkillsInput>
+    create: XOR<GameDinozCreateWithoutSkillsInput, GameDinozUncheckedCreateWithoutSkillsInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutSkillsInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutSkillsInput, GameDinozUncheckedUpdateWithoutSkillsInput>
+  }
+
+  export type GameDinozUpdateWithoutSkillsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutSkillsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+  }
+
   export type DinozCreateWithoutUnlockableSkillsInput = {
     name: string
     raceId: number
@@ -83853,6 +86012,66 @@ export namespace Prisma {
   export type DinozCreateOrConnectWithoutUnlockableSkillsInput = {
     where: DinozWhereUniqueInput
     create: XOR<DinozCreateWithoutUnlockableSkillsInput, DinozUncheckedCreateWithoutUnlockableSkillsInput>
+  }
+
+  export type GameDinozCreateWithoutUnlockableSkillsInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutUnlockableSkillsInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutUnlockableSkillsInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutUnlockableSkillsInput, GameDinozUncheckedCreateWithoutUnlockableSkillsInput>
   }
 
   export type DinozUpsertWithoutUnlockableSkillsInput = {
@@ -83957,6 +86176,72 @@ export namespace Prisma {
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
   }
 
+  export type GameDinozUpsertWithoutUnlockableSkillsInput = {
+    update: XOR<GameDinozUpdateWithoutUnlockableSkillsInput, GameDinozUncheckedUpdateWithoutUnlockableSkillsInput>
+    create: XOR<GameDinozCreateWithoutUnlockableSkillsInput, GameDinozUncheckedCreateWithoutUnlockableSkillsInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutUnlockableSkillsInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutUnlockableSkillsInput, GameDinozUncheckedUpdateWithoutUnlockableSkillsInput>
+  }
+
+  export type GameDinozUpdateWithoutUnlockableSkillsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutUnlockableSkillsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+  }
+
   export type DinozCreateWithoutStatusInput = {
     name: string
     raceId: number
@@ -84051,6 +86336,66 @@ export namespace Prisma {
   export type DinozCreateOrConnectWithoutStatusInput = {
     where: DinozWhereUniqueInput
     create: XOR<DinozCreateWithoutStatusInput, DinozUncheckedCreateWithoutStatusInput>
+  }
+
+  export type GameDinozCreateWithoutStatusInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutStatusInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutStatusInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutStatusInput, GameDinozUncheckedCreateWithoutStatusInput>
   }
 
   export type DinozUpsertWithoutStatusInput = {
@@ -84153,6 +86498,72 @@ export namespace Prisma {
     DojoOpponents?: DojoOpponentsUncheckedUpdateManyWithoutDinozNestedInput
     DojoTeam?: DojoTeamUncheckedUpdateManyWithoutDinozNestedInput
     TournamentTeam?: TournamentTeamUncheckedUpdateManyWithoutDinozNestedInput
+  }
+
+  export type GameDinozUpsertWithoutStatusInput = {
+    update: XOR<GameDinozUpdateWithoutStatusInput, GameDinozUncheckedUpdateWithoutStatusInput>
+    create: XOR<GameDinozCreateWithoutStatusInput, GameDinozUncheckedCreateWithoutStatusInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutStatusInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutStatusInput, GameDinozUncheckedUpdateWithoutStatusInput>
+  }
+
+  export type GameDinozUpdateWithoutStatusInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutStatusInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -85155,6 +87566,7 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
   }
 
   export type FightArchiveUncheckedCreateWithoutPlayerInput = {
@@ -85170,6 +87582,7 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -85202,6 +87615,71 @@ export namespace Prisma {
 
   export type FightWatchedCreateManyPlayerInputEnvelope = {
     data: FightWatchedCreateManyPlayerInput | FightWatchedCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GameDinozCreateWithoutPlayerInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutPlayerInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutPlayerInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutPlayerInput, GameDinozUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type GameDinozCreateManyPlayerInputEnvelope = {
+    data: GameDinozCreateManyPlayerInput | GameDinozCreateManyPlayerInput[]
     skipDuplicates?: boolean
   }
 
@@ -85940,6 +88418,7 @@ export namespace Prisma {
     tournamentTeamRightId?: UuidNullableFilter<"FightArchive"> | string | null
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     metadata?: StringNullableFilter<"FightArchive"> | string | null
+    FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
   }
 
   export type FightWatchedUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -85966,6 +88445,49 @@ export namespace Prisma {
     playerId?: UuidFilter<"FightWatched"> | string
     favorite?: BoolFilter<"FightWatched"> | boolean
     fightArchiveId?: UuidFilter<"FightWatched"> | string
+  }
+
+  export type GameDinozUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: GameDinozWhereUniqueInput
+    update: XOR<GameDinozUpdateWithoutPlayerInput, GameDinozUncheckedUpdateWithoutPlayerInput>
+    create: XOR<GameDinozCreateWithoutPlayerInput, GameDinozUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type GameDinozUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: GameDinozWhereUniqueInput
+    data: XOR<GameDinozUpdateWithoutPlayerInput, GameDinozUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type GameDinozUpdateManyWithWhereWithoutPlayerInput = {
+    where: GameDinozScalarWhereInput
+    data: XOR<GameDinozUpdateManyMutationInput, GameDinozUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type GameDinozScalarWhereInput = {
+    AND?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
+    OR?: GameDinozScalarWhereInput[]
+    NOT?: GameDinozScalarWhereInput | GameDinozScalarWhereInput[]
+    id?: IntFilter<"GameDinoz"> | number
+    name?: StringFilter<"GameDinoz"> | string
+    raceId?: IntFilter<"GameDinoz"> | number
+    level?: IntFilter<"GameDinoz"> | number
+    nextUpElementId?: IntFilter<"GameDinoz"> | number
+    nextUpAltElementId?: IntFilter<"GameDinoz"> | number
+    display?: StringFilter<"GameDinoz"> | string
+    life?: IntFilter<"GameDinoz"> | number
+    maxLife?: IntFilter<"GameDinoz"> | number
+    experience?: IntFilter<"GameDinoz"> | number
+    nbrUpFire?: IntFilter<"GameDinoz"> | number
+    nbrUpWood?: IntFilter<"GameDinoz"> | number
+    nbrUpWater?: IntFilter<"GameDinoz"> | number
+    nbrUpLightning?: IntFilter<"GameDinoz"> | number
+    nbrUpAir?: IntFilter<"GameDinoz"> | number
+    canChangeName?: BoolFilter<"GameDinoz"> | boolean
+    createdDate?: DateTimeFilter<"GameDinoz"> | Date | string
+    seed?: StringFilter<"GameDinoz"> | string
+    usage?: EnumGameDinozUsageFilter<"GameDinoz"> | $Enums.GameDinozUsage
+    playerId?: UuidNullableFilter<"GameDinoz"> | string | null
+    FBTournamentId?: UuidNullableFilter<"GameDinoz"> | string | null
   }
 
   export type PlayerCreateWithoutDojoInput = {
@@ -86022,6 +88544,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDojoInput = {
@@ -86078,6 +88601,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDojoInput = {
@@ -86251,6 +88775,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDojoInput = {
@@ -86307,6 +88832,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
@@ -87044,6 +89570,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -87100,6 +89627,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -87172,6 +89700,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -87228,6 +89757,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -87284,6 +89814,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -87340,6 +89871,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -87412,6 +89944,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -87468,6 +90001,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -87524,6 +90058,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -87580,6 +90115,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -87652,6 +90188,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -87708,6 +90245,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -87764,6 +90302,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -87820,6 +90359,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -87892,6 +90432,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -87948,6 +90489,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -88004,6 +90546,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -88060,6 +90603,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -88132,6 +90676,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -88188,6 +90733,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -88244,6 +90790,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -88300,6 +90847,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -88372,6 +90920,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -88428,6 +90977,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -88484,6 +91034,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -88540,6 +91091,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -88612,6 +91164,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -88668,6 +91221,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -88724,6 +91278,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -88780,6 +91335,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -88852,6 +91408,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -88908,6 +91465,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -89054,6 +91612,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -89110,6 +91669,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -89216,6 +91776,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -89272,6 +91833,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -89424,6 +91986,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -89480,6 +92043,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -89698,6 +92262,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -89754,6 +92319,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -89949,6 +92515,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -90005,6 +92572,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -90179,6 +92747,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -90235,6 +92804,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -90489,6 +93059,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -90545,6 +93116,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -90617,6 +93189,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -90673,6 +93246,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -90825,6 +93399,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -90881,6 +93456,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -91055,6 +93631,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -91111,6 +93688,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanWarCreateWithoutClansInput = {
@@ -91183,6 +93761,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -91239,6 +93818,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -91477,6 +94057,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -91533,6 +94114,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -91764,6 +94346,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -91820,6 +94403,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -91932,6 +94516,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -91988,6 +94573,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -92186,6 +94772,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -92242,6 +94829,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -92348,6 +94936,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -92404,6 +94993,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -92500,6 +95090,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -92556,6 +95147,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -92662,6 +95254,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -92718,6 +95311,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -92848,6 +95442,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -92904,6 +95499,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -93016,6 +95612,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -93072,6 +95669,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -93298,6 +95896,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -93354,6 +95953,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -93415,6 +96015,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -93471,6 +96072,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -93532,6 +96134,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -93588,6 +96191,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -93762,6 +96366,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -93818,6 +96423,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -93885,6 +96491,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -93941,6 +96548,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -94008,6 +96616,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -94064,6 +96673,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutCreatedConversationsInput = {
@@ -94120,6 +96730,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -94176,6 +96787,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -94259,6 +96871,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -94315,6 +96928,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -94437,6 +97051,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -94493,6 +97108,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -94588,6 +97204,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -94644,6 +97261,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -94761,6 +97379,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -94817,6 +97436,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -94924,6 +97544,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -94980,6 +97601,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -95094,6 +97716,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -95150,6 +97773,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -95292,6 +97916,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -95348,6 +97973,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -95404,6 +98030,7 @@ export namespace Prisma {
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -95460,6 +98087,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -95532,6 +98160,7 @@ export namespace Prisma {
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -95588,6 +98217,7 @@ export namespace Prisma {
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutFightArchiveInput = {
@@ -95644,6 +98274,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
@@ -95700,6 +98331,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
@@ -95812,6 +98444,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type FBTournamentCreateWithoutFightsInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+    participants?: GameDinozCreateNestedManyWithoutFBTournamentInput
+  }
+
+  export type FBTournamentUncheckedCreateWithoutFightsInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+    participants?: GameDinozUncheckedCreateNestedManyWithoutFBTournamentInput
+  }
+
+  export type FBTournamentCreateOrConnectWithoutFightsInput = {
+    where: FBTournamentWhereUniqueInput
+    create: XOR<FBTournamentCreateWithoutFightsInput, FBTournamentUncheckedCreateWithoutFightsInput>
+  }
+
   export type PlayerUpsertWithoutFightArchiveInput = {
     update: XOR<PlayerUpdateWithoutFightArchiveInput, PlayerUncheckedUpdateWithoutFightArchiveInput>
     create: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
@@ -95877,6 +98536,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
@@ -95933,6 +98593,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentUpsertWithoutFightsInput = {
@@ -96052,6 +98713,39 @@ export namespace Prisma {
     data: XOR<FightWatchedUpdateManyMutationInput, FightWatchedUncheckedUpdateManyWithoutFightInput>
   }
 
+  export type FBTournamentUpsertWithoutFightsInput = {
+    update: XOR<FBTournamentUpdateWithoutFightsInput, FBTournamentUncheckedUpdateWithoutFightsInput>
+    create: XOR<FBTournamentCreateWithoutFightsInput, FBTournamentUncheckedCreateWithoutFightsInput>
+    where?: FBTournamentWhereInput
+  }
+
+  export type FBTournamentUpdateToOneWithWhereWithoutFightsInput = {
+    where?: FBTournamentWhereInput
+    data: XOR<FBTournamentUpdateWithoutFightsInput, FBTournamentUncheckedUpdateWithoutFightsInput>
+  }
+
+  export type FBTournamentUpdateWithoutFightsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: GameDinozUpdateManyWithoutFBTournamentNestedInput
+  }
+
+  export type FBTournamentUncheckedUpdateWithoutFightsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+    participants?: GameDinozUncheckedUpdateManyWithoutFBTournamentNestedInput
+  }
+
   export type FightArchiveCreateWithoutFightWatchedInput = {
     id?: string
     fighters: string
@@ -96066,6 +98760,7 @@ export namespace Prisma {
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
   }
 
   export type FightArchiveUncheckedCreateWithoutFightWatchedInput = {
@@ -96082,6 +98777,7 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
   }
 
   export type FightArchiveCreateOrConnectWithoutFightWatchedInput = {
@@ -96143,6 +98839,7 @@ export namespace Prisma {
     ranking?: RankingCreateNestedOneWithoutPlayerInput
     Dojo?: DojoCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightWatchedInput = {
@@ -96199,6 +98896,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
     Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightWatchedInput = {
@@ -96231,6 +98929,7 @@ export namespace Prisma {
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutFightWatchedInput = {
@@ -96247,6 +98946,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PlayerUpsertWithoutFightWatchedInput = {
@@ -96314,6 +99014,7 @@ export namespace Prisma {
     ranking?: RankingUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightWatchedInput = {
@@ -96370,6 +99071,7 @@ export namespace Prisma {
     ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
     Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -96416,6 +99118,7 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentInput = {
@@ -96431,6 +99134,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: string | null
     tournamentTeamRightId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -96648,6 +99352,7 @@ export namespace Prisma {
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput = {
@@ -96663,6 +99368,7 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -96690,6 +99396,7 @@ export namespace Prisma {
     Tournament?: TournamentCreateNestedOneWithoutFightsInput
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentTeamRightInput = {
@@ -96705,6 +99412,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -96838,6 +99546,635 @@ export namespace Prisma {
   export type FightArchiveUpdateManyWithWhereWithoutTournamentTeamRightInput = {
     where: FightArchiveScalarWhereInput
     data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutTournamentTeamRightInput>
+  }
+
+  export type GameDinozCreateWithoutFBTournamentInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutFBTournamentInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutFBTournamentInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutFBTournamentInput, GameDinozUncheckedCreateWithoutFBTournamentInput>
+  }
+
+  export type GameDinozCreateManyFBTournamentInputEnvelope = {
+    data: GameDinozCreateManyFBTournamentInput | GameDinozCreateManyFBTournamentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FightArchiveCreateWithoutFBTournamentInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutFBTournamentInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
+  }
+
+  export type FightArchiveCreateOrConnectWithoutFBTournamentInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutFBTournamentInput, FightArchiveUncheckedCreateWithoutFBTournamentInput>
+  }
+
+  export type FightArchiveCreateManyFBTournamentInputEnvelope = {
+    data: FightArchiveCreateManyFBTournamentInput | FightArchiveCreateManyFBTournamentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type GameDinozUpsertWithWhereUniqueWithoutFBTournamentInput = {
+    where: GameDinozWhereUniqueInput
+    update: XOR<GameDinozUpdateWithoutFBTournamentInput, GameDinozUncheckedUpdateWithoutFBTournamentInput>
+    create: XOR<GameDinozCreateWithoutFBTournamentInput, GameDinozUncheckedCreateWithoutFBTournamentInput>
+  }
+
+  export type GameDinozUpdateWithWhereUniqueWithoutFBTournamentInput = {
+    where: GameDinozWhereUniqueInput
+    data: XOR<GameDinozUpdateWithoutFBTournamentInput, GameDinozUncheckedUpdateWithoutFBTournamentInput>
+  }
+
+  export type GameDinozUpdateManyWithWhereWithoutFBTournamentInput = {
+    where: GameDinozScalarWhereInput
+    data: XOR<GameDinozUpdateManyMutationInput, GameDinozUncheckedUpdateManyWithoutFBTournamentInput>
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutFBTournamentInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutFBTournamentInput, FightArchiveUncheckedUpdateWithoutFBTournamentInput>
+    create: XOR<FightArchiveCreateWithoutFBTournamentInput, FightArchiveUncheckedCreateWithoutFBTournamentInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutFBTournamentInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutFBTournamentInput, FightArchiveUncheckedUpdateWithoutFBTournamentInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutFBTournamentInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutFBTournamentInput>
+  }
+
+  export type PlayerCreateWithoutGameDinozInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    id: string
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutGameDinozInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    banCaseId?: number | null
+    id: string
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutGameDinozInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutGameDinozInput, PlayerUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozItemCreateWithoutGameDinozInput = {
+    itemId: number
+    dinoz?: DinozCreateNestedOneWithoutItemsInput
+    dinozItemToDinoz?: DinozItemToDinozCreateNestedManyWithoutDinoz_itemInput
+  }
+
+  export type DinozItemUncheckedCreateWithoutGameDinozInput = {
+    id?: number
+    itemId: number
+    dinozId?: number | null
+    dinozItemToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutDinoz_itemInput
+  }
+
+  export type DinozItemCreateOrConnectWithoutGameDinozInput = {
+    where: DinozItemWhereUniqueInput
+    create: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozItemCreateManyGameDinozInputEnvelope = {
+    data: DinozItemCreateManyGameDinozInput | DinozItemCreateManyGameDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozItemToDinozCreateWithoutGameDinozInput = {
+    dinoz: DinozCreateNestedOneWithoutDinozItemsToDinozInput
+    dinoz_item: DinozItemCreateNestedOneWithoutDinozItemToDinozInput
+  }
+
+  export type DinozItemToDinozUncheckedCreateWithoutGameDinozInput = {
+    dinozId: number
+    dinozItemId: number
+  }
+
+  export type DinozItemToDinozCreateOrConnectWithoutGameDinozInput = {
+    where: DinozItemToDinozWhereUniqueInput
+    create: XOR<DinozItemToDinozCreateWithoutGameDinozInput, DinozItemToDinozUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozItemToDinozCreateManyGameDinozInputEnvelope = {
+    data: DinozItemToDinozCreateManyGameDinozInput | DinozItemToDinozCreateManyGameDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozSkillCreateWithoutGameDinozInput = {
+    skillId: number
+    state?: boolean
+    dinoz?: DinozCreateNestedOneWithoutSkillsInput
+  }
+
+  export type DinozSkillUncheckedCreateWithoutGameDinozInput = {
+    id?: number
+    skillId: number
+    state?: boolean
+    dinozId?: number | null
+  }
+
+  export type DinozSkillCreateOrConnectWithoutGameDinozInput = {
+    where: DinozSkillWhereUniqueInput
+    create: XOR<DinozSkillCreateWithoutGameDinozInput, DinozSkillUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozSkillCreateManyGameDinozInputEnvelope = {
+    data: DinozSkillCreateManyGameDinozInput | DinozSkillCreateManyGameDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozSkillUnlockableCreateWithoutGameDinozInput = {
+    skillId: number
+    dinoz?: DinozCreateNestedOneWithoutUnlockableSkillsInput
+  }
+
+  export type DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput = {
+    id?: number
+    skillId: number
+    dinozId?: number | null
+  }
+
+  export type DinozSkillUnlockableCreateOrConnectWithoutGameDinozInput = {
+    where: DinozSkillUnlockableWhereUniqueInput
+    create: XOR<DinozSkillUnlockableCreateWithoutGameDinozInput, DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUnlockableCreateManyGameDinozInputEnvelope = {
+    data: DinozSkillUnlockableCreateManyGameDinozInput | DinozSkillUnlockableCreateManyGameDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DinozStatusCreateWithoutGameDinozInput = {
+    statusId: number
+    dinoz?: DinozCreateNestedOneWithoutStatusInput
+  }
+
+  export type DinozStatusUncheckedCreateWithoutGameDinozInput = {
+    id?: number
+    statusId: number
+    dinozId?: number | null
+  }
+
+  export type DinozStatusCreateOrConnectWithoutGameDinozInput = {
+    where: DinozStatusWhereUniqueInput
+    create: XOR<DinozStatusCreateWithoutGameDinozInput, DinozStatusUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozStatusCreateManyGameDinozInputEnvelope = {
+    data: DinozStatusCreateManyGameDinozInput | DinozStatusCreateManyGameDinozInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FBTournamentCreateWithoutParticipantsInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+    fights?: FightArchiveCreateNestedManyWithoutFBTournamentInput
+  }
+
+  export type FBTournamentUncheckedCreateWithoutParticipantsInput = {
+    id?: string
+    date?: Date | string
+    teamRace: string
+    levelLimit?: number
+    cashPrice?: number
+    nextRound?: Date | string
+    winnerId?: number | null
+    fights?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentInput
+  }
+
+  export type FBTournamentCreateOrConnectWithoutParticipantsInput = {
+    where: FBTournamentWhereUniqueInput
+    create: XOR<FBTournamentCreateWithoutParticipantsInput, FBTournamentUncheckedCreateWithoutParticipantsInput>
+  }
+
+  export type PlayerUpsertWithoutGameDinozInput = {
+    update: XOR<PlayerUpdateWithoutGameDinozInput, PlayerUncheckedUpdateWithoutGameDinozInput>
+    create: XOR<PlayerCreateWithoutGameDinozInput, PlayerUncheckedCreateWithoutGameDinozInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutGameDinozInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutGameDinozInput, PlayerUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type PlayerUpdateWithoutGameDinozInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutGameDinozInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    id?: StringFieldUpdateOperationsInput | string
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type DinozItemUpsertWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozItemWhereUniqueInput
+    update: XOR<DinozItemUpdateWithoutGameDinozInput, DinozItemUncheckedUpdateWithoutGameDinozInput>
+    create: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozItemUpdateWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozItemWhereUniqueInput
+    data: XOR<DinozItemUpdateWithoutGameDinozInput, DinozItemUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type DinozItemUpdateManyWithWhereWithoutGameDinozInput = {
+    where: DinozItemScalarWhereInput
+    data: XOR<DinozItemUpdateManyMutationInput, DinozItemUncheckedUpdateManyWithoutGameDinozInput>
+  }
+
+  export type DinozItemToDinozUpsertWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozItemToDinozWhereUniqueInput
+    update: XOR<DinozItemToDinozUpdateWithoutGameDinozInput, DinozItemToDinozUncheckedUpdateWithoutGameDinozInput>
+    create: XOR<DinozItemToDinozCreateWithoutGameDinozInput, DinozItemToDinozUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozItemToDinozUpdateWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozItemToDinozWhereUniqueInput
+    data: XOR<DinozItemToDinozUpdateWithoutGameDinozInput, DinozItemToDinozUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type DinozItemToDinozUpdateManyWithWhereWithoutGameDinozInput = {
+    where: DinozItemToDinozScalarWhereInput
+    data: XOR<DinozItemToDinozUpdateManyMutationInput, DinozItemToDinozUncheckedUpdateManyWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUpsertWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozSkillWhereUniqueInput
+    update: XOR<DinozSkillUpdateWithoutGameDinozInput, DinozSkillUncheckedUpdateWithoutGameDinozInput>
+    create: XOR<DinozSkillCreateWithoutGameDinozInput, DinozSkillUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUpdateWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozSkillWhereUniqueInput
+    data: XOR<DinozSkillUpdateWithoutGameDinozInput, DinozSkillUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUpdateManyWithWhereWithoutGameDinozInput = {
+    where: DinozSkillScalarWhereInput
+    data: XOR<DinozSkillUpdateManyMutationInput, DinozSkillUncheckedUpdateManyWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUnlockableUpsertWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozSkillUnlockableWhereUniqueInput
+    update: XOR<DinozSkillUnlockableUpdateWithoutGameDinozInput, DinozSkillUnlockableUncheckedUpdateWithoutGameDinozInput>
+    create: XOR<DinozSkillUnlockableCreateWithoutGameDinozInput, DinozSkillUnlockableUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUnlockableUpdateWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozSkillUnlockableWhereUniqueInput
+    data: XOR<DinozSkillUnlockableUpdateWithoutGameDinozInput, DinozSkillUnlockableUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type DinozSkillUnlockableUpdateManyWithWhereWithoutGameDinozInput = {
+    where: DinozSkillUnlockableScalarWhereInput
+    data: XOR<DinozSkillUnlockableUpdateManyMutationInput, DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozInput>
+  }
+
+  export type DinozStatusUpsertWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozStatusWhereUniqueInput
+    update: XOR<DinozStatusUpdateWithoutGameDinozInput, DinozStatusUncheckedUpdateWithoutGameDinozInput>
+    create: XOR<DinozStatusCreateWithoutGameDinozInput, DinozStatusUncheckedCreateWithoutGameDinozInput>
+  }
+
+  export type DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput = {
+    where: DinozStatusWhereUniqueInput
+    data: XOR<DinozStatusUpdateWithoutGameDinozInput, DinozStatusUncheckedUpdateWithoutGameDinozInput>
+  }
+
+  export type DinozStatusUpdateManyWithWhereWithoutGameDinozInput = {
+    where: DinozStatusScalarWhereInput
+    data: XOR<DinozStatusUpdateManyMutationInput, DinozStatusUncheckedUpdateManyWithoutGameDinozInput>
+  }
+
+  export type FBTournamentUpsertWithoutParticipantsInput = {
+    update: XOR<FBTournamentUpdateWithoutParticipantsInput, FBTournamentUncheckedUpdateWithoutParticipantsInput>
+    create: XOR<FBTournamentCreateWithoutParticipantsInput, FBTournamentUncheckedCreateWithoutParticipantsInput>
+    where?: FBTournamentWhereInput
+  }
+
+  export type FBTournamentUpdateToOneWithWhereWithoutParticipantsInput = {
+    where?: FBTournamentWhereInput
+    data: XOR<FBTournamentUpdateWithoutParticipantsInput, FBTournamentUncheckedUpdateWithoutParticipantsInput>
+  }
+
+  export type FBTournamentUpdateWithoutParticipantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+    fights?: FightArchiveUpdateManyWithoutFBTournamentNestedInput
+  }
+
+  export type FBTournamentUncheckedUpdateWithoutParticipantsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    teamRace?: StringFieldUpdateOperationsInput | string
+    levelLimit?: IntFieldUpdateOperationsInput | number
+    cashPrice?: IntFieldUpdateOperationsInput | number
+    nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
+    winnerId?: NullableIntFieldUpdateOperationsInput | number | null
+    fights?: FightArchiveUncheckedUpdateManyWithoutFBTournamentNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -97069,10 +100406,12 @@ export namespace Prisma {
   export type DinozItemCreateManyDinozInput = {
     id?: number
     itemId: number
+    gameDinozId?: number | null
   }
 
   export type DinozItemToDinozCreateManyDinozInput = {
     dinozItemId: number
+    gameDinozId?: number | null
   }
 
   export type DinozMissionCreateManyDinozInput = {
@@ -97087,16 +100426,19 @@ export namespace Prisma {
     id?: number
     skillId: number
     state?: boolean
+    gameDinozId?: number | null
   }
 
   export type DinozSkillUnlockableCreateManyDinozInput = {
     id?: number
     skillId: number
+    gameDinozId?: number | null
   }
 
   export type DinozStatusCreateManyDinozInput = {
     id?: number
     statusId: number
+    gameDinozId?: number | null
   }
 
   export type NPCCreateManyDinozInput = {
@@ -97378,29 +100720,35 @@ export namespace Prisma {
   export type DinozItemUpdateWithoutDinozInput = {
     itemId?: IntFieldUpdateOperationsInput | number
     dinozItemToDinoz?: DinozItemToDinozUpdateManyWithoutDinoz_itemNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutItemsNestedInput
   }
 
   export type DinozItemUncheckedUpdateWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
     dinozItemToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemNestedInput
   }
 
   export type DinozItemUncheckedUpdateManyWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     itemId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozUpdateWithoutDinozInput = {
     dinoz_item?: DinozItemUpdateOneRequiredWithoutDinozItemToDinozNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutDinozItemsToDinozNestedInput
   }
 
   export type DinozItemToDinozUncheckedUpdateWithoutDinozInput = {
     dinozItemId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozUncheckedUpdateManyWithoutDinozInput = {
     dinozItemId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozMissionUpdateWithoutDinozInput = {
@@ -97429,46 +100777,55 @@ export namespace Prisma {
   export type DinozSkillUpdateWithoutDinozInput = {
     skillId?: IntFieldUpdateOperationsInput | number
     state?: BoolFieldUpdateOperationsInput | boolean
+    GameDinoz?: GameDinozUpdateOneWithoutSkillsNestedInput
   }
 
   export type DinozSkillUncheckedUpdateWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     skillId?: IntFieldUpdateOperationsInput | number
     state?: BoolFieldUpdateOperationsInput | boolean
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozSkillUncheckedUpdateManyWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     skillId?: IntFieldUpdateOperationsInput | number
     state?: BoolFieldUpdateOperationsInput | boolean
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozSkillUnlockableUpdateWithoutDinozInput = {
     skillId?: IntFieldUpdateOperationsInput | number
+    GameDinoz?: GameDinozUpdateOneWithoutUnlockableSkillsNestedInput
   }
 
   export type DinozSkillUnlockableUncheckedUpdateWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     skillId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozSkillUnlockableUncheckedUpdateManyWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     skillId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozStatusUpdateWithoutDinozInput = {
     statusId?: IntFieldUpdateOperationsInput | number
+    gameDinoz?: GameDinozUpdateOneWithoutStatusNestedInput
   }
 
   export type DinozStatusUncheckedUpdateWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozStatusUncheckedUpdateManyWithoutDinozInput = {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type NPCUpdateWithoutDinozInput = {
@@ -97556,18 +100913,22 @@ export namespace Prisma {
 
   export type DinozItemToDinozCreateManyDinoz_itemInput = {
     dinozId: number
+    gameDinozId?: number | null
   }
 
   export type DinozItemToDinozUpdateWithoutDinoz_itemInput = {
     dinoz?: DinozUpdateOneRequiredWithoutDinozItemsToDinozNestedInput
+    GameDinoz?: GameDinozUpdateOneWithoutDinozItemsToDinozNestedInput
   }
 
   export type DinozItemToDinozUncheckedUpdateWithoutDinoz_itemInput = {
     dinozId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemInput = {
     dinozId?: IntFieldUpdateOperationsInput | number
+    gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type ClanHistoryCreateManyAuthorInput = {
@@ -97776,12 +101137,36 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
   }
 
   export type FightWatchedCreateManyPlayerInput = {
     id?: string
     favorite: boolean
     fightArchiveId: string
+  }
+
+  export type GameDinozCreateManyPlayerInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    FBTournamentId?: string | null
   }
 
   export type ClanHistoryUpdateWithoutAuthorInput = {
@@ -98408,6 +101793,7 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutPlayerInput = {
@@ -98423,6 +101809,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -98439,6 +101826,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightWatchedUpdateWithoutPlayerInput = {
@@ -98457,6 +101845,84 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     favorite?: BoolFieldUpdateOperationsInput | boolean
     fightArchiveId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type GameDinozUpdateWithoutPlayerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateManyWithoutPlayerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DojoTeamCreateManyDojoInput = {
@@ -98925,6 +102391,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: string | null
     tournamentTeamRightId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
   }
 
   export type TournamentTeamUpdateWithoutTournamentInput = {
@@ -98967,6 +102434,7 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentInput = {
@@ -98982,6 +102450,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -98998,6 +102467,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveCreateManyTournamentTeamLeftInput = {
@@ -99013,6 +102483,7 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
   }
 
   export type FightArchiveCreateManyTournamentTeamRightInput = {
@@ -99028,6 +102499,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentId?: string | null
   }
 
   export type DinozUpdateWithoutTournamentTeamInput = {
@@ -99166,6 +102638,7 @@ export namespace Prisma {
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentTeamLeftInput = {
@@ -99181,6 +102654,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -99197,6 +102671,7 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type FightArchiveUpdateWithoutTournamentTeamRightInput = {
@@ -99213,6 +102688,7 @@ export namespace Prisma {
     Tournament?: TournamentUpdateOneWithoutFightsNestedInput
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentTeamRightInput = {
@@ -99228,6 +102704,7 @@ export namespace Prisma {
     tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -99244,6 +102721,292 @@ export namespace Prisma {
     tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type GameDinozCreateManyFBTournamentInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+  }
+
+  export type FightArchiveCreateManyFBTournamentInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+  }
+
+  export type GameDinozUpdateWithoutFBTournamentInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutFBTournamentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateManyWithoutFBTournamentInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type FightArchiveUpdateWithoutFBTournamentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutFBTournamentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutFBTournamentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type DinozItemCreateManyGameDinozInput = {
+    id?: number
+    itemId: number
+    dinozId?: number | null
+  }
+
+  export type DinozItemToDinozCreateManyGameDinozInput = {
+    dinozId: number
+    dinozItemId: number
+  }
+
+  export type DinozSkillCreateManyGameDinozInput = {
+    id?: number
+    skillId: number
+    state?: boolean
+    dinozId?: number | null
+  }
+
+  export type DinozSkillUnlockableCreateManyGameDinozInput = {
+    id?: number
+    skillId: number
+    dinozId?: number | null
+  }
+
+  export type DinozStatusCreateManyGameDinozInput = {
+    id?: number
+    statusId: number
+    dinozId?: number | null
+  }
+
+  export type DinozItemUpdateWithoutGameDinozInput = {
+    itemId?: IntFieldUpdateOperationsInput | number
+    dinoz?: DinozUpdateOneWithoutItemsNestedInput
+    dinozItemToDinoz?: DinozItemToDinozUpdateManyWithoutDinoz_itemNestedInput
+  }
+
+  export type DinozItemUncheckedUpdateWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+    dinozItemToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemNestedInput
+  }
+
+  export type DinozItemUncheckedUpdateManyWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    itemId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozItemToDinozUpdateWithoutGameDinozInput = {
+    dinoz?: DinozUpdateOneRequiredWithoutDinozItemsToDinozNestedInput
+    dinoz_item?: DinozItemUpdateOneRequiredWithoutDinozItemToDinozNestedInput
+  }
+
+  export type DinozItemToDinozUncheckedUpdateWithoutGameDinozInput = {
+    dinozId?: IntFieldUpdateOperationsInput | number
+    dinozItemId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozItemToDinozUncheckedUpdateManyWithoutGameDinozInput = {
+    dinozId?: IntFieldUpdateOperationsInput | number
+    dinozItemId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type DinozSkillUpdateWithoutGameDinozInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+    state?: BoolFieldUpdateOperationsInput | boolean
+    dinoz?: DinozUpdateOneWithoutSkillsNestedInput
+  }
+
+  export type DinozSkillUncheckedUpdateWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    state?: BoolFieldUpdateOperationsInput | boolean
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozSkillUncheckedUpdateManyWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    state?: BoolFieldUpdateOperationsInput | boolean
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozSkillUnlockableUpdateWithoutGameDinozInput = {
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinoz?: DinozUpdateOneWithoutUnlockableSkillsNestedInput
+  }
+
+  export type DinozSkillUnlockableUncheckedUpdateWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    skillId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozStatusUpdateWithoutGameDinozInput = {
+    statusId?: IntFieldUpdateOperationsInput | number
+    dinoz?: DinozUpdateOneWithoutStatusNestedInput
+  }
+
+  export type DinozStatusUncheckedUpdateWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    statusId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DinozStatusUncheckedUpdateManyWithoutGameDinozInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    statusId?: IntFieldUpdateOperationsInput | number
+    dinozId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

@@ -1,7 +1,8 @@
 <template>
 	<TitleHeader
-		:title="`${$t('pageTitle.levelup')}${dinozData.name} ]`"
-		:header="$t(`levelup.title`, { name: dinozData.name })"
+		v-if="availableSkills"
+		:title="`${$t('pageTitle.levelup')}${availableSkills.name} ]`"
+		:header="$t(`levelup.title`, { name: availableSkills.name })"
 	></TitleHeader>
 	<div class="levelUp">
 		<DZDisclaimer content="levelup.disclaimer" />
@@ -19,9 +20,8 @@
 							position: `relative`,
 							top: `45px`
 						}"
-						:display="dinozData.display"
-						:life="dinozData.life / dinozData.maxLife"
-						:race="dinozData.race.raceId"
+						:display="availableSkills.display"
+						:life="1"
 					/>
 					<template #fallback><Loading /></template>
 				</Suspense>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="slide-bottom" :class="isSpinOver ? '' : 'hidden'" v-if="availableSkills">
 			<div class="result" v-if="ElementType[availableSkills.element]">
-				{{ dinozData.name }}
+				{{ availableSkills.name }}
 				<p v-html="formatContent($t(`levelup.${ElementType[availableSkills.element].toLowerCase()}`))" />
 				<Elements
 					:fire="
@@ -64,7 +64,11 @@
 							<th class="type">{{ $t('levelup.level') }}</th>
 							<th class="type"></th>
 						</tr>
-						<tr v-for="skill in availableSkills.learnableSkills" :key="skill" @click="learnSkill(skill.skillId)">
+						<tr
+							v-for="skill in availableSkills.learnableSkills"
+							:key="skill.skillId"
+							@click="learnSkill(skill.skillId)"
+						>
 							<td class="name">
 								<div class="skillName">
 									<img
@@ -154,7 +158,6 @@ import EventBus from '../events/index.js';
 import { DinozService } from '../services/index.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { dinozStore } from '../store/index.js';
@@ -163,6 +166,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
+import { FBService } from '../services/FBTournamentService.js';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -177,13 +181,20 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			availableSkills: null as DinozSkillOwnAndUnlockable | null,
-			dinozData: {} as DinozFiche,
 			tryNumber: 1 as number,
 			skillList,
 			ElementType: ElementType,
 			isSpinOver: false as boolean,
 			position: dinozPlacement
 		};
+	},
+	props: {
+		id: { type: Number, required: true },
+		event: {
+			type: String,
+			required: false,
+			default: null
+		}
 	},
 	methods: {
 		spinOver(): void {
@@ -195,7 +206,7 @@ export default defineComponent({
 				confirm(
 					this.$t('levelup.confirmSkill', {
 						skill: this.$t(`skill.name.${skillList[skillId].name}`),
-						level: this.dinozData.level + 1
+						level: (this.availableSkills?.level ?? 0) + 1
 					})
 				)
 			) {
@@ -221,17 +232,17 @@ export default defineComponent({
 			const dinozId: number = parseInt(this.$route.params.id.toString());
 
 			EventBus.emit('isLoading', true);
+			console.log(this.event);
 			try {
-				const newMaxExperience = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
-
-				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id === dinozId)!;
-				dinozToUpdate.experience = 0;
-				dinozToUpdate.maxExperience = parseInt(newMaxExperience);
-				this.dinozStore.setDinozList(dinozList);
-				EventBus.emit('isLoading', false);
-
-				this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+				if (!this.event) {
+					await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
+					EventBus.emit('isLoading', false);
+					this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+				} else {
+					await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
+					EventBus.emit('isLoading', false);
+					this.$router.push({ name: 'FBTournament' });
+				}
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;
@@ -240,21 +251,21 @@ export default defineComponent({
 		retry(): void {
 			this.isSpinOver = false;
 			this.availableSkills = null;
-			const dinozId: string = this.$route.params.id.toString();
 			this.tryNumber = this.tryNumber === 1 ? 2 : 1;
-			this.getLearnableSkills(dinozId, this.tryNumber);
+			this.getLearnableSkills(this.id, this.tryNumber);
 		},
-		async getLearnableSkills(dinozId: string, tryNumber: number): Promise<void> {
+		async getLearnableSkills(dinozId: number, tryNumber: number): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.availableSkills = await DinozService.levelUp(parseInt(dinozId), tryNumber.toString());
+				if (this.event) {
+					this.availableSkills = await FBService.levelUp(dinozId, tryNumber, this.event);
+				} else {
+					this.availableSkills = await DinozService.levelUp(dinozId, tryNumber.toString());
+				}
+
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
-				this.$router.push({
-					name: 'DinozPage',
-					params: { id: +dinozId }
-				});
 				return;
 			}
 		},
@@ -263,11 +274,7 @@ export default defineComponent({
 		}
 	},
 	async created(): Promise<void> {
-		const dinozId: string = this.$route.params.id.toString();
-		const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-		this.dinozData = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-
-		await this.getLearnableSkills(dinozId, 1);
+		await this.getLearnableSkills(this.id, 1);
 	}
 });
 </script>

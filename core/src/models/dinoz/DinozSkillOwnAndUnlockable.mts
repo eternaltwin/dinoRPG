@@ -5,6 +5,9 @@ export interface DinozSkillOwnAndUnlockable {
 	learnableSkills: { skillId: number; type: SkillType; element: ElementType[] }[];
 	unlockableSkills: { skillId: number; element: ElementType[] }[];
 	element: number;
+	name: string;
+	display: string;
+	level: number;
 	canRelaunch: boolean;
 	nbrUpFire: number;
 	nbrUpWood: number;

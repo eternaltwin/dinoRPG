@@ -76,6 +76,8 @@ model DinozItem {
   dinozId          Int?
   dinoz            Dinoz?             @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_37055da55534196f2248a1b5c6d")
   dinozItemToDinoz DinozItemToDinoz[]
+  GameDinoz        GameDinoz?         @relation(fields: [gameDinozId], references: [id], onDelete: Cascade)
+  gameDinozId      Int?
 
   @@index([dinozId])
   @@map("dinoz_item")
@@ -84,8 +86,10 @@ model DinozItem {
 model DinozItemToDinoz {
   dinozId     Int
   dinozItemId Int
-  dinoz       Dinoz     @relation(fields: [dinozId], references: [id], onDelete: Cascade, map: "FK_4e81bd56b675264ba5f30a5f109")
-  dinoz_item  DinozItem @relation(fields: [dinozItemId], references: [id], onDelete: Cascade, map: "FK_e90f6271f11b3522312139ef3a9")
+  dinoz       Dinoz      @relation(fields: [dinozId], references: [id], onDelete: Cascade, map: "FK_4e81bd56b675264ba5f30a5f109")
+  dinoz_item  DinozItem  @relation(fields: [dinozItemId], references: [id], onDelete: Cascade, map: "FK_e90f6271f11b3522312139ef3a9")
+  GameDinoz   GameDinoz? @relation(fields: [gameDinozId], references: [id], onDelete: Cascade)
+  gameDinozId Int?
 
   @@id([dinozId, dinozItemId], map: "PK_e7161ad9702ca574280cf1a1617")
   @@index([dinozId], map: "IDX_4e81bd56b675264ba5f30a5f10")
@@ -108,11 +112,13 @@ model DinozMission {
 }
 
 model DinozSkill {
-  id      Int     @id(map: "PK_c4109fad8627da673d3614fbc01") @default(autoincrement())
-  skillId Int
-  state   Boolean @default(true)
-  dinozId Int?
-  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_5662d0ad643e55696f10bcbc858")
+  id          Int        @id(map: "PK_c4109fad8627da673d3614fbc01") @default(autoincrement())
+  skillId     Int
+  state       Boolean    @default(true)
+  dinozId     Int?
+  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_5662d0ad643e55696f10bcbc858")
+  GameDinoz   GameDinoz? @relation(fields: [gameDinozId], references: [id], onDelete: Cascade)
+  gameDinozId Int?
 
   @@unique([skillId, dinozId])
   @@index([dinozId])
@@ -120,19 +126,23 @@ model DinozSkill {
 }
 
 model DinozSkillUnlockable {
-  id      Int    @id(map: "PK_f61132504207a4379a96a324e93") @default(autoincrement())
-  skillId Int
-  dinozId Int?
-  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_db6b95479693f3e4b5948800cf8")
+  id          Int        @id(map: "PK_f61132504207a4379a96a324e93") @default(autoincrement())
+  skillId     Int
+  dinozId     Int?
+  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_db6b95479693f3e4b5948800cf8")
+  GameDinoz   GameDinoz? @relation(fields: [gameDinozId], references: [id], onDelete: Cascade)
+  gameDinozId Int?
 
   @@map("dinoz_skill_unlockable")
 }
 
 model DinozStatus {
-  id       Int    @id(map: "PK_149653f1934603aede93803c9de") @default(autoincrement())
-  statusId Int
-  dinozId  Int?
-  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ec5230fd4ad653770e13558df7d")
+  id          Int        @id(map: "PK_149653f1934603aede93803c9de") @default(autoincrement())
+  statusId    Int
+  dinozId     Int?
+  dinoz       Dinoz?     @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_ec5230fd4ad653770e13558df7d")
+  gameDinozId Int?
+  gameDinoz   GameDinoz? @relation(fields: [gameDinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
 
   @@unique([statusId, dinozId])
   @@index([dinozId])
@@ -230,6 +240,7 @@ model Player {
   Dojo                 Dojo?
   FightArchive         FightArchive[]
   FightWatched         FightWatched[]
+  GameDinoz            GameDinoz[]
   ips                  String[]           @db.Inet
 
   @@map("player")
@@ -654,6 +665,8 @@ model FightArchive {
   tournamentId          String?         @db.Uuid
   metadata              String?         @db.Text
   FightWatched          FightWatched[]
+  FBTournament          FBTournament?   @relation(fields: [FBTournamentId], references: [id])
+  FBTournamentId        String?         @db.Uuid
 }
 
 model FightWatched {
@@ -698,6 +711,58 @@ model TournamentTeam {
 
   @@unique([dojoId, tournamentId])
   @@index([dojoId])
+}
+
+model FBTournament {
+  id           String         @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  date         DateTime       @default(now()) @db.Timestamp(6)
+  teamRace     String         @db.Text
+  levelLimit   Int            @default(50)
+  participants GameDinoz[]
+  fights       FightArchive[]
+  cashPrice    Int            @default(0)
+  nextRound    DateTime       @default(now())
+  winnerId     Int?
+
+  @@index([id, date])
+}
+
+model GameDinoz {
+  id                 Int                    @id() @default(autoincrement())
+  name               String                 @db.VarChar
+  raceId             Int
+  level              Int
+  nextUpElementId    Int
+  nextUpAltElementId Int
+  display            String                 @db.VarChar
+  life               Int
+  maxLife            Int
+  experience         Int
+  nbrUpFire          Int
+  nbrUpWood          Int
+  nbrUpWater         Int
+  nbrUpLightning     Int
+  nbrUpAir           Int
+  canChangeName      Boolean                @default(false)
+  createdDate        DateTime               @default(now()) @db.Timestamp(6)
+  seed               String                 @default(dbgenerated("uuid_generate_v4()"))
+  usage              GameDinozUsage
+  playerId           String?                @db.Uuid
+  player             Player?                @relation(fields: [playerId], references: [id], onDelete: SetNull, onUpdate: NoAction, map: "FK_064135f23ecaf0207af9926d7c9")
+  items              DinozItem[]
+  dinozItemsToDinoz  DinozItemToDinoz[]
+  skills             DinozSkill[]
+  unlockableSkills   DinozSkillUnlockable[]
+  status             DinozStatus[]
+  FBTournament       FBTournament?          @relation(fields: [FBTournamentId], references: [id])
+  FBTournamentId     String?                @db.Uuid
+
+  @@index([usage])
+  @@map("gamedinoz")
+}
+
+enum GameDinozUsage {
+  FBTournament
 }
 
 enum UnavailableReason {

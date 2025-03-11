@@ -41,7 +41,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceList.SANTAZ,
 			RaceList.FEROSS,
 			RaceList.KABUKI,
-			RaceList.KABUKI_DEMON,
 			RaceList.TOUFUFU,
 			RaceList.MAHAMUTI,
 			RaceList.SOUFFLET,

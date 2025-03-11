@@ -66,7 +66,7 @@ export function fromBase62(s: string) {
 	return result;
 }
 
-export function shuffle(array: any[]) {
+export function shuffle<T>(array: T[]): T[] {
 	const shuffledArray = [...array];
 	for (let i = array.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
