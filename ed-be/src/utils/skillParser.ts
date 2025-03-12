@@ -71,6 +71,15 @@ function deApplySkillFromDinoz(
 				break;
 		}
 	}
+
+	return {
+		maxLife: dinoz.maxLife,
+		nbrUpFire: dinoz.nbrUpFire,
+		nbrUpWood: dinoz.nbrUpWood,
+		nbrUpWater: dinoz.nbrUpWater,
+		nbrUpLightning: dinoz.nbrUpLightning,
+		nbrUpAir: dinoz.nbrUpAir
+	};
 }
 
 function applyUSkillEffect(

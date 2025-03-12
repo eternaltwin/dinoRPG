@@ -319,7 +319,7 @@ export const itemNames = [
 export type ItemName = (typeof itemNames)[number];
 
 // Note:
-// Price is for the players' market. If 0 the item cannot be sold.
+// Price is for the players' market.
 export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	// Irma's Potion: new action
 	[Item.POTION_IRMA]: {

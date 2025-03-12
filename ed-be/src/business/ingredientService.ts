@@ -15,17 +15,17 @@ export async function getAllIngredientsData(req: Request) {
 	const allIngredientsData = await getAllIngredientsDataRequest(authed.id);
 
 	const ingredients = allIngredientsData.map(ingr => {
-		const ingredientFound = Object.entries(ingredientList).find(
-			([, value]) => value.ingredientId === ingr.ingredientId
+		const ingredientFound = Object.values(ingredientList).find(
+			value => value.ingredientId === ingr.ingredientId
 		);
 
 		if (!ingredientFound) throw new ExpectedError('Ingredient not found');
 
 		return {
-			ingredientId: ingr.ingredientId,
-			name: ingredientFound[0].toLowerCase(),
+			ingredientId: ingredientFound.ingredientId,
+			name: ingredientFound.name.toLowerCase(),
 			quantity: ingr.quantity,
-			maxQuantity: ingredientFound[1].maxQuantity
+			maxQuantity: ingredientFound.maxQuantity
 		};
 	});
 

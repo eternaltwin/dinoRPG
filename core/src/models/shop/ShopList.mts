@@ -4,7 +4,7 @@ import { ItemShopType, ShopFiche } from './ShopFiche.mjs';
 import { Item, itemList } from '../item/ItemList.mjs';
 import { ConditionEnum } from '../enums/Parser.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
-import { ingredientList } from '../ingredient/ingredientList.mjs';
+import { Ingredient } from '../ingredient/ingredientList.mjs';
 import { DayEnum } from '../enums/dayEnum.mjs';
 
 export const shopList: Readonly<Record<string, ShopFiche>> = {
@@ -429,27 +429,27 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				id: ingredientList.ENERGIE_FOUDRE.ingredientId,
+				id: Ingredient.ENERGIE_FOUDRE,
 				price: 300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_AIR.ingredientId,
+				id: Ingredient.ENERGIE_AIR,
 				price: 1000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_EAU.ingredientId,
+				id: Ingredient.ENERGIE_EAU,
 				price: 4000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_FEU.ingredientId,
+				id: Ingredient.ENERGIE_FEU,
 				price: 4000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_BOIS.ingredientId,
+				id: Ingredient.ENERGIE_BOIS,
 				price: 4000,
 				type: ItemShopType.INGREDIENT
 			}
@@ -466,42 +466,42 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				id: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
+				id: Ingredient.FEUILLES_DE_PELINAE,
 				price: 75,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
+				id: Ingredient.BOLET_PHALISK_BLANC,
 				price: 130,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
+				id: Ingredient.ORCHIDEE_FANTASQUE,
 				price: 230,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
+				id: Ingredient.RACINE_DE_FIGONICIA,
 				price: 230,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SADIQUAE_MORDICUS.ingredientId,
+				id: Ingredient.SADIQUAE_MORDICUS,
 				price: 230,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.FLAUREOLE.ingredientId,
+				id: Ingredient.FLAUREOLE,
 				price: 500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SPORE_ETHERAL.ingredientId,
+				id: Ingredient.SPORE_ETHERAL,
 				price: 150,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.POUSSE_SOMBRE.ingredientId,
+				id: Ingredient.POUSSE_SOMBRE,
 				price: 300,
 				type: ItemShopType.INGREDIENT
 			}
@@ -518,42 +518,42 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				id: ingredientList.SILEX_TAILLE.ingredientId,
+				id: Ingredient.SILEX_TAILLE,
 				price: 150,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
+				id: Ingredient.FRAGMENT_DE_TEXTE_ANCIEN,
 				price: 1000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
+				id: Ingredient.VIEIL_ANNEAU_PRECIEUX,
 				price: 8000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.CALICE_CISELE.ingredientId,
+				id: Ingredient.CALICE_CISELE,
 				price: 8000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.COLLIER_KARAT.ingredientId,
+				id: Ingredient.COLLIER_KARAT,
 				price: 8000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
+				id: Ingredient.BROCHE_EN_PARFAIT_ETAT,
 				price: 30000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
+				id: Ingredient.SUPERBE_COURONNE_ROYALE,
 				price: 40000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.BRAS_MECANIQUE.ingredientId,
+				id: Ingredient.BRAS_MECANIQUE,
 				price: 23000,
 				type: ItemShopType.INGREDIENT
 			}
@@ -570,37 +570,37 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				id: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
+				id: Ingredient.TOUFFE_DE_FOURRURE,
 				price: 350,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ROCHE_RADIO_ACTIVE.ingredientId,
+				id: Ingredient.ROCHE_RADIO_ACTIVE,
 				price: 500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.GRIFFES_ACEREES.ingredientId,
+				id: Ingredient.GRIFFES_ACEREES,
 				price: 750,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
+				id: Ingredient.CORNE_EN_CHOCOLAT,
 				price: 1000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.OEIL_VISQUEUX.ingredientId,
+				id: Ingredient.OEIL_VISQUEUX,
 				price: 1300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.LANGUE_MONSTRUEUSE.ingredientId,
+				id: Ingredient.LANGUE_MONSTRUEUSE,
 				price: 10000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.DENT_DE_DOROGON.ingredientId,
+				id: Ingredient.DENT_DE_DOROGON,
 				price: 12000,
 				type: ItemShopType.INGREDIENT
 			}
@@ -617,27 +617,27 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				id: ingredientList.MEROU_LUJIDANE.ingredientId,
+				id: Ingredient.MEROU_LUJIDANE,
 				price: 100,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.POISSON_VENGEUR.ingredientId,
+				id: Ingredient.POISSON_VENGEUR,
 				price: 300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.AN_GUILI_GUILILLE.ingredientId,
+				id: Ingredient.AN_GUILI_GUILILLE,
 				price: 1500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.GLOBULOS.ingredientId,
+				id: Ingredient.GLOBULOS,
 				price: 1500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SUPER_POISSON.ingredientId,
+				id: Ingredient.SUPER_POISSON,
 				price: 1500,
 				type: ItemShopType.INGREDIENT
 			}
@@ -654,172 +654,172 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.ITINERANT,
 		listItemsSold: [
 			{
-				id: ingredientList.MEROU_LUJIDANE.ingredientId,
+				id: Ingredient.MEROU_LUJIDANE,
 				price: 100,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.POISSON_VENGEUR.ingredientId,
+				id: Ingredient.POISSON_VENGEUR,
 				price: 300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.AN_GUILI_GUILILLE.ingredientId,
+				id: Ingredient.AN_GUILI_GUILILLE,
 				price: 1500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.GLOBULOS.ingredientId,
+				id: Ingredient.GLOBULOS,
 				price: 1500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SUPER_POISSON.ingredientId,
+				id: Ingredient.SUPER_POISSON,
 				price: 1500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
+				id: Ingredient.TOUFFE_DE_FOURRURE,
 				price: 350,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ROCHE_RADIO_ACTIVE.ingredientId,
+				id: Ingredient.ROCHE_RADIO_ACTIVE,
 				price: 500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.GRIFFES_ACEREES.ingredientId,
+				id: Ingredient.GRIFFES_ACEREES,
 				price: 750,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.CORNE_EN_CHOCOLAT.ingredientId,
+				id: Ingredient.CORNE_EN_CHOCOLAT,
 				price: 1000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.OEIL_VISQUEUX.ingredientId,
+				id: Ingredient.OEIL_VISQUEUX,
 				price: 1300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.LANGUE_MONSTRUEUSE.ingredientId,
+				id: Ingredient.LANGUE_MONSTRUEUSE,
 				price: 10000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.DENT_DE_DOROGON.ingredientId,
+				id: Ingredient.DENT_DE_DOROGON,
 				price: 12000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_FOUDRE.ingredientId,
+				id: Ingredient.ENERGIE_FOUDRE,
 				price: 300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_AIR.ingredientId,
+				id: Ingredient.ENERGIE_AIR,
 				price: 1000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_EAU.ingredientId,
+				id: Ingredient.ENERGIE_EAU,
 				price: 4000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_FEU.ingredientId,
+				id: Ingredient.ENERGIE_FEU,
 				price: 4000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_BOIS.ingredientId,
+				id: Ingredient.ENERGIE_BOIS,
 				price: 4000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SILEX_TAILLE.ingredientId,
+				id: Ingredient.SILEX_TAILLE,
 				price: 150,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId,
+				id: Ingredient.FRAGMENT_DE_TEXTE_ANCIEN,
 				price: 1000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
+				id: Ingredient.VIEIL_ANNEAU_PRECIEUX,
 				price: 8000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.CALICE_CISELE.ingredientId,
+				id: Ingredient.CALICE_CISELE,
 				price: 8000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.COLLIER_KARAT.ingredientId,
+				id: Ingredient.COLLIER_KARAT,
 				price: 8000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
+				id: Ingredient.BROCHE_EN_PARFAIT_ETAT,
 				price: 30000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId,
+				id: Ingredient.SUPERBE_COURONNE_ROYALE,
 				price: 40000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.BRAS_MECANIQUE.ingredientId,
+				id: Ingredient.BRAS_MECANIQUE,
 				price: 23000,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
+				id: Ingredient.FEUILLES_DE_PELINAE,
 				price: 75,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.BOLET_PHALISK_BLANC.ingredientId,
+				id: Ingredient.BOLET_PHALISK_BLANC,
 				price: 130,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ORCHIDEE_FANTASQUE.ingredientId,
+				id: Ingredient.ORCHIDEE_FANTASQUE,
 				price: 230,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.RACINE_DE_FIGONICIA.ingredientId,
+				id: Ingredient.RACINE_DE_FIGONICIA,
 				price: 230,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SADIQUAE_MORDICUS.ingredientId,
+				id: Ingredient.SADIQUAE_MORDICUS,
 				price: 230,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.FLAUREOLE.ingredientId,
+				id: Ingredient.FLAUREOLE,
 				price: 500,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SPORE_ETHERAL.ingredientId,
+				id: Ingredient.SPORE_ETHERAL,
 				price: 150,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.POUSSE_SOMBRE.ingredientId,
+				id: Ingredient.POUSSE_SOMBRE,
 				price: 300,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.GRAINE_DE_DEVOREUSE.ingredientId,
+				id: Ingredient.GRAINE_DE_DEVOREUSE,
 				price: 15000,
 				type: ItemShopType.INGREDIENT
 			}
@@ -846,27 +846,27 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 		type: ShopType.FILOU,
 		listItemsSold: [
 			{
-				id: ingredientList.MEROU_LUJIDANE.ingredientId,
+				id: Ingredient.MEROU_LUJIDANE,
 				price: 11,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.FEUILLES_DE_PELINAE.ingredientId,
+				id: Ingredient.FEUILLES_DE_PELINAE,
 				price: 18,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.ENERGIE_FOUDRE.ingredientId,
+				id: Ingredient.ENERGIE_FOUDRE,
 				price: 4,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.SILEX_TAILLE.ingredientId,
+				id: Ingredient.SILEX_TAILLE,
 				price: 6,
 				type: ItemShopType.INGREDIENT
 			},
 			{
-				id: ingredientList.TOUFFE_DE_FOURRURE.ingredientId,
+				id: Ingredient.TOUFFE_DE_FOURRURE,
 				price: 4,
 				type: ItemShopType.INGREDIENT
 			}

@@ -1,6 +1,6 @@
 import { http } from '../utils/index.js';
 import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
@@ -100,7 +100,7 @@ export const AdminService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	listAllDinozFromPlayer(id: string): Promise<Array<DinozFiche>> {
+	listAllDinozFromPlayer(id: string): Promise<Array<DinozAdminFiche>> {
 		return http()
 			.get(`/admin/playerdinoz/${id}`)
 			.then(res => Promise.resolve(res.data))

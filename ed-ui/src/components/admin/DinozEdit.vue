@@ -227,7 +227,7 @@ import { DinozEdit } from '@drpg/core/models/dinoz/DinozEdit';
 import { statusList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
@@ -242,7 +242,7 @@ export default defineComponent({
 				statusList: [],
 				unlockableSkillList: []
 			} as DinozEdit,
-			dinoz: {} as DinozFiche,
+			dinoz: {} as DinozAdminFiche,
 			statusList: statusList,
 			statusOperation: '' as string,
 			statusListFiltered: [] as Array<string>,
@@ -256,7 +256,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		dinozProp: { type: Object as PropType<DinozFiche>, required: true },
+		dinozProp: { type: Object as PropType<DinozAdminFiche>, required: true },
 		playerId: { type: Number, required: true }
 	},
 	methods: {
@@ -310,7 +310,7 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<DinozFiche> = await AdminService.listAllDinozFromPlayer(this.playerId);
+				const refresh: Array<DinozAdminFiche> = await AdminService.listAllDinozFromPlayer(this.playerId);
 				this.dinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id)!;
 			} catch (err) {
 				EventBus.emit('isLoading', false);

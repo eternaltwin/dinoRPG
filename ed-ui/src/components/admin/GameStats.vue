@@ -68,6 +68,11 @@ const LogTypes = [
 	'AdminRemoveMoney',
 	'AdminAddReward',
 	'AdminRemoveReward',
+	'AdminAddItem',
+	'AdminRemoveItem',
+	'AdminAddIngredient',
+	'AdminRemoveIngredient',
+	'AdminUpdateQuest',
 	'AdminUpdatePlayer',
 	'AdminUpdateSecret'
 ] as const;

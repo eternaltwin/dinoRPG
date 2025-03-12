@@ -182,9 +182,8 @@ export async function editDinoz(req: Request) {
 						throw new ExpectedError(`Skill ${skill} doesn't exist.`);
 					}
 					if (skillDetail.effects) {
-						applySkillToDinoz(skillDetail.effects, dinoz);
-						console.log(`Dinoz Max hp ${dinoz.maxLife}`)
-						await updateDinoz(dinozId, dinoz);
+						const updates = applySkillToDinoz(skillDetail.effects, dinoz);
+						await updateDinoz(dinozId, updates);
 					}
 					await createLog(LogType.AdminAddSkill, authed.id, dinozId, skill);
 				}
@@ -199,8 +198,8 @@ export async function editDinoz(req: Request) {
 						throw new ExpectedError(`Skill ${skill} doesn't exist.`);
 					}
 					if (skillDetail.effects) {
-						deApplySkillFromDinoz(skillDetail.effects, dinoz);
-						await updateDinoz(dinozId, dinoz);
+						const updates = deApplySkillFromDinoz(skillDetail.effects, dinoz);
+						await updateDinoz(dinozId, updates);
 					}
 					await createLog(LogType.AdminRemoveSkill, authed.id, dinozId, skill);
 				}
@@ -323,13 +322,13 @@ export async function modifyPlayerItems(req: Request): Promise<void> {
 		case 'increase':
 			for (const item of items) {
 				await increaseItemQuantity(req.params.id, item.id, item.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, item.id, item.quantity);
+				await createLog(LogType.AdminAddItem, authed.id, undefined, req.params.id, item.id, item.quantity);
 			}
 			break;
 		case 'decrease':
 			for (const item of items) {
 				await decreaseItemQuantity(req.params.id, item.id, item.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, item.id, item.quantity);
+				await createLog(LogType.AdminRemoveItem, authed.id, undefined, req.params.id, item.id, item.quantity);
 			}
 			break;
 		default:
@@ -353,13 +352,13 @@ export async function modifyPlayerIngredients(req: Request): Promise<void> {
 		case 'increase':
 			for (const ing of ingredients) {
 				await increaseIngredientQuantity(req.params.id, ing.id, ing.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, ing.id, ing.quantity);
+				await createLog(LogType.AdminAddIngredient, authed.id, undefined, req.params.id, ing.id, ing.quantity);
 			}
 			break;
 		case 'decrease':
 			for (const ing of ingredients) {
 				await decreaseIngredientQuantity(req.params.id, ing.id, ing.quantity);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, ing.id, ing.quantity);
+				await createLog(LogType.AdminRemoveIngredient, authed.id, undefined, req.params.id, ing.id, ing.quantity);
 			}
 			break;
 		default:
@@ -387,13 +386,13 @@ export async function updatePlayerQuestProgression(req: Request): Promise<void> 
 		case 'increase':
 			for (const q of quests) {
 				await increaseQuestProgression(req.params.id, q.questId, q.progression);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, q.questId, q.progression);
+				await createLog(LogType.AdminUpdateQuest, authed.id, undefined, req.params.id, q.questId, q.progression);
 			}
 			break;
 		case 'decrease':
 			for (const q of quests) {
 				await decreaseQuestProgression(req.params.id, q.questId, q.progression);
-				await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, q.questId, q.progression);
+				await createLog(LogType.AdminUpdateQuest, authed.id, undefined, req.params.id, q.questId, q.progression);
 			}
 			break;
 		default:

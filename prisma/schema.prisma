@@ -866,6 +866,11 @@ enum LogType {
   AdminRemoveMoney
   AdminAddReward
   AdminRemoveReward
+  AdminAddItem
+  AdminRemoveItem
+  AdminAddIngredient
+  AdminRemoveIngredient
+  AdminUpdateQuest
   AdminUpdatePlayer
   AdminUpdateSecret
   IngredientSold

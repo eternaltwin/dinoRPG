@@ -93,18 +93,18 @@ export const discoverBox = (
 			const item = itemList[ingredientId as Item];
 			rewards.item.push({ id: item.itemId, price: item.price, maxQuantity: item.maxQuantity, quantity: 1 });
 		} else {
-			const ingredient = Object.entries(ingredientList).find(
-				ingredients => ingredients[1].ingredientId === ingredientId
+			const ingredient = Object.values(ingredientList).find(
+				ingredientFiche => ingredientFiche.ingredientId === ingredientId
 			);
 			if (ingredient) {
 				const gridIngredient = gridInformation.items.filter(ing =>
-					ing.ingredientId.includes(ingredient[1].ingredientId)
+					ing.ingredientId.includes(ingredient.ingredientId)
 				);
 				if (gridIngredient.length < 1) throw new Error('Ingredient not found in gridInformation.items');
 				for (const possibleGater of gridIngredient) {
 					if (checkCondition(possibleGater.condition, player, player.dinoz[0].id)) {
-						ingredient[1].name = ingredient[0].toLowerCase();
-						rewards.ingredients.push(ingredient[1]);
+						ingredient.name = ingredient.name.toLowerCase();
+						rewards.ingredients.push(ingredient);
 					}
 				}
 			}

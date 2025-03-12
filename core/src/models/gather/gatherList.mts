@@ -3,7 +3,7 @@ import { Skill, skillList } from '../dinoz/SkillList.mjs';
 import { GatherType } from '../enums/GatherType.mjs';
 import { ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
-import { ingredientList } from '../ingredient/ingredientList.mjs';
+import { Ingredient } from '../ingredient/ingredientList.mjs';
 import { Item, itemList } from '../item/ItemList.mjs';
 import { GatherData } from './gatherData.mjs';
 
@@ -21,12 +21,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.MEROU_LUJIDANE.ingredientId],
+				ingredientId: [Ingredient.MEROU_LUJIDANE],
 				startQuantity: 18
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.POISSON_VENGEUR.ingredientId],
+				ingredientId: [Ingredient.POISSON_VENGEUR],
 				startQuantity: 5,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.PECHEUR_CONFIRME].id
@@ -34,7 +34,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.AN_GUILI_GUILILLE.ingredientId],
+				ingredientId: [Ingredient.AN_GUILI_GUILILLE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -45,7 +45,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.GLOBULOS.ingredientId], //4
+				ingredientId: [Ingredient.GLOBULOS], //4
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -56,7 +56,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SUPER_POISSON.ingredientId], //5
+				ingredientId: [Ingredient.SUPER_POISSON], //5
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -80,12 +80,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FEUILLES_DE_PELINAE.ingredientId],
+				ingredientId: [Ingredient.FEUILLES_DE_PELINAE],
 				startQuantity: 28
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.BOLET_PHALISK_BLANC.ingredientId],
+				ingredientId: [Ingredient.BOLET_PHALISK_BLANC],
 				startQuantity: 11,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
@@ -93,7 +93,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ORCHIDEE_FANTASQUE.ingredientId],
+				ingredientId: [Ingredient.ORCHIDEE_FANTASQUE],
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
@@ -104,7 +104,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.RACINE_DE_FIGONICIA.ingredientId],
+				ingredientId: [Ingredient.RACINE_DE_FIGONICIA],
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
@@ -115,7 +115,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SADIQUAE_MORDICUS.ingredientId],
+				ingredientId: [Ingredient.SADIQUAE_MORDICUS],
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
@@ -139,12 +139,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FEUILLES_DE_PELINAE.ingredientId],
+				ingredientId: [Ingredient.FEUILLES_DE_PELINAE],
 				startQuantity: 20
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.BOLET_PHALISK_BLANC.ingredientId],
+				ingredientId: [Ingredient.BOLET_PHALISK_BLANC],
 				startQuantity: 5,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
@@ -152,7 +152,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ORCHIDEE_FANTASQUE.ingredientId],
+				ingredientId: [Ingredient.ORCHIDEE_FANTASQUE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id }, { [ConditionEnum.RANDOM]: 4 }]
@@ -160,7 +160,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.RACINE_DE_FIGONICIA.ingredientId],
+				ingredientId: [Ingredient.RACINE_DE_FIGONICIA],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id }, { [ConditionEnum.RANDOM]: 4 }]
@@ -168,7 +168,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SADIQUAE_MORDICUS.ingredientId],
+				ingredientId: [Ingredient.SADIQUAE_MORDICUS],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id }, { [ConditionEnum.RANDOM]: 4 }]
@@ -176,7 +176,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FLAUREOLE.ingredientId],
+				ingredientId: [Ingredient.FLAUREOLE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -200,12 +200,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FEUILLES_DE_PELINAE.ingredientId],
+				ingredientId: [Ingredient.FEUILLES_DE_PELINAE],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.BOLET_PHALISK_BLANC.ingredientId],
+				ingredientId: [Ingredient.BOLET_PHALISK_BLANC],
 				startQuantity: 5,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
@@ -213,7 +213,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ORCHIDEE_FANTASQUE.ingredientId],
+				ingredientId: [Ingredient.ORCHIDEE_FANTASQUE],
 				startQuantity: 2,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
@@ -221,7 +221,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SPORE_ETHERAL.ingredientId],
+				ingredientId: [Ingredient.SPORE_ETHERAL],
 				startQuantity: 5,
 				condition: {
 					[Operator.AND]: [
@@ -245,17 +245,17 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FEUILLES_DE_PELINAE.ingredientId],
+				ingredientId: [Ingredient.FEUILLES_DE_PELINAE],
 				startQuantity: 8
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.BOLET_PHALISK_BLANC.ingredientId],
+				ingredientId: [Ingredient.BOLET_PHALISK_BLANC],
 				startQuantity: 3
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ORCHIDEE_FANTASQUE.ingredientId, ingredientList.SADIQUAE_MORDICUS.ingredientId],
+				ingredientId: [Ingredient.ORCHIDEE_FANTASQUE, Ingredient.SADIQUAE_MORDICUS],
 				startQuantity: 2,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id
@@ -263,7 +263,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.POUSSE_SOMBRE.ingredientId],
+				ingredientId: [Ingredient.POUSSE_SOMBRE],
 				startQuantity: 1,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.OEIL_DE_LYNX].id //TODO: lieu du monde sombre
@@ -284,12 +284,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FOUDRE.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FOUDRE],
 				startQuantity: 6
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_AIR.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_AIR],
 				startQuantity: 3,
 				condition: {
 					[Operator.AND]: [
@@ -300,7 +300,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FEU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FEU],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -311,7 +311,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_BOIS.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_BOIS],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -322,7 +322,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_EAU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_EAU],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -346,17 +346,17 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FOUDRE.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FOUDRE],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_AIR.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_AIR],
 				startQuantity: 3
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FEU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FEU],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -367,7 +367,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_BOIS.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_BOIS],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -378,7 +378,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_EAU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_EAU],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -402,12 +402,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.TOUFFE_DE_FOURRURE.ingredientId],
+				ingredientId: [Ingredient.TOUFFE_DE_FOURRURE],
 				startQuantity: 7
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.GRIFFES_ACEREES.ingredientId],
+				ingredientId: [Ingredient.GRIFFES_ACEREES],
 				startQuantity: 4,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_GEANT].id
@@ -415,7 +415,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.CORNE_EN_CHOCOLAT.ingredientId, ingredientList.OEIL_VISQUEUX.ingredientId],
+				ingredientId: [Ingredient.CORNE_EN_CHOCOLAT, Ingredient.OEIL_VISQUEUX],
 				startQuantity: 1,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.CHASSEUR_DE_DRAGON].id
@@ -423,7 +423,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.LANGUE_MONSTRUEUSE.ingredientId],
+				ingredientId: [Ingredient.LANGUE_MONSTRUEUSE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -435,7 +435,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.LANGUE_MONSTRUEUSE.ingredientId, ingredientList.DENT_DE_DOROGON.ingredientId],
+				ingredientId: [Ingredient.LANGUE_MONSTRUEUSE, Ingredient.DENT_DE_DOROGON],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -447,7 +447,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ROCHE_RADIO_ACTIVE.ingredientId],
+				ingredientId: [Ingredient.ROCHE_RADIO_ACTIVE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -471,12 +471,12 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SILEX_TAILLE.ingredientId],
+				ingredientId: [Ingredient.SILEX_TAILLE],
 				startQuantity: 3
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId],
+				ingredientId: [Ingredient.FRAGMENT_DE_TEXTE_ANCIEN],
 				startQuantity: 1,
 				condition: {
 					[ConditionEnum.SKILL]: skillList[Skill.DETECTIVE].id
@@ -485,9 +485,9 @@ export const gatherList: Record<GatherType, GatherData> = {
 			{
 				type: 'ingredient',
 				ingredientId: [
-					ingredientList.VIEIL_ANNEAU_PRECIEUX.ingredientId,
-					ingredientList.CALICE_CISELE.ingredientId,
-					ingredientList.COLLIER_KARAT.ingredientId
+					Ingredient.VIEIL_ANNEAU_PRECIEUX,
+					Ingredient.CALICE_CISELE,
+					Ingredient.COLLIER_KARAT
 				],
 				startQuantity: 2,
 				condition: {
@@ -497,8 +497,8 @@ export const gatherList: Record<GatherType, GatherData> = {
 			{
 				type: 'ingredient',
 				ingredientId: [
-					ingredientList.BROCHE_EN_PARFAIT_ETAT.ingredientId,
-					ingredientList.SUPERBE_COURONNE_ROYALE.ingredientId
+					Ingredient.BROCHE_EN_PARFAIT_ETAT,
+					Ingredient.SUPERBE_COURONNE_ROYALE
 				],
 				startQuantity: 1,
 				condition: {
@@ -507,7 +507,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.BRAS_MECANIQUE.ingredientId],
+				ingredientId: [Ingredient.BRAS_MECANIQUE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [
@@ -539,82 +539,82 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.MEROU_LUJIDANE.ingredientId],
+				ingredientId: [Ingredient.MEROU_LUJIDANE],
 				startQuantity: 16
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.POISSON_VENGEUR.ingredientId],
+				ingredientId: [Ingredient.POISSON_VENGEUR],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.AN_GUILI_GUILILLE.ingredientId],
+				ingredientId: [Ingredient.AN_GUILI_GUILILLE],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.GLOBULOS.ingredientId],
+				ingredientId: [Ingredient.GLOBULOS],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SUPER_POISSON.ingredientId],
+				ingredientId: [Ingredient.SUPER_POISSON],
 				startQuantity: 4
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SPORE_ETHERAL.ingredientId],
+				ingredientId: [Ingredient.SPORE_ETHERAL],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ROCHE_RADIO_ACTIVE.ingredientId],
+				ingredientId: [Ingredient.ROCHE_RADIO_ACTIVE],
 				startQuantity: 2
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.GRAINE_DE_DEVOREUSE.ingredientId],
+				ingredientId: [Ingredient.GRAINE_DE_DEVOREUSE],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SILEX_TAILLE.ingredientId],
+				ingredientId: [Ingredient.SILEX_TAILLE],
 				startQuantity: 10
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId],
+				ingredientId: [Ingredient.FRAGMENT_DE_TEXTE_ANCIEN],
 				startQuantity: 3
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.COLLIER_KARAT.ingredientId],
+				ingredientId: [Ingredient.COLLIER_KARAT],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FOUDRE.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FOUDRE],
 				startQuantity: 3
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_AIR.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_AIR],
 				startQuantity: 4
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_EAU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_EAU],
 				startQuantity: 2
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FEU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FEU],
 				startQuantity: 4
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_BOIS.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_BOIS],
 				startQuantity: 2
 			},
 			{
@@ -665,97 +665,97 @@ export const gatherList: Record<GatherType, GatherData> = {
 		items: [
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SILEX_TAILLE.ingredientId],
+				ingredientId: [Ingredient.SILEX_TAILLE],
 				startQuantity: 8
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FRAGMENT_DE_TEXTE_ANCIEN.ingredientId],
+				ingredientId: [Ingredient.FRAGMENT_DE_TEXTE_ANCIEN],
 				startQuantity: 4
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.CALICE_CISELE.ingredientId],
+				ingredientId: [Ingredient.CALICE_CISELE],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.COLLIER_KARAT.ingredientId],
+				ingredientId: [Ingredient.COLLIER_KARAT],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.TOUFFE_DE_FOURRURE.ingredientId],
+				ingredientId: [Ingredient.TOUFFE_DE_FOURRURE],
 				startQuantity: 13
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FEUILLES_DE_PELINAE.ingredientId],
+				ingredientId: [Ingredient.FEUILLES_DE_PELINAE],
 				startQuantity: 11
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.BOLET_PHALISK_BLANC.ingredientId],
+				ingredientId: [Ingredient.BOLET_PHALISK_BLANC],
 				startQuantity: 8
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.RACINE_DE_FIGONICIA.ingredientId],
+				ingredientId: [Ingredient.RACINE_DE_FIGONICIA],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.FLAUREOLE.ingredientId],
+				ingredientId: [Ingredient.FLAUREOLE],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.SPORE_ETHERAL.ingredientId],
+				ingredientId: [Ingredient.SPORE_ETHERAL],
 				startQuantity: 1
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.MEROU_LUJIDANE.ingredientId],
+				ingredientId: [Ingredient.MEROU_LUJIDANE],
 				startQuantity: 11
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.POISSON_VENGEUR.ingredientId],
+				ingredientId: [Ingredient.POISSON_VENGEUR],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.GRIFFES_ACEREES.ingredientId],
+				ingredientId: [Ingredient.GRIFFES_ACEREES],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_EAU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_EAU],
 				startQuantity: 3
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FEU.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FEU],
 				startQuantity: 2
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_BOIS.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_BOIS],
 				startQuantity: 4
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_AIR.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_AIR],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.ENERGIE_FOUDRE.ingredientId],
+				ingredientId: [Ingredient.ENERGIE_FOUDRE],
 				startQuantity: 5
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [ingredientList.GRAINE_DE_DEVOREUSE.ingredientId],
+				ingredientId: [Ingredient.GRAINE_DE_DEVOREUSE],
 				startQuantity: 3
 			},
 			{

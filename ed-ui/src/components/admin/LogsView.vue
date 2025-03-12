@@ -30,6 +30,8 @@ import EventBus from '../../events/index.js';
 import { mixin } from '../../mixin/mixin.js';
 import { LogsService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { itemList } from '@drpg/core/models/item/ItemList';
 
 const LogTypes = [
 	'ItemUsed',
@@ -70,6 +72,11 @@ const LogTypes = [
 	'AdminRemoveMoney',
 	'AdminAddReward',
 	'AdminRemoveReward',
+	'AdminAddItem',
+	'AdminRemoveItem',
+	'AdminAddIngredient',
+	'AdminRemoveIngredient',
+	'AdminUpdateQuest',
 	'AdminUpdatePlayer',
 	'AdminUpdateSecret'
 ] as const;
@@ -279,6 +286,41 @@ const getLogPropsForTranslation = (
 			values = {
 				targetId: log.values[0],
 				reward: $t(`rewards.name.${rewardList[+log.values[1]].name}`)
+			};
+			break;
+		case 'AdminAddItem':
+			values = {
+				targetId: log.values[0],
+				item: $t(`items.name.${itemList[+log.values[1]].name}`),
+				quantity: log.values[2]
+			};
+			break;
+		case 'AdminRemoveItem':
+			values = {
+				targetId: log.values[0],
+				item: $t(`items.name.${itemList[+log.values[1]].name}`),
+				quantity: log.values[2]
+			};
+			break;
+		case 'AdminAddIngredient':
+			values = {
+				targetId: log.values[0],
+				ingredient: $t(`ingredients.name.${ingredientList[+log.values[1]].name}`),
+				quantity: log.values[2]
+			};
+			break;
+		case 'AdminRemoveIngredient':
+			values = {
+				targetId: log.values[0],
+				ingredient: $t(`ingredients.name.${ingredientList[+log.values[1]].name}`),
+				quantity: log.values[2]
+			};
+			break;
+		case 'AdminUpdateQuest':
+			values = {
+				targetId: log.values[0],
+				questId: log.values[1],
+				progress: log.values[2]
 			};
 			break;
 		case 'AdminUpdatePlayer':
