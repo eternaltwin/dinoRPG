@@ -5,7 +5,6 @@
 			<template #content>
 				<div v-html="formatContent($t('events.tournament.progress', { qty: currentTournament.dinoz }))" />
 			</template>
-			{{ $t(`shop.item.buy`) }}
 		</Tippy>
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>

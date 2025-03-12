@@ -11,7 +11,7 @@
 			<tr v-for="event in currentEvent" :key="event.id" @click="goToTournament(event.id)">
 				<td>{{ formatDate(event.date.toString()) }}</td>
 				<td>{{ event.levelLimit }}</td>
-				<td>{{ event.teamRace }}</td>
+				<td>{{ $t(`race.name.${raceList[event.teamRace]}`) }}</td>
 			</tr>
 		</DZTable>
 	</div>
@@ -27,6 +27,7 @@ import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZTable from '../components/common/DZTable.vue';
 import { localStore } from '../store/index.js';
+import { raceList } from '../constants/index.js';
 
 export default defineComponent({
 	name: 'EventPage',
@@ -35,6 +36,7 @@ export default defineComponent({
 		return {
 			currentEvent: [] as PublicEvent[],
 			localStore: localStore(),
+			raceList: raceList,
 			show: true
 		};
 	},
