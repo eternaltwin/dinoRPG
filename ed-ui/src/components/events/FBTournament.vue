@@ -84,7 +84,7 @@ export default defineComponent({
 		},
 		async myParticipation() {
 			try {
-				this.dinoz = await FBService.getTournamentParticipation();
+				this.dinoz = await FBService.getTournamentParticipation(this.id);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -92,7 +92,7 @@ export default defineComponent({
 		async createDinoz() {
 			if (!this.name) return;
 			try {
-				await FBService.createTournamentDinoz(this.name);
+				await FBService.createTournamentDinoz(this.name, this.id);
 				await this.myParticipation();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

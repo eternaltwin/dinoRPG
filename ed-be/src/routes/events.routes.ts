@@ -15,7 +15,7 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.events;
 
-routes.get(`${commonPath}/tournament/current/:id`, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/tournament/current/:id`, [param('id').exists()], async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
@@ -28,31 +28,39 @@ routes.get(`${commonPath}/tournament/current/:id`, async (req: Request, res: Res
 	}
 });
 
-routes.get(`${commonPath}/tournament/participation`, async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/tournament/:tournamentId`,
+	[param('tournamentId').exists()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response = await getPlayerParticipation(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await getPlayerParticipation(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
-routes.post(`${commonPath}/tournament/participation`, [body('name').exists()], async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.post(
+	`${commonPath}/tournament/participation`,
+	[body('name').exists(), body('tournamentId').exists()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response = await createTournamentDinoz(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await createTournamentDinoz(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
+);
 
 routes.get(
 	`${commonPath}/FBTournament/:id/:tryNumber`,

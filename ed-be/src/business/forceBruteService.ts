@@ -90,8 +90,8 @@ export async function getCurrentEvents(req: Request) {
 export async function getPlayerParticipation(req: Request) {
 	const authed = await auth(req);
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
-		orderBy: {
-			date: 'desc'
+		where: {
+			id: req.params.tournamentId
 		},
 		select: {
 			id: true
@@ -103,7 +103,8 @@ export async function getPlayerParticipation(req: Request) {
 	const dinozList = await prisma.gameDinoz.findMany({
 		where: {
 			playerId: authed.id,
-			usage: GameDinozUsage.FBTournament
+			usage: GameDinozUsage.FBTournament,
+			FBTournamentId: activeTournament.id
 		},
 		select: {
 			id: true,
@@ -131,8 +132,8 @@ export async function getPlayerParticipation(req: Request) {
 export async function createTournamentDinoz(req: Request) {
 	const authed = await auth(req);
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
-		orderBy: {
-			date: 'desc'
+		where: {
+			id: req.body.tournamentId
 		},
 		select: {
 			levelLimit: true,
@@ -146,7 +147,7 @@ export async function createTournamentDinoz(req: Request) {
 	const lastDinoz = await prisma.gameDinoz.findFirst({
 		where: {
 			playerId: authed.id,
-			usage: GameDinozUsage.FBTournament
+			FBTournamentId: activeTournament.id
 		},
 		select: {
 			id: true,
@@ -202,6 +203,7 @@ export async function createTournamentDinoz(req: Request) {
 		player: { connect: { id: authed.id } },
 		FBTournament: { connect: { id: activeTournament.id } }
 	};
+	console.log(newDinoz);
 
 	const dinoz = await prisma.gameDinoz.create({
 		data: newDinoz,

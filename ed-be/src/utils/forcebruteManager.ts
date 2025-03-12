@@ -260,8 +260,8 @@ class ForceBruteManager {
 		prisma: PismaClientLocal
 	): Promise<{ id: string; nextRound: Date; startDate: Date }> {
 		const activeTournament = await prisma.fBTournament.findFirstOrThrow({
-			orderBy: {
-				date: 'desc'
+			where: {
+				levelLimit: this.level
 			}
 		});
 

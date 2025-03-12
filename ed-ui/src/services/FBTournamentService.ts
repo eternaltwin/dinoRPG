@@ -9,16 +9,17 @@ export const FBService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getTournamentParticipation(): Promise<FBParticipation[]> {
+	getTournamentParticipation(id: string): Promise<FBParticipation[]> {
 		return http()
-			.get(`/events/tournament/participation`)
+			.get(`/events/tournament/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	createTournamentDinoz(name: string) {
+	createTournamentDinoz(name: string, id: string) {
 		return http()
 			.post(`/events/tournament/participation`, {
-				name: name
+				name: name,
+				tournamentId: id
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
