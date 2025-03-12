@@ -125,8 +125,10 @@ export async function rewarder(
 				case RewardEnum.TELEPORT:
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
 					break;
+				case RewardEnum.REDIRECT:
+					break;
 				default:
-					LOGGER.log(`Reward ${reward.rewardType} not yet implemented.`);
+					break;
 			}
 		}
 	}
