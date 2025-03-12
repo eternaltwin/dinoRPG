@@ -26,7 +26,7 @@ import {
 	removeAllUnlockableSkillsFromDinoz,
 	removeUnlockableSkillsFromDinoz
 } from '../dao/dinozSkillUnlockableDao.js';
-import { effectParser, fromBase62 } from '../utils/index.js';
+import { applySkillToDinoz, applyUSkillEffect, fromBase62 } from '../utils/index.js';
 import { getMaxXp, getRace } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
@@ -547,50 +547,21 @@ export async function applySkillEffect(
 	event?: GameDinozUsage
 ) {
 	if (skill.effects) {
-		await effectParser(skill.effects, dinoz, event);
+		const updates = applySkillToDinoz(skill.effects, dinoz);
+		if (event) {
+			await updateEventDinoz(dinoz.id, updates)
+		} else {
+			await updateDinoz(dinoz.id, updates);
+		}
 	}
-	if (playerId && skill.type === SkillType.U && !event) {
-		await applyUSkillEffect(playerId, skill);
+	if (playerId && skill.type === SkillType.U) {
+		const player = await getPlayerUSkills(playerId);
+		if (!player) {
+			throw new ExpectedError(`This player doesn't exist.`);
+		}
+		applyUSkillEffect(player, skill);
+		await setPlayer(playerId, player);
 	}
-}
-
-async function applyUSkillEffect(playerId: string, skill: SkillDetails) {
-	const player = await getPlayerUSkills(playerId);
-	if (!player) {
-		throw new ExpectedError(`This player doesn't exist.`);
-	}
-	switch (skill.id) {
-		case Skill.LEADER:
-			if (!player.leader) player.leader = true;
-			break;
-		case Skill.INGENIEUR:
-			if (!player.engineer) player.engineer = true;
-			break;
-		case Skill.MAGASINIER:
-			if (!player.shopKeeper) player.shopKeeper = true;
-			break;
-		case Skill.CUISINIER:
-			if (!player.cooker) player.cooker = true;
-			break;
-		case Skill.MARCHAND:
-			if (!player.merchant) player.merchant = true;
-			break;
-		case Skill.PRETRE:
-			if (!player.priest) player.priest = true;
-			break;
-		case Skill.PROFESSEUR:
-			if (!player.teacher) player.teacher = true;
-			break;
-		case Skill.MESSIE:
-			if (!player.messie) player.messie = true;
-			break;
-		case Skill.MATELASSEUR:
-			if (!player.matelasseur) player.matelasseur = true;
-			break;
-		default:
-			break;
-	}
-	await setPlayer(playerId, player);
 }
 
 export async function reincarnate(req: Request) {

@@ -795,6 +795,23 @@ export async function getEventDinozForLevelUp(dinozId: number) {
 	return dinoz;
 }
 
+export async function getDinozForSkillEffect(dinozId: number) {
+	const dinoz = await prisma.dinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			maxLife: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+		}
+	});
+
+	return dinoz;
+}
+
 export async function getDinozSkillsLearnableAndUnlockable(dinozId: number) {
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },

@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { getAllDinozFromAccount, getDinozForDojoFight, updateDinoz } from '../dao/dinozDao.js';
+import { getAllDinozFromAccount, getDinozForDojoFight, getDinozForSkillEffect, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import {
@@ -28,6 +28,8 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { applySkillToDinoz, deApplySkillFromDinoz } from '../utils/skillParser.js';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -161,23 +163,46 @@ export async function editDinoz(req: Request) {
 		}
 	}
 
-	const skillList: number[] = req.body.skills;
-	if (skillList.length > 0 && req.body.skillOperation) {
+	const skillsToHandle: number[] = req.body.skills;
+	if (skillsToHandle.length > 0 && req.body.skillOperation) {
+		const dinozId = +req.params.id;
+		const dinoz = await getDinozForSkillEffect(dinozId);
+
+		if(!dinoz) {
+			throw new ExpectedError(`Dinoz ${dinozId} does not exist`);
+		}
+
 		switch (req.body.skillOperation) {
 			case 'add':
-				await addMultipleSkillToDinoz(+req.params.id, skillList);
+				await addMultipleSkillToDinoz(dinozId, skillsToHandle);
 
-				for (const skill of skillList) {
-					// await applySkillEffect(dinoz, skill, authed.id);
-					await createLog(LogType.AdminAddSkill, authed.id, +req.params.id, skill);
+				for (const skill of skillsToHandle) {
+					const skillDetail = Object.values(skillList).find(s => s.id === skill);
+					if (!skillDetail) {
+						throw new ExpectedError(`Skill ${skill} doesn't exist.`);
+					}
+					if (skillDetail.effects) {
+						applySkillToDinoz(skillDetail.effects, dinoz);
+						console.log(`Dinoz Max hp ${dinoz.maxLife}`)
+						await updateDinoz(dinozId, dinoz);
+					}
+					await createLog(LogType.AdminAddSkill, authed.id, dinozId, skill);
 				}
 				break;
 			case 'remove':
-				const promises = skillList.map(skill => removeSkillFromDinoz(+req.params.id, skill));
+				const promises = skillsToHandle.map(skill => removeSkillFromDinoz(dinozId, skill));
 				await Promise.all(promises);
 
-				for (const skill of skillList) {
-					await createLog(LogType.AdminRemoveSkill, authed.id, +req.params.id, skill);
+				for (const skill of skillsToHandle) {
+					const skillDetail = Object.values(skillList).find(s => s.id === skill);
+					if (!skillDetail) {
+						throw new ExpectedError(`Skill ${skill} doesn't exist.`);
+					}
+					if (skillDetail.effects) {
+						deApplySkillFromDinoz(skillDetail.effects, dinoz);
+						await updateDinoz(dinozId, dinoz);
+					}
+					await createLog(LogType.AdminRemoveSkill, authed.id, dinozId, skill);
 				}
 				break;
 			default:
@@ -191,7 +216,7 @@ export async function editDinoz(req: Request) {
 			case 'add':
 				const unlockableSkillListData = unlockableSkillList.map(s => ({
 					skillId: s,
-					dinozId: +req.params.id,
+					dinozId: +req.params.id
 				}));
 				await addMultipleUnlockableSkills(unlockableSkillListData);
 

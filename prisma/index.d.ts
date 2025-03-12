@@ -69308,10 +69308,6 @@ export namespace Prisma {
    */
   export type ListEnumNotificationSeverityFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationSeverity[]'>
     
-<<<<<<< HEAD
-
-=======
->>>>>>> 2850ddf4a (fix: add translation strings, fix  admin gold operation)
 
   /**
    * Reference to a field of type 'GameDinozUsage'
