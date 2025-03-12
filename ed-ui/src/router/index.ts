@@ -156,8 +156,18 @@ const router = createRouter({
 				},
 				{
 					path: '/events',
-					name: 'FBTournament',
-					component: () => import('../pages/FBTournament.vue')
+					name: 'EventPage',
+					component: () => import('../pages/EventPage.vue'),
+					children: [
+						{
+							path: 'tournament',
+							name: 'FBTournament',
+							component: () => import('../components/events/FBTournament.vue'),
+							props: route => ({
+								id: route.query.id
+							})
+						}
+					]
 				},
 				{
 					path: '/dojo',

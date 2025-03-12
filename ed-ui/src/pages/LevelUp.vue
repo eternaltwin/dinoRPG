@@ -232,7 +232,6 @@ export default defineComponent({
 			const dinozId: number = parseInt(this.$route.params.id.toString());
 
 			EventBus.emit('isLoading', true);
-			console.log(this.event);
 			try {
 				if (!this.event) {
 					await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
@@ -241,7 +240,7 @@ export default defineComponent({
 				} else {
 					await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
 					EventBus.emit('isLoading', false);
-					this.$router.push({ name: 'FBTournament' });
+					this.$router.push({ name: 'EventPage' });
 				}
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

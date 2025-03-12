@@ -1,11 +1,11 @@
 import { http } from '../utils/index.js';
-import { FBParticipation, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
+import { FBParticipation, PublicEvent, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 
 export const FBService = {
-	getCurrentTournament(): Promise<PublicFBTournament | undefined> {
+	getCurrentTournament(id: string): Promise<PublicFBTournament | undefined> {
 		return http()
-			.get(`/events/tournament/current`)
+			.get(`/events/tournament/current/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
@@ -35,6 +35,12 @@ export const FBService = {
 				skillIdList: skillIdList,
 				tryNumber: tryNumber
 			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getCurrentEvent(): Promise<PublicEvent[]> {
+		return http()
+			.get(`/events/list`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

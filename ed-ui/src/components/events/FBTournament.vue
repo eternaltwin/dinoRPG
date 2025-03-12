@@ -1,9 +1,12 @@
 <template>
-	<div class="wrapper">
-		<DZDisclaimer
-			v-if="currentTournament"
-			:content="$t('events.tournament.disclaimer', { level: currentTournament.level })"
-		/>
+	<div class="wrapper" v-if="currentTournament">
+		<DZDisclaimer :content="$t('events.tournament.disclaimer', { level: currentTournament.level })" />
+		<Tippy theme="small" tag="progress" :value="currentTournament.dinoz" max="256">
+			<template #content>
+				<div v-html="formatContent($t('events.tournament.progress', { qty: currentTournament.dinoz }))" />
+			</template>
+			{{ $t(`shop.item.buy`) }}
+		</Tippy>
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
 			<input type="text" v-model="name" />
@@ -11,7 +14,9 @@
 		</div>
 		<div class="dinozList" v-if="dinoz.length > 0 && currentTournament">
 			<template v-for="d in dinoz" :key="d.id">
-				<div
+				<Tippy
+					tag="div"
+					theme="small"
 					:class="{
 						dinoz: true,
 						levelup: d.level < currentTournament.level
@@ -21,7 +26,14 @@
 					<DinozWithoutFlash :display="d.display" :life="1" flip />
 					<div class="name">{{ d.name }}</div>
 					<div class="dinozInfo">{{ $t(`myAccount.level`) }} {{ d.level }}</div>
-				</div>
+					<template #content>
+						<p
+							v-for="skill in d.skills"
+							:key="skill"
+							v-html="formatContent($t(`skill.name.${skillList[skill].name}`))"
+						/>
+					</template>
+				</Tippy>
 			</template>
 		</div>
 	</div>
@@ -29,16 +41,22 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { errorHandler } from '../utils/index.js';
-import { FBService } from '../services/FBTournamentService.js';
+import { errorHandler } from '../../utils/index.js';
+import { FBService } from '../../services/FBTournamentService.js';
 import { FBParticipation, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
-import DZButton from '../components/common/DZButton.vue';
-import DinozWithoutFlash from '../components/dinoz/DinozWithoutFlash.vue';
-import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import { formatText } from '../utils/formatText.js';
+import DZButton from '../common/DZButton.vue';
+import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import { formatText } from '../../utils/formatText.js';
+import { skillList } from '@drpg/core/models/dinoz/SkillList';
 
 export default defineComponent({
 	name: 'FBTournament',
+	computed: {
+		skillList() {
+			return skillList;
+		}
+	},
 	components: { DZDisclaimer, DinozWithoutFlash, DZButton },
 	data() {
 		return {
@@ -47,10 +65,14 @@ export default defineComponent({
 			dinoz: [] as FBParticipation[]
 		};
 	},
+	props: {
+		id: { type: String, required: true }
+	},
 	methods: {
 		async getCurrentTournament() {
+			if (!this.id) return;
 			try {
-				this.currentTournament = await FBService.getCurrentTournament();
+				this.currentTournament = await FBService.getCurrentTournament(this.id);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -94,6 +116,14 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+$h: 25px;
+$r: 0.5 * $h;
+$b: 3px;
+@mixin val() {
+	border-radius: $r - $b;
+	box-shadow: inset 0 0.05em 0.05em rgba(#fff, 0.35);
+	background: var(--fill);
+}
 .wrapper {
 	display: flex;
 	width: 90%;
@@ -182,11 +212,34 @@ export default defineComponent({
 		font-size: 9pt;
 		font-weight: bold;
 		border: none;
-		background-image: url('../assets/design/form_field.webp');
+		background-image: url('../../assets/design/form_field.webp');
 		background-repeat: no-repeat;
 		background-color: transparent;
 		grid-column: 2 / 4;
 		grid-row: 1;
+	}
+}
+progress {
+	box-sizing: border-box;
+	border: solid $b #6e3a1e;
+	width: 95%;
+	align-self: center;
+	height: $h;
+	border-radius: $r;
+	background: linear-gradient(#2d1309, #6e3a1e);
+	font: clamp(0.625em, 7.5vw, 5em) monospace;
+	--fill: linear-gradient(#{rgba(#e2664c, 0.65)}, transparent),
+		repeating-linear-gradient(135deg, #a22215 0 #{0.5 * $r}, #be2a20 0 #{$r});
+
+	&::-webkit-progress-bar {
+		background: transparent;
+	}
+
+	&::-webkit-progress-value {
+		@include val();
+	}
+	&::-moz-progress-bar {
+		@include val();
 	}
 }
 </style>

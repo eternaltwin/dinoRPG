@@ -270,6 +270,14 @@ export default defineComponent({
 						link: { name: 'MarketPage', params: { tab: 1 } },
 						date: notification.date
 					};
+				case 'event':
+					return {
+						id: notification.id,
+						message: this.$t(`notification.${notification.message}`),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
 				case 'offerEnded':
 					return {
 						id: notification.id,

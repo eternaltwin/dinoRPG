@@ -32,6 +32,7 @@ export type PublicFBTournament = {
 	id: string;
 	date: string;
 	level: number;
+	dinoz: number;
 };
 
 export type FBParticipation = {
@@ -39,7 +40,14 @@ export type FBParticipation = {
 	name: string;
 	level: number;
 	display: string;
-	experience: number;
+	skills: number[];
+};
+
+export type PublicEvent = {
+	levelLimit: number;
+	id: string;
+	teamRace: string;
+	date: Date;
 };
 
 export const FBDetails: Readonly<Record<number, RaceList>> = {

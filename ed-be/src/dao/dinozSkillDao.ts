@@ -28,13 +28,22 @@ export async function addSkillToDinoz(dinozId: number, skillId: number, event?: 
 }
 
 //TODO
-export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[]) {
-	await prisma.dinozSkill.createMany({
-		data: skillIds.map(skillId => ({
-			dinozId,
-			skillId
-		}))
-	});
+export async function addMultipleSkillToDinoz(dinozId: number, skillIds: number[], event?: GameDinozUsage) {
+	if (event) {
+		await prisma.dinozSkill.createMany({
+			data: skillIds.map(skillId => ({
+				gameDinozId: dinozId,
+				skillId
+			}))
+		});
+	} else {
+		await prisma.dinozSkill.createMany({
+			data: skillIds.map(skillId => ({
+				dinozId,
+				skillId
+			}))
+		});
+	}
 }
 
 export async function removeSkillFromDinoz(dinozId: number, skillId: number) {

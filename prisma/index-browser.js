@@ -728,7 +728,8 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
   offerExpired: 'offerExpired',
   offerEnded: 'offerEnded',
   ban: 'ban',
-  reward: 'reward'
+  reward: 'reward',
+  event: 'event'
 };
 
 exports.GameDinozUsage = exports.$Enums.GameDinozUsage = {

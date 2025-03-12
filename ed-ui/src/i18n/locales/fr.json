@@ -2469,7 +2469,8 @@
 		"clansList": "Dino-RPG [ Liste des Clans ]",
 		"createClan": "Dino-RPG [ Créer un Clan ]",
 		"challengeFriend": "Dino-RPG [ Affronte un ami ]",
-		"forum": "Dino-RPG [ Forums ]"
+		"forum": "Dino-RPG [ Forums ]",
+		"event": "Dino-RPG [ Evénements ]"
 	},
 	"gather": {
 		"action": {
@@ -4793,11 +4794,18 @@
 		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}.",
 		"reward": "Vous avez obtenu {rewards}",
 		"rewardGold": "{quantity} :gold:",
-		"rewardScenario": "Vous avez progressé dans le scénario **{scenario}**."
+		"rewardScenario": "Vous avez progressé dans le scénario **{scenario}**.",
+		"FBStarted": "Un nouvel événement est ouvert !"
 	},
 	"events": {
+		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
+		"header": "Evenements en cours",
+		"date": "Date de création",
+		"level": "Niveau max",
+		"races": "Races authorisées",
 		"tournament": {
-			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un dinoz par jour durant les trois jours de qualification.&&Votre dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître dinoz !"
+			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un dinoz par jour durant les trois jours de qualification.&&Votre dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître dinoz !",
+			"progress": "Actuellement {qty} dinoz sont au niveau du tournois."
 		}
 	}
 }

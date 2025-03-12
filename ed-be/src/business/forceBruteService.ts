@@ -43,10 +43,20 @@ export async function checkFBCreation(level: number) {
 	}
 }
 
-export async function getCurrentTournament() {
+export async function getCurrentTournament(req: Request) {
 	const activeTournament = await prisma.fBTournament.findFirst({
-		orderBy: {
-			date: 'desc'
+		where: {
+			id: req.params.id
+		},
+		select: {
+			id: true,
+			date: true,
+			levelLimit: true,
+			participants: {
+				select: {
+					level: true
+				}
+			}
 		}
 	});
 
@@ -54,11 +64,27 @@ export async function getCurrentTournament() {
 		return {
 			id: activeTournament.id,
 			date: activeTournament.date.toString(),
-			level: activeTournament.levelLimit
+			level: activeTournament.levelLimit,
+			dinoz: activeTournament.participants.filter(d => d.level === activeTournament.levelLimit).length
 		};
 	} else {
 		return;
 	}
+}
+
+export async function getCurrentEvents(req: Request) {
+	const activeEvents = await prisma.fBTournament.findMany({
+		where: {
+			winnerId: null
+		},
+		select: {
+			levelLimit: true,
+			id: true,
+			teamRace: true,
+			date: true
+		}
+	});
+	return activeEvents;
 }
 
 export async function getPlayerParticipation(req: Request) {
@@ -84,11 +110,22 @@ export async function getPlayerParticipation(req: Request) {
 			name: true,
 			level: true,
 			display: true,
-			experience: true,
-			FBTournamentId: true
+			FBTournamentId: true,
+			skills: {
+				select: {
+					skillId: true
+				}
+			}
 		}
 	});
-	return dinozList.filter(d => d.FBTournamentId === activeTournament.id);
+	return dinozList
+		.filter(d => d.FBTournamentId === activeTournament.id)
+		.map(d => {
+			return {
+				...d,
+				skills: d.skills.map(s => s.skillId)
+			};
+		});
 }
 
 export async function createTournamentDinoz(req: Request) {
@@ -178,6 +215,7 @@ export async function createTournamentDinoz(req: Request) {
 	);
 	await addMultipleSkillToDinoz(
 		dinoz.id,
-		skillsToAdd.map(skill => skill.id)
+		skillsToAdd.map(skill => skill.id),
+		'FBTournament'
 	);
 }

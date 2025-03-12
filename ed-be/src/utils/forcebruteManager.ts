@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
+import NotificationSeverity = $Enums.NotificationSeverity;
 
 class ForceBruteManager {
 	private readonly QUALIFIED_TEAMS = 256;
@@ -21,10 +22,10 @@ class ForceBruteManager {
 	public async initializeTournament(prisma: PismaClientLocal) {
 		const tournamentFormat = FBDetails[this.level];
 
-		// Check if there is already a tournament in progress or if this one doesn't exist already
+		// Check if there is already a tournament in progress for this level
 		const check = await prisma.fBTournament.findFirst({
 			where: {
-				OR: [{ levelLimit: this.level }, { winnerId: null }]
+				levelLimit: this.level
 			}
 		});
 		if (check) {
@@ -43,7 +44,16 @@ class ForceBruteManager {
 			}
 		});
 
-		LOGGER.log(`Creation of the FBTournament ${newTournament.id} for the level ${this.level}.`);
+		// Notify users
+		const notifications = await prisma.$executeRaw`
+			INSERT INTO "Notification" ("playerId", "message", "link", "severity")
+			SELECT id, 'FBStarted', ${`/events/tournament?id=${newTournament.id}`}, ${NotificationSeverity.event}
+			FROM "player";
+		`;
+
+		LOGGER.log(
+			`Creation of the FBTournament ${newTournament.id} for the level ${this.level}. ${notifications} notifications sent.`
+		);
 		return newTournament;
 	}
 

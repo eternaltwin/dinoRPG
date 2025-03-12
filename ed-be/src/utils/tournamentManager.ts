@@ -688,9 +688,7 @@ class TournamentManager {
 		if (!activeTournament) {
 			const today = dayjs();
 			const daysUntilNextMonday = (1 + 7 - today.day()) % 7;
-			const nextMonday = today
-				.add(daysUntilNextMonday, 'day')
-				.startOf('day');
+			const nextMonday = today.add(daysUntilNextMonday, 'day').startOf('day');
 			LOGGER.error(`No tournament found, schedule a creation for ${nextMonday}.`);
 			scheduleJob('createFirstTournament', nextMonday.toDate(), () => createFirstTournament(prisma));
 			return null;

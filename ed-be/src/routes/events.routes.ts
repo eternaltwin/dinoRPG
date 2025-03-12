@@ -2,7 +2,12 @@ import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
 import { body, param, validationResult } from 'express-validator';
 import sendError from '../utils/sendErrors.js';
-import { createTournamentDinoz, getCurrentTournament, getPlayerParticipation } from '../business/forceBruteService.js';
+import {
+	createTournamentDinoz,
+	getCurrentEvents,
+	getCurrentTournament,
+	getPlayerParticipation
+} from '../business/forceBruteService.js';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
 
@@ -10,13 +15,13 @@ const routes: Router = Router();
 
 const commonPath: string = apiRoutes.events;
 
-routes.get(`${commonPath}/tournament/current`, async (req: Request, res: Response) => {
+routes.get(`${commonPath}/tournament/current/:id`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
 	}
 
 	try {
-		const response = await getCurrentTournament();
+		const response = await getCurrentTournament(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
@@ -90,5 +95,18 @@ routes.post(
 		}
 	}
 );
+
+routes.get(`${commonPath}/list`, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getCurrentEvents(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 export default routes;
