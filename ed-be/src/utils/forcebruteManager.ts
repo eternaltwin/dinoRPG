@@ -24,11 +24,7 @@ class ForceBruteManager {
 		// Check if there is already a tournament in progress or if this one doesn't exist already
 		const check = await prisma.fBTournament.findFirst({
 			where: {
-				OR: [
-					{levelLimit: this.level},
-					{winnerId: null}
-				]
-
+				OR: [{ levelLimit: this.level }, { winnerId: null }]
 			}
 		});
 		if (check) {
@@ -47,7 +43,7 @@ class ForceBruteManager {
 			}
 		});
 
-		LOGGER.log(`Creation of the FBTournament ${newTournament.id} for the level ${this.level}.`)
+		LOGGER.log(`Creation of the FBTournament ${newTournament.id} for the level ${this.level}.`);
 		return newTournament;
 	}
 

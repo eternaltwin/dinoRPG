@@ -38,6 +38,9 @@
 		<li>
 			<a href="#" :class="tabSelected === 9 ? 'active' : ''" @click="setTab(9)"> Game </a>
 		</li>
+		<li>
+			<a href="#" :class="tabSelected === 9 ? 'active' : ''" @click="setTab(9)"> Game </a>
+		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
