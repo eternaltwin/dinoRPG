@@ -44,6 +44,7 @@ export default defineComponent({
 		async getCurrentEvents() {
 			try {
 				this.currentEvent = await FBService.getCurrentEvent();
+				this.currentEvent.sort((a, b) => b.levelLimit - a.levelLimit);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
