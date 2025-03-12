@@ -226,7 +226,7 @@ export enum Reward {
 	LITTER = 223,
 	CLOVER = 224,
 	TIK = 998,
-	IMPORT = 999
+	BETA = 999
 }
 
 export const rewardList: Readonly<Record<Reward, EpicReward>> = {
@@ -455,5 +455,5 @@ export const rewardList: Readonly<Record<Reward, EpicReward>> = {
 	[Reward.LITTER]: { id: Reward.LITTER, name: 'litter', displayed: true, announced: false },
 	[Reward.CLOVER]: { id: Reward.CLOVER, name: 'clover', displayed: true, announced: false },
 	[Reward.TIK]: { id: Reward.TIK, name: 'tik', displayed: false, announced: false },
-	[Reward.IMPORT]: { id: Reward.IMPORT, name: 'import', displayed: true, announced: false }
+	[Reward.BETA]: { id: Reward.BETA, name: 'beta', displayed: true, announced: false }
 };

@@ -202,5 +202,11 @@ export const AdminService = {
 			.put(`/admin/cancelBan/${playerId}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	resetGame(): Promise<void> {
+		return http()
+			.delete(`/admin/truncateGame`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

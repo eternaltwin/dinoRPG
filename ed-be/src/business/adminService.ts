@@ -10,7 +10,7 @@ import {
 	removeMoney,
 	setPlayer
 } from '../dao/playerDao.js';
-import { addMultipleRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
+import { addMultipleRewardToPlayer, addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
 import { increaseItemQuantity, decreaseItemQuantity } from '../dao/playerItemDao.js';
 import { increaseIngredientQuantity, decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
@@ -20,6 +20,9 @@ import { LogType } from '@drpg/prisma';
 import { AdminRole } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
+import { GLOBAL, LOGGER } from '../context.js';
+import { prisma } from '../prisma.js';
+import { Reward } from '@drpg/core/models/reward/RewardList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -521,4 +524,90 @@ export async function addSecret(req: Request) {
 	await createLog(LogType.AdminUpdateSecret, authed.id, undefined, req.body.key, req.body.value);
 
 	return secrets;
+}
+
+export async function truncateAll(req: Request) {
+	const authed = await auth(req);
+	const superAdmin = authed.id === GLOBAL.config.administrator;
+	if (!superAdmin) {
+		LOGGER.error(`${authed.id} attempted to truncate the game !`);
+		throw new ExpectedError(`Forbiden for you`);
+	}
+
+	try {
+		await prisma.$executeRaw`BEGIN;`;
+
+		await prisma.$executeRaw`SET CONSTRAINTS ALL DEFERRED;`;
+
+		await prisma.$executeRaw`TRUNCATE TABLE "Clan" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "Conversation" CASCADE;`;
+		await prisma.$executeRaw`DELETE FROM dinoz;`;
+		await prisma.$executeRaw`TRUNCATE TABLE dojo CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "FBTournament" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "FightArchive" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE gamedinoz CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "Log" CASCADE;`;
+		await prisma.$executeRaw`DELETE FROM "Moderation";`;
+		await prisma.$executeRaw`TRUNCATE TABLE news;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "Notification" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "Offer" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "Pantheon" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE player_dinoz_shop CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE player_gather CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE player_ingredient CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE player_item CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE player_quest CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE player_reward CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "playerTracking" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "Tournament" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "UsernameHistory";`;
+
+		await prisma.$executeRaw`SET CONSTRAINTS ALL IMMEDIATE;`;
+
+		await prisma.$executeRaw`COMMIT;`;
+
+		LOGGER.log('Remise à zéro du jeu effectuée');
+	} catch (error) {
+		console.error('Erreur lors de la suppression des données:', error);
+		try {
+			await prisma.$executeRaw`ROLLBACK;`;
+		} catch (rollbackError) {
+			console.error('Erreur lors du rollback:', rollbackError);
+		}
+	}
+
+	const players = await prisma.player.updateManyAndReturn({
+		data: {
+			money: 50000,
+			quetzuBought: 0,
+			leader: false,
+			engineer: false,
+			cooker: false,
+			shopKeeper: false,
+			merchant: false,
+			priest: false,
+			teacher: false,
+			matelasseur: false,
+			messie: false,
+			labruteDone: false,
+			dailyGridRewards: 0,
+			role: AdminRole.PLAYER,
+			createdDate: new Date()
+		}
+	});
+	await prisma.ranking.updateMany({
+		data: {
+			dinozCount: 0,
+			points: 0,
+			average: 0,
+			completion: 0,
+			dojo: 0
+		}
+	});
+	for (const player of players) {
+		await addRewardToPlayer({
+			rewardId: Reward.BETA,
+			player: { connect: { id: player.id } }
+		});
+	}
 }

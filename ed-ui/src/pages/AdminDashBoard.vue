@@ -35,6 +35,9 @@
 		<li>
 			<a href="#" :class="tabSelected === 8 ? 'active' : ''" @click="setTab(8)"> Banned </a>
 		</li>
+		<li>
+			<a href="#" :class="tabSelected === 9 ? 'active' : ''" @click="setTab(9)"> Game </a>
+		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
@@ -53,6 +56,7 @@
 	<GameStats v-if="tabSelected === 6" />
 	<Moderation v-if="tabSelected === 7" />
 	<Banned v-if="tabSelected === 8" />
+	<GameControl v-if="tabSelected === 9" />
 </template>
 
 <script lang="ts">
@@ -72,6 +76,7 @@ import Banned from '../components/admin/Banned.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Player } from '@drpg/core/models/player/Player';
 import { playerStore } from '../store/index.js';
+import GameControl from '../components/admin/GameControl.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -80,7 +85,7 @@ interface PlayerSearch {
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	components: { TitleHeader, NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, GameStats, Moderation, Banned },
+	components: { GameControl, TitleHeader, NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, GameStats, Moderation, Banned },
 	data() {
 		return {
 			searchValue: undefined as string | undefined,
