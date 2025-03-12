@@ -7,10 +7,6 @@ import { FBDetails, FBMetaData, FBPool, FBPools, rawMatches } from '@drpg/core/m
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import dayjs from 'dayjs';
-import 'dayjs/locale/de.js';
-import 'dayjs/locale/fr.js';
-import 'dayjs/locale/es.js';
-import 'dayjs/locale/en.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
@@ -25,23 +21,21 @@ class ForceBruteManager {
 	public async initializeTournament(prisma: PismaClientLocal) {
 		const tournamentFormat = FBDetails[this.level];
 
-		// Check if tournament doesn't exist already
+		// Check if there is already a tournament in progress or if this one doesn't exist already
 		const check = await prisma.fBTournament.findFirst({
 			where: {
-				levelLimit: this.level
+				OR: [
+					{levelLimit: this.level},
+					{winnerId: null}
+				]
+
 			}
 		});
-		// Check if there is already an ongoing tournament
-		const ongoingTournament = await prisma.fBTournament.findMany({
-			where: {
-				winnerId: null
-			}
-		});
-		if (check || ongoingTournament) {
+		if (check) {
 			return;
 		}
 
-		const endCreation = dayjs().add(3, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
+		const endCreation = dayjs().add(2, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.fBTournament.create({
 			data: {
 				teamRace: tournamentFormat.toString(),
@@ -53,6 +47,7 @@ class ForceBruteManager {
 			}
 		});
 
+		LOGGER.log(`Creation of the FBTournament ${newTournament.id} for the level ${this.level}.`)
 		return newTournament;
 	}
 
@@ -61,7 +56,7 @@ class ForceBruteManager {
 		const qualificationStart = dayjs(tournament.startDate).toDate();
 		// 3 days to create the dinoz pool
 		const qualificationEnd = dayjs(tournament.startDate)
-			.add(3, 'days')
+			.add(2, 'days')
 			.set('hour', 23)
 			.set('minute', 59)
 			.set('second', 59)
