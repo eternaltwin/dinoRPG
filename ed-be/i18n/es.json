@@ -49,7 +49,11 @@
 		"notEnoughGold": "No tienes suficiente oro para esta pelea",
 		"archiveNotFound": "El archivo no fue encontrado",
 		"inexistantOpponent": "Adversario no encontrado",
-		"notFightedOpponent": "Adversario ya derrotado"
+		"notFightedOpponent": "Adversario ya derrotado",
+		"teamSize": "Los equipos están formados por {{nb}} miembros.",
+		"raceLimit": "Las razas permitidas para participar son {{races}}.",
+		"newsTitle": "Nuevo Torneo Inter-Dojo",
+		"newsCorpus": "¡Un nuevo TiD ha comenzado!<br/><br/>Las fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas para la creación de equipos son:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>Las recompensas serán las siguientes:<br/>- Para el primero, un huevo de Tufufu raro, una caja legendaria y el 12% del premio en efectivo.<br/>- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y el 6% del premio en efectivo cada uno.<br/>- Para los puestos del 5° al 8°, una caja rara y el 3.75% del premio en efectivo cada uno.<br/>- Para los puestos del 9° al 16°, una caja rara y el 1.875% del premio en efectivo cada uno.<br/>- Para aquellos que solo tengan una victoria, el 0.75% del premio en efectivo cada uno.<br/>- Para todos los demás clasificados en las fases de grupos, el 0.25% del premio en efectivo cada uno.<br/><br/>¡Buen torneo a todos! "
 	},
 	"race": {
 		"1": "Moueffe",

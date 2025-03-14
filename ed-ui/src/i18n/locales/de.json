@@ -249,7 +249,6 @@
 		"assaults": "Angriff",
 		"defenses": "Verteidigung",
 		"specials": "Sonstiges",
-		"base": "Base",
 		"skill": "Fähigkeit",
 		"fireAssault": "Feuerangriff",
 		"woodAssault": "Holzangriff",
@@ -464,7 +463,7 @@
 			"tear_of_life": "Gibt den Klonen 10% der Lebenspunkte des sie beschwörenden Dinoz.",
 			"cuzcussian_mask": "Schützt Verbündete des Trägers vor Hypnose.",
 			"anti_grave_suit": "Schützt Verbündete des Trägers vor Schwarzen Löchern.",
-			"enchanted_steroid": "Schütz den Träger gegen Energieverlust.",
+			"enchanted_steroid": "Schützt den Träger gegen Ausdauerverlust.",
 			"curse_locker": "Ein gegnerischer Dinoz wird gezwungen, die nächsten 3 Runden, mit seinem schwächsten Element anzugreifen.",
 			"fear_factor": "Ein Dinoz mit der Fähigkeit „Tollkühnheit“, der diesen Gegenstand trägt, kann anderen Dinoz folgen, wenn sie die gleiche Elementaffinität haben.",
 			"life_stealer": "Falls der Dinoz unter 20 Lebenspunkte fällt, stiehlt er 30 LP von einem zufälligen Gegner und verleibt sie sich ein.",
@@ -2153,7 +2152,7 @@
 			"CoeurDuPhenix": "Erhöht die Anzahl der beim Ausruhen wiederhergestellten Lebenspunkte um 15%.",
 			"LanceurDeGland": "Wirft eine Eichel auf einen Feind mit einer Holzkraft von 5.",
 			"Gratteur": "Ermöglicht dem Dinoz, ein zusätzliches Feld freizulegen.",
-			"GrosseBeigne": "Verdoppelt die Kraft des nächsten Angriffs",
+			"GrosseBeigne": "Verdoppelt die Kraft des nächsten Angriffs.",
 			"Vitalite": "Erhöht die maximalen Lebenspunkte um 10.",
 			"MoignonsLiquides": "Verringert die Initiative eines gegnerischen Dinoz um 25.",
 			"Deluge": "Greift alle Gegner mit einer Wasserkraft von 10 an und verringert ihre Initiative um 8.",
@@ -2227,7 +2226,7 @@
 			"ForceDeZeus": "Erhöht die Stärke aller Blitzangriffe um 20.",
 			"RemanenceHertzienne": "Erhöht die Chance auf Ausweichen um 20%.",
 			"Blanc": "Verstärkt die Angriffe des Dinoz um 20, wenn er sich auf Nimbao aufhält.",
-			"Anaerobie": "Verringert die maximale Energie um 25%.",
+			"Anaerobie": "Verringert die Ausdauer des Dinoz um 25%.",
 			"DoubleFace": "50% Chance zu Beginn des Kampfes die Initiative des Wirkers um 10 zu erhöhen oder zu verringern.",
 			"Flagellation": "Reduziert die Heilfähigkeit des Ziels um 15%.",
 			"SouffleDange": "Erhöht die Feuerabwehr um 20%.",
@@ -2550,7 +2549,7 @@
 			"defend": "Die Verteidigung der Schmieden",
 			"shipmt": "Das verschwundene Paket",
 			"sales": "(Un-)Freie Marktwirtschaft",
-			"ritual": "Lächerliches Ritual",
+			"ritual": "Rigoroses Ritual",
 			"hiero": "Hieroglyphen",
 			"pigeon": "Brieftaube",
 			"unmute": "Der Wächter des Waldes",
@@ -2698,7 +2697,7 @@
 			"returnColline": "Zu den Verwunschenen Hügeln zurückkehren",
 			"findPickPoint": "Einen Aussichtspunkt suchen",
 			"drawMap": "Eine Karte zeichnen",
-			"findBat": "Finde den Jägerflatter wieder",
+			"findBat": "Finde die Jägerflatter wieder",
 			"catchBat": "Sich dem Sog nähern",
 			"bat": "Seltenes Färkel-Ei",
 			"launchRock": "Einen Stein werfen",
@@ -3180,10 +3179,10 @@
 				"auree": "Gluck, gluck, gluck! Fielen Sank... Hofn wir, daff daf wirkt... Sas war langvam ech gnap... Hier, dimm siesen Drang al Seichen beiner Sangbarheit."
 			},
 			"map": {
-				"drawMap": "Du setzt dich auf einen alten Baumstumpf, um eine Karte der Umgebung anzufertigen... Urplötzlich taucht wie aus dem Nichts ein abscheulicher Jägerflatter auf und bemächtigt sich mit einem Biss deines Notizblocks! Er hebt die Flügel schlagend ab, um sich anschließend auf einen hoch gelegenen Ast zu setzen...",
-				"catchBat": "Du bist dir ziemlich sicher, ihn auf seinem hohen Ast sitzend hämisch lachen zu hören... Du greifst nach einem der Zweige und schüttelst kräftig, damit der Jägerflatter runterfällt, aber dieser fliegt einfach weg und verschwindet irgendwo im Dschungel!",
+				"drawMap": "Du setzt dich auf einen alten Baumstumpf, um eine Karte der Umgebung anzufertigen... Urplötzlich taucht wie aus dem Nichts eine abscheuliche Jägerflatter auf und bemächtigt sich mit einem Biss deines Notizblocks! Sie hebt die Flügel schlagend ab, um sich anschließend auf einen hoch gelegenen Ast zu setzen...",
+				"catchBat": "Du bist dir ziemlich sicher, sie auf ihrem hohen Ast sitzend hämisch lachen zu hören... Du greifst nach einem der Zweige und schüttelst kräftig, damit die Jägerflatter runterfällt, aber diese fliegt einfach weg und verschwindet irgendwo im Dschungel!",
 				"bat": "Das Mistvieh hat sich auf die Krone eines riesigen Baumes gesetzt! Es starrt dich teilnahmslos an.",
-				"launchRock": "Volltreffer! Der Jägerflatter kreischt auf und lässt deinen Notizblock am Fuße seines Baumes fallen. Gereizt setzt er sich ein Stück weiter weg und glotzt dich mit einem trotzigen Blick an...",
+				"launchRock": "Volltreffer! Die Jägerflatter kreischt auf und lässt deinen Notizblock am Fuße ihres Baumes fallen. Gereizt setzt sie sich ein Stück weiter weg und glotzt dich mit einem trotzigen Blick an...",
 				"pickNote": "Endlich hast du deinen Notizblock wieder!",
 				"redraw": "Du zeichnest die Karte zu Ende, aber diesmal mit einem wachsamen Auge...",
 				"auree": "Gar nicht übel! Die werde ich mir etwas genauer unter die Lupe nehmen, um gut auf meine Extremexpedition vorbereitet zu sein."
@@ -3550,7 +3549,7 @@
 			"tour": "Dieses gelbe Trikot ist die Belohnung für deine großartige Teilnahme an der „Tour de Dinoland“. Du gehörst nun zu den großen Entdeckern des Dinolandes!",
 			"vener": "Das Auge des Ehrwürdigen ist ein äußerst seltener Gegenstand und nur die größten Krieger können es erlangen! Es wird erzählt, dass es unglaublich starke magische Eigenschaften hätte...",
 			"taurus": "Du hast Baobob dabei geholfen, den höllischen Taurus, einen mächtigen Möffen zurück in die Dunkle Welt zu befördern. Vous n'êtes pas prêt de le revoir, votre courage commence déjà à traverser les frontières de Dinoland.",
-			"belius": "Du hast den höllischen Belius, einen mächtigen Santas vertrieben. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de dinoz démons dans la boutique démoniaque.",
+			"belius": "Vous avez supprimé le puissant Santaz infernal Belius. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de Dinoz démons dans la boutique démoniaque.",
 			"scorp": "Du hast den höllischen Scorpus, einen mächtigen Winks vertrieben. Il est reparti dans les profondeurs du Monde Sombre.",
 			"msg": "Dieser unbegrenzte Vorrat an offiziellen Briefmarken der Dinoz Post AG verifiziert deinen Aufenthalt in Dinoville.",
 			"magnet": "Cet éclat de Magnétite Négative vous a été offert par le Roi des Rockys en personne ! Qui sait quels pouvoirs mystérieux il possède...",
@@ -3740,17 +3739,17 @@
 			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
 			"tid1": "Herzlichen Glückwunsch zum Sieg im Inter-Dojo Turnier! Die Zen-Medaille kürt das beste Dojo, das es im Dinoland gibt und kein Dinoz-Meister kann dir das Wasser reichen! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"tid2": "Herzlichen Glückwunsch zum Sieg im Dinoz-Turnier! Die Figur von Meister Zenit aus massivem Gold gleicht dem Oscar für die furchtlosesten unter den Dinoz-Meistern von ganz Dinoland. Jene, die niemand zu überholen vermag! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
-			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres dinoz vanteront les mérites de votre prose à travers le monde !",
+			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres Dinoz vanteront les mérites de votre prose à travers le monde !",
 			"hunt1": "Vos exploits durant la chasse aux monstres vous ont rendu célèbre. L'âme du chasseur brûle en vous et rappelle à chaque monstres qui foulent les terres de Dinoland que vous les tenez à l'oeil.",
-			"hunint": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"xhunt3": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"xhunt2": "Vous avez été le second plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
-			"xhunt1": "Vous avez été l'un des plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"hunint": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"xhunt3": "Vous avez été le plus redoutable de tous les chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"xhunt2": "Vous avez été le second plus redoutable chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"xhunt1": "Vous avez été l'un des plus redoutables chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître Dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
 			"cinema": "Dein Film wurde von der Jury des Dinoville-Filmfestivals in der Kategorie „Bester Abenteuer-, Melodrama-, Komödino-, Kriegs- und Wahnsinnsfilm“ ausgezeichnet. Du bist nun unter den hochkarätigsten Regisseuren, die in der Lage sind, unsere Fantasie in eine Welt voller Magie zu entführen, die verborgenen Geheimnisse derer nur ihnen bekannt sind!",
 			"cinem2": "Spezialpreis der Jury des Dinoville-Filmfestivals.",
 			"eugene": "Der Verdienst dieser großartigen Medaille ist deiner beispiellosen Kreativität zu verdanken! Nur Dinoz-Meister von außergewöhnlicher Intelligenz erlauben sich, sie zu tragen. Manche sagen, du seist ein Genie, andere behaupten, du seist ein echter Spinner. Das Wichtigste ist, dass sie über dich reden!",
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe tel que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
-			"clover": "Ce prix vous a été remis pour avoir été le maître dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Glückwunsch!",
+			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"import": "Glückwunsch! Vous avez importé votre compte sur EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},
@@ -4256,7 +4255,7 @@
 		"seeFinal": "Finale ansehen",
 		"seeFight": "Kampf ansehen",
 		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
-		"qualification": "Das nächste Turnier beginnt am **{poolsStart}**, also sei bereit! Die Qualifikationsrunden enden am **{qualificationEnd}**.&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
+		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
 		"pools": "Die Gruppenphase hat begonnen und endet am {finalsStart}. &&Das Preisgeld liegt momentan bei **{cashPrice}** :gold:.",
 		"finals": "Die heiß begehrten Endrunden haben begonnen!&&Das Preisgeld beträgt nun **{cashPrice}** :gold:.",
 		"tournamentInfo": "**ACHTUNG:** &&Deine Position wird in Grün angezeigt. Du kannst die Teilnehmer jedes Kampfes anklicken, um sie zu betrachten. **Nur Gruppensieger werden am Finale teilnehmen.**",
@@ -4768,6 +4767,9 @@
 		"participantsConv": "Teilnehmer",
 		"blockSender": "Absender blockieren"
 	},
+	"scenario": {
+		"star": "Seltsames Wesen"
+	},
 	"notification": {
 		"reasons": {
 			"customText": "persönliche Beschreibung",
@@ -4779,6 +4781,9 @@
 		"offerEnded": "Du hast dein Angebot für {value} :ticket: verkauft",
 		"offerWon": "Du hast die Auktion für {value} :ticket: gewonnen",
 		"warning": "Achtung, du hast aufgrund von „{reason}“ eine Warnung erhalten.",
-		"ban": "Du wurdest aufgrund von „{reason}“ bis zum {date} gebannt."
+		"ban": "Du wurdest aufgrund von „{reason}“ bis zum {date} gebannt.",
+		"reward": "Du hast {rewards} erhalten",
+		"rewardGold": "{quantity} :gold:",
+		"rewardScenario": "Vous avez progressé dans le scénario **{scenario}**."
 	}
 }

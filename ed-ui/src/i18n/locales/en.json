@@ -14,7 +14,7 @@
 		"logout": "Log out",
 		"guide": "Game Guide",
 		"faq": "FAQ",
-		"cinema": "Cinéma"
+		"cinema": "Cinema"
 	},
 	"toast": {
 		"maxParticipantInThread": "You cannot add more than 9 participants to a conversation.",
@@ -42,7 +42,7 @@
 			"offerCreated": "Your offer has been created.",
 			"offerCancelled": "Your offer has been cancelled.",
 			"notEnoughItems": "You don't have enough of this item.",
-			"offerClaimed": "Vos gains ont été récupérés"
+			"offerClaimed": "Your earnings have been collected"
 		},
 		"isSelling": "Your Dinoz is currently on sale at the Tamer Market.",
 		"heal": "Your dinoz has received {value} :hp:.",
@@ -65,8 +65,8 @@
 		"resting": "Your Dinoz is currently resting. It will regain {hp} :pv: in {min} minutes.",
 		"ingredientSold": "You sold your ingredients for a total of {value} :gold:.",
 		"needIngredientToSell": "You need to have the ingredients you want to sell.",
-		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
-		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées."
+		"finishGrid": "Congratulations! You have earned 1000 :gold: for having finished the grid!",
+		"dailyGridRewardsFinished": "You have reached the daily amount of completed grids."
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -141,7 +141,7 @@
 			"party": "Use magical firecrackers to create an astonishing firework and win plenty of treasures!",
 			"concentrate": "Your Dinoz may try to stop concentrating at any time.",
 			"market": "Welcome to the Tamer Market! Here you can buy and sell Dinoz, ingredients, and some rare items coming from all over Dinoland !",
-			"disband": "Order your other dinoz to stop following this dinoz.",
+			"disband": "Order your other Dinoz to stop following this Dinoz.",
 			"daily": "You can use your daily login ticket here to get special rewards!",
 			"irma": "Your Dinoz has already used its turn by moving or fighting today. However, you can use a *Madam Irma's Potion* to take another turn straight away.",
 			"irmas": "Your group from Dinoz has already fought or moved today. You can use **Madame Irma's Potion per Dinoz** to do an additional action immediately.&&If free actions are available for one of the dinoz, they will be consumed in priority.",
@@ -229,7 +229,7 @@
 				"A": "This skill **can replace** an attack",
 				"S": "This skill has a **particular effect**",
 				"U": "This skill will work **only once for all Dinoz**",
-				"I": "This skill allow to **summon the deity** with which the dinoz has made a pact during the fight",
+				"I": "This skill allow to **summon the deity** with which the Dinoz has made a pact during the fight",
 				"C": "This skill **enables to collect ingredients** in different places"
 			}
 		},
@@ -249,7 +249,6 @@
 		"assaults": "Assaults",
 		"defenses": "Defenses",
 		"specials": "Specials",
-		"base": "Base",
 		"skill": "Skill",
 		"fireAssault": "Fire assault",
 		"woodAssault": "Wood assault",
@@ -390,7 +389,7 @@
 			"smog_egg_christmas_green": "Green Christmas Smog's Egg",
 			"triceragnon_baby": "Baby Triceragnon",
 			"triceragnon_baby_rare": "Rare baby Triceragnon",
-			"christmas_egg": "Oeuf de Noël",
+			"christmas_egg": "Christmas egg",
 			"amnesic_rice": "Amnesiac Rice",
 			"tik_bracelet": "Tik Bracelet",
 			"magic_star": "Magic Star",
@@ -522,7 +521,7 @@
 			"smog_egg_christmas_green": "This strange egg seems ready to hatch into a truly exceptional dinoz...",
 			"triceragnon_baby": "This strange little egg seems to be ready to transform into an amazing Dino!",
 			"triceragnon_baby_rare": "This strange little egg seems to be ready to transform into an amazing Dino!",
-			"christmas_egg": "Cet oeuf de Noël vous réserve la surprise de se transformer soit en Santaz soit en Tricéragnon. Ce sera la surprise !",
+			"christmas_egg": "This Christmas egg will surprise you by transforming into either a Santaz or a Triceratops. What a surprise!",
 			"amnesic_rice": "This rice will cause a Dinoz to have amnesia. After eating it a Dinoz forgets its name along with the experience it has gained since its last level up.",
 			"tik_bracelet": "This bracelet, created using Caushemesh technology, can restore up to 10 health points each day to the Dinoz who wears it!",
 			"magic_star": "These mysterious stars are scattered throughout Dinoland. Will you be able to find all 7?",
@@ -543,7 +542,7 @@
 			"empty": "There is no item at this spot",
 			"undefined": "This object is unknown, it is rare and it will strongly make developers curious about its existence."
 		},
-		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your dinoz in combat.//"
+		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//"
 	},
 	"news": {
 		"actualites": "Dinoland's actuality",
@@ -750,7 +749,7 @@
 			"mvoutp": "The Vegetox outpost is hidden within a lush forest. It is occupied by the Vegetox special forces, who are trained at the Elite Camp, which includes specialists in military strategy.",
 			"mvpalc": "True fortress, home of the king of Vegetox, the palace of Antraxov is obviously a well guarded place. Multiple guards patrol the area, an intruder would have a hard time trying to infiltrate this place. The Palace is magnificent: a huge tree sculpted with decorations that remind you of Cuzcoussian symbols.",
 			"mcuzco": "Hidden in an isolated corner of Monster Island are the ancient ruins of the capital of the Monster Empire. Today Cuzcous is no more than a pile of rocks overgrown with plants, but the buildings that are still standing show signs of a large and powerful civilisation. Many treasures are said to lie beneath these stones...",
-			"mcelit": "Au cœur du territoire Végétox se dresse le camp d'entrainement secret des forces spéciales Végétox : le Camp d'Elit ! Dans ce lieu barricadé, les meilleurs soldats Végétox s'entrainent pour pouvoir un jour remporter la Guerre contre les Frutox. Même si celle-çi dure déjà depuis des temps mémoriaux, le moral des soldats reste intact.",
+			"mcelit": "At the heart of the Vegetox kingdom lies the training camp of the Vegetox special forces: the Elite Camp. Here the best Vegetox soldiers are trained so that they can one day win the war against the Frutox. Even though the war has lasted many centuries, the soldiers desire to win the war is as strong as ever.",
 			"dkbao": "On the other side of the portal lies an unknown yet curiously familiar place. Screams can be heard in the distance. Your Dinoz will have to stay on his guard if he wants to survive!",
 			"dkchut": "Through the heavy fog, we hear a far away scream, some water flows violently past. It's better not to swim too far, the current is very violent....",
 			"dktow": "A tall Black Tower stands here. At first glance it seems uninhabited, but piles of Dinoz bones lie at the entrance. The large dark door to the Tower appears half-open. It's better stay outside, entering the Tower would be suicidal!",
@@ -766,7 +765,7 @@
 		}
 	},
 	"race": {
-		"race": "Race :",
+		"race": "Race:",
 		"name": {
 			"winks": "Winks",
 			"sirain": "Sirain",
@@ -1576,7 +1575,7 @@
 	},
 	"shop": {
 		"dinoz": {
-			"header": "Enclos des dinoz",
+			"header": "Dino enclosure",
 			"help": "Welcome to Dinoz! Here, **daily**, you can discover the different Dinoz options available for adoption. Choose the one that suits you best."
 		},
 		"confirm": {
@@ -1585,7 +1584,7 @@
 			"magic": "Do you wish to buy {item} for a total of {sold} napodinos?"
 		},
 		"item": {
-			"help": "Cliquez sur un objet dans la liste pour l'examiner...",
+			"help": "Select an object from the list to examine it...",
 			"advice": "**Tip:** ",
 			"advice_1": "Want to take another turn? La potion de Madame Irma : l'essayer, c'est l'adopter !",
 			"quantity": "Quantity",
@@ -1603,7 +1602,7 @@
 			},
 			"magic": {
 				"name": "Magic Shop",
-				"description": "Au cœur d'une petite ruelle de Dinoville, les aventuriers se perdent parfois et trouvent alors la Boutique Magique... Les objets extrêmement rares et puissants qu'elle vend ne peuvent être achetés avec de vulgaires pièces d'or. Par contre, ces objets sont ensorcelés : une fois équipés sur un Dinoz, ils ne peuvent plus être enlevés avant plusieurs jours !"
+				"description": "Hidden away in a small Dinotown street, adventurers sometimes get lost and thus find the Magic Shop. Only extremely rare and powerful items are sold here. They can't be bought with common or garden gold coins. Furthermore, these items are enchanted: once equipped by a Dinoz, they can't be removed for several days!"
 			},
 			"cursed": {
 				"name": "Cursed Shop",
@@ -1991,7 +1990,7 @@
 			"CoeurArdent": "Increases the strength of all Fire assaults by 7 and increase maximum health points by 20",
 			"Kamikaze": "Attack an enemy with a Fire power of 15, then the dinoz loses half of his life",
 			"Sprint": "Increases the initiative by 6",
-			"ProteinesDinozienne": "Increases dinoz' endurance by 30%",
+			"ProteinesDinozienne": "Increases Dinoz' endurance by 30%",
 			"Extenuation": "Reduces the enemy's ability to recover by 25%",
 			"CarapaceDeMagma": "Increases max HP by 30 and fire assaults by 5",
 			"Carapace": "Increases armor by 1",
@@ -2155,7 +2154,7 @@
 			"Gratteur": "Enables Dinoz to search an additional square during an excavation",
 			"GrosseBeigne": "Doubles strength of the next assault",
 			"Vitalite": "Increases maximum health points by 10",
-			"MoignonsLiquides": "Decreases intiative of one enemy by 25",
+			"MoignonsLiquides": "Decreases initiative of an enemy by 25",
 			"Deluge": "Attacks all enemies with Water at a strenght of 10. All enemies lose 8 points of initiative",
 			"Reflex": "Increases initiative by 5",
 			"EclairSinueux": "Attacks up to 3 enemies with Lightning at a strength of 10",
@@ -2227,13 +2226,13 @@
 			"ForceDeZeus": "Increases the power of all Lightning Assaults by 20",
 			"RemanenceHertzienne": "Increases dodge chance by 20%",
 			"Blanc": "White",
-			"Anaerobie": "Increases assaults of the Dinoz by 20 when it is in Nimbao",
+			"Anaerobie": "Reduces Dinoz' endurance by 25%",
 			"DoubleFace": "50% chance to increase or reduce the caster's initiative by 10 at the start of a fight",
 			"Flagellation": "Reduces recovery speed by 15%",
 			"SouffleDange": "Increases fire defense by 20%",
 			"Ouragan": "Increases air assault power by 20 against fire",
 			"Ouranos": "Dinoz (allies and enemies) with an air element of less than 10 see the speed of their assaults reduced by 50% for the next 3 turns of the caster",
-			"Twinoid500mg": "Increase dinoz stamina by 50%",
+			"Twinoid500mg": "Increases Dinoz' endurance by 50%",
 			"LonDuhaut": "Allows the dinoz to search an additional square when harvesting",
 			"SurplisDhades": "Allows the Dinoz to be equipped with an additional battle item",
 			"ReceptacleThermique": "Cancels the type A and E Fire spherical skills of a dinoz",
@@ -2401,7 +2400,7 @@
 		"elements": "Information",
 		"action": "Actions",
 		"level": "This level reflects the strength of your dinoz.",
-		"slot": "This slot is empty. Please choose an item from the inventory to equip. && //Equipped items can be used by your Dinoz during a battle//",
+		"slot": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
 		"shopButton": "Go to the shop",
 		"clanButton": "My clan",
 		"dojoButton": "My dojo",
@@ -2460,37 +2459,37 @@
 		"clan": "Dino-RPG [ Clan : ",
 		"clansList": "Dino-RPG [ Clans List ]",
 		"createClan": "Dino-RPG [ Create a Clan ]",
-		"challengeFriend": "Dino-RPG [ Affronte un ami ]",
+		"challengeFriend": "Dino-RPG [ Duel a Friend ]",
 		"forum": "Dino-RPG [ Forums ]"
 	},
 	"gather": {
 		"action": {
-			"cueille": "Cueillir",
-			"fish": "Pêcher",
-			"hunt": "Trophées de Chasse",
-			"seek": "Artefacts",
-			"energy": "Energétiser",
-			"anniv": "Anniversaire",
-			"xmas": "Chasse-Neige",
-			"tictac": "Trésor de Papy Joe",
-			"labo": "Laboratoire de l'Archidorogon",
-			"party": "Feu d'artifice",
-			"daily": "Grille Quotidienne"
+			"cueille": "Pick",
+			"fish": "Fish",
+			"hunt": "Hunt Trophies",
+			"seek": "Artifacts",
+			"energy": "Energize",
+			"anniv": "Anniversary",
+			"xmas": "Snowplow",
+			"tictac": "Grandpa Joe's Treasure",
+			"labo": "Archdorogon's Laboratory",
+			"party": "Fireworks",
+			"daily": "Daily Grid"
 		},
 		"type": {
-			"cueille": "plantes",
-			"fish": "poissons",
-			"hunt": "Chasser",
-			"seek": "Fouiller",
-			"energy": "énergie",
-			"anniv": "trésors fabuleux",
-			"xmas": "Cadeaux de Noël",
-			"tictac": "trésors dans le jardin de Papy Joe",
-			"labo": "ressources dans le laboratoire de l'Archidorogon",
-			"party": "trésors fabuleux",
-			"daily": "récompenses quotidiennes"
+			"cueille": "plants",
+			"fish": "fishes",
+			"hunt": "Hunt",
+			"seek": "Excavate",
+			"energy": "energy",
+			"anniv": "fabulous treasures",
+			"xmas": "Christmas Gifts",
+			"tictac": "treasures in Grandpa Joe's garden",
+			"labo": "resources in the Archdorogon's Laboratory",
+			"party": "fabulous treasures",
+			"daily": "daily rewards"
 		},
-		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}"
+		"disclaimer": "Click on {number} grid box(es) to search for {search}"
 	},
 	"missions": {
 		"header": "Missions list",
@@ -2917,7 +2916,7 @@
 		},
 		"dialog": {
 			"fish": {
-				"fishVendor": "Hey little guy",
+				"fishVendor": "Hello little one, are you here for the fish? Here you go! Take them to Dinotown before Madam Squyd's party is ruined.",
 				"mmeSeyche": "Ooooohhhh, thank you! This meal is going to be a success thanks to you! Make sure you return to Grandpa Joe to receive your reward!",
 				"papyjoe": "Madam Squyd is really pleased with you, here's your reward!"
 			},
@@ -3113,7 +3112,7 @@
 				"shaman": "Hmmm ... very interesting ... Hmmm ... Here's something that should gobsmack that old grumpy clown from the University! Thanks for your help!"
 			},
 			"pigeon": {
-				"profLetter": "Je vois que ce magicien de pacotille a encore trouvé quelque chose à me coller sous la moustache. Hmm... Hmm... OH ! Ça par exemple ! Il faut que j'en ai le cœur net... Montrez cette lettre à ma bonne amie le docteur Yolande de l'île de Waïkiki !",
+				"profLetter": "I see that this crazy magician has found something else to bother me with! Hmm ... Hmm ... OH! Oh my god! It can't be! I have to be certain before I can comment any further. Show this letter to my dear friend Doctor Yolande on Waïkiki Island immediately!",
 				"yolande": "Wow! This came from the caverns of Deep Gorges you say? It's incredible! You must show this to Mister Shovel, The Brutforce Archeologist.",
 				"foundArcheo": "Archeologist Shovel doesn't seem to be here. Apparently he is working on a construction site in the Deep Gorges.",
 				"archeo": "Oh ... That's funny, this looks a lot like the notes I left on the cavern walls. What's that you say? The Shaman thought it was ancient texts?! Of course not! I wrote those, they're my personal notes.",
@@ -3303,7 +3302,7 @@
 	},
 	"levelup": {
 		"disclaimer": "You can now start the animation to find out which element your dinoz is evolving with.",
-		"title": "Niveau supplémentaire pour {name}",
+		"title": "Additional level for {name}",
 		"helper": "Choose a skill to learn:",
 		"fire": "Gains +1 :feu: Fire",
 		"wood": "Gains +1 :bois: Wood",
@@ -3501,12 +3500,12 @@
 			"chmx2a": "Dague de lave",
 			"chmx3b": "Styletto",
 			"chmx3a": "Damascus",
-			"chnx1b": "Bouclier de magma",
-			"chnx1a": "Bouclier légendaire",
+			"chnx1b": "Magma shield",
+			"chnx1a": "Legendary shield",
 			"chnx2b": "Pavois Croisé",
-			"chnx2a": "Bouclier américain",
-			"chnx3b": "Bouclier Umbo",
-			"chnx3a": "Bouclier d'Acier",
+			"chnx2a": "American shield",
+			"chnx3b": "Umbo Shield",
+			"chnx3a": "Steel Shield",
 			"chox1a": "La paume du plombier",
 			"chox1b": "Point fulgurant",
 			"chox2a": "La main d'Eve",
@@ -3520,45 +3519,45 @@
 			"chpx3a": "Radis Max",
 			"chpx3b": "Carotte tempo",
 			"chrx3b": "Patate de forain",
-			"cinec1": "Dinoz d'Or",
+			"cinec1": "Golden Dinoz",
 			"cinec2": "Outstanding Contribution DAFTA",
 			"cinec3": "Best Parody DAFTA",
 			"cinec4": "Best Adaptation DAFTA",
-			"hallow": "Special halloween",
-			"tid1": "Médaille zen",
-			"tid2": "Maître Zenit",
-			"gazeli": "Reporter de l'extrême",
+			"hallow": "Halloween special",
+			"tid1": "Zen Medal",
+			"tid2": "Master Zenit",
+			"gazeli": "Extreme Reporter",
 			"hunt1": "Chasseur ultime",
-			"hunint": "Chasseur international",
-			"xhunt3": "Roi des Chasseurs",
-			"xhunt2": "Prince des Chasseurs",
-			"xhunt1": "Chasseur royal",
-			"cinema": "Pellicule d'or",
-			"cinem2": "Pellicule d'argent",
+			"hunint": "Ultimate International Hunter",
+			"xhunt3": "King of the Hunters",
+			"xhunt2": "Prince of the Hunters",
+			"xhunt1": "Royal Hunter",
+			"cinema": "Golden Movie",
+			"cinem2": "Silver Movie",
 			"eugene": "Prix Eugène de Physique",
 			"litter": "Prix de Littérature",
-			"clover": "Gagnant de DinoLoto",
+			"clover": "DinoLoto Winner",
 			"import": "Importosaurus bone"
 		},
 		"description": {
 			"perle": "Using the pearl your Dinoz can recover health at the Fountain of Youth each day.",
 			"pteroz": "Pteroz's trophy awards players having defeated the strange Pteroz, it gives access to Pteroz among available Dinoz in the shop.",
-			"hippo": "Le Trophée des Hippoclamps récompense les joueurs ayant vaincu l'Hippoclamp sauvage, et donne accès aux Hippoclamps parmi les Dinoz disponibles dans la Boutique.",
-			"rocky": "Le Trophée des Rockys récompense les joueurs ayant vaincu le Rocky endormi, et donne accès aux Rockys parmi les Dinoz disponibles dans la Boutique.",
-			"quetzu": "Le Trophée des Quetzus a été remis par Mandragore aux joueurs ayant vaincu l'Archidorogon Grizorg, il donne accès aux Quetzu parmi les Dinoz disponibles dans la Boutique.",
+			"hippo": "The Hippoclamp's Trophy is awarded to players who have defeated the wild Hippoclamp. It also unlocks Hippoclamps in the Dinoz Shop.",
+			"rocky": "The Rocky's Trophy is awarded to players who have defeated the sleeping Rocky. It also unlocks Rockies in the Dinoz Shop.",
+			"quetzu": "The Quetzus Trophy is awarded by Mandragore to players who have defeated the Archdorogon Grizorg, and grants access to the Quetzu among the Dinoz available in the Shop.",
 			"labowi": "The Smogs' Trophy was given by Professor Henderson during the Corrupt Lab Crisis. Unfortunately, only one smog could have been created during this quest.",
 			"tour": "This yellow jersey awards you for your beautiful Dinoland's tour ! You are now part of Dinoland's greatest explorers.",
-			"vener": "L'Oeil du Vénérable est un objet extrêmement rare. Seuls les plus grands Guerriers peuvent l'obtenir ! On raconte qu'il aurait des propriétés magiques incroyablement puissantes...",
+			"vener": "The Eye of the Venerable is an extremely rare item. Only the greatest warriors can obtain it! It is said to have incredibly powerful magical properties...",
 			"taurus": "You helped Baobob push the mighty Infernal Moueffe Taurus into the depths of the Dark World. You are not going to see it again, your courage is already beginning to cross the borders of Dinoland.",
-			"belius": "Vous avez supprimé le puissant Santaz infernal Belius. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de dinoz démons dans la boutique démoniaque.",
+			"belius": "You have defeated the powerful Belius, the infernal Santaz. He has been sent back to the depths of the Dark World. This trophy allows you to unlock 3 additional races of demon Dinoz in the Demon Shop.",
 			"scorp": "You expelled the powerful infernal Winks Scorpus. He is back in the depths of the Dark World.",
 			"msg": "This unlimited dinozian postal services approved stamp's stock validates your Dinotown trip",
 			"magnet": "You have been gifted this negative magnetite shard by the Rockies' king himself ! Who knows what kind of mysterious powers it holds...",
 			"plume": "This feather, gifted from someone far away, allows editing player's presentation.",
 			"kaura": "This aura allows you accessing the totem island and finding - maybe - Kabuki having survived the Great Cataclysm !",
 			"demon": "This old scroll will allow you to access the demonic shop at the downfall Cemetery !",
-			"pmi": "Le Petit Missionnaire Illustré permet d'avoir accès à tout moment à la liste des missions effectuées et restant à faire pour vos Dinoz.",
-			"pda": "La P.D.A. est une pierre remplie (chose surprenante) de technologie formée naturellement et permettant à l'éleveur d'avoir un aperçu de tous ses Dinoz en un simple coup d'oeil. La Diamantite au contraire c'est juste pour la frime.",
+			"pmi": "The Little Illustrated Missionary allows you to have access at any time to the list of missions completed and remaining to be done for your Dino.",
+			"pda": "The P.D.A. is a stone filled (surprisingly) with naturally formed technology that allows a master to have an overview of all his Dinoz at a glance. The Diamantite on the other hand is just for show.",
 			"fdjv1": "This trophy is a thanks to the players who made a long journey to the 2010 edition of the Gaming Festival to meet the shadow puppeteers!",
 			"dico1": "A very old book, maybe it will help you decipher something? Unfortunately for now, it is closed by a very complex lock. Does anyone know how to open it ? For now, it seems that no one can...",
 			"dicarb": "A very old book, you managed to open it, it can now help decipher the Arboris language.",
@@ -3738,19 +3737,19 @@
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
 			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
-			"tid1": "Congratulations on winning the Inter-Dojo Tournament! The Zen medal rewards the best existing Dojo in Dinoland, no Dinoz master surpasses you! To you the glory, the flashes, the success with the masters / mistresses dinoz.... !!",
+			"tid1": "Congratulations on winning the Inter-Dojo Tournament! The Zen Medal rewards the best existing Dojo in Dinoland, no Dinoz master surpasses you! To you the glory, the flashes, the success with the masters / mistresses dinoz.... !!",
 			"tid2": "Congratulations on winning the Dinoz Tournament! The solid gold master Zenit figurine is the equivalent of the Oscar of the most valiant master dinoz in all of Dinoland, no master surpasses you! To you the glory, the flashes, the success with the masters / mistresses dinoz.... !!",
-			"gazeli": "Your exciting article written for the Dinoland Gazette allowed you to win this trophy. Tous les maîtres dinoz vanteront les mérites de votre prose à travers le monde !",
+			"gazeli": "The exciting article which you wrote for the Dinoland gazette won you this trophy. Dinoz masters around the world are showing off your work!",
 			"hunt1": "Your achievements during the monster hunt have made you famous. The hunter's soul burns within you and reminds every monster that roams the lands of Dinoland that you are keeping an eye on them.",
-			"hunint": "You were the most fearsome of all hunters in the international hunt. The hunter's soul burns within you and reminds every dinoz master in Dinoland that you are a legend among them.",
-			"xhunt3": "You were the most fearsome of all hunters in the international hunt. The hunter's soul burns within you and reminds every dinoz master in Dinoland that you are a legend among them.",
-			"xhunt2": "You were the second most fearsome hunters in the international hunt. The hunter's soul burns within you and reminds every dinoz master in Dinoland that you are a legend among them.",
-			"xhunt1": "Vous avez été l'un des plus redoutables chasseurs lors de la chasse internationale. L'âme du chasseur brûle en vous et rappelle à chaque maître dinoz qui foulent les terres de Dinoland que vous êtes une légende parmi eux.",
+			"hunint": "You were the most formidable hunter in the International Monster Hunt. The soul of a true hunter burns within you and all Dinoz masters who roam the Kingdom of Dinoland are aware of your ascent to legendary status. Time will tell stories of your greatness and bravery.",
+			"xhunt3": "You were the most formidable hunter in the International Monster Hunt. The soul of a true hunter burns within you and all Dinoz masters who roam the Kingdom of Dinoland are aware of your ascent to legendary status. Time will tell stories of your greatness and bravery.",
+			"xhunt2": "You were the second most formidable hunter in the International Monster Hunt. The soul of a true hunter burns within you and all dinoz masters who roam the Kingdom of Dinoland are aware of your ascent to legendary status. Time will tell stories of your greatness and bravery.",
+			"xhunt1": "You were one of the most formidable hunters in the International Monster Hunt. The soul of a true hunter burns within you and all dinoz masters who roam the Kingdom of Dinoland are aware of your ascent to legendary status. Time will tell stories of your greatness and bravery.",
 			"cinema": "Votre film a été sélectionné par le jury du festival du film de Dinoville en temps que meilleur film d'aventuro/mélodrama/comédino/époustouflo/rocambolesque. Vous faîtes partie de la caste des meilleurs réalisateurs qui délivrent notre imaginaire en nous emportant dans un monde onirique dont vous seul avez le secret !",
 			"cinem2": "Special award from the jury of the Dinoville Film Festival.",
 			"eugene": "Your unparalleled creativity has earned you this magnificent medal, only Dinoz masters with extraordinary intelligence allow themselves to wear it. Some say you're a genius, others say you're a twisted mind, the most important thing is that they are talking about you!",
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe telle que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
-			"clover": "This prize was given to you for being the luckiest dinoz master in Dinoland during a dinoLoto! Congratulations!",
+			"clover": "You have been awarded this prize for being the owner of the luckiest Dinoz in Dinoland (as selected by the DinoLoto draw)! Congratulations!",
 			"import": "Congratulations! You have imported your account to EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Maybe it's a mistake after all?"
 		}
 	},
@@ -3760,19 +3759,19 @@
 			"player": "Master",
 			"dinoz": "Dinoz",
 			"points": "Pts",
-			"average": "Moy.",
+			"average": "Avg.",
 			"completion": "Comp.",
 			"clans": "Clans",
-			"treasure": "Trésor du Clan"
+			"treasure": "Clan Treasure"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
 			"average": "The Player Ranking is updated in real time and is calculated from the average level of all the player's Dinoz.",
-			"completion": "Le Classement des joueurs est mis à jour à minuit et est calculé à partir de la formule de complétion se basant sur les dinoz actifs et la progression dans l'histoire du jeu.",
-			"pantheon": "Here you can find which players and dinoz were the first to accomplish feats and challenges.",
-			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan.",
-			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
-			"clansCreationLink": "page de recherche des clans"
+			"completion": "The ranking of players is updated at midnight and base on the completion formula. This formula is based on the active Dinoz of the player and its progress in the story.",
+			"pantheon": "Here you can find which players and Dinoz were the first to accomplish feats and challenges.",
+			"clans": "The clan raking is updatedin real time and based on the treasure value of the clan.",
+			"clansCreation": "You can consult the {0} in order to see newly created clans.",
+			"clansCreationLink": "clan research page"
 		},
 		"page": {
 			"previous": "Previous page",
@@ -3799,8 +3798,8 @@
 	"clan": {
 		"ingredients": {
 			"price": "{price} :gold:",
-			"help": "Votre trésor d'une valeur de **{value}** :gold: est protégé par le château. Vous pouvez donner des ingrédients pour qu'ils soient ajoutés au trésor du Clan.",
-			"giveAway": "Donner au clan."
+			"help": "Your treasure worth **{value}** :gold: is protected by the castle. You can donate ingredients to be added to the Clan's treasure.",
+			"giveAway": "Donate to the clan."
 		},
 		"header": {
 			"title": "Clan: {name}",
@@ -3940,7 +3939,7 @@
 	},
 	"createClan": {
 		"title": "Create a clan",
-		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
+		"information": "Please fill out the information below to create your Clan. Creating a Clan will cost you **{cost}** :gold:",
 		"clan_name": "Clan name",
 		"clan_description": "Clan description",
 		"create_button": "Create clan",
@@ -3955,15 +3954,15 @@
 		"display": "Show the battle",
 		"resume": "You fought an {enemy}",
 		"clone": "Clone",
-		"life": "Vie perdue",
-		"experience": "Expérience",
-		"gold": "Or trouvée",
+		"life": "Lost life",
+		"experience": "Experience",
+		"gold": "Gold found",
 		"monster": {
 			"goupignon": "Smashroom",
-			"wolf": "Loup",
+			"wolf": "Wolf",
 			"gluon": "Gluon",
-			"greeng": "Géant Vert",
-			"coq": "Coqdur",
+			"greeng": "Green giant",
+			"coq": "Giant Chickens",
 			"piglou": "Piglounou",
 			"piglo2": "Pigloubi",
 			"piglo3": "Piglouglou",
@@ -3977,40 +3976,40 @@
 			"kazka": "Kazkadine",
 			"anguil": "Anguilloz",
 			"korgon": "Facetious Korgon",
-			"barche": "Bébé Archélion",
+			"barche": "Baby Archelion",
 			"flam": "Flamelet",
 			"cobra": "Cobrasero",
-			"goblin": "Gobelin",
-			"bat": "Fauve Souris",
-			"ronciv": "Roncivore",
+			"goblin": "Goblin",
+			"bat": "Bat",
+			"ronciv": "Ronciv",
 			"gardien": "Grapeboom",
-			"grdien": "Gardien Arboricole",
-			"rkrgns": "Renfort Korgon",
-			"egrllz": "Esprit Gorilloz",
+			"grdien": "Tree Guardian",
+			"rkrgns": "Korgon Reinforcement",
+			"egrllz": "Gorilloz Spirit",
 			"borg": "Borg",
-			"ewater": "Élémental d'eau",
-			"efire": "Élémental de feu",
-			"vener": "Le Vénérable",
-			"rasca": "Vieux Rascaphandre",
-			"eearth": "Elémental de Terre",
-			"pirask": "Pirhan-os",
-			"megawf": "Mega-loup"
+			"ewater": "Water Elemental",
+			"efire": "Fire Elemental",
+			"vener": "The Venerable",
+			"rasca": "Old Rascaphandre",
+			"eearth": "Earth Elemental",
+			"pirask": "Pirahn-os",
+			"megawf": "Mega-wolf"
 		},
 		"status": {
 			"asleep": "Asleep",
 			"slowed": "Slowed",
 			"petrified": "Petrified",
 			"poisoned": "Poisoned",
-			"burned": "brûlé",
-			"locked": "verrouillé",
-			"dazzled": "ébloui",
-			"stunned": "étourdi",
+			"burned": "burned",
+			"locked": "locked",
+			"dazzled": "dazzled",
+			"stunned": "stunned",
 			"torched": "Torched",
 			"intangible": "Intangible",
 			"flying": "Flying",
 			"quickened": "Quickened",
 			"shielded": "Shielded",
-			"blessed": "béni",
+			"blessed": "blessed",
 			"healing": "Healing"
 		},
 		"step": {
@@ -4024,7 +4023,7 @@
 			"moveBack": "**{fighter}** went back to his position.",
 			"attemptHit": "**{fighter}** tried attacking **{target}**.",
 			"evade": "**{fighter}** evaded the hit.",
-			"death": "**{fighter}** a succombé à ses blessures !",
+			"death": "**{fighter}** has died from his wounds ",
 			"counter": "**{fighter}** countered **{opponent}**.",
 			"survive": "**{dinoz}** survived the attack.",
 			"skillAnnounce": "**{dinoz}** uses **{skill}** (-{energy} energy).",
@@ -4034,8 +4033,8 @@
 			"skillExpire": "**{dinoz}**'s **{skill}** expired.",
 			"looseHp": "**{fighter}** lost **{hp} HP**.",
 			"heal": "**{fighter}** healed **{hp} HP**.",
-			"addStatus": "**{fighter}** a obtenu le statut **{status}**.",
-			"removeStatus": "**{fighter}** n'a plus le statut **{status}**.",
+			"addStatus": "**{fighter}** has obtained **{status}** status.",
+			"removeStatus": "**{fighter}** no longer has **{status}** status.",
 			"itemUse": "**{fighter}** used **{item}**.",
 			"hypnotize": "**{fighter}** switched sides.",
 			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy.",
@@ -4043,15 +4042,15 @@
 			"tired": "**{fighter}** is tired and passed its turn."
 		},
 		"event": {
-			"christmas_ticket": "Il semblerait que ce monstre possédait un ticket de Noël sur lui. Quelle aubaine !"
+			"christmas_ticket": "It seems that this monster had a Christmas ticket on him. What a bargain!"
 		}
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
 		"tname": "Ingredients",
 		"giveAway": {
-			"button": "Donner au clan",
-			"confirm": "Désirez-vous donner vos ingrédients pour un total de {gold} or ?"
+			"button": "Donate to the clan",
+			"confirm": "Would you like to donate your ingredients for a total of {gold} gold?"
 		},
 		"tstock": "Stock",
 		"tquantity": "Quantity",
@@ -4095,7 +4094,7 @@
 			"merou_lujidane": "A common species in Dinoland and this fish is very popular due to it caramelised taste.",
 			"poisson_vengeur": "It steals leerfish to give to the poor.",
 			"an_guili_guilille": "Most of the Eels are\"electric\", but this species is refrigerable. People use it to refresh their drinks or to preserve food by wrapping it with them.",
-			"globulos": "Le Globulos est particulièrement visqueux et mou mais il rebondit étonnamment bien si on le projette contre un mur. Cette propriété amusante en fait un jouet très apprécié !",
+			"globulos": "Globulos is very soft and sticky but it bounces surprisingly well when thrown against a wall. This funny feature makes it very popular!",
 			"super_poisson": "Defenders of Groupers and Globulos! Nobody really knows the identity of Super-Fish. In fact, no one ever cared... Super-Fish is a greatly unknown hero.",
 			"touffe_de_fourrure": "A handful of good-quality fur! Not enough to make a coat, but it's better than nothing....",
 			"roche_radio_active": "This rock, extracted from the sloughed rock hide of a Groulem, has been affected by exposure to ether and now has a strange glow to it. It's recommended that you don't carry it on your person for any more than a day or you risk losing your hair.",
@@ -4105,9 +4104,9 @@
 			"langue_monstrueuse": "A hunting trophy which would make most Dinoland Masters envious! If in perfect condition, this monster tongue will be sold for a lot of money.",
 			"energie_foudre": "Lightning energy is easy to capture as its all round us. You just have to know how to find it by hitting a stone or moving an iron bar during a thunderstorm.",
 			"energie_air": "In spite of the fact that Air is present everywhere on Dinoland, only certain breezes can be transformed in pure energy.",
-			"energie_eau": "Les Énergies Eau sont présentes en très grand nombre dans toutes les surfaces d'eau, mais elles filent si vite que presque personne n'arrive jamais à les capter ! D'où leur prix très élevé.",
+			"energie_eau": "Water Energy can be found on every water surface, but they move so quickly that nobody ever succeeds in capturing them! This is why their price is so high.",
 			"energie_feu": "Fire in its natural state is very valuable.",
-			"energie_bois": "Si trouver un arbre est chose aisée, puiser une Énergie Bois relève du défi surhumain ! Il faut souvent grimper très haut dans les feuillages pour en trouver...",
+			"energie_bois": "If finding a tree is an easy, then harboring Wood Energy is near impossible! You have often to climb high in the leaves to find it...",
 			"silex_taille": "A sharpened pebble by who-knows-who to do who-knows-what.",
 			"fragment_de_texte_ancien": "The text engraved on this fragment is unreadable. But you can be sure that a collector will pay well to get it.",
 			"vieil_anneau_precieux": "This gold ring dates back hundreds of years and would be a beautiful exhibit in a museum",
@@ -4180,12 +4179,12 @@
 		},
 		"transactionView": {
 			"yourOngoingOffer": "Your ongoing offer",
-			"yourWonOffer": "Vos offres gagnées",
-			"myExpiredOffers": "Vos ventes expirées",
-			"claimExpired": "Récupérer ma vente",
+			"yourWonOffer": "Your won bids",
+			"myExpiredOffers": "Your expired offers",
+			"claimExpired": "Recover my offer",
 			"noOnGoingOffer": "You have no ongoing offer.",
-			"noWonOffer": "Vous n'avez aucune offre à récupérer",
-			"claim": "Récupérer mes gains",
+			"noWonOffer": "You have no ongoing offer.",
+			"claim": "Collect my winnings",
 			"bid": "Bids",
 			"noBidYet": "No bet yet.",
 			"cancel": "Cancel",
@@ -4198,47 +4197,47 @@
 		}
 	},
 	"hud": {
-		"following": "Ce Dinoz suit son chef de groupe.",
-		"gather": "Ce dinoz peut récolter en ce lieu.",
-		"rest": "Ce dinoz se repose.",
-		"resting": "Votre Dinoz se repose actuellement. Il regagnera {hp} :pv: dans {min} minutes.",
-		"remainingActions": "Votre dinoz peut encore effectuer des actions gratuites.",
-		"follow": "Le chef de groupe est {leader}.",
-		"followed": "Ce Dinoz est chef de groupe.",
-		"restEnd": "Votre dinoz a déjà récupéré le maximum de point de vie en se reposant."
+		"following": "This Dinoz is following his group leader.",
+		"gather": "This Dinoz can gather at this place.",
+		"rest": "This Dinoz is resting.",
+		"resting": "Your Dinoz is currently resting. It will regain {hp} :pv: in {min} minutes.",
+		"remainingActions": "Your Dinoz still has free actions left.",
+		"follow": "The group leader is {leader}.",
+		"followed": "This Dinoz leads a group.",
+		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting."
 	},
 	"logs": {
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
-		"ItemBought": "**{player} ({playerId})** a acheté **{quantity}x {item}** (total {total}).",
-		"IngredientSold": "**{player} ({playerId})** a vendu **{quantity}x {item}** (restant {amount}).",
-		"GoldWon": "**{player} ({playerId})** a gagné **{quantity} :gold:** ({total} :gold:).",
-		"GoldLost": "**{player} ({playerId})** a perdu **{quantity} :gold:** ({total} :gold:).",
-		"Move": "**{player} ({playerId})** a bougé son Dinoz **{dinoz} ({dinozId})** à **{location}**.",
+		"ItemBought": "**{player} ({playerId})** has purchased **{quantity}x {item}** (total {total}).",
+		"IngredientSold": "**{player} ({playerId})** sold **{quantity}x {item}** ({amount} remains).",
+		"GoldWon": "**{player} ({playerId})** won **{quantity} :gold:** ({total} :gold:).",
+		"GoldLost": "**{player} ({playerId})** lost **{quantity} :gold:** ({total} :gold:).",
+		"Move": "**{player} ({playerId})** has moved his Dinoz **{dinoz} ({dinozId})** to **{location}**.",
 		"LevelUp": "**{player} ({playerId})** leveled up its Dinoz **{dinoz} ({dinozId})** to **level {level}**.",
 		"Fight": "**{player} ({playerId})** fought and lost **{hpLost} :pv:**, earned **{gold} :gold:** and **{xp} :xp:**.",
-		"XPEarned": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** a gagné **{xp} :xp:**.",
-		"HPLost": "Le Dinoz **{dinoz} ({dinozId})** de **{player} ({playerId})** a perdu **{hpLost} :pv:**.",
+		"XPEarned": "The Dinoz **{dinoz} ({dinozId})** from **{player} ({playerId})** gained **{xp} :xp:**.",
+		"HPLost": "The Dinoz **{dinoz} ({dinozId})** of **{player} ({playerId})** has lost **{hpLost} :pv:**.",
 		"Death": "**{player} ({playerId})**'s Dinoz *{dinoz} ({dinozId})** died.",
 		"Revive": "**{player} ({playerId})** revived its Dinoz **{dinoz} ({dinozId})**.",
 		"MissionStep": "**{player} ({playerId})** made progress for mission **{mission}** to **step {step}** with its Dinoz **{dinoz} ({dinozId})**.",
-		"MissionFinished": "**{player} ({playerId})** a fini la mission **{mission}** avec son Dinoz **{dinoz} ({dinozId})**.",
+		"MissionFinished": "**{player} ({playerId})** has completed the mission **{mission}** with his Dinoz **{dinoz} ({dinozId})**.",
 		"MissionCanceled": "**{player} ({playerId})** canceled **{mission}** with dinoz **{dinoz} ({dinozId})**.",
 		"Gather": "**{player} ({playerId})** gathered with dinoz **{dinoz} ({dinozId})**.",
-		"GridFinished": "**{player} ({playerId})** a fini une grille de récolte et gagné  {gold} :gold:.",
+		"GridFinished": "**{player} ({playerId})** finished a harvest grid and won {gold} :gold:.",
 		"CreateDinoz": "**{player} ({playerId})** created dinoz **{dinoz} ({dinozId})**.",
 		"ChangeDinozOrder": "**{player} ({playerId})** changed the order of dinoz **{dinoz} ({dinozId})**.",
 		"PlayerCreated": "**New player has arrived : {name}**.",
 		"PlayerConnected": "**Player {name}** has just logged on.",
 		"LBDone": "**Player {player}** just claimed his rewards.",
-		"OfferNew": "**{player} ({playerId})** a créé une **nouvelle offre {offer}** pour un montant de {amount} :gold:.",
-		"OfferBid": "L'**offre {offer}** de **{player} ({playerId})** a reçu une nouvelle **mise de {amount}** bons.",
-		"OfferCancelled": "**{player} ({playerId})** a  **annulé** son **offre {offer}**.",
-		"OfferExpired": "L'**offre {offer}** de **{player} ({playerId})** a **expiré** et n'a pas été remportée.",
-		"OfferWon": "L'**offre {offer}** de **{player} ({playerId})** a été **remportée par {winner}** pour le **montant de {amount}** bons."
+		"OfferNew": "**{player} ({playerId})** has created a **new offer {offer}** for {amount} :gold:.\n",
+		"OfferBid": "The **offer {offer}** of **{player} ({playerId})** has received a new **bid of {amount}** vouchers.",
+		"OfferCancelled": "**{player} ({playerId})** has **cancelled** its **offer {offer}**.",
+		"OfferExpired": "The **offer {offer}** of **{player} ({playerId})** has **expired** and has not been won.",
+		"OfferWon": "The **offer {offer}** of **{player} ({playerId})** has been **won by {winner}** for the **amount of {amount}** vouchers."
 	},
 	"dojo": {
 		"welcome": "Welcome to your Dojo",
-		"return": "Retour",
+		"return": "Back",
 		"accessTournament": "Access tournament",
 		"disclaimer": "**No way to escape!** && The Black Hole skill and the Dimensional Powder item are not activated during tournament battles, nor in future challenges!",
 		"tidInProgress": "The final phases of the inter-dojo tournament are in progress.",
@@ -4255,87 +4254,87 @@
 		"group": "Group {group}",
 		"seeFinal": "See the final",
 		"seeFight": "See the fight",
-		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
-		"qualification": "Le prochain tournoi commencera le **{poolsStart}**, soyez prêt ! Les phases de qualifications se terminent le **{qualificationEnd}**.&&Le cash price est actuellement à **{cashPrice}** :gold:.",
-		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&Le cash price est maintenant de **{cashPrice}** :gold:.",
-		"finals": "Et voici les phases finales tant attendues.&&Le cash price est à présent de **{cashPrice}** :gold:.",
-		"tournamentInfo": "**ATTENTION :** &&Votre position est indiquée en vert, vous pouvez cliquer sur les participants de chaque combat pour le revoir. **Seuls les gagnants des groupes participeront à la finale.**",
+		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
+		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
+		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",
+		"finals": "And here are the long-awaited final stages && The cash price has been set at **{cashPrice}** :gold:.",
+		"tournamentInfo": "**ATTENTION:**&& Your position is indicated in green, you can click on the participants of each fight to see it again. **Only group winners will participate in the final.**",
 		"challengeFriend": {
-			"disclaimer": "Ici vous pouvez sélectionner **5 de vos Dinoz** pour affronter un membre de votre clan. Choisissez ensuite votre ami et jusqu'à **5 de ses Dinoz** avant de lancer le combat. Aucun :pv: ne sera perdu, aucune :xp: ne sera gagnée et aucun objet ne sera consommé. &&Le prix d'un combat est de **50:gold: par Dinoz combattant**. Ces pièces d'or :gold: utilisées serviront à financer les prochains tournois.",
-			"friend": "Sélectionnez ici les Dinoz de votre camarade à affronter.",
+			"disclaimer": "Here you can select **5 Dinoz** to face another member of your clan. Then choose a clan member and **5 of their Dinoz**. Then you can start the fight. No :pv: will be lost, no :xp: will be earned, no items will be used.&&The price of a fight is **50 :gold: per Dinoz selected**. This fee contributes to the crash price of the next tournament.",
+			"friend": "Select here the Dinoz of your comrade to challenge.",
 			"startFight": "{gold} :gold:"
 		},
 		"history": {
-			"myDinoz": "Mes combattants",
-			"ennemis": "Adversaires",
-			"seeFight": "Voir le combat",
-			"link": "Lien",
-			"copyLink": "Copier le lien"
+			"myDinoz": "My fighters",
+			"ennemis": "Opponents",
+			"seeFight": "See the fight",
+			"link": "Link",
+			"copyLink": "Copy Link"
 		},
 		"fightRecap": {
-			"hpLost": "Quantité de points de vie perdus :pv:",
-			"hpHealed": "Quantité de points de vie gagnés",
-			"attacks": "Quantité d'attaques",
-			"multiHit": "Nombre de multi-coup",
-			"assaults": "Nombre d'assauts",
-			"evasions": "Nombre d'esquives",
-			"counters": "Nombre de contres",
-			"poisoned": "Nombre d'adversaires empoisonnés",
-			"poison_damage": "Dégâts de poison infligés",
-			"burn_damage": "Dégâts de brûlure infligés",
-			"reinforcements": "Nombre de renforts appelés",
-			"petrified": "Nombre d'adversaires pétrifiés",
-			"damageFire": "Dégats de :fire: infligés",
-			"assaultFire": "Nombre d'assaut :fire: réalisés",
-			"damageWater": "Dégats de :water: infligés",
-			"assaultWater": "Nombre d'assaut :water: réalisés",
-			"damageWood": "Dégats de :wood: infligés",
-			"assaultWood": "Nombre d'assaut :wood: réalisés",
-			"damageLightning": "Dégats de :lightning: infligés",
-			"assaultLightning": "Nombre d'assaut :lightning: réalisés",
-			"damageAir": "Dégats de :air: infligés",
-			"assaultAir": "Nombre d'assaut :air: réalisés",
-			"damageVoid": "Dégats de :void: infligés",
-			"assaultVoid": "Nombre d'assaut :void: réalisés",
-			"hpRemaining": "Vie restante",
-			"times_poisoned": "Nombre de fois qu'un dinoz est empoisonné"
+			"hpLost": "Quantity of health points lost :pv:",
+			"hpHealed": "Quantity of health points gained",
+			"attacks": "Quantity of attacks",
+			"multiHit": "Number of multi-hits",
+			"assaults": "Number of assaults",
+			"evasions": "Number of dodges",
+			"counters": "Number of counter attacks",
+			"poisoned": "Number of poisoned opponents",
+			"poison_damage": "Poison damage dealt",
+			"burn_damage": "Burn damage dealt",
+			"reinforcements": "Number of reinforcements called",
+			"petrified": "Number of petrified opponents",
+			"damageFire": ":fire: damage dealt",
+			"assaultFire": "Number of :fire: assaults carried out",
+			"damageWater": ":water: damage dealt",
+			"assaultWater": "Number of :water: assaults carried out",
+			"damageWood": ":wood: damage dealt",
+			"assaultWood": "Number of :wood: assaults carried out",
+			"damageLightning": ":lightning: damage dealt",
+			"assaultLightning": "Number of :lightning: assaults carried out",
+			"damageAir": ":air: damage dealt",
+			"assaultAir": "Number of :air: assaults carried out",
+			"damageVoid": ":void: damage dealt",
+			"assaultVoid": "Number of assaults :void: carried out",
+			"hpRemaining": "Hit points left",
+			"times_poisoned": "Number of times a Dinoz has been poisoned"
 		},
 		"challenge": {
-			"selectChampions": "Choisis tes champions",
-			"selectTeam": "Sélectionne ton équipe de Dinoz pour les défis d'aujourd'hui",
-			"disclaimer": "Tu peux sélectionner jusqu'à **10** Dinoz pour ton équipe. Choisis bien, tu ne pourras modifier ta sélection que demain.",
-			"validate": "Valider ma sélection",
-			"edit": "Modifier ma sélection",
-			"launch": "Lancer le combat",
+			"selectChampions": "Choose your champions",
+			"selectTeam": "Select your Dinoz team for today's challenges",
+			"disclaimer": "You can select up to **10** Dinoz for your team. Choose carefully, you won't be able to change your selection until tomorrow.",
+			"validate": "Validate selection",
+			"edit": "Modify selection",
+			"launch": "Start the fight",
 			"challenge": {
-				"kill": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
-				"takeAttack": "Remportez la victoire en subissant au maximum {goal} attaques de votre adversaire.",
-				"takeRawDmg": "Remportez la victoire en encaissant au maximum {goal} points de vie.",
-				"takePrctDmg": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
-				"assault": "Remportez la victoire en réalisant au minimum {goal} assauts.",
-				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmis l'ensemble de vos attaques.",
-				"maxDmg": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
-				"minPrctDmg": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
-				"counter": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",
-				"dodge": "Remportez la victoire en réalisant au minimum {goal} esquive(s).",
-				"noPoison": "Remportez la victoire sans vous faire empoisonner.",
-				"poison": "Remportez la victoire en empoisonnant votre adversaire durant le combat.",
-				"undefined": "No challenge was selected."
+				"kill": "Achieve victory by destroying your opponent before time runs out, don't give them a chance!",
+				"takeAttack": "Achieve victory by taking a maximum of {goal} attacks from your opponent.",
+				"takeRawDmg": "Achieve victory by losing a maximum of {goal} hit points.",
+				"takePrctDmg": "Achieve victory by losing a maximum of {goal} hit points.",
+				"assault": "Achieve victory by losing a maximum of {goal} hit points.",
+				"assaultPrct": "Achieve victory by completing at least {goal}% of all your attacks.",
+				"maxDmg": "Achieve victory by not causing your opponent to lose more than {goal} health points.",
+				"minPrctDmg": "Achieve victory by making your opponent lose at least {goal}% of his health points.",
+				"counter": "Achieve victory by {goal} counter-attack(s) or more.",
+				"dodge": "Achieve victory by losing a maximum of {goal} hit points).",
+				"noPoison": "Achieve victory without being poisoned.",
+				"poison": "Achieve victory by poisoning your opponent during combat.",
+				"undefined": "Error: No challenge was selected."
 			},
 			"challengeExplanation": {
-				"kill": "Dommage, vous n'avez pas réussi à vaincre votre adversaire avant la fin du temps imparti.",
-				"takeAttack": "Dommage, vous avez subis {goal} attaques de trop.",
-				"takeRawDmg": "Dommage, vous avez encaissé {goal} dégats de trop.",
-				"takePrctDmg": "Dommage, vous avez perdu {goal}% de vie en trop.",
-				"assault": "Dommage, il vous manquait {goal} assaut pour réussir.",
-				"assaultPrct": "Dommage, il vous manque {goal}% d'assauts.",
-				"maxDmg": "Dommage, vous avez infligé {goal} dégats en trop.",
-				"minPrctDmg": "Dommage, il fallait faire {goal}% de dégats en plus.",
-				"counter": "Dommage, il fallait faire {goal} contres supplémentaires.",
-				"dodge": "Dommage, il fallait faire {goal} esquives supplémentaires.",
-				"noPoison": "Dommage, vous avez été empoisonné {goal} fois.",
-				"poison": "Dommage, vous n'avez pas réussi à empoisonner votre adversaire.",
-				"looseFight": "Vous n'avez pas réussi à gagner le combat."
+				"kill": "Too bad, you didn't manage to defeat your opponent before time ran out.",
+				"takeAttack": "Too bad, you've suffered {goal} too many attacks.",
+				"takeRawDmg": "Too bad, you've taken {goal} too much damage.",
+				"takePrctDmg": "Too bad, you've lost {goal}% too much life.",
+				"assault": "Too bad, you are missing {goal} assault to succeed.",
+				"assaultPrct": "Too bad, you're {goal}% short on assaults.",
+				"maxDmg": "Too bad, you've inflicted {goal} too much damage.",
+				"minPrctDmg": "Too bad, you should have done {goal}% more damage.",
+				"counter": "Too bad, you should have done {goal} more counters.",
+				"dodge": "Too bad, you had to do {goal} more dodges",
+				"noPoison": "Too bad, you've been poisoned {goal} times",
+				"poison": "Too bad, you failed to poison your opponent.",
+				"looseFight": "You failed to win the fight."
 			}
 		}
 	},
@@ -4592,7 +4591,7 @@
 		},
 		"faq12": {
 			"question": "Can I have my Dinoz fight together?",
-			"answer": "You cannot have them fight against each other, but you can have them fight alongside each other. To group your Dinoz, they must be in the same location and each have an available action. && && Select the action 'Follow': your Dinoz are now in a team. You can group up to three Dinoz; the limit can increase to five if the leading Dinoz of the group has learned the skills :wood: Sympathy and Charisma."
+			"answer": "You cannot have them fight against each other, but you can have them fight alongside each other. To group your Dinoz, they must be in the same location and each have an available action. && && Select the action 'Follow': your Dinoz are now in a team. You can group up to three Dinoz; the limit can increase to five if the leading Dinoz of the group has learned the skills :bois: Sympathy and Charisma."
 		},
 		"faq13": {
 			"question": "I've completed Grandpa Joe's missions, how can I get more?",
@@ -4632,10 +4631,10 @@
 		},
 		"faq22": {
 			"question": "How to access the Grumhel forest from the Deep Gorges or how to access the second part of the Grumhel forest?",
-			"answer": "Il vous faudra le Gant des Zors, une Feuille de Nénuphar et la Bouée. Rendez-vous aux chutes Mutantes, et déplacez-vous à la forêt de Grumhel (Lieu 'Contourner les Chutes Mutantes'). À partir de là, rendez-vous aux Collines hantées. Parlez à l'homme Bizarre et ignorez-le. Il vous parlera alors d'un horrible monstre, et demandez à le combattre. Vous entrerez alors en combat avec un Korgon Farceur. Si vous réussissez à la vaincre (ce qui est fort possible), l'Homme Bizarre s'enfuira, vous laissant sa lanterne. A présent, quittez la Forêt de Grumhel, quittez les Îles Atlantéinées, quittez dinoLand et rendez vous au Mont Tout Chaud, au Tunnel sous la Branche. À partir de là, accédez aux Gorges Profondes (action Se déplacer). À partir des Gorges Profondes, accéder au Camp des Korgons (action Se Déplacer). Vous êtes maintenant au camp des Korgons, dans la seconde partie de la forêt de Grumehl. Pour rallier les deux parties, faites les missions de Dian Korgsey, et obtenez les Palmes de Korgon. À présent, vous avez la possibilité de vous déplacer du Camp des Korgons au Fleuve Jumin, et vice-versa."
+			"answer": "You will need the Zors Glove, the Lily Pad, and the Buoy. Go to the Mutant Falls, and move to the Grumhel Forest (Location 'Go pass the Mutant Falls'). From there, go to the Haunted Hills. Talk to the Weird Man and ignore him. He will then tell you about a horrible monster, and ask to fight it. You will then enter into combat with a Korgon Prankster. If you manage to defeat it (which is quite possible), the Weird Man will flee, leaving you with his lantern. Now, leave the Grumhel Forest, leave the Atlantean Isles, leave Dinoland and go to the Big All-Hot Mountain, to the Tunnel under the Branch. From there, access the Deep Gorges (Move action). From the Deep Gorges, access the Korgon Camp (Move action). You are now at the Korgon Camp, in the second part of the Grumehl Forest. To join the two sides, do Dian Korgsey's missions, and obtain the Korgon Fins. Now, you have the possibility to move from the Korgon Camp to the Jumin River, and vice versa."
 		},
 		"faq23": {
-			"question": "Comment obtenir la Pelle (Creuser) ?",
+			"question": "How to get the Shovel (to dig)?",
 			"answer": "First you need the Buoy. À partir du port de Prêche, accédez aux Îles Atlantéinées, puis déplacez-vous aux Mines de Corail. Talk to the Coral Miner and say yes. && He'll give you the shovel, but every time you dig it will break, and you'll have to come back to him to get it fixed."
 		},
 		"faq24": {
@@ -4643,7 +4642,7 @@
 			"answer": "The Dark Hippoclamp can be found on Waikiki Island, accessible from the Frish Port via the Buoy. Defeating it will earn you the Seahorse Trophy. And you need to be at least level 8 to see it. && && The Dark Pteroz can be found on the Basalt Slopes, accessible from the Climbing Hills with the Climbing Equipment. You'll get the Pteroz Trophy by beating it. && && The Rocky is in BrutForce. It isn't visible until level 13 and is difficult to defeat until level 15, but it will earn you the Rocky Trophy. && && Trophies are epic items that can be seen on your account. Ils vous permettent d'acheter dans l'Enclos le dinoz correspondant au Trophée : Hippoclamp si vous avez le Trophée Hippoclamp, etc."
 		},
 		"faq25": {
-			"question": "How do you freeze a dinoz?",
+			"question": "How do you freeze a Dinoz?",
 			"answer": "Go to Deep Gorges and talk to the spelunker. He'll offer to freeze your dinoz. && This will allow you to raise an extra dinoz. && && Of course, you'll need the lantern to access the deep gorges."
 		},
 		"faq26": {
@@ -4671,7 +4670,7 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Aller sur le profil DinoRPG de {player}",
+		"title": "Go to {player}'s DinoRPG profile",
 		"gridMenu": {
 			"pDRPG": "DinoRPG Profile",
 			"pEternal": "Eternaltwin Profile",
@@ -4693,15 +4692,15 @@
 			"title3": "2050 Roadmap"
 		},
 		"help": "Click on an update below to display more information!",
-		"disclaimer": "Les prévisions de Madame Irma n'étant pas infaillibles, aucune date de sortie n'est disponible pour chacune de ces nouveautés. Chaque évènement fera cependant l'objet d'une annonce officielle sur le site le moment venu.",
-		"futurTitle": "Avenir Dinolandien",
+		"disclaimer": "Given Madam Irma's divination is not accurate, no release date is available for any of those updates. Still each event will be announced properly through a public broadcast on the website at t",
+		"futurTitle": "Dinolandian Future",
 		"futureInfo1": {
-			"text1": "Accès aux cartes : Dinoland, Grand Tout-Chaud, Forêt de Gruhmel, Îles Atlantéinées.",
+			"text1": "Access to maps: Dinoland, Big Hot, Grumhel Forest, Atlantean Islands.",
 			"text2": "Access to the original missions: Grandpa Joe, Bao Bob, Soft Shaman, Dian Korgsey, Forest Warden.",
-			"text3": "Et plein d'autres fonctionnalités"
+			"text3": "And many other features"
 		},
 		"futureInfo2": {
-			"text1": "Accès à l'ouest de Dinoville.",
+			"text1": "Access to the west of Dinoland.",
 			"text2": "Access to the Elemental Master's missions."
 		},
 		"futureInfo3": {
@@ -4727,26 +4726,26 @@
 			"multi": "This player has multiple accounts"
 		},
 		"sorted": {
-			"open": "À traiter",
-			"closed": "Fermé",
-			"warning": "Avertissement",
-			"shortBan": "Ban court",
-			"mediumBan": "Ban moyen",
-			"longBan": "Ban long",
-			"infiniteBan": "Ban infini"
+			"open": "Treat",
+			"closed": "Farm",
+			"warning": "Warning",
+			"shortBan": "Short ban",
+			"mediumBan": "Medium ban",
+			"longBan": "Long ban",
+			"infiniteBan": "Infinite ban"
 		},
 		"arguments": "Explain why this is inappropriate.",
 		"report": "Report content",
 		"cancel": "Cancel",
 		"error": "You must provide a reason and explanation with your complaint.",
-		"errorDinoz": "You must specify a dinoz to report",
+		"errorDinoz": "You must specify a Dinoz to report",
 		"success": "Complaint sent successfully."
 	},
 	"messagerie": {
 		"actions": "Actions",
-		"create": "Écrire",
-		"research": "Rechercher",
-		"search": "Rechercher une conversation...",
+		"create": "Write",
+		"research": "Search",
+		"search": "Search for a conversation...",
 		"conversations": "Conversations",
 		"disclaimer": "Make sure to select a conversation.",
 		"close": "Close",
@@ -4768,17 +4767,23 @@
 		"participantsConv": "Participants",
 		"blockSender": "Block sender"
 	},
+	"scenario": {
+		"star": "The Strange Creature"
+	},
 	"notification": {
 		"reasons": {
-			"customText": "votre description personnalisée",
-			"multi": "une suspiscion de multicompte",
-			"dinozName": "un nom de dinoz offensant",
-			"avatar": "un avatar offensant"
+			"customText": "your personalized description",
+			"multi": "a suspicion of multiple accounts",
+			"dinozName": "an offending Dinoz name",
+			"avatar": "an offensive avatar"
 		},
-		"offerExpired": "Votre offre n'a pas trouvé d'acheteur.",
-		"offerEnded": "Vous avez vendu votre offre pour {value} :ticket:",
-		"offerWon": "Vous avez gagné l'enchère avec {value} :ticket:",
-		"warning": "Attention vous avez reçu un avertissement concernant {reason}.",
-		"ban": "Vous avez été bannis à cause de {reason} jusqu'au {date}."
+		"offerExpired": "Your offer did not have a buyer.",
+		"offerEnded": "You sold your offer for {value} :ticket:",
+		"offerWon": "You won the auction with {value} :ticket:",
+		"warning": "Attention, you have received a warning regarding {reason}.",
+		"ban": "You have been banned due to {reason} until {date}.",
+		"reward": "You received {rewards}",
+		"rewardGold": "{quantity} :gold:",
+		"rewardScenario": "You made progress in the scenario **{scenario}**."
 	}
 }
