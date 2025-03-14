@@ -1031,7 +1031,7 @@ class TournamentManager {
 				.filter(player => player.dojo >= floor.floor)
 				.forEach(player => {
 					if (!player.player || !player.player.dinoz || !player.playerId) return;
-					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId));
+					promises.push(rewarder(floor.rewards, player.player.dinoz, player.playerId, true));
 				});
 		});
 		LOGGER.log(`Rewarded ${allRewarded.length} players.`);

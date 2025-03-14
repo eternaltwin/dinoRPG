@@ -25,7 +25,8 @@ export async function rewarder(
 	team: (Pick<Dinoz, 'id' | 'level'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 	})[],
-	playerId: string
+	playerId: string,
+	notification?: boolean
 ) {
 	if (!team.length) {
 		throw new ExpectedError('No player found');
@@ -66,7 +67,9 @@ export async function rewarder(
 					break;
 				case RewardEnum.GOLD:
 					await addMoney(playerId, reward.value);
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					if (notification) {
+						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					}
 					break;
 				case RewardEnum.ITEM:
 					const itemRewarded = Object.values(itemList).find(item => item.itemId === reward.value);
@@ -98,7 +101,9 @@ export async function rewarder(
 					} else {
 						await insertItem(playerId, { itemId: itemRewarded.itemId, quantity: reward.quantity });
 					}
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					if (notification) {
+						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					}
 					break;
 				case RewardEnum.EPIC:
 					const testRewards = await getPlayerRewardsRequest(playerId);
@@ -112,7 +117,9 @@ export async function rewarder(
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
 					}
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					if (notification) {
+						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					}
 					break;
 				case RewardEnum.SCENARIO:
 					if (reward.step === 1) {
@@ -120,14 +127,18 @@ export async function rewarder(
 					} else {
 						await updateQuest(playerId, reward.value, reward.step);
 					}
-					await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					if (notification) {
+						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+					}
 					break;
 				case RewardEnum.TELEPORT:
 					await updateDinoz(dinoz.id, { placeId: reward.place.placeId });
 					break;
 				case RewardEnum.REDIRECT:
+					// Nothing to do here
 					break;
 				default:
+					LOGGER.log(`Reward not yet implemented.`);
 					break;
 			}
 		}

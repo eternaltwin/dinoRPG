@@ -126,7 +126,7 @@ export async function movementListener(
 				player
 			);
 			if (fightResult.winner) {
-				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id);
+				await rewarder(potentialSpecialActions.reward, [partyLeader], player.id, true);
 				//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 			}
 			if (potentialSpecialActions.startText) {
@@ -137,7 +137,7 @@ export async function movementListener(
 			}
 			return result;
 		} else {
-			await rewarder(potentialSpecialActions.reward, team, player.id);
+			await rewarder(potentialSpecialActions.reward, team, player.id, true);
 			//TODO: add a pending popup for the next dinozFiche call to prompt the text of the special event
 		}
 	}

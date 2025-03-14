@@ -147,7 +147,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			if (result.result) {
 				await updateDinozStep(dinozId, pnj.id, nextStepWanted);
 				if (nextStepWantedData.reward !== undefined) {
-					await rewarder(nextStepWantedData.reward, team, authed.id);
+					await rewarder(nextStepWantedData.reward, team, authed.id, true);
 				}
 			}
 			return {
@@ -166,7 +166,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		// Reward statement
 		if (nextStepWantedData.reward !== undefined) {
 			checkRedirect(nextStepWantedData.reward, npcName, nextStepWantedData.stepName);
-			await rewarder(nextStepWantedData.reward, player.dinoz, authed.id);
+			await rewarder(nextStepWantedData.reward, player.dinoz, authed.id, true);
 
 			//Refresh dinoz data to unlock next speech if it is conditioned by reward of the actual step
 			player = await getDinozNPCRequest(dinozId, authed.id);

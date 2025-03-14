@@ -1,4 +1,4 @@
-import { FullFightStats } from "../fight/FightResult.mjs";
+import { FullFightStats } from '../fight/FightResult.mjs';
 
 export enum ChallengeType {
 	// Beat the opponent

@@ -160,7 +160,7 @@ export async function endMission(req: Request) {
 
 	const authed = await auth(req);
 
-	await rewarder(mission.missionReference.rewards, [mission.dinoz], authed.id);
+	await rewarder(mission.missionReference.rewards, [mission.dinoz], authed.id, false);
 	await finishMission(authed.id, mission.dinoz.id, mission.dinozMission.missionId);
 	return mission.missionReference.rewards;
 }
