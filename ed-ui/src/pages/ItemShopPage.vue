@@ -500,6 +500,7 @@ export default defineComponent({
 			} as IngredientFiche;
 		},
 		selectItem(itemId: number) {
+			this.selectedQuantity = 1;
 			this.selectedItem = this.fullItems.find(i => i.id === itemId);
 			if (this.selectedItem?.type === ItemShopType.ITEM) {
 				this.selectedItem.itemType = this.itemList.find(i => i.itemId === itemId)?.itemType;
