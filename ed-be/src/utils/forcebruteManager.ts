@@ -47,7 +47,7 @@ class ForceBruteManager {
 		// Notify users
 		const notifications = await prisma.$executeRaw`
 			INSERT INTO "Notification" ("playerId", "message", "link", "severity")
-			SELECT id, 'FBStarted', ${`/events/tournament?id=${newTournament.id}`}, ${NotificationSeverity.event}
+			SELECT id, 'FBStarted', ${`/events/tournament?id=${newTournament.id}`}, 'event'
 			FROM "player";
 		`;
 

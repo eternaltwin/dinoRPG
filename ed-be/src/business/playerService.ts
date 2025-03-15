@@ -115,7 +115,9 @@ export async function getCommonData(req: Request) {
 		clanId: playerCommonData.ClanMember?.clanId,
 		playerOptions: {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PDA),
-			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI)
+			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI),
+			skipFight: playerCommonData.skipFight,
+			skipLevel: playerCommonData.skipLevel
 		},
 		admin: playerCommonData.role === AdminRole.ADMIN,
 		priest: playerCommonData.priest,
@@ -306,4 +308,14 @@ export async function resetAccount(req: Request) {
 	}
 
 	await resetUser(authed.id);
+}
+
+export async function updatePlayerSettings(req: Request) {
+	const authed = await auth(req);
+	if (req.params.setting === 'skipLevel') {
+		await setPlayer(authed.id, { skipLevel: req.body.setting });
+	}
+	if (req.params.setting === 'skipFight') {
+		await setPlayer(authed.id, { skipFight: req.body.setting });
+	}
 }

@@ -19784,6 +19784,8 @@ export namespace Prisma {
     role: $Enums.AdminRole | null
     lang: $Enums.Lang | null
     dailyGridRewards: number | null
+    skipFight: boolean | null
+    skipLevel: boolean | null
     banCaseId: number | null
     id: string | null
   }
@@ -19811,6 +19813,8 @@ export namespace Prisma {
     role: $Enums.AdminRole | null
     lang: $Enums.Lang | null
     dailyGridRewards: number | null
+    skipFight: boolean | null
+    skipLevel: boolean | null
     banCaseId: number | null
     id: string | null
   }
@@ -19838,6 +19842,8 @@ export namespace Prisma {
     role: number
     lang: number
     dailyGridRewards: number
+    skipFight: number
+    skipLevel: number
     banCaseId: number
     id: number
     ips: number
@@ -19884,6 +19890,8 @@ export namespace Prisma {
     role?: true
     lang?: true
     dailyGridRewards?: true
+    skipFight?: true
+    skipLevel?: true
     banCaseId?: true
     id?: true
   }
@@ -19911,6 +19919,8 @@ export namespace Prisma {
     role?: true
     lang?: true
     dailyGridRewards?: true
+    skipFight?: true
+    skipLevel?: true
     banCaseId?: true
     id?: true
   }
@@ -19938,6 +19948,8 @@ export namespace Prisma {
     role?: true
     lang?: true
     dailyGridRewards?: true
+    skipFight?: true
+    skipLevel?: true
     banCaseId?: true
     id?: true
     ips?: true
@@ -20053,6 +20065,8 @@ export namespace Prisma {
     role: $Enums.AdminRole
     lang: $Enums.Lang
     dailyGridRewards: number
+    skipFight: boolean
+    skipLevel: boolean
     banCaseId: number | null
     id: string
     ips: string[]
@@ -20100,6 +20114,8 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: boolean
     id?: boolean
     ips?: boolean
@@ -20160,6 +20176,8 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: boolean
     id?: boolean
     ips?: boolean
@@ -20189,6 +20207,8 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: boolean
     id?: boolean
     ips?: boolean
@@ -20218,12 +20238,14 @@ export namespace Prisma {
     role?: boolean
     lang?: boolean
     dailyGridRewards?: boolean
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: boolean
     id?: boolean
     ips?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "banCaseId" | "id" | "ips", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "id" | "ips", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -20323,6 +20345,8 @@ export namespace Prisma {
       role: $Enums.AdminRole
       lang: $Enums.Lang
       dailyGridRewards: number
+      skipFight: boolean
+      skipLevel: boolean
       banCaseId: number | null
       id: string
       ips: string[]
@@ -20802,6 +20826,8 @@ export namespace Prisma {
     readonly role: FieldRef<"Player", 'AdminRole'>
     readonly lang: FieldRef<"Player", 'Lang'>
     readonly dailyGridRewards: FieldRef<"Player", 'Int'>
+    readonly skipFight: FieldRef<"Player", 'Boolean'>
+    readonly skipLevel: FieldRef<"Player", 'Boolean'>
     readonly banCaseId: FieldRef<"Player", 'Int'>
     readonly id: FieldRef<"Player", 'String'>
     readonly ips: FieldRef<"Player", 'String[]'>
@@ -67117,6 +67143,8 @@ export namespace Prisma {
     role: 'role',
     lang: 'lang',
     dailyGridRewards: 'dailyGridRewards',
+    skipFight: 'skipFight',
+    skipLevel: 'skipLevel',
     banCaseId: 'banCaseId',
     id: 'id',
     ips: 'ips'
@@ -68686,6 +68714,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntFilter<"Player"> | number
+    skipFight?: BoolFilter<"Player"> | boolean
+    skipLevel?: BoolFilter<"Player"> | boolean
     banCaseId?: IntNullableFilter<"Player"> | number | null
     id?: UuidFilter<"Player"> | string
     ips?: StringNullableListFilter<"Player">
@@ -68745,6 +68775,8 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    skipFight?: SortOrder
+    skipLevel?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
     id?: SortOrder
     ips?: SortOrder
@@ -68809,6 +68841,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntFilter<"Player"> | number
+    skipFight?: BoolFilter<"Player"> | boolean
+    skipLevel?: BoolFilter<"Player"> | boolean
     ips?: StringNullableListFilter<"Player">
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     ClanHistory?: ClanHistoryListRelationFilter
@@ -68866,6 +68900,8 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    skipFight?: SortOrder
+    skipLevel?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
     id?: SortOrder
     ips?: SortOrder
@@ -68902,6 +68938,8 @@ export namespace Prisma {
     role?: EnumAdminRoleWithAggregatesFilter<"Player"> | $Enums.AdminRole
     lang?: EnumLangWithAggregatesFilter<"Player"> | $Enums.Lang
     dailyGridRewards?: IntWithAggregatesFilter<"Player"> | number
+    skipFight?: BoolWithAggregatesFilter<"Player"> | boolean
+    skipLevel?: BoolWithAggregatesFilter<"Player"> | boolean
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
     id?: UuidWithAggregatesFilter<"Player"> | string
     ips?: StringNullableListFilter<"Player">
@@ -72303,6 +72341,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -72361,6 +72401,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -72419,6 +72461,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -72477,6 +72521,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -72535,6 +72581,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -72563,6 +72611,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
   }
@@ -72590,6 +72640,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -76275,6 +76327,8 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    skipFight?: SortOrder
+    skipLevel?: SortOrder
     banCaseId?: SortOrder
     id?: SortOrder
     ips?: SortOrder
@@ -76311,6 +76365,8 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    skipFight?: SortOrder
+    skipLevel?: SortOrder
     banCaseId?: SortOrder
     id?: SortOrder
   }
@@ -76338,6 +76394,8 @@ export namespace Prisma {
     role?: SortOrder
     lang?: SortOrder
     dailyGridRewards?: SortOrder
+    skipFight?: SortOrder
+    skipLevel?: SortOrder
     banCaseId?: SortOrder
     id?: SortOrder
   }
@@ -83472,6 +83530,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -83529,6 +83589,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -84182,6 +84244,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -84239,6 +84303,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -88516,6 +88582,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -88573,6 +88641,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -88747,6 +88817,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -88804,6 +88876,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -89542,6 +89616,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -89599,6 +89675,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -89672,6 +89750,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -89729,6 +89809,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -89786,6 +89868,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -89843,6 +89927,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -89916,6 +90002,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -89973,6 +90061,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -90030,6 +90120,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -90087,6 +90179,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -90160,6 +90254,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -90217,6 +90313,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -90274,6 +90372,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -90331,6 +90431,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -90404,6 +90506,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -90461,6 +90565,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -90518,6 +90624,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -90575,6 +90683,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -90648,6 +90758,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -90705,6 +90817,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -90762,6 +90876,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -90819,6 +90935,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -90892,6 +91010,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -90949,6 +91069,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -91006,6 +91128,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -91063,6 +91187,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -91136,6 +91262,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -91193,6 +91321,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -91250,6 +91380,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -91307,6 +91439,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -91380,6 +91514,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -91437,6 +91573,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -91584,6 +91722,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -91641,6 +91781,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -91748,6 +91890,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -91805,6 +91949,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -91958,6 +92104,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -92015,6 +92163,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -92234,6 +92384,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -92291,6 +92443,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -92487,6 +92641,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -92544,6 +92700,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -92719,6 +92877,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -92776,6 +92936,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -93031,6 +93193,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -93088,6 +93252,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -93161,6 +93327,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -93218,6 +93386,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -93371,6 +93541,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -93428,6 +93600,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -93603,6 +93777,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -93660,6 +93836,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -93733,6 +93911,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
@@ -93790,6 +93970,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -94029,6 +94211,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
@@ -94086,6 +94270,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -94318,6 +94504,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -94375,6 +94563,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -94488,6 +94678,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -94545,6 +94737,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -94744,6 +94938,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -94801,6 +94997,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -94908,6 +95106,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -94965,6 +95165,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -95062,6 +95264,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -95119,6 +95323,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -95226,6 +95432,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -95283,6 +95491,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -95414,6 +95624,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -95471,6 +95683,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -95584,6 +95798,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -95641,6 +95857,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -95868,6 +96086,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -95925,6 +96145,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -95987,6 +96209,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -96044,6 +96268,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -96106,6 +96332,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -96163,6 +96391,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -96338,6 +96568,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -96395,6 +96627,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -96463,6 +96697,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -96520,6 +96756,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -96588,6 +96826,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -96645,6 +96885,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -96702,6 +96944,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -96759,6 +97003,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -96843,6 +97089,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -96900,6 +97148,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -97023,6 +97273,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97080,6 +97332,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -97176,6 +97430,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97233,6 +97489,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -97351,6 +97609,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -97408,6 +97668,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -97516,6 +97778,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97573,6 +97837,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -97688,6 +97954,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -97745,6 +98013,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -97888,6 +98158,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97945,6 +98217,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -98002,6 +98276,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -98059,6 +98335,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -98132,6 +98410,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -98189,6 +98469,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -98246,6 +98528,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -98303,6 +98587,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -98508,6 +98794,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -98565,6 +98853,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -98811,6 +99101,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -98868,6 +99160,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -98986,6 +99280,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -99043,6 +99339,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
@@ -99715,6 +100013,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -99772,6 +100072,8 @@ export namespace Prisma {
     role?: $Enums.AdminRole
     lang?: $Enums.Lang
     dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
     banCaseId?: number | null
     id: string
     ips?: PlayerCreateipsInput | string[]
@@ -99980,6 +100282,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -100037,6 +100341,8 @@ export namespace Prisma {
     role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
     lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]

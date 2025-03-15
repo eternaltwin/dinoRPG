@@ -130,6 +130,14 @@ export const PlayerService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	updateSetting(setting: 'skipLevel' | 'skipFight', value: boolean): Promise<void> {
+		return http()
+			.patch(`/player/settings/${setting}`, {
+				setting: value
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
 interface PlayerSearch {

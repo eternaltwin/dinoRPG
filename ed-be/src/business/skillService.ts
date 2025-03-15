@@ -248,7 +248,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage) {
 			break;
 	}
 
-	await checkFBCreation(dinozSkills.level);
+	await checkFBCreation(dinozSkills.level + 1);
 
 	return newMaxExperience ?? 0;
 }

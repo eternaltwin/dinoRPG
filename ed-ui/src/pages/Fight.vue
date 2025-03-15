@@ -211,6 +211,9 @@ export default defineComponent({
 
 		console.log(nexFight.filter(n => n != undefined));
 		this.loaded = true;
+		if (this.playerStore.getPlayerOptions.skipFight) {
+			this.fightEnded = true;
+		}
 		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {

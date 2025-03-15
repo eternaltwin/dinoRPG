@@ -15,7 +15,10 @@
 		"guide": "Guide du Jeu",
 		"faq": "FAQ",
 		"cinema": "Cinéma",
-		"events": "Evénements"
+		"events": "Evénements",
+		"system": "Réglages",
+		"skipFight": "Afficher directement le résultat de combat",
+		"skipLevel": "Passer l'animation de gain de niveau"
 	},
 	"toast": {
 		"noFBTournament": "Il n'y a pas encore de phase de qualification pour le tournois de ForceBrute.",

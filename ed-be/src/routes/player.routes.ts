@@ -8,7 +8,8 @@ import {
 	playerToolTip,
 	resetAccount,
 	searchPlayers,
-	setCustomText
+	setCustomText,
+	updatePlayerSettings
 } from '../business/playerService.js';
 import { apiRoutes } from '../constants/index.js';
 import { auth, getPlayerMoney, updatePlayerLanguage } from '../dao/playerDao.js';
@@ -403,6 +404,22 @@ routes.put(
 			const authed = await auth(req);
 			const { language } = req.body;
 			const response = await updatePlayerLanguage(authed.id, language);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.patch(
+	`${commonPath}/settings/:setting`,
+	[param('setting').exists(), body('setting').exists().isBoolean()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+		try {
+			const response = await updatePlayerSettings(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

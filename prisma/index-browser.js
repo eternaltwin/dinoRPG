@@ -253,6 +253,8 @@ exports.Prisma.PlayerScalarFieldEnum = {
   role: 'role',
   lang: 'lang',
   dailyGridRewards: 'dailyGridRewards',
+  skipFight: 'skipFight',
+  skipLevel: 'skipLevel',
   banCaseId: 'banCaseId',
   id: 'id',
   ips: 'ips'

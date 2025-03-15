@@ -19,6 +19,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'LevelUpGrid',
@@ -42,7 +43,8 @@ export default defineComponent({
 			increment: 0 as number,
 			isSpinOver: false as boolean,
 			speed: 50 as number,
-			isSpinning: false as boolean
+			isSpinning: false as boolean,
+			playerStore: playerStore()
 		};
 	},
 	computed: {
@@ -53,35 +55,50 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		spin(): void {
+		spin(duration = 4000) {
+			// Durée totale de 4 secondes par défaut
 			this.isSpinning = true;
 			this.isSpinOver = false;
-			const totalDuration = 6000;
-			const startTime = Date.now();
+			this.increment = 0;
 
-			const animateSpin = () => {
-				const elapsedTime = Date.now() - startTime;
-				if (elapsedTime >= totalDuration && this.increment % 20 === this.selectedIndex) {
-					this.isSpinOver = true;
-					this.isSpinning = false;
-					this.$emit('spinOver');
-					return;
-				}
+			// Points de transition en % de progression
+			// (début rapide, ralentissement progressif)
+			const phases = [0.2, 0.4, 0.6, 0.75, 0.9, 1];
 
-				this.increment++;
+			// Facteurs de vitesse: élevés au début (rapide),
+			// puis diminuant progressivement (ralentissement)
+			const speeds = [2, 1.5, 1.3, 1.0, 0.7, 0.3];
 
-				this.speed = this.calculateSpeed(elapsedTime, totalDuration);
-				setTimeout(animateSpin, this.speed);
+			const totalSteps = 80 + this.selectedIndex;
+			const baseSpeed = duration / totalSteps;
+
+			const spinStep = () => {
+				if (this.isSpinOver) return;
+
+				// Détermine la phase actuelle
+				let phase = 0;
+				const progress = this.increment / totalSteps;
+				while (phase < phases.length && progress >= phases[phase]) phase++;
+
+				// Calcule la vitesse pour cette phase
+				const speedFactor = phase < speeds.length ? speeds[phase] : 0.3;
+				this.speed = baseSpeed / speedFactor;
+
+				setTimeout(() => {
+					this.increment++;
+
+					// Vérifie si l'animation est terminée
+					if (this.increment >= totalSteps) {
+						this.isSpinOver = true;
+						this.$emit('spinOver');
+						return;
+					}
+
+					spinStep();
+				}, this.speed);
 			};
 
-			animateSpin();
-		},
-		calculateSpeed(elapsedTime: number, totalDuration: number): number {
-			const progress = elapsedTime / totalDuration;
-			const minSpeed = 50; // Vitesse maximale
-			const maxSpeed = 200; // Vitesse minimale
-
-			return minSpeed + (maxSpeed - minSpeed) * Math.pow(progress, 2);
+			spinStep();
 		}
 	},
 	mounted(): void {
@@ -99,7 +116,13 @@ export default defineComponent({
 		}, []);
 		this.selectedIndex = selectElement[Math.floor(Math.random() * selectElement.length)];
 		this.isSpinning = !this.isSpinning;
-		this.spin();
+		if (this.playerStore.getPlayerOptions.skipLevel) {
+			this.isSpinning = false;
+			this.isSpinOver = true;
+			this.$emit('spinOver');
+		} else {
+			this.spin();
+		}
 	}
 });
 </script>

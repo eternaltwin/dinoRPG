@@ -12,7 +12,8 @@ export const playerStore = defineStore('playerStore', {
 		playerOptions: {
 			hasPDA: false,
 			hasPMI: false,
-			currentDinozId: undefined
+			skipFight: false,
+			skipLevel: false
 		},
 		admin: false,
 		priest: false,

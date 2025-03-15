@@ -21,6 +21,8 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 			shopKeeper: true,
 			lastLogin: true,
 			ips: true,
+			skipFight: true,
+			skipLevel: true,
 			ClanMember: { select: { clanId: true } },
 			notifications: {
 				select: { id: true, message: true, severity: true, link: true, date: true },
@@ -335,6 +337,8 @@ export async function getCommonDataRequest(playerId: string) {
 			shopKeeper: true,
 			lastLogin: true,
 			ips: true,
+			skipFight: true,
+			skipLevel: true,
 			ClanMember: { select: { clanId: true } },
 			notifications: {
 				select: { id: true, message: true, severity: true, link: true, date: true },

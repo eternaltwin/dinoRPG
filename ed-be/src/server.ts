@@ -90,7 +90,7 @@ export function main(cx: ServerContext) {
 
 	scheduleOffersExpiration();
 	TournamentManager.resume(prisma);
-	resumeTournaments();
+	// resumeTournaments();
 
 	initRoutes(app, cx.config);
 }

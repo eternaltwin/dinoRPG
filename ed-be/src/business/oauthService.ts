@@ -107,15 +107,7 @@ export class OAuth {
 					id: etwinUser.id,
 					name: etwinUser.displayName.current.value,
 					money: gameConfig.general.initialMoney,
-					quetzuBought: 0,
-					leader: false,
-					engineer: false,
-					cooker: false,
-					shopKeeper: false,
-					merchant: false,
-					priest: false,
-					teacher: false,
-					role: AdminRole.PLAYER
+					quetzuBought: 0
 				});
 				// Create player at position 0 in ranking
 				await addPlayerInRanking(player.id);
@@ -225,7 +217,9 @@ export class OAuth {
 				clanId: player.ClanMember?.clanId,
 				playerOptions: {
 					hasPDA: player.rewards.some(reward => reward.rewardId === Reward.PDA),
-					hasPMI: player.rewards.some(reward => reward.rewardId === Reward.PMI)
+					hasPMI: player.rewards.some(reward => reward.rewardId === Reward.PMI),
+					skipLevel: player.skipLevel,
+					skipFight: player.skipFight
 				},
 				admin: req?.auth?.isAdmin || false,
 				priest: player.priest,

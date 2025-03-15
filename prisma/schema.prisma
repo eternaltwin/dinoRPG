@@ -208,6 +208,8 @@ model Player {
   role                 AdminRole          @default(PLAYER)
   lang                 Lang               @default(fr)
   dailyGridRewards     Int                @default(0)
+  skipFight            Boolean            @default(false)
+  skipLevel            Boolean            @default(false)
   banCaseId            Int?               @unique
   id                   String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
   leaderOf             Clan?              @relation("leader")
