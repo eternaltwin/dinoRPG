@@ -150,6 +150,22 @@ class ForceBruteManager {
 			phase = TournamentPhase.FINALS;
 		}
 
+		// Add 24h if not enough participants
+		if (tournament.participants < this.QUALIFIED_TEAMS) {
+			phase = TournamentPhase.QUALIFICATION;
+			if (tournament.nextRound < new Date()) {
+				LOGGER.log(`Post-poned pool phase of tournament ${tournament.id} because there is only ${tournament.participants} participants.`)
+				await prisma.fBTournament.update({
+					where: {
+						id: tournament.id
+					},
+					data: {
+						nextRound: dayjs(tournament.nextRound).add(1, 'day').toDate()
+					}
+				});
+			}
+		}
+
 		const round = lastFight ? lastFight.tournamentStep + 1 : 0;
 
 		return {
@@ -258,14 +274,28 @@ class ForceBruteManager {
 
 	public async getActiveTournament(
 		prisma: PismaClientLocal
-	): Promise<{ id: string; nextRound: Date; startDate: Date }> {
+	): Promise<{ id: string; nextRound: Date; startDate: Date, participants: number }> {
 		const activeTournament = await prisma.fBTournament.findFirstOrThrow({
 			where: {
 				levelLimit: this.level
+			},
+			select: {
+				id: true,
+				nextRound: true,
+				date: true,
+				_count: {
+					select: {
+						participants: {
+							where: {
+								level: this.level
+							}
+						}
+					}
+				}
 			}
 		});
 
-		return { id: activeTournament.id, nextRound: activeTournament.nextRound, startDate: activeTournament.date };
+		return { id: activeTournament.id, nextRound: activeTournament.nextRound, startDate: activeTournament.date, participants: activeTournament._count.participants  };
 	}
 
 	public async resume(prisma: PismaClientLocal) {
@@ -273,15 +303,9 @@ class ForceBruteManager {
 		const currentState = await this.getCurrentState(prisma);
 
 		if (currentState.phase !== TournamentPhase.QUALIFICATION) {
-			const lastFight = await prisma.fightArchive.findFirstOrThrow({
-				where: {
-					FBTournamentId: currentState.tournamentId
-				},
-				orderBy: {
-					tournamentStep: 'desc'
-				}
-			});
-			if (lastFight.tournamentStep < 7) {
+
+			if (currentState.round < 7) {
+				console.log(currentState)
 				this.generateNextRound(prisma);
 			}
 		} else {
