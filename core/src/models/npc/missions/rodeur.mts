@@ -77,7 +77,7 @@ export const M_RODEUR: Mission[] = [
 		rewards: [
 			{
 				rewardType: RewardEnum.GOLD,
-				value: 500
+				value: 5000
 			},
 			{
 				rewardType: RewardEnum.EXPERIENCE,
