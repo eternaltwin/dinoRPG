@@ -3,7 +3,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { PismaClientLocal, prisma } from '../prisma.js';
 import { shuffle } from './tools.js';
 import { TournamentPhase, TournamentSchedule } from '@drpg/core/models/dojo/tournament';
-import { FBDetails, FBMetaData, FBPool, FBPools, rawMatches } from '@drpg/core/models/dojo/ForceBrute';
+import { FBDetails, FBMetaData, FBPool, FBPools, RawMatch } from '@drpg/core/models/dojo/ForceBrute';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import dayjs from 'dayjs';
@@ -57,42 +57,11 @@ class ForceBruteManager {
 		return newTournament;
 	}
 
-	private async getSchedule(prisma: PismaClientLocal): Promise<TournamentSchedule> {
-		const tournament = await this.getActiveTournament(prisma);
-		const qualificationStart = dayjs(tournament.startDate).toDate();
-		// 3 days to create the dinoz pool
-		const qualificationEnd = dayjs(tournament.startDate)
-			.add(2, 'days')
-			.set('hour', 23)
-			.set('minute', 59)
-			.set('second', 59)
-			.toDate();
-
-		const poolsStart = dayjs(tournament.startDate)
-			.add(3, 'days')
-			.set('hour', 0)
-			.set('minute', 0)
-			.set('second', 0)
-			.toDate();
-
-		const finalsStart = dayjs(tournament.startDate)
-			.add(3, 'days')
-			.set('hour', 12)
-			.set('minute', 0)
-			.set('second', 0)
-			.toDate();
-
-		return {
-			qualificationStart,
-			qualificationEnd,
-			poolsStart,
-			finalsStart
-		};
-	}
-
 	private async createPools(teams: number[]): Promise<number[][]> {
 		const shuffledTeams = shuffle(teams);
-		const pools: number[][] = [[], [], [], []];
+		const pools: number[][] = Array(16)
+			.fill([])
+			.map(() => []);
 
 		for (let i = 0; i < shuffledTeams.length; i++) {
 			const poolIndex = Math.floor(i / this.TEAMS_PER_POOL);
@@ -134,17 +103,13 @@ class ForceBruteManager {
 		const tournament = await this.getActiveTournament(prisma);
 
 		const lastFight = await prisma.fightArchive.findFirst({
-			where: { tournamentId: tournament.id },
+			where: { FBTournamentId: tournament.id },
 			orderBy: { tournamentStep: 'desc' }
 		});
 
-		const currentDate = new Date();
-		const schedule = await this.getSchedule(prisma);
-
+		const round = lastFight ? lastFight.tournamentStep + 1 : 0;
 		let phase: TournamentPhase;
-		if (currentDate <= schedule.qualificationEnd) {
-			phase = TournamentPhase.QUALIFICATION;
-		} else if (currentDate <= schedule.finalsStart) {
+		if (round <= 3) {
 			phase = TournamentPhase.POOLS;
 		} else {
 			phase = TournamentPhase.FINALS;
@@ -169,8 +134,6 @@ class ForceBruteManager {
 				scheduleJob(tournament.id, postPoned, () => this.generateNextRound(prisma));
 			}
 		}
-
-		const round = lastFight ? lastFight.tournamentStep + 1 : 0;
 
 		return {
 			phase: phase,
@@ -237,7 +200,7 @@ class ForceBruteManager {
 				seed: fight.seed,
 				result: fight.winner,
 				tournamentStep: round,
-				tournamentId: tournamentId,
+				FBTournamentId: tournamentId,
 				metadata: JSON.stringify(metadata)
 			}
 		});
@@ -249,10 +212,10 @@ class ForceBruteManager {
 		round: number,
 		prisma: PismaClientLocal,
 		tournamentId: string
-	): Promise<rawMatches[]> {
+	): Promise<RawMatch[]> {
 		const previousMatches = await prisma.fightArchive.findMany({
 			where: {
-				tournamentId: tournamentId,
+				FBTournamentId: tournamentId,
 				tournamentStep: round - 1
 			},
 			select: {
@@ -312,19 +275,18 @@ class ForceBruteManager {
 		const currentState = await this.getCurrentState(prisma);
 
 		if (currentState.phase !== TournamentPhase.QUALIFICATION) {
-			if (currentState.round < 7) {
-				console.log(currentState);
+			if (currentState.round <= 7) {
 				this.generateNextRound(prisma);
 			}
 		} else {
-			LOGGER.log(`Scheduled FB ${currentState.tournamentId} for ${currentState.nextRound}`);
+			// LOGGER.log(`Scheduled FB ${currentState.tournamentId} for ${currentState.nextRound}`);
 			scheduleJob(currentState.tournamentId, currentState.nextRound, () => this.generateNextRound(prisma));
 		}
 	}
 
-	private translatePools(originalData: rawMatches[]): FBPools[] {
+	private translatePools(originalData: RawMatch[]): FBPools[] {
 		// Grouper les données par pool
-		const poolsMap = new Map<number, rawMatches[]>();
+		const poolsMap = new Map<number, RawMatch[]>();
 
 		originalData.forEach(item => {
 			if (!poolsMap.has(item.poolNumber)) {
@@ -337,33 +299,32 @@ class ForceBruteManager {
 		const transformedPools: FBPools[] = [];
 
 		poolsMap.forEach((poolData, poolId) => {
-			// Groupe les données par match
-			const matchesMap = new Map<number, rawMatches[]>();
-			poolData.forEach(item => {
-				if (!matchesMap.has(item.matchNumber)) {
-					matchesMap.set(item.matchNumber, []);
-				}
-				matchesMap.get(item.matchNumber)?.push(item);
-			});
+			// Trier les données par numéro de match pour préserver l'ordre
+			const sortedPoolData = [...poolData].sort((a, b) => a.matchNumber - b.matchNumber);
 
-			// Créer les matches pour ce pool
+			// Créer les matches pour ce pool en regroupant les dinoz deux par deux
 			const matches: FBPool[] = [];
-			matchesMap.forEach((matchData, matchNumber) => {
-				// S'assurer qu'il y a exactement 2 dinoz par match
-				if (matchData.length === 2) {
+
+			// Pour chaque paire de dinoz dans ce pool
+			for (let i = 0; i < sortedPoolData.length; i += 2) {
+				// S'assurer qu'il y a un deuxième dinoz disponible pour former une paire
+				if (i + 1 < sortedPoolData.length) {
 					matches.push({
-						match: matchNumber,
-						left: matchData[0].dinoz,
-						right: matchData[1].dinoz
+						// Utiliser le plus petit des deux numéros de match comme identifiant de match
+						match: Math.min(sortedPoolData[i].matchNumber, sortedPoolData[i + 1].matchNumber),
+						left: sortedPoolData[i].dinoz,
+						right: sortedPoolData[i + 1].dinoz
 					});
 				}
-			});
+			}
 
-			// Ajouter le pool transformé
-			transformedPools.push({
-				poolId: poolId,
-				matches: matches
-			});
+			// Ajouter le pool transformé seulement s'il contient des matches
+			if (matches.length > 0) {
+				transformedPools.push({
+					poolId: poolId,
+					matches: matches
+				});
+			}
 		});
 
 		return transformedPools;
@@ -378,7 +339,7 @@ class ForceBruteManager {
 				return; // Pas de matchs à générer pendant la qualification
 
 			case TournamentPhase.POOLS: {
-				let dinozToMatch: rawMatches[] = [];
+				let dinozToMatch: RawMatch[] = [];
 
 				if (currentState.round === 0) {
 					// Premier round : on les dinoz
@@ -420,7 +381,7 @@ class ForceBruteManager {
 			}
 
 			case TournamentPhase.FINALS: {
-				let teamsToMatch: rawMatches[] = [];
+				let teamsToMatch: RawMatch[] = [];
 				const lastWinners = await this.getWinnersFromPreviousRound(
 					currentState.round,
 					prisma,
@@ -433,6 +394,9 @@ class ForceBruteManager {
 				if (currentState.round === 4) {
 					// Start of the final
 					teamsToMatch = shuffle(lastWinners);
+					teamsToMatch = teamsToMatch.map(m => {
+						return { ...m, poolNumber: 17 };
+					});
 				} else {
 					// Rounds suivants : on ne prend que les gagnants du round précédent
 					teamsToMatch = await this.getWinnersFromPreviousRound(currentState.round, prisma, currentState.tournamentId);

@@ -11,7 +11,7 @@ export type FBMetaData = {
 	winner: 'left' | 'right';
 };
 
-export type rawMatches = {
+export type RawMatch = {
 	dinoz: number;
 	poolNumber: number;
 	matchNumber: number;
