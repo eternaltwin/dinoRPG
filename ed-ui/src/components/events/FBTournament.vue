@@ -102,7 +102,11 @@ export default defineComponent({
 			const dinoz = this.dinoz.find(d => d.id === dinozId);
 			const currentTournament = this.currentTournament;
 			if (!dinoz || !currentTournament || dinoz.level >= currentTournament.level) return;
-			this.$router.push({ name: 'Leveling', params: { id: dinoz.id }, query: { event: 'FBTournament' } });
+			this.$router.push({
+				name: 'Leveling',
+				params: { id: dinoz.id },
+				query: { event: 'FBTournament', eventId: this.id }
+			});
 		}
 	},
 	async mounted() {

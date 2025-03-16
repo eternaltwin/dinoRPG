@@ -72,7 +72,8 @@ const router = createRouter({
 					component: () => import('../pages/LevelUp.vue'),
 					props: route => ({
 						id: route.params.id,
-						event: route.query.event // Récupéré depuis l'URL query
+						event: route.query.event,
+						eventId: route.query.eventId
 					})
 				},
 				{

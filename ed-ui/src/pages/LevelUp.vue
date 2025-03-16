@@ -194,6 +194,11 @@ export default defineComponent({
 			type: String,
 			required: false,
 			default: null
+		},
+		eventId: {
+			type: String,
+			required: false,
+			default: null
 		}
 	},
 	methods: {
@@ -240,7 +245,7 @@ export default defineComponent({
 				} else {
 					await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
 					EventBus.emit('isLoading', false);
-					this.$router.push({ name: 'EventPage' });
+					this.$router.push({ name: 'FBTournament', query: { id: this.eventId } });
 				}
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
