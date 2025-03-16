@@ -48,6 +48,7 @@ export type PublicEvent = {
 	id: string;
 	teamRace: string;
 	date: Date;
+	participantCount: number;
 };
 
 export const FBDetails: Readonly<Record<number, RaceList>> = {

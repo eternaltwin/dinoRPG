@@ -73,17 +73,20 @@ export async function getCurrentTournament(req: Request) {
 }
 
 export async function getCurrentEvents(req: Request) {
-	const activeEvents = await prisma.fBTournament.findMany({
-		where: {
-			winnerId: null
-		},
-		select: {
-			levelLimit: true,
-			id: true,
-			teamRace: true,
-			date: true
-		}
-	});
+	const activeEvents = await prisma.$queryRaw`
+  SELECT 
+    t.id,
+    t."levelLimit",
+    t."teamRace",
+    t.date,
+    (
+        SELECT CAST(COUNT(*) AS INTEGER)
+      FROM "gamedinoz" p
+      WHERE p."FBTournamentId" = t.id AND p.level = t."levelLimit"
+    ) AS "participantCount"
+  FROM "FBTournament" t
+  WHERE t."winnerId" IS NULL
+`;
 	return activeEvents;
 }
 
