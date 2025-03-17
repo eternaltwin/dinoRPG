@@ -31,6 +31,7 @@ import { createNotification } from '../dao/notificationDao.js';
 import { NotificationSeverity, UnavailableReason } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -176,10 +177,18 @@ class TournamentManager {
 		team1Dinoz.map(d => {
 			d.items = [];
 			d.life = d.maxLife;
+			// Remove Trou noir, Sylphides and Hypnose
+			d.skills = d.skills.filter(
+				s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+			);
 		});
 		team2Dinoz.map(d => {
 			d.items = [];
 			d.life = d.maxLife;
+			// Remove Trou noir, Sylphides and Hypnose
+			d.skills = d.skills.filter(
+				s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+			);
 		});
 
 		const fight = calculateFightBetweenPlayers(team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
