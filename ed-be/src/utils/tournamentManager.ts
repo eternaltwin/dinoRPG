@@ -701,13 +701,7 @@ class TournamentManager {
 		// Vérifier si le tournoi est toujours en cours
 		const currentState = await manager.getCurrentState(prisma);
 		const schedule = manager.getSchedule();
-		if (currentState.nextScheduledMatch && new Date() <= schedule.poolsStart) {
-			LOGGER.log(
-				`Reprise du tournoi ${activeTournament.id} à la phase de qualification, récompenses prévu pour ${currentState.nextScheduledMatch}`
-			);
-			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.rewardQualification(prisma));
-			return manager;
-		} else if (currentState.nextScheduledMatch && currentState.round <= 7) {
+		if (currentState.nextScheduledMatch && currentState.round <= 7) {
 			if (currentState.nextScheduledMatch <= new Date()) {
 				await manager.generateNextRound(prisma);
 				return manager;
@@ -787,6 +781,7 @@ class TournamentManager {
 				let teamsToMatch: string[] = [];
 
 				if (currentState.round === 0) {
+					await this.rewardQualification(prisma)
 					const teamSize = await prisma.tournament.findUniqueOrThrow({
 						where: {
 							id: this.tournamentId
