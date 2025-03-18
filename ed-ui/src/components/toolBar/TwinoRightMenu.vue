@@ -160,7 +160,14 @@
 					<LocaleChange />
 				</div>
 			</div>
-			<div class="notifications">
+			<div class="notifications" v-if="notifications.length > 0">
+				<div class="section">
+					<span class="title">
+						<span>Notifications</span>
+					</span>
+					<button @click="readAll()">Tout Lu</button>
+				</div>
+
 				<div
 					:class="{
 						notification: true,
@@ -286,6 +293,15 @@ export default defineComponent({
 			// Combinaison date + heure
 			return `${formattedDate}, ${formattedTime}`;
 		},
+		async readAll() {
+			try {
+				await NotificationService.readAllNotification();
+				this.playerStore.setNotifications([]);
+				this.playerStore.setNotificationsCounter(0);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
 		translateNotification(notification: Notification): translatedNotification | null {
 			switch (notification.severity) {
 				case 'offerExpired':
@@ -410,10 +426,90 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.indice {
+	display: flex;
+	flex-flow: wrap;
+	-moz-box-pack: center;
+	place-content: center;
+	-moz-box-align: center;
+	align-items: center;
+	position: absolute;
+	box-sizing: border-box;
+	font-family: arial, sans-serif;
+	font-weight: 500;
+	font-size: 0.9rem;
+	min-width: 20px;
+	line-height: 1;
+	padding: 0px 6px;
+	height: 20px;
+	border-radius: 10px;
+	z-index: 1;
+	transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1);
+	background-color: rgb(46, 125, 50);
+	color: rgb(255, 255, 255);
+	top: 0px;
+	right: 0px;
+	transform: scale(1) translate(50%, -50%);
+	transform-origin: 100% 0% 0px;
+}
 .notifications {
-	margin-top: 5px;
 	display: flex;
 	flex-direction: column;
+	.section {
+		background-color: rgb(15, 25, 36);
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 8px;
+		.title {
+			box-sizing: border-box;
+			list-style: none;
+			color: rgba(255, 255, 255, 0.7);
+			font-family: arial, sans-serif;
+			font-weight: 500;
+			padding: 8px 16px;
+			position: sticky;
+			top: 0px;
+			z-index: 1;
+			line-height: inherit;
+		}
+		button {
+			display: inline-flex;
+			-moz-box-align: center;
+			align-items: center;
+			-moz-box-pack: center;
+			justify-content: center;
+			position: relative;
+			box-sizing: border-box;
+			background-color: transparent;
+			outline: 0px;
+			border: 0px;
+			margin: 0px;
+			cursor: pointer;
+			user-select: none;
+			vertical-align: middle;
+			appearance: none;
+			text-decoration: none;
+			font-family: arial, sans-serif;
+			font-weight: 500;
+			font-size: 1.1rem;
+			line-height: 1.75;
+			text-transform: uppercase;
+			min-width: 64px;
+			padding: 4px 5px;
+			border-radius: 4px;
+			transition:
+				background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+				box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+				border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+				color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+			color: rgb(254, 125, 0);
+			&:hover {
+				text-decoration: none;
+				background-color: rgba(219, 191, 149, 0.04);
+			}
+		}
+	}
+
 	.notification {
 		transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
 		justify-content: space-between;
@@ -516,6 +612,7 @@ export default defineComponent({
 .shortCutMenu {
 	padding: 16px;
 	background-color: rgb(29, 32, 40);
+
 	.shortCuts {
 		display: flex;
 		-moz-box-pack: center;
