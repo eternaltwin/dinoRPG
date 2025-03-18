@@ -69,7 +69,7 @@ export async function createTournamentTeam(req: Request) {
 
 	// Check if player select the right number of dinoz
 	if (teamIds.length !== latestTournament.teamSize) {
-		throw new ExpectedError(translate('dojo.wrongDinozInTeam', authed));
+		throw new ExpectedError(translate('dojo.wrongDinozQuantity', authed, { qty: latestTournament.teamSize }));
 	}
 
 	const playerDinoz = await getPlayerDinozInformationForTeam(authed.id);

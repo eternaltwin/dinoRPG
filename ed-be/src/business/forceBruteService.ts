@@ -158,9 +158,9 @@ export async function createTournamentDinoz(req: Request) {
 				}
 			}
 		}
-	})
+	});
 	if (dayjs(player.createdDate).diff(dayjs(), 'days') < 3) {
-		throw new ExpectedError(translate('fb.tooYoungAccount', authed))
+		throw new ExpectedError(translate('fb.tooYoungAccount', authed));
 	}
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
 		where: {
@@ -175,8 +175,8 @@ export async function createTournamentDinoz(req: Request) {
 	if (!activeTournament) {
 		throw new ExpectedError(translate('fb.noTournamentOngoing', authed));
 	}
-	if (player.ranking && player.ranking.points < activeTournament.levelLimit ) {
-		throw new ExpectedError(translate('fb.notEnoughPoints', authed))
+	if (player.ranking && player.ranking.points < activeTournament.levelLimit) {
+		throw new ExpectedError(translate('fb.notEnoughPoints', authed));
 	}
 	const lastDinoz = await prisma.gameDinoz.findFirst({
 		where: {
