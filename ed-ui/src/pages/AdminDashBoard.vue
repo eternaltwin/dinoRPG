@@ -88,7 +88,18 @@ interface PlayerSearch {
 
 export default defineComponent({
 	name: 'AdminDashBoard',
-	components: { GameControl, TitleHeader, NewsEdit, PlayerEdit, DinozEdit, SecretEdit, LogsView, GameStats, Moderation, Banned },
+	components: {
+		GameControl,
+		TitleHeader,
+		NewsEdit,
+		PlayerEdit,
+		DinozEdit,
+		SecretEdit,
+		LogsView,
+		GameStats,
+		Moderation,
+		Banned
+	},
 	data() {
 		return {
 			searchValue: undefined as string | undefined,

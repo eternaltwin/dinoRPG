@@ -5279,6 +5279,10 @@ export namespace Prisma {
             args: Prisma.FBTournamentUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
+          updateManyAndReturn: {
+            args: Prisma.FBTournamentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$FBTournamentPayload>[]
+          }
           upsert: {
             args: Prisma.FBTournamentUpsertArgs<ExtArgs>
             result: $Utils.PayloadToResult<Prisma.$FBTournamentPayload>
@@ -5348,6 +5352,10 @@ export namespace Prisma {
           updateMany: {
             args: Prisma.GameDinozUpdateManyArgs<ExtArgs>
             result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.GameDinozUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$GameDinozPayload>[]
           }
           upsert: {
             args: Prisma.GameDinozUpsertArgs<ExtArgs>
@@ -6472,6 +6480,8 @@ export namespace Prisma {
     skills: number
     unlockableSkills: number
     status: number
+    FightArchiveLeft: number
+    FightArchiveRight: number
   }
 
   export type GameDinozCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6480,6 +6490,8 @@ export namespace Prisma {
     skills?: boolean | GameDinozCountOutputTypeCountSkillsArgs
     unlockableSkills?: boolean | GameDinozCountOutputTypeCountUnlockableSkillsArgs
     status?: boolean | GameDinozCountOutputTypeCountStatusArgs
+    FightArchiveLeft?: boolean | GameDinozCountOutputTypeCountFightArchiveLeftArgs
+    FightArchiveRight?: boolean | GameDinozCountOutputTypeCountFightArchiveRightArgs
   }
 
   // Custom InputTypes
@@ -6526,6 +6538,20 @@ export namespace Prisma {
    */
   export type GameDinozCountOutputTypeCountStatusArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozStatusWhereInput
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountFightArchiveLeftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
+  }
+
+  /**
+   * GameDinozCountOutputType without action
+   */
+  export type GameDinozCountOutputTypeCountFightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FightArchiveWhereInput
   }
 
 
@@ -6948,7 +6974,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Concentrations and only return the `id`
      * const concentrationWithIdOnly = await prisma.concentration.updateManyAndReturn({
      *   select: { id: true },
@@ -6961,7 +6987,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ConcentrationUpdateManyAndReturnArgs>(args: SelectSubset<T, ConcentrationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConcentrationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -8469,7 +8495,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Dinozs and only return the `id`
      * const dinozWithIdOnly = await prisma.dinoz.updateManyAndReturn({
      *   select: { id: true },
@@ -8482,7 +8508,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -10045,7 +10071,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozItems and only return the `id`
      * const dinozItemWithIdOnly = await prisma.dinozItem.updateManyAndReturn({
      *   select: { id: true },
@@ -10058,7 +10084,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozItemUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -10221,9 +10247,9 @@ export namespace Prisma {
    */
   export interface Prisma__DinozItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    dinoz<T extends DinozItem$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItem$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    dinozItemToDinoz<T extends DinozItem$dinozItemToDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItem$dinozItemToDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    GameDinoz<T extends DinozItem$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItem$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozItem$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItem$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    dinozItemToDinoz<T extends DinozItem$dinozItemToDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItem$dinozItemToDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    GameDinoz<T extends DinozItem$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItem$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -11207,7 +11233,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozItemToDinozs and only return the `dinozId`
      * const dinozItemToDinozWithDinozIdOnly = await prisma.dinozItemToDinoz.updateManyAndReturn({
      *   select: { dinozId: true },
@@ -11220,7 +11246,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozItemToDinozUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozItemToDinozUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -11383,9 +11409,9 @@ export namespace Prisma {
    */
   export interface Prisma__DinozItemToDinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    dinoz<T extends DinozDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozDefaultArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    dinoz_item<T extends DinozItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozItemDefaultArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | Null, Null, ExtArgs, ClientOptions>
-    GameDinoz<T extends DinozItemToDinoz$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItemToDinoz$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozDefaultArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    dinoz_item<T extends DinozItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DinozItemDefaultArgs<ExtArgs>>): Prisma__DinozItemClient<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    GameDinoz<T extends DinozItemToDinoz$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozItemToDinoz$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12355,7 +12381,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozMissions and only return the `id`
      * const dinozMissionWithIdOnly = await prisma.dinozMission.updateManyAndReturn({
      *   select: { id: true },
@@ -12368,7 +12394,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozMissionUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozMissionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozMissionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -13495,7 +13521,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozSkills and only return the `id`
      * const dinozSkillWithIdOnly = await prisma.dinozSkill.updateManyAndReturn({
      *   select: { id: true },
@@ -13508,7 +13534,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozSkillUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozSkillUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -13671,8 +13697,8 @@ export namespace Prisma {
    */
   export interface Prisma__DinozSkillClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    dinoz<T extends DinozSkill$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkill$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    GameDinoz<T extends DinozSkill$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkill$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozSkill$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkill$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    GameDinoz<T extends DinozSkill$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkill$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -14642,7 +14668,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozSkillUnlockables and only return the `id`
      * const dinozSkillUnlockableWithIdOnly = await prisma.dinozSkillUnlockable.updateManyAndReturn({
      *   select: { id: true },
@@ -14655,7 +14681,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozSkillUnlockableUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozSkillUnlockableUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -14818,8 +14844,8 @@ export namespace Prisma {
    */
   export interface Prisma__DinozSkillUnlockableClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    dinoz<T extends DinozSkillUnlockable$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkillUnlockable$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    GameDinoz<T extends DinozSkillUnlockable$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkillUnlockable$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozSkillUnlockable$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkillUnlockable$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    GameDinoz<T extends DinozSkillUnlockable$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozSkillUnlockable$GameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -15788,7 +15814,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozStatuses and only return the `id`
      * const dinozStatusWithIdOnly = await prisma.dinozStatus.updateManyAndReturn({
      *   select: { id: true },
@@ -15801,7 +15827,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozStatusUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozStatusUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -15964,8 +15990,8 @@ export namespace Prisma {
    */
   export interface Prisma__DinozStatusClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    dinoz<T extends DinozStatus$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozStatus$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    gameDinoz<T extends DinozStatus$gameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozStatus$gameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    dinoz<T extends DinozStatus$dinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozStatus$dinozArgs<ExtArgs>>): Prisma__DinozClient<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    gameDinoz<T extends DinozStatus$gameDinozArgs<ExtArgs> = {}>(args?: Subset<T, DinozStatus$gameDinozArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -16893,7 +16919,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Migrations and only return the `id`
      * const migrationsWithIdOnly = await prisma.migrations.updateManyAndReturn({
      *   select: { id: true },
@@ -16906,7 +16932,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends migrationsUpdateManyAndReturnArgs>(args: SelectSubset<T, migrationsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$migrationsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -18025,7 +18051,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more News and only return the `id`
      * const newsWithIdOnly = await prisma.news.updateManyAndReturn({
      *   select: { id: true },
@@ -18038,7 +18064,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends NewsUpdateManyAndReturnArgs>(args: SelectSubset<T, NewsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -19081,7 +19107,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more NPCS and only return the `id`
      * const nPCWithIdOnly = await prisma.nPC.updateManyAndReturn({
      *   select: { id: true },
@@ -19094,7 +19120,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends NPCUpdateManyAndReturnArgs>(args: SelectSubset<T, NPCUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NPCPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -20568,7 +20594,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Players and only return the `customText`
      * const playerWithCustomTextOnly = await prisma.player.updateManyAndReturn({
      *   select: { customText: true },
@@ -20581,7 +20607,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -20744,37 +20770,37 @@ export namespace Prisma {
    */
   export interface Prisma__PlayerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    leaderOf<T extends Player$leaderOfArgs<ExtArgs> = {}>(args?: Subset<T, Player$leaderOfArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    ClanHistory<T extends Player$ClanHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    ClanJoinRequest<T extends Player$ClanJoinRequestArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanJoinRequestArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    ClanMember<T extends Player$ClanMemberArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanMemberArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    createdConversations<T extends Player$createdConversationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$createdConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    Conversation<T extends Player$ConversationArgs<ExtArgs> = {}>(args?: Subset<T, Player$ConversationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    logs<T extends Player$logsArgs<ExtArgs> = {}>(args?: Subset<T, Player$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    messages<T extends Player$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Player$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    reportedCases<T extends Player$reportedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$reportedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    targetedCases<T extends Player$targetedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$targetedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    notifications<T extends Player$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    offers<T extends Player$offersArgs<ExtArgs> = {}>(args?: Subset<T, Player$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    bids<T extends Player$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Player$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    Pantheon<T extends Player$PantheonArgs<ExtArgs> = {}>(args?: Subset<T, Player$PantheonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    conversations<T extends Player$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    usernameHistory<T extends Player$usernameHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$usernameHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    ClanMessage<T extends Player$ClanMessageArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanMessageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    dinoz<T extends Player$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    banCase<T extends Player$banCaseArgs<ExtArgs> = {}>(args?: Subset<T, Player$banCaseArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    playerTracking<T extends Player$playerTrackingArgs<ExtArgs> = {}>(args?: Subset<T, Player$playerTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    dinozShop<T extends Player$dinozShopArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozShopArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    gathers<T extends Player$gathersArgs<ExtArgs> = {}>(args?: Subset<T, Player$gathersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    ingredients<T extends Player$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, Player$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    items<T extends Player$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Player$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    quests<T extends Player$questsArgs<ExtArgs> = {}>(args?: Subset<T, Player$questsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    rewards<T extends Player$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, Player$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    ranking<T extends Player$rankingArgs<ExtArgs> = {}>(args?: Subset<T, Player$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    Dojo<T extends Player$DojoArgs<ExtArgs> = {}>(args?: Subset<T, Player$DojoArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    FightArchive<T extends Player$FightArchiveArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightArchiveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    FightWatched<T extends Player$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    GameDinoz<T extends Player$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$GameDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    leaderOf<T extends Player$leaderOfArgs<ExtArgs> = {}>(args?: Subset<T, Player$leaderOfArgs<ExtArgs>>): Prisma__ClanClient<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ClanHistory<T extends Player$ClanHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ClanJoinRequest<T extends Player$ClanJoinRequestArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanJoinRequestArgs<ExtArgs>>): Prisma__ClanJoinRequestClient<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    ClanMember<T extends Player$ClanMemberArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanMemberArgs<ExtArgs>>): Prisma__ClanMemberClient<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    createdConversations<T extends Player$createdConversationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$createdConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Conversation<T extends Player$ConversationArgs<ExtArgs> = {}>(args?: Subset<T, Player$ConversationArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    logs<T extends Player$logsArgs<ExtArgs> = {}>(args?: Subset<T, Player$logsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    messages<T extends Player$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Player$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reportedCases<T extends Player$reportedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$reportedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    targetedCases<T extends Player$targetedCasesArgs<ExtArgs> = {}>(args?: Subset<T, Player$targetedCasesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    notifications<T extends Player$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    offers<T extends Player$offersArgs<ExtArgs> = {}>(args?: Subset<T, Player$offersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    bids<T extends Player$bidsArgs<ExtArgs> = {}>(args?: Subset<T, Player$bidsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Pantheon<T extends Player$PantheonArgs<ExtArgs> = {}>(args?: Subset<T, Player$PantheonArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    conversations<T extends Player$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Player$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    usernameHistory<T extends Player$usernameHistoryArgs<ExtArgs> = {}>(args?: Subset<T, Player$usernameHistoryArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ClanMessage<T extends Player$ClanMessageArgs<ExtArgs> = {}>(args?: Subset<T, Player$ClanMessageArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dinoz<T extends Player$dinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    banCase<T extends Player$banCaseArgs<ExtArgs> = {}>(args?: Subset<T, Player$banCaseArgs<ExtArgs>>): Prisma__ModerationClient<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    playerTracking<T extends Player$playerTrackingArgs<ExtArgs> = {}>(args?: Subset<T, Player$playerTrackingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dinozShop<T extends Player$dinozShopArgs<ExtArgs> = {}>(args?: Subset<T, Player$dinozShopArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    gathers<T extends Player$gathersArgs<ExtArgs> = {}>(args?: Subset<T, Player$gathersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ingredients<T extends Player$ingredientsArgs<ExtArgs> = {}>(args?: Subset<T, Player$ingredientsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    items<T extends Player$itemsArgs<ExtArgs> = {}>(args?: Subset<T, Player$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quests<T extends Player$questsArgs<ExtArgs> = {}>(args?: Subset<T, Player$questsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rewards<T extends Player$rewardsArgs<ExtArgs> = {}>(args?: Subset<T, Player$rewardsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    ranking<T extends Player$rankingArgs<ExtArgs> = {}>(args?: Subset<T, Player$rankingArgs<ExtArgs>>): Prisma__RankingClient<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Dojo<T extends Player$DojoArgs<ExtArgs> = {}>(args?: Subset<T, Player$DojoArgs<ExtArgs>>): Prisma__DojoClient<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    FightArchive<T extends Player$FightArchiveArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightArchiveArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    FightWatched<T extends Player$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    GameDinoz<T extends Player$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$GameDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -22481,7 +22507,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Dojos and only return the `id`
      * const dojoWithIdOnly = await prisma.dojo.updateManyAndReturn({
      *   select: { id: true },
@@ -22494,7 +22520,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DojoUpdateManyAndReturnArgs>(args: SelectSubset<T, DojoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -23674,7 +23700,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DojoTeams and only return the `id`
      * const dojoTeamWithIdOnly = await prisma.dojoTeam.updateManyAndReturn({
      *   select: { id: true },
@@ -23687,7 +23713,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DojoTeamUpdateManyAndReturnArgs>(args: SelectSubset<T, DojoTeamUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoTeamPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -24782,7 +24808,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DojoOpponents and only return the `id`
      * const dojoOpponentsWithIdOnly = await prisma.dojoOpponents.updateManyAndReturn({
      *   select: { id: true },
@@ -24795,7 +24821,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DojoOpponentsUpdateManyAndReturnArgs>(args: SelectSubset<T, DojoOpponentsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoOpponentsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -25924,7 +25950,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DojoChallengeHistories and only return the `id`
      * const dojoChallengeHistoryWithIdOnly = await prisma.dojoChallengeHistory.updateManyAndReturn({
      *   select: { id: true },
@@ -25937,7 +25963,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DojoChallengeHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, DojoChallengeHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DojoChallengeHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -27004,7 +27030,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more UsernameHistories and only return the `id`
      * const usernameHistoryWithIdOnly = await prisma.usernameHistory.updateManyAndReturn({
      *   select: { id: true },
@@ -27017,7 +27043,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends UsernameHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, UsernameHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UsernameHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -28114,7 +28140,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerDinozShops and only return the `id`
      * const playerDinozShopWithIdOnly = await prisma.playerDinozShop.updateManyAndReturn({
      *   select: { id: true },
@@ -28127,7 +28153,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerDinozShopUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerDinozShopUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerDinozShopPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -29241,7 +29267,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerGathers and only return the `id`
      * const playerGatherWithIdOnly = await prisma.playerGather.updateManyAndReturn({
      *   select: { id: true },
@@ -29254,7 +29280,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerGatherUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerGatherUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerGatherPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -30357,7 +30383,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerIngredients and only return the `id`
      * const playerIngredientWithIdOnly = await prisma.playerIngredient.updateManyAndReturn({
      *   select: { id: true },
@@ -30370,7 +30396,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerIngredientUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerIngredientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerIngredientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -31472,7 +31498,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerItems and only return the `id`
      * const playerItemWithIdOnly = await prisma.playerItem.updateManyAndReturn({
      *   select: { id: true },
@@ -31485,7 +31511,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerItemUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -32587,7 +32613,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerQuests and only return the `id`
      * const playerQuestWithIdOnly = await prisma.playerQuest.updateManyAndReturn({
      *   select: { id: true },
@@ -32600,7 +32626,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerQuestUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerQuestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerQuestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -33686,7 +33712,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerRewards and only return the `id`
      * const playerRewardWithIdOnly = await prisma.playerReward.updateManyAndReturn({
      *   select: { id: true },
@@ -33699,7 +33725,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerRewardUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerRewardUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerRewardPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -34848,7 +34874,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Rankings and only return the `id`
      * const rankingWithIdOnly = await prisma.ranking.updateManyAndReturn({
      *   select: { id: true },
@@ -34861,7 +34887,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends RankingUpdateManyAndReturnArgs>(args: SelectSubset<T, RankingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RankingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -35886,7 +35912,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Secrets and only return the `key`
      * const secretWithKeyOnly = await prisma.secret.updateManyAndReturn({
      *   select: { key: true },
@@ -35899,7 +35925,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends SecretUpdateManyAndReturnArgs>(args: SelectSubset<T, SecretUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SecretPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -36947,7 +36973,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more OfferItems and only return the `id`
      * const offerItemWithIdOnly = await prisma.offerItem.updateManyAndReturn({
      *   select: { id: true },
@@ -36960,7 +36986,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends OfferItemUpdateManyAndReturnArgs>(args: SelectSubset<T, OfferItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -38051,7 +38077,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more OfferBids and only return the `id`
      * const offerBidWithIdOnly = await prisma.offerBid.updateManyAndReturn({
      *   select: { id: true },
@@ -38064,7 +38090,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends OfferBidUpdateManyAndReturnArgs>(args: SelectSubset<T, OfferBidUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferBidPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -39211,7 +39237,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Offers and only return the `id`
      * const offerWithIdOnly = await prisma.offer.updateManyAndReturn({
      *   select: { id: true },
@@ -39224,7 +39250,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends OfferUpdateManyAndReturnArgs>(args: SelectSubset<T, OfferUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -40435,7 +40461,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Logs and only return the `id`
      * const logWithIdOnly = await prisma.log.updateManyAndReturn({
      *   select: { id: true },
@@ -40448,7 +40474,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends LogUpdateManyAndReturnArgs>(args: SelectSubset<T, LogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$LogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -41573,7 +41599,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more DinozCatches and only return the `id`
      * const dinozCatchWithIdOnly = await prisma.dinozCatch.updateManyAndReturn({
      *   select: { id: true },
@@ -41586,7 +41612,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends DinozCatchUpdateManyAndReturnArgs>(args: SelectSubset<T, DinozCatchUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozCatchPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -42665,7 +42691,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more PlayerTrackings and only return the `id`
      * const playerTrackingWithIdOnly = await prisma.playerTracking.updateManyAndReturn({
      *   select: { id: true },
@@ -42678,7 +42704,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PlayerTrackingUpdateManyAndReturnArgs>(args: SelectSubset<T, PlayerTrackingUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PlayerTrackingPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -43804,7 +43830,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Pantheons and only return the `id`
      * const pantheonWithIdOnly = await prisma.pantheon.updateManyAndReturn({
      *   select: { id: true },
@@ -43817,7 +43843,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends PantheonUpdateManyAndReturnArgs>(args: SelectSubset<T, PantheonUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PantheonPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -45005,7 +45031,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Clans and only return the `id`
      * const clanWithIdOnly = await prisma.clan.updateManyAndReturn({
      *   select: { id: true },
@@ -45018,7 +45044,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -46277,7 +46303,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanJoinRequests and only return the `id`
      * const clanJoinRequestWithIdOnly = await prisma.clanJoinRequest.updateManyAndReturn({
      *   select: { id: true },
@@ -46290,7 +46316,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanJoinRequestUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanJoinRequestUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanJoinRequestPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -47350,7 +47376,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanWars and only return the `id`
      * const clanWarWithIdOnly = await prisma.clanWar.updateManyAndReturn({
      *   select: { id: true },
@@ -47363,7 +47389,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanWarUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanWarUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanWarPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -48465,7 +48491,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanIngredients and only return the `id`
      * const clanIngredientWithIdOnly = await prisma.clanIngredient.updateManyAndReturn({
      *   select: { id: true },
@@ -48478,7 +48504,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanIngredientUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanIngredientUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanIngredientPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -49588,7 +49614,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanMessages and only return the `id`
      * const clanMessageWithIdOnly = await prisma.clanMessage.updateManyAndReturn({
      *   select: { id: true },
@@ -49601,7 +49627,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -50733,7 +50759,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanHistories and only return the `id`
      * const clanHistoryWithIdOnly = await prisma.clanHistory.updateManyAndReturn({
      *   select: { id: true },
@@ -50746,7 +50772,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanHistoryUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanHistoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanHistoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -51890,7 +51916,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanMembers and only return the `id`
      * const clanMemberWithIdOnly = await prisma.clanMember.updateManyAndReturn({
      *   select: { id: true },
@@ -51903,7 +51929,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -53010,7 +53036,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more ClanPages and only return the `id`
      * const clanPageWithIdOnly = await prisma.clanPage.updateManyAndReturn({
      *   select: { id: true },
@@ -53023,7 +53049,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ClanPageUpdateManyAndReturnArgs>(args: SelectSubset<T, ClanPageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ClanPagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -54181,7 +54207,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Moderations and only return the `id`
      * const moderationWithIdOnly = await prisma.moderation.updateManyAndReturn({
      *   select: { id: true },
@@ -54194,7 +54220,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ModerationUpdateManyAndReturnArgs>(args: SelectSubset<T, ModerationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModerationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -55404,7 +55430,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Conversations and only return the `id`
      * const conversationWithIdOnly = await prisma.conversation.updateManyAndReturn({
      *   select: { id: true },
@@ -55417,7 +55443,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ConversationUpdateManyAndReturnArgs>(args: SelectSubset<T, ConversationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -56624,7 +56650,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Participants and only return the `id`
      * const participantsWithIdOnly = await prisma.participants.updateManyAndReturn({
      *   select: { id: true },
@@ -56637,7 +56663,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends ParticipantsUpdateManyAndReturnArgs>(args: SelectSubset<T, ParticipantsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ParticipantsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -57767,7 +57793,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Messages and only return the `id`
      * const messageWithIdOnly = await prisma.message.updateManyAndReturn({
      *   select: { id: true },
@@ -57780,7 +57806,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends MessageUpdateManyAndReturnArgs>(args: SelectSubset<T, MessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -58899,7 +58925,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Notifications and only return the `id`
      * const notificationWithIdOnly = await prisma.notification.updateManyAndReturn({
      *   select: { id: true },
@@ -58912,7 +58938,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends NotificationUpdateManyAndReturnArgs>(args: SelectSubset<T, NotificationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -59550,11 +59576,15 @@ export namespace Prisma {
   export type FightArchiveAvgAggregateOutputType = {
     tournamentStep: number | null
     slot: number | null
+    FBTournamentLeftId: number | null
+    FBTournamentRightId: number | null
   }
 
   export type FightArchiveSumAggregateOutputType = {
     tournamentStep: number | null
     slot: number | null
+    FBTournamentLeftId: number | null
+    FBTournamentRightId: number | null
   }
 
   export type FightArchiveMinAggregateOutputType = {
@@ -59572,6 +59602,8 @@ export namespace Prisma {
     tournamentId: string | null
     metadata: string | null
     FBTournamentId: string | null
+    FBTournamentLeftId: number | null
+    FBTournamentRightId: number | null
   }
 
   export type FightArchiveMaxAggregateOutputType = {
@@ -59589,6 +59621,8 @@ export namespace Prisma {
     tournamentId: string | null
     metadata: string | null
     FBTournamentId: string | null
+    FBTournamentLeftId: number | null
+    FBTournamentRightId: number | null
   }
 
   export type FightArchiveCountAggregateOutputType = {
@@ -59606,6 +59640,8 @@ export namespace Prisma {
     tournamentId: number
     metadata: number
     FBTournamentId: number
+    FBTournamentLeftId: number
+    FBTournamentRightId: number
     _all: number
   }
 
@@ -59613,11 +59649,15 @@ export namespace Prisma {
   export type FightArchiveAvgAggregateInputType = {
     tournamentStep?: true
     slot?: true
+    FBTournamentLeftId?: true
+    FBTournamentRightId?: true
   }
 
   export type FightArchiveSumAggregateInputType = {
     tournamentStep?: true
     slot?: true
+    FBTournamentLeftId?: true
+    FBTournamentRightId?: true
   }
 
   export type FightArchiveMinAggregateInputType = {
@@ -59635,6 +59675,8 @@ export namespace Prisma {
     tournamentId?: true
     metadata?: true
     FBTournamentId?: true
+    FBTournamentLeftId?: true
+    FBTournamentRightId?: true
   }
 
   export type FightArchiveMaxAggregateInputType = {
@@ -59652,6 +59694,8 @@ export namespace Prisma {
     tournamentId?: true
     metadata?: true
     FBTournamentId?: true
+    FBTournamentLeftId?: true
+    FBTournamentRightId?: true
   }
 
   export type FightArchiveCountAggregateInputType = {
@@ -59669,6 +59713,8 @@ export namespace Prisma {
     tournamentId?: true
     metadata?: true
     FBTournamentId?: true
+    FBTournamentLeftId?: true
+    FBTournamentRightId?: true
     _all?: true
   }
 
@@ -59773,6 +59819,8 @@ export namespace Prisma {
     tournamentId: string | null
     metadata: string | null
     FBTournamentId: string | null
+    FBTournamentLeftId: number | null
+    FBTournamentRightId: number | null
     _count: FightArchiveCountAggregateOutputType | null
     _avg: FightArchiveAvgAggregateOutputType | null
     _sum: FightArchiveSumAggregateOutputType | null
@@ -59809,12 +59857,16 @@ export namespace Prisma {
     tournamentId?: boolean
     metadata?: boolean
     FBTournamentId?: boolean
+    FBTournamentLeftId?: boolean
+    FBTournamentRightId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FightWatched?: boolean | FightArchive$FightWatchedArgs<ExtArgs>
     FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
+    FBTournamentLeft?: boolean | FightArchive$FBTournamentLeftArgs<ExtArgs>
+    FBTournamentRight?: boolean | FightArchive$FBTournamentRightArgs<ExtArgs>
     _count?: boolean | FightArchiveCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
@@ -59833,11 +59885,15 @@ export namespace Prisma {
     tournamentId?: boolean
     metadata?: boolean
     FBTournamentId?: boolean
+    FBTournamentLeftId?: boolean
+    FBTournamentRightId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
+    FBTournamentLeft?: boolean | FightArchive$FBTournamentLeftArgs<ExtArgs>
+    FBTournamentRight?: boolean | FightArchive$FBTournamentRightArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -59855,11 +59911,15 @@ export namespace Prisma {
     tournamentId?: boolean
     metadata?: boolean
     FBTournamentId?: boolean
+    FBTournamentLeftId?: boolean
+    FBTournamentRightId?: boolean
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
+    FBTournamentLeft?: boolean | FightArchive$FBTournamentLeftArgs<ExtArgs>
+    FBTournamentRight?: boolean | FightArchive$FBTournamentRightArgs<ExtArgs>
   }, ExtArgs["result"]["fightArchive"]>
 
   export type FightArchiveSelectScalar = {
@@ -59877,9 +59937,11 @@ export namespace Prisma {
     tournamentId?: boolean
     metadata?: boolean
     FBTournamentId?: boolean
+    FBTournamentLeftId?: boolean
+    FBTournamentRightId?: boolean
   }
 
-  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata" | "FBTournamentId", ExtArgs["result"]["fightArchive"]>
+  export type FightArchiveOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fighters" | "steps" | "seed" | "result" | "playerId" | "tournamentStep" | "slot" | "createdDate" | "tournamentTeamLeftId" | "tournamentTeamRightId" | "tournamentId" | "metadata" | "FBTournamentId" | "FBTournamentLeftId" | "FBTournamentRightId", ExtArgs["result"]["fightArchive"]>
   export type FightArchiveInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
     Tournament?: boolean | FightArchive$TournamentArgs<ExtArgs>
@@ -59887,6 +59949,8 @@ export namespace Prisma {
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FightWatched?: boolean | FightArchive$FightWatchedArgs<ExtArgs>
     FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
+    FBTournamentLeft?: boolean | FightArchive$FBTournamentLeftArgs<ExtArgs>
+    FBTournamentRight?: boolean | FightArchive$FBTournamentRightArgs<ExtArgs>
     _count?: boolean | FightArchiveCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FightArchiveIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -59895,6 +59959,8 @@ export namespace Prisma {
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
+    FBTournamentLeft?: boolean | FightArchive$FBTournamentLeftArgs<ExtArgs>
+    FBTournamentRight?: boolean | FightArchive$FBTournamentRightArgs<ExtArgs>
   }
   export type FightArchiveIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | FightArchive$playerArgs<ExtArgs>
@@ -59902,6 +59968,8 @@ export namespace Prisma {
     tournamentTeamLeft?: boolean | FightArchive$tournamentTeamLeftArgs<ExtArgs>
     tournamentTeamRight?: boolean | FightArchive$tournamentTeamRightArgs<ExtArgs>
     FBTournament?: boolean | FightArchive$FBTournamentArgs<ExtArgs>
+    FBTournamentLeft?: boolean | FightArchive$FBTournamentLeftArgs<ExtArgs>
+    FBTournamentRight?: boolean | FightArchive$FBTournamentRightArgs<ExtArgs>
   }
 
   export type $FightArchivePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -59913,6 +59981,8 @@ export namespace Prisma {
       tournamentTeamRight: Prisma.$TournamentTeamPayload<ExtArgs> | null
       FightWatched: Prisma.$FightWatchedPayload<ExtArgs>[]
       FBTournament: Prisma.$FBTournamentPayload<ExtArgs> | null
+      FBTournamentLeft: Prisma.$GameDinozPayload<ExtArgs> | null
+      FBTournamentRight: Prisma.$GameDinozPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -59929,6 +59999,8 @@ export namespace Prisma {
       tournamentId: string | null
       metadata: string | null
       FBTournamentId: string | null
+      FBTournamentLeftId: number | null
+      FBTournamentRightId: number | null
     }, ExtArgs["result"]["fightArchive"]>
     composites: {}
   }
@@ -60147,7 +60219,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FightArchives and only return the `id`
      * const fightArchiveWithIdOnly = await prisma.fightArchive.updateManyAndReturn({
      *   select: { id: true },
@@ -60160,7 +60232,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FightArchiveUpdateManyAndReturnArgs>(args: SelectSubset<T, FightArchiveUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -60323,12 +60395,14 @@ export namespace Prisma {
    */
   export interface Prisma__FightArchiveClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    player<T extends FightArchive$playerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    Tournament<T extends FightArchive$TournamentArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$TournamentArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    tournamentTeamLeft<T extends FightArchive$tournamentTeamLeftArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamLeftArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    tournamentTeamRight<T extends FightArchive$tournamentTeamRightArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamRightArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    FightWatched<T extends FightArchive$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    FBTournament<T extends FightArchive$FBTournamentArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$FBTournamentArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    player<T extends FightArchive$playerArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    Tournament<T extends FightArchive$TournamentArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$TournamentArgs<ExtArgs>>): Prisma__TournamentClient<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tournamentTeamLeft<T extends FightArchive$tournamentTeamLeftArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamLeftArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tournamentTeamRight<T extends FightArchive$tournamentTeamRightArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$tournamentTeamRightArgs<ExtArgs>>): Prisma__TournamentTeamClient<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    FightWatched<T extends FightArchive$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    FBTournament<T extends FightArchive$FBTournamentArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$FBTournamentArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    FBTournamentLeft<T extends FightArchive$FBTournamentLeftArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$FBTournamentLeftArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    FBTournamentRight<T extends FightArchive$FBTournamentRightArgs<ExtArgs> = {}>(args?: Subset<T, FightArchive$FBTournamentRightArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -60372,6 +60446,8 @@ export namespace Prisma {
     readonly tournamentId: FieldRef<"FightArchive", 'String'>
     readonly metadata: FieldRef<"FightArchive", 'String'>
     readonly FBTournamentId: FieldRef<"FightArchive", 'String'>
+    readonly FBTournamentLeftId: FieldRef<"FightArchive", 'Int'>
+    readonly FBTournamentRightId: FieldRef<"FightArchive", 'Int'>
   }
     
 
@@ -60896,6 +60972,44 @@ export namespace Prisma {
   }
 
   /**
+   * FightArchive.FBTournamentLeft
+   */
+  export type FightArchive$FBTournamentLeftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
+  }
+
+  /**
+   * FightArchive.FBTournamentRight
+   */
+  export type FightArchive$FBTournamentRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozInclude<ExtArgs> | null
+    where?: GameDinozWhereInput
+  }
+
+  /**
    * FightArchive without action
    */
   export type FightArchiveDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -61342,7 +61456,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more FightWatcheds and only return the `id`
      * const fightWatchedWithIdOnly = await prisma.fightWatched.updateManyAndReturn({
      *   select: { id: true },
@@ -61355,7 +61469,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends FightWatchedUpdateManyAndReturnArgs>(args: SelectSubset<T, FightWatchedUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -62514,7 +62628,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more Tournaments and only return the `id`
      * const tournamentWithIdOnly = await prisma.tournament.updateManyAndReturn({
      *   select: { id: true },
@@ -62527,7 +62641,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends TournamentUpdateManyAndReturnArgs>(args: SelectSubset<T, TournamentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TournamentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -63663,7 +63777,7 @@ export namespace Prisma {
      *     // ... provide data here
      *   ]
      * })
-     *
+     * 
      * // Update zero or more TournamentTeams and only return the `id`
      * const tournamentTeamWithIdOnly = await prisma.tournamentTeam.updateManyAndReturn({
      *   select: { id: true },
@@ -63676,7 +63790,7 @@ export namespace Prisma {
      * })
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     *
+     * 
      */
     updateManyAndReturn<T extends TournamentTeamUpdateManyAndReturnArgs>(args: SelectSubset<T, TournamentTeamUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TournamentTeamPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
@@ -64647,6 +64761,16 @@ export namespace Prisma {
     winnerId?: boolean
   }, ExtArgs["result"]["fBTournament"]>
 
+  export type FBTournamentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    date?: boolean
+    teamRace?: boolean
+    levelLimit?: boolean
+    cashPrice?: boolean
+    nextRound?: boolean
+    winnerId?: boolean
+  }, ExtArgs["result"]["fBTournament"]>
+
   export type FBTournamentSelectScalar = {
     id?: boolean
     date?: boolean
@@ -64664,6 +64788,7 @@ export namespace Prisma {
     _count?: boolean | FBTournamentCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type FBTournamentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type FBTournamentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $FBTournamentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FBTournament"
@@ -64690,7 +64815,7 @@ export namespace Prisma {
       select?: FBTournamentCountAggregateInputType | true
     }
 
-  export interface FBTournamentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+  export interface FBTournamentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['FBTournament'], meta: { name: 'FBTournament' } }
     /**
      * Find zero or one FBTournament that matches the filter.
@@ -64703,7 +64828,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends FBTournamentFindUniqueArgs>(args: SelectSubset<T, FBTournamentFindUniqueArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findUnique<T extends FBTournamentFindUniqueArgs>(args: SelectSubset<T, FBTournamentFindUniqueArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one FBTournament that matches the filter or throw an error with `error.code='P2025'`
@@ -64717,7 +64842,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends FBTournamentFindUniqueOrThrowArgs>(args: SelectSubset<T, FBTournamentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findUniqueOrThrow<T extends FBTournamentFindUniqueOrThrowArgs>(args: SelectSubset<T, FBTournamentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first FBTournament that matches the filter.
@@ -64732,7 +64857,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends FBTournamentFindFirstArgs>(args?: SelectSubset<T, FBTournamentFindFirstArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findFirst<T extends FBTournamentFindFirstArgs>(args?: SelectSubset<T, FBTournamentFindFirstArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first FBTournament that matches the filter or
@@ -64748,7 +64873,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends FBTournamentFindFirstOrThrowArgs>(args?: SelectSubset<T, FBTournamentFindFirstOrThrowArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findFirstOrThrow<T extends FBTournamentFindFirstOrThrowArgs>(args?: SelectSubset<T, FBTournamentFindFirstOrThrowArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more FBTournaments that matches the filter.
@@ -64766,7 +64891,7 @@ export namespace Prisma {
      * const fBTournamentWithIdOnly = await prisma.fBTournament.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends FBTournamentFindManyArgs>(args?: SelectSubset<T, FBTournamentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findMany", ClientOptions>>
+    findMany<T extends FBTournamentFindManyArgs>(args?: SelectSubset<T, FBTournamentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
      * Create a FBTournament.
@@ -64780,7 +64905,7 @@ export namespace Prisma {
      * })
      * 
      */
-    create<T extends FBTournamentCreateArgs>(args: SelectSubset<T, FBTournamentCreateArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+    create<T extends FBTournamentCreateArgs>(args: SelectSubset<T, FBTournamentCreateArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many FBTournaments.
@@ -64818,7 +64943,7 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends FBTournamentCreateManyAndReturnArgs>(args?: SelectSubset<T, FBTournamentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+    createManyAndReturn<T extends FBTournamentCreateManyAndReturnArgs>(args?: SelectSubset<T, FBTournamentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Delete a FBTournament.
@@ -64832,7 +64957,7 @@ export namespace Prisma {
      * })
      * 
      */
-    delete<T extends FBTournamentDeleteArgs>(args: SelectSubset<T, FBTournamentDeleteArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+    delete<T extends FBTournamentDeleteArgs>(args: SelectSubset<T, FBTournamentDeleteArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one FBTournament.
@@ -64849,7 +64974,7 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends FBTournamentUpdateArgs>(args: SelectSubset<T, FBTournamentUpdateArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+    update<T extends FBTournamentUpdateArgs>(args: SelectSubset<T, FBTournamentUpdateArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more FBTournaments.
@@ -64885,6 +65010,36 @@ export namespace Prisma {
     updateMany<T extends FBTournamentUpdateManyArgs>(args: SelectSubset<T, FBTournamentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
+     * Update zero or more FBTournaments and returns the data updated in the database.
+     * @param {FBTournamentUpdateManyAndReturnArgs} args - Arguments to update many FBTournaments.
+     * @example
+     * // Update many FBTournaments
+     * const fBTournament = await prisma.fBTournament.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more FBTournaments and only return the `id`
+     * const fBTournamentWithIdOnly = await prisma.fBTournament.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends FBTournamentUpdateManyAndReturnArgs>(args: SelectSubset<T, FBTournamentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
      * Create or update one FBTournament.
      * @param {FBTournamentUpsertArgs} args - Arguments to update or create a FBTournament.
      * @example
@@ -64901,7 +65056,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends FBTournamentUpsertArgs>(args: SelectSubset<T, FBTournamentUpsertArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+    upsert<T extends FBTournamentUpsertArgs>(args: SelectSubset<T, FBTournamentUpsertArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
@@ -65041,10 +65196,10 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__FBTournamentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__FBTournamentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    participants<T extends FBTournament$participantsArgs<ExtArgs> = {}>(args?: Subset<T, FBTournament$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    fights<T extends FBTournament$fightsArgs<ExtArgs> = {}>(args?: Subset<T, FBTournament$fightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
+    participants<T extends FBTournament$participantsArgs<ExtArgs> = {}>(args?: Subset<T, FBTournament$participantsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    fights<T extends FBTournament$fightsArgs<ExtArgs> = {}>(args?: Subset<T, FBTournament$fightsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -65377,6 +65532,36 @@ export namespace Prisma {
      * Filter which FBTournaments to update
      */
     where?: FBTournamentWhereInput
+    /**
+     * Limit how many FBTournaments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * FBTournament updateManyAndReturn
+   */
+  export type FBTournamentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FBTournament
+     */
+    select?: FBTournamentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the FBTournament
+     */
+    omit?: FBTournamentOmit<ExtArgs> | null
+    /**
+     * The data used to update FBTournaments.
+     */
+    data: XOR<FBTournamentUpdateManyMutationInput, FBTournamentUncheckedUpdateManyInput>
+    /**
+     * Filter which FBTournaments to update
+     */
+    where?: FBTournamentWhereInput
+    /**
+     * Limit how many FBTournaments to update.
+     */
+    limit?: number
   }
 
   /**
@@ -65441,6 +65626,10 @@ export namespace Prisma {
      * Filter which FBTournaments to delete
      */
     where?: FBTournamentWhereInput
+    /**
+     * Limit how many FBTournaments to delete.
+     */
+    limit?: number
   }
 
   /**
@@ -65891,10 +66080,38 @@ export namespace Prisma {
     unlockableSkills?: boolean | GameDinoz$unlockableSkillsArgs<ExtArgs>
     status?: boolean | GameDinoz$statusArgs<ExtArgs>
     FBTournament?: boolean | GameDinoz$FBTournamentArgs<ExtArgs>
+    FightArchiveLeft?: boolean | GameDinoz$FightArchiveLeftArgs<ExtArgs>
+    FightArchiveRight?: boolean | GameDinoz$FightArchiveRightArgs<ExtArgs>
     _count?: boolean | GameDinozCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["gameDinoz"]>
 
   export type GameDinozSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    raceId?: boolean
+    level?: boolean
+    nextUpElementId?: boolean
+    nextUpAltElementId?: boolean
+    display?: boolean
+    life?: boolean
+    maxLife?: boolean
+    experience?: boolean
+    nbrUpFire?: boolean
+    nbrUpWood?: boolean
+    nbrUpWater?: boolean
+    nbrUpLightning?: boolean
+    nbrUpAir?: boolean
+    canChangeName?: boolean
+    createdDate?: boolean
+    seed?: boolean
+    usage?: boolean
+    playerId?: boolean
+    FBTournamentId?: boolean
+    player?: boolean | GameDinoz$playerArgs<ExtArgs>
+    FBTournament?: boolean | GameDinoz$FBTournamentArgs<ExtArgs>
+  }, ExtArgs["result"]["gameDinoz"]>
+
+  export type GameDinozSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
     raceId?: boolean
@@ -65953,9 +66170,15 @@ export namespace Prisma {
     unlockableSkills?: boolean | GameDinoz$unlockableSkillsArgs<ExtArgs>
     status?: boolean | GameDinoz$statusArgs<ExtArgs>
     FBTournament?: boolean | GameDinoz$FBTournamentArgs<ExtArgs>
+    FightArchiveLeft?: boolean | GameDinoz$FightArchiveLeftArgs<ExtArgs>
+    FightArchiveRight?: boolean | GameDinoz$FightArchiveRightArgs<ExtArgs>
     _count?: boolean | GameDinozCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type GameDinozIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | GameDinoz$playerArgs<ExtArgs>
+    FBTournament?: boolean | GameDinoz$FBTournamentArgs<ExtArgs>
+  }
+  export type GameDinozIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | GameDinoz$playerArgs<ExtArgs>
     FBTournament?: boolean | GameDinoz$FBTournamentArgs<ExtArgs>
   }
@@ -65970,6 +66193,8 @@ export namespace Prisma {
       unlockableSkills: Prisma.$DinozSkillUnlockablePayload<ExtArgs>[]
       status: Prisma.$DinozStatusPayload<ExtArgs>[]
       FBTournament: Prisma.$FBTournamentPayload<ExtArgs> | null
+      FightArchiveLeft: Prisma.$FightArchivePayload<ExtArgs>[]
+      FightArchiveRight: Prisma.$FightArchivePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -66004,7 +66229,7 @@ export namespace Prisma {
       select?: GameDinozCountAggregateInputType | true
     }
 
-  export interface GameDinozDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> {
+  export interface GameDinozDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['GameDinoz'], meta: { name: 'GameDinoz' } }
     /**
      * Find zero or one GameDinoz that matches the filter.
@@ -66017,7 +66242,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUnique<T extends GameDinozFindUniqueArgs>(args: SelectSubset<T, GameDinozFindUniqueArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUnique", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findUnique<T extends GameDinozFindUniqueArgs>(args: SelectSubset<T, GameDinozFindUniqueArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find one GameDinoz that matches the filter or throw an error with `error.code='P2025'`
@@ -66031,7 +66256,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findUniqueOrThrow<T extends GameDinozFindUniqueOrThrowArgs>(args: SelectSubset<T, GameDinozFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findUniqueOrThrow<T extends GameDinozFindUniqueOrThrowArgs>(args: SelectSubset<T, GameDinozFindUniqueOrThrowArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first GameDinoz that matches the filter.
@@ -66046,7 +66271,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirst<T extends GameDinozFindFirstArgs>(args?: SelectSubset<T, GameDinozFindFirstArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findFirst", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    findFirst<T extends GameDinozFindFirstArgs>(args?: SelectSubset<T, GameDinozFindFirstArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find the first GameDinoz that matches the filter or
@@ -66062,7 +66287,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    findFirstOrThrow<T extends GameDinozFindFirstOrThrowArgs>(args?: SelectSubset<T, GameDinozFindFirstOrThrowArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findFirstOrThrow", ClientOptions>, never, ExtArgs, ClientOptions>
+    findFirstOrThrow<T extends GameDinozFindFirstOrThrowArgs>(args?: SelectSubset<T, GameDinozFindFirstOrThrowArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Find zero or more GameDinozs that matches the filter.
@@ -66080,7 +66305,7 @@ export namespace Prisma {
      * const gameDinozWithIdOnly = await prisma.gameDinoz.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends GameDinozFindManyArgs>(args?: SelectSubset<T, GameDinozFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", ClientOptions>>
+    findMany<T extends GameDinozFindManyArgs>(args?: SelectSubset<T, GameDinozFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
      * Create a GameDinoz.
@@ -66094,7 +66319,7 @@ export namespace Prisma {
      * })
      * 
      */
-    create<T extends GameDinozCreateArgs>(args: SelectSubset<T, GameDinozCreateArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "create", ClientOptions>, never, ExtArgs, ClientOptions>
+    create<T extends GameDinozCreateArgs>(args: SelectSubset<T, GameDinozCreateArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Create many GameDinozs.
@@ -66132,7 +66357,7 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends GameDinozCreateManyAndReturnArgs>(args?: SelectSubset<T, GameDinozCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "createManyAndReturn", ClientOptions>>
+    createManyAndReturn<T extends GameDinozCreateManyAndReturnArgs>(args?: SelectSubset<T, GameDinozCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
      * Delete a GameDinoz.
@@ -66146,7 +66371,7 @@ export namespace Prisma {
      * })
      * 
      */
-    delete<T extends GameDinozDeleteArgs>(args: SelectSubset<T, GameDinozDeleteArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "delete", ClientOptions>, never, ExtArgs, ClientOptions>
+    delete<T extends GameDinozDeleteArgs>(args: SelectSubset<T, GameDinozDeleteArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Update one GameDinoz.
@@ -66163,7 +66388,7 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends GameDinozUpdateArgs>(args: SelectSubset<T, GameDinozUpdateArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "update", ClientOptions>, never, ExtArgs, ClientOptions>
+    update<T extends GameDinozUpdateArgs>(args: SelectSubset<T, GameDinozUpdateArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
      * Delete zero or more GameDinozs.
@@ -66199,6 +66424,36 @@ export namespace Prisma {
     updateMany<T extends GameDinozUpdateManyArgs>(args: SelectSubset<T, GameDinozUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
+     * Update zero or more GameDinozs and returns the data updated in the database.
+     * @param {GameDinozUpdateManyAndReturnArgs} args - Arguments to update many GameDinozs.
+     * @example
+     * // Update many GameDinozs
+     * const gameDinoz = await prisma.gameDinoz.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more GameDinozs and only return the `id`
+     * const gameDinozWithIdOnly = await prisma.gameDinoz.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends GameDinozUpdateManyAndReturnArgs>(args: SelectSubset<T, GameDinozUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
      * Create or update one GameDinoz.
      * @param {GameDinozUpsertArgs} args - Arguments to update or create a GameDinoz.
      * @example
@@ -66215,7 +66470,7 @@ export namespace Prisma {
      *   }
      * })
      */
-    upsert<T extends GameDinozUpsertArgs>(args: SelectSubset<T, GameDinozUpsertArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "upsert", ClientOptions>, never, ExtArgs, ClientOptions>
+    upsert<T extends GameDinozUpsertArgs>(args: SelectSubset<T, GameDinozUpsertArgs<ExtArgs>>): Prisma__GameDinozClient<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
@@ -66355,15 +66610,17 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__GameDinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__GameDinozClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    player<T extends GameDinoz$playerArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
-    items<T extends GameDinoz$itemsArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    dinozItemsToDinoz<T extends GameDinoz$dinozItemsToDinozArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$dinozItemsToDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    skills<T extends GameDinoz$skillsArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$skillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    unlockableSkills<T extends GameDinoz$unlockableSkillsArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$unlockableSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    status<T extends GameDinoz$statusArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$statusArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "findMany", ClientOptions> | Null>
-    FBTournament<T extends GameDinoz$FBTournamentArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$FBTournamentArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUniqueOrThrow", ClientOptions> | null, null, ExtArgs, ClientOptions>
+    player<T extends GameDinoz$playerArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$playerArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    items<T extends GameDinoz$itemsArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$itemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dinozItemsToDinoz<T extends GameDinoz$dinozItemsToDinozArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$dinozItemsToDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozItemToDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    skills<T extends GameDinoz$skillsArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$skillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    unlockableSkills<T extends GameDinoz$unlockableSkillsArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$unlockableSkillsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozSkillUnlockablePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    status<T extends GameDinoz$statusArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$statusArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DinozStatusPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    FBTournament<T extends GameDinoz$FBTournamentArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$FBTournamentArgs<ExtArgs>>): Prisma__FBTournamentClient<$Result.GetResult<Prisma.$FBTournamentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    FightArchiveLeft<T extends GameDinoz$FightArchiveLeftArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$FightArchiveLeftArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    FightArchiveRight<T extends GameDinoz$FightArchiveRightArgs<ExtArgs> = {}>(args?: Subset<T, GameDinoz$FightArchiveRightArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightArchivePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -66714,6 +66971,40 @@ export namespace Prisma {
      * Filter which GameDinozs to update
      */
     where?: GameDinozWhereInput
+    /**
+     * Limit how many GameDinozs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * GameDinoz updateManyAndReturn
+   */
+  export type GameDinozUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the GameDinoz
+     */
+    select?: GameDinozSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the GameDinoz
+     */
+    omit?: GameDinozOmit<ExtArgs> | null
+    /**
+     * The data used to update GameDinozs.
+     */
+    data: XOR<GameDinozUpdateManyMutationInput, GameDinozUncheckedUpdateManyInput>
+    /**
+     * Filter which GameDinozs to update
+     */
+    where?: GameDinozWhereInput
+    /**
+     * Limit how many GameDinozs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: GameDinozIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -66778,6 +67069,10 @@ export namespace Prisma {
      * Filter which GameDinozs to delete
      */
     where?: GameDinozWhereInput
+    /**
+     * Limit how many GameDinozs to delete.
+     */
+    limit?: number
   }
 
   /**
@@ -66936,6 +67231,54 @@ export namespace Prisma {
      */
     include?: FBTournamentInclude<ExtArgs> | null
     where?: FBTournamentWhereInput
+  }
+
+  /**
+   * GameDinoz.FightArchiveLeft
+   */
+  export type GameDinoz$FightArchiveLeftArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
+  }
+
+  /**
+   * GameDinoz.FightArchiveRight
+   */
+  export type GameDinoz$FightArchiveRightArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FightArchive
+     */
+    select?: FightArchiveSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the FightArchive
+     */
+    omit?: FightArchiveOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FightArchiveInclude<ExtArgs> | null
+    where?: FightArchiveWhereInput
+    orderBy?: FightArchiveOrderByWithRelationInput | FightArchiveOrderByWithRelationInput[]
+    cursor?: FightArchiveWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FightArchiveScalarFieldEnum | FightArchiveScalarFieldEnum[]
   }
 
   /**
@@ -67542,7 +67885,9 @@ export namespace Prisma {
     tournamentTeamRightId: 'tournamentTeamRightId',
     tournamentId: 'tournamentId',
     metadata: 'metadata',
-    FBTournamentId: 'FBTournamentId'
+    FBTournamentId: 'FBTournamentId',
+    FBTournamentLeftId: 'FBTournamentLeftId',
+    FBTournamentRightId: 'FBTournamentRightId'
   };
 
   export type FightArchiveScalarFieldEnum = (typeof FightArchiveScalarFieldEnum)[keyof typeof FightArchiveScalarFieldEnum]
@@ -71006,12 +71351,16 @@ export namespace Prisma {
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     metadata?: StringNullableFilter<"FightArchive"> | string | null
     FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
+    FBTournamentLeftId?: IntNullableFilter<"FightArchive"> | number | null
+    FBTournamentRightId?: IntNullableFilter<"FightArchive"> | number | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
     tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     FightWatched?: FightWatchedListRelationFilter
     FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
+    FBTournamentLeft?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
+    FBTournamentRight?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }
 
   export type FightArchiveOrderByWithRelationInput = {
@@ -71029,12 +71378,16 @@ export namespace Prisma {
     tournamentId?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     FBTournamentId?: SortOrderInput | SortOrder
+    FBTournamentLeftId?: SortOrderInput | SortOrder
+    FBTournamentRightId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
     Tournament?: TournamentOrderByWithRelationInput
     tournamentTeamLeft?: TournamentTeamOrderByWithRelationInput
     tournamentTeamRight?: TournamentTeamOrderByWithRelationInput
     FightWatched?: FightWatchedOrderByRelationAggregateInput
     FBTournament?: FBTournamentOrderByWithRelationInput
+    FBTournamentLeft?: GameDinozOrderByWithRelationInput
+    FBTournamentRight?: GameDinozOrderByWithRelationInput
   }
 
   export type FightArchiveWhereUniqueInput = Prisma.AtLeast<{
@@ -71055,12 +71408,16 @@ export namespace Prisma {
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     metadata?: StringNullableFilter<"FightArchive"> | string | null
     FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
+    FBTournamentLeftId?: IntNullableFilter<"FightArchive"> | number | null
+    FBTournamentRightId?: IntNullableFilter<"FightArchive"> | number | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
     Tournament?: XOR<TournamentNullableScalarRelationFilter, TournamentWhereInput> | null
     tournamentTeamLeft?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     tournamentTeamRight?: XOR<TournamentTeamNullableScalarRelationFilter, TournamentTeamWhereInput> | null
     FightWatched?: FightWatchedListRelationFilter
     FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
+    FBTournamentLeft?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
+    FBTournamentRight?: XOR<GameDinozNullableScalarRelationFilter, GameDinozWhereInput> | null
   }, "id">
 
   export type FightArchiveOrderByWithAggregationInput = {
@@ -71078,6 +71435,8 @@ export namespace Prisma {
     tournamentId?: SortOrderInput | SortOrder
     metadata?: SortOrderInput | SortOrder
     FBTournamentId?: SortOrderInput | SortOrder
+    FBTournamentLeftId?: SortOrderInput | SortOrder
+    FBTournamentRightId?: SortOrderInput | SortOrder
     _count?: FightArchiveCountOrderByAggregateInput
     _avg?: FightArchiveAvgOrderByAggregateInput
     _max?: FightArchiveMaxOrderByAggregateInput
@@ -71103,6 +71462,8 @@ export namespace Prisma {
     tournamentId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
     metadata?: StringNullableWithAggregatesFilter<"FightArchive"> | string | null
     FBTournamentId?: UuidNullableWithAggregatesFilter<"FightArchive"> | string | null
+    FBTournamentLeftId?: IntNullableWithAggregatesFilter<"FightArchive"> | number | null
+    FBTournamentRightId?: IntNullableWithAggregatesFilter<"FightArchive"> | number | null
   }
 
   export type FightWatchedWhereInput = {
@@ -71411,6 +71772,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableListRelationFilter
     status?: DinozStatusListRelationFilter
     FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
+    FightArchiveLeft?: FightArchiveListRelationFilter
+    FightArchiveRight?: FightArchiveListRelationFilter
   }
 
   export type GameDinozOrderByWithRelationInput = {
@@ -71442,6 +71805,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableOrderByRelationAggregateInput
     status?: DinozStatusOrderByRelationAggregateInput
     FBTournament?: FBTournamentOrderByWithRelationInput
+    FightArchiveLeft?: FightArchiveOrderByRelationAggregateInput
+    FightArchiveRight?: FightArchiveOrderByRelationAggregateInput
   }
 
   export type GameDinozWhereUniqueInput = Prisma.AtLeast<{
@@ -71476,6 +71841,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableListRelationFilter
     status?: DinozStatusListRelationFilter
     FBTournament?: XOR<FBTournamentNullableScalarRelationFilter, FBTournamentWhereInput> | null
+    FightArchiveLeft?: FightArchiveListRelationFilter
+    FightArchiveRight?: FightArchiveListRelationFilter
   }, "id">
 
   export type GameDinozOrderByWithAggregationInput = {
@@ -74532,6 +74899,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
     FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateInput = {
@@ -74549,6 +74918,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -74568,6 +74939,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateInput = {
@@ -74585,6 +74958,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -74603,6 +74978,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type FightArchiveUpdateManyMutationInput = {
@@ -74632,6 +75009,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type FightWatchedCreateInput = {
@@ -74948,6 +75327,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateInput = {
@@ -74977,6 +75358,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUpdateInput = {
@@ -75005,6 +75388,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateInput = {
@@ -75034,6 +75419,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozCreateManyInput = {
@@ -77936,11 +78323,15 @@ export namespace Prisma {
     tournamentId?: SortOrder
     metadata?: SortOrder
     FBTournamentId?: SortOrder
+    FBTournamentLeftId?: SortOrder
+    FBTournamentRightId?: SortOrder
   }
 
   export type FightArchiveAvgOrderByAggregateInput = {
     tournamentStep?: SortOrder
     slot?: SortOrder
+    FBTournamentLeftId?: SortOrder
+    FBTournamentRightId?: SortOrder
   }
 
   export type FightArchiveMaxOrderByAggregateInput = {
@@ -77958,6 +78349,8 @@ export namespace Prisma {
     tournamentId?: SortOrder
     metadata?: SortOrder
     FBTournamentId?: SortOrder
+    FBTournamentLeftId?: SortOrder
+    FBTournamentRightId?: SortOrder
   }
 
   export type FightArchiveMinOrderByAggregateInput = {
@@ -77975,11 +78368,15 @@ export namespace Prisma {
     tournamentId?: SortOrder
     metadata?: SortOrder
     FBTournamentId?: SortOrder
+    FBTournamentLeftId?: SortOrder
+    FBTournamentRightId?: SortOrder
   }
 
   export type FightArchiveSumOrderByAggregateInput = {
     tournamentStep?: SortOrder
     slot?: SortOrder
+    FBTournamentLeftId?: SortOrder
+    FBTournamentRightId?: SortOrder
   }
 
   export type FightArchiveScalarRelationFilter = {
@@ -82040,6 +82437,18 @@ export namespace Prisma {
     connect?: FBTournamentWhereUniqueInput
   }
 
+  export type GameDinozCreateNestedOneWithoutFightArchiveLeftInput = {
+    create?: XOR<GameDinozCreateWithoutFightArchiveLeftInput, GameDinozUncheckedCreateWithoutFightArchiveLeftInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFightArchiveLeftInput
+    connect?: GameDinozWhereUniqueInput
+  }
+
+  export type GameDinozCreateNestedOneWithoutFightArchiveRightInput = {
+    create?: XOR<GameDinozCreateWithoutFightArchiveRightInput, GameDinozUncheckedCreateWithoutFightArchiveRightInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFightArchiveRightInput
+    connect?: GameDinozWhereUniqueInput
+  }
+
   export type FightWatchedUncheckedCreateNestedManyWithoutFightInput = {
     create?: XOR<FightWatchedCreateWithoutFightInput, FightWatchedUncheckedCreateWithoutFightInput> | FightWatchedCreateWithoutFightInput[] | FightWatchedUncheckedCreateWithoutFightInput[]
     connectOrCreate?: FightWatchedCreateOrConnectWithoutFightInput | FightWatchedCreateOrConnectWithoutFightInput[]
@@ -82109,6 +82518,26 @@ export namespace Prisma {
     delete?: FBTournamentWhereInput | boolean
     connect?: FBTournamentWhereUniqueInput
     update?: XOR<XOR<FBTournamentUpdateToOneWithWhereWithoutFightsInput, FBTournamentUpdateWithoutFightsInput>, FBTournamentUncheckedUpdateWithoutFightsInput>
+  }
+
+  export type GameDinozUpdateOneWithoutFightArchiveLeftNestedInput = {
+    create?: XOR<GameDinozCreateWithoutFightArchiveLeftInput, GameDinozUncheckedCreateWithoutFightArchiveLeftInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFightArchiveLeftInput
+    upsert?: GameDinozUpsertWithoutFightArchiveLeftInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutFightArchiveLeftInput, GameDinozUpdateWithoutFightArchiveLeftInput>, GameDinozUncheckedUpdateWithoutFightArchiveLeftInput>
+  }
+
+  export type GameDinozUpdateOneWithoutFightArchiveRightNestedInput = {
+    create?: XOR<GameDinozCreateWithoutFightArchiveRightInput, GameDinozUncheckedCreateWithoutFightArchiveRightInput>
+    connectOrCreate?: GameDinozCreateOrConnectWithoutFightArchiveRightInput
+    upsert?: GameDinozUpsertWithoutFightArchiveRightInput
+    disconnect?: GameDinozWhereInput | boolean
+    delete?: GameDinozWhereInput | boolean
+    connect?: GameDinozWhereUniqueInput
+    update?: XOR<XOR<GameDinozUpdateToOneWithWhereWithoutFightArchiveRightInput, GameDinozUpdateWithoutFightArchiveRightInput>, GameDinozUncheckedUpdateWithoutFightArchiveRightInput>
   }
 
   export type FightWatchedUncheckedUpdateManyWithoutFightNestedInput = {
@@ -82538,6 +82967,20 @@ export namespace Prisma {
     connect?: FBTournamentWhereUniqueInput
   }
 
+  export type FightArchiveCreateNestedManyWithoutFBTournamentLeftInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentLeftInput, FightArchiveUncheckedCreateWithoutFBTournamentLeftInput> | FightArchiveCreateWithoutFBTournamentLeftInput[] | FightArchiveUncheckedCreateWithoutFBTournamentLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentLeftInput | FightArchiveCreateOrConnectWithoutFBTournamentLeftInput[]
+    createMany?: FightArchiveCreateManyFBTournamentLeftInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveCreateNestedManyWithoutFBTournamentRightInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentRightInput, FightArchiveUncheckedCreateWithoutFBTournamentRightInput> | FightArchiveCreateWithoutFBTournamentRightInput[] | FightArchiveUncheckedCreateWithoutFBTournamentRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentRightInput | FightArchiveCreateOrConnectWithoutFBTournamentRightInput[]
+    createMany?: FightArchiveCreateManyFBTournamentRightInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
   export type DinozItemUncheckedCreateNestedManyWithoutGameDinozInput = {
     create?: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput> | DinozItemCreateWithoutGameDinozInput[] | DinozItemUncheckedCreateWithoutGameDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutGameDinozInput | DinozItemCreateOrConnectWithoutGameDinozInput[]
@@ -82571,6 +83014,20 @@ export namespace Prisma {
     connectOrCreate?: DinozStatusCreateOrConnectWithoutGameDinozInput | DinozStatusCreateOrConnectWithoutGameDinozInput[]
     createMany?: DinozStatusCreateManyGameDinozInputEnvelope
     connect?: DinozStatusWhereUniqueInput | DinozStatusWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentLeftInput, FightArchiveUncheckedCreateWithoutFBTournamentLeftInput> | FightArchiveCreateWithoutFBTournamentLeftInput[] | FightArchiveUncheckedCreateWithoutFBTournamentLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentLeftInput | FightArchiveCreateOrConnectWithoutFBTournamentLeftInput[]
+    createMany?: FightArchiveCreateManyFBTournamentLeftInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+  }
+
+  export type FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentRightInput, FightArchiveUncheckedCreateWithoutFBTournamentRightInput> | FightArchiveCreateWithoutFBTournamentRightInput[] | FightArchiveUncheckedCreateWithoutFBTournamentRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentRightInput | FightArchiveCreateOrConnectWithoutFBTournamentRightInput[]
+    createMany?: FightArchiveCreateManyFBTournamentRightInputEnvelope
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
   }
 
   export type EnumGameDinozUsageFieldUpdateOperationsInput = {
@@ -82667,6 +83124,34 @@ export namespace Prisma {
     update?: XOR<XOR<FBTournamentUpdateToOneWithWhereWithoutParticipantsInput, FBTournamentUpdateWithoutParticipantsInput>, FBTournamentUncheckedUpdateWithoutParticipantsInput>
   }
 
+  export type FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentLeftInput, FightArchiveUncheckedCreateWithoutFBTournamentLeftInput> | FightArchiveCreateWithoutFBTournamentLeftInput[] | FightArchiveUncheckedCreateWithoutFBTournamentLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentLeftInput | FightArchiveCreateOrConnectWithoutFBTournamentLeftInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutFBTournamentLeftInput | FightArchiveUpsertWithWhereUniqueWithoutFBTournamentLeftInput[]
+    createMany?: FightArchiveCreateManyFBTournamentLeftInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutFBTournamentLeftInput | FightArchiveUpdateWithWhereUniqueWithoutFBTournamentLeftInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutFBTournamentLeftInput | FightArchiveUpdateManyWithWhereWithoutFBTournamentLeftInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUpdateManyWithoutFBTournamentRightNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentRightInput, FightArchiveUncheckedCreateWithoutFBTournamentRightInput> | FightArchiveCreateWithoutFBTournamentRightInput[] | FightArchiveUncheckedCreateWithoutFBTournamentRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentRightInput | FightArchiveCreateOrConnectWithoutFBTournamentRightInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutFBTournamentRightInput | FightArchiveUpsertWithWhereUniqueWithoutFBTournamentRightInput[]
+    createMany?: FightArchiveCreateManyFBTournamentRightInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutFBTournamentRightInput | FightArchiveUpdateWithWhereUniqueWithoutFBTournamentRightInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutFBTournamentRightInput | FightArchiveUpdateManyWithWhereWithoutFBTournamentRightInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
   export type DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput = {
     create?: XOR<DinozItemCreateWithoutGameDinozInput, DinozItemUncheckedCreateWithoutGameDinozInput> | DinozItemCreateWithoutGameDinozInput[] | DinozItemUncheckedCreateWithoutGameDinozInput[]
     connectOrCreate?: DinozItemCreateOrConnectWithoutGameDinozInput | DinozItemCreateOrConnectWithoutGameDinozInput[]
@@ -82735,6 +83220,34 @@ export namespace Prisma {
     update?: DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput | DinozStatusUpdateWithWhereUniqueWithoutGameDinozInput[]
     updateMany?: DinozStatusUpdateManyWithWhereWithoutGameDinozInput | DinozStatusUpdateManyWithWhereWithoutGameDinozInput[]
     deleteMany?: DinozStatusScalarWhereInput | DinozStatusScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentLeftInput, FightArchiveUncheckedCreateWithoutFBTournamentLeftInput> | FightArchiveCreateWithoutFBTournamentLeftInput[] | FightArchiveUncheckedCreateWithoutFBTournamentLeftInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentLeftInput | FightArchiveCreateOrConnectWithoutFBTournamentLeftInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutFBTournamentLeftInput | FightArchiveUpsertWithWhereUniqueWithoutFBTournamentLeftInput[]
+    createMany?: FightArchiveCreateManyFBTournamentLeftInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutFBTournamentLeftInput | FightArchiveUpdateWithWhereUniqueWithoutFBTournamentLeftInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutFBTournamentLeftInput | FightArchiveUpdateManyWithWhereWithoutFBTournamentLeftInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput = {
+    create?: XOR<FightArchiveCreateWithoutFBTournamentRightInput, FightArchiveUncheckedCreateWithoutFBTournamentRightInput> | FightArchiveCreateWithoutFBTournamentRightInput[] | FightArchiveUncheckedCreateWithoutFBTournamentRightInput[]
+    connectOrCreate?: FightArchiveCreateOrConnectWithoutFBTournamentRightInput | FightArchiveCreateOrConnectWithoutFBTournamentRightInput[]
+    upsert?: FightArchiveUpsertWithWhereUniqueWithoutFBTournamentRightInput | FightArchiveUpsertWithWhereUniqueWithoutFBTournamentRightInput[]
+    createMany?: FightArchiveCreateManyFBTournamentRightInputEnvelope
+    set?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    disconnect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    delete?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    connect?: FightArchiveWhereUniqueInput | FightArchiveWhereUniqueInput[]
+    update?: FightArchiveUpdateWithWhereUniqueWithoutFBTournamentRightInput | FightArchiveUpdateWithWhereUniqueWithoutFBTournamentRightInput[]
+    updateMany?: FightArchiveUpdateManyWithWhereWithoutFBTournamentRightInput | FightArchiveUpdateManyWithWhereWithoutFBTournamentRightInput[]
+    deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -84880,6 +85393,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutItemsInput = {
@@ -84908,6 +85423,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutItemsInput = {
@@ -85069,6 +85586,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutItemsInput = {
@@ -85097,6 +85616,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type DinozCreateWithoutDinozItemsToDinozInput = {
@@ -85238,6 +85759,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutDinozItemsToDinozInput = {
@@ -85266,6 +85789,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutDinozItemsToDinozInput = {
@@ -85435,6 +85960,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutDinozItemsToDinozInput = {
@@ -85463,6 +85990,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type DinozCreateWithoutMissionsInput = {
@@ -85784,6 +86313,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutSkillsInput = {
@@ -85812,6 +86343,8 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutSkillsInput = {
@@ -85957,6 +86490,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutSkillsInput = {
@@ -85985,6 +86520,8 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type DinozCreateWithoutUnlockableSkillsInput = {
@@ -86108,6 +86645,8 @@ export namespace Prisma {
     skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutUnlockableSkillsInput = {
@@ -86136,6 +86675,8 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutUnlockableSkillsInput = {
@@ -86281,6 +86822,8 @@ export namespace Prisma {
     skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutUnlockableSkillsInput = {
@@ -86309,6 +86852,8 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type DinozCreateWithoutStatusInput = {
@@ -86432,6 +86977,8 @@ export namespace Prisma {
     skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutStatusInput = {
@@ -86460,6 +87007,8 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutStatusInput = {
@@ -86605,6 +87154,8 @@ export namespace Prisma {
     skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutStatusInput = {
@@ -86633,6 +87184,8 @@ export namespace Prisma {
     dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -87636,6 +88189,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
     FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutPlayerInput = {
@@ -87652,6 +88207,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -87712,6 +88269,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
     FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutPlayerInput = {
@@ -87740,6 +88299,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutPlayerInput = {
@@ -88488,6 +89049,8 @@ export namespace Prisma {
     tournamentId?: UuidNullableFilter<"FightArchive"> | string | null
     metadata?: StringNullableFilter<"FightArchive"> | string | null
     FBTournamentId?: UuidNullableFilter<"FightArchive"> | string | null
+    FBTournamentLeftId?: IntNullableFilter<"FightArchive"> | number | null
+    FBTournamentRightId?: IntNullableFilter<"FightArchive"> | number | null
   }
 
   export type FightWatchedUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -98760,6 +99323,134 @@ export namespace Prisma {
     create: XOR<FBTournamentCreateWithoutFightsInput, FBTournamentUncheckedCreateWithoutFightsInput>
   }
 
+  export type GameDinozCreateWithoutFightArchiveLeftInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutFightArchiveLeftInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutFightArchiveLeftInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutFightArchiveLeftInput, GameDinozUncheckedCreateWithoutFightArchiveLeftInput>
+  }
+
+  export type GameDinozCreateWithoutFightArchiveRightInput = {
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    player?: PlayerCreateNestedOneWithoutGameDinozInput
+    items?: DinozItemCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutParticipantsInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+  }
+
+  export type GameDinozUncheckedCreateWithoutFightArchiveRightInput = {
+    id?: number
+    name: string
+    raceId: number
+    level: number
+    nextUpElementId: number
+    nextUpAltElementId: number
+    display: string
+    life: number
+    maxLife: number
+    experience: number
+    nbrUpFire: number
+    nbrUpWood: number
+    nbrUpWater: number
+    nbrUpLightning: number
+    nbrUpAir: number
+    canChangeName?: boolean
+    createdDate?: Date | string
+    seed?: string
+    usage: $Enums.GameDinozUsage
+    playerId?: string | null
+    FBTournamentId?: string | null
+    items?: DinozItemUncheckedCreateNestedManyWithoutGameDinozInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedCreateNestedManyWithoutGameDinozInput
+    skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
+    status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+  }
+
+  export type GameDinozCreateOrConnectWithoutFightArchiveRightInput = {
+    where: GameDinozWhereUniqueInput
+    create: XOR<GameDinozCreateWithoutFightArchiveRightInput, GameDinozUncheckedCreateWithoutFightArchiveRightInput>
+  }
+
   export type PlayerUpsertWithoutFightArchiveInput = {
     update: XOR<PlayerUpdateWithoutFightArchiveInput, PlayerUncheckedUpdateWithoutFightArchiveInput>
     create: XOR<PlayerCreateWithoutFightArchiveInput, PlayerUncheckedCreateWithoutFightArchiveInput>
@@ -99039,6 +99730,146 @@ export namespace Prisma {
     participants?: GameDinozUncheckedUpdateManyWithoutFBTournamentNestedInput
   }
 
+  export type GameDinozUpsertWithoutFightArchiveLeftInput = {
+    update: XOR<GameDinozUpdateWithoutFightArchiveLeftInput, GameDinozUncheckedUpdateWithoutFightArchiveLeftInput>
+    create: XOR<GameDinozCreateWithoutFightArchiveLeftInput, GameDinozUncheckedCreateWithoutFightArchiveLeftInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutFightArchiveLeftInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutFightArchiveLeftInput, GameDinozUncheckedUpdateWithoutFightArchiveLeftInput>
+  }
+
+  export type GameDinozUpdateWithoutFightArchiveLeftInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutFightArchiveLeftInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
+  }
+
+  export type GameDinozUpsertWithoutFightArchiveRightInput = {
+    update: XOR<GameDinozUpdateWithoutFightArchiveRightInput, GameDinozUncheckedUpdateWithoutFightArchiveRightInput>
+    create: XOR<GameDinozCreateWithoutFightArchiveRightInput, GameDinozUncheckedCreateWithoutFightArchiveRightInput>
+    where?: GameDinozWhereInput
+  }
+
+  export type GameDinozUpdateToOneWithWhereWithoutFightArchiveRightInput = {
+    where?: GameDinozWhereInput
+    data: XOR<GameDinozUpdateWithoutFightArchiveRightInput, GameDinozUncheckedUpdateWithoutFightArchiveRightInput>
+  }
+
+  export type GameDinozUpdateWithoutFightArchiveRightInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    player?: PlayerUpdateOneWithoutGameDinozNestedInput
+    items?: DinozItemUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+  }
+
+  export type GameDinozUncheckedUpdateWithoutFightArchiveRightInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    raceId?: IntFieldUpdateOperationsInput | number
+    level?: IntFieldUpdateOperationsInput | number
+    nextUpElementId?: IntFieldUpdateOperationsInput | number
+    nextUpAltElementId?: IntFieldUpdateOperationsInput | number
+    display?: StringFieldUpdateOperationsInput | string
+    life?: IntFieldUpdateOperationsInput | number
+    maxLife?: IntFieldUpdateOperationsInput | number
+    experience?: IntFieldUpdateOperationsInput | number
+    nbrUpFire?: IntFieldUpdateOperationsInput | number
+    nbrUpWood?: IntFieldUpdateOperationsInput | number
+    nbrUpWater?: IntFieldUpdateOperationsInput | number
+    nbrUpLightning?: IntFieldUpdateOperationsInput | number
+    nbrUpAir?: IntFieldUpdateOperationsInput | number
+    canChangeName?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    seed?: StringFieldUpdateOperationsInput | string
+    usage?: EnumGameDinozUsageFieldUpdateOperationsInput | $Enums.GameDinozUsage
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: DinozItemUncheckedUpdateManyWithoutGameDinozNestedInput
+    dinozItemsToDinoz?: DinozItemToDinozUncheckedUpdateManyWithoutGameDinozNestedInput
+    skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
+    unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
+    status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+  }
+
   export type FightArchiveCreateWithoutFightWatchedInput = {
     id?: string
     fighters: string
@@ -99054,6 +99885,8 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutFightWatchedInput = {
@@ -99071,6 +99904,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type FightArchiveCreateOrConnectWithoutFightWatchedInput = {
@@ -99227,6 +100062,8 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutFightWatchedInput = {
@@ -99244,6 +100081,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PlayerUpsertWithoutFightWatchedInput = {
@@ -99420,6 +100259,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
     FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentInput = {
@@ -99436,6 +100277,8 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -99654,6 +100497,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
     FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentTeamLeftInput = {
@@ -99670,6 +100515,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -99698,6 +100545,8 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
     FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutTournamentTeamRightInput = {
@@ -99714,6 +100563,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -99874,6 +100725,8 @@ export namespace Prisma {
     skills?: DinozSkillCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozUncheckedCreateWithoutFBTournamentInput = {
@@ -99902,6 +100755,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedCreateNestedManyWithoutGameDinozInput
     unlockableSkills?: DinozSkillUnlockableUncheckedCreateNestedManyWithoutGameDinozInput
     status?: DinozStatusUncheckedCreateNestedManyWithoutGameDinozInput
+    FightArchiveLeft?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentLeftInput
+    FightArchiveRight?: FightArchiveUncheckedCreateNestedManyWithoutFBTournamentRightInput
   }
 
   export type GameDinozCreateOrConnectWithoutFBTournamentInput = {
@@ -99929,6 +100784,8 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
     tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
     FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
   }
 
   export type FightArchiveUncheckedCreateWithoutFBTournamentInput = {
@@ -99945,6 +100802,8 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
   }
 
@@ -100248,6 +101107,102 @@ export namespace Prisma {
     create: XOR<FBTournamentCreateWithoutParticipantsInput, FBTournamentUncheckedCreateWithoutParticipantsInput>
   }
 
+  export type FightArchiveCreateWithoutFBTournamentLeftInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentRight?: GameDinozCreateNestedOneWithoutFightArchiveRightInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutFBTournamentLeftInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentRightId?: number | null
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
+  }
+
+  export type FightArchiveCreateOrConnectWithoutFBTournamentLeftInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutFBTournamentLeftInput, FightArchiveUncheckedCreateWithoutFBTournamentLeftInput>
+  }
+
+  export type FightArchiveCreateManyFBTournamentLeftInputEnvelope = {
+    data: FightArchiveCreateManyFBTournamentLeftInput | FightArchiveCreateManyFBTournamentLeftInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FightArchiveCreateWithoutFBTournamentRightInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    metadata?: string | null
+    player?: PlayerCreateNestedOneWithoutFightArchiveInput
+    Tournament?: TournamentCreateNestedOneWithoutFightsInput
+    tournamentTeamLeft?: TournamentTeamCreateNestedOneWithoutFightArchiveLeftInput
+    tournamentTeamRight?: TournamentTeamCreateNestedOneWithoutFightArchiveRightInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutFightInput
+    FBTournament?: FBTournamentCreateNestedOneWithoutFightsInput
+    FBTournamentLeft?: GameDinozCreateNestedOneWithoutFightArchiveLeftInput
+  }
+
+  export type FightArchiveUncheckedCreateWithoutFBTournamentRightInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutFightInput
+  }
+
+  export type FightArchiveCreateOrConnectWithoutFBTournamentRightInput = {
+    where: FightArchiveWhereUniqueInput
+    create: XOR<FightArchiveCreateWithoutFBTournamentRightInput, FightArchiveUncheckedCreateWithoutFBTournamentRightInput>
+  }
+
+  export type FightArchiveCreateManyFBTournamentRightInputEnvelope = {
+    data: FightArchiveCreateManyFBTournamentRightInput | FightArchiveCreateManyFBTournamentRightInput[]
+    skipDuplicates?: boolean
+  }
+
   export type PlayerUpsertWithoutGameDinozInput = {
     update: XOR<PlayerUpdateWithoutGameDinozInput, PlayerUncheckedUpdateWithoutGameDinozInput>
     create: XOR<PlayerCreateWithoutGameDinozInput, PlayerUncheckedCreateWithoutGameDinozInput>
@@ -100488,6 +101443,38 @@ export namespace Prisma {
     nextRound?: DateTimeFieldUpdateOperationsInput | Date | string
     winnerId?: NullableIntFieldUpdateOperationsInput | number | null
     fights?: FightArchiveUncheckedUpdateManyWithoutFBTournamentNestedInput
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutFBTournamentLeftInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutFBTournamentLeftInput, FightArchiveUncheckedUpdateWithoutFBTournamentLeftInput>
+    create: XOR<FightArchiveCreateWithoutFBTournamentLeftInput, FightArchiveUncheckedCreateWithoutFBTournamentLeftInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutFBTournamentLeftInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutFBTournamentLeftInput, FightArchiveUncheckedUpdateWithoutFBTournamentLeftInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutFBTournamentLeftInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftInput>
+  }
+
+  export type FightArchiveUpsertWithWhereUniqueWithoutFBTournamentRightInput = {
+    where: FightArchiveWhereUniqueInput
+    update: XOR<FightArchiveUpdateWithoutFBTournamentRightInput, FightArchiveUncheckedUpdateWithoutFBTournamentRightInput>
+    create: XOR<FightArchiveCreateWithoutFBTournamentRightInput, FightArchiveUncheckedCreateWithoutFBTournamentRightInput>
+  }
+
+  export type FightArchiveUpdateWithWhereUniqueWithoutFBTournamentRightInput = {
+    where: FightArchiveWhereUniqueInput
+    data: XOR<FightArchiveUpdateWithoutFBTournamentRightInput, FightArchiveUncheckedUpdateWithoutFBTournamentRightInput>
+  }
+
+  export type FightArchiveUpdateManyWithWhereWithoutFBTournamentRightInput = {
+    where: FightArchiveScalarWhereInput
+    data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutFBTournamentRightInput>
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -101451,6 +102438,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type FightWatchedCreateManyPlayerInput = {
@@ -102107,6 +103096,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutPlayerInput = {
@@ -102123,6 +103114,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -102140,6 +103133,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type FightWatchedUpdateWithoutPlayerInput = {
@@ -102185,6 +103180,8 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutParticipantsNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutPlayerInput = {
@@ -102213,6 +103210,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateManyWithoutPlayerInput = {
@@ -102705,6 +103704,8 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type TournamentTeamUpdateWithoutTournamentInput = {
@@ -102748,6 +103749,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentInput = {
@@ -102764,6 +103767,8 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -102781,6 +103786,8 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type FightArchiveCreateManyTournamentTeamLeftInput = {
@@ -102797,6 +103804,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type FightArchiveCreateManyTournamentTeamRightInput = {
@@ -102813,6 +103822,8 @@ export namespace Prisma {
     tournamentId?: string | null
     metadata?: string | null
     FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type DinozUpdateWithoutTournamentTeamInput = {
@@ -102952,6 +103963,8 @@ export namespace Prisma {
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentTeamLeftInput = {
@@ -102968,6 +103981,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -102985,6 +104000,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type FightArchiveUpdateWithoutTournamentTeamRightInput = {
@@ -103002,6 +104019,8 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
     FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutTournamentTeamRightInput = {
@@ -103018,6 +104037,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -103035,6 +104056,8 @@ export namespace Prisma {
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type GameDinozCreateManyFBTournamentInput = {
@@ -103074,6 +104097,8 @@ export namespace Prisma {
     tournamentTeamRightId?: string | null
     tournamentId?: string | null
     metadata?: string | null
+    FBTournamentLeftId?: number | null
+    FBTournamentRightId?: number | null
   }
 
   export type GameDinozUpdateWithoutFBTournamentInput = {
@@ -103101,6 +104126,8 @@ export namespace Prisma {
     skills?: DinozSkillUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateWithoutFBTournamentInput = {
@@ -103129,6 +104156,8 @@ export namespace Prisma {
     skills?: DinozSkillUncheckedUpdateManyWithoutGameDinozNestedInput
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     status?: DinozStatusUncheckedUpdateManyWithoutGameDinozNestedInput
+    FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
+    FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
   }
 
   export type GameDinozUncheckedUpdateManyWithoutFBTournamentInput = {
@@ -103169,6 +104198,8 @@ export namespace Prisma {
     tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
     tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
   }
 
   export type FightArchiveUncheckedUpdateWithoutFBTournamentInput = {
@@ -103185,6 +104216,8 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
   }
 
@@ -103202,6 +104235,8 @@ export namespace Prisma {
     tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
     tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
     metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DinozItemCreateManyGameDinozInput = {
@@ -103232,6 +104267,42 @@ export namespace Prisma {
     id?: number
     statusId: number
     dinozId?: number | null
+  }
+
+  export type FightArchiveCreateManyFBTournamentLeftInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentRightId?: number | null
+  }
+
+  export type FightArchiveCreateManyFBTournamentRightInput = {
+    id?: string
+    fighters: string
+    steps: string
+    seed: string
+    result: boolean
+    playerId?: string | null
+    tournamentStep?: number
+    slot?: number
+    createdDate?: Date | string
+    tournamentTeamLeftId?: string | null
+    tournamentTeamRightId?: string | null
+    tournamentId?: string | null
+    metadata?: string | null
+    FBTournamentId?: string | null
+    FBTournamentLeftId?: number | null
   }
 
   export type DinozItemUpdateWithoutGameDinozInput = {
@@ -103320,6 +104391,118 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     statusId?: IntFieldUpdateOperationsInput | number
     dinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FightArchiveUpdateWithoutFBTournamentLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentRight?: GameDinozUpdateOneWithoutFightArchiveRightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutFBTournamentLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentRightId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type FightArchiveUpdateWithoutFBTournamentRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    player?: PlayerUpdateOneWithoutFightArchiveNestedInput
+    Tournament?: TournamentUpdateOneWithoutFightsNestedInput
+    tournamentTeamLeft?: TournamentTeamUpdateOneWithoutFightArchiveLeftNestedInput
+    tournamentTeamRight?: TournamentTeamUpdateOneWithoutFightArchiveRightNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutFightNestedInput
+    FBTournament?: FBTournamentUpdateOneWithoutFightsNestedInput
+    FBTournamentLeft?: GameDinozUpdateOneWithoutFightArchiveLeftNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateWithoutFBTournamentRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutFightNestedInput
+  }
+
+  export type FightArchiveUncheckedUpdateManyWithoutFBTournamentRightInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fighters?: StringFieldUpdateOperationsInput | string
+    steps?: StringFieldUpdateOperationsInput | string
+    seed?: StringFieldUpdateOperationsInput | string
+    result?: BoolFieldUpdateOperationsInput | boolean
+    playerId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentStep?: IntFieldUpdateOperationsInput | number
+    slot?: IntFieldUpdateOperationsInput | number
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    tournamentTeamLeftId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentTeamRightId?: NullableStringFieldUpdateOperationsInput | string | null
+    tournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    metadata?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
+    FBTournamentLeftId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

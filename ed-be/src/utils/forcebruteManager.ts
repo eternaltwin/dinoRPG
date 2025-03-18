@@ -11,6 +11,7 @@ import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import NotificationSeverity = $Enums.NotificationSeverity;
+import { matches } from 'validator';
 
 class ForceBruteManager {
 	private readonly QUALIFIED_TEAMS = 256;
@@ -152,7 +153,7 @@ class ForceBruteManager {
 		poolNumber: number,
 		matchNumber: number,
 		tournamentId: string
-	): Promise<string> {
+	): Promise<{ id: string; winner: number }> {
 		const team1Dinoz = await this.getDinozToFight(dinoz1, prisma);
 		const team2Dinoz = await this.getDinozToFight(dinoz2, prisma);
 
@@ -207,7 +208,7 @@ class ForceBruteManager {
 			}
 		});
 
-		return fightArchive.id;
+		return { id: fightArchive.id, winner: fight.winner ? dinoz1 : dinoz2 };
 	}
 
 	private async getWinnersFromPreviousRound(
@@ -334,6 +335,7 @@ class ForceBruteManager {
 
 	async generateNextRound(prisma: PismaClientLocal): Promise<void> {
 		const currentState = await this.getCurrentState(prisma);
+		const matches: number[] = [];
 
 		// Logique spécifique selon la phase
 		switch (currentState.phase) {
@@ -404,9 +406,10 @@ class ForceBruteManager {
 					teamsToMatch = await this.getWinnersFromPreviousRound(currentState.round, prisma, currentState.tournamentId);
 				}
 				const tournamentRound = this.translatePools(teamsToMatch);
+
 				for (const fbPool of tournamentRound) {
 					for (const match of fbPool.matches) {
-						await this.generateAndSaveFight(
+						const winner = await this.generateAndSaveFight(
 							match.left,
 							match.right,
 							TournamentPhase.FINALS,
@@ -416,6 +419,7 @@ class ForceBruteManager {
 							match.match,
 							currentState.tournamentId
 						);
+						matches.push(winner.winner);
 					}
 				}
 				break;
@@ -443,6 +447,14 @@ class ForceBruteManager {
 		}
 
 		if (currentState.round === 7) {
+			await prisma.fBTournament.update({
+				where: {
+					id: currentState.tournamentId
+				},
+				data: {
+					winnerId: matches[0]
+				}
+			});
 			return;
 		}
 

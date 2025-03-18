@@ -779,7 +779,7 @@ class TournamentManager {
 				let teamsToMatch: string[] = [];
 
 				if (currentState.round === 0) {
-					await this.rewardQualification(prisma)
+					await this.rewardQualification(prisma);
 					const teamSize = await prisma.tournament.findUniqueOrThrow({
 						where: {
 							id: this.tournamentId
