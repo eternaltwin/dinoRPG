@@ -1,7 +1,7 @@
 {
   "name": "@eternaltwin/dinorpg-monorepo",
   "private": true,
-  "version": "0.15.16",
+  "version": "0.15.17",
   "licenses": [
     {
       "type": "AGPL-3.0-or-later",
