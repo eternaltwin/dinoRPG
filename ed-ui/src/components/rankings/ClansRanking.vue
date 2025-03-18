@@ -55,7 +55,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
-import { Clan } from '@drpg/prisma';
+import { Clan } from '@drpg/core/models/clan/clan';
 import { ClanService } from '../../services/index.js';
 import { utils } from '../../utils/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -82,8 +82,8 @@ export default defineComponent({
 				return;
 			}
 		},
-		goToClan(_id: number): void {
-			this.$router.push({ name: 'Clan', params: { id: _id } });
+		goToClan(clan: { id: string; name: string }): void {
+			this.$router.push({ name: 'Clan', params: { id: clan.id } });
 		},
 		changePage(i: number) {
 			this.page += i;

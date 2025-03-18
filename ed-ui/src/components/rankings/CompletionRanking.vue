@@ -71,8 +71,8 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		goToAccount(paramId: string): void {
-			this.$router.push({ name: 'MyAccount', params: { id: paramId } });
+		goToAccount(player: { id: string; name: string }) {
+			this.$router.push({ name: 'MyAccount', params: { id: player.id } });
 		},
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
