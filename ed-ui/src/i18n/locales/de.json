@@ -14,9 +14,14 @@
 		"logout": "Ausloggen",
 		"guide": "Spielhandbuch",
 		"faq": "FAQ",
-		"cinema": "Kino"
+		"cinema": "Kino",
+		"events": "Evénements",
+		"system": "Réglages",
+		"skipFight": "Afficher directement le résultat de combat",
+		"skipLevel": "Passer l'animation de gain de niveau"
 	},
 	"toast": {
+		"noFBTournament": "Il n'y a pas encore de phase de qualification pour le tournois de ForceBrute.",
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
 		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
 		"DinozIsDead": "Dein Dinoz ist tot und kann nicht geheilt werden.",
@@ -31,6 +36,8 @@
 		"dinozDataMissing": "Dinoz-Daten nicht gefunden.",
 		"selectADinozAtMarketFirst": "Wähle zunächst einen Dinoz auf dem Markt aus.",
 		"unknownDinoz": "Dinoz nicht bekannt.",
+		"noFollowers": "Le Dinoz n'est pas suivi.",
+		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
 		"missingUser": "Nutzer fehlt.",
 		"missingData": "Daten fehlen.",
 		"AlreadySphere": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
@@ -151,7 +158,8 @@
 			"rest": "Dein Dinoz kann **sich ausruhen**, um Lebenspunkte wiederherzustellen. Währenddessen kann er keine anderen Aktionen nutzen!",
 			"stop_rest": "Dein Dinoz ruht sich derzeit aus. Du kannst ihn unterbrechen, damit er sich wieder fortbewegen und kämpfen kann.",
 			"itinerant_shop": "Beim Fliegenden Händler kannst du deine Zutaten verkaufen.",
-			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente."
+			"reincarnation": "Dein Dinoz kann sich reinkarnieren! Er behält das gleiche Schicksal der Elemente.",
+			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe."
 		},
 		"name": {
 			"fight": "Kämpfen",
@@ -182,7 +190,8 @@
 			"rest": "Ausruhen",
 			"stop_rest": "Ausruhen einstellen",
 			"itinerant_shop": "Der fliegende Händler",
-			"reincarnation": "Reinkarnation"
+			"reincarnation": "Reinkarnation",
+			"change_leader": "Devenir Leader"
 		}
 	},
 	"button": {
@@ -205,7 +214,17 @@
 		"itemName": "Name des Gegenstands",
 		"stock": "Vorrat",
 		"actions": "Aktionen",
-		"full": "Vorrat gefüllt"
+		"full": "Vorrat gefüllt",
+		"sortBy": "Trier par",
+		"sort": {
+			"default": "Par défaut",
+			"nameAsc": "Nom (A → Z)",
+			"nameDesc": "Nom (Z → A)",
+			"priceAsc": "Prix (croissant)",
+			"priceDesc": "Prix (décroissant)",
+			"qtyAsc": "Quantité (croissante)",
+			"qtyDesc": "Quantité (décroissante)"
+		}
 	},
 	"details": {
 		"th": {
@@ -249,6 +268,7 @@
 		"assaults": "Angriff",
 		"defenses": "Verteidigung",
 		"specials": "Sonstiges",
+		"base": "Base",
 		"skill": "Fähigkeit",
 		"fireAssault": "Feuerangriff",
 		"woodAssault": "Holzangriff",
@@ -1998,7 +2018,7 @@
 			"Kamikaze": "Greift einen Feind mit einer Feuerkraft von 15 an, dann verliert der Dinoz die Hälfte seines Lebens.",
 			"Sprint": "Erhöht die Initiative um 6.",
 			"ProteinesDinozienne": "Erhöht die Ausdauer des Dinoz um 30%.",
-			"Extenuation": "Verringert die Erholungsfähigkeit eines Gegners während eines Angriffs um 25%.",
+			"Extenuation": "Diminue de 25% la capacité de récupération d'un adversaire lors d'un assaut",
 			"CarapaceDeMagma": "Erhöht die maximalen Lebenspunkte um 30 und die Stärke von Feuerangriffen um 5.",
 			"Carapace": "Erhöht die Rüstung um 1.",
 			"Sauvagerie": "Erhöht die Stärke von Holzangriffen um 5.",
@@ -2041,7 +2061,7 @@
 			"Surcharge": "Erhöht die Chance auf einen Mehrfachschlag um 15%.",
 			"SoutienMoral": "Erhöht die Ausdauer des Dinoz um 10%.",
 			"Jaune": "Erhöht die Stärke aller Angriffe um 20, wenn sich der Dinoz bei den Magnetischen Steppen befindet.",
-			"CrampeChronique": "Ein gegnerischer Dinoz verliert 10 Lebenspunkte, während die Erholungsfähigkeit des Wirkers um 15% verringert wird.",
+			"CrampeChronique": "Le Dinoz perd 10 points d'énergie, et diminue de 15% la capacité de récupération du lanceur",
 			"BarriereElectrifiee": "Erhöht die Luftabwehr um 20.",
 			"Agilite": "Erhöht die Stärke von Luftangriffen um 5.",
 			"Esquive": "Erhöht die Chance auf Ausweichen um 10 %.",
@@ -2078,7 +2098,7 @@
 			"Detective": "Ermöglicht es dem Dinoz, an bestimmten Orten nach seltenen Artefakten zu suchen.",
 			"ExpertEnFouille": "Ermöglicht es dem Dinoz, ein zusätzliches Feld freizulegen.",
 			"Cocon": "Erhöht beim Ausruhen die wiederhergestellten Lebenspunkte pro Stunde um 2.",
-			"Geant": "Erhöht die Stärke aller Angriffe um 5, die maximalen Lebenspunkte um 30 und verringert die Geschwindigkeit des Dinoz um 20%.",
+			"Geant": "Augmente la puissance de tous les assauts de 5, augmente les PV max de 30 et diminue la vitesse du Dinoz de 20%",
 			"Archeologue": "Ermöglicht es dem Dinoz, an bestimmten Orten nach seltenen oder außergewöhnlichen Artefakten zu suchen.",
 			"Colosse": "Erhöht die Stärke aller Angriffe um 15 und die maximalen Lebenspunkte um 50. Verringert die Geschwindigkeit um 20.",
 			"Tenacite": "Erhöht den Mindestschaden von Angriffen um 1.",
@@ -2093,14 +2113,14 @@
 			"Acupuncture": "Regeneriert jede Runde 1 LP und Angreifer im Nahkampf erleiden 1 Schaden.",
 			"Sapeur": "Erhöht die Wahrscheinlichkeit, dass die Ausrüstung benutzt wird, um 50%.",
 			"RayonKaarSher": "Greift alle Gegner mit einer Wasserkraft von 7 an.",
-			"Magasinier": "Erhöht die maximale Kapazität des Inventars um 50%.",
+			"Magasinier": "Augmente la capacité maximale de l'inventaire de 50%",
 			"Perception": "Erhöht die Stärke aller Wasserangriffe um 4 und ermöglicht es dem Dinoz, auch körperlose Gegner anzugreifen.",
 			"CoupsSournois": "Greift einen Gegner an. Bei einem Erfolg verliert der Gegner die Hälfte seiner Lebenspunkte (Nur in PVE).",
 			"ApprentiPecheur": "Ermöglicht es dem Dinoz, an bestimmten Stellen kleine Fische zu fangen.",
 			"CoupFatal": "Greift einen Gegner an. Wenn er getroffen wird, stirbt er (nur im PVE).",
 			"EntrainementSousMarin": "Erhöht die maximalen Lebenspunkte um 10.",
 			"PecheurConfirme": "Ermöglicht es dem Dinoz, an bestimmten Stellen große Fische zu fangen.",
-			"Marecage": "Verlangsamt alle Gegner um 50%.",
+			"Marecage": "Ralentit tous les ennemis de 50%",
 			"EntrainementSousMarinAvance": "Erhöht die maximalen Lebenspunkte um 20.",
 			"MaitrePecheur": "Ermöglicht es dem Dinoz, an bestimmten Stellen seltene und außergewöhnliche Fische zu fangen.",
 			"MaitreNageur": "Erhöht das Wasserelement um 5.",
@@ -2109,7 +2129,7 @@
 			"SansPitie": "Angriffe zielen auf den Gegner mit den wenigsten Lebenspunkten.",
 			"CloneAqueux": "Der Wirker erschafft eine Kopie von sich selbst mit 1 LP. Die Kopie erbt lediglich die Basiseigenschaften des Wirkers (Angriff, Verteidigung, Ausweichen, Mehrfachschlag, Gegenangriff).",
 			"GriffesEmpoisonnees": "Wenn der Dinoz einen seiner Gegner mit einem Wasserangriff trifft, wird dieser für eine bestimmte Zeit vergiftet.",
-			"Cuisinier": "Erhöht für alle Dinoz die wiederhergestellten Lebenspunkte durch Benutzung von Gegenständen um 10%.",
+			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les Dinoz",
 			"SangAcide": "Angreifer im Nahkampf haben eine Chance, Schaden zu erleiden, der dem Wasserelement des Dinoz entspricht.",
 			"Regenerescence": "Erhöht beim Ausruhen die wiederhergestellten Lebenspunkte pro Stunde um 2.",
 			"PremiersSoins": "Ermöglicht es dem Dinoz, am Ende eines Kampfes einen Lebenspunkt wiederherzustellen, falls dieser Leben verlor",
@@ -2126,7 +2146,7 @@
 			"FissionElementaire": "Ermöglicht es dem Dinoz, an bestimmten Stellen alle Arten von elementarer Energie zu absorbieren.",
 			"CrocsDiamant": "Erhöht die Stärke aller Angriffe um 2.",
 			"Brancardier": "Stellt einem anderen Dinoz in der Gruppe am Ende eines Kampfes bis zu 5 Lebenspunkte wieder her.",
-			"Marchand": "Senkt alle Preise in der Boutique des Dinolandes um 10%.",
+			"Marchand": "Diminue tous les prix de la boutique de Dinoland de 10%",
 			"Reincarnation": "Ermöglicht es dem Dinoz, sich ab Stufe 40 einmalig zu reinkarnieren. Der Dinoz kehrt auf Stufe 1 zurück und erhält 5 zusätzliche Elementpunkte, die zufällig verteilt werden.",
 			"Saut": "Ermöglicht es, beim Angreifen fliegende Gegner zu treffen.",
 			"DisqueVacuum": "Greift einen Gegner mit einer Luftkraft von 12 an.",
@@ -2149,7 +2169,7 @@
 			"PaumeEjectable": "Führt einen Angriff mit doppelter Stärke aus, wonach sich die Initiative des Dinoz um 15 verringert.",
 			"VentVif": "Verleiht den Status „Beschleunigt“ (Erhöht die Geschwindigkeit um 50%).",
 			"FormeVaporeuse": "Gewährt dem Dinoz eine Chance, den Status „Unantastbar“ zu erhalten, wenn dieser angegriffen wird.",
-			"Professeur": "Erhöht die von allen Dinoz erhaltenen Erfahrungspunkte um 5%.",
+			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5%",
 			"MeditationSolitaire": "Erhöht die Luftabwehr um 3 und verringert die Geschwindigkeit von Luftangriffen um 50%.",
 			"MeditationTranscendantale": "Erhöht die Luftabwehr um 6 und verringert die Geschwindigkeit von Luftangriffen um 50%.",
 			"SouffleDeVie": "Der Dinoz ist immun gegen Gift und Flüche.",
@@ -2182,7 +2202,7 @@
 			"Pietinement": "Hebt die Rüstung von Gegnern auf.",
 			"Cuirasse": "Reduziert den Schaden, der bei einem gegnerischen Angriff erlitten wird.",
 			"Insaisissable": "Erhöht die Chance auf Ausweichen um 10%.",
-			"DeplacementInstantane": "Erhöht die Chance bestimmten Fernkampfangriffen auszuweichen um 15%.",
+			"DeplacementInstantane": "Augmente les chances d'esquiver certaines attaques à distance de 15%",
 			"Napomagicien": "Ermöglicht das Anlegen von zwei magischen Gegenständen zur gleichen Zeit.",
 			"EcaillesLuminescentes": "Erhöht die Rüstung um 2.",
 			"PeauDeSerpent": "Erhöht die Chance auf Ausweichen um 10%. Verringert die Geschwindigkeit von Wasserangriffen um 15%.",
@@ -2233,10 +2253,10 @@
 			"ForceDeZeus": "Erhöht die Stärke aller Blitzangriffe um 20.",
 			"RemanenceHertzienne": "Erhöht die Chance auf Ausweichen um 20%.",
 			"Blanc": "Verstärkt die Angriffe des Dinoz um 20, wenn er sich auf Nimbao aufhält.",
-			"Anaerobie": "Verringert die Ausdauer des Dinoz um 25%.",
+			"Anaerobie": "Augmente la puissance de tous les assauts de 20 lorsque le Dinoz est à Nimbao",
 			"DoubleFace": "50% Chance zu Beginn des Kampfes die Initiative des Wirkers um 10 zu erhöhen oder zu verringern.",
 			"Flagellation": "Reduziert die Heilfähigkeit des Ziels um 15%.",
-			"SouffleDange": "Erhöht die Feuerabwehr um 20%.",
+			"SouffleDange": "Augmente la défense Feu de 20",
 			"Ouragan": "Erhöht die Stärke von Luftangriffen gegen Feuer um 20.",
 			"Ouranos": "Bei Dinoz (Verbündete und Feinde) mit einem Luftelement unter 10 wird während der nächsten 3 Runden die Geschwindigkeit ihrer Angriffe um 50% verringert.",
 			"Twinoid500mg": "Erhöht die Ausdauer des Dinoz um 50%.",
@@ -2467,7 +2487,9 @@
 		"clansList": "Dino-RPG [ Liste der Klane ]",
 		"createClan": "Dino-RPG [ Klan gründen ]",
 		"challengeFriend": "Dino-RPG [ Freundschaftsscharmützel ]",
-		"forum": "Dino-RPG [ Foren ]"
+		"forum": "Dino-RPG [ Foren ]",
+		"admin": "Dino-RPG [ Admin Dashboard ]",
+		"event": "Dino-RPG [ Evénements ]"
 	},
 	"gather": {
 		"action": {
@@ -3491,7 +3513,7 @@
 			"chjx3b": "Bissiger Pilz",
 			"chkx1b": "Wolkenschwert",
 			"chkx1a": "Chocobo",
-			"chkx2b": "Tonberry",
+			"chkx2b": "Tomberry",
 			"chkx2a": "Mog",
 			"chkx3b": "Magier",
 			"chkx3a": "Kaktor",
@@ -3744,7 +3766,7 @@
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
 			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
-			"tid1": "Herzlichen Glückwunsch zum Sieg im Inter-Dojo Turnier! Die Zen-Medaille kürt das beste Dojo, das es im Dinoland gibt und kein Dinoz-Meister kann dir das Wasser reichen! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
+			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La médaille zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
 			"tid2": "Herzlichen Glückwunsch zum Sieg im Dinoz-Turnier! Die Figur von Meister Zenit aus massivem Gold gleicht dem Oscar für die furchtlosesten unter den Dinoz-Meistern von ganz Dinoland. Jene, die niemand zu überholen vermag! Der Ruhm, der Glanz und der Erfolg unter den Dinoz-Meistern gehören ganz allein dir!!",
 			"gazeli": "Votre article passionnant écrit pour la gazette de Dinoland vous a permis de gagner ce trophée. Tous les maîtres Dinoz vanteront les mérites de votre prose à travers le monde !",
 			"hunt1": "Vos exploits durant la chasse aux monstres vous ont rendu célèbre. L'âme du chasseur brûle en vous et rappelle à chaque monstres qui foulent les terres de Dinoland que vous les tenez à l'oeil.",
@@ -4244,6 +4266,7 @@
 	},
 	"dojo": {
 		"welcome": "Willkommen in deinem Dojo",
+		"noTournament": "Il n'y a pas encore assez de dinoz pour pouvoir faire un tournois, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
 		"return": "Zurück",
 		"accessTournament": "An Wettkampf teilnehmen",
 		"disclaimer": "**Es gibt kein Entkommen!**&&Die Fähigkeit „Schwarzes Loch“ und der Gegenstand „Dimensionales Pulver“ sind weder in Wettkämpfen, noch in weiteren Herausforderungen verfügbar!",
@@ -4260,7 +4283,9 @@
 		"build": "Dojo erbauen",
 		"group": "Gruppe {group}",
 		"seeFinal": "Finale ansehen",
+		"dailyReset": "Vous avez vaincu {qty} vagues de 5 ennemis.&&A chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
 		"seeFight": "Kampf ansehen",
+		"deleteTeam": "Supprimer mon équipe",
 		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
 		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
 		"pools": "Die Gruppenphase hat begonnen und endet am {finalsStart}. &&Das Preisgeld liegt momentan bei **{cashPrice}** :gold:.",
@@ -4269,7 +4294,24 @@
 		"challengeFriend": {
 			"disclaimer": "Hier kannst du bis zu **5 deiner Dinoz** auswählen, um gegen ein Mitglied deines Klans zu kämpfen. Wähle dann einen Mitstreiter und bis zu **5 seiner Dinoz** aus, bevor du den Kampf startest. Es werden keine :pv: verloren, keine :xp: erhalten und keine Gegenstände verbraucht.&&Der Preis für einen Kampf beträgt **50 :gold: pro Dinoz-Kämpfer**. Die verwendeten Goldmünzen :gold: werden zur Finanzierung der nächsten Wettkämpfe verwendet.",
 			"friend": "Wähle hier die Dinoz deines Mitstreiters zum Gegenübertreten aus.",
-			"startFight": "{gold} :gold:"
+			"startFight": "{gold} :gold:",
+			"doubleDinoz": "Vous ne pouvez faire combattre le même dinoz"
+		},
+		"tournamentFormats": {
+			"uncommon": "Dinoz non communs",
+			"common": "Dinoz communs",
+			"duo": "Duo de dinoz",
+			"anti_meta_4": "Anti-Meta 4v4",
+			"anti_meta_5": "Anti-Meta 5v5",
+			"all_in_5": "Tout le monde en v5",
+			"all_in_6": "Tout le monde en v6",
+			"fire": "Dinoz feu",
+			"water": "Dinoz eau",
+			"wood": "Dinoz bois",
+			"air": "Dinoz air",
+			"lightning": "Dinoz foudre",
+			"ffa": "Free for All",
+			"demons": "Dinoz démoniaques"
 		},
 		"history": {
 			"myDinoz": "Meine Kämpfer",
@@ -4791,6 +4833,18 @@
 		"ban": "Du wurdest aufgrund von „{reason}“ bis zum {date} gebannt.",
 		"reward": "Du hast {rewards} erhalten",
 		"rewardGold": "{quantity} :gold:",
-		"rewardScenario": "Vous avez progressé dans le scénario **{scenario}**."
+		"rewardScenario": "Vous avez progressé dans le scénario**{scenario}**.",
+		"FBStarted": "Un nouvel événement est ouvert !"
+	},
+	"events": {
+		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
+		"header": "Evenements en cours",
+		"date": "Date de création",
+		"level": "Niveau max",
+		"races": "Races authorisées",
+		"tournament": {
+			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un dinoz par jour durant les trois jours de qualification.&&Votre dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître dinoz !",
+			"progress": "Actuellement {qty} dinoz sont au niveau du tournois."
+		}
 	}
 }

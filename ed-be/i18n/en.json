@@ -41,6 +41,7 @@
 	"tooMuchItem": "You have an item that will overflow the maximum limit.",
 	"equipedItems": "You cannot sell a Dinoz with equipped items.",
 	"offerInProgress": "You cannot cancel an offer with an ongoing offer.",
+	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
 	"dojo": {
 		"inexistantDojo": "The selected dojo does not exist.",
 		"dinozNotPlayer": "These Dinoz cannot fight.",
@@ -50,10 +51,13 @@
 		"archiveNotFound": "The archive was not found.",
 		"inexistantOpponent": "Opponent not found.",
 		"notFightedOpponent": "Opponent already defeated.",
-		"teamSize": "The team must be formed of {{nb}} members.",
+		"teamSize": "Les équipes sont constituées de {{nb}} membres avec au moins {{races}} races différentes.",
 		"raceLimit": "The authorized races to participate are {{races}}.",
+		"levelLimit": "La limite de niveau maximum est fixé à {{level}}",
+		"poison": "Le poison est activé",
+		"nopoison": "Le poison est désactivé",
 		"newsTitle": "New Inter Dojo Tournament",
-		"newsCorpus": "A new ITD has started!<br/><br/>The qualification phase will last until {{endQualif}}. The rules to create a team are:<br/>-{{rule1}<br/>-{{rule2}}<br/><br/>The rewards are the following:<br/>- For the first, a rare Tofufu egg, a legendary box and 12% of the cash prize.<br/>- For the second, third and fourth, a Tofufu egg, an epic box and 6% of the cash prize each.<br/>- For the 5th to 8th, a rare box and 3,75% of the cash prize each.<br/>- For the 9th to 16th, a rare box and 1,875% of the cash prize each.<br/>- For those with only with one, 0,75% of the cash prize each.<br/>- For all the others, 0,25% of the cash prize.<br/><br/>Happy tournament to all!"
+		"newsCorpus": "Un nouveau TiD de type {{type}} a commencé !<br/><br/>Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>- {{rule3}}<br/><br/>- {{rule4}}<br/><br/>Les récompenses seront les suivantes:<br/>- Pour le premier, un oeuf de Toufufu rare, une boîtee légendaire et 12% du cash price.<br/>- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.<br/>- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.<br/>- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.<br/>- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.<br/>- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.<br/><br/>N'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! <br/><br/>Bon tournois à tous ! "
 	},
 	"race": {
 		"1": "Moueffe",
@@ -115,6 +119,22 @@
 		"dicarb": "Arborian Dictionary",
 		"caush": "Mandragore Doll",
 		"fmedal": "3-Eyed Medallion"
+	},
+	"tournament": {
+		"uncommon": "races non communes",
+		"common": "races communes",
+		"duo": "duo",
+		"anti_meta_4": "races non meta",
+		"anti_meta_5": "races non meta",
+		"all_in_5": "toutes les races",
+		"all_in_6": "toutes les races",
+		"fire": "races à dominance feu",
+		"water": "races à dominance eau",
+		"wood": "races à dominance bois",
+		"air": "races à dominance air",
+		"lightning": "races à dominance foudre",
+		"ffa": "toutes les races",
+		"demons": "uniquement les démons"
 	},
 	"announce": {
 		"dinoz": "Congratulations to {{player}} for their Dinoz {{dinoz}} who is the $t(position.{{position}}) $t(race.{{race}}) to reach level {{level}}!",
