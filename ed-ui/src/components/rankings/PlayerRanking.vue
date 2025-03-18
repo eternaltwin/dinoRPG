@@ -1,4 +1,6 @@
 <template>
+	<DZDisclaimer content="ranking.disclaimer.classic" v-if="sort === 'classic'" />
+	<DZDisclaimer content="ranking.disclaimer.average" v-if="sort === 'average'" />
 	<div class="wrapper">
 		<table>
 			<tbody>
@@ -48,6 +50,7 @@
 			</tr>
 		</table>
 	</div>
+	<SearchEntity background entityType="player" placeHolder="ranking.placeholder.searchPlayer" @entity="goToAccount" />
 </template>
 
 <script lang="ts">
@@ -59,10 +62,14 @@ import { playerStore } from '../../store/index.js';
 import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
 import PlayerMenu from '../modal/PlayerMenu.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import SearchEntity from '../data/SearchEntity.vue';
 
 export default defineComponent({
 	name: 'PlayerRanking',
 	components: {
+		SearchEntity,
+		DZDisclaimer,
 		DZUser,
 		PlayerMenu
 	},

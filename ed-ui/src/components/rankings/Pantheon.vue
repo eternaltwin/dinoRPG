@@ -1,4 +1,5 @@
 <template>
+	<DZDisclaimer content="ranking.disclaimer.pantheon" />
 	<div class="wrapper">
 		<DZButton @click="pantheon = PantheonMotif.RACE">{{ $t(`ranking.pantheon.dinozPantheon`) }}</DZButton>
 		<DZButton @click="pantheon = PantheonMotif.EPIC">{{ $t(`ranking.pantheon.playerPantheon`) }}</DZButton>
@@ -21,7 +22,7 @@
 			</option>
 		</select>
 	</div>
-	<div class="table" v-if="pantheon === PantheonMotif.RACE && display">
+	<div class="table" v-if="pantheon === PantheonMotif.RACE && display.length > 0">
 		<table>
 			<tbody>
 				<tr>
@@ -29,7 +30,7 @@
 					<th class="status">{{ $t('ranking.pantheon.detail') }}</th>
 				</tr>
 				<tr v-for="item in display" :key="item.id">
-					<template v-if="item.motif === PantheonMotif.RACE">
+					<template v-if="item.motif === PantheonMotif.RACE && item.dinoz">
 						<td class="dinoz">
 							<DinozWithoutFlash class="dinoImg" :display="item.dinoz.display" :life="1" flip></DinozWithoutFlash>
 						</td>
@@ -124,10 +125,11 @@ import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import DZUser from '../common/DZUser.vue';
 import { localStore } from '../../store/index.js';
 import { rewardList } from '@drpg/core/models/reward/RewardList';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
 
 export default defineComponent({
 	name: 'Pantheon',
-	components: { DZUser, DZButton, DinozWithoutFlash },
+	components: { DZDisclaimer, DZUser, DZButton, DinozWithoutFlash },
 	data() {
 		return {
 			page: 1 as number,

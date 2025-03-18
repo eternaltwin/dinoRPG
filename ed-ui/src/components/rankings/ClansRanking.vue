@@ -1,5 +1,5 @@
-<!-- eslint-disable tailwindcss/no-custom-classname -->
 <template>
+	<DZDisclaimer content="ranking.disclaimer.clans" />
 	<div class="wrapper">
 		<i18n-t keypath="ranking.disclaimer.clansCreation" tag="p" for="ranking.disclaimer.clansCreationLink">
 			<RouterLink :to="`/clans`">
@@ -49,6 +49,7 @@
 			</tr>
 		</table>
 	</div>
+	<SearchEntity background entityType="clan" placeHolder="ranking.placeholder.searchClan" @entity="goToClan" />
 </template>
 
 <script lang="ts">
@@ -58,10 +59,12 @@ import { Clan } from '@drpg/prisma';
 import { ClanService } from '../../services/index.js';
 import { utils } from '../../utils/index.js';
 import { errorHandler } from '../../utils/index.js';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import SearchEntity from '../data/SearchEntity.vue';
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: {},
+	components: { SearchEntity, DZDisclaimer },
 	data() {
 		return {
 			clansList: [] as Array<Clan>,

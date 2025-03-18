@@ -1,4 +1,5 @@
 <template>
+	<DZDisclaimer content="ranking.disclaimer.completion" />
 	<div class="wrapper">
 		<table>
 			<tbody>
@@ -45,6 +46,7 @@
 			</tr>
 		</table>
 	</div>
+	<SearchEntity background entityType="player" placeHolder="ranking.placeholder.searchPlayer" @entity="goToAccount" />
 </template>
 
 <script lang="ts">
@@ -55,10 +57,12 @@ import { errorHandler } from '../../utils/index.js';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
 import { playerStore } from '../../store/index.js';
 import DZUser from '../common/DZUser.vue';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import SearchEntity from '../data/SearchEntity.vue';
 
 export default defineComponent({
 	name: 'CompletionRanking',
-	components: { DZUser },
+	components: { SearchEntity, DZDisclaimer, DZUser },
 	data() {
 		return {
 			rankings: [] as RankingGetResponse,
