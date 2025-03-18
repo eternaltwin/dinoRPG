@@ -199,7 +199,8 @@ export async function useItem(req: Request) {
 			feedback = {
 				category: ItemEffect.SPECIAL,
 				value: itemName.name.toLowerCase(),
-				effect: itemWon ?? ''
+				effect: itemWon?.name ?? '',
+				quantity: itemWon?.quantity ?? 1
 			};
 			break;
 		default:
@@ -409,7 +410,7 @@ async function useSpecialItem(
 			| null;
 	},
 	item: ItemFiche
-) {
+): Promise<{ name: string; quantity?: number } | undefined> {
 	if (!dinoz.player) {
 		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to a player.`);
 	}
@@ -421,10 +422,10 @@ async function useSpecialItem(
 				throw new ExpectedError(translate(`NotCursed`, dinoz.player));
 			}
 			await removeStatusFromDinoz(dinoz.id, DinozStatusId.CURSED);
-			return 'ointment';
+			return { name: 'ointment' };
 		case 'rice':
 			await updateDinoz(dinoz.id, useRice(dinoz));
-			return 'rice';
+			return { name: 'rice' };
 		case 'pampleboum':
 			const healed = heal(dinoz, 15 * (dinoz.player.cooker ? 1.1 : 1));
 			await updateDinoz(dinoz.id, healed);
@@ -436,18 +437,19 @@ async function useSpecialItem(
 
 			//Update stats
 			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, healed.life);
-			return 'pampleboum';
+			return { name: 'pampleboum' };
 		case 'box':
 			if (!item.name) {
 				throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 			}
 			const boxOpened = boxOpening(item);
-			const newItem = dinoz.player.items.find(item => item.itemId === boxOpened.item.itemId);
-			if (!newItem) await insertItem(dinoz.player.id, { itemId: boxOpened.item.itemId, quantity: boxOpened.quantity });
-			// TODO: check for max quantity ?
-			else await increaseItemQuantity(dinoz.player.id, boxOpened.item.itemId, boxOpened.quantity);
+			await increaseItemQuantity(dinoz.player.id, boxOpened.item.itemId, boxOpened.quantity);
+			// const newItem = dinoz.player.items.find(item => item.itemId === boxOpened.item.itemId);
+			// if (!newItem) await insertItem(dinoz.player.id, { itemId: boxOpened.item.itemId, quantity: boxOpened.quantity });
+			// // TODO: check for max quantity ?
+			// else await increaseItemQuantity(dinoz.player.id, boxOpened.item.itemId, boxOpened.quantity);
 			const wonItem = itemList[boxOpened.item.itemId as Item];
-			return wonItem.name.toLowerCase();
+			return { name: wonItem.name.toLowerCase(), quantity: boxOpened.quantity };
 		default:
 			throw new ExpectedError(`Special item with ${item.effect.value} value is not implemented`);
 	}

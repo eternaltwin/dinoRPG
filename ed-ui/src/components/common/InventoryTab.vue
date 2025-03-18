@@ -116,7 +116,8 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			sortOption: playerStore().getSortOption
 		};
 	},
 	methods: {
@@ -160,7 +161,10 @@ export default defineComponent({
 					let message: string;
 					switch (toast.category) {
 						case ItemEffect.SPECIAL:
-							message = this.$t(`toast.special.${toast.value}`, { value: this.$t(`item.name.${toast.effect}`) });
+							message = this.$t(`toast.special.${toast.value}`, {
+								value: this.$t(`item.name.${toast.effect}`),
+								qty: toast.quantity
+							});
 							break;
 						case ItemEffect.SPHERE:
 							message = this.$t(`toast.sphere`, { value: this.$t(`skill.name.${toast.value}`) });
