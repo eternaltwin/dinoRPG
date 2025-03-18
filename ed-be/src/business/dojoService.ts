@@ -34,7 +34,7 @@ import {
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { calculateFightBetweenPlayers } from './fightService.js';
-import { Challenge, challengeRanges, ChallengeType } from '@drpg/core/models/dojo/challenge';
+import { Challenge, challengeRanges, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { Dojo, NotificationSeverity } from '@drpg/prisma';
 import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
@@ -314,7 +314,7 @@ export async function fightChallenge(req: Request) {
 
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const activeChallenge = JSON.parse(player.Dojo.activeChallenge!) as Challenge;
-	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) && fightResult.winner;
+	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;
 
 	const promises = [];
 	promises.push(removeMoney(authed.id, 200));
@@ -346,54 +346,6 @@ export async function fightChallenge(req: Request) {
 	await Promise.all(promises);
 
 	return { fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory: fightResult.winner };
-}
-
-function parseChallenge(challenge: Challenge, stats: FullFightStats) {
-	switch (challenge.type) {
-		case ChallengeType.Kill:
-			// Beat the opponent
-			return stats.defense.endingHp <= 0;
-		case ChallengeType.TakeAttackQuantity:
-			// Receive less than N attacks
-			return stats.attack.times_attacked <= challenge.goal;
-		case ChallengeType.TakeRawDamage:
-			// Lose les than N hp
-			return stats.attack.hpLost <= challenge.goal;
-		case ChallengeType.TakePercentDamage:
-			// Lose less than X% of hp
-			return (
-				Math.round((stats.attack.startingHp - stats.attack.endingHp) / stats.attack.startingHp) * 100 <= challenge.goal
-			);
-		case ChallengeType.Assault:
-			// Do at least N assaults
-			return stats.attack.assaults >= challenge.goal;
-		case ChallengeType.AssaultPercentage:
-			// X% of attacks are assaults
-			return Math.round(stats.attack.assaults / stats.attack.attacks) * 100 >= challenge.goal;
-		case ChallengeType.DealDamage:
-			// Deal up to N damage
-			return stats.defense.hpLost <= challenge.goal;
-		case ChallengeType.DealPercentDamage:
-			// Deal at least X% of opponent hp
-			return (
-				Math.round((stats.defense.startingHp - stats.defense.endingHp) / stats.defense.startingHp) * 100 >=
-				challenge.goal
-			);
-		case ChallengeType.CounterAttack:
-			// Counter a minimum of N times
-			return stats.attack.counters >= challenge.goal;
-		case ChallengeType.Dodge:
-			// Dodge a minimum of N times
-			return stats.attack.evasions >= challenge.goal;
-		case ChallengeType.DodgePoison:
-			// Never get poisoned
-			return stats.defense.poisoned === 0;
-		case ChallengeType.PoisonOpponent:
-			// Poison the opponent at least once
-			return stats.attack.poisoned > 0;
-		default:
-			return false;
-	}
 }
 
 export async function skipOpponent(req: Request) {

@@ -92,7 +92,7 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
-import { Challenge, ChallengeType } from '@drpg/core/models/dojo/challenge';
+import { Challenge, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore } from '../../store/index.js';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
@@ -168,57 +168,7 @@ export default defineComponent({
 		},
 		calculateMissedGoal(challenge: Challenge) {
 			if (!this.fightStat) return 0;
-			switch (challenge.type) {
-				case ChallengeType.Kill:
-					return 0;
-				case ChallengeType.TakeAttackQuantity:
-					// Receive less than N attacks
-					return this.fightStat.attack.times_attacked - challenge.goal;
-				case ChallengeType.TakeRawDamage:
-					// Lose les than N hp
-					return this.fightStat.attack.hpLost - challenge.goal;
-				case ChallengeType.TakePercentDamage:
-					// Lose less than X% of hp
-					return (
-						Math.round(
-							((this.fightStat.attack.startingHp - this.fightStat.attack.endingHp) / this.fightStat.attack.startingHp) *
-								100
-						) - challenge.goal
-					);
-				case ChallengeType.Assault:
-					// Do at least N assaults
-					return challenge.goal - this.fightStat.attack.assaults;
-				case ChallengeType.AssaultPercentage:
-					// X% of attacks are assaults
-					return challenge.goal - Math.round((this.fightStat.attack.assaults / this.fightStat.attack.attacks) * 100);
-				case ChallengeType.DealDamage:
-					// Deal up to N damage
-					return this.fightStat.defense.hpLost - challenge.goal;
-				case ChallengeType.DealPercentDamage:
-					// Deal at least X% of opponent hp
-					return (
-						challenge.goal -
-						Math.round(
-							((this.fightStat.defense.startingHp - this.fightStat.defense.endingHp) /
-								this.fightStat.defense.startingHp) *
-								100
-						)
-					);
-				case ChallengeType.CounterAttack:
-					// Counter a minimum of N times
-					return challenge.goal - this.fightStat.attack.counters;
-				case ChallengeType.Dodge:
-					// Dodge a minimum of N times
-					return challenge.goal - this.fightStat.attack.evasions;
-				case ChallengeType.DodgePoison:
-					// Never get poisoned
-					return this.fightStat.attack.times_poisoned;
-				case ChallengeType.PoisonOpponent:
-					// Poison the opponent at least once
-					return 0;
-				default:
-					return false;
-			}
+			return Math.round(parseChallenge(challenge, this.fightStat));
 		},
 		selectOpponent(data: number) {
 			const possible = this.opponents.find(d => d.dinoz.id === data);
