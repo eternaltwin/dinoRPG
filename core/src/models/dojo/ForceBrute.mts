@@ -1,5 +1,6 @@
 import { RaceList } from '../dinoz/RaceList.mjs';
-import { TournamentPhase } from './tournament.mjs';
+import { PublicMetada, TeamLeader, TournamentPhase } from './tournament.mjs';
+import { FighterRecap } from '../fight/FightResult.mjs';
 
 export type FBMetaData = {
 	phase: TournamentPhase;
@@ -33,7 +34,17 @@ export type PublicFBTournament = {
 	date: string;
 	level: number;
 	dinoz: number;
+	state: 'qualif' | 'fights';
 };
+
+export interface PublicFBTournamentFight {
+	id: string;
+	left: FighterRecap;
+	right: FighterRecap;
+	metadata: PublicMetada;
+	result: boolean;
+	watched: boolean;
+}
 
 export type FBParticipation = {
 	id: number;

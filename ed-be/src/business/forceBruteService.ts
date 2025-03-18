@@ -14,6 +14,10 @@ import { getRandomLetter } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
+import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { PublicFBTournamentFight } from '@drpg/core/models/dojo/ForceBrute';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -65,7 +69,11 @@ export async function getCurrentTournament(req: Request) {
 			id: activeTournament.id,
 			date: activeTournament.date.toString(),
 			level: activeTournament.levelLimit,
-			dinoz: activeTournament.participants.filter(d => d.level === activeTournament.levelLimit).length
+			dinoz: activeTournament.participants.filter(d => d.level === activeTournament.levelLimit).length,
+			state:
+				activeTournament.participants.filter(d => d.level === activeTournament.levelLimit).length < 256
+					? 'qualif'
+					: 'fights'
 		};
 	} else {
 		return;
@@ -206,7 +214,6 @@ export async function createTournamentDinoz(req: Request) {
 		player: { connect: { id: authed.id } },
 		FBTournament: { connect: { id: activeTournament.id } }
 	};
-	console.log(newDinoz);
 
 	const dinoz = await prisma.gameDinoz.create({
 		data: newDinoz,
@@ -223,4 +230,183 @@ export async function createTournamentDinoz(req: Request) {
 		skillsToAdd.map(skill => skill.id),
 		'FBTournament'
 	);
+}
+
+export async function getTournamentFights(req: Request) {
+	const authed = await auth(req);
+	const tournamentId = req.params.id as string;
+	let pool = +req.params.pool;
+	const phase = req.params.phase as TournamentPhase;
+	const fights = await prisma.fightArchive.findMany({
+		where: {
+			FBTournamentId: tournamentId
+		},
+		select: {
+			id: true,
+			fighters: true,
+			metadata: true,
+			result: true,
+			FBTournamentLeft: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					player: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			},
+			FBTournamentRight: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					player: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			}
+		}
+	});
+	if (phase === TournamentPhase.FINALS) {
+		pool = 17;
+	}
+	const returnData = fights
+		.map(f => {
+			return {
+				id: f.id,
+				tournamentTeamLeft: f.FBTournamentLeft,
+				tournamentTeamRight: f.FBTournamentRight,
+				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+				result: f.result
+			};
+		})
+		.filter(t => t.metadata.phase === phase)
+		.filter(t => t.metadata.poolNumber === pool) as PublicTournament[];
+
+	const watchedFight = await getViewedTournamentFight(
+		authed.id,
+		returnData.map(f => f.id)
+	);
+
+	let mostAdvancedStep = 0;
+	if (watchedFight.length === 0 && phase === TournamentPhase.POOLS) {
+		return returnData.filter(t => t.metadata.round === 0);
+	} else if (watchedFight.length === 0 && phase === TournamentPhase.FINALS) {
+		return fights
+			.map(f => {
+				const fighters = JSON.parse(f.fighters) as FighterRecap[];
+				const left = fighters.find(f => f.type === 'dinoz');
+				if (!left) {
+					throw new Error('Left fighter not found');
+				}
+				const right = fighters.find(f => f.type === 'dinoz' && f.id !== left.id);
+				if (!right) {
+					throw new Error('Right fighter not found');
+				}
+				return {
+					id: f.id,
+					tournamentTeamLeft: f.FBTournamentLeft,
+					tournamentTeamRight: f.FBTournamentRight,
+					metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+					result: f.result
+				};
+			})
+			.filter(t => t.metadata.phase === phase)
+			.filter(t => t.metadata.round === 4);
+	}
+
+	const poolMatchViewed = watchedFight
+		.map(f => {
+			const a = returnData.find(t => t.id === f.fightArchiveId);
+			if (a) return a;
+		})
+		.filter(f => f !== undefined);
+	mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
+
+	// Reach next round if all match from this round for this pool ahve been view
+	if (
+		(phase === TournamentPhase.POOLS &&
+			16 / Math.pow(2, mostAdvancedStep + 1) ===
+				poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) ||
+		(phase === TournamentPhase.FINALS && poolMatchViewed.length >= 2)
+	) {
+		mostAdvancedStep++;
+	}
+
+	return returnData
+		.filter(t => {
+			if (t.metadata.round <= mostAdvancedStep || watchedFight.map(f => f.fightArchiveId).includes(t.id)) return true;
+		})
+		.map(fight => {
+			return {
+				...fight,
+				watched: watchedFight.map(f => f.fightArchiveId).includes(fight.id)
+			};
+		});
+}
+
+export async function readAllFightFromEventPool(req: Request) {
+	const authed = await auth(req);
+	const tournamentId = req.params.id as string;
+	const pool = +req.params.pool;
+	const phase = req.params.phase as TournamentPhase;
+	const fights = await prisma.fightArchive.findMany({
+		where: {
+			FBTournamentId: tournamentId
+		},
+		select: {
+			id: true,
+			metadata: true,
+			result: true,
+			FBTournamentLeft: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					player: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			},
+			FBTournamentRight: {
+				select: {
+					id: true,
+					name: true,
+					display: true,
+					player: {
+						select: {
+							id: true,
+							name: true
+						}
+					}
+				}
+			}
+		}
+	});
+
+	const poolFights = fights
+		.map(f => {
+			return {
+				id: f.id,
+				metadata: JSON.parse(<string>f.metadata) as PublicMetada,
+				result: f.result
+			};
+		})
+		.filter(t => t.metadata.phase === phase)
+		.filter(t => t.metadata.poolNumber === pool)
+		.map(f => f.id);
+
+	for (const poolFight of poolFights) {
+		await viewFight(authed.id, poolFight);
+	}
 }

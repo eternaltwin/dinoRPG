@@ -669,6 +669,10 @@ model FightArchive {
   FightWatched          FightWatched[]
   FBTournament          FBTournament?   @relation(fields: [FBTournamentId], references: [id])
   FBTournamentId        String?         @db.Uuid
+  FBTournamentLeft      GameDinoz?      @relation("LeftTeamRelationFB", fields: [FBTournamentLeftId], references: [id])
+  FBTournamentLeftId    Int?
+  FBTournamentRight     GameDinoz?      @relation("RightTeamRelationFB", fields: [FBTournamentRightId], references: [id])
+  FBTournamentRightId   Int?
 }
 
 model FightWatched {
@@ -758,6 +762,8 @@ model GameDinoz {
   status             DinozStatus[]
   FBTournament       FBTournament?          @relation(fields: [FBTournamentId], references: [id])
   FBTournamentId     String?                @db.Uuid
+  FightArchiveLeft   FightArchive[]         @relation("LeftTeamRelationFB")
+  FightArchiveRight  FightArchive[]         @relation("RightTeamRelationFB")
 
   @@index([usage])
   @@map("gamedinoz")

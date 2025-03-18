@@ -550,7 +550,9 @@ exports.Prisma.FightArchiveScalarFieldEnum = {
   tournamentTeamRightId: 'tournamentTeamRightId',
   tournamentId: 'tournamentId',
   metadata: 'metadata',
-  FBTournamentId: 'FBTournamentId'
+  FBTournamentId: 'FBTournamentId',
+  FBTournamentLeftId: 'FBTournamentLeftId',
+  FBTournamentRightId: 'FBTournamentRightId'
 };
 
 exports.Prisma.FightWatchedScalarFieldEnum = {

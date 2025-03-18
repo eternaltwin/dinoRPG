@@ -201,7 +201,9 @@ class ForceBruteManager {
 				result: fight.winner,
 				tournamentStep: round,
 				FBTournamentId: tournamentId,
-				metadata: JSON.stringify(metadata)
+				metadata: JSON.stringify(metadata),
+				FBTournamentLeftId: dinoz1,
+				FBTournamentRightId: dinoz2
 			}
 		});
 
@@ -394,8 +396,8 @@ class ForceBruteManager {
 				if (currentState.round === 4) {
 					// Start of the final
 					teamsToMatch = shuffle(lastWinners);
-					teamsToMatch = teamsToMatch.map(m => {
-						return { ...m, poolNumber: 17 };
+					teamsToMatch = teamsToMatch.map((m, index) => {
+						return { ...m, poolNumber: 17, matchNumber: Math.floor(index / 2) };
 					});
 				} else {
 					// Rounds suivants : on ne prend que les gagnants du round précédent
@@ -407,7 +409,7 @@ class ForceBruteManager {
 						await this.generateAndSaveFight(
 							match.left,
 							match.right,
-							TournamentPhase.POOLS,
+							TournamentPhase.FINALS,
 							currentState.round,
 							prisma,
 							fbPool.poolId,

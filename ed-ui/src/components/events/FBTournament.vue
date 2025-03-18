@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper" v-if="currentTournament">
+	<div class="wrapper" v-if="currentTournament && currentTournament.state === 'qualif'">
 		<DZDisclaimer :content="$t('events.tournament.disclaimer', { level: currentTournament.level })" />
 		<Tippy theme="small" tag="progress" :value="currentTournament.dinoz" max="256">
 			<template #content>
@@ -36,6 +36,11 @@
 			</template>
 		</div>
 	</div>
+	<TournamentDisplay
+		v-if="group && currentTournament && currentTournament.state === 'fights'"
+		:tournamentId="currentTournament.id"
+		:activeGroup="+group"
+	/>
 </template>
 
 <script lang="ts">
@@ -48,6 +53,7 @@ import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { formatText } from '../../utils/formatText.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import TournamentDisplay from './TournamentDisplay.vue';
 
 export default defineComponent({
 	name: 'FBTournament',
@@ -56,7 +62,7 @@ export default defineComponent({
 			return skillList;
 		}
 	},
-	components: { DZDisclaimer, DinozWithoutFlash, DZButton },
+	components: { TournamentDisplay, DZDisclaimer, DinozWithoutFlash, DZButton },
 	data() {
 		return {
 			currentTournament: undefined as undefined | PublicFBTournament,
@@ -65,7 +71,8 @@ export default defineComponent({
 		};
 	},
 	props: {
-		id: { type: String, required: true }
+		id: { type: String, required: true },
+		group: { type: String, required: false }
 	},
 	methods: {
 		async getCurrentTournament() {
@@ -113,6 +120,12 @@ export default defineComponent({
 		await this.getCurrentTournament();
 		if (this.currentTournament) {
 			await this.myParticipation();
+			if (this.currentTournament.state === 'fights') {
+				this.$router.push({
+					name: 'FBTournament',
+					query: { id: this.id, group: 0 }
+				});
+			}
 		}
 	}
 });

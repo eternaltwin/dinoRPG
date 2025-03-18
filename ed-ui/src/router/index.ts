@@ -165,7 +165,8 @@ const router = createRouter({
 							name: 'FBTournament',
 							component: () => import('../components/events/FBTournament.vue'),
 							props: route => ({
-								id: route.query.id
+								id: route.query.id,
+								group: route.query.group
 							})
 						}
 					]

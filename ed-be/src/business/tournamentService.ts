@@ -6,7 +6,7 @@ import translate from '../utils/translate.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import { UnavailableReason } from '@drpg/prisma';
+import { GameDinozUsage, Prisma, UnavailableReason } from '@drpg/prisma';
 import { getRandomNumber } from '../utils/index.js';
 import { formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { RaceList } from '@drpg/core/models/dinoz/RaceList';
