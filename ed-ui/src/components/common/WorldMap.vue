@@ -177,6 +177,7 @@ export default defineComponent({
 					this.dinozStore.setDinozList(
 						dinozList.map(dinoz => {
 							if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
+								this.dinozStore.clearNpc(dinoz.id);
 								if (dinoz.life !== 0) {
 									// Update dinoz place
 									dinoz.placeId = place.alias || placeId;
@@ -192,7 +193,7 @@ export default defineComponent({
 						})
 					);
 				}
-				this.dinozStore.clearNpc(dinozId);
+
 				this.$router.push({
 					name: 'Fight',
 					params: { dinozId: this.dinozData?.id?.toString() }
