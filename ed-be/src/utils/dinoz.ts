@@ -8,6 +8,7 @@ import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import seedrandom from 'seedrandom';
 import { randomUUID } from 'crypto';
+import translate from './translate.js';
 
 export const getRandomUpElement = (raceUpChance: UpChance, seed?: string) => {
 	const totalUpChance = Object.values(raceUpChance).reduce((total, currentValue) => total + currentValue, 0);
@@ -173,7 +174,7 @@ export const learnNextSphereSkill = (
 
 	const testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
 	if (!testSphereToLean) {
-		throw new ExpectedError('AlreadySphere');
+		throw new ExpectedError(translate('AlreadySphere'));
 	}
 
 	return testSphereToLean.id;
