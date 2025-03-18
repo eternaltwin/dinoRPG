@@ -142,6 +142,10 @@ export async function getPlayerParticipation(req: Request) {
 
 export async function createTournamentDinoz(req: Request) {
 	const authed = await auth(req);
+	const regexName = /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/;
+	if (regexName.test(req.body.name)) {
+		throw new ExpectedError(translate('OnlyLettersAndNumbers', authed));
+	}
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
 		where: {
 			id: req.body.tournamentId
