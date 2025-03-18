@@ -42,6 +42,13 @@
 	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
 	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
+	"fb": {
+		"tooYoungAccount": "Votre compte est encore trop jeune.",
+		"noTournamentOngoing": "Aucun tournois n'est en cours.",
+		"notEnoughPoints": "Vous n'avez pas assez de points pour participer à ce tournois.",
+		"alreadyCreatedDinoz": "Vous avez déjà créé un dinoz aujourd'hui.",
+		"maxDinozReached": "Le nombre maximal de dinoz pour ce tournois est atteint."
+	},
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
 		"dinozNotPlayer": "Ces Dinoz ne peuvent pas combattre",

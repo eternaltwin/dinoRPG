@@ -146,6 +146,22 @@ export async function createTournamentDinoz(req: Request) {
 	if (!regexName.test(req.body.name)) {
 		throw new ExpectedError(translate('OnlyLettersAndNumbers', authed));
 	}
+	const player = await prisma.player.findUniqueOrThrow({
+		where: {
+			id: authed.id
+		},
+		select: {
+			createdDate: true,
+			ranking: {
+				select: {
+					points: true
+				}
+			}
+		}
+	})
+	if (dayjs(player.createdDate).diff(dayjs(), 'days') < 3) {
+		throw new ExpectedError(translate('fb.tooYoungAccount', authed))
+	}
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
 		where: {
 			id: req.body.tournamentId
@@ -158,6 +174,9 @@ export async function createTournamentDinoz(req: Request) {
 	});
 	if (!activeTournament) {
 		throw new ExpectedError(translate('fb.noTournamentOngoing', authed));
+	}
+	if (player.ranking && player.ranking.points < activeTournament.levelLimit ) {
+		throw new ExpectedError(translate('fb.notEnoughPoints', authed))
 	}
 	const lastDinoz = await prisma.gameDinoz.findFirst({
 		where: {
