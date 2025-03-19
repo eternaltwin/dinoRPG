@@ -159,7 +159,7 @@ export async function createTournamentDinoz(req: Request) {
 			}
 		}
 	});
-	if (dayjs(player.createdDate).diff(dayjs(), 'days') < 3) {
+	if (dayjs().diff(dayjs(player.createdDate), 'days') < 3) {
 		throw new ExpectedError(translate('fb.tooYoungAccount', authed));
 	}
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
