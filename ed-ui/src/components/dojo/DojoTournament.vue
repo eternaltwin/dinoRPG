@@ -15,12 +15,15 @@
 			<DZButton @click="viewAll()">Mark as read</DZButton>
 		</div>
 		<div class="rounds">
-			<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
+			<template v-for="(dinoz, count) in pool" :key="`${count}${activeGroup}`">
+				<div class="dinoz lost" v-if="dinoz === undefined">
+					<span class="name"></span>
+				</div>
 				<Tippy
 					tag="div"
 					theme="normal"
 					class="dinoz"
-					v-if="dinoz.player"
+					v-else-if="dinoz.player"
 					:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
 					@click="goToPage('ShareFight', { archive: dinoz.fight })"
 				>
@@ -310,38 +313,42 @@ export default defineComponent({
 					if (d.round === 0) {
 						this.pool[d.matchNumber * 2 + (d.slot === 'left' ? 0 : 1)] = d;
 					} else if (d.round === 1) {
-						this.pool[16 + d.matchNumber + (d.slot === 'left' ? 0 : 1) - this.activeGroup * 8] = d;
+						this.pool[16 + d.matchNumber + (d.slot === 'left' ? 0 : 1)] = d;
 					} else if (d.round === 2) {
-						this.pool[24 + d.matchNumber + (d.slot === 'left' ? 0 : 1) - this.activeGroup * 2] = d;
+						this.pool[24 + d.matchNumber / 2 + (d.slot === 'left' ? 0 : 1)] = d;
 					} else if (d.round === 3) {
 						this.pool[28 + d.matchNumber + (d.slot === 'left' ? 0 : 1)] = d;
 					}
 				});
-				this.pool.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
-				this.pool.sort((d1, d2) => d1.round - d2.round);
+
+				// this.pool.sort((d1, d2) => d1.matchNumber - d2.matchNumber);
+				// this.pool.sort((d1, d2) => d1.round - d2.round);
 
 				// Place watched fight
+				console.log(maxRound);
 				this.dinozInFights
 					.filter(d => d.won)
 					.filter(d => d.round === maxRound)
 					.forEach(dinoz => {
 						if (maxRound === 0) {
+							console.log(dinoz.matchNumber);
 							if (dinoz.watched) {
 								this.pool[16 + dinoz.matchNumber] = dinoz;
 							} else {
+								console.log('a');
 								this.pool[16 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
 							}
 						} else if (maxRound === 1) {
 							if (dinoz.watched) {
-								this.pool[24 + dinoz.matchNumber] = dinoz;
+								this.pool[24 + dinoz.matchNumber / 2] = dinoz;
 							} else {
-								this.pool[24 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
+								this.pool[24 + dinoz.matchNumber / 2] = { fight: dinoz.fight } as DisplayedLeader;
 							}
 						} else if (maxRound === 2) {
 							if (dinoz.watched) {
-								this.pool[28 + dinoz.matchNumber] = dinoz;
+								this.pool[28 + dinoz.matchNumber / 4] = dinoz;
 							} else {
-								this.pool[28 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
+								this.pool[28 + dinoz.matchNumber / 4] = { fight: dinoz.fight } as DisplayedLeader;
 							}
 						} else if (maxRound === 3) {
 							if (dinoz.watched) {
@@ -351,6 +358,7 @@ export default defineComponent({
 							}
 						}
 					});
+				console.log(this.pool);
 
 				this.displayFinal = false;
 			} catch (e) {

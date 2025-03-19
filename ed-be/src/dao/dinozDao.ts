@@ -616,6 +616,7 @@ export async function getDinozFightDataRequest(dinozId: number, playerId: string
 	return player;
 }
 
+export type selectDinozForDojoFight = Awaited<ReturnType<typeof getDinozForDojoFight>>;
 export async function getDinozForDojoFight(dinozIds: number[]) {
 	const dinoz = await prisma.dinoz.findMany({
 		where: { id: { in: dinozIds } },

@@ -1,4 +1,4 @@
-import { getDinozForDojoFight } from '../dao/dinozDao.js';
+import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { createFirstTournament, getLevelLimits, getSelectedDojo } from '../business/tournamentService.js';
@@ -6,8 +6,11 @@ import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
 import {
 	MetaData,
+	RawTournamentMatch,
 	TournamentMatch,
 	TournamentPhase,
+	TournamentPool,
+	TournamentPools,
 	TournamentSchedule,
 	TournamentState
 } from '@drpg/core/models/dojo/tournament';
@@ -149,8 +152,10 @@ class TournamentManager {
 	}
 
 	private async createPools(teams: string[]): Promise<string[][]> {
-		const shuffledTeams = [...teams].sort(() => Math.random() - 0.5);
-		const pools: string[][] = [[], [], [], []];
+		const shuffledTeams = shuffle(teams);
+		const pools: string[][] = Array(this.NUMBER_OF_POOLS)
+			.fill([])
+			.map(() => []);
 
 		for (let i = 0; i < shuffledTeams.length; i++) {
 			const poolIndex = Math.floor(i / this.TEAMS_PER_POOL);
@@ -162,7 +167,7 @@ class TournamentManager {
 
 	private async generateAndSaveFight(
 		team1Id: string,
-		team2Id: string,
+		team2Id: string | undefined,
 		phase: TournamentPhase,
 		round: number,
 		scheduledFor: Date,
@@ -171,7 +176,12 @@ class TournamentManager {
 		matchNumber: number
 	): Promise<{ fightId: string; winnerId: string }> {
 		const team1Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team1Id, prisma));
-		const team2Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team2Id, prisma));
+		let team2Dinoz: selectDinozForDojoFight;
+		if (!team2Id) {
+			team2Dinoz = [];
+		} else {
+			team2Dinoz = await getDinozForDojoFight(await this.getDinozIdsFromTeam(team2Id, prisma));
+		}
 
 		// Remove items from dinoz for the fight and set life to maxLife
 		team1Dinoz.map(d => {
@@ -235,12 +245,17 @@ class TournamentManager {
 		});
 
 		// Détermine quelle équipe a gagné
-		const winnerId = fight.winner ? team1Id : team2Id;
+		let winnerId: string;
+		if (!team2Id) {
+			winnerId = team1Id;
+		} else {
+			winnerId = fight.winner ? team1Id : team2Id;
+		}
 
 		return { fightId: fightArchive.id, winnerId };
 	}
 
-	private async getWinnersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<string[]> {
+	private async getWinnersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
 		const previousMatches = await prisma.fightArchive.findMany({
 			where: {
 				tournamentId: this.tournamentId,
@@ -257,46 +272,57 @@ class TournamentManager {
 		const winners = [];
 
 		for (const match of previousMatches) {
+			if (match.tournamentTeamLeftId && match.metadata) {
+				const meta = JSON.parse(match.metadata) as MetaData;
+				if (!match.tournamentTeamRightId) {
+					winners.push({
+						team: match.tournamentTeamLeftId,
+						poolNumber: meta.poolNumber,
+						matchNumber: meta.matchNumber
+					});
+				} else {
+					winners.push({
+						team: match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId,
+						poolNumber: meta.poolNumber,
+						matchNumber: meta.matchNumber
+					});
+				}
+				// winners.add(match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId);
+			}
+		}
+
+		return winners;
+	}
+
+	private async getLoosersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
+		const previousMatches = await prisma.fightArchive.findMany({
+			where: {
+				tournamentId: this.tournamentId,
+				tournamentStep: round - 1
+			},
+			select: {
+				tournamentTeamRightId: true,
+				tournamentTeamLeftId: true,
+				result: true,
+				metadata: true
+			}
+		});
+
+		const loosers = [];
+
+		for (const match of previousMatches) {
 			if (match.tournamentTeamRightId && match.tournamentTeamLeftId && match.metadata) {
-				winners.push({
-					team: match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId,
-					metada: JSON.parse(match.metadata) as MetaData
+				const meta = JSON.parse(match.metadata) as MetaData;
+				loosers.push({
+					team: match.result ? match.tournamentTeamRightId : match.tournamentTeamLeftId,
+					poolNumber: meta.poolNumber,
+					matchNumber: meta.matchNumber
 				});
 				// winners.add(match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId);
 			}
 		}
 
-		return winners
-			.sort(
-				(m1, m2) =>
-					m1.metada.poolNumber * 100 + m1.metada.matchNumber - (m2.metada.poolNumber * 100 + m2.metada.matchNumber)
-			)
-			.map(m => m.team);
-	}
-
-	private async getLoosersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<string[]> {
-		const previousMatches = await prisma.fightArchive.findMany({
-			where: {
-				tournamentId: this.tournamentId,
-				tournamentStep: round - 1
-			},
-			select: {
-				tournamentTeamRightId: true,
-				tournamentTeamLeftId: true,
-				result: true,
-				metadata: true
-			}
-		});
-
-		const winners = [];
-
-		for (const match of previousMatches) {
-			if (match.tournamentTeamRightId && match.tournamentTeamLeftId) {
-				winners.push(match.result ? match.tournamentTeamRightId : match.tournamentTeamLeftId);
-			}
-		}
-
-		return winners;
+		return loosers;
 	}
 
 	private async rewardTournament(prisma: PismaClientLocal) {
@@ -716,6 +742,7 @@ class TournamentManager {
 			LOGGER.log(
 				`Reprise du tournoi ${activeTournament.id} à la phase ${currentState.phase}, round ${currentState.round} prévu pour ${currentState.nextScheduledMatch}`
 			);
+			// manager.generateNextRound(prisma);
 			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.generateNextRound(prisma));
 			return manager;
 		} else if (currentState.nextScheduledMatch && currentState.round === 8) {
@@ -768,6 +795,59 @@ class TournamentManager {
 		};
 	}
 
+	private translatePools(originalData: RawTournamentMatch[]): TournamentPools[] {
+		// Grouper les données par pool
+		const poolsMap = new Map<number, RawTournamentMatch[]>();
+
+		originalData.forEach(item => {
+			if (!poolsMap.has(item.poolNumber)) {
+				poolsMap.set(item.poolNumber, []);
+			}
+			poolsMap.get(item.poolNumber)?.push(item);
+		});
+
+		// Transformer les pools
+		const transformedPools: TournamentPools[] = [];
+
+		poolsMap.forEach((poolData, poolId) => {
+			// Trier les données par numéro de match pour préserver l'ordre
+			const sortedPoolData = [...poolData].sort((a, b) => a.matchNumber - b.matchNumber);
+
+			// Créer les matches pour ce pool en regroupant les dinoz deux par deux
+			const matches: TournamentPool[] = [];
+
+			// Pour chaque paire de dinoz dans ce pool
+			for (let i = 0; i < sortedPoolData.length; i += 2) {
+				// S'assurer qu'il y a un deuxième dinoz disponible pour former une paire
+				if (i + 1 < sortedPoolData.length) {
+					matches.push({
+						// Utiliser le plus petit des deux numéros de match comme identifiant de match
+						match: Math.min(sortedPoolData[i].matchNumber, sortedPoolData[i + 1].matchNumber),
+						left: sortedPoolData[i].team,
+						right: sortedPoolData[i + 1].team
+					});
+				} else {
+					matches.push({
+						// Utiliser le plus petit des deux numéros de match comme identifiant de match
+						match: sortedPoolData[i].matchNumber,
+						left: sortedPoolData[i].team,
+						right: undefined
+					});
+				}
+			}
+
+			// Ajouter le pool transformé seulement s'il contient des matches
+			if (matches.length > 0) {
+				transformedPools.push({
+					poolId: poolId,
+					matches: matches
+				});
+			}
+		});
+
+		return transformedPools;
+	}
+
 	async generateNextRound(prisma: PismaClientLocal): Promise<void> {
 		const currentState = await this.getCurrentState(prisma);
 
@@ -777,7 +857,7 @@ class TournamentManager {
 		if (!nextMatch) {
 			throw new Error('Pas de match prévu à cette heure');
 		}
-		const matches: TournamentMatch[] = [];
+		let matches = 0;
 
 		// Logique spécifique selon la phase
 		switch (currentState.phase) {
@@ -785,7 +865,12 @@ class TournamentManager {
 				return; // Pas de matchs à générer pendant la qualification
 
 			case TournamentPhase.POOLS: {
-				let teamsToMatch: string[] = [];
+				let teamsToMatch: RawTournamentMatch[] = [];
+
+				if (currentState.round === 0) {
+				} else {
+					// Rounds suivants : on ne prend que les gagnants du round précédent
+				}
 
 				if (currentState.round === 0) {
 					await this.rewardQualification(prisma);
@@ -798,77 +883,53 @@ class TournamentManager {
 						}
 					});
 					// Premier round : on prend les équipes qualifiées
-					const qualifiedTeams = await getSelectedDojo(teamSize.teamSize, this.QUALIFIED_TEAMS);
-					teamsToMatch = qualifiedTeams.map(t => t.tournamentTeamId).filter(t => t !== null);
+					const qualifiedTeams: { tournamentTeamId: string }[] = await prisma.$queryRaw`
+					SELECT d."tournamentTeamId"
+FROM dojo d
+         JOIN "TournamentTeam" tt ON d."tournamentTeamId" = tt.id
+         JOIN player p ON d."playerId" = p.id
+         JOIN ranking r ON p.id = r."playerId"
+WHERE tt."teamCount" = ${teamSize.teamSize}
+  AND d."tournamentTeamId" IS NOT NULL
+ORDER BY r.dojo DESC
+LIMIT ${this.QUALIFIED_TEAMS};`;
+					const pools = await this.createPools(qualifiedTeams.map(t => t.tournamentTeamId));
+					pools.forEach((pool, poolIndex) => {
+						pool.forEach((team, teamIndex) => {
+							teamsToMatch.push({ team: team, poolNumber: poolIndex, matchNumber: Math.floor(teamIndex / 2) });
+						});
+					});
 				} else {
-					// Rounds suivants : on ne prend que les gagnants du round précédent
 					teamsToMatch = await this.getWinnersFromPreviousRound(currentState.round, prisma);
 				}
-
-				if (currentState.round === 0) {
-					const pools = await this.createPools(teamsToMatch);
-
-					for (const [poolIndex, pool] of pools.entries()) {
-						let matchIndex = 0;
-						for (let i = 0; i < pool.length; i += 2) {
-							if (pool[i] && pool[i + 1]) {
-								const { fightId, winnerId } = await this.generateAndSaveFight(
-									pool[i],
-									pool[i + 1],
-									TournamentPhase.POOLS,
-									currentState.round,
-									nextMatch,
-									prisma,
-									poolIndex,
-									matchIndex
-								);
-
-								matches.push({
-									id: fightId,
-									round: currentState.round,
-									phase: TournamentPhase.POOLS,
-									poolNumber: poolIndex,
-									scheduledFor: nextMatch,
-									winner: winnerId
-								});
-								matchIndex++;
-							}
-						}
-					}
-				} else {
-					// Pour les rounds suivants, on apparie simplement les gagnants deux par deux
-					for (let i = 0; i < teamsToMatch.length; i += 2) {
-						if (teamsToMatch[i] && teamsToMatch[i + 1]) {
-							const { fightId, winnerId } = await this.generateAndSaveFight(
-								teamsToMatch[i],
-								teamsToMatch[i + 1],
-								TournamentPhase.POOLS,
-								currentState.round,
-								nextMatch,
-								prisma,
-								Math.floor(i / (this.TEAMS_PER_POOL / Math.pow(2, currentState.round))),
-								i
-							);
-
-							matches.push({
-								id: fightId,
-								round: currentState.round,
-								phase: TournamentPhase.POOLS,
-								scheduledFor: nextMatch,
-								winner: winnerId
-							});
-						}
+				const tournamentRound = this.translatePools(teamsToMatch);
+				for (const pool of tournamentRound) {
+					for (const match of pool.matches) {
+						await this.generateAndSaveFight(
+							match.left,
+							match.right,
+							TournamentPhase.POOLS,
+							currentState.round,
+							nextMatch,
+							prisma,
+							pool.poolId,
+							match.match
+						);
+						matches++;
 					}
 				}
 				break;
 			}
 
 			case TournamentPhase.FINALS: {
-				let teamsToMatch: string[] = [];
-				const lastWinners = await this.getWinnersFromPreviousRound(currentState.round, prisma);
+				let teamsToMatch: RawTournamentMatch[] = [];
+				const lastWinners: RawTournamentMatch[] = await this.getWinnersFromPreviousRound(currentState.round, prisma);
 				if (currentState.round === 4) {
 					// Random pick of two fighters out of 4
-					teamsToMatch = shuffle(lastWinners) as string[];
+					teamsToMatch = shuffle(lastWinners);
+					teamsToMatch = teamsToMatch.map((m, index) => {
+						return { ...m, poolNumber: 5, matchNumber: Math.floor(index / 2) };
+					});
 				} else if (currentState.round === 5) {
 					// Winners fight and loosers fight
 					const winnerBracket = await this.getWinnersFromPreviousRound(currentState.round, prisma);
@@ -907,12 +968,16 @@ class TournamentManager {
 						looserBracket.tournamentTeamRightId &&
 						looserBracket.tournamentTeamLeftId
 					) {
-						teamsToMatch.push(
-							winnerBracket.result ? winnerBracket.tournamentTeamRightId : winnerBracket.tournamentTeamLeftId
-						);
-						teamsToMatch.push(
-							looserBracket.result ? looserBracket.tournamentTeamLeftId : looserBracket.tournamentTeamRightId
-						);
+						teamsToMatch.push({
+							team: winnerBracket.result ? winnerBracket.tournamentTeamRightId : winnerBracket.tournamentTeamLeftId,
+							poolNumber: 5,
+							matchNumber: 5
+						});
+						teamsToMatch.push({
+							team: looserBracket.result ? looserBracket.tournamentTeamLeftId : looserBracket.tournamentTeamRightId,
+							poolNumber: 5,
+							matchNumber: 5
+						});
 					}
 				} else if (currentState.round === 7) {
 					// Grand final
@@ -935,32 +1000,27 @@ class TournamentManager {
 					}
 					const winnerBracket = lastLastRound[0];
 					if (winnerBracket.tournamentTeamLeftId && winnerBracket.tournamentTeamRightId) {
-						teamsToMatch.push(
-							winnerBracket.result ? winnerBracket.tournamentTeamLeftId : winnerBracket.tournamentTeamRightId
-						);
+						teamsToMatch.push({
+							team: winnerBracket.result ? winnerBracket.tournamentTeamLeftId : winnerBracket.tournamentTeamRightId,
+							poolNumber: 5,
+							matchNumber: 6
+						});
 					}
 				}
-
-				for (let i = 0; i < teamsToMatch.length; i += 2) {
-					if (teamsToMatch[i] && teamsToMatch[i + 1]) {
-						const { fightId, winnerId } = await this.generateAndSaveFight(
-							teamsToMatch[i],
-							teamsToMatch[i + 1],
+				const tournamentRound = this.translatePools(teamsToMatch);
+				for (const fbPool of tournamentRound) {
+					for (const match of fbPool.matches) {
+						await this.generateAndSaveFight(
+							match.left,
+							match.right,
 							TournamentPhase.FINALS,
 							currentState.round,
 							nextMatch,
 							prisma,
-							this.NUMBER_OF_POOLS + 1,
-							i
+							fbPool.poolId,
+							match.match
 						);
-
-						matches.push({
-							id: fightId,
-							round: currentState.round,
-							phase: TournamentPhase.FINALS,
-							scheduledFor: nextMatch,
-							winner: winnerId
-						});
+						matches++;
 					}
 				}
 				break;
@@ -992,8 +1052,13 @@ class TournamentManager {
 		});
 
 		LOGGER.log(
-			`Generated ${matches.length} fights for round ${currentState.round}. Next round is for ${nextPlannedMatch.time}`
+			`Generated ${matches} fights for round ${currentState.round}. Next round is for ${nextPlannedMatch.time}`
 		);
+
+		if (nextPlannedMatch.time <= new Date()) {
+			await this.generateNextRound(prisma);
+		}
+
 		scheduleJob(this.tournamentId, nextPlannedMatch.time, () => this.generateNextRound(prisma));
 	}
 

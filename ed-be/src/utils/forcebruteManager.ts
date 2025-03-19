@@ -60,7 +60,7 @@ class ForceBruteManager {
 
 	private async createPools(teams: number[]): Promise<number[][]> {
 		const shuffledTeams = shuffle(teams);
-		const pools: number[][] = Array(16)
+		const pools: number[][] = Array(this.NUMBER_OF_POOLS)
 			.fill([])
 			.map(() => []);
 

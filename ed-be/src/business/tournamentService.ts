@@ -300,10 +300,10 @@ export async function tournamentTargetInfo(req: Request) {
 	mostAdvancedStep = Math.max(...poolMatchViewed.map(f => f.metadata.round));
 
 	// Reach next round if all match from this round for this pool ahve been view
+	const poolMatchStep = returnData.filter(f => f.metadata.round === mostAdvancedStep).length;
 	if (
 		(phase === TournamentPhase.POOLS &&
-			16 / Math.pow(2, mostAdvancedStep + 1) ===
-				poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) ||
+			poolMatchStep === poolMatchViewed.filter(f => f.metadata.round === mostAdvancedStep).length) ||
 		(phase === TournamentPhase.FINALS && poolMatchViewed.length >= 2)
 	) {
 		mostAdvancedStep++;
