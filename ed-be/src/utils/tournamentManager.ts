@@ -1,13 +1,12 @@
 import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { createFirstTournament, getLevelLimits, getSelectedDojo } from '../business/tournamentService.js';
+import { createFirstTournament, getLevelLimits } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
 import {
 	MetaData,
 	RawTournamentMatch,
-	TournamentMatch,
 	TournamentPhase,
 	TournamentPool,
 	TournamentPools,
@@ -31,7 +30,7 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { NotificationSeverity, UnavailableReason } from '@drpg/prisma';
+import { NotificationSeverity } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -359,28 +358,26 @@ class TournamentManager {
 		// This should order by ranking
 		allTournamentParticipants.forEach(match => {
 			if (
-				!match.tournamentTeamLeft ||
-				!match.tournamentTeamLeft.dojoId ||
-				!match.tournamentTeamRight ||
-				!match.tournamentTeamRight.dojoId
+				match.tournamentTeamLeft &&
+				match.tournamentTeamLeft.dojoId &&
+				match.tournamentTeamRight &&
+				match.tournamentTeamRight.dojoId
 			) {
-				throw new Error('Player cannot be rewarded');
+				ranking.add(match.result ? match.tournamentTeamLeft.dojoId : match.tournamentTeamRight.dojoId);
 			}
-			ranking.add(match.result ? match.tournamentTeamLeft.dojoId : match.tournamentTeamRight.dojoId);
 		});
 		// Fill with all looser from first round
 		allTournamentParticipants.forEach(match => {
 			const metadata = JSON.parse(match.metadata as string) as MetaData;
 			if (metadata.round === 0) {
 				if (
-					!match.tournamentTeamLeft ||
-					!match.tournamentTeamLeft.dojoId ||
-					!match.tournamentTeamRight ||
-					!match.tournamentTeamRight.dojoId
+					match.tournamentTeamLeft &&
+					match.tournamentTeamLeft.dojoId &&
+					match.tournamentTeamRight &&
+					match.tournamentTeamRight.dojoId
 				) {
-					throw new Error('Player cannot be rewarded');
+					ranking.add(match.result ? match.tournamentTeamRight.dojoId : match.tournamentTeamLeft.dojoId);
 				}
-				ranking.add(match.result ? match.tournamentTeamRight.dojoId : match.tournamentTeamLeft.dojoId);
 			}
 		});
 
@@ -923,8 +920,8 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 
 			case TournamentPhase.FINALS: {
 				let teamsToMatch: RawTournamentMatch[] = [];
-				const lastWinners: RawTournamentMatch[] = await this.getWinnersFromPreviousRound(currentState.round, prisma);
 				if (currentState.round === 4) {
+					const lastWinners: RawTournamentMatch[] = await this.getWinnersFromPreviousRound(currentState.round, prisma);
 					// Random pick of two fighters out of 4
 					teamsToMatch = shuffle(lastWinners);
 					teamsToMatch = teamsToMatch.map((m, index) => {
@@ -934,7 +931,14 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 					// Winners fight and loosers fight
 					const winnerBracket = await this.getWinnersFromPreviousRound(currentState.round, prisma);
 					const looserBracket = await this.getLoosersFromPreviousRound(currentState.round, prisma);
-					teamsToMatch.push(...winnerBracket, ...looserBracket);
+					teamsToMatch.push(
+						...winnerBracket.map(m => {
+							return { ...m, matchNumber: 0 };
+						}),
+						...looserBracket.map(m => {
+							return { ...m, matchNumber: 1 };
+						})
+					);
 				} else if (currentState.round === 6) {
 					// Winner from looserBracket vs looser from winnerBracket
 					const lastRound = await prisma.fightArchive.findMany({
@@ -949,16 +953,13 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 							metadata: true
 						}
 					});
-					if (lastRound.length !== 2) {
-						throw new Error("Round 5 doesn't have 2 matches");
-					}
 					const winnerBracket = lastRound.find(f => {
 						const metadata = JSON.parse(<string>f.metadata) as MetaData;
 						return metadata.matchNumber === 0;
 					});
 					const looserBracket = lastRound.find(f => {
 						const metadata = JSON.parse(<string>f.metadata) as MetaData;
-						return metadata.matchNumber === 2;
+						return metadata.matchNumber === 1;
 					});
 					if (
 						winnerBracket &&

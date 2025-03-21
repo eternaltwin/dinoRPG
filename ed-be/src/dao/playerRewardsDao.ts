@@ -12,8 +12,17 @@ export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) 
 	if (rewardStat.displayed && rewardStat.id !== Reward.BETA) {
 		await setSpecificStat(rewardStat.name, playerId, 1);
 	}
-	return prisma.playerReward.create({
-		data: reward
+	return prisma.playerReward.upsert({
+		where: {
+			rewardId_playerId: {
+				playerId: playerId,
+				rewardId: reward.rewardId
+			}
+		},
+		update: {},
+		create: {
+			rewardId: reward.rewardId
+		}
 	});
 }
 
