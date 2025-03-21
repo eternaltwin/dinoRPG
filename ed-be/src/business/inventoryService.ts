@@ -383,7 +383,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	return race;
 }
 
-function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
+export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {
 	// Generate display:
 	// - the first 2 chars are the race's chars
 	// - the next 11 chars are random between '0' and 'z'

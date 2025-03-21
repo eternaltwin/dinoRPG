@@ -1,5 +1,7 @@
+import { RaceList } from './RaceList.mjs';
+
 export interface DinozRace {
-	raceId: number;
+	raceId: RaceList;
 	isDemon: boolean;
 	name: string;
 	nbrFire: number;

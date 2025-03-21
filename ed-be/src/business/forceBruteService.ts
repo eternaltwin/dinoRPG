@@ -3,21 +3,21 @@ import { prisma } from '../prisma.js';
 import ForceBruteManager from '../utils/forcebruteManager.js';
 import { auth } from '../dao/playerDao.js';
 import { $Enums, Prisma } from '@drpg/prisma';
-import GameDinozUsage = $Enums.GameDinozUsage;
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import dayjs from 'dayjs';
 import { getRandomUpElement } from '../utils/dinoz.js';
 import { RaceList, raceList } from '@drpg/core/models/dinoz/RaceList';
 import { randomUUID } from 'crypto';
-import { getRandomLetter } from '../utils/index.js';
+import { getLetter, getRandomNumber } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
-import { PublicFBTournamentFight } from '@drpg/core/models/dojo/ForceBrute';
+import { generateDinozDisplay } from './inventoryService.js';
+import GameDinozUsage = $Enums.GameDinozUsage;
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -211,9 +211,55 @@ export async function createTournamentDinoz(req: Request) {
 	const seed = randomUUID();
 	const currentRace = raceList[+activeTournament.teamRace as RaceList];
 
-	let display = currentRace.swfLetter;
-	for (let i = 0; i < 11; i++) {
-		display += getRandomLetter('z');
+	let display = generateDinozDisplay(currentRace, '0', '0', '0');
+	if (Math.random() * 100 <= 1) {
+		switch (currentRace.raceId) {
+			case RaceList.MOUEFFE:
+			case RaceList.MOUEFFE_DEMON:
+			case RaceList.WINKS:
+			case RaceList.WINKS_DEMON:
+			case RaceList.PLANAILLE:
+			case RaceList.PLANAILLE_DEMON:
+			case RaceList.GORILLOZ:
+			case RaceList.GORILLOZ_DEMON:
+			case RaceList.SANTAZ:
+			case RaceList.MAHAMUTI:
+			case RaceList.QUETZU:
+			case RaceList.TRICERAGNON:
+			case RaceList.PIGMOU:
+			case RaceList.PIGMOU_DEMON:
+			case RaceList.SIRAIN:
+			case RaceList.KABUKI:
+			case RaceList.KABUKI_DEMON:
+				display = generateDinozDisplay(currentRace, '1', '1', '0');
+				break;
+			case RaceList.CASTIVORE:
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+				break;
+			case RaceList.ROCKY:
+			case RaceList.NUAGOZ:
+			case RaceList.SMOG:
+				display = generateDinozDisplay(currentRace, '1', '0', '0');
+				break;
+			case RaceList.WANWAN:
+			case RaceList.WANWAN_DEMON:
+				display = generateDinozDisplay(currentRace, '2', '0', '0');
+				break;
+			case RaceList.FEROSS:
+				display =
+					getRandomNumber(0, 1) === 0
+						? generateDinozDisplay(currentRace, '1', '1', '0')
+						: generateDinozDisplay(currentRace, '2', '2', '0');
+				break;
+			case RaceList.TOUFUFU:
+				display = generateDinozDisplay(currentRace, '0', '1', '0');
+				break;
+			case RaceList.PTEROZ:
+			case RaceList.HIPPOCLAMP:
+			case RaceList.SOUFFLET:
+			default:
+				break;
+		}
 	}
 	//TODO add a chance to get rare display (1%)
 
