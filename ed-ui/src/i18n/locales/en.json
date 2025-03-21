@@ -40,7 +40,6 @@
 		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
 		"missingUser": "Missing user.",
 		"missingData": "Missing data.",
-		"AlreadySphere": "This dinoz already knows all sphere skills from this element.",
 		"labrute": "You received {quantity} of Madam Irma's Potions.",
 		"reincarnation": "Your dinoz has been reincarnated.",
 		"market": {
@@ -59,10 +58,10 @@
 		"resurrect": "Your dinoz is resurrected.",
 		"egg": "You opened a {value}'s Egg.",
 		"special": {
-			"box_common": "The common box contained a {value}!",
-			"box_rare": "The rare box contained a {value}!",
-			"box_epic": "The epic box contained a {value}!",
-			"box_legendary": "The legendary box contained a {value}!",
+			"box_common": "La boîte commune contenait {qty} {value} !",
+			"box_rare": "La boîte rare contenait {qty} {value} !",
+			"box_epic": "La boîte épique contenait {qty} {value} !",
+			"box_legendary": "La boîte légendaire contenait {qty} {value} !",
 			"devil_ointment": "You have removed the cursed status of your dinoz.",
 			"amnesic_rice": "Your dinoz doesn't remember its name anymore and also lost all its experience :xp: !",
 			"pampleboum": "Ouch! There was a pit in this grapeboom!"
@@ -2328,7 +2327,7 @@
 			"11": "Zors' glove",
 			"40": "Backpackery Useful Backpack",
 			"32": "Membership card",
-			"59": "Diamond Medal",
+			"59": "Gold Medal",
 			"60": "Silver Medal",
 			"61": "Bronze Medal",
 			"54": "Coral",

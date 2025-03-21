@@ -42,11 +42,20 @@
 	"equipedItems": "No puede vender un Dino con objetos equipados.",
 	"offerInProgress": "No puedes cancelar una subasta que tenga al menos una oferta.",
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
+	"AlreadySphere": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
+	"fb": {
+		"tooYoungAccount": "Votre compte est encore trop jeune.",
+		"noTournamentOngoing": "Aucun tournois n'est en cours.",
+		"notEnoughPoints": "Vous n'avez pas assez de points pour participer à ce tournois.",
+		"alreadyCreatedDinoz": "Vous avez déjà créé un dinoz aujourd'hui.",
+		"maxDinozReached": "Le nombre maximal de dinoz pour ce tournois est atteint."
+	},
 	"dojo": {
 		"inexistantDojo": "El dojo seleccionado no existe.",
 		"dinozNotPlayer": "Estos Dinos no pueden combatir",
 		"alreadyFighted": "Este Dino ya ha combatido",
 		"wrongDinozInTeam": "Tu equipo solo puede estar formado por una cantidad de Dinos entre 5 y 10.",
+		"wrongDinozQuantity": "Votre équipe doit avoir {qty} dinoz.",
 		"notEnoughGold": "No tienes suficiente oro para esta pelea",
 		"archiveNotFound": "El archivo no fue encontrado",
 		"inexistantOpponent": "Adversario no encontrado",

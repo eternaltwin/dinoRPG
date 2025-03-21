@@ -40,7 +40,6 @@
 		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
 		"missingUser": "Usuario perdido",
 		"missingData": "Datos perdidos",
-		"AlreadySphere": "Tu Dino ya ha aprendido todas las competencias esféricas de este elemento.",
 		"labrute": "Has obtenido {quantity} pociones de la Bruja Lola.",
 		"reincarnation": "Tu Dino ha sido reencarnado.",
 		"market": {
@@ -59,10 +58,10 @@
 		"resurrect": "Tu Dino ha resucitado.",
 		"egg": "Has abierto un huevo de {value}.",
 		"special": {
-			"box_common": "¡La caja común contenía un {value}!",
-			"box_rare": "¡La caja rara contenía un {value}!",
-			"box_epic": "¡La caja épica contenía un {value}!",
-			"box_legendary": "¡La caja legendaria contenía un {value}!",
+			"box_common": "La boîte commune contenait {qty} {value} !",
+			"box_rare": "La boîte rare contenait {qty} {value} !",
+			"box_epic": "La boîte épique contenait {qty} {value} !",
+			"box_legendary": "La boîte légendaire contenait {qty} {value} !",
 			"devil_ointment": "Has eliminado el estado maldito de tu Dino.",
 			"amnesic_rice": "¡Tu Dino ha olvidado su nombre y además perdió todo su :xp: !",
 			"pampleboum": "¡Ay! ¡Había un hoyo en este Pomelum!"
