@@ -6,33 +6,38 @@ import { createLog, createLogForMultipleDinoz } from './logDao.js';
 // Getters
 
 export async function getRandomDinozFromLevel(level: number, team: number[], playerId: string) {
-	const count = await prisma.dinoz.count({
-		where: {
+	let leveldifference = 1;
+	const MAX_LEVEL_DIFFERENCE = 5;
+	while (leveldifference <= MAX_LEVEL_DIFFERENCE) {
+		const condition = {
 			AND: [
-				{ level: { gte: level - 1, lte: level + 1 } },
+				{ level: { gte: level - leveldifference, lte: level + leveldifference } },
 				{ id: { not: { in: team } } },
 				{ playerId: { not: playerId } }
 			]
+		};
+		const count = await prisma.dinoz.count({
+			where: condition
+		});
+
+		if (count > 0) {
+			const random = Math.floor(Math.random() * count);
+			return await prisma.dinoz.findFirstOrThrow({
+				skip: random,
+				where: condition,
+				select: {
+					id: true,
+					display: true,
+					name: true,
+					level: true
+				}
+			});
 		}
-	});
-	const random = Math.floor(Math.random() * count);
-	const dinoz = await prisma.dinoz.findFirstOrThrow({
-		skip: random,
-		where: {
-			AND: [
-				{ level: { gte: level - 1, lte: level + 1 } },
-				{ id: { not: { in: team } } },
-				{ playerId: { not: playerId } }
-			]
-		},
-		select: {
-			id: true,
-			display: true,
-			name: true,
-			level: true
-		}
-	});
-	return dinoz;
+
+		leveldifference += 1;
+	}
+	
+	return null;
 }
 
 export async function getActiveDinoz(playerId: string) {

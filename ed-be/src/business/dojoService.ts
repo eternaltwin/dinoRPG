@@ -17,6 +17,7 @@ import {
 	getMyDojoDao,
 	getMyTeamDao,
 	giveReputation,
+	incrementDailyReset,
 	setFightedOpponent,
 	setFightedTeam
 } from '../dao/dojoDao.js';
@@ -123,20 +124,12 @@ export async function getMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
 	}
 
-	if (myDojo.DojoOpponents.length > 0 && myDojo.DojoOpponents.every(d => d.achieved) && myDojo.dailyReset < 10) {
+	if (myDojo.team.length == 0) {
+		return myDojo;
+	}
+
+	if ((myDojo.DojoOpponents.length == 0 || myDojo.DojoOpponents.every(d => d.achieved)) && myDojo.dailyReset < 10) {
 		myDojo.team = await cleanCurrentOpponentTeam(myDojo.id);
-		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
-		await createNotification(
-			authed.id,
-			JSON.stringify([
-				{
-					rewardType: RewardEnum.ITEM,
-					value: Item.TREASURE_COUPON,
-					quantity: 1
-				}
-			]),
-			NotificationSeverity.reward
-		);
 		myDojo.DojoOpponents = await createOpponentTeam(
 			myDojo.team.map(d => {
 				return {
@@ -146,6 +139,21 @@ export async function getMyTeam(req: Request) {
 			}),
 			myDojo
 		);
+		if (myDojo.DojoOpponents.length > 0) {
+			await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
+			await createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			);
+			await incrementDailyReset(myDojo.id);
+		}
 	}
 
 	return myDojo;
@@ -393,14 +401,23 @@ export async function skipOpponent(req: Request) {
 
 async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
 	const opponentLevels = team.sort((a, b) => b.level - a.level).slice(0, 5);
-	const opponents = [];
+	const opponentIds = [];
 	const parsedId = opponentLevels.map(o => o.id);
 	for (const dinoz of opponentLevels) {
 		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, myDojo.playerId);
-		const newOpponent = await addOpponent(ennemi.id, myDojo.id);
-		opponents.push(newOpponent);
+		if (ennemi === null) {
+			// Incomplete opponent teams won't be created
+			return [];
+		}
 		// Prevent a picked to opponent to be picked again
-		parsedId.push(newOpponent.dinoz.id);
+		parsedId.push(ennemi.id);
+		opponentIds.push(ennemi.id);
 	}
+
+	const opponents = [];
+	for (const opponentId of opponentIds) {
+		opponents.push(await addOpponent(opponentId, myDojo.id));
+	}
+
 	return opponents;
 }
