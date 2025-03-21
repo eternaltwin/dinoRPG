@@ -40,7 +40,6 @@ import { dinozStore, sessionStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import { npcList } from '@drpg/core/models/npc/NpcList';
-import { formatText } from '../utils/formatText.js';
 import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
@@ -74,7 +73,6 @@ export default defineComponent({
 			}
 			EventBus.emit('isLoading', false);
 			if (this.npcSpeech.service) {
-				const dinozId = +this.$route.params.id;
 				EventBus.emit('isLoading', true);
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
