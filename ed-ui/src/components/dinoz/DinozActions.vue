@@ -195,31 +195,9 @@ export default defineComponent({
 					});
 					break;
 				case Action.FIGHT: {
-					const dinozId = +this.$route.params.id;
-
-					// eslint-disable-next-line
 					try {
 						const fight = await FightService.processFight(+this.$route.params.id);
 						this.sessionStore.setFightResult(fight);
-						const dinozList = this.dinozStore.getDinozList;
-
-						if (!dinozList) {
-							this.$toast.open({
-								message: formatText(this.$t(`toast.missingData`)),
-								type: 'error'
-							});
-							return;
-						}
-
-						this.dinozStore.setDinozList(
-							dinozList.map(dinoz => {
-								if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-									// Update dinoz HP
-									dinoz.life -= fight.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
-								}
-								return dinoz;
-							})
-						);
 
 						this.$router.push({
 							name: 'Fight',

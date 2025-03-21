@@ -90,6 +90,7 @@ import { dinozStore, localStore, playerStore, sessionStore } from '../store/inde
 import { errorHandler } from '../utils/index.js';
 import translateFightStep from '../utils/translateFightStep.js';
 import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js';
+import { formatText } from '../utils/formatText.js';
 
 export default defineComponent({
 	name: 'Fight',
@@ -219,6 +220,25 @@ export default defineComponent({
 	unmounted(): void {
 		// Comment this to replay fight with refresh
 		this.loaded = false;
+		const dinozList = this.dinozStore.getDinozList;
+
+		if (!dinozList) {
+			this.$toast.open({
+				message: formatText(this.$t(`toast.missingData`)),
+				type: 'error'
+			});
+			return;
+		}
+
+		this.dinozStore.setDinozList(
+			dinozList.map(dinoz => {
+				if (dinoz.id === this.dinozId || dinoz.leaderId === this.dinozId) {
+					// Update dinoz HP
+					dinoz.life -= this.fight.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+				}
+				return dinoz;
+			})
+		);
 		this.sessionStore.setFightResult(undefined);
 	}
 });

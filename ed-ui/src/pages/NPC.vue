@@ -93,28 +93,6 @@ export default defineComponent({
 						case ServiceEnum.FIGHT:
 							try {
 								this.sessionStore.setFightResult(this.npcSpeech.fight);
-								this.dinozStore.setNpc(this.dinozId, this.npcSpeech.speech, this.npcSpeech.name);
-								const dinozList = this.dinozStore.getDinozList;
-
-								if (!dinozList) {
-									this.$toast.open({
-										message: formatText(this.$t(`toast.missingData`)),
-										type: 'error'
-									});
-									EventBus.emit('isLoading', false);
-									return;
-								}
-
-								this.dinozStore.setDinozList(
-									dinozList.map(dinoz => {
-										if (dinoz.id === dinozId || dinoz.leaderId === dinozId) {
-											// Update dinoz HP
-											dinoz.life -= this.npcSpeech.fight!.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
-										}
-										return dinoz;
-									})
-								);
-
 								this.$router.push({
 									name: 'Fight',
 									params: { dinozId: this.$route.params.id.toString() }

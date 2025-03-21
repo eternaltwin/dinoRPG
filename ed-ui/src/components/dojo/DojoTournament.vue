@@ -325,7 +325,6 @@ export default defineComponent({
 				// this.pool.sort((d1, d2) => d1.round - d2.round);
 
 				// Place watched fight
-				console.log(maxRound);
 				this.dinozInFights
 					.filter(d => d.won)
 					.filter(d => d.round === maxRound)
@@ -335,7 +334,6 @@ export default defineComponent({
 							if (dinoz.watched) {
 								this.pool[16 + dinoz.matchNumber] = dinoz;
 							} else {
-								console.log('a');
 								this.pool[16 + dinoz.matchNumber] = { fight: dinoz.fight } as DisplayedLeader;
 							}
 						} else if (maxRound === 1) {
