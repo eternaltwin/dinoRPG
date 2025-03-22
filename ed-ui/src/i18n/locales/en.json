@@ -876,14 +876,8 @@
 			"hippo": "Strange Dinoz",
 			"rocky": "Strange Stone",
 			"vener": "The Venerable",
-			"alien_0": "Strange Creature",
-			"alien_1": "Strange Creature",
-			"alien_8": "Strange Creature",
-			"alien_all": "Strange Creature",
-			"merguez_star": "Merguez Seller",
-			"skully_star": "Skully",
-			"skully": "Skully",
-			"bob_star": "Mr. Bao Bob"
+			"alien": "Strange Creature",
+			"skully": "Skully"
 		},
 		"professor": {
 			"speech": {
@@ -1061,7 +1055,10 @@
 				"ingr": "Poom poom palalam poom poom pam poom poom palalam PAM! And here you go, a magnificent Anti-SEDH Potion for you...",
 				"potion": "Mmmm... goodbye my friend, come back to see me sometime!",
 				"ok": "Your dinoz is now focusing. When there are enough of them, they will be teleported to another world.",
-				"bye": "See you next time and have fun!"
+				"bye": "See you next time and have fun!",
+				"begin_star": "hat are you doing in my house at this time in the early morning?",
+				"ok_star": "Sorry, I'm not fully awake yet. I had no idea. Here, take this, I've been keeping it for you. I hope it won't cause you any problems...",
+				"star": "Bao Bob has entrusted you with the 6th magic star! Only one left!!!"
 			},
 			"playerChoice": {
 				"question": "I have a question for you...",
@@ -1080,7 +1077,9 @@
 				"noingr": "Here are the ingredients!",
 				"ingr": "Here are the ingredients!",
 				"potion": "So you are an Ancient Monkey!!!",
-				"ok": "Okay"
+				"ok": "Okay",
+				"ok_star": "I'm looking for something...",
+				"star": "???"
 			}
 		},
 		"baofan": {
@@ -1148,12 +1147,17 @@
 				"begin": "Ola ola ola! They are very greasy, my merguez! ....... How? What idea to come and sell merguez sausages in such a dismal place? But these Ruins are gorgeous!! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
 				"ah": "Yes, that's right! It's a bit like the Acre-o-Poles: my cousin makes a fortune there selling temple-shaped key rings. So I decided I would be the first merchant to set up shop at these magnificient ruins, even though it may take many years for my business to take off, I'm not going to let this golden opportunity pass by!",
 				"ok": "Take these Merguez. Your Dinoz is far too skinny! This one's on the house, as long as you do me a favor: promise me you'll tell your friends about the Ashpouk Ruins. Tell them all that I sell the best Merguez around. Promise me you won't forget?",
-				"thanks": "You're welcome, don't forget to tell all your friends!"
+				"thanks": "You're welcome, don't forget to tell all your friends!",
+				"begin_star": "Oh, I see that your Dinoz is carrying a cloud burger! Did you know that they're bad for your health? Unless you want your Dinoz to become a Sumo?!?",
+				"ok_star": "Throw away your nasty Burger and taste my merguez instead! Take this item as a sign of loyalty. I found it on the ground!",
+				"star": "Great! The merguez seller has given you one of the seven magic stars!"
 			},
 			"playerChoice": {
 				"ah": "Oh...",
 				"ok": "Indeed...",
-				"thanks": "Thank you"
+				"thanks": "Thank you",
+				"ok_star": "...",
+				"star": "Ah?"
 			}
 		},
 		"shaman": {
@@ -1360,7 +1364,16 @@
 				"talk": "What? You can see me? .... Argh! ....",
 				"yes": "The guy who sold me this cape assured me that it would make me invisible! Can you take a look at the indicator on my back, is something written on it?",
 				"read": "What? \"LOW BAT-RICE\"? Umm .... the seller told me to recharge something .... so I have to use .... rice? But where can I get rice from?",
-				"talk2": "Hurry! I NEED the rice to recharge my cape. Quick! Hurry!!"
+				"talk2": "Hurry! I NEED the rice to recharge my cape. Quick! Hurry!!",
+				"begin_2": "My cape ran out of rice again ... I'm starting to get sick of this...",
+				"qual2": "Instead of saying stupid things, maybe you should try and complete your mission...",
+				"qual": "What!? How dare you talk like that about Caushemesh technology! Do you know how many years of research it took our scientists to master the Ether?",
+				"caush": "Caushemesh is a large civilization in the Caushemesh Mountains, beyond the Magnetic Steppes. We're far more developed than these barbarians.",
+				"ether": "After centuries of research, the Caushemeshians have mastered the power of Ether, a complex mix of the Air and Void elements. It's an extraordinary technological advancement, all thanks to Caushemesh engineers, the best in Dinoland!",
+				"next": "Your Dinoz are too weak. They're no match for ours, hahahaha! Make sure you train your Dinoz well, as the day will come when you are called upon to fight more powerful enemies!",
+				"more": "Enough of me talking... what would you say about a little mission to convince you of the strength of our technology?",
+				"begin_3": "I thought I should let you know that all the Dark Dinoz you have met up until now were only newbies that we train in this region of Dinoland... the Dinoz of Caushemesh are far stronger. Even your Venerable will be no match for our strongest Dinoz masters!",
+				"next_2": "I'm a man of my word. Here's a reward to convince you of the superiority of Caushemesh technology. I only have one copy, so use it well... it's a bracelet made of Tik, you can equip it on any Dinoz of your choice."
 			},
 			"playerChoice": {
 				"go": "This guy seems dangerous... it's probably a good idea to move away from him.",
@@ -1368,36 +1381,15 @@
 				"yes": "Umm... Yes",
 				"read": "Check the indicator",
 				"missions": "Help the Prowler",
-				"talk2": "Talk to him"
-			}
-		},
-		"rodeur2": {
-			"speech": {
-				"begin": "My cape ran out of rice again ... I'm starting to get sick of this...",
-				"qual2": "Instead of saying stupid things, maybe you should try and complete your mission...",
-				"qual": "What!? How dare you talk like that about Caushemesh technology! Do you know how many years of research it took our scientists to master the Ether?",
-				"caush": "Caushemesh is a large civilization in the Caushemesh Mountains, beyond the Magnetic Steppes. We're far more developed than these barbarians.",
-				"ether": "After centuries of research, the Caushemeshians have mastered the power of Ether, a complex mix of the Air and Void elements. It's an extraordinary technological advancement, all thanks to Caushemesh engineers, the best in Dinoland!",
-				"next": "Your Dinoz are too weak. They're no match for ours, hahahaha! Make sure you train your Dinoz well, as the day will come when you are called upon to fight more powerful enemies!",
-				"more": "Enough of me talking... what would you say about a little mission to convince you of the strength of our technology?"
-			},
-			"playerChoice": {
+				"talk2": "Talk to him",
 				"qual2": "It's probably a bad quality cape",
 				"qual": "It's probably a bad quality cape",
 				"caush": "Caushemesh?",
 				"ether": "Etherwasp",
 				"next": "Deal...",
 				"more": "...",
-				"missions": "Accept the mission"
-			}
-		},
-		"rodeur3": {
-			"speech": {
-				"begin": "I thought I should let you know that all the Dark Dinoz you have met up until now were only newbies that we train in this region of Dinoland... the Dinoz of Caushemesh are far stronger. Even your Venerable will be no match for our strongest Dinoz masters!",
-				"next": "I'm a man of my word. Here's a reward to convince you of the superiority of Caushemesh technology. I only have one copy, so use it well... it's a bracelet made of Tik, you can equip it on any Dinoz of your choice."
-			},
-			"playerChoice": {
-				"next": "..."
+				"missions_2": "Accept the mission",
+				"next_2": "..."
 			}
 		},
 		"spelele": {
@@ -1493,7 +1485,7 @@
 				"auto": "Can I have an autograph?"
 			}
 		},
-		"alien_0": {
+		"alien": {
 			"speech": {
 				"begin": ". . . . . me . . . lost . . . . . without power . . stars . . . . never . . . . be able to go .... home . . . . help me?",
 				"no": "It's better not to get involved with people who look like that!",
@@ -1502,7 +1494,20 @@
 				"dom": "I need your help to recover some crystals from (TcEtCiNo)... Let me think... How can I describe them in your language? They look like shining stars!",
 				"star": "Yes! If you bring me exactly seven stars. I'll be able to finish my journey, and maybe reward you with a (CiLoJuAeDa) from my planet!",
 				"how": "It's relatively easy. All you have to do is complete missions which are listed in the Eclectik Tourist Guide. Each time I read out a mission description, you'll have to complete it!",
-				"ah": "Hmmmm... well! I'm going to get the Tourist Guide. Wait here, I'll be back in a minute...."
+				"ah": "Hmmmm... well! I'm going to get the Tourist Guide. Wait here, I'll be back in a minute....",
+				"begin_first_star": "The Guide says: \"A megawolf is waiting you in the capital!\"",
+				"et": "And? That's all! You'll have to carry this mission out alone. Sorry to be so eclectic!",
+				"begin_star": "Ah! I see that you're progressing with your quest! Let see what the Tourist Guide says next...",
+				"star2": "The guide says: \"The enthusiastic greasy man would appreciate a transported cloud\"... does that mean anything to you?",
+				"star3": "Tourist Guide, page 879 indent B: \"When you get stuck up to the neck, nothing is better than a nice cake\". Does that mean anything to you?",
+				"star4": "The guide says: \"The shady hole call will serve you\"... Do you have any ideas??",
+				"star5": "The next one is written in small text. It says: \"The old bones like to watch a... capsicum\", yup... that's all it says... (I think)",
+				"star6": "Appendix B of the Tourist Guide: \"Visit the god-man at noon at Pek-1\". Mmmmmmm....",
+				"star7": "The last missing star! The Guide says: \"At the country of Saru, you will return from the dead without firework\". Sounds dangerous!",
+				"end": "Your language is a bit strange... I can't make sense of it!",
+				"begin_plume": ".... Yeaaaahh!!! Thanks a lot! I'll finally be able to return to (PuOsEniLa)! I have to hurry though, as the stars are aligning in the Rochechouart.",
+				"ok": "Can you give me the stars. I'll give you a (CiLoJuAeDa) in exchange, plus a trinket I found in Dinoland!",
+				"give": "The Strange Being runs to some kind of small house, then a big lightning strikes before the house disappears. All that remains are burned traces on the ground and a column of smoke rising far up into the sky... He left you one \"Gold Napodino\" and a strange collectible item..."
 			},
 			"playerChoice": {
 				"begin": ". . . . . me . . . lost . . . . . without power . . stars . . . . never . . . . be able to go .... home . . . . help me?",
@@ -1512,90 +1517,30 @@
 				"dom": "That's very sad!",
 				"star": "Stars?",
 				"how": "And how do I find these stars?",
-				"ah": "\"Ah\"?"
-			}
-		},
-		"alien_1": {
-			"speech": {
-				"begin": "The Guide says: \"A megawolf is waiting you in the capital!\"",
-				"et": "And? That's all! You'll have to carry this mission out alone. Sorry to be so eclectic!"
-			},
-			"playerChoice": {
-				"et": "And?"
-			}
-		},
-		"alien_8": {
-			"speech": {
-				"begin": ".... Yeaaaahh!!! Thanks a lot! I'll finally be able to return to (PuOsEniLa)! I have to hurry though, as the stars are aligning in the Rochechouart.",
-				"ok": "Can you give me the stars. I'll give you a (CiLoJuAeDa) in exchange, plus a trinket I found in Dinoland!",
-				"give": "The Strange Being runs to some kind of small house, then a big lightning strikes before the house disappears. All that remains are burned traces on the ground and a column of smoke rising far up into the sky... He left you one \"Gold Napodino\" and a strange collectible item..."
-			},
-			"playerChoice": {
-				"ok": "...",
-				"give": "Hand over the 7 stars"
-			}
-		},
-		"alien_all": {
-			"speech": {
-				"begin": "Ah! I see that you're progressing with your quest! Let see what the Tourist Guide says next...",
-				"star2": "The guide says: \"The enthusiastic greasy man would appreciate a transported cloud\"... does that mean anything to you?",
-				"star3": "Tourist Guide, page 879 indent B: \"When you get stuck up to the neck, nothing is better than a nice cake\". Does that mean anything to you?",
-				"star4": "The guide says: \"The shady hole call will serve you\"... Do you have any ideas??",
-				"star5": "The next one is written in small text. It says: \"The old bones like to watch a... capsicum\", yup... that's all it says... (I think)",
-				"star6": "Appendix B of the Tourist Guide: \"Visit the god-man at noon at Pek-1\". Mmmmmmm....",
-				"star7": "The last missing star! The Guide says: \"At the country of Saru, you will return from the dead without firework\". Sounds dangerous!",
-				"end": "Your language is a bit strange... I can't make sense of it!"
-			},
-			"playerChoice": {
+				"ah": "\"Ah\"?",
+				"et": "And?",
 				"star2": "Listen",
 				"star3": "Listen",
 				"star4": "Listen",
 				"star5": "Listen",
 				"star6": "Listen",
 				"star7": "Listen",
-				"end": "..."
-			}
-		},
-		"merguez_star": {
-			"speech": {
-				"begin": "Oh, I see that your Dinoz is carrying a cloud burger! Did you know that they're bad for your health? Unless you want your Dinoz to become a Sumo?!?",
-				"ok": "Throw away your nasty Burger and taste my merguez instead! Take this item as a sign of loyalty. I found it on the ground!",
-				"star": "Great! The merguez seller has given you one of the seven magic stars!"
-			},
-			"playerChoice": {
+				"end": "...",
 				"ok": "...",
-				"star": "Ah?"
-			}
-		},
-		"skully_star": {
-			"speech": {
-				"begin": "Oh oh!! What do we have here!!! It's a magnificent \"Capsicum annuum\"! What colors, what odors, it's absolutely beau-ti-ful!",
-				"ok": "Thank you so much! In exchange, I'm going to give you this item. I found it while searching for a lost bone! Take it!",
-				"star": "Congratulations! Thanks to Skully, you've found the 5th magic star! You only have 2 more to find!"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "Ah?"
+				"give": "Hand over the 7 stars"
 			}
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Sorry but the game developers are super lazy and have not integrated fully my features in the game. What a shame!"
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Sorry but the game developers are super lazy and have not integrated fully my features in the game. What a shame!",
+				"begin_star": "Oh oh!! What do we have here!!! It's a magnificent \"Capsicum annuum\"! What colors, what odors, it's absolutely beau-ti-ful!",
+				"ok_star": "Thank you so much! In exchange, I'm going to give you this item. I found it while searching for a lost bone! Take it!",
+				"star": "Congratulations! Thanks to Skully, you've found the 5th magic star! You only have 2 more to find!"
 			},
 			"playerChoice": {
 				"ok": "...",
+				"ok_star": "...",
 				"star": "Ah?"
-			}
-		},
-		"bob_star": {
-			"speech": {
-				"begin": "hat are you doing in my house at this time in the early morning?",
-				"ok": "Sorry, I'm not fully awake yet. I had no idea. Here, take this, I've been keeping it for you. I hope it won't cause you any problems...",
-				"star": "Bao Bob has entrusted you with the 6th magic star! Only one left!!!"
-			},
-			"playerChoice": {
-				"ok": "I'm looking for something...",
-				"star": "???"
 			}
 		}
 	},

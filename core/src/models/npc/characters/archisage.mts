@@ -1,5 +1,5 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
-import { ConditionEnum, Operator, RewardEnum, TriggerEnum } from '../../enums/Parser.mjs';
+import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { bossList } from '../../fight/BossList.mjs';
 import { NpcData } from '../NpcData.mjs';
 

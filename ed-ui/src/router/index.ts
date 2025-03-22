@@ -47,6 +47,11 @@ const router = createRouter({
 					component: () => import('../pages/Missions.vue')
 				},
 				{
+					path: '/dino/:id/missions2/:npc',
+					name: 'NPC2',
+					component: () => import('../pages/NPC2.vue')
+				},
+				{
 					path: '/shop/:name',
 					name: 'ItemShopPage',
 					component: () => import('../pages/ItemShopPage.vue')

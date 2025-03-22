@@ -55,5 +55,12 @@ export const missionsList: Record<number, string> = {
 	48: 'bckpck',
 	//RODEUR
 	49: 'rodriz',
-	50: 'rodlif'
+	50: 'rodlif',
+	// SKULLY
+	51: 'skully1',
+	52: 'skully2',
+	53: 'skully3',
+	54: 'skully4',
+	55: 'skully5',
+	56: 'skully_end'
 };

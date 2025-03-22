@@ -1,8 +1,8 @@
+import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { setSpecificStat } from './trackingDao.js';
-import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 //TODO
 export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) {

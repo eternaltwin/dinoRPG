@@ -1061,7 +1061,10 @@
 				"ingr": "Pum pum, palalam, pum pum pum, pam pum pum, palalam, pam! Bitte sehr, ein wunderbarer Anti-Sedh-Trank für dich...",
 				"potion": "Hmmm... mach's gut, mein Freund und komm doch bei Gelegenheit mal wieder vorbei!",
 				"ok": "Na bitte, dein Dinoz konzentriert sich! Sobald ihr vollzählig seid, findet ihr euch in einer anderen Welt wieder.",
-				"bye": "Viel Spaß und bis dann!"
+				"bye": "Viel Spaß und bis dann!",
+				"begin_star": "Was machst du denn um die Uhrzeit in meinem Haus?",
+				"ok_star": "Ach so! Ja, ich bin noch halb am Schlafen und hab's nicht verstanden. Hier, das hab' ich für dich aufgehoben. Hoffentlich wird es dir nicht allzu viel Ärger einbringen...",
+				"star": "Mit diesen seltsamen Worten vertraut dir Bao Bob den sechsten Zauberstern an! Fehlt nur noch der Letzte!!!"
 			},
 			"playerChoice": {
 				"question": "Ich hätte da eine Frage für Euch...",
@@ -1080,7 +1083,9 @@
 				"noingr": "Bitte sehr, die Zutaten!",
 				"ingr": "Bitte sehr, die Zutaten!",
 				"potion": "Dann seid Ihr also ein Antiker Affe!!!",
-				"ok": "Einverstanden"
+				"ok": "Einverstanden",
+				"ok_star": "Ich suche nach...",
+				"star": "???"
 			}
 		},
 		"baofan": {
@@ -1148,12 +1153,17 @@
 				"begin": "Hola, hola, hola! Würstchen! Fettige Würstchen! ... Wie? Was das für eine Idee ist, an einem so finsteren Ort Merguez-Würstchen zu verkaufen? Aber diese Ruinen sind doch großartig! Ich bin mir sicher, dass eines Tages Millionen von Touristen herkommen werden, um sie zu besuchen!",
 				"ah": "Ja, in der Tat! Es ist ein wenig wie das Koloss-E.ON: Mein Cousin hat ein Vermögen durch den Verkauf gebrandeter, tempelförmiger Schlüsselanhänger gemacht. Aber hier, und das ist beschlossene Sache, werde ich der Erste sein! Auch wenn ich mehrere Jahre darauf warten muss, dass das Geschäft richtig anläuft. Niemals lasse ich mir diese goldene Gelegenheit entgehen!",
 				"ok": "Schau mal, dein Dinoz sieht ja schon praktisch ausgemergelt aus... Hier, nimm diese Merguez! Sie sind für dich umsonst unter der Bedingung, dass du all deinen Freunden von den Fantastischen Aschpuckruinen erzählst. Nicht vergessen, ja?",
-				"thanks": "Gerne, gerne, ist ja schließlich gut fürs Geschäft!"
+				"thanks": "Gerne, gerne, ist ja schließlich gut fürs Geschäft!",
+				"begin_star": "Ohh! Wie ich sehe, hat dein Dinoz einen Wolkenburger dabei! Weißt du denn nicht, dass sie gesundheitsschädlich sind? Oder möchtest du etwa, dass dein Dinoz zum Sumoringer wird?!",
+				"ok_star": "Nimm bloß diesen abscheulichen Burger wieder mit und probier stattdessen lieber meine Merguez! Hier, dafür kriegst du auch dieses Ding, was hier auf dem Boden rumlag!",
+				"star": "Toll! Der Merguez-Verkäufer hat dir einen der sieben Zaubersterne überreicht!"
 			},
 			"playerChoice": {
 				"ah": "Äh...",
 				"ok": "Tja, also...",
-				"thanks": "Danke"
+				"thanks": "Danke",
+				"ok_star": "...",
+				"star": "Hä?"
 			}
 		},
 		"shaman": {
@@ -1350,7 +1360,9 @@
 				"better": "Es scheint Ihnen viel besser zu gehen...",
 				"missions": "Missionsliste betrachten",
 				"lowLevel": "Missionsliste betrachten",
-				"curesearch": "Mal sehen..."
+				"curesearch": "Mal sehen...",
+				"begin_3": "Zu deiner Information: Die Dunklen Dinoz, denen du bisher begegnet bist, waren nur Anfänger, die wir hier in der Gegend des Dinolandes ausbilden lassen... Die Caushemesh-Dinoz sind weitaus stärker und selbst euer Ehrwürdiger würde unseren besten Dinoz-Meistern nichts entgegensetzen können!",
+				"next_2": "Na gut, ich halte mein Versprechen. Hier eine Belohnung, die dich von der Überlegenheit der Caushemesh-Technologie überzeugen wird. Ich habe nur ein Exemplar, gehe deshalb behutsam damit um... Es handelt sich um ein Tik-Armreif, das du einem deiner Dinoz umlegen kannst."
 			}
 		},
 		"rodeur": {
@@ -1360,20 +1372,8 @@
 				"talk": "Häh?!??? Was?! Du kannst mich SEHEN?!?... Grrrrr...",
 				"yes": "Hmm... tja... verstehe... dabei hat man mir doch versichert, dass dieser Umhang mich unsichtbar machen würde! Kannst du mal einen Blick auf die Anzeige auf meinem Rücken werfen? Steht da irgendwas?",
 				"read": "Was?! „LOHER BADEREIS“? Hm... der Verkäufer hatte ja auch irgendwas vom Aufladen geschwafelt... Brauche ich da etwa Reis?!? Und wo soll ich den bitte herkriegen?!?",
-				"talk2": "Schnell! Ich BRAUCHE diesen Reis!"
-			},
-			"playerChoice": {
-				"go": "Dieser Typ sieht gefährlich aus... abhauen!",
-				"talk": "Ihn ansprechen",
-				"yes": "Ähm... ja?",
-				"read": "Anzeige vorlesen",
-				"missions": "Dem Herumtreiber helfen",
-				"talk2": "Ihn ansprechen"
-			}
-		},
-		"rodeur2": {
-			"speech": {
-				"begin": "Mein Umhang ist schon wieder hin... so langsam hab' ich die Schnauze voll...",
+				"talk2": "Schnell! Ich BRAUCHE diesen Reis!",
+				"begin_2": "Mein Umhang ist schon wieder hin... so langsam hab' ich die Schnauze voll...",
 				"qual2": "Anstatt blöd rumzulabern, solltest du lieber deine Mission zu Ende bringen...",
 				"qual": "WAS?!? Wie kannst du es wagen, so über die großartige Caushemesh-Technologie zu reden! Hast du eine Ahnung wie viele Jahre Forschungsarbeit nötig waren, um den Äther zu beherrschen?!?",
 				"caush": "Ja! Ganz richtig, ich rede von der großartigen Zivilisation der Caushemesh-Berge, weit jenseits der Magnetischen Steppen. Wir sind sehr viel weiter entwickelt als die Barbaren in Dinoville...",
@@ -1382,22 +1382,20 @@
 				"more": "Aber ich habe dir schon zu viel erzählt... Was hältst du von einer kleinen Mission, um dich von der Caushemesh-Technologie zu überzeugen?"
 			},
 			"playerChoice": {
+				"go": "Dieser Typ sieht gefährlich aus... abhauen!",
+				"talk": "Ihn ansprechen",
+				"yes": "Ähm... ja?",
+				"read": "Anzeige vorlesen",
+				"missions": "Dem Herumtreiber helfen",
+				"talk2": "Ihn ansprechen",
 				"qual2": "Ist sicher wegen der schlechten Qualität...",
 				"qual": "Ist sicher wegen der schlechten Qualität...",
 				"caush": "Caushemesh?",
 				"ether": "Äther?",
 				"next": "Und...",
 				"more": "...",
-				"missions": "Eine Mission annehmen"
-			}
-		},
-		"rodeur3": {
-			"speech": {
-				"begin": "Zu deiner Information: Die Dunklen Dinoz, denen du bisher begegnet bist, waren nur Anfänger, die wir hier in der Gegend des Dinolandes ausbilden lassen... Die Caushemesh-Dinoz sind weitaus stärker und selbst euer Ehrwürdiger würde unseren besten Dinoz-Meistern nichts entgegensetzen können!",
-				"next": "Na gut, ich halte mein Versprechen. Hier eine Belohnung, die dich von der Überlegenheit der Caushemesh-Technologie überzeugen wird. Ich habe nur ein Exemplar, gehe deshalb behutsam damit um... Es handelt sich um ein Tik-Armreif, das du einem deiner Dinoz umlegen kannst."
-			},
-			"playerChoice": {
-				"next": "..."
+				"missions_2": "Eine Mission annehmen",
+				"next_2": "..."
 			}
 		},
 		"spelele": {
@@ -1493,7 +1491,7 @@
 				"auto": "Könnte ich vielleicht ein Autogramm haben?"
 			}
 		},
-		"alien_0": {
+		"alien": {
 			"speech": {
 				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
 				"no": "Stimmt, es wohl besser, sich nicht in Angelegenheiten von Wesen einzumischen, die so komisch aussehen!",
@@ -1502,7 +1500,20 @@
 				"dom": "Also gut, ich bräuchte deine nette Hilfe, um Kristalle aus (TcEtCiNo) zu beschaffen... Mal sehen... in deiner Sprache wären sie wohl gleichbedeutend mit leuchtenden Sternen, die irgendwie verlockend aussehen!",
 				"star": "Ja, in der Tat! Falls du es schaffen solltest, mir genau sieben von ihnen zu besorgen, könnte ich meine Reise fortsetzen und würde dich dafür sogar mit einem (CiLoJuAeDa) aus meiner Heimat belohnen!",
 				"how": "Das ist ziemlich einfach. Alles, was du tun musst, ist einer bestimmten Anzahl spektakulärer Weissagungen zu folgen, die im Eklektischen Touristenführer beschrieben werden. Jedes Mal, wenn ich dir einen Auszug vorlese, darfst du diesen entziffern! Ach ja!",
-				"ah": "Tja, nun, also! Ich gehe mal den Touristenführer suchen. Rühr dich nicht vom Fleck, ich bin sofort wieder da..."
+				"ah": "Tja, nun, also! Ich gehe mal den Touristenführer suchen. Rühr dich nicht vom Fleck, ich bin sofort wieder da...",
+				"begin_first_star": "Im Führer steht: „Ein Megawolf erwartet dich in der Hauptstadt!“",
+				"et": "Und was? Das war's! Den Rest musst du schon selbst entziffern. Verzeih, dass ich auch so eklektisch bin!",
+				"begin_star": "Ah! Wie ich sehe, hast du bei deiner Suche Fortschritte gemacht! Mal sehen was der Touristenführer als Nächstes sagt...",
+				"star2": "Im Führer steht: „Der schmierige Enthusiast wüsste eine tragbare Wolke zu schätzen.“ ...sagt dir das irgendwas?",
+				"star3": "Touristenführer, Seite 879, Absatz b: „Wenn man bis zum Hals in klebriger Masse steckt, geht nichts über Kuchen.“ Alles klar, oder?",
+				"star4": "Ich zitiere: „Es könnte helfen, wenn man am dunklen Loch etwas Umschau fällt.“ ...hast du eine Idee?",
+				"star5": "Es ist ganz klein gedruckt. Ich werde versuchen, die Wörter richtig zu lesen: „Die alten Knochen schätzen wohl den Anblick eines... Capsicum.“ Ja... das müsste es sein... (glaube ich zumindest).",
+				"star6": "Hmmm... Anhang B des Touristenführers: „Suche den Halbgott auf, wenn auf Pek-1 Mittag ist“. Das ist ja ein ganzes Programm...",
+				"star7": "Es fehlt nur noch der letzte Stern! Der Führer sagt: „Im Land des Saru wirst du ungekünstelt von den Toten zurückkehren.“ Viel Glück!",
+				"end": "Eure Sprache hierzulande ist überaus bizarr... ich kann überhaupt nichts verstehen!",
+				"begin_plume": "...Jaaaaaa!!! Danke, danke, danke! Dank dir werde ich endlich nach (PuOsEniLa) zurückkehren können! Mir bleibt nicht mehr viel Zeit bis die Sterne nicht mehr nach Rochechouart ausgerichtet sind...",
+				"ok": "Würdest du mir die Sterne geben? Wie versprochen, würde ich dir dafür einen (CiLoJuAeDa) überlassen, sowie ein Schmuckstück, das ich in deiner Welt gefunden habe!",
+				"give": "Das Seltsame Wesen rennt in eine Art kleines Haus hinein, woraufhin alles von einem grellen Blitz erleuchtet wird und schon ist das Haus verschwunden. Es ist kaum was übrig außer Brandflecken im Boden und einer riesigen Rauchsäule, die hoch in den Himmel emporsteigt... Das Wesen hat dir einen „Goldenen Napodino“ hinterlassen und irgendein eigenartiges Sammlerlstück..."
 			},
 			"playerChoice": {
 				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
@@ -1512,90 +1523,30 @@
 				"dom": "Was für ein Jammer!",
 				"star": "Sterne?",
 				"how": "Und wo finde ich diese Sterne?",
-				"ah": "„Ach ja“?"
-			}
-		},
-		"alien_1": {
-			"speech": {
-				"begin": "Im Führer steht: „Ein Megawolf erwartet dich in der Hauptstadt!“",
-				"et": "Und was? Das war's! Den Rest musst du schon selbst entziffern. Verzeih, dass ich auch so eklektisch bin!"
-			},
-			"playerChoice": {
-				"et": "Und?"
-			}
-		},
-		"alien_8": {
-			"speech": {
-				"begin": "...Jaaaaaa!!! Danke, danke, danke! Dank dir werde ich endlich nach (PuOsEniLa) zurückkehren können! Mir bleibt nicht mehr viel Zeit bis die Sterne nicht mehr nach Rochechouart ausgerichtet sind...",
-				"ok": "Würdest du mir die Sterne geben? Wie versprochen, würde ich dir dafür einen (CiLoJuAeDa) überlassen, sowie ein Schmuckstück, das ich in deiner Welt gefunden habe!",
-				"give": "Das Seltsame Wesen rennt in eine Art kleines Haus hinein, woraufhin alles von einem grellen Blitz erleuchtet wird und schon ist das Haus verschwunden. Es ist kaum was übrig außer Brandflecken im Boden und einer riesigen Rauchsäule, die hoch in den Himmel emporsteigt... Das Wesen hat dir einen „Goldenen Napodino“ hinterlassen und irgendein eigenartiges Sammlerlstück..."
-			},
-			"playerChoice": {
-				"ok": "...",
-				"give": "Die 7 Sterne geben"
-			}
-		},
-		"alien_all": {
-			"speech": {
-				"begin": "Ah! Wie ich sehe, hast du bei deiner Suche Fortschritte gemacht! Mal sehen was der Touristenführer als Nächstes sagt...",
-				"star2": "Im Führer steht: „Der schmierige Enthusiast wüsste eine tragbare Wolke zu schätzen.“ ...sagt dir das irgendwas?",
-				"star3": "Touristenführer, Seite 879, Absatz b: „Wenn man bis zum Hals in klebriger Masse steckt, geht nichts über Kuchen.“ Alles klar, oder?",
-				"star4": "Ich zitiere: „Es könnte helfen, wenn man am dunklen Loch etwas Umschau fällt.“ ...hast du eine Idee?",
-				"star5": "Es ist ganz klein gedruckt. Ich werde versuchen, die Wörter richtig zu lesen: „Die alten Knochen schätzen wohl den Anblick eines... Capsicum.“ Ja... das müsste es sein... (glaube ich zumindest).",
-				"star6": "Hmmm... Anhang B des Touristenführers: „Suche den Halbgott auf, wenn auf Pek-1 Mittag ist“. Das ist ja ein ganzes Programm...",
-				"star7": "Es fehlt nur noch der letzte Stern! Der Führer sagt: „Im Land des Saru wirst du ungekünstelt von den Toten zurückkehren.“ Viel Glück!",
-				"end": "Eure Sprache hierzulande ist überaus bizarr... ich kann überhaupt nichts verstehen!"
-			},
-			"playerChoice": {
+				"ah": "„Ach ja“?",
+				"et": "Und?",
 				"star2": "Zuhören",
 				"star3": "Zuhören",
 				"star4": "Zuhören",
 				"star5": "Zuhören",
 				"star6": "Zuhören",
 				"star7": "Zuhören",
-				"end": "..."
-			}
-		},
-		"merguez_star": {
-			"speech": {
-				"begin": "Ohh! Wie ich sehe, hat dein Dinoz einen Wolkenburger dabei! Weißt du denn nicht, dass sie gesundheitsschädlich sind? Oder möchtest du etwa, dass dein Dinoz zum Sumoringer wird?!",
-				"ok": "Nimm bloß diesen abscheulichen Burger wieder mit und probier stattdessen lieber meine Merguez! Hier, dafür kriegst du auch dieses Ding, was hier auf dem Boden rumlag!",
-				"star": "Toll! Der Merguez-Verkäufer hat dir einen der sieben Zaubersterne überreicht!"
-			},
-			"playerChoice": {
+				"end": "...",
 				"ok": "...",
-				"star": "Hä?"
-			}
-		},
-		"skully_star": {
-			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!!! Was sehe ich denn da?!! Na, wenn das kein wunderschönes Exemplar eines „Capsicum annuum“ ist! Was für eine Farbenpracht, welch ein Duft, es ist wun-der-schön!",
-				"ok": "Ich danke dir vielmals! Oh oh oh! Im Gegenzug für diesen wundervollen Anblick, schenke ich dir etwas, das ich fand, als ich nach einem Knochen gesucht habe, den ich verloren hatte! Hier, bitte!",
-				"star": "Glückwunsch! Dank Skully, hast du den fünften Zauberstern erhalten! Jetzt fehlen nur noch zwei!"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "Oh?"
+				"give": "Die 7 Sterne geben"
 			}
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh!!! Verzeihung, aber die Entwickler sind wirklich faul und haben mich in das Spiel noch nicht eingebaut. Wie schade!"
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh!!! Verzeihung, aber die Entwickler sind wirklich faul und haben mich in das Spiel noch nicht eingebaut. Wie schade!",
+				"begin_star": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!!! Was sehe ich denn da?!! Na, wenn das kein wunderschönes Exemplar eines „Capsicum annuum“ ist! Was für eine Farbenpracht, welch ein Duft, es ist wun-der-schön!",
+				"ok_star": "Ich danke dir vielmals! Oh oh oh! Im Gegenzug für diesen wundervollen Anblick, schenke ich dir etwas, das ich fand, als ich nach einem Knochen gesucht habe, den ich verloren hatte! Hier, bitte!",
+				"star": "Glückwunsch! Dank Skully, hast du den fünften Zauberstern erhalten! Jetzt fehlen nur noch zwei!"
 			},
 			"playerChoice": {
 				"ok": "...",
+				"ok_star": "...",
 				"star": "Oh?"
-			}
-		},
-		"bob_star": {
-			"speech": {
-				"begin": "Was machst du denn um die Uhrzeit in meinem Haus?",
-				"ok": "Ach so! Ja, ich bin noch halb am Schlafen und hab's nicht verstanden. Hier, das hab' ich für dich aufgehoben. Hoffentlich wird es dir nicht allzu viel Ärger einbringen...",
-				"star": "Mit diesen seltsamen Worten vertraut dir Bao Bob den sechsten Zauberstern an! Fehlt nur noch der Letzte!!!"
-			},
-			"playerChoice": {
-				"ok": "Ich suche nach...",
-				"star": "???"
 			}
 		}
 	},

@@ -1,7 +1,8 @@
-import { http } from '../utils/index.js';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 import { MissionList } from '@drpg/core/models/missions/missionList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
 import { MissionsPageData } from '@drpg/core/returnTypes/Dinoz';
+import { http } from '../utils/index.js';
 
 export const MissionService = {
 	getMissions(id: string, npc: string): Promise<Array<MissionList>> {
@@ -19,6 +20,12 @@ export const MissionService = {
 	interactMission(dinozId: string, missionId: number, task: string): Promise<string> {
 		return http()
 			.put(`/missions/step/${dinozId}/`, { missionId: missionId, task: task })
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	startFightMission(dinozId: string, missionId: number, task: string): Promise<FightResult> {
+		return http()
+			.put(`/missions/fight/${dinozId}/`, { missionId: missionId, task: task })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

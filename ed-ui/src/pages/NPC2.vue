@@ -11,7 +11,7 @@
 				<span
 					class="dialog"
 					v-if="npcSpeech.speech"
-					v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
+					v-html="formatContent($t(`missions.dialog.${npcSpeech.speech}`))"
 				/>
 				<div class="portrait">
 					<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
@@ -29,29 +29,28 @@
 </template>
 
 <script lang="ts">
-import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
-import { npcList } from '@drpg/core/models/npc/NpcList';
-import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
 import { defineComponent } from 'vue';
-import { NavigationFailure } from 'vue-router';
-import AnimatedNPC from '../components/common/AnimatedNPC.vue';
-import DZButton from '../components/common/DZButton.vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
-import { DinozService, NPCService, PlayerService } from '../services/index.js';
-import { dinozStore, sessionStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
+import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import AnimatedNPC from '../components/common/AnimatedNPC.vue';
+import { npcList } from '@drpg/core/models/npc/NpcList';
+import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
-	name: 'NPC',
+	name: 'NPC2',
+	props: {
+		dialogue: {
+			type: String,
+			required: true
+		}
+	},
 	data() {
 		return {
 			npcName: undefined as string | undefined,
 			dinozId: +this.$route.params.id as number,
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
-			dinozStore: dinozStore(),
-			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
 		};
 	},
@@ -61,90 +60,33 @@ export default defineComponent({
 		AnimatedNPC
 	},
 	methods: {
-		async choiseStep(choice: string): Promise<void | NavigationFailure> {
-			if (choice === 'missions') {
-				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
-			}
-			EventBus.emit('isLoading', true);
-			try {
-				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
-			} catch (e) {
-				errorHandler.handle(e, this.$toast);
-			}
-			EventBus.emit('isLoading', false);
-			if (this.npcSpeech.service) {
-				EventBus.emit('isLoading', true);
-				for (const service of this.npcSpeech.service) {
-					switch (service) {
-						case ServiceEnum.CONCENTRATION:
-							await DinozService.concentration(this.dinozId!);
-							EventBus.emit('isLoading', false);
-							break;
-						case ServiceEnum.DINOZ:
-							this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
-							EventBus.emit('isLoading', false);
-							break;
-						case ServiceEnum.REFRESH_DINOZLIST:
-							this.dinozStore.setDinozList(await PlayerService.getDinozList());
-							EventBus.emit('isLoading', false);
-							break;
-						case ServiceEnum.FIGHT:
-							try {
-								this.sessionStore.setFightResult(this.npcSpeech.fight);
-								this.$router.push({
-									name: 'Fight',
-									params: { dinozId: this.$route.params.id.toString() }
-								});
-							} catch (e) {
-								errorHandler.handle(e, this.$toast);
-							}
-							break;
-						default:
-							break;
-					}
-				}
-			}
-		},
 		async stop(): Promise<void> {
-			await NPCService.talkTo(this.dinozId!, this.npcName!, 'begin', true);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
-		const npc = this.dinozStore.getNpc(this.dinozId);
-		console.log(npc);
 		this.npcName = this.$route.params.npc as string;
-		let step = 'begin';
-
-		if (npc && npc.npcName === this.npcName) {
-			step = npc.npcSpeech;
-		} else {
-			this.dinozStore.clearNpc(this.dinozId);
-		}
+		const npcName2 = this.$route.params.npc as string;
+		const dialogue = history.state.dialogue as string;
 		try {
-			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
-
-			step = this.npcSpeech.speech;
-			this.dinozStore.setNpc(this.dinozId, step, this.npcSpeech.name);
+			this.dinozId = parseInt(this.$route.params.id as string);
+			this.npcSpeech = {
+				name: npcName2,
+				speech: dialogue,
+				playerChoice: []
+			};
 
 			this.loaded = true;
-			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;
 		}
 
-		const npcCore = Object.values(npcList).find(npc => npc.name === this.npcName);
+		const npcCore = Object.values(npcList).find(npc => npc.name === npcName2);
 		if (npcCore) {
 			this.swfName = npcCore.display ?? npcCore.name;
 		} else {
 			this.swfName = this.npcName;
-		}
-	},
-	watch: {
-		npcSpeech(newVal) {
-			this.dinozStore.setNpc(this.dinozId, newVal.speech, newVal.name);
 		}
 	}
 });

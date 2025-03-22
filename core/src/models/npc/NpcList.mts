@@ -1,10 +1,12 @@
+import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
-import { itemList, Item } from '../item/ItemList.mjs';
+import { Scenario } from '../enums/Scenario.mjs';
 import { MissionID } from '../missions/missionList.mjs';
-import { ALPHA } from './characters/alpha.mjs';
+import { Reward } from '../reward/RewardList.mjs';
+import { ALIEN } from './characters/alien.mjs';
 import { ARCHISAGE } from './characters/archisage.mjs';
-import { BAOBOB, BOB_STAR } from './characters/baoBob.mjs';
+import { BAOBOB } from './characters/baoBob.mjs';
 import { BAOFAN } from './characters/baofan.mjs';
 import { DIANKORGSEY } from './characters/dianKorgsey.mjs';
 import { FORGERON } from './characters/forgeron.mjs';
@@ -14,32 +16,29 @@ import { GARDIEN } from './characters/gardien.mjs';
 import { HULOT } from './characters/hulot.mjs';
 import { HYDARGOL } from './characters/hydargol.mjs';
 import { JOVEBOZE_RASCA } from './characters/joveboze.mjs';
-import { MERGUEZ, MERGUEZ_STAR } from './characters/merguez.mjs';
+import { MERGUEZ } from './characters/merguez.mjs';
 import { MINEUR } from './characters/mineur.mjs';
 import { MMEX } from './characters/mmex.mjs';
 import { PADAMOINE } from './characters/padamoine.mjs';
 import { PAPYJOE } from './characters/papyJoe.mjs';
 import { PROFESSOR } from './characters/prof.mjs';
-import { RODEUR, RODEUR2, RODEUR3 } from './characters/rodeur.mjs';
+import { RODEUR } from './characters/rodeur.mjs';
 import { SHAMAN } from './characters/shaman.mjs';
+import { MOULDEUR, SKULLY } from './characters/skully.mjs';
 import { SOFIA } from './characters/sofia.mjs';
+import { SPELELE } from './characters/spelele.mjs';
+import { HIPPO, PTEROZ, ROCKY } from './characters/totems.mjs';
+import { VENERABLE } from './characters/vener.mjs';
 import { M_BAO_BOB } from './missions/baoBob.mjs';
 import { M_DIANKORGSEY } from './missions/dianKorgsey.mjs';
 import { M_GARDIEN } from './missions/gardien.mjs';
 import { M_HULOT } from './missions/hulot.mjs';
+import { M_MMEX } from './missions/mmex.mjs';
 import { M_PAPY_JOE } from './missions/papyJoe.mjs';
 import { M_RODEUR } from './missions/rodeur.mjs';
 import { M_SHAMAN_MOU } from './missions/shaman.mjs';
+import { M_SKULLY } from './missions/skully.mjs';
 import { Npc } from './npc.mjs';
-import { M_MMEX } from './missions/mmex.mjs';
-import { DinozStatusId } from '../dinoz/StatusList.mjs';
-import { SPELELE } from './characters/spelele.mjs';
-import { Reward } from '../reward/RewardList.mjs';
-import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
-import { VENERABLE } from './characters/vener.mjs';
-import { Scenario } from '../enums/Scenario.mjs';
-import { ALIEN_0, ALIEN_1, ALIEN_8, ALIEN_ALL } from './characters/alien.mjs';
-import { SKULLY, SKULLY_STAR } from './characters/skully.mjs';
 
 export const npcList: Record<string, Npc> = {
 	// CRIEUR: {
@@ -118,14 +117,7 @@ export const npcList: Record<string, Npc> = {
 		placeId: PlaceEnum.BAO_BOB,
 		missions: M_BAO_BOB,
 		data: BAOBOB,
-		condition: {
-			[Operator.NOT]: {
-				[Operator.AND]: [
-					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
-					{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
-				]
-			}
-		},
+		condition: undefined,
 		flashvars: undefined
 	},
 	BAOFAN: {
@@ -151,14 +143,7 @@ export const npcList: Record<string, Npc> = {
 		id: 12,
 		placeId: PlaceEnum.RUINES_ASHPOUK,
 		data: MERGUEZ,
-		condition: {
-			[Operator.NOT]: {
-				[Operator.AND]: [
-					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '='] },
-					{ [ConditionEnum.EQUIP]: itemList[Item.CLOUD_BURGER].itemId }
-				]
-			}
-		},
+		condition: undefined,
 		missions: undefined,
 		flashvars: undefined
 	},
@@ -281,45 +266,17 @@ export const npcList: Record<string, Npc> = {
 		data: RODEUR,
 		missions: M_RODEUR,
 		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } },
-				{ [ConditionEnum.MINLEVEL]: 15 }
-			]
-		},
-		flashvars: undefined
-	},
-	RODEUR2: {
-		name: 'rodeur2',
-		id: 23,
-		placeId: PlaceEnum.FORGES_DU_GTC,
-		data: RODEUR2,
-		missions: M_RODEUR,
-		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
+			// Present if the dinoz has not finished the last mission or has not obtained tik
+			[Operator.OR]: [
 				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF } },
-				{ [ConditionEnum.MINLEVEL]: 20 }
-			]
-		},
-		flashvars: undefined
-	},
-	RODEUR3: {
-		name: 'rodeur3',
-		id: 24,
-		placeId: PlaceEnum.FORGES_DU_GTC,
-		data: RODEUR3,
-		missions: undefined,
-		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } },
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF }
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } }
 			]
 		},
 		flashvars: undefined
 	},
 	SPELELE: {
 		name: 'spelele',
-		id: 25,
+		id: 24,
 		placeId: PlaceEnum.GORGES_PROFONDES,
 		data: SPELELE,
 		missions: undefined,
@@ -330,7 +287,7 @@ export const npcList: Record<string, Npc> = {
 	},
 	PTEROZ: {
 		name: 'pteroz',
-		id: 26,
+		id: 25,
 		placeId: PlaceEnum.PENTES_DE_BASALTE,
 		data: PTEROZ,
 		missions: undefined,
@@ -351,7 +308,7 @@ export const npcList: Record<string, Npc> = {
 	},
 	HIPPO: {
 		name: 'hippo',
-		id: 27,
+		id: 26,
 		placeId: PlaceEnum.ILE_WAIKIKI,
 		data: HIPPO,
 		missions: undefined,
@@ -372,7 +329,7 @@ export const npcList: Record<string, Npc> = {
 	},
 	ROCKY: {
 		name: 'rocky',
-		id: 28,
+		id: 27,
 		placeId: PlaceEnum.FORCEBRUT,
 		data: ROCKY,
 		missions: undefined,
@@ -393,122 +350,74 @@ export const npcList: Record<string, Npc> = {
 	},
 	VENERABLE: {
 		name: 'vener',
-		id: 29,
+		id: 28,
 		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
 		data: VENERABLE,
 		missions: undefined,
 		flashvars: undefined
 	},
-	ALIEN_O: {
-		name: 'alien_0',
+	ALIEN: {
+		name: 'alien',
 		display: 'alien',
-		id: 30,
+		id: 29,
 		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-		data: ALIEN_0,
-		condition: {
-			[Operator.AND]: [{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 0, '='] }, { [ConditionEnum.TIME]: 30 }]
-		},
-		missions: undefined,
-		flashvars: undefined
-	},
-	ALIEN_1: {
-		name: 'alien_1',
-		display: 'alien',
-		id: 31,
-		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-		data: ALIEN_1,
-		condition: {
-			[ConditionEnum.SCENARIO]: [Scenario.STAR, 1, '=']
-		},
-		missions: undefined,
-		flashvars: undefined
-	},
-	ALIEN_all: {
-		name: 'alien_all',
-		display: 'alien',
-		id: 32,
-		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-		data: ALIEN_ALL,
+		data: ALIEN,
 		condition: {
 			[Operator.AND]: [
-				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '+'] },
-				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 8, '+'] } }
+				{
+					[Operator.OR]: [
+						// First appearance of the alien with a time condition
+						{ [Operator.AND]: [{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 0, '='] }, { [ConditionEnum.TIME]: 30 }] },
+						{
+							[Operator.AND]: [
+								// Normal appearance when the player is between step 1 and 8 of the scenario
+								{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 1, '='] },
+								{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 9, '='] } }
+							]
+						}
+					]
+				},
+				{
+					// Disappearance of the alien when the player has completed the scenario and obtained the feather
+					[Operator.NOT]: {
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 9, '='] },
+							{ [ConditionEnum.COLLEC]: Reward.PLUME }
+						]
+					}
+				}
 			]
 		},
-		missions: undefined,
-		flashvars: undefined
-	},
-	ALIEN_8: {
-		name: 'alien_8',
-		display: 'alien',
-		id: 33,
-		placeId: PlaceEnum.FOUTAINE_DE_JOUVENCE,
-		data: ALIEN_8,
-		condition: {
-			[ConditionEnum.SCENARIO]: [Scenario.STAR, 8, '=']
-		},
-		missions: undefined,
-		flashvars: undefined
-	},
-	MERGUEZ_STAR: {
-		name: 'merguez_star',
-		id: 34,
-		placeId: PlaceEnum.RUINES_ASHPOUK,
-		data: MERGUEZ_STAR,
-		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 2, '='] },
-				{ [ConditionEnum.EQUIP]: itemList[Item.CLOUD_BURGER].itemId }
-			]
-		},
-		display: 'merguez',
-		missions: undefined,
-		flashvars: undefined
-	},
-	SKULLY_STAR: {
-		name: 'skully_star',
-		id: 35,
-		placeId: PlaceEnum.CIMETIERE,
-		data: SKULLY_STAR,
-		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-				{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
-			]
-		},
-		display: 'skully',
 		missions: undefined,
 		flashvars: undefined
 	},
 	SKULLY: {
 		name: 'skully',
-		id: 36,
+		id: 30,
 		placeId: PlaceEnum.CIMETIERE,
 		data: SKULLY,
 		condition: {
-			[Operator.NOT]: {
-				[Operator.AND]: [
-					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-					{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
-				]
-			}
-		},
-		display: 'skully',
-		missions: undefined,
-		flashvars: undefined
-	},
-	BOB_STAR: {
-		name: 'bob_star',
-		id: 37,
-		placeId: PlaceEnum.BAO_BOB,
-		data: BOB_STAR,
-		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
-				{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
+			[Operator.OR]: [
+				// Present when the last mission is not completed or the player has not obtained the PDA, or if the player has not progressed past step 5 of the alien scenario
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END } },
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PDA } },
+				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '+'] } }
 			]
 		},
-		display: 'bob',
+		display: 'skully',
+		missions: M_SKULLY,
+		flashvars: undefined
+	},
+	MOULDEUR: {
+		name: 'mouldeur',
+		id: 31,
+		placeId: PlaceEnum.RUINES_ASHPOUK,
+		data: MOULDEUR,
+		condition: {
+			// Appears only at step 1 of Skully's last mission
+			[Operator.AND]: [{ [ConditionEnum.CURRENT_MISSION]: MissionID.SKULLY_END }, { [ConditionEnum.CURRENT_STEP]: 1 }]
+		},
+		display: 'moulder',
 		missions: undefined,
 		flashvars: undefined
 	}

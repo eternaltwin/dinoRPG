@@ -33,7 +33,10 @@ export enum ConditionEnum {
 	DINOZ_LIFE = 'dinoz_life',
 	KILL_BOSS = 'kill_boss',
 	LAUNCH_FIGHT = 'launch_fight',
-	DAY = 'day'
+	DAY = 'day',
+	GIVE_ITEM = 'give_item',
+	CURRENT_STEP = 'current_step',
+	DINOZ_COUNT = 'dinoz_count'
 }
 
 export enum TriggerEnum {

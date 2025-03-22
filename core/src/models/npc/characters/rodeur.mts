@@ -1,19 +1,26 @@
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
-import { NpcData } from '../NpcData.mjs';
-import { MissionID } from '../../missions/missionList.mjs';
 import { Item, itemList } from '../../item/ItemList.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const RODEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
+		condition: {
+			// Initial step if the dinoz is at least level 15 and has not finished the first mission
+			[Operator.AND]: [
+				{ [ConditionEnum.MINLEVEL]: 15 },
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } }
+			]
+		},
 		nextStep: ['go', 'talk', 'talk2'],
 		initialStep: true
 	},
 	talk: {
 		stepName: 'talk',
 		condition: {
-			[Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODLIF }
+			[Operator.NOT]: { [ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODRIZ }
 		},
 		nextStep: ['go', 'yes']
 	},
@@ -24,7 +31,7 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 	talk2: {
 		stepName: 'talk2',
 		condition: {
-			[ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODLIF
+			[ConditionEnum.CURRENT_MISSION]: MissionID.RODEUR_RODRIZ
 		},
 		nextStep: []
 	},
@@ -40,15 +47,16 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 		stepName: 'missions',
 		nextStep: []
 	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const RODEUR2: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
+	begin_2: {
+		stepName: 'begin_2',
+		condition: {
+			// Initial step if the dinoz is at least level 20 and has finished the first mission but not the last one
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF } },
+				{ [ConditionEnum.MINLEVEL]: 20 }
+			]
+		},
 		nextStep: ['qual', 'qual2'],
 		initialStep: true
 	},
@@ -82,24 +90,24 @@ export const RODEUR2: Readonly<Record<string, NpcData>> = {
 		stepName: 'more',
 		nextStep: ['missions']
 	},
-	missions: {
-		stepName: 'missions',
+	missions_2: {
+		stepName: 'missions_2',
 		nextStep: []
 	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const RODEUR3: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
-		nextStep: ['next'],
+	begin_3: {
+		stepName: 'begin_3',
+		nextStep: ['next_2'],
+		condition: {
+			// Initial step if the dinoz has completed the last mission and the player does not have the Tik reward
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF },
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } }
+			]
+		},
 		initialStep: true
 	},
-	next: {
-		stepName: 'next',
+	next_2: {
+		stepName: 'next_2',
 		nextStep: [],
 		reward: [
 			{

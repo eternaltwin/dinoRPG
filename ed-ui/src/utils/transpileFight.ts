@@ -1,6 +1,10 @@
-import { FightStep } from '@drpg/core/models/fight/FightStep';
-import { placeList } from '@drpg/core/models/place/PlaceList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
+import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { GroundEnum } from '@drpg/core/models/enums/GroundEnum';
+import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
+import { Status } from '@drpg/core/models/fight/DetailedFighter';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { FightStep } from '@drpg/core/models/fight/FightStep';
 import {
 	DamagesEffect,
 	DinoAction,
@@ -10,19 +14,15 @@ import {
 	StatusEffect,
 	transpiled
 } from '@drpg/core/models/fight/transpiler';
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Status } from '@drpg/core/models/fight/DetailedFighter';
-import { TFunction } from './translateFightStep.js';
-import { FighterRecap } from '@drpg/core/models/fight/FightResult';
-import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { FightText } from '@drpg/core/models/missions/specialActions';
-import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
+import { DialogText, FightText } from '@drpg/core/models/missions/specialActions';
+import { placeList } from '@drpg/core/models/place/PlaceList';
 import {
 	BASE_ASSAULT_ENERGY_COST,
 	BASE_ENERGY_COST,
 	ENERGY_RECOVERY_BASE_FACTOR
 } from '@drpg/core/utils/fightConstants';
+import { TFunction } from './translateFightStep.js';
 
 export function resolveFightingPlace(placeId: number) {
 	const place = Object.values(placeList).find(p => p.placeId === placeId);
@@ -139,6 +139,7 @@ export function transpileFight(
 	fight: Array<FightStep>,
 	t: TFunction,
 	startText: FightText | undefined,
+	dialog: DialogText | undefined,
 	endText: FightText | undefined,
 	victory: boolean,
 	dojo?: boolean
@@ -156,6 +157,8 @@ export function transpileFight(
 	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
 	let timeLimit: number | undefined;
+	let dialogBubble = false;
+
 	if (startText) {
 		history.push({
 			action: DinoAction.TEXT,
@@ -213,6 +216,16 @@ export function transpileFight(
 					fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 				});
 				myFighter = undefined;
+				if (dialog && dialogBubble === false) {
+					if (i + 1 < fight.length && fight[i + 1].action !== 'arrive') {
+						dialogBubble = true;
+						history.push({
+							action: DinoAction.TALK,
+							fid: dialog.fid,
+							message: t(`quest.${dialog.message}`)
+						});
+					}
+				}
 				break;
 			case 'activateEnvironment':
 				break;

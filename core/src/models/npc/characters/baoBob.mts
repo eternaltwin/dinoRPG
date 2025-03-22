@@ -1,13 +1,22 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
-import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
-import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
+import { ServiceEnum } from '../../enums/ServiceEnum.mjs';
 import { Item, itemList } from '../../item/ItemList.mjs';
+import { NpcData } from '../NpcData.mjs';
 
 export const BAOBOB: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
+		condition: {
+			// Initial step if the conditions of the alien scenario are not met
+			[Operator.NOT]: {
+				[Operator.AND]: [
+					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
+					{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
+				]
+			}
+		},
 		nextStep: ['question', 'nothing'],
 		initialStep: true
 	},
@@ -137,20 +146,20 @@ export const BAOBOB: Readonly<Record<string, NpcData>> = {
 		nextStep: [],
 		alias: 'nothing'
 	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const BOB_STAR: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
-		nextStep: ['ok'],
+	begin_star: {
+		stepName: 'begin_star',
+		condition: {
+			// Initial step if the player is at step 6 of the alien scenario
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 6, '='] },
+				{ [Operator.OR]: [{ [ConditionEnum.HOUR]: 5 }, { [ConditionEnum.HOUR]: 6 }, { [ConditionEnum.HOUR]: 7 }] }
+			]
+		},
+		nextStep: ['ok_star'],
 		initialStep: true
 	},
-	ok: {
-		stepName: 'ok',
+	ok_star: {
+		stepName: 'ok_star',
 		nextStep: ['star']
 	},
 	star: {

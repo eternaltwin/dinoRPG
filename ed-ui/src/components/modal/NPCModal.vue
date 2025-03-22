@@ -45,7 +45,7 @@ export default defineComponent({
 	.box {
 		cursor: pointer;
 		background-repeat: repeat-y;
-		max-width: 95%;
+		max-width: 70%;
 		min-height: 75px;
 		//background-image: url('../../assets/background/dialog_bg_pix.webp');
 		background: url('../../assets/background/dialog_bg_top_left.webp'),

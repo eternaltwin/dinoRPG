@@ -131,6 +131,7 @@ export default defineComponent({
 					params: { id: this.$route.params.dinozId.toString(), npc: this.npcName }
 				});
 			} else {
+				console.log('Redirection vers DinozPage');
 				this.dinozStore.clearNpc(this.dinozId);
 				this.$router.push({ name: 'DinozPage', params: { id: this.$route.params.dinozId } });
 			}
@@ -197,6 +198,7 @@ export default defineComponent({
 			fightSteps,
 			this.$t,
 			fightResult.startText,
+			fightResult.dialog,
 			fightResult.endText,
 			fightResult.result
 		);

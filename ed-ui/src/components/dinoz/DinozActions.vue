@@ -217,14 +217,44 @@ export default defineComponent({
 							this.$route.params.id.toString(),
 							this.dinoz.missionId!
 						);
-					} else {
+					} else if (this.mission && this.mission.actionType === ConditionEnum.LAUNCH_FIGHT) {
 						try {
 							this.npcName = action.prop as string;
-							this.NPCModal = await MissionService.interactMission(
+							const fight = await MissionService.startFightMission(
 								this.$route.params.id.toString(),
 								this.dinoz.missionId!,
 								action.prop as string
 							);
+							this.sessionStore.setFightResult(fight);
+							this.$router.push({
+								name: 'Fight',
+								params: { dinozId: this.$route.params.id.toString() }
+							});
+						} catch (e) {
+							errorHandler.handle(e, this.$toast);
+						}
+					} else {
+						try {
+							if (this.mission && 'npcName' in this.mission) {
+								const npcName = this.mission.npcName;
+								const dialog = await MissionService.interactMission(
+									this.$route.params.id.toString(),
+									this.dinoz.missionId!,
+									action.prop as string
+								);
+								this.$router.replace({
+									name: 'NPC2',
+									params: { id: this.$route.params.id.toString(), npc: npcName },
+									state: { dialogue: dialog }
+								});
+							} else {
+								this.npcName = action.prop as string;
+								this.NPCModal = await MissionService.interactMission(
+									this.$route.params.id.toString(),
+									this.dinoz.missionId!,
+									action.prop as string
+								);
+							}
 						} catch (e) {
 							errorHandler.handle(e, this.$toast);
 						}

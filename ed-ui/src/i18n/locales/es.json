@@ -1061,7 +1061,10 @@
 				"ingr": "¡Pum pum palalam pum pum pam pum pum palalam pam! ¡Ea! Aquí tienes una magnífica Poción Anti Sedh para ti...",
 				"potion": "Mmmm... hasta la próxima amigo, ¡vuelve cuando quieras!",
 				"ok": "Tu Dino ahora se está concentrando. Cuando haya suficientes, serán teletransportados a otro mundo.",
-				"bye": "¡Hasta la próxima y diviértete!"
+				"bye": "¡Hasta la próxima y diviértete!",
+				"begin_star": "¿Qué vienes a hacer a esta hora tan matinal?",
+				"ok_star": "¡Ah! Sí... se me han pegado las sábanas. Ten, lo había guardado para ti. Espero que no te dé demasiados problemas...",
+				"star": "¡Con estas extrañas palabras, Bao Bob te confía la 6ª estrella mágica! ¡¡¡Ya no queda más que una!!!"
 			},
 			"playerChoice": {
 				"question": "Tengo una pregunta para ti...",
@@ -1080,7 +1083,9 @@
 				"noingr": "¡Aquí están los ingredientes!",
 				"ingr": "¡Aquí están los ingredientes!",
 				"potion": "¡Eres un Apio Antique!",
-				"ok": "De acuerdo"
+				"ok": "De acuerdo",
+				"ok_star": "Busco...",
+				"star": "???"
 			}
 		},
 		"baofan": {
@@ -1148,12 +1153,17 @@
 				"begin": "¡Saludos saludines! ¡Acércate a oler mis grasientas salchichas!....... ¿Cómo? ¿Qué menuda idea la de vender salchichas en un lugar tan lúgubre? ¡Pero si estas Ruinas son magníficas! Estoy seguro de que algún día vendrán millones de turistas a visitar este lugar.",
 				"ah": "¡Sin lugar a dudas! Es un poco como en la agriópolis: mi primo hizo allí una fortuna vendiendo mecheros en forma de templo. Está claro que aquí seré yo el primero. No me importa si tengo que esperar varios años para que esto se lance... ¡no pienso dejarle esta oportunidad a otros!",
 				"ok": "Ten, tu Dino está muy delgado... ¡dale esta salchicha! Es gratis, a condición de que hables superbien de las Ruinas Ashpuk a tus amigos. ",
-				"thanks": "De nada, de nada, ¡es bueno para el negocio!"
+				"thanks": "De nada, de nada, ¡es bueno para el negocio!",
+				"begin_star": "Ooh, ¡veo que tu Dino transporta una nube-hamburguesa! ¿Sabías que es muy malo para la salud? A menos que no quieras que tu Dino se ponga tan gordo como un luchador de Sumo...",
+				"ok_star": "Quítame esta nube-hamburguesa de la vista y cómete una de mis salchichas... toma, te doy este objeto que me encontré en el suelo como regalo de fidelidad.",
+				"star": "¡Genial! ¡El vendedor de salchichas te ha dado una de sus estrellas mágicas!"
 			},
 			"playerChoice": {
 				"ah": "Ah....",
 				"ok": "Pues sí...",
-				"thanks": "Gracias."
+				"thanks": "Gracias.",
+				"ok_star": "...",
+				"star": "¿Mmm?"
 			}
 		},
 		"shaman": {
@@ -1360,7 +1370,16 @@
 				"talk": "¿Uh? ¿Qué? ¿Puedes verme? ..... Grrrrr....",
 				"yes": "Uhm... bien... ya veo... ¡me habían garantizado que esta capa te hace invisible! ¿Puedes mirarme la etiqueta en la espalda, a ver qué dice?",
 				"read": "¡¿Qué?! ¿\"LAVAR CON AGUA DE ARROZ\"? Uhm... el vendedor habló de recargar algo... voy a tener que usar... ¿arroz? ¿Pero dónde puedo yo encontrar eso?\n",
-				"talk2": "¡Rápido! ¡Necesito Arroz!"
+				"talk2": "¡Rápido! ¡Necesito Arroz!",
+				"begin_2": "Mi capa va de nuevo a estropearse... empiezo a estar un poco cansado...",
+				"qual2": "En lugar de decir estupideces, será mejor que intentes cumplir tu misión...",
+				"qual": "¿QUÉ? ¿Cómo osas hablar así de la gran tecnología de Caushemesh? ¿Sabes cuántos años de búsqueda les ha hecho falta a nuestros científicos para controlar el Éter?",
+				"caush": "¡Sí! Por supuesto, la gran civilización de las Montañas de Caushemesh, más allá de las Estepas Magnéticas. Estamos más desarrollados que los bárbaros de Dinovilla...",
+				"ether": "Tras centenas de años de búsqueda, los Caushemeshianos han conseguido controlar la potencia del Éter, una sabiduría que mezcla elementos del Aire y del Vacío. Esto nos da una potencia tecnológica fuera de lo normal. ¡Los ingenieros de Caushemesh son los mejores de todo Dinoland!",
+				"next": "Tus Dinos son muy poquita cosa comparados con los de Caushemesh, no pesan lo suficiente. ¡Ja, ja, ja! Entrena bien a tus Dinos, joven maestro, ¡pues un día tendrás que afrontar peligros aún mayores!",
+				"more": "Bueno, ya he contado demasiado... Para convencerte sobre la tecnología de Caushemesh, ¿qué tal una pequeña misión?",
+				"begin_3": "Para tu información, los Dinos Sombra que encontraste no eran más que principiantes que acabamos de entrenar en esta parte de Dinoland... La potencia de los Dinos de Caushemesh va más allá, ¡e incluso el Venerable no sería lo suficientemente poderoso contra nuestros mejores Dinos!",
+				"next_2": "Bueno, bueno, yo cumplo con mis promesas. Aquí tienes una recompensa para convencerte de la superioridad de la tecnología de Caushemesh. Solo tengo un ejemplar, así que haz buen uso de él... Se trata de un Brazalete de Tik que podrás equipar en tu Dino."
 			},
 			"playerChoice": {
 				"go": "Este personaje parece peligroso... ¡irse de aquí!",
@@ -1368,36 +1387,15 @@
 				"yes": "Ehh... sí",
 				"read": "Leer la etiqueta.",
 				"missions": "Ayudar al merodeador",
-				"talk2": "Hablar con él"
-			}
-		},
-		"rodeur2": {
-			"speech": {
-				"begin": "Mi capa va de nuevo a estropearse... empiezo a estar un poco cansado...",
-				"qual2": "En lugar de decir estupideces, será mejor que intentes cumplir tu misión...",
-				"qual": "¿QUÉ? ¿Cómo osas hablar así de la gran tecnología de Caushemesh? ¿Sabes cuántos años de búsqueda les ha hecho falta a nuestros científicos para controlar el Éter?",
-				"caush": "¡Sí! Por supuesto, la gran civilización de las Montañas de Caushemesh, más allá de las Estepas Magnéticas. Estamos más desarrollados que los bárbaros de Dinovilla...",
-				"ether": "Tras centenas de años de búsqueda, los Caushemeshianos han conseguido controlar la potencia del Éter, una sabiduría que mezcla elementos del Aire y del Vacío. Esto nos da una potencia tecnológica fuera de lo normal. ¡Los ingenieros de Caushemesh son los mejores de todo Dinoland!",
-				"next": "Tus Dinos son muy poquita cosa comparados con los de Caushemesh, no pesan lo suficiente. ¡Ja, ja, ja! Entrena bien a tus Dinos, joven maestro, ¡pues un día tendrás que afrontar peligros aún mayores!",
-				"more": "Bueno, ya he contado demasiado... Para convencerte sobre la tecnología de Caushemesh, ¿qué tal una pequeña misión?"
-			},
-			"playerChoice": {
+				"talk2": "Hablar con él",
 				"qual2": "Seguramente sea de mala calidad...",
 				"qual": "Seguramente sea de mala calidad...",
 				"caush": "¿Caushemesh?",
 				"ether": "¿El éter?",
 				"next": "Y...",
 				"more": "¿De veras?",
-				"missions": "Acepta una misión."
-			}
-		},
-		"rodeur3": {
-			"speech": {
-				"begin": "Para tu información, los Dinos Sombra que encontraste no eran más que principiantes que acabamos de entrenar en esta parte de Dinoland... La potencia de los Dinos de Caushemesh va más allá, ¡e incluso el Venerable no sería lo suficientemente poderoso contra nuestros mejores Dinos!",
-				"next": "Bueno, bueno, yo cumplo con mis promesas. Aquí tienes una recompensa para convencerte de la superioridad de la tecnología de Caushemesh. Solo tengo un ejemplar, así que haz buen uso de él... Se trata de un Brazalete de Tik que podrás equipar en tu Dino."
-			},
-			"playerChoice": {
-				"next": "(cara de asombro)"
+				"missions_2": "Acepta una misión.",
+				"next_2": "(cara de asombro)"
 			}
 		},
 		"spelele": {
@@ -1493,7 +1491,7 @@
 				"auto": "¿Te puedo pedir un autógrafo?"
 			}
 		},
-		"alien_0": {
+		"alien": {
 			"speech": {
 				"begin": ". . . . . yo . . . perdido . . . . . sin potencia . . estrella . . . . nunca . . . . poder volver a casa . . . . ayuda",
 				"no": "Es verdad, ¡más vale evitarse problemas con gente rara!",
@@ -1502,7 +1500,20 @@
 				"dom": "Necesitaría tu ayuda para poder encontrar cristales de (TcEtCiNo)...\n\t\tVeamos... en tu idioma, la traducción más próxima debería ser 'estrellas brillantes'.",
 				"star": "Sí, ¡así es! Si me traes exactamente siete ejemplares de la Estrella, podré retomar mi camino ¡y quizás te recompense con un (CiLoJuAeDa) de mi propia casa!",
 				"how": "Es relativamente sencillo. Tienes que resolver un cierto número de adivinanzas espectaculares inscritas en la Guía del Turista Ecléctiko. Cada vez te leeré el pasaje, y luego te las tienes que desarreglar por ti mismo, ¡ah!",
-				"ah": "Si, eso, ¡ya te digo! Voy a buscar la Guía del Turista, no te vayas ahora vuelvo..."
+				"ah": "Si, eso, ¡ya te digo! Voy a buscar la Guía del Turista, no te vayas ahora vuelvo...",
+				"begin_first_star": "La Guía dice: \"¡Un megalobo te espera en la capital!\"",
+				"et": "¿Y qué? ¡Eso es todo! Habrá que desarreglárselas uno mismo por el momento, ¡siento ser tan ecléctico!",
+				"begin_star": "¡Ah! Veo que avanzas en tus investigaciones. Veamos qué nos dice la Guía del Turista...",
+				"star2": "Leo en la Guía: \"el tipo grasiento apreciará una nube transportada\"... ¿te dice algo?",
+				"star3": "Guía del Turista, página 879 apartado b: \"cuando tenemos lodo hasta el cuello, nada mejor que un buen pastel\". Está claro, ¿no?",
+				"star4": "Cito: \"Hacer un agujero en el agujero no es cosa de tonto\" ... ¿¿tienes alguna idea??",
+				"star5": "Está escrito en letras muy pequeñas: \"Los viejos huesos aprecian la vista de un... capsicum\", sí... debe de ser eso... (digo yo...)",
+				"star6": "Uhm... Anexo B de la Guía del Turista: \"Visita el hombre-dios cuando sea mediodía en Pekín\". Todo un programa...",
+				"star7": "¡Falta la última estrella! La guía dice \"en el país de Saru volverás de los muertos sin artificios\". ¡Buena suerte!",
+				"end": "Tu lenguaje local es bien raro... ¡la verdad es que no te entiendo nada!",
+				"begin_plume": ".... ¡¡¡Síii!!! ¡Gracias! ¡gracias! ¡gracias! ¡Gracias a ti voy a poder volver a (PuOsEniLa)! Me queda poco tiempo antes de que los astros dejen de estar alineados en Rochechouart...",
+				"ok": "¿Podrías darme las estrellas? Te daré como te prometí un (CiLoJuAeDa) a cambio. ¡También te ofrezco una babiola que encontré en tu mundo!",
+				"give": "El Ser Raro corre hacia una pequeña casa, y en un pequeño destello, esta desaparece. No quedan más que rastros quemados en el suelo y una columna de humo que se eleva muy alto en el cielo... te ha dejado un \"Napodino de Oro\" así como un extraño objeto de colección..."
 			},
 			"playerChoice": {
 				"begin": ". . . . . yo . . . perdido . . . . . sin potencia . . estrella . . . . nunca . . . . poder volver a casa . . . . ayuda",
@@ -1512,90 +1523,30 @@
 				"dom": "Eso veo, ¡qué mala suerte!",
 				"star": "¿Estrellas?",
 				"how": "¿Sabes cómo puedo encontrar esas estrellas?",
-				"ah": "¿\"Ah\"?"
-			}
-		},
-		"alien_1": {
-			"speech": {
-				"begin": "La Guía dice: \"¡Un megalobo te espera en la capital!\"",
-				"et": "¿Y qué? ¡Eso es todo! Habrá que desarreglárselas uno mismo por el momento, ¡siento ser tan ecléctico!"
-			},
-			"playerChoice": {
-				"et": "¿Y qué?"
-			}
-		},
-		"alien_8": {
-			"speech": {
-				"begin": ".... ¡¡¡Síii!!! ¡Gracias! ¡gracias! ¡gracias! ¡Gracias a ti voy a poder volver a (PuOsEniLa)! Me queda poco tiempo antes de que los astros dejen de estar alineados en Rochechouart...",
-				"ok": "¿Podrías darme las estrellas? Te daré como te prometí un (CiLoJuAeDa) a cambio. ¡También te ofrezco una babiola que encontré en tu mundo!",
-				"give": "El Ser Raro corre hacia una pequeña casa, y en un pequeño destello, esta desaparece. No quedan más que rastros quemados en el suelo y una columna de humo que se eleva muy alto en el cielo... te ha dejado un \"Napodino de Oro\" así como un extraño objeto de colección..."
-			},
-			"playerChoice": {
-				"ok": "...",
-				"give": "Dar las 7 Estrellas"
-			}
-		},
-		"alien_all": {
-			"speech": {
-				"begin": "¡Ah! Veo que avanzas en tus investigaciones. Veamos qué nos dice la Guía del Turista...",
-				"star2": "Leo en la Guía: \"el tipo grasiento apreciará una nube transportada\"... ¿te dice algo?",
-				"star3": "Guía del Turista, página 879 apartado b: \"cuando tenemos lodo hasta el cuello, nada mejor que un buen pastel\". Está claro, ¿no?",
-				"star4": "Cito: \"Hacer un agujero en el agujero no es cosa de tonto\" ... ¿¿tienes alguna idea??",
-				"star5": "Está escrito en letras muy pequeñas: \"Los viejos huesos aprecian la vista de un... capsicum\", sí... debe de ser eso... (digo yo...)",
-				"star6": "Uhm... Anexo B de la Guía del Turista: \"Visita el hombre-dios cuando sea mediodía en Pekín\". Todo un programa...",
-				"star7": "¡Falta la última estrella! La guía dice \"en el país de Saru volverás de los muertos sin artificios\". ¡Buena suerte!",
-				"end": "Tu lenguaje local es bien raro... ¡la verdad es que no te entiendo nada!"
-			},
-			"playerChoice": {
+				"ah": "¿\"Ah\"?",
+				"et": "¿Y qué?",
 				"star2": "Escuchar",
 				"star3": "Escuchar",
 				"star4": "Escuchar",
 				"star5": "Escuchar",
 				"star6": "Escuchar",
 				"star7": "Escuchar",
-				"end": "..."
-			}
-		},
-		"merguez_star": {
-			"speech": {
-				"begin": "Ooh, ¡veo que tu Dino transporta una nube-hamburguesa! ¿Sabías que es muy malo para la salud? A menos que no quieras que tu Dino se ponga tan gordo como un luchador de Sumo...",
-				"ok": "Quítame esta nube-hamburguesa de la vista y cómete una de mis salchichas... toma, te doy este objeto que me encontré en el suelo como regalo de fidelidad.",
-				"star": "¡Genial! ¡El vendedor de salchichas te ha dado una de sus estrellas mágicas!"
-			},
-			"playerChoice": {
+				"end": "...",
 				"ok": "...",
-				"star": "¿Mmm?"
-			}
-		},
-		"skully_star": {
-			"speech": {
-				"begin": "¡¡Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!! ¡¡¡¿Pero qué ven mis ojos?!!! ¡Es un magnífico ejemplar de \"Capsicum avuum\"! Qué color, qué olor, ¡es magnífico!",
-				"ok": "¡Te lo agradezco enormemente! ¡oh oh oh! A cambio de haberme ofrecido esta visión espléndida, voy a darte algo que me encontré buscando un hueso que había perdido. ¡Toma!",
-				"star": "Félicitations ! ¡Gracias a Calaveri, has recuperado la 5ª estrella mágica! Plus que deux !"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "¿Mmm?"
+				"give": "Dar las 7 Estrellas"
 			}
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh!! Lo siento, pero los desarrolladores son muy vagos y aún no me han incluido en el juego. ¡Qué pena!"
+				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh!! Lo siento, pero los desarrolladores son muy vagos y aún no me han incluido en el juego. ¡Qué pena!",
+				"begin_star": "¡¡Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!! ¡¡¡¿Pero qué ven mis ojos?!!! ¡Es un magnífico ejemplar de \"Capsicum avuum\"! Qué color, qué olor, ¡es magnífico!",
+				"ok_star": "¡Te lo agradezco enormemente! ¡oh oh oh! A cambio de haberme ofrecido esta visión espléndida, voy a darte algo que me encontré buscando un hueso que había perdido. ¡Toma!",
+				"star": "Félicitations ! ¡Gracias a Calaveri, has recuperado la 5ª estrella mágica! Plus que deux !"
 			},
 			"playerChoice": {
 				"ok": "...",
+				"ok_star": "...",
 				"star": "¿Mmm?"
-			}
-		},
-		"bob_star": {
-			"speech": {
-				"begin": "¿Qué vienes a hacer a esta hora tan matinal?",
-				"ok": "¡Ah! Sí... se me han pegado las sábanas. Ten, lo había guardado para ti. Espero que no te dé demasiados problemas...",
-				"star": "¡Con estas extrañas palabras, Bao Bob te confía la 6ª estrella mágica! ¡¡¡Ya no queda más que una!!!"
-			},
-			"playerChoice": {
-				"ok": "Busco...",
-				"star": "???"
 			}
 		}
 	},
