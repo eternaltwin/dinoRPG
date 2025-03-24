@@ -869,21 +869,15 @@
 			"padamoine": "Padamoon apprentice",
 			"hulot": "Nicolas Mulot",
 			"rodeur": "Strange Prowler",
-			"rodeur2": "Strange Prowler",
-			"rodeur3": "Strange Prowler",
 			"spelele": "Popotholeler",
 			"pteroz": "Strange Dinoz",
 			"hippo": "Strange Dinoz",
 			"rocky": "Strange Stone",
 			"vener": "The Venerable",
-			"alien_0": "Strange Creature",
-			"alien_1": "Strange Creature",
-			"alien_8": "Strange Creature",
-			"alien_all": "Strange Creature",
-			"merguez_star": "Merguez Seller",
-			"skully_star": "Skully",
+			"alien": "Être Etrange",
 			"skully": "Skully",
-			"bob_star": "Mr. Bao Bob"
+			"baobabe": "BaoBabe",
+			"mouldeur": "Mouldeur"
 		},
 		"professor": {
 			"speech": {
@@ -1061,7 +1055,10 @@
 				"ingr": "Poom poom palalam poom poom pam poom poom palalam PAM! And here you go, a magnificent Anti-SEDH Potion for you...",
 				"potion": "Mmmm... goodbye my friend, come back to see me sometime!",
 				"ok": "Your dinoz is now focusing. When there are enough of them, they will be teleported to another world.",
-				"bye": "See you next time and have fun!"
+				"bye": "See you next time and have fun!",
+				"begin_star": "Que viens-tu faire à cette heure si matinale chez moi ?",
+				"ok_star": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardée pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
+				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
 			},
 			"playerChoice": {
 				"question": "I have a question for you...",
@@ -1080,7 +1077,9 @@
 				"noingr": "Here are the ingredients!",
 				"ingr": "Here are the ingredients!",
 				"potion": "So you are an Ancient Monkey!!!",
-				"ok": "Okay"
+				"ok": "Okay",
+				"ok_star": "Je cherche...",
+				"star": "???"
 			}
 		},
 		"baofan": {
@@ -1148,12 +1147,17 @@
 				"begin": "Ola ola ola! They are very greasy, my merguez! ....... How? What idea to come and sell merguez sausages in such a dismal place? But these Ruins are gorgeous!! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
 				"ah": "Yes, that's right! It's a bit like the Acre-o-Poles: my cousin makes a fortune there selling temple-shaped key rings. So I decided I would be the first merchant to set up shop at these magnificient ruins, even though it may take many years for my business to take off, I'm not going to let this golden opportunity pass by!",
 				"ok": "Take these Merguez. Your Dinoz is far too skinny! This one's on the house, as long as you do me a favor: promise me you'll tell your friends about the Ashpouk Ruins. Tell them all that I sell the best Merguez around. Promise me you won't forget?",
-				"thanks": "You're welcome, don't forget to tell all your friends!"
+				"thanks": "You're welcome, don't forget to tell all your friends!",
+				"begin_star": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? À moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
+				"ok_star": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
 			},
 			"playerChoice": {
 				"ah": "Oh...",
 				"ok": "Indeed...",
-				"thanks": "Thank you"
+				"thanks": "Thank you",
+				"ok_star": "...",
+				"star": "Ah ?"
 			}
 		},
 		"shaman": {
@@ -1360,7 +1364,16 @@
 				"talk": "What? You can see me? .... Argh! ....",
 				"yes": "The guy who sold me this cape assured me that it would make me invisible! Can you take a look at the indicator on my back, is something written on it?",
 				"read": "What? \"LOW BAT-RICE\"? Umm .... the seller told me to recharge something .... so I have to use .... rice? But where can I get rice from?",
-				"talk2": "Hurry! I NEED the rice to recharge my cape. Quick! Hurry!!"
+				"talk2": "Hurry! I NEED the rice to recharge my cape. Quick! Hurry!!",
+				"begin_2": "Ma cape est à nouveau en panne... je commence à en avoir un peu marre...",
+				"qual2": "Au lieu de dire des conneries, tu ferrais mieux d'essayer de remplir ta mission...",
+				"qual": "QUOI ?!? Comment oses-tu parler ainsi de la grande technologie Caushemeshenne ! Sais-tu simplement combien d'années recherches il a fallu à nos scientifiques pour maîtriser l'Ether ?!?",
+				"caush": "Oui ! Tout à fait, la grande civilisation des Montagnes de Caushemesh, bien au delà des Steppes Magnétiques. Nous sommes bien plus développés que les barbares de Dinoville...",
+				"ether": "Après des centaines d'années de recherche, les Caushemeshens ont maîtrisés la puissance de l'Ether, un savant mélange des éléments Air et Vide. Cela nous donne une puissance technologique hors du commun, et les ingénieurs de Caushemesh sont les meilleurs de tout Dinoland !",
+				"next": "Vos Dinoz sont bien faibles comparés à ceux de Caushemesh, ils ne font pas le poids ahahahah ah ! Entraîne bien tes Dinoz, jeune maître, car un jour viendra où tu devras affronter des dangers bien plus grands !",
+				"more": "Mais j'en ai déjà trop dit... Pour te convaincre de la technologie de Caushemesh, que dirais-tu d'une petite mission ?",
+				"begin_3": "Pour ton information, les Dinoz Sombres que tu as rencontré jusqu'à présent n'étaient que des débutants que nous venons faire entraîner dans cette partie de Dinoland... La puissance des Dinoz de Caushemesh va bien au delà, et même votre Vénérable ne ferait pas le poids contre nos meilleurs maîtres Dinoz !",
+				"next_2": "Enfin bon, je tiens ma promesse. Voici une récompense pour te convaincre de la supériorité de la technologie de Caushemesh. Je n'en ai qu'un exemplaire, alors fais-en bon usage... Il s'agit d'un Bracelet en Tik, que tu pourras équiper sur le Dinoz de ton choix..."
 			},
 			"playerChoice": {
 				"go": "This guy seems dangerous... it's probably a good idea to move away from him.",
@@ -1368,36 +1381,15 @@
 				"yes": "Umm... Yes",
 				"read": "Check the indicator",
 				"missions": "Help the Prowler",
-				"talk2": "Talk to him"
-			}
-		},
-		"rodeur2": {
-			"speech": {
-				"begin": "My cape ran out of rice again ... I'm starting to get sick of this...",
-				"qual2": "Instead of saying stupid things, maybe you should try and complete your mission...",
-				"qual": "What!? How dare you talk like that about Caushemesh technology! Do you know how many years of research it took our scientists to master the Ether?",
-				"caush": "Caushemesh is a large civilization in the Caushemesh Mountains, beyond the Magnetic Steppes. We're far more developed than these barbarians.",
-				"ether": "After centuries of research, the Caushemeshians have mastered the power of Ether, a complex mix of the Air and Void elements. It's an extraordinary technological advancement, all thanks to Caushemesh engineers, the best in Dinoland!",
-				"next": "Your Dinoz are too weak. They're no match for ours, hahahaha! Make sure you train your Dinoz well, as the day will come when you are called upon to fight more powerful enemies!",
-				"more": "Enough of me talking... what would you say about a little mission to convince you of the strength of our technology?"
-			},
-			"playerChoice": {
-				"qual2": "It's probably a bad quality cape",
-				"qual": "It's probably a bad quality cape",
-				"caush": "Caushemesh?",
-				"ether": "Etherwasp",
-				"next": "Deal...",
+				"talk2": "Talk to him",
+				"qual2": "Surement de la mauvaise qualité...",
+				"qual": "Surement de la mauvaise qualité...",
+				"caush": "Caushemesh ?",
+				"ether": "L'Ether ?",
+				"next": "Et...",
 				"more": "...",
-				"missions": "Accept the mission"
-			}
-		},
-		"rodeur3": {
-			"speech": {
-				"begin": "I thought I should let you know that all the Dark Dinoz you have met up until now were only newbies that we train in this region of Dinoland... the Dinoz of Caushemesh are far stronger. Even your Venerable will be no match for our strongest Dinoz masters!",
-				"next": "I'm a man of my word. Here's a reward to convince you of the superiority of Caushemesh technology. I only have one copy, so use it well... it's a bracelet made of Tik, you can equip it on any Dinoz of your choice."
-			},
-			"playerChoice": {
-				"next": "..."
+				"missions_2": "Accepter une mission.",
+				"next_2": "..."
 			}
 		},
 		"spelele": {
@@ -1493,109 +1485,140 @@
 				"auto": "Can I have an autograph?"
 			}
 		},
-		"alien_0": {
+		"alien": {
 			"speech": {
-				"begin": ". . . . . me . . . lost . . . . . without power . . stars . . . . never . . . . be able to go .... home . . . . help me?",
-				"no": "It's better not to get involved with people who look like that!",
-				"yes": ". . . . . Thanks  . . . . a lot . . . Bziiiiiiiiiiiiiiiiiiit! Ah! Finally! My simultaneous translator is fixed! Luckily I had some spare strawberry batteries! Thanks for offering your help my friend!",
-				"nothing": "But it's all thanks to you! As I just told you, I have a little technicological problem. My (SiAvUaEs) is completely broken, and I can't go back to (PuOsEniLa)!",
-				"dom": "I need your help to recover some crystals from (TcEtCiNo)... Let me think... How can I describe them in your language? They look like shining stars!",
-				"star": "Yes! If you bring me exactly seven stars. I'll be able to finish my journey, and maybe reward you with a (CiLoJuAeDa) from my planet!",
-				"how": "It's relatively easy. All you have to do is complete missions which are listed in the Eclectik Tourist Guide. Each time I read out a mission description, you'll have to complete it!",
-				"ah": "Hmmmm... well! I'm going to get the Tourist Guide. Wait here, I'll be back in a minute...."
+				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+				"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
+				"yes": ". . . . . Thank you . . . . very . . . Bziiiiiiiiiiiiiiiiiiit ! Ah ! Voilà ! Mon traducteur simultané est réparé ! Heureusement que j'avais emmené des batteries à la fraise de rechange ! Merci, très cher ami, merci de votre aide si aimablement proposée...",
+				"nothing": "C'est tout à votre honneur du poil ! Comme j'essayais de vous le dire à l'instant, j'ai un petit problème technicologique. Mon (SiAvUaEs) est cassé comme une noisette, et je ne peux donc pas rentrer chez moi, sur (PuOsEniLa) !",
+				"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)... Voyons voir... dans votre langage, cela devrait ressembler à des étoiles brillantes, avec l'air très appétissant !",
+				"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée, et je serais même prèt à vous récompenser avec un (CiLoJuAeDa) de chez moi !",
+				"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations, qui sont inscrites dans le Guide du Touriste Éclectik. A chaque fois je vous lirai le passage, ensuite à vous de vous débrouissailler ! Ah !",
+				"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant...",
+				"begin_first_star": "Le Guide a dit : \"Un mégaloup t'attend dans la capitale !\"",
+				"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !",
+				"begin_star": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite....",
+				"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
+				"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
+				"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
+				"star5": "C'est écrit tout petit, je vais essayer de bien lire les mots : \"Les vieux os apprécient parait-il la vue d'un ... capsicum\" , oui... ça doit être ça... (enfin je pense)",
+				"star6": "Uhm... Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\". Tout un programme...",
+				"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\". Courage !",
+				"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !",
+				"begin_plum": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
+				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
+				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
 			},
 			"playerChoice": {
-				"begin": ". . . . . me . . . lost . . . . . without power . . stars . . . . never . . . . be able to go .... home . . . . help me?",
-				"no": "No way",
-				"yes": "Um... yes?",
-				"nothing": "Please, don't mention it...",
-				"dom": "That's very sad!",
-				"star": "Stars?",
-				"how": "And how do I find these stars?",
-				"ah": "\"Ah\"?"
-			}
-		},
-		"alien_1": {
-			"speech": {
-				"begin": "The Guide says: \"A megawolf is waiting you in the capital!\"",
-				"et": "And? That's all! You'll have to carry this mission out alone. Sorry to be so eclectic!"
-			},
-			"playerChoice": {
-				"et": "And?"
-			}
-		},
-		"alien_8": {
-			"speech": {
-				"begin": ".... Yeaaaahh!!! Thanks a lot! I'll finally be able to return to (PuOsEniLa)! I have to hurry though, as the stars are aligning in the Rochechouart.",
-				"ok": "Can you give me the stars. I'll give you a (CiLoJuAeDa) in exchange, plus a trinket I found in Dinoland!",
-				"give": "The Strange Being runs to some kind of small house, then a big lightning strikes before the house disappears. All that remains are burned traces on the ground and a column of smoke rising far up into the sky... He left you one \"Gold Napodino\" and a strange collectible item..."
-			},
-			"playerChoice": {
+				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
+				"no": "Pas question",
+				"yes": "Euh... oui ?",
+				"nothing": "De rien...",
+				"dom": "Effectivement, quel dommage !",
+				"star": "Des étoiles ?",
+				"how": "Et comment trouver ces étoiles ?",
+				"ah": "\"Ah\" ?",
+				"et": "Et ?",
+				"star2": "Écouter",
+				"star3": "Écouter",
+				"star4": "Écouter",
+				"star5": "Écouter",
+				"star6": "Écouter",
+				"star7": "Écouter",
+				"end": "...",
 				"ok": "...",
-				"give": "Hand over the 7 stars"
-			}
-		},
-		"alien_all": {
-			"speech": {
-				"begin": "Ah! I see that you're progressing with your quest! Let see what the Tourist Guide says next...",
-				"star2": "The guide says: \"The enthusiastic greasy man would appreciate a transported cloud\"... does that mean anything to you?",
-				"star3": "Tourist Guide, page 879 indent B: \"When you get stuck up to the neck, nothing is better than a nice cake\". Does that mean anything to you?",
-				"star4": "The guide says: \"The shady hole call will serve you\"... Do you have any ideas??",
-				"star5": "The next one is written in small text. It says: \"The old bones like to watch a... capsicum\", yup... that's all it says... (I think)",
-				"star6": "Appendix B of the Tourist Guide: \"Visit the god-man at noon at Pek-1\". Mmmmmmm....",
-				"star7": "The last missing star! The Guide says: \"At the country of Saru, you will return from the dead without firework\". Sounds dangerous!",
-				"end": "Your language is a bit strange... I can't make sense of it!"
-			},
-			"playerChoice": {
-				"star2": "Listen",
-				"star3": "Listen",
-				"star4": "Listen",
-				"star5": "Listen",
-				"star6": "Listen",
-				"star7": "Listen",
-				"end": "..."
-			}
-		},
-		"merguez_star": {
-			"speech": {
-				"begin": "Oh, I see that your Dinoz is carrying a cloud burger! Did you know that they're bad for your health? Unless you want your Dinoz to become a Sumo?!?",
-				"ok": "Throw away your nasty Burger and taste my merguez instead! Take this item as a sign of loyalty. I found it on the ground!",
-				"star": "Great! The merguez seller has given you one of the seven magic stars!"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "Ah?"
-			}
-		},
-		"skully_star": {
-			"speech": {
-				"begin": "Oh oh!! What do we have here!!! It's a magnificent \"Capsicum annuum\"! What colors, what odors, it's absolutely beau-ti-ful!",
-				"ok": "Thank you so much! In exchange, I'm going to give you this item. I found it while searching for a lost bone! Take it!",
-				"star": "Congratulations! Thanks to Skully, you've found the 5th magic star! You only have 2 more to find!"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "Ah?"
+				"give": "Donner les 7 Étoiles"
 			}
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Sorry but the game developers are super lazy and have not integrated fully my features in the game. What a shame!"
+				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
+				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
+				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !",
+				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout... Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!! ... enfin presque.",
+				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler. D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
+				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
+				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, (une fois de plus si ça se trouve) ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
+				"uhm": "Je te raconte tout ça ! oh oh oh ! Mais ca n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
+				"bonne": "Oui, oh ! oh oh oh ! C'est comme une malédiction mais en mieux ! je suis protégée par une bonnédiction pour éviter que les gens fassent des cauchemars et pour éloigner les scientifiques. Ils seraient trop ravis d'examiner la façon dont je me nourris,  oh oh oh ! Je ne fais même plus attention à mon cholestérol. Bref, peu aprés m'avoir vu, les gens m'oublient aussitôt !",
+				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHERI !!!",
+				"nohelp": "Tu ne peux m'aider de toute façon... oh oh oh ! Laisse moi seule maintenant, je vais penser à lui, et n'oublie pas de m'oublier...",
+				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeller les détails...",
+				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ca va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
+				"accept": "OH OH OH OH OH !! Alors, s'il te plait Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
+				"missions": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
+				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brulés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quand à ces étranges marques...",
+				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brulé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
+				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
+				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
+				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"skully": "Quoi ? Vous connaissez Skully ?!?",
+				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompais pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidé !",
+				"end": "Si ! C'est un véritable exploit !!! Accompagnez moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la comtempler yeux-dans-les-yeux !!",
+				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
+				"begin_memory": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
+				"begin_pda": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
+				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
+				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
+				"begin_star": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
+				"ok_star": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
+				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
 			},
 			"playerChoice": {
+				"arg": "Ahhhh ! Un fanntôoommme !!!",
+				"bye": "S'enfuir en courant",
+				"shortcut": "(admin)",
+				"arg2": "Ici !!! Vous !!!",
+				"diff": "Et quelle différence ça fait ?",
+				"free": "Presque libre ? C'est-à-dire ?",
+				"haunt": "Vous hantez cet endroit alors !",
+				"do": "Ah ? Et quoi donc par exemple !",
+				"uhm": "Uhm....",
+				"bonne": "Une... bonnédiction ?!?",
+				"reset": "Je ne vous crois pas...",
+				"next": "C'est peu pratique...",
+				"nohelp": "Qui est Mouldeur ?",
+				"help": "Je pourrais vous aider...",
+				"forgot": "...",
+				"question": "Je ne vais rien oublier !",
+				"accept": "Oui ! Sans aucun doute !",
+				"maybe": "Il faut que j'y réflechisse...",
+				"missions": "Que dois-je faire maintenant ?",
+				"you": "Vous êtes Mouldeur ?",
+				"explain": "Ah... Et ?",
+				"other": "Et l'autre explication ?",
 				"ok": "...",
+				"ok2": "Mais... vous aussi !",
+				"skully": "Skully vous cherche aussi...",
+				"exp": "(Expliquer toute l'histoire)",
+				"end": "Ce n'est vraiment rien...",
+				"dinoz": "Ce n'était vraiment rien",
+				"pda": "Ce n'était vraiment rien",
+				"ok_star": "...",
 				"star": "Ah?"
 			}
 		},
-		"bob_star": {
+		"mouldeur": {
 			"speech": {
-				"begin": "hat are you doing in my house at this time in the early morning?",
-				"ok": "Sorry, I'm not fully awake yet. I had no idea. Here, take this, I've been keeping it for you. I hope it won't cause you any problems...",
-				"star": "Bao Bob has entrusted you with the 6th magic star! Only one left!!!"
+				"begin": "Uhmm.... Quelle délicieuse odeur ces Crevettes au Napalm ! Elle me rappellent la cuisine de ma pauvre femme !",
+				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brulés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quand à ces étranges marques...",
+				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brulé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
+				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
+				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
+				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"skully": "Quoi ? Vous connaissez Skully ?!?",
+				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompais pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidé !",
+				"end": "Si ! C'est un véritable exploit !!! Accompagnez moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la comtempler yeux-dans-les-yeux !!"
 			},
 			"playerChoice": {
-				"ok": "I'm looking for something...",
-				"star": "???"
+				"you": "Vous êtes Mouldeur ?",
+				"explain": "Ah... Et ?",
+				"other": "Et l'autre explication ?",
+				"ok": "...",
+				"ok2": "Mais... vous aussi !",
+				"skully": "Skully vous cherche aussi...",
+				"exp": "(Expliquer toute l'histoire)",
+				"end": "Ce n'est vraiment rien..."
 			}
 		}
 	},
@@ -2095,15 +2118,15 @@
 			"GardeForestier": "Increases the Wood defense of all Dinoz in the Group by 3",
 			"Fouille": "Allows Dinoz to find artifacts in some places",
 			"Detective": "Enables the Dinoz to find uncommon artifacts in some places",
-			"ExpertEnFouille": "Permet au Dinoz de chercher une case supplémentaire",
+			"ExpertEnFouille": "Permet au Dinoz de chercher une case de plus lors d'une action de fouille",
 			"Cocon": "Increases the speed of recovery of life points when resting",
 			"Geant": "Augmente la puissance de tous les assauts de 5, augmente les PV max de 30 et diminue la vitesse du Dinoz de 20%",
 			"Archeologue": "Enables the Dinoz to find rare or exceptional artifacts in some places\t",
-			"Colosse": "Augmente la puissance de tous les assauts de 15 et les PV max de 50. Réduit la vitesse de 20%.",
+			"Colosse": "Augmente la puissance de tous les assauts de 15, augmente les PV max de 30 et diminue la vitesse de 20%",
 			"Tenacite": "Increases minimum damage by 1",
 			"Charisme": "Dinoz can be followed by an additional dinoz ",
 			"ResistanceALaMagie": "Cancels all negative status of the Dinoz",
-			"Ingenieur": "Tous les Dinoz débloquent un emplacement d'équipement supplémentaire",
+			"Ingenieur": "Tous les Dinoz débloquent un emplacement d'équipement supplémentaire (non cumulable)",
 			"CanonAEau": "Attacks one enemy with Water at a strength of 6",
 			"Gel": "Attacks one enemy with Water at a strength of 5. The enemy's speed is reduced",
 			"DoucheEcossaise": "Attacks all enemies with Water at a strength of 2",
@@ -2113,10 +2136,10 @@
 			"Sapeur": "Increases the probability of using combat gear by 50%",
 			"RayonKaarSher": "Attacks all the enemies with Water at a strength of 7",
 			"Magasinier": "Increases maximum inventory capacity by 50%",
-			"Perception": "Augmente la puissance de tous les assauts Eau de 4, et permet au Dinoz d'attaquer les ennemis intangibles",
+			"Perception": "Augmente la puissance de tous les assauts Eau de 4, et permet au Dinoz d'annuler l'effet intangible à chaque assaut. Annule également l'effet des compétences coup sournois et coup fatal.",
 			"CoupsSournois": "Attacks one enemy. If successful, the enemy loses half of its health points",
 			"ApprentiPecheur": "Allows Dinoz to catch small fish in some places",
-			"CoupFatal": "Attaque un ennemi. S'il est touché, il perd tous ses points de vie.",
+			"CoupFatal": "Attaque un ennemi. S'il est touché, il perd tous ses points de vie (soumis à équilibrage) s'il n'a pas la compétence perception. Note : ne fonctionne pas sur les boss.",
 			"EntrainementSousMarin": "Increases maximum health points by 10",
 			"PecheurConfirme": "The Dinoz can catch big fishes in certain places",
 			"Marecage": "Slows down all enemies",
@@ -2128,8 +2151,8 @@
 			"SansPitie": "Chooses the target with the least health points for each assault",
 			"CloneAqueux": "Creates a clone of the Dinoz with 1 health point",
 			"GriffesEmpoisonnees": "If one of the Dinoz's Water assaults hits an enemy, it becomes poisoned for a medium duration",
-			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les Dinoz",
-			"SangAcide": "Les ennemis attaquant le Dinoz en mêlée ont une chance de subir des dégâts relatifs à l'élément Eau du Dinoz",
+			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les Dinoz (non cumulable)",
+			"SangAcide": "Les ennemis attaquant le Dinoz en mêlée ont une chance de subir des dégâts relatifs à l'élément Eau du Dinoz (soumis à équilibrage)",
 			"Regenerescence": "Increases speed of health points recovery when resting",
 			"PremiersSoins": "Dinoz will recover one health point at the end of the fight if he has lost some life",
 			"PureeSalvatrice": "Cancels all Negative Status of the Group",
@@ -2139,14 +2162,14 @@
 			"Benediction": "Gives the status Blessed to a group",
 			"ArchangeCorrosif": "Increases the Fire element by 2 and the Lightning element by 1",
 			"ArchangeGenesif": "Increases the Wood element by 2 and the Lightning element by 1",
-			"Pretre": "Augmente de 1 les PV récupérés par heure lors du repos pour tous les Dinoz",
+			"Pretre": "Augmente de 1 les PV récupérés par heure lors du repos pour tous les Dinoz (non cumulable)",
 			"Paratonnerre": "Enables the Dinoz to absorb the lightning energy in some places",
 			"Medecine": "Allows to recover up to 3 HP at the end of a fight",
 			"FissionElementaire": "Enables the dinoz to collect all kind of element energy in some places",
 			"CrocsDiamant": "Increases the strength of all assault by 2",
 			"Brancardier": "Enables one another Dinoz in the Group to recover up to 5 health points at the end of the fight",
 			"Marchand": "Decreases all prices in Dinoland shops by 10%",
-			"Reincarnation": "Permet au Dinoz de se réincarner une fois à partir du lvl 40. Le Dinoz reviendra niveau 1 et recevra 5 points d'éléments supplémentaires répartis aléatoirement.",
+			"Reincarnation": "Permet au Dinoz de se réincarner une fois à partir du niveau 40 en mourant. Le Dinoz recommencera niveau 1, sans statut, compétence et missions mais recevra 5 points d'éléments supplémentaires répartis aléatoirement suivant ses affinités élémentaires.",
 			"Saut": "Enables to attack flying enemies",
 			"DisqueVacuum": "Attacks one enemy with Air at a strength of 12",
 			"AttaquePlongeante": "Attacks one enemy with an assault with Air bonus 2",
@@ -2159,20 +2182,20 @@
 			"Specialiste": "The weakest element disappears from attack circle of elements ",
 			"TalonDAchille": "Increases the strength of all assaults by 2",
 			"OeilDeLynx": "Enables the Dinoz to find exotic plants in some places",
-			"NuageToxique": "Empoisonne tous les ennemis, les dégâts par tour sont strictement égaux à l'élément Air du lanceur",
-			"HaleineFetive": "Empoisonne les ennemis touchés par un assaut",
+			"NuageToxique": "Empoisonne tous les ennemis pour une durée moyenne, les dégâts par tour sont strictement égaux à l'élément Air du lanceur",
+			"HaleineFetive": "Empoisonne les ennemis touchés par un assaut pour une longue durée, les dégâts par tour sont strictement égaux à l'élément Air du lanceur",
 			"Mistral": "Attacks all enemies with Air at a strengh of 3",
 			"TaiChi": "Increases strength of Air assault by 15. Decreases speed of Air attacks by 20%",
 			"Tornade": "Attacks all enemies with Air at a strength of 5",
 			"Eveil": "Decreases speed of Air attacks by 20%",
 			"PaumeEjectable": "Attacks one enemy with double power, then decreases initiative by 15",
 			"VentVif": "Gives Dinoz \"Accelerated\" status",
-			"FormeVaporeuse": "Chance de gagner le statut intangible en se défendant",
-			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5%",
+			"FormeVaporeuse": "Le Dinoz a 6% de chance de devenir intangible pour une durée courte juste avant de subir une attaque",
+			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5% (non cumulable)",
 			"MeditationSolitaire": "Increases Air defense by 3. Decreases the speed of Air attacks by 50%",
 			"MeditationTranscendantale": "Increases Air defense by 6. Decreases the speed of Air attacks by 50%",
 			"SouffleDeVie": "Protects Dinoz against poisons and curses",
-			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible",
+			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible pour une durée infinie",
 			"Brasero": "Attacks all enemies with Fire at a strength of 3",
 			"Detonation": "Dinoz loses 5 health points and gains 15 points of initiative",
 			"CoeurDuPhenix": "Increases the health points recovered at rest by 15%",
@@ -2181,23 +2204,23 @@
 			"GrosseBeigne": "Doubles strength of the next assault",
 			"Vitalite": "Increases maximum health points by 10",
 			"MoignonsLiquides": "Decreases initiative of an enemy by 25",
-			"Deluge": "Attaque tous les ennemis avec un pouvoir eau de 10, et diminue leur initiative de 8",
+			"Deluge": "Attaque tous les ennemis avec un pouvoir Eau de 10, et diminue leur initiative de 8",
 			"Reflex": "Increases initiative by 5",
 			"EclairSinueux": "Attacks up to 3 enemies with Lightning at a strength of 10",
 			"Survie": "Allow Dinoz to escape one death in combat",
 			"Aiguillon": "Attacks one enemy with Air at a strength of 3",
-			"AuraPuante": "Empoisonne les assaillants en mêlée",
+			"AuraPuante": "Empoisonne les assaillants en mêlée pour une durée moyenne, le poison inflige 10 dégâts",
 			"Hypnose": "One ennemy joins your side for 3 turns",
 			"Vendetta": "Increases the chance of counter-attacks by 20%",
 			"Secousse": "Ground attack with a power of Wood + Air at a strength of 4",
-			"Bulle": "Enveloppe le Dinoz dans une bulle réduisant les dégâts des sorts élémentaux de type autre que le bois. L'efficacité est basée sur la proportion des éléments eau et air devant les autres éléments.",
+			"Bulle": "Enveloppe le Dinoz dans une bulle réduisant les dégâts des sorts élémentaux de type autre que le bois. L'efficacité est basée sur la proportion des éléments Eau et Air devant les autres éléments.",
 			"Electrolyse": "Increases speed of all Dinoz of the Group by 5%",
 			"MaitreElementaire": "Increases Water and Fire elements by 2",
 			"Increvable": "Increases all defenses by 2",
 			"ArmureDeBasalte": "Increases armor by 3",
 			"Coque": "Increases armor by 1",
 			"ChargeCornue": "Increases strength of first assault by 20%",
-			"Rock": "Devient une cible privilégiée des ennemis",
+			"Rock": "À chaque assaut des ennemis, le Dinoz a 50% de chance de devenir leur cible.",
 			"Pietinement": "Removes enemies' armor",
 			"Cuirasse": "Reduces part of the damage at the moment of an opponent's attack",
 			"Insaisissable": "Increases evasion chances by 10%",
@@ -2220,11 +2243,11 @@
 			"PoingDeFeu": "Increases Fire assault power by 20",
 			"VideEnergetique": "5% chance to reduce the energy speed recovery by 15% when attacked with an assault",
 			"BouclierDinoz": "Automatically protects the dinoz with the least life points by taking damage in its stead for the duration of the combat",
-			"Courbatures": "Si le lanceur touche un ennemi lors d'un assaut après avoir activé cette compétence, l'endurance de l'ennemi sera réduite de 30%",
+			"Courbatures": "Diminue l'énergie maximale d'un adversaire de 30%",
 			"ForceControl": "The dinoz will deal a minimum of 10 damage on assaults",
 			"CourantDeVie": "Increases Water defense by 20 and increases Wood assaults by 20",
-			"Berserk": "Double la puissance des assauts, mais empêche l'utilisation des compétences A et E pendant la durée du combat",
-			"Sharignan": "Copie une compétence utilisée par l'adversaire et la conserve pendant la durée du combat",
+			"Berserk": "Double la puissance des assauts, mais empêche l'utilisation des compétences A et E pendant toute la durée du combat",
+			"Sharignan": "Copie une compétence utilisée par l'adversaire et la conserve pendant toute la durée du combat",
 			"Amazonie": "All dinoz (allies and enemies) without at least 10 points in Wood will not be able to use A and E skills during the user's next 3 turns unless they are victim of an attack which costs them at least 10 hit points",
 			"EauDivine": "Doubles the number of HP restored by the dinoz when resting",
 			"RadiationsGamma": "Increases all assaults of the Dinoz by 5, health points by 30 and decreases initiative by 10",
@@ -2243,7 +2266,7 @@
 			"ReceptacleTesla": "Blocks A and E sphere lightning skills of a dinoz",
 			"VitaliteMarine": "Increases HP by 80.",
 			"StimulationCardiaque": "Increases the dinoz energy recovery speed by 20%",
-			"MorsureDuSoleil": "Éblouit le Dinoz adverse. Ses assauts auront une chance sur 3 de toucher leur cible.",
+			"MorsureDuSoleil": "Éblouit le Dinoz adverse pour une durée moyenne. Ses assauts auront une chance sur 3 de toucher leur cible.",
 			"BatterieSupplementaire": "Increases max HP by 50 and reduces initiative by 15",
 			"Einstein": "Allows a dinoz to search an additional square during fission",
 			"ReceptacleAerien": "Cancels the type A and E Air spherical skills of a dinoz for the remainder of the fight",
@@ -2252,7 +2275,7 @@
 			"ForceDeZeus": "Increases the power of all Lightning Assaults by 20",
 			"RemanenceHertzienne": "Increases dodge chance by 20%",
 			"Blanc": "White",
-			"Anaerobie": "Augmente la puissance de tous les assauts de 20 lorsque le Dinoz est à Nimbao",
+			"Anaerobie": "Réduit l’endurance du Dinoz de 25%",
 			"DoubleFace": "50% chance to increase or reduce the caster's initiative by 10 at the start of a fight",
 			"Flagellation": "Reduces recovery speed by 15%",
 			"SouffleDange": "Increases fire defense by 20%",
@@ -2397,7 +2420,7 @@
 			"35": "This Bronze Medal rewards the Dinoz for having reached the 10th floor of the BrutForce Tournament.",
 			"36": "This Silver Medal rewards the Dinoz for having reached the 20th floor of the BrutForce Tournament.",
 			"37": "This Silver Medal rewards the Dinoz for having reached the 30th floor of the BrutForce Tournament.",
-			"38": "Cette médaille de diamant récompense les Dinoz légendaires ayant terminé le tournoi de Forcebrut.",
+			"38": "Cette Médaille de Diamant récompense les Dinoz légendaires ayant terminé le tournoi de Forcebrut.",
 			"49": "This item allows your Dinoz to access part of the Dark World.",
 			"53": "Your dinoz bathed in pure ether, it can now evolve using a whole new skills tree!",
 			"56": "Used to obtain the Negative Lodestone Shard from the Rocky Kin. (Can be obtained only once!)",
@@ -2593,7 +2616,13 @@
 			"hucure": "Remedy",
 			"bckpck": "Survival Kit",
 			"rodriz": "The Amnesic Rice",
-			"rodlif": "The Dark Dinoz"
+			"rodlif": "The Dark Dinoz",
+			"skully1": "Informations préliminaires",
+			"skully2": "Sur les trâces de Mouldeur",
+			"skully3": "Mademoiselle Bao",
+			"skully4": "Les touristes génants",
+			"skully5": "Des crevettes au Napalm",
+			"skully_end": "Les retrouvaillages"
 		},
 		"tooltip": "Mission: {mission}",
 		"description": {
@@ -2646,7 +2675,13 @@
 			"hucure": "Vat's is nice from you ... I vink the Bonks from mutant valls can help me ... Take the blants you brought me and go to see them on my vehalf ... Sniff....",
 			"bckpck": "Before starting my long and dangerous journey, there's one more thing I need, a good backpack. I lost mine when I was travelling through the Mutant Falls ... Can you find it for me?",
 			"rodriz": "I need some Amnesiac Rice to recharge my magic cape. I've been told that it grows in the Sticky Swamp of the Atlanteid Islands. Can you bring me enough Rice to recharge my cape so I can become invisible again? Hurry up, it's really important!",
-			"rodlif": "Three Dark Dinoz from Caushemesh are waiting for you at the Mutant Falls. Go and defeat them and then return to receive your reward ... take my advice, don't try to defeat them alone, your Dinoz could die!"
+			"rodlif": "Three Dark Dinoz from Caushemesh are waiting for you at the Mutant Falls. Go and defeat them and then return to receive your reward ... take my advice, don't try to defeat them alone, your Dinoz could die!",
+			"skully1": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'joe… Va le voir et tiens moi au courant !",
+			"skully2": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
+			"skully3": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau os retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce roblème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
+			"skully4": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
+			"skully5": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
+			"skully_end": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !"
 		},
 		"actions": {
 			"nothing": "{npc}",
@@ -2739,7 +2774,22 @@
 			"afraidFisher": "Fish",
 			"findBobine": "Find a Bobbin",
 			"couturiere": "Merchant",
-			"rice": "Search"
+			"rice": "Search",
+			"giveMerguez": "Donner les Merguez",
+			"give_item": "Donner {itemQuantity} {item}",
+			"readMessage": "Lire le message",
+			"panneau": "Panneau Indicateur",
+			"bao?": "Mademoiselle Bao ???",
+			"missBao": "Mademoiselle Bao",
+			"baoBabe": "Bao Babe",
+			"AAA": "Réunion des A.A.A",
+			"merguez": "Vendeur de Merguez",
+			"visitRuin": "Visiter les ruines",
+			"lookBoat": "Chercher un Bateau Louche",
+			"enterBoat": "Entrer dans le Bateau",
+			"freeMan": "Homme Libéré",
+			"korgon": "Chercher un Korgon",
+			"baiePira": "Baie aux Piranhoz"
 		},
 		"npc": {
 			"fishVendor": "The Fish Merchant",
@@ -2855,7 +2905,26 @@
 			"findBobine": "Find a Bobbin",
 			"couturiere": "Harvester",
 			"seekrice": "Search",
-			"pickrice": "Gather the Rice"
+			"pickrice": "Gather the Rice",
+			"ptitJoe": "Papy 'ptit' Joe",
+			"giveMerguez": "Donner les merguez",
+			"readMessage": "Lire le message",
+			"AAA": "Réunion des A.A.A",
+			"baiePira": "Baie aux Piranhoz",
+			"panneau": "Panneau Indicateur",
+			"bao?": "Mademoiselle Bao ???",
+			"missBao": "Mademoiselle Bao",
+			"baoBabe": "Bao Babe",
+			"merguez": "Vendeur de Merguez",
+			"visitRuin": "Visiter les ruines",
+			"lookBoat": "Chercher un Bateau Louche",
+			"enterBoat": "Entrer dans le Bateau",
+			"freeMan": "Homme Libéré",
+			"skully": "Skully",
+			"shrimpSeller": "Marchand de Crevettes",
+			"shamanM": "Shaman Mou",
+			"giveSos": "Donner les flammèches",
+			"korgon": "Chercher un Korgon"
 		},
 		"place": {
 			"port": "to Frish Port",
@@ -3234,6 +3303,49 @@
 			},
 			"rodlif": {
 				"forges": "Not bad for a weak Dinoz from Dinotown ... here take this!"
+			},
+			"skully1": {
+				"ptitJoe1": "Oncle Mouldeur ? Ohlala ca fait des années que je n'ai pas entendu parler de lui... Si tu veux en savoir plus, ramène-moi trois merguez du Grand Tout Chaud !",
+				"ptitJoe2": "Merci ! (crounch crounch) tout ce que je sais, c'est qu'oncle Mouldeur aimait beaucoup sa femme et a laissé un message pour elle gravé sur la Fontaine de Jouvence.",
+				"readMessage": "Dans une des nombreuses gravures de la Fontaine de Jouvence, on peut lire le message suivant : \"Je t'attendrai sur le lieu de notre rencontre\"",
+				"skull": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
+			},
+			"skully2": {
+				"touriste": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Si j'ai vu un dénommé Mouldeur ? Ah ! oui, il est parti assister à une réunion de l'Amicale des Anguilloz Anonymes ! Fait attention si tu vas là-bas car elles sont du genre susceptible...",
+				"fish1": "Ca mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fait gaffe mon gars, ça mordille ces saletés...",
+				"fish2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content...",
+				"panneau": "Un panneau semble avoir été récemment dressé près d'un parterre de nénuphars. On peut y lire le message suivant : \"Marre des moustiques, rejoins moi là où je t'ai déclaré ma flamme. Mouldeur.\"",
+				"skull": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
+			},
+			"skully3": {
+				"bao?": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure...",
+				"missBao": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe...",
+				"baoBabe1": "Tu cherches mon conseil ? Ecoute, je dois d'abord finir ma partie de dames avec le petit-fils de l'ArchiDorogon. Son grand-père m'a fait promettre de venir lui tenir compagnie de temps-en-temps... Que dirais-tu d'aller chasser quelques gobelins en attendant que je finisse ?",
+				"baoBabe2": "Voilà ! J'ai fini ! Je l'ai battu à plate couture hi hi hi ! J'adooore le mettre en colère, il est tellement mignon quand ses narines commencent à souffler de la vapeur d'eau ! Mais tu voulais me demander un conseil ?",
+				"baoBabe3": ".......... Oh ? Vraiment ? ..... La solution à ce genre de bonnédiction est très simple : il suffit que quelqu'un garde une partie de Skully toujours avec lui pour ne rien oublier... A bientôt, jeune homme !",
+				"skull": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
+			},
+			"skully4": {
+				"merguez": "Un client bizarre ? Oui, j'ai bien vu un type maigrichon qui est venu manger en lançant de grands soupirs... Il est parti se promener dans les ruines. Faites attention, on a des touristes d'un genre un peu particulier en ce moment...",
+				"lookBoat": "Après quelques recherches, vous trouvez un Bateau définitivement bizarre sur les quais.",
+				"freeMan": "Mmmerr mmerrciii !! Jejejej'ai eu trtrtrès pepeupeur vous sasavez ! Mouldeur ?? Nonon, je m'apeppelle Jean-Claude... Jeje susuis un ami du vendeur dede merguez ! Mermerci en tout cas de vovotre aide !",
+				"merguez2": "Vous avez sauvé Jean-Claude ? Ah !! Merci beaucoup. Ces bandits des steppes génaient vraiment l'émergence du tourisme de masse dans ces ruines. Je ne sais pas comment vous remercier ! .... Mouldeur ? Il a promis de revenir si je lui préparais des crevettes au Napalm, mais je ne connais pas la recette...",
+				"skull": "Oh oh oh ! Mouldeur n'est pas très loin, merci beaucoup de ton aide mon jeune ami !"
+			},
+			"skully5": {
+				"skully1": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
+				"shrimpSeller": "Je suis désolé mais suite à des fraudes je n'accepte aucune pièce d'or en paiement de mes crevettes. Il va falloir me ramener 3 Bons du Trésor...",
+				"giveTreasure": "Merci, voici vos crevettes ! Bon appétit !",
+				"skully2": "Oh oh oh ! Ma-gni-fi-que ! Ces crevettes sont d'une fraicheur incomparable ! Bon, passons à la suite. Deuxième ingrédient indispensable : du Napalm. Pour en fabriquer il nous faut de la lave de bonne qualité...",
+				"shaman": "Du Napalm ? Uhmm... Pour cela, il va te falloir faire un mélange moitié Lave - moitié Flammèches. On ne manque pas de Lave par ici, alors apporte-moi 5 Boites de Flammèche pour que je te prépare le mélange...",
+				"giveSos": "A glou ! A glou ! A gadagagou glou ! Et voilà, du Napalm à faible densité tout chaud pour toi....",
+				"skully3": "Oh ! oh oh oh ! Quel superbe Napalm ! Mais la recette ne peut être complète sans que l'on y rajoute un ingrédient ab-so-lu-ment nécessaire... Les poils d'un Korgon bien gras ! Normalement, il devrait y en avoir du coté du Grand Tout Chaud, mais fait attention à ne pas voler le repas de quelqu'un d'autre ou tu pourrais bien le regretter !",
+				"skully4": "Oh oh oh oh ! Je touille je touille !!! Et voilà ! Un magnifique plat de Crevettes au Napalm !",
+				"skull": "Merci pour ton aide ! oh oh oh ! Bientôt mes retrouvailles avec mon tendre Mouldeur !"
+			},
+			"skully_end": {
+				"merguez": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
+				"skull": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
 			}
 		},
 		"target": {
@@ -3512,7 +3624,7 @@
 			"chjx3b": "Angry Shroom",
 			"chkx1b": "Cloud Sword",
 			"chkx1a": "Chocobo",
-			"chkx2b": "Tomberry",
+			"chkx2b": "Tonberry",
 			"chkx2a": "Mog",
 			"chkx3b": "Magician",
 			"chkx3a": "Cactuar",
@@ -3765,7 +3877,7 @@
 			"cinec3": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Parody Award.",
 			"cinec4": "This magnificent trophy was awarded to the winner of the Cinema Paradino Film Festival Best Adaptation Award.",
 			"hallow": "This magnificent trophy was awarded to the winner of the Halloween's parade!",
-			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La médaille zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
+			"tid1": "Félicitation pour avoir gagné le Tournoi Inter-Dojo ! La Médaille Zen récompense le meilleur Dojo existant à Dinoland, aucun maître Dinoz ne vous surpasse ! A vous la gloire, les flashs, le succès auprès des maîtres/maîtresses Dinoz .... !!",
 			"tid2": "Congratulations on winning the Dinoz Tournament! The solid gold master Zenit figurine is the equivalent of the Oscar of the most valiant master dinoz in all of Dinoland, no master surpasses you! To you the glory, the flashes, the success with the masters / mistresses dinoz.... !!",
 			"gazeli": "The exciting article which you wrote for the Dinoland gazette won you this trophy. Dinoz masters around the world are showing off your work!",
 			"hunt1": "Your achievements during the monster hunt have made you famous. The hunter's soul burns within you and reminds every monster that roams the lands of Dinoland that you are keeping an eye on them.",
@@ -4021,7 +4133,10 @@
 			"rasca": "Old Rascaphandre",
 			"eearth": "Earth Elemental",
 			"pirask": "Pirahn-os",
-			"megawf": "Mega-wolf"
+			"megawf": "Mega-wolf",
+			"baraba": "Barababor",
+			"baratr": "Baratribor",
+			"bamboo": "Bambooz"
 		},
 		"status": {
 			"asleep": "Asleep",
@@ -4064,9 +4179,11 @@
 			"addStatus": "**{fighter}** has obtained **{status}** status.",
 			"removeStatus": "**{fighter}** no longer has **{status}** status.",
 			"itemUse": "**{fighter}** used **{item}**.",
-			"hypnotize": "**{fighter}** switched sides.",
+			"hypnotize": "**{fighter}** a été hypnotizé et a changé de camp.",
+			"endHypnotize": "**{fighter}** n'est plus hypnotizé et a regagné son camp d'origine.",
 			"gainEnergy": "**{fighter}** regained energy and now has **{energy}** energy.",
 			"newTurn": "It is **{fighter}**'s turn.",
+			"statusTurn": "Vérication des statuts avant le tour de **{fighter}**",
 			"tired": "**{fighter}** is tired and passed its turn."
 		},
 		"event": {
@@ -4235,6 +4352,24 @@
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting."
 	},
 	"logs": {
+		"AdminAddStatus": "**Admin ({playerId})** a ajouté le status {status} au dinoz {dinoz} ({dinozId})",
+		"AdminUpdateDinoz": "**Admin ({playerId})** a mis à jour {stat} à {value} du dinoz {dinoz} ({dinozId})",
+		"AdminRemoveStatus": "**Admin ({playerId})** a enlevé le status {status} au dinoz {dinoz} ({dinozId})",
+		"AdminAddSkill": "**Admin ({playerId})** a ajouté la compétence {skill} au dinoz {dinoz} ({dinozId})",
+		"AdminRemoveSkill": "**Admin ({playerId})** a enlevé la compétence {skill} au dinoz {dinoz} ({dinozId})",
+		"AdminAddUnlockableSkill": "**Admin ({playerId})** a ajouté la compétence débloquable {skill} au dinoz {dinoz} ({dinozId})",
+		"AdminRemoveUnlockableSkill": "**Admin ({playerId})** a enlevé la compétence débloquable {skill} au dinoz {dinoz} ({dinozId})",
+		"AdminAddMoney": "**Admin ({playerId})** a ajouté {quantity} d'or au joueur {targetId}",
+		"AdminRemoveMoney": "**Admin ({playerId})** a enlevé {quantity} d'or au joueur {targetId}",
+		"AdminAddReward": "**Admin ({playerId})** a ajouté la récompense {reward} au joueur {targetId}",
+		"AdminRemoveReward": "**Admin ({playerId})** a enlevé la récompense {reward} au joueur {targetId}",
+		"AdminAddItem": "**Admin ({playerId})** a ajouté {quantity} de l'objet {item} au joueur {targetId}",
+		"AdminRemoveItem": "**Admin ({playerId})** a enlevé {quantity} de l'objet {item} au joueur {targetId}",
+		"AdminAddIngredient": "**Admin ({playerId})** a ajouté {quantity} de l'ingrédient {ingredient} au joueur {targetId}",
+		"AdminRemoveIngredient": "**Admin ({playerId})** a enlevé {quantity} de l'ingrédient {ingredient} au joueur {targetId}",
+		"AdminUpdateQuest": "**Admin ({playerId})** a incrémenter/décrémenter de {progress} la progresssion de la quête {quest} du joueur {targetId}",
+		"AdminUpdatePlayer": "**Admin ({playerId})** a mis à jour {stat} à {value} du joueur {targetId}",
+		"AdminUpdateSecret": "**Admin ({playerId})** a mis à jour  le secret {key} à {value}",
 		"ItemUsed": "**{player} ({playerId})** used **{quantity}**x {item}** with its Dinoz **{dinoz} ({dinozId})**.",
 		"ItemBought": "**{player} ({playerId})** has purchased **{quantity}x {item}** (total {total}).",
 		"IngredientSold": "**{player} ({playerId})** sold **{quantity}x {item}** ({amount} remains).",
@@ -4760,7 +4895,17 @@
 		"fight_star_found": "At the end of the fight, you see a shiny object: it is one of the 7 magic stars!",
 		"eat_star_found": "After swallowing the Pie, your Dinoz sees something shining a few meters away... Congratulations! You have found one of the 7 magic stars!",
 		"dig_star_found": "At the first blow of the shovel, you hear a strange noise. By digging a little you find one of the 7 magic stars! Congratulations!",
-		"resurrect_star_found": "As it wakes up in Dinoville, your Dinoz realizes that someone has entrusted it with the last magic star! Its memories are blurred, but it remembers strange Dinoz, unknown until then, who looked like monkeys with multicolored fur... They are the ones who entrusted it with the 7th star, but who are they?!?"
+		"resurrect_star_found": "As it wakes up in Dinoville, your Dinoz realizes that someone has entrusted it with the last magic star! Its memories are blurred, but it remembers strange Dinoz, unknown until then, who looked like monkeys with multicolored fur... They are the ones who entrusted it with the 7th star, but who are they?!?",
+		"AAA_start": "Alors que votre Dinoz s'approche, certaines Anguilloz se rendent compte de sa présence et l'attaquent !",
+		"AAA_end": "Aprés la défaite des Anguilloz, vous observez des traces de pas qui s'éloignent en direction de l'ouest...",
+		"baiePira_start": "A peine vous entrez dans la baie que de nombreux Piranhoz se précipitent pour vous mordiller... Qui peut bien avoir envie de venir pêcher ici ???",
+		"baiePira_end": "Une fois les Piranhoz vaincus, vous regardez aux alentours. Si Mouldeur est venu pêcher ici, il est déjà reparti...",
+		"baraba_start": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
+		"baraba_end": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\"",
+		"boat_start": "Que le pouvoir du Bambooz soit avec moi ! Je vengerais mon frère !!!",
+		"boat_end": "Après avoir vaincu les Bandits, vous libérez un homme ligoté dans le bateau...",
+		"korgon_start": "Kwwiiiiiiik !",
+		"korgon_end": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
 	},
 	"report": {
 		"header": "Report inappropriate content",
@@ -4833,14 +4978,17 @@
 		"reward": "You received {rewards}",
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "You made progress in the scenario **{scenario}**.",
-		"FBStarted": "Un nouvel événement est ouvert !"
+		"FBStarted": "Un nouvel événement est ouvert !",
+		"clanApply": "{name} souhaite rejoindre votre clan !"
 	},
 	"events": {
 		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
+		"disclaimerEnded": "Vous trouverez ici tout les événements communautaires terminés.",
 		"header": "Evenements en cours",
 		"date": "Date de création",
 		"level": "Niveau max",
-		"races": "Races authorisées",
+		"races": "Races autorisées",
+		"subscribed": "Inscrits",
 		"tournament": {
 			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un dinoz par jour durant les trois jours de qualification.&&Votre dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître dinoz !",
 			"progress": "Actuellement {qty} dinoz sont au niveau du tournois."

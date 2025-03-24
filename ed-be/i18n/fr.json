@@ -55,18 +55,18 @@
 		"dinozNotPlayer": "Ces Dinoz ne peuvent pas combattre",
 		"alreadyFighted": "Ce Dinoz a déjà combattu",
 		"wrongDinozInTeam": "Votre équipe ne peut être constituée que de 5 à 10 Dinoz.",
-		"wrongDinozQuantity": "Votre équipe doit avoir {qty} dinoz.",
+		"wrongDinozQuantity": "Votre équipe doit être formée de {qty} Dinoz.",
 		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
 		"archiveNotFound": "L'archive n'a pas été trouvée",
 		"inexistantOpponent": "Adversaire non trouvé",
 		"notFightedOpponent": "Adversaire déjà vaincu",
 		"teamSize": "Les équipes sont constituées de {{nb}} membres avec au moins {{races}} races différentes.",
 		"raceLimit": "Les races autorisées à participer sont les{{races}}.",
-		"levelLimit": "La limite de niveau maximum est fixé à {{level}}",
-		"poison": "Le poison est activé",
-		"nopoison": "Le poison est désactivé",
+		"levelLimit": "La limite de niveau maximum est fixé à {{level}}.",
+		"poison": "Le poison est activé.",
+		"nopoison": "Le poison est désactivé.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
-		"newsCorpus": "Un nouveau TiD de type {{type}} a commencé !<br/><br/>Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>- {{rule3}}<br/><br/>- {{rule4}}<br/><br/>Les récompenses seront les suivantes:<br/>- Pour le premier, un oeuf de Toufufu rare, une boîtee légendaire et 12% du cash price.<br/>- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.<br/>- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.<br/>- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.<br/>- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.<br/>- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.<br/><br/>N'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! <br/><br/>Bon tournois à tous ! "
+		"newsCorpus": "Un nouveau TiD de type {{type}} a commencé !<br/><br/>Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>- {{rule3}}<br/><br/>- {{rule4}}<br/><br/>Les récompenses seront les suivantes:<br/>- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.<br/>- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.<br/>- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.<br/>- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.<br/>- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.<br/>- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.<br/><br/>N'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! <br/><br/>Bon tournois à tous ! "
 	},
 	"race": {
 		"1": "Moueffe",

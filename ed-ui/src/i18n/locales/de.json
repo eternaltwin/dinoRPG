@@ -492,7 +492,7 @@
 			"lightning_sphere": "Eine Elementarsphäre ermöglicht es deinem Dinoz, direkt eine der Sphärenfähigkeiten zu erlernen!",
 			"air_sphere": "Eine Elementarsphäre ermöglicht es deinem Dinoz, direkt eine der Sphärenfähigkeiten zu erlernen!",
 			"void_sphere": "Eine Elementarsphäre ermöglicht es deinem Dinoz, direkt eine der Sphärenfähigkeiten zu erlernen!",
-			"demon_ticket": "Dämonengutscheine erhältst du, indem du in der Dämonischen Boutique einen oder mehrere Dinoz opferst. Sobald du genügend Dämonengutscheine zusammen hast, kannst du sie gegen einen Dämonen-Dinoz eintauschen.",
+			"demon_ticket": "Dämonengutscheine erhältst du, indem du in dem Dämonischen Geschäft einen oder mehrere Dinoz opferst. Sobald du genügend Dämonengutscheine zusammen hast, kannst du sie gegen einen Dämonen-Dinoz eintauschen.",
 			"treasure_coupon": "Ein Schatzbrief entspricht 1.000 Goldmünzen inkl. MwSt. und damit kann auf dem Marktplatz geboten werden. Bei Benutzung wird er in Münzen umgetauscht.",
 			"moueffe_egg": "Dieses seltsame Ei ist kurz davor, sich in einen wunderschönen Dinoz zu verwandeln!",
 			"moueffe_egg_rare": "Dieses seltsame Ei ist kurz davor, sich in einen außergewöhnlichen Dinoz zu verwandeln!",
@@ -869,21 +869,15 @@
 			"padamoine": "Padamön-Lehrling",
 			"hulot": "Heinz Fielmann",
 			"rodeur": "Seltsamer Herumtreiber",
-			"rodeur2": "Seltsamer Herumtreiber",
-			"rodeur3": "Seltsamer Herumtreiber",
 			"spelele": "Höhöhöhlenforscher",
 			"pteroz": "Seltsamer Dinoz",
 			"hippo": "Seltsamer Dinoz",
 			"rocky": "Seltsamer Felsen",
 			"vener": "Der Ehrwürdige",
-			"alien_0": "Seltsames Wesen",
-			"alien_1": "Seltsames Wesen",
-			"alien_8": "Seltsames Wesen",
-			"alien_all": "Seltsames Wesen",
-			"merguez_star": "Merguez-Verkäufer",
-			"skully_star": "Skully",
+			"alien": "Seltsames Wesen",
 			"skully": "Skully",
-			"bob_star": "Herr Bao Bob"
+			"baobabe": "BaoBabe",
+			"mouldeur": "Moulder"
 		},
 		"professor": {
 			"speech": {
@@ -1061,7 +1055,10 @@
 				"ingr": "Pum pum, palalam, pum pum pum, pam pum pum, palalam, pam! Bitte sehr, ein wunderbarer Anti-Sedh-Trank für dich...",
 				"potion": "Hmmm... mach's gut, mein Freund und komm doch bei Gelegenheit mal wieder vorbei!",
 				"ok": "Na bitte, dein Dinoz konzentriert sich! Sobald ihr vollzählig seid, findet ihr euch in einer anderen Welt wieder.",
-				"bye": "Viel Spaß und bis dann!"
+				"bye": "Viel Spaß und bis dann!",
+				"begin_star": "Was machst du denn um die Uhrzeit in meinem Haus?",
+				"ok_star": "Ach so! Ja, ich bin noch halb am Schlafen und hab's nicht verstanden. Hier, das hab' ich für dich aufgehoben. Hoffentlich wird es dir nicht allzu viel Ärger einbringen...",
+				"star": "Mit diesen seltsamen Worten vertraut dir Bao Bob den sechsten Zauberstern an! Fehlt nur noch der Letzte!!!"
 			},
 			"playerChoice": {
 				"question": "Ich hätte da eine Frage für Euch...",
@@ -1080,7 +1077,9 @@
 				"noingr": "Bitte sehr, die Zutaten!",
 				"ingr": "Bitte sehr, die Zutaten!",
 				"potion": "Dann seid Ihr also ein Antiker Affe!!!",
-				"ok": "Einverstanden"
+				"ok": "Einverstanden",
+				"ok_star": "Ich suche nach...",
+				"star": "???"
 			}
 		},
 		"baofan": {
@@ -1148,12 +1147,17 @@
 				"begin": "Hola, hola, hola! Würstchen! Fettige Würstchen! ... Wie? Was das für eine Idee ist, an einem so finsteren Ort Merguez-Würstchen zu verkaufen? Aber diese Ruinen sind doch großartig! Ich bin mir sicher, dass eines Tages Millionen von Touristen herkommen werden, um sie zu besuchen!",
 				"ah": "Ja, in der Tat! Es ist ein wenig wie das Koloss-E.ON: Mein Cousin hat ein Vermögen durch den Verkauf gebrandeter, tempelförmiger Schlüsselanhänger gemacht. Aber hier, und das ist beschlossene Sache, werde ich der Erste sein! Auch wenn ich mehrere Jahre darauf warten muss, dass das Geschäft richtig anläuft. Niemals lasse ich mir diese goldene Gelegenheit entgehen!",
 				"ok": "Schau mal, dein Dinoz sieht ja schon praktisch ausgemergelt aus... Hier, nimm diese Merguez! Sie sind für dich umsonst unter der Bedingung, dass du all deinen Freunden von den Fantastischen Aschpuckruinen erzählst. Nicht vergessen, ja?",
-				"thanks": "Gerne, gerne, ist ja schließlich gut fürs Geschäft!"
+				"thanks": "Gerne, gerne, ist ja schließlich gut fürs Geschäft!",
+				"begin_star": "Ohh! Wie ich sehe, hat dein Dinoz einen Wolkenburger dabei! Weißt du denn nicht, dass sie gesundheitsschädlich sind? Oder möchtest du etwa, dass dein Dinoz zum Sumoringer wird?!",
+				"ok_star": "Nimm bloß diesen abscheulichen Burger wieder mit und probier stattdessen lieber meine Merguez! Hier, dafür kriegst du auch dieses Ding, was hier auf dem Boden rumlag!",
+				"star": "Toll! Der Merguez-Verkäufer hat dir einen der sieben Zaubersterne überreicht!"
 			},
 			"playerChoice": {
 				"ah": "Äh...",
 				"ok": "Tja, also...",
-				"thanks": "Danke"
+				"thanks": "Danke",
+				"ok_star": "...",
+				"star": "Oh?"
 			}
 		},
 		"shaman": {
@@ -1233,7 +1237,7 @@
 				"thanks": "Ich wünsche dir einen angenehmen Aufenthalt auf den Atlantinischen Inseln."
 			},
 			"playerChoice": {
-				"rasca": "Eine was?!",
+				"rasca": "Einen was?!",
 				"where": "Wissen Sie, wo ich einen finde?",
 				"call": "Super! Hmm... Haben Sie ihre Nummer?",
 				"appeau": "Eine Lockpfeife...",
@@ -1360,7 +1364,16 @@
 				"talk": "Häh?!??? Was?! Du kannst mich SEHEN?!?... Grrrrr...",
 				"yes": "Hmm... tja... verstehe... dabei hat man mir doch versichert, dass dieser Umhang mich unsichtbar machen würde! Kannst du mal einen Blick auf die Anzeige auf meinem Rücken werfen? Steht da irgendwas?",
 				"read": "Was?! „LOHER BADEREIS“? Hm... der Verkäufer hatte ja auch irgendwas vom Aufladen geschwafelt... Brauche ich da etwa Reis?!? Und wo soll ich den bitte herkriegen?!?",
-				"talk2": "Schnell! Ich BRAUCHE diesen Reis!"
+				"talk2": "Schnell! Ich BRAUCHE diesen Reis!",
+				"begin_2": "Mein Umhang ist schon wieder hin... so langsam hab' ich die Schnauze voll...",
+				"qual2": "Anstatt blöd rumzulabern, solltest du lieber deine Mission zu Ende bringen...",
+				"qual": "WAS?!? Wie kannst du es wagen, so über die großartige Caushemesh-Technologie zu reden! Hast du eine Ahnung wie viele Jahre Forschungsarbeit nötig waren, um den Äther zu beherrschen?!",
+				"caush": "Ja! Ganz richtig, ich rede von der großartigen Zivilisation der Caushemesh-Berge, weit jenseits der Magnetischen Steppen. Wir sind sehr viel weiter entwickelt als die Barbaren in Dinoville...",
+				"ether": "Nach Jahrhunderten der Forschung waren die Caushemeshianer in der Lage, die Macht des Äthers zu beherrschen. Es handelt sich um eine raffinierte Verschmelzung der Elemente Luft und Leere. Das gibt uns eine außergewöhnliche technologische Macht. Die Ingenieure aus Caushemesh sind die besten im ganzen Dinoland!",
+				"next": "Deine Dinoz sind ganz schön schwach im Vergleich zu denen aus Caushemesh. Sie sind ihnen nicht gewachsen, hahahaha! Trainiere deine Dinoz gut, junger Meister, denn eines Tages wirst du weitaus größeren Gefahren entgegentreten müssen!",
+				"more": "Aber ich habe dir schon zu viel erzählt... Was hältst du von einer kleinen Mission, um dich von der Caushemesh-Technologie zu überzeugen?",
+				"begin_3": "Zu deiner Information: Die Dunklen Dinoz, denen du bisher begegnet bist, waren nur Anfänger, die wir hier in der Gegend des Dinolandes ausbilden lassen... Die Caushemesh-Dinoz sind weitaus stärker und selbst euer Ehrwürdiger würde unseren besten Dinoz-Meistern nichts entgegensetzen können!",
+				"next_2": "Na gut, ich halte mein Versprechen. Hier eine Belohnung, die dich von der Überlegenheit der Caushemesh-Technologie überzeugen wird. Ich habe nur ein Exemplar, gehe deshalb behutsam damit um... Es handelt sich um ein Tik-Armreif, das du einem deiner Dinoz umlegen kannst."
 			},
 			"playerChoice": {
 				"go": "Dieser Typ sieht gefährlich aus... abhauen!",
@@ -1368,36 +1381,15 @@
 				"yes": "Ähm... ja?",
 				"read": "Anzeige vorlesen",
 				"missions": "Dem Herumtreiber helfen",
-				"talk2": "Ihn ansprechen"
-			}
-		},
-		"rodeur2": {
-			"speech": {
-				"begin": "Mein Umhang ist schon wieder hin... so langsam hab' ich die Schnauze voll...",
-				"qual2": "Anstatt blöd rumzulabern, solltest du lieber deine Mission zu Ende bringen...",
-				"qual": "WAS?!? Wie kannst du es wagen, so über die großartige Caushemesh-Technologie zu reden! Hast du eine Ahnung wie viele Jahre Forschungsarbeit nötig waren, um den Äther zu beherrschen?!?",
-				"caush": "Ja! Ganz richtig, ich rede von der großartigen Zivilisation der Caushemesh-Berge, weit jenseits der Magnetischen Steppen. Wir sind sehr viel weiter entwickelt als die Barbaren in Dinoville...",
-				"ether": "Nach Jahrhunderten Forschung waren die Caushemeshianer in der Lage, die Macht des Äthers zu beherrschen. Es handelt sich um eine raffinierte Verschmelzung der Elemente Luft und Leere. Das gibt uns eine außergewöhnliche technologische Macht. Die Ingenieure aus Caushemesh sind die besten im ganzen Dinoland!",
-				"next": "Deine Dinoz sind ganz schön schwach im Vergleich zu denen aus Caushemesh. Sie sind ihnen nicht gewachsen, hahahaha! Trainiere deine Dinoz gut, junger Meister, denn eines Tages wirst du weitaus größeren Gefahren entgegentreten müssen!",
-				"more": "Aber ich habe dir schon zu viel erzählt... Was hältst du von einer kleinen Mission, um dich von der Caushemesh-Technologie zu überzeugen?"
-			},
-			"playerChoice": {
+				"talk2": "Ihn ansprechen",
 				"qual2": "Ist sicher wegen der schlechten Qualität...",
 				"qual": "Ist sicher wegen der schlechten Qualität...",
 				"caush": "Caushemesh?",
 				"ether": "Äther?",
 				"next": "Und...",
 				"more": "...",
-				"missions": "Eine Mission annehmen"
-			}
-		},
-		"rodeur3": {
-			"speech": {
-				"begin": "Zu deiner Information: Die Dunklen Dinoz, denen du bisher begegnet bist, waren nur Anfänger, die wir hier in der Gegend des Dinolandes ausbilden lassen... Die Caushemesh-Dinoz sind weitaus stärker und selbst euer Ehrwürdiger würde unseren besten Dinoz-Meistern nichts entgegensetzen können!",
-				"next": "Na gut, ich halte mein Versprechen. Hier eine Belohnung, die dich von der Überlegenheit der Caushemesh-Technologie überzeugen wird. Ich habe nur ein Exemplar, gehe deshalb behutsam damit um... Es handelt sich um ein Tik-Armreif, das du einem deiner Dinoz umlegen kannst."
-			},
-			"playerChoice": {
-				"next": "..."
+				"missions_2": "Eine Mission annehmen",
+				"next_2": "..."
 			}
 		},
 		"spelele": {
@@ -1493,7 +1485,7 @@
 				"auto": "Könnte ich vielleicht ein Autogramm haben?"
 			}
 		},
-		"alien_0": {
+		"alien": {
 			"speech": {
 				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
 				"no": "Stimmt, es wohl besser, sich nicht in Angelegenheiten von Wesen einzumischen, die so komisch aussehen!",
@@ -1502,100 +1494,131 @@
 				"dom": "Also gut, ich bräuchte deine nette Hilfe, um Kristalle aus (TcEtCiNo) zu beschaffen... Mal sehen... in deiner Sprache wären sie wohl gleichbedeutend mit leuchtenden Sternen, die irgendwie verlockend aussehen!",
 				"star": "Ja, in der Tat! Falls du es schaffen solltest, mir genau sieben von ihnen zu besorgen, könnte ich meine Reise fortsetzen und würde dich dafür sogar mit einem (CiLoJuAeDa) aus meiner Heimat belohnen!",
 				"how": "Das ist ziemlich einfach. Alles, was du tun musst, ist einer bestimmten Anzahl spektakulärer Weissagungen zu folgen, die im Eklektischen Touristenführer beschrieben werden. Jedes Mal, wenn ich dir einen Auszug vorlese, darfst du diesen entziffern! Ach ja!",
-				"ah": "Tja, nun, also! Ich gehe mal den Touristenführer suchen. Rühr dich nicht vom Fleck, ich bin sofort wieder da..."
-			},
-			"playerChoice": {
-				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
-				"no": "Auf keinen Fall",
-				"yes": "Ähm... ja?",
-				"nothing": "Keine Ursache...",
-				"dom": "Was für ein Jammer!",
-				"star": "Sterne?",
-				"how": "Und wo finde ich diese Sterne?",
-				"ah": "„Ach ja“?"
-			}
-		},
-		"alien_1": {
-			"speech": {
-				"begin": "Im Führer steht: „Ein Megawolf erwartet dich in der Hauptstadt!“",
-				"et": "Und was? Das war's! Den Rest musst du schon selbst entziffern. Verzeih, dass ich auch so eklektisch bin!"
-			},
-			"playerChoice": {
-				"et": "Und?"
-			}
-		},
-		"alien_8": {
-			"speech": {
-				"begin": "...Jaaaaaa!!! Danke, danke, danke! Dank dir werde ich endlich nach (PuOsEniLa) zurückkehren können! Mir bleibt nicht mehr viel Zeit bis die Sterne nicht mehr nach Rochechouart ausgerichtet sind...",
-				"ok": "Würdest du mir die Sterne geben? Wie versprochen, würde ich dir dafür einen (CiLoJuAeDa) überlassen, sowie ein Schmuckstück, das ich in deiner Welt gefunden habe!",
-				"give": "Das Seltsame Wesen rennt in eine Art kleines Haus hinein, woraufhin alles von einem grellen Blitz erleuchtet wird und schon ist das Haus verschwunden. Es ist kaum was übrig außer Brandflecken im Boden und einer riesigen Rauchsäule, die hoch in den Himmel emporsteigt... Das Wesen hat dir einen „Goldenen Napodino“ hinterlassen und irgendein eigenartiges Sammlerlstück..."
-			},
-			"playerChoice": {
-				"ok": "...",
-				"give": "Die 7 Sterne geben"
-			}
-		},
-		"alien_all": {
-			"speech": {
-				"begin": "Ah! Wie ich sehe, hast du bei deiner Suche Fortschritte gemacht! Mal sehen was der Touristenführer als Nächstes sagt...",
+				"ah": "Tja, nun, also! Ich gehe mal den Touristenführer suchen. Rühr dich nicht vom Fleck, ich bin sofort wieder da...",
+				"begin_first_star": "Im Führer steht: „Ein Megawolf erwartet dich in der Hauptstadt!“",
+				"et": "Und was? Das war's! Den Rest musst du schon selbst entziffern. Verzeih, dass ich auch so eklektisch bin!",
+				"begin_star": "Ah! Wie ich sehe, hast du bei deiner Suche Fortschritte gemacht! Mal sehen was der Touristenführer als Nächstes sagt...",
 				"star2": "Im Führer steht: „Der schmierige Enthusiast wüsste eine tragbare Wolke zu schätzen.“ ...sagt dir das irgendwas?",
 				"star3": "Touristenführer, Seite 879, Absatz b: „Wenn man bis zum Hals in klebriger Masse steckt, geht nichts über Kuchen.“ Alles klar, oder?",
 				"star4": "Ich zitiere: „Es könnte helfen, wenn man am dunklen Loch etwas Umschau fällt.“ ...hast du eine Idee?",
 				"star5": "Es ist ganz klein gedruckt. Ich werde versuchen, die Wörter richtig zu lesen: „Die alten Knochen schätzen wohl den Anblick eines... Capsicum.“ Ja... das müsste es sein... (glaube ich zumindest).",
 				"star6": "Hmmm... Anhang B des Touristenführers: „Suche den Halbgott auf, wenn auf Pek-1 Mittag ist“. Das ist ja ein ganzes Programm...",
 				"star7": "Es fehlt nur noch der letzte Stern! Der Führer sagt: „Im Land des Saru wirst du ungekünstelt von den Toten zurückkehren.“ Viel Glück!",
-				"end": "Eure Sprache hierzulande ist überaus bizarr... ich kann überhaupt nichts verstehen!"
+				"end": "Eure Sprache hierzulande ist überaus bizarr... ich kann überhaupt nichts verstehen!",
+				"begin_plum": "...Jaaaaaa!!! Danke, danke, danke! Dank dir werde ich endlich nach (PuOsEniLa) zurückkehren können! Mir bleibt nicht mehr viel Zeit bis die Sterne nicht mehr nach Rochechouart ausgerichtet sind...",
+				"ok": "Würdest du mir die Sterne geben? Wie versprochen, würde ich dir dafür einen (CiLoJuAeDa) überlassen, sowie ein Schmuckstück, das ich in deiner Welt gefunden habe!",
+				"give": "Das Seltsame Wesen rennt in eine Art kleines Haus hinein, woraufhin alles von einem grellen Blitz erleuchtet wird und schon ist das Haus verschwunden. Es ist kaum was übrig außer Brandflecken im Boden und einer riesigen Rauchsäule, die hoch in den Himmel emporsteigt... Das Wesen hat dir einen „Goldenen Napodino“ hinterlassen und irgendein eigenartiges Sammlerlstück..."
 			},
 			"playerChoice": {
+				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
+				"no": "Kommt nicht in Frage",
+				"yes": "Ähm... ja?",
+				"nothing": "Keine Ursache...",
+				"dom": "Was für ein Jammer!",
+				"star": "Sterne?",
+				"how": "Und wo finde ich diese Sterne?",
+				"ah": "„Ach ja“?",
+				"et": "Und?",
 				"star2": "Zuhören",
 				"star3": "Zuhören",
 				"star4": "Zuhören",
 				"star5": "Zuhören",
 				"star6": "Zuhören",
 				"star7": "Zuhören",
-				"end": "..."
-			}
-		},
-		"merguez_star": {
-			"speech": {
-				"begin": "Ohh! Wie ich sehe, hat dein Dinoz einen Wolkenburger dabei! Weißt du denn nicht, dass sie gesundheitsschädlich sind? Oder möchtest du etwa, dass dein Dinoz zum Sumoringer wird?!",
-				"ok": "Nimm bloß diesen abscheulichen Burger wieder mit und probier stattdessen lieber meine Merguez! Hier, dafür kriegst du auch dieses Ding, was hier auf dem Boden rumlag!",
-				"star": "Toll! Der Merguez-Verkäufer hat dir einen der sieben Zaubersterne überreicht!"
-			},
-			"playerChoice": {
+				"end": "...",
 				"ok": "...",
-				"star": "Hä?"
-			}
-		},
-		"skully_star": {
-			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!!! Was sehe ich denn da?!! Na, wenn das kein wunderschönes Exemplar eines „Capsicum annuum“ ist! Was für eine Farbenpracht, welch ein Duft, es ist wun-der-schön!",
-				"ok": "Ich danke dir vielmals! Oh oh oh! Im Gegenzug für diesen wundervollen Anblick, schenke ich dir etwas, das ich fand, als ich nach einem Knochen gesucht habe, den ich verloren hatte! Hier, bitte!",
-				"star": "Glückwunsch! Dank Skully, hast du den fünften Zauberstern erhalten! Jetzt fehlen nur noch zwei!"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "Oh?"
+				"give": "Die 7 Sterne geben"
 			}
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh!!! Verzeihung, aber die Entwickler sind wirklich faul und haben mich in das Spiel noch nicht eingebaut. Wie schade!"
+				"begin": "Oh oh oh oh oh oh oh! Dein Dinoz sieht aber ziemlich angeschlagen aus!",
+				"arg": "Ein GEIST?!!??? Aaaahh!!! Wo denn?!! Wo denn?!",
+				"arg2": "WAS?! Ich?!! Aber, aber, aber, aber, aber... Ich bitte um ein wenig Respekt! Sonst wirst du hier nicht alt werden, glaub's mir!",
+				"diff": "Nun, zunächst mal ist ein Geist tot und ich, ich bin nur ein wenig... ein wenig erschöpft. Sind sicher nur Augenringe, das ist alles... Und ein Geist sucht immer etwas oder jemanden heim, während ich frei bin!!! ... Na ja, fast.",
+				"free": "Das ist etwas... ähmmm... schwierig... Sagen wir's mal so: Ich habe zwei kleine technische Probleme zu lösen. Zum einen können mich nur Dinoz sehen, die am Rande des Todes schweben, so wie ihre Meister. Zum anderen kann ich diesen düsteren Ort hier nicht verlassen...",
+				"haunt": "Hier rumspuken?! Du machst wohl WITZE!!! Oh oh oh oh oh oh oh! Wenn ich nur daran denke, bekomme ich Gänsehaut! ICH habe Besseres zu tun, oh oh!",
+				"do": "Ähm... das ist ja so... TAKTLOS! Oh oh oh oh! ... Aber ich werde es dir trotzdem erzählen (womöglich auch nochmals). Oh oh... Weißt du, ich habe... einen LIEBHABER! Man mag es kaum glauben, aber als ich jünger war, hatte ich super Schienbeine!",
+				"uhm": "Wenn ich's dir doch sage! Oh oh oh! Aber das spielt keine Rolle, denn auf mir lastet ohnehin ein Unfluch, der dafür sorgen wird, dass du alles über mich schnell vergessen wirst!",
+				"bonne": "Oh ja! Oh oh oh! Das ist wie ein Fluch, aber im guten Sinne! Ich werde durch einen Unfluch beschützt, um Alpträume zu verhindern und Wissenschaftler fernzuhalten. Sie wären zu froh darüber, die Art und Weise zu erforschen, wie ich mich ernähre, oh oh oh! Ich achte nicht einmal mehr auf mein Cholesterin. Kurzum: Die Leute vergessen mich, gleich nachdem sie mich getroffen haben!",
+				"next": "Ja, ne?!! Und wenn ich diesen Ort nicht verlassen kann, wie soll ich ihn bloß wiederfinden?! Meinen GELIEBTEN Moulder!!!",
+				"nohelp": "Du kannst mir sowieso nicht helfen... oh oh oh! Lass mich jetzt bitte allein, ich muss an ihn denken. Und vergiss nicht, mich zu vergessen...",
+				"forgot": "Es kommt dir einen Moment lang so vor, als hättest du gerade mit jemanden gesprochen, aber die Details scheinen dir zu entfallen...",
+				"help": "WIIRKLIIICHHH?! OH OH OH OH OH! Das würdest du für miiich tun?!! Aber das wird für dich etwas schwierig werden, und jedes Mal, wenn wir uns begegnen, wirst du dich an nichts oder fast nichts mehr erinnern können! Bist du dir wirklich sicher, dass du mir helfen willst???",
+				"accept": "OH OH OH OH OH! Also bitte, lieber Herr Dinoz-Meister! Hilf mir, Moulder wiederzufinden und ich werde dich so belohnen wie es sich gehört!",
+				"missions": "Das furchteinflößende Skelett schaut dir traurig hinterher, als du es wieder verlässt. Wenn du dich umdrehen würdest, könntest du es fast weinen sehen, aber du läufst so weit weg wie möglich und dafür hast du sicherlich gute Gründe.",
+				"you": "So ist es. Hocherfreut! Wusstest du, dass man in diesen Ruinen seltsame verbrannte Kreise finden kann? Ich beschäftige mich schon seit einiger Zeit mit diesen Phänomenen und ich bin zu dem Schluss gekommen, dass es zwei Erklärungen für diese komischen Brandzeichen gibt...",
+				"explain": "Alles deutet darauf, dass es sich um fremde Wesen handelt, die aus dem All gekommen sind, um die Menschen zu erforschen. Diese halten sich an unauffälligen Orten auf... Und wenn sie bei der Rückkehr zu ihrem Heimatplaneten Zündflammen ausstoßen, hinterlassen sie diese verbrannten Kreise! Selbstverständlich hält der König diese Informationen unter Verschluss, denn er steckt mit ihnen unter einer Decke! Außergewöhnlich, nicht wahr?",
+				"other": "Wie? ... Ähm... die andere Erklärung erscheint mir weitaus weniger plausibel, aber laut dem Würstchenverkäufer könnte es sich um Lagerfeuerstellen handeln, die von den Touristen stammen, die die Ruinen besuchen...",
+				"ok": "Mmh! Saftig, diese Napalm-Garnelen! Kaum zu glauben, dass ich meine bezaubernde Frau nie wiedersehen werde! Oh, wie sehr wir uns geliebt haben... die niedlichen Schreieanfälle, in die sie jedes mal verfiel, wenn ich vom Saufen mit meinen Kollegen nach Hause kam, die fehlen mir so... Kaum vorstellbar, dass sie mit Sicherheit tot ist...",
+				"ok2": "Wie bitte? Du scherzt doch hoffentlich. Ich bin noch im besten Alter! Schau doch mal, wie glatt meine Knochen sind: Nicht eine einzige Falte! Ah ha ha ha ha!",
+				"skully": "Was? Du kennst Skully?!!",
+				"exp": ".............danke! Das heißt, dass meine Intuition mich nicht getäuscht hat und es richtig von mir war, keine andere Frau zu suchen, um sie zu ersetzen! Oooohh! Danke! Tausend Dank für deine Hilfe!",
+				"end": "Doch, das ist wahrlich eine Heldentat!!! Bring mich bitte bis zu meiner Frau. Ich kann es kaum erwarten, sie von Angesicht zu Angesicht zu sehen!",
+				"bye": "Das furchteinflößende Skelett schaut dir traurig hinterher, als du es wieder verlässt. Wenn du dich umdrehen würdest, könntest du es fast weinen sehen, aber du läufst so weit weg wie möglich und dafür hast du sicherlich gute Gründe.",
+				"begin_memory": "oh oh Oh Oh OH!!! Der Unfluch ist aufgehoben! Jetzt wirst du mir tatsächlich helfen können, Moulder wiederzufinden!",
+				"begin_pda": "Danke für alles, was du für uns getan hast! Moulder und ich leben inzwischen die Liebe unseres Lebens in dieser wunderbaren Gegend mit Blick aufs Meer! Welch ein Segen, ihn jeden Tag an meiner Seite zu wissen!",
+				"pda": "Aber klar doch! Du hast sehr viel für uns getan! Hier, das ist für dich... ich schenke dir diesen wunderbaren Planer, der dir dabei helfen wird, deine unterschiedlichen Dinoz zu verwalten. Er wird zu deiner Sammlung hinzugefügt, pass also gut darauf auf!",
+				"dinoz": "Aber klar doch! Du hast sehr viel für uns getan! Besuche mich wieder, sobald du mehr Dinoz hast, dann werde ich dir ein Geschenk überreichen, das dir bei deiner Mission helfen wird!",
+				"begin_star": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh!!! Was sehe ich denn da?!! Na, wenn das kein wunderschönes Exemplar eines „Capsicum annuum“ ist! Was für eine Farbenpracht, welch ein Duft, es ist wun-der-schön!",
+				"ok_star": "Ich danke dir vielmals! Oh oh oh! Im Gegenzug für diesen wundervollen Anblick, schenke ich dir etwas, das ich fand, als ich nach einem Knochen gesucht habe, den ich verloren hatte! Hier, bitte!",
+				"star": "Glückwunsch! Dank Skully, hast du den fünften Zauberstern erhalten! Jetzt fehlen nur noch zwei!"
 			},
 			"playerChoice": {
+				"arg": "Ahhhh! Ein Geeiiist!!!",
+				"bye": "Schleunigst abhauen",
+				"shortcut": "(admin)",
+				"arg2": "Na hier!!! Sie!!!",
+				"diff": "Und was macht das für einen Unterschied?",
+				"free": "Fast frei? Was soll das heißen?",
+				"haunt": "Dann spuken Sie an diesem Ort also rum!",
+				"do": "Ach ja? Was denn so?!",
+				"uhm": "Ähm....",
+				"bonne": "Ein... Unfluch?!",
+				"reset": "Ich glaube Ihnen nicht...",
+				"next": "Das ist nicht gerade praktisch...",
+				"nohelp": "Wer ist Moulder?",
+				"help": "Ich könnte Ihnen ja helfen...",
+				"forgot": "...",
+				"question": "Ich werde schon nichts vergessen!",
+				"accept": "Ja, ohne jeden Zweifel!",
+				"maybe": "Ich muss erst darüber nachdenken...",
+				"missions": "Was muss ich denn machen?",
+				"you": "Sind Sie Moulder?",
+				"explain": "Äh... und?",
+				"other": "Und die andere Erklärung?",
 				"ok": "...",
+				"ok2": "Aber... Sie doch auch!",
+				"skully": "Skully sucht Sie doch auch...",
+				"exp": "(Die komplette Geschichte erzählen)",
+				"end": "Ach, ist doch nicht der Rede wert...",
+				"dinoz": "War doch nicht der Rede wert",
+				"pda": "War doch nicht der Rede wert",
+				"ok_star": "...",
 				"star": "Oh?"
 			}
 		},
-		"bob_star": {
+		"mouldeur": {
 			"speech": {
-				"begin": "Was machst du denn um die Uhrzeit in meinem Haus?",
-				"ok": "Ach so! Ja, ich bin noch halb am Schlafen und hab's nicht verstanden. Hier, das hab' ich für dich aufgehoben. Hoffentlich wird es dir nicht allzu viel Ärger einbringen...",
-				"star": "Mit diesen seltsamen Worten vertraut dir Bao Bob den sechsten Zauberstern an! Fehlt nur noch der Letzte!!!"
+				"begin": "Mmh... wie köstlich doch diese Napalm-Garnelen duften! Sie erinnern mich an die Kochkünste meiner armen Frau!",
+				"you": "So ist es. Hocherfreut! Wusstest du, dass man in diesen Ruinen seltsame verbrannte Kreise finden kann? Ich beschäftige mich schon seit einiger Zeit mit diesen Phänomenen und ich bin zu dem Schluss gekommen, dass es zwei Erklärungen für diese komischen Brandzeichen gibt...",
+				"explain": "Alles deutet darauf, dass es sich um fremde Wesen handelt, die aus dem All gekommen sind, um die Menschen zu erforschen. Diese halten sich an unauffälligen Orten auf... Und wenn sie bei der Rückkehr zu ihrem Heimatplaneten Zündflammen ausstoßen, hinterlassen sie diese verbrannten Kreise! Selbstverständlich hält der König diese Informationen unter Verschluss, denn er steckt mit ihnen unter einer Decke! Außergewöhnlich, nicht wahr?",
+				"other": "Wie? ... Ähm... die andere Erklärung erscheint mir weitaus weniger plausibel, aber laut dem Würstchenverkäufer könnte es sich um Lagerfeuerstellen handeln, die von den Touristen stammen, die die Ruinen besuchen...",
+				"ok": "Mmh! Saftig, diese Napalm-Garnelen! Kaum zu glauben, dass ich meine bezaubernde Frau nie wiedersehen werde! Oh, wie sehr wir uns geliebt haben... die niedlichen Schreieanfälle, in die sie jedes mal verfiel, wenn ich vom Saufen mit meinen Kollegen nach Hause kam, die fehlen mir so... Kaum vorstellbar, dass sie mit Sicherheit tot ist...",
+				"ok2": "Wie bitte? Du scherzt doch hoffentlich. Ich bin noch im besten Alter! Schau doch mal, wie glatt meine Knochen sind: Nicht eine einzige Falte! Ah ha ha ha ha!",
+				"skully": "Was? Du kennst Skully?!!",
+				"exp": ".............danke! Das heißt, dass meine Intuition mich nicht getäuscht hat und es richtig von mir war, keine andere Frau zu suchen, um sie zu ersetzen! Oooohh! Danke! Tausend Dank für deine Hilfe!",
+				"end": "Doch, das ist wahrlich eine Heldentat!!! Bring mich bitte bis zu meiner Frau. Ich kann es kaum erwarten, sie von Angesicht zu Angesicht zu sehen!"
 			},
 			"playerChoice": {
-				"ok": "Ich suche nach...",
-				"star": "???"
+				"you": "Sind Sie Moulder?",
+				"explain": "Äh... und?",
+				"other": "Und die andere Erklärung?",
+				"ok": "...",
+				"ok2": "Aber... Sie doch auch!",
+				"skully": "Skully sucht Sie doch auch...",
+				"exp": "(Die komplette Geschichte erzählen)",
+				"end": "Ach, ist doch nicht der Rede wert..."
 			}
 		}
 	},
@@ -2593,7 +2616,13 @@
 			"hucure": "Gegenmittel",
 			"bckpck": "Abenteurerausrüstung",
 			"rodriz": "Der Reis der Amnesie",
-			"rodlif": "Dunkle Dinoz"
+			"rodlif": "Dunkle Dinoz",
+			"skully1": "Vorabinformationen",
+			"skully2": "Auf Moulders Spuren",
+			"skully3": "Fräulein Bao",
+			"skully4": "Die störenden Touristen",
+			"skully5": "Napalm-Garnelen",
+			"skully_end": "Das Wiederfindsehen"
 		},
 		"tooltip": "Mission: {mission}",
 		"description": {
@@ -2646,7 +2675,13 @@
 			"hucure": "Sas is wirklich fehr nett von dir... Ih glaube, sass sie Bönche ser Butierenden Furzfluden bir helfen könnten... Nimm die Flansen bit, sie du bir gebracht hass und suh die Bönche für bich auf... Schnief...",
 			"bckpck": "Bevor ich meine unglaubliche Reise in ein unbekanntes Land antrete, fehlt mir noch etwas Unverzichtbares! Ein guter Rucksack. Meinen hab' ich verloren, als ich die Mutierenden Sturzfluten umschifft habe... Könntest du ihn für mich wiederfinden?",
 			"rodriz": "Ich brauche Reis, um meinen magischen Umhang aufzuladen. Es gibt scheinbar welchen im Klebrigen Sumpf der Atlantinischen Inseln. Kannst du mir eine ausreichende Menge bringen, damit ich mich wieder unsichtbar machen kann? Beeil dich, es ist dringend!",
-			"rodlif": "Drei Dunkle Dinoz aus Caushemesh erwarten dich bei den Mutierenden Sturzfluten. Geh sie besiegen und komm danach wieder zu mir zurück, um dir deine Belohnung abzuholen... Ich rate dir, sie nicht mit nur einem Dinoz allein anzugreifen, denn er könnte dabei sterben!"
+			"rodlif": "Drei Dunkle Dinoz aus Caushemesh erwarten dich bei den Mutierenden Sturzfluten. Geh sie besiegen und komm danach wieder zu mir zurück, um dir deine Belohnung abzuholen... Ich rate dir, sie nicht mit nur einem Dinoz allein anzugreifen, denn er könnte dabei sterben!",
+			"skully1": "Moulder wurde von meinem Unfluch erwischt, gerade als wir dabei waren, zusammen alt zu werden. Er hat mich auf einen Schlag vergessen und ist in die Welt hinaus gezogen, dieser Unhold! Sein Neffe, der kleine Joe, hat bestimmt Neuigkeiten von ihm... Besuch ihn doch mal und bring mich auf den neuesten Stand!",
+			"skully2": "„Ich werde an dem Ort auf dich warten, wo wir uns das erste Mal begegnet sind.“ Oh oh oh oh! Wie romantisch er doch ist, mein geliebter Moulder! Ich hoffe, dass er dort noch immer auf mich wartet! Schnell, begib dich an diesen wunderbaren Ort, der süßlich nach Seerosen duftet und wo wir uns das erste Mal getroffen haben. Bring mir meinen Liebsten wieder zurück!",
+			"skully3": "Oh oh oh! Mir ist gerade noch etwas eingefallen... etwas Problematisches. Selbst wenn ich Moulder wiederfinden sollte, wird er unser Wiedersehen wieder vergessen und erneut fortgehen, um irgendwo auf mich zu warten. Du musst unbedingt eine Lösung für dieses Problem finden, bevor du Moulder aufsuchst. Besuche mal dieses liebe Fräulein Bao. Sie hat bestimmt eine Lösung!",
+			"skully4": "„Triff mich dort, wo ich dir meine Liebeserklärung gemacht habe.“ Oh oh oh oh! Mein Moulder hat wahrlich ein Herz aus Goooold! Ich werde diesen vorzüglichen Ort nie vergessen, an den er uns geführt hat, als wir noch jung waren... Und den Moment, als er mir ein wohlgegrilltes Merguez-Würstchen hingehalten und um meine Hand angehalten hat!",
+			"skully5": "Napalm-Garnelen? Oh oh oh oh! Welch süße Erinnerung dieses köstliche Gericht ist! Also gut, du müsstest mir eine bestimmte Anzahl an Zutaten bringen, damit ich es zubereiten kann...",
+			"skully_end": "Deine Mission neigt sich ihrem Ende zu... Bring diese Portion Napalm-Garnelen zu meinem lieben Moulder. Er wird meine Kochkunst wiedererkennen und zu mir zurückkommen! Oh oh oh!"
 		},
 		"actions": {
 			"nothing": "{npc}",
@@ -2729,7 +2764,7 @@
 			"catchBat": "Sich dem Sog nähern",
 			"bat": "Seltenes Färkel-Ei",
 			"launchRock": "Einen Stein werfen",
-			"pickNote": "Notizbuch aufheben",
+			"pickNote": "Notizblock aufheben",
 			"redraw": "Die Karte zeichnen",
 			"dnvReport": "In Dinoville Bericht erstatten",
 			"extremFisher": "Extremfischer",
@@ -2739,7 +2774,22 @@
 			"afraidFisher": "Tüchtiger Fischer",
 			"findBobine": "Garnrolle suchen",
 			"couturiere": "Näherin",
-			"rice": "Nach Reis suchen"
+			"rice": "Nach Reis suchen",
+			"giveMerguez": "Merguez geben",
+			"give_item": "{itemQuantity} {item} geben",
+			"readMessage": "Die Nachricht lesen",
+			"panneau": "Hinweisschild",
+			"bao?": "Fräulein Bao???",
+			"missBao": "Fräulein Bao",
+			"baoBabe": "Bao Babe",
+			"AAA": "Versammlung der A.A.A.",
+			"merguez": "Merguez-Verkäufer",
+			"visitRuin": "Die Ruinen aufsuchen",
+			"lookBoat": "Ein verdächtiges Boot suchen",
+			"enterBoat": "Das Boot betreten",
+			"freeMan": "Befreiter Mann",
+			"korgon": "Einen Korgonen suchen",
+			"baiePira": "Piranhselbucht"
 		},
 		"npc": {
 			"fishVendor": "Fischhändler",
@@ -2845,7 +2895,7 @@
 			"catchBat": "Jägerflatter fangen",
 			"bat": "Jägerflatter",
 			"launchRock": "Einen Stein werfen",
-			"pickNote": "Notizbuch aufheben",
+			"pickNote": "Notizblock aufheben",
 			"redraw": "Die Karte zeichnen",
 			"extremFisher": "Extremfischer",
 			"alguae": "Algensammler",
@@ -2855,7 +2905,26 @@
 			"findBobine": "Garnrolle suchen",
 			"couturiere": "Näherin",
 			"seekrice": "Nach Reis suchen",
-			"pickrice": "Reis einsammeln"
+			"pickrice": "Reis einsammeln",
+			"ptitJoe": "„Kleiner“ Papy Joe",
+			"giveMerguez": "Merguez geben",
+			"readMessage": "Die Nachricht lesen",
+			"AAA": "Versammlung der A.A.A.",
+			"baiePira": "Piranhselbucht",
+			"panneau": "Hinweisschild",
+			"bao?": "Fräulein Bao???",
+			"missBao": "Fräulein Bao",
+			"baoBabe": "Bao Babe",
+			"merguez": "Merguez-Verkäufer",
+			"visitRuin": "Die Ruinen aufsuchen",
+			"lookBoat": "Ein verdächtiges Boot suchen",
+			"enterBoat": "Das Boot betreten",
+			"freeMan": "Befreiter Mann",
+			"skully": "Skully",
+			"shrimpSeller": "Garnelenverkäufer",
+			"shamanM": "Lässiger Schamane",
+			"giveSos": "Die Flämmchen geben",
+			"korgon": "Einen Korgonen suchen"
 		},
 		"place": {
 			"port": "zum Predigerhafen",
@@ -2993,7 +3062,7 @@
 			},
 			"troc": {
 				"marchand": "Diese Banane sieht köstlich aus. Ich würde sie gegen diesen Flugdrachen eintauschen!",
-				"amoureux": "Pfff... Ich bin auf dem Weg zum Jungbrunnen. Wenn du willst, tausche ich deinen fliegenden Drachen gegen diesen nagelneuen Verlobungsring... der ist noch unbenutzt...",
+				"amoureux": "Pfff... Ich bin auf dem Weg zum Jungbrunnen. Wenn du willst, tausche ich deinen Flugdrachen gegen diesen nagelneuen Verlobungsring... der ist noch unbenutzt...",
 				"bijoutier": "Was?!? Ja was sehe ich denn da?!? Dieser Ring ist Teil einer alten königlichen Sammlung! Ich tausche ihn gegen das Wertvollste, was ich auf der ganzen Welt besitze: Meine Villa auf der Totem-Insel! Also dann, hier sind die Schlüssel. Ablehnen ist keine Option!",
 				"touriste": "Ich habe die SCHNAUZE VOLL von diesem Sumpf voller Sch... !!! Das ist jetzt schon das dritte Mal, dass unser Campingwagen stecken bleibt! Die Idee war voll für'n A... URLAUB IN EINEM SUMPF zu machen!!! Wie? Eine Villa auf der Totem-Insel? Ok, geht klar, ich tausch meinen Campingwagen gegen die Villa!",
 				"artiste": "Wuuuunderbar!!! Ich bin seeeehr zufrieden! Siehst du diese Gesichter? Die Komposition ist einfach vir-tu-os! Was soll das heißen: „Sieht nach nichts aus“? Ach, du hast ja nicht die leiseste Ahnung von Kunst. Von DER Kunst! Und überhaupt, mein Kunstwerk ist gut und gern einen Campingwagen wert. Voilà, der Tausch ist vollzogen!",
@@ -3234,6 +3303,49 @@
 			},
 			"rodlif": {
 				"forges": "Gar nicht übel für schwache Dinoz aus Dinoville... Nimm, das ist für dich!"
+			},
+			"skully1": {
+				"ptitJoe1": "Onkel Moulder? Ach du meine Güte, ich habe schon seit Jahren nichts mehr von ihm gehört... Wenn du mehr darüber wissen willst, dann bringe mir drei Würstchen vom Großen Immerhitzus!",
+				"ptitJoe2": "Danke! (mampf, mampf). Alles, was ich weiß, ist, dass Onkel Moulder seine Frau sehr geliebt hat. Und dass er für sie eine Nachricht in den Jungbrunnen eingraviert hat.",
+				"readMessage": "Unter den zahlreichen Gravuren des Jungbrunnens kann man folgende Nachricht lesen: „Ich werde an dem Ort auf dich warten, wo wir uns das erste Mal begegnet sind.“",
+				"skull": "Danke, das sind wertvolle Informationen, die du mir da gebracht hast! Mein geliebter Moulder kann nicht sehr weit sein. Schon bald sind wir wieder vereint!"
+			},
+			"skully2": {
+				"touriste": "Ich habe die SCHNAUZE GESTRICHEN VOLL von diesem sch... Sumpf!!! Das ist jetzt schon das dritte Mal, dass unser Campingwagen steckenbleibt. Was für eine besch... Idee, URLAUB IN EINEM SUMPF zu machen!!! Was?! Ob ich jemanden gesehen habe, der Moulder heißt? Ah! Ja, der ist losgezogen, um an einer Sitzung der Allgemeinschaft der Anonymen Aalos teilzunehmen! Pass auf dich auf, falls du dorthin gehen solltest – sie sind da etwas empfindlich...",
+				"fish1": "Die beißen hier gut an. Die Fische kommen hierher, um die schwebenden Mönche zu sehen... Ein Typ namens Moulder? Den kenne ich gut. Der ist zum Angeln zur Piranhselbucht aufgebrochen. Sei vorsichtig mein Junge, die Biester beißen...",
+				"fish2": "Moulder? Er hat gesagt, dass er wieder zurückwollte, um im Sumpf auf seine Frau zu warten... Der arme Kerl, er hat sie schon seit Jahren nicht mehr gesehen... Ich an seiner Stelle wäre da ja eher froh...",
+				"panneau": "Ein Hinweisschild scheint vor kurzem in der Nähe eines Seerosenbeetes aufgestellt worden zu sein. Folgendes ist darauf zu lesen: „Habe die Mücken leid. Triff mich dort, wo ich dir meine Liebeserklärung gemacht habe. Moulder.“",
+				"skull": "Ooohh oh oh oh oh! Moulder, mein Schatz! Ich fühl mich dir so nah wie nie zuvor!"
+			},
+			"skully3": {
+				"bao?": "Bitte was??? Fräulein Bao?! Aber nicht doch... für wen hältst du mich denn? .......... Aber falls du meine Schwester suchst, die ist gerade beim Enkel des Erzdorogon: Dem „Ehrwürdigen“, wie er jetzt genannt werden möchte... Übrigens, sollte sein Vater davon Wind bekommen, dann wird das ein Donnerwetter geben...",
+				"missBao": "Bitte was??? Fräulein Bao?! Meinetwegen... das ist nur schon eine Ewigkeit her, dass mich jemand so genannt hat. Ich bitte dich, Bürschchen, nenn mich doch einfach beim Vornamen: „Babe“...",
+				"baoBabe1": "Du suchst also meinen Rat? Hör mal, ich muss hier erst meine Damenpartie mit dem Enkel des Erzdorogon zu Ende bringen. Ich musste seinem Großvater versprechen, ihm ab und zu Gesellschaft zu leisten... Was hältst du davon, solange ein paar Goblins zu jagen, bis ich hier fertig bin?",
+				"baoBabe2": "Sodele! Schon bin ich fertig! Vernichtend geschlagen hab' ich ihn, hi hi hi! Ich liiiebe es, wenn er sich aufregt! Er ist so süß, wenn aus seinen Nasenflügeln Wasserdampf aufsteigt! Aber gut, du wolltest ja meinen Rat, nicht?",
+				"baoBabe3": "..........oh? Wirklich? ..... Die Lösung für diese Art von Unfluch ist recht einfach: Um sie nicht zu vergessen, genügt es, wenn jemand etwas von Skully stets bei sich trägt... Bis bald, Bürschchen!",
+				"skull": "Oh oh oh oh oh! Das ist ja mal eine gute Lösung für meinen Unfluch! Hier, nimm das mit. So wirst du weder den Weg zum Friedhof, noch deine liebe Skully vergessen oh oh oh!"
+			},
+			"skully4": {
+				"merguez": "Ein seltsamer Kunde? Ja, ich habe einen ziemlich ausgemergelten Typen gesehen, der zum Essen hergekommen war und dabei die ganze Zeit vor sich hin geseufzt hat... Er ist zum Spazieren zu den Ruinen gegangen. Sei vorsichtig, wir haben da etwas spezielle Touristen zurzeit...",
+				"lookBoat": "Nach einigem Suchen findest du am Kai ein Boot, das definitiv komisch aussieht.",
+				"freeMan": "Dddann-ddannkeee!! Ich-ich-ich, ich hatte se-se-sehr große A-a-angst, wissen Sie! Moulder?? Ne-nein, ich heiße Jean-Claude... Ich-ich bin ein Freund des Wü-Wü-Würstchenverkäufers! Da-danke jedenfalls für Ih-ih-ihre Hilfe!",
+				"merguez2": "Du hast Jean-Claude gerettet? Ah! Vielen Dank. Diese Banditen aus den Steppen haben den Aufschwung des Massentourismus in den Ruinen wirklich gestört. Ich weiß nicht, wie ich dir danken soll! ... Moulder? Er hat mir versprochen zurückzukehren, wenn ich ihm ein paar Napalm-Garnelen zubereite, aber ich kenne das Rezept nicht...",
+				"skull": "Oh oh oh! Moulder ist nicht weit weg. Vielen Dank für deine Hilfe, mein junger Freund!"
+			},
+			"skully5": {
+				"skully1": "Gut, zunächst mal brauche ich selbstverständlich gute Garnelen. Du findest welche auf dem Markt in der Unterwasserkuppel! Beeil dich!",
+				"shrimpSeller": "Ich bitte um Entschuldigung, aber aufgrund einer Reihe von Betrügen nehme für meine Garnelen keine Goldmünzen mehr an. Sie müssten mir drei Schatzbriefe bringen...",
+				"giveTreasure": "Danke, und hier sind Ihre Garnelen! Guten Appetit!",
+				"skully2": "Oh oh oh! Wun-der-bar! Diese Garnelen sind unglaublich frisch! Nun denn, machen wir weiter. Zweite unverzichtbare Zutat: Napalm. Um welches herzustellen, brauchen wir qualitativ hochwertige Lava...",
+				"shaman": "Für Napalm? Hmm... dafür bräuchtest du eine Mischung halb Lava, halb Flämmchen. An Lava mangelt es hier nicht, darum bring mir 5 Kisten Flämmchen, damit ich die Mischung für dich herstellen kann...",
+				"giveSos": "A glu! A glu! A gadagagu-glu! Na bitte, noch ganz warmes und nicht zu dickflüssiges Napalm für dich...",
+				"skully3": "Oh! Oh oh oh! Welch hervorragendes Napalm! Aber das Rezept ist erst vollständig, wenn man noch eine ab-so-lut notwendige Zutat hinzufügt... Haare eines gut genährten Korgonen! Normalerweise müssten sich welche in der Nähe des Großen Immerhitzus finden lassen. Aber sei vorsichtig, dass du nicht jemandem das Essen stiehlst, sonst könntest es bereuen!",
+				"skully4": "Oh oh oh oh! Ich rühre und rühre!!! Und voilà! Eine köstliche Portion Napalm-Garnelen!",
+				"skull": "Danke für deine Hilfe! Oh oh oh! Bald werde ich meinen zärtlichen Moulder wiedersehen!"
+			},
+			"skully_end": {
+				"merguez": "Ooooohh! Das sind also die berühmten Napalm-Garnelen??! Lass mal kosten... hmm... da fehlt etwas Fett, aber ist trotzdem saftig. Keine Frage, Moulder wird bald hier aufkreuzen... Sieh doch mal, wer da kommt!",
+				"skull": "Ooooooooh! Oh! Oh oh oh! Moulder ist zurückgekehrt!!! Vielen Dank!"
 			}
 		},
 		"target": {
@@ -3577,13 +3689,13 @@
 			"tour": "Dieses gelbe Trikot ist die Belohnung für deine großartige Teilnahme an der „Tour de Dinoland“. Du gehörst nun zu den großen Entdeckern des Dinolandes!",
 			"vener": "Das Auge des Ehrwürdigen ist ein äußerst seltener Gegenstand und nur die größten Krieger können es erlangen! Es wird erzählt, dass es unglaublich starke magische Eigenschaften hätte...",
 			"taurus": "Du hast Baobob dabei geholfen, den höllischen Taurus, einen mächtigen Möffen zurück in die Dunkle Welt zu befördern. Vous n'êtes pas prêt de le revoir, votre courage commence déjà à traverser les frontières de Dinoland.",
-			"belius": "Vous avez supprimé le puissant Santaz infernal Belius. Il est reparti dans les profondeurs du Monde Sombre. Ce trophée vous permet de débloquer 3 nouvelles races de Dinoz démons dans la boutique démoniaque.",
+			"belius": "Du hast den höllischen Belius, einen mächtigen Santas vertrieben. Er ist zurück in die Tiefen der Dunklen Welt zurückgekehrt. Mit dieser Trophäe kannst du im Dämonischen Geschäft drei neue Arten von Dämonen-Dinoz freischalten.",
 			"scorp": "Du hast den höllischen Scorpus, einen mächtigen Winks vertrieben. Il est reparti dans les profondeurs du Monde Sombre.",
 			"msg": "Dieser unbegrenzte Vorrat an offiziellen Briefmarken der Dinoz Post AG verifiziert deinen Aufenthalt in Dinoville.",
 			"magnet": "Cet éclat de Magnétite Négative vous a été offert par le Roi des Rockys en personne ! Qui sait quels pouvoirs mystérieux il possède...",
 			"plume": "Diese Feder ist ein Geschenk von jemandem, der aus weiter Ferne stammt. Damit kann man die Präsentation des Spielerprofils bearbeiten.",
 			"kaura": "Diese Aura ermöglicht es dir, die Totem-Insel zu erreichen und möglicherweise einen Kabuki zu finden, der die Gewaltige Katastrophe überlebt hat!",
-			"demon": "Cet ancien parchemin vous permettra d'accèder à la Boutique Démoniaque au Cimetière du Crépuscule !",
+			"demon": "Diese uralte Schriftrolle gewährt dir Zugang zum Dämonischen Geschäft auf dem Dämmerungsfriedhof!",
 			"pmi": "Das Illustrierte Missionsbüchlein ermöglicht es, jederzeit auf die Liste der abgeschlossenen und ausstehenden Missionen deiner Dinoz zuzugreifen.",
 			"pda": "La P.D.A. est une pierre remplie (chose surprenante) de technologie formée naturellement et permettant à l'éleveur d'avoir un aperçu de tous ses Dinoz en un simple coup d'oeil. La Diamantite au contraire c'est juste pour la frime.",
 			"fdjv1": "Ce trophée remercie les joueurs ayant fait un long périple jusqu'au Festival du Jeu video édition 2010 pour rencontrer les marionnettistes de l'ombre !",
@@ -4021,7 +4133,10 @@
 			"rasca": "Alter Tiefseeskorp",
 			"eearth": "Erdelementar",
 			"pirask": "Grätanha",
-			"megawf": "Megawolf"
+			"megawf": "Megawolf",
+			"baraba": "Barababor",
+			"baratr": "Baratribor",
+			"bamboo": "Bambooz"
 		},
 		"status": {
 			"asleep": "schlafend",
@@ -4064,9 +4179,11 @@
 			"addStatus": "**{fighter}** hat den Status **„{status}“** erhalten.",
 			"removeStatus": "Der Status **„{status}“** von **{fighter}** ist abgelaufen.",
 			"itemUse": "**{fighter}** hat **{item}** benutzt.",
-			"hypnotize": "**{fighter}** hat die Seite gewechselt.",
+			"hypnotize": "**{fighter}** wurde hypnotisiert und hat die Seite gewechselt.",
+			"endHypnotize": "**{fighter}** ist nicht mehr hypnotisiert und ist wieder auf die ursprüngliche Seite zurückgekehrt.",
 			"gainEnergy": "**{fighter}** hat Energie wiederhergestellt und hat jetzt **{energy}** Energie.",
 			"newTurn": " **{fighter}** ist dran!",
+			"statusTurn": "Statusüberprüfung bevor **{fighter}** dran ist.",
 			"tired": "**{fighter}** ist erschöpft und setzt eine Runde aus."
 		},
 		"event": {
@@ -4235,6 +4352,24 @@
 		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt."
 	},
 	"logs": {
+		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",
+		"AdminUpdateDinoz": "**Admin ({playerId})** hat {stat} von {dinoz} ({dinozId}) auf {value} gesetzt",
+		"AdminRemoveStatus": "**Admin ({playerId})** hat vom Dinoz {dinoz} ({dinozId}) den Status „{status}“ entfernt",
+		"AdminAddSkill": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) die Fähigkeit „{skill}“ verliehen",
+		"AdminRemoveSkill": "**Admin ({playerId})** hat vom Dinoz {dinoz} ({dinozId}) die Fähigkeit „{skill}“ entfernt",
+		"AdminAddUnlockableSkill": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) die freischaltbare Fähigkeit „{skill}“ verliehen",
+		"AdminRemoveUnlockableSkill": "**Admin ({playerId})** hat vom Dinoz {dinoz} ({dinozId}) die freischaltbare Fähigkeit „{skill}“ entfernt",
+		"AdminAddMoney": "**Admin ({playerId})** hat dem Spieler {targetId} {quantity} Gold hinzugefügt",
+		"AdminRemoveMoney": "**Admin ({playerId})** hat vom Spieler {targetId} {quantity} Gold entfernt",
+		"AdminAddReward": "**Admin ({playerId})** hat dem Spieler {targetId} die Belohnung „{reward}“ gegeben",
+		"AdminRemoveReward": "**Admin ({playerId})** hat vom Spieler {targetId} die Belohnung „{reward}“ entfernt",
+		"AdminAddItem": "**Admin ({playerId})** hat dem Spieler {targetId} {quantity} Einheit(en) des Gegenstands „{item}“ gegeben",
+		"AdminRemoveItem": "**Admin ({playerId})** hat vom Spieler {targetId} {quantity} Einheit(en) des Gegenstands „{item}“ entfernt",
+		"AdminAddIngredient": "**Admin ({playerId})** hat dem Spieler {targetId} {quantity} Einheit(en) der Zutat „{ingredient}“ gegeben",
+		"AdminRemoveIngredient": "**Admin ({playerId})** hat vom Spieler {targetId} {quantity} Einheit(en) der Zutat „{ingredient}“ entfernt",
+		"AdminUpdateQuest": "**Admin ({playerId})** hat für den Spieler {targetId} den Fortschritt der Mission „{quest}“ um {progress} vorgespult/zurückgespult",
+		"AdminUpdatePlayer": "**Admin ({playerId})** hat {stat} des Spielers {targetId} auf {value} gesetzt",
+		"AdminUpdateSecret": "**Admin ({playerId})** hat den geheimen Schlüssel „{key}“ auf {value} gesetzt",
 		"ItemUsed": "**{player} ({playerId})** hat **{quantity}x {item}** mit dem Dinoz **{dinoz} ({dinozId})** benutzt.",
 		"ItemBought": "**{player} ({playerId})** hat **{quantity}x {item}** gekauft (Gesamt: {total}).",
 		"IngredientSold": "**{player} ({playerId})** hat **{quantity}x {item}** verkauft (Übrig: {amount}).",
@@ -4272,7 +4407,7 @@
 		"tidInProgress": "Der letzte Abschnitt des Inter-Dojo Turniers ist im Gange.",
 		"reputation": "Ruf",
 		"points": "Punkte",
-		"worth": "Vergütung",
+		"worth": "Kompetenz",
 		"ranking": "Platzierung",
 		"accessChallenges": "Herausforderungen ansehen",
 		"testDinoz": "Probekampf",
@@ -4760,7 +4895,17 @@
 		"fight_star_found": "Am Ende des Kampfes fällt dir ein gleißender Gegenstand auf. Es ist einer der sieben Zaubersterne!",
 		"eat_star_found": "Kurz nachdem dein Dinoz die Pastete verschlungen hat, bemerkt er einige Meter entfernt etwas Leuchtendes... Glückwunsch! Du hast einen der sieben Zaubersterne gefunden!",
 		"dig_star_found": "Schon beim ersten Schaufelschlag vernimmst du ein komisches Geräusch. Du hast beim Graben einen der sieben Zaubersterne gefunden! Glückwunsch!",
-		"resurrect_star_found": "Als er in Dinoville aufwacht, erkennt dein Dinoz, dass ihm jemand den letzten Zauberstern anvertraut hat! Seine Erinnerungen sind getrübt, aber er erinnert sich an seltsame, bislang unbekannte Dinoz, die wie Affen mit buntem Fell aussahen... Sie waren es, die ihm den siebten Stern überreicht haben, aber wer sind sie!?"
+		"resurrect_star_found": "Als er in Dinoville aufwacht, erkennt dein Dinoz, dass ihm jemand den letzten Zauberstern anvertraut hat! Seine Erinnerungen sind getrübt, aber er erinnert sich an seltsame, bislang unbekannte Dinoz, die wie Affen mit buntem Fell aussahen... Sie waren es, die ihm den siebten Stern überreicht haben, aber wer sind sie!?",
+		"AAA_start": "Als deine Dinoz gerade dabei sind, sich der Gruppe zu nähern, werden einige Aalos auf sie aufmerksam und greifen an!",
+		"AAA_end": "Nachdem du die Aalos besiegt hast, bemerkst du Fußspuren, die in Richtung Westen führen...",
+		"baiePira_start": "Sobald du die Bucht betrittst, stürzen sich zahlreiche Piranhsel auf dich, um an dir zu nagen... Wer kommt denn hier bitte zum Angeln her???",
+		"baiePira_end": "Sobald die Piranhsel besiegt sind, siehst du dich um. Falls Moulder zum Angeln hier gewesen ist, ist er schon wieder weg...",
+		"baraba_start": "Möge die Macht der Bambooz mit mir sein! Nieder mit den Ungläubigen!",
+		"baraba_end": "Bevor Barababor zusammenbricht, flüstert er dir Folgendes zu: „Wir haben deinen Freund gefangen genommen: Er wird mit dem Boot in unsere heimatlichen Steppen gebracht, wo er in die Sklaverei verkauft wird!“",
+		"boat_start": "Möge die Macht der Bambooz mit mir sein! Ich werde meinen Bruder rächen!!!",
+		"boat_end": "Nachdem du die Banditen besiegt hast, befreist du einen Mann, der im Boot gefesselt war...",
+		"korgon_start": "Kwwiiiiiiik!",
+		"korgon_end": "Du hast einen besonders fetten Korgonen gefangengenommen... hoffentlich war er nicht als Abendessen für jemand anderen vorgesehen!"
 	},
 	"report": {
 		"header": "Unangemessene Inhalte melden",
@@ -4833,14 +4978,17 @@
 		"reward": "Du hast {rewards} erhalten!",
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "Du hast im Szenario „**{scenario}**“ Fortschritt erzielt.",
-		"FBStarted": "Es ist ein neues Ereignis verfügbar!"
+		"FBStarted": "Es ist ein neues Ereignis verfügbar!",
+		"clanApply": "{name} möchte deinem Klan beitreten!"
 	},
 	"events": {
 		"disclaimer": "Hier findest du alle laufenden Gemeinschaftsereignisse.",
+		"disclaimerEnded": "Hier findest du alle abgeschlossenen Gemeinschaftsereignisse.",
 		"header": "Ereignisse im Gange",
 		"date": "Erstellungsdatum",
 		"level": "Maximale Stufe",
 		"races": "Zugelassene Rassen",
+		"subscribed": "Inscrits",
 		"tournament": {
 			"disclaimer": "Ein Ereignis der Stufe {level} des Rohkraft-Turniers, um den Sieger zu küren, ist im Gange. Du kannst während der dreitägigen Qualifikationsphase einen Dinoz pro Tag erstellen.&&Dein Dino kann kostenlos bis zur Höchststufe aufsteigen. Es werden nur die ersten 256 Dinoz der Höchststufe ausgewählt.&& &&Viel Glück, Dinoz-Meister!",
 			"progress": "Derzeit sind {qty} Dinoz auf Turnierstufe."
