@@ -39,17 +39,15 @@ const router = createRouter({
 				{
 					path: '/dino/:id/:npc',
 					name: 'NPC',
-					component: () => import('../pages/NPC.vue')
+					component: () => import('../pages/NPC.vue'),
+					props: route => ({
+						dialog: route.query.dialog
+					})
 				},
 				{
 					path: '/dino/:id/missions/:npc',
 					name: 'Missions',
 					component: () => import('../pages/Missions.vue')
-				},
-				{
-					path: '/dino/:id/missions2/:npc',
-					name: 'NPC2',
-					component: () => import('../pages/NPC2.vue')
 				},
 				{
 					path: '/shop/:name',

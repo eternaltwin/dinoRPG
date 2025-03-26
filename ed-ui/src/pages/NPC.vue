@@ -10,9 +10,10 @@
 			<div class="content">
 				<span
 					class="dialog"
-					v-if="npcSpeech.speech"
+					v-if="npcSpeech.speech && !dialog"
 					v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
 				/>
+				<span class="dialog" v-else v-html="formatContent($t(`missions.dialog.${npcSpeech.speech}`))" />
 				<div class="portrait">
 					<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
 					<DZButton @click="stop()">{{ $t(`npc.stop`) }}</DZButton>
@@ -54,6 +55,12 @@ export default defineComponent({
 			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
 		};
+	},
+	props: {
+		dialog: {
+			type: String,
+			default: undefined
+		}
 	},
 	components: {
 		DZButton,
@@ -112,27 +119,36 @@ export default defineComponent({
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
-		const npc = this.dinozStore.getNpc(this.dinozId);
-		console.log(npc);
 		this.npcName = this.$route.params.npc as string;
-		let step = 'begin';
-
-		if (npc && npc.npcName === this.npcName) {
-			step = npc.npcSpeech;
-		} else {
-			this.dinozStore.clearNpc(this.dinozId);
-		}
-		try {
-			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
-
-			step = this.npcSpeech.speech;
-			this.dinozStore.setNpc(this.dinozId, step, this.npcSpeech.name);
-
-			this.loaded = true;
+		if (this.dialog) {
+			this.npcSpeech = {
+				name: this.npcName,
+				speech: this.dialog,
+				playerChoice: []
+			};
 			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err, this.$toast);
-			return;
+		} else {
+			const npc = this.dinozStore.getNpc(this.dinozId);
+
+			let step = 'begin';
+
+			if (npc && npc.npcName === this.npcName) {
+				step = npc.npcSpeech;
+			} else {
+				this.dinozStore.clearNpc(this.dinozId);
+			}
+			try {
+				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
+
+				step = this.npcSpeech.speech;
+				this.dinozStore.setNpc(this.dinozId, step, this.npcSpeech.name);
+
+				this.loaded = true;
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
 		}
 
 		const npcCore = Object.values(npcList).find(npc => npc.name === this.npcName);

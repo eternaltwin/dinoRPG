@@ -242,10 +242,10 @@ export default defineComponent({
 									this.dinoz.missionId!,
 									action.prop as string
 								);
-								this.$router.replace({
-									name: 'NPC2',
+								this.$router.push({
+									name: 'NPC',
 									params: { id: this.$route.params.id.toString(), npc: npcName },
-									state: { dialogue: dialog }
+									query: { dialog: dialog }
 								});
 							} else {
 								this.npcName = action.prop as string;
@@ -555,7 +555,7 @@ export default defineComponent({
 			const day: Date = new Date();
 			return 60 - day.getMinutes();
 		},
-		mission() {
+		mission(): MissionHUD | null {
 			const dinoz = dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString());
 			if (!dinoz) return null;
 			return dinoz.missionHUD;

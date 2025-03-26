@@ -53,11 +53,10 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 
 	// Management of multiple initial steps
-	let possibleInitialSteps = Object.values(pnj.data).filter(
-		step => step.initialStep && (!step.condition || checkCondition(step.condition, player!, dinozId))
+	const initialStepData = Object.values(pnj.data).find(
+		step => step.initialStep && player && checkCondition(step.condition, player, dinozId)
 	);
 
-	let initialStepData = possibleInitialSteps[0];
 	if (!initialStepData) {
 		throw new ExpectedError(`No valid initial step found for NPC ${npcName}.`);
 	}
@@ -97,7 +96,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 				name: npcName,
 				speech: initialStepData.stepName,
 				playerChoice: initialStepData.nextStep.filter(
-					step => !pnj.data[step].condition || checkCondition(pnj.data[step].condition, player!, dinozId)
+					step => player && checkCondition(pnj.data[step].condition, player, dinozId)
 				)
 			};
 		}
