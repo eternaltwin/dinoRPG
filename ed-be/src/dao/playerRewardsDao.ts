@@ -21,7 +21,8 @@ export async function addRewardToPlayer(reward: Prisma.PlayerRewardCreateInput) 
 		},
 		update: {},
 		create: {
-			rewardId: reward.rewardId
+			rewardId: reward.rewardId,
+			playerId: playerId
 		}
 	});
 }
