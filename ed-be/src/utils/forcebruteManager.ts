@@ -355,6 +355,10 @@ class ForceBruteManager {
 								{ FBTournamentId: currentState.tournamentId }
 							]
 						},
+						take: this.QUALIFIED_TEAMS,
+						orderBy: {
+							createdDate: 'asc'
+						},
 						select: {
 							id: true
 						}
