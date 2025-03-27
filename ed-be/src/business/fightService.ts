@@ -15,7 +15,7 @@ import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { generateString, getRandomNumber } from '../utils/index.js';
-import { DinozToCheckMissionFight, checkMissionFight } from './missionsService.js';
+import { checkMissionFight, DinozToCheckMissionFight } from './missionsService.js';
 import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import randomBetween from '../utils/fight/randomBetween.js';

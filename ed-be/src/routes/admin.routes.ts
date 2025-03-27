@@ -4,6 +4,7 @@ import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import {
 	addSecret,
+	debugFight,
 	editDinoz,
 	editPlayer,
 	getAdminDashBoard,
@@ -11,11 +12,11 @@ import {
 	givePlayerEpicReward,
 	listAllDinozFromPlayer,
 	listAllPlayerInformationForAdminDashboard,
-	modifyPlayerItems,
 	modifyPlayerIngredients,
-	updatePlayerQuestProgression,
+	modifyPlayerItems,
 	setPlayerMoney,
-	truncateAll
+	truncateAll,
+	updatePlayerQuestProgression
 } from '../business/adminService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkIsAdmin } from '../utils/jwt.js';
@@ -23,8 +24,8 @@ import sendError from '../utils/sendErrors.js';
 import {
 	banPlayer,
 	cancelBan,
-	getPaginatedBannedPlayers,
 	getAllModeration,
+	getPaginatedBannedPlayers,
 	takeActionOnReport,
 	updateBan
 } from '../business/moderationService.js';
@@ -429,6 +430,19 @@ routes.delete(`${commonPath}/truncateGame`, checkIsAdmin, async (req: Request, r
 	try {
 		await truncateAll(req);
 		return res.status(200).send();
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.get(`${commonPath}/:dinoz1/:dinoz2/:seed/:type`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const fight = await debugFight(req);
+		return res.status(200).send(fight);
 	} catch (err) {
 		sendError(res, err);
 	}

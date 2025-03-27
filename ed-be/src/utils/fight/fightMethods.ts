@@ -2197,7 +2197,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
 
-const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean => {
+const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: string): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
@@ -4736,7 +4736,7 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	}
 };
 
-export const playFighterTurn = (fightData: DetailedFight) => {
+export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	const attacker = fightData.fighters[0];
 
 	// TODO: rework environment to use a timeout.
@@ -4960,7 +4960,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(fightData, attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
-		if (activateSkill(fightData, possibleSkill)) {
+		if (activateSkill(fightData, possibleSkill, seed)) {
 			endTurnChecks(fightData, attacker);
 			return;
 		}

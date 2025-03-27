@@ -400,7 +400,7 @@ class ForceBruteManager {
 					currentState.tournamentId
 				);
 				if (currentState.round === 4 && lastWinners.length !== 16) {
-					LOGGER.error('There is no 16 winners from pools phase.');
+					LOGGER.error(`There is no 16 winners from pools phase for tournament ${currentState.tournamentId}.`);
 					throw new Error('There is no 16 winners from pools phase.');
 				}
 				if (currentState.round === 4) {

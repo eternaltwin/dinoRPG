@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { getAllDinozFromAccount, updateDinoz } from '../dao/dinozDao.js';
+import { getAllDinozFromAccount, getDinozForDojoFight, updateDinoz } from '../dao/dinozDao.js';
 import { addMultipleSkillToDinoz, removeSkillFromDinoz } from '../dao/dinozSkillDao.js';
 import { addMultipleStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
 import {
@@ -12,17 +12,20 @@ import {
 } from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
-import { increaseItemQuantity, decreaseItemQuantity } from '../dao/playerItemDao.js';
-import { increaseIngredientQuantity, decreaseIngredientQuantity } from '../dao/playerIngredientDao.js';
-import { increaseQuestProgression, decreaseQuestProgression } from '../dao/questsDao.js';
+import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
+import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { LogType } from '@drpg/prisma';
-import { AdminRole } from '@drpg/prisma';
+import { AdminRole, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
+import { calculateFightBetweenPlayers } from './fightService.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -610,4 +613,79 @@ export async function truncateAll(req: Request) {
 			player: { connect: { id: player.id } }
 		});
 	}
+}
+
+export async function debugFight(req: Request) {
+	const seed = req.params.seed;
+	let dinoz1: DinozToGetFighter[];
+	let dinoz2: DinozToGetFighter[];
+	let timeout = 1000;
+	if (req.params.type === 'gameDinoz') {
+		const d1 = await getDinozToFight(+req.params.dinoz1);
+		const d2 = await getDinozToFight(+req.params.dinoz2);
+		// Remove items from dinoz for the fight and set life to maxLife
+		d1.skills = d1.skills.filter(
+			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+		);
+		d1.life = d1.maxLife;
+		d2.skills = d2.skills.filter(
+			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+		);
+		d2.life = d2.maxLife;
+		dinoz1 = [d1];
+		dinoz2 = [d2];
+	} else if (req.params.type === 'classic') {
+		dinoz1 = await getDinozForDojoFight([+req.params.dinoz1]);
+		dinoz2 = await getDinozForDojoFight([+req.params.dinoz2]);
+	} else {
+		// if (req.params.type === 'dojo')
+		dinoz1 = await getDinozForDojoFight([+req.params.dinoz1]);
+		dinoz2 = await getDinozForDojoFight([+req.params.dinoz2]);
+		dinoz1.map(d => {
+			d.items = [];
+			d.life = d.maxLife;
+		});
+		dinoz2.map(d => {
+			d.items = [];
+			d.life = d.maxLife;
+		});
+	}
+
+	if (req.params.type === 'dojo') {
+		timeout = 100;
+	}
+
+	/*	console.log('start')
+	for (let i = 0; i < 10000; i++) {
+		calculateFightBetweenPlayers([dinoz1], false, [dinoz2], false, PlaceEnum.DOJO);
+	}
+	console.log('stop')*/
+	const fight = calculateFightBetweenPlayers(dinoz1, false, dinoz2, false, PlaceEnum.DOJO, timeout, seed);
+	return fight;
+}
+
+async function getDinozToFight(dinozId: number) {
+	const dinoz = await prisma.gameDinoz.findUnique({
+		where: { id: dinozId },
+		select: {
+			id: true,
+			display: true,
+			name: true,
+			level: true,
+			life: true,
+			maxLife: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			skills: {
+				select: { skillId: true }
+			}
+		}
+	});
+	if (!dinoz) {
+		throw new Error("Dinoz doesn't exist");
+	}
+	return { ...dinoz, status: [], items: [], catches: [] };
 }

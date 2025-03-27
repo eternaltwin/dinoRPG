@@ -5,6 +5,7 @@ import { SecretData } from '@drpg/core/models/admin/SecretData';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
+import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -206,6 +207,12 @@ export const AdminService = {
 	resetGame(): Promise<void> {
 		return http()
 			.delete(`/admin/truncateGame`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	debugFight(dinoz1: number, dinoz2: number, seed: string, type: string): Promise<FightProcessResult> {
+		return http()
+			.get(`/admin/${dinoz1}/${dinoz2}/${seed}/${type}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}
