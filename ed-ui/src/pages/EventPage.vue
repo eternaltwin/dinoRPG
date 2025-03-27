@@ -97,6 +97,7 @@ export default defineComponent({
 	flex-direction: column;
 	align-items: center;
 	gap: 10px;
+	align-self: center;
 }
 .dinozList {
 	display: flex;

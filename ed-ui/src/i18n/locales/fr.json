@@ -4841,6 +4841,7 @@
 		"date": "Date de création",
 		"level": "Niveau max",
 		"races": "Races authorisées",
+		"subscribed": "Inscrits",
 		"tournament": {
 			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un dinoz par jour durant les trois jours de qualification.&&Votre dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître dinoz !",
 			"progress": "Actuellement {qty} dinoz sont au niveau du tournois."
