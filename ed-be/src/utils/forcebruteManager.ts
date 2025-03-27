@@ -1,8 +1,8 @@
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { PismaClientLocal, prisma } from '../prisma.js';
+import { PismaClientLocal } from '../prisma.js';
 import { shuffle } from './tools.js';
-import { TournamentPhase, TournamentSchedule } from '@drpg/core/models/dojo/tournament';
+import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { FBDetails, FBMetaData, FBPool, FBPools, RawMatch } from '@drpg/core/models/dojo/ForceBrute';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
@@ -10,8 +10,6 @@ import dayjs from 'dayjs';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { $Enums } from '@drpg/prisma';
 import GameDinozUsage = $Enums.GameDinozUsage;
-import NotificationSeverity = $Enums.NotificationSeverity;
-import { matches } from 'validator';
 
 class ForceBruteManager {
 	private readonly QUALIFIED_TEAMS = 256;
@@ -349,7 +347,11 @@ class ForceBruteManager {
 					// Premier round : on les dinoz
 					const qualifiedTeams = await prisma.gameDinoz.findMany({
 						where: {
-							AND: [{ level: this.level }, { usage: GameDinozUsage.FBTournament }]
+							AND: [
+								{ level: this.level },
+								{ usage: GameDinozUsage.FBTournament },
+								{ FBTournamentId: currentState.tournamentId }
+							]
 						},
 						select: {
 							id: true
@@ -429,7 +431,7 @@ class ForceBruteManager {
 				throw new Error('Phase de tournoi invalide');
 		}
 
-		LOGGER.log(`Generated round ${currentState.round}.`);
+		LOGGER.log(`Generated round ${currentState.round} of ${currentState.tournamentId}.`);
 
 		if (currentState.round === 3) {
 			// End of pool phase
