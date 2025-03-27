@@ -26,10 +26,10 @@ import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
 import { IncomingMessage } from 'http';
 import { checkBans } from './cron/checkBans.js';
-import { dojoResets } from './cron/dojoResets.js';
 import TournamentManager from './utils/tournamentManager.js';
 import { prisma } from './prisma.js';
 import { resumeTournaments } from './business/forceBruteService.js';
+import { scheduleAtStart } from './business/scheduleService.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -81,12 +81,12 @@ export function main(cx: ServerContext) {
 		});*/
 	});
 
+	scheduleAtStart();
 	resetDinozShopAtMidnight().start();
 	healRestingDinoz().start();
 	healDinozFount().start();
 	itinerantMerchant().start();
 	checkBans().start();
-	dojoResets().start();
 
 	scheduleOffersExpiration();
 	TournamentManager.resume(prisma);

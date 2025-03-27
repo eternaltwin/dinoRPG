@@ -36,7 +36,7 @@ export async function getRandomDinozFromLevel(level: number, team: number[], pla
 
 		leveldifference += 1;
 	}
-	
+
 	return null;
 }
 

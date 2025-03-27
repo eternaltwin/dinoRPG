@@ -616,6 +616,11 @@ exports.Prisma.GameDinozScalarFieldEnum = {
   FBTournamentId: 'FBTournamentId'
 };
 
+exports.Prisma.ServerStateScalarFieldEnum = {
+  action: 'action',
+  nextCheck: 'nextCheck'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -740,6 +745,16 @@ exports.GameDinozUsage = exports.$Enums.GameDinozUsage = {
   FBTournament: 'FBTournament'
 };
 
+exports.ServerAction = exports.$Enums.ServerAction = {
+  checkBans: 'checkBans',
+  dojoReset: 'dojoReset',
+  healDinozFount: 'healDinozFount',
+  healRestingDinoz: 'healRestingDinoz',
+  itinerantMerchant: 'itinerantMerchant',
+  dinozShop: 'dinozShop',
+  midnightReset: 'midnightReset'
+};
+
 exports.Prisma.ModelName = {
   Concentration: 'Concentration',
   Dinoz: 'Dinoz',
@@ -791,7 +806,8 @@ exports.Prisma.ModelName = {
   Tournament: 'Tournament',
   TournamentTeam: 'TournamentTeam',
   FBTournament: 'FBTournament',
-  GameDinoz: 'GameDinoz'
+  GameDinoz: 'GameDinoz',
+  ServerState: 'ServerState'
 };
 
 /**

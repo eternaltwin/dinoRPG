@@ -769,6 +769,21 @@ model GameDinoz {
   @@map("gamedinoz")
 }
 
+model ServerState {
+  action    ServerAction @id @unique
+  nextCheck DateTime
+}
+
+enum ServerAction {
+  checkBans
+  dojoReset
+  healDinozFount
+  healRestingDinoz
+  itinerantMerchant
+  dinozShop
+  midnightReset
+}
+
 enum GameDinozUsage {
   FBTournament
 }
