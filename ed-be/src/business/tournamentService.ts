@@ -6,8 +6,7 @@ import translate from '../utils/translate.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
-import { GameDinozUsage, Prisma, UnavailableReason } from '@drpg/prisma';
-import { getRandomNumber } from '../utils/index.js';
+import { UnavailableReason } from '@drpg/prisma';
 import { formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { RaceList } from '@drpg/core/models/dinoz/RaceList';
 import dayjs from 'dayjs';
@@ -468,7 +467,7 @@ export async function getLevelLimits(races: RaceList[]) {
 					AND: [{ raceId: race }, { level: { gte: currentLevel } }]
 				}
 			});
-			if (current >= 100 && maxLevel <= currentLevel) {
+			if (current >= 350 && maxLevel <= currentLevel) {
 				maxLevel = currentLevel;
 			}
 			currentLevel += 5;
