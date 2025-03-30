@@ -13,7 +13,6 @@ import {
 	cleanCurrentOpponentTeam,
 	createChallengeRequest,
 	createMyDojo,
-	createMyTeamDao,
 	getMyDojoDao,
 	getMyTeamDao,
 	giveReputation,
@@ -32,11 +31,10 @@ import {
 	getArchivedFightRequest,
 	viewFight
 } from '../dao/archiveDao.js';
-import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { Challenge, challengeRanges, ChallengeType, parseChallenge } from '@drpg/core/models/dojo/challenge';
-import { myTeam } from '@drpg/core/models/dojo/dojoBasic';
 import { Dojo, NotificationSeverity } from '@drpg/prisma';
 import { getPlayerPositionDojoDAO, updateDojoPoints } from '../dao/rankingDao.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -54,16 +52,7 @@ export async function getDojo(req: Request) {
 	let myDojo = await getMyDojoDao(authed.id);
 
 	if (!myDojo) {
-		myDojo = await createMyDojo(authed.id);
-		const newChallenge = generateRandomChallenge();
-		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
-		myDojo.activeChallenge = JSON.stringify(newChallenge);
-	}
-
-	if (!myDojo.activeChallenge) {
-		const newChallenge = generateRandomChallenge();
-		await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
-		myDojo.activeChallenge = JSON.stringify(newChallenge);
+		myDojo = await createMyDojo(authed.id, generateRandomChallenge());
 	}
 
 	const rank = await getPlayerPositionDojoDAO(authed.id);
@@ -85,7 +74,7 @@ export async function createMyTeam(req: Request) {
 	let myDojo = await getMyDojoDao(authed.id);
 
 	if (!myDojo) {
-		myDojo = await createMyDojo(authed.id);
+		myDojo = await createMyDojo(authed.id, generateRandomChallenge());
 	}
 
 	if (teamIds.length < 5 || teamIds.length > 10) {
@@ -106,13 +95,7 @@ export async function createMyTeam(req: Request) {
 	}
 	await createOpponentTeam(team, myDojo);
 
-	// Create challenge
-	const newChallenge = generateRandomChallenge();
-	await createChallengeRequest(authed.id, JSON.stringify(newChallenge));
-
-	const dojo: myTeam = await createMyTeamDao(teamIds, myDojo.id);
-
-	return dojo;
+	return myDojo;
 }
 
 export async function getMyTeam(req: Request) {
@@ -321,7 +304,7 @@ export async function fightChallenge(req: Request) {
 	const fightArchive = await archiveFight(fightResult, authed.id);
 
 	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-	const activeChallenge = JSON.parse(player.Dojo.activeChallenge!) as Challenge;
+	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;
 
 	const promises = [];
@@ -331,7 +314,7 @@ export async function fightChallenge(req: Request) {
 	promises.push(setFightedOpponent(opponentId, player.Dojo.id, fightArchive.result));
 
 	const newChallenge = generateRandomChallenge();
-	promises.push(createChallengeRequest(authed.id, JSON.stringify(newChallenge)));
+	promises.push(createChallengeRequest(authed.id, newChallenge));
 
 	// Reputation
 	const reputation = fightResult.winner ? 2 + (challengeWon ? 2 : 0) : 0;

@@ -1,4 +1,5 @@
 import { prisma } from '../prisma.js';
+import { Challenge } from '@drpg/core/models/dojo/challenge';
 
 export async function getMyDojoDao(playerId: string) {
 	const dojo = await prisma.dojo.findUnique({
@@ -107,10 +108,11 @@ export async function incrementDailyReset(dojoId: string) {
 	});
 }
 
-export async function createMyDojo(playerId: string) {
+export async function createMyDojo(playerId: string, challenge: Challenge) {
 	const dojo = await prisma.dojo.create({
 		data: {
-			player: { connect: { id: playerId } }
+			player: { connect: { id: playerId } },
+			activeChallenge: challenge
 		},
 		select: {
 			DojoChallengeHistory: {
@@ -224,7 +226,7 @@ export async function getChallengeRequest(playerId: string) {
 	return challenge;
 }
 
-export async function createChallengeRequest(playerId: string, activeChallenge: string) {
+export async function createChallengeRequest(playerId: string, activeChallenge: Challenge) {
 	const challenge = await prisma.dojo.update({
 		where: { playerId },
 		data: {

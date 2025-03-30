@@ -5,10 +5,10 @@
 			<DZDisclaimer content="dojo.challenge.disclaimer" help round />
 			<SelectDinoz :dinozList="myDinoz" :selectLimit="10" :minLimit="5" @validate="composeMyTeam"></SelectDinoz>
 		</template>
-		<div class="challenge" v-if="!fightTransformed">
+		<div class="challenge" v-if="!fightTransformed && activeChallenge">
 			<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
 		</div>
-		<div v-if="fightTransformed" class="recap">
+		<div v-if="fightTransformed && activeChallenge" class="recap">
 			<div
 				class="challenge"
 				:class="[
@@ -94,7 +94,7 @@ import { DojoService } from '../../services/DojoService.js';
 import { errorHandler } from '../../utils/index.js';
 import { Challenge, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
@@ -123,7 +123,7 @@ export default defineComponent({
 	data() {
 		return {
 			myTeam: [] as (Pick<DojoTeam, 'fighted'> & { dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'> })[],
-			activeChallenge: {} as Challenge,
+			activeChallenge: undefined as Challenge | undefined,
 			opponents: [] as (Pick<DojoOpponents, 'fighted' | 'achieved'> & {
 				dinoz: Pick<Dinoz, 'id' | 'name' | 'level' | 'display'>;
 			})[],
@@ -138,7 +138,8 @@ export default defineComponent({
 			challengeWon: false,
 			victory: false,
 			fightAnimationEnded: false,
-			dailyReset: 0
+			dailyReset: 0,
+			playerStore: playerStore()
 		};
 	},
 	methods: {
@@ -215,6 +216,9 @@ export default defineComponent({
 					// lang: this.lang
 				};
 				this.loaded = true;
+				if (this.playerStore.getPlayerOptions.skipFight) {
+					this.fightAnimationEnded = true;
+				}
 
 				EventBus.emit('isLoading', false);
 			} catch (e) {
@@ -243,7 +247,8 @@ export default defineComponent({
 					this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
 					this.dailyReset = dojo.dailyReset;
 				}
-				this.activeChallenge = JSON.parse(dojo.activeChallenge) as Challenge;
+				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
+
 				EventBus.emit('refreshDojo', true);
 				EventBus.emit('isLoading', false);
 			} catch (e) {
@@ -275,15 +280,19 @@ $b: 3px;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
+	align-self: center;
 	.recap {
+		display: flex;
+		flex-direction: column;
 		align-self: center;
+		max-width: 95%;
 	}
 }
 .debrief {
 	// position: absolute;
 	display: flex;
 	align-self: center;
-	width: 530px;
+	width: 100%;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
@@ -341,7 +350,6 @@ $b: 3px;
 	background-image: url('../../assets/design/dojo_challenge.webp');
 	background-repeat: no-repeat;
 	height: 64px;
-	max-width: 75%;
 	background-position: center;
 	background-size: contain;
 	padding-left: 50px;

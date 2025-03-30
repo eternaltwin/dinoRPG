@@ -22127,7 +22127,6 @@ export namespace Prisma {
   export type DojoMinAggregateOutputType = {
     id: string | null
     playerId: string | null
-    activeChallenge: string | null
     reputation: number | null
     teamUpdate: Date | null
     dailyReset: number | null
@@ -22137,7 +22136,6 @@ export namespace Prisma {
   export type DojoMaxAggregateOutputType = {
     id: string | null
     playerId: string | null
-    activeChallenge: string | null
     reputation: number | null
     teamUpdate: Date | null
     dailyReset: number | null
@@ -22169,7 +22167,6 @@ export namespace Prisma {
   export type DojoMinAggregateInputType = {
     id?: true
     playerId?: true
-    activeChallenge?: true
     reputation?: true
     teamUpdate?: true
     dailyReset?: true
@@ -22179,7 +22176,6 @@ export namespace Prisma {
   export type DojoMaxAggregateInputType = {
     id?: true
     playerId?: true
-    activeChallenge?: true
     reputation?: true
     teamUpdate?: true
     dailyReset?: true
@@ -22286,7 +22282,7 @@ export namespace Prisma {
   export type DojoGroupByOutputType = {
     id: string
     playerId: string
-    activeChallenge: string | null
+    activeChallenge: JsonValue
     reputation: number
     teamUpdate: Date | null
     dailyReset: number
@@ -22392,7 +22388,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       playerId: string
-      activeChallenge: string | null
+      activeChallenge: Prisma.JsonValue
       reputation: number
       teamUpdate: Date | null
       dailyReset: number
@@ -22827,7 +22823,7 @@ export namespace Prisma {
   interface DojoFieldRefs {
     readonly id: FieldRef<"Dojo", 'String'>
     readonly playerId: FieldRef<"Dojo", 'String'>
-    readonly activeChallenge: FieldRef<"Dojo", 'String'>
+    readonly activeChallenge: FieldRef<"Dojo", 'Json'>
     readonly reputation: FieldRef<"Dojo", 'Int'>
     readonly teamUpdate: FieldRef<"Dojo", 'DateTime'>
     readonly dailyReset: FieldRef<"Dojo", 'Int'>
@@ -69058,6 +69054,13 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
   export const QueryMode: {
     default: 'default',
     insensitive: 'insensitive'
@@ -69072,6 +69075,15 @@ export namespace Prisma {
   };
 
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+  export const JsonNullValueFilter: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull,
+    AnyNull: typeof AnyNull
+  };
+
+  export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
   /**
@@ -69195,6 +69207,20 @@ export namespace Prisma {
    * Reference to a field of type 'Lang[]'
    */
   export type ListEnumLangFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Lang[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -70391,7 +70417,7 @@ export namespace Prisma {
     NOT?: DojoWhereInput | DojoWhereInput[]
     id?: UuidFilter<"Dojo"> | string
     playerId?: UuidFilter<"Dojo"> | string
-    activeChallenge?: StringNullableFilter<"Dojo"> | string | null
+    activeChallenge?: JsonFilter<"Dojo">
     reputation?: IntFilter<"Dojo"> | number
     teamUpdate?: DateTimeNullableFilter<"Dojo"> | Date | string | null
     dailyReset?: IntFilter<"Dojo"> | number
@@ -70406,7 +70432,7 @@ export namespace Prisma {
   export type DojoOrderByWithRelationInput = {
     id?: SortOrder
     playerId?: SortOrder
-    activeChallenge?: SortOrderInput | SortOrder
+    activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrderInput | SortOrder
     dailyReset?: SortOrder
@@ -70425,7 +70451,7 @@ export namespace Prisma {
     AND?: DojoWhereInput | DojoWhereInput[]
     OR?: DojoWhereInput[]
     NOT?: DojoWhereInput | DojoWhereInput[]
-    activeChallenge?: StringNullableFilter<"Dojo"> | string | null
+    activeChallenge?: JsonFilter<"Dojo">
     reputation?: IntFilter<"Dojo"> | number
     teamUpdate?: DateTimeNullableFilter<"Dojo"> | Date | string | null
     dailyReset?: IntFilter<"Dojo"> | number
@@ -70439,7 +70465,7 @@ export namespace Prisma {
   export type DojoOrderByWithAggregationInput = {
     id?: SortOrder
     playerId?: SortOrder
-    activeChallenge?: SortOrderInput | SortOrder
+    activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrderInput | SortOrder
     dailyReset?: SortOrder
@@ -70457,7 +70483,7 @@ export namespace Prisma {
     NOT?: DojoScalarWhereWithAggregatesInput | DojoScalarWhereWithAggregatesInput[]
     id?: UuidWithAggregatesFilter<"Dojo"> | string
     playerId?: UuidWithAggregatesFilter<"Dojo"> | string
-    activeChallenge?: StringNullableWithAggregatesFilter<"Dojo"> | string | null
+    activeChallenge?: JsonWithAggregatesFilter<"Dojo">
     reputation?: IntWithAggregatesFilter<"Dojo"> | number
     teamUpdate?: DateTimeNullableWithAggregatesFilter<"Dojo"> | Date | string | null
     dailyReset?: IntWithAggregatesFilter<"Dojo"> | number
@@ -74148,7 +74174,7 @@ export namespace Prisma {
 
   export type DojoCreateInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -74162,7 +74188,7 @@ export namespace Prisma {
   export type DojoUncheckedCreateInput = {
     id?: string
     playerId: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -74174,7 +74200,7 @@ export namespace Prisma {
 
   export type DojoUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -74188,7 +74214,7 @@ export namespace Prisma {
   export type DojoUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -74201,7 +74227,7 @@ export namespace Prisma {
   export type DojoCreateManyInput = {
     id?: string
     playerId: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -74210,7 +74236,7 @@ export namespace Prisma {
 
   export type DojoUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -74219,7 +74245,7 @@ export namespace Prisma {
   export type DojoUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -77981,6 +78007,29 @@ export namespace Prisma {
     _min?: NestedEnumLangFilter<$PrismaModel>
     _max?: NestedEnumLangFilter<$PrismaModel>
   }
+  export type JsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
@@ -78038,7 +78087,6 @@ export namespace Prisma {
   export type DojoMaxOrderByAggregateInput = {
     id?: SortOrder
     playerId?: SortOrder
-    activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrder
     dailyReset?: SortOrder
@@ -78048,7 +78096,6 @@ export namespace Prisma {
   export type DojoMinOrderByAggregateInput = {
     id?: SortOrder
     playerId?: SortOrder
-    activeChallenge?: SortOrder
     reputation?: SortOrder
     teamUpdate?: SortOrder
     dailyReset?: SortOrder
@@ -78058,6 +78105,32 @@ export namespace Prisma {
   export type DojoSumOrderByAggregateInput = {
     reputation?: SortOrder
     dailyReset?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -84783,6 +84856,29 @@ export namespace Prisma {
     gte?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedUuidNullableFilter<$PrismaModel> | string | null
   }
+  export type NestedJsonFilter<$PrismaModel = never> = 
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
@@ -89367,7 +89463,7 @@ export namespace Prisma {
 
   export type DojoCreateWithoutPlayerInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -89379,7 +89475,7 @@ export namespace Prisma {
 
   export type DojoUncheckedCreateWithoutPlayerInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -90213,7 +90309,7 @@ export namespace Prisma {
 
   export type DojoUpdateWithoutPlayerInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -90225,7 +90321,7 @@ export namespace Prisma {
 
   export type DojoUncheckedUpdateWithoutPlayerInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -90790,7 +90886,7 @@ export namespace Prisma {
 
   export type DojoCreateWithoutTeamInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -90803,7 +90899,7 @@ export namespace Prisma {
   export type DojoUncheckedCreateWithoutTeamInput = {
     id?: string
     playerId: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -90926,7 +91022,7 @@ export namespace Prisma {
 
   export type DojoUpdateWithoutTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -90939,7 +91035,7 @@ export namespace Prisma {
   export type DojoUncheckedUpdateWithoutTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -91052,7 +91148,7 @@ export namespace Prisma {
 
   export type DojoCreateWithoutDojoOpponentsInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -91065,7 +91161,7 @@ export namespace Prisma {
   export type DojoUncheckedCreateWithoutDojoOpponentsInput = {
     id?: string
     playerId: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -91188,7 +91284,7 @@ export namespace Prisma {
 
   export type DojoUpdateWithoutDojoOpponentsInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -91201,7 +91297,7 @@ export namespace Prisma {
   export type DojoUncheckedUpdateWithoutDojoOpponentsInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -91314,7 +91410,7 @@ export namespace Prisma {
 
   export type DojoCreateWithoutDojoChallengeHistoryInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -91327,7 +91423,7 @@ export namespace Prisma {
   export type DojoUncheckedCreateWithoutDojoChallengeHistoryInput = {
     id?: string
     playerId: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -91354,7 +91450,7 @@ export namespace Prisma {
 
   export type DojoUpdateWithoutDojoChallengeHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -91367,7 +91463,7 @@ export namespace Prisma {
   export type DojoUncheckedUpdateWithoutDojoChallengeHistoryInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -101546,7 +101642,7 @@ export namespace Prisma {
 
   export type DojoCreateWithoutTournamentTeamInput = {
     id?: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -101559,7 +101655,7 @@ export namespace Prisma {
   export type DojoUncheckedCreateWithoutTournamentTeamInput = {
     id?: string
     playerId: string
-    activeChallenge?: string | null
+    activeChallenge: JsonNullValueInput | InputJsonValue
     reputation?: number
     teamUpdate?: Date | string | null
     dailyReset?: number
@@ -101811,7 +101907,7 @@ export namespace Prisma {
 
   export type DojoUpdateWithoutTournamentTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
@@ -101824,7 +101920,7 @@ export namespace Prisma {
   export type DojoUncheckedUpdateWithoutTournamentTeamInput = {
     id?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
-    activeChallenge?: NullableStringFieldUpdateOperationsInput | string | null
+    activeChallenge?: JsonNullValueInput | InputJsonValue
     reputation?: IntFieldUpdateOperationsInput | number
     teamUpdate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     dailyReset?: IntFieldUpdateOperationsInput | number
