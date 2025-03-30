@@ -93,7 +93,6 @@ export async function getCurrentEvents(req: Request) {
       WHERE p."FBTournamentId" = t.id AND p.level = t."levelLimit"
     ) AS "participantCount"
   FROM "FBTournament" t
-  WHERE t."winnerId" IS NULL
 `;
 	return activeEvents;
 }

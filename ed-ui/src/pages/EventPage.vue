@@ -8,10 +8,29 @@
 				<th class="items-header">{{ $t('events.level') }}</th>
 				<th class="dinoz-header">{{ $t('events.subscribed') }}</th>
 			</tr>
-			<tr v-for="event in currentEvent" :key="event.id" @click="goToTournament(event.id)">
+			<tr
+				v-for="event in currentEvent.filter(e => e.participantCount < 256)"
+				:key="event.id"
+				@click="goToTournament(event.id)"
+			>
 				<td>{{ $t(`race.name.${raceList[event.teamRace]}`) }}</td>
 				<td>{{ event.levelLimit }}</td>
 				<td>{{ event.participantCount }} / 256</td>
+			</tr>
+		</DZTable>
+		<DZDisclaimer round :content="$t('events.disclaimerEnded')" />
+		<DZTable>
+			<tr>
+				<th class="items-header">{{ $t('events.races') }}</th>
+				<th class="items-header">{{ $t('events.level') }}</th>
+			</tr>
+			<tr
+				v-for="event in currentEvent.filter(e => e.participantCount >= 256)"
+				:key="event.id"
+				@click="goToTournament(event.id)"
+			>
+				<td>{{ $t(`race.name.${raceList[event.teamRace]}`) }}</td>
+				<td>{{ event.levelLimit }}</td>
 			</tr>
 		</DZTable>
 	</div>

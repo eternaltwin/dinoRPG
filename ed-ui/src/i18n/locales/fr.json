@@ -4837,6 +4837,7 @@
 	},
 	"events": {
 		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
+		"disclaimerEnded": "Vous trouverez ici tout les événements communautaires terminés.",
 		"header": "Evenements en cours",
 		"date": "Date de création",
 		"level": "Niveau max",
