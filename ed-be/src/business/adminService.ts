@@ -12,7 +12,7 @@ import {
 } from '../dao/playerDao.js';
 import { addMultipleRewardToPlayer, addRewardToPlayer, removeRewardFromPlayer } from '../dao/playerRewardsDao.js';
 import { addNewSecret, getAllSecretsRequest } from '../dao/secretDao.js';
-import { decreaseItemQuantity, increaseItemQuantity } from '../dao/playerItemDao.js';
+import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../dao/playerItemDao.js';
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
@@ -26,6 +26,7 @@ import { calculateFightBetweenPlayers } from './fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
+import { Item } from '@drpg/core/models/item/ItemList';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -594,7 +595,6 @@ export async function truncateAll(req: Request) {
 			messie: false,
 			labruteDone: false,
 			dailyGridRewards: 0,
-			role: AdminRole.PLAYER,
 			createdDate: new Date()
 		}
 	});
@@ -612,6 +612,38 @@ export async function truncateAll(req: Request) {
 			rewardId: Reward.BETA,
 			player: { connect: { id: player.id } }
 		});
+		await setMultipleItem([
+			{
+				itemId: Item.POTION_IRMA,
+				quantity: 30,
+				playerId: player.id
+			},
+			{
+				itemId: Item.CLOUD_BURGER,
+				quantity: 5,
+				playerId: player.id
+			},
+			{
+				itemId: Item.MEAT_PIE,
+				quantity: 2,
+				playerId: player.id
+			},
+			{
+				itemId: Item.FIGHT_RATION,
+				quantity: 2,
+				playerId: player.id
+			},
+			{
+				itemId: Item.HOT_BREAD,
+				quantity: 1,
+				playerId: player.id
+			},
+			{
+				itemId: Item.POTION_ANGEL,
+				quantity: 5,
+				playerId: player.id
+			}
+		]);
 	}
 }
 
