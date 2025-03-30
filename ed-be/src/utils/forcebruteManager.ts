@@ -160,7 +160,7 @@ class ForceBruteManager {
 			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
 		);
 		team1Dinoz.life = team1Dinoz.maxLife;
-		team2Dinoz.skills = team1Dinoz.skills.filter(
+		team2Dinoz.skills = team2Dinoz.skills.filter(
 			s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
 		);
 		team2Dinoz.life = team2Dinoz.maxLife;
