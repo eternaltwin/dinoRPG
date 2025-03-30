@@ -1,6 +1,6 @@
 {
 	"name": "ed-be",
-	"version": "0.15.22",
+	"version": "0.15.23",
 	"description": "EternalDino API",
 	"scripts": {
 		"serve": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
