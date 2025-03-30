@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import { prisma } from '../prisma.js';
 import { ServerAction } from '@drpg/prisma';
+import { LOGGER } from '../context.js';
+import { scheduleJob } from 'node-schedule';
 
 const dojoResets = async () => {
 	try {
@@ -16,11 +18,12 @@ const dojoResets = async () => {
 				action: ServerAction.dojoReset
 			},
 			data: {
-				nextCheck: dayjs().endOf('day').toDate()
+				nextCheck: dayjs().add(1, 'day').startOf('day').toDate()
 			}
 		});
+		scheduleJob('dojoReset', dayjs().add(1, 'day').startOf('day').toDate(), () => dojoResets());
 	} catch (err) {
-		console.error(`Cannot reset team and opponents team: ${err}`);
+		LOGGER.error(`Cannot reset team and opponents team: ${err}`);
 	}
 };
 

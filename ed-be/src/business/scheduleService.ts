@@ -12,7 +12,7 @@ export async function scheduleAtStart() {
 				if (action.nextCheck < new Date()) {
 					await dojoResets();
 				} else {
-					scheduleJob(action.action, dayjs().endOf('day').toDate(), () => dojoResets());
+					scheduleJob(action.action, dayjs().add(1, 'day').startOf('day').toDate(), () => dojoResets());
 				}
 				break;
 			default:
