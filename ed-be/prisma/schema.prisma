@@ -892,4 +892,5 @@ enum NotificationSeverity {
   ban
   reward
   event
+  newClanApply
 }

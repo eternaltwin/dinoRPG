@@ -361,6 +361,16 @@ export default defineComponent({
 						link: null,
 						date: notification.date
 					};
+				case 'newClanApply':
+					return {
+						id: notification.id,
+						message: this.$t(`notification.clanApply`, {
+							name: notification.message
+						}),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
 				case 'reward':
 					// eslint-disable-next-line no-case-declarations
 					const reward = JSON.parse(notification.message) as Rewarder[];

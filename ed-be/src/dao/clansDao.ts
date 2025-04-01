@@ -264,10 +264,22 @@ export async function joinClanRequest(clanId: number, playerId: string) {
 			clan: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					leaderId: true,
+					members: {
+						select: {
+							playerId: true,
+							rights: true
+						},
+						where: {
+							rights: {
+								has: ClanMemberRight[ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS]
+							}
+						}
+					}
 				}
 			},
-			player: { select: { id: true } },
+			player: { select: { id: true, name: true } },
 			date: true
 		}
 	});

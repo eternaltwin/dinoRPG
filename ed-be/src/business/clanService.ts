@@ -46,6 +46,8 @@ import translate from '../utils/translate.js';
 import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 import { LOGGER } from '../context.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { createNotification } from '../dao/notificationDao.js';
+import { NotificationSeverity } from '@drpg/prisma';
 
 /**
  * Get all the clans
@@ -169,6 +171,16 @@ export async function joinClan(req: Request) {
 	await removeMoney(authed.id, CLAN_JOIN_MONEY);
 
 	const clan = await joinClanRequest(Number(req.params.id), authed.id);
+	const notificationMember = [clan.clan.leaderId, ...clan.clan.members.map(m => m.playerId)];
+	for (const member of notificationMember) {
+		await createNotification(
+			member,
+			clan.player.name,
+			NotificationSeverity.newClanApply,
+			`/clan/${clan.clan.id}/members`
+		);
+	}
+
 	return clan;
 }
 

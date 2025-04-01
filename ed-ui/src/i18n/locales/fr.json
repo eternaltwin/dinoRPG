@@ -4833,7 +4833,8 @@
 		"reward": "Vous avez obtenu{rewards}",
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "Vous avez progressé dans le scénario**{scenario}**.",
-		"FBStarted": "Un nouvel événement est ouvert !"
+		"FBStarted": "Un nouvel événement est ouvert !",
+		"clanApply": "{name} souhaite rejoindre votre clan !"
 	},
 	"events": {
 		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
