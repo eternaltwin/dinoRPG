@@ -1,7 +1,8 @@
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
-import { ConditionEnum, Operator } from '../enums/Parser.mjs';
+import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { Scenario } from '../enums/Scenario.mjs';
+import { Item, itemList } from '../item/ItemList.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { Reward } from '../reward/RewardList.mjs';
 import { ALIEN } from './characters/alien.mjs';
@@ -369,10 +370,10 @@ export const npcList: Record<string, Npc> = {
 						// First appearance of the alien with a time condition
 						{ [Operator.AND]: [{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 0, '='] }, { [ConditionEnum.TIME]: 30 }] },
 						{
-							[Operator.AND]: [
+							[Operator.OR]: [
 								// Normal appearance when the player is between step 1 and 8 of the scenario
 								{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 1, '='] },
-								{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 9, '='] } }
+								{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 8, '+'] } }
 							]
 						}
 					]
@@ -398,10 +399,8 @@ export const npcList: Record<string, Npc> = {
 		data: SKULLY,
 		condition: {
 			[Operator.OR]: [
-				// Present when the last mission is not completed or the player has not obtained the PDA, or if the player has not progressed past step 5 of the alien scenario
-				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END } },
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.PDA } },
-				{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '+'] } }
+				{ [ConditionEnum.DINOZ_LIFE]: [Comparator.LESSER_EQUAL, 10] },
+				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY }
 			]
 		},
 		display: 'skully',

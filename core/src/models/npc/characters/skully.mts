@@ -11,17 +11,15 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 		stepName: 'begin',
 		condition: {
 			// Initial step if the conditions of the alien scenario are not met and the dinoz does not have the Skully Memory status
-			[Operator.NOT]: {
-				[Operator.OR]: [
-					{
-						[Operator.AND]: [
-							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
-						]
-					},
-					{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY }
-				]
-			}
+			[Operator.AND]: [
+				{
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] } },
+						{ [Operator.NOT]: { [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId } }
+					]
+				},
+				{ [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY } }
+			]
 		},
 		nextStep: ['arg', 'shortcut', 'bye'],
 		initialStep: true
@@ -113,15 +111,17 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 			// Initial step if the conditions of the alien scenario are not met and the dinoz has the Skully Memory status and has not finished the last mission
 			[Operator.AND]: [
 				{
-					[Operator.NOT]: {
-						[Operator.AND]: [
-							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
-						]
-					}
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] } },
+						{ [Operator.NOT]: { [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId } }
+					]
 				},
-				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
-				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END } }
+				{
+					[Operator.AND]: [
+						{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
+						{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END } }
+					]
+				}
 			]
 		},
 		nextStep: ['missions'],
@@ -133,15 +133,17 @@ export const SKULLY: Readonly<Record<string, NpcData>> = {
 			// Initial step if the conditions of the alien scenario are not met and the dinoz has the Skully Memory status and has finished the last mission
 			[Operator.AND]: [
 				{
-					[Operator.NOT]: {
-						[Operator.AND]: [
-							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
-						]
-					}
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] } },
+						{ [Operator.NOT]: { [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId } }
+					]
 				},
-				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END }
+				{
+					[Operator.AND]: [
+						{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
+						{ [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END }
+					]
+				}
 			]
 		},
 		nextStep: ['pda', 'dinoz'],

@@ -75,6 +75,7 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
+				this.dinozStore.setNpc(this.dinozId, choice, this.npcSpeech.name);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -139,9 +140,6 @@ export default defineComponent({
 			}
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
-
-				step = this.npcSpeech.speech;
-				this.dinozStore.setNpc(this.dinozId, step, this.npcSpeech.name);
 
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
