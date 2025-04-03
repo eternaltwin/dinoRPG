@@ -14,6 +14,7 @@ import { auth } from '../dao/playerDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import translate from '../utils/translate.js';
 import { calculateFightVsMonsters, rewardFight } from './fightService.js';
+import { Npc } from '@drpg/core/models/npc/npc';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
@@ -23,27 +24,23 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const authed = await auth(req);
 
 	let player = await getDinozNPCRequest(dinozId, authed.id);
-
 	if (!player) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
-	const dinozBase = player.dinoz.find(d => d.id === dinozId);
 
+	const dinozBase = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozBase) {
 		throw new ExpectedError(`Dinoz is not here.`);
 	}
-
 	if (dinozBase.canChangeName) {
 		throw new ExpectedError(`Dinoz has to be named.`);
 	}
 
 	const actualPlace = Object.values(placeList).find(place => place.placeId === dinozBase.placeId);
 	const pnj = Object.values(npcList).find(pnj => pnj.name === npcName);
-
 	if (!actualPlace) {
 		throw new ExpectedError(`Place ${dinozBase.placeId} doesn't exist.`);
 	}
-
 	if (!pnj) {
 		throw new ExpectedError(`NPC ${npcName} doesn't exists`);
 	}
@@ -53,6 +50,15 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	}
 	if (actualPlace.placeId !== pnj.placeId && !req.body.stop) {
 		throw new ExpectedError(`Dinoz ${dinozId} cannot talk to this NPC`);
+	}
+
+	// Management of multiple initial steps
+	const initialStepData = Object.values(pnj.data).find(
+		step => step.initialStep && player && checkCondition(step.condition, player, dinozId)
+	);
+
+	if (!initialStepData) {
+		throw new ExpectedError(`No valid initial step found for NPC ${npcName}.`);
 	}
 
 	let nextStepWantedData = Object.values(pnj.data).find(
@@ -72,23 +78,10 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	if (dinozTalk === undefined) {
 		dinozTalk = await createDinozStep(dinozId, {
 			npcId: pnj.id,
-			step: 'begin'
+			step: initialStepData.stepName
 		});
 	} else {
-		if (req.body.stop) {
-			const stopStep = Object.values(pnj.data).find(pnj => pnj.stepName === 'stop');
-
-			if (!stopStep) {
-				throw new ExpectedError(`The step stop doesn't exist for the NPC ${npcName}`);
-			}
-
-			await updateDinozStep(dinozId, pnj.id, 'begin');
-			return {
-				name: npcName,
-				speech: stopStep.stepName,
-				playerChoice: stopStep.nextStep
-			};
-		}
+		if (req.body.stop) return await handleStopStep(dinozId, pnj, npcName);
 
 		const actualStep = Object.values(pnj.data).find(pnj => pnj.stepName === dinozTalk?.step);
 
@@ -97,7 +90,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 
 		// Check if dinoz can go to this step
-		if (
+		/*if (
 			nextStepWanted !== 'begin' &&
 			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
 			!actualStep.nextStep.includes(nextStepWantedData.alias || '')
@@ -109,6 +102,19 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 				name: npcName,
 				speech: beginStep.stepName,
 				playerChoice: beginStep.nextStep
+			};
+		}*/
+		if (
+			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
+			!actualStep.nextStep.includes(nextStepWantedData.alias || '')
+		) {
+			await updateDinozStep(dinozId, pnj.id, initialStepData.stepName);
+			return {
+				name: npcName,
+				speech: initialStepData.stepName,
+				playerChoice: initialStepData.nextStep.filter(
+					step => player && checkCondition(pnj.data[step].condition, player, dinozId)
+				)
 			};
 		}
 		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, player, dinozId)) {
@@ -206,4 +212,19 @@ function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {
 			};
 		}
 	}
+}
+
+async function handleStopStep(dinozId: number, pnj: Npc, npcName: string) {
+	// Management of ending the conversation with the NPC
+	const stopStep = Object.values(pnj.data).find(pnj => pnj.stepName === 'stop');
+	if (!stopStep) {
+		throw new ExpectedError(`The step stop doesn't exist for the NPC ${npcName}`);
+	}
+
+	await updateDinozStep(dinozId, pnj.id, 'begin');
+	return {
+		name: npcName,
+		speech: stopStep.stepName,
+		playerChoice: stopStep.nextStep
+	};
 }
