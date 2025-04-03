@@ -12,6 +12,17 @@
 					})
 				}}
 			</template>
+			<template v-else-if="missionDetail.actionType === MissionEnum.LAUNCH_FIGHT">
+				{{ $t(`missions.actions.${missionDetail.target}`) }}
+			</template>
+			<template v-else-if="missionDetail.actionType === MissionEnum.GIVE_ITEM">
+				{{
+					$t(`missions.actions.${missionDetail.actionType}`, {
+						itemQuantity: missionDetail.itemQuantity,
+						item: $t(`item.name.${missionDetail.item.name}`)
+					})
+				}}
+			</template>
 			<template v-else-if="missionDetail.actionType === MissionEnum.GOTO">
 				{{
 					$t(`missions.actions.${missionDetail.actionType}`, { place: $t(`missions.place.${missionDetail.target}`) })

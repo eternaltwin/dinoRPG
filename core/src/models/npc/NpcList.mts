@@ -39,7 +39,8 @@ import { PTEROZ, ROCKY, HIPPO } from './characters/totems.mjs';
 import { VENERABLE } from './characters/vener.mjs';
 import { Scenario } from '../enums/Scenario.mjs';
 import { ALIEN_0, ALIEN_1, ALIEN_8, ALIEN_ALL } from './characters/alien.mjs';
-import { SKULLY, SKULLY_STAR } from './characters/skully.mjs';
+import { MOULDEUR, SKULLY1, SKULLY2, SKULLY3, SKULLY_STAR } from './characters/skully.mjs';
+import { M_SKULLY } from './missions/skully.mjs';
 
 export const npcList: Record<string, Npc> = {
 	// CRIEUR: {
@@ -480,23 +481,87 @@ export const npcList: Record<string, Npc> = {
 		missions: undefined,
 		flashvars: undefined
 	},
-	SKULLY: {
+	SKULLY1: {
 		name: 'skully',
 		id: 36,
 		placeId: PlaceEnum.CIMETIERE,
-		data: SKULLY,
+		data: SKULLY1,
 		condition: {
 			[Operator.NOT]: {
-				[Operator.AND]: [
-					{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
-					{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+				[Operator.OR]: [
+					{
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+						]
+					},
+					{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY }
 				]
 			}
 		},
 		display: 'skully',
+		missions: M_SKULLY,
+		flashvars: undefined
+	},
+	SKULLY2: {
+		name: 'skully2',
+		id: 38,
+		placeId: PlaceEnum.CIMETIERE,
+		data: SKULLY2,
+		condition: {
+			[Operator.AND]: [
+				{
+					[Operator.NOT]: {
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+						]
+					}
+				},
+				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END } }
+			]
+		},
+		display: 'skully',
+		missions: M_SKULLY,
+		flashvars: undefined
+	},
+	SKULLY3: {
+		name: 'skully3',
+		id: 39,
+		placeId: PlaceEnum.CIMETIERE,
+		data: SKULLY3,
+		condition: {
+			[Operator.AND]: [
+				{
+					[Operator.NOT]: {
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+						]
+					}
+				},
+				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END }
+			]
+		},
+		display: 'skully',
+		missions: M_SKULLY,
+		flashvars: undefined
+	},
+	MOULDEUR: {
+		name: 'mouldeur',
+		id: 40,
+		placeId: PlaceEnum.RUINES_ASHPOUK,
+		data: MOULDEUR,
+		condition: {
+			[Operator.AND]: [{ [ConditionEnum.CURRENT_MISSION]: MissionID.SKULLY_END }, { [ConditionEnum.CURRENT_STEP]: 1 }]
+		},
+		display: 'moulder',
 		missions: undefined,
 		flashvars: undefined
 	},
+
 	BOB_STAR: {
 		name: 'bob_star',
 		id: 37,

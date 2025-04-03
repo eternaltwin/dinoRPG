@@ -70,6 +70,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 			matelasseur: true,
 			items: { select: { itemId: true, quantity: true } },
 			quests: { select: { questId: true, progression: true } },
+			ranking: { select: { dinozCount: true } },
 			role: true
 		}
 	});
@@ -386,6 +387,7 @@ export async function getCommonDataRequest(playerId: string) {
 			matelasseur: true,
 			items: { select: { itemId: true, quantity: true } },
 			quests: { select: { questId: true, progression: true } },
+			ranking: { select: { dinozCount: true } },
 			role: true
 		}
 	});

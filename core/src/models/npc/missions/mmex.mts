@@ -7,7 +7,7 @@ import { bossList } from '../../fight/BossList.mjs';
 import { monsterList } from '../../fight/MonsterList.mjs';
 
 export const M_MMEX: Mission[] = [
-	// Missions 51 to 55
+	// Missions 57 to 61
 	{
 		missionId: MissionID.MMEX_MMEX1,
 		missionName: 'mmex1',

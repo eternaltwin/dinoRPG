@@ -42,4 +42,6 @@ export type Condition = {
 	[ConditionEnum.OVERWRITE]?: string;
 	[ConditionEnum.LAUNCH_FIGHT]?: string;
 	[ConditionEnum.DAY]?: DayEnum;
+	[ConditionEnum.CURRENT_STEP]?: number;
+	[ConditionEnum.DINOZ_COUNT]?: [Comparator, number];
 };

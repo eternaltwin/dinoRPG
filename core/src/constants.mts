@@ -7,7 +7,8 @@ import {
 	PlayerItem,
 	PlayerReward,
 	PlayerQuest,
-	Player
+	Player,
+	Ranking
 } from '@drpg/prisma';
 
 export const MARKET_MIN_VALUE = 5000;
@@ -29,9 +30,10 @@ export type PlayerForConditionCheck = Pick<Player, 'id'> & {
 	items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 	rewards: Pick<PlayerReward, 'rewardId'>[];
 	quests: Pick<PlayerQuest, 'questId' | 'progression'>[];
+	ranking: Pick<Ranking, 'dinozCount'> | null;
 	dinoz: (Pick<Dinoz, 'level' | 'placeId' | 'life' | 'id'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
-		missions: Pick<DinozMission, 'missionId' | 'isFinished'>[];
+		missions: Pick<DinozMission, 'missionId' | 'isFinished' | 'step'>[];
 		items: Pick<DinozItem, 'itemId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
 	})[];

@@ -8,6 +8,7 @@ import {
 	PlayerItem,
 	PlayerQuest,
 	PlayerReward,
+	Ranking,
 	type Dinoz
 } from '@drpg/prisma';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
@@ -39,6 +40,7 @@ export const toDinozFiche = (
 		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 		rewards: Pick<PlayerReward, 'rewardId'>[];
 		quests: Pick<PlayerQuest, 'questId' | 'progression'>[];
+		ranking: Pick<Ranking, 'dinozCount'> | null;
 		dinoz: (Pick<
 			Dinoz,
 			| 'id'

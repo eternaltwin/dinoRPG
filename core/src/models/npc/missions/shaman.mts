@@ -106,7 +106,8 @@ export const M_SHAMAN_MOU: Mission[] = [
 				place: PlaceEnum.FORGES_DU_GTC,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'forgeron'
+					target: 'forgeron',
+					npcName: 'forgeron'
 				},
 				displayedAction: 'forgeron',
 				displayedText: 'forgeron'

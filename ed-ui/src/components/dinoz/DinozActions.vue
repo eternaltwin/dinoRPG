@@ -217,14 +217,44 @@ export default defineComponent({
 							this.$route.params.id.toString(),
 							this.dinoz.missionId!
 						);
-					} else {
+					} else if (this.mission && this.mission.actionType === ConditionEnum.LAUNCH_FIGHT) {
 						try {
 							this.npcName = action.prop as string;
-							this.NPCModal = await MissionService.interactMission(
+							const fight = await MissionService.startFightMission(
 								this.$route.params.id.toString(),
 								this.dinoz.missionId!,
 								action.prop as string
 							);
+							this.sessionStore.setFightResult(fight);
+							this.$router.push({
+								name: 'Fight',
+								params: { dinozId: this.$route.params.id.toString() }
+							});
+						} catch (e) {
+							errorHandler.handle(e, this.$toast);
+						}
+					} else {
+						try {
+							if (this.mission && 'npcName' in this.mission) {
+								const npcName = this.mission.npcName;
+								const dialog = await MissionService.interactMission(
+									this.$route.params.id.toString(),
+									this.dinoz.missionId!,
+									action.prop as string
+								);
+								this.$router.push({
+									name: 'NPC',
+									params: { id: this.$route.params.id.toString(), npc: npcName },
+									query: { dialog: dialog }
+								});
+							} else {
+								this.npcName = action.prop as string;
+								this.NPCModal = await MissionService.interactMission(
+									this.$route.params.id.toString(),
+									this.dinoz.missionId!,
+									action.prop as string
+								);
+							}
 						} catch (e) {
 							errorHandler.handle(e, this.$toast);
 						}
@@ -525,7 +555,7 @@ export default defineComponent({
 			const day: Date = new Date();
 			return 60 - day.getMinutes();
 		},
-		mission() {
+		mission(): MissionHUD | null {
 			const dinoz = dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString());
 			if (!dinoz) return null;
 			return dinoz.missionHUD;

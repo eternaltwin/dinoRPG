@@ -197,6 +197,7 @@ export default defineComponent({
 			fightSteps,
 			this.$t,
 			fightResult.startText,
+			fightResult.dialog,
 			fightResult.endText,
 			fightResult.result
 		);

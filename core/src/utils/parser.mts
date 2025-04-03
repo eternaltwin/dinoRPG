@@ -27,8 +27,13 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 	const TIME = condition[ConditionEnum.TIME];
 	const EQUIP = condition[ConditionEnum.EQUIP];
 	const HOUR = condition[ConditionEnum.HOUR];
+	const CURRENT_MISSION = condition[ConditionEnum.CURRENT_MISSION];
+	const CURRENT_STEP = condition[ConditionEnum.CURRENT_STEP];
+	const DINOZ_COUNT = condition[ConditionEnum.DINOZ_COUNT];
 
 	const myDinoz = player.dinoz.find(d => d.id === activeDinoz);
+
+	const dinozCount = player.ranking?.dinozCount ?? 0;
 
 	if (!myDinoz) {
 		throw new ExpectedError(`No dinoz ${activeDinoz} found for parser.`);
@@ -42,6 +47,36 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 		result = myDinoz.status.some(st => st.statusId === STATUS);
 	} else if (FINISHED_MISSION) {
 		result = myDinoz.missions.find(missions => missions.missionId === FINISHED_MISSION)?.isFinished ?? false;
+	} else if (CURRENT_MISSION) {
+		result =
+			myDinoz.missions.find(missions => missions.missionId === CURRENT_MISSION && missions.isFinished === false) !==
+			undefined;
+	} else if (CURRENT_STEP) {
+		result =
+			myDinoz.missions.find(missions => missions.step === CURRENT_STEP && missions.isFinished === false) !== undefined;
+	} else if (DINOZ_COUNT) {
+		const [comparator, value] = DINOZ_COUNT;
+
+		switch (comparator) {
+			case '==':
+				result = dinozCount === value;
+				break;
+			case '>':
+				result = dinozCount > value;
+				break;
+			case '>=':
+				result = dinozCount >= value;
+				break;
+			case '<':
+				result = dinozCount < value;
+				break;
+			case '<=':
+				result = dinozCount <= value;
+				break;
+			default:
+				result = false;
+				break;
+		}
 	} else if (SKILL) {
 		result = myDinoz.skills.some(dinozSkill => dinozSkill.skillId === SKILL);
 	} else if (GOTO) {

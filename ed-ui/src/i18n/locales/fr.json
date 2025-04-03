@@ -883,7 +883,11 @@
 			"merguez_star": "Vendeur de merguez",
 			"skully_star": "Skully",
 			"skully": "Skully",
-			"bob_star": "M. Bao Bob"
+			"bob_star": "M. Bao Bob",
+			"skully2": "Skully",
+			"skully3": "Skully",
+			"baobabe": "BaoBabe",
+			"mouldeur": "Mouldeur"
 		},
 		"professor": {
 			"speech": {
@@ -1580,11 +1584,105 @@
 		},
 		"skully": {
 			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Désolé mais les développeurs sont de gros fainéants et ne m'ont pas encore intégrée au jeu. Quelle honte !"
+				"begin": "Oh oh oh oh oh oh oh ! Ton Dinoz m'a l'air très mal en point !!",
+				"arg": "Un FANTOMEE ?!!??? Aaaahh !! Où ça !! où ça ??",
+				"arg2": "QUOI ?? Moi ??? Mais mais mais mais mais... Un peu de respect voyons ! Sinon vous ne ferez pas de vieux os ici, croyez-moi !",
+				"diff": "Tout d'abord, un fantôme est mort, et moi je suis juste... un peu fatiguée, je dois avoir des cernes, voilà tout... Et un fantôme, ça hante toujours quelque chose ou quelqu'un, alors que moi, je suis libre !!! ... enfin presque.",
+				"free": "C'est un peu... uhmmm... compliqué... Disons que j'ai deux petits pépins techniques à régler. D'une part, seuls les Dinoz au bord de la mort et leurs maîtres peuvent me voir, d'autre part je ne peux pas quitter cet endroit lugubre...",
+				"haunt": "Hanter cet endroit ?!? Non mais vous RIGOLEZ ?!? Oh oh oh oh oh oh oh ! Rien que d'y penser j'en ai la chair de poule ! J'ai bien mieux à faire MOI oh oh !",
+				"do": "Uhm... C'est... INDISCRET ! Oh oh oh oh ! ..... Mais je vais quand même te raconter, (une fois de plus si ça se trouve) ! oh oh..... J'ai, vois-tu... un AMOUREUX ! On ne dirait pas comme ça, mais quand j'étais plus jeune j'avais de superbes tibias !",
+				"uhm": "Je te raconte tout ça ! oh oh oh ! Mais ca n'a aucune importance, car de toute façon j'ai une bonnédiction qui te fera rapidement tout oublier de moi !",
+				"bonne": "Oui, oh ! oh oh oh ! C'est comme une malédiction mais en mieux ! je suis protégée par une bonnédiction pour éviter que les gens fassent des cauchemars et pour éloigner les scientifiques. Ils seraient trop ravis d'examiner la façon dont je me nourris,  oh oh oh ! Je ne fais même plus attention à mon cholestérol. Bref, peu aprés m'avoir vu, les gens m'oublient aussitôt !",
+				"next": "N'est-ce pas !!! Du coup, comme je ne peux pas m'éloigner d'ici, comment veux-tu que je le retrouve ! Mon Mouldeur CHERI !!!",
+				"nohelp": "Tu ne peux m'aider de toute façon... oh oh oh ! Laisse moi seule maintenant, je vais penser à lui, et n'oublie pas de m'oublier...",
+				"forgot": "Il vous a semblé un instant que vous parliez avec quelqu'un, mais vous n'arrivez pas à vous en rappeller les détails...",
+				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ca va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
+				"accept": "OH OH OH OH OH !! Alors, s'il te plait Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
+				"missions": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
+				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
+				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
+				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brulés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quand à ces étranges marques...",
+				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brulé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
+				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
+				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
+				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"skully": "Quoi ? Vous connaissez Skully ?!?",
+				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompais pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidé !",
+				"end": "Si ! C'est un véritable exploit !!! Accompagnez moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la comtempler yeux-dans-les-yeux !!",
+				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison."
 			},
 			"playerChoice": {
+				"arg": "Ahhhh ! Un fanntôoommme !!!",
+				"bye": "S'enfuir en courant",
+				"shortcut": "(admin)",
+				"arg2": "Ici !!! Vous !!!",
+				"diff": "Et quelle différence ça fait ?",
+				"free": "Presque libre ? C'est-à-dire ?",
+				"haunt": "Vous hantez cet endroit alors !",
+				"do": "Ah ? Et quoi donc par exemple !",
+				"uhm": "Uhm....",
+				"bonne": "Une... bonnédiction ?!?",
+				"reset": "Je ne vous crois pas...",
+				"next": "C'est peu pratique...",
+				"nohelp": "Qui est Mouldeur ?",
+				"help": "Je pourrais vous aider...",
+				"forgot": "...",
+				"question": "Je ne vais rien oublier !",
+				"accept": "Oui ! Sans aucun doute !",
+				"maybe": "Il faut que j'y réflechisse...",
+				"missions": "Que dois-je faire maintenant ?",
+				"dinoz": "Ce n'était vraiment rien",
+				"pda": "Ce n'était vraiment rien",
+				"you": "Vous êtes Mouldeur ?",
+				"explain": "Ah... Et ?",
+				"other": "Et l'autre explication ?",
 				"ok": "...",
-				"star": "Ah ?"
+				"ok2": "Mais... vous aussi !",
+				"skully": "Skully vous cherche aussi...",
+				"exp": "(Expliquer toute l'histoire)",
+				"end": "Ce n'est vraiment rien..."
+			}
+		},
+		"skully2": {
+			"speech": {
+				"begin": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !"
+			},
+			"playerChoice": {
+				"missions": "Que dois-je faire maintenant ?"
+			}
+		},
+		"skully3": {
+			"speech": {
+				"begin": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
+				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
+				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !"
+			},
+			"playerChoice": {
+				"dinoz": "Ce n'était vraiment rien",
+				"pda": "Ce n'était vraiment rien"
+			}
+		},
+		"mouldeur": {
+			"speech": {
+				"begin": "Uhmm.... Quelle délicieuse odeur ces Crevettes au Napalm ! Elle me rappellent la cuisine de ma pauvre femme !",
+				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brulés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quand à ces étranges marques...",
+				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brulé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
+				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
+				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
+				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
+				"skully": "Quoi ? Vous connaissez Skully ?!?",
+				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompais pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidé !",
+				"end": "Si ! C'est un véritable exploit !!! Accompagnez moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la comtempler yeux-dans-les-yeux !!"
+			},
+			"playerChoice": {
+				"you": "Vous êtes Mouldeur ?",
+				"explain": "Ah... Et ?",
+				"other": "Et l'autre explication ?",
+				"ok": "...",
+				"ok2": "Mais... vous aussi !",
+				"skully": "Skully vous cherche aussi...",
+				"exp": "(Expliquer toute l'histoire)",
+				"end": "Ce n'est vraiment rien..."
 			}
 		},
 		"bob_star": {
@@ -2593,7 +2691,13 @@
 			"hucure": "Remède",
 			"bckpck": "Kit de l'aventurier",
 			"rodriz": "Le Riz Amnésique",
-			"rodlif": "Les Dinoz Sombres"
+			"rodlif": "Les Dinoz Sombres",
+			"skully1": "Informations préliminaires",
+			"skully2": "Sur les trâces de Mouldeur",
+			"skully3": "Mademoiselle Bao",
+			"skully4": "Les touristes génants",
+			"skully5": "Des crevettes au Napalm",
+			"skully_end": "Les retrouvaillages"
 		},
 		"tooltip": "Mission : {mission}",
 		"description": {
@@ -2646,7 +2750,13 @@
 			"hucure": "F'est bien aimable de votre part... Ve pense que les Boines de l'île des Futes mutantes pourraient m'aider... Prenez les blantes que vous m'avez amenées et allez les voir de ma bart... Snirf...",
 			"bckpck": "Avant d'envisager mon voyage incroyable en terre inconnue, il me manque une chose primordiale ! Un bon sac à dos. J'ai perdu le mien en contournant les Chutes Mutantes... Pourriez-vous me le retrouver ?",
 			"rodriz": "J'ai besoin de Riz pour recharger ma cape magique. On en trouve paraît-il dans le Marais Collant des Îles Atlantéinées. Peux-tu m'en rapporter suffisamment pour que je puisse à nouveau devenir invisible ? Vite, c'est urgent !",
-			"rodlif": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !"
+			"rodlif": "Trois Dinoz Sombres de Caushemesh t'attendent aux Chutes Mutantes. Va les vaincre et reviens me voir pour obtenir ta récompense... Je te conseille de ne pas tenter de les battre tout seul, car tu pourrais y laisser la vie de ton Dinoz !",
+			"skully1": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'joe… Va le voir et tiens moi au courant !",
+			"skully2": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
+			"skully3": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau os retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce roblème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
+			"skully4": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
+			"skully5": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
+			"skully_end": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !"
 		},
 		"actions": {
 			"nothing": "{npc}",
@@ -2739,7 +2849,22 @@
 			"afraidFisher": "Pêcheur affairé",
 			"findBobine": "Trouver une bobine",
 			"couturiere": "Couturière",
-			"rice": "Chercher du Riz"
+			"rice": "Chercher du Riz",
+			"giveMerguez": "TESTB",
+			"give_item": "Donner {itemQuantity} {item}",
+			"readMessage": "Lire le message",
+			"panneau": "Panneau Indicateur",
+			"bao?": "Mademoiselle Bao ???",
+			"missBao": "Mademoiselle Bao",
+			"baoBabe": "Bao Babe",
+			"AAA": "Réunion des A.A.A",
+			"merguez": "Vendeur de Merguez",
+			"visitRuin": "Visiter les ruines",
+			"lookBoat": "Chercher un Bateau Louche",
+			"enterBoat": "Entrer dans le Bateau",
+			"freeMan": "Homme Libéré",
+			"korgon": "Chercher un Korgon",
+			"baiePira": "Baie aux Piranhoz"
 		},
 		"npc": {
 			"fishVendor": "Marchand de poisson",
@@ -2855,7 +2980,26 @@
 			"findBobine": "Trouver une bobine",
 			"couturiere": "Couturière",
 			"seekrice": "Chercher du Riz",
-			"pickrice": "Ramasser le Riz"
+			"pickrice": "Ramasser le Riz",
+			"ptitJoe": "Papy 'ptit' Joe",
+			"giveMerguez": "Donner les merguez",
+			"readMessage": "Lire le message",
+			"AAA": "Réunion des A.A.A",
+			"baiePira": "Baie aux Piranhoz",
+			"panneau": "Panneau Indicateur",
+			"bao?": "Mademoiselle Bao ???",
+			"missBao": "Mademoiselle Bao",
+			"baoBabe": "Bao Babe",
+			"merguez": "Vendeur de Merguez",
+			"visitRuin": "Visiter les ruines",
+			"lookBoat": "Chercher un Bateau Louche",
+			"enterBoat": "Entrer dans le Bateau",
+			"freeMan": "Homme Libéré",
+			"skully": "Skully",
+			"shrimpSeller": "Marchand de Crevettes",
+			"shamanM": "Shaman Mou",
+			"giveSos": "Donner les flammèches",
+			"korgon": "Chercher un Korgon"
 		},
 		"place": {
 			"port": "au Port de Prêche",
@@ -3234,6 +3378,49 @@
 			},
 			"rodlif": {
 				"forges": "Pas mal pour un Dinoz faible de Dinoville... Tiens, voilà pour toi !"
+			},
+			"skully1": {
+				"ptitJoe1": "Oncle Mouldeur ? Ohlala ca fait des années que je n'ai pas entendu parler de lui... Si tu veux en savoir plus, ramène-moi trois merguez du Grand Tout Chaud !",
+				"ptitJoe2": "Merci ! (crounch crounch) tout ce que je sais, c'est qu'oncle Mouldeur aimait beaucoup sa femme et a laissé un message pour elle gravé sur la Fontaine de Jouvence.",
+				"readMessage": "Dans une des nombreuses gravures de la Fontaine de Jouvence, on peut lire le message suivant : \"Je t'attendrai sur le lieu de notre rencontre\"",
+				"skull": "Merci, ce sont de précieuses informations que tu m'as rapporté là ! Mon Mouldeur chéri ne doit pas être très loin, nous serons bientôt réunis !"
+			},
+			"skully2": {
+				"touriste": "J'en ai RAZ LE BOL de ce Marais de M...... !!!!! Ca fait trois fois que notre Camping-Car s'enlise, quelle idée à la c... de venir passer des VACANCES DANS UN MARAIS !!! Quoi ? Si j'ai vu un dénommé Mouldeur ? Ah ! oui, il est parti assister à une réunion de l'Amicale des Anguilloz Anonymes ! Fait attention si tu vas là-bas car elles sont du genre susceptible...",
+				"fish1": "Ca mord bien dans l'coin : les poissons viennent voir les moines qui lévitent... Un gars qui s'appelle Mouldeur ? J'le connais bien : il est parti pêcher dans la baie aux Piranhoz. Fait gaffe mon gars, ça mordille ces saletés...",
+				"fish2": "Mouldeur ? Il a dit qu'il retournait attendre sa femme au Marais... Pauv'gars, ça fait des années qu'il ne l'a pas revu... Remarquez à sa place je serais plutôt content...",
+				"panneau": "Un panneau semble avoir été récemment dressé près d'un parterre de nénuphars. On peut y lire le message suivant : \"Marre des moustiques, rejoins moi là où je t'ai déclaré ma flamme. Mouldeur.\"",
+				"skull": "Ooohh oh oh oh oh ! Mouldeur chéri ! Je te sens plus proche de moi que jamais !"
+			},
+			"skully3": {
+				"bao?": "Quoi ??? Mademoiselle Bao ?? Non mais... tu me prends pour qui au juste ? .......... Si tu cherches ma soeur, et bien elle se trouve en ce moment auprès du petit fils de l'ArchiDorogon : \"le Vénérable\" comme il aime se faire appeller maintenant... D'ailleurs si un jour son père l'apprend, il va passer un sale quart-d'heure...",
+				"missBao": "Quoi ??? Mademoiselle Bao ?? Mais voyons.... celà fait une éternité que l'on ne m'a pas appellée comme celà. Je t'en prie, jeune homme, utilise mon prénom, appelle-moi Babe...",
+				"baoBabe1": "Tu cherches mon conseil ? Ecoute, je dois d'abord finir ma partie de dames avec le petit-fils de l'ArchiDorogon. Son grand-père m'a fait promettre de venir lui tenir compagnie de temps-en-temps... Que dirais-tu d'aller chasser quelques gobelins en attendant que je finisse ?",
+				"baoBabe2": "Voilà ! J'ai fini ! Je l'ai battu à plate couture hi hi hi ! J'adooore le mettre en colère, il est tellement mignon quand ses narines commencent à souffler de la vapeur d'eau ! Mais tu voulais me demander un conseil ?",
+				"baoBabe3": ".......... Oh ? Vraiment ? ..... La solution à ce genre de bonnédiction est très simple : il suffit que quelqu'un garde une partie de Skully toujours avec lui pour ne rien oublier... A bientôt, jeune homme !",
+				"skull": "Oh oh oh oh oh ! En voilà une bonne solution pour ma bonnédiction ! Tiens, prends ça, de cette façon tu n'oublieras plus ni le chemin du Cimetière, ni ta chère Skully oh oh oh !"
+			},
+			"skully4": {
+				"merguez": "Un client bizarre ? Oui, j'ai bien vu un type maigrichon qui est venu manger en lançant de grands soupirs... Il est parti se promener dans les ruines. Faites attention, on a des touristes d'un genre un peu particulier en ce moment...",
+				"lookBoat": "Après quelques recherches, vous trouvez un Bateau définitivement bizarre sur les quais.",
+				"freeMan": "Mmmerr mmerrciii !! Jejejej'ai eu trtrtrès pepeupeur vous sasavez ! Mouldeur ?? Nonon, je m'apeppelle Jean-Claude... Jeje susuis un ami du vendeur dede merguez ! Mermerci en tout cas de vovotre aide !",
+				"merguez2": "Vous avez sauvé Jean-Claude ? Ah !! Merci beaucoup. Ces bandits des steppes génaient vraiment l'émergence du tourisme de masse dans ces ruines. Je ne sais pas comment vous remercier ! .... Mouldeur ? Il a promis de revenir si je lui préparais des crevettes au Napalm, mais je ne connais pas la recette...",
+				"skull": "Oh oh oh ! Mouldeur n'est pas très loin, merci beaucoup de ton aide mon jeune ami !"
+			},
+			"skully5": {
+				"skully1": "Bien, tout d'abord, il me faut bien entendu de bonnes crevettes. Tu pourras en trouver au Marché du Dôme Soulaflotte ! Fais-vite !",
+				"shrimpSeller": "Je suis désolé mais suite à des fraudes je n'accepte aucune pièce d'or en paiement de mes crevettes. Il va falloir me ramener 3 Bons du Trésor...",
+				"giveTreasure": "Merci, voici vos crevettes ! Bon appétit !",
+				"skully2": "Oh oh oh ! Ma-gni-fi-que ! Ces crevettes sont d'une fraicheur incomparable ! Bon, passons à la suite. Deuxième ingrédient indispensable : du Napalm. Pour en fabriquer il nous faut de la lave de bonne qualité...",
+				"shaman": "Du Napalm ? Uhmm... Pour cela, il va te falloir faire un mélange moitié Lave - moitié Flammèches. On ne manque pas de Lave par ici, alors apporte-moi 5 Boites de Flammèche pour que je te prépare le mélange...",
+				"giveSos": "A glou ! A glou ! A gadagagou glou ! Et voilà, du Napalm à faible densité tout chaud pour toi....",
+				"skully3": "Oh ! oh oh oh ! Quel superbe Napalm ! Mais la recette ne peut être complète sans que l'on y rajoute un ingrédient ab-so-lu-ment nécessaire... Les poils d'un Korgon bien gras ! Normalement, il devrait y en avoir du coté du Grand Tout Chaud, mais fait attention à ne pas voler le repas de quelqu'un d'autre ou tu pourrais bien le regretter !",
+				"skully4": "Oh oh oh oh ! Je touille je touille !!! Et voilà ! Un magnifique plat de Crevettes au Napalm !",
+				"skull": "Merci pour ton aide ! oh oh oh ! Bientôt mes retrouvailles avec mon tendre Mouldeur !"
+			},
+			"skully_end": {
+				"merguez": "Ooooohh !! Il s'agit donc des fameuses crevettes au Napalm ?!? Voyons voir.... uhmm.... cela manque un peu de graisse mais c'est succulent. Nul doute que Mouldeur devrait bientôt se montrer... Mais regarde qui voilà !",
+				"skull": "OOooooooh ! oh ! oh oh oh ! Mouldeur est revenu !!! Merci beaucoup !!"
 			}
 		},
 		"target": {
@@ -4780,7 +4967,17 @@
 		"fight_star_found": "À la fin du combat, vous apercevez un objet brillant : il s'agit d'une des 7 étoiles magiques !",
 		"eat_star_found": "Après avoir avalé la Tarte, votre Dinoz aperçoit quelquechose qui brille à quelques mètres... Félicitations ! Vous avez trouvé l'une des 7 étoiles magiques !",
 		"dig_star_found": "Au premier coup de pelle, vous entendez un bruit étrange. En creusant un peu vous trouvez l'une des 7 étoiles magiques ! Félicitations !",
-		"resurrect_star_found": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?"
+		"resurrect_star_found": "Alors qu'il se réveille à Dinoville, votre Dinoz s'aperçoit que quelqu'un lui a confié la dernière étoile magique ! Ses souvenirs sont troubles, mais il se rappelle de Dinoz étranges, inconnus jusque là, à l'allure de singes au pelage multicolore... Ce sont eux qui lui ont confié la 7ème étoile, mais qui sont-ils ?!?",
+		"AAA_start": "Alors que votre Dinoz s'approche, certaines Anguilloz se rendent compte de sa présence et l'attaquent !",
+		"AAA_end": "Aprés la défaite des Anguilloz, vous observez des traces de pas qui s'éloignent en direction de l'ouest...",
+		"baiePira_start": "A peine vous entrez dans la baie que de nombreux Piranhoz se précipitent pour vous mordiller... Qui peut bien avoir envie de venir pêcher ici ???",
+		"baiePira_end": "Une fois les Piranhoz vaincus, vous regardez aux alentours. Si Mouldeur est venu pêcher ici, il est déjà reparti...",
+		"baraba_start": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
+		"baraba_end": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\"",
+		"boat_start": "Que le pouvoir du Bambooz soit avec moi ! Je vengerais mon frère !!!",
+		"boat_end": "Après avoir vaincu les Bandits, vous libérez un homme ligoté dans le bateau...",
+		"korgon_start": "Kwwiiiiiiik !",
+		"korgon_end": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
 	},
 	"report": {
 		"header": "Reporter du contenu inapproprié",

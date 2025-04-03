@@ -10,9 +10,10 @@
 			<div class="content">
 				<span
 					class="dialog"
-					v-if="npcSpeech.speech"
+					v-if="npcSpeech.speech && !dialog"
 					v-html="formatContent($t(`npc.${npcName}.speech.${npcSpeech.speech}`))"
 				/>
+				<span class="dialog" v-else v-html="formatContent($t(`missions.dialog.${npcSpeech.speech}`))" />
 				<div class="portrait">
 					<AnimatedNPC :NPC="swfName" :flashvars="npcSpeech.flashvars" />
 					<DZButton @click="stop()">{{ $t(`npc.stop`) }}</DZButton>
@@ -29,18 +30,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import EventBus from '../events/index.js';
-import { errorHandler } from '../utils/index.js';
-import { DinozService, NPCService, PlayerService } from '../services/index.js';
-import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
-import { NavigationFailure } from 'vue-router';
 import { ServiceEnum } from '@drpg/core/models/enums/ServiceEnum';
-import { dinozStore, sessionStore } from '../store/index.js';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import { npcList } from '@drpg/core/models/npc/NpcList';
+import { NpcTalk } from '@drpg/core/models/npc/NpcTalk';
+import { defineComponent } from 'vue';
+import { NavigationFailure } from 'vue-router';
+import AnimatedNPC from '../components/common/AnimatedNPC.vue';
 import DZButton from '../components/common/DZButton.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import EventBus from '../events/index.js';
+import { DinozService, NPCService, PlayerService } from '../services/index.js';
+import { dinozStore, sessionStore } from '../store/index.js';
+import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
 	name: 'NPC',
@@ -55,6 +56,12 @@ export default defineComponent({
 			swfName: undefined as string | undefined
 		};
 	},
+	props: {
+		dialog: {
+			type: String,
+			default: undefined
+		}
+	},
 	components: {
 		DZButton,
 		TitleHeader,
@@ -68,6 +75,7 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
+				this.dinozStore.setNpc(this.dinozId, choice, this.npcSpeech.name);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -107,33 +115,52 @@ export default defineComponent({
 		},
 		async stop(): Promise<void> {
 			await NPCService.talkTo(this.dinozId!, this.npcName!, 'begin', true);
+			this.dinozStore.clearNpc(this.dinozId);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}
 	},
 	async mounted(): Promise<void> {
 		EventBus.emit('isLoading', true);
-		const npc = this.dinozStore.getNpc(this.dinozId);
 		this.npcName = this.$route.params.npc as string;
-		let step = 'begin';
-		if (npc && npc.npcName === this.npcName) {
-			step = npc.npcSpeech;
-		} else {
-			this.dinozStore.clearNpc(this.dinozId);
-		}
-		try {
-			this.dinozId = parseInt(this.$route.params.id as string);
-			this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
-			this.loaded = true;
+		if (this.dialog) {
+			this.npcSpeech = {
+				name: this.npcName,
+				speech: this.dialog,
+				playerChoice: []
+			};
 			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err, this.$toast);
-			return;
+		} else {
+			const npc = this.dinozStore.getNpc(this.dinozId);
+
+			let step = 'begin';
+
+			if (npc && npc.npcName === this.npcName) {
+				step = npc.npcSpeech;
+			} else {
+				this.dinozStore.clearNpc(this.dinozId);
+			}
+			try {
+				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
+
+				this.dinozStore.setNpc(this.dinozId, step, this.npcSpeech.name);
+				this.loaded = true;
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
 		}
+
 		const npcCore = Object.values(npcList).find(npc => npc.name === this.npcName);
 		if (npcCore) {
 			this.swfName = npcCore.display ?? npcCore.name;
 		} else {
 			this.swfName = this.npcName;
+		}
+	},
+	watch: {
+		npcSpeech(newVal) {
+			this.dinozStore.setNpc(this.dinozId, newVal.speech, newVal.name);
 		}
 	}
 });
@@ -197,18 +224,6 @@ export default defineComponent({
 		}
 	}
 }
-/*.footer {
-	&::after {
-		content: '.';
-		visibility: hidden;
-	}
-	background: url('../assets/background/dialog_bg_footer_left.webp'), url('../assets/background/dialog_bg_footer_right.webp'),
-	url('../assets/background/dialog_bg_footer_center.webp');
-	background-position-x: left, right, center;
-	background-repeat: no-repeat, no-repeat, repeat-x;
-	display: block;
-
-}*/
 #answer {
 	list-style: none;
 	margin-top: 10px;

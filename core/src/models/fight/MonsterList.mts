@@ -68,6 +68,7 @@ export enum Monster {
 	SCORPWINK_THIEF_2 = 'SCORPWINK_THIEF_2',
 	TRIPOU_THE_SOFTY = 'TRIPOU_THE_SOFTY',
 	EMMEMA_BANDIT = 'EMMEMA_BANDIT',
+	BARABABOR = 'BARABABOR',
 	BARATRIBOR = 'BARATRIBOR',
 	MERGUEZ_THIEF = 'MERGUEZ_THIEF',
 	ELEMENTAL_DISCIPLE = 'ELEMENTAL_DISCIPLE',
@@ -954,7 +955,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		level: 0,
 		zones: [MapZone.ALL],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'bamboo'
 	},
 	[Monster.PIGLOUNOU]: {
 		id: Monster.PIGLOUNOU,
@@ -1517,6 +1519,27 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: true
 	},
+	[Monster.BARABABOR]: {
+		id: Monster.BARABABOR,
+		name: 'baraba',
+		level: 15,
+		elements: {
+			fire: 0,
+			wood: 3,
+			water: 6,
+			lightning: 6,
+			air: 3
+		},
+		bonus_attack: 0,
+		bonus_defense: 0,
+		balanced: true,
+		hp: 70,
+		odds: 100,
+		skills: [Skill.COUP_DOUBLE],
+		zones: [],
+		canBeCaptured: true,
+		display: 'brig2'
+	},
 	[Monster.BARATRIBOR]: {
 		id: Monster.BARATRIBOR,
 		name: 'baratr',
@@ -1535,7 +1558,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.COUP_DOUBLE],
 		zones: [],
-		canBeCaptured: true
+		canBeCaptured: true,
+		display: 'brig1'
 	},
 	[Monster.ELEMENTAL_DISCIPLE]: {
 		id: Monster.ELEMENTAL_DISCIPLE,

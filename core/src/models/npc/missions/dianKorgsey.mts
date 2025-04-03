@@ -308,7 +308,8 @@ export const M_DIANKORGSEY: Mission[] = [
 				place: PlaceEnum.FLEUVE_JUMIN,
 				requirement: {
 					actionType: ConditionEnum.TALKTO,
-					target: 'dian'
+					target: 'dian',
+					npcName: 'dian'
 				},
 				displayedAction: 'dian',
 				displayedText: 'dian'

@@ -13,7 +13,13 @@ import { DinozToGetActualStep, getActualStep } from '@drpg/core/utils/MissionUti
 import { checkCondition } from '@drpg/core/utils/checkCondition';
 import { Dinoz, DinozMission } from '@drpg/prisma';
 import { Request } from 'express';
-import { PlayerWithMissionData, getDinozMissionsInfo, getGlobalMissionsData } from '../dao/dinozDao.js';
+import {
+	PlayerWithMissionData,
+	getDinozFicheRequest,
+	getDinozFightDataRequest,
+	getDinozMissionsInfo,
+	getGlobalMissionsData
+} from '../dao/dinozDao.js';
 import {
 	addMissionToDinoz,
 	finishMission,
@@ -25,6 +31,9 @@ import { getPlayerRewards } from '../dao/playerRewardsDao.js';
 import { rewarder } from '../utils/rewarder.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { auth } from '../dao/playerDao.js';
+import { calculateFightVsMonsters, rewardFight } from './fightService.js';
+import { decreaseItemQuantity, getPlayerItems } from '../dao/playerItemDao.js';
+import translate from '../utils/translate.js';
 
 export async function getMissionsList(req: Request) {
 	const dinozId = +req.params.id;
@@ -126,6 +135,54 @@ export async function updateMission(req: Request) {
 	}
 }
 
+export async function startFightMission(req: Request) {
+	const authed = await auth(req);
+	const mission = await checkMission(req);
+	const task = mission.actualStep.requirement.actionType;
+
+	if (task !== ConditionEnum.LAUNCH_FIGHT) {
+		return;
+	}
+
+	const dinoz_fiche = await getDinozFicheRequest(mission.dinoz.id, authed.id);
+	const leadDinoz = dinoz_fiche?.dinoz.find(d => d.id === mission.dinoz.id);
+	const lead = leadDinoz?.leaderId;
+
+	let dinoz_fight;
+
+	if (!lead) {
+		dinoz_fight = mission.dinoz.id;
+	} else {
+		dinoz_fight = lead;
+	}
+
+	if (!dinoz_fight) {
+		throw new ExpectedError('error dinoz_fight');
+	}
+	const player = await getDinozFightDataRequest(dinoz_fight, authed.id);
+	if (!player) {
+		throw new ExpectedError(`No player ${authed.id} found`);
+	}
+	const team = player.dinoz;
+	const ennemi_team = mission.actualStep.requirement.mobList;
+
+	const fightResult = calculateFightVsMonsters(team, player, mission.actualStep.place, ennemi_team);
+	const fight: FightResult = await rewardFight(team, ennemi_team, fightResult, mission.actualStep.place, player);
+	if (mission.actualStep.requirement.startText) {
+		fight.startText = mission.actualStep.requirement.startText;
+	}
+	if (mission.actualStep.requirement.dialog) {
+		fight.dialog = mission.actualStep.requirement.dialog;
+	}
+
+	if (mission.actualStep.requirement.endText) {
+		fight.endText = mission.actualStep.requirement.endText;
+	}
+
+	await updateMissionStep(authed.id, [mission.dinoz.id], mission.dinozMission.missionId, mission.actualStep.stepId + 1);
+	return fight;
+}
+
 export async function interactMission(req: Request) {
 	const authed = await auth(req);
 
@@ -135,13 +192,6 @@ export async function interactMission(req: Request) {
 
 	switch (task) {
 		case ConditionEnum.TALKTO:
-			await updateMissionStep(
-				authed.id,
-				[mission.dinoz.id],
-				mission.dinozMission.missionId,
-				mission.actualStep.stepId + 1
-			);
-			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		case ConditionEnum.DO:
 			await updateMissionStep(
 				authed.id,
@@ -150,6 +200,14 @@ export async function interactMission(req: Request) {
 				mission.actualStep.stepId + 1
 			);
 			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
+		case ConditionEnum.GIVE_ITEM:
+			const { requirement } = mission.actualStep;
+			const playerItems = await getPlayerItems(authed.id, { itemId: requirement.item.itemId });
+			const playerNbItem = playerItems[0]?.quantity || 0;
+			if (playerNbItem < requirement.itemQuantity) {
+				throw new ExpectedError(translate('notEnoughItem', authed));
+			}
+			await decreaseItemQuantity(authed.id, requirement.item.itemId, requirement.itemQuantity);
 		default:
 			return 'error';
 	}

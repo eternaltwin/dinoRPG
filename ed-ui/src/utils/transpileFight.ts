@@ -16,7 +16,7 @@ import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { FightText } from '@drpg/core/models/missions/specialActions';
+import { DialogText, FightText } from '@drpg/core/models/missions/specialActions';
 import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
 import {
 	BASE_ASSAULT_ENERGY_COST,
@@ -139,6 +139,7 @@ export function transpileFight(
 	fight: Array<FightStep>,
 	t: TFunction,
 	startText: FightText | undefined,
+	dialog: DialogText | undefined,
 	endText: FightText | undefined,
 	victory: boolean,
 	dojo?: boolean
@@ -156,6 +157,7 @@ export function transpileFight(
 	let counteringFighterCombo = 0;
 	let myFighter: FighterRecap | undefined;
 	let timeLimit: number | undefined;
+	let dialogBubble = false;
 	if (startText) {
 		history.push({
 			action: DinoAction.TEXT,
@@ -213,6 +215,16 @@ export function transpileFight(
 					fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 				});
 				myFighter = undefined;
+				if (dialog && dialogBubble === false) {
+					if (i + 1 < fight.length && fight[i + 1].action !== 'arrive') {
+						dialogBubble = true;
+						history.push({
+							action: DinoAction.TALK,
+							fid: dialog.fid,
+							message: t(`quest.${dialog.message}`)
+						});
+					}
+				}
 				break;
 			case 'activateEnvironment':
 				break;

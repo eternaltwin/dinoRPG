@@ -468,6 +468,7 @@ export async function buyDinoz(req: Request) {
 		items: [],
 		rewards: [],
 		quests: [],
+		ranking: null,
 		dinoz: [
 			{
 				...dinozCreated,
@@ -675,6 +676,7 @@ export async function betaMove(req: Request) {
 				items: player.items,
 				rewards: player.rewards,
 				quests: player.quests,
+				ranking: player.ranking,
 				dinoz: [member]
 			};
 			if (!canGoToThisPlace(memberToTest, desiredPlace.conditions, member.id)) {
