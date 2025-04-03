@@ -20,7 +20,7 @@ import { MMEX } from './characters/mmex.mjs';
 import { PADAMOINE } from './characters/padamoine.mjs';
 import { PAPYJOE } from './characters/papyJoe.mjs';
 import { PROFESSOR } from './characters/prof.mjs';
-import { RODEUR, RODEUR2, RODEUR3 } from './characters/rodeur.mjs';
+import { RODEUR } from './characters/rodeur.mjs';
 import { SHAMAN } from './characters/shaman.mjs';
 import { SOFIA } from './characters/sofia.mjs';
 import { M_BAO_BOB } from './missions/baoBob.mjs';
@@ -282,38 +282,26 @@ export const npcList: Record<string, Npc> = {
 		data: RODEUR,
 		missions: M_RODEUR,
 		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } },
-				{ [ConditionEnum.MINLEVEL]: 15 }
-			]
-		},
-		flashvars: undefined
-	},
-	RODEUR2: {
-		name: 'rodeur2',
-		id: 23,
-		placeId: PlaceEnum.FORGES_DU_GTC,
-		data: RODEUR2,
-		missions: M_RODEUR,
-		condition: {
-			[Operator.AND]: [
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
-				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF } },
-				{ [ConditionEnum.MINLEVEL]: 20 }
-			]
-		},
-		flashvars: undefined
-	},
-	RODEUR3: {
-		name: 'rodeur3',
-		id: 24,
-		placeId: PlaceEnum.FORGES_DU_GTC,
-		data: RODEUR3,
-		missions: undefined,
-		condition: {
-			[Operator.AND]: [
-				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } },
-				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF }
+			[Operator.OR]: [
+				{
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } },
+						{ [ConditionEnum.MINLEVEL]: 15 }
+					]
+				},
+				{
+					[Operator.AND]: [
+						{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
+						{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF } },
+						{ [ConditionEnum.MINLEVEL]: 20 }
+					]
+				},
+				{
+					[Operator.AND]: [
+						{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } },
+						{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF }
+					]
+				}
 			]
 		},
 		flashvars: undefined

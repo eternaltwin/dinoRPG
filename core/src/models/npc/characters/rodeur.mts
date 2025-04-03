@@ -7,6 +7,12 @@ import { Reward } from '../../reward/RewardList.mjs';
 export const RODEUR: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
+		condition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ } },
+				{ [ConditionEnum.MINLEVEL]: 15 }
+			]
+		},
 		nextStep: ['go', 'talk', 'talk2'],
 		initialStep: true
 	},
@@ -40,15 +46,15 @@ export const RODEUR: Readonly<Record<string, NpcData>> = {
 		stepName: 'missions',
 		nextStep: []
 	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const RODEUR2: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
+	begin_2: {
+		stepName: 'begin_2',
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODRIZ },
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF } },
+				{ [ConditionEnum.MINLEVEL]: 20 }
+			]
+		},
 		nextStep: ['qual', 'qual2'],
 		initialStep: true
 	},
@@ -80,26 +86,25 @@ export const RODEUR2: Readonly<Record<string, NpcData>> = {
 	},
 	more: {
 		stepName: 'more',
-		nextStep: ['missions']
+		nextStep: ['missions_2']
 	},
-	missions: {
-		stepName: 'missions',
+	missions_2: {
+		stepName: 'missions_2',
 		nextStep: []
 	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const RODEUR3: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
-		nextStep: ['next'],
+	begin_3: {
+		stepName: 'begin_3',
+		condition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [ConditionEnum.COLLEC]: Reward.TIK } },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.RODEUR_RODLIF }
+			]
+		},
+		nextStep: ['next_2'],
 		initialStep: true
 	},
-	next: {
-		stepName: 'next',
+	next_2: {
+		stepName: 'next_2',
 		nextStep: [],
 		reward: [
 			{

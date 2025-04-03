@@ -69,7 +69,7 @@ export default defineComponent({
 	},
 	methods: {
 		async choiseStep(choice: string): Promise<void | NavigationFailure> {
-			if (choice === 'missions') {
+			if (choice === 'missions' || choice === 'missions_2') {
 				return this.$router.push({ name: 'Missions', params: { id: this.dinozId, npc: this.npcName } });
 			}
 			EventBus.emit('isLoading', true);
