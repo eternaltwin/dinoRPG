@@ -80,6 +80,13 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 			npcId: pnj.id,
 			step: initialStepData.stepName
 		});
+		return {
+			name: npcName,
+			speech: initialStepData.stepName,
+			playerChoice: initialStepData.nextStep.filter(
+				step => player && checkCondition(pnj.data[step].condition, player, dinozId)
+			)
+		};
 	} else {
 		if (req.body.stop) return await handleStopStep(dinozId, pnj, npcName);
 
@@ -90,21 +97,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		}
 
 		// Check if dinoz can go to this step
-		/*if (
-			nextStepWanted !== 'begin' &&
-			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
-			!actualStep.nextStep.includes(nextStepWantedData.alias || '')
-		) {
-			await updateDinozStep(dinozId, pnj.id, 'begin');
-			const beginStep = Object.values(pnj.data).find(pnj => pnj.initialStep);
-			if (!beginStep) throw new ExpectedError(`Begin step did not exist for NPC ${pnj.name}`);
-			return {
-				name: npcName,
-				speech: beginStep.stepName,
-				playerChoice: beginStep.nextStep
-			};
-		}*/
 		if (
+			nextStepWanted !== initialStepData.stepName &&
 			!actualStep.nextStep.includes(nextStepWantedData.stepName) &&
 			!actualStep.nextStep.includes(nextStepWantedData.alias || '')
 		) {
@@ -117,6 +111,7 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 				)
 			};
 		}
+
 		if (nextStepWantedData.condition !== undefined && !checkCondition(nextStepWantedData.condition, player, dinozId)) {
 			throw new ExpectedError(`The dinoz doesn't fullfill the conditions.`);
 		}

@@ -4,10 +4,25 @@ import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
 import { ConditionEnum, Operator } from '../../enums/Parser.mjs';
 import { Reward } from '../../reward/RewardList.mjs';
+import { DinozStatusId } from '../../dinoz/StatusList.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
 
-export const SKULLY1: Readonly<Record<string, NpcData>> = {
+export const SKULLY: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
+		condition: {
+			[Operator.NOT]: {
+				[Operator.OR]: [
+					{
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+						]
+					},
+					{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY }
+				]
+			}
+		},
 		nextStep: ['arg', 'shortcut', 'bye'],
 		initialStep: true
 	},
@@ -92,27 +107,47 @@ export const SKULLY1: Readonly<Record<string, NpcData>> = {
 		stepName: 'bye',
 		nextStep: []
 	},
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const SKULLY2: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
+	begin_memory: {
+		stepName: 'begin_memory',
+		condition: {
+			// Initial step if the conditions of the alien scenario are not met and the dinoz has the Skully Memory status and has not finished the last mission
+			[Operator.AND]: [
+				{
+					[Operator.NOT]: {
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+						]
+					}
+				},
+				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
+				{ [Operator.NOT]: { [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END } }
+			]
+		},
 		nextStep: ['missions'],
 		initialStep: true
 	},
-	stop: {
-		stepName: 'stop',
+	missions: {
+		stepName: 'missions',
 		nextStep: []
-	}
-};
-
-export const SKULLY3: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
+	},
+	begin_pda: {
+		stepName: 'begin_pda',
+		condition: {
+			// Initial step if the conditions of the alien scenario are not met and the dinoz has the Skully Memory status and has finished the last mission
+			[Operator.AND]: [
+				{
+					[Operator.NOT]: {
+						[Operator.AND]: [
+							{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+							{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+						]
+					}
+				},
+				{ [ConditionEnum.STATUS]: DinozStatusId.SKULLY_MEMORY },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SKULLY_END }
+			]
+		},
 		nextStep: ['pda', 'dinoz'],
 		initialStep: true
 	},
@@ -146,21 +181,20 @@ export const SKULLY3: Readonly<Record<string, NpcData>> = {
 		},
 		nextStep: []
 	},
-
-	stop: {
-		stepName: 'stop',
-		nextStep: []
-	}
-};
-
-export const SKULLY_STAR: Readonly<Record<string, NpcData>> = {
-	begin: {
-		stepName: 'begin',
-		nextStep: ['ok'],
+	begin_star: {
+		stepName: 'begin_star',
+		condition: {
+			// Initial step if the player is at step 5 of the scenario
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.STAR, 5, '='] },
+				{ [ConditionEnum.EQUIP]: itemList[Item.LITTLE_PEPPER].itemId }
+			]
+		},
+		nextStep: ['ok_star'],
 		initialStep: true
 	},
-	ok: {
-		stepName: 'ok',
+	ok_star: {
+		stepName: 'ok_star',
 		nextStep: ['star']
 	},
 	star: {

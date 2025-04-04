@@ -874,16 +874,8 @@
 			"hippo": "Étrange Dinoz",
 			"rocky": "Étrange Pierre",
 			"vener": "Le Vénérable",
-			"alien_0": "Être Etrange",
-			"alien_1": "Être Etrange",
-			"alien_8": "Être Etrange",
-			"alien_all": "Être Etrange",
-			"merguez_star": "Vendeur de merguez",
-			"skully_star": "Skully",
+			"alien": "Être Etrange",
 			"skully": "Skully",
-			"bob_star": "M. Bao Bob",
-			"skully2": "Skully",
-			"skully3": "Skully",
 			"baobabe": "BaoBabe",
 			"mouldeur": "Mouldeur"
 		},
@@ -1063,7 +1055,10 @@
 				"ingr": "Poum poum palalam poum poum pam poum poum palalam pam ! Et voila, une magnifique Potion Anti Sedh pour toi...",
 				"potion": "Mmmm... au revoir mon ami, reviens me voir à l'occasion !",
 				"ok": "Et voilà ton Dinoz se concentre ! Lorsque vous serez suffisamment, vous vous retrouverez dans un autre monde.",
-				"bye": "À la prochaine et amuse-toi bien !"
+				"bye": "À la prochaine et amuse-toi bien !",
+				"begin_star": "Que viens-tu faire à cette heure si matinale chez moi ?",
+				"ok_star": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardée pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
+				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
 			},
 			"playerChoice": {
 				"question": "J'ai une question à vous poser...",
@@ -1082,7 +1077,9 @@
 				"noingr": "Voilà les ingrédients !",
 				"ingr": "Voilà les ingrédients !",
 				"potion": "Vous êtes donc un Singe Antique !!!",
-				"ok": "D'accord"
+				"ok": "D'accord",
+				"ok_star": "Je cherche...",
+				"star": "???"
 			}
 		},
 		"baofan": {
@@ -1150,12 +1147,17 @@
 				"begin": "Ola ola ola ! Elles sont bien graisseuses, mes merguez ! ....... Comment ? Quelle idée de venir vendre des merguez dans un endroit aussi lugubre ? Mais ces Ruines sont magnifiques !! Je suis certain qu'un jour ce sont des millions de touristes qui viendront les visiter !",
 				"ah": "Oui, tout à fait ! C'est un peu comme l'acre-aux-pôles : mon cousin y a fait une fortune en vendant des porte-clés en forme de temple. Alors ici, c'est décidé, je serai le premier ! Même si je dois attendre plusieurs années que le commerce se lance, pas question de laisser passer cette opportunité en or !",
 				"ok": "Tiens, ton Dinoz m'a l'air bien maigre... Prends ces merguez ! C'est gratuit à condition que tu ailles parler des Superbes Ruines Ashpouk à tes amis. Ok, tu n'oublieras pas alors ?",
-				"thanks": "De rien, de rien, c'est bon pour le business !"
+				"thanks": "De rien, de rien, c'est bon pour le business !",
+				"begin_star": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? À moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
+				"ok_star": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
 			},
 			"playerChoice": {
 				"ah": "Ah....",
 				"ok": "Effectivement...",
-				"thanks": "Merci"
+				"thanks": "Merci",
+				"ok_star": "...",
+				"star": "Ah ?"
 			}
 		},
 		"shaman": {
@@ -1483,7 +1485,7 @@
 				"auto": "Pourrais-je avoir un autographe ?"
 			}
 		},
-		"alien_0": {
+		"alien": {
 			"speech": {
 				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
 				"no": "Effectivement, il vaut mieux éviter de s'attirer des problèmes avec des gens bizarres !",
@@ -1492,7 +1494,20 @@
 				"dom": "Voilà, j'aurais donc besoin de votre gentille aide pour pouvoir retrouver pour moi des crystaux de (TcEtCiNo)... Voyons voir... dans votre langage, cela devrait ressembler à des étoiles brillantes, avec l'air très appétissant !",
 				"star": "Oui, tout à fait ! Si vous m'en ramenez exactement sept d'entre elles, je pourrais reprendre ma traversée, et je serais même prèt à vous récompenser avec un (CiLoJuAeDa) de chez moi !",
 				"how": "C'est relativement simple. Il va falloir vous résoudre un certain nombre de spectaculaires divinations, qui sont inscrites dans le Guide du Touriste Éclectik. A chaque fois je vous lirai le passage, ensuite à vous de vous débrouissailler ! Ah !",
-				"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant..."
+				"ah": "Oui, donc, voilà ! Je vais chercher le Guide du Touriste, ne quittez pas je reviens dans un instant...",
+				"begin_first_star": "Le Guide a dit : \"Un mégaloup t'attend dans la capitale !\"",
+				"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !",
+				"begin_star": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite....",
+				"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
+				"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
+				"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
+				"star5": "C'est écrit tout petit, je vais essayer de bien lire les mots : \"Les vieux os apprécient parait-il la vue d'un ... capsicum\" , oui... ça doit être ça... (enfin je pense)",
+				"star6": "Uhm... Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\". Tout un programme...",
+				"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\". Courage !",
+				"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !",
+				"begin_plum": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
+				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
+				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
 			},
 			"playerChoice": {
 				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
@@ -1502,70 +1517,17 @@
 				"dom": "Effectivement, quel dommage !",
 				"star": "Des étoiles ?",
 				"how": "Et comment trouver ces étoiles ?",
-				"ah": "\"Ah\" ?"
-			}
-		},
-		"alien_1": {
-			"speech": {
-				"begin": "Le Guide a dit : \"Un mégaloup t'attend dans la capitale !\"",
-				"et": "Et ? C'est tout ! Il va falloir vous débroussailler tout seul maintenant, désolé d'être aussi éclectique !"
-			},
-			"playerChoice": {
-				"et": "Et ?"
-			}
-		},
-		"alien_8": {
-			"speech": {
-				"begin": ".... Ouiiiiii !!! Merci ! merci ! merci ! Grâce à toi je vais enfin pouvoir retourner sur (PuOsEniLa) ! Il ne me reste que peu de temps tant que les astres sont dans l'alignement de Rochechouart...",
-				"ok": "Pourrais-tu me donner les étoiles, je te donnerai - comme promis - un (CiLoJuAeDa) en échange ainsi qu'une babiole que j'ai trouvé dans ton monde !",
-				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
-			},
-			"playerChoice": {
-				"ok": "...",
-				"give": "Donner les 7 Étoiles"
-			}
-		},
-		"alien_all": {
-			"speech": {
-				"begin": "Ah ! Je vois que tu avances dans ta quête ! Voyons voir ce que le Guide du Touriste nous raconte ensuite....",
-				"star2": "Je lis dans le Guide : \"le graisseux enthousiaste appréciera un nuage transporté\"... ça te dit quelque chose ?",
-				"star3": "Guide du Touriste, page 879 alinéa b : \"quand on est englué jusqu'au cou, rien ne vaut un bon gâteau\". C'est clair, non ?",
-				"star4": "Je cite : \"L'appel au trou sombre te servira\" ... tu as une idée ??",
-				"star5": "C'est écrit tout petit, je vais essayer de bien lire les mots : \"Les vieux os apprécient parait-il la vue d'un ... capsicum\" , oui... ça doit être ça... (enfin je pense)",
-				"star6": "Uhm... Annexe B du Guide du Touriste : \"Visite l'homme-dieu quand il sera midi à Pek-1\". Tout un programme...",
-				"star7": "C'est la dernière étoile qui manque ! Le Guide raconte \"au pays de Saru tu reviendras de parmi les morts sans artifice\". Courage !",
-				"end": "Votre langage local est tout de même bizarre... en tout cas, moi, je n'y comprends rien !"
-			},
-			"playerChoice": {
+				"ah": "\"Ah\" ?",
+				"et": "Et ?",
 				"star2": "Écouter",
 				"star3": "Écouter",
 				"star4": "Écouter",
 				"star5": "Écouter",
 				"star6": "Écouter",
 				"star7": "Écouter",
-				"end": "..."
-			}
-		},
-		"merguez_star": {
-			"speech": {
-				"begin": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? À moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
-				"ok": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
-				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
-			},
-			"playerChoice": {
+				"end": "...",
 				"ok": "...",
-				"star": "Ah ?"
-			}
-		},
-		"skully_star": {
-			"speech": {
-				"begin": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
-				"ok": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
-				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
-			},
-			"playerChoice": {
-				"ok": "...",
-				"star": "Ah ?"
+				"give": "Donner les 7 Étoiles"
 			}
 		},
 		"skully": {
@@ -1585,8 +1547,6 @@
 				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ca va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
 				"accept": "OH OH OH OH OH !! Alors, s'il te plait Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
 				"missions": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
-				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
-				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
 				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brulés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quand à ces étranges marques...",
 				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brulé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
 				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
@@ -1595,7 +1555,14 @@
 				"skully": "Quoi ? Vous connaissez Skully ?!?",
 				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompais pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidé !",
 				"end": "Si ! C'est un véritable exploit !!! Accompagnez moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la comtempler yeux-dans-les-yeux !!",
-				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison."
+				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
+				"begin_memory": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
+				"begin_pda": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
+				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
+				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !",
+				"begin_star": "Oh oh oh oh oh oh oh oh oh oh oh oh oh oh !! Mais que vois-je là !!! N'est-ce pas un magnifique exemplaire de \"Capsicum annuum\" ! Quelle couleur, quelle odeur, c'est ma-gni-fi-que !",
+				"ok_star": "Je te remercie vraiment ! oh oh oh ! En échange pour m'avoir offert cette vision splendide, je vais te donner un truc que j'ai trouvé en cherchant un os que j'avais perdu ! Tiens !",
+				"star": "Félicitations ! Grâce à Skully, vous avez récupéré la 5ème étoile magique ! Plus que deux !"
 			},
 			"playerChoice": {
 				"arg": "Ahhhh ! Un fanntôoommme !!!",
@@ -1617,8 +1584,6 @@
 				"accept": "Oui ! Sans aucun doute !",
 				"maybe": "Il faut que j'y réflechisse...",
 				"missions": "Que dois-je faire maintenant ?",
-				"dinoz": "Ce n'était vraiment rien",
-				"pda": "Ce n'était vraiment rien",
 				"you": "Vous êtes Mouldeur ?",
 				"explain": "Ah... Et ?",
 				"other": "Et l'autre explication ?",
@@ -1626,26 +1591,11 @@
 				"ok2": "Mais... vous aussi !",
 				"skully": "Skully vous cherche aussi...",
 				"exp": "(Expliquer toute l'histoire)",
-				"end": "Ce n'est vraiment rien..."
-			}
-		},
-		"skully2": {
-			"speech": {
-				"begin": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !"
-			},
-			"playerChoice": {
-				"missions": "Que dois-je faire maintenant ?"
-			}
-		},
-		"skully3": {
-			"speech": {
-				"begin": "Merci pour ce que tu as fait pour nous ! Mouldeur et moi vivons désormais notre amour dans ce magnifique cadre avec vue sur la mer ! Quel bonheur de le savoir à mes côtés chaque jour !",
-				"pda": "Oh mais si ! Tu as fait beaucoup ! Tiens voilà pour toi... je t'offre ce magnifique Planificateur qui t'aidera dans ta quête à gérer tes différents Dinoz. Il sera rajouté à tes objets de collection, alors prends-en bien soin !",
-				"dinoz": "Oh mais si ! Tu as fait beaucoup ! Reviens me voir quand tu auras plus de Dinoz, et je te donnerai un cadeau qui t'aidera dans ta quête !"
-			},
-			"playerChoice": {
+				"end": "Ce n'est vraiment rien...",
 				"dinoz": "Ce n'était vraiment rien",
-				"pda": "Ce n'était vraiment rien"
+				"pda": "Ce n'était vraiment rien",
+				"ok_star": "...",
+				"star": "Ah ?"
 			}
 		},
 		"mouldeur": {
@@ -1669,17 +1619,6 @@
 				"skully": "Skully vous cherche aussi...",
 				"exp": "(Expliquer toute l'histoire)",
 				"end": "Ce n'est vraiment rien..."
-			}
-		},
-		"bob_star": {
-			"speech": {
-				"begin": "Que viens-tu faire à cette heure si matinale chez moi ?",
-				"ok": "Ah ! Oui, je suis encore dans les vappes, je n'avais pas réalisé. Tiens, je l'avais gardée pour toi, j'espère en tout cas qu'elle ne t'attirera pas trop d'ennuis...",
-				"star": "Sur ces mots étranges, Bao Bob vous confie la 6ème étoile magique ! Plus qu'une dernière !!!"
-			},
-			"playerChoice": {
-				"ok": "Je cherche...",
-				"star": "???"
 			}
 		}
 	},
