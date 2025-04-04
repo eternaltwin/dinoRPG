@@ -1116,8 +1116,8 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 				nextRound: nextPlannedMatch.time
 			}
 		});
-		scheduleJob(this.tournamentId, nextPlannedMatch.time, () => this.generateNextRound(prisma));
-		LOGGER.log(`First round is for ${nextPlannedMatch.time}.`);
+		// scheduleJob(this.tournamentId, nextPlannedMatch.time, () => this.generateNextRound(prisma));
+		// LOGGER.log(`First round is for ${nextPlannedMatch.time}.`);
 	}
 }
 
