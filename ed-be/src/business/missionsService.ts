@@ -208,6 +208,13 @@ export async function interactMission(req: Request) {
 				throw new ExpectedError(translate('notEnoughItem', authed));
 			}
 			await decreaseItemQuantity(authed.id, requirement.item.itemId, requirement.itemQuantity);
+			await updateMissionStep(
+				authed.id,
+				[mission.dinoz.id],
+				mission.dinozMission.missionId,
+				mission.actualStep.stepId + 1
+			);
+			return `${mission.missionReference.missionName}.${mission.actualStep.displayedText}`;
 		default:
 			return 'error';
 	}
