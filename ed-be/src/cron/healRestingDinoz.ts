@@ -1,6 +1,5 @@
 import cron from 'cron';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import dayjs from 'dayjs';
 import { prisma } from '../prisma.js';
 import { LOGGER } from '../context.js';
 
@@ -8,9 +7,8 @@ const healRestingDinoz = () => {
 	const CronJob = cron.CronJob;
 
 	return new CronJob('0 * * * *', async () => {
-		const startTime = dayjs();
 		try {
-			const healed = await prisma.$executeRaw`
+			await prisma.$executeRaw`
 				UPDATE
 					dinoz du
 				SET life = least(d.life + ( -- Repos
@@ -97,10 +95,8 @@ const healRestingDinoz = () => {
 				;
 
 			`;
-			const endTime = dayjs();
-			LOGGER.log(`Operation healed ${healed} dinoz and ended in ${endTime.diff(startTime)}ms.`);
 		} catch (err) {
-			console.error(`Cannot heal resting dinoz: ${err}`);
+			LOGGER.error(`Cannot heal resting dinoz: ${err}`);
 		}
 	});
 };
