@@ -39,9 +39,6 @@
 			<a href="#" :class="tabSelected === 9 ? 'active' : ''" @click="setTab(9)"> Game </a>
 		</li>
 		<li>
-			<a href="#" :class="tabSelected === 9 ? 'active' : ''" @click="setTab(9)"> Game </a>
-		</li>
-		<li>
 			<a href="#" :class="tabSelected === 10 ? 'active' : ''" @click="setTab(10)"> Debug </a>
 		</li>
 	</ul>
