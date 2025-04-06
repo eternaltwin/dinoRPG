@@ -1733,7 +1733,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.REFRIGERATED_SHIELD: {
-				fighter.stats.defense[ElementType.FIRE] += 10;
+				fighter.stats.defense[ElementType.FIRE] += 20;
 				break;
 			}
 			case Item.GOBLIN_MERGUEZ: {
