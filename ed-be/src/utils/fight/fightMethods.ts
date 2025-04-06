@@ -1678,10 +1678,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				return false;
 		}
 
-		// Not working well to add the activate step for all skills at this point
-		// // Add step
-		// fightData.steps.push(activate_step);
-
 		// Consume energy
 		setEnergy(fighter, fighter.energy - event.energy);
 	} else {
@@ -1710,8 +1706,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (hpDelta < 0) hpDelta = 0;
 
-				// Less chance to heal if lost HP is less than 20. Sure to heal if lost HP is 20+
-				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
+				// Less chance to heal if lost HP is less than 20. 50% to heal if lost HP is >=20
+				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta+1) !== 0) {
 					return cancel();
 				}
 
