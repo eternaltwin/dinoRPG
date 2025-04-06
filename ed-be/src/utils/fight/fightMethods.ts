@@ -1758,7 +1758,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					{ hp: 3, odds: 3 }
 				];
 				const total = data.reduce((acc, item) => acc + item.odds, 0);
-				const item = weightedRandom(data, total); // { id: X, odds: Y }
+				const item = weightedRandom(data, total);
 				heal(fightData, fighter, 1 + item.hp, undefined, LifeEffect.Normal, true);
 				break;
 			}
@@ -1789,6 +1789,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 						itemId: Item.ANTICHROMATIC
 					});
 					break;
+				}
+
+				// Don't apply if the fighter has already one element
+				if (fighter.elements.length === 1) {
+					cancel();
 				}
 
 				// Get dinoz best element
