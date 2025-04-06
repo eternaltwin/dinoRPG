@@ -1819,7 +1819,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Cancel if speed is already x2
-				if (fighter.stats.speed.global <= 0.5) {
+				if (fighter.stats.speed.global < 0.51) {
 					return cancel();
 				}
 
