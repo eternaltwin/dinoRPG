@@ -1836,9 +1836,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					return cancel();
 				}
 
-				// Cancel if petrifed or stunned
+				// Nothing happens if petrifed or stunned
 				if (hasStatus(fighter, Status.PETRIFIED) || hasStatus(fighter, Status.STUNNED)) {
-					return cancel();
+					break;
 				}
 
 				// Get random opponent attacker
@@ -1858,7 +1858,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					tid: opponentDefender.id
 				});
 
-				// Attack defender
+				// Trigger a normal close combat attack but that's not an assault
 				attackTarget(fightData, opponentAttacker, opponentDefender, false);
 
 				// Check if fighter is not dead
