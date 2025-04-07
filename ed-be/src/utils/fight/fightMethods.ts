@@ -2345,7 +2345,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: str
 			break;
 		}
 		case Skill.HYPNOSE: {
-			// TODO: using hypnose on an hypnotized target cancels it
 			// Get opponents
 			const opponents = getOpponents(fightData, fighter);
 
@@ -2367,31 +2366,32 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: str
 				opponent.items.some(item => item.itemId === Item.CUZCUSSIAN_MASK)
 			);
 
-			if (opponentWithMask) {
-				// Add item use step
+			if (opponent.hypnotized) {
+				// Cancel hypnose if target is already hypnotized
+				// Add step for fx
+				(activate_step as SkillActivateStep).targets.push({ tid: opponent.id });
+				fightData.steps.push(activate_step);
+
+				opponent.attacker = !opponent.attacker;
+				opponent.hypnotized = undefined;
+			}
+			else if (opponentWithMask) {
+				// Just activate the mask and nothing happens
 				fightData.steps.push({
 					action: 'itemUse',
 					fighter: stepFighter(opponentWithMask),
 					itemId: Item.CUZCUSSIAN_MASK
 				});
-
-				// Add hypnotize step
-				fightData.steps.push({
-					action: 'endHypnosis',
-					fighter: stepFighter(opponent)
-				});
 			} else {
-				// Hypnotized for 3 turns
-				opponent.hypnotized = 4;
+				// Hypnotized for 4 cycles
+				opponent.hypnotized = 4 * CYCLE;
 
 				// Change team
 				opponent.attacker = !opponent.attacker;
 
-				// Add hypnotize step
-				fightData.steps.push({
-					action: 'hypnotize',
-					fighter: stepFighter(opponent)
-				});
+				// Add step for fx
+				(activate_step as SkillActivateStep).targets.push({ tid: opponent.id });
+				fightData.steps.push(activate_step);
 			}
 			fighter.hasUsedHypnose = true;
 
@@ -2820,7 +2820,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: str
 				// Add hypnotize step
 				fightData.steps.push({
 					action: 'hypnotize',
-					fighter: stepFighter(monster)
+					fighter: stepFighter(monster),
+					target: stepFighter(monster)
 				});
 			}
 			break;
@@ -4883,27 +4884,6 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 	}
 
-	// TODO handle hypnosis as a status for easier handling with the cycles.
-	// Hypnosis
-	if (attacker.hypnotized) {
-		// Decrease turns left
-		attacker.hypnotized--;
-
-		// Remove hypnotize if no more turns left
-		// TODO: implement the return either via move & flip or endHypnosis
-		if (attacker.hypnotized <= 0) {
-			// Change team
-			attacker.attacker = !attacker.attacker;
-			attacker.hypnotized = undefined;
-
-			// Add hypnotize step
-			fightData.steps.push({
-				action: 'endHypnosis',
-				fighter: stepFighter(attacker)
-			});
-		}
-	}
-
 	// Curse locker
 	if (attacker.locked) {
 		// Decrease turns left
@@ -4921,9 +4901,9 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	// Calculate the elapsed time
 	let deltaTime = attacker.time - fightData.time;
 
-
 	if (deltaTime > 0) {
-		const isStatusTurn = (fightData.nextStatusTrigger < deltaTime);
+		const isStatusTurn = (fightData.nextStatusTrigger < deltaTime); // && fightData.nextStatusTrigger <= fightData.nextCycleTrigger);
+		// const isCycleTurn = (fightData.nextCycleTrigger < deltaTime && fightData.nextCycleTrigger <= fightData.nextStatusTrigger);
 
 		// If a status triggered before the turn of the current fighter, update the delta and handle that first.
 		if (isStatusTurn) {
@@ -4964,11 +4944,35 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 			}
 		}
 
-		// TODO 2nd - Handle environment timeout
+		// 2rd - Handle special time based effects (environment, hypnosis, locked)
+		// TODO envionrment
 
-		// TODO 3rd - Handle on new cycle events (hypnosis & locke)
+		// Hypnosis
+		const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
+		hypnosedFighters.forEach(hypnoF => {
+			if (hypnoF.hypnotized) {
+				// Decrease time left
+				hypnoF.hypnotized -= deltaTime;
 
-		// 4th - Handle statuses of *all* fighters
+				// Remove hypnotize if no more time left
+				if (hypnoF.hypnotized <= 0) {
+					// Change team
+					hypnoF.attacker = !hypnoF.attacker;
+					hypnoF.hypnotized = undefined;
+
+					// Add hypnotize step
+					fightData.steps.push({
+						action: 'endHypnosis',
+						fighter: stepFighter(hypnoF),
+						ally: stepFighter(getAllies(fightData, attacker).filter(f => f.id != hypnoF.id)[0])
+					});
+				}
+			}
+		});
+
+		// TODO locked
+
+		// 3rd - Handle statuses of *all* fighters
 		updateAllStatus(fightData, deltaTime);
 
 		// Check for death in case some fighters succombed to statuses
@@ -4990,10 +4994,10 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 	}
 
-	// 5th - Active the active environment if it's its caster turn
+	// 4th - Active the active environment if it's its caster turn
 	// TODO
 
-	// 6th - If the last fighter that played is different than the current fighter, reset both combo counts
+	// 5th - If the last fighter that played is different than the current fighter, reset both combo counts
 	if (fightData.lastFighterId !== undefined && fightData.lastFighterId !== attacker.id) {
 		const lastFighter = fightData.fighters.find(f => f.id === fightData.lastFighterId);
 		if (lastFighter) {
@@ -5006,7 +5010,7 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	attacker.comboCounter++;
 
 	// Note: combo counter seems to work weirdly, or may be not
-	// 7th - Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
+	// 6th - Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
 		fightData.steps.push({
 			action: 'tired',

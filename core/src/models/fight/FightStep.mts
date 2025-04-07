@@ -180,11 +180,13 @@ export interface RemoveCostumeStep {
 export interface HypnotizeStep {
 	action: 'hypnotize';
 	fighter: StepFighter;
+	target: StepFighter;
 }
 
 export interface EndHypnosisStep {
 	action: 'endHypnosis';
 	fighter: StepFighter;
+	ally: StepFighter;
 }
 
 export interface GainEnergyStep {

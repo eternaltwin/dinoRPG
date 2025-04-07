@@ -3838,6 +3838,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 7,
 		probability: 5,
 		visualEffect: SkillVisualEffect.AURA,
+		visualEffectBis: SkillVisualEffect.HYPNOSE,
 		color: '0x0000FF',
 		fxType: AuraFxType.Light
 	},
@@ -4311,7 +4312,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 5,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFFFF00',
-		VisualEffectBis: SkillVisualEffect.SPEED,
+		visualEffectBis: SkillVisualEffect.SPEED,
 		fxType: AuraFxType.Line
 	},
 	[Skill.COQUE]: {

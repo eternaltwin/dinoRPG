@@ -250,6 +250,15 @@ export function transpileFight(
 			case 'disabledItems':
 				break;
 			case 'endHypnosis':
+				history.push({
+					action: DinoAction.GOTO,
+					fid: step.fighter.id,
+					tid: step.ally.id
+				});
+				history.push({
+					action: DinoAction.FLIP,
+					fid: step.fighter.id
+				});
 				break;
 			case 'expireEnvironment':
 				break;
@@ -267,6 +276,14 @@ export function transpileFight(
 				myFighter = undefined;
 				break;
 			case 'hypnotize':
+				history.push({
+					action: DinoAction.SKILL,
+					skill: SkillVisualEffect.HYPNOSE,
+					details: {
+						fid: step.fighter.id,
+						targets: [{ id: step.target.id }]
+					}
+				});
 				break;
 			case 'heal':
 				history.push({
@@ -489,10 +506,10 @@ export function transpileFight(
 						}
 					});
 					// Play a second effect if specified
-					if (skill?.VisualEffectBis) {
+					if (skill?.visualEffectBis) {
 						history.push({
 							action: DinoAction.SKILL,
-							skill: skill.VisualEffectBis,
+							skill: skill.visualEffectBis,
 							details: {
 								fid: step.fid,
 								targets: step.targets.map(t => {

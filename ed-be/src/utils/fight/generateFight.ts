@@ -42,6 +42,8 @@ export type DetailedFight = {
 	time: number;
 	// Time left until the next status activates (poison, dot, or end of a status)
 	nextStatusTrigger: number;
+	// Time left until the next cycle activates (hypnosis, locked)
+	nextCycleTrigger: number;
 	lastFighterId: number | undefined;
 	environment?: {
 		type: Skill;
@@ -117,6 +119,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		protectedFighters: [],
 		time: 0,
 		nextStatusTrigger: FIGHT_INFINITE,
+		nextCycleTrigger: FIGHT_INFINITE,
 		lastFighterId: undefined,
 		place: config.place,
 		stats: {
