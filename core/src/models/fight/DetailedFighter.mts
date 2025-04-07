@@ -6,6 +6,7 @@ import { ItemFiche } from '../item/ItemFiche.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
+import { FIGHT_INFINITE } from '../../utils/fightConstants.mjs';
 
 export enum Status {
 	// Bad
@@ -71,7 +72,7 @@ export enum StatusLength {
 	SHORT = 15,
 	MEDIUM = 30,
 	LONG = 80,
-	INFINITE = 1000000
+	INFINITE = FIGHT_INFINITE
 }
 
 export type FighterStatus = {

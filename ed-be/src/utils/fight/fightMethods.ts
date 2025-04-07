@@ -64,6 +64,7 @@ export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]
 	let fighters = [];
 
 	// Remove dead and escaped fighters
+	// TODO: try to use list of dead fighters instead
 	fighters = fightData.fighters.filter(f => f.hp > 0 && !f.escaped);
 
 	if (limitTypes?.length) {
@@ -77,6 +78,7 @@ export const getAllies = (fightData: DetailedFight, fighter: DetailedFighter, li
 	let allies = [];
 
 	// Remove dead and escaped fighters and other team
+	// TODO: try to use list of dead fighters instead
 	allies = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker === fighter.attacker);
 
 	if (limitTypes?.length) {
@@ -93,6 +95,7 @@ export const getOpponents = (fightData: DetailedFight, fighter: DetailedFighter,
 	let opponents = [];
 
 	// Remove dead and escaped fighters and same team
+	// TODO: try to use list of dead fighters instead
 	opponents = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker !== fighter.attacker);
 
 	if (limitTypes?.length) {
@@ -283,6 +286,11 @@ export const updateStat = (
 	value: number,
 	element?: ElementType
 ) => {
+	// If stats are not enabled, don't collect them.
+	if (!fightData.rules.enableStats) {
+		return;
+	}
+
 	// Determine which stat to pick from
 	const stats = fighter.attacker ? fightData.stats.attack : fightData.stats.defense;
 
@@ -2101,7 +2109,16 @@ export const addStatus = (
 	}
 
 	// Add status
-	fighter.status.push(createStatus(status, length ?? StatusLength.INFINITE));
+	let status_props = createStatus(status, length ?? StatusLength.INFINITE);
+
+	// Update the next trigger of status accordingly
+	if (status_props.cycle && fightData.nextStatusTrigger > CYCLE) {
+		fightData.nextStatusTrigger = CYCLE;
+	} else if (status_props.time < fightData.nextStatusTrigger) {
+		fightData.nextStatusTrigger = status_props.time;
+	}
+
+	fighter.status.push(status_props);
 
 	// Add status step
 	fightData.steps.push({
@@ -4507,6 +4524,107 @@ const checkAfterDefenseEffects = (
 	}
 };
 
+const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
+	// Reset nextStatusTrigger for proper update
+	fightData.nextStatusTrigger = FIGHT_INFINITE;
+
+	getFighters(fightData).forEach(fighter => {
+		fighter.status.forEach(status => {
+			// Remove delta to the time left to the status
+			status.time -= deltaTime;
+
+			// If the status is cycle-based then trigger it if a cycle has elapsed since the previous one.
+			// Then set next status trigger as the remainder of the status until a cycle passes.
+			if (status.cycle) {
+				status.timeSinceLastCycle += deltaTime;
+
+				// Execute the status if a cycle has elapsed
+				if (status.timeSinceLastCycle >= CYCLE) {
+					switch (status.type) {
+						case Status.POISONED: {
+							const poisonedBy = fighter.poisonedBy;
+
+							if (!poisonedBy) {
+								sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
+								throw new Error('Missing poisonedBy data');
+							}
+
+							// Get poisoner
+							const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
+
+							if (!poisoner) {
+								sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
+								throw new Error('Poisoner not found');
+							}
+
+							// Register the hp lost from poison
+							const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+
+							// Update stat
+							updateStat(fightData, poisoner, 'poison_damage', hp_lost);
+							break;
+						}
+						case Status.BURNED: {
+							// Check if fighter is burned
+							const burnedBy = fighter.burnedBy;
+
+							if (!burnedBy) {
+								sendJSONToDiscord('Error `Missing burn data` in `playFighterTurn`.', { fightData: fightData });
+								throw new Error('Missing burnedBy data');
+							}
+
+							// Get burner
+							const burner = fightData.fighters.find(f => f.id === burnedBy.id);
+
+							if (!burner) {
+								sendJSONToDiscord('Error `Burner not found` in `playFighterTurn`.', { fightData: fightData });
+								throw new Error('Burner not found');
+							}
+
+							// Register the hp lost from burn
+							const hp_lost = loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
+
+							// Update stat
+							updateStat(fightData, burner, 'burn_damage', hp_lost);
+							break;
+						}
+						case Status.HEALING: {
+							// Heal 1 HP
+							heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
+							break;
+						}
+						case Status.TORCHED: {
+							loseHp(fightData, fighter, 1, LifeEffect.Fire);
+							break;
+						}
+						default: {
+							break;
+						}
+					}
+
+					// Reset "time since last cycle"
+					status.timeSinceLastCycle = 0;
+				}
+
+				// If there is less than a cycle left until the next trigger, update the nextStatusTrigger if applicable.
+				const nextCycleTrigger = CYCLE - status.timeSinceLastCycle;
+				if (fightData.nextStatusTrigger > nextCycleTrigger) {
+					fightData.nextStatusTrigger = nextCycleTrigger;
+				}
+
+			}
+
+			if (status.time <= 0) {
+				// Cancel the status if finished
+				removeStatus(fightData, fighter, status.type);
+			} else if (fightData.nextStatusTrigger > status.time) {
+				// Or schedule its termination
+				fightData.nextStatusTrigger = status.time;
+			}
+		});
+	});
+}
+
 export const checkDeaths = (fightData: DetailedFight) => {
 	let attackersAlive = 0;
 	let defendersAlive = 0;
@@ -4719,10 +4837,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	// Calculate new attacker's time
-	let time = TIME_BASE * TIME_FACTOR * attacker.stats.speed.global * attacker.stats.speed[attacker.element];
-
-	// Round up time
-	time = Math.round(time);
+	let time = Math.round(TIME_BASE * TIME_FACTOR * attacker.stats.speed.global * attacker.stats.speed[attacker.element]);
 
 	// Minimum time increment of 1
 	if (time <= 0) {
@@ -4736,6 +4851,8 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	if (!hasStatus(attacker, Status.LOCKED)) {
 		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
 	}
+
+	// TODO any "onNextTurn" effets would go here
 };
 
 export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
@@ -4802,25 +4919,40 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	}
 
 	// Calculate the elapsed time
-	const deltaTime = attacker.time - fightData.time;
+	let deltaTime = attacker.time - fightData.time;
 
-	// Set the new current time to fighter's turn
-	fightData.time = attacker.time;
 
-	// Recover energy for all fighters except the current one
-	getFighters(fightData).forEach(f => {
-		if (f.id === attacker.id) return;
-		setEnergy(f, Math.round(f.energy + f.stats.special.energyRecovery * deltaTime * ENERGY_RECOVERY_BASE_FACTOR));
-	});
-
-	// Log a new turn
-	fightData.steps.push({
-		action: 'newTurn',
-		fighter: stepFighter(attacker),
-		delta: deltaTime
-	});
 	if (deltaTime > 0) {
-		// Handle timeout
+		const isStatusTurn = (fightData.nextStatusTrigger < deltaTime);
+
+		// If a status triggered before the turn of the current fighter, update the delta and handle that first.
+		if (isStatusTurn) {
+			deltaTime = fightData.nextStatusTrigger;
+			// Log a new status turn
+			fightData.steps.push({
+				action: 'statusTurn',
+				fighter: stepFighter(attacker),
+				delta: deltaTime
+			});
+		} else {
+			// Log a new turn
+			fightData.steps.push({
+				action: 'newTurn',
+				fighter: stepFighter(attacker),
+				delta: deltaTime
+			});
+		}
+
+		// Set the new current time to fighter's turn
+		fightData.time += deltaTime;
+
+		// Recover energy for all fighters except the current one
+		getFighters(fightData).forEach(f => {
+			if (f.id === attacker.id) return;
+			setEnergy(f, Math.round(f.energy + f.stats.special.energyRecovery * deltaTime * ENERGY_RECOVERY_BASE_FACTOR));
+		});
+
+		// 1st - Handle fight timeout
 		if (fightData.timeout !== undefined) {
 			// Decrement time
 			fightData.timeout -= deltaTime;
@@ -4832,99 +4964,36 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 			}
 		}
 
-		// Handle statuses
-		getFighters(fightData).forEach(fighter => {
-			fighter.status.forEach(status => {
-				status.time -= deltaTime;
+		// TODO 2nd - Handle environment timeout
 
-				if (status.cycle) {
-					status.timeSinceLastCycle += deltaTime;
+		// TODO 3rd - Handle on new cycle events (hypnosis & locke)
 
-					if (status.timeSinceLastCycle >= CYCLE) {
-						switch (status.type) {
-							case Status.POISONED: {
-								const poisonedBy = fighter.poisonedBy;
+		// 4th - Handle statuses of *all* fighters
+		updateAllStatus(fightData, deltaTime);
 
-								if (!poisonedBy) {
-									sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
-									throw new Error('Missing poisonedBy data');
-								}
+		// Check for death in case some fighters succombed to statuses
+		checkDeaths(fightData);
 
-								// Get poisoner
-								const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
+		// Return early if the attacker that was just picked died from a status
+		if (attacker.hp <= 0) {
+			return;
+		}
 
-								if (!poisoner) {
-									sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
-									throw new Error('Poisoner not found');
-								}
+		// Return if a winner has been determined
+		if (fightData.loser) {
+			return;
+		}
 
-								// Register the hp lost from poison
-								const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
-
-								// Update stat
-								updateStat(fightData, poisoner, 'poison_damage', hp_lost);
-								break;
-							}
-							case Status.BURNED: {
-								// Check if fighter is burned
-								const burnedBy = fighter.burnedBy;
-
-								if (!burnedBy) {
-									sendJSONToDiscord('Error `Missing burn data` in `playFighterTurn`.', { fightData: fightData });
-									throw new Error('Missing burnedBy data');
-								}
-
-								// Get burner
-								const burner = fightData.fighters.find(f => f.id === burnedBy.id);
-
-								if (!burner) {
-									sendJSONToDiscord('Error `Burner not found` in `playFighterTurn`.', { fightData: fightData });
-									throw new Error('Burner not found');
-								}
-
-								// Register the hp lost from burn
-								const hp_lost = loseHp(fightData, fighter, burnedBy.damage, LifeEffect.Fire);
-
-								// Update stat
-								updateStat(fightData, burner, 'burn_damage', hp_lost);
-								break;
-							}
-							case Status.HEALING: {
-								// Heal 1 HP
-								heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
-								break;
-							}
-							case Status.TORCHED: {
-								loseHp(fightData, fighter, 1, LifeEffect.Fire);
-								break;
-							}
-							default: {
-								break;
-							}
-						}
-						status.timeSinceLastCycle = 0;
-					}
-				}
-
-				if (status.time <= 0) {
-					removeStatus(fightData, fighter, status.type);
-				}
-			});
-		});
+		// If it was only a status specific turn, then return early.
+		if (isStatusTurn) {
+			return;
+		}
 	}
 
-	checkDeaths(fightData);
+	// 5th - Active the active environment if it's its caster turn
+	// TODO
 
-	// Abort if the attacker that was just picked died from a status
-	if (attacker.hp <= 0) {
-		return;
-	}
-
-	if (fightData.loser) {
-		return;
-	}
-
-	// If the last fighter that played is different than the current fighter, reset both combo counts
+	// 6th - If the last fighter that played is different than the current fighter, reset both combo counts
 	if (fightData.lastFighterId !== undefined && fightData.lastFighterId !== attacker.id) {
 		const lastFighter = fightData.fighters.find(f => f.id === fightData.lastFighterId);
 		if (lastFighter) {
@@ -4932,12 +5001,12 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 		attacker.comboCounter = 0;
 	}
-
+	
 	fightData.lastFighterId = attacker.id;
 	attacker.comboCounter++;
 
 	// Note: combo counter seems to work weirdly, or may be not
-	// Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
+	// 7th - Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
 	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
 		fightData.steps.push({
 			action: 'tired',
@@ -4946,6 +5015,8 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		endTurnChecks(fightData, attacker);
 		return;
 	}
+
+	// Finally, go on with the figher's turn
 
 	// Event activation
 	const possibleEvent = randomlyGetEvent(fightData, attacker);

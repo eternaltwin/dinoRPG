@@ -184,6 +184,10 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t)
 			});
+		case 'statusTurn':
+			return t(`fight.step.${fightStep.action}`, {
+				fighter: getFighterName(fightStep.fighter, t)
+			});
 		case 'tired':
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t)

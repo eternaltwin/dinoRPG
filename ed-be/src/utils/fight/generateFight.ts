@@ -12,7 +12,7 @@ import {
 } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { randomBetweenSeeded } from './randomBetween.js';
-import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
+import { FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -38,7 +38,10 @@ export type DetailedFight = {
 	fighters: DetailedFighter[];
 	protectedFighters: number[];
 	deads: number[];
+	// Moving time in the fight
 	time: number;
+	// Time left until the next status activates (poison, dot, or end of a status)
+	nextStatusTrigger: number;
 	lastFighterId: number | undefined;
 	environment?: {
 		type: Skill;
@@ -113,6 +116,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		},
 		protectedFighters: [],
 		time: 0,
+		nextStatusTrigger: FIGHT_INFINITE,
 		lastFighterId: undefined,
 		place: config.place,
 		stats: {
@@ -272,7 +276,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 
 		// Curse locker
-		if (fighter.items.some(item => item.itemId === Item.TEMPORAL_REDUCTION)) {
+		if (fighter.items.some(item => item.itemId === Item.CURSE_LOCKER)) {
 			const opponent = getLimitedRandomOpponent(fightData, fighter, ['dinoz']);
 
 			if (opponent) {
@@ -313,7 +317,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 					action: 'skillAnnounce',
 					fid: fighter.id,
 					skill: Skill.CLEPTOMANE
-					// targets: [{ tid: opponent.id }]
 				});
 
 				// Add disabled items step

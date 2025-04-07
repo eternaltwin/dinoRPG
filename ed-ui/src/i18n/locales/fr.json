@@ -4067,6 +4067,7 @@
 			"hypnotize": "**{fighter}** a changé de camp.",
 			"gainEnergy": "**{fighter}** regagne de l'énergie et a maintenant **{energy}** énergie.",
 			"newTurn": "C'est au tour de **{fighter}**.",
+			"statusTurn": "Vérication des statuts avant le tour de **{fighter}**",
 			"tired": "**{fighter}** est fatigué et passe son tour."
 		},
 		"event": {

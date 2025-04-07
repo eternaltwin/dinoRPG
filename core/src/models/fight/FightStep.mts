@@ -236,7 +236,14 @@ export interface NewTurnStep {
 	delta: number;
 }
 
-/// The fighter passes its turn due to exceeding combo or no energy.
+// Describe a new turn starte but it is only about checking on status
+export interface StatusTurnStep {
+	action: 'statusTurn';
+	fighter: StepFighter;
+	delta: number;
+}
+
+// The fighter passes its turn due to exceeding combo or no energy.
 export interface TiredStep {
 	action: 'tired';
 	fighter: StepFighter;
@@ -277,4 +284,5 @@ export type FightStep =
 	| CursedStep
 	| ReviveStep
 	| NewTurnStep
+	| StatusTurnStep
 	| TiredStep;

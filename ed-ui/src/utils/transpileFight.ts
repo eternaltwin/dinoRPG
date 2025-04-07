@@ -378,7 +378,7 @@ export function transpileFight(
 					});
 				}
 				break;
-			// TODO: more infrastructure needed to support this otherwise this errors because "fighters" is all fighters, even dead ones
+			case `statusTurn`:
 			case `newTurn`:
 				// Note the ID of the fighter playing a turn and reset the combo and counter stats
 				currentFighterId = step.fighter.id;
