@@ -459,19 +459,17 @@ export async function createFirstTournament(prisma: PismaClientLocal) {
 
 export async function getLevelLimits(races: RaceList[]) {
 	let maxLevel = 0;
-	for (const race of races) {
-		let currentLevel = 20;
-		while (currentLevel <= gameConfig.dinoz.maxLevel) {
-			const current = await prisma.dinoz.count({
-				where: {
-					AND: [{ raceId: race }, { level: { gte: currentLevel } }]
-				}
-			});
-			if (current >= 350 && maxLevel <= currentLevel) {
-				maxLevel = currentLevel;
+	let currentLevel = 20;
+	while (currentLevel <= gameConfig.dinoz.maxLevel) {
+		const current = await prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: currentLevel } }]
 			}
-			currentLevel += 5;
+		});
+		if (current >= 350 && maxLevel <= currentLevel) {
+			maxLevel = currentLevel;
 		}
+		currentLevel += 5;
 	}
 	return maxLevel;
 }

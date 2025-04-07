@@ -32,7 +32,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 4,
 		raceMinimum: 4,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.HIPPOCLAMP,
 			RaceList.PTEROZ,
@@ -53,7 +53,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 4,
 		raceMinimum: 3,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.WANWAN,
@@ -71,7 +71,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 2,
 		raceMinimum: 2,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.WANWAN,
@@ -108,7 +108,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 4,
 		raceMinimum: 4,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.PIGMOU,
@@ -139,7 +139,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 5,
 		raceMinimum: 5,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.PIGMOU,
@@ -170,7 +170,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 5,
 		raceMinimum: 5,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.WANWAN,
@@ -207,7 +207,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 6,
 		raceMinimum: 6,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.WANWAN,
@@ -244,7 +244,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 3,
 		raceMinimum: 3,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.PIGMOU,
 			RaceList.MOUEFFE,
@@ -264,7 +264,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 3,
 		raceMinimum: 3,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.SIRAIN,
 			RaceList.NUAGOZ,
@@ -282,7 +282,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 3,
 		raceMinimum: 3,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.PLANAILLE,
 			RaceList.NUAGOZ,
@@ -302,7 +302,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 3,
 		raceMinimum: 3,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.WANWAN,
 			RaceList.PLANAILLE,
@@ -322,7 +322,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 3,
 		raceMinimum: 2,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ,
 			RaceList.WANWAN,
@@ -375,7 +375,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 		teamSize: 4,
 		raceMinimum: 3,
 		poison: true,
-		levelLimit: 50,
+		//levelLimit: 50,
 		teamRace: [
 			RaceList.GORILLOZ_DEMON,
 			RaceList.WANWAN_DEMON,
