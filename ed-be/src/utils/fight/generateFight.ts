@@ -12,7 +12,7 @@ import {
 } from './fightMethods.js';
 import { getAssaultValue } from './getDamage.js';
 import { randomBetweenSeeded } from './randomBetween.js';
-import { FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
+import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -23,7 +23,7 @@ import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
-import { LifeEffect } from '@drpg/core/models/fight/transpiler';
+import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
 
 export type DetailedFight = {
@@ -289,18 +289,17 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 					itemId: Item.CURSE_LOCKER
 				});
 
-				// Find weakest assault element
-				const weakestElement = +[
-					ElementType.FIRE,
-					ElementType.WOOD,
-					ElementType.WATER,
-					ElementType.LIGHTNING,
-					ElementType.AIR
-				].sort((a, b) => getAssaultValue(opponent, a) - getAssaultValue(opponent, b))[0] as ElementType;
+				// Weakest element is the last in the array
+				opponent.element = opponent.elements[opponent.elements.length-1];
+				// Lock opponent for 4 cycles on that element
+				opponent.locked = 4 * CYCLE;
 
-				// Lock opponent for 3 turns
-				opponent.element = weakestElement;
-				opponent.locked = 4;
+				// Add fx for locked
+				fightData.steps.push({
+					action: 'notify',
+					fids: [opponent.id],
+					notification: NotificationList.MonoElt
+				});
 				addStatus(fightData, opponent, Status.LOCKED);
 			}
 		}

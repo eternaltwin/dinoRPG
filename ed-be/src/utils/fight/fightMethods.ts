@@ -344,14 +344,14 @@ export const updateStat = (
 
 	if (stat === 'el.defenses') {
 		if (!element) {
-			sendJSONToDiscord('Error `Element is required for attacks stat` in `updateStat`.', {
+			sendJSONToDiscord('Error `Element is required for defenses stat` in `updateStat`.', {
 				fightData: fightData,
 				fighter: fighter,
 				stat: stat,
 				value: value,
 				element: value
 			});
-			throw new Error('Element is required for attacks stat');
+			throw new Error('Element is required for defenses stat');
 		}
 
 		stats.elements[element].defenses += value;
@@ -1278,7 +1278,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
 
 				// Lock that opponent to a random element
-				opponent.element = opponent.elements[Math.round(fightData.rng() * opponent.elements.length)];
+				// Note: the MT code does not actually lock on a random element but just locks on the current one
+				// opponent.element = opponent.elements[Math.round(fightData.rng() * opponent.elements.length)];
+				fightData.steps.push({
+					action: 'notify',
+					fids: [opponent.id],
+					notification: NotificationList.MonoElt
+				});
 				addStatus(fightData, opponent, Status.LOCKED, StatusLength.MEDIUM);
 				break;
 			}
@@ -4884,20 +4890,6 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 	}
 
-	// Curse locker
-	if (attacker.locked) {
-		// Decrease turns left
-		attacker.locked--;
-
-		// Remove curse if no more turns left
-		if (attacker.locked <= 0) {
-			attacker.locked = undefined;
-
-			// Remove LOCKED
-			removeStatus(fightData, attacker, Status.LOCKED);
-		}
-	}
-
 	// Calculate the elapsed time
 	let deltaTime = attacker.time - fightData.time;
 
@@ -4970,7 +4962,20 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 			}
 		});
 
-		// TODO locked
+		// Curse locker
+		const lockedFighters = getFighters(fightData).filter(f => f.locked);
+		lockedFighters.forEach(lockedF => {
+			if (lockedF.locked) {
+				// Decrease time left
+				lockedF.locked -= deltaTime;
+
+				// Remove curse if no more turns left
+				if (lockedF.locked <= 0) {
+					lockedF.locked = undefined;
+					removeStatus(fightData, lockedF, Status.LOCKED);
+				}
+			}
+		});
 
 		// 3rd - Handle statuses of *all* fighters
 		updateAllStatus(fightData, deltaTime);

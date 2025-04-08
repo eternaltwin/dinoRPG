@@ -1086,7 +1086,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 6, // TODO double check
 		display: 'stero'
 	},
-	// Curse Locker: restricts a random enemy to using their weakest element for 3 turns
+	// Curse Locker: restricts a random enemy to using their weakest element for 4 cycles
 	[Item.CURSE_LOCKER]: {
 		itemId: 53,
 		name: 'curse_locker',
