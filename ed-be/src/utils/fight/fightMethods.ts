@@ -3945,9 +3945,6 @@ const attackTarget = (
 		};
 	}
 
-	// Store as previous target
-	attacker.previousTarget = target.id;
-
 	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn
 	// Add teammates if Item.FRIENDLY_WHISTLE
 	// const attackers = [attacker];

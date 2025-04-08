@@ -184,7 +184,7 @@ export interface DetailedFighter {
 	// Cursed
 	initiallyCursed: boolean;
 	permanentStatusGained: DinozStatusId[];
-	// Previous target
+	// Previous target - only used for concentration
 	previousTarget?: number;
 	// Caught by
 	catcher?: number;
