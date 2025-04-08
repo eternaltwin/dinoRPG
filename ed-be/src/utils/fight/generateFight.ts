@@ -49,6 +49,7 @@ export type DetailedFight = {
 		type: Skill;
 		caster: DetailedFighter;
 		turnsLeft: number;
+		timeout: number;
 	};
 	attackerData: {
 		hasCook: boolean;

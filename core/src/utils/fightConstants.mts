@@ -2,6 +2,8 @@ export const TIME_BASE = 10;
 export const TIME_FACTOR = 10;
 // Duration of a cycle
 export const CYCLE = 6 * TIME_FACTOR;
+// Environement timeout
+export const ENVIRONMENT_TIMEOUT = 10 * TIME_FACTOR;
 
 export const ENERGY_RECOVERY_BASE_FACTOR = 0.5;
 export const DEFAULT_MAX_ENERGY = 100;

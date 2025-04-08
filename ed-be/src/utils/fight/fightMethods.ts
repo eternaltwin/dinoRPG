@@ -33,6 +33,7 @@ import {
 	CYCLE,
 	DEFAULT_MAX_ENERGY,
 	ENERGY_RECOVERY_BASE_FACTOR,
+	ENVIRONMENT_TIMEOUT,
 	FIGHT_INFINITE,
 	MAXIMUM_COMBO_COUNT,
 	MAXIMUM_MAX_ENERGY,
@@ -981,12 +982,14 @@ const checkReinforcementBan = (fightData: DetailedFight, invocation: DetailedFig
 	invocation.escaped = true;
 };
 
+// TODO rework: avoid using statuses, add "executeEnvironment" method
 const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, environment: Skill) => {
 	// Set environment
 	fightData.environment = {
 		type: environment,
 		caster,
-		turnsLeft: 3
+		turnsLeft: 3,
+		timeout: ENVIRONMENT_TIMEOUT
 	};
 
 	// Add activate environment step
@@ -4860,42 +4863,20 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	}
 
 	// TODO any "onNextTurn" effets would go here
+	// Decrease turn left to environment if its caster just played
+	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
+		fightData.environment.turnsLeft--;
+	}
 };
 
 export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	const attacker = fightData.fighters[0];
 
-	// TODO: rework environment to use a timeout.
-	// TODO: turn counter is currently used to cancel the environment. But it is based on cycles I think. Double check.
-	// Environment
-	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
-		// Decrease turns left
-		fightData.environment.turnsLeft--;
-
-		// Remove environment if no more turns left
-		if (fightData.environment.turnsLeft <= 0) {
-			cancelEnvironment(fightData);
-		} else {
-			if (fightData.environment.type === Skill.FEU_DE_ST_ELME) {
-				// Take 5% HP for LIGHTNING_STRUCK fighters
-				getFighters(fightData).forEach(f => {
-					if (hasStatus(f, Status.LIGHTNING_STRUCK)) {
-						const damage = Math.round(f.hp * 0.05);
-
-						// Register the hit
-						loseHp(fightData, attacker, Math.ceil(attacker.hp * 0.05), LifeEffect.Skull);
-					}
-				});
-			}
-		}
-	}
-
 	// Calculate the elapsed time
 	let deltaTime = attacker.time - fightData.time;
 
 	if (deltaTime > 0) {
-		const isStatusTurn = (fightData.nextStatusTrigger < deltaTime); // && fightData.nextStatusTrigger <= fightData.nextCycleTrigger);
-		// const isCycleTurn = (fightData.nextCycleTrigger < deltaTime && fightData.nextCycleTrigger <= fightData.nextStatusTrigger);
+		const isStatusTurn = (fightData.nextStatusTrigger < deltaTime);
 
 		// If a status triggered before the turn of the current fighter, update the delta and handle that first.
 		if (isStatusTurn) {
@@ -4937,7 +4918,16 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 
 		// 2rd - Handle special time based effects (environment, hypnosis, locked)
-		// TODO envionrment
+		// Environment timeout
+		if (fightData.environment && attacker.id === fightData.environment.caster.id) {
+			// Decrease turns left
+			fightData.environment.timeout -= deltaTime;
+
+			// Cancel environment if no more time left
+			if (fightData.environment.timeout <= 0) {
+				cancelEnvironment(fightData);
+			}
+		}
 
 		// Hypnosis
 		const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
@@ -5000,7 +4990,27 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	}
 
 	// 4th - Active the active environment if it's its caster turn
-	// TODO
+	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
+		// Decrease turns left
+		fightData.environment.turnsLeft--;
+
+		// Execute/apply environment
+		// TODO check the others if they need to be re-applied
+		if (fightData.environment.type === Skill.FEU_DE_ST_ELME) {
+			// Take 5% HP for LIGHTNING_STRUCK fighters
+			getFighters(fightData).forEach(f => {
+				if (hasStatus(f, Status.LIGHTNING_STRUCK)) {
+					loseHp(fightData, attacker, Math.ceil(attacker.hp * 0.05), LifeEffect.Skull);
+				}
+			});
+		}
+
+		// Remove environment if no more turns left
+		if (fightData.environment.turnsLeft <= 0) {
+			cancelEnvironment(fightData);
+		}
+	}
+
 
 	// 5th - If the last fighter that played is different than the current fighter, reset both combo counts
 	if (fightData.lastFighterId !== undefined && fightData.lastFighterId !== attacker.id) {
