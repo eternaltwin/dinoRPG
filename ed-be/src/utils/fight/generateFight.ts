@@ -471,8 +471,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.MEDECINE)) {
-			// Heal 1-3HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 3), undefined, LifeEffect.Heal);
+			// Heal beteen 0 and 3HP
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 0, 3), undefined, LifeEffect.Heal);
 		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.BRANCARDIER)) {

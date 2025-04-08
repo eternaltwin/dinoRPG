@@ -1564,10 +1564,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.M_ELEMENTAL: {
 				// Lock into a random element
-				let randomElement = randomBetweenSeeded(fightData.rng, 1, 6) as ElementType;
+				let randomElement = randomBetweenSeeded(fightData.rng, 1, 5) as ElementType;
 
 				while (fighter.element === randomElement) {
-					randomElement = randomBetweenSeeded(fightData.rng, 1, 6) as ElementType;
+					randomElement = randomBetweenSeeded(fightData.rng, 1, 5) as ElementType;
 				}
 
 				fighter.element = randomElement;
@@ -1706,8 +1706,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (hpDelta < 0) hpDelta = 0;
 
-				// Less chance to heal if lost HP is less than 20. 50% to heal if lost HP is >=20
-				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta+1) !== 0) {
+				// Less chance to heal if lost HP is less than 20. Sure to heal if lost HP is 20+
+				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
 					return cancel();
 				}
 
@@ -3512,7 +3512,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: str
 			// Check if fighter is not dead
 			if (hit && hit.target && hit.hpLost > 0) {
 				const opponent = hit.target;
-				const goldStolen = (randomBetweenSeeded(fightData.rng, 0, 5) + 8) * 10;
+				const goldStolen = (randomBetweenSeeded(fightData.rng, 0, 4) + 8) * 10;
 				fighter.goldStolen = {
 					...fighter.goldStolen,
 					[opponent.id]: (fighter.goldStolen?.[opponent.id] ?? 0) + goldStolen
@@ -4301,8 +4301,8 @@ const checkDefensiveEffects = (
 	// M_ELEMENTAL
 	if (hasSkill(target, Skill.M_ELEMENTAL)) {
 		if (elements.find(e => e === target.element)) {
-			// Take 29 + 0-3 damage if the attack contains the element of the opposing fighter
-			const random = randomBetweenSeeded(fightData.rng, 0, 3);
+			// Take 29 + 0-2 damage if the attack contains the element of the opposing fighter
+			const random = randomBetweenSeeded(fightData.rng, 0, 2);
 
 			damage = 29 + random;
 		} else {
@@ -4483,15 +4483,19 @@ const checkAfterDefenseEffects = (
 		// 1/5 chance
 		randomBetweenSeeded(fightData.rng, 0, 4) === 0
 	) {
-		// TODO announce the skill
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.M_CONTAMINATION
+		});
 		poison(fightData, attacker, target, Skill.M_CONTAMINATION, StatusLength.SHORT);
 	}
 
 	// Repousse (garde végétox)
 
-	// Source de vie
+	// Source de vie TODO
 
-	// Vide énergétique
+	// Vide énergétique TODO
 
 	// Mur de boue ??
 
