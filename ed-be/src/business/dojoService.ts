@@ -43,9 +43,10 @@ import TournamentManager from '../utils/tournamentManager.js';
 import { prisma } from '../prisma.js';
 import { TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { Item } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { createNotification } from '../dao/notificationDao.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
+import { ItemType } from '@drpg/core/models/enums/ItemType';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
@@ -170,11 +171,11 @@ export async function fightFriend(req: Request) {
 
 	// Remove items from dinoz for the fight and set life to maxLife
 	rightTeam.map(d => {
-		d.items = [];
+		d.items = d.items.filter(i => Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL));
 		d.life = d.maxLife;
 	});
 	leftTeam.map(d => {
-		d.items = [];
+		d.items = d.items.filter(i => Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL));
 		d.life = d.maxLife;
 	});
 
@@ -232,7 +233,7 @@ export async function getAllArchivedFight(req: Request) {
  */
 function generateRandomChallenge(): Challenge {
 	// Get all challenge types from the enum
-	const challengeTypes = Object.values(ChallengeType); // .filter(value => typeof value === 'number'); // Filter out reverse mappings
+	const challengeTypes = Object.values(ChallengeType); // Filter out reverse mappings
 
 	// Select a random challenge type
 	const randomType = challengeTypes[Math.floor(Math.random() * challengeTypes.length)] as ChallengeType;
