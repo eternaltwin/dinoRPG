@@ -13,6 +13,7 @@ import {
 	cleanCurrentOpponentTeam,
 	createChallengeRequest,
 	createMyDojo,
+	createMyTeamDao,
 	getMyDojoDao,
 	getMyTeamDao,
 	giveReputation,
@@ -95,7 +96,7 @@ export async function createMyTeam(req: Request) {
 	}
 	await createOpponentTeam(team, myDojo);
 
-	return myDojo;
+	return await createMyTeamDao(teamIds, myDojo.id);
 }
 
 export async function getMyTeam(req: Request) {
