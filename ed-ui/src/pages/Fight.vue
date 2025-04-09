@@ -196,10 +196,10 @@ export default defineComponent({
 			structuredClone(toRaw(fighters)),
 			fightSteps,
 			this.$t,
+			fightResult.result,
 			fightResult.startText,
 			fightResult.dialog,
-			fightResult.endText,
-			fightResult.result
+			fightResult.endText
 		);
 		if (!nexFight) {
 			return;

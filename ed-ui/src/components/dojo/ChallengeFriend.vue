@@ -115,14 +115,7 @@ export default defineComponent({
 				console.log(fightSteps);
 
 				console.log(fighters);
-				const nexFight = transpileFight(
-					structuredClone(toRaw(fighters)),
-					fightSteps,
-					this.$t,
-					undefined,
-					undefined,
-					fightResult.result
-				);
+				const nexFight = transpileFight(structuredClone(toRaw(fighters)), fightSteps, this.$t, fightResult.result);
 				if (!nexFight) {
 					return;
 				}

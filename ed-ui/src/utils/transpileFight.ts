@@ -138,10 +138,10 @@ export function transpileFight(
 	fighters: Array<FighterRecap>,
 	fight: Array<FightStep>,
 	t: TFunction,
-	startText: FightText | undefined,
-	dialog: DialogText | undefined,
-	endText: FightText | undefined,
 	victory: boolean,
+	startText?: FightText,
+	dialog?: DialogText,
+	endText?: FightText,
 	dojo?: boolean
 ) {
 	const history: transpiled[] = [];

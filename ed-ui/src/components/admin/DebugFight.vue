@@ -52,9 +52,10 @@ export default defineComponent({
 					structuredClone(toRaw(fight.fighters)),
 					fight.steps,
 					this.$t,
-					undefined,
-					undefined,
 					fight.winner,
+					undefined,
+					undefined,
+					undefined,
 					true
 				);
 				if (!nexFight) {
