@@ -20,3 +20,4 @@ export * from './shaman.mjs';
 export * from './sofia.mjs';
 export * from './spelele.mjs';
 export * from './skully.mjs';
+export * from './baoBabe.mjs';

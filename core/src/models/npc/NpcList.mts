@@ -41,6 +41,7 @@ import { Scenario } from '../enums/Scenario.mjs';
 import { ALIEN } from './characters/alien.mjs';
 import { MOULDEUR, SKULLY } from './characters/skully.mjs';
 import { M_SKULLY } from './missions/skully.mjs';
+import { BAOBABE } from './characters/baoBabe.mjs';
 
 export const npcList: Record<string, Npc> = {
 	// CRIEUR: {
@@ -373,6 +374,16 @@ export const npcList: Record<string, Npc> = {
 		data: VENERABLE,
 		missions: undefined,
 		flashvars: undefined
+	},
+	MLEBAO: {
+		name: 'baobabe',
+		id: 28,
+		placeId: PlaceEnum.REPAIRE_DU_VENERABLE,
+		condition: {
+			[ConditionEnum.ACTIVE]: false
+		},
+		data: BAOBABE,
+		display: 'baobabe'
 	},
 	ALIEN: {
 		name: 'alien',
