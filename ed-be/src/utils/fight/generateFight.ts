@@ -10,7 +10,6 @@ import {
 	stepFighter,
 	updateStat
 } from './fightMethods.js';
-import { getAssaultValue } from './getDamage.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -291,7 +290,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				});
 
 				// Weakest element is the last in the array
-				opponent.element = opponent.elements[opponent.elements.length-1];
+				opponent.element = opponent.elements[opponent.elements.length - 1];
 				// Lock opponent for 4 cycles on that element
 				opponent.locked = 4 * CYCLE;
 
@@ -391,6 +390,11 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		applyStrategy(fightData, fighter);
 	});
+
+	// Hack to not play dinoz turn if there are no ennemies (swamp)
+	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
+		fightData.loser = 'defenders';
+	}
 
 	// Fight loop
 	while (!fightData.loser) {
