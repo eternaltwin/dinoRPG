@@ -134,7 +134,7 @@ import { goTo } from '../../utils/goTo.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { Tippy } from 'vue-tippy';
 import DZHelp from '../common/DZHelp.vue';
-import { MARKET_MIN_VALUE, MARKET_MAX_ITEMS } from '@drpg/core/constants';
+import { MARKET_MAX_ITEMS, MARKET_MIN_VALUE } from '@drpg/core/constants';
 import { OfferService } from '../../services/OfferService.js';
 import DZInput from '../common/DZInput.vue';
 import { formatText } from '../../utils/formatText.js';
@@ -299,7 +299,7 @@ export default defineComponent({
 			const ingredients = await IngredientsService.getAllIngredients();
 			this.ingredients = ingredients.map(i => {
 				return {
-					...ingredientList[i.name.toUpperCase()],
+					...ingredientList[i.ingredientId],
 					quantity: i.quantity
 				};
 			});
