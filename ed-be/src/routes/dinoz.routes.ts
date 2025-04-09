@@ -500,10 +500,8 @@ routes.post(`${commonPath}/manage`, [body('order').exists().isArray()], async (r
 	}
 
 	try {
-		await updateOrders(req);
-		return res.status(200).send({
-			message: 'Orders updated'
-		});
+		const response = await updateOrders(req);
+		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
 	}

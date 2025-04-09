@@ -664,7 +664,7 @@ export async function getDinozForSkillEffect(dinozId: number) {
 			nbrUpWood: true,
 			nbrUpWater: true,
 			nbrUpLightning: true,
-			nbrUpAir: true,
+			nbrUpAir: true
 		}
 	});
 
@@ -826,7 +826,7 @@ export async function getManageData(userID: string) {
 			display: true,
 			status: { select: { statusId: true } }
 		},
-		orderBy: [{ order: 'asc' }, { name: 'asc' }]
+		orderBy: [{ order: 'asc' }, { id: 'asc' }]
 	});
 
 	return dinozList;
@@ -852,6 +852,22 @@ export async function updateOrderData(playerId: string, dinozList: { id: number;
 		playerId,
 		dinozList.map(d => d.id)
 	);
+	return prisma.dinoz.findMany({
+		where: {
+			playerId,
+			OR: [
+				{ unavailableReason: null },
+				{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+			]
+		},
+		select: {
+			id: true,
+			order: true
+		},
+		orderBy: {
+			order: 'asc'
+		}
+	});
 }
 
 export async function getAvailableDinozToFollow(playerId: string, dinozId: number) {

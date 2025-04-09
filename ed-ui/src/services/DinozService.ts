@@ -112,7 +112,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	updateOrders(dinozIds: number[]): Promise<void> {
+	updateOrders(dinozIds: number[]): Promise<{ id: number; order: number }[]> {
 		return http()
 			.post('/dinoz/manage', { order: dinozIds })
 			.then(res => Promise.resolve(res.data))

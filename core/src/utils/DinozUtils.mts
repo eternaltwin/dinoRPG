@@ -1,5 +1,6 @@
 import {
 	Concentration,
+	type Dinoz,
 	DinozItem,
 	DinozMission,
 	DinozSkill,
@@ -8,8 +9,7 @@ import {
 	PlayerItem,
 	PlayerQuest,
 	PlayerReward,
-	Ranking,
-	type Dinoz
+	Ranking
 } from '@drpg/prisma';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';

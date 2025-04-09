@@ -1161,7 +1161,8 @@ export async function updateOrders(req: Request) {
 	}));
 
 	// Update orders
-	await updateOrderData(playerId, dinozList);
+	const newOrder = await updateOrderData(playerId, dinozList);
+	return newOrder
 }
 
 /**

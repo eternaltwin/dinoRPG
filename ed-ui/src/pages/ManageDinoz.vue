@@ -109,25 +109,14 @@ export default defineComponent({
 			}
 
 			try {
-				await DinozService.updateOrders(newList.map(d => d.id));
-
-				// Update list
+				const returnList = await DinozService.updateOrders(newList.map(d => d.id));
 				this.dinozList = newList;
 
-				// Update store
-				if (!this.dinozStore.getDinozList) {
-					this.$toast.open({
-						message: formatText(this.$t(`toast.noDinozList`)),
-						type: 'error'
-					});
-					return;
-				}
 				this.dinozStore.setDinozList(
-					this.dinozStore.getDinozList.map((d, i) => {
-						if (i === index) {
-							d.order = dinoz.order + direction;
-						} else if (i === index + direction) {
-							d.order = dinoz.order;
+					this.dinozStore.getDinozList.map(d => {
+						const currentDinoz = returnList.find(e => e.id === d.id);
+						if (currentDinoz) {
+							d.order = currentDinoz.order;
 						}
 						return d;
 					})
