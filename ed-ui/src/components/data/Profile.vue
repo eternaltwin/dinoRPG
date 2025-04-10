@@ -59,7 +59,7 @@
 				<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
 				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
 				<DZButton @click="option = true">{{ $t(`myAccount.editAccount`) }}</DZButton>
-				<DZButton v-if="hasPDA()">{{ $t(`myAccount.quest`) }}</DZButton>
+				<DZButton v-if="hasPMI()">{{ $t(`myAccount.quest`) }}</DZButton>
 				<DZButton @click="goLB()">{{ $t(`myAccount.labrute`) }}</DZButton>
 			</div>
 		</div>
@@ -158,8 +158,8 @@ export default defineComponent({
 			}
 			EventBus.emit('isLoading', true);
 		},
-		hasPDA(): boolean {
-			return this.accountData!.epicRewards.includes(Reward.PDA);
+		hasPMI(): boolean {
+			return this.accountData!.epicRewards.includes(Reward.PMI);
 		},
 		isMyAccount(): boolean {
 			return this.playerStore.getPlayerId === (this.$route.params.id as string);
@@ -207,14 +207,6 @@ export default defineComponent({
 			}
 		}
 	},
-	/*	watch: {
-		accountData: {
-			immediate: true,
-			handler() {
-				this.fetchPlayerPosition();
-			}
-		}
-	},*/
 	beforeRouteUpdate(to, from, next) {
 		this.fetchPlayerPosition();
 		next();
