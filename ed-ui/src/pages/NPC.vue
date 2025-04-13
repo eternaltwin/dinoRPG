@@ -75,7 +75,6 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
-				this.dinozStore.setNpc(this.dinozId, choice, this.npcSpeech.name);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -99,6 +98,7 @@ export default defineComponent({
 						case ServiceEnum.FIGHT:
 							try {
 								this.sessionStore.setFightResult(this.npcSpeech.fight);
+								this.sessionStore.fromFight = true;
 								this.$router.push({
 									name: 'Fight',
 									params: { dinozId: this.$route.params.id.toString() }
@@ -142,7 +142,6 @@ export default defineComponent({
 			try {
 				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName, step);
 
-				this.dinozStore.setNpc(this.dinozId, step, this.npcSpeech.name);
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -157,6 +156,15 @@ export default defineComponent({
 		} else {
 			this.swfName = this.npcName;
 		}
+	},
+	beforeRouteLeave(to, from, next) {
+		if (this.sessionStore.fromFight) {
+			// If ServiceEnum.FIGHT => keep dialog after fight
+			this.sessionStore.fromFight = false;
+		} else {
+			this.dinozStore.clearNpc(this.dinozId);
+		}
+		next();
 	},
 	watch: {
 		npcSpeech(newVal) {
