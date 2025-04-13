@@ -111,7 +111,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 			air: 1
 		},
 		price: 800,
-		swfLetter: '1',
+		swfLetter: '1A',
 		skillId: [61115] //CHARGE_PIGMOU
 	},
 	[RaceList.WINKS]: {
