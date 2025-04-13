@@ -96,6 +96,7 @@ export async function createMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.dinozTooLowLevel', authed));
 	}
 	await createOpponentTeam(team, myDojo);
+	await incrementDailyReset(myDojo.id);
 
 	return await createMyTeamDao(teamIds, myDojo.id);
 }

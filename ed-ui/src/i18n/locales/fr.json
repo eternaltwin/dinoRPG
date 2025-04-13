@@ -4417,7 +4417,7 @@
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
-		"dailyReset": "Vous avez vaincu {qty} vagues de 5 ennemis.&&A chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
+		"dailyReset": "Vouz êtes en êtes la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
 		"seeFight": "Voir le combat",
 		"deleteTeam": "Supprimer mon équipe",
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
