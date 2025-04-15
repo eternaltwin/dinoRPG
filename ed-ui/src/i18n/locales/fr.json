@@ -4400,6 +4400,7 @@
 	},
 	"dojo": {
 		"welcome": "Bienvenue dans votre Dojo",
+		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournois, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
 		"return": "Retour",
 		"accessTournament": "Accéder au tournoi",

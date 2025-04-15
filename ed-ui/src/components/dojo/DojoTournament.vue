@@ -12,10 +12,10 @@
 			<RouterLink :to="`/dojo/tournament/${tournamentId}/5`">
 				<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
 			</RouterLink>
-			<DZButton @click="viewAll()">Mark as read</DZButton>
+			<DZButton @click="viewAll()">{{ $t('dojo.markAsRead') }}</DZButton>
 		</div>
 		<div class="rounds">
-			<template v-for="(dinoz, count) in pool" :key="`${count}${activeGroup}`">
+			<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
 				<div class="dinoz lost" v-if="dinoz === undefined">
 					<span class="name"></span>
 				</div>
@@ -93,6 +93,7 @@ import DinozMini from '../dinoz/DinozMini.vue';
 import { DojoService } from '../../services/DojoService.js';
 import { DisplayedLeader, PublicTournament, TeamLeader, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { errorHandler } from '../../utils/index.js';
+
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export default defineComponent({
@@ -356,8 +357,6 @@ export default defineComponent({
 							}
 						}
 					});
-				console.log(this.pool);
-
 				this.displayFinal = false;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -366,6 +365,7 @@ export default defineComponent({
 		async viewAll() {
 			try {
 				await DojoService.viewAllFightFromPool(this.tournamentId, TournamentPhase.POOLS, this.activeGroup);
+				this.loadPage();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
