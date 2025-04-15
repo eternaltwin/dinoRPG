@@ -64,6 +64,7 @@ import DinozMini from '../dinoz/DinozMini.vue';
 import { DisplayedLeader, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { errorHandler } from '../../utils/index.js';
 import { FBService } from '../../services/FBTournamentService.js';
+
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 export default defineComponent({

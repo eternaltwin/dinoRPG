@@ -37,9 +37,9 @@
 		</div>
 	</div>
 	<TournamentDisplay
-		v-if="group && currentTournament && currentTournament.state === 'fights'"
+		v-if="groupProp !== undefined && currentTournament && currentTournament.state === 'fights'"
 		:tournamentId="currentTournament.id"
-		:activeGroup="+group"
+		:activeGroup="groupProp"
 	/>
 </template>
 
@@ -67,7 +67,8 @@ export default defineComponent({
 		return {
 			currentTournament: undefined as undefined | PublicFBTournament,
 			name: undefined as string | undefined,
-			dinoz: [] as FBParticipation[]
+			dinoz: [] as FBParticipation[],
+			groupProp: undefined as number | undefined
 		};
 	},
 	props: {
@@ -121,11 +122,17 @@ export default defineComponent({
 		if (this.currentTournament) {
 			await this.myParticipation();
 			if (this.currentTournament.state === 'fights') {
-				this.$router.push({
+				this.groupProp = +this.$route.query.group;
+				/*this.$router.push({
 					name: 'FBTournament',
 					query: { id: this.id, group: 0 }
-				});
+				});*/
 			}
+		}
+	},
+	watch: {
+		'$route.query.group': async function () {
+			this.groupProp = +this.$route.query.group;
 		}
 	}
 });
