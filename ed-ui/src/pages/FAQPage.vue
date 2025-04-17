@@ -176,6 +176,12 @@ export default defineComponent({
 			padding: 5px;
 			max-width: calc(100% - 52px);
 		}
+		:deep(strong) {
+			color: rgb(142, 62, 38);
+		}
+		:deep(i) {
+			color: rgb(142, 62, 38);
+		}
 	}
 }
 </style>
