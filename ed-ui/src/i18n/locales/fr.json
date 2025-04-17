@@ -4338,7 +4338,8 @@
 		},
 		"historyView": {
 			"lastOffers": "Voici les dernières ventes qui ont été effectuées par les joueurs :",
-			"yourBids": "Vos mises"
+			"yourOwnOffers": "Vos mises",
+			"yourOwnBids": "Vos achats"
 		}
 	},
 	"hud": {

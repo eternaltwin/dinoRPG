@@ -6,7 +6,8 @@
 			<option value="all">{{ $t('market.all') }}</option>
 			<option value="dinoz">{{ $t('market.dinoz') }}</option>
 			<option value="items">{{ $t('market.items') }}</option>
-			<option value="own">{{ $t('market.historyView.yourBids') }}</option>
+			<option value="own">{{ $t('market.historyView.yourOwnOffers') }}</option>
+			<option value="bids">{{ $t('market.historyView.yourOwnBids') }}</option>
 		</select>
 	</div>
 	<DZTable>
@@ -40,6 +41,7 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import OfferLine from './OfferLine.vue';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'OfferHistory',
@@ -54,7 +56,8 @@ export default defineComponent({
 			currentPage: 1,
 			offersPerPage: 10,
 			totalOffer: 0,
-			totalPages: 0
+			totalPages: 0,
+			playerStore: playerStore()
 		};
 	},
 	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
@@ -75,7 +78,14 @@ export default defineComponent({
 		async fetchOffers() {
 			// Fetch data
 			try {
-				const { offers, total } = await OfferService.getList(this.filter, null, null, true, this.currentPage);
+				const userId = this.playerStore.playerId;
+				const { offers, total } = await OfferService.getList(
+					this.filter,
+					this.filter === 'own' ? userId : null,
+					this.filter === 'bids' ? userId : null,
+					true,
+					this.currentPage
+				);
 
 				this.offers = this.formatOffers(offers);
 				this.totalOffer = total;
