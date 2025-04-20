@@ -29,6 +29,15 @@
 					</strong>
 				</a>
 			</li>
+			<li @click="showTable(4)">
+				<a>
+					<small>{{ $t('roadmap.small') }}</small>
+					<strong>
+						<img :src="getImgURL('icons', 'r_world')" alt="world" />
+						<span>{{ $t('roadmap.strong.title4') }}</span>
+					</strong>
+				</a>
+			</li>
 		</ul>
 		<table class="futur" :style="{ display: showFuturTable ? 'table' : 'none' }">
 			<tbody>
@@ -87,8 +96,10 @@ export default defineComponent({
 				case 1:
 					this.futurInfoList = [
 						{ imageUrl: { path: 'achievements', name: 'moves' }, text: this.$t('roadmap.futureInfo1.text1') },
-						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('roadmap.futureInfo1.text2') },
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('roadmap.futureInfo1.text3') }
+						{ imageUrl: { path: 'icons', name: 'small_mode' }, text: this.$t('roadmap.futureInfo1.text2') },
+						{ imageUrl: { path: 'icons', name: 'small_reput' }, text: this.$t('roadmap.futureInfo1.text3') },
+						{ imageUrl: { path: 'icons', name: 'small_dojo' }, text: this.$t('roadmap.futureInfo1.text4') },
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('roadmap.futureInfo1.text5') }
 					];
 					break;
 				case 2:
@@ -99,7 +110,12 @@ export default defineComponent({
 					break;
 				case 3:
 					this.futurInfoList = [
-						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('roadmap.futureInfo3.text1') }
+						{ imageUrl: { path: 'achievements', name: 'moves' }, text: this.$t('roadmap.futureInfo3.text1') }
+					];
+					break;
+				case 4:
+					this.futurInfoList = [
+						{ imageUrl: { path: 'icons', name: 'small_missAct' }, text: this.$t('roadmap.futureInfo4.text1') }
 					];
 					break;
 				default:
@@ -115,6 +131,7 @@ export default defineComponent({
 	bottom: 0px;
 	margin-top: 50px;
 	max-width: 520px;
+	align-self: center;
 	& h3 {
 		color: #9a4029;
 		font-variant: small-caps;
@@ -128,7 +145,7 @@ export default defineComponent({
 		height: 74px;
 		background-image: url('../../assets/background/underDevTimeline.webp');
 		background-repeat: no-repeat;
-		padding-left: 108px;
+		padding-left: 2px;
 		& li {
 			float: left;
 			position: relative;
@@ -183,10 +200,14 @@ export default defineComponent({
 					height: 29px;
 					.futurTitle {
 						text-transform: uppercase;
-						font-size: 12px;
+						font-size: 13px;
 						color: #ffee92;
 						text-align: center;
+						font-weight: bold;
 						margin-top: -4px;
+						& span {
+							margin-left: 5px;
+						}
 					}
 				}
 				.futurDesc {
@@ -237,9 +258,52 @@ export default defineComponent({
 	.disclaimer {
 		font-size: 10px;
 		font-style: italic;
-		color: #bc683c;
 		margin: auto;
 		padding: 5px;
+	}
+}
+@media screen and (max-width: 560px) {
+	.roadmap {
+		max-width: 90%;
+		.timeline {
+			background-image: none !important;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+			border: 1px solid #67220d;
+			padding: 0;
+			height: auto;
+		}
+		.futur {
+			border: 1px solid #67220d;
+			width: 100%;
+			.futurHeader {
+				background-image: none !important;
+				.futurTitle {
+					color: #67220d !important;
+				}
+			}
+			.futurDesc {
+				background-image: none !important;
+				.futurInfo {
+					& ul {
+						display: flex !important;
+						flex-direction: column;
+						gap: 5px;
+						justify-content: center !important;
+						margin-left: 0 !important;
+						& li {
+							margin-left: 0 !important;
+							margin-right: 0 !important;
+							text-align: center;
+						}
+					}
+				}
+			}
+			.futurFooter {
+				background-image: none !important;
+			}
+		}
 	}
 }
 </style>
