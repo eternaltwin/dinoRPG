@@ -97,9 +97,7 @@ export const discoverBox = (
 				ingredientFiche => ingredientFiche.ingredientId === ingredientId
 			);
 			if (ingredient) {
-				const gridIngredient = gridInformation.items.filter(ing =>
-					ing.ingredientId.includes(ingredient.ingredientId)
-				);
+				const gridIngredient = gridInformation.items.filter(ing => ing.ingredientId.includes(ingredient.ingredientId));
 				if (gridIngredient.length < 1) throw new Error('Ingredient not found in gridInformation.items');
 				for (const possibleGater of gridIngredient) {
 					if (checkCondition(possibleGater.condition, player, player.dinoz[0].id)) {

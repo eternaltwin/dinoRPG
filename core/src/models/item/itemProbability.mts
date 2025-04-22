@@ -226,16 +226,6 @@ export const boxProbabilities: BoxOpening[] = [
 				odds: 1
 			},
 			{
-				item: itemList[Item.PTEROZ_EGG_RARE],
-				quantity: 1,
-				odds: 1
-			},
-			{
-				item: itemList[Item.HIPPOCLAMP_EGG_RARE],
-				quantity: 1,
-				odds: 1
-			},
-			{
 				item: itemList[Item.FEROSS_EGG],
 				quantity: 1,
 				odds: 1
@@ -337,16 +327,6 @@ export const boxProbabilities: BoxOpening[] = [
 			},
 			{
 				item: itemList[Item.ROCKY_EGG_RARE],
-				quantity: 1,
-				odds: 1
-			},
-			{
-				item: itemList[Item.PTEROZ_EGG_RARE],
-				quantity: 1,
-				odds: 1
-			},
-			{
-				item: itemList[Item.HIPPOCLAMP_EGG_RARE],
 				quantity: 1,
 				odds: 1
 			},
