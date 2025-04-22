@@ -122,7 +122,7 @@ export default defineComponent({
 		if (this.currentTournament) {
 			await this.myParticipation();
 			if (this.currentTournament.state === 'fights') {
-				this.groupProp = +this.$route.query.group;
+				this.groupProp = this.$route.query.group ? +this.$route.query.group : 0;
 				/*this.$router.push({
 					name: 'FBTournament',
 					query: { id: this.id, group: 0 }
@@ -132,7 +132,7 @@ export default defineComponent({
 	},
 	watch: {
 		'$route.query.group': async function () {
-			this.groupProp = +this.$route.query.group;
+			this.groupProp = this.$route.query.group ? +this.$route.query.group : 0;
 		}
 	}
 });

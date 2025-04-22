@@ -65,8 +65,7 @@ export default defineComponent({
 	},
 	mounted(): void {
 		setTimeout(() => {
-			this.isCodePresent = this.$route.query.code !== undefined;
-			if (this.isCodePresent) {
+			if (this.$route.query.code !== undefined) {
 				this.authenticateToET();
 			}
 		}, 1);
