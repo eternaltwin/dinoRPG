@@ -404,7 +404,7 @@ async function useSpecialItem(
 	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		player:
-			| (Pick<Player, 'id' | 'cooker' | 'lang'> & {
+			| (Pick<Player, 'id' | 'cooker' | 'lang' | 'shopKeeper'> & {
 					items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 			  })
 			| null;
@@ -430,8 +430,13 @@ async function useSpecialItem(
 			const healed = heal(dinoz, 15 * (dinoz.player.cooker ? 1.1 : 1));
 			await updateDinoz(dinoz.id, healed);
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
-			if (!pamp) await insertItem(dinoz.player.id, { itemId: itemList[Item.PAMPLEBOUM_PIT].itemId, quantity: 1 });
-			else if (pamp.quantity < itemList[Item.PAMPLEBOUM_PIT].maxQuantity) {
+			if (!pamp) await insertItem(dinoz.player.id, { itemId: Item.PAMPLEBOUM_PIT, quantity: 1 });
+			else if (
+				pamp.quantity <
+				(dinoz.player.shopKeeper
+					? Math.round(1.5 * itemList[Item.PAMPLEBOUM_PIT].maxQuantity)
+					: itemList[Item.PAMPLEBOUM_PIT].maxQuantity)
+			) {
 				await increaseItemQuantity(dinoz.player.id, itemList[Item.PAMPLEBOUM_PIT].itemId, 1);
 			}
 
