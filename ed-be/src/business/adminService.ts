@@ -168,7 +168,7 @@ export async function editDinoz(req: Request) {
 		const dinozId = +req.params.id;
 		const dinoz = await getDinozForSkillEffect(dinozId);
 
-		if(!dinoz) {
+		if (!dinoz) {
 			throw new ExpectedError(`Dinoz ${dinozId} does not exist`);
 		}
 

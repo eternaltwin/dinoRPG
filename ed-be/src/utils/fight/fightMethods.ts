@@ -2383,8 +2383,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: str
 
 				opponent.attacker = !opponent.attacker;
 				opponent.hypnotized = undefined;
-			}
-			else if (opponentWithMask) {
+			} else if (opponentWithMask) {
 				// Just activate the mask and nothing happens
 				fightData.steps.push({
 					action: 'itemUse',
@@ -4621,7 +4620,6 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				if (fightData.nextStatusTrigger > nextCycleTrigger) {
 					fightData.nextStatusTrigger = nextCycleTrigger;
 				}
-
 			}
 
 			if (status.time <= 0) {
@@ -4633,7 +4631,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 			}
 		});
 	});
-}
+};
 
 export const checkDeaths = (fightData: DetailedFight) => {
 	let attackersAlive = 0;
@@ -4876,7 +4874,7 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	let deltaTime = attacker.time - fightData.time;
 
 	if (deltaTime > 0) {
-		const isStatusTurn = (fightData.nextStatusTrigger < deltaTime);
+		const isStatusTurn = fightData.nextStatusTrigger < deltaTime;
 
 		// If a status triggered before the turn of the current fighter, update the delta and handle that first.
 		if (isStatusTurn) {
@@ -5011,7 +5009,6 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 	}
 
-
 	// 5th - If the last fighter that played is different than the current fighter, reset both combo counts
 	if (fightData.lastFighterId !== undefined && fightData.lastFighterId !== attacker.id) {
 		const lastFighter = fightData.fighters.find(f => f.id === fightData.lastFighterId);
@@ -5020,7 +5017,7 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 		}
 		attacker.comboCounter = 0;
 	}
-	
+
 	fightData.lastFighterId = attacker.id;
 	attacker.comboCounter++;
 

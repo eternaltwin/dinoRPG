@@ -1162,7 +1162,7 @@ export async function updateOrders(req: Request) {
 
 	// Update orders
 	const newOrder = await updateOrderData(playerId, dinozList);
-	return newOrder
+	return newOrder;
 }
 
 /**

@@ -549,7 +549,7 @@ export async function applySkillEffect(
 	if (skill.effects) {
 		const updates = applySkillToDinoz(skill.effects, dinoz);
 		if (event) {
-			await updateEventDinoz(dinoz.id, updates)
+			await updateEventDinoz(dinoz.id, updates);
 		} else {
 			await updateDinoz(dinoz.id, updates);
 		}

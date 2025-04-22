@@ -125,21 +125,6 @@ export async function getMyTeam(req: Request) {
 			}),
 			myDojo
 		);
-		if (myDojo.DojoOpponents.length > 0) {
-			await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
-			await createNotification(
-				authed.id,
-				JSON.stringify([
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TREASURE_COUPON,
-						quantity: 1
-					}
-				]),
-				NotificationSeverity.reward
-			);
-			await incrementDailyReset(myDojo.id);
-		}
 	}
 
 	return myDojo;
@@ -172,11 +157,15 @@ export async function fightFriend(req: Request) {
 
 	// Remove items from dinoz for the fight and set life to maxLife
 	rightTeam.map(d => {
-		d.items = d.items.filter(i => Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL));
+		d.items = d.items.filter(i =>
+			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
+		);
 		d.life = d.maxLife;
 	});
 	leftTeam.map(d => {
-		d.items = d.items.filter(i => Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL));
+		d.items = d.items.filter(i =>
+			Object.values(itemList).find(item => item.itemId === i.itemId && item.itemType === ItemType.MAGICAL)
+		);
 		d.life = d.maxLife;
 	});
 
@@ -310,7 +299,25 @@ export async function fightChallenge(req: Request) {
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;
 
+
+
 	const promises = [];
+
+	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length === 4) {
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1))
+		promises.push(createNotification(
+			authed.id,
+			JSON.stringify([
+				{
+					rewardType: RewardEnum.ITEM,
+					value: Item.TREASURE_COUPON,
+					quantity: 1
+				}
+			]),
+			NotificationSeverity.reward
+		))
+		promises.push(incrementDailyReset(player.Dojo.id))
+	}
 	promises.push(removeMoney(authed.id, 200));
 	promises.push(increaseCashPrice(tournament.id, 200));
 	promises.push(setFightedTeam(myDinozId, player.Dojo.id));

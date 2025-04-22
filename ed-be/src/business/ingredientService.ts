@@ -15,9 +15,7 @@ export async function getAllIngredientsData(req: Request) {
 	const allIngredientsData = await getAllIngredientsDataRequest(authed.id);
 
 	const ingredients = allIngredientsData.map(ingr => {
-		const ingredientFound = Object.values(ingredientList).find(
-			value => value.ingredientId === ingr.ingredientId
-		);
+		const ingredientFound = Object.values(ingredientList).find(value => value.ingredientId === ingr.ingredientId);
 
 		if (!ingredientFound) throw new ExpectedError('Ingredient not found');
 

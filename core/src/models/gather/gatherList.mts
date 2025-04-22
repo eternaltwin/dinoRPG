@@ -484,11 +484,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [
-					Ingredient.VIEIL_ANNEAU_PRECIEUX,
-					Ingredient.CALICE_CISELE,
-					Ingredient.COLLIER_KARAT
-				],
+				ingredientId: [Ingredient.VIEIL_ANNEAU_PRECIEUX, Ingredient.CALICE_CISELE, Ingredient.COLLIER_KARAT],
 				startQuantity: 2,
 				condition: {
 					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 5 }]
@@ -496,10 +492,7 @@ export const gatherList: Record<GatherType, GatherData> = {
 			},
 			{
 				type: 'ingredient',
-				ingredientId: [
-					Ingredient.BROCHE_EN_PARFAIT_ETAT,
-					Ingredient.SUPERBE_COURONNE_ROYALE
-				],
+				ingredientId: [Ingredient.BROCHE_EN_PARFAIT_ETAT, Ingredient.SUPERBE_COURONNE_ROYALE],
 				startQuantity: 1,
 				condition: {
 					[Operator.AND]: [{ [ConditionEnum.SKILL]: skillList[Skill.ARCHEOLOGUE].id }, { [ConditionEnum.RANDOM]: 15 }]
