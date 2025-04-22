@@ -47,7 +47,18 @@
 							<template #content>
 								<h1 v-html="formatContent($t(`skill.name.${skillList[skill.id].name}`))" />
 								<p v-html="formatContent($t(`skill.description.${skillList[skill.id].name}`))" />
-								<h3 v-html="formatContent($t(`skill.energy.${skill.energy}`))" />
+								<hr class="demarcation" />
+								<div class="hidden-stats">
+									<p v-html="formatContent($t(`skill.energy`, { energy: skill.energy }))" />
+									<p
+										v-if="skill.priority !== undefined && skill.priority !== null"
+										v-html="formatContent($t(`skill.priority`, { priority: skill.priority }))"
+									/>
+									<p
+										v-if="skill.probability !== undefined && skill.probability !== null"
+										v-html="formatContent($t(`skill.probability`, { probability: skill.probability }))"
+									/>
+								</div>
 							</template>
 						</Tippy>
 					</td>
@@ -727,5 +738,18 @@ export default defineComponent({
 
 .ml-4 {
 	margin-left: 4px;
+}
+.demarcation {
+	border: 1px solid #fff;
+	margin-top: 7px;
+	margin-bottom: 7px;
+	width: 90%;
+}
+.hidden-stats {
+	display: flex;
+	flex-wrap: wrap;
+	& p {
+		font-size: 8.5pt !important;
+	}
 }
 </style>

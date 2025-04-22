@@ -1701,23 +1701,9 @@
 		}
 	},
 	"skill": {
-		"energy": {
-			"0": "**Consommation d'énergie :** aucune.",
-			"5": "**Consommation d'énergie :** faible.",
-			"10": "**Consommation d'énergie :** faible.",
-			"20": "**Consommation d'énergie :** normale.",
-			"25": "**Consommation d'énergie :** normale.",
-			"30": "**Consommation d'énergie :** normale.",
-			"35": "**Consommation d'énergie :** normale.",
-			"40": "**Consommation d'énergie :** normale.",
-			"45": "**Consommation d'énergie :** normale.",
-			"50": "**Consommation d'énergie :** forte.",
-			"55": "**Consommation d'énergie :** forte.",
-			"60": "**Consommation d'énergie :** forte.",
-			"65": "**Consommation d'énergie :** forte.",
-			"75": "**Consommation d'énergie :** très forte.",
-			"80": "**Consommation d'énergie :** très forte."
-		},
+		"energy": "Énergie : **{energy}**",
+		"probability": "Probabilité : **{probability}%**",
+		"priority": "Priorité : **{priority}**",
 		"name": {
 			"GriffesEnflammees": "Griffes Enflammées",
 			"Colere": "Colère",

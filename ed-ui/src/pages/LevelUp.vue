@@ -82,6 +82,44 @@
 								<p class="desc">
 									{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
 								</p>
+								<hr class="demarcation" />
+								<div class="hidden-stats">
+									<p
+										class="desc"
+										v-html="
+											formatContent(
+												$t(`skill.energy`, {
+													energy: skillList[skill.skillId].energy
+												})
+											)
+										"
+									/>
+									<p
+										class="desc"
+										v-if="skillList[skill.skillId].priority !== undefined && skillList[skill.skillId].priority !== null"
+										v-html="
+											formatContent(
+												$t(`skill.priority`, {
+													priority: skillList[skill.skillId].priority
+												})
+											)
+										"
+									/>
+									<p
+										class="desc"
+										v-if="
+											skillList[skill.skillId].probability !== undefined &&
+											skillList[skill.skillId].probability !== null
+										"
+										v-html="
+											formatContent(
+												$t(`skill.probability`, {
+													probability: skillList[skill.skillId].probability
+												})
+											)
+										"
+									/>
+								</div>
 							</td>
 							<Tippy theme="normal" tag="td" class="type">
 								{{ skill.type }}
@@ -410,6 +448,20 @@ export default defineComponent({
 	font-size: 10pt;
 	padding: 5px;
 }
+.demarcation {
+	border: 1px solid #bc683c;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: 92%;
+}
+.hidden-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 5px;
+	& p {
+		font-size: 8.5pt !important;
+	}
+}
 .desc {
 	font-size: 9pt;
 	line-height: 10pt;
@@ -417,6 +469,12 @@ export default defineComponent({
 	margin-top: -5px;
 	margin-bottom: 6px;
 	font-style: italic;
+}
+:deep(strong) {
+	color: #710;
+}
+:deep(.name:hover strong) {
+	color: #fff;
 }
 .elements {
 	display: flex;
