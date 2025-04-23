@@ -445,14 +445,23 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHARGE]: {
 		id: Skill.CHARGE,
 		name: 'Charge',
-		type: SkillType.P,
-		energy: Energy.NONE,
+		type: SkillType.A,
+		energy: Energy.E20,
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [11103],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 2,
+		probability: 20,
+		visualEffect: SkillVisualEffect.CHARGE,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xff0000,
+			col2: 0x000000
+		}
+		
 	},
 	[Skill.SANG_CHAUD]: {
 		id: Skill.SANG_CHAUD,

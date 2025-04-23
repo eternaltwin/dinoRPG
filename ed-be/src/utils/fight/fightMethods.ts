@@ -2410,6 +2410,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.SOUFFLE_ARDENT:
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 5), skill.id, activate_step);
 			break;
+		case Skill.CHARGE:
+			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.FIRE];
+
+			// Attack opponent
+			launchAssault(fightData, fighter, true, Skill.CHARGE);
+			break;
 		case Skill.METEORES:
 			attackAllOpponents(
 				fightData,
