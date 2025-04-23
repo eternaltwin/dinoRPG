@@ -165,15 +165,15 @@ export const getSpecialStat = (
 		switch (status) {
 			case DinozStatusId.CUSCOUZ_MALEDICTION: {
 				if (stat === SpecialStat.ARMOR) {
-					value -= 3;
+					value *= 0.7;
 
 					details.push({
 						type: 'status',
 						name: DinozStatusId.CUSCOUZ_MALEDICTION.toString(),
-						percent: false,
-						multiplier: false,
+						percent: true,
+						multiplier: true,
 						elements: [],
-						value: -3
+						value: 0.7
 					});
 				}
 				break;
