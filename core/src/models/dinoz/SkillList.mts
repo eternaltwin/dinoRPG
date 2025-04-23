@@ -654,7 +654,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [11205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 10,
+			[Stat.FIRE_ELEMENT]: 1
+		}
 	},
 	[Skill.BOULE_DE_FEU]: {
 		id: Skill.BOULE_DE_FEU,
