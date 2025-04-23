@@ -535,7 +535,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.BRASERO],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		priority: 1,
+		priority: 3,
 		probability: 10,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFF0000',
