@@ -45,6 +45,7 @@ import {
 import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,
+	calculateArmor,
 	calculateDamage,
 	getAttackDefense,
 	getElementalAttack,
@@ -4030,8 +4031,11 @@ const attackTarget = (
 		// Note: this would prevent infinite counter too...
 		attacker.comboCounter++;
 
+		// Calculate armor
+		const armor = calculateArmor(attacker, target, power.map(p => p[0]), isAssault);
+
 		// Get damage
-		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, isAssault);
+		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, armor, isAssault);
 
 		// Apply defensive effects
 		damage = checkDefensiveEffects(

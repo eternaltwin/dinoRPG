@@ -18,6 +18,12 @@ export type SkillEffects = {
 	[Stat.COUNTER]?: ['x', number];
 	[Stat.INITIATIVE]?: number;
 	[Stat.ARMOR]?: ['x', number];
+	[Stat.IGNORE_ARMOR]?: number;
+	[Stat.FIRE_IGNORE_ARMOR]?: number;
+	[Stat.WOOD_IGNORE_ARMOR]?: number;
+	[Stat.WATER_IGNORE_ARMOR]?: number;
+	[Stat.LIGHTNING_IGNORE_ARMOR]?: number;
+	[Stat.AIR_IGNORE_ARMOR]?: number;
 	[Stat.EVASION]?: ['x', number];
 	[Stat.SUPER_EVASION]?: ['x', number];
 	[Stat.MULTIHIT]?: ['x', number];
