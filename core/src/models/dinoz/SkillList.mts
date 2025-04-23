@@ -522,6 +522,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.LIGHTNING_ASSAULT]: 2,
 			[Stat.WATER_ASSAULT]: 2,
 			[Stat.WOOD_ASSAULT]: 2
+		},
+		globalEffects: {
+			[Stat.FIRE_DEFENSE]: 1
 		}
 	},
 	[Skill.DETONATION]: {
