@@ -4800,7 +4800,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 15
+		probability: 15,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0x0000FF,
+			col2: 0x000000
+		}
 	},
 	[Skill.M_ELEMENTAL]: {
 		id: Skill.M_ELEMENTAL,
