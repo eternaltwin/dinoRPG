@@ -503,7 +503,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [11101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		globalEffects: {
+			[Stat.FIRE_DEFENSE]: 3
+		}
 	},
 	[Skill.ARTS_MARTIAUX]: {
 		id: Skill.ARTS_MARTIAUX,
