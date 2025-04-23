@@ -435,7 +435,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11101],
+		unlockedFrom: [Skill.GRIFFES_ENFLAMMEES],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
@@ -450,7 +450,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11103],
+		unlockedFrom: [Skill.FORCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
@@ -471,7 +471,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11102],
+		unlockedFrom: [Skill.COLERE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -486,7 +486,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11102],
+		unlockedFrom: [Skill.COLERE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -510,7 +510,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11101],
+		unlockedFrom: [Skill.GRIFFES_ENFLAMMEES],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
@@ -525,7 +525,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11103],
+		unlockedFrom: [Skill.FORCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {

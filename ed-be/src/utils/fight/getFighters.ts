@@ -150,6 +150,15 @@ export const initializeDinoz = (
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
 			},
+			ignore_armor: {
+				[ElementType.AIR]: 1,
+				[ElementType.FIRE]: 1,
+				[ElementType.LIGHTNING]: 1,
+				[ElementType.WATER]: 1,
+				[ElementType.WOOD]: 1,
+				[ElementType.VOID]: 1,
+				global: 1
+			},
 			speed: {
 				[ElementType.AIR]: 1,
 				[ElementType.FIRE]: 1,
@@ -291,6 +300,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
 				[SpecialStat.ACID_BLOOD_DAMAGE]: 0 // No acid blood for clones
 			},
+			ignore_armor: dinoz.stats.ignore_armor,
 			speed: dinoz.stats.speed
 		},
 		items: [], // No items for clones
@@ -467,6 +477,15 @@ export const initializeMonster = (
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
 			},
+			ignore_armor: {
+				[ElementType.AIR]: 1,
+				[ElementType.FIRE]: 1,
+				[ElementType.LIGHTNING]: 1,
+				[ElementType.WATER]: 1,
+				[ElementType.WOOD]: 1,
+				[ElementType.VOID]: 1,
+				global: 1
+			},
 			speed: {
 				[ElementType.AIR]: 1,
 				[ElementType.FIRE]: 1,
@@ -612,6 +631,26 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	const fighterHas = fighter.skills.reduce(
 		(acc, skill) => {
 			acc[skill.id as Skill] = true;
+
+			// Process armore ignore changes
+			if (skill.effects?.[Stat.IGNORE_ARMOR]) {
+				fighter.stats.ignore_armor.global *= skill.effects[Stat.IGNORE_ARMOR];
+			}
+			if (skill.effects?.[Stat.FIRE_IGNORE_ARMOR]) {
+				fighter.stats.ignore_armor[ElementType.FIRE] *= skill.effects[Stat.FIRE_IGNORE_ARMOR];
+			}
+			if (skill.effects?.[Stat.WOOD_IGNORE_ARMOR]) {
+				fighter.stats.ignore_armor[ElementType.WOOD] *= skill.effects[Stat.WOOD_IGNORE_ARMOR];
+			}
+			if (skill.effects?.[Stat.WATER_IGNORE_ARMOR]) {
+				fighter.stats.ignore_armor[ElementType.WATER] *= skill.effects[Stat.WATER_IGNORE_ARMOR];
+			}
+			if (skill.effects?.[Stat.LIGHTNING_IGNORE_ARMOR]) {
+				fighter.stats.ignore_armor[ElementType.LIGHTNING] *= skill.effects[Stat.LIGHTNING_IGNORE_ARMOR];
+			}
+			if (skill.effects?.[Stat.AIR_IGNORE_ARMOR]) {
+				fighter.stats.ignore_armor[ElementType.AIR]  *= skill.effects[Stat.AIR_IGNORE_ARMOR];
+			}
 
 			// Process speed changes
 			if (skill.effects?.[Stat.SPEED]) {

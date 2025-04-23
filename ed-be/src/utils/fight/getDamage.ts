@@ -138,6 +138,42 @@ export const getAttackDefense = (
 	};
 };
 
+
+
+// Determine armor factor for a given target
+export const calculateArmor = (
+	attacker: DetailedFighter,
+	target: DetailedFighter,
+	elements: ElementType[],
+	isCloseCombat: boolean
+) => {
+	// Apply target's armor to the result unless the attacker cancels it
+	if (attacker.cancelArmor) {
+		return 0;
+	} else {
+		// Transform to 0 to 1 value
+		let effective_armor = target.stats.special.armor - 1;
+
+		// Remove global armor ignore
+		effective_armor -= (attacker.stats.ignore_armor.global - 1);
+		// Remove asssault armor ignore
+		if (isCloseCombat) {
+			effective_armor -= (attacker.stats.ignore_armor.assault - 1);
+		}
+		// Remove elemental armor ignore for each element
+		elements.forEach(element => {
+			effective_armor -= (attacker.stats.ignore_armor[element] - 1);
+		});
+
+		// Minimum armor is 0
+		effective_armor = Math.max(effective_armor, 0);
+		// Max is 0.9
+		effective_armor = Math.min(effective_armor, 0.9);
+
+		return effective_armor;
+	}
+};
+
 // Applies final factors to the attack score:
 // - random bonus of up to 33%
 // - global factor
@@ -148,6 +184,7 @@ export const calculateDamage = (
 	target: DetailedFighter,
 	attack: number,
 	defense: number,
+	armor: number,
 	isCloseCombat: boolean
 ) => {
 	// Apply random factor
@@ -159,12 +196,8 @@ export const calculateDamage = (
 
 	let damage = attack - defense;
 
-	// Apply target's armor to the result unless the attacker cancels it
-	// Capped at 90% reduction
-	if (!attacker.cancelArmor) {
-		const armor_factor = (Math.min(target.stats.special.armor, 1.9) - 1)
-		damage *= (1 - armor_factor)	;
-	}
+	// Apply target's armor to the result
+	damage *= (1 - armor);
 
 	// Apply balance effect if both fighters needs to be balanced
 	if (attacker.balanced && target.balanced) {
