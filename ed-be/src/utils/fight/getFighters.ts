@@ -639,10 +639,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	);
 
 	// FIRE
-	if (fighterHas[Skill.CHARGE]) {
-		fighter.nextAssaultBonus += 5;
-	}
-
 	if (fighterHas[Skill.BELIER]) {
 		fighter.nextAssaultBonus += 20;
 	}
