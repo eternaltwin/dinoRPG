@@ -807,7 +807,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [11306],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.FIRE_ELEMENT]: 2,
+			[Stat.ARMOR]: ['x', 1.05]
+		}
 	},
 	[Skill.BELIER]: {
 		id: Skill.BELIER,
