@@ -2478,7 +2478,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), undefined, LifeEffect.Heal);
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 10, 20), undefined, LifeEffect.Heal);
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
