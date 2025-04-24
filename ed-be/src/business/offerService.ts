@@ -312,8 +312,11 @@ export async function bidOffer(req: Request) {
 		throw new ExpectedError(translate('invalidOffer', authed));
 	}
 
-	// Get previous own bid value
-	const previousOwnBid = offer.bids.filter(bid => bid.userId === authed.id).pop()?.value || 0;
+	// Get previous own bid value if it is the leading one
+	let previousOwnBid = 0;
+	if (offer.bids.length && offer.bids[offer.bids.length - 1].userId === authed.id) {
+		previousOwnBid = offer.bids[offer.bids.length - 1].value;
+	}
 
 	// Cancel if bid is lower or equal to previous bid
 	if (value <= previousOwnBid) {
