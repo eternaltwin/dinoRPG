@@ -12,46 +12,131 @@ type OtherAssaults<T> = Exclude<
 	T
 >;
 
+// export enum EffectCategory {
+// 	GLOBAL = 'global',
+// 	ASSAULT = 'assault',
+// 	FIRE = 'fire',
+// 	WOOD = 'wood',
+// 	WATER = 'water',
+// 	LIGHTNING = 'lightning',
+// 	AIR = 'air',
+// 	VOID = 'void'
+// }
+
 export type SkillEffects = {
 	[Stat.MAX_HP]?: number;
 	[Stat.HP_REGEN]?: number | ['x', number];
-	[Stat.COUNTER]?: ['x', number];
-	[Stat.INITIATIVE]?: number;
-	[Stat.ARMOR]?: ['x', number];
-	[Stat.IGNORE_ARMOR]?: number;
-	[Stat.FIRE_IGNORE_ARMOR]?: number;
-	[Stat.WOOD_IGNORE_ARMOR]?: number;
-	[Stat.WATER_IGNORE_ARMOR]?: number;
-	[Stat.LIGHTNING_IGNORE_ARMOR]?: number;
-	[Stat.AIR_IGNORE_ARMOR]?: number;
-	[Stat.EVASION]?: ['x', number];
-	[Stat.SUPER_EVASION]?: ['x', number];
-	[Stat.MULTIHIT]?: ['x', number];
 	[Stat.MAX_FOLLOWERS]?: number;
+	[Stat.INITIATIVE]?: number;
 	[Stat.ENERGY]?: ['x', number];
 	[Stat.ENERGY_RECOVERY]?: ['x', number];
+	// Armors
+	[Stat.ARMOR]?: ['x', number];
+	[Stat.FIRE_ARMOR]?: ['x', number];
+	[Stat.WOOD_ARMOR]?: ['x', number];
+	[Stat.WATER_ARMOR]?: ['x', number];
+	[Stat.LIGHTNING_ARMOR]?: ['x', number];
+	[Stat.AIR_ARMOR]?: ['x', number];
+	[Stat.VOID_ARMOR]?: ['x', number];
+	// Counters
+	[Stat.COUNTER]?: ['x', number];
+	[Stat.FIRE_COUNTER]?: ['x', number];
+	[Stat.WOOD_COUNTER]?: ['x', number];
+	[Stat.WATER_COUNTER]?: ['x', number];
+	[Stat.LIGHTNING_COUNTER]?: ['x', number];
+	[Stat.AIR_COUNTER]?: ['x', number];
+	[Stat.VOID_COUNTER]?: ['x', number];
+	// Armor ignores
+	[Stat.IGNORE_ARMOR]?: ['x', number];
+	[Stat.ASSAULT_IGNORE_ARMOR]?: ['x', number];
+	[Stat.FIRE_IGNORE_ARMOR]?: ['x', number];
+	[Stat.WATER_IGNORE_ARMOR]?: ['x', number];
+	[Stat.WOOD_IGNORE_ARMOR]?: ['x', number];
+	[Stat.LIGHTNING_IGNORE_ARMOR]?: ['x', number];
+	[Stat.AIR_IGNORE_ARMOR]?: ['x', number];
+	[Stat.VOID_IGNORE_ARMOR]?: ['x', number];
+	// Evasions
+	[Stat.EVASION]?: ['x', number];
+	[Stat.FIRE_EVASION]?: ['x', number];
+	[Stat.WOOD_EVASION]?: ['x', number];
+	[Stat.WATER_EVASION]?: ['x', number];
+	[Stat.LIGHTNING_EVASION]?: ['x', number];
+	[Stat.AIR_EVASION]?: ['x', number];
+	[Stat.VOID_EVASION]?: ['x', number];
+	// Super evasions
+	[Stat.SUPER_EVASION]?: ['x', number];
+	[Stat.FIRE_SUPER_EVASION]?: ['x', number];
+	[Stat.WOOD_SUPER_EVASION]?: ['x', number];
+	[Stat.WATER_SUPER_EVASION]?: ['x', number];
+	[Stat.LIGHTNING_SUPER_EVASION]?: ['x', number];
+	[Stat.AIR_SUPER_EVASION]?: ['x', number];
+	[Stat.VOID_SUPER_EVASION]?: ['x', number];
+	// Multihits
+	[Stat.MULTIHIT]?: ['x', number];
+	[Stat.FIRE_MULTIHIT]?: ['x', number];
+	[Stat.WOOD_MULTIHIT]?: ['x', number];
+	[Stat.WATER_MULTIHIT]?: ['x', number];
+	[Stat.LIGHTNING_MULTIHIT]?: ['x', number];
+	[Stat.AIR_MULTIHIT]?: ['x', number];
+	[Stat.VOID_MULTIHIT]?: ['x', number];
+	// Assaults
 	[Stat.FIRE_ASSAULT]?: number | OtherAssaults<Stat.FIRE_ASSAULT>;
-	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
-	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;
-	[Stat.LIGHTNING_ASSAULT]?: number | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
 	[Stat.WOOD_ASSAULT]?: number | OtherAssaults<Stat.WOOD_ASSAULT>;
-	[Stat.SPEED]?: number;
-	[Stat.FIRE_SPEED]?: number;
-	[Stat.WATER_SPEED]?: number;
-	[Stat.AIR_SPEED]?: number;
-	[Stat.LIGHTNING_SPEED]?: number;
-	[Stat.WOOD_SPEED]?: number;
+	[Stat.WATER_ASSAULT]?: number | OtherAssaults<Stat.WATER_ASSAULT>;
+	[Stat.LIGHTNING_ASSAULT]?: number | OtherAssaults<Stat.LIGHTNING_ASSAULT>;
+	[Stat.AIR_ASSAULT]?: number | OtherAssaults<Stat.AIR_ASSAULT>;
+	// Speeds
+	[Stat.SPEED]?: ['x', number];
+	[Stat.FIRE_SPEED]?: ['x', number];
+	[Stat.WOOD_SPEED]?: ['x', number];
+	[Stat.WATER_SPEED]?: ['x', number];
+	[Stat.LIGHTNING_SPEED]?: ['x', number];
+	[Stat.AIR_SPEED]?: ['x', number];
+	[Stat.VOID_SPEED]?: ['x', number];
+	// Defenses
 	[Stat.FIRE_DEFENSE]?: number;
-	[Stat.WATER_DEFENSE]?: number;
-	[Stat.AIR_DEFENSE]?: number;
-	[Stat.LIGHTNING_DEFENSE]?: number;
 	[Stat.WOOD_DEFENSE]?: number;
+	[Stat.WATER_DEFENSE]?: number;
+	[Stat.LIGHTNING_DEFENSE]?: number;
+	[Stat.AIR_DEFENSE]?: number;
+	// Elements
 	[Stat.FIRE_ELEMENT]?: number;
-	[Stat.WATER_ELEMENT]?: number;
-	[Stat.AIR_ELEMENT]?: number;
-	[Stat.LIGHTNING_ELEMENT]?: number;
 	[Stat.WOOD_ELEMENT]?: number;
+	[Stat.WATER_ELEMENT]?: number;
+	[Stat.LIGHTNING_ELEMENT]?: number;
+	[Stat.AIR_ELEMENT]?: number;
 };
+
+
+// type CategorizedAdditiveEffect = [EffectCategory, number];
+// type SimpleMultiplicativeEffect = ['x', number];
+// type CategorizedMultiplicativeEffect = ['x', EffectCategory, number];
+
+// export function isStatSimpleAddition(stat: any): stat is number {
+// 	return typeof stat === "number";
+// }
+
+// export function isStatCategorizedAdditiveEffect(stat: any): stat is CategorizedAdditiveEffect {
+//     return Array.isArray(stat) &&
+// 		stat.length === 2 &&
+// 		Object.values(EffectCategory).includes(stat[0] as EffectCategory) &&
+// 		typeof stat[1] === "number";
+// }
+
+// export function isStatSimpleMultiplication(stat: any): stat is SimpleMultiplicativeEffect {
+//     return Array.isArray(stat) &&
+// 		stat.length === 2 &&
+// 		stat[0] === 'x' &&
+// 		typeof stat[1] === "number";
+// }
+
+// export function isStatCategorizedMultiplication(stat: any): stat is CategorizedMultiplicativeEffect {
+//     return Array.isArray(stat) &&
+// 		stat.length === 3 &&
+// 		stat[0] === 'x' &&
+// 		Object.values(EffectCategory).includes(stat[1] as EffectCategory) &&
+// 		typeof stat[2] === "number";
+// }
 
 export interface SkillDetails {
 	id: Skill;

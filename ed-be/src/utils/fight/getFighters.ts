@@ -11,7 +11,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { PlacesByMap } from '@drpg/core/models/place/PlaceList';
 import { AssaultElement, getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 import { DefenseElement, getDefenseStat } from '@drpg/core/utils/getDefenseStat';
-import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
+import { BaseSpecialStats, SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { DinozToGetFighter } from '@drpg/core/models/fight/FightConfiguration';
 import { TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus, setMaxEnergy } from './fightMethods.js';
@@ -133,41 +133,81 @@ export const initializeDinoz = (
 			},
 			special: {
 				[SpecialStat.INITIATIVE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ?? 0,
-				[SpecialStat.ENERGY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.INITIATIVE)?.value ?? BaseSpecialStats[SpecialStat.INITIATIVE],
+				[SpecialStat.ENERGY]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY)?.value ?? BaseSpecialStats[SpecialStat.ENERGY],
 				[SpecialStat.ENERGY_RECOVERY]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
-				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
-				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
-				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
-				[SpecialStat.SUPER_EVASION]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
-				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? BaseSpecialStats[SpecialStat.ENERGY_RECOVERY],
 				[SpecialStat.BUBBLE_RATE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? BaseSpecialStats[SpecialStat.BUBBLE_RATE],
 				[SpecialStat.TORCH_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.TORCH_DAMAGE)?.value ?? BaseSpecialStats[SpecialStat.TORCH_DAMAGE],
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE],
 			},
-			ignore_armor: {
-				[ElementType.AIR]: 1,
-				[ElementType.FIRE]: 1,
-				[ElementType.LIGHTNING]: 1,
-				[ElementType.WATER]: 1,
-				[ElementType.WOOD]: 1,
-				[ElementType.VOID]: 1,
-				global: 1
+			counter: {
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? BaseSpecialStats[SpecialStat.COUNTER],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.FIRE_COUNTER],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.WOOD_COUNTER],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.WATER_COUNTER],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_COUNTER],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.AIR_COUNTER],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.VOID_COUNTER],
+			},
+			armor: {
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? BaseSpecialStats[SpecialStat.ARMOR],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.FIRE_ARMOR],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WOOD_ARMOR],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WATER_ARMOR],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_ARMOR],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.AIR_ARMOR],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.VOID_ARMOR],
+			},
+			ignoreArmor: {
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.IGNORE_ARMOR],
+				assault: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ASSAULT_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.ASSAULT_IGNORE_ARMOR],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.FIRE_IGNORE_ARMOR],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WOOD_IGNORE_ARMOR],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WATER_IGNORE_ARMOR],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_IGNORE_ARMOR],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.AIR_IGNORE_ARMOR],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.VOID_IGNORE_ARMOR],
+			},
+			evasion: {
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? BaseSpecialStats[SpecialStat.EVASION],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_EVASION)?.value ?? BaseSpecialStats[SpecialStat.FIRE_EVASION],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WOOD_EVASION],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WATER_EVASION],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_EVASION)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_EVASION],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_EVASION)?.value ?? BaseSpecialStats[SpecialStat.AIR_EVASION],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_EVASION)?.value ?? BaseSpecialStats[SpecialStat.VOID_EVASION],
+			},
+			superEvasion: {
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.SUPER_EVASION],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.FIRE_SUPER_EVASION],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WOOD_SUPER_EVASION],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WATER_SUPER_EVASION],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_SUPER_EVASION],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.AIR_SUPER_EVASION],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.VOID_SUPER_EVASION],
+			},
+			multihit: {
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.MULTIHIT],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.FIRE_MULTIHIT],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.WOOD_MULTIHIT],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.WATER_MULTIHIT],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_MULTIHIT],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.AIR_MULTIHIT],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.VOID_MULTIHIT],
 			},
 			speed: {
-				[ElementType.AIR]: 1,
-				[ElementType.FIRE]: 1,
-				[ElementType.LIGHTNING]: 1,
-				[ElementType.WATER]: 1,
-				[ElementType.WOOD]: 1,
-				[ElementType.VOID]: 1,
-				global: 1
-			}
+				global: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SPEED)?.value ?? BaseSpecialStats[SpecialStat.SPEED],
+				[ElementType.FIRE]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.FIRE_SPEED)?.value ?? BaseSpecialStats[SpecialStat.FIRE_SPEED],
+				[ElementType.WOOD]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WOOD_SPEED)?.value ?? BaseSpecialStats[SpecialStat.WOOD_SPEED],
+				[ElementType.WATER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.WATER_SPEED)?.value ?? BaseSpecialStats[SpecialStat.WATER_SPEED],
+				[ElementType.LIGHTNING]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.LIGHTNING_SPEED)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_SPEED],
+				[ElementType.AIR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.AIR_SPEED)?.value ?? BaseSpecialStats[SpecialStat.AIR_SPEED],
+				[ElementType.VOID]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.VOID_SPEED)?.value ?? BaseSpecialStats[SpecialStat.VOID_SPEED],
+			},
 		},
 		items,
 		itemsUsed: [],
@@ -291,17 +331,17 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.INITIATIVE]: 0, // No initative for clones
 				[SpecialStat.ENERGY]: 0, // No energy recovery bonus for clones
 				[SpecialStat.ENERGY_RECOVERY]: 0, // No energy recovery bonus for clones
-				[SpecialStat.ARMOR]: dinoz.stats.special[SpecialStat.ARMOR],
-				[SpecialStat.MULTIHIT]: dinoz.stats.special[SpecialStat.MULTIHIT],
-				[SpecialStat.EVASION]: dinoz.stats.special[SpecialStat.EVASION],
-				[SpecialStat.SUPER_EVASION]: dinoz.stats.special[SpecialStat.SUPER_EVASION],
-				[SpecialStat.COUNTER]: dinoz.stats.special[SpecialStat.COUNTER],
 				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
 				[SpecialStat.ACID_BLOOD_DAMAGE]: 0 // No acid blood for clones
 			},
-			ignore_armor: dinoz.stats.ignore_armor,
-			speed: dinoz.stats.speed
+			armor: dinoz.stats.armor,
+			ignoreArmor: dinoz.stats.ignoreArmor,
+			speed: dinoz.stats.speed,
+			multihit: dinoz.stats.multihit,
+			counter: dinoz.stats.counter,
+			evasion: dinoz.stats.evasion,
+			superEvasion: dinoz.stats.evasion
 		},
 		items: [], // No items for clones
 		itemsUsed: [],
@@ -464,37 +504,82 @@ export const initializeMonster = (
 					getDefenseStat(similiDinoz, [], skills, DefenseElement.NEUTRAL).value + (monster.bonus_defense ?? 0)
 			},
 			special: {
-				[SpecialStat.INITIATIVE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.INITIATIVE)?.value ?? 0,
-				[SpecialStat.ENERGY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY)?.value ?? 0,
-				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
-				[SpecialStat.ARMOR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? 0,
-				[SpecialStat.MULTIHIT]: getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ?? 0,
-				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? 0,
-				[SpecialStat.SUPER_EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
-				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? 0,
-				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
-				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
+				[SpecialStat.INITIATIVE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.INITIATIVE)?.value ?? BaseSpecialStats[SpecialStat.INITIATIVE],
+				[SpecialStat.ENERGY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY)?.value ?? BaseSpecialStats[SpecialStat.ENERGY],
+				[SpecialStat.ENERGY_RECOVERY]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ?? BaseSpecialStats[SpecialStat.ENERGY_RECOVERY],
+				[SpecialStat.BUBBLE_RATE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? BaseSpecialStats[SpecialStat.BUBBLE_RATE],
+				[SpecialStat.TORCH_DAMAGE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? BaseSpecialStats[SpecialStat.TORCH_DAMAGE],
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
-					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? 0
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ?? BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE],
 			},
-			ignore_armor: {
-				[ElementType.AIR]: 1,
-				[ElementType.FIRE]: 1,
-				[ElementType.LIGHTNING]: 1,
-				[ElementType.WATER]: 1,
-				[ElementType.WOOD]: 1,
-				[ElementType.VOID]: 1,
-				global: 1
+			counter: {
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? BaseSpecialStats[SpecialStat.COUNTER],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.FIRE_COUNTER],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.WOOD_COUNTER],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.WATER_COUNTER],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_COUNTER],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.AIR_COUNTER],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_COUNTER)?.value ?? BaseSpecialStats[SpecialStat.VOID_COUNTER],
+			},
+			armor: {
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? BaseSpecialStats[SpecialStat.ARMOR],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.FIRE_ARMOR],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WOOD_ARMOR],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WATER_ARMOR],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_ARMOR],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.AIR_ARMOR],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.VOID_ARMOR],
+			},
+			ignoreArmor: {
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.IGNORE_ARMOR],
+				assault: getSpecialStat(similiDinoz, [], skills, SpecialStat.ASSAULT_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.ASSAULT_IGNORE_ARMOR],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.FIRE_IGNORE_ARMOR],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WOOD_IGNORE_ARMOR],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.WATER_IGNORE_ARMOR],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_IGNORE_ARMOR],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.AIR_IGNORE_ARMOR],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_IGNORE_ARMOR)?.value ?? BaseSpecialStats[SpecialStat.VOID_IGNORE_ARMOR],
+			},
+			evasion: {
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? BaseSpecialStats[SpecialStat.EVASION],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_EVASION)?.value ?? BaseSpecialStats[SpecialStat.FIRE_EVASION],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WOOD_EVASION],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WATER_EVASION],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_EVASION)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_EVASION],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_EVASION)?.value ?? BaseSpecialStats[SpecialStat.AIR_EVASION],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_EVASION)?.value ?? BaseSpecialStats[SpecialStat.VOID_EVASION],
+			},
+			superEvasion: {
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.SUPER_EVASION],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.FIRE_SUPER_EVASION],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WOOD_SUPER_EVASION],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.WATER_SUPER_EVASION],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_SUPER_EVASION],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.AIR_SUPER_EVASION],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_SUPER_EVASION)?.value ?? BaseSpecialStats[SpecialStat.VOID_SUPER_EVASION],
+			},
+			multihit: {
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.MULTIHIT],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.FIRE_MULTIHIT],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.WOOD_MULTIHIT],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.WATER_MULTIHIT],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_MULTIHIT],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.AIR_MULTIHIT],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_MULTIHIT)?.value ?? BaseSpecialStats[SpecialStat.VOID_MULTIHIT],
 			},
 			speed: {
-				[ElementType.AIR]: 1,
-				[ElementType.FIRE]: 1,
-				[ElementType.LIGHTNING]: 1,
-				[ElementType.WATER]: 1,
-				[ElementType.WOOD]: 1,
-				[ElementType.VOID]: 1,
-				global: 1
-			}
+				global: getSpecialStat(similiDinoz, [], skills, SpecialStat.SPEED)?.value ?? BaseSpecialStats[SpecialStat.SPEED],
+				[ElementType.FIRE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_SPEED)?.value ?? BaseSpecialStats[SpecialStat.FIRE_SPEED],
+				[ElementType.WOOD]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_SPEED)?.value ?? BaseSpecialStats[SpecialStat.WOOD_SPEED],
+				[ElementType.WATER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_SPEED)?.value ?? BaseSpecialStats[SpecialStat.WATER_SPEED],
+				[ElementType.LIGHTNING]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? BaseSpecialStats[SpecialStat.LIGHTNING_SPEED],
+				[ElementType.AIR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_SPEED)?.value ?? BaseSpecialStats[SpecialStat.AIR_SPEED],
+				[ElementType.VOID]: getSpecialStat(similiDinoz, [], skills, SpecialStat.VOID_SPEED)?.value ?? BaseSpecialStats[SpecialStat.VOID_SPEED],
+			},
 		},
 		items: [],
 		itemsUsed: [],
@@ -631,47 +716,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	const fighterHas = fighter.skills.reduce(
 		(acc, skill) => {
 			acc[skill.id as Skill] = true;
-
-			// Process armore ignore changes
-			if (skill.effects?.[Stat.IGNORE_ARMOR]) {
-				fighter.stats.ignore_armor.global *= skill.effects[Stat.IGNORE_ARMOR];
-			}
-			if (skill.effects?.[Stat.FIRE_IGNORE_ARMOR]) {
-				fighter.stats.ignore_armor[ElementType.FIRE] *= skill.effects[Stat.FIRE_IGNORE_ARMOR];
-			}
-			if (skill.effects?.[Stat.WOOD_IGNORE_ARMOR]) {
-				fighter.stats.ignore_armor[ElementType.WOOD] *= skill.effects[Stat.WOOD_IGNORE_ARMOR];
-			}
-			if (skill.effects?.[Stat.WATER_IGNORE_ARMOR]) {
-				fighter.stats.ignore_armor[ElementType.WATER] *= skill.effects[Stat.WATER_IGNORE_ARMOR];
-			}
-			if (skill.effects?.[Stat.LIGHTNING_IGNORE_ARMOR]) {
-				fighter.stats.ignore_armor[ElementType.LIGHTNING] *= skill.effects[Stat.LIGHTNING_IGNORE_ARMOR];
-			}
-			if (skill.effects?.[Stat.AIR_IGNORE_ARMOR]) {
-				fighter.stats.ignore_armor[ElementType.AIR]  *= skill.effects[Stat.AIR_IGNORE_ARMOR];
-			}
-
-			// Process speed changes
-			if (skill.effects?.[Stat.SPEED]) {
-				fighter.stats.speed.global *= skill.effects[Stat.SPEED];
-			}
-			if (skill.effects?.[Stat.FIRE_SPEED]) {
-				fighter.stats.speed[ElementType.FIRE] *= skill.effects[Stat.FIRE_SPEED];
-			}
-			if (skill.effects?.[Stat.WATER_SPEED]) {
-				fighter.stats.speed[ElementType.WATER] *= skill.effects[Stat.WATER_SPEED];
-			}
-			if (skill.effects?.[Stat.WOOD_SPEED]) {
-				fighter.stats.speed[ElementType.WOOD] *= skill.effects[Stat.WOOD_SPEED];
-			}
-			if (skill.effects?.[Stat.LIGHTNING_SPEED]) {
-				fighter.stats.speed[ElementType.LIGHTNING] *= skill.effects[Stat.LIGHTNING_SPEED];
-			}
-			if (skill.effects?.[Stat.AIR_SPEED]) {
-				fighter.stats.speed[ElementType.AIR] *= skill.effects[Stat.AIR_SPEED];
-			}
-
 			return acc;
 		},
 		{} as Record<Skill, boolean>
@@ -908,6 +952,129 @@ const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType,
 	// The defense in the fourth element increases by 0.5 of the bonus, this is the second "weak" element
 	fighter.stats.defense[elementWheel[(elementWheel.indexOf(element) + 4) % elementWheel.length]] += 0.5 * bonus;
 };
+
+// Determine the counter chance of the fighter based on its current element.
+// The value is recentered around 0.
+// Maximum is 0.9 and minimum is 0.
+export const getFighterCounter = (fighter: DetailedFighter) => {
+	// Remove 1 to recenter the value at 0.
+	const counterTotal = (fighter.stats.counter.global * fighter.stats.counter[fighter.element]) - 1;
+
+	return Math.min(0.9, Math.max(0, counterTotal));
+}
+
+// Determine the multihit chance of the fighter based on its current element.
+// The value is recentered around 0.
+// Maximum is 0.9 and minimum is 0.
+export const getFighterMultihit = (fighter: DetailedFighter) => {
+	// Remove 1 to recenter the value at 0.
+	const multihitTotal = (fighter.stats.multihit.global * fighter.stats.multihit[fighter.element]) - 1;
+
+	return Math.min(0.9, Math.max(0, multihitTotal));
+}
+
+// Determine the evasion chance of the fighter based on the elements of the attack
+// The value is recentered around 0.
+// Maximum is 0.9 and minimum is 0.
+export const getFighterEvasion = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
+	let evasionTotal = fighter.stats.evasion.global;
+	console.log(`Evasion: ${evasionTotal}`);
+
+	// Prorate the evasion chance base on the element
+	// Example: If the attack has 9 fire and 1 wood, 90% of the fire evasion will be applied and 10% of the wood evasion will be applied
+	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 1);
+	elementAttack.forEach(val => {
+		const ele = val[0];
+		const att = val[1];
+		console.log(`Element ${ele} evasion ${fighter.stats.evasion[ele]}`);
+		evasionTotal *= (fighter.stats.evasion[ele] * att) / sumAtt;
+		console.log(`Partial Evasion: ${evasionTotal}`);
+;	});
+
+	// Remove 1 to recenter the value at 0.
+	evasionTotal -= 1;
+	console.log(`Final (uncapped) Evasion: ${evasionTotal}`);
+
+	return Math.min(0.9, Math.max(0, evasionTotal));
+}
+
+// Determine the super evasion chance of the fighter based on the elements of the attack
+// The value is recentered around 0.
+// Maximum is 0.9 and minimum is 0.
+export const getFighterSuperEvasion = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
+	let superEvasionTotal = fighter.stats.superEvasion.global;
+	console.log(`superEvasion: ${superEvasionTotal}`);
+
+	// Prorate the superEvasion chance base on the element
+	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
+	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 1);
+	elementAttack.forEach(val => {
+		const ele = val[0];
+		const att = val[1];
+		console.log(`Element ${ele} superEvasion ${fighter.stats.superEvasion[ele]}`);
+		superEvasionTotal *= (fighter.stats.superEvasion[ele] * att) / sumAtt;
+		console.log(`Partial superEvasion: ${superEvasionTotal}`);
+;	});
+
+	// Remove 1 to recenter the value at 0.
+	superEvasionTotal -= 1;
+	console.log(`Final (uncapped) superEvasion: ${superEvasionTotal}`);
+
+
+	return Math.min(0.9, Math.max(0, superEvasionTotal));
+}
+
+// Determine the armor ignore ratio of the fighter based on the elements of the attack and if the attack is an assault or not.
+// The returned value is uncapped and recentered around 0
+export const getFighterIgnoreArmorRatio = (fighter: DetailedFighter, elementAttack: [ElementType, number][], isAssault: boolean) => {
+	let ignoreArmorRatio = fighter.stats.ignoreArmor.global;
+
+	console.log(`Ignore armor ratio: ${ignoreArmorRatio}`);
+
+	// Prorate the superEvasion chance base on the element
+	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
+	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 1);
+	elementAttack.forEach(val => {
+		const ele = val[0];
+		const att = val[1];
+		console.log(`Element ${ele} ignore armor ${fighter.stats.ignoreArmor[ele]}`);
+		ignoreArmorRatio *= (fighter.stats.ignoreArmor[ele] * att) / sumAtt;
+		console.log(`Partial ignore armor: ${ignoreArmorRatio}`);
+;	});
+
+	if (isAssault) {
+		ignoreArmorRatio *= fighter.stats.ignoreArmor.assault;
+		console.log(`Assault ignore armor: ${ignoreArmorRatio}`);
+	}
+
+	console.log(`Final (uncapped) ignore armor: ${ignoreArmorRatio}`);
+
+	return ignoreArmorRatio - 1;
+}
+
+// Determine the armor ratio of the fighter based on the elements of the attack and if the attack is an assault or not.
+// The returned value is uncapped and recentered around 0
+export const getFighterArmorRatio = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
+	let armorRatio = fighter.stats.armor.global;
+
+	console.log(`Ignore armor ratio: ${armorRatio}`);
+
+	// Prorate the superEvasion chance base on the element
+	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
+	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 1);
+	elementAttack.forEach(val => {
+		const ele = val[0];
+		const att = val[1];
+		console.log(`Element ${ele} ignore armor ${fighter.stats.armor[ele]}`);
+		armorRatio *= (fighter.stats.armor[ele] * att) / sumAtt;
+		console.log(`Partial ignore armor: ${armorRatio}`);
+;	});
+
+	console.log(`Final (uncapped) ignore armor: ${armorRatio}`);
+
+	return armorRatio - 1;
+}
+
 
 const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedrandom.PRNG): DetailedFighter[] => {
 	const fighters: DetailedFighter[] = [];
