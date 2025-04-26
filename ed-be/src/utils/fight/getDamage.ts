@@ -5,6 +5,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConstants';
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
+import { getFighterArmorRatio, getFighterIgnoreArmorRatio } from './getFighters.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -85,23 +86,23 @@ export const getMultiElementalAttack = (fighter: DetailedFighter, element_type_p
 export const getAttackDefense = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
-	element_attack: [ElementType, number][],
+	elementAttack: [ElementType, number][],
 	isCloseCombat: boolean
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
-	let sum_of_elements = 0;
+	let sumOfElements = 0;
 	let elements: ElementType[] = [];
 
 	// Go over all the elements of the attack
 	// Add the attacker's elemental attack and possible bonus to the attack score
 	// Add the target's elemental defense
-	element_attack.forEach(val => {
+	elementAttack.forEach(val => {
 		const ele = val[0];
 		const att = val[1];
 		elements.push(ele);
 		attack += att;
-		sum_of_elements += att;
+		sumOfElements += att;
 		if (att > 0) {
 			defense += target.stats.defense[ele] * att;
 			if (isCloseCombat) {
@@ -127,8 +128,8 @@ export const getAttackDefense = (
 	}
 
 	// Average the defense in case of multi-element attack
-	if (sum_of_elements > 0) {
-		defense /= sum_of_elements;
+	if (sumOfElements > 0) {
+		defense /= sumOfElements;
 	}
 
 	return {
@@ -138,13 +139,11 @@ export const getAttackDefense = (
 	};
 };
 
-
-
 // Determine armor factor for a given target
 export const calculateArmor = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
-	elements: ElementType[],
+	power: [ElementType, number][],
 	isCloseCombat: boolean
 ) => {
 	// Apply target's armor to the result unless the attacker cancels it
@@ -152,18 +151,10 @@ export const calculateArmor = (
 		return 0;
 	} else {
 		// Transform to 0 to 1 value
-		let effective_armor = target.stats.special.armor - 1;
+		let effective_armor = getFighterArmorRatio(attacker, power);
 
 		// Remove global armor ignore
-		effective_armor -= (attacker.stats.ignore_armor.global - 1);
-		// Remove asssault armor ignore
-		if (isCloseCombat) {
-			effective_armor -= (attacker.stats.ignore_armor.assault - 1);
-		}
-		// Remove elemental armor ignore for each element
-		elements.forEach(element => {
-			effective_armor -= (attacker.stats.ignore_armor[element] - 1);
-		});
+		effective_armor -= getFighterIgnoreArmorRatio(attacker, power, isCloseCombat);
 
 		// Minimum armor is 0
 		effective_armor = Math.max(effective_armor, 0);

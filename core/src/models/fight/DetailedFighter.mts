@@ -1,4 +1,4 @@
-import { SpecialStatUsedInFights } from '../../utils/getSpecialStat.mjs';
+import { UniqueSpecialStatUsedInFights } from '../../utils/getSpecialStat.mjs';
 import { SkillDetails } from '../dinoz/SkillDetails.mjs';
 import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
@@ -112,9 +112,14 @@ export interface DetailedFighter {
 		// Assault elemental bonuses. This includes the "allAssaultBonus" from MT too, as it is just handled as a bonus for all assault elements.
 		assaultBonus: Record<ElementType, number>;
 		defense: Record<ElementType, number>;
-		special: Record<SpecialStatUsedInFights, number>;
-		ignore_armor: Record<ElementType | 'global' | 'assault', number>;
+		special: Record<UniqueSpecialStatUsedInFights, number>;
+		armor: Record<ElementType | 'global', number>;
+		ignoreArmor: Record<ElementType | 'global' | 'assault', number>;
 		speed: Record<ElementType | 'global', number>;
+		multihit: Record<ElementType | 'global', number>;
+		evasion: Record<ElementType | 'global', number>;
+		superEvasion: Record<ElementType | 'global', number>;
+		counter: Record<ElementType | 'global', number>;
 	};
 	// Items
 	items: ItemFiche[];

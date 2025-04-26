@@ -6,33 +6,144 @@ import { ElementType } from '../models/enums/ElementType.mjs';
 import { Item, itemList } from '../models/item/ItemList.mjs';
 
 export enum SpecialStat {
+	// Unique
 	HP_REGEN = 'hpRegen',
 	INITIATIVE = 'initiative',
 	ENERGY = 'energy',
 	ENERGY_RECOVERY = 'energyRecovery',
 	MAX_FOLLOWERS = 'maxFollowers',
-	ARMOR = 'armor',
-	MULTIHIT = 'multihit',
-	EVASION = 'evasion',
-	SUPER_EVASION = 'superEvasion',
-	COUNTER = 'counter',
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
-	ACID_BLOOD_DAMAGE = 'acidBloodDamage'
-}
-
-export enum SpecialStatAsPercent {
-	ARMOR = 'armor',
-	MULTIHIT = 'multihit',
-	EVASION = 'evasion',
-	SUPER_EVASION = 'superEvasion',
+	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+	// Counters
 	COUNTER = 'counter',
-	BUBBLE_RATE = 'bubbleRate'
+	FIRE_COUNTER = 'fireCounter',
+	WOOD_COUNTER = 'woodCounter',
+	WATER_COUNTER = 'waterCounter',
+	LIGHTNING_COUNTER = 'lightningCounter',
+	AIR_COUNTER = 'airCounter',
+	VOID_COUNTER = 'voidCounter',
+	// Armors
+	ARMOR = 'armor',
+	FIRE_ARMOR = 'fireArmor',
+	WOOD_ARMOR = 'woodArmor',
+	WATER_ARMOR = 'waterArmor',
+	LIGHTNING_ARMOR = 'lightningArmor',
+	AIR_ARMOR = 'airArmor',
+	VOID_ARMOR = 'voidArmor',
+	// Armor Ignores
+	IGNORE_ARMOR = 'ignoreArmor',
+	ASSAULT_IGNORE_ARMOR = 'assaultIgnoreArmor',
+	FIRE_IGNORE_ARMOR = 'fireIgnoreArmor',
+	WOOD_IGNORE_ARMOR = 'woodIgnoreArmor',
+	WATER_IGNORE_ARMOR = 'waterIgnoreArmor',
+	LIGHTNING_IGNORE_ARMOR = 'lightningIgnoreArmor',
+	AIR_IGNORE_ARMOR = 'airIgnoreArmor',
+	VOID_IGNORE_ARMOR = 'voidIgnoreArmor',
+	// Evasions
+	EVASION = 'evasion',
+	FIRE_EVASION = 'fireEvasion',
+	WOOD_EVASION = 'woodEvasion',
+	WATER_EVASION = 'waterEvasion',
+	LIGHTNING_EVASION = 'lightningEvasion',
+	AIR_EVASION = 'airEvasion',
+	VOID_EVASION = 'voidEvasion',
+	// Super evasions
+	SUPER_EVASION = 'superEvasion',
+	FIRE_SUPER_EVASION = 'fireSuperEvasion',
+	WOOD_SUPER_EVASION = 'woodSuperEvasion',
+	WATER_SUPER_EVASION = 'waterSuperEvasion',
+	LIGHTNING_SUPER_EVASION = 'lightningSuperEvasion',
+	AIR_SUPER_EVASION = 'airSuperEvasion',
+	VOID_SUPER_EVASION = 'voidSuperEvasion',
+	// Multihits
+	MULTIHIT = 'multihit',
+	FIRE_MULTIHIT = 'fireMultihit',
+	WOOD_MULTIHIT = 'woodMultihit',
+	WATER_MULTIHIT = 'waterMultihit',
+	LIGHTNING_MULTIHIT = 'lightningMultihit',
+	AIR_MULTIHIT = 'airMultihit',
+	VOID_MULTIHIT = 'voidMultihit',
+	// Speeds
+	SPEED = 'speed',
+	FIRE_SPEED = 'fireSpeed',
+	WOOD_SPEED = 'woodSpeed',
+	WATER_SPEED = 'waterSpeed',
+	LIGHTNING_SPEED = 'lightningSpeed',
+	AIR_SPEED = 'airSpeed',
+	VOID_SPEED = 'voidSpeed',
 }
 
-export type SpecialStatUsedInFights = Exclude<SpecialStat, SpecialStat.HP_REGEN | SpecialStat.MAX_FOLLOWERS>;
+// Special statistics handled as a %.
+// Base is 1. Multiplier are  used as 1.x (for x%)
+// But then when attemping a roll, you have a deduce 1.
+export enum SpecialStatAsPercent {
+	// Uniques
+	BUBBLE_RATE = 'bubbleRate',
+	// Counters
+	COUNTER = 'counter',
+	FIRE_COUNTER = 'fireCounter',
+	WOOD_COUNTER = 'woodCounter',
+	WATER_COUNTER = 'waterCounter',
+	LIGHTNING_COUNTER = 'lightningCounter',
+	AIR_COUNTER = 'airCounter',
+	VOID_COUNTER = 'voidCounter',
+	// Armors
+	ARMOR = 'armor',
+	FIRE_ARMOR = 'fireArmor',
+	WOOD_ARMOR = 'woodArmor',
+	WATER_ARMOR = 'waterArmor',
+	LIGHTNING_ARMOR = 'lightningArmor',
+	AIR_ARMOR = 'airArmor',
+	VOID_ARMOR = 'voidArmor',
+	// Armor Ignores
+	IGNORE_ARMOR = 'ignoreArmor',
+	ASSAULT_IGNORE_ARMOR = 'assaultIgnoreArmor',
+	FIRE_IGNORE_ARMOR = 'fireIgnoreArmor',
+	WOOD_IGNORE_ARMOR = 'woodIgnoreArmor',
+	WATER_IGNORE_ARMOR = 'waterIgnoreArmor',
+	LIGHTNING_IGNORE_ARMOR = 'lightningIgnoreArmor',
+	AIR_IGNORE_ARMOR = 'airIgnoreArmor',
+	VOID_IGNORE_ARMOR = 'voidIgnoreArmor',
+	// Evasions
+	EVASION = 'evasion',
+	FIRE_EVASION = 'fireEvasion',
+	WOOD_EVASION = 'woodEvasion',
+	WATER_EVASION = 'waterEvasion',
+	LIGHTNING_EVASION = 'lightningEvasion',
+	AIR_EVASION = 'airEvasion',
+	VOID_EVASION = 'voidEvasion',
+	// Super evasions
+	SUPER_EVASION = 'superEvasion',
+	FIRE_SUPER_EVASION = 'fireSuperEvasion',
+	WOOD_SUPER_EVASION = 'woodSuperEvasion',
+	WATER_SUPER_EVASION = 'waterSuperEvasion',
+	LIGHTNING_SUPER_EVASION = 'lightningSuperEvasion',
+	AIR_SUPER_EVASION = 'airSuperEvasion',
+	VOID_SUPER_EVASION = 'voidSuperEvasion',
+	// Multihits
+	MULTIHIT = 'multihit',
+	FIRE_MULTIHIT = 'fireMultihit',
+	WOOD_MULTIHIT = 'woodMultihit',
+	WATER_MULTIHIT = 'waterMultihit',
+	LIGHTNING_MULTIHIT = 'lightningMultihit',
+	AIR_MULTIHIT = 'airMultihit',
+	VOID_MULTIHIT = 'voidMultihit',
+}
 
-export const BaseStats = {
+export enum UniqueSpecialStatUsedInFights {
+	INITIATIVE = 'initiative',
+	ENERGY = 'energy',
+	ENERGY_RECOVERY = 'energyRecovery',
+	BUBBLE_RATE = 'bubbleRate',
+	TORCH_DAMAGE = 'torchDamage',
+	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+}
+
+
+// export type UniqueSpecialStatUsedInFights = Exclude<UniqueSpecialStat, SpecialStat.HP_REGEN | SpecialStat.MAX_FOLLOWERS>;
+
+export const BaseSpecialStats = {
 	...Object.values(SpecialStat).reduce(
 		(acc, value) => {
 			acc[value] = 0;
@@ -43,7 +154,15 @@ export const BaseStats = {
 	[SpecialStat.HP_REGEN]: 1,
 	[SpecialStat.ENERGY]: 100,
 	[SpecialStat.ENERGY_RECOVERY]: 1,
-	[SpecialStat.MAX_FOLLOWERS]: 2
+	[SpecialStat.MAX_FOLLOWERS]: 2,
+	// Speeds
+    [SpecialStat.SPEED]: 1,
+	[SpecialStat.FIRE_SPEED]: 1,
+	[SpecialStat.WOOD_SPEED]: 1,
+	[SpecialStat.WATER_SPEED]: 1,
+	[SpecialStat.LIGHTNING_SPEED]: 1,
+	[SpecialStat.AIR_SPEED]: 1,
+	[SpecialStat.VOID_SPEED]: 1,
 };
 
 export const getSpecialStat = (
@@ -129,7 +248,7 @@ export const getSpecialStat = (
 		};
 	}
 
-	let value = BaseStats[stat];
+	let value = BaseSpecialStats[stat];
 	let base_stat = value;
 	let multiplier = 1;
 	let details: {
@@ -202,8 +321,6 @@ export const getSpecialStat = (
 				effectValue = effect[1] - 1;
 				multiplier *= effect[1];
 			}
-
-			const percent = (Object.values(SpecialStatAsPercent) as string[]).includes(stat.toString());
 
 			let finalValue;
 			if (percent) {

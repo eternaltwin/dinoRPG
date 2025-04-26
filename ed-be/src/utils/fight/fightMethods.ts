@@ -51,7 +51,7 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, initializeMonster } from './getFighters.js';
+import { cloneDinoz, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -1734,7 +1734,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor *= 1.05;
+				fighter.stats.armor.global *= 1.05;
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -2094,12 +2094,12 @@ export const addStatus = (
 			break;
 		}
 		case Status.PETRIFIED: {
-			fighter.stats.special.armor *= 1.5;
+			fighter.stats.armor.global *= 1.5;
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
 		case Status.SHIELDED: {
-			fighter.stats.special.armor *= 1.5;
+			fighter.stats.armor.global *= 1.5;
 			break;
 		}
 		case Status.BLESSED: {
@@ -2186,7 +2186,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.PETRIFIED: {
-				fighter.stats.special.armor /= 1.5;
+				fighter.stats.armor.global /= 1.5;
 				fighter.time -= FIGHT_INFINITE;
 				// Make sure the fighter's time is not in the past
 				if (fighter.time < fightData.time) {
@@ -2195,7 +2195,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.SHIELDED: {
-				fighter.stats.special.armor /= 1.5;
+				fighter.stats.armor.global /= 1.5;
 				break;
 			}
 			case Status.BLESSED: {
@@ -3066,7 +3066,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			getAllies(fightData, fighter).forEach(ally => {
 				// Increase evasion
-				ally.stats.special.evasion *= 1.2;
+				ally.stats.evasion.global *= 1.2;
 			});
 			break;
 		}
@@ -3685,7 +3685,7 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	if (opponent.hp <= 0) return false;
 
 	const random = fightData.rng();
-	const countered = random < opponent.stats.special.counter - 1;
+	const countered = random < getFighterCounter(opponent);
 
 	// Counter stat
 	if (countered) {
@@ -4032,7 +4032,7 @@ const attackTarget = (
 		attacker.comboCounter++;
 
 		// Calculate armor
-		const armor = calculateArmor(attacker, target, power.map(p => p[0]), isAssault);
+		const armor = calculateArmor(attacker, target, power, isAssault);
 
 		// Get damage
 		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, armor, isAssault);
@@ -4053,7 +4053,7 @@ const attackTarget = (
 			isAssault &&
 			!hasStatus(target, Status.PETRIFIED) &&
 			!attacker.cancelAssaultDodge &&
-			fightData.rng() < target.stats.special.evasion - 1
+			fightData.rng() < getFighterEvasion(target, power)
 		) {
 			isDodged = true;
 		}
@@ -4067,7 +4067,7 @@ const attackTarget = (
 				hasStatus(target, Status.FLYING) ||
 				hasStatus(target, Status.STUNNED)
 			) &&
-			fightData.rng() < target.stats.special.superEvasion - 1
+			fightData.rng() < getFighterSuperEvasion(target, power)
 		) {
 			isSuperDodged = true;
 		}
@@ -4158,7 +4158,7 @@ const attackTarget = (
 
 		// Check for combo
 		if (canCombo) {
-			if (fightData.rng() < attacker.stats.special.multihit - 1) {
+			if (fightData.rng() < getFighterMultihit(attacker)) {
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
 				energyCost++;
 				updateStat(fightData, attacker, 'multiHits', 1);

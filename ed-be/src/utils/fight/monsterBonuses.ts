@@ -7,18 +7,18 @@ import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus } from './fightMethods.js';
 
 const worm = (monster: DetailedFighter) => {
-	monster.stats.special.armor *= 1.1;
+	monster.stats.armor.global *= 1.1;
 	monster.canHitFlying = true;
 	monster.hp = monster.startingHp / 2;
 };
 
 const sentinel = (monster: DetailedFighter) => {
-	monster.stats.special.counter *= 1.9;
+	monster.stats.counter.global *= 1.9;
 	monster.status.push(createStatus(Status.NO_ASSAULT));
 };
 
 const stinger = (monster: DetailedFighter) => {
-	monster.stats.special.evasion *= 1.6;
+	monster.stats.evasion.global *= 1.6;
 	monster.stats.speed.global *= 1.5;
 	monster.status.push(createStatus(Status.NO_POISON));
 };
@@ -31,7 +31,7 @@ const brig1 = (monster: DetailedFighter) => {
 const brig2 = (monster: DetailedFighter) => {
 	monster.stats.speed.global *= 0.7;
 	monster.time -= 15 * TIME_FACTOR;
-	monster.stats.special.multihit *= 1.3;
+	monster.stats.multihit.global *= 1.3;
 	setSkillProbability(monster, Skill.M_STEAL, 5);
 };
 
@@ -44,18 +44,18 @@ const ggoupi = (monster: DetailedFighter) => {
 };
 
 const singmu = (monster: DetailedFighter) => {
-	monster.stats.special.multihit *= 1.5;
+	monster.stats.multihit.global *= 1.5;
 	monster.stats.speed.global *= 0.3;
 };
 
 const cyclo = (monster: DetailedFighter) => {
-	monster.stats.special.evasion *= 1.15;
-	monster.stats.special.multihit *= 1.3;
+	monster.stats.evasion.global *= 1.15;
+	monster.stats.multihit.global *= 1.3;
 };
 
 const gromst = (monster: DetailedFighter) => {
-	monster.stats.special.evasion *= 1.15;
-	monster.stats.special.multihit *= 1.3;
+	monster.stats.evasion.global *= 1.15;
+	monster.stats.multihit.global *= 1.3;
 };
 
 const multiplySkillProbability = (monster: DetailedFighter, skillId: Skill, multiplier: number) => {
@@ -80,8 +80,8 @@ const setSkillProbability = (monster: DetailedFighter, skillId: Skill, value: nu
 
 export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFighter) => void>> = {
 	[Monster.GOBLIN]: monster => {
-		monster.stats.special.counter *= 1.5;
-		monster.stats.special.multihit *= 1.3;
+		monster.stats.counter.global *= 1.5;
+		monster.stats.multihit.global *= 1.3;
 	},
 	[Monster.DARK_SMASHROOM]: monster => {
 		multiplySkillProbability(monster, Skill.M_RENFORTS, 2);
@@ -131,7 +131,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		setSkillProbability(monster, Skill.M_STEAL, 10);
 	},
 	[Monster.CACTUS]: monster => {
-		monster.stats.special.evasion *= 1.3;
+		monster.stats.evasion.global *= 1.3;
 		monster.stats.speed.global *= 1.3;
 		monster.spikes = 2;
 	},
@@ -170,7 +170,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.MOUKTIZ]: monster => {
 		monster.stats.speed.global *= 0.6;
-		monster.stats.special.evasion *= 1.2;
+		monster.stats.evasion.global *= 1.2;
 	},
 	[Monster.FRUTOX_DEFENDER]: monster => {
 		monster.time -= 20 * TIME_FACTOR;
@@ -195,8 +195,8 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		cyclo(monster);
 	},
 	[Monster.ECURENNE]: monster => {
-		monster.stats.special.evasion *= 1.15;
-		monster.stats.special.multihit *= 1.3;
+		monster.stats.evasion.global *= 1.15;
+		monster.stats.multihit.global *= 1.3;
 	},
 	[Monster.GROMSTER]: monster => {
 		gromst(monster);
@@ -211,20 +211,20 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		gromst(monster);
 	},
 	[Monster.LAPOUF]: monster => {
-		monster.stats.special.evasion *= 1.05;
-		monster.stats.special.multihit *= 1.05;
-		monster.stats.special.counter *= 1.1;
+		monster.stats.evasion.global *= 1.05;
+		monster.stats.multihit.global *= 1.05;
+		monster.stats.counter.global *= 1.1;
 		monster.stats.speed.global *= 0.5;
 	},
 	[Boss.TW_BIGBEASTLY]: monster => {
 		multiplySkillProbability(monster, Skill.CELERITE, 3);
 	},
 	[Boss.PR_IGOR]: monster => {
-		monster.stats.special.evasion *= 1.25;
+		monster.stats.evasion.global *= 1.25;
 		monster.stats.speed.global *= 3;
 	},
 	[Boss.YAKUZI]: monster => {
-		monster.stats.special.multihit *= 1.25;
+		monster.stats.multihit.global *= 1.25;
 	},
 	[Boss.DARK_MEGASHROOM]: monster => {
 		ggoupi(monster);
