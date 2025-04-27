@@ -423,7 +423,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 2,
-		probability: 25,
+		probability: 20,
 		visualEffect: SkillVisualEffect.SHOWER,
 		fxType: SkillFxType.Fire
 	},
