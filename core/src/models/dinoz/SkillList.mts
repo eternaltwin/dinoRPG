@@ -581,7 +581,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11206],
+		unlockedFrom: [Skill.ARTS_MARTIAUX],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
@@ -692,7 +692,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11206],
+		unlockedFrom: [Skill.ARTS_MARTIAUX],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -753,7 +753,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11206],
+		unlockedFrom: [Skill.CHARGE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
@@ -830,9 +830,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11305],
+		unlockedFrom: [Skill.CHARGE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ASSAULT_IGNORE_ARMOR]: ['x', 1.2]
+		}
 	},
 	[Skill.TORCHE]: {
 		id: Skill.TORCHE,
