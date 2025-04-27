@@ -450,7 +450,7 @@ export default defineComponent({
 						}
 
 						// Hide element speeds if equal to one
-						if (special && special.name.includes("Speed")) {
+						if (special && special.name.includes("Speed") && special.value === 1) {
 							special = null;
 						}
 
