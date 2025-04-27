@@ -170,9 +170,9 @@ export async function fightFriend(req: Request) {
 
 	const fightResult = calculateFightBetweenPlayers(
 		leftTeam,
-		leftPlayer.cooker,
+		leftPlayer,
 		rightTeam,
-		rightPlayer.cooker,
+		rightPlayer,
 		PlaceEnum.DOJO
 	);
 
@@ -290,7 +290,12 @@ export async function fightChallenge(req: Request) {
 		);
 	});
 
-	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
+	const opponentPlayer = {
+		cooker: rightTeam[0].player.cooker,
+		warLord: rightTeam[0].player.warLord,
+	};
+
+	const fightResult = calculateFightBetweenPlayers(leftTeam, player, rightTeam, opponentPlayer, PlaceEnum.DOJO, 100);
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 

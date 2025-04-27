@@ -41,6 +41,7 @@ export default defineComponent({
 				this.dinozStore.setDinozList(commonData.dinoz);
 				this.dinozStore.setDinozCount(commonData.dinozCount);
 				this.playerStore.setClanId(commonData.clanId);
+				this.playerStore.setWarLord(commonData.warLord);
 				this.playerStore.setPriest(commonData.priest);
 				this.playerStore.setShopkeeper(commonData.shopkeeper);
 				this.playerStore.setNotificationsCounter(commonData.notifications.length);

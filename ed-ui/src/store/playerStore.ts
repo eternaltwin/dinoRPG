@@ -17,6 +17,7 @@ export const playerStore = defineStore('playerStore', {
 			skipLevel: false
 		},
 		admin: false,
+		warLord: false,
 		priest: false,
 		shopkeeper: false,
 		sortOption: 'default',
@@ -30,6 +31,7 @@ export const playerStore = defineStore('playerStore', {
 		getPlayerId: (state: StorePlayer) => state.playerId ?? 0,
 		getPlayerOptions: (state: StorePlayer) => state.playerOptions,
 		getClanId: (state: StorePlayer) => state.clanId,
+		isWarLord: (state: StorePlayer) => state.warLord,
 		isPriest: (state: StorePlayer) => state.priest,
 		isShopkeeper: (state: StorePlayer) => state.shopkeeper,
 		getSortOption: (state: StorePlayer) => state.sortOption,
@@ -56,6 +58,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setAdmin(admin: boolean): void {
 			this.admin = admin;
+		},
+		setWarLord(warLord: boolean): void {
+			this.warLord = warLord;
 		},
 		setPriest(priest: boolean): void {
 			this.priest = priest;

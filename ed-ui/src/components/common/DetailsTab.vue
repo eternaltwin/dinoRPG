@@ -413,12 +413,15 @@ export default defineComponent({
 			}
 
 			// Get stats
+			const warlord = this.playerStore.isWarLord;
+
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
 				getAssaultStat(
 					data,
 					data.status.map(s => s.statusId),
 					this.dinozSkill,
-					stat as AssaultElement
+					stat as AssaultElement,
+					warlord
 				)
 			);
 
@@ -434,33 +437,31 @@ export default defineComponent({
 			const priest = this.playerStore.isPriest;
 
 			this.specialStats = Object.values(SpecialStat)
-				.map(stat =>
-					{
-						let special = getSpecialStat(
-							data,
-							data.status.map(s => s.statusId),
-							this.dinozSkill,
-							stat as SpecialStat,
-							priest
-						);
+				.map(stat => {
+					let special = getSpecialStat(
+						data,
+						data.status.map(s => s.statusId),
+						this.dinozSkill,
+						stat as SpecialStat,
+						priest
+					);
 
-						// Cut speed digits to 2
-						if (special && special.name.includes("speed")) {
-							special.value = Math.round(special.value * 100) / 100;
-						}
-
-						// Hide element speeds if equal to one
-						if (special && special.name.includes("Speed") && special.value === 1) {
-							special = null;
-						}
-
-						if (special && special.details && special.details.length > 0) {
-							return special;
-						} else {
-							return null;
-						}
+					// Cut speed digits to 2
+					if (special && special.name.includes('speed')) {
+						special.value = Math.round(special.value * 100) / 100;
 					}
-				)
+
+					// Hide element speeds if equal to one
+					if (special && special.name.includes('Speed') && special.value === 1) {
+						special = null;
+					}
+
+					if (special && special.details && special.details.length > 0) {
+						return special;
+					} else {
+						return null;
+					}
+				})
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 
 			// Refresh special stats on EventBus `refreshInventory`

@@ -1,6 +1,10 @@
 {
   "name": "@drpg/prisma",
+<<<<<<< HEAD
   "version": "0.16.7",
+=======
+  "version": "1.0.0",
+>>>>>>> 162208451 (refactor: make chef de guerre U skill)
   "main": "index.js",
   "types": "index.d.ts",
   "browser": "index-browser.js"

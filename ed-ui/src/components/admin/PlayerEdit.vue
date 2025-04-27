@@ -253,6 +253,16 @@
 		<fieldset>
 			<legend>U Skills</legend>
 			<div>
+				<label class="title" for="playerWarLord">WarLord :</label>
+				<input id="playerWarLord" type="text" v-model="player.warLord" disabled />
+				<div class="uSkills">
+					<input class="radio" type="radio" value="true" name="warLord" v-model="playerFields.warLord" />
+					<label class="radio" for="true">true</label>
+					<input class="radio" type="radio" value="false" name="warLord" v-model="playerFields.warLord" />
+					<label class="radio" for="false">false</label>
+				</div>
+			</div>
+			<div>
 				<label class="title" for="playerLeader">Leader :</label>
 				<input id="playerLeader" type="text" v-model="player.leader" disabled />
 				<div class="uSkills">
@@ -454,6 +464,7 @@ export default defineComponent({
 				this.playerFields.customText ||
 				this.playerFields.quetzuBought ||
 				this.playerFields.dailyGridRewards !== undefined ||
+				this.playerFields.warLord !== undefined ||
 				this.playerFields.leader !== undefined ||
 				this.playerFields.engineer !== undefined ||
 				this.playerFields.cooker !== undefined ||
@@ -470,6 +481,7 @@ export default defineComponent({
 					this.playerFields.customText,
 					this.playerFields.quetzuBought,
 					this.playerFields.dailyGridRewards,
+					this.playerFields.warLord,
 					this.playerFields.leader,
 					this.playerFields.engineer,
 					this.playerFields.cooker,

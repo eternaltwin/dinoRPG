@@ -192,6 +192,7 @@ model Player {
   connexionToken       String             @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   money                Int
   quetzuBought         Int
+  warLord              Boolean            @default(false)
   leader               Boolean            @default(false)
   engineer             Boolean            @default(false)
   cooker               Boolean            @default(false)

@@ -92,6 +92,8 @@ export const initializeDinoz = (
 		items: dinoz.items.map(item => item.itemId)
 	};
 
+	const hasWarLord = team ? team[Skill.CHEF_DE_GUERRE] ? true : false : false;
+
 	const fighter: DetailedFighter = {
 		id: dinoz.id,
 		display: dinoz.display,
@@ -116,11 +118,11 @@ export const initializeDinoz = (
 				[ElementType.VOID]: 0
 			},
 			assaultBonus: {
-				[ElementType.AIR]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.AIR).bonus,
-				[ElementType.FIRE]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.FIRE).bonus,
-				[ElementType.LIGHTNING]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.LIGHTNING).bonus,
-				[ElementType.WATER]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.WATER).bonus,
-				[ElementType.WOOD]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.WOOD).bonus,
+				[ElementType.AIR]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.AIR, hasWarLord).bonus,
+				[ElementType.FIRE]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.FIRE, hasWarLord).bonus,
+				[ElementType.LIGHTNING]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.LIGHTNING, hasWarLord).bonus,
+				[ElementType.WATER]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.WATER, hasWarLord).bonus,
+				[ElementType.WOOD]: getAssaultStat(dinoz, dinozStatus, skills, AssaultElement.WOOD, hasWarLord).bonus,
 				[ElementType.VOID]: 0
 			},
 			defense: {
@@ -726,10 +728,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 		fighter.nextAssaultBonus += 20;
 	}
 
-	if (team && fighterHas[Skill.CHEF_DE_GUERRE]) {
-		team[Skill.CHEF_DE_GUERRE] = true;
-	}
-
 	// WOOD
 	if (fighterHas[Skill.TENACITE]) {
 		fighter.minDamage += 1;
@@ -1141,15 +1139,6 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 	fighters.forEach(fighter => {
 		const team = fighter.attacker ? team1 : team2;
 
-		// FIRE
-		if (team[Skill.CHEF_DE_GUERRE]) {
-			fighter.stats.assaultBonus[ElementType.AIR] += 2;
-			fighter.stats.assaultBonus[ElementType.FIRE] += 2;
-			fighter.stats.assaultBonus[ElementType.WOOD] += 2;
-			fighter.stats.assaultBonus[ElementType.WATER] += 2;
-			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 2;
-			fighter.stats.assaultBonus[ElementType.VOID] += 2;
-		}
 		// WOOD: global wood defense bonus to the team
 		if (team[Skill.GARDE_FORESTIER]) {
 			applyGlobalDefenseBonus(fighter, ElementType.WOOD, 3);

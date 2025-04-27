@@ -101,7 +101,7 @@ async function goDarkWorld(playerId: string, dinozList: Pick<Dinoz, 'id'>[]) {
 }
 
 export async function movementListener(
-	player: Pick<Player, 'id' | 'teacher' | 'cooker'> & PlayerForConditionCheck,
+	player: Pick<Player, 'id' | 'warLord' | 'teacher' | 'cooker'> & PlayerForConditionCheck,
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToGetActualStep)[],
 	finalPlace: PlaceEnum,
 	activeDinoz: number
