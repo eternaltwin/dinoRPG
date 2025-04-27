@@ -18,6 +18,7 @@ export interface PlayerEdit {
 	operation?: string;
 	quetzuBought?: number;
 	dailyGridRewards?: number;
+	warLord?: boolean;
 	leader?: boolean;
 	engineer?: boolean;
 	cooker?: boolean;

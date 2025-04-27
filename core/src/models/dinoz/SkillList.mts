@@ -912,7 +912,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHEF_DE_GUERRE]: {
 		id: Skill.CHEF_DE_GUERRE,
 		name: 'ChefDeGuerre',
-		type: SkillType.P,
+		type: SkillType.U,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,

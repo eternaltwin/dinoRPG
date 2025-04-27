@@ -13,6 +13,7 @@ export interface PlayerCommonData {
 	clanId: number | undefined;
 	playerOptions: PlayerOptions;
 	admin: boolean;
+	warLord: boolean;
 	priest: boolean;
 	shopkeeper: boolean;
 	notifications: Notification[];

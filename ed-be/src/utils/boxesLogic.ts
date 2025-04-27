@@ -24,6 +24,7 @@ export async function calculatePlayerCompletion(playerId: string) {
 	const totalRewards = boxInfo.rewards.filter(r => r.rewardId <= 24).length;
 	const AVAILABLE_REWARDS = 23;
 	const universalCount =
+		(boxInfo.warLord ? 1 : 0) +
 		(boxInfo.cooker ? 1 : 0) +
 		(boxInfo.engineer ? 1 : 0) +
 		(boxInfo.matelasseur ? 1 : 0) +

@@ -37,6 +37,7 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getPlayerQuestProgression, increaseQuestProgression, updateQuest } from '../dao/questsDao.js';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { scenarioChecker } from '../utils/scenarioChecker.js';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 
 /**
  * @summary Process a fight
@@ -131,7 +132,7 @@ export async function processFight(req: Request) {
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	player: Pick<Player, 'id' | 'teacher' | 'cooker'>
+	player: Pick<Player, 'id' | 'warLord' | 'teacher' | 'cooker'>
 ) {
 	const dayOfWeek = dayjs().day();
 	let monsters = generateMonsterList(team, placeId);
@@ -166,7 +167,7 @@ export async function fightMonstersAtPlace(
  **/
 export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
-	player: Pick<Player, 'cooker'>,
+	player: Pick<Player, 'warLord' | 'cooker'>,
 	place: PlaceEnum,
 	monsters?: MonsterFiche[],
 	seed?: string
@@ -177,7 +178,8 @@ export function calculateFightVsMonsters(
 	const fighters = getFighters(
 		{
 			dinozList: team,
-			monsterList: []
+			monsterList: [],
+			[Skill.CHEF_DE_GUERRE]: player.warLord
 		},
 		{
 			dinozList: [],
@@ -223,9 +225,9 @@ export function calculateFightVsMonsters(
  **/
 export function calculateFightBetweenPlayers(
 	teamA: DinozToGetFighter[],
-	cookerA: boolean,
+	playerA: Pick<Player, 'warLord' | 'cooker'>,
 	teamB: DinozToGetFighter[],
-	cookerB: boolean,
+	playerB: Pick<Player, 'warLord' | 'cooker'>,
 	place: PlaceEnum,
 	timeout?: number,
 	seed?: string
@@ -236,11 +238,13 @@ export function calculateFightBetweenPlayers(
 	const fighters = getFighters(
 		{
 			dinozList: teamA,
-			monsterList: []
+			monsterList: [],
+			[Skill.CHEF_DE_GUERRE]: playerA.warLord
 		},
 		{
 			dinozList: teamB,
-			monsterList: []
+			monsterList: [],
+			[Skill.CHEF_DE_GUERRE]: playerB.warLord
 		},
 		place,
 		rng
@@ -260,8 +264,8 @@ export function calculateFightBetweenPlayers(
 		enableStats: true,
 
 		// Teams
-		attackerHasCook: cookerA,
-		defenderHasCook: cookerB,
+		attackerHasCook: playerA.cooker,
+		defenderHasCook: playerB.cooker,
 
 		// Fighters
 		initialDinozList,

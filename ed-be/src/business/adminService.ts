@@ -7,6 +7,8 @@ import {
 	auth,
 	getAllInformationFromPlayer,
 	getEternalTwinId,
+	getPlayerDinozInformationForTeam,
+	getPlayerUSkills,
 	removeMoney,
 	setPlayer
 } from '../dao/playerDao.js';
@@ -439,6 +441,7 @@ export async function listAllDinozFromPlayer(req: Request) {
  * @param req.params.id {number} PlayerId
  * @param req.body.customText {string}
  * @param req.body.quetzuBought {number}
+ * @param req.body.warLord {boolean}
  * @param req.body.leader {boolean}
  * @param req.body.engineer {boolean}
  * @param req.body.cooker {boolean}
@@ -472,6 +475,7 @@ export async function editPlayer(req: Request) {
 		customText: req.body.customText,
 		quetzuBought: req.body.quetzuBought,
 		dailyGridRewards: req.body.dailyGridRewards,
+		warLord: req.body.warLord,
 		leader: req.body.leader,
 		engineer: req.body.engineer,
 		cooker: req.body.cooker,
@@ -508,6 +512,9 @@ export async function editPlayer(req: Request) {
 			'dailyGridRewards',
 			player.dailyGridRewards
 		);
+	}
+	if (typeof player.warLord !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'warLord', player.warLord);
 	}
 	if (typeof player.leader !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'leader', player.leader);
@@ -557,6 +564,7 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		money: player.money,
 		quetzuBought: player.quetzuBought,
 		dailyGridRewards: player.dailyGridRewards,
+		warLord: player.warLord,
 		leader: player.leader,
 		engineer: player.engineer,
 		cooker: player.cooker,
@@ -778,7 +786,13 @@ export async function debugFight(req: Request) {
 		calculateFightBetweenPlayers([dinoz1], false, [dinoz2], false, PlaceEnum.DOJO);
 	}
 	console.log('stop')*/
-	const fight = calculateFightBetweenPlayers(dinoz1, false, dinoz2, false, PlaceEnum.DOJO, timeout, seed);
+
+	const fakePlayer = {
+		cooker: false,
+		warLord: false
+	};
+
+	const fight = calculateFightBetweenPlayers(dinoz1, fakePlayer, dinoz2, fakePlayer, PlaceEnum.DOJO, timeout, seed);
 	return fight;
 }
 
@@ -797,6 +811,7 @@ async function getDinozToFight(dinozId: number) {
 			nbrUpWater: true,
 			nbrUpLightning: true,
 			nbrUpAir: true,
+			playerId: true,
 			skills: {
 				select: { skillId: true }
 			}

@@ -224,6 +224,7 @@ export class OAuth {
 					skipFight: player.skipFight
 				},
 				admin: req?.auth?.isAdmin || false,
+				warLord: player.warLord,
 				priest: player.priest,
 				shopkeeper: player.shopKeeper,
 				notifications: player.notifications,

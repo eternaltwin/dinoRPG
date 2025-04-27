@@ -200,7 +200,17 @@ class TournamentManager {
 			);
 		});
 
-		const fight = calculateFightBetweenPlayers(team1Dinoz, false, team2Dinoz, false, PlaceEnum.DOJO);
+		const player1 = {
+			cooker: team1Dinoz[0].player.cooker,
+			warLord: team1Dinoz[0].player.warLord
+		};
+
+		const player2 = {
+			cooker: team2Dinoz ? team2Dinoz[0].player.cooker : false,
+			warLord: team2Dinoz ? team2Dinoz[0].player.warLord : false
+		};
+
+		const fight = calculateFightBetweenPlayers(team1Dinoz, player1, team2Dinoz, player2, PlaceEnum.DOJO);
 
 		const metadata: MetaData = {
 			phase: phase,

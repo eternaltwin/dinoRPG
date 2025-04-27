@@ -72,6 +72,7 @@ export async function getCommonData(req: Request) {
 			skipLevel: playerCommonData.skipLevel
 		},
 		admin: playerCommonData.role === AdminRole.ADMIN,
+		warLord: playerCommonData.warLord,
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper,
 		notifications: playerCommonData.notifications,

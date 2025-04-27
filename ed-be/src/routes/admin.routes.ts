@@ -233,6 +233,7 @@ routes.put(
 		body('customText').default(undefined).optional().exists(),
 		body('quetzuBought').default(undefined).optional().exists().isNumeric(),
 		body('dailyGridRewards').default(undefined).optional().exists().isNumeric(),
+		body('warLord').default(undefined).optional().exists().toBoolean(),
 		body('leader').default(undefined).optional().exists().toBoolean(),
 		body('engineer').default(undefined).optional().exists().toBoolean(),
 		body('cooker').default(undefined).optional().exists().toBoolean(),
