@@ -2181,7 +2181,7 @@
 			"LimiteBrisee": "Permet au Dinoz d'évoluer au-delà de sa force initiale dans un nouvel arbre de compétences",
 			"Waikikido": "Augmente les chances de contre-attaque de 10% et le maximum de points de vie de 20. Diminue l'initiative du Dinoz de 5",
 			"Vigilance": "Augmente la défense Feu de 5",
-			"PaumeChalumeau": "Attaque un ennemi avec un pouvoir de Feu 10 puis diminue l'initiative du Dinoz de 15",
+			"PaumeChalumeau": "Attaque un ennemi avec un pouvoir de Feu 10, détruit 5% de l'armure de l'adversaire sur impacte puis diminue l'initiative du Dinoz de 15",
 			"ChefDeGuerre": "Augmente la puissance de tous les *assauts* de tous les Dinoz du Groupe de 2",
 			"Belier": "Augmente la puissance du premier assaut de 20",
 			"ChasseurDeGoupignon": "Permet au Dinoz de chasser des petits animaux dans certains lieux",
