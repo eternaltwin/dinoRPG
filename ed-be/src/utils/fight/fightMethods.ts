@@ -2476,11 +2476,38 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.KAMIKAZE: {
-			// This skill cannot combo but is an assault
-			launchAssault(fightData, fighter, false, Skill.KAMIKAZE, getElementalAttack(fighter, ElementType.FIRE, 15));
+			// Pick target
+			const target = getRandomOpponentForAssault(fightData, fighter);
 
-			// Loose 50% HP
-			loseHp(fightData, fighter, Math.round(fighter.hp / 2), LifeEffect.Fire);
+			if (target === null) {
+				return cancel();
+			}
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: fighter.id,
+				tid: target.id,
+				skill: Skill.KAMIKAZE
+			});
+
+			// This skill cannot combo but is an assault
+			const hit = launchAssault(fightData, fighter, false, Skill.KAMIKAZE, getElementalAttack(fighter, ElementType.FIRE, 15), target, false);
+
+			// Loose 10% HP
+			loseHp(fightData, fighter, Math.round(fighter.maxHp * 0.1), LifeEffect.Explode);
+
+			if (hit && hit.hpLost > 0) {
+				addStatus(fightData, hit.target, Status.STUNNED, StatusLength.MEDIUM);
+			}
+
+			if (fighter.hp > 0) {
+				fightData.steps.push({
+					action: 'moveBack',
+					fid: fighter.id
+				});
+			}
+
 			break;
 		}
 		case Skill.SIESTE: {
