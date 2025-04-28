@@ -584,11 +584,13 @@ export async function reincarnate(req: Request) {
 
 	const race = getRace(dinoz);
 
+
+	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.seed));
+
+	// Note: remove all skills *before*  going through the promises because the removal may conflict with adding back the race native skills.
+	await removeAllSkillFromDinoz(dinoz.id);
+
 	const promises = [];
-
-	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.id));
-	promises.push(removeAllSkillFromDinoz(dinoz.id));
-
 	if (race.skillId && race.skillId.length > 0) {
 		for (const skill of race.skillId) {
 			promises.push(addSkillToDinoz(dinoz.id, skill));
@@ -598,7 +600,7 @@ export async function reincarnate(req: Request) {
 	promises.push(removeAllMissionsFromDinoz(dinoz.id));
 	promises.push(removeAllUnlockableSkillsFromDinoz(dinoz.id));
 	promises.push(updatePoints(authed.id, -dinoz.level));
-	promises.push(addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION));
-
 	await Promise.all(promises);
+
+	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
 }

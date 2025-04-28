@@ -992,6 +992,7 @@ export async function getDinozToReincarnate(dinozId: number) {
 			},
 			display: true,
 			id: true,
+			seed: true,
 			raceId: true,
 			life: true,
 			level: true,

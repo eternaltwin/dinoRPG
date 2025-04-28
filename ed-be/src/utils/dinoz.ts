@@ -101,11 +101,10 @@ export const initializeDinoz = (
 	};
 };
 
-export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: number): Prisma.DinozUpdateInput => {
+export const reincarnateDinoz = (race: DinozRace, display: string, seed: string): Prisma.DinozUpdateInput => {
 	const fullDisplay = [...display];
 	fullDisplay[1] = '0';
 
-	//TODO use upchance
 	let fire = 0;
 	let water = 0;
 	let wood = 0;
@@ -137,8 +136,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string, dinozId: numb
 	return {
 		experience: 0,
 		level: 1,
-		nextUpElementId: getRandomUpElement(race.upChance),
-		nextUpAltElementId: getRandomUpElement(race.upChance),
+		nextUpElementId: getRandomUpElement(race.upChance, seed),
+		nextUpAltElementId: getRandomUpElement(race.upChance, seed),
 		nbrUpFire: race.nbrFire + fire,
 		nbrUpWood: race.nbrWood + wood,
 		nbrUpWater: race.nbrWater + water,
