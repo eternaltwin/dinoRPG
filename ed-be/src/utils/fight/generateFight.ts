@@ -12,7 +12,7 @@ import {
 } from './fightMethods.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
@@ -24,6 +24,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -351,6 +352,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		// TORCHE
 		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
 			addStatus(fightData, fighter, Status.TORCHED);
+			// Add torche skill to relight.
+			let torche = structuredClone(Object.values(skillList).find(skill => skill.id === Skill.TORCHE));
+			torche!.type = SkillType.E; // SAFETY: this is safe because it's been checked above the fighter has torche.
+			fighter.skills.push(torche!); // SAFETY: same
 		}
 
 		// ACCUPUNCTURE
