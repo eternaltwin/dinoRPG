@@ -487,7 +487,7 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	// No skill if NO_SKILL
 	if (hasStatus(fighter, Status.NO_SKILL)) return null;
 
-	const skills = fighter.skills.filter(skill => skill.probability && skill.type !== SkillType.E);
+	const skills = fighter.skills.filter(skill => skill.probability && skill.type === SkillType.A);
 
 	if (!skills.length) return null;
 
@@ -1198,6 +1198,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					return cancel();
 				}
 				break;
+			}
+			case Skill.TORCHE: {
+				if (hasStatus(fighter, Status.TORCHED)) {
+					return cancel();
+				}
+				addStatus(fightData, fighter, Status.TORCHED);
 			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {

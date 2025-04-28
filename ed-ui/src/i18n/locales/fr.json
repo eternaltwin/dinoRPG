@@ -2189,7 +2189,7 @@
 			"BouleDeFeu": "Attaque un ennemi avec un pouvoir de Feu 7",
 			"Combustion": "Tous les ennemis perdent des points de vie égaux à leur élément Bois",
 			"ChasseurDeDragon": "Permet au Dinoz de chasser des animaux très rares et dangereux dans certains lieux",
-			"Torche": "Le Dinoz s'enflamme et perd 1 PV par tour. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage.",
+			"Torche": "Le Dinoz s'enflamme et perd 1 PV par cycle. Les ennemis attaquant le Dinoz en mêlée subissent des dégâts relatifs à l'élément Feu du Dinoz enflammé soumis à équilibrage. Le statut enflammé augmente la défense contre le feu de 10. Le combattant peut se rallumer.",
 			"AuraIncandescente": "Augmente l'élément Feu de 2",
 			"Vengeance": "Augmente les chances de contre-attaque de 5%",
 			"Sieste": "Le Dinoz regagne jusqu'à 20 points de vie et s'endort",
