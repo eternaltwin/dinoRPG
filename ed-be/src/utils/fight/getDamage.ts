@@ -151,7 +151,7 @@ export const calculateArmor = (
 		return 0;
 	} else {
 		// Transform to 0 to 1 value
-		let effective_armor = getFighterArmorRatio(attacker, power);
+		let effective_armor = getFighterArmorRatio(target, power);
 
 		// Remove global armor ignore
 		effective_armor -= getFighterIgnoreArmorRatio(attacker, power, isCloseCombat);
