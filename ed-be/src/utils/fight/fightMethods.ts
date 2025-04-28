@@ -4510,6 +4510,23 @@ const checkAfterDefenseEffects = (
 
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible, ...
 
+	// Furie: hit landed
+	if (damage > 0 &&
+		// 20 % chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 20 &&
+		hasSkill(target, Skill.FURIE)) {
+		target.nextAssaultBonus += 3;
+		// TODO add FX
+		console.log('Furie triggered');
+		// Add fx for gain of power
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.FURIE,
+			targets: [{tid: target.id}]
+		});
+	}
+
 	// Torch: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
 		const hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);

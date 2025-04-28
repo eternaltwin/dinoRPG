@@ -484,7 +484,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FURIE]: {
 		id: Skill.FURIE,
 		name: 'Furie',
-		type: SkillType.P,
+		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -492,18 +492,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.COLERE],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
-			[Stat.FIRE_ASSAULT]: 3,
-			[Stat.WATER_ASSAULT]: 3,
-			[Stat.AIR_ASSAULT]: 3,
-			[Stat.LIGHTNING_ASSAULT]: 3,
-			[Stat.WOOD_ASSAULT]: 3,
-			[Stat.FIRE_DEFENSE]: -2,
-			[Stat.WATER_DEFENSE]: -2,
-			[Stat.AIR_DEFENSE]: -2,
-			[Stat.LIGHTNING_DEFENSE]: -2,
-			[Stat.WOOD_DEFENSE]: -2
-		}
+		visualEffect: SkillVisualEffect.AURA,
+		fxType: AuraFxType.Spiral,
+		color: '0xFF0000',
 	},
 	[Skill.CHASSEUR_DE_GOUPIGNON]: {
 		id: Skill.CHASSEUR_DE_GOUPIGNON,
