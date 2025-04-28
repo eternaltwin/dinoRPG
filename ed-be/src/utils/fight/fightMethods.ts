@@ -2223,6 +2223,31 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 	fighter.status = fighter.status.filter(s => !statusList.includes(s.type));
 };
 
+/**
+ * Remove given quantity of armor from the opponent.
+ * It is a simple substraction.
+ * Armor cannot go below 0.
+ * @param {DetailedFight} fightData The data of the fight (to handle history and other)
+ * @param {DetailedFighter} fighter The fighter that receives the status
+ * @param {number} armorDestroyed Amount of armor destroyed, must be between 0 and 1.
+ */
+const destroyArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorDestroyed: number) => {
+	// TODO add FX
+	fighter.stats.armor.global = Math.min(fighter.stats.armor.global - armorDestroyed, 0);
+};
+
+/**
+ * Gain given quantity of armor from the opponent.
+ * Armor is gained multiplicatively.
+ * @param {DetailedFight} fightData The data of the fight (to handle history and other)
+ * @param {DetailedFighter} fighter The fighter that receives the status
+ * @param {number} armorDestroyed Amount of armor gained, must be between 0 and 1.
+ */
+const gainArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorGained: number) => {
+	// TODO add FX
+	fighter.stats.armor.global *= (1 + armorGained);
+};
+
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
 
 const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean => {
@@ -2460,13 +2485,19 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Increase time of the attacker
 			fighter.time += 15 * TIME_FACTOR;
 			// This skill cannot combo but is an assault
-			launchAssault(
+			const hit = launchAssault(
 				fightData,
 				fighter,
 				false,
 				Skill.PAUME_CHALUMEAU,
 				getElementalAttack(fighter, ElementType.FIRE, 10)
 			);
+
+			// on hit, destroy 5% of armor of the target
+			if (hit && hit.hpLost > 0) {
+				destroyArmor(fightData, hit.target, 0.05);
+			}
+
 			// Add fx for loss of init
 			fightData.steps.push({
 				action: 'notify',
