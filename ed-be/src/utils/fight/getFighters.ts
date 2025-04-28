@@ -976,7 +976,6 @@ export const getFighterMultihit = (fighter: DetailedFighter) => {
 // Maximum is 0.9 and minimum is 0.
 export const getFighterEvasion = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
 	let evasionTotal = fighter.stats.evasion.global;
-	console.log(`Evasion: ${evasionTotal}`);
 
 	// Prorate the evasion chance base on the element
 	// Example: If the attack has 9 fire and 1 wood, 90% of the fire evasion will be applied and 10% of the wood evasion will be applied
@@ -985,15 +984,12 @@ export const getFighterEvasion = (fighter: DetailedFighter, elementAttack: [Elem
 		elementAttack.forEach(val => {
 			const ele = val[0];
 			const att = val[1];
-			console.log(`Element ${ele} evasion ${fighter.stats.evasion[ele]}`);
 			evasionTotal *= (fighter.stats.evasion[ele] * att) / sumAtt;
-			console.log(`Partial Evasion: ${evasionTotal}`);
 		});
 	}
 
 	// Remove 1 to recenter the value at 0.
 	evasionTotal -= 1;
-	console.log(`Final (uncapped) Evasion: ${evasionTotal}`);
 
 	return Math.min(0.9, Math.max(0, evasionTotal));
 }
@@ -1003,7 +999,6 @@ export const getFighterEvasion = (fighter: DetailedFighter, elementAttack: [Elem
 // Maximum is 0.9 and minimum is 0.
 export const getFighterSuperEvasion = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
 	let superEvasionTotal = fighter.stats.superEvasion.global;
-	console.log(`superEvasion: ${superEvasionTotal}`);
 
 	// Prorate the superEvasion chance base on the element
 	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
@@ -1012,16 +1007,12 @@ export const getFighterSuperEvasion = (fighter: DetailedFighter, elementAttack: 
 		elementAttack.forEach(val => {
 			const ele = val[0];
 			const att = val[1];
-			console.log(`Element ${ele} superEvasion ${fighter.stats.superEvasion[ele]}`);
 			superEvasionTotal *= (fighter.stats.superEvasion[ele] * att) / sumAtt;
-			console.log(`Partial superEvasion: ${superEvasionTotal}`);
 		});
 	}
 
 	// Remove 1 to recenter the value at 0.
 	superEvasionTotal -= 1;
-	console.log(`Final (uncapped) superEvasion: ${superEvasionTotal}`);
-
 
 	return Math.min(0.9, Math.max(0, superEvasionTotal));
 }
@@ -1031,31 +1022,21 @@ export const getFighterSuperEvasion = (fighter: DetailedFighter, elementAttack: 
 export const getFighterIgnoreArmorRatio = (fighter: DetailedFighter, elementAttack: [ElementType, number][], isAssault: boolean) => {
 	let ignoreArmorRatio = fighter.stats.ignoreArmor.global;
 
-	console.log(`Ignore armor ratio: ${ignoreArmorRatio}`);
-
 	// Prorate the superEvasion chance base on the element
 	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
 	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 0);
-
-	console.log(`Sum attaque ${sumAtt}`);
 
 	if (sumAtt > 0) {
 		elementAttack.forEach(val => {
 			const ele = val[0];
 			const att = val[1];
-			console.log(`Attaque ${att}`);
-			console.log(`Element ${ele} ignore armor ${fighter.stats.ignoreArmor[ele]}`);
 			ignoreArmorRatio *= (fighter.stats.ignoreArmor[ele] * att) / sumAtt;
-			console.log(`Partial ignore armor: ${ignoreArmorRatio}`);
 	});
 	}
 
 	if (isAssault) {
 		ignoreArmorRatio *= fighter.stats.ignoreArmor.assault;
-		console.log(`Assault ignore armor: ${ignoreArmorRatio}`);
 	}
-
-	console.log(`Final (uncapped) ignore armor: ${ignoreArmorRatio}`);
 
 	return ignoreArmorRatio - 1;
 }
@@ -1065,8 +1046,6 @@ export const getFighterIgnoreArmorRatio = (fighter: DetailedFighter, elementAtta
 export const getFighterArmorRatio = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
 	let armorRatio = fighter.stats.armor.global;
 
-	console.log(`Armor ratio: ${armorRatio}`);
-
 	// Prorate the superEvasion chance base on the element
 	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
 	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 0);
@@ -1075,13 +1054,9 @@ export const getFighterArmorRatio = (fighter: DetailedFighter, elementAttack: [E
 		elementAttack.forEach(val => {
 			const ele = val[0];
 			const att = val[1];
-			console.log(`Element ${ele} armor ${fighter.stats.armor[ele]}`);
 			armorRatio *= (fighter.stats.armor[ele] * att) / sumAtt;
-			console.log(`Partial armor: ${armorRatio}`);
 		});
 	}
-
-	console.log(`Final (uncapped) armor: ${armorRatio}`);
 
 	return armorRatio - 1;
 }
