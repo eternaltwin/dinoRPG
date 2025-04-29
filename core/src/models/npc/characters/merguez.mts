@@ -1,5 +1,5 @@
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
-import { itemList, Item } from '../../item/ItemList.mjs';
+import { Item, itemList } from '../../item/ItemList.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
 
@@ -15,7 +15,7 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 				]
 			}
 		},
-		nextStep: ['ah'],
+		nextStep: ['ah', 'merguez_step_1', 'merguez_step_2', 'merguez_step_3', 'merguez_step_4', 'merguez_card'],
 		initialStep: true
 	},
 	ah: {
@@ -35,7 +35,77 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 	},
 	thanks: {
 		stepName: 'thanks',
+		nextStep: ['begin_merguez']
+	},
+	begin_merguez: {
+		stepName: 'begin_merguez',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 0, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.MERGUEZ,
+				step: 1
+			}
+		],
 		nextStep: []
+	},
+	merguez_step_1: {
+		stepName: 'merguez_step_1',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 1, '=']
+		},
+		nextStep: []
+	},
+	merguez_step_2: {
+		stepName: 'merguez_step_2',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 2, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.MERGUEZ,
+				step: 3
+			}
+		],
+		nextStep: []
+	},
+	merguez_step_3: {
+		stepName: 'merguez_step_3',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 3, '=']
+		},
+		nextStep: []
+	},
+	merguez_step_4: {
+		stepName: 'merguez_step_4',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 4, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.MERGUEZ,
+				step: 5
+			}
+		],
+		nextStep: []
+	},
+	merguez_card: {
+		stepName: 'merguez_card',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.MERGUEZ, 5, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.ITEM,
+				value: Item.GOBLIN_MERGUEZ,
+				quantity: 100
+			}
+		],
+		nextStep: ['thanks']
 	},
 	begin_star: {
 		stepName: 'begin_star',

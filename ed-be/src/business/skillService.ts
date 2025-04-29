@@ -584,7 +584,6 @@ export async function reincarnate(req: Request) {
 
 	const race = getRace(dinoz);
 
-
 	await updateDinoz(dinoz.id, reincarnateDinoz(race, dinoz.display, dinoz.seed));
 
 	// Note: remove all skills *before*  going through the promises because the removal may conflict with adding back the race native skills.

@@ -364,6 +364,7 @@ model PlayerQuest {
   id          Int     @id(map: "PK_8cb4cc9b423807c511f24c0faa3") @default(autoincrement())
   questId     Int
   progression Int
+  tracking    Int     @default(0)
   playerId    String? @db.Uuid
   player      Player? @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_1b5b041fab3362c845c142ca3b0")
 

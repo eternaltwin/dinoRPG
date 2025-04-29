@@ -299,24 +299,24 @@ export async function fightChallenge(req: Request) {
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;
 
-
-
 	const promises = [];
 
 	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length === 4) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1))
-		promises.push(createNotification(
-			authed.id,
-			JSON.stringify([
-				{
-					rewardType: RewardEnum.ITEM,
-					value: Item.TREASURE_COUPON,
-					quantity: 1
-				}
-			]),
-			NotificationSeverity.reward
-		))
-		promises.push(incrementDailyReset(player.Dojo.id))
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
+		promises.push(
+			createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			)
+		);
+		promises.push(incrementDailyReset(player.Dojo.id));
 	}
 	promises.push(removeMoney(authed.id, 200));
 	promises.push(increaseCashPrice(tournament.id, 200));

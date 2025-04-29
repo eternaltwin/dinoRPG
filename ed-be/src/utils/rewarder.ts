@@ -7,17 +7,17 @@ import { addMoney, getPlayerRewardsRequest, getPlayerShopOneItemDataRequest } fr
 import { decreaseItemQuantity, increaseItemQuantity, insertItem } from '../dao/playerItemDao.js';
 import { addRewardToPlayer } from '../dao/playerRewardsDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { itemList } from '@drpg/core/models/item/ItemList';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { levelList } from '@drpg/core/models/dinoz/DinozLevel';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Dinoz, DinozStatus, LogType, NotificationSeverity } from '@drpg/prisma';
+import { Dinoz, DinozStatus, LogType, NotificationSeverity, PantheonMotif } from '@drpg/prisma';
 import { updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
 import { createQuest, updateQuest } from '../dao/questsDao.js';
 import { checkAnnounce } from './announcer.js';
-import { PantheonMotif } from '@drpg/prisma';
 import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
+import { Scenario } from '@drpg/core/models/enums/Scenario';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -86,7 +86,17 @@ export async function rewarder(
 							const quantityLimitedByMaxQuantity =
 								(playerShopData.shopKeeper ? Math.round(itemRewarded.maxQuantity * 1.5) : itemRewarded.maxQuantity) -
 								playerItemData.quantity;
-
+							if (
+								playerShopData.quests.some(q => q.questId === Scenario.MERGUEZ && q.progression === 5) &&
+								itemRewarded.itemId === Item.GOBLIN_MERGUEZ
+							) {
+								await increaseItemQuantity(
+									playerId,
+									itemRewarded.itemId,
+									Math.min(playerItemData.quantity + reward.quantity, 100 - playerItemData.quantity)
+								);
+								break;
+							}
 							if (quantityLimitedByMaxQuantity <= 0) break;
 
 							await increaseItemQuantity(

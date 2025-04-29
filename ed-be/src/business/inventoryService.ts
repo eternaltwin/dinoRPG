@@ -64,6 +64,18 @@ export async function getAllItemsData(req: Request) {
 			throw new ExpectedError(`Item ${i.itemId} doesn't exist.`);
 		}
 
+		if (
+			theItem.itemId === Item.GOBLIN_MERGUEZ &&
+			playerInventoryData.quests.some(q => q.questId === Scenario.MERGUEZ && q.progression === 5)
+		) {
+			return {
+				id: theItem.itemId,
+				price: theItem.price,
+				quantity: playerInventoryData ? i.quantity : 0,
+				maxQuantity: 100
+			};
+		}
+
 		// Push a new item object with its properties accordingly to the player's unique skills and data
 		return {
 			id: theItem.itemId,

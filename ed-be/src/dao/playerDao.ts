@@ -599,6 +599,12 @@ export async function getPlayerInventoryDataRequest(playerId: string) {
 						gt: 0
 					}
 				}
+			},
+			quests: {
+				select: {
+					questId: true,
+					progression: true
+				}
 			}
 		}
 	});
@@ -812,6 +818,12 @@ export async function getPlayerShopOneItemDataRequest(playerId: string, itemId: 
 						{ unavailableReason: null },
 						{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
 					]
+				}
+			},
+			quests: {
+				select: {
+					questId: true,
+					progression: true
 				}
 			}
 		}

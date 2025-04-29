@@ -32278,18 +32278,21 @@ export namespace Prisma {
     id: number | null
     questId: number | null
     progression: number | null
+    tracking: number | null
   }
 
   export type PlayerQuestSumAggregateOutputType = {
     id: number | null
     questId: number | null
     progression: number | null
+    tracking: number | null
   }
 
   export type PlayerQuestMinAggregateOutputType = {
     id: number | null
     questId: number | null
     progression: number | null
+    tracking: number | null
     playerId: string | null
   }
 
@@ -32297,6 +32300,7 @@ export namespace Prisma {
     id: number | null
     questId: number | null
     progression: number | null
+    tracking: number | null
     playerId: string | null
   }
 
@@ -32304,6 +32308,7 @@ export namespace Prisma {
     id: number
     questId: number
     progression: number
+    tracking: number
     playerId: number
     _all: number
   }
@@ -32313,18 +32318,21 @@ export namespace Prisma {
     id?: true
     questId?: true
     progression?: true
+    tracking?: true
   }
 
   export type PlayerQuestSumAggregateInputType = {
     id?: true
     questId?: true
     progression?: true
+    tracking?: true
   }
 
   export type PlayerQuestMinAggregateInputType = {
     id?: true
     questId?: true
     progression?: true
+    tracking?: true
     playerId?: true
   }
 
@@ -32332,6 +32340,7 @@ export namespace Prisma {
     id?: true
     questId?: true
     progression?: true
+    tracking?: true
     playerId?: true
   }
 
@@ -32339,6 +32348,7 @@ export namespace Prisma {
     id?: true
     questId?: true
     progression?: true
+    tracking?: true
     playerId?: true
     _all?: true
   }
@@ -32433,6 +32443,7 @@ export namespace Prisma {
     id: number
     questId: number
     progression: number
+    tracking: number
     playerId: string | null
     _count: PlayerQuestCountAggregateOutputType | null
     _avg: PlayerQuestAvgAggregateOutputType | null
@@ -32459,6 +32470,7 @@ export namespace Prisma {
     id?: boolean
     questId?: boolean
     progression?: boolean
+    tracking?: boolean
     playerId?: boolean
     player?: boolean | PlayerQuest$playerArgs<ExtArgs>
   }, ExtArgs["result"]["playerQuest"]>
@@ -32467,6 +32479,7 @@ export namespace Prisma {
     id?: boolean
     questId?: boolean
     progression?: boolean
+    tracking?: boolean
     playerId?: boolean
     player?: boolean | PlayerQuest$playerArgs<ExtArgs>
   }, ExtArgs["result"]["playerQuest"]>
@@ -32475,6 +32488,7 @@ export namespace Prisma {
     id?: boolean
     questId?: boolean
     progression?: boolean
+    tracking?: boolean
     playerId?: boolean
     player?: boolean | PlayerQuest$playerArgs<ExtArgs>
   }, ExtArgs["result"]["playerQuest"]>
@@ -32483,10 +32497,11 @@ export namespace Prisma {
     id?: boolean
     questId?: boolean
     progression?: boolean
+    tracking?: boolean
     playerId?: boolean
   }
 
-  export type PlayerQuestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "questId" | "progression" | "playerId", ExtArgs["result"]["playerQuest"]>
+  export type PlayerQuestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "questId" | "progression" | "tracking" | "playerId", ExtArgs["result"]["playerQuest"]>
   export type PlayerQuestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     player?: boolean | PlayerQuest$playerArgs<ExtArgs>
   }
@@ -32506,6 +32521,7 @@ export namespace Prisma {
       id: number
       questId: number
       progression: number
+      tracking: number
       playerId: string | null
     }, ExtArgs["result"]["playerQuest"]>
     composites: {}
@@ -32934,6 +32950,7 @@ export namespace Prisma {
     readonly id: FieldRef<"PlayerQuest", 'Int'>
     readonly questId: FieldRef<"PlayerQuest", 'Int'>
     readonly progression: FieldRef<"PlayerQuest", 'Int'>
+    readonly tracking: FieldRef<"PlayerQuest", 'Int'>
     readonly playerId: FieldRef<"PlayerQuest", 'String'>
   }
     
@@ -68675,6 +68692,7 @@ export namespace Prisma {
     id: 'id',
     questId: 'questId',
     progression: 'progression',
+    tracking: 'tracking',
     playerId: 'playerId'
   };
 
@@ -70956,6 +70974,7 @@ export namespace Prisma {
     id?: IntFilter<"PlayerQuest"> | number
     questId?: IntFilter<"PlayerQuest"> | number
     progression?: IntFilter<"PlayerQuest"> | number
+    tracking?: IntFilter<"PlayerQuest"> | number
     playerId?: UuidNullableFilter<"PlayerQuest"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
@@ -70964,6 +70983,7 @@ export namespace Prisma {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
     playerId?: SortOrderInput | SortOrder
     player?: PlayerOrderByWithRelationInput
   }
@@ -70976,6 +70996,7 @@ export namespace Prisma {
     NOT?: PlayerQuestWhereInput | PlayerQuestWhereInput[]
     questId?: IntFilter<"PlayerQuest"> | number
     progression?: IntFilter<"PlayerQuest"> | number
+    tracking?: IntFilter<"PlayerQuest"> | number
     playerId?: UuidNullableFilter<"PlayerQuest"> | string | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id" | "questId_playerId">
@@ -70984,6 +71005,7 @@ export namespace Prisma {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
     playerId?: SortOrderInput | SortOrder
     _count?: PlayerQuestCountOrderByAggregateInput
     _avg?: PlayerQuestAvgOrderByAggregateInput
@@ -70999,6 +71021,7 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"PlayerQuest"> | number
     questId?: IntWithAggregatesFilter<"PlayerQuest"> | number
     progression?: IntWithAggregatesFilter<"PlayerQuest"> | number
+    tracking?: IntWithAggregatesFilter<"PlayerQuest"> | number
     playerId?: UuidNullableWithAggregatesFilter<"PlayerQuest"> | string | null
   }
 
@@ -74665,6 +74688,7 @@ export namespace Prisma {
   export type PlayerQuestCreateInput = {
     questId: number
     progression: number
+    tracking?: number
     player?: PlayerCreateNestedOneWithoutQuestsInput
   }
 
@@ -74672,12 +74696,14 @@ export namespace Prisma {
     id?: number
     questId: number
     progression: number
+    tracking?: number
     playerId?: string | null
   }
 
   export type PlayerQuestUpdateInput = {
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
     player?: PlayerUpdateOneWithoutQuestsNestedInput
   }
 
@@ -74685,6 +74711,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -74692,18 +74719,21 @@ export namespace Prisma {
     id?: number
     questId: number
     progression: number
+    tracking?: number
     playerId?: string | null
   }
 
   export type PlayerQuestUpdateManyMutationInput = {
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlayerQuestUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -78480,6 +78510,7 @@ export namespace Prisma {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
     playerId?: SortOrder
   }
 
@@ -78487,12 +78518,14 @@ export namespace Prisma {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
   }
 
   export type PlayerQuestMaxOrderByAggregateInput = {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
     playerId?: SortOrder
   }
 
@@ -78500,6 +78533,7 @@ export namespace Prisma {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
     playerId?: SortOrder
   }
 
@@ -78507,6 +78541,7 @@ export namespace Prisma {
     id?: SortOrder
     questId?: SortOrder
     progression?: SortOrder
+    tracking?: SortOrder
   }
 
   export type PlayerRewardRewardIdPlayerIdCompoundUniqueInput = {
@@ -89410,12 +89445,14 @@ export namespace Prisma {
   export type PlayerQuestCreateWithoutPlayerInput = {
     questId: number
     progression: number
+    tracking?: number
   }
 
   export type PlayerQuestUncheckedCreateWithoutPlayerInput = {
     id?: number
     questId: number
     progression: number
+    tracking?: number
   }
 
   export type PlayerQuestCreateOrConnectWithoutPlayerInput = {
@@ -90248,6 +90285,7 @@ export namespace Prisma {
     id?: IntFilter<"PlayerQuest"> | number
     questId?: IntFilter<"PlayerQuest"> | number
     progression?: IntFilter<"PlayerQuest"> | number
+    tracking?: IntFilter<"PlayerQuest"> | number
     playerId?: UuidNullableFilter<"PlayerQuest"> | string | null
   }
 
@@ -103741,6 +103779,7 @@ export namespace Prisma {
     id?: number
     questId: number
     progression: number
+    tracking?: number
   }
 
   export type PlayerRewardCreateManyPlayerInput = {
@@ -104377,18 +104416,21 @@ export namespace Prisma {
   export type PlayerQuestUpdateWithoutPlayerInput = {
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlayerQuestUncheckedUpdateWithoutPlayerInput = {
     id?: IntFieldUpdateOperationsInput | number
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlayerQuestUncheckedUpdateManyWithoutPlayerInput = {
     id?: IntFieldUpdateOperationsInput | number
     questId?: IntFieldUpdateOperationsInput | number
     progression?: IntFieldUpdateOperationsInput | number
+    tracking?: IntFieldUpdateOperationsInput | number
   }
 
   export type PlayerRewardUpdateWithoutPlayerInput = {

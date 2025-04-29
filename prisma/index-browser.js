@@ -335,6 +335,7 @@ exports.Prisma.PlayerQuestScalarFieldEnum = {
   id: 'id',
   questId: 'questId',
   progression: 'progression',
+  tracking: 'tracking',
   playerId: 'playerId'
 };
 

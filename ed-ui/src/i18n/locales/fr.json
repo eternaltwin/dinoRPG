@@ -1150,14 +1150,26 @@
 				"thanks": "De rien, de rien, c'est bon pour le business !",
 				"begin_star": "Ohhh je vois que ton Dinoz transporte un nuage burger ! Savais-tu que cela était très mauvais pour la santé ? À moins que tu ne veuilles que ton Dinoz ne devienne aussi gros qu'un Sumo ?!?",
 				"ok_star": "Enlève-moi ce vilain Burger et viens plutôt goûter mes merguez à la place ! Tiens, je te donne en cadeau de fidélité ce truc que j'ai trouvé par terre !",
-				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !"
+				"star": "Chouette ! Le vendeur de merguez vous a confié l'une des sept étoiles magiques !",
+				"begin_merguez": "Ah tu veux une carte de fidélité ? Bien sur avec plaisir. Reviens me voir quand tu auras consommé 500 merguez, j'aurais quelque chose pour toi.",
+				"merguez_step_2": "500 !?! On s'est mal compris, c'est de 500 livraisons dont je parlais. Donc 2500 au total.&& Aller encore 2000 à manger !",
+				"merguez_step_1": "Je trouve que tu exagère. C'est pas autant que ça, et surtout c'est gratuit !",
+				"merguez_step_3": "Pense bien à macher surtout. Et hydrate-toi, elles peuvent piquer un peu.",
+				"merguez_step_4": "Féliciations ! Je te note dans mon carnet des plus fidèles consommateurs. Vu que je sais que tu aime les merguez je vais te les donner par paquet de 100 à présent.",
+				"merguez_card": "Ah mais oui c'est vrai que ce cher client est un grand amateur de merguez. Tenez, voici de quoi remplir votre stock !"
 			},
 			"playerChoice": {
 				"ah": "Ah....",
 				"ok": "Effectivement...",
 				"thanks": "Merci",
 				"ok_star": "...",
-				"star": "Ah ?"
+				"star": "Ah ?",
+				"begin_merguez": "Je compte revenir !",
+				"merguez_step_1": "500 ca fait quand même beaucoup.",
+				"merguez_step_2": "Ca y est, j'ai consommé les 500 merguez.",
+				"merguez_step_3": "2500 ca fait quand même beaucoup.",
+				"merguez_step_4": "Ca y est, j'ai consommé les 2500 merguez.",
+				"merguez_card": "Montrer la carte de fidélité."
 			}
 		},
 		"shaman": {
