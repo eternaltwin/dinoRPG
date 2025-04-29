@@ -2154,10 +2154,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31104],
+		unlockedFrom: [Skill.VITALITE],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		priority: 4,
+		priority: 2,
 		probability: 8,
 		visualEffect: SkillVisualEffect.ATTACH,
 		fx: 'fxOndeFocus'
