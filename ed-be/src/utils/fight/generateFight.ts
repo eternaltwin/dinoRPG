@@ -2,7 +2,9 @@ import {
 	addStatus,
 	applyStrategy,
 	checkDeaths,
+	getAllies,
 	getLimitedRandomOpponent,
+	hasSkill,
 	hasStatus,
 	heal,
 	initStepFighter,
@@ -356,6 +358,17 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			let torche = structuredClone(Object.values(skillList).find(skill => skill.id === Skill.TORCHE));
 			torche!.type = SkillType.E; // SAFETY: this is safe because it's been checked above the fighter has torche.
 			fighter.skills.push(torche!); // SAFETY: same
+		}
+
+		// BRAVE
+		if (hasSkill(fighter, Skill.BRAVE)) {
+			const allies = getAllies(fightData, fighter);
+
+			if (allies.length === 0) {
+				fighter.stats.speed.global *= 0.85;
+				fighter.allAssaultMultiplier *= 1.2;
+				fighter.time -= 12 * TIME_FACTOR;
+			}
 		}
 
 		// COUP FATAL: replaces coup sournois, so remove it
