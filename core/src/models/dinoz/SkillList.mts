@@ -422,7 +422,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.COEUR_DU_PHOENIX],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		priority: 2,
+		priority: 1,
 		probability: 20,
 		visualEffect: SkillVisualEffect.SHOWER,
 		fxType: SkillFxType.Fire,
