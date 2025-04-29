@@ -51,7 +51,7 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
+import { cloneDinoz, getFighterArmorRatio, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -2646,19 +2646,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			);
 			break;
 		case Skill.COUP_SOURNOIS: {
-			// Get random opponent
+			// Launch normal assault
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit && hit.hpLost > 0) {
-				let damage = 0;
-
-				// Base damage of half the target hp if is does not know perception or is not a boss
-				if (hit.target.type !== 'boss') {
-					// 50% HP otherwise
-					damage = applyBalanceDamage(hit.target, Math.round(hit.target.hp / 2));
+			// If it hits, chance to remove % of max hp based on target armor
+			if (hit && hit.hpLost > 0 && hit.target.type !== 'boss') {
+				// 100% armor means 100% chance to land the hit, 5% armor means 5% chance to land the hit
+				if (randomBetweenSeeded(fightData.rng, 0, 99) < getFighterArmorRatio(hit.target, [])) {
+					// 5% max HP
+					const damage = Math.round(hit.target.hp * 0.05);
+					loseHp(fightData, hit.target, damage, LifeEffect.Skull);
 				}
-
-				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
 			}
 			break;
 		}
