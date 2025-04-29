@@ -1297,7 +1297,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [21102],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 3,
+		priority: 2,
 		probability: 15
 	},
 	[Skill.SYMPATIQUE]: {
@@ -1385,7 +1385,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.ESPRIT_GORILLOZ],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 3,
+		priority: 4,
 		probability: 10,
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xAAFF00',
@@ -1480,7 +1480,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.VIGNES],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 2,
+		priority: 3,
 		probability: 10,
 		visualEffect: SkillVisualEffect.HEAL
 	},
