@@ -2154,7 +2154,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [31103],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 20,
+		}
 	},
 	[Skill.KARATE_SOUS_MARIN]: {
 		id: Skill.KARATE_SOUS_MARIN,
