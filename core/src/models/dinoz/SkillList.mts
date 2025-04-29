@@ -2140,9 +2140,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.PERCEPTION],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
-			[Stat.MAX_HP]: 10,
-			[Stat.WATER_ELEMENT]: 1
+		globalEffects: {
+			[Stat.WATER_DEFENSE]: 3
 		}
 	},
 	[Skill.POCHE_VENTRALE]: {
