@@ -1401,7 +1401,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [21205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 10,
+			[Stat.WOOD_ELEMENT]: 1
+		}
 	},
 	[Skill.COCON]: {
 		id: Skill.COCON,
