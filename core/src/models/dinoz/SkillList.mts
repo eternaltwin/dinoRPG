@@ -2057,7 +2057,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: 30
+			[Stat.MAX_HP]: 20
 		}
 	},
 	[Skill.VITALITE]: {
