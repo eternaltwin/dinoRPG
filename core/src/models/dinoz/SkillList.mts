@@ -1259,7 +1259,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.LANCEUR_DE_GLAND,
 		name: 'LanceurDeGland',
 		type: SkillType.A,
-		energy: Energy.E25,
+		energy: Energy.E10,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
