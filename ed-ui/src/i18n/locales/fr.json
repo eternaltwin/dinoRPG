@@ -2202,7 +2202,7 @@
 			"EspritGorilloz": "Appelle un esprit Gorilloz pour aider à combattre",
 			"GardeForestier": "Augmente de 3 la défense Bois de tous les Dinoz du groupe",
 			"Fouille": "Permet au Dinoz de trouver des artefacts dans certains lieux",
-			"Detective": "Permet au Dinoz de chercher des artefacts rares à certains endroits",
+			"Detective": "Permet au Dinoz de chercher des artefacts rares à certains endroits. Augmente l'élément Bois de 1 et les PV max de 10.",
 			"ExpertEnFouille": "Permet au Dinoz de chercher une case de plus lors d'une action de fouille",
 			"Cocon": "Augmente de 2 les PV récupérés par heure lors du repos",
 			"Geant": "Augmente la puissance de tous les *assauts* de 5, l'élément Bois de 1, augmente les PV max de 30 et diminue la vitesse de 20%",
