@@ -2244,7 +2244,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
  */
 const destroyArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorDestroyed: number) => {
 	// TODO add FX
-	fighter.stats.armor.global = Math.min(fighter.stats.armor.global - armorDestroyed, 0);
+	fighter.stats.armor.global = Math.max(fighter.stats.armor.global - armorDestroyed, 0);
 };
 
 /**
