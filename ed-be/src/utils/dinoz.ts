@@ -59,7 +59,7 @@ export const getNumberOfGatheringTries = (
 			dinoz.skills.some(s => s.skillId === skillList[Skill.EXPERT_EN_FOUILLE].id) ? click++ : click;
 			dinoz.skills.some(s => s.skillId === skillList[Skill.PLANIFICATEUR].id) ? click++ : click;
 			dinoz.skills.some(s => s.skillId === skillList[Skill.CHAMPOLLION].id) ? click++ : click;
-			dinoz.skills.some(s => s.skillId === skillList[Skill.GRATTEUR].id) ? click++ : click;
+			dinoz.skills.some(s => s.skillId === skillList[Skill.GRIFFES_METALLIQUES].id) ? click++ : click;
 			break;
 		case GatherType.LABO:
 		case GatherType.PARTY:
