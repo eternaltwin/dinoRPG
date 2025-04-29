@@ -1652,7 +1652,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [21302],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ARMOR]: ['x', 1.05],
+			[Stat.WOOD_ELEMENT]: 2
+		}
 	},
 	[Skill.BENEDICTION_DES_FEES]: {
 		id: Skill.BENEDICTION_DES_FEES,
