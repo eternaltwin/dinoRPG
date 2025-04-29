@@ -1251,7 +1251,9 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Slow opponents
 				opponents.forEach(opponent => {
-					addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
+					if (!hasStatus(opponent, Status.FLYING)) {
+						addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
+					}
 				});
 				break;
 			}
@@ -2076,6 +2078,9 @@ export const addStatus = (
 
 	// Negate if SELF_CONTROL
 	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
+
+	// Cancel SLOWED status
+	if (hasSkill(fighter, Skill.ENTRAINEMENT_SOUS_MARIN) && status === Status.SLOWED) return false;
 
 	// Handle the immediate effect of the status
 	switch (status) {
