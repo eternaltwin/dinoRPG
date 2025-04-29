@@ -2223,7 +2223,7 @@
 			"RayonKaarSher": "Attaque tous les ennemis avec un pouvoir Eau de 7",
 			"Magasinier": "Augmente la capacité maximale de l'inventaire du joueur de 50% (non cumulable)",
 			"Perception": "Augmente la puissance de tous les *assauts* Eau de 4, et les assauts Eau permettent d'annuler le statut intangible.",
-			"CoupsSournois": "Attaque un ennemi. En cas de réussite l'ennemi perd la moitié de ses points de vie (soumis à équilibrage) s'il n'a pas la compétence perception. Note : ne fonctionne pas sur les boss.",
+			"CoupsSournois": "Attaque un ennemi. Selon l'armure de la cible, peut infliger des dégâts supplémentaires égaux à 5% des PV max. Note : ne fonctionne pas sur les boss.",
 			"ApprentiPecheur": "Permet au Dinoz de pêcher de petits poissons à certains endroits. Augmente la défense en Eau de 3.",
 			"CoupFatal": "Attaque un ennemi. S'il est touché, il perd tous ses points de vie (soumis à équilibrage) s'il n'a pas la compétence perception. Note : ne fonctionne pas sur les boss.",
 			"EntrainementSousMarin": "Augmente la défense en Eau de 3, les PV max de 10 et immunise au ralentissement",
