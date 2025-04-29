@@ -2122,7 +2122,7 @@
 			"Furie": "Le Dinoz a 20% de chance d'augmenter la puissance de son prochain assaut de 3 à chaque fois qu'il subit des dégâts directes",
 			"ArtsMartiaux": "Augmente la puissance de tous les *assauts* de 2",
 			"CoeurArdent": "Augmente la puissance de tous les *assauts* de Feu de 12 et augmente le maximum de points de vie de 20",
-			"Kamikaze": "Attaque un ennemi avec un pouvoir de Feu 15, au prix de 10% de ses points de vie maximum et stun la cible pour une durée moyenne si l'attaque touche. L'attaquant peut mourir de son attaque.",
+			"Kamikaze": "Attaque un ennemi avec un pouvoir de Feu 15, au prix de 10% de ses points de vie maximum et étourdit la cible pour une durée moyenne si l'attaque touche. L'attaquant peut mourir de son attaque.",
 			"Sprint": "Augmente l'initiative de 6",
 			"ProteinesDinozienne": "Augmente l'endurance du Dinoz de 30%",
 			"Extenuation": "Diminue de 25% la capacité de récupération d'un adversaire",
