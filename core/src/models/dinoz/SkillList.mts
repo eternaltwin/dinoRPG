@@ -1617,7 +1617,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21303],
+		unlockedFrom: [Skill.COCON],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -1626,6 +1626,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.FIRE_ASSAULT]: 5,
 			[Stat.WATER_ASSAULT]: 5,
 			[Stat.LIGHTNING_ASSAULT]: 5,
+			[Stat.WOOD_ELEMENT]: 1,
 			[Stat.MAX_HP]: 30,
 			[Stat.SPEED]: ['x', 1.2]
 		}
@@ -1650,7 +1651,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21302],
+		unlockedFrom: [Skill.DETECTIVE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
