@@ -74,7 +74,7 @@ export enum Skill {
 	TENACITE = 21204,
 	FOUILLE = 21205,
 	CROISSANCE = 21206,
-	GRATTEUR = 21207,
+	GRIFFES_METALLIQUES = 21207,
 	ETAT_PRIMAL = 21301,
 	DETECTIVE = 21302,
 	COCON = 21303,
@@ -1363,17 +1363,20 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.WOOD_ASSAULT]: 1
 		}
 	},
-	[Skill.GRATTEUR]: {
-		id: Skill.GRATTEUR,
-		name: 'Gratteur',
-		type: SkillType.C,
+	[Skill.GRIFFES_METALLIQUES]: {
+		id: Skill.GRIFFES_METALLIQUES,
+		name: 'GriffesMetalliques',
+		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21104],
+		unlockedFrom: [Skill.LANCEUR_DE_GLAND],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		effects: {
+			[Stat.ARMOR]: ['x', 1.1]
+		}
 	},
 	[Skill.ETAT_PRIMAL]: {
 		id: Skill.ETAT_PRIMAL,
@@ -1569,7 +1572,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.GRATTEUR],
+		unlockedFrom: [Skill.GRIFFES_METALLIQUES],
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 3,
