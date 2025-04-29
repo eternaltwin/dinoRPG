@@ -176,6 +176,8 @@ export interface DetailedFighter {
 	hypnotized?: number;
 	hasUsedHypnose: boolean;
 	hasUsedHyperventilation: boolean;
+	// Rage
+	hasRaged: boolean;
 	// Mud wall
 	mudWall?: number;
 	// Invocations

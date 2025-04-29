@@ -50,6 +50,7 @@ export enum Skill {
 	VULCAIN = 11412,
 	ARMURE_DIFRIT = 11413,
 	BRAVE = 11501,
+	RAGE = 11502,
 	PROTEINES_DINOZIENNES = 12101,
 	EXTENUATION = 12201,
 	ROUGE = 12202,
@@ -1013,6 +1014,22 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.FIRE_ELEMENT]: 3,
 			[Stat.SPEED]: ['x', 0.85]
 		}
+	},
+	[Skill.RAGE]: {
+		id: Skill.RAGE,
+		name: 'Rage',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.FIRE],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.KAMIKAZE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.GENERATE,
+		color: '0xFF0000',
+		radius: 2,
+		power: 2
 	},
 	[Skill.PROTEINES_DINOZIENNES]: {
 		id: Skill.PROTEINES_DINOZIENNES,

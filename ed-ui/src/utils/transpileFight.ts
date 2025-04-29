@@ -513,6 +513,8 @@ export function transpileFight(
 								return { id: t.tid, life: t.damages };
 							}),
 							color: skill?.color,
+							radius: skill?.radius,
+							power: skill?.power,
 							type: skill?.fxType,
 							fx: skill?.fx
 						}
