@@ -1415,7 +1415,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21206],
+		unlockedFrom: [Skill.CROISSANCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -1445,11 +1445,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21206],
+		unlockedFrom: [Skill.CROISSANCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WOOD_ASSAULT]: 15
+			[Stat.WOOD_ASSAULT]: 15,
+			[Stat.ASSAULT_IGNORE_ARMOR]: ['x', 1.05]
 		}
 	},
 	[Skill.ACROBATE]: {
