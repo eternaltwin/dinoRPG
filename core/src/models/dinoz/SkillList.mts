@@ -1460,7 +1460,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21202],
+		unlockedFrom: [Skill.RENFORTS_KORGON],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -1713,7 +1713,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21404],
+		unlockedFrom: [Skill.GEANT],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -1723,6 +1723,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.AIR_ASSAULT]: 15,
 			[Stat.LIGHTNING_ASSAULT]: 15,
 			[Stat.WOOD_ASSAULT]: 15,
+			[Stat.WOOD_ELEMENT]: 2,
 			[Stat.SPEED]: ['x', 1.2]
 		}
 	},
