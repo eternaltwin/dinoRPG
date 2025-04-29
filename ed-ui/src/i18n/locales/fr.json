@@ -2195,7 +2195,7 @@
 			"Sieste": "Le Dinoz regagne jusqu'à 20 points de vie et s'endort",
 			"Meteores": "Attaque tous les ennemis avec un pouvoir de Feu 10",
 			"SelfControl": "Immunise le Dinoz contre les stuns et autre prise de contrôle (hypnose, nécromancie, etc.) et diminue son initiative de 3",
-			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6, le maximum de vie de 50 et la vitesse de 15%",
+			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 3, le maximum de vie de 20 et la vitesse de 15%. Si le Dinoz est effectivement seul, il gagne 15% de vitesse supplémentaire, 20% de puissance pour tous ses assauts et 12 d'initiative.",
 			"Planificateur": "Permet au Dinoz de chercher une case supplémentaire",
 			"HeritageFaroe": "Augmente la puissance des *assauts* Bois de 12 et l'armure de 10%",
 			"PrintempsPrecoce": "Tous les autres combattants alliés regagnent jusqu'à autant de points de vie que l'élément Bois du Dinoz",
