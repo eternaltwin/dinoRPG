@@ -2077,7 +2077,7 @@ export const addStatus = (
 	const isBad = BadStatus.includes(status);
 
 	// Negate if SELF_CONTROL
-	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
+	if (hasSkill(fighter, Skill.SELF_CONTROL) && status === Status.STUNNED) return false;
 
 	// Cancel SLOWED status
 	if (hasSkill(fighter, Skill.ENTRAINEMENT_SOUS_MARIN) && status === Status.SLOWED) return false;
@@ -2426,6 +2426,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					action: 'itemUse',
 					fighter: stepFighter(opponentWithMask),
 					itemId: Item.CUZCUSSIAN_MASK
+				});
+			} else if (hasSkill(opponent, Skill.SELF_CONTROL)) {
+				// Just activate and nothing happens
+				fightData.steps.push({
+					action: 'skillAnnounce',
+					fid: opponent.id,
+					skill: Skill.SELF_CONTROL,
 				});
 			} else {
 				// Hypnotized for 4 cycles
