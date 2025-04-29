@@ -2209,17 +2209,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ZERO_ABSOLU]: {
 		id: Skill.ZERO_ABSOLU,
 		name: 'ZeroAbsolu',
-		type: SkillType.P,
+		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31201],
+		unlockedFrom: [Skill.GEL],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_DEFENSE]: 25
-		}
+		},
+		visualEffect: SkillVisualEffect.ICE
 	},
 	[Skill.PETRIFICATION]: {
 		id: Skill.PETRIFICATION,
