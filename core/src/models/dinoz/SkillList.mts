@@ -2461,9 +2461,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31307],
+		unlockedFrom: [Skill.PECHEUR_CONFIRME],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ARMOR]: ['x', 1.05],
+			[Stat.WATER_ELEMENT]: 2
+		}
 	},
 	[Skill.CUISINIER]: {
 		id: Skill.CUISINIER,
