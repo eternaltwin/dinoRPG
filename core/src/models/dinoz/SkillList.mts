@@ -98,6 +98,7 @@ export enum Skill {
 	CHOC = 21408,
 	LOUP_GAROU = 21409,
 	COLOSSE = 21501,
+	FORCEBRUTE = 21502,
 	OXYGENATION_MUSCULAIRE = 22101,
 	VERT = 22102,
 	SOURCE_DE_VIE = 22201,
@@ -1731,6 +1732,21 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.WOOD_ASSAULT]: 15,
 			[Stat.WOOD_ELEMENT]: 2,
 			[Stat.SPEED]: ['x', 1.2]
+		}
+	},
+	[Skill.FORCEBRUTE]: {
+		id: Skill.FORCEBRUTE,
+		name: 'Forcebrute',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.WOOD],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.INSTINCT_SAUVAGE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		effects: {
+			[Stat.WOOD_IGNORE_ARMOR]: ['x', 2]
 		}
 	},
 	[Skill.OXYGENATION_MUSCULAIRE]: {
