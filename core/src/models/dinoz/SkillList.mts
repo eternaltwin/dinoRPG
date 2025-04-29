@@ -578,6 +578,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.ARTS_MARTIAUX],
 		isBaseSkill: false,
 		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 20,
+		},
 		globalEffects: {
 			[Stat.FIRE_DEFENSE]: 5
 		}
