@@ -2449,11 +2449,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31306],
+		unlockedFrom: [Skill.ENTRAINEMENT_SOUS_MARIN],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: 20
+			[Stat.MAX_HP]: 20,
+			[Stat.ARMOR]: ['x', 1.1]
 		}
 	},
 	[Skill.MAITRE_PECHEUR]: {
