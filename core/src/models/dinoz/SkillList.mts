@@ -1519,14 +1519,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
 		name: 'Planificateur',
-		type: SkillType.C,
+		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.SYMPATIQUE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.ENERGY]: ['x', 1.1],
+			[Stat.ENERGY_RECOVERY]: ['x', 1.1]
+		}
 	},
 	[Skill.HERITAGE_FAROE]: {
 		id: Skill.HERITAGE_FAROE,
