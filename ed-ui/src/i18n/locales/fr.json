@@ -2196,7 +2196,7 @@
 			"Vengeance": "Augmente les chances de contre-attaque de 5%",
 			"Sieste": "Le Dinoz regagne jusqu'à 20 points de vie et s'endort",
 			"Meteores": "Attaque tous les ennemis avec un pouvoir de Feu 10",
-			"SelfControl": "Immunise le Dinoz contre tous les effets négatifs et diminue son initiative de 3",
+			"SelfControl": "Immunise le Dinoz contre les stuns et autre prise de contrôle (hypnose, nécromancie, etc.) et diminue son initiative de 3",
 			"Brave": "Le Dinoz ne pourra plus faire partie d'un Groupe. Augmente l'élément Feu de 6, le maximum de vie de 50 et la vitesse de 15%",
 			"Planificateur": "Permet au Dinoz de chercher une case supplémentaire",
 			"HeritageFaroe": "Augmente la puissance des *assauts* Bois de 12 et l'armure de 10%",
