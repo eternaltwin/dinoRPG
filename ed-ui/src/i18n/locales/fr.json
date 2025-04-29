@@ -2229,7 +2229,7 @@
 			"ApprentiPecheur": "Permet au Dinoz de pêcher de petits poissons à certains endroits. Augmente la défense en Eau de 3.",
 			"CoupFatal": "Attaque un ennemi. S'il est touché, il perd tous ses points de vie (soumis à équilibrage) s'il n'a pas la compétence perception. Note : ne fonctionne pas sur les boss.",
 			"EntrainementSousMarin": "Augmente les PV max de 10",
-			"PecheurConfirme": "Permet au Dinoz de pêcher de gros poissons à certains endroits",
+			"PecheurConfirme": "Permet au Dinoz de pêcher de gros poissons à certains endroits. Augmente l'élément Eau de 1 et les PV max de 10.",
 			"Marecage": "Ralentit tous les ennemis de 50% pour une durée moyenne",
 			"EntrainementSousMarinAvance": "Augmente les PV max de 20",
 			"MaitrePecheur": "Permet au Dinoz de pêcher des poissons rares et exceptionnels à certains endroits",
