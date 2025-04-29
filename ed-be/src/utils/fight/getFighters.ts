@@ -745,7 +745,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 
 	// WATER
 	if (fighterHas[Skill.PERCEPTION]) {
-		fighter.canHitIntangible = true;
 		fighter.perception = true;
 	}
 

@@ -118,7 +118,7 @@ const chooseRandomOpponentForAssault = (
 	// The attacker can hit intangible units if it has the capacity to, the attack deals non-zero air damage, or its current element is air.
 	const canHitIntangible =
 		attacker.canHitIntangible ||
-		(power ? power.some(val => val[0] === ElementType.AIR) : attacker.element === ElementType.AIR);
+		(power ? power.some(val => val[0] === ElementType.AIR || (val[0] === ElementType.WATER && attacker.perception)) : (attacker.element === ElementType.AIR || (attacker.element === ElementType.WATER && attacker.perception)));
 
 	// List all invalid opponents
 	const unreachable_opponents: DetailedFighter[] = [];
@@ -2653,7 +2653,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				let damage = 0;
 
 				// Base damage of half the target hp if is does not know perception or is not a boss
-				if (!hit.target.perception && hit.target.type !== 'boss') {
+				if (hit.target.type !== 'boss') {
 					// 50% HP otherwise
 					damage = applyBalanceDamage(hit.target, Math.round(hit.target.hp / 2));
 				}
@@ -2685,7 +2685,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				let damage = 0;
 
 				// Base damage of whole target hp if is does not know perception or is not a boss
-				if (!hit.target.perception && hit.target.type !== 'boss') {
+				if (hit.target.type !== 'boss') {
 					// 100% current HP otherwise
 					damage = applyBalanceDamage(hit.target, hit.target.hp);
 				}
