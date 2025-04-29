@@ -3543,7 +3543,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.AIGUILLON,
 		name: 'Aiguillon',
 		type: SkillType.E,
-		energy: Energy.E35,
+		energy: Energy.E10,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
@@ -3551,7 +3551,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		priority: 1,
-		probability: 15,
+		probability: 40,
 		visualEffect: SkillVisualEffect.PROJECTILE
 	},
 	[Skill.ENVOL]: {
