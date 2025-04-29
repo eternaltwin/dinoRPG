@@ -2680,19 +2680,20 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.COUP_FATAL: {
-			// Get random opponent
+			// Launch normal assault
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit && hit.hpLost > 0) {
-				let damage = 0;
+			// If it hits, destroy 10% armor, then chance to remove % of max hp based on target armor
+			if (hit && hit.hpLost > 0 && hit.target.type !== 'boss') {
+				// Destroy 10% armor
+				destroyArmor(fightData, hit.target, 0.1);
 
-				// Base damage of whole target hp if is does not know perception or is not a boss
-				if (hit.target.type !== 'boss') {
-					// 100% current HP otherwise
-					damage = applyBalanceDamage(hit.target, hit.target.hp);
+				// 100% armor means 100% chance to land the hit, 5% armor means 5% chance to land the hit
+				if (randomBetweenSeeded(fightData.rng, 0, 99) < getFighterArmorRatio(hit.target, [])) {
+					// Remove 10% max HP
+					const damage = Math.round(hit.target.hp * 0.1);
+					loseHp(fightData, hit.target, damage, LifeEffect.Skull);
 				}
-
-				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
 			}
 			break;
 		}
