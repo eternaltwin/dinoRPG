@@ -2674,6 +2674,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			if (result.target && !result.evasion) {
 				// Slow opponent
 				addStatus(fightData, result.target, Status.SLOWED, StatusLength.MEDIUM);
+				// Remove torche
+				if (hasStatus(result.target, Status.TORCHED)) {
+					removeStatus(fightData, result.target, Status.TORCHED);
+				}
 			}
 			break;
 		}
