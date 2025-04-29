@@ -2341,10 +2341,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31208],
+		unlockedFrom: [Skill.MOIGNONS_LIQUIDES],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		priority: 5,
+		priority: 3,
 		probability: 5,
 		visualEffect: SkillVisualEffect.DELUGE
 	},
