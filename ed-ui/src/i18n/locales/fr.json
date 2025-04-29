@@ -2218,7 +2218,7 @@
 			"CanonAEau": "Attaque un ennemi avec un pouvoir Eau de 6",
 			"Gel": "Attaque un ennemi avec un pouvoir Eau de 5. L'ennemi est ensuite ralenti. La compétence éteint les flammes.",
 			"DoucheEcossaise": "Attaque tous les ennemis avec un pouvoir Eau de 2",
-			"ZeroAbsolu": "Augmente la défense contre le Feu de 25",
+			"ZeroAbsolu": "Augmente la défense contre le Feu de 25. Le Dinoz a 5% de chance de ralentir un assaillant après avoir été touché par un assaut.",
 			"Petrification": "Pétrifie un ennemi pour une durée moyenne",
 			"Acupuncture": "Régénère 1 PV par tour, les assaillants en mêlée prennent 1 point de dégât.",
 			"Sapeur": "Augmente la probabilité d'utilisation des équipements de 50%",

@@ -4519,14 +4519,13 @@ const checkAfterDefenseEffects = (
 
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible, ...
 
+	// Skills:
 	// Furie: hit landed
 	if (damage > 0 &&
 		// 20 % chance
 		randomBetweenSeeded(fightData.rng, 0, 99) < 20 &&
 		hasSkill(target, Skill.FURIE)) {
 		target.nextAssaultBonus += 3;
-		// TODO add FX
-		console.log('Furie triggered');
 		// Add fx for gain of power
 		fightData.steps.push({
 			action: 'skillActivate',
@@ -4548,7 +4547,22 @@ const checkAfterDefenseEffects = (
 		updateStat(fightData, target, 'burn_damage', 1);
 	}
 
-	// Skills:
+	// Furie: hit landed
+	if (isCloseCombat &&
+		damage > 0 &&
+		// 5 % chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 5 &&
+		hasSkill(target, Skill.ZERO_ABSOLU)) {
+		// Add fx for freeze
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.ZERO_ABSOLU,
+			targets: [{tid: attacker.id}]
+		});
+		addStatus(fightData, attacker, Status.SLOWED, StatusLength.SHORT);
+	}
+
 	// Accupuncture (*not* tied to the healing status): close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.ACUPUNCTURE)) {
 		loseHp(fightData, attacker, 1, LifeEffect.Normal);
