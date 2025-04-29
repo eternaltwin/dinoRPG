@@ -4525,6 +4525,18 @@ const checkAfterDefenseEffects = (
 
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible, ...
 
+	// Torch: close combat and hit landed
+	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
+		const hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+		updateStat(fightData, target, 'burn_damage', hp_lost);
+	}
+
+	// Burn: close combat and hit landed
+	if (isCloseCombat && damage > 0 && hasStatus(target, Status.BURNED)) {
+		loseHpBalanced(fightData, attacker, 1, LifeEffect.Fire);
+		updateStat(fightData, target, 'burn_damage', 1);
+	}
+
 	// Skills:
 	// Furie: hit landed
 	if (damage > 0 &&
@@ -4541,19 +4553,28 @@ const checkAfterDefenseEffects = (
 		});
 	}
 
-	// Torch: close combat and hit landed
-	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
-		const hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
-		updateStat(fightData, target, 'burn_damage', hp_lost);
+	// RAGE
+	if (target.hp <= target.maxHp * 0.1 && !target.hasRaged && hasSkill(target, Skill.RAGE)) {
+		// Buff
+		target.hasRaged = true;
+		target.allAssaultMultiplier *= 1.25;
+		target.stats.speed.global *= 0.8;
+		target.stats.counter.global *= 1.2;
+		// Then announce and fx
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.RAGE,
+		});
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.RAGE,
+			targets: [{tid: target.id}]
+		});
 	}
 
-	// Burn: close combat and hit landed
-	if (isCloseCombat && damage > 0 && hasStatus(target, Status.BURNED)) {
-		loseHpBalanced(fightData, attacker, 1, LifeEffect.Fire);
-		updateStat(fightData, target, 'burn_damage', 1);
-	}
-
-	// Furie: hit landed
+	// Zero absolu: hit landed
 	if (isCloseCombat &&
 		damage > 0 &&
 		// 5 % chance

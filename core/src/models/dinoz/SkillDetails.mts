@@ -157,6 +157,8 @@ export interface SkillDetails {
 	probability?: number;
 	visualEffect?: SkillVisualEffect; // Effect for Skill "activate" steps
 	color?: string; // Color for skill "activate" step
+	radius?: number; // Radius for "Generate" effect
+	power?: number; // Power for "Rafale" or "Generate" effect
 	visualEffectBis?: SkillVisualEffect; // Second effect for Skill "activate" steps
 	colorBis?: string; // Color for 2nd skill "activate" step
 	lifeEffect?: {
