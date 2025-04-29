@@ -2139,7 +2139,7 @@
 			"EtatPrimal": "Annule tous les statuts positifs des ennemis et tous les statuts négatifs des alliés",
 			"InstinctSauvage": "Augmente de 2 l'élément Bois",
 			"LargeMachoire": "Augmente la puissance des *assauts* de Bois de 15",
-			"Acrobate": "Augmente la vitesse du Dinoz de 15%",
+			"Acrobate": "Augmente la vitesse et l'esquive du Dinoz de 10%",
 			"Choc": "Ajoute la valeur de l'élément Bois sur les *assauts* Foudre, et vice-versa",
 			"OxygenationMusculaire": "Augmente l'endurance du Dinoz de 20%",
 			"Vert": "Augmente la puissance de tous les *assauts* de 20 quand le Dinoz se trouve dans la forêt de Grumhel",
