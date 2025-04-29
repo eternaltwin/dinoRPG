@@ -358,6 +358,11 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			fighter.skills.push(torche!); // SAFETY: same
 		}
 
+		// COUP FATAL: replaces coup sournois, so remove it
+		if (fighter.skills.some(skill => skill.id === Skill.COUP_FATAL)) {
+			fighter.skills = fighter.skills.filter(skill => skill.id !== Skill.COUP_SOURNOIS);
+		}
+
 		// ACCUPUNCTURE
 		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
 			addStatus(fightData, fighter, Status.HEALING);

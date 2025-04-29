@@ -2268,11 +2268,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31203],
+		unlockedFrom: [Skill.COUP_SOURNOIS],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 4,
-		probability: 2,
+		priority: 3,
+		probability: 7,
 		lifeEffect: {
 			fx: LifeEffect.Normal,
 			size: 2
