@@ -2900,10 +2900,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41104],
+		unlockedFrom: [Skill.REFLEX],
 		isBaseSkill: false,
 		isSphereSkill: true,
-		priority: 3,
+		priority: 2,
 		probability: 10,
 		visualEffect: SkillVisualEffect.CHAINLIGHTNING
 	},
