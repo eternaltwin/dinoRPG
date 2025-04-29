@@ -1336,7 +1336,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (!hasStatus(opponent, Status.FLYING)) {
 					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					opponent.time += 6 * TIME_FACTOR;
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',
