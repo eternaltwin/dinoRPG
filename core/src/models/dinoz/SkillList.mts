@@ -2330,7 +2330,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: 100
+			[Stat.MAX_HP]: 50,
+			[Stat.SPEED]: ['x', 1.1]
 		}
 	},
 	[Skill.SANS_PITIE]: {
