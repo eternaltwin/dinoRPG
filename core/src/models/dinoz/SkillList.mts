@@ -2137,9 +2137,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31102],
+		unlockedFrom: [Skill.PERCEPTION],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 10,
+			[Stat.WATER_ELEMENT]: 1
+		}
 	},
 	[Skill.POCHE_VENTRALE]: {
 		id: Skill.POCHE_VENTRALE,

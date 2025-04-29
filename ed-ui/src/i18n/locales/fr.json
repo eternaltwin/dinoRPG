@@ -2224,7 +2224,7 @@
 			"Magasinier": "Augmente la capacité maximale de l'inventaire du joueur de 50% (non cumulable)",
 			"Perception": "Augmente la puissance de tous les *assauts* Eau de 4, et permet au Dinoz d'annuler l'effet intangible à chaque assaut. Annule également l'effet des compétences coup sournois et coup fatal.",
 			"CoupsSournois": "Attaque un ennemi. En cas de réussite l'ennemi perd la moitié de ses points de vie (soumis à équilibrage) s'il n'a pas la compétence perception. Note : ne fonctionne pas sur les boss.",
-			"ApprentiPecheur": "Permet au Dinoz de pêcher de petits poissons à certains endroits",
+			"ApprentiPecheur": "Permet au Dinoz de pêcher de petits poissons à certains endroits. Augmente les PV max de 10 et l'élément Eau de 1.",
 			"CoupFatal": "Attaque un ennemi. S'il est touché, il perd tous ses points de vie (soumis à équilibrage) s'il n'a pas la compétence perception. Note : ne fonctionne pas sur les boss.",
 			"EntrainementSousMarin": "Augmente les PV max de 10",
 			"PecheurConfirme": "Permet au Dinoz de pêcher de gros poissons à certains endroits",
