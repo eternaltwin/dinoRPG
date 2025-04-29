@@ -2094,7 +2094,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.DOUCHE_ECOSSAISE,
 		name: 'DoucheEcossaise',
 		type: SkillType.E,
-		energy: Energy.E20,
+		energy: Energy.E25,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
@@ -2102,7 +2102,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 40,
+		probability: 25,
 		visualEffect: SkillVisualEffect.SHOWER,
 		fxType: SkillFxType.Water
 	},
