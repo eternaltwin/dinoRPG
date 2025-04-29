@@ -64,7 +64,7 @@ export const skillNameResolution: Record<number, string[]> = {
 	21204: ['tenacité', 'tenacidad', 'tenacity', 'zähigkeit'],
 	21205: ['fouille', 'excavación', 'search', 'suche'],
 	21206: ['croissance', 'crecimiento', 'growth', 'wachstum'],
-	21207: ['gratteur', 'excavador nato', 'scratcher', 'kratzer'],
+	21207: ['griffesMetalliques', 'excavador nato', 'scratcher', 'kratzer'],
 	21301: ['etat primal', 'estado primario', 'primal state', 'urzustand'],
 	21302: ['détective', 'detective', 'detective', 'detektiv'],
 	21303: ['cocon', 'envoltura', 'cocoon', 'kokon'],
