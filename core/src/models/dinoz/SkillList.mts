@@ -441,7 +441,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.GRIFFES_ENFLAMMEES],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 1,
+		priority: 2,
 		probability: 10,
 		visualEffect: SkillVisualEffect.BLOW
 	},
