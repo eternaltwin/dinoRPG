@@ -94,7 +94,7 @@ export enum Skill {
 	ESPRIT_GORILLOZ = 21401,
 	LEADER = 21402,
 	INGENIEUR = 21403,
-	GEANT = 21404,
+	GEANT_DES_FORETS = 21404,
 	GARDE_FORESTIER = 21405,
 	ARCHEOLOGUE = 21406,
 	BENEDICTION_DES_FEES = 21407,
@@ -1665,9 +1665,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
-	[Skill.GEANT]: {
-		id: Skill.GEANT,
-		name: 'Geant',
+	[Skill.GEANT_DES_FORETS]: {
+		id: Skill.GEANT_DES_FORETS,
+		name: 'GeantDesForets',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
@@ -1769,7 +1769,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.GEANT],
+		unlockedFrom: [Skill.GEANT_DES_FORETS],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
