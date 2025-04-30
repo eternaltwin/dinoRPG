@@ -928,7 +928,7 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 // ^                |
 // |                v
 // Air    <-    Lightning
-const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType, bonus: number) => {
+export const applyGlobalDefenseBonus = (fighter: DetailedFighter, element: ElementType, bonus: number) => {
 	const elementWheel: ElementType[] = [
 		ElementType.FIRE,
 		ElementType.WOOD,

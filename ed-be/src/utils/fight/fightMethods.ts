@@ -51,7 +51,7 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, getFighterArmorRatio, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
+import { applyGlobalDefenseBonus, cloneDinoz, getFighterArmorRatio, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -61,6 +61,7 @@ import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
+import { getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -2565,6 +2566,18 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
+			break;
+		}
+		case Skill.BRASIER: {
+			// Summon FIRE/5 flams with FIRE/5 in FIRE element and torche
+			const number = Math.max(Math.floor(fighter.stats.base[ElementType.FIRE] / 5), 1);
+			for (let i = 0; i < number; i++) {
+				let flameche = createMonster(fightData, fighter, monsterList.FLAM);
+				flameche.skills = [];
+				flameche.stats.base[ElementType.FIRE] = number;
+				applyGlobalDefenseBonus(flameche, ElementType.FIRE, number);
+				addStatus(fightData, flameche, Status.TORCHED);
+			}
 			break;
 		}
 

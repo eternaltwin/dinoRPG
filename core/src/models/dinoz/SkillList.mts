@@ -52,6 +52,7 @@ export enum Skill {
 	ARMURE_DIFRIT = 11413,
 	BRAVE = 11501,
 	RAGE = 11502,
+	BRASIER = 11503,
 	PROTEINES_DINOZIENNES = 12101,
 	EXTENUATION = 12201,
 	ROUGE = 12202,
@@ -1044,6 +1045,20 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		color: '0xFF0000',
 		radius: 2,
 		power: 2
+	},
+	[Skill.BRASIER]: {
+		id: Skill.BRASIER,
+		name: 'Brasier',
+		type: SkillType.A,
+		energy: Energy.E40,
+		element: [ElementType.FIRE],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.KAMIKAZE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		priority: 5,
+		probability: 15
 	},
 	[Skill.PROTEINES_DINOZIENNES]: {
 		id: Skill.PROTEINES_DINOZIENNES,
