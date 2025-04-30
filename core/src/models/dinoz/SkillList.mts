@@ -2237,7 +2237,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		effects: {
 			[Stat.FIRE_DEFENSE]: 25
 		},
-		visualEffect: SkillVisualEffect.ICE
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0x00CCFF',
+		fxType: AuraFxType.Spiral
 	},
 	[Skill.PETRIFICATION]: {
 		id: Skill.PETRIFICATION,
