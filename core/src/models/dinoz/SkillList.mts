@@ -36,6 +36,7 @@ export enum Skill {
 	DETONATION = 11313,
 	BOUDDHA = 11314,
 	GRIFFES_INFERNALES = 11315,
+	RIPOSTE = 11316,
 	CHASSEUR_DE_DRAGON = 11401,
 	BELIER = 11402,
 	TORCHE = 11403,
@@ -802,6 +803,19 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [11208],
 		raceId: [RaceList.QUETZU],
+		isBaseSkill: false,
+		isSphereSkill: false
+	},
+	[Skill.RIPOSTE]: {
+		id: Skill.RIPOSTE,
+		name: 'Riposte',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.FIRE],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.WAIKIKIDO],
+		raceId: [],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},

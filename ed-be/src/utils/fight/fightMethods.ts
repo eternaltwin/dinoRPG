@@ -4238,6 +4238,16 @@ const attackTarget = (
 		// Check for combo
 		if (canCombo) {
 			if (fightData.rng() < getFighterMultihit(attacker)) {
+				// If target has riposte and succeeds its roll, interrupt the combo
+				if (!hasStatus(target, Status.PETRIFIED) && hasSkill(target, Skill.RIPOSTE) && randomBetweenSeeded(fightData.rng, 0, 99) < 50) {
+					fightData.steps.push({
+						action: 'skillAnnounce',
+						fid: target.id,
+						skill: Skill.RIPOSTE
+					});
+					attackTarget(fightData, target, attacker, true);
+					break;
+				}
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
 				energyCost++;
 				updateStat(fightData, attacker, 'multiHits', 1);
