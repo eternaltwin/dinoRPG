@@ -4555,11 +4555,23 @@ const checkAfterDefenseEffects = (
 
 	// RAGE
 	if (target.hp <= target.maxHp * 0.1 && !target.hasRaged && hasSkill(target, Skill.RAGE)) {
-		// Buff
+		// Remove all bad status
+		target.status.forEach(status => {
+			if(BadStatus.includes(status.type)) {
+				removeStatus(fightData, target, status.type);
+			}
+		});
+		// Buff, gains initiative
 		target.hasRaged = true;
 		target.allAssaultMultiplier *= 1.25;
 		target.stats.speed.global *= 0.8;
 		target.stats.counter.global *= 1.2;
+		target.energy = target.maxEnergy;
+		getFighters(fightData).forEach(f => {
+			if (f.id !== target.id) {
+				f.time += 15 * TIME_FACTOR;
+			}
+		});
 		// Then announce and fx
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -4571,6 +4583,12 @@ const checkAfterDefenseEffects = (
 			fid: target.id,
 			skill: Skill.RAGE,
 			targets: [{tid: target.id}]
+		});
+		// Add fx for gain of init
+		fightData.steps.push({
+			action: 'notify',
+			fids: [target.id],
+			notification: NotificationList.InitUp
 		});
 	}
 
