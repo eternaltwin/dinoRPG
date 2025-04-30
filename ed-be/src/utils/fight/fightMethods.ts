@@ -4254,6 +4254,11 @@ const attackTarget = (
 				// If target has riposte and succeeds its roll, interrupt the combo
 				if (!hasStatus(target, Status.PETRIFIED) && hasSkill(target, Skill.RIPOSTE) && randomBetweenSeeded(fightData.rng, 0, 99) < 50) {
 					fightData.steps.push({
+						action: 'anim',
+						fid: attacker.id,
+						anim: 'attack'
+					});
+					fightData.steps.push({
 						action: 'skillAnnounce',
 						fid: target.id,
 						skill: Skill.RIPOSTE

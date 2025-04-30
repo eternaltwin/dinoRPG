@@ -192,6 +192,7 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t)
 			});
+		case 'anim': // Nothing
 		default:
 			return JSON.stringify(fightStep);
 	}
