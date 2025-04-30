@@ -25,7 +25,6 @@ interface Team {
 	dinozList: DinozToGetFighter[];
 	monsterList: MonsterFiche[];
 	[Skill.ELECTROLYSE]?: boolean;
-	[Skill.CHEF_DE_GUERRE]?: boolean;
 	[Skill.GARDE_FORESTIER]?: boolean;
 	[Skill.MAITRE_LEVITATEUR]?: boolean;
 	[Item.EMBER]?: boolean;
@@ -92,7 +91,7 @@ export const initializeDinoz = (
 		items: dinoz.items.map(item => item.itemId)
 	};
 
-	const hasWarLord = team ? team[Skill.CHEF_DE_GUERRE] ? true : false : false;
+	const hasWarLord = (team && team[Skill.CHEF_DE_GUERRE]) ? true : false;
 
 	const fighter: DetailedFighter = {
 		id: dinoz.id,
