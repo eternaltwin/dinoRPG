@@ -179,11 +179,15 @@ export function calculateFightVsMonsters(
 		{
 			dinozList: team,
 			monsterList: [],
+			[Skill.ELECTROLYSE]: 0,
+			[Skill.GARDE_FORESTIER]: 0,
 			[Skill.CHEF_DE_GUERRE]: player.warLord
 		},
 		{
 			dinozList: [],
-			monsterList: monsters ?? []
+			monsterList: monsters ?? [],
+			[Skill.ELECTROLYSE]: 0,
+			[Skill.GARDE_FORESTIER]: 0,
 		},
 		place,
 		rng
@@ -239,11 +243,15 @@ export function calculateFightBetweenPlayers(
 		{
 			dinozList: teamA,
 			monsterList: [],
+			[Skill.ELECTROLYSE]: 0,
+			[Skill.GARDE_FORESTIER]: 0,
 			[Skill.CHEF_DE_GUERRE]: playerA.warLord
 		},
 		{
 			dinozList: teamB,
 			monsterList: [],
+			[Skill.ELECTROLYSE]: 0,
+			[Skill.GARDE_FORESTIER]: 0,
 			[Skill.CHEF_DE_GUERRE]: playerB.warLord
 		},
 		place,
