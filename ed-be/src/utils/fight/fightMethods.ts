@@ -1418,13 +1418,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
-			case Skill.ESPRIT_GORILLOZ: {
-				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
-
-				// Set intangible
-				addStatus(fightData, monster, Status.INTANGIBLE);
-				break;
-			}
 			case Skill.PAYS_DE_CENDRE: {
 				// Only one environment active at a time
 				if (fightData.environment) {
@@ -2827,6 +2820,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 			break;
 		// WOOD
+		case Skill.ESPRIT_GORILLOZ: {
+			const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
+
+			// Set intangible only if has GIANT skill
+			if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+				addStatus(fightData, monster, Status.INTANGIBLE);
+			}
+			break;
+		}
 		case Skill.LANCER_DE_ROCHE:
 			attackSingleOpponent(
 				fightData,
