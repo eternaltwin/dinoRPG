@@ -4330,6 +4330,16 @@ const attackTarget = (
 
 			// Opponent attacks fighter: the counter can combo
 			attackTarget(fightData, target, attacker, true);
+		} else {
+			const reinforcements = getAllies(fightData, attacker, ['reinforcement']).filter(r => r.master === attacker.id);
+			if (isAssault  && totalDamage > 0 && reinforcements.length > 0 && hasSkill(attacker, Skill.CHARISME)) {
+				fightData.steps.push({
+					action: 'skillAnnounce',
+					fid: attacker.id,
+					skill: Skill.CHARISME
+				});
+				reinforcements.forEach(reinforcement => attackTarget(fightData, reinforcement, target, true));
+			}
 		}
 	}
 

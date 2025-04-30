@@ -2215,7 +2215,7 @@
 			"Colosse": "Augmente la puissance de tous les *assauts* de 15, l'élément Bois de 2, augmente les PV max de 30 et diminue la vitesse de 20%",
 			"Forcebrute": "Les attaques bois ignorent 100% de l'armure",
 			"Tenacite": "Augmente le minimum de dégâts de 1",
-			"Charisme": "Le Dinoz peut être suivi par un Dinoz supplémentaire",
+			"Charisme": "Le Dinoz peut être suivi par un Dinoz supplémentaire. Après un assaut réussi et non-contré, le Dinoz appelle l'aide de *ses* renforts pour attaquer la cible.",
 			"ResistanceALaMagie": "Annule tous les effets négatifs de ce Dinoz",
 			"Ingenieur": "Tous les Dinoz débloquent un emplacement d'équipement supplémentaire (non cumulable)",
 			"CanonAEau": "Attaque un ennemi avec un pouvoir Eau de 6",
