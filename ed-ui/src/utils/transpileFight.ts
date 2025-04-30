@@ -202,7 +202,7 @@ export function transpileFight(
 									: 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
-						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy
+						entrance: step.entrance ?? EntranceEffect.JUMP // MT's default is stand, but it's way less classy
 					}
 				});
 				// Initialize energy of fighter
