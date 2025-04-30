@@ -24,8 +24,9 @@ import seedrandom from 'seedrandom';
 interface Team {
 	dinozList: DinozToGetFighter[];
 	monsterList: MonsterFiche[];
-	[Skill.ELECTROLYSE]?: boolean;
-	[Skill.GARDE_FORESTIER]?: boolean;
+	[Skill.ELECTROLYSE]: number;
+	[Skill.GARDE_FORESTIER]: number;
+	[Skill.CHEF_DE_GUERRE]?: boolean;
 	[Skill.MAITRE_LEVITATEUR]?: boolean;
 	[Item.EMBER]?: boolean;
 	[Item.BEER]?: boolean;
@@ -736,7 +737,7 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	}
 
 	if (team && fighterHas[Skill.GARDE_FORESTIER]) {
-		team[Skill.GARDE_FORESTIER] = true;
+		team[Skill.GARDE_FORESTIER] += 1;
 	}
 
 	if (fighterHas[Skill.FORCE_CONTROL]) {
@@ -877,7 +878,7 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 
 	// DOUBLE
 	if (team && fighterHas[Skill.ELECTROLYSE]) {
-		team[Skill.ELECTROLYSE] = true;
+		team[Skill.ELECTROLYSE] += 1;
 	}
 
 	// SPHERE
@@ -1129,11 +1130,12 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 		const team = fighter.attacker ? team1 : team2;
 
 		// WOOD: global wood defense bonus to the team
-		if (team[Skill.GARDE_FORESTIER]) {
+		for (let i = 0; i < team[Skill.GARDE_FORESTIER]; i++) {
 			applyGlobalDefenseBonus(fighter, ElementType.WOOD, 3);
+			fighter.stats.armor.global *= 1.05;
 		}
 		// LIGHTNING
-		if (team[Skill.ELECTROLYSE]) {
+		for (let i = 0; i < team[Skill.ELECTROLYSE]; i++) {
 			fighter.stats.speed.global *= 0.95;
 		}
 		// AIR
