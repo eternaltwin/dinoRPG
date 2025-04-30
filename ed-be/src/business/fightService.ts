@@ -175,20 +175,24 @@ export function calculateFightVsMonsters(
 	const rng_seed = seed ?? generateString(20);
 	const rng = seedrandom(rng_seed);
 
+	// TODO add ember and beer if implementation is kept
+	const attackTeam = {
+		dinozList: team,
+		monsterList: [],
+		[Skill.ELECTROLYSE]: 0,
+		[Skill.GARDE_FORESTIER]: 0,
+		[Skill.CHEF_DE_GUERRE]: player.warLord
+	};
+	const defenseTeam = {
+		dinozList: [],
+		monsterList: monsters ?? [],
+		[Skill.ELECTROLYSE]: 0,
+		[Skill.GARDE_FORESTIER]: 0,
+	};
+
 	const fighters = getFighters(
-		{
-			dinozList: team,
-			monsterList: [],
-			[Skill.ELECTROLYSE]: 0,
-			[Skill.GARDE_FORESTIER]: 0,
-			[Skill.CHEF_DE_GUERRE]: player.warLord
-		},
-		{
-			dinozList: [],
-			monsterList: monsters ?? [],
-			[Skill.ELECTROLYSE]: 0,
-			[Skill.GARDE_FORESTIER]: 0,
-		},
+		attackTeam,
+		defenseTeam,
 		place,
 		rng
 	);
@@ -202,8 +206,16 @@ export function calculateFightVsMonsters(
 		enableStats: false,
 
 		// Teams
-		attackerHasCook: player.cooker,
-		defenderHasCook: false,
+		attackerTeam: {
+			[Skill.ELECTROLYSE]: attackTeam[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: attackTeam[Skill.GARDE_FORESTIER],
+			[Skill.CUISINIER]: player.cooker,
+			[Skill.CHEF_DE_GUERRE]: player.warLord
+		},
+		defenderTeam: {
+			[Skill.ELECTROLYSE]: defenseTeam[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: defenseTeam[Skill.GARDE_FORESTIER],
+		},
 
 		// Fighters
 		initialDinozList: team,
@@ -239,21 +251,25 @@ export function calculateFightBetweenPlayers(
 	const rng_seed = seed ?? generateString(20);
 	const rng = seedrandom(rng_seed);
 
+	// TODO add ember and beer if implementation is kept
+	const teamConfigA = {
+		dinozList: teamA,
+		monsterList: [],
+		[Skill.ELECTROLYSE]: 0, // Filled in by `getFighters` below
+		[Skill.GARDE_FORESTIER]: 0, // Filled in by `getFighters` below
+		[Skill.CHEF_DE_GUERRE]: playerA.warLord
+	};
+	const teamConfigB = {
+		dinozList: teamB,
+		monsterList: [],
+		[Skill.ELECTROLYSE]: 0, // Filled in by `getFighters` below
+		[Skill.GARDE_FORESTIER]: 0, // Filled in by `getFighters` below
+		[Skill.CHEF_DE_GUERRE]: playerB.warLord
+	};
+
 	const fighters = getFighters(
-		{
-			dinozList: teamA,
-			monsterList: [],
-			[Skill.ELECTROLYSE]: 0,
-			[Skill.GARDE_FORESTIER]: 0,
-			[Skill.CHEF_DE_GUERRE]: playerA.warLord
-		},
-		{
-			dinozList: teamB,
-			monsterList: [],
-			[Skill.ELECTROLYSE]: 0,
-			[Skill.GARDE_FORESTIER]: 0,
-			[Skill.CHEF_DE_GUERRE]: playerB.warLord
-		},
+		teamConfigA,
+		teamConfigB,
 		place,
 		rng
 	);
@@ -272,8 +288,18 @@ export function calculateFightBetweenPlayers(
 		enableStats: true,
 
 		// Teams
-		attackerHasCook: playerA.cooker,
-		defenderHasCook: playerB.cooker,
+		attackerTeam: {
+			[Skill.ELECTROLYSE]: teamConfigA[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: teamConfigA[Skill.GARDE_FORESTIER],
+			[Skill.CUISINIER]: playerA.cooker,
+			[Skill.CHEF_DE_GUERRE]: playerA.warLord
+		},
+		defenderTeam: {
+			[Skill.ELECTROLYSE]: teamConfigB[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: teamConfigB[Skill.GARDE_FORESTIER],
+			[Skill.CUISINIER]: playerB.cooker,
+			[Skill.CHEF_DE_GUERRE]: playerB.warLord
+		},
 
 		// Fighters
 		initialDinozList,
