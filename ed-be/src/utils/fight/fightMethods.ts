@@ -941,6 +941,26 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 
 	monster.master = fighter.id;
 
+	// Apply team bonuses
+	if (fighter.attacker) {
+		for (let i = 0; i < fightData.attackerData[Skill.GARDE_FORESTIER]; i++) {
+			applyGlobalDefenseBonus(monster, ElementType.WOOD, 3);
+			monster.stats.armor.global *= 1.05;
+		}
+		for (let i = 0; i < fightData.attackerData[Skill.ELECTROLYSE]; i++) {
+			monster.stats.speed.global *= 0.95;
+		}
+	} else {
+
+		for (let i = 0; i < fightData.defenderData[Skill.GARDE_FORESTIER]; i++) {
+			applyGlobalDefenseBonus(monster, ElementType.WOOD, 3);
+			monster.stats.armor.global *= 1.05;
+		}
+		for (let i = 0; i < fightData.defenderData[Skill.ELECTROLYSE]; i++) {
+			monster.stats.speed.global *= 0.95;
+		}
+	}
+
 	// Adjust time
 	monster.time = fighter.time + randomBetweenMaxExcludedSeeded(fightData.rng, 0, TIME_BASE) * TIME_FACTOR;
 
@@ -3940,9 +3960,9 @@ export const heal = (
 
 	// Apply cook bonus only to item healing
 	if (isItem) {
-		if (fighter.attacker && fightData.attackerData.hasCook) {
+		if (fighter.attacker && fightData.attackerData[Skill.CUISINIER]) {
 			healBonus *= 1.1;
-		} else if (!fighter.attacker && fightData.defenderData.hasCook) {
+		} else if (!fighter.attacker && fightData.defenderData[Skill.CUISINIER]) {
 			healBonus *= 1.1;
 		}
 	}
