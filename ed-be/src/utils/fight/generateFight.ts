@@ -368,6 +368,16 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			fighter.skills = fighter.skills.filter(skill => skill.id !== Skill.COUP_SOURNOIS);
 		}
 
+		// SYMPATHIQUE
+		if (hasSkill(fighter, Skill.SYMPATIQUE)) {
+			fighter.skills.forEach(skill => {
+				const reinforcementSkills = [Skill.RENFORTS_KORGON, Skill.ESPRIT_GORILLOZ];
+				if (reinforcementSkills.includes(skill.id)) {
+					skill.probability! += 5; // SAFETY: those skills have to have a defined probability
+				}
+			});
+		}
+
 		// ACCUPUNCTURE
 		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
 			addStatus(fightData, fighter, Status.HEALING);
