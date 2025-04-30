@@ -970,7 +970,8 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Add arrive step
 	fightData.steps.push({
 		action: 'arrive',
-		fid: monster.id
+		fid: monster.id,
+		entrance: monsterData.entrance
 	});
 
 	checkReinforcementBan(fightData, monster);
@@ -2826,6 +2827,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Set intangible only if has GIANT skill
 			if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
 				addStatus(fightData, monster, Status.INTANGIBLE);
+			}
+			break;
+		}
+		case Skill.GARDIEN_ARBORICOLE: {
+			const monster = createMonster(fightData, fighter, monsterList.GRDIEN);
+			monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
+			// Remove Meteor skill if it does not have COMET
+			if (!hasSkill(fighter, Skill.COLOSSE)) {
+				monster.skills = monster.skills.filter(s => s.id !== Skill.M_COMET);
 			}
 			break;
 		}
