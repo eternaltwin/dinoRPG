@@ -4669,6 +4669,26 @@ const checkAfterDefenseEffects = (
 		});
 	}
 
+	// Maitre des Ronces
+	if (isCloseCombat &&
+		damage > 0 &&
+		hasSkill(target, Skill.MAITRE_DES_RONCES)
+	) {
+		attacker.time += 1 * TIME_FACTOR;
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.MAITRE_DES_RONCES,
+			targets: [{tid: attacker.id}]
+		});
+		// Add fx for loss of init
+		fightData.steps.push({
+			action: 'notify',
+			fids: [attacker.id],
+			notification: NotificationList.InitDown
+		});
+	}
+
 	// Zero absolu: hit landed
 	if (isCloseCombat &&
 		damage > 0 &&
