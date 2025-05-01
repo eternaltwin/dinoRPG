@@ -39,6 +39,7 @@ export interface ArriveStep {
 	action: 'arrive';
 	fid: number;
 	entrance?: EntranceEffect;
+	scale?: number;
 }
 
 export interface LeaveStep {

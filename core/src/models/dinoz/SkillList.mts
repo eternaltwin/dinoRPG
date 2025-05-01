@@ -101,7 +101,7 @@ export enum Skill {
 	CHOC = 21408,
 	LOUP_GAROU = 21409,
 	GARDIEN_ARBORICOLE = 21410,
-	COLOSSE = 21501,
+	COLOSSE_DES_FORETS = 21501,
 	FORCEBRUTE = 21502,
 	OXYGENATION_MUSCULAIRE = 22101,
 	VERT = 22102,
@@ -1776,9 +1776,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 4,
 		probability: 10
 	},
-	[Skill.COLOSSE]: {
-		id: Skill.COLOSSE,
-		name: 'Colosse',
+	[Skill.COLOSSE_DES_FORETS]: {
+		id: Skill.COLOSSE_DES_FORETS,
+		name: 'ColosseDesForets',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
