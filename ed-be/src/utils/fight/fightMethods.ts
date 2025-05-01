@@ -971,7 +971,8 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	fightData.steps.push({
 		action: 'arrive',
 		fid: monster.id,
-		entrance: monsterData.entrance
+		entrance: monsterData.entrance,
+		scale: monsterData.size
 	});
 
 	checkReinforcementBan(fightData, monster);
@@ -2831,12 +2832,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.GARDIEN_ARBORICOLE: {
-			const monster = createMonster(fightData, fighter, monsterList.GRDIEN);
-			monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
-			// Remove Meteor skill if it does not have COMET
-			if (!hasSkill(fighter, Skill.COLOSSE)) {
-				monster.skills = monster.skills.filter(s => s.id !== Skill.M_COMET);
+			let gardien = monsterList.GRDIEN;
+			// If fighter does not have COLOSSE_DES_FORETS, downgrade the gardien
+			if (!hasSkill(fighter, Skill.COLOSSE_DES_FORETS)) {
+				gardien.skills = gardien.skills!.filter(s => s !== Skill.M_COMET);
+				gardien.bonus_attack = 5;
+				gardien.bonus_defense = 13;
+				gardien.hp = 40;
+				gardien.size = 50;
 			}
+			const monster = createMonster(fightData, fighter, gardien);
+			monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
 			break;
 		}
 		case Skill.LANCER_DE_ROCHE:
