@@ -371,7 +371,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		// SYMPATHIQUE
 		if (hasSkill(fighter, Skill.SYMPATIQUE)) {
 			fighter.skills.forEach(skill => {
-				const reinforcementSkills = [Skill.RENFORTS_KORGON, Skill.ESPRIT_GORILLOZ];
+				const reinforcementSkills = [Skill.RENFORTS_KORGON, Skill.ESPRIT_GORILLOZ, Skill.GARDIEN_ARBORICOLE];
 				if (reinforcementSkills.includes(skill.id)) {
 					skill.probability! += 5; // SAFETY: those skills have to have a defined probability
 				}
