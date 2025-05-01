@@ -4351,12 +4351,13 @@ const attackTarget = (
 		} else {
 			const reinforcements = getAllies(fightData, attacker, ['reinforcement']).filter(r => r.master === attacker.id);
 			if (isAssault  && totalDamage > 0 && reinforcements.length > 0 && hasSkill(attacker, Skill.CHARISME)) {
-				fightData.steps.push({
-					action: 'skillAnnounce',
-					fid: attacker.id,
-					skill: Skill.CHARISME
+				reinforcements.forEach(reinforcement => {
+					attackTarget(fightData, reinforcement, target, true)
+					fightData.steps.push({
+						action: 'moveBack',
+						fid: reinforcement.id
+					});
 				});
-				reinforcements.forEach(reinforcement => attackTarget(fightData, reinforcement, target, true));
 			}
 		}
 	}
