@@ -1774,7 +1774,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 5
 	},
 	[Skill.COLOSSE_DES_FORETS]: {
 		id: Skill.COLOSSE_DES_FORETS,
