@@ -4371,6 +4371,12 @@ const attackTarget = (
 		}
 	}
 
+	if (target.hp <= 0) {
+		if (isAssault && hasSkill(attacker, Skill.DECOMPOSEUR) && target.type !== 'clone') {
+			heal(fightData, attacker, Math.round(target.maxHp * 0.1), undefined, LifeEffect.Skull);
+		}
+	}
+
 	return {
 		attacker: attacker,
 		target: target,
