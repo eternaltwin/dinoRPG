@@ -1380,6 +1380,18 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
+			case Skill.COCON: {
+				gainArmor(fightData, fighter, 0.05);
+				heal(
+					fightData,
+					fighter,
+					randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
+					activate_step
+				);
+				// Add step for fx
+				fightData.steps.push(activate_step);
+				break;
+			}
 			case Skill.RESISTANCE_A_LA_MAGIE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);

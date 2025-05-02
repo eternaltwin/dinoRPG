@@ -1466,17 +1466,21 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.COCON]: {
 		id: Skill.COCON,
 		name: 'Cocon',
-		type: SkillType.S,
-		energy: Energy.NONE,
+		type: SkillType.E,
+		energy: Energy.E25,
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.CROISSANCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
+		priority: 3,
+		probability: 40,
 		effects: {
 			[Stat.HP_REGEN]: 2
-		}
+		},
+		visualEffect: SkillVisualEffect.HEAL,
+
 	},
 	[Skill.INSTINCT_SAUVAGE]: {
 		id: Skill.INSTINCT_SAUVAGE,
