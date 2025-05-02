@@ -158,8 +158,10 @@ export enum Skill {
 	BULLE = 31407,
 	INCREVABLE = 31408,
 	ONDINE = 31409,
+	NEW_T4_SKILL_TBD = 31410,
 	MAITRE_NAGEUR = 31501,
 	LEVIATHAN = 31502,
+	ONDE_DE_VIE = 31503,
 	EAU_DIVINE = 32101,
 	RADIATIONS_GAMMA = 32201,
 	BLEU = 32202,
@@ -2620,6 +2622,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.WOOD_DEFENSE]: 2
 		}
 	},
+	[Skill.NEW_T4_SKILL_TBD]: {
+		id: Skill.NEW_T4_SKILL_TBD,
+		name: 'TBD',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.WATER],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.ACUPUNCTURE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+	},
 	[Skill.ONDINE]: {
 		id: Skill.ONDINE,
 		name: 'Ondine',
@@ -2664,6 +2678,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 4,
 		probability: 10
+	},
+	[Skill.ONDE_DE_VIE]: {
+		id: Skill.ONDE_DE_VIE,
+		name: 'OndeDeVie',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.WATER],
+		activatable: true,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.NEW_T4_SKILL_TBD],
+		isBaseSkill: false,
+		isSphereSkill: false,
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,
