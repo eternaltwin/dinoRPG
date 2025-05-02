@@ -1475,7 +1475,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 40,
+		probability: 10,
 		effects: {
 			[Stat.HP_REGEN]: 2
 		},
