@@ -105,6 +105,7 @@ export enum Skill {
 	PROVOCATION = 21412,
 	COLOSSE_DES_FORETS = 21501,
 	MAITRE_DES_RONCES = 21502,
+	ECORCE_CENTENAIRE = 21503,
 	OXYGENATION_MUSCULAIRE = 22101,
 	VERT = 22102,
 	SOURCE_DE_VIE = 22201,
@@ -1858,6 +1859,25 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0x964B00',
 		fxType: AuraFxType.Line
+	},
+	[Skill.ECORCE_CENTENAIRE]: {
+		id: Skill.ECORCE_CENTENAIRE,
+		name: 'EcorceCentenaire',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.WOOD],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.FORCEBRUTE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		effects: {
+			[Stat.WOOD_ELEMENT]: 1,
+			[Stat.FIRE_ARMOR]: ['x', 1.2]
+		},
+		globalEffects: {
+			[Stat.WOOD_DEFENSE]: 10
+		}
 	},
 	[Skill.OXYGENATION_MUSCULAIRE]: {
 		id: Skill.OXYGENATION_MUSCULAIRE,
