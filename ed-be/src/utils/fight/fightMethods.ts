@@ -4607,6 +4607,15 @@ const checkAfterAttackEffects = (
 		});
 	}
 
+
+	// Onde de Vie
+	if (damage > 0 &&
+		elements.find(element => element === ElementType.WATER) &&
+		hasSkill(attacker, Skill.ONDE_DE_VIE)
+	) {
+		heal(fightData, attacker, 1, undefined, LifeEffect.Water);
+	}
+
 	// Cancel FLYING
 	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
 		removeStatus(fightData, attacker, Status.FLYING);
