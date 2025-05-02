@@ -3912,7 +3912,7 @@ const poison = (
 			break;
 		}
 		case Skill.GRIFFES_EMPOISONNEES: {
-			poisonDamage = Math.min(Math.round(Math.pow(poisoner.stats.base[ElementType.WATER] / 2, 0.6)), 1);
+			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.WATER] / 2, 0.6)), 1);
 			break;
 		}
 		case Skill.HADES: {
