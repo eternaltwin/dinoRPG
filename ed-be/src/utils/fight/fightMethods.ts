@@ -2879,6 +2879,9 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.PROVOCATION: {
+			if (!hasStatus(fighter, Status.TAUNT)) {
+				return cancel();
+			}
 			addStatus(fightData, fighter, Status.TAUNT, StatusLength.LONG);
 			// TODO need FX to show assault instead like poison
 			// Add step for fx
