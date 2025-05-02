@@ -1024,8 +1024,8 @@ export const getFighterSuperEvasion = (fighter: DetailedFighter, elementAttack: 
 export const getFighterIgnoreArmorRatio = (fighter: DetailedFighter, elementAttack: [ElementType, number][], isAssault: boolean) => {
 	let ignoreArmorRatio = fighter.stats.ignoreArmor.global;
 
-	// Prorate the superEvasion chance base on the element
-	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
+	// Prorate the ignore armor ratio base on the element
+	// Example: If the attack has 9 fire and 1 wood, 90% of the fire ignore armor will be applied and 10% of the wood ignore armor will be applied
 	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 0);
 
 	if (sumAtt > 0) {
@@ -1048,8 +1048,8 @@ export const getFighterIgnoreArmorRatio = (fighter: DetailedFighter, elementAtta
 export const getFighterArmorRatio = (fighter: DetailedFighter, elementAttack: [ElementType, number][]) => {
 	let armorRatio = fighter.stats.armor.global;
 
-	// Prorate the superEvasion chance base on the element
-	// Example: If the attack has 9 fire and 1 wood, 90% of the fire superEvasion will be applied and 10% of the wood superEvasion will be applied
+	// Prorate the armor ratio base on the element
+	// Example: If the attack has 9 fire and 1 wood, 90% of the fire armor will be applied and 10% of the wood armor will be applied
 	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 0);
 
 	if (sumAtt > 0) {
