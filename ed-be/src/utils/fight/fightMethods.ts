@@ -200,6 +200,12 @@ const chooseRandomOpponentForAssault = (
 		}
 	}
 
+	// Provocation overrides everything
+	const opponents_with_provocation = opponents.some(opponent => hasStatus(opponent, Status.TAUNT));
+	if (opponents_with_provocation) {
+		filtered_opponents = filtered_opponents.filter(opponent => hasStatus(opponent, Status.TAUNT));
+	}
+
 	if (!filtered_opponents.length) {
 		sendJSONToDiscord('Error `No opponent left after applying filtering.', {
 			fighter: attacker,
@@ -1479,6 +1485,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
+				// Add step for fx
+				fightData.steps.push(activate_step);
 
 				// Reduce max energy by 30%
 				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
@@ -1510,6 +1518,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
+				// Add step for fx
+				fightData.steps.push(activate_step);
 
 				// Disable invocations
 				// TODO: see if this can be done differently as this may mess up with display
@@ -1534,6 +1544,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
+				// Add step for fx
+				fightData.steps.push(activate_step);
 
 				addStatus(fightData, opponent, Status.DAZZLED, StatusLength.MEDIUM);
 				break;
@@ -1585,6 +1597,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					addStatus(fightData, ally, Status.QUICKENED, StatusLength.MEDIUM);
 					activate_step.targets.push({ tid: ally.id });
 				});
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			// MONSTER
@@ -1698,6 +1712,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					ally.time -= 5 * TIME_FACTOR;
 					fighter.time += 3 * TIME_FACTOR;
 				});
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.M_FRUKOPTER_FLIGHT: {
@@ -2125,6 +2141,10 @@ export const addStatus = (
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
+		case Status.TAUNT: {
+			fighter.stats.armor.global *= 1.3;
+			break;
+		}
 		case Status.SHIELDED: {
 			fighter.stats.armor.global *= 1.5;
 			break;
@@ -2219,6 +2239,10 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				if (fighter.time < fightData.time) {
 					fighter.time = fightData.time;
 				}
+				break;
+			}
+			case Status.TAUNT: {
+				fighter.stats.armor.global /= 1.3;
 				break;
 			}
 			case Status.SHIELDED: {
@@ -2756,9 +2780,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// Add target
-			activate_step.targets.push({ tid: opponent.id });
-
 			// Petrification removes flying and intangible.
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
 
@@ -2843,6 +2864,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 			const monster = createMonster(fightData, fighter, gardien);
 			monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
+			break;
+		}
+		case Skill.PROVOCATION: {
+			addStatus(fightData, fighter, Status.TAUNT, StatusLength.LONG);
+			// TODO need FX to show assault instead like poison
+			// Add step for fx
+			fightData.steps.push(activate_step);
 			break;
 		}
 		case Skill.LANCER_DE_ROCHE:

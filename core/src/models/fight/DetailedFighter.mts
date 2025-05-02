@@ -27,6 +27,7 @@ export enum Status {
 	SHIELDED = 'shielded',
 	BLESSED = 'blessed',
 	HEALING = 'healing',
+	TAUNT = 'taunt',
 	// Skills
 	COPY_HEAL = 'copyHeal',
 	NO_INVOCATION = 'noInvocation',

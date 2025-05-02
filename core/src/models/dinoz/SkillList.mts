@@ -102,6 +102,7 @@ export enum Skill {
 	LOUP_GAROU = 21409,
 	GARDIEN_ARBORICOLE = 21410,
 	FORCEBRUTE = 21411,
+	PROVOCATION = 21412,
 	COLOSSE_DES_FORETS = 21501,
 	MAITRE_DES_RONCES = 21502,
 	OXYGENATION_MUSCULAIRE = 22101,
@@ -1794,6 +1795,24 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		effects: {
 			[Stat.WOOD_IGNORE_ARMOR]: ['x', 2]
 		}
+	},
+	[Skill.PROVOCATION]: {
+		id: Skill.PROVOCATION,
+		name: 'Provocation',
+		type: SkillType.A,
+		energy: Energy.E40,
+		element: [ElementType.WOOD],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.GARDE_FORESTIER],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		priority: 4,
+		probability: 10,
+		visualEffect: SkillVisualEffect.GENERATE,
+		color: '0x00FF00',
+		radius: 1,
+		power: 1
 	},
 	[Skill.COLOSSE_DES_FORETS]: {
 		id: Skill.COLOSSE_DES_FORETS,
