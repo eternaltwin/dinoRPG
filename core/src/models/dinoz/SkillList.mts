@@ -138,7 +138,7 @@ export enum Skill {
 	ZERO_ABSOLU = 31301,
 	PETRIFICATION = 31302,
 	ACUPUNCTURE = 31303,
-	SAPEUR = 31304,
+	MALEDICTION_AQUEUSE = 31304,
 	COUP_FATAL = 31305,
 	ENTRAINEMENT_SOUS_MARIN = 31306,
 	PECHEUR_CONFIRME = 31307,
@@ -2327,21 +2327,24 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31202],
+		unlockedFrom: [Skill.DOUCHE_ECOSSAISE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
-	[Skill.SAPEUR]: {
-		id: Skill.SAPEUR,
-		name: 'Sapeur',
+	[Skill.MALEDICTION_AQUEUSE]: {
+		id: Skill.MALEDICTION_AQUEUSE,
+		name: 'MaledictionAqueuse',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31202],
+		unlockedFrom: [Skill.DOUCHE_ECOSSAISE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.AURA,
+		color: '0xFF8080',
+		fxType: AuraFxType.Line
 	},
 	[Skill.COUP_FATAL]: {
 		id: Skill.COUP_FATAL,
@@ -2524,7 +2527,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31304],
+		unlockedFrom: [Skill.MALEDICTION_AQUEUSE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -2592,7 +2595,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER, ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31304, 51312, 61119],
+		unlockedFrom: [Skill.MALEDICTION_AQUEUSE, 51312, 61119],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		visualEffect: SkillVisualEffect.ATTACH,

@@ -194,12 +194,13 @@ export function transpileFight(
 								? myFighter.name
 								: resolveMonsterName(myFighter.name, t),
 						side: myFighter.attacker,
-						scale:
-							step.scale ? (step.scale / 100) : (myFighter.type === 'dinoz' || myFighter.type === 'clone'
+						scale: step.scale
+							? step.scale / 100
+							: myFighter.type === 'dinoz' || myFighter.type === 'clone'
 								? myFighter.maxHp / 100
 								: myFighter.size
 									? myFighter.size / 100
-									: 1),
+									: 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
 						entrance: step.entrance ?? EntranceEffect.JUMP // MT's default is stand, but it's way less classy
