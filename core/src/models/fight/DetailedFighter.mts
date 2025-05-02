@@ -18,6 +18,7 @@ export enum Status {
 	LOCKED = 'locked',
 	DAZZLED = 'dazzled',
 	STUNNED = 'stunned',
+	NO_HEAL = 'hoHeal',
 	// Good
 	TORCHED = 'torched',
 	INTANGIBLE = 'intangible',

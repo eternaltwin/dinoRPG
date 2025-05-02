@@ -839,10 +839,10 @@ const attackSingleOpponent = (
 	// Add target
 	(activate_step as SkillActivateStep).targets.push({ tid: realOpponent.id });
 
-	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, activate_step);
-
 	// Add step
 	fightData.steps.push(activate_step);
+
+	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, activate_step);
 
 	if (goto) {
 		// Add moveTo step
@@ -885,6 +885,9 @@ const attackAllOpponents = (
 		}
 	}
 
+	// Add step
+	fightData.steps.push(activate_step);
+
 	targets.forEach(target => {
 		let realTarget = target;
 		// Check if a dinoz is protecting the opponent and replace the target with the protector
@@ -913,9 +916,6 @@ const attackAllOpponents = (
 			});
 		}
 	});
-
-	// Add step
-	fightData.steps.push(activate_step);
 };
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
@@ -3970,7 +3970,16 @@ export const heal = (
 ) => {
 	// No heal if BEER
 	// TODO add fx for no healing
-	if (hasStatus(fighter, Status.BEER)) return;
+	if (hasStatus(fighter, Status.BEER) || hasStatus(fighter, Status.NO_HEAL)) {
+		// Add FX
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: fighter.id,
+			skill: Skill.MALEDICTION_AQUEUSE,
+			targets: [{tid: fighter.id}]
+		});
+		return
+	};
 
 	const hpBeforeHeal = fighter.hp;
 
@@ -4579,6 +4588,23 @@ const checkAfterAttackEffects = (
 			setEnergy(target, 0);
 			setEnergy(attacker, attacker.energy + energyStolen);
 		}
+	}
+
+	// MALEDICTION AQUEUSE: 10% chance to apply NO_HEAL
+	if (damage > 0 &&
+		elements.find(element => element === ElementType.WATER) &&
+		hasSkill(attacker, Skill.MALEDICTION_AQUEUSE) &&
+		randomBetweenSeeded(fightData.rng, 0, 99) < 10
+	) {
+		addStatus(fightData, target, Status.NO_HEAL, StatusLength.MEDIUM);
+		// Add FX
+		// TODO find better FX like the poison marker
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.MALEDICTION_AQUEUSE,
+			targets: []
+		});
 	}
 
 	// Cancel FLYING

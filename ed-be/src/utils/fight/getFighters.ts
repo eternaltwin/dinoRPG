@@ -755,16 +755,16 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 		fighter.skillElementalBonus[ElementType.WATER] += 10;
 	}
 
-	if (fighterHas[Skill.SAPEUR]) {
-		// Increase item use probability by 50%
-		fighter.items.forEach(item => {
-			let probability = (item.probability ?? 0) * 1.5;
-			if (probability > 100) {
-				probability = 100;
-			}
-			item.probability = probability;
-		});
-	}
+	// if (fighterHas[Skill.SAPEUR]) {
+	// 	// Increase item use probability by 50%
+	// 	fighter.items.forEach(item => {
+	// 		let probability = (item.probability ?? 0) * 1.5;
+	// 		if (probability > 100) {
+	// 			probability = 100;
+	// 		}
+	// 		item.probability = probability;
+	// 	});
+	// }
 
 	// AIR
 	if (fighterHas[Skill.SAUT]) {
