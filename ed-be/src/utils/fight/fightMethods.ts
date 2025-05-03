@@ -61,7 +61,6 @@ import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
-import { getAssaultStat } from '@drpg/core/utils/getAssaultStat';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -2830,30 +2829,67 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 			break;
 		}
-		case Skill.DELUGE:
-			{
-				attackAllOpponents(
-					fightData,
-					fighter,
-					getElementalAttack(fighter, ElementType.WATER, 10),
-					skill.id,
-					activate_step
-				);
-				// Increase time of all opponents by 8
-				const opponents = getOpponents(fightData, fighter);
-				const init_down_notify = {
-					action: 'notify',
-					fids: [],
-					notification: NotificationList.InitDown
-				} as NotifyStep;
-				opponents.forEach(opponent => {
-					opponent.time += 8 * TIME_FACTOR;
-					init_down_notify.fids.push(opponent.id);
+		case Skill.DELUGE: {
+			attackAllOpponents(
+				fightData,
+				fighter,
+				getElementalAttack(fighter, ElementType.WATER, 10),
+				skill.id,
+				activate_step
+			);
+			// Increase time of all opponents by 8
+			const opponents = getOpponents(fightData, fighter);
+			const init_down_notify = {
+				action: 'notify',
+				fids: [],
+				notification: NotificationList.InitDown
+			} as NotifyStep;
+			opponents.forEach(opponent => {
+				opponent.time += 8 * TIME_FACTOR;
+				init_down_notify.fids.push(opponent.id);
+			});
+			fightData.steps.push(init_down_notify);
+			break;
+		}
+		case Skill.NECROMANCIE: {
+			// Get all dead non espaced fighters, except clones, reinforcements and bosses
+			const limitTypes = ['dinoz', 'monster'];
+			const deadfighters = fightData.fighters.filter(f => f.hp <= 0 && !f.escaped && limitTypes.includes(f.type) && !hasStatus(f, Status.UNDEAD));
+
+			if (deadfighters.length === 0) {
+				return cancel();
+			}
+
+			const random = randomBetweenSeeded(fightData.rng, 0, deadfighters.length - 1);
+			const dead = deadfighters[random];
+
+			// Reset status before anything
+			dead.status = [];
+			// Resurrect
+			heal(fightData, dead, 10, undefined, LifeEffect.Skull);
+			// Remove fighter from list of deads
+			fightData.deads = fightData.deads.filter(d => d !== dead.id);
+			// Reset energy to max
+			dead.energy = dead.maxEnergy;
+			// Set time to invoquer
+			dead.time = fighter.time;
+			// Mark as undead
+			addStatus(fightData, dead, Status.UNDEAD);
+
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: dead.id,
+				tid: fighter.id
+			});
+			if (dead.attacker !== fighter.attacker) {
+				dead.attacker = !dead.attacker;
+				fightData.steps.push({
+					action: 'flip',
+					fid: dead.id
 				});
-				fightData.steps.push(init_down_notify);
-				break;
 			}
 			break;
+		}
 		// WOOD
 		case Skill.ESPRIT_GORILLOZ: {
 			const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
@@ -4013,7 +4049,7 @@ export const heal = (
 ) => {
 	// No heal if BEER
 	// TODO add fx for no healing
-	if (hasStatus(fighter, Status.BEER) || hasStatus(fighter, Status.NO_HEAL)) {
+	if (hasStatus(fighter, Status.BEER) || hasStatus(fighter, Status.NO_HEAL) || hasStatus(fighter, Status.UNDEAD)) {
 		// Add FX
 		fightData.steps.push({
 			action: 'skillActivate',

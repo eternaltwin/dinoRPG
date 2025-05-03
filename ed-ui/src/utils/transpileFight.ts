@@ -408,6 +408,12 @@ export function transpileFight(
 					});
 				}
 				break;
+			case 'flip':
+				history.push({
+					action: DinoAction.FLIP,
+					fid: step.fid
+				});
+				break;
 			case `statusTurn`:
 			case `newTurn`:
 				// Note the ID of the fighter playing a turn and reset the combo and counter stats

@@ -37,6 +37,7 @@ export enum Status {
 	NO_CURSE = 'noCurse',
 	KEEP_FLYING = 'keepFlying',
 	NO_DEATH = 'noDeath',
+	UNDEAD = 'undead',
 	// Items
 	CURED = 'cured',
 	BEER = 'beer',
@@ -67,7 +68,8 @@ export const BadStatus = [
 	Status.BURNED,
 	Status.LOCKED,
 	Status.DAZZLED,
-	Status.STUNNED
+	Status.STUNNED,
+	Status.NO_HEAL
 ];
 
 export enum StatusLength {
@@ -97,6 +99,7 @@ export interface DetailedFighter {
 	master?: number;
 	// Team side
 	attacker: boolean;
+	originalTeamSide: boolean;
 	// If the fighter needs to use smoothed calculations
 	balanced: boolean;
 	escaped?: boolean;
