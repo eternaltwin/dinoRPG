@@ -101,6 +101,7 @@ export const initializeDinoz = (
 		level: dinoz.level,
 		type: 'dinoz' as const,
 		attacker: teamIndex === 0,
+		originalTeamSide: teamIndex === 0,
 		maxHp: dinoz.maxLife,
 		startingHp: dinoz.life,
 		hp: dinoz.life,
@@ -319,6 +320,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		level: dinoz.level,
 		type: 'clone' as const, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
 		attacker: dinoz.attacker,
+		originalTeamSide: dinoz.originalTeamSide,
 		maxHp: dinoz.maxHp,
 		startingHp: has_tear ? dinoz.maxHp * 0.1 : 1,
 		hp: has_tear ? dinoz.maxHp * 0.1 : 1,
@@ -469,6 +471,7 @@ export const initializeMonster = (
 		level: monster.level,
 		type: is_reinforcement ? 'reinforcement' : monster.boss ? 'boss' : ('monster' as const),
 		attacker: teamIndex === 0,
+		originalTeamSide: teamIndex === 0,
 		maxHp: monster.hp,
 		startingHp: monster.hp,
 		hp: monster.hp,

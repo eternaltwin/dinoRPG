@@ -11,7 +11,7 @@ import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
 
 export type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
-const IGNORE_STEPS = ['moveTo', 'moveBack', 'resist', 'notify'];
+const IGNORE_STEPS = ['moveTo', 'moveBack', 'resist', 'notify', 'anim', 'flip'];
 const DISPLAYED_STATUSES = [...GoodStatus, ...BadStatus];
 
 const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
@@ -192,7 +192,6 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 			return t(`fight.step.${fightStep.action}`, {
 				fighter: getFighterName(fightStep.fighter, t)
 			});
-		case 'anim': // Nothing
 		default:
 			return JSON.stringify(fightStep);
 	}

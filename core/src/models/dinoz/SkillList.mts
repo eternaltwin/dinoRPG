@@ -165,6 +165,7 @@ export enum Skill {
 	MAITRE_NAGEUR = 31501,
 	LEVIATHAN = 31502,
 	ONDE_DE_VIE = 31503,
+	NECROMANCIE = 31504,
 	EAU_DIVINE = 32101,
 	RADIATIONS_GAMMA = 32201,
 	BLEU = 32202,
@@ -2746,6 +2747,20 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.NEW_T4_SKILL_TBD],
 		isBaseSkill: false,
 		isSphereSkill: false,
+	},
+	[Skill.NECROMANCIE]: {
+		id: Skill.NECROMANCIE,
+		name: 'Necromancie',
+		type: SkillType.A,
+		energy: Energy.E50,
+		element: [ElementType.WATER],
+		activatable: true,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.DECOMPOSEUR],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		priority: 5,
+		probability: 10
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,

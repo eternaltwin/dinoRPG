@@ -467,6 +467,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		turn += 1;
 	}
 
+	
+
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === 'monster' && fighter.name === monsterList[Monster.BAOBOB].name
 	);
@@ -495,10 +497,19 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	const winner = fightData.loser === 'defenders';
 
-	// After fight regeneration
+	// After fight processing
 	fightData.fighters.forEach(fighter => {
 		// No heal if dead
 		if (fighter.hp <= 0) return;
+
+		if (hasStatus(fighter, Status.UNDEAD)) {
+			fightData.steps.push({
+				action: 'death',
+				fighter: stepFighter(fighter)
+			});
+			fightData.deads.push(fighter.id);
+			return;
+		}
 
 		if (fighter.skills.some(skill => skill.id === Skill.PREMIERS_SOINS)) {
 			// Heal 1HP
@@ -549,28 +560,21 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 	}
 
-	// Place hypnotized fighters in the right teams
-	fightData.fighters.map(f => {
-		if (f.hypnotized && f.hypnotized > 0) {
-			f.attacker = !f.attacker;
-		}
-	});
-
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters
-		.filter(fighter => fighter.attacker && fighter.type === 'dinoz')
+		.filter(fighter => fighter.originalTeamSide && fighter.type === 'dinoz')
 		.map(dinoz => ({
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 			itemsUsed: dinoz.itemsUsed,
 			goldLost: fightData.fighters
-				.filter(fighter => !fighter.attacker && fighter.goldStolen?.[dinoz.id])
+				.filter(fighter => !fighter.originalTeamSide && fighter.goldStolen?.[dinoz.id])
 				.reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
 			statusGained: dinoz.permanentStatusGained
 		}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters
-		.filter(fighter => !fighter.attacker && fighter.type === 'dinoz')
+		.filter(fighter => !fighter.originalTeamSide && fighter.type === 'dinoz')
 		.map(dinoz => ({
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
@@ -604,12 +608,12 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				type: f.type,
 				name: f.name,
 				display: f.display,
-				attacker: f.attacker,
+				attacker: f.originalTeamSide,
 				maxHp: f.maxHp,
 				startingHp: f.startingHp,
-				energy: f.maxEnergy, // starting energy is same as max energy
+				energy: f.maxEnergy,
 				maxEnergy: f.maxEnergy,
-				energyRecovery: f.stats.special.energyRecovery ?? 1
+				energyRecovery: f.stats.special.energyRecovery
 			};
 		})
 	};

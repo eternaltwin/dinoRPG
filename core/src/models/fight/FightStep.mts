@@ -93,6 +93,11 @@ export interface MoveBackStep {
 	fid: number;
 }
 
+export interface FlipStep {
+	action: 'flip';
+	fid: number;
+}
+
 export interface SurviveStep {
 	action: 'survive';
 	dinoz: StepFighter;
@@ -297,4 +302,5 @@ export type FightStep =
 	| NewTurnStep
 	| StatusTurnStep
 	| TiredStep
-	| AnimationStep;
+	| AnimationStep
+	| FlipStep;
