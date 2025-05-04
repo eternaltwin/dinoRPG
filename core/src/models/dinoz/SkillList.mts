@@ -3382,7 +3382,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [41310],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 3,
+		priority: 4,
 		probability: 25
 	},
 	[Skill.CREPUSCULE_FLAMBOYANT]: {
