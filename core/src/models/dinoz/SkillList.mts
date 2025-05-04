@@ -689,7 +689,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [11201],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 2,
+		priority: 3,
 		probability: 15,
 		visualEffect: SkillVisualEffect.FIREBALL
 	},
