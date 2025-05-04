@@ -3087,7 +3087,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41101],
+		unlockedFrom: [Skill.INTELLIGENCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
@@ -3102,7 +3102,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41103],
+		unlockedFrom: [Skill.CELERITE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3117,7 +3117,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41102],
+		unlockedFrom: [Skill.FOCUS],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3132,7 +3132,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41101],
+		unlockedFrom: [Skill.INTELLIGENCE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
