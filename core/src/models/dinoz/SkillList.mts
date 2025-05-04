@@ -2229,7 +2229,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [31101],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 1,
+		priority: 2,
 		probability: 25,
 		visualEffect: SkillVisualEffect.SHOWER,
 		fxType: SkillFxType.Water
