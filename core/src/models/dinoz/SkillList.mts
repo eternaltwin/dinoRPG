@@ -3220,7 +3220,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41206],
+		unlockedFrom: [],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3545,13 +3545,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
-<<<<<<< HEAD
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.AUBE_FEUILLUE],
-=======
-		tree: SkillTree.VANILLA,
-		unlockedFrom: [Skill.AUBE_FEUILLUE],
->>>>>>> d14cc3aac (refactor: refactor intelligence branch + change premiers soins to revitalisation)
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
