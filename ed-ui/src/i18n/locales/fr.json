@@ -2271,7 +2271,7 @@
 			"Pretre": "Augmente de 1 les PV récupérés par heure lors du repos pour tous les Dinoz (non cumulable)",
 			"Paratonnerre": "Permet au Dinoz d'absorber l'énergie de la Foudre à certains endroits. Augmente la défense en Foudre de 3.",
 			"Medecine": "Permet de récupérer jusqu'à 3 PV à la fin d'un combat",
-			"FissionElementaire": "Permet au Dinoz d'absorber tous types d'énergie élémentaire à certains endroits",
+			"FissionElementaire": "Permet au Dinoz d'absorber tous types d'énergie élémentaire à certains endroits. Augmente l'élément Foudre de 1 et les PV max de 10.",
 			"CrocsDiamant": "Augmente la puissance de tous les *assauts* de 2",
 			"Brancardier": "Permet à un autre Dinoz du groupe de récupérer jusqu'à 5 PV à la fin d'un combat",
 			"Marchand": "Diminue tous les prix de la boutique de Dinoland de 10% (non cumulable)",
