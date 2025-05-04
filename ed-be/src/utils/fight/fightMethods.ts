@@ -282,7 +282,8 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 
 // This method can return null because its possible that the fighter is alone.
 export const getRandomAlly = (fightData: DetailedFight, fighter: DetailedFighter) => {
-	const allies = getAllies(fightData, fighter);
+	const allies = getAllies(fightData, fighter).filter(f => f.id !== fighter.id);
+
 	if (!allies.length) {
 		return null;
 	}
@@ -1297,7 +1298,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					action: 'moveBack',
 					fid: fighter.id
 				});
-
 				break;
 			}
 			// WATER
