@@ -1251,6 +1251,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
+			case Skill.REGENERESCENCE: {
+				if (hasStatus(fighter, Status.HEALING)) {
+					return cancel();
+				}
+				addStatus(fightData, fighter, Status.HEALING, StatusLength.MEDIUM);
+				break;
+			}
 			case Skill.PUREE_SALVATRICE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
