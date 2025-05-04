@@ -3208,7 +3208,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41204],
+		unlockedFrom: [Skill.INTELLIGENCE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
