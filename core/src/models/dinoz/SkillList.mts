@@ -1349,7 +1349,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21102],
+		unlockedFrom: [Skill.SAUVAGERIE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 2,
@@ -2214,7 +2214,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [31101],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 1,
+		priority: 2,
 		probability: 10,
 		visualEffect: SkillVisualEffect.ICE
 	},
