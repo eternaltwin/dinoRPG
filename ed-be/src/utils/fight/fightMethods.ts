@@ -2662,7 +2662,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		case Skill.AUBE_FEUILLUE: {
 			// Heal each fighter of the caster's group
-			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 2 + fighter.stats.base[ElementType.WOOD] * 2;
+			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 1 + fighter.stats.base[ElementType.WOOD] * 1;
 			getAllies(fightData, fighter).forEach(ally => {
 				heal(fightData, ally, randomBetweenSeeded(fightData.rng, 1, hpHealed), activate_step);
 			});
