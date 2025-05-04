@@ -3533,7 +3533,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ELEMENT]: 2,
-			[Stat.LIGHTNING_ELEMENT]: 1
+			[Stat.LIGHTNING_ELEMENT]: 1,
+			[Stat.COUNTER]: ['x', 1.05],
+			[Stat.LIGHTNING_COUNTER]: ['x', 1.05]
 		}
 	},
 	[Skill.ARCHANGE_GENESIF]: {
