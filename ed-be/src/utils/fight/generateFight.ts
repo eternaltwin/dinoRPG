@@ -511,7 +511,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			return;
 		}
 
-		if (fighter.skills.some(skill => skill.id === Skill.PREMIERS_SOINS)) {
+		if (fighter.skills.some(skill => skill.id === Skill.REVITALISATION)) {
 			// Heal 1HP
 			heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
 		}
