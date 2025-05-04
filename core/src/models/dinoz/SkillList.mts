@@ -3174,9 +3174,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41203],
+		unlockedFrom: [Skill.PARATONNERRE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 10,
+			[Stat.LIGHTNING_ELEMENT]: 1
+		}
 	},
 	[Skill.VOIE_DE_KAOS]: {
 		id: Skill.VOIE_DE_KAOS,
