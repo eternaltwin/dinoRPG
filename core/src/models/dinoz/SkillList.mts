@@ -2760,7 +2760,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
-		probability: 10
+		probability: 50
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,
