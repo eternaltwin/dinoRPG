@@ -3089,7 +3089,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [41101],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		globalEffects: {
+			[Stat.LIGHTNING_DEFENSE]: 3
+		}
 	},
 	[Skill.COUP_DOUBLE]: {
 		id: Skill.COUP_DOUBLE,

@@ -2271,7 +2271,7 @@
 			"ArchangeCorrosif": "Augmente l'élément Feu de 2 et l'élément Foudre de 1",
 			"ArchangeGenesif": "Augmente l'élément Bois de 2 et l'élément Foudre de 1",
 			"Pretre": "Augmente de 1 les PV récupérés par heure lors du repos pour tous les Dinoz (non cumulable)",
-			"Paratonnerre": "Permet au Dinoz d'absorber l'énergie de la Foudre à certains endroits",
+			"Paratonnerre": "Permet au Dinoz d'absorber l'énergie de la Foudre à certains endroits. Augmente la défense en Foudre de 3.",
 			"Medecine": "Permet de récupérer jusqu'à 3 PV à la fin d'un combat",
 			"FissionElementaire": "Permet au Dinoz d'absorber tous types d'énergie élémentaire à certains endroits",
 			"CrocsDiamant": "Augmente la puissance de tous les *assauts* de 2",
