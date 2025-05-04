@@ -2259,7 +2259,7 @@
 			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les Dinoz (non cumulable)",
 			"SangAcide": "Les ennemis attaquant le Dinoz en mêlée ont une chance de subir des dégâts relatifs à l'élément Eau du Dinoz (soumis à équilibrage)",
 			"Decomposeur": "Si un assaut achève un opposant, regagne 10% des points de vie maximum de la cible. Note: ne fonctionne pas sur les clones.",
-			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos",
+			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos. Donne le statut soin pour une durée moyenne.",
 			"PremiersSoins": "Permet au Dinoz de récupérer un point de vie à la fin du combat s'il a perdu de la vie",
 			"PureeSalvatrice": "Annule tous les effets négatifs du groupe",
 			"AuraHermetique": "Le Dinoz se donne le statut bouclier (augmente toutes les défenses de 6)",
