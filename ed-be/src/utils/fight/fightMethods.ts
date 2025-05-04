@@ -108,7 +108,7 @@ export const getOpponents = (fightData: DetailedFight, fighter: DetailedFighter,
 	return opponents;
 };
 
-const chooseRandomOpponentForAssault = (
+const chooseRandomFighterForAssault = (
 	attacker: DetailedFighter,
 	opponents: DetailedFighter[],
 	rng: seedrandom.PRNG,
@@ -222,7 +222,7 @@ const chooseRandomOpponentForAssault = (
 
 /// Choose a random opponent from a list
 /// No filtering is applied
-export const chooseRandomOpponent = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
+export const chooseRandomFighter = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
 	const random = randomBetweenSeeded(rng, 0, opponents.length - 1);
 
 	return opponents[random];
@@ -235,7 +235,7 @@ export const getLimitedRandomOpponent = (
 ) => {
 	const opponents = getOpponents(fightData, fighter, limitTypes);
 
-	return chooseRandomOpponent(opponents, fightData.rng);
+	return chooseRandomFighter(opponents, fightData.rng);
 };
 
 export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFighter) => {
@@ -248,11 +248,11 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 		throw new Error('No opponent found');
 	}
 
-	const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
+	const randomOpponent = chooseRandomFighter(opponents, fightData.rng);
 
 	if (!randomOpponent) {
 		sendJSONToDiscord(
-			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
+			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomFighter` was called.',
 			{ fightData: fightData, fighter: fighter }
 		);
 		throw new Error('No random opponent found');
@@ -267,17 +267,29 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 		return null;
 	}
 
-	const randomOpponent = chooseRandomOpponentForAssault(fighter, opponents, fightData.rng);
+	const randomOpponent = chooseRandomFighterForAssault(fighter, opponents, fightData.rng);
 
 	if (!randomOpponent) {
 		sendJSONToDiscord(
-			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
+			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomFighter` was called.',
 			{ fightData: fightData, fighter: fighter }
 		);
 		throw new Error('No random opponent found');
 	}
 
 	return randomOpponent;
+};
+
+// This method can return null because its possible that the fighter is alone.
+export const getRandomAlly = (fightData: DetailedFight, fighter: DetailedFighter) => {
+	const allies = getAllies(fightData, fighter);
+	if (!allies.length) {
+		return null;
+	}
+
+	const randomAlly = chooseRandomFighter(allies, fightData.rng);
+
+	return randomAlly;
 };
 
 /**
@@ -1266,6 +1278,26 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				getAllies(fightData, fighter).forEach(fighter => {
 					removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 				});
+				break;
+			}
+			case Skill.BRANCARDIER: {
+				const ally = getRandomAlly(fightData, fighter);
+
+				if (!ally) {
+					return cancel();
+				}
+
+				fightData.steps.push({
+					action: 'moveTo',
+					fid: fighter.id,
+					tid: ally.id
+				});
+				heal(fightData, ally, 5, undefined, LifeEffect.Lightning);
+				fightData.steps.push({
+					action: 'moveBack',
+					fid: fighter.id
+				});
+
 				break;
 			}
 			// WATER
@@ -2470,7 +2502,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 
 			// Get random opponent
-			const opponent = chooseRandomOpponent(opponents, fightData.rng);
+			const opponent = chooseRandomFighter(opponents, fightData.rng);
 
 			// Hypnose does not work if opponent is a boss
 			if (opponent.type == 'boss') {
@@ -4469,6 +4501,7 @@ const attackTarget = (
 		}
 	}
 
+	// Post attack effets
 	if (target.hp <= 0) {
 		if (isAssault && hasSkill(attacker, Skill.DECOMPOSEUR) && target.type !== 'clone') {
 			heal(fightData, attacker, Math.round(target.maxHp * 0.1), undefined, LifeEffect.Skull);

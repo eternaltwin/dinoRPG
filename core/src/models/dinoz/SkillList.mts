@@ -3371,14 +3371,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.BRANCARDIER]: {
 		id: Skill.BRANCARDIER,
 		name: 'Brancardier',
-		type: SkillType.S,
-		energy: Energy.NONE,
+		type: SkillType.E,
+		energy: Energy.E20,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.REVITALISATION],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 3,
+		probability: 15
 	},
 	[Skill.BENEDICTION]: {
 		id: Skill.BENEDICTION,
