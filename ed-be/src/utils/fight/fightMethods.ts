@@ -4720,6 +4720,14 @@ const checkAfterAttackEffects = (
 		heal(fightData, attacker, 1, undefined, LifeEffect.Water);
 	}
 
+	// Revitalisation
+	if (isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.REVITALISATION)
+	) {
+		heal(fightData, attacker, 1, undefined, LifeEffect.Lightning);
+	}
+
 	// Cancel FLYING
 	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
 		removeStatus(fightData, attacker, Status.FLYING);
