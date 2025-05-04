@@ -191,7 +191,7 @@ export enum Skill {
 	PARATONNERRE = 41203,
 	COUP_DOUBLE = 41204,
 	REGENERESCENCE = 41205,
-	PREMIERS_SOINS = 41206,
+	REVITALISATION = 41206,
 	ECLAIR_SINUEUX = 41207,
 	FOUDRE = 41301,
 	FISSION_ELEMENTAIRE = 41302,
@@ -3060,7 +3060,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41102],
+		unlockedFrom: [Skill.FOCUS],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -3126,9 +3126,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.HP_REGEN]: 2
 		}
 	},
-	[Skill.PREMIERS_SOINS]: {
-		id: Skill.PREMIERS_SOINS,
-		name: 'PremiersSoins',
+	[Skill.REVITALISATION]: {
+		id: Skill.REVITALISATION,
+		name: 'Revitaliastion',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
@@ -3161,7 +3161,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41204],
+		unlockedFrom: [Skill.CONCENTRATION],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
@@ -3192,7 +3192,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41201],
+		unlockedFrom: [Skill.CONCENTRATION],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3235,7 +3235,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41201],
+		unlockedFrom: [Skill.PARATONNERRE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
@@ -3251,7 +3251,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41206],
+		unlockedFrom: [Skill.BRANCARDIER],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -3282,7 +3282,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41202],
+		unlockedFrom: [Skill.ATTAQUE_ECLAIR],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3297,7 +3297,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41205],
+		unlockedFrom: [Skill.REGENERESCENCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
@@ -3314,7 +3314,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41205],
+		unlockedFrom: [Skill.REGENERESCENCE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
@@ -3328,7 +3328,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41203],
+		unlockedFrom: [Skill.REVITALISATION],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3361,7 +3361,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41306],
+		unlockedFrom: [Skill.VOIE_DE_GAIA],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
@@ -3376,7 +3376,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41307],
+		unlockedFrom: [Skill.REVITALISATION],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -3545,8 +3545,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
+<<<<<<< HEAD
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41401],
+		unlockedFrom: [Skill.AUBE_FEUILLUE],
+=======
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.AUBE_FEUILLUE],
+>>>>>>> d14cc3aac (refactor: refactor intelligence branch + change premiers soins to revitalisation)
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
