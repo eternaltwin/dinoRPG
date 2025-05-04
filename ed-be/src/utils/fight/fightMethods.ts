@@ -2164,7 +2164,7 @@ export const addStatus = (
 			break;
 		}
 		case Status.SHIELDED: {
-			fighter.stats.armor.global *= 1.5;
+			fighter.stats.armor.global *= 1.3;
 			break;
 		}
 		case Status.BLESSED: {
@@ -2264,7 +2264,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.SHIELDED: {
-				fighter.stats.armor.global /= 1.5;
+				fighter.stats.armor.global /= 1.3;
 				break;
 			}
 			case Status.BLESSED: {
