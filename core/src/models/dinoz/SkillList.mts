@@ -2363,7 +2363,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [31201],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 1,
+		priority: 3,
 		probability: 10
 	},
 	[Skill.ACUPUNCTURE]: {
