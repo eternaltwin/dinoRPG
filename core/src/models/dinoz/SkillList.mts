@@ -751,7 +751,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [11201],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 1,
+		priority: 3,
 		probability: 10
 	},
 	[Skill.PAUME_CHALUMEAU]: {
