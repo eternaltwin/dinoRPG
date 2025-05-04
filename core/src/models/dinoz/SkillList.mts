@@ -2504,7 +2504,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [31206],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 8,
+		priority: 3,
 		probability: 15
 	},
 	[Skill.GRIFFES_EMPOISONNEES]: {
