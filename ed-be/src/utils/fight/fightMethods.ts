@@ -61,6 +61,7 @@ import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
+import { fightChallenge } from '../../business/dojoService.js';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -2125,6 +2126,17 @@ export const addStatus = (
 
 	// Bad status
 	const isBad = BadStatus.includes(status);
+
+	// Negate once if blessed
+	if (isBad && hasStatus(fighter, Status.BLESSED)) {
+		removeStatus(fightData, fighter, Status.BLESSED);
+		fightData.steps.push({
+			action: 'attach',
+			fid: fighter.id,
+			fx: 'fxBubble'
+		});
+		return false;
+	}
 
 	// Negate if SELF_CONTROL
 	if (hasSkill(fighter, Skill.SELF_CONTROL) && status === Status.STUNNED) return false;
