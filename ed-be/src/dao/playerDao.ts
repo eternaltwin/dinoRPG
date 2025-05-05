@@ -122,12 +122,17 @@ export async function auth(request: Request, banByPass = false) {
 		select: {
 			id: true,
 			lang: true,
-			banCase: true
+			banCase: true,
+			connexionToken: true
 		}
 	});
 
 	if (!user) {
 		throw new ExpectedError('User not found');
+	}
+
+	if (user.connexionToken !== token) {
+		throw new ExpectedError('Invalid user token');
 	}
 
 	if (user.banCase && !banByPass) {
