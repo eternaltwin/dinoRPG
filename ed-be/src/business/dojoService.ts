@@ -96,7 +96,6 @@ export async function createMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.dinozTooLowLevel', authed));
 	}
 	await createOpponentTeam(team, myDojo);
-	await incrementDailyReset(myDojo.id);
 
 	return await createMyTeamDao(teamIds, myDojo.id);
 }
@@ -390,6 +389,23 @@ export async function skipOpponent(req: Request) {
 	);
 	promises.push(updateDojoPoints(authed.id, Math.round(worth * ranking.reputation)));
 	await Promise.all(promises);
+
+	// If skip generate new batch of opponent
+	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === 5) {
+		await incrementDailyReset(player.Dojo.id)
+		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1)
+		await createNotification(
+			authed.id,
+			JSON.stringify([
+				{
+					rewardType: RewardEnum.ITEM,
+					value: Item.TREASURE_COUPON,
+					quantity: 1
+				}
+			]),
+			NotificationSeverity.reward
+		)
+	}
 }
 
 async function createOpponentTeam(team: { id: number; level: number }[], myDojo: Pick<Dojo, 'id' | 'playerId'>) {
