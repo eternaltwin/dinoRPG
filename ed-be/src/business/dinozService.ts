@@ -239,10 +239,7 @@ export async function getAvailableActions(
 		if (!gatherFound) {
 			throw new ExpectedError(`Gather ${dinozPlace.gather} doesn't exist.`);
 		}
-		availableActions.push({
-			name: gatherFound.action,
-			imgName: 'act_gather'
-		});
+		availableActions.push(actionList[gatherFound.action]);
 	}
 
 	// Special Gather

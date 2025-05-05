@@ -96,27 +96,27 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.MARKET]: {
 		name: Action.MARKET,
-		imgName: 'act_talk'
+		imgName: 'act_market'
 	},
 	[Action.FISH]: {
 		name: Action.FISH,
-		imgName: 'act_default'
+		imgName: 'act_fish'
 	},
 	[Action.CUEILLE]: {
 		name: Action.CUEILLE,
-		imgName: 'act_default'
+		imgName: 'act_cueille'
 	},
 	[Action.ENERGY]: {
 		name: Action.ENERGY,
-		imgName: 'act_default'
+		imgName: 'act_energy'
 	},
 	[Action.HUNT]: {
 		name: Action.HUNT,
-		imgName: 'act_default'
+		imgName: 'act_hunt'
 	},
 	[Action.SEEK]: {
 		name: Action.SEEK,
-		imgName: 'act_default'
+		imgName: 'act_seek'
 	},
 	[Action.ANNIV]: {
 		name: Action.ANNIV,
@@ -140,15 +140,15 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.ACTION]: {
 		name: Action.ACTION,
-		imgName: 'act_default'
+		imgName: 'act_action'
 	},
 	[Action.CONGEL]: {
 		name: Action.CONGEL,
-		imgName: 'act_default'
+		imgName: 'act_congel'
 	},
 	[Action.STOP_CONGEL]: {
 		name: Action.STOP_CONGEL,
-		imgName: 'act_default'
+		imgName: 'act_stop_congel'
 	},
 	[Action.REST]: {
 		name: Action.REST,
@@ -156,7 +156,7 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.STOP_REST]: {
 		name: Action.STOP_REST,
-		imgName: 'act_default'
+		imgName: 'act_stop_rest'
 	},
 	[Action.REINCARNATION]: {
 		name: Action.REINCARNATION,
