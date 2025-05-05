@@ -2,7 +2,7 @@
 	<TitleHeader :title="$t('pageTitle.challengeFriend')" />
 	<div class="preparation" v-if="!fightTransformed">
 		<DZDisclaimer round help :content="$t('dojo.challengeFriend.disclaimer')" />
-		<SelectDinoz :dinozList="myDinoz" :selectLimit="5" @validate="composeMyTeam"></SelectDinoz>
+		<SelectDinoz :dinozList="myDinoz" :selectLimit="6" @validate="composeMyTeam"></SelectDinoz>
 		<template v-if="opponentDinoz.length <= 0">
 			<DZButton v-for="friend in clanMembers" :key="friend.player.id" @click="selectPlayer(friend.player.id)">
 				{{ friend.player.name }}</DZButton
@@ -10,7 +10,7 @@
 		</template>
 		<template v-else>
 			<DZDisclaimer round help :content="$t('dojo.challengeFriend.friend')" />
-			<SelectDinoz :dinozList="opponentDinoz" :selectLimit="5" @validate="composeEnnemyTeam"></SelectDinoz>
+			<SelectDinoz :dinozList="opponentDinoz" :selectLimit="6" @validate="composeEnnemyTeam"></SelectDinoz>
 		</template>
 		<div
 			class="fight"
