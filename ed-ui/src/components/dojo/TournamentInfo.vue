@@ -24,7 +24,7 @@
 	</div>
 	<div class="df aic fdc" v-if="myDojo && tournamentInfo && myDojo.TournamentTeam">
 		<DZButton @click="displayTeam" v-if="myTeam.length === 0">{{ $t('dojo.team') }}</DZButton>
-		<div class="df" v-if="myTeam.length > 0">
+		<div class="df jcc fww" v-if="myTeam.length > 0">
 			<div v-for="dinoz in myTeam" :key="dinoz.id" class="dinoz-button">
 				<DinozWithoutFlash :display="dinoz.display" :life="1" />
 
@@ -252,7 +252,7 @@ export default defineComponent({
 	user-select: none;
 	display: flex;
 	flex-direction: column;
-	background-image: url('../assets/battle/forcebrut.webp');
+	background-image: url('../../assets/battle/forcebrut.webp');
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position-x: center;
