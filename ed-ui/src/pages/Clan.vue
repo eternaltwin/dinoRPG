@@ -91,7 +91,7 @@
 					theme: 'small'
 				}"
 			>
-				<img :src="getImgURL('icons', 'act_gather')" alt="Paramètres du clan" />
+				<img :src="getImgURL('icons', 'act_default')" alt="Paramètres du clan" />
 			</div>
 		</div>
 		<div class="clan-page">
