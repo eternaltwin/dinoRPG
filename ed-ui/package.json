@@ -17,11 +17,10 @@
     "git": false
   },
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^42.0.2",
-    "@ckeditor/ckeditor5-vue": "^6.0.0",
+    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
-    "ckeditor5": "^42.0.2",
+    "ckeditor5": "^45.0.0",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",

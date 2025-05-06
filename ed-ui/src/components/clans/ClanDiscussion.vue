@@ -1,7 +1,7 @@
 <template>
 	<div class="new-message-container" v-if="hasAccess">
 		<div v-if="isConnectionOk">
-			<Ckeditor :editor="editor" v-model="newMessage" />
+			<Editor v-model="newMessage" />
 		</div>
 		<div v-if="isConnectionOk === false" class="msg-error">
 			<p>{{ $t('clan.forum.connectionFailed') }}</p>
@@ -44,7 +44,7 @@
 					</div>
 					<button v-if="canDeleteMessage(msg)" @click="deleteMessage(msg)">X</button>
 				</div>
-				<p class="msg-content" style="white-space: pre-line" v-html="msg.content" />
+				<div class="msg-content" style="white-space: pre-line" v-html="msg.content" />
 			</div>
 		</div>
 		<div class="switch-page-container">
@@ -69,34 +69,35 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { playerStore } from '../../store/index.js';
-import EventBus from '../../events/index.js';
-import { ClanService } from '../../services/ClanService.js';
-import { errorHandler } from '../../utils/index.js';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { WebSocketService } from '../../services/WebSocketService';
-import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
+import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
 import { WsMsgRequestCreation } from '@drpg/core/models/webSocket/WsMsgRequestCreation';
 import { WsMsgRequestDeletion } from '@drpg/core/models/webSocket/WsMsgRequestDeletion';
-import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
 import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
+import EventBus from '../../events/index.js';
+import { ClanService } from '../../services/ClanService.js';
+import { WebSocketService } from '../../services/WebSocketService';
+import { playerStore } from '../../store/index.js';
+import { errorHandler } from '../../utils/index.js';
+import Editor from '../common/Editor.vue';
 
 export default defineComponent({
 	name: 'ClanDiscussion',
-	components: {},
+	components: {
+		Editor
+	},
 	data() {
 		return {
 			webSocket: {} as WebSocket,
 			playerStore: playerStore(),
-			hasAccess: false as boolean,
+			hasAccess: false,
 			messages: [] as CreateClanMessage[],
-			newMessage: '' as string,
-			page: 1 as number,
-			maxPage: 1 as number,
-			pageSelector: 1 as number,
+			page: 1,
+			maxPage: 1,
+			pageSelector: 1,
 			isConnectionOk: undefined as boolean | undefined,
-			editor: ClassicEditor
+			newMessage: ''
 		};
 	},
 	methods: {
@@ -270,10 +271,6 @@ export default defineComponent({
 				cursor: pointer;
 			}
 		}
-	}
-	.msg-content {
-		padding: 0 4px;
-		color: rgb(50, 50, 50);
 	}
 }
 

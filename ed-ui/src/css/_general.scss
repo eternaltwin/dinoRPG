@@ -185,3 +185,27 @@ strong {
 	display: flex;
 	align-items: center;
 }*/
+
+/* CKEditor */
+.ck-content {
+	ul {
+		padding-left: 20px;
+	}
+}
+
+.msg-content {
+	padding: 0 4px;
+	color: rgb(50, 50, 50);
+
+	blockquote {
+		padding-left: 1.5em;
+		padding-right: 1.5em;
+		margin: 0px;
+		font-style: italic;
+		border-left: solid 5px hsl(0, 0%, 80%);
+	}
+
+	ul {
+		padding-left: 20px;
+	}
+}

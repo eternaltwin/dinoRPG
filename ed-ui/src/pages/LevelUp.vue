@@ -227,7 +227,7 @@ export default defineComponent({
 		};
 	},
 	props: {
-		id: { type: Number, required: true },
+		id: { type: String, required: true },
 		event: {
 			type: String,
 			required: false,
@@ -241,7 +241,6 @@ export default defineComponent({
 	},
 	methods: {
 		spinOver(): void {
-			console.log('received');
 			this.isSpinOver = true;
 		},
 		learnSkill(skillId: number): void {
@@ -272,7 +271,7 @@ export default defineComponent({
 			}
 		},
 		async learnSkillAndSetStore(skillIdList: Array<number>): Promise<void> {
-			const dinozId: number = parseInt(this.$route.params.id.toString());
+			const dinozId: number = +this.id;
 
 			EventBus.emit('isLoading', true);
 			try {
@@ -294,7 +293,7 @@ export default defineComponent({
 			this.isSpinOver = false;
 			this.availableSkills = null;
 			this.tryNumber = this.tryNumber === 1 ? 2 : 1;
-			this.getLearnableSkills(this.id, this.tryNumber);
+			this.getLearnableSkills(+this.id, this.tryNumber);
 		},
 		async getLearnableSkills(dinozId: number, tryNumber: number): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -316,7 +315,7 @@ export default defineComponent({
 		}
 	},
 	async created(): Promise<void> {
-		await this.getLearnableSkills(this.id, 1);
+		await this.getLearnableSkills(+this.id, 1);
 	}
 });
 </script>

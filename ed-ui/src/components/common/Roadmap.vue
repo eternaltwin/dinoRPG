@@ -44,7 +44,7 @@
 				<tr>
 					<td class="futurHeader">
 						<div class="futurTitle">
-							<img :src="getImgURL('icons', 'small_sage')" :alt="small_sage" />
+							<img :src="getImgURL('icons', 'small_sage')" alt="small_sage" />
 							<span>{{ $t('roadmap.futurTitle') }}</span>
 						</div>
 					</td>

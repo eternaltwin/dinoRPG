@@ -41,7 +41,7 @@
 		</div>
 	</div>
 	<div v-if="answerMode" class="answer">
-		<Ckeditor :editor="editor" v-model="answer" />
+		<Editor v-model="answer" />
 		<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
 	</div>
 	<div v-if="myThread && myThread.pinnedMessage">
@@ -55,13 +55,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZButton from '../common/DZButton.vue';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { FullThread } from '@drpg/core/models/messagerie/threadsBasic';
 import { localStore } from '../../store/index.js';
 import Message from './Message.vue';
 import { MessagerieService } from '../../services/MessagerieService.js';
 import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
+import Editor from '../common/Editor.vue';
 
 export default defineComponent({
 	name: 'Thread',
@@ -70,16 +70,15 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			editor: ClassicEditor,
-			answerMode: false as boolean,
+			answerMode: false,
 			localStore: localStore(),
-			answer: undefined as undefined | string,
+			answer: '',
 			myThread: undefined as undefined | FullThread,
 			currentThreadPage: 1,
-			showParticipants: false as boolean
+			showParticipants: false
 		};
 	},
-	components: { DZUser, Message, DZButton },
+	components: { DZUser, Message, DZButton, Editor },
 	methods: {
 		async answerMsg() {
 			this.answerMode = true;

@@ -199,7 +199,7 @@ export default defineComponent({
 		},
 		async sendMessage() {
 			try {
-				const participants = this.newThread.participants.map(p => p.id);
+				const participants = this.newThread.participants?.map(p => p.id);
 				const newThread = await MessagerieService.createThread(
 					participants,
 					this.newThread.title,
