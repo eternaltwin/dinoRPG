@@ -3323,7 +3323,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CROCS_DIAMANT]: {
 		id: Skill.CROCS_DIAMANT,
 		name: 'CrocsDiamant',
-		type: SkillType.P,
+		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
