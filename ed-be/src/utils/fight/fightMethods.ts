@@ -2463,6 +2463,11 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.TROU_NOIR: {
 			// TODO add rule to disable escape in fight (dojo, other)
 
+			// Does not work if there is only one fighter
+			if (getOpponents(fightData, fighter).length === 1) {
+				return cancel();
+			}
+
 			const opponent = getRandomOpponent(fightData, fighter);
 
 			// Prevent if item.ANTI_GRAVE_SUIT from target
