@@ -487,7 +487,7 @@ export function transpileFight(
 					message: resolveSkillName(step.skill, t)
 				});
 				// Update the energy
-				setFighterEnergy(myFighter, myFighter.energy - getSkillEnergy(step.skill));
+				setFighterEnergy(myFighter, Math.round((myFighter.energy - getSkillEnergy(step.skill)) * myFighter.skillEnergyFactor));
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [
@@ -543,11 +543,13 @@ export function transpileFight(
 						});
 					}
 					// Remove energy per target hit
-					setFighterEnergy(myFighter, myFighter.energy - step.targets.length * BASE_ENERGY_COST);
-					history.push({
-						action: DinoAction.ENERGY,
-						fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
-					});
+					if (resolveSkillVisualEffect(step.skill) !== SkillVisualEffect.HEAL) {
+						setFighterEnergy(myFighter, myFighter.energy - step.targets.length * BASE_ENERGY_COST);
+						history.push({
+							action: DinoAction.ENERGY,
+							fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+						});
+					}
 					myFighter = undefined;
 				} else {
 					history.push({

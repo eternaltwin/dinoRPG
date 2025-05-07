@@ -38,6 +38,7 @@ import { getPlayerQuestProgression, increaseQuestProgression, updateQuest } from
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { scenarioChecker } from '../utils/scenarioChecker.js';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { hasSkill } from '../utils/fight/fightMethods.js';
 
 /**
  * @summary Process a fight
@@ -530,6 +531,7 @@ export async function rewardFight(
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
+			skillEnergyFactor: f.skillEnergyFactor,
 			dark: f.type === 'boss' ? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined) : undefined,
 			size: f.type === 'boss' ? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined) : undefined
 		};

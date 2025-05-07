@@ -39,6 +39,7 @@ export interface FighterRecap {
 	energy: number;
 	maxEnergy: number;
 	energyRecovery: number;
+	skillEnergyFactor: number;
 	dark?: boolean;
 	size?: number;
 }

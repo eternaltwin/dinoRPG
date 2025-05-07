@@ -1787,7 +1787,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		}
 
 		// Consume energy
-		setEnergy(fighter, fighter.energy - event.energy);
+		let energyFactor = 1;
+		if (hasSkill(fighter, Skill.STRATEGIE)) {
+			energyFactor *= 0.9;
+		}
+		setEnergy(fighter, Math.round((fighter.energy - event.energy) * energyFactor));
 	} else {
 		// Event is an item
 
@@ -3901,8 +3905,11 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	// // Add step
 	// fightData.steps.push(activate_step);
 
-	// Consume energy
-	setEnergy(fighter, fighter.energy - skill.energy);
+	let energyFactor = 1;
+	if (hasSkill(fighter, Skill.STRATEGIE)) {
+		energyFactor *= 0.9;
+	}
+	setEnergy(fighter, Math.round((fighter.energy - skill.energy) * energyFactor));
 
 	if (fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
