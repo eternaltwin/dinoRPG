@@ -45,6 +45,7 @@ export enum Status {
 	// Environments
 	NO_EVENT = 'noEvent',
 	NO_SKILL = 'noSkill',
+	ABYSSE = 'abysse',
 	WEAKENED = 'weakened',
 	LIGHTNING_STRUCK = 'lightningStruck',
 	AIR_SLOWED = 'airSlowed'
