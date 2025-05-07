@@ -2299,7 +2299,7 @@
 			"Specialiste": "Remplace l'élément le plus faible du cycle élémentaire par le plus fort",
 			"TalonDAchille": "Augmente la puissance de tous les *assauts* de 2",
 			"OeilDeLynx": "Permet au Dinoz de trouver des plantes exotiques à certains endroits. Augmente l'élément Air de 1 et les PV max de 10.",
-			"NuageToxique": "Empoisonne tous les ennemis pour une durée moyenne, les dégâts par tour sont strictement égaux à l'élément Air du lanceur",
+			"NuageToxique": "Empoisonne tous les ennemis pour une durée moyenne, les dégâts par tour basés sur l'élément Air du lanceur",
 			"HaleineFetive": "Empoisonne les ennemis touchés par un assaut pour une longue durée, les dégâts par tour sont strictement égaux à l'élément Air du lanceur",
 			"Mistral": "Attaque tous les ennemis avec un pouvoir Air de 3",
 			"TaiChi": "Augmente la puissance des *assauts* Air de 15. Diminue la vitesse des attaques Air de 20%",

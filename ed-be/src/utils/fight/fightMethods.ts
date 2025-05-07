@@ -4064,7 +4064,7 @@ const poison = (
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
-			poisonDamage = poisoner.stats.base[ElementType.AIR];
+			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.AIR], 0.6)), 1);
 			break;
 		}
 		case Skill.HALEINE_FETIVE: {
