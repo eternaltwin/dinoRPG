@@ -15,6 +15,7 @@ export enum SpecialStat {
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+	DISCHARGE_DAMAGE = 'dischargeDamange',
 	// Counters
 	COUNTER = 'counter',
 	FIRE_COUNTER = 'fireCounter',
@@ -138,6 +139,7 @@ export enum UniqueSpecialStatUsedInFights {
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+	DISCHARGE_DAMAGE = 'dischargeDamage'
 }
 
 
@@ -247,6 +249,30 @@ export const getSpecialStat = (
 			]
 		};
 	}
+
+		// Special case for ACID_BLOOD_DAMAGE (value not influenced by skills)
+		if (stat === SpecialStat.DISCHARGE_DAMAGE) {
+			// Return null if no acid blood skill
+			if (!skills.some(skill => skill.id === Skill.DECHARGE)) {
+				return null;
+			}
+
+			return {
+				name: 'dischargeDamage',
+				// (Thunger + Air) / 2
+				value: Math.ceil((dinoz.nbrUpLightning + dinoz.nbrUpAir) / 2),
+				details: [
+					{
+						type: 'base',
+						name: 'base',
+						percent: false,
+						multiplier: false,
+						elements: ['lightning', 'air'],
+						value: dinoz.nbrUpLightning + dinoz.nbrUpAir
+					}
+				]
+			};
+		}
 
 	let value = BaseSpecialStats[stat];
 	let base_stat = value;

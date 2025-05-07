@@ -220,9 +220,14 @@ export enum Skill {
 	RAIJIN = 41411,
 	QUETZACOATL = 41412,
 	ROI_DES_SINGES = 41413,
+	DECHARGE = 41414,
 	ARCHANGE_CORROSIF = 41501,
 	ARCHANGE_GENESIF = 41502,
 	PRETRE = 41503,
+	HERCOLUBUS = 41504,
+	REINE_DE_LA_RUCHE = 41505,
+	ARCHANGE_EVASIF = 41506,
+	YGGDRASIL = 41507,
 	SOUTIEN_MORAL = 42101,
 	STIMULATION_CARDIAQUE = 42201,
 	JAUNE = 42202,
@@ -314,10 +319,7 @@ export enum Skill {
 	GROS_DORMEUR = 61122,
 	VEILLEUSE = 61201,
 	MATELASSEUR = 61301,
-	HERCOLUBUS = 41504,
-	REINE_DE_LA_RUCHE = 41505,
 	BIG_MAMA = 51506,
-	YGGDRASIL = 41507,
 	BALEINE_BLANCHE = 41508,
 	// Monster Skills
 	M_RENFORTS = 99901,
@@ -3465,6 +3467,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
+	[Skill.DECHARGE]: {
+		id: Skill.DECHARGE,
+		name: 'Decharge',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.LIGHTNING],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.VOIE_D_OURANOS],
+		isBaseSkill: false,
+		isSphereSkill: false
+	},
 	[Skill.SURCHARGE]: {
 		id: Skill.SURCHARGE,
 		name: 'Surcharge',
@@ -3588,6 +3602,24 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.LIGHTNING_ARMOR]: ['x', 1.05]
 		}
 	},
+	[Skill.ARCHANGE_EVASIF]: {
+		id: Skill.ARCHANGE_EVASIF,
+		name: 'ArchangeEvasif',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.LIGHTNING],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.DECHARGE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		effects: {
+			[Stat.AIR_ELEMENT]: 2,
+			[Stat.LIGHTNING_ELEMENT]: 1,
+			[Stat.EVASION]: ['x', 1.05],
+			[Stat.LIGHTNING_EVASION]: ['x', 1.05]
+		}
+	},
 	[Skill.PRETRE]: {
 		id: Skill.PRETRE,
 		name: 'Pretre',
@@ -3596,7 +3628,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41403],
+		unlockedFrom: [Skill.BENEDICTION],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
