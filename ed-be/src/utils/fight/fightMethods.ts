@@ -4677,6 +4677,22 @@ const checkDefensiveEffects = (
 		damage = Math.max(damage - 5, 0);
 	}
 
+	// DECOLLAGE D'URGENCE
+	if (
+		isCloseCombat &&
+		hasSkill(target, Skill.DECOLLAGE_D_URGENCE) &&
+		// 5 % chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 5
+	) {
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.DECOLLAGE_D_URGENCE
+		});
+		// Add FLYING
+		addStatus(fightData, target, Status.FLYING, StatusLength.SHORT);
+	}
+
 	// Check for mud wall
 	if (target.mudWall) {
 		// TODO announce skill only the first time it tanks damage
