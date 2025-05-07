@@ -4122,7 +4122,7 @@ const poison = (
 	let poisonDamage = 0;
 	switch (skill) {
 		case Skill.AURA_PUANTE: {
-			poisonDamage = 10;
+			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.AIR] / 4, 0.6)), 1);
 			break;
 		}
 		case Skill.GRIFFES_EMPOISONNEES: {
@@ -5027,7 +5027,7 @@ const checkAfterDefenseEffects = (
 			fid: target.id,
 			skill: Skill.AURA_PUANTE
 		});
-		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.MEDIUM);
+		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.SUPER_SHORT);
 	}
 
 	// TODO Bulle (add fx?)
