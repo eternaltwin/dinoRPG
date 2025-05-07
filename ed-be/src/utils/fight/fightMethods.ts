@@ -2449,21 +2449,41 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.PAUME_EJECTABLE: {
-			// x2 damage
-			fighter.nextAssaultMultiplier *= 2;
+			// x2 damage for the whole assault (for multihit and combo)
+			fighter.allAssaultMultiplier *= 2;
 
 			// Attack opponent
 			const hit = launchAssault(fightData, fighter, true, Skill.PAUME_EJECTABLE);
 
+			// Remove x2 bonus
+			fighter.allAssaultMultiplier /= 2;
+
 			if (hit && hit.hpLost > 0) {
-				// Increase time
-				fighter.time += 15 * TIME_FACTOR;
+				// Increase target time
+				hit.target.time += 6 * TIME_FACTOR;
 				// Add fx for loss of init
 				fightData.steps.push({
 					action: 'notify',
-					fids: [fighter.id],
+					fids: [hit.target.id],
 					notification: NotificationList.InitDown
 				});
+
+				let goodStatusToRemove: Status[] = [];
+				hit.target.status.forEach(s => {
+					const isGood = GoodStatus.includes(s.type);
+					if (isGood) {
+						goodStatusToRemove.push(s.type);
+					}
+				});
+
+				if (goodStatusToRemove.length > 0) {
+					removeStatus(fightData, hit.target, ...goodStatusToRemove);
+					fightData.steps.push({
+						action: 'attach',
+						fid: hit.target.id,
+						fx: 'fxBubble'
+					});
+				}
 			}
 			break;
 		}
