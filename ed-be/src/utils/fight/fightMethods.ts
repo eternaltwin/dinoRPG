@@ -61,7 +61,6 @@ import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
-import { fightChallenge } from '../../business/dojoService.js';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -4122,6 +4121,10 @@ export const heal = (
 		} else if (!fighter.attacker && fightData.defenderData[Skill.CUISINIER]) {
 			healBonus *= 1.1;
 		}
+	}
+
+	if (hasSkill(fighter, Skill.MEDECINE)) {
+		healBonus *= 2;
 	}
 
 	fighter.hp += Math.round(hp * healBonus);
