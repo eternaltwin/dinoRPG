@@ -409,12 +409,12 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	let deadlyPoisonApplied = false;
 
-	// STRATEGIE
-	fightData.fighters.forEach(fighter => {
-		if (!fighter.skills.some(skill => skill.id === Skill.STRATEGIE)) return;
+	// // STRATEGIE
+	// fightData.fighters.forEach(fighter => {
+	// 	if (!fighter.skills.some(skill => skill.id === Skill.STRATEGIE)) return;
 
-		applyStrategy(fightData, fighter);
-	});
+	// 	applyStrategy(fightData, fighter);
+	// });
 
 	// Hack to not play dinoz turn if there are no ennemies (swamp)
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
@@ -613,7 +613,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				startingHp: f.startingHp,
 				energy: f.maxEnergy,
 				maxEnergy: f.maxEnergy,
-				energyRecovery: f.stats.special.energyRecovery
+				energyRecovery: f.stats.special.energyRecovery,
+				skillEnergyFactor: hasSkill(f, Skill.STRATEGIE) ? 0.9 : 1
 			};
 		})
 	};
