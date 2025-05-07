@@ -4351,7 +4351,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_SPEED]: ['x', 1.5]
+			[Stat.EVASION]: ['x', 1.1],
+			[Stat.SPEED]: ['x', 1.1]
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 6

@@ -2308,7 +2308,7 @@
 			"FormeVaporeuse": "Le Dinoz a 6% de chance de devenir intangible pour une durée courte juste avant de subir une attaque",
 			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5% (non cumulable)",
 			"MeditationSolitaire": "Augmente la défense Air de 3 et l'esquive de 5%, diminue la vitesse des attaques Air de 50%",
-			"MeditationTranscendantale": "Augmente la défense Air de 6, diminue la vitesse des attaques Air de 50%",
+			"MeditationTranscendantale": "Augmente la défense Air de 6 et l'esquive de 10%, diminue la vitesse de 10%",
 			"SouffleDeVie": "Augmente les PV max de 20 et l'élément Air de 1. Le Dinoz est immunisé au poison et aux malédictions. Il regagne 1 PV par effet de ses poisons.",
 			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible pour une durée infinie",
 			"Brasero": "Attaque tous les ennemis avec un pouvoir Feu de 3",
