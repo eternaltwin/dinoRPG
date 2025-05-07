@@ -3553,7 +3553,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ELEMENT]: 2,
-			[Stat.LIGHTNING_ELEMENT]: 1
+			[Stat.LIGHTNING_ELEMENT]: 1,
+			[Stat.ARMOR]: ['x', 1.05],
+			[Stat.LIGHTNING_ARMOR]: ['x', 1.05]
 		}
 	},
 	[Skill.PRETRE]: {
