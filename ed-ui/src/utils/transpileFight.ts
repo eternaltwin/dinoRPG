@@ -487,7 +487,10 @@ export function transpileFight(
 					message: resolveSkillName(step.skill, t)
 				});
 				// Update the energy
-				setFighterEnergy(myFighter, Math.round((myFighter.energy - getSkillEnergy(step.skill)) * myFighter.skillEnergyFactor));
+				setFighterEnergy(
+					myFighter,
+					Math.round((myFighter.energy - getSkillEnergy(step.skill)) * myFighter.skillEnergyFactor)
+				);
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [

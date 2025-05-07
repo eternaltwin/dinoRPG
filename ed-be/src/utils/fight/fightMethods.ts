@@ -1678,6 +1678,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				fighter.element = randomElement;
 				fighter.elements = [randomElement];
+				fighter.currentElementIndex = 0;
 				break;
 			}
 			case Skill.M_YAKUZI: {
@@ -1922,6 +1923,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Set the element list to only the best element
 				fighter.elements = [bestElement];
+				fighter.currentElementIndex = 0;
 				break;
 			}
 			case Item.FUCA_PILL: {
@@ -3877,7 +3879,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, fighter.element, 8), skill.id, activate_step);
 
 			// Change element
-			fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
+			fighter.currentElementIndex = (fighter.currentElementIndex + 1) % fighter.elements.length;
+			fighter.element = fighter.elements[fighter.currentElementIndex];
 			break;
 		}
 		case Skill.M_DEMYOM_HEAL: {
@@ -5334,7 +5337,8 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 
 	// Change fighter element
 	if (!hasStatus(attacker, Status.LOCKED)) {
-		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
+		attacker.currentElementIndex = (attacker.currentElementIndex + 1) % attacker.elements.length;
+		attacker.element = attacker.elements[attacker.currentElementIndex];
 	}
 
 	// TODO any "onNextTurn" effets would go here
