@@ -4605,14 +4605,14 @@ const checkDefensiveEffects = (
 	// FORME VAPOREUSE
 	if (
 		// Opponent has FORME_VAPOREUSE
-		hasSkill(target, Skill.FORME_VAPOREUSE) &&
+		hasSkill(target, Skill.FORME_ETHERALE) &&
 		// 6% chance
 		randomBetweenSeeded(fightData.rng, 0, 99) < 6
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
-			skill: Skill.FORME_VAPOREUSE
+			skill: Skill.FORME_ETHERALE
 		});
 		// Add INTANGIBLE
 		addStatus(fightData, target, Status.INTANGIBLE, StatusLength.SHORT);

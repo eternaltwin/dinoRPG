@@ -16,7 +16,7 @@ import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConsta
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
+import { DetailedFighter, FighterResultFiche, Status, StatusLength } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozToGetFighter, FightConfiguration, TeamFightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
@@ -382,6 +382,11 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		// ACCUPUNCTURE
 		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
 			addStatus(fightData, fighter, Status.HEALING);
+		}
+
+		// FORME VAPOREUSE
+		if (fighter.skills.some(skill => skill.id === Skill.FORME_VAPOREUSE)) {
+			addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.LONG);
 		}
 
 		// M_INITIATIVE_RESET
