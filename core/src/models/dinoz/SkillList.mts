@@ -4063,7 +4063,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 2,
 			[Stat.WATER_DEFENSE]: 2,
-			[Stat.LIGHTNING_DEFENSE]: 2
+			[Stat.LIGHTNING_DEFENSE]: 2,
+			[Stat.EVASION]: ['x', 1.05]
 		}
 	},
 	[Skill.SPECIALISTE]: {
