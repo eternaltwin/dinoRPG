@@ -3930,14 +3930,17 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ANALYSE]: {
 		id: Skill.ANALYSE,
 		name: 'Analyse',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [51102],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.IGNORE_ARMOR]: ['x', 1.1]
+		}
 	},
 	[Skill.CUEILLETTE]: {
 		id: Skill.CUEILLETTE,
