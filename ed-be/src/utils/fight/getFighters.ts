@@ -221,6 +221,7 @@ export const initializeDinoz = (
 		status: [],
 		elements: [],
 		element: ElementType.AIR,
+		currentElementIndex: 0,
 		minDamage: 1,
 		minAssaultDamage: 1,
 		skillElementalBonus: {
@@ -301,8 +302,8 @@ export const initializeDinoz = (
 
 	// SPECIALISTE
 	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {
-		// Remove the lowest element
-		elements.pop();
+		// Replace the lowest element by the strongest
+		elements[elements.length - 1] = elements[0];
 	}
 
 	fighter.elements = elements.map(element => element.element);
@@ -358,6 +359,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		status: [], // No statuses for clones
 		elements: [], // Copy exactly the elements of the original dinoz, see below
 		element: ElementType.AIR, // Temporary, is changed below
+		currentElementIndex: 0,
 		minDamage: dinoz.minDamage,
 		minAssaultDamage: dinoz.minAssaultDamage,
 		skillElementalBonus: dinoz.skillElementalBonus,
@@ -608,6 +610,7 @@ export const initializeMonster = (
 			ElementType.VOID
 		],
 		element: ElementType.FIRE,
+		currentElementIndex: 0,
 		minDamage: 1,
 		minAssaultDamage: 1,
 		skillElementalBonus: {
@@ -698,7 +701,8 @@ export const initializeMonster = (
 	if (fighter.skills.some(skill => skill.id === Skill.SPECIALISTE)) {
 		// Remove the lowest element
 		if (fighter.elements.length > 1) {
-			elements.pop();
+			// Replace the lowest element by the strongest
+			elements[elements.length - 1] = elements[0];
 		}
 	}
 

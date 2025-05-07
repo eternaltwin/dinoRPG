@@ -149,6 +149,7 @@ export interface DetailedFighter {
 		damage: number;
 	};
 	// Elements
+	currentElementIndex: number;
 	elements: ElementType[];
 	element: ElementType;
 	locked?: number;

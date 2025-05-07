@@ -284,8 +284,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 					itemId: Item.CURSE_LOCKER
 				});
 
+				// TODO: not exactly if fighter has specialist
 				// Weakest element is the last in the array
 				opponent.element = opponent.elements[opponent.elements.length - 1];
+				opponent.currentElementIndex = opponent.elements.length - 1;
 				// Lock opponent for 4 cycles on that element
 				opponent.locked = 4 * CYCLE;
 
