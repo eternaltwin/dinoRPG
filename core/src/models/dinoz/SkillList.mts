@@ -4257,14 +4257,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.MAITRE_LEVITATEUR]: {
 		id: Skill.MAITRE_LEVITATEUR,
 		name: 'MaitreLevitateur',
-		type: SkillType.S,
-		energy: Energy.NONE,
+		type: SkillType.E,
+		energy: Energy.E30,
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51303],
+		unlockedFrom: [Skill.ATTAQUE_PLONGEANTE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		priority: 4,
+		probability: 9
 	},
 	[Skill.HALEINE_FETIVE]: {
 		id: Skill.HALEINE_FETIVE,

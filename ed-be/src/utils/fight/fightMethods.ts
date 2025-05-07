@@ -1204,6 +1204,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
 				break;
 			}
+			case Skill.MAITRE_LEVITATEUR: {
+				const allies = getAllies(fightData, fighter);
+				allies.forEach(a => {
+					addStatus(fightData, a, Status.FLYING, StatusLength.SHORT);
+				});
+				break;
+			}
 			case Skill.AIGUILLON: {
 				attackSingleOpponent(
 					fightData,
@@ -2565,7 +2572,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const allies = getAllies(fightData, fighter);
 			allies.forEach(a => {
 				addStatus(fightData, a, Status.INTANGIBLE, StatusLength.SHORT);
-			})
+			});
 			// Add FX
 			fightData.steps.push(activate_step);
 			break;

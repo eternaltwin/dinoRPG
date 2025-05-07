@@ -27,7 +27,6 @@ interface Team {
 	[Skill.ELECTROLYSE]: number;
 	[Skill.GARDE_FORESTIER]: number;
 	[Skill.CHEF_DE_GUERRE]?: boolean;
-	[Skill.MAITRE_LEVITATEUR]?: boolean;
 	[Item.EMBER]?: boolean;
 	[Item.BEER]?: boolean;
 }
@@ -788,9 +787,9 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 		fighter.canHitFlying = true;
 	}
 
-	if (team && fighterHas[Skill.MAITRE_LEVITATEUR]) {
-		team[Skill.MAITRE_LEVITATEUR] = true;
-	}
+	// if (team && fighterHas[Skill.MAITRE_LEVITATEUR]) {
+	// 	team[Skill.MAITRE_LEVITATEUR] = true;
+	// }
 
 	if (fighterHas[Skill.SOUFFLE_DE_VIE]) {
 		fighter.status.push(createStatus(Status.NO_POISON));
@@ -1156,9 +1155,9 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 			fighter.stats.speed.global *= 0.95;
 		}
 		// AIR
-		if (team[Skill.MAITRE_LEVITATEUR]) {
-			fighter.canHitFlying = true;
-		}
+		// if (team[Skill.MAITRE_LEVITATEUR]) {
+		// 	fighter.canHitFlying = true;
+		// }
 
 		// ITEMS
 		if (team1[Item.EMBER] || team2[Item.EMBER]) {
