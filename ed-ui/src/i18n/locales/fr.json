@@ -2309,7 +2309,7 @@
 			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5% (non cumulable)",
 			"MeditationSolitaire": "Augmente la défense Air de 3, diminue la vitesse des attaques Air de 50%",
 			"MeditationTranscendantale": "Augmente la défense Air de 6, diminue la vitesse des attaques Air de 50%",
-			"SouffleDeVie": "Le Dinoz est immunisé au poison et aux malédictions",
+			"SouffleDeVie": "Augmente les PV max de 20 et l'élément Air de 1. Le Dinoz est immunisé au poison et aux malédictions. Il regagne 1 PV par effet de ses poisons.",
 			"FormeEtherale": "Le Dinoz apparaît avec le statut intangible pour une durée infinie",
 			"Brasero": "Attaque tous les ennemis avec un pouvoir Feu de 3",
 			"Detonation": "Le Dinoz perd 5 PV et gagne 15 d'initiative",

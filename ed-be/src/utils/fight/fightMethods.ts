@@ -2980,7 +2980,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				return cancel();
 			}
 			addStatus(fightData, fighter, Status.TAUNT, StatusLength.LONG);
-			// TODO need FX to show assault instead like poison
+			// TODO need FX to show status instead like poison
 			// Add step for fx
 			fightData.steps.push(activate_step);
 			break;
@@ -5048,6 +5048,10 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 
 							// Register the hp lost from poison
 							const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+
+							if (hasSkill(poisoner, Skill.SOUFFLE_DE_VIE)) {
+								heal(fightData, poisoner, 1, undefined, LifeEffect.Poison);
+							}
 
 							// Update stat
 							updateStat(fightData, poisoner, 'poison_damage', hp_lost);

@@ -4109,7 +4109,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51204],
+		unlockedFrom: [Skill.CUEILLETTE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
@@ -4262,7 +4262,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51307],
+		unlockedFrom: [Skill.NUAGE_TOXIQUE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -4304,9 +4304,14 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51311],
+		unlockedFrom: [Skill.HALEINE_FETIVE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 20,
+			[Stat.AIR_ELEMENT]: 1
+		}
+
 	},
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
 		id: Skill.TOTEM_ANCESTRAL_AEROPORTE,
