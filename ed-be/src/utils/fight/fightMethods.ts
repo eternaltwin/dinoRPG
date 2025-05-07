@@ -4764,6 +4764,13 @@ const checkAfterAttackEffects = (
 		heal(fightData, attacker, 1, undefined, LifeEffect.Lightning);
 	}
 
+	if (isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.CROCS_DIAMANT)
+	) {
+		destroyArmor(fightData, target, 0.01);
+	}
+
 	// Cancel FLYING
 	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
 		removeStatus(fightData, attacker, Status.FLYING);
