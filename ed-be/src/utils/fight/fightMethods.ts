@@ -56,7 +56,7 @@ import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBet
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { FightStats } from '@drpg/core/models/fight/FightResult';
+import { FightStats, HitResult } from '@drpg/core/models/fight/FightResult';
 import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
@@ -906,6 +906,7 @@ const attackAllOpponents = (
 	// Add step
 	fightData.steps.push(activate_step);
 
+	let results: HitResult[] = [];
 	targets.forEach(target => {
 		let realTarget = target;
 		// Check if a dinoz is protecting the opponent and replace the target with the protector
@@ -923,7 +924,7 @@ const attackAllOpponents = (
 		// Add target
 		(activate_step as SkillActivateStep).targets.push({ tid: realTarget.id });
 
-		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, activate_step);
+		results.push(attackTarget(fightData, fighter, realTarget, false, element_attack, skill, activate_step));
 
 		// TODO this moveBack should be after the activate step
 		if (protector && protector.hp > 0) {
@@ -934,6 +935,8 @@ const attackAllOpponents = (
 			});
 		}
 	});
+
+	return results;
 };
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
@@ -2429,7 +2432,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				removeStatus(fightData, opponent, Status.FLYING);
 			});
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, activate_step);
+			const results = attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, activate_step);
+
+			results.forEach(r => {
+				if (r.target && r.hpLost > 0) {
+					addStatus(fightData, r.target, Status.STUNNED, StatusLength.SHORT);
+				}
+			})
 			break;
 		}
 		case Skill.ATTAQUE_PLONGEANTE: {
@@ -4547,13 +4556,15 @@ const attackTarget = (
 		}
 	}
 
-	return {
+	const hit: HitResult = {
 		attacker: attacker,
 		target: target,
 		isAssault: isAssault,
 		evasion: evasion,
 		hpLost: totalDamage
 	};
+
+	return hit;
 };
 
 const checkDefensiveEffects = (
