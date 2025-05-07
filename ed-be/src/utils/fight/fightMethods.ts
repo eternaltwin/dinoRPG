@@ -2561,6 +2561,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			break;
 		}
+		case Skill.SOUFFLE_ETHERAL: {
+			const allies = getAllies(fightData, fighter);
+			allies.forEach(a => {
+				addStatus(fightData, a, Status.INTANGIBLE, StatusLength.SHORT);
+			})
+			// Add FX
+			fightData.steps.push(activate_step);
+			break;
+		}
 		case Skill.HYPNOSE: {
 			// Get opponents
 			const opponents = getOpponents(fightData, fighter);

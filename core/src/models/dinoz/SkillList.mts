@@ -280,6 +280,7 @@ export enum Skill {
 	MEDITATION_TRANSCENDANTALE = 51501,
 	DJINN = 51502,
 	HADES = 51503,
+	SOUFFLE_ETHERAL = 51504,
 	FORME_ETHERALE = 51601,
 	MAITRISE_CORPORELLE = 52101,
 	BLANC = 52201,
@@ -4412,6 +4413,22 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.FORME_VAPOREUSE],
 		isBaseSkill: false,
 		isSphereSkill: false
+	},
+	[Skill.SOUFFLE_ETHERAL]: {
+		id: Skill.SOUFFLE_ETHERAL,
+		name: 'SouffleEtheral',
+		type: SkillType.A,
+		energy: Energy.E50,
+		element: [ElementType.AIR],
+		activatable: true,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.FORME_ETHERALE],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		priority: 5,
+		probability: 40,
+		visualEffect: SkillVisualEffect.CLOUD,
+		color: '0xDDDDDD'
 	},
 	[Skill.MAITRISE_CORPORELLE]: {
 		id: Skill.MAITRISE_CORPORELLE,
