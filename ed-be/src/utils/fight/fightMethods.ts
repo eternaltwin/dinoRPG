@@ -940,6 +940,18 @@ const attackAllOpponents = (
 };
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
+	// Go no further before checking that the call of the monster is not cancelled
+	const tempestFighters = getOpponents(fightData, fighter).filter(f => hasSkill(f, Skill.TEMPETE));
+
+	for (let i = 0; i < tempestFighters.length; i++) {
+		const tempester = tempestFighters[i];
+		if (randomBetweenSeeded(fightData.rng, 0, 99) <  30) {
+			console.log(`Tempete!`);
+			fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
+			return null;
+		}
+	}
+
 	// Count monsters
 	const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
 
@@ -1333,6 +1345,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.CLONE_AQUEUX: {
+				// Go no further before checking the clone is not cancelled
+				const tempestFighters = getOpponents(fightData, fighter).filter(f => hasSkill(f, Skill.TEMPETE));
+
+				for (let i = 0; i < tempestFighters.length; i++) {
+					const tempester = tempestFighters[i];
+					if (randomBetweenSeeded(fightData.rng, 0, 99) <  30) {
+						fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
+						break;
+					}
+				}
+
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
 				if (!initialDinoz) {
@@ -1692,28 +1715,30 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.M_YAKUZI: {
 				const clone = createMonster(fightData, fighter, bossList.YAKUZI);
 
-				// Count monsters
-				const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
+				if (clone) {
+					// Count monsters
+					const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
 
-				clone.level = 1;
-				clone.hp = 1;
-				clone.type = 'clone';
-				clone.master = fighter.id;
-				clone.id = -monsterCount - 1;
+					clone.level = 1;
+					clone.hp = 1;
+					clone.type = 'clone';
+					clone.master = fighter.id;
+					clone.id = -monsterCount - 1;
 
-				applyStrategy(fightData, clone);
+					applyStrategy(fightData, clone);
 
-				// Set the clone's time to the fighter's time
-				clone.time = fighter.time;
+					// Set the clone's time to the fighter's time
+					clone.time = fighter.time;
 
-				// Add clone to fighters
-				fightData.fighters.push(clone);
+					// Add clone to fighters
+					fightData.fighters.push(clone);
 
-				// Add arrive step
-				fightData.steps.push({
-					action: 'arrive',
-					fid: clone.id
-				});
+					// Add arrive step
+					fightData.steps.push({
+						action: 'arrive',
+						fid: clone.id
+					});
+				}
 
 				break;
 			}
@@ -2718,10 +2743,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const number = Math.max(Math.floor(fighter.stats.base[ElementType.FIRE] / 5), 1);
 			for (let i = 0; i < number; i++) {
 				let flameche = createMonster(fightData, fighter, monsterList.FLAM);
-				flameche.skills = [];
-				flameche.stats.base[ElementType.FIRE] = number;
-				applyGlobalDefenseBonus(flameche, ElementType.FIRE, number);
-				addStatus(fightData, flameche, Status.TORCHED);
+				if(flameche) {
+					flameche.skills = [];
+					flameche.stats.base[ElementType.FIRE] = number;
+					applyGlobalDefenseBonus(flameche, ElementType.FIRE, number);
+					addStatus(fightData, flameche, Status.TORCHED);
+				}
 			}
 			break;
 		}
@@ -2990,7 +3017,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
 
 			// Set intangible only if has GIANT skill
-			if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+			if (monster && hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
 				addStatus(fightData, monster, Status.INTANGIBLE);
 			}
 			break;
@@ -3006,7 +3033,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				gardien.size = 50;
 			}
 			const monster = createMonster(fightData, fighter, gardien);
-			monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
+			if (monster) monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
 			break;
 		}
 		case Skill.PROVOCATION: {
