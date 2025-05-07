@@ -207,6 +207,7 @@ export enum Skill {
 	CROCS_DIAMANT = 41312,
 	SURVIE = 41313,
 	FLASH = 41314,
+	VOIE_D_OURANOS = 41315,
 	AUBE_FEUILLUE = 41401,
 	BRANCARDIER = 41402,
 	BENEDICTION = 41403,
@@ -3365,6 +3366,22 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.COUP_DOUBLE],
 		isBaseSkill: false,
 		isSphereSkill: false,
+	},
+	[Skill.VOIE_D_OURANOS]: {
+		id: Skill.VOIE_D_OURANOS,
+		name: 'VoieDOuranos',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.LIGHTNING],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.ATTAQUE_ECLAIR],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		effects: {
+			[Stat.AIR_SPEED]: ['x', 0.75],
+			[Stat.LIGHTNING_SPEED]: ['x', 0.75]
+		}
 	},
 	[Skill.AUBE_FEUILLUE]: {
 		id: Skill.AUBE_FEUILLUE,
