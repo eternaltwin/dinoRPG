@@ -276,6 +276,7 @@ export enum Skill {
 	SOUFFLE_DE_VIE = 51406,
 	TOTEM_ANCESTRAL_AEROPORTE = 51407,
 	FUJIN = 51408,
+	TEMPETE = 51409,
 	MEDITATION_TRANSCENDANTALE = 51501,
 	DJINN = 51502,
 	HADES = 51503,
@@ -4357,6 +4358,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 6
 		}
+	},
+	[Skill.TEMPETE]: {
+		id: Skill.TEMPETE,
+		name: 'Tempete',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.AIR],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.DISQUE_VACUUM],
+		isBaseSkill: false,
+		isSphereSkill: false,
 	},
 	[Skill.DJINN]: {
 		id: Skill.DJINN,
