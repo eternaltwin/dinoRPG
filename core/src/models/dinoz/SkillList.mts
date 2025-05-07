@@ -160,7 +160,7 @@ export enum Skill {
 	BULLE = 31407,
 	INCREVABLE = 31408,
 	ONDINE = 31409,
-	NEW_T4_SKILL_TBD = 31410,
+	NEW_T4_WATER_SKILL_TBD = 31410,
 	DECOMPOSEUR = 31411,
 	MAITRE_NAGEUR = 31501,
 	LEVIATHAN = 31502,
@@ -221,6 +221,7 @@ export enum Skill {
 	QUETZACOATL = 41412,
 	ROI_DES_SINGES = 41413,
 	DECHARGE = 41414,
+	NEW_T4_LIGHTNING_SKILL_TBD = 41415,
 	ARCHANGE_CORROSIF = 41501,
 	ARCHANGE_GENESIF = 41502,
 	PRETRE = 41503,
@@ -2671,8 +2672,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.WOOD_DEFENSE]: 2
 		}
 	},
-	[Skill.NEW_T4_SKILL_TBD]: {
-		id: Skill.NEW_T4_SKILL_TBD,
+	[Skill.NEW_T4_WATER_SKILL_TBD]: {
+		id: Skill.NEW_T4_WATER_SKILL_TBD,
 		name: 'TBD',
 		type: SkillType.P,
 		energy: Energy.NONE,
@@ -2748,7 +2749,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [Skill.NEW_T4_SKILL_TBD],
+		unlockedFrom: [Skill.NEW_T4_WATER_SKILL_TBD],
 		isBaseSkill: false,
 		isSphereSkill: false,
 	},
@@ -3476,6 +3477,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.VOIE_D_OURANOS],
+		isBaseSkill: false,
+		isSphereSkill: false
+	},
+	[Skill.NEW_T4_LIGHTNING_SKILL_TBD]: {
+		id: Skill.NEW_T4_LIGHTNING_SKILL_TBD,
+		name: 'TBD',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.LIGHTNING],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.DANSE_FOUDROYANTE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
