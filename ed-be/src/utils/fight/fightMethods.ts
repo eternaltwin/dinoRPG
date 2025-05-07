@@ -4764,11 +4764,21 @@ const checkAfterAttackEffects = (
 		heal(fightData, attacker, 1, undefined, LifeEffect.Lightning);
 	}
 
+	// Crocs Diamants
 	if (isCloseCombat &&
 		damage > 0 &&
 		hasSkill(attacker, Skill.CROCS_DIAMANT)
 	) {
 		destroyArmor(fightData, target, 0.01);
+	}
+
+	// Flash
+	if (isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.FLASH) &&
+		randomBetweenSeeded(fightData.rng, 0, 99) < 5
+	) {
+		addStatus(fightData, target, Status.DAZZLED, StatusLength.SHORT);
 	}
 
 	// Cancel FLYING
