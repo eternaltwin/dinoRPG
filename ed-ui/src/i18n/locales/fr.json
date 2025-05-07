@@ -2301,7 +2301,7 @@
 			"HaleineFetive": "Les ennemis touchés par un assaut ont 50% de chance de subir des dégâts relatifs à l'élément Air du Dinoz (soumis à équilibrage)",
 			"Mistral": "Attaque tous les ennemis avec un pouvoir Air de 3",
 			"TaiChi": "Augmente la puissance des *assauts* Air de 15. Diminue la vitesse des attaques Air de 20%",
-			"Tornade": "Attaque tous les ennemis avec un pouvoir Air de 10 et fait tomber les ennemis volants au sol",
+			"Tornade": "Attaque tous les ennemis avec un pouvoir Air de 10, fait tomber les ennemis volants au sol et étourdit les ennemis touchés pour une courte durée",
 			"Eveil": "Diminue la vitesse des attaques Air de 20%",
 			"PaumeEjectable": "Attaque avec un assaut de puissance doublée (fonctionne aussi sur les combo), si la cible est touchée, elle perd 6 d'initiative et tout ses statuts positifs",
 			"VentVif": "Donne le statut accéléré (Augmente la vitesse de 50%)",
