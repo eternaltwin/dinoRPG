@@ -4185,7 +4185,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51206],
+		unlockedFrom: [Skill.VENT_VIF],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -4396,7 +4396,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51501],
+		unlockedFrom: [Skill.FORME_VAPOREUSE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
