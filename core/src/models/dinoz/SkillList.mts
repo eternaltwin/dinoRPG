@@ -4128,21 +4128,21 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.AIR_ELEMENT]: 1
 		}
 	},
-	[Skill.EVEIL]: {
-		id: Skill.EVEIL,
-		name: 'Eveil',
-		type: SkillType.P,
-		energy: Energy.NONE,
-		element: [ElementType.AIR],
-		activatable: false,
-		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51205],
-		isBaseSkill: false,
-		isSphereSkill: false,
-		effects: {
-			[Stat.AIR_SPEED]: ['x', 1.2]
-		}
-	},
+	// [Skill.EVEIL]: {
+	// 	id: Skill.EVEIL,
+	// 	name: 'Eveil',
+	// 	type: SkillType.P,
+	// 	energy: Energy.NONE,
+	// 	element: [ElementType.AIR],
+	// 	activatable: false,
+	// 	tree: SkillTreeType.VANILLA,
+	// 	unlockedFrom: [51205],
+	// 	isBaseSkill: false,
+	// 	isSphereSkill: false,
+	// 	effects: {
+	// 		[Stat.AIR_SPEED]: ['x', 1.2]
+	// 	}
+	// },
 	[Skill.PAUME_EJECTABLE]: {
 		id: Skill.PAUME_EJECTABLE,
 		name: 'PaumeEjectable',
