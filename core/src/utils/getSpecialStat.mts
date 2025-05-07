@@ -16,6 +16,7 @@ export enum SpecialStat {
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
 	DISCHARGE_DAMAGE = 'dischargeDamage',
+	FETID_BREATH_DAMAGE = 'fetidBreathDamage',
 	// Counters
 	COUNTER = 'counter',
 	FIRE_COUNTER = 'fireCounter',
@@ -139,7 +140,8 @@ export enum UniqueSpecialStatUsedInFights {
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
-	DISCHARGE_DAMAGE = 'dischargeDamage'
+	DISCHARGE_DAMAGE = 'dischargeDamage',
+	FETID_BREATH_DAMAGE = 'fetidBreathDamage'
 }
 
 
@@ -250,29 +252,53 @@ export const getSpecialStat = (
 		};
 	}
 
-		// Special case for ACID_BLOOD_DAMAGE (value not influenced by skills)
-		if (stat === SpecialStat.DISCHARGE_DAMAGE) {
-			// Return null if no acid blood skill
-			if (!skills.some(skill => skill.id === Skill.DECHARGE)) {
-				return null;
-			}
-
-			return {
-				name: 'dischargeDamage',
-				// (Thunger + Air) / 2
-				value: Math.ceil((dinoz.nbrUpLightning + dinoz.nbrUpAir) / 2),
-				details: [
-					{
-						type: 'base',
-						name: 'base',
-						percent: false,
-						multiplier: false,
-						elements: ['lightning', 'air'],
-						value: dinoz.nbrUpLightning + dinoz.nbrUpAir
-					}
-				]
-			};
+	// Special case for DISCHARGE_DAMAGE (value not influenced by skills)
+	if (stat === SpecialStat.DISCHARGE_DAMAGE) {
+		// Return null if no acid blood skill
+		if (!skills.some(skill => skill.id === Skill.DECHARGE)) {
+			return null;
 		}
+
+		return {
+			name: 'dischargeDamage',
+			// (Thunger + Air) / 2
+			value: Math.ceil((dinoz.nbrUpLightning + dinoz.nbrUpAir) / 2),
+			details: [
+				{
+					type: 'base',
+					name: 'base',
+					percent: false,
+					multiplier: false,
+					elements: ['lightning', 'air'],
+					value: dinoz.nbrUpLightning + dinoz.nbrUpAir
+				}
+			]
+		};
+	}
+
+	// Special case for FETID_BREATH_DAMAGE (value not influenced by skills)
+	if (stat === SpecialStat.FETID_BREATH_DAMAGE) {
+		// Return null if no acid blood skill
+		if (!skills.some(skill => skill.id === Skill.HALEINE_FETIVE)) {
+			return null;
+		}
+
+		return {
+			name: 'fetidBreathDamage',
+			// Air / 2
+			value: Math.ceil(dinoz.nbrUpAir/ 2),
+			details: [
+				{
+					type: 'base',
+					name: 'base',
+					percent: false,
+					multiplier: false,
+					elements: ['air'],
+					value: dinoz.nbrUpAir
+				}
+			]
+		};
+	}
 
 	let value = BaseSpecialStats[stat];
 	let base_stat = value;
