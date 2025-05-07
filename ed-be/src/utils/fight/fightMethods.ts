@@ -4921,6 +4921,17 @@ const checkAfterDefenseEffects = (
 		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
 
+	// Decharge: close combat, hit landed, 3% chance to electrocute and stun
+	if (isCloseCombat &&
+		damage > 0 &&
+		!hasStatus(attacker, Status.STUNNED) &&
+		hasSkill(target, Skill.DECHARGE) &&
+		randomBetweenSeeded(fightData.rng, 0, 99) === 3
+	) {
+		loseHpBalanced(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning);
+		addStatus(fightData, attacker, Status.STUNNED, StatusLength.SUPER_SHORT);
+	}
+
 	// Aura puante: close combat and hit landed, the attacker must not be poisoned
 	if (isCloseCombat && damage > 0 && !hasStatus(attacker, Status.POISONED) && hasSkill(target, Skill.AURA_PUANTE)) {
 		fightData.steps.push({

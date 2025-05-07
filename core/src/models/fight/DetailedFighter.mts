@@ -73,6 +73,7 @@ export const BadStatus = [
 ];
 
 export enum StatusLength {
+	SUPER_SHORT = 6,
 	SHORT = 15,
 	MEDIUM = 30,
 	LONG = 80,
