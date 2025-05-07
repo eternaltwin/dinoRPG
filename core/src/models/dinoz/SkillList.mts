@@ -262,7 +262,7 @@ export enum Skill {
 	TALON_DACHILLE = 51306,
 	NUAGE_TOXIQUE = 51307,
 	OEIL_DE_LYNX = 51308,
-	// EVEIL = 51309,
+	RAFALE = 51309,
 	PAUME_EJECTABLE = 51310,
 	VENT_VIF = 51311,
 	FORME_VAPOREUSE = 51312,
@@ -4128,6 +4128,21 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		effects: {
 			[Stat.MAX_HP]: 10,
 			[Stat.AIR_ELEMENT]: 1
+		}
+	},
+	[Skill.RAFALE]: {
+		id: Skill.RAFALE,
+		name: 'Rafale',
+		type: SkillType.P,
+		energy: Energy.NONE,
+		element: [ElementType.AIR],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [],
+		isBaseSkill: false,
+		isSphereSkill: false,
+		effects: {
+			[Stat.AIR_MULTIHIT]: ['x', 1.3]
 		}
 	},
 	// [Skill.EVEIL]: {
