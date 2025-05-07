@@ -104,7 +104,21 @@ export const getAttackDefense = (
 		attack += att;
 		sumOfElements += att;
 		if (att > 0) {
-			defense += target.stats.defense[ele] * att;
+			let defenseVal = target.stats.defense[ele];
+			// Only pick weakest defense if weakened
+			if (hasStatus(target, Status.WEAKENED)) {
+				// Sort defenses from lowest to biggest.
+				const defenses = [
+					target.stats.base[ElementType.FIRE],
+					target.stats.base[ElementType.WATER],
+					target.stats.base[ElementType.WOOD],
+					target.stats.base[ElementType.LIGHTNING],
+					target.stats.base[ElementType.AIR]
+				].sort((a, b) => a - b);
+				// Then pick loweest
+				defenseVal = defenses[0];
+			}
+			defense += defenseVal * att;
 			if (isCloseCombat) {
 				attack += attacker.stats.assaultBonus[ele];
 			} else {
@@ -123,7 +137,7 @@ export const getAttackDefense = (
 
 	// TODO this needs to be reworked, see Abysse
 	// -25% to attack score if attacker is WEAKENED
-	if (hasStatus(attacker, Status.WEAKENED)) {
+	if (hasStatus(attacker, Status.ABYSSE)) {
 		attack *= 0.75;
 	}
 

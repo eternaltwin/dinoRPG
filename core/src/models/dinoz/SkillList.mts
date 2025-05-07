@@ -4085,21 +4085,16 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.TALON_DACHILLE]: {
 		id: Skill.TALON_DACHILLE,
 		name: 'TalonDAchille',
-		type: SkillType.P,
-		energy: Energy.NONE,
+		type: SkillType.E,
+		energy: Energy.E20,
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51203],
+		unlockedFrom: [Skill.ANALYSE],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
-			[Stat.FIRE_ASSAULT]: 2,
-			[Stat.AIR_ASSAULT]: 2,
-			[Stat.WOOD_ASSAULT]: 2,
-			[Stat.WATER_ASSAULT]: 2,
-			[Stat.LIGHTNING_ASSAULT]: 2
-		}
+		priority: 3,
+		probability: 5
 	},
 	[Skill.NUAGE_TOXIQUE]: {
 		id: Skill.NUAGE_TOXIQUE,

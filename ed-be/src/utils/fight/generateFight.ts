@@ -1,6 +1,5 @@
 import {
 	addStatus,
-	applyStrategy,
 	checkDeaths,
 	getAllies,
 	getLimitedRandomOpponent,

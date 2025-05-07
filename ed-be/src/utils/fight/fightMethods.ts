@@ -1065,7 +1065,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.WATER] < 10) {
 					// TODO: this probably needs rework as it applies a nextAssaultMultiplier = 0.75
-					addStatus(fightData, f, Status.WEAKENED);
+					addStatus(fightData, f, Status.ABYSSE);
 				}
 			});
 			break;
@@ -1122,7 +1122,7 @@ const cancelEnvironment = (fightData: DetailedFight) => {
 		case Skill.ABYSSE: {
 			// Remove WEAKENED from all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.WEAKENED);
+				removeStatus(fightData, f, Status.ABYSSE);
 			});
 			break;
 		}
@@ -1180,6 +1180,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 		switch (event.id) {
 			// AIR Vanilla
+			case Skill.TALON_DACHILLE: {
+				const opponent = getRandomOpponent(fightData, fighter);
+				addStatus(fightData, opponent, Status.WEAKENED, StatusLength.SHORT);
+				break;
+			}
 			case Skill.VENT_VIF: {
 				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
 				break;
