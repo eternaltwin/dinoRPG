@@ -254,6 +254,7 @@ export enum Skill {
 	TAICHI = 51205,
 	TORNADE = 51206,
 	AURA_PUANTE = 51207,
+	DECOLLAGE_D_URGENCE = 51208,
 	DISQUE_VACUUM = 51301,
 	ELASTICITE = 51302,
 	ATTAQUE_PLONGEANTE = 51303,
@@ -4001,6 +4002,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [51104],
 		isBaseSkill: false,
 		isSphereSkill: true
+	},
+	[Skill.DECOLLAGE_D_URGENCE]: {
+		id: Skill.DECOLLAGE_D_URGENCE,
+		name: 'DecollageDUrgence',
+		type: SkillType.S,
+		energy: Energy.NONE,
+		element: [ElementType.AIR],
+		activatable: false,
+		tree: SkillTree.VANILLA,
+		unlockedFrom: [Skill.ENVOL],
+		isBaseSkill: false,
+		isSphereSkill: false,
 	},
 	[Skill.DISQUE_VACUUM]: {
 		id: Skill.DISQUE_VACUUM,
