@@ -2292,7 +2292,7 @@
 			"TrouNoir": "Envoie un ennemi dans une dimension parallèle. Note : n'affecte pas les boss et non utilisable dans certains combats compétitifs (Dojo).",
 			"MaitreLevitateur": "Permet à tous les Dinoz du groupe d'attaquer les ennemis volants",
 			"Strategie": "Les compétences consomment 10% moins d'énergie",
-			"Analyse": "Choisit la meilleure cible pour chaque attaque",
+			"Analyse": "Ignore 10% de l'armure adverse",
 			"Cueillette": "Permet au Dinoz de collecter des plantes à certains endroits. Augmente la défense en Air de 3.",
 			"Specialiste": "Retire l'élément le plus faible du cycle élémentaire des *assauts*",
 			"TalonDAchille": "Augmente la puissance de tous les *assauts* de 2",
