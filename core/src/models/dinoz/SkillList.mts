@@ -3949,7 +3949,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [51102],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		globalEffects: {
+			[Stat.AIR_DEFENSE]: 3
+		}
 	},
 	[Skill.TAICHI]: {
 		id: Skill.TAICHI,
@@ -4120,7 +4123,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [51204],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 10,
+			[Stat.AIR_ELEMENT]: 1
+		}
 	},
 	[Skill.EVEIL]: {
 		id: Skill.EVEIL,
