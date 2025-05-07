@@ -15,7 +15,7 @@ export enum SpecialStat {
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
-	DISCHARGE_DAMAGE = 'dischargeDamange',
+	DISCHARGE_DAMAGE = 'dischargeDamage',
 	// Counters
 	COUNTER = 'counter',
 	FIRE_COUNTER = 'fireCounter',
