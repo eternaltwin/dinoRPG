@@ -4067,10 +4067,6 @@ const poison = (
 			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.AIR], 0.6)), 1);
 			break;
 		}
-		case Skill.HALEINE_FETIVE: {
-			poisonDamage = poisoner.stats.base[ElementType.AIR];
-			break;
-		}
 		case Skill.M_STINGER: {
 			poisonDamage = 5;
 			break;
@@ -4710,8 +4706,13 @@ const checkAfterAttackEffects = (
 	}
 
 	// Poison opponent if fighter has Skill.HALEINE_FETIVE and landed a hit with an assault
-	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.HALEINE_FETIVE)) {
-		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
+	if (isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.HALEINE_FETIVE) &&
+		// 1/2 chance
+		randomBetweenSeeded(fightData.rng, 0, 1) === 0
+	) {
+		loseHpBalanced(fightData, target, attacker.stats.special.fetidBreathDamage, LifeEffect.Acid);
 	}
 
 	// TODO
