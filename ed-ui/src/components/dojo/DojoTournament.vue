@@ -7,79 +7,100 @@
 			</RouterLink>
 		</li>
 	</ul>
-	<div class="wrapper tournament" v-if="!displayFinal">
-		<div class="header">
-			<RouterLink :to="`/dojo/tournament/${tournamentId}/5`">
-				<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
-			</RouterLink>
-			<DZButton @click="viewAll()">{{ $t('dojo.markAsRead') }}</DZButton>
+	<div class="container">
+		<div class="wrapper tournament" v-if="!displayFinal">
+			<div class="header">
+				<RouterLink :to="`/dojo/tournament/${tournamentId}/5`">
+					<DZButton>{{ $t('dojo.seeFinal') }}</DZButton>
+				</RouterLink>
+				<DZButton @click="viewAll()">{{ $t('dojo.markAsRead') }}</DZButton>
+			</div>
+			<div class="rounds">
+				<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
+					<div class="dinoz lost" v-if="dinoz === undefined">
+						<span class="name"></span>
+					</div>
+					<Tippy
+						tag="div"
+						theme="normal"
+						class="dinoz"
+						v-else-if="dinoz.player"
+						:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
+						@click="goToPage('ShareFight', { archive: dinoz.fight })"
+					>
+						<DinozMini
+							:display="dinoz.display"
+							:width="50"
+							:height="50"
+							:flip="isFlipped(count)"
+							class="dinoz-display"
+						/>
+						<span class="name">{{ dinoz.player.name }}</span>
+
+						<template #content>
+							<h1>{{ dinoz.name }}</h1>
+							<p>{{ $t('dojo.seeFight') }}</p>
+						</template>
+					</Tippy>
+					<Tippy
+						tag="div"
+						theme="normal"
+						class="dinoz"
+						v-else
+						@click="goToPage('ShareFight', { archive: dinoz.fight })"
+					>
+						<span class="name">Soon</span>
+
+						<template #content>
+							<h1>{{ dinoz.name }}</h1>
+							<p>{{ $t('dojo.seeFight') }}</p>
+						</template>
+					</Tippy>
+				</template>
+			</div>
 		</div>
-		<div class="rounds">
-			<template v-for="(dinoz, count) in pool.filter(p => p !== undefined)" :key="`${count}${dinoz.id}`">
-				<div class="dinoz lost" v-if="dinoz === undefined">
-					<span class="name"></span>
-				</div>
-				<Tippy
-					tag="div"
-					theme="normal"
-					class="dinoz"
-					v-else-if="dinoz.player"
-					:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
-					@click="goToPage('ShareFight', { archive: dinoz.fight })"
-				>
-					<DinozMini :display="dinoz.display" :width="50" :height="50" :flip="isFlipped(count)" class="dinoz-display" />
-					<span class="name">{{ dinoz.player.name }}</span>
+		<div class="wrapper final" v-if="displayFinal">
+			<div class="header">
+				<RouterLink :to="`/dojo/tournament/${tournamentId}/0`">
+					<DZButton>{{ $t('dojo.return') }}</DZButton>
+				</RouterLink>
+			</div>
+			<div class="rounds">
+				<template v-for="(dinoz, count) in dinozInFights" :key="`${count}${dinoz.id}`">
+					<Tippy
+						tag="div"
+						theme="normal"
+						class="dinoz"
+						v-if="dinoz.player"
+						:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
+						@click="goToPage('ShareFight', { archive: dinoz.fight })"
+					>
+						<DinozMini :display="dinoz.display" v-if="dinoz.display" :width="50" :height="50" class="dinoz-display" />
+						<span class="name">{{ dinoz.player.name }}</span>
+						<template #content>
+							<h1>{{ dinoz.name }}</h1>
+							<p>{{ $t('dojo.seeFight') }}</p>
+						</template>
+					</Tippy>
+					<Tippy
+						tag="div"
+						theme="normal"
+						class="dinoz"
+						v-else
+						@click="goToPage('ShareFight', { archive: dinoz.fight })"
+					>
+						<span class="name">Soon</span>
 
-					<template #content>
-						<h1>{{ dinoz.name }}</h1>
-						<p>{{ $t('dojo.seeFight') }}</p>
-					</template>
-				</Tippy>
-				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: dinoz.fight })">
-					<span class="name">Soon</span>
-
-					<template #content>
-						<h1>{{ dinoz.name }}</h1>
-						<p>{{ $t('dojo.seeFight') }}</p>
-					</template>
-				</Tippy>
-			</template>
+						<template #content>
+							<h1>{{ dinoz.name }}</h1>
+							<p>{{ $t('dojo.seeFight') }}</p>
+						</template>
+					</Tippy>
+				</template>
+			</div>
 		</div>
 	</div>
-	<div class="wrapper final" v-if="displayFinal">
-		<div class="header">
-			<RouterLink :to="`/dojo/tournament/${tournamentId}/0`">
-				<DZButton>{{ $t('dojo.return') }}</DZButton>
-			</RouterLink>
-		</div>
-		<div class="rounds">
-			<template v-for="(dinoz, count) in dinozInFights" :key="`${count}${dinoz.id}`">
-				<Tippy
-					tag="div"
-					theme="normal"
-					class="dinoz"
-					v-if="dinoz.player"
-					:class="{ me: dinoz.player.id === playerStore.getPlayerId, lost: !dinoz.won && dinoz.watched }"
-					@click="goToPage('ShareFight', { archive: dinoz.fight })"
-				>
-					<DinozMini :display="dinoz.display" v-if="dinoz.display" :width="50" :height="50" class="dinoz-display" />
-					<span class="name">{{ dinoz.player.name }}</span>
-					<template #content>
-						<h1>{{ dinoz.name }}</h1>
-						<p>{{ $t('dojo.seeFight') }}</p>
-					</template>
-				</Tippy>
-				<Tippy tag="div" theme="normal" class="dinoz" v-else @click="goToPage('ShareFight', { archive: dinoz.fight })">
-					<span class="name">Soon</span>
 
-					<template #content>
-						<h1>{{ dinoz.name }}</h1>
-						<p>{{ $t('dojo.seeFight') }}</p>
-					</template>
-				</Tippy>
-			</template>
-		</div>
-	</div>
 	<DZDisclaimer help :content="$t('dojo.tournamentInfo')" />
 </template>
 
@@ -419,6 +440,13 @@ export default defineComponent({
 				color: #bc683c;
 			}
 		}
+	}
+}
+
+@media (max-width: 505px) {
+	.container {
+		overflow-x: auto;
+		margin: 10px;
 	}
 }
 
