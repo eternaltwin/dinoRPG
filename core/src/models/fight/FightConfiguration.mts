@@ -29,7 +29,6 @@ export interface TeamFightConfiguration {
 	[Skill.GARDE_FORESTIER]: number;
 	[Skill.CUISINIER]?: boolean;
 	[Skill.CHEF_DE_GUERRE]?: boolean;
-	[Skill.MAITRE_LEVITATEUR]?: boolean;
 	[Item.EMBER]?: boolean;
 	[Item.BEER]?: boolean;
 }
