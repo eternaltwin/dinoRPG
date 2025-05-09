@@ -445,10 +445,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 2,
 		probability: 20,
 		visualEffect: SkillVisualEffect.SHOWER,
-		fxType: SkillFxType.Fire,
-		globalEffects: {
-			[Stat.FIRE_DEFENSE]: 3 
-		}
+		fxType: SkillFxType.Fire
 	},
 	[Skill.SOUFFLE_ARDENT]: {
 		id: Skill.SOUFFLE_ARDENT,
