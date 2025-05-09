@@ -138,9 +138,13 @@ export default defineComponent({
 			border-bottom-right-radius: 5px;
 			font-size: 10px;
 			font-weight: bold;
+			padding: 2px 4px;
 
 			.name {
 				color: #874b2e;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.level {
