@@ -120,11 +120,11 @@ li {
 	list-style-type: none;
 }
 .icons {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	height: 100%;
-	padding: 5px;
+	text-align: center;
+	& img {
+		padding: 5px;
+		vertical-align: middle;
+	}
 }
 .pagination-controls {
 	margin-top: 10px;
