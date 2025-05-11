@@ -4020,10 +4020,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51201],
+		unlockedFrom: [Skill.ESQUIVE],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 8,
+		priority: 3,
 		probability: 7,
 		visualEffect: SkillVisualEffect.DISC
 	},
