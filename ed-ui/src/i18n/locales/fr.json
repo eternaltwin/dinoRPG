@@ -2244,7 +2244,7 @@
 			"ResistanceALaMagie": "Annule tous les effets négatifs de ce Dinoz",
 			"Ingenieur": "Tous les Dinoz débloquent un emplacement d'équipement supplémentaire (non cumulable)",
 			"CanonAEau": "Attaque un ennemi avec un pouvoir Eau de 6",
-			"Gel": "Attaque un ennemi avec un pouvoir Eau de 5. L'ennemi est ensuite ralenti. La compétence éteint les flammes.",
+			"Gel": "Attaque un ennemi avec un pouvoir Eau de 5. L'ennemi est ensuite ralenti sauf si celui-ci est enflammé mais au-quel cas les flammes sont éteintes.",
 			"DoucheEcossaise": "Attaque tous les ennemis avec un pouvoir Eau de 2",
 			"ZeroAbsolu": "Augmente la défense contre le Feu de 25. Le Dinoz a 5% de chance de ralentir un assaillant après avoir été touché par un assaut.",
 			"Petrification": "Pétrifie un ennemi pour une durée moyenne",

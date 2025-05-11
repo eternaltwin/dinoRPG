@@ -931,7 +931,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [11309],
+		unlockedFrom: [Skill.AURA_INCANDESCENTE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
