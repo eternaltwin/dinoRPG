@@ -4107,7 +4107,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 5
+		probability: 10
 	},
 	[Skill.NUAGE_TOXIQUE]: {
 		id: Skill.NUAGE_TOXIQUE,

@@ -1197,7 +1197,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			// AIR Vanilla
 			case Skill.TALON_DACHILLE: {
 				const opponent = getRandomOpponent(fightData, fighter);
-				addStatus(fightData, opponent, Status.WEAKENED, StatusLength.SHORT);
+				addStatus(fightData, opponent, Status.WEAKENED, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.VENT_VIF: {
