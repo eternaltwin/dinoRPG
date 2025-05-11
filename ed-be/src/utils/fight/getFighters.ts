@@ -787,6 +787,10 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 		fighter.canHitFlying = true;
 	}
 
+	if (fighterHas[Skill.TAICHI]) {
+		fighter.skillElementalBonus[ElementType.AIR] += 15;
+	}
+
 	// if (team && fighterHas[Skill.MAITRE_LEVITATEUR]) {
 	// 	team[Skill.MAITRE_LEVITATEUR] = true;
 	// }

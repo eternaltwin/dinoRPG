@@ -2304,7 +2304,7 @@
 			"NuageToxique": "Empoisonne tous les ennemis pour une durée moyenne, le poison inflige des dégâts basés sur l'élément Air du lanceur",
 			"HaleineFetive": "Les ennemis touchés par un assaut ont 50% de chance de subir des dégâts relatifs à l'élément Air du Dinoz (soumis à équilibrage)",
 			"Mistral": "Attaque tous les ennemis avec un pouvoir Air de 3",
-			"TaiChi": "Augmente la puissance des *assauts* Air de 15. Diminue la vitesse des attaques Air de 20%",
+			"TaiChi": "Augmente la puissance des *assauts* et pouvoirs Air de 15. Diminue la vitesse des attaques Air de 20%",
 			"Tornade": "Attaque tous les ennemis avec un pouvoir Air de 10, fait tomber les ennemis volants au sol et étourdit les ennemis touchés pour une courte durée",
 			"Eveil": "Diminue la vitesse des attaques Air de 20%",
 			"Rafale": "Augmente les chances de multi-coup Air de 30%",
