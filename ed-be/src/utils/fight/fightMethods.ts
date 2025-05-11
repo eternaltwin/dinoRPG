@@ -5036,9 +5036,8 @@ const checkAfterDefenseEffects = (
 	// Decharge: close combat, hit landed, 3% chance to electrocute and stun
 	if (isCloseCombat &&
 		damage > 0 &&
-		!hasStatus(attacker, Status.STUNNED) &&
 		hasSkill(target, Skill.DECHARGE) &&
-		randomBetweenSeeded(fightData.rng, 0, 99) === 3
+		randomBetweenSeeded(fightData.rng, 0, 99) < 3
 	) {
 		loseHpBalanced(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning);
 		addStatus(fightData, attacker, Status.STUNNED, StatusLength.SUPER_SHORT);
