@@ -147,7 +147,7 @@ export default defineComponent({
 			if (res) {
 				try {
 					await PlayerService.resetAccount();
-					deleteCookie('token');
+					deleteCookie('x-drpg-token');
 					this.dinozStore.$reset();
 					this.playerStore.$reset();
 					this.$router.go(0);

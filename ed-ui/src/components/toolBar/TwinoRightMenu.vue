@@ -251,8 +251,8 @@ export default defineComponent({
 	},
 	methods: {
 		logOff(): void {
-			deleteCookie('token');
-			deleteCookie('user');
+			deleteCookie('x-drpg-token');
+			deleteCookie('x-drpg-user');
 			this.dinozStore.$reset();
 			this.playerStore.$reset();
 			this.menuCalled = false;

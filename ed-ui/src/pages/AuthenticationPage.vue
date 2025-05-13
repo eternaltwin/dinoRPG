@@ -33,8 +33,8 @@ export default defineComponent({
 			try {
 				const commonData = await OauthService.authenticateUser(this.$route.query.code as string);
 				// Set cookies
-				setCookie('user', commonData.id, 7);
-				setCookie('token', commonData.connexionToken, 7);
+				setCookie('x-drpg-user', commonData.id, 7);
+				setCookie('x-drpg-token', commonData.connexionToken, 7);
 				// Set data in sessionStore
 				this.playerStore.setMoney(commonData.money);
 				this.dinozStore.setDinozList(commonData.dinoz);

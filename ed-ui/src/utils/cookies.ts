@@ -11,11 +11,11 @@ export const getCookie = (name: string) => {
 };
 
 export const setCookie = (name: string, value: string, days: number) => {
-	if (name === 'token') EventBus.emit('connected', true);
+	if (name === 'x-drpg-token') EventBus.emit('connected', true);
 	document.cookie = `${name}=${value}; path=/; domain=${mainDomain}; max-age=${days * 24 * 60 * 60}`;
 };
 
 export const deleteCookie = (name: string) => {
-	if (name === 'token') EventBus.emit('connected', false);
+	if (name === 'x-drpg-token') EventBus.emit('connected', false);
 	document.cookie = `${name}=; path=/; domain=${mainDomain}; max-age=0`;
 };
