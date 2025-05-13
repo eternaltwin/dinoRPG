@@ -446,6 +446,11 @@ export default defineComponent({
 						priest
 					);
 
+					// Add +1 to bubble for proper display
+					if (special && special.name.includes('bubble')) {
+						special.value += 1;
+					}
+
 					// Cut speed digits to 2
 					if (special && special.name.includes('speed')) {
 						special.value = Math.round(special.value * 100) / 100;
@@ -456,7 +461,7 @@ export default defineComponent({
 						special = null;
 					}
 
-					if (special && special.details && special.details.length > 0) {
+					if (special && ((special.details && special.details.length > 0) || special.name === SpecialStat.BUBBLE_RATE)) {
 						return special;
 					} else {
 						return null;

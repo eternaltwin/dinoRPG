@@ -197,7 +197,7 @@ export const getSpecialStat = (
 			percent: true,
 			multiplier: false,
 			// Clamp value between 30% and 100%
-			value: (value < 0.3 ? 0.3 : value) + 1
+			value: (value < 0.3 ? 0.3 : value)
 		};
 	}
 
