@@ -114,6 +114,7 @@ export interface DetailedFighter {
 	hp: number;
 	energy: number;
 	maxEnergy: number;
+	skillEnergyFactor: number;
 	stats: {
 		base: Record<ElementType, number>;
 		// Assault elemental bonuses. This includes the "allAssaultBonus" from MT too, as it is just handled as a bonus for all assault elements.

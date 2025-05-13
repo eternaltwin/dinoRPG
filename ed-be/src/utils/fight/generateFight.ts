@@ -339,6 +339,11 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			});
 		}
 
+		// STRATEGIE
+		if (hasSkill(fighter, Skill.STRATEGIE)) {
+			fighter.skillEnergyFactor *= 0.9;
+		}
+
 		// FORME_ETHERALE
 		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
 			addStatus(fightData, fighter, Status.INTANGIBLE);
@@ -620,7 +625,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				energy: f.maxEnergy,
 				maxEnergy: f.maxEnergy,
 				energyRecovery: f.stats.special.energyRecovery,
-				skillEnergyFactor: hasSkill(f, Skill.STRATEGIE) ? 0.9 : 1
+				skillEnergyFactor: f.skillEnergyFactor
 			};
 		})
 	};
