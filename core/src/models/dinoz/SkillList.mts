@@ -2661,9 +2661,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.MALEDICTION_AQUEUSE, 51312, 61119],
 		isBaseSkill: false,
-		isSphereSkill: false,
-		visualEffect: SkillVisualEffect.ATTACH,
-		fx: 'fxBubble'
+		isSphereSkill: false
 	},
 	[Skill.INCREVABLE]: {
 		id: Skill.INCREVABLE,
