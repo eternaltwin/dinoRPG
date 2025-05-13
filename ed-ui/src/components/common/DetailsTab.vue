@@ -461,7 +461,11 @@ export default defineComponent({
 						special = null;
 					}
 
-					if (special && ((special.details && special.details.length > 0) || special.name === SpecialStat.BUBBLE_RATE)) {
+					// Filter out stats with no details, with some exceptions
+					if (
+						special &&
+						((special.details && special.details.length > 0) || special.name === SpecialStat.BUBBLE_RATE)
+					) {
 						return special;
 					} else {
 						return null;

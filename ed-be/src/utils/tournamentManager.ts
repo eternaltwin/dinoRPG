@@ -237,6 +237,7 @@ class TournamentManager {
 							energy: f.energy,
 							maxEnergy: f.maxEnergy,
 							energyRecovery: f.energyRecovery,
+							skillEnergyFactor: f.skillEnergyFactor,
 							dark: undefined,
 							size: undefined
 						};

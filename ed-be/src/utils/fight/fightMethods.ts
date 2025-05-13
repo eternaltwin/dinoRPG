@@ -491,7 +491,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		// Check if event is a skill
 		if ('id' in event) {
 			// Skip if not enough energy
-			if (fighter.energy < event.energy) continue;
+			if (fighter.energy < event.energy * fighter.skillEnergyFactor) continue;
 		}
 
 		if (randomBetweenSeeded(fightData.rng, 1, 100) < (event.probability ?? 0)) {
@@ -529,7 +529,7 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		const skill = skills[i];
 
 		// Skip if not enough energy
-		if (fighter.energy < skill.energy) continue;
+		if (fighter.energy < skill.energy * fighter.skillEnergyFactor) continue;
 
 		let probability = skill.probability ?? 0;
 
@@ -1827,12 +1827,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				return false;
 		}
 
-		// Consume energy
-		let energyFactor = 1;
-		if (hasSkill(fighter, Skill.STRATEGIE)) {
-			energyFactor *= 0.9;
-		}
-		setEnergy(fighter, Math.round((fighter.energy - event.energy) * energyFactor));
+		setEnergy(fighter, Math.round(fighter.energy - event.energy * fighter.skillEnergyFactor));
 	} else {
 		// Event is an item
 
@@ -3991,11 +3986,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	// // Add step
 	// fightData.steps.push(activate_step);
 
-	let energyFactor = 1;
-	if (hasSkill(fighter, Skill.STRATEGIE)) {
-		energyFactor *= 0.9;
-	}
-	setEnergy(fighter, Math.round((fighter.energy - skill.energy) * energyFactor));
+	setEnergy(fighter, Math.round(fighter.energy - skill.energy * fighter.skillEnergyFactor));
 
 	if (fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
