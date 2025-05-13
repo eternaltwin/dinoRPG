@@ -481,7 +481,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			col1: 0xff0000,
 			col2: 0x000000
 		}
-		
 	},
 	[Skill.SANG_CHAUD]: {
 		id: Skill.SANG_CHAUD,
@@ -511,7 +510,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		visualEffect: SkillVisualEffect.AURA,
 		fxType: AuraFxType.Spiral,
-		color: '0xFF0000',
+		color: '0xFF0000'
 	},
 	[Skill.CHASSEUR_DE_GOUPIGNON]: {
 		id: Skill.CHASSEUR_DE_GOUPIGNON,
@@ -596,7 +595,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: 20,
+			[Stat.MAX_HP]: 20
 		},
 		globalEffects: {
 			[Stat.FIRE_DEFENSE]: 5
@@ -1494,8 +1493,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		effects: {
 			[Stat.HP_REGEN]: 2
 		},
-		visualEffect: SkillVisualEffect.HEAL,
-
+		visualEffect: SkillVisualEffect.HEAL
 	},
 	[Skill.INSTINCT_SAUVAGE]: {
 		id: Skill.INSTINCT_SAUVAGE,
@@ -2301,7 +2299,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.MAX_HP]: 20,
+			[Stat.MAX_HP]: 20
 		}
 	},
 	[Skill.KARATE_SOUS_MARIN]: {
@@ -2692,7 +2690,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.ACUPUNCTURE],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DECOMPOSEUR]: {
 		id: Skill.DECOMPOSEUR,
@@ -2704,7 +2702,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.ACUPUNCTURE],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.ONDINE]: {
 		id: Skill.ONDINE,
@@ -2765,7 +2763,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.NEW_T4_WATER_SKILL_TBD],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.NECROMANCIE]: {
 		id: Skill.NECROMANCIE,
@@ -3382,7 +3380,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.COUP_DOUBLE],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.VOIE_D_OURANOS]: {
 		id: Skill.VOIE_D_OURANOS,
@@ -4032,7 +4030,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.ENVOL],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DISQUE_VACUUM]: {
 		id: Skill.DISQUE_VACUUM,
@@ -4359,7 +4357,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.MAX_HP]: 20,
 			[Stat.AIR_ELEMENT]: 1
 		}
-
 	},
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
 		id: Skill.TOTEM_ANCESTRAL_AEROPORTE,
@@ -4424,7 +4421,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.DISQUE_VACUUM],
 		isBaseSkill: false,
-		isSphereSkill: false,
+		isSphereSkill: false
 	},
 	[Skill.DJINN]: {
 		id: Skill.DJINN,
@@ -5273,7 +5270,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 15,
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0x0000FF,
+			col1: 0x0000ff,
 			col2: 0x000000
 		}
 	},
