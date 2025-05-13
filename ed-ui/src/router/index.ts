@@ -326,7 +326,7 @@ const router = createRouter({
 });
 
 router.beforeEach(to => {
-	const isLogged = getCookie('token') !== null;
+	const isLogged = getCookie('x-drpg-token') !== null;
 	// route to AuthPage if not logged and going to any page
 	if (!isLogged && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };

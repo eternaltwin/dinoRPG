@@ -6,8 +6,8 @@ const API_SERVER = new URL(import.meta.env.VITE_API_URL);
 export const API_BASE = urlJoin(API_SERVER.toString(), 'api/v1');
 
 export const http = function (): AxiosInstance {
-	const user = getCookie('user') || '';
-	const token = getCookie('token') || '';
+	const user = getCookie('x-drpg-user') || '';
+	const token = getCookie('x-drpg-token') || '';
 
 	return axios.create({
 		baseURL: API_BASE,

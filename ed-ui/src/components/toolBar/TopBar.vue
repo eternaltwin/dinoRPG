@@ -71,7 +71,7 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		this.isLogged = getCookie('token') !== null;
+		this.isLogged = getCookie('x-drpg-token') !== null;
 		this.notification = this.playerStore.getNotificationsCounter;
 		EventBus.on('connected', async e => {
 			this.isLogged = e;
