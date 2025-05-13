@@ -1,7 +1,8 @@
 import { http } from '../utils/index.js';
-import { FBParticipation, PublicEvent, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
+import { FBOpponent, FBParticipation, PublicEvent, PublicFBTournament } from '@drpg/core/models/dojo/ForceBrute';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
+import { FightResult } from '@drpg/core/models/fight/FightResult';
 
 export const FBService = {
 	getCurrentTournament(id: string): Promise<PublicFBTournament | undefined> {
@@ -55,6 +56,18 @@ export const FBService = {
 	viewAllFightFromPool(id: string, phase: TournamentPhase, pool: number): Promise<PublicTournament[]> {
 		return http()
 			.patch(`/events/tournament/${phase}/${id}/${pool}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getOpponent(id: number): Promise<FBOpponent> {
+		return http()
+			.get(`/events/opponent/${id}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	fightOpponent(id: number): Promise<FightResult> {
+		return http()
+			.get(`/events/fight/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

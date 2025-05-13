@@ -105,3 +105,9 @@ export const FBDetails: Readonly<Record<number, RaceList>> = {
 	[49]: RaceList.WANWAN_DEMON,
 	[50]: RaceList.KABUKI_DEMON
 };
+
+export interface FBOpponent {
+	name: string;
+	level: number;
+	display: string;
+}

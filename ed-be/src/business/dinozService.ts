@@ -261,6 +261,11 @@ export async function getAvailableActions(
 		});
 	}
 
+	// Forcebrute Tournament
+	if (dinoz.placeId === PlaceEnum.FORCEBRUT && dinoz.status.some(s => s.statusId === DinozStatusId.TOURNA)) {
+		availableActions.push(actionList[Action.FB_TOURNAMENT]);
+	}
+
 	// Dig with the shovel
 	if (
 		dinoz.status.some(

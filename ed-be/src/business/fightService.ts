@@ -450,7 +450,6 @@ export async function rewardFight(
 		const merguezUsedCount = [...fightResult.attackers, ...fightResult.defenders]
 			.flatMap(fighter => fighter.itemsUsed)
 			.filter(item => item === Item.GOBLIN_MERGUEZ).length;
-		console.log(merguezUsedCount);
 
 		if (quest.tracking + merguezUsedCount >= 500 && quest.progression === 1) {
 			await updateQuest(playerId, Scenario.MERGUEZ, 2);

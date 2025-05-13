@@ -42,6 +42,7 @@ import { ALIEN } from './characters/alien.mjs';
 import { MOULDEUR, SKULLY } from './characters/skully.mjs';
 import { M_SKULLY } from './missions/skully.mjs';
 import { BAOBABE } from './characters/baoBabe.mjs';
+import { FB_TOURNAMENT } from './characters/tournois.mjs';
 
 export const npcList: Record<string, Npc> = {
 	// CRIEUR: {
@@ -444,6 +445,16 @@ export const npcList: Record<string, Npc> = {
 			[Operator.AND]: [{ [ConditionEnum.CURRENT_MISSION]: MissionID.SKULLY_END }, { [ConditionEnum.CURRENT_STEP]: 1 }]
 		},
 		display: 'moulder',
+		missions: undefined,
+		flashvars: undefined
+	},
+	FB_TOURNAMENT: {
+		name: 'fb_tournament',
+		id: 32,
+		placeId: PlaceEnum.FORCEBRUT,
+		data: FB_TOURNAMENT,
+		condition: { [Operator.NOT]: { [ConditionEnum.STATUS]: DinozStatusId.TOURNA } },
+		display: 'tournament',
 		missions: undefined,
 		flashvars: undefined
 	}

@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import { prisma } from '../prisma.js';
 import ForceBruteManager from '../utils/forcebruteManager.js';
-import { auth } from '../dao/playerDao.js';
+import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
 import { $Enums, Prisma } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
@@ -14,10 +14,25 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
-import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
-import { FighterRecap } from '@drpg/core/models/fight/FightResult';
+import { archiveFight, getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
+import { FighterRecap, FightResult } from '@drpg/core/models/fight/FightResult';
 import { generateDinozDisplay } from './inventoryService.js';
+import seedrandom from 'seedrandom';
+import {
+	TournamentNameMiddle,
+	TournamentNamePrefix,
+	TournamentNameQuality,
+	TournamentNameSuffix,
+	TournamentNameTitle
+} from '@drpg/core/models/enums/TournamentName';
+import { getRandomEnumValue } from '../utils/randomEnum.js';
+import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
+import { calculateFightBetweenPlayers } from './fightService.js';
+import { updateDinoz } from '../dao/dinozDao.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
+import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -477,4 +492,284 @@ export async function readAllFightFromEventPool(req: Request) {
 	for (const poolFight of poolFights) {
 		await viewFight(authed.id, poolFight);
 	}
+}
+
+export async function getFBTournamentOpponent(req: Request) {
+	const authed = await auth(req);
+	const dinozId = +req.params.dinozId;
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(authed.id, dinozId))) {
+		throw new ExpectedError('Player does not own this dinoz');
+	}
+
+	const dinoz = await prisma.dinoz.findFirst({
+		where: {
+			id: dinozId
+		},
+		select: {
+			FBTournamentStep: true,
+			placeId: true
+		}
+	});
+
+	if (!dinoz) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+	}
+
+	if (dinoz.placeId !== PlaceEnum.FORCEBRUT) {
+		throw new ExpectedError(`Dinoz not at the right place.`);
+	}
+
+	const opponent = await prisma.fBTournament.findFirst({
+		where: {
+			levelLimit: dinoz.FBTournamentStep + 10
+		},
+		select: {
+			winnerId: true
+		}
+	});
+
+	if (!opponent || !opponent.winnerId) {
+		throw new ExpectedError(translate(`fb_tournament.noOpponent`, authed));
+	}
+
+	const opponentGameDinoz = await prisma.gameDinoz.findFirstOrThrow({
+		where: {
+			id: opponent.winnerId
+		},
+		select: {
+			display: true,
+			level: true,
+			seed: true
+		}
+	});
+
+	const rng = seedrandom(opponentGameDinoz.seed);
+	const name =
+		getRandomEnumValue(TournamentNamePrefix, rng()) +
+		getRandomEnumValue(TournamentNameMiddle, rng()) +
+		getRandomEnumValue(TournamentNameSuffix, rng()) +
+		' ' +
+		getRandomEnumValue(TournamentNameTitle, rng()) +
+		' ' +
+		getRandomEnumValue(TournamentNameQuality, rng());
+
+	return {
+		name: name,
+		display: opponentGameDinoz.display,
+		level: opponentGameDinoz.level
+	};
+}
+
+export async function fightFBTournamentOpponent(req: Request) {
+	const authed = await auth(req);
+	const dinozId = +req.params.dinozId;
+
+	// Check if the player owns the dinoz
+	if (!(await ownsDinoz(authed.id, dinozId))) {
+		throw new ExpectedError('Player does not own this dinoz');
+	}
+
+	const dinoz = await prisma.dinoz.findFirst({
+		where: {
+			id: dinozId
+		},
+		select: {
+			FBTournamentStep: true,
+			placeId: true,
+			id: true,
+			display: true,
+			name: true,
+			level: true,
+			experience: true,
+			life: true,
+			maxLife: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			skills: {
+				select: { skillId: true },
+				where: { state: { equals: true } }
+			},
+			items: {
+				select: {
+					itemId: true
+				}
+			},
+			status: {
+				select: {
+					statusId: true
+				}
+			},
+			catches: { select: { id: true, hp: true, monsterId: true } },
+			player: {
+				select: {
+					cooker: true,
+					teacher: true
+				}
+			}
+		}
+	});
+
+	if (!dinoz) {
+		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+	}
+
+	if (dinoz.placeId !== PlaceEnum.FORCEBRUT) {
+		throw new ExpectedError(`Dinoz not at the right place.`);
+	}
+
+	if (!isAlive(dinoz)) {
+		throw new ExpectedError(translate('dead', authed));
+	}
+
+	const opponent = await prisma.fBTournament.findFirst({
+		where: {
+			levelLimit: dinoz.FBTournamentStep + 10
+		},
+		select: {
+			winnerId: true
+		}
+	});
+
+	if (!opponent || !opponent.winnerId) {
+		throw new ExpectedError(translate(`fb_tournament.noOpponent`, authed));
+	}
+
+	const opponentGameDinoz = await prisma.gameDinoz.findFirstOrThrow({
+		where: {
+			id: opponent.winnerId
+		},
+		select: {
+			display: true,
+			level: true,
+			id: true,
+			name: true,
+			life: true,
+			maxLife: true,
+			seed: true,
+			nbrUpFire: true,
+			nbrUpWood: true,
+			nbrUpWater: true,
+			nbrUpLightning: true,
+			nbrUpAir: true,
+			skills: {
+				select: { skillId: true },
+				where: { state: { equals: true } }
+			},
+			items: {
+				select: {
+					itemId: true
+				}
+			},
+			status: {
+				select: {
+					statusId: true
+				}
+			}
+		}
+	});
+
+	const rng = seedrandom(opponentGameDinoz.seed);
+	opponentGameDinoz.name =
+		getRandomEnumValue(TournamentNamePrefix, rng()) +
+		getRandomEnumValue(TournamentNameMiddle, rng()) +
+		getRandomEnumValue(TournamentNameSuffix, rng()) +
+		' ' +
+		getRandomEnumValue(TournamentNameTitle, rng()) +
+		' ' +
+		getRandomEnumValue(TournamentNameQuality, rng());
+	opponentGameDinoz.life = opponentGameDinoz.maxLife;
+
+	const fightResult = calculateFightBetweenPlayers(
+		[dinoz],
+		dinoz.player.cooker,
+		[{ ...opponentGameDinoz, catches: [] }],
+		false,
+		PlaceEnum.FORCEBRUT
+	);
+
+	const attacker = fightResult.attackers.find(a => a.dinozId === dinoz.id);
+	if (!attacker) {
+		throw new ExpectedError(`Attacker ${dinoz.id} doesn't exist.`);
+	}
+
+	const fprob = getRandomNumber(0, 100);
+	let goldMultiplier = 1;
+	if (fprob < 1) goldMultiplier = 10;
+	else if (fprob < 11) goldMultiplier = 3;
+
+	let gold = (getRandomNumber(0, 10) + 28) * 10;
+
+	gold += Math.round(gold * goldMultiplier);
+
+	if (fightResult.winner) {
+		await addMoney(authed.id, gold);
+	}
+
+	const lvlDiff = opponentGameDinoz.level - dinoz.level;
+	let xpf = 1.2 + 0.8 * (lvlDiff / opponentGameDinoz.level);
+	if (xpf < 1.0) xpf = 1.0;
+	let xp = calculateXPBonus(dinoz, 50 * xpf, dinoz.player);
+	const max = getMaxXp(dinoz);
+	let levelup = false;
+	if (dinoz.experience + xp >= max) {
+		levelup = true;
+		xp = max - dinoz.experience;
+		if (xp < 0) xp = 0;
+	}
+	await updateDinoz(dinoz.id, {
+		life: {
+			decrement: attacker.hpLost
+		},
+		experience: {
+			increment: fightResult.winner ? xp : 0
+		},
+		FBTournamentStep: {
+			increment: fightResult.winner ? 1 : 0
+		}
+	});
+
+	await archiveFight(fightResult, authed.id);
+
+	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
+		switch (dinoz.FBTournamentStep / 10) {
+			case 1:
+				await addStatusToDinoz(dinoz.id, DinozStatusId.BRONZE_MEDAL_FORCEBRUT);
+				break;
+			case 2:
+				await addStatusToDinoz(dinoz.id, DinozStatusId.SILVER_MEDAL_FORCEBRUT);
+				break;
+			case 3:
+				await addStatusToDinoz(dinoz.id, DinozStatusId.GOLD_MEDAL_FORCEBRUT);
+				break;
+			case 4:
+				await addStatusToDinoz(dinoz.id, DinozStatusId.DIAMOND_MEDAL_FORCEBRUT);
+				break;
+			default:
+				break;
+		}
+	}
+
+	return {
+		fighters: fightResult.fighters,
+		goldEarned: fightResult.winner ? gold : 0,
+		xpEarned: fightResult.winner ? xp : 0,
+		levelUp: levelup,
+		totalHpLost: fightResult.attackers.reduce((partialSum, a) => partialSum + a.hpLost, 0),
+		result: fightResult.winner,
+		history: fightResult.steps,
+		hpLost: fightResult.attackers.map(a => ({
+			id: a.dinozId,
+			hpLost: a.hpLost
+		})),
+		itemsUsed: fightResult.attackers.map(a => ({
+			id: a.dinozId,
+			itemsUsed: a.itemsUsed
+		})),
+		place: PlaceEnum.FORCEBRUT
+	};
 }

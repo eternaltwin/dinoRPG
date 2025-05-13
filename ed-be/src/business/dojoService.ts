@@ -392,8 +392,8 @@ export async function skipOpponent(req: Request) {
 
 	// If skip generate new batch of opponent
 	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === 5) {
-		await incrementDailyReset(player.Dojo.id)
-		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1)
+		await incrementDailyReset(player.Dojo.id);
+		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
 		await createNotification(
 			authed.id,
 			JSON.stringify([
@@ -404,7 +404,7 @@ export async function skipOpponent(req: Request) {
 				}
 			]),
 			NotificationSeverity.reward
-		)
+		);
 	}
 }
 

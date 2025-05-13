@@ -483,6 +483,12 @@ export default defineComponent({
 						errorHandler.handle(e, this.$toast);
 					}
 					break;
+				case Action.FB_TOURNAMENT:
+					this.$router.push({
+						name: 'Forcebrute',
+						query: { dinozId: +this.dinozId }
+					});
+					break;
 				default:
 					console.log(action.name);
 					break;

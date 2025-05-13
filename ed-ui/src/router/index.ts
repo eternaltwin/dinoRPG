@@ -227,6 +227,14 @@ const router = createRouter({
 					component: () => import('../pages/ClansList.vue')
 				},
 				{
+					path: '/forcebrute',
+					name: 'Forcebrute',
+					component: () => import('../pages/ForceBrute.vue'),
+					props: route => ({
+						dinozId: route.query.dinozId
+					})
+				},
+				{
 					path: '/clan/:id',
 					component: () => import('../pages/Clan.vue'),
 					children: [

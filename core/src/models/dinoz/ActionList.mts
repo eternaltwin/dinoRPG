@@ -1,4 +1,5 @@
 import { GatherType } from '../enums/GatherType.mjs';
+import { FB_TOURNAMENT } from '../npc/characters/tournois.mjs';
 
 export enum Action {
 	FIGHT = 'fight',
@@ -30,7 +31,8 @@ export enum Action {
 	STOP_CONGEL = 'stop_congel',
 	REST = 'rest',
 	STOP_REST = 'stop_rest',
-	REINCARNATION = 'reincarnation'
+	REINCARNATION = 'reincarnation',
+	FB_TOURNAMENT = 'fb_tournament'
 }
 
 export interface ActionFiche {
@@ -161,5 +163,9 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.REINCARNATION]: {
 		name: Action.REINCARNATION,
 		imgName: 'act_resurrect'
+	},
+	[Action.FB_TOURNAMENT]: {
+		name: Action.FB_TOURNAMENT,
+		imgName: 'act_default'
 	}
 };

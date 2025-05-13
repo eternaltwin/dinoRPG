@@ -4,8 +4,10 @@ import { body, param, validationResult } from 'express-validator';
 import sendError from '../utils/sendErrors.js';
 import {
 	createTournamentDinoz,
+	fightFBTournamentOpponent,
 	getCurrentEvents,
 	getCurrentTournament,
+	getFBTournamentOpponent,
 	getPlayerParticipation,
 	getTournamentFights,
 	readAllFightFromEventPool
@@ -153,5 +155,35 @@ routes.patch(
 		}
 	}
 );
+
+routes.get(
+	`${commonPath}/opponent/:dinozId`,
+	[param('dinozId').exists().toInt()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await getFBTournamentOpponent(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.get(`${commonPath}/fight/:dinozId`, [param('dinozId').exists().toInt()], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await fightFBTournamentOpponent(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 export default routes;

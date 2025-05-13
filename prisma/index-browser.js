@@ -152,6 +152,7 @@ exports.Prisma.DinozScalarFieldEnum = {
   fight: 'fight',
   gather: 'gather',
   remaining: 'remaining',
+  FBTournamentStep: 'FBTournamentStep',
   unavailableReason: 'unavailableReason',
   seed: 'seed',
   playerId: 'playerId'

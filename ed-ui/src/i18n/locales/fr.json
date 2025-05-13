@@ -158,7 +158,8 @@
 			"stop_rest": "Votre Dinoz se repose actuellement. Vous pouvez l'interrompre pour qu'il puisse à nouveau se déplacer et combattre.",
 			"itinerant_shop": "Vous pouvez vendre vos ingrédients au Marchand Ambulant.",
 			"reincarnation": "Votre Dinoz peut se réincarner ! Il conservera la même destinée des éléments.",
-			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe."
+			"change_leader": "Votre Dinoz peut devenir le nouveau leader du groupe.",
+			"fb_tournament": "Accéder au Tournoi de Forcebrut."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -190,7 +191,8 @@
 			"stop_rest": "Arrêter de se reposer",
 			"itinerant_shop": "Marchand Ambulant",
 			"reincarnation": "Réincarnation",
-			"change_leader": "Devenir Leader"
+			"change_leader": "Devenir Leader",
+			"fb_tournament": "Tournoi"
 		}
 	},
 	"button": {
@@ -877,7 +879,8 @@
 			"alien": "Être Etrange",
 			"skully": "Skully",
 			"baobabe": "BaoBabe",
-			"mouldeur": "Mouldeur"
+			"mouldeur": "Mouldeur",
+			"fb_tournament": "Organisateur du Tournoi"
 		},
 		"professor": {
 			"speech": {
@@ -1631,6 +1634,19 @@
 				"skully": "Skully vous cherche aussi...",
 				"exp": "(Expliquer toute l'histoire)",
 				"end": "Ce n'est vraiment rien..."
+			}
+		},
+		"fb_tournament": {
+			"speech": {
+				"begin": "Bonjour, ô Grand Maître Dinoz ! Le Grand Tournoi de Forcebrut est ouvert à tous ceux qui désirent mesurer leurs Dinoz à ceux des autres joueurs. Je vous y inscris ?",
+				"yes": "Malheureusement, comme le précise le règlement intérieur, paragraphe 15.48 alinéa H, l'accès au Tournoi est ouvert uniquement aux Dinoz ayant en leur possession une relique d'une civilisation ancienne. C'est l'unique condition pour participer... N'hésitez pas à revenir quand votre Dinoz en aura trouvé une. Bonne journée et bon séjour à Forcebrut !",
+				"ok": "Oh ! Je vois que votre Dinoz possède un {Totem Ashpouk} ! Très bien, je l'inscris donc sur la liste des participants au Tournoi, il pourra donc désormais y accéder directement. Bonne journée monsieur le Maître Dinoz !",
+				"no": "Très bien, vous n'êtes nullement obligé de vous inscrire, surtout si vos Dinoz ne sont pas prêts à se mesurer à de puissants adversaires. C'est vrai que le Tournoi peut être très dangereux pour les Dinoz inexpérimentés. Bonne journée et bon séjour à Forcebrut !"
+			},
+			"playerChoice": {
+				"yes": "Ho, bonne idée !",
+				"ok": "Oui, merci !",
+				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
 			}
 		}
 	},
@@ -2509,7 +2525,8 @@
 		"challengeFriend": "Dino-RPG [ Affronte un ami ]",
 		"forum": "Dino-RPG [ Forums ]",
 		"admin": "Dino-RPG [ Admin Dashboard ]",
-		"event": "Dino-RPG [ Evénements ]"
+		"event": "Dino-RPG [ Evénements ]",
+		"fb_tournament": "Dino-RPG [ Tournois de Forcebrute ]"
 	},
 	"gather": {
 		"action": {
@@ -4999,5 +5016,8 @@
 			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un Dinoz par jour durant les trois jours de qualification.&&Votre Dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître Dinoz !",
 			"progress": "Actuellement {qty} Dinoz sont au niveau du tournois."
 		}
+	},
+	"fb_tournament": {
+		"disclaimer": "Bienvenu au tournois de Forcebrute, ici vous pourrez affronter les meilleurs dinoz créés par d'autres joueurs. Le premier palier est un dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître dinoz !"
 	}
 }

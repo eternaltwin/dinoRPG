@@ -43,6 +43,7 @@ model Dinoz {
   fight              Boolean                @default(true)
   gather             Boolean                @default(true)
   remaining          Int                    @default(2)
+  FBTournamentStep   Int                    @default(0)
   unavailableReason  UnavailableReason?
   seed               String                 @default(dbgenerated("uuid_generate_v4()"))
   playerId           String                 @db.Uuid

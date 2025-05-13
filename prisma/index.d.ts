@@ -7767,6 +7767,7 @@ export namespace Prisma {
     order: number | null
     concentrationId: number | null
     remaining: number | null
+    FBTournamentStep: number | null
   }
 
   export type DinozSumAggregateOutputType = {
@@ -7788,6 +7789,7 @@ export namespace Prisma {
     order: number | null
     concentrationId: number | null
     remaining: number | null
+    FBTournamentStep: number | null
   }
 
   export type DinozMinAggregateOutputType = {
@@ -7816,6 +7818,7 @@ export namespace Prisma {
     fight: boolean | null
     gather: boolean | null
     remaining: number | null
+    FBTournamentStep: number | null
     unavailableReason: $Enums.UnavailableReason | null
     seed: string | null
     playerId: string | null
@@ -7847,6 +7850,7 @@ export namespace Prisma {
     fight: boolean | null
     gather: boolean | null
     remaining: number | null
+    FBTournamentStep: number | null
     unavailableReason: $Enums.UnavailableReason | null
     seed: string | null
     playerId: string | null
@@ -7878,6 +7882,7 @@ export namespace Prisma {
     fight: number
     gather: number
     remaining: number
+    FBTournamentStep: number
     unavailableReason: number
     seed: number
     playerId: number
@@ -7904,6 +7909,7 @@ export namespace Prisma {
     order?: true
     concentrationId?: true
     remaining?: true
+    FBTournamentStep?: true
   }
 
   export type DinozSumAggregateInputType = {
@@ -7925,6 +7931,7 @@ export namespace Prisma {
     order?: true
     concentrationId?: true
     remaining?: true
+    FBTournamentStep?: true
   }
 
   export type DinozMinAggregateInputType = {
@@ -7953,6 +7960,7 @@ export namespace Prisma {
     fight?: true
     gather?: true
     remaining?: true
+    FBTournamentStep?: true
     unavailableReason?: true
     seed?: true
     playerId?: true
@@ -7984,6 +7992,7 @@ export namespace Prisma {
     fight?: true
     gather?: true
     remaining?: true
+    FBTournamentStep?: true
     unavailableReason?: true
     seed?: true
     playerId?: true
@@ -8015,6 +8024,7 @@ export namespace Prisma {
     fight?: true
     gather?: true
     remaining?: true
+    FBTournamentStep?: true
     unavailableReason?: true
     seed?: true
     playerId?: true
@@ -8133,6 +8143,7 @@ export namespace Prisma {
     fight: boolean
     gather: boolean
     remaining: number
+    FBTournamentStep: number
     unavailableReason: $Enums.UnavailableReason | null
     seed: string
     playerId: string
@@ -8183,6 +8194,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: boolean
+    FBTournamentStep?: boolean
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
@@ -8234,6 +8246,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: boolean
+    FBTournamentStep?: boolean
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
@@ -8268,6 +8281,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: boolean
+    FBTournamentStep?: boolean
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
@@ -8302,12 +8316,13 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: boolean
+    FBTournamentStep?: boolean
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "fight" | "gather" | "remaining" | "unavailableReason" | "seed" | "playerId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "seed" | "playerId", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
@@ -8390,6 +8405,7 @@ export namespace Prisma {
       fight: boolean
       gather: boolean
       remaining: number
+      FBTournamentStep: number
       unavailableReason: $Enums.UnavailableReason | null
       seed: string
       playerId: string
@@ -8860,6 +8876,7 @@ export namespace Prisma {
     readonly fight: FieldRef<"Dinoz", 'Boolean'>
     readonly gather: FieldRef<"Dinoz", 'Boolean'>
     readonly remaining: FieldRef<"Dinoz", 'Int'>
+    readonly FBTournamentStep: FieldRef<"Dinoz", 'Int'>
     readonly unavailableReason: FieldRef<"Dinoz", 'UnavailableReason'>
     readonly seed: FieldRef<"Dinoz", 'String'>
     readonly playerId: FieldRef<"Dinoz", 'String'>
@@ -68449,6 +68466,7 @@ export namespace Prisma {
     fight: 'fight',
     gather: 'gather',
     remaining: 'remaining',
+    FBTournamentStep: 'FBTournamentStep',
     unavailableReason: 'unavailableReason',
     seed: 'seed',
     playerId: 'playerId'
@@ -69445,6 +69463,7 @@ export namespace Prisma {
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
+    FBTournamentStep?: IntFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
@@ -69495,6 +69514,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
     unavailableReason?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
@@ -69548,6 +69568,7 @@ export namespace Prisma {
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
+    FBTournamentStep?: IntFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
@@ -69598,6 +69619,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
     unavailableReason?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
@@ -69637,6 +69659,7 @@ export namespace Prisma {
     fight?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     gather?: BoolWithAggregatesFilter<"Dinoz"> | boolean
     remaining?: IntWithAggregatesFilter<"Dinoz"> | number
+    FBTournamentStep?: IntWithAggregatesFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableWithAggregatesFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringWithAggregatesFilter<"Dinoz"> | string
     playerId?: UuidWithAggregatesFilter<"Dinoz"> | string
@@ -73143,6 +73166,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -73192,6 +73216,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -73236,6 +73261,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -73285,6 +73311,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -73332,6 +73359,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -73360,6 +73388,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
   }
@@ -73390,6 +73419,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -77037,6 +77067,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
@@ -77061,6 +77092,7 @@ export namespace Prisma {
     order?: SortOrder
     concentrationId?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
   }
 
   export type DinozMaxOrderByAggregateInput = {
@@ -77089,6 +77121,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
@@ -77120,6 +77153,7 @@ export namespace Prisma {
     fight?: SortOrder
     gather?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
@@ -77144,6 +77178,7 @@ export namespace Prisma {
     order?: SortOrder
     concentrationId?: SortOrder
     remaining?: SortOrder
+    FBTournamentStep?: SortOrder
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -85110,6 +85145,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -85157,6 +85193,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -85233,6 +85270,7 @@ export namespace Prisma {
     fight?: BoolFilter<"Dinoz"> | boolean
     gather?: BoolFilter<"Dinoz"> | boolean
     remaining?: IntFilter<"Dinoz"> | number
+    FBTournamentStep?: IntFilter<"Dinoz"> | number
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
@@ -85538,6 +85576,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -85586,6 +85625,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -85634,6 +85674,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -85681,6 +85722,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -86264,6 +86306,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -86312,6 +86355,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -86634,6 +86678,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -86682,6 +86727,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -86825,6 +86871,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -86873,6 +86920,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -87002,6 +87050,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -87050,6 +87099,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -87191,6 +87241,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -87239,6 +87290,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -87376,6 +87428,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -87424,6 +87477,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -87483,6 +87537,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -87531,6 +87586,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -87574,6 +87630,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -87622,6 +87679,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -87745,6 +87803,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -87793,6 +87852,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -87906,6 +87966,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -87954,6 +88015,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -88077,6 +88139,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -88125,6 +88188,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -88238,6 +88302,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -88286,6 +88351,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -88409,6 +88475,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -88457,6 +88524,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -88570,6 +88638,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -88618,6 +88687,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -88677,6 +88747,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -88725,6 +88796,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -89229,6 +89301,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -89277,6 +89350,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
@@ -90982,6 +91056,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -91030,6 +91105,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -91124,6 +91200,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -91172,6 +91249,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -91244,6 +91322,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -91292,6 +91371,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -91386,6 +91466,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -91434,6 +91515,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -93933,6 +94015,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -93981,6 +94064,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -94207,6 +94291,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -94255,6 +94340,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -94470,6 +94556,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -94518,6 +94605,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -94700,6 +94788,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -94748,6 +94837,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -94920,6 +95010,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     logs?: LogCreateNestedManyWithoutDinozInput
@@ -94968,6 +95059,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -95027,6 +95119,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     logs?: LogUpdateManyWithoutDinozNestedInput
@@ -95075,6 +95168,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -95370,6 +95464,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -95418,6 +95513,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -95600,6 +95696,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -95648,6 +95745,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -97915,6 +98013,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -97963,6 +98062,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -98391,6 +98491,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -98439,6 +98540,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -101738,6 +101840,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
@@ -101786,6 +101889,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -102864,6 +102968,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -102892,6 +102997,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -102939,6 +103045,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -102985,6 +103092,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -103060,6 +103168,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
@@ -103281,6 +103390,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -103328,6 +103438,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -103374,6 +103485,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -103740,6 +103852,7 @@ export namespace Prisma {
     fight?: boolean
     gather?: boolean
     remaining?: number
+    FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
   }
@@ -104227,6 +104340,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -104275,6 +104389,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
@@ -104321,6 +104436,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
   }
@@ -105215,6 +105331,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
@@ -105263,6 +105380,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
@@ -105309,6 +105427,7 @@ export namespace Prisma {
     fight?: BoolFieldUpdateOperationsInput | boolean
     gather?: BoolFieldUpdateOperationsInput | boolean
     remaining?: IntFieldUpdateOperationsInput | number
+    FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
