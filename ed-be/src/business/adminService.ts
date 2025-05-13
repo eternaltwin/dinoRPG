@@ -811,3 +811,95 @@ export async function getJobs(req: Request) {
 	console.log(rawJobs)*/
 	return rawJobs;
 }
+
+export async function softReset(req: Request) {
+	const authed = await auth(req);
+	const superAdmin = authed.id === GLOBAL.config.administrator;
+	if (!superAdmin) {
+		LOGGER.error(`${authed.id} attempted to truncate the game !`);
+		throw new ExpectedError(`Forbiden for you`);
+	}
+
+	try {
+		await prisma.$executeRaw`BEGIN;`;
+
+		await prisma.$executeRaw`SET CONSTRAINTS ALL DEFERRED;`;
+
+		await prisma.$executeRaw`TRUNCATE TABLE dojo CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "FBTournament" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE "FightArchive" CASCADE;`;
+		await prisma.$executeRaw`TRUNCATE TABLE gamedinoz CASCADE;`;
+		await prisma.$executeRaw`DELETE FROM dinoz_skill WHERE "skillId" NOT IN (61102, 61103, 61104, 61105, 61106, 61107, 61108, 61109, 61113, 61117);`;
+		await prisma.$executeRaw`TRUNCATE TABLE dinoz_skill_unlockable;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 100 WHERE level = 2;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 207 WHERE level = 3;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 322 WHERE level = 4;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 446 WHERE level = 5;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 579 WHERE level = 6;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 722 WHERE level = 7;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 876 WHERE level = 8;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1041 WHERE level = 9;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1219 WHERE level = 10;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1410 WHERE level = 11;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1616 WHERE level = 12;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1837 WHERE level = 13;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2075 WHERE level = 14;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2331 WHERE level = 15;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2606 WHERE level = 16;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2901 WHERE level = 17;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 3219 WHERE level = 18;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 3560 WHERE level = 19;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 3927 WHERE level = 20;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 4322 WHERE level = 21;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 4746 WHERE level = 22;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 5202 WHERE level = 23;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 5692 WHERE level = 24;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 6219 WHERE level = 25;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 6786 WHERE level = 26;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 7382 WHERE level = 27;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 8037 WHERE level = 28;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 8741 WHERE level = 29;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 9498 WHERE level = 30;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 10312 WHERE level = 31;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 11187 WHERE level = 32;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 12128 WHERE level = 33;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 13139 WHERE level = 34;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 14226 WHERE level = 35;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 15395 WHERE level = 36;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 16651 WHERE level = 37;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 18002 WHERE level = 38;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 19454 WHERE level = 39;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 21015 WHERE level = 40;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 22693 WHERE level = 41;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 24497 WHERE level = 42;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 26433 WHERE level = 43;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 28518 WHERE level = 44;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 30760 WHERE level = 45;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 33169 WHERE level = 46;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 35760 WHERE level = 47;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 38545 WHERE level = 48;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 41538 WHERE level = 49;`;
+		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 44756 WHERE level = 50;`;
+		await prisma.$executeRaw`UPDATE dinoz SET level = 1;`;
+
+		await prisma.$executeRaw`SET CONSTRAINTS ALL IMMEDIATE;`;
+
+		await prisma.$executeRaw`COMMIT;`;
+
+		LOGGER.log('Remise à zéro du jeu effectuée');
+	} catch (error) {
+		console.error('Erreur lors de la suppression des données:', error);
+		try {
+			await prisma.$executeRaw`ROLLBACK;`;
+		} catch (rollbackError) {
+			console.error('Erreur lors du rollback:', rollbackError);
+		}
+	}
+
+	await prisma.ranking.updateMany({
+		data: {
+			points: 0,
+			average: 0
+		}
+	});
+}

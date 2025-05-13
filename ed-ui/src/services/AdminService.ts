@@ -238,5 +238,11 @@ export const AdminService = {
 			.get(`/admin/jobs`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	softReset(): Promise<void> {
+		return http()
+			.patch(`/admin/softreset`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
