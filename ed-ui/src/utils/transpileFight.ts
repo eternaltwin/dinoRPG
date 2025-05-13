@@ -526,7 +526,8 @@ export function transpileFight(
 							radius: skill?.radius,
 							power: skill?.power,
 							type: skill?.fxType,
-							fx: skill?.fx
+							fx: skill?.fx,
+							anim: skill?.anim
 						}
 					});
 					// Play a second effect if specified
@@ -563,7 +564,8 @@ export function transpileFight(
 							targets: [{ id: step.fid }],
 							color: skill?.color,
 							type: skill?.fxType,
-							fx: skill?.fx
+							fx: skill?.fx,
+							anim: skill?.anim
 						}
 					});
 				}

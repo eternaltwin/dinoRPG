@@ -159,6 +159,7 @@ export interface SkillDetails {
 	color?: string; // Color for skill "activate" step
 	radius?: number; // Radius for "Generate" effect
 	power?: number; // Power for "Rafale" or "Generate" effect
+	anim?: string; // Animation to use for supported visual effects (ex: invocation)
 	visualEffectBis?: SkillVisualEffect; // Second effect for Skill "activate" steps
 	colorBis?: string; // Color for 2nd skill "activate" step
 	lifeEffect?: {
