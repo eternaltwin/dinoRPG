@@ -1806,7 +1806,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.FORCEBRUTE,
 		name: 'Forcebrute',
 		type: SkillType.A,
-		energy: Energy.NONE,
+		energy: Energy.E20,
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTree.VANILLA,
