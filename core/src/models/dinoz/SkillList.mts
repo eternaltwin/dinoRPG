@@ -4245,7 +4245,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [Skill.VENT_VIF],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.AIR_ELEMENT]: 1,
+		}
 	},
 	[Skill.HYPNOSE]: {
 		id: Skill.HYPNOSE,
@@ -4334,7 +4337,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: ['x', 1.05],
-			[Stat.AIR_SPEED]: ['x', 1.5]
+			[Stat.AIR_SPEED]: ['x', 1.5],
+			[Stat.AIR_ELEMENT]: 1
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 3
@@ -4365,7 +4369,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.MAX_HP]: 20,
-			[Stat.AIR_ELEMENT]: 1
+			[Stat.AIR_ELEMENT]: 2
 		}
 	},
 	[Skill.TOTEM_ANCESTRAL_AEROPORTE]: {
@@ -4415,7 +4419,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.EVASION]: ['x', 1.1],
-			[Stat.SPEED]: ['x', 1.1]
+			[Stat.SPEED]: ['x', 1.1],
+			[Stat.AIR_ELEMENT]: 2
 		},
 		globalEffects: {
 			[Stat.AIR_DEFENSE]: 6
