@@ -2265,6 +2265,7 @@ export const addStatus = (
 		}
 		case Status.THUNDERED: {
 			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
+			fighter.skillElementalBonus[ElementType.LIGHTNING] += 20;
 			fighter.element = ElementType.LIGHTNING;
 			break;
 		}
@@ -2375,6 +2376,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 			}
 			case Status.THUNDERED: {
 				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 20;
+				fighter.skillElementalBonus[ElementType.LIGHTNING] -= 20;
 				break;
 			}
 			default: {
