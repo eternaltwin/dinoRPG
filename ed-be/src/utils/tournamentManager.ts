@@ -1056,7 +1056,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 			`Generated ${matches} fights for round ${currentState.round}. Next round is for ${nextPlannedMatch.time}`
 		);
 
-		if (nextPlannedMatch.time <= new Date()) {
+		if (nextPlannedMatch.time <= new Date() && matches > 0) {
 			await this.generateNextRound(prisma);
 		}
 
