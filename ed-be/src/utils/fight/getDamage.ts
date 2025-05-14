@@ -129,7 +129,7 @@ export const getAttackDefense = (
 
 	// Add close combat specific bonuses
 	if (isCloseCombat) {
-		attack += attacker.nextAssaultBonus;
+		attack += attacker.nextAssaultBonus + attacker.allAssaultBonus;
 		attack *= attacker.nextAssaultMultiplier * attacker.allAssaultMultiplier;
 		attacker.nextAssaultBonus = 0;
 		attacker.nextAssaultMultiplier = 1;

@@ -2252,11 +2252,7 @@ export const addStatus = (
 			break;
 		}
 		case Status.BLESSED: {
-			fighter.stats.assaultBonus[ElementType.AIR] += 3;
-			fighter.stats.assaultBonus[ElementType.FIRE] += 3;
-			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 3;
-			fighter.stats.assaultBonus[ElementType.WATER] += 3;
-			fighter.stats.assaultBonus[ElementType.WOOD] += 3;
+			fighter.allAssaultBonus += 10;
 			break;
 		}
 		case Status.STUNNED: {
@@ -2359,11 +2355,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.BLESSED: {
-				fighter.stats.assaultBonus[ElementType.AIR] -= 3;
-				fighter.stats.assaultBonus[ElementType.FIRE] -= 3;
-				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 3;
-				fighter.stats.assaultBonus[ElementType.WATER] -= 3;
-				fighter.stats.assaultBonus[ElementType.WOOD] -= 3;
+				fighter.allAssaultBonus -= 10;
 				break;
 			}
 			case Status.STUNNED: {
