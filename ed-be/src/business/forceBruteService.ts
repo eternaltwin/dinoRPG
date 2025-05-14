@@ -33,6 +33,7 @@ import { updateDinoz } from '../dao/dinozDao.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
+import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -740,6 +741,13 @@ export async function fightFBTournamentOpponent(req: Request) {
 	});
 
 	await archiveFight(fightResult, authed.id);
+
+	// Consume item used
+	for (const fighter of [...fightResult.attackers]) {
+		for (const itemUsed of fighter.itemsUsed) {
+			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+		}
+	}
 
 	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
 		switch (dinoz.FBTournamentStep / 10) {
