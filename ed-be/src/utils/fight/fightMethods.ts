@@ -2574,7 +2574,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.HYPNOSE: {
 			// Get opponents
-			const opponents = getOpponents(fightData, fighter);
+			const opponents = getOpponents(fightData, fighter).filter(f => !hasSkill(f, Skill.SELF_CONTROL));
 
 			// Hypnose does not work if there is no opponent or just a single one, or if the fighter has already used it.
 			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
@@ -2988,7 +2988,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.NECROMANCIE: {
 			// Get all dead non espaced fighters, except clones, reinforcements and bosses
 			const limitTypes = ['dinoz', 'monster'];
-			const deadfighters = fightData.fighters.filter(f => f.hp <= 0 && !f.escaped && limitTypes.includes(f.type) && !hasStatus(f, Status.UNDEAD));
+			const deadfighters = fightData.fighters.filter(f =>
+				f.hp <= 0 &&
+				!f.escaped &&
+				limitTypes.includes(f.type) &&
+				!hasSkill(f, Skill.SELF_CONTROL) &&
+				!hasStatus(f, Status.UNDEAD)
+			);
 
 			if (deadfighters.length === 0) {
 				return cancel();
