@@ -423,6 +423,9 @@ export async function getDinozEquipItemRequest(dinozId: number) {
 					shopKeeper: true,
 					items: {
 						select: { id: true, itemId: true, quantity: true }
+					},
+					quests: {
+						select: { questId: true, progression: true }
 					}
 				}
 			},
