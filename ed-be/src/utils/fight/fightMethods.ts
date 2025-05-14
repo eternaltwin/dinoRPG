@@ -2261,6 +2261,12 @@ export const addStatus = (
 		}
 		case Status.STUNNED: {
 			fighter.time += FIGHT_INFINITE;
+			break;
+		}
+		case Status.THUNDERED: {
+			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
+			fighter.element = ElementType.LIGHTNING;
+			break;
 		}
 		default: {
 			break;
@@ -2365,6 +2371,11 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				if (fighter.time < fightData.time) {
 					fighter.time = fightData.time;
 				}
+				break;
+			}
+			case Status.THUNDERED: {
+				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 20;
+				break;
 			}
 			default: {
 				break;
@@ -2824,6 +2835,28 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					fid: fighter.id
 				});
 			}
+			break;
+		}
+		case Skill.PARAFOUDRE: {
+			// Add step for fx
+			activate_step.targets.push({tid: fighter.id});
+			fightData.steps.push(activate_step);
+
+			addStatus(fightData, fighter, Status.THUNDERED, StatusLength.MEDIUM);
+			addStatus(fightData, fighter, Status.LOCKED, StatusLength.MEDIUM);
+
+			// Increase the time of all other fighters to make it look like the caster "gained" time
+			getFighters(fightData).forEach(f => {
+				if (f.id !== fighter.id) {
+					f.time += 12 * TIME_FACTOR;
+				}
+			});
+			// Add fx for gain of init
+			fightData.steps.push({
+				action: 'notify',
+				fids: [fighter.id],
+				notification: NotificationList.InitUp
+			});
 			break;
 		}
 		case Skill.ECLAIR_SINUEUX: {

@@ -15,7 +15,6 @@ export enum Status {
 	PETRIFIED = 'petrified',
 	POISONED = 'poisoned',
 	BURNED = 'burned',
-	LOCKED = 'locked',
 	DAZZLED = 'dazzled',
 	STUNNED = 'stunned',
 	NO_HEAL = 'hoHeal',
@@ -28,6 +27,9 @@ export enum Status {
 	BLESSED = 'blessed',
 	HEALING = 'healing',
 	TAUNT = 'taunt',
+	THUNDERED = 'thundered',
+	// Good & bad
+	LOCKED = 'locked',
 	// Skills
 	COPY_HEAL = 'copyHeal',
 	NO_INVOCATION = 'noInvocation',
@@ -67,7 +69,6 @@ export const BadStatus = [
 	Status.PETRIFIED,
 	Status.POISONED,
 	Status.BURNED,
-	Status.LOCKED,
 	Status.DAZZLED,
 	Status.STUNNED,
 	Status.NO_HEAL
