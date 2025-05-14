@@ -155,5 +155,8 @@
 		"selling": "Votre dinoz est en vente",
 		"superdom": "Votre dinoz est au superdom",
 		"resting": "Votre dinoz se repose"
+	},
+	"fb_tournament": {
+		"noOpponent": "Il n'y a plus personne à combattre pour le moment."
 	}
 }

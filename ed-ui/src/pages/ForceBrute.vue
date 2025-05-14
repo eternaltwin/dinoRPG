@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="vs">
+		<div class="vs" v-if="opponent">
 			<img :src="getImgURL('design', 'vs')" alt="" />
 			<span class="stage">{{ $t('fb_tournament.stage', { stage: stage }) }}</span>
 		</div>
@@ -29,8 +29,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="fight" v-if="!fightTransformed">
-		<div class="launch-fight" v-if="opponent" @click="launchFight()">
+	<div class="fight" v-if="!fightTransformed && opponent">
+		<div class="launch-fight" @click="launchFight()">
 			<img :src="getImgURL('icons', 'act_attack')" alt="" />
 			<span>{{ $t('fb_tournament.fight', { opponent: opponent.name }) }}</span>
 		</div>
