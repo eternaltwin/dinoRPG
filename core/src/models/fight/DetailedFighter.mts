@@ -170,6 +170,7 @@ export interface DetailedFighter {
 	skillElementalBonus: Record<ElementType, number>;
 	nextSkill?: SkillDetails;
 	// Assault bonuses
+	allAssaultBonus: number;
 	allAssaultMultiplier: number;
 	nextAssaultBonus: number;
 	nextAssaultMultiplier: number;

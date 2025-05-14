@@ -3041,6 +3041,19 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			}
 			break;
 		}
+		case Skill.FORCEBRUTE: {
+			// Bonuses just for this attack
+			fighter.allAssaultBonus += 3 * fighter.stats.base[ElementType.WOOD];
+			fighter.stats.ignoreArmor.assault *= 2;
+
+			// Attack opponent
+			launchAssault(fightData, fighter, true, Skill.FORCEBRUTE);
+
+			// Remove bonuses once attack is done
+			fighter.allAssaultBonus -= 3 * fighter.stats.base[ElementType.WOOD];
+			fighter.stats.ignoreArmor.assault /= 2;
+			break;
+		}
 		case Skill.GARDIEN_ARBORICOLE: {
 			let gardien = monsterList.GRDIEN;
 			// If fighter does not have COLOSSE_DES_FORETS, downgrade the gardien

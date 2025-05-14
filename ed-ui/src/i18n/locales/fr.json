@@ -2231,7 +2231,7 @@
 			"Cocon": "Augmente de 2 les PV récupérés par heure lors du repos. En combat, le Dinoz regagne jusqu'à autant de points de vie que son élément Bois et augmente son armure de 5% pour le reste du combat.",
 			"GeantDesForets": "Augmente la puissance de tous les *assauts* de 5, l'élément Bois de 1, augmente les PV max de 30 et diminue la vitesse de 20%. Les Esprits Gorillozs appelés en renfort sont désormais intangibles.",
 			"Archeologue": "Permet au Dinoz de trouver des artefacts rares ou exceptionnels à certains endroits. Augmente l'armure de 5% et l'élément Bois de 2.",
-			"Forcebrute": "Les attaques bois ignorent 100% de l'armure",
+			"Forcebrute": "Attaque un adversaire avec un assault avec un bonus Bois de 3 et 100% d'armure ignorée.",
 			"Provocation": "Le Dinoz devient la cible prioritaire des assauts ennemis et gagne 30% d'armure pour une durée longue. L'effet est prioritaire sur les autres compétences de choix de cible.",
 			"GardienArboricole": "Appelle un petit Gardien Arboricole pour aider à combattre",
 			"ColosseDesForets": "Augmente la puissance de tous les *assauts* de 15, l'élément Bois de 2, augmente les PV max de 30 et diminue la vitesse de 20%. Les Gardien Arboricoles appelés en renfort sont désormais de taille normale.",
