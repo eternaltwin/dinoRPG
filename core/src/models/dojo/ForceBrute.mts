@@ -110,4 +110,5 @@ export interface FBOpponent {
 	name: string;
 	level: number;
 	display: string;
+	stage: number;
 }

@@ -5,7 +5,7 @@
 			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
 			<template #fallback> <Loading /> </template>
 		</Suspense>
-		<FightBounce :fight="fight" :dinozId="dinozId" />
+		<FightBounce v-if="fightEnded" :fight="fight" :dinozId="dinozId" />
 	</div>
 </template>
 

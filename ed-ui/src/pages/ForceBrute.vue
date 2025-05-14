@@ -37,10 +37,10 @@
 	</div>
 	<div class="wrapper" v-if="fightTransformed && fight">
 		<Suspense>
-			<FullFightAnimation :fight="fightTransformed" />
+			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
 			<template #fallback> <Loading /> </template>
 		</Suspense>
-		<FightBounce :fight="fight" :dinozId="+dinozId" />
+		<FightBounce v-if="fightEnded" :fight="fight" :dinozId="+dinozId" />
 	</div>
 </template>
 
@@ -60,8 +60,8 @@ import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import EventBus from '../events/index.js';
 import FightBounce from '../components/fight/FightBounce.vue';
-import { dinozStore } from '../store/index.js';
-import DinozFiche from '@drpg/core/models/dinoz/DinozFiche';
+import { dinozStore, playerStore } from '../store/index.js';
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'ForceBrute',
@@ -76,10 +76,13 @@ export default defineComponent({
 		return {
 			dinozStore: dinozStore(),
 			opponent: undefined as undefined | FBOpponent,
-			stage: null as number,
+			stage: null as number | null,
 			fightTransformed: undefined as undefined | preFightLoader,
 			displayFight: undefined as undefined | DojoFightResume,
-			fight: undefined as undefined | FightResult
+			fight: undefined as undefined | FightResult,
+			dinoz: undefined as undefined | DinozFiche,
+			fightEnded: false as boolean,
+			playerStore: playerStore()
 		};
 	},
 	props: {
@@ -90,7 +93,6 @@ export default defineComponent({
 			try {
 				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
 				this.dinoz = dinozList.find(d => d.id === +this.dinozId);
-				console.log(this.dinoz);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -137,7 +139,9 @@ export default defineComponent({
 			await this.getDinozInfo();
 			this.opponent = await FBService.getOpponent(+this.dinozId);
 			this.stage = this.opponent.stage;
-			console.log(this.opponent);
+			if (this.playerStore.getPlayerOptions.skipFight) {
+				this.fightEnded = true;
+			}
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
