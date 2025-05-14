@@ -1805,7 +1805,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FORCEBRUTE]: {
 		id: Skill.FORCEBRUTE,
 		name: 'Forcebrute',
-		type: SkillType.P,
+		type: SkillType.A,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1813,8 +1813,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.INSTINCT_SAUVAGE],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		effects: {
-			[Stat.WOOD_IGNORE_ARMOR]: ['x', 2]
+		priority: 4,
+		probability: 9,
+		gotoEffect: GotoEffect.Special,
+		shadeColor: {
+			col1: 0xFFFFFF,
+			col2: 0x00FF00
 		}
 	},
 	[Skill.PROVOCATION]: {
