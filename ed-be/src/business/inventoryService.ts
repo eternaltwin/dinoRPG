@@ -14,7 +14,7 @@ import { ItemFiche, ItemFicheDTO } from '@drpg/core/models/item/ItemFiche';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { backpackSlot, useRice } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
+import { $Enums, Dinoz, DinozStatus, LogType, Player, PlayerItem } from '@drpg/prisma';
 import dayjs from 'dayjs';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
@@ -39,6 +39,7 @@ import { initializeDinoz, learnNextSphereSkill } from '../utils/dinoz.js';
 import { getLetter, getRandomLetter, getRandomNumber } from '../utils/index.js';
 import translate from '../utils/translate.js';
 import { applySkillEffect } from './skillService.js';
+import UnavailableReason = $Enums.UnavailableReason;
 
 /**
  * @summary Get all items from the inventory of a player
@@ -478,6 +479,10 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 	const dinoz = await getDinozEquipItemRequest(dinozId);
 	if (!dinoz) {
 		throw new ExpectedError(`Player ${dinozId} doesn't exist.`);
+	}
+
+	if (dinoz.unavailableReason && dinoz.unavailableReason === UnavailableReason.selling) {
+		throw new ExpectedError(translate(`UnavailableReason.${dinoz.unavailableReason}`, authed));
 	}
 	const itemId = +req.body.itemId;
 	const equip = !!req.body.equip;

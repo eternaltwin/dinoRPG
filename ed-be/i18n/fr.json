@@ -148,5 +148,12 @@
 	"announce": {
 		"dinoz": "Félicitation à {{player}} pour son dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
 		"epic": "Félicitations à {{player}} qui est le $t(position.{{position}}) joueur à obtenir la récompense $t(reward.{{reward}}) !"
+	},
+	"UnavailableReason": {
+		"frozen": "Votre dinoz est congelé",
+		"sacrificed": "Votre dinoz est sacrifié",
+		"selling": "Votre dinoz est en vente",
+		"superdom": "Votre dinoz est au superdom",
+		"resting": "Votre dinoz se repose"
 	}
 }
