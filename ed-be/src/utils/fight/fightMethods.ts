@@ -2757,6 +2757,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				if(flameche) {
 					flameche.skills = [];
 					flameche.stats.base[ElementType.FIRE] = number;
+					flameche.stats.special.torchDamage = flameche.stats.base[ElementType.FIRE];
 					applyGlobalDefenseBonus(flameche, ElementType.FIRE, number);
 					addStatus(fightData, flameche, Status.TORCHED);
 				}
