@@ -3221,7 +3221,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.FIRE_ASSAULT]: 6,
-			[Stat.LIGHTNING_ASSAULT]: 6
+			[Stat.LIGHTNING_ASSAULT]: 6,
+			[Stat.MAX_HP]: 15
 		}
 	},
 	[Skill.PLAN_DE_CARRIERE]: {
@@ -3264,7 +3265,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		globalEffects: {
 			[Stat.WOOD_DEFENSE]: 3,
-			[Stat.LIGHTNING_DEFENSE]: 3
+			[Stat.LIGHTNING_DEFENSE]: 3,
+			[Stat.MAX_HP]: 15
 		}
 	},
 	[Skill.MEDECINE]: {
@@ -3402,7 +3404,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.AIR_SPEED]: ['x', 0.75],
-			[Stat.LIGHTNING_SPEED]: ['x', 0.75]
+			[Stat.LIGHTNING_SPEED]: ['x', 0.75],
+			[Stat.MAX_HP]: 15
 		}
 	},
 	[Skill.AUBE_FEUILLUE]: {
