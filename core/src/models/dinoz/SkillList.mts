@@ -160,7 +160,7 @@ export enum Skill {
 	BULLE = 31407,
 	INCREVABLE = 31408,
 	ONDINE = 31409,
-	NEW_T4_WATER_SKILL_TBD = 31410,
+	BRANCHIES = 31410,
 	DECOMPOSEUR = 31411,
 	MAITRE_NAGEUR = 31501,
 	LEVIATHAN = 31502,
@@ -2684,9 +2684,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.WOOD_DEFENSE]: 2
 		}
 	},
-	[Skill.NEW_T4_WATER_SKILL_TBD]: {
-		id: Skill.NEW_T4_WATER_SKILL_TBD,
-		name: 'TBD',
+	[Skill.BRANCHIES]: {
+		id: Skill.BRANCHIES,
+		name: 'branchies',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
@@ -2694,7 +2694,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.ACUPUNCTURE],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.WATER_ELEMENT]: 2,
+		}
 	},
 	[Skill.DECOMPOSEUR]: {
 		id: Skill.DECOMPOSEUR,
@@ -2765,7 +2768,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [Skill.NEW_T4_WATER_SKILL_TBD],
+		unlockedFrom: [Skill.MALEDICTION_AQUEUSE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
