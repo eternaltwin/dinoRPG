@@ -11,7 +11,7 @@ import { RaceList, raceList } from '@drpg/core/models/dinoz/RaceList';
 import { randomUUID } from 'crypto';
 import { getLetter, getRandomNumber } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { archiveFight, getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
@@ -626,6 +626,11 @@ export async function fightFBTournamentOpponent(req: Request) {
 	if (!isAlive(dinoz)) {
 		throw new ExpectedError(translate('dead', authed));
 	}
+
+	//Forbid Black Hole, Hypnose and Sylphide skills
+	dinoz.skills = dinoz.skills.filter(
+		s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
+	);
 
 	const opponent = await prisma.fBTournament.findFirst({
 		where: {
