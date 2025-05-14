@@ -1,13 +1,38 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.fb_tournament')" />
+	<TitleHeader :title="$t('pageTitle.fb_tournament')" :header="$t('fb_tournament.title')" />
 	<DZDisclaimer help round :content="$t('fb_tournament.disclaimer')" />
-	<div class="wrapper" v-if="opponent && !fightTransformed" @click="launchFight()">
-		<div class="dinoz">
-			<DinozWithoutFlash :display="opponent.display" flip :key="opponent.display" :life="1" />
-			<p class="name">
-				{{ opponent.name }}
-			</p>
-			<div class="dinozInfo">{{ $t('myAccount.level') }} {{ opponent.level }}</div>
+	<div class="fb" v-if="!fightTransformed">
+		<div class="dinoz" v-if="dinoz">
+			<div class="dinozCard">
+				<DinozWithoutFlash :display="dinoz.display" flip :key="dinoz.display" :life="1" />
+				<div class="dinozInfo">
+					<p class="name">
+						{{ dinoz.name }}
+					</p>
+					<p class="lvl">{{ $t('myAccount.level') }} {{ dinoz.level }}</p>
+				</div>
+			</div>
+		</div>
+		<div class="vs">
+			<img :src="getImgURL('design', 'vs')" alt="" />
+			<span class="stage">{{ $t('fb_tournament.stage', { stage: stage }) }}</span>
+		</div>
+		<div class="opponent" v-if="opponent">
+			<div class="opponentCard">
+				<DinozWithoutFlash :display="opponent.display" flip :key="opponent.display" :life="1" />
+				<div class="opponentInfo">
+					<p class="name">
+						{{ opponent.name }}
+					</p>
+					<p class="lvl">{{ $t('myAccount.level') }} {{ opponent.level }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="fight" v-if="!fightTransformed">
+		<div class="launch-fight" v-if="opponent" @click="launchFight()">
+			<img :src="getImgURL('icons', 'act_attack')" alt="" />
+			<span>{{ $t('fb_tournament.fight', { opponent: opponent.name }) }}</span>
 		</div>
 	</div>
 	<div class="wrapper" v-if="fightTransformed && fight">
@@ -35,6 +60,8 @@ import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import EventBus from '../events/index.js';
 import FightBounce from '../components/fight/FightBounce.vue';
+import { dinozStore } from '../store/index.js';
+import DinozFiche from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'ForceBrute',
@@ -47,7 +74,9 @@ export default defineComponent({
 	},
 	data() {
 		return {
+			dinozStore: dinozStore(),
 			opponent: undefined as undefined | FBOpponent,
+			stage: null as number,
 			fightTransformed: undefined as undefined | preFightLoader,
 			displayFight: undefined as undefined | DojoFightResume,
 			fight: undefined as undefined | FightResult
@@ -57,6 +86,15 @@ export default defineComponent({
 		dinozId: { type: String, required: true }
 	},
 	methods: {
+		async getDinozInfo(): Promise<void> {
+			try {
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
+				this.dinoz = dinozList.find(d => d.id === +this.dinozId);
+				console.log(this.dinoz);
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
 		async launchFight() {
 			EventBus.emit('loading', true);
 			try {
@@ -96,7 +134,10 @@ export default defineComponent({
 	},
 	async mounted() {
 		try {
+			await this.getDinozInfo();
 			this.opponent = await FBService.getOpponent(+this.dinozId);
+			this.stage = this.opponent.stage;
+			console.log(this.opponent);
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
@@ -105,47 +146,130 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.wrapper {
+.fb {
 	display: flex;
 	align-self: center;
-	flex-direction: column;
+	overflow: hidden;
+	position: relative;
 }
-.dinoz {
-	width: auto;
+.dinoz,
+.opponent {
+	width: 100%;
 	height: auto;
-	background-color: #fbdba8;
-	cursor: default;
-	border: 1px solid #fce3bc;
+	background-color: #bc683c;
+	border: 3px solid #bc683c;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 5px;
-	max-width: 200px;
-	&:hover {
-		border: 1px solid #f1c98e;
-		cursor: pointer;
-	}
+	justify-content: center;
+	overflow: hidden;
+	padding-block: 15px;
+	padding-inline: 15px;
 	img {
 		width: 100%;
 	}
 }
-.name {
-	text-align: center;
-	font-weight: bold;
-	line-height: 10pt;
-	color: #52646b;
-	background-color: transparent;
-	margin-top: -5px;
-	align-self: center;
+.dinozCard,
+.opponentCard {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	overflow: hidden;
 }
-.dinozInfo {
+.dinozInfo,
+.opponentInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 	text-align: center;
-	font-size: 9pt;
-	line-height: 10pt;
-	color: #bc683c;
-	width: 170px;
-	margin-bottom: 10px;
+	color: #fce3bc;
+	.name {
+		text-align: center;
+		font-weight: bold;
+		line-height: 10pt;
+		background-color: transparent;
+		margin-top: -5px;
+		align-self: center;
+	}
+	.lvl {
+		font-size: 9pt;
+	}
+}
+.vs {
+	background-color: #fce3bc;
+	width: 30px;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	& img {
+		position: relative;
+		left: 11.3px;
+		top: -1px;
+	}
+	.stage {
+		position: relative;
+		top: 55px;
+		left: -60px;
+		right: 0;
+		text-align: center;
+		font-size: 10pt;
+		font-weight: bold;
+		color: black;
+	}
+}
+.fight {
+	background-color: #bc683c;
+	border: 3px solid #bc683c;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	display: flex;
+	align-items: center;
+	align-self: center;
+	justify-content: center;
+	margin-top: 10px;
+	width: 80%;
+	height: 50px;
+}
+.launch-fight {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #7a4528;
+	border-radius: 10px;
+	padding-right: 5px;
+	gap: 10px;
+	height: 30px;
+	cursor: pointer;
+	& span {
+		color: #fce3bc;
+		font-size: 12pt;
+	}
+	&:hover {
+		background-color: #53260e;
+	}
+}
+@media (max-width: 580px) {
+	.fb {
+		width: 90%;
+	}
+	.fight {
+		width: 90%;
+	}
+	.launch-fight {
+		width: 80%;
+		gap: 5px;
+		padding: 0 5px 0 0;
+	}
+}
+.wrapper {
+	display: flex;
+	align-self: center;
+	flex-direction: column;
 }
 </style>

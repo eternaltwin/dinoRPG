@@ -166,6 +166,6 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.FB_TOURNAMENT]: {
 		name: Action.FB_TOURNAMENT,
-		imgName: 'act_default'
+		imgName: 'act_tournament'
 	}
 };

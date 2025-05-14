@@ -558,7 +558,8 @@ export async function getFBTournamentOpponent(req: Request) {
 	return {
 		name: name,
 		display: opponentGameDinoz.display,
-		level: opponentGameDinoz.level
+		level: opponentGameDinoz.level,
+		stage: dinoz.FBTournamentStep + 1
 	};
 }
 
