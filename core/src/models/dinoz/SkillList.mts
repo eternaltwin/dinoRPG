@@ -3985,7 +3985,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51103],
+		unlockedFrom: [Skill.MISTRAL],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -4016,7 +4016,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51104],
+		unlockedFrom: [Skill.AIGUILLON],
 		isBaseSkill: false,
 		isSphereSkill: true
 	},
@@ -4055,7 +4055,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51201],
+		unlockedFrom: [Skill.ESQUIVE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -4074,7 +4074,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51202],
+		unlockedFrom: [Skill.SAUT],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
@@ -4093,7 +4093,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51202],
+		unlockedFrom: [Skill.SAUT],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		globalEffects: {
@@ -4111,7 +4111,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51203],
+		unlockedFrom: [Skill.ANALYSE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -4153,7 +4153,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51204],
+		unlockedFrom: [Skill.CUEILLETTE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -4169,7 +4169,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.AIR],
 		activatable: false,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [],
+		unlockedFrom: [Skill.TAICHI],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
