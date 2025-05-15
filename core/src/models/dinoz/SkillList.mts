@@ -1873,7 +1873,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: ['x', 1.2],
+			[Stat.ARMOR]: ['x', 1.1],
 			[Stat.WOOD_ELEMENT]: 1
 		},
 		visualEffect: SkillVisualEffect.AURA,
