@@ -1441,7 +1441,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: true,
 		effects: {
-			[Stat.ARMOR]: ['x', 1.1]
+			[Stat.ARMOR]: ['x', 1.05]
 		}
 	},
 	[Skill.ETAT_PRIMAL]: {
