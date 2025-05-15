@@ -2211,7 +2211,7 @@ export const addStatus = (
 	}
 
 	// Negate if SELF_CONTROL
-	if (hasSkill(fighter, Skill.SELF_CONTROL) && status === Status.STUNNED) return false;
+	if (hasSkill(fighter, Skill.SELF_CONTROL) && (status === Status.STUNNED || status === Status.ASLEEP)) return false;
 
 	// Cancel SLOWED status
 	if (hasSkill(fighter, Skill.ENTRAINEMENT_SOUS_MARIN) && status === Status.SLOWED) return false;
@@ -2579,7 +2579,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.HYPNOSE: {
 			// Get opponents
-			const opponents = getOpponents(fightData, fighter).filter(f => !hasSkill(f, Skill.SELF_CONTROL));
+			const opponents = getOpponents(fightData, fighter);
 
 			// Hypnose does not work if there is no opponent or just a single one, or if the fighter has already used it.
 			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
