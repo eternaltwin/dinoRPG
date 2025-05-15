@@ -1857,7 +1857,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.AIR_ASSAULT]: 15,
 			[Stat.LIGHTNING_ASSAULT]: 15,
 			[Stat.WOOD_ASSAULT]: 15,
-			[Stat.WOOD_ELEMENT]: 2,
+			[Stat.WOOD_ELEMENT]: 1,
 			[Stat.SPEED]: ['x', 1.2]
 		}
 	},
