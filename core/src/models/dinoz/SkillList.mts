@@ -1631,7 +1631,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [21205],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		effects: {
+			[Stat.SPEED]: ['x', 1.05],
+			[Stat.WOOD_ELEMENT]: 1
+		}
 	},
 	[Skill.GROSSE_BEIGNE]: {
 		id: Skill.GROSSE_BEIGNE,

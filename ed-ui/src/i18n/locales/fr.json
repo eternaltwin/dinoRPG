@@ -2229,7 +2229,7 @@
 			"GardeForestier": "Augmente de 3 la défense Bois et l'armure de 5% de tous les Dinoz du groupe, affecte également les renforts",
 			"Fouille": "Permet au Dinoz de trouver des artefacts dans certains lieux. Augmente la défense en Bois de 3.",
 			"Detective": "Permet au Dinoz de chercher des artefacts rares à certains endroits. Augmente l'élément Bois de 1 et les PV max de 10.",
-			"ExpertEnFouille": "Permet au Dinoz de chercher une case de plus lors d'une action de fouille",
+			"ExpertEnFouille": "Permet au Dinoz de chercher une case de plus lors d'une action de fouille. Augmente l'élément Bois de 1 et la vitesse de 5%.",
 			"Cocon": "Augmente de 2 les PV récupérés par heure lors du repos. En combat, le Dinoz regagne jusqu'à autant de points de vie que son élément Bois et augmente son armure de 5% pour le reste du combat.",
 			"GeantDesForets": "Augmente la puissance de tous les *assauts* de 5, l'élément Bois de 1, augmente les PV max de 30 et diminue la vitesse de 20%. Les Esprits Gorillozs appelés en renfort sont désormais intangibles.",
 			"Archeologue": "Permet au Dinoz de trouver des artefacts rares ou exceptionnels à certains endroits. Augmente l'armure de 5% et l'élément Bois de 2.",
