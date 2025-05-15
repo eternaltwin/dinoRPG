@@ -4190,7 +4190,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_MULTIHIT]: ['x', 1.3]
+			[Stat.AIR_MULTIHIT]: ['x', 1.3],
+			[Stat.AIR_ELEMENT]: 1
 		}
 	},
 	// [Skill.EVEIL]: {
