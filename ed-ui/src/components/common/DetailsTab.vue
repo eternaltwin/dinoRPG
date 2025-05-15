@@ -252,14 +252,15 @@
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img
-									v-if="detail.type === 'base' && detail.elements.length"
-									:src="getImgURL('elements', `elem_${detail.elements[0]}`)"
+									v-for="element in detail.elements"
+									:key="element"
+									:src="getImgURL('elements', `elem_${element}`)"
 									alt="info_button"
 								/>
 								<span v-if="detail.type === 'base'">
 									{{ detail.value }}{{ detail.percent ? '%' : '' }}
 									<span class="detail-name">
-										{{ stat.name === SpecialStat.ACID_BLOOD_DAMAGE ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
+										{{ (stat.name === SpecialStat.ACID_BLOOD_DAMAGE || stat.name === SpecialStat.FETID_BREATH_DAMAGE) ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
 									</span>
 								</span>
 								<span v-else>

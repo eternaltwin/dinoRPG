@@ -261,8 +261,8 @@ export const getSpecialStat = (
 
 		return {
 			name: 'dischargeDamage',
-			// (Thunger*2 + Air*2) / 2
-			value: Math.ceil((dinoz.nbrUpLightning * 2 + dinoz.nbrUpAir * 2) / 2),
+			// Thunger + Air
+			value: Math.ceil(dinoz.nbrUpLightning + dinoz.nbrUpAir),
 			details: [
 				{
 					type: 'base',
