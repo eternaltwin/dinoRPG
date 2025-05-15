@@ -5497,9 +5497,9 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
 	hypnosedFighters.forEach(hypnoF => {
 		if (hypnoF.hypnotized) {
-			const alliesCount = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide).length;
+			const aliveAlliesCount = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide).length;
 			// Remove hypnotize if no more time left
-			if (alliesCount === 0) {
+			if (aliveAlliesCount === 0) {
 				// Change team
 				hypnoF.attacker = !hypnoF.attacker;
 				hypnoF.hypnotized = undefined;
@@ -5593,7 +5593,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 					hypnoF.attacker = !hypnoF.attacker;
 					hypnoF.hypnotized = undefined;
 
-					// Add hypnotize step
+					// Add hypnotize step to move back to the its original side
 					fightData.steps.push({
 						action: 'endHypnosis',
 						fighter: stepFighter(hypnoF),

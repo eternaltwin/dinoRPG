@@ -360,7 +360,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		// BRAVE
 		if (hasSkill(fighter, Skill.BRAVE)) {
-			const allies = getAllies(fightData, fighter);
+			const allies = getAllies(fightData, fighter).filter(f => f.id !== fighter.id);
 
 			if (allies.length === 0) {
 				fighter.stats.speed.global *= 0.85;
