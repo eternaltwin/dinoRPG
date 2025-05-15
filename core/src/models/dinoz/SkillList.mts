@@ -1618,7 +1618,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.WOOD_ASSAULT]: 12,
-			[Stat.ARMOR]: ['x', 1.1]
+			[Stat.ARMOR]: ['x', 1.05]
 		}
 	},
 	[Skill.EXPERT_EN_FOUILLE]: {
