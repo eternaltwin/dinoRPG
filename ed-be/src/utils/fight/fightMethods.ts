@@ -45,6 +45,7 @@ import {
 import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,
+	balanceDamage,
 	calculateArmor,
 	calculateDamage,
 	getAttackDefense,
@@ -4089,7 +4090,7 @@ const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, dama
 	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
 };
 
-const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect, noStep?: boolean) => {
 	// TODO: check for danger detector item
 	let hp_lost = damage;
 	const initial_hp = fighter.hp;
@@ -4101,12 +4102,14 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 		hp_lost = initial_hp;
 	}
 
-	fightData.steps.push({
-		action: 'looseHp',
-		fid: fighter.id,
-		hp: hp_lost,
-		fx
-	});
+	if (!noStep) {
+		fightData.steps.push({
+			action: 'looseHp',
+			fid: fighter.id,
+			hp: hp_lost,
+			fx
+		});
+	}
 
 	updateStat(fightData, fighter, 'hpLost', hp_lost);
 
@@ -5072,12 +5075,22 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Decharge: close combat, hit landed, 3% chance to electrocute and stun
-	if (isCloseCombat &&
-		damage > 0 &&
+	if (damage > 0 &&
 		hasSkill(target, Skill.DECHARGE) &&
 		randomBetweenSeeded(fightData.rng, 0, 99) < 3
 	) {
-		loseHpBalanced(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning);
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.DECHARGE
+		});
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.DECHARGE,
+			targets: [{ tid: attacker.id, damages: balanceDamage(target.stats.special.dischargeDamage)}]
+		});
+		loseHp(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning, true);
 		addStatus(fightData, attacker, Status.STUNNED, StatusLength.SUPER_SHORT);
 	}
 

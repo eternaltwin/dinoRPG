@@ -3504,7 +3504,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.VOIE_D_OURANOS],
 		isBaseSkill: false,
-		isSphereSkill: false
+		isSphereSkill: false,
+		visualEffect: SkillVisualEffect.CHAINLIGHTNING
 	},
 	[Skill.PARAFOUDRE]: {
 		id: Skill.PARAFOUDRE,
