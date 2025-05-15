@@ -12,17 +12,6 @@ type OtherAssaults<T> = Exclude<
 	T
 >;
 
-// export enum EffectCategory {
-// 	GLOBAL = 'global',
-// 	ASSAULT = 'assault',
-// 	FIRE = 'fire',
-// 	WOOD = 'wood',
-// 	WATER = 'water',
-// 	LIGHTNING = 'lightning',
-// 	AIR = 'air',
-// 	VOID = 'void'
-// }
-
 export type SkillEffects = {
 	[Stat.MAX_HP]?: number;
 	[Stat.HP_REGEN]?: number | ['x', number];
@@ -106,37 +95,6 @@ export type SkillEffects = {
 	[Stat.LIGHTNING_ELEMENT]?: number;
 	[Stat.AIR_ELEMENT]?: number;
 };
-
-
-// type CategorizedAdditiveEffect = [EffectCategory, number];
-// type SimpleMultiplicativeEffect = ['x', number];
-// type CategorizedMultiplicativeEffect = ['x', EffectCategory, number];
-
-// export function isStatSimpleAddition(stat: any): stat is number {
-// 	return typeof stat === "number";
-// }
-
-// export function isStatCategorizedAdditiveEffect(stat: any): stat is CategorizedAdditiveEffect {
-//     return Array.isArray(stat) &&
-// 		stat.length === 2 &&
-// 		Object.values(EffectCategory).includes(stat[0] as EffectCategory) &&
-// 		typeof stat[1] === "number";
-// }
-
-// export function isStatSimpleMultiplication(stat: any): stat is SimpleMultiplicativeEffect {
-//     return Array.isArray(stat) &&
-// 		stat.length === 2 &&
-// 		stat[0] === 'x' &&
-// 		typeof stat[1] === "number";
-// }
-
-// export function isStatCategorizedMultiplication(stat: any): stat is CategorizedMultiplicativeEffect {
-//     return Array.isArray(stat) &&
-// 		stat.length === 3 &&
-// 		stat[0] === 'x' &&
-// 		Object.values(EffectCategory).includes(stat[1] as EffectCategory) &&
-// 		typeof stat[2] === "number";
-// }
 
 export interface SkillDetails {
 	id: Skill;
