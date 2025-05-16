@@ -5466,6 +5466,27 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		}
 	}
 
+	// Cancel Hypnosis if no allies left for the hypnosed guys
+	const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
+	hypnosedFighters.forEach(hypnoF => {
+		if (hypnoF.hypnotized) {
+			const aliveAlliesCount = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide).length;
+			// Remove hypnotize if no more time left
+			if (aliveAlliesCount === 0) {
+				// Change team
+				hypnoF.attacker = !hypnoF.attacker;
+				hypnoF.hypnotized = undefined;
+
+				// Add hypnotize step
+				fightData.steps.push({
+					action: 'endHypnosis',
+					fighter: stepFighter(hypnoF),
+					ally: stepFighter(getAllies(fightData, hypnoF).filter(f => f.id != hypnoF.id)[0])
+				});
+			}
+		}
+	});
+
 	// Set loser if only one team is alive
 	if (attackersAlive === 0) {
 		fightData.loser = 'attackers';
@@ -5493,26 +5514,6 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	}
 
 	// TODO any "onNextTurn" effets would go here
-	// Cancel Hypnosis if no allies left for the hypnosed guys
-	const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
-	hypnosedFighters.forEach(hypnoF => {
-		if (hypnoF.hypnotized) {
-			const aliveAlliesCount = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide).length;
-			// Remove hypnotize if no more time left
-			if (aliveAlliesCount === 0) {
-				// Change team
-				hypnoF.attacker = !hypnoF.attacker;
-				hypnoF.hypnotized = undefined;
-
-				// Add hypnotize step
-				fightData.steps.push({
-					action: 'endHypnosis',
-					fighter: stepFighter(hypnoF),
-					ally: stepFighter(getAllies(fightData, attacker).filter(f => f.id != hypnoF.id)[0])
-				});
-			}
-		}
-	});
 
 	// Decrease turn left to environment if its caster just played
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
