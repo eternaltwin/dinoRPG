@@ -242,19 +242,19 @@
 				"E": "Événement",
 				"P": "Permanent",
 				"A": "Attaque",
-				"S": "Spécial",
+				"C": "Conditionnée",
 				"U": "Unique",
 				"I": "Invocation",
-				"C": "Collecte"
+				"R": "Récolte"
 			},
 			"description": {
 				"E": "Cette compétence **peut se déclencher avant chaque attaque**",
 				"P": "Cette compétence s'applique **à tout moment**",
 				"A": "Cette compétence **peut remplacer** une attaque",
-				"S": "Cette compétence a un **effet particulier**",
+				"C": "Cette compétence peut se déclencher dans certaines conditions",
 				"U": "Cette compétence ne s'appliquera qu'**une seule fois pour l'ensemble des Dinoz**",
 				"I": "Cette compétence permet d'**invoquer la divinité** avec laquelle le Dinoz a pactisé pendant le combat",
-				"C": "Cette compétence **permet de collecter des ingrédients** dans différents lieux"
+				"R": "Cette compétence **permet de récolter des ingrédients** dans différents lieux"
 			}
 		},
 		"activate": {
