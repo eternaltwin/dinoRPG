@@ -146,7 +146,7 @@ export function transpileFight(
 ) {
 	const history: transpiled[] = [];
 	// Basic tracking of active fighters, this may not cover all cases.
-	const activeFighters: FighterRecap[] = [];
+	let activeFighters: FighterRecap[] = [];
 	// ID of the fighter whose turn it is
 	let currentFighterId = 0;
 	// Assault combo counter of the current fighter
@@ -258,7 +258,7 @@ export function transpileFight(
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
-				activeFighters.filter(f => f.id != step.fighter.id);
+				activeFighters = activeFighters.filter(f => f.id !== step.fighter.id);
 				break;
 			case 'disabledItems':
 				break;
@@ -571,7 +571,7 @@ export function transpileFight(
 				}
 				// Black hole and sylphide extract the fighter from the fight so extract it from the list of actives too
 				if (step.skill && (step.skill == Skill.TROU_NOIR || step.skill == Skill.SYLPHIDES)) {
-					activeFighters.filter(f => f.id != step.fid);
+					activeFighters = activeFighters.filter(f => f.id !== step.targets[0].tid);
 				}
 				myFighter = undefined;
 				break;
