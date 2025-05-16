@@ -352,10 +352,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		// TORCHE
 		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
 			addStatus(fightData, fighter, Status.TORCHED);
-			// Add torche skill to relight.
-			let torche = structuredClone(Object.values(skillList).find(skill => skill.id === Skill.TORCHE));
-			torche!.type = SkillType.E; // SAFETY: this is safe because it's been checked above the fighter has torche.
-			fighter.skills.push(torche!); // SAFETY: same
 		}
 
 		// BRAVE

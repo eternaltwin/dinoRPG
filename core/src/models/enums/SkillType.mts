@@ -1,9 +1,9 @@
 export enum SkillType {
 	E = 'E',
 	P = 'P',
-	S = 'S',
+	C = 'C',
 	A = 'A',
 	U = 'U',
 	I = 'I',
-	C = 'C'
+	R = 'R'
 }

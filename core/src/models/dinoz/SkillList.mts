@@ -500,7 +500,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FURIE]: {
 		id: Skill.FURIE,
 		name: 'Furie',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: true,
@@ -515,7 +515,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHASSEUR_DE_GOUPIGNON]: {
 		id: Skill.CHASSEUR_DE_GOUPIGNON,
 		name: 'ChasseurDeGoupignon',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -669,7 +669,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHASSEUR_DE_GEANT]: {
 		id: Skill.CHASSEUR_DE_GEANT,
 		name: 'ChasseurDeGeant',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -811,7 +811,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.GRIFFES_INFERNALES]: {
 		id: Skill.GRIFFES_INFERNALES,
 		name: 'GriffesInfernales',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -824,7 +824,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.RIPOSTE]: {
 		id: Skill.RIPOSTE,
 		name: 'Riposte',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: true,
@@ -837,7 +837,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHASSEUR_DE_DRAGON]: {
 		id: Skill.CHASSEUR_DE_DRAGON,
 		name: 'ChasseurDeDragon',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -868,7 +868,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.TORCHE]: {
 		id: Skill.TORCHE,
 		name: 'Torche',
-		type: SkillType.S,
+		type: SkillType.E,
 		energy: Energy.E20,
 		priority: 4,
 		probability: 10,
@@ -882,7 +882,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SELF_CONTROL]: {
 		id: Skill.SELF_CONTROL,
 		name: 'SelfControl',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -1036,7 +1036,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.BRAVE]: {
 		id: Skill.BRAVE,
 		name: 'Brave',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -1053,7 +1053,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.RAGE]: {
 		id: Skill.RAGE,
 		name: 'Rage',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -1171,7 +1171,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.BENEDICTION_DARTEMIS]: {
 		id: Skill.BENEDICTION_DARTEMIS,
 		name: 'BenedictionDArtemis',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -1370,7 +1370,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SYMPATIQUE]: {
 		id: Skill.SYMPATIQUE,
 		name: 'Sympathique',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1397,7 +1397,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FOUILLE]: {
 		id: Skill.FOUILLE,
 		name: 'Fouille',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1432,7 +1432,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.GRIFFES_METALLIQUES]: {
 		id: Skill.GRIFFES_METALLIQUES,
 		name: 'GriffesMetalliques',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1464,7 +1464,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.DETECTIVE]: {
 		id: Skill.DETECTIVE,
 		name: 'Detective',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1560,7 +1560,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHARISME]: {
 		id: Skill.CHARISME,
 		name: 'Charisme',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1592,7 +1592,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
 		name: 'Planificateur',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1624,7 +1624,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.EXPERT_EN_FOUILLE]: {
 		id: Skill.EXPERT_EN_FOUILLE,
 		name: 'ExpertEnFouille',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1729,7 +1729,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ARCHEOLOGUE]: {
 		id: Skill.ARCHEOLOGUE,
 		name: 'Archeologue',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1868,7 +1868,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.MAITRE_DES_RONCES]: {
 		id: Skill.MAITRE_DES_RONCES,
 		name: 'MaitreDesRonces',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1933,7 +1933,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SOURCE_DE_VIE]: {
 		id: Skill.SOURCE_DE_VIE,
 		name: 'SourceDeVie',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.E20,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -1945,7 +1945,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.VIDE_ENERGETIQUE]: {
 		id: Skill.VIDE_ENERGETIQUE,
 		name: 'VideEnergetique',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.E20,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -2041,7 +2041,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHAMPOLLION]: {
 		id: Skill.CHAMPOLLION,
 		name: 'Champollion',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -2283,7 +2283,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.APPRENTI_PECHEUR]: {
 		id: Skill.APPRENTI_PECHEUR,
 		name: 'ApprentiPecheur',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2298,7 +2298,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.POCHE_VENTRALE]: {
 		id: Skill.POCHE_VENTRALE,
 		name: 'PocheVentrale',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2360,7 +2360,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ZERO_ABSOLU]: {
 		id: Skill.ZERO_ABSOLU,
 		name: 'ZeroAbsolu',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2404,7 +2404,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.MALEDICTION_AQUEUSE]: {
 		id: Skill.MALEDICTION_AQUEUSE,
 		name: 'MaledictionAqueuse',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
@@ -2460,7 +2460,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PECHEUR_CONFIRME]: {
 		id: Skill.PECHEUR_CONFIRME,
 		name: 'PecheurConfirme',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2507,7 +2507,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SANS_PITIE]: {
 		id: Skill.SANS_PITIE,
 		name: 'SansPitie',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
@@ -2533,7 +2533,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.GRIFFES_EMPOISONNEES]: {
 		id: Skill.GRIFFES_EMPOISONNEES,
 		name: 'GriffesEmpoisonnees',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
@@ -2620,7 +2620,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.MAITRE_PECHEUR]: {
 		id: Skill.MAITRE_PECHEUR,
 		name: 'MaitrePecheur',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2648,7 +2648,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SANG_ACIDE]: {
 		id: Skill.SANG_ACIDE,
 		name: 'SangAcide',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2706,7 +2706,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.DECOMPOSEUR]: {
 		id: Skill.DECOMPOSEUR,
 		name: 'Decomposeur',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2735,7 +2735,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.MAITRE_NAGEUR]: {
 		id: Skill.MAITRE_NAGEUR,
 		name: 'MaitreNageur',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2767,7 +2767,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ONDE_DE_VIE]: {
 		id: Skill.ONDE_DE_VIE,
 		name: 'OndeDeVie',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: true,
@@ -2793,7 +2793,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,
 		name: 'EauDivine',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2886,7 +2886,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.EFFLUVE_APHRODISIAQUE]: {
 		id: Skill.EFFLUVE_APHRODISIAQUE,
 		name: 'EffluveAphrodisiaque',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -2901,7 +2901,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.NEMO]: {
 		id: Skill.NEMO,
 		name: 'Nemo',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
 		activatable: false,
@@ -3025,7 +3025,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.INTELLIGENCE]: {
 		id: Skill.INTELLIGENCE,
 		name: 'Intelligence',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3083,7 +3083,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CONCENTRATION]: {
 		id: Skill.CONCENTRATION,
 		name: 'Concentration',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
@@ -3110,7 +3110,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PARATONNERRE]: {
 		id: Skill.PARATONNERRE,
 		name: 'Paratonnerre',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3157,7 +3157,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.REVITALISATION]: {
 		id: Skill.REVITALISATION,
 		name: 'Revitaliastion',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3199,7 +3199,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FISSION_ELEMENTAIRE]: {
 		id: Skill.FISSION_ELEMENTAIRE,
 		name: 'FissionElementaire',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3232,7 +3232,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PLAN_DE_CARRIERE]: {
 		id: Skill.PLAN_DE_CARRIERE,
 		name: 'PlanDeCarriere',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3276,7 +3276,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.MEDECINE]: {
 		id: Skill.MEDECINE,
 		name: 'Medecine',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3353,7 +3353,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CROCS_DIAMANT]: {
 		id: Skill.CROCS_DIAMANT,
 		name: 'CrocsDiamant',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3372,7 +3372,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SURVIE]: {
 		id: Skill.SURVIE,
 		name: 'Survie',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.E65,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3386,7 +3386,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FLASH]: {
 		id: Skill.FLASH,
 		name: 'Flash',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3485,7 +3485,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.REINCARNATION]: {
 		id: Skill.REINCARNATION,
 		name: 'Reincarnation',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3497,7 +3497,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.DECHARGE]: {
 		id: Skill.DECHARGE,
 		name: 'Decharge',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3772,7 +3772,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.EINSTEIN]: {
 		id: Skill.EINSTEIN,
 		name: 'Einstein',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3884,7 +3884,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.STRATEGIE]: {
 		id: Skill.STRATEGIE,
 		name: 'Strategie',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: true,
@@ -3983,7 +3983,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CUEILLETTE]: {
 		id: Skill.CUEILLETTE,
 		name: 'Cueillette',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4029,7 +4029,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.AURA_PUANTE]: {
 		id: Skill.AURA_PUANTE,
 		name: 'AuraPuante',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4041,7 +4041,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.DECOLLAGE_D_URGENCE]: {
 		id: Skill.DECOLLAGE_D_URGENCE,
 		name: 'DecollageDUrgence',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4124,7 +4124,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SPECIALISTE]: {
 		id: Skill.SPECIALISTE,
 		name: 'Specialiste',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4166,7 +4166,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.OEIL_DE_LYNX]: {
 		id: Skill.OEIL_DE_LYNX,
 		name: 'OeilDeLynx',
-		type: SkillType.C,
+		type: SkillType.R,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4247,7 +4247,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FORME_VAPOREUSE]: {
 		id: Skill.FORME_VAPOREUSE,
 		name: 'FormeVaporeuse',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4324,7 +4324,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.HALEINE_FETIVE]: {
 		id: Skill.HALEINE_FETIVE,
 		name: 'HaleineFetive',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4368,7 +4368,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.SOUFFLE_DE_VIE]: {
 		id: Skill.SOUFFLE_DE_VIE,
 		name: 'SouffleDeVie',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4438,7 +4438,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.TEMPETE]: {
 		id: Skill.TEMPETE,
 		name: 'Tempete',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4484,7 +4484,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.FORME_ETHERALE]: {
 		id: Skill.FORME_ETHERALE,
 		name: 'FormeEtherale',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.AIR],
 		activatable: false,
@@ -4748,7 +4748,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.COMPETENCE_DOUBLE]: {
 		id: Skill.COMPETENCE_DOUBLE,
 		name: 'CompetenceDouble',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4759,7 +4759,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.LIMITE_BRISEE]: {
 		id: Skill.LIMITE_BRISEE,
 		name: 'LimiteBrisee',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4770,7 +4770,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.INVOCATEUR]: {
 		id: Skill.INVOCATEUR,
 		name: 'Invocateur',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4826,7 +4826,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ROCK]: {
 		id: Skill.ROCK,
 		name: 'Rock',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: true,
@@ -4838,7 +4838,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PIETINEMENT]: {
 		id: Skill.PIETINEMENT,
 		name: 'Pietinement',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4850,7 +4850,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CUIRASSE]: {
 		id: Skill.CUIRASSE,
 		name: 'Cuirasse',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4877,7 +4877,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.DEPLACEMENT_INSTANTANE]: {
 		id: Skill.DEPLACEMENT_INSTANTANE,
 		name: 'DeplacementInstantane',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4892,7 +4892,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.NAPOMAGICIEN]: {
 		id: Skill.NAPOMAGICIEN,
 		name: 'Napomagicien',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -4998,7 +4998,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.BIGMAGNON]: {
 		id: Skill.BIGMAGNON,
 		name: 'Bigmagnon',
-		type: SkillType.S,
+		type: SkillType.A,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5121,7 +5121,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.GROS_DORMEUR]: {
 		id: Skill.GROS_DORMEUR,
 		name: 'GrosDormeur',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5133,7 +5133,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.VEILLEUSE]: {
 		id: Skill.VEILLEUSE,
 		name: 'Veilleuse',
-		type: SkillType.S,
+		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5233,7 +5233,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_RESISTANCE]: {
 		id: Skill.M_RESISTANCE,
 		name: 'Resistance',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5244,7 +5244,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_PROTECTION]: {
 		id: Skill.M_PROTECTION,
 		name: 'Protection',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5314,7 +5314,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_DISABLE]: {
 		id: Skill.M_DISABLE,
 		name: 'Disable',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5338,7 +5338,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_WORM]: {
 		id: Skill.M_WORM,
 		name: 'Worm',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5363,7 +5363,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_POISONED_PICKS]: {
 		id: Skill.M_POISONED_PICKS,
 		name: 'PoisonedPicks',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5452,7 +5452,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_CONTAMINATION]: {
 		id: Skill.M_CONTAMINATION,
 		name: 'Contamination',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5502,7 +5502,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_INITIATIVE_RESET]: {
 		id: Skill.M_INITIATIVE_RESET,
 		name: 'InitiativeReset',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5555,7 +5555,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_VEGETOX_DEFENDER]: {
 		id: Skill.M_VEGETOX_DEFENDER,
 		name: 'VegetoxDefender',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
@@ -5566,7 +5566,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_INFINITE_REINFORCEMENTS]: {
 		id: Skill.M_INFINITE_REINFORCEMENTS,
 		name: 'InfiniteReinforcements',
-		type: SkillType.S,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
 		activatable: false,
