@@ -2336,7 +2336,7 @@
 			"Survie": "En cas de mort, le Dinoz est réanimé une fois avec 12 PV",
 			"Aiguillon": "Attaque un ennemi avec un pouvoir Air de 3",
 			"AuraPuante": "Empoisonne les assaillants en mêlée pour une durée très courte, le poison inflige des dégâts basés sur l'élément Air du lanceur",
-			"Hypnose": "Un des ennemis est placé sous hypnose et vient se battre à vos côtés",
+			"Hypnose": "Un des ennemis est placé sous hypnose pendant 4 cycles et vient se battre à vos côtés. L'hypnose est interrompu si tous les opposants sont KO.",
 			"Vendetta": "Augmente les chances de contre-attaque de 20%",
 			"Secousse": "Frappe le sol avec un pouvoir Bois 4 + Air 4 sur tous les ennemis",
 			"Bulle": "Enveloppe le Dinoz dans une bulle réduisant les dégâts des sorts élémentaux de type autre que le Bois. L'efficacité est basée sur la proportion des éléments Eau et Air devant les autres éléments.",
