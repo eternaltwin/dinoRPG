@@ -1036,7 +1036,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.BRAVE]: {
 		id: Skill.BRAVE,
 		name: 'Brave',
-		type: SkillType.P,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.FIRE],
 		activatable: false,
@@ -1560,7 +1560,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.CHARISME]: {
 		id: Skill.CHARISME,
 		name: 'Charisme',
-		type: SkillType.P,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.WOOD],
 		activatable: false,
@@ -3232,7 +3232,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PLAN_DE_CARRIERE]: {
 		id: Skill.PLAN_DE_CARRIERE,
 		name: 'PlanDeCarriere',
-		type: SkillType.P,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
@@ -3485,7 +3485,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.REINCARNATION]: {
 		id: Skill.REINCARNATION,
 		name: 'Reincarnation',
-		type: SkillType.P,
+		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
 		activatable: false,
