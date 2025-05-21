@@ -376,7 +376,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		nbrLightning: 1,
 		nbrAir: 0,
 		upChance: {
-			fire: 2,
+			fire: 3,
 			wood: 6,
 			water: 1,
 			lightning: 8,
