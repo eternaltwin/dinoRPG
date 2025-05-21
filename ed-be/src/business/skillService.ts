@@ -554,7 +554,7 @@ export async function applySkillEffect(
 			await updateDinoz(dinoz.id, updates);
 		}
 	}
-	if (playerId && skill.type === SkillType.U) {
+	if (playerId && skill.type === SkillType.U && !event) {
 		const player = await getPlayerUSkills(playerId);
 		if (!player) {
 			throw new ExpectedError(`This player doesn't exist.`);
