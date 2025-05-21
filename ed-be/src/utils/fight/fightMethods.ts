@@ -4035,7 +4035,7 @@ const attackTarget = (
 			damage,
 			elements,
 			isAssault,
-			skill ? skillList[skill].type === SkillType.I : false
+			skill ? skillList[skill].type !== SkillType.I : false
 		);
 
 		// Check for assault dodge
@@ -4217,7 +4217,7 @@ const checkDefensiveEffects = (
 	// Reduce damage by bulle percentage
 	if (
 		// Opponent has BULLE
-		hasSkill(target, Skill.BULLE) &&
+		target.stats.special.bubbleRate > 1 &&
 		// Don't trigger on assaults and invocations
 		!isCloseCombat &&
 		!isInvocation &&
@@ -4228,14 +4228,16 @@ const checkDefensiveEffects = (
 		// Don't trigger for VOID
 		!elements.includes(ElementType.VOID)
 	) {
-		console.log(`bulle`);
-		damage = Math.round(damage * (1 - target.stats.special.bubbleRate));
+		damage = Math.round(damage * (target.stats.special.bubbleRate - 1));
 
-		fightData.steps.push({
-			action: 'attach',
-			fid: target.id,
-			fx: 'fxBubble'
-		});
+		// TODO add bubble effect post skill/hit
+		// if (actualDamage[opponent.id] < damage) {
+		// 	// Add resist step
+		// 	fightData.steps.push({
+		// 		action: 'resist',
+		// 		dinoz: stepFighter(opponent)
+		// 	});
+		// }
 	}
 
 	// FORME VAPOREUSE
@@ -4391,7 +4393,7 @@ const checkAfterAttackEffects = (
 
 	// Burn opponent if fighter has Skill.GRIFFES_INFERNALES and landed a hit with an assault that was not dodged
 	if (isCloseCombat && !isDodged && hasSkill(attacker, Skill.GRIFFES_INFERNALES)) {
-		const damage = target.stats.base[ElementType.FIRE];
+		const damage = attacker.stats.base[ElementType.FIRE];
 
 		target.burnedBy = {
 			id: attacker.id,
