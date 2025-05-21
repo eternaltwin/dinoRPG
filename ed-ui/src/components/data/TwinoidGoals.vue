@@ -128,9 +128,9 @@
 <script lang="ts">
 import { PlayerStats } from '@drpg/core/models/player/PlayerStats';
 import { PropType, defineComponent } from 'vue';
-import { dinorpg } from 'twinoid-goals';
 import { localStore } from '../../store/index.js';
-import { Unlock } from '@drpg/core/models/player/unlock';
+import { Unlock } from '@drpg/core/models/goals/GoalsType';
+import { getGoal, getUnlockedGoals } from '@drpg/core/utils/twinoidGoals';
 
 export default defineComponent({
 	name: 'TwinoidGoals',
@@ -156,17 +156,26 @@ export default defineComponent({
 			this.topStats = sortedStats.slice(0, 3);
 		},
 		isLastAchievement(stat: PlayerStats): boolean {
-			const last = dinorpg.get(stat.stat).unlocks[dinorpg.get(stat.stat).unlocks.length - 1];
+			const last = getGoal(stat.stat).unlocks[getGoal(stat.stat).unlocks.length - 1];
 			return (last?.count ?? 0) <= stat.quantity;
 		},
 		getStatDetails(stat: PlayerStats, detail: string) {
+			const goal = getGoal(stat.stat)
 			switch (detail) {
 				case 'name':
-					return dinorpg.get(stat.stat).name[this.language];
+					return goal.name[this.language];
 				case 'description':
-					return dinorpg.get(stat.stat).description[this.language];
+					if (goal.description) {
+						return goal.description[this.language];
+					} else {
+						return
+					}
 				case 'points':
-					return dinorpg.get(stat.stat).description[this.language];
+					if (goal.description) {
+						return goal.description[this.language];
+					} else {
+						return
+					}
 				default:
 					break;
 			}
@@ -185,9 +194,7 @@ export default defineComponent({
 			this.getTopStats();
 			this.achievementsPoints = this.accountStats
 				.map(stat => {
-					return dinorpg
-						.get(stat.stat)
-						.unlocks.filter(u => u.count <= stat.quantity)
+					return getUnlockedGoals(stat)
 						.map(a => {
 							if (a.title) this.wonRewards.push({ unlock: a, stat: stat.stat });
 							return a.points;

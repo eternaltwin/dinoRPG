@@ -35,6 +35,7 @@ import { setSpecificStat } from '../dao/trackingDao.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import translate from '../utils/translate.js';
 import { getAvailableActions } from './dinozService.js';
+import { convertToPlayerStats } from '@drpg/core/utils/twinoidGoals';
 
 /**
  * @summary Get data from player on login
@@ -177,7 +178,7 @@ export async function getAccountData(req: Request) {
 		}),
 		customText: playerInfo.customText,
 		completion: playerInfo.ranking.completion,
-		stats: playerInfo.playerTracking
+		stats: convertToPlayerStats(playerInfo.playerTracking)
 	};
 
 	return infoToSend;

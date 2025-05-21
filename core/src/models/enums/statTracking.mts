@@ -45,5 +45,11 @@ export enum StatTracking {
 	BELIUS = 'belius',
 	CAUSH = 'caush',
 	FMEDAL = 'fmedal',
-	LABOWI = 'labowi'
+	LABOWI = 'labowi',
+	MEDAL_1 = 'medgol',
+	MEDAL_2 = 'medsil',
+	MEDAL_3 = 'medbro',
+	MEDAL_4 = 'medpla',
+	LEVELUP_1 = 'lvlup1',
+	LEVELUP_2 = 'lvlup2'
 }

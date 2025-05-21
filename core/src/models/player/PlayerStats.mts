@@ -1,4 +1,6 @@
+import { StatTracking } from '../enums/statTracking.mjs';
+
 export type PlayerStats = {
-	stat: string;
+	stat: StatTracking;
 	quantity: number;
 };

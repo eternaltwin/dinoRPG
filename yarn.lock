@@ -7387,7 +7387,6 @@ __metadata:
     pixi.js: "npm:^7.3.2"
     prettier: "npm:^3.4.2"
     sass: "npm:^1.60.0"
-    twinoid-goals: "npm:^1.2.2"
     typescript: "npm:^5.7.2"
     url-join: "npm:^5.0.0"
     vite: "npm:^4.5.0"
@@ -14229,13 +14228,6 @@ __metadata:
   dependencies:
     "@mixmark-io/domino": "npm:^2.2.0"
   checksum: 10/ad373d9cff76e80196effe29c19c1a14fda428fa9f41ef7458daa9c0c8939f37bbc36d0a504940f95ba34a6db8fd4d9cafd1ae498f91d010805f8d540e9e71bb
-  languageName: node
-  linkType: hard
-
-"twinoid-goals@npm:^1.2.2":
-  version: 1.2.2
-  resolution: "twinoid-goals@npm:1.2.2"
-  checksum: 10/8ed442a546b26a02d0c3c9eaee9727e86ea349e91c9fe2eccf2586938b4e79cfd182931f6b513c761204c60814d7daca038d2d45a1eac4ae82cd1d7615abff11
   languageName: node
   linkType: hard
 
