@@ -1,7 +1,7 @@
 import { StatTracking } from '../enums/statTracking.mjs';
 
-declare const Languages: readonly ["en", "fr", "de", "es"];
-type Language = typeof Languages[number];
+declare const Languages: readonly ['en', 'fr', 'de', 'es'];
+type Language = (typeof Languages)[number];
 export interface Goal {
 	id: StatTracking;
 	name: Record<Language, string>;

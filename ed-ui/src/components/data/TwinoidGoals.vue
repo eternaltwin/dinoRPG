@@ -160,7 +160,7 @@ export default defineComponent({
 			return (last?.count ?? 0) <= stat.quantity;
 		},
 		getStatDetails(stat: PlayerStats, detail: string) {
-			const goal = getGoal(stat.stat)
+			const goal = getGoal(stat.stat);
 			switch (detail) {
 				case 'name':
 					return goal.name[this.language];
@@ -168,13 +168,13 @@ export default defineComponent({
 					if (goal.description) {
 						return goal.description[this.language];
 					} else {
-						return
+						return;
 					}
 				case 'points':
 					if (goal.description) {
 						return goal.description[this.language];
 					} else {
-						return
+						return;
 					}
 				default:
 					break;
