@@ -1074,7 +1074,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE],
 		activatable: true,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [Skill.KAMIKAZE],
+		unlockedFrom: [Skill.TORCHE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
