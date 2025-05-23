@@ -202,7 +202,7 @@ export const calculateDamage = (
 	let damage = attack - defense;
 
 	// Apply target's armor to the result
-	damage *= (1 - armor);
+	damage *= 1 - armor;
 
 	// Apply balance effect if both fighters needs to be balanced
 	if (attacker.balanced && target.balanced) {

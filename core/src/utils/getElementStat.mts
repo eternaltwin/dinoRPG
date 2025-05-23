@@ -1,6 +1,6 @@
-import { SkillDetails } from "../models/dinoz/SkillDetails.mjs";
-import { ElementType } from "../models/enums/ElementType.mjs";
-import { Stat } from "../models/enums/SkillStat.mjs";
+import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
+import { ElementType } from '../models/enums/ElementType.mjs';
+import { Stat } from '../models/enums/SkillStat.mjs';
 
 // Special statistics that exist in both global and elemental form.
 // They combine multiplicatively.
@@ -48,19 +48,19 @@ export enum ElementStat {
 	WOOD_SPEED = 'woodSpeed',
 	WATER_SPEED = 'waterSpeed',
 	LIGHTNING_SPEED = 'lightningSpeed',
-	AIR_SPEED = 'airSpeed',
+	AIR_SPEED = 'airSpeed'
 }
 
 export const ElementBaseStats = {
 	// Counters
-    [Stat.COUNTER]: 0,
+	[Stat.COUNTER]: 0,
 	[Stat.FIRE_COUNTER]: 0,
 	[Stat.WOOD_COUNTER]: 0,
 	[Stat.WATER_COUNTER]: 0,
 	[Stat.LIGHTNING_COUNTER]: 0,
 	[Stat.AIR_COUNTER]: 0,
 	// Armor ignores
-    [Stat.IGNORE_ARMOR]: 0,
+	[Stat.IGNORE_ARMOR]: 0,
 	[Stat.ASSAULT_IGNORE_ARMOR]: 0,
 	[Stat.FIRE_IGNORE_ARMOR]: 0,
 	[Stat.WOOD_IGNORE_ARMOR]: 0,
@@ -68,33 +68,33 @@ export const ElementBaseStats = {
 	[Stat.LIGHTNING_IGNORE_ARMOR]: 0,
 	[Stat.AIR_IGNORE_ARMOR]: 0,
 	// Evasions
-    [Stat.EVASION]: 0,
+	[Stat.EVASION]: 0,
 	[Stat.FIRE_EVASION]: 0,
 	[Stat.WOOD_EVASION]: 0,
 	[Stat.WATER_EVASION]: 0,
 	[Stat.LIGHTNING_EVASION]: 0,
 	[Stat.AIR_EVASION]: 0,
 	// Super evasions
-    [Stat.SUPER_EVASION]: 0,
+	[Stat.SUPER_EVASION]: 0,
 	[Stat.FIRE_SUPER_EVASION]: 0,
 	[Stat.WOOD_SUPER_EVASION]: 0,
 	[Stat.WATER_SUPER_EVASION]: 0,
 	[Stat.LIGHTNING_SUPER_EVASION]: 0,
 	[Stat.AIR_SUPER_EVASION]: 0,
 	// Multihits
-    [Stat.MULTIHIT]: 0,
+	[Stat.MULTIHIT]: 0,
 	[Stat.FIRE_MULTIHIT]: 0,
 	[Stat.WOOD_MULTIHIT]: 0,
 	[Stat.WATER_MULTIHIT]: 0,
 	[Stat.LIGHTNING_MULTIHIT]: 0,
 	[Stat.AIR_MULTIHIT]: 0,
 	// Speeds
-    [Stat.SPEED]: 1,
+	[Stat.SPEED]: 1,
 	[Stat.FIRE_SPEED]: 1,
 	[Stat.WOOD_SPEED]: 1,
 	[Stat.WATER_SPEED]: 1,
 	[Stat.LIGHTNING_SPEED]: 1,
-	[Stat.AIR_SPEED]: 1,
+	[Stat.AIR_SPEED]: 1
 };
 
 export enum ElementStatAsPercent {
@@ -133,12 +133,12 @@ export enum ElementStatAsPercent {
 	WOOD_MULTIHIT = 'woodMultihit',
 	WATER_MULTIHIT = 'waterMultihit',
 	LIGHTNING_MULTIHIT = 'lightningMultihit',
-	AIR_MULTIHIT = 'airMultihit',
+	AIR_MULTIHIT = 'airMultihit'
 }
 
 export const getElementStat = (
 	skills: Pick<SkillDetails, 'id' | 'effects' | 'name' | 'element'>[],
-	stat: ElementStat,
+	stat: ElementStat
 ) => {
 	let value = ElementBaseStats[stat];
 	let base_stat = value;
@@ -259,4 +259,3 @@ export const getElementStat = (
 		details
 	};
 };
-

@@ -1821,8 +1821,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 9,
 		gotoEffect: GotoEffect.Special,
 		shadeColor: {
-			col1: 0xFFFFFF,
-			col2: 0x00FF00
+			col1: 0xffffff,
+			col2: 0x00ff00
 		}
 	},
 	[Skill.PROVOCATION]: {
@@ -2700,7 +2700,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.WATER_ELEMENT]: 2,
+			[Stat.WATER_ELEMENT]: 2
 		}
 	},
 	[Skill.DECOMPOSEUR]: {
@@ -4256,7 +4256,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.AIR_ELEMENT]: 1,
+			[Stat.AIR_ELEMENT]: 1
 		}
 	},
 	[Skill.HYPNOSE]: {

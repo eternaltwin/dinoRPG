@@ -52,7 +52,16 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { applyGlobalDefenseBonus, cloneDinoz, getFighterArmorRatio, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
+import {
+	applyGlobalDefenseBonus,
+	cloneDinoz,
+	getFighterArmorRatio,
+	getFighterCounter,
+	getFighterEvasion,
+	getFighterMultihit,
+	getFighterSuperEvasion,
+	initializeMonster
+} from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -119,7 +128,9 @@ const chooseRandomFighterForAssault = (
 	// The attacker can hit intangible units if it has the capacity to, the attack deals non-zero air damage, or its current element is air.
 	const canHitIntangible =
 		attacker.canHitIntangible ||
-		(power ? power.some(val => val[0] === ElementType.AIR || (val[0] === ElementType.WATER && attacker.perception)) : (attacker.element === ElementType.AIR || (attacker.element === ElementType.WATER && attacker.perception)));
+		(power
+			? power.some(val => val[0] === ElementType.AIR || (val[0] === ElementType.WATER && attacker.perception))
+			: attacker.element === ElementType.AIR || (attacker.element === ElementType.WATER && attacker.perception));
 
 	// List all invalid opponents
 	const unreachable_opponents: DetailedFighter[] = [];
@@ -946,7 +957,7 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 
 	for (let i = 0; i < tempestFighters.length; i++) {
 		const tempester = tempestFighters[i];
-		if (randomBetweenSeeded(fightData.rng, 0, 99) <  30) {
+		if (randomBetweenSeeded(fightData.rng, 0, 99) < 30) {
 			console.log(`Tempete!`);
 			fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
 			return null;
@@ -985,7 +996,6 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 			monster.stats.speed.global *= 0.95;
 		}
 	} else {
-
 		for (let i = 0; i < fightData.defenderData[Skill.GARDE_FORESTIER]; i++) {
 			applyGlobalDefenseBonus(monster, ElementType.WOOD, 3);
 			monster.stats.armor.global *= 1.05;
@@ -1358,7 +1368,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				for (let i = 0; i < tempestFighters.length; i++) {
 					const tempester = tempestFighters[i];
-					if (randomBetweenSeeded(fightData.rng, 0, 99) <  30) {
+					if (randomBetweenSeeded(fightData.rng, 0, 99) < 30) {
 						fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
 						break;
 					}
@@ -2404,7 +2414,7 @@ const destroyArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorD
  */
 const gainArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorGained: number) => {
 	// TODO add FX
-	fighter.stats.armor.global *= (1 + armorGained);
+	fighter.stats.armor.global *= 1 + armorGained;
 };
 
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
@@ -2465,13 +2475,19 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				removeStatus(fightData, opponent, Status.FLYING);
 			});
 
-			const results = attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, activate_step);
+			const results = attackAllOpponents(
+				fightData,
+				fighter,
+				getElementalAttack(fighter, ElementType.AIR, 10),
+				skill.id,
+				activate_step
+			);
 
 			results.forEach(r => {
 				if (r.target && r.hpLost > 0) {
 					addStatus(fightData, r.target, Status.STUNNED, StatusLength.SHORT);
 				}
-			})
+			});
 			break;
 		}
 		case Skill.ATTAQUE_PLONGEANTE: {
@@ -2620,7 +2636,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				fightData.steps.push({
 					action: 'skillAnnounce',
 					fid: opponent.id,
-					skill: Skill.SELF_CONTROL,
+					skill: Skill.SELF_CONTROL
 				});
 			} else {
 				// Hypnotized for 4 cycles
@@ -2729,7 +2745,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 
 			// This skill cannot combo but is an assault
-			const hit = launchAssault(fightData, fighter, false, Skill.KAMIKAZE, getElementalAttack(fighter, ElementType.FIRE, 15), target, false);
+			const hit = launchAssault(
+				fightData,
+				fighter,
+				false,
+				Skill.KAMIKAZE,
+				getElementalAttack(fighter, ElementType.FIRE, 15),
+				target,
+				false
+			);
 
 			// Loose 10% HP
 			loseHp(fightData, fighter, Math.round(fighter.maxHp * 0.1), LifeEffect.Explode);
@@ -2760,7 +2784,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const number = Math.max(Math.floor(fighter.stats.base[ElementType.FIRE] / 5), 1);
 			for (let i = 0; i < number; i++) {
 				let flameche = createMonster(fightData, fighter, monsterList.FLAM);
-				if(flameche) {
+				if (flameche) {
 					flameche.skills = [];
 					flameche.stats.base[ElementType.FIRE] = number;
 					flameche.stats.special.torchDamage = flameche.stats.base[ElementType.FIRE];
@@ -2834,7 +2858,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.PARAFOUDRE: {
 			// Add step for fx
-			activate_step.targets.push({tid: fighter.id});
+			activate_step.targets.push({ tid: fighter.id });
 			fightData.steps.push(activate_step);
 
 			addStatus(fightData, fighter, Status.THUNDERED, StatusLength.MEDIUM);
@@ -3017,12 +3041,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.NECROMANCIE: {
 			// Get all dead non espaced fighters, except clones, reinforcements and bosses
 			const limitTypes = ['dinoz', 'monster'];
-			const deadfighters = fightData.fighters.filter(f =>
-				f.hp <= 0 &&
-				!f.escaped &&
-				limitTypes.includes(f.type) &&
-				!hasSkill(f, Skill.SELF_CONTROL) &&
-				!hasStatus(f, Status.UNDEAD)
+			const deadfighters = fightData.fighters.filter(
+				f =>
+					f.hp <= 0 &&
+					!f.escaped &&
+					limitTypes.includes(f.type) &&
+					!hasSkill(f, Skill.SELF_CONTROL) &&
+					!hasStatus(f, Status.UNDEAD)
 			);
 
 			if (deadfighters.length === 0) {
@@ -3093,7 +3118,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				gardien.size = 50;
 			}
 			const monster = createMonster(fightData, fighter, gardien);
-			if (monster) monster.status = monster.status.filter(s =>  s.type !== Status.NO_ASSAULT);
+			if (monster) monster.status = monster.status.filter(s => s.type !== Status.NO_ASSAULT);
 			break;
 		}
 		case Skill.PROVOCATION: {
@@ -4090,7 +4115,13 @@ const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, dama
 	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
 };
 
-const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect, noStep?: boolean) => {
+const loseHp = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	damage: number,
+	fx: LifeEffect,
+	noStep?: boolean
+) => {
 	// TODO: check for danger detector item
 	let hp_lost = damage;
 	const initial_hp = fighter.hp;
@@ -4235,10 +4266,10 @@ export const heal = (
 			action: 'skillActivate',
 			fid: fighter.id,
 			skill: Skill.MALEDICTION_AQUEUSE,
-			targets: [{tid: fighter.id}]
+			targets: [{ tid: fighter.id }]
 		});
-		return
-	};
+		return;
+	}
 
 	const hpBeforeHeal = fighter.hp;
 
@@ -4562,7 +4593,11 @@ const attackTarget = (
 		if (canCombo) {
 			if (fightData.rng() < getFighterMultihit(attacker)) {
 				// If target has riposte and succeeds its roll, interrupt the combo
-				if (!hasStatus(target, Status.PETRIFIED) && hasSkill(target, Skill.RIPOSTE) && randomBetweenSeeded(fightData.rng, 0, 99) < 50) {
+				if (
+					!hasStatus(target, Status.PETRIFIED) &&
+					hasSkill(target, Skill.RIPOSTE) &&
+					randomBetweenSeeded(fightData.rng, 0, 99) < 50
+				) {
 					fightData.steps.push({
 						action: 'anim',
 						fid: attacker.id,
@@ -4622,9 +4657,9 @@ const attackTarget = (
 			attackTarget(fightData, target, attacker, true);
 		} else {
 			const reinforcements = getAllies(fightData, attacker, ['reinforcement']).filter(r => r.master === attacker.id);
-			if (isAssault  && totalDamage > 0 && reinforcements.length > 0 && hasSkill(attacker, Skill.CHARISME)) {
+			if (isAssault && totalDamage > 0 && reinforcements.length > 0 && hasSkill(attacker, Skill.CHARISME)) {
 				reinforcements.forEach(reinforcement => {
-					attackTarget(fightData, reinforcement, target, true)
+					attackTarget(fightData, reinforcement, target, true);
 					fightData.steps.push({
 						action: 'moveBack',
 						fid: reinforcement.id
@@ -4843,7 +4878,8 @@ const checkAfterAttackEffects = (
 	}
 
 	// Poison opponent if fighter has Skill.HALEINE_FETIVE and landed a hit with an assault
-	if (isCloseCombat &&
+	if (
+		isCloseCombat &&
 		damage > 0 &&
 		hasSkill(attacker, Skill.HALEINE_FETIVE) &&
 		// 1/2 chance
@@ -4884,7 +4920,8 @@ const checkAfterAttackEffects = (
 	}
 
 	// MALEDICTION AQUEUSE: 10% chance to apply NO_HEAL
-	if (damage > 0 &&
+	if (
+		damage > 0 &&
 		elements.find(element => element === ElementType.WATER) &&
 		hasSkill(attacker, Skill.MALEDICTION_AQUEUSE) &&
 		randomBetweenSeeded(fightData.rng, 0, 99) < 10
@@ -4900,37 +4937,23 @@ const checkAfterAttackEffects = (
 		});
 	}
 
-
 	// Onde de Vie
-	if (damage > 0 &&
-		elements.find(element => element === ElementType.WATER) &&
-		hasSkill(attacker, Skill.ONDE_DE_VIE)
-	) {
+	if (damage > 0 && elements.find(element => element === ElementType.WATER) && hasSkill(attacker, Skill.ONDE_DE_VIE)) {
 		heal(fightData, attacker, 1, undefined, LifeEffect.Water);
 	}
 
 	// Revitalisation
-	if (isCloseCombat &&
-		damage > 0 &&
-		hasSkill(attacker, Skill.REVITALISATION)
-	) {
+	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.REVITALISATION)) {
 		heal(fightData, attacker, 1, undefined, LifeEffect.Lightning);
 	}
 
 	// Crocs Diamants
-	if (isCloseCombat &&
-		damage > 0 &&
-		hasSkill(attacker, Skill.CROCS_DIAMANT)
-	) {
+	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.CROCS_DIAMANT)) {
 		destroyArmor(fightData, target, 0.01);
 	}
 
 	// Flash
-	if (isCloseCombat &&
-		damage > 0 &&
-		hasSkill(attacker, Skill.FLASH) &&
-		randomBetweenSeeded(fightData.rng, 0, 99) < 5
-	) {
+	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.FLASH) && randomBetweenSeeded(fightData.rng, 0, 99) < 5) {
 		addStatus(fightData, target, Status.DAZZLED, StatusLength.SHORT);
 	}
 
@@ -4969,17 +4992,19 @@ const checkAfterDefenseEffects = (
 
 	// Skills:
 	// Furie: hit landed
-	if (damage > 0 &&
+	if (
+		damage > 0 &&
 		// 20 % chance
 		randomBetweenSeeded(fightData.rng, 0, 99) < 20 &&
-		hasSkill(target, Skill.FURIE)) {
+		hasSkill(target, Skill.FURIE)
+	) {
 		target.nextAssaultBonus += 3;
 		// Add fx for gain of power
 		fightData.steps.push({
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.FURIE,
-			targets: [{tid: target.id}]
+			targets: [{ tid: target.id }]
 		});
 	}
 
@@ -4987,7 +5012,7 @@ const checkAfterDefenseEffects = (
 	if (target.hp <= target.maxHp * 0.1 && !target.hasRaged && hasSkill(target, Skill.RAGE)) {
 		// Remove all bad status
 		target.status.forEach(status => {
-			if(BadStatus.includes(status.type)) {
+			if (BadStatus.includes(status.type)) {
 				removeStatus(fightData, target, status.type);
 			}
 		});
@@ -5006,13 +5031,13 @@ const checkAfterDefenseEffects = (
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
-			skill: Skill.RAGE,
+			skill: Skill.RAGE
 		});
 		fightData.steps.push({
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.RAGE,
-			targets: [{tid: target.id}]
+			targets: [{ tid: target.id }]
 		});
 		// Add fx for gain of init
 		fightData.steps.push({
@@ -5023,16 +5048,13 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Maitre des Ronces
-	if (isCloseCombat &&
-		damage > 0 &&
-		hasSkill(target, Skill.MAITRE_DES_RONCES)
-	) {
+	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.MAITRE_DES_RONCES)) {
 		attacker.time += 1 * TIME_FACTOR;
 		fightData.steps.push({
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.MAITRE_DES_RONCES,
-			targets: [{tid: attacker.id}]
+			targets: [{ tid: attacker.id }]
 		});
 		// Add fx for loss of init
 		fightData.steps.push({
@@ -5043,17 +5065,19 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Zero absolu: hit landed
-	if (isCloseCombat &&
+	if (
+		isCloseCombat &&
 		damage > 0 &&
 		// 5 % chance
 		randomBetweenSeeded(fightData.rng, 0, 99) < 5 &&
-		hasSkill(target, Skill.ZERO_ABSOLU)) {
+		hasSkill(target, Skill.ZERO_ABSOLU)
+	) {
 		// Add fx for freeze
 		fightData.steps.push({
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.ZERO_ABSOLU,
-			targets: [{tid: attacker.id}]
+			targets: [{ tid: attacker.id }]
 		});
 		addStatus(fightData, attacker, Status.SLOWED, StatusLength.SHORT);
 	}
@@ -5075,10 +5099,7 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Decharge: close combat, hit landed, 3% chance to electrocute and stun
-	if (damage > 0 &&
-		hasSkill(target, Skill.DECHARGE) &&
-		randomBetweenSeeded(fightData.rng, 0, 99) < 3
-	) {
+	if (damage > 0 && hasSkill(target, Skill.DECHARGE) && randomBetweenSeeded(fightData.rng, 0, 99) < 3) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
@@ -5088,7 +5109,7 @@ const checkAfterDefenseEffects = (
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.DECHARGE,
-			targets: [{ tid: attacker.id, damages: balanceDamage(target.stats.special.dischargeDamage)}]
+			targets: [{ tid: attacker.id, damages: balanceDamage(target.stats.special.dischargeDamage) }]
 		});
 		loseHp(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning, true);
 		addStatus(fightData, attacker, Status.STUNNED, StatusLength.SUPER_SHORT);
@@ -5470,7 +5491,9 @@ export const checkDeaths = (fightData: DetailedFight) => {
 	const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
 	hypnosedFighters.forEach(hypnoF => {
 		if (hypnoF.hypnotized) {
-			const aliveAlliesCount = fightData.fighters.filter(f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide).length;
+			const aliveAlliesCount = fightData.fighters.filter(
+				f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide
+			).length;
 			// Remove hypnotize if no more time left
 			if (aliveAlliesCount === 0) {
 				// Change team

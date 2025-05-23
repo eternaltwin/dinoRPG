@@ -73,7 +73,7 @@ export enum SpecialStat {
 	WATER_SPEED = 'waterSpeed',
 	LIGHTNING_SPEED = 'lightningSpeed',
 	AIR_SPEED = 'airSpeed',
-	VOID_SPEED = 'voidSpeed',
+	VOID_SPEED = 'voidSpeed'
 }
 
 // Special statistics handled as a %.
@@ -130,7 +130,7 @@ export enum SpecialStatAsPercent {
 	WATER_MULTIHIT = 'waterMultihit',
 	LIGHTNING_MULTIHIT = 'lightningMultihit',
 	AIR_MULTIHIT = 'airMultihit',
-	VOID_MULTIHIT = 'voidMultihit',
+	VOID_MULTIHIT = 'voidMultihit'
 }
 
 export enum UniqueSpecialStatUsedInFights {
@@ -143,7 +143,6 @@ export enum UniqueSpecialStatUsedInFights {
 	DISCHARGE_DAMAGE = 'dischargeDamage',
 	FETID_BREATH_DAMAGE = 'fetidBreathDamage'
 }
-
 
 // export type UniqueSpecialStatUsedInFights = Exclude<UniqueSpecialStat, SpecialStat.HP_REGEN | SpecialStat.MAX_FOLLOWERS>;
 
@@ -160,13 +159,13 @@ export const BaseSpecialStats = {
 	[SpecialStat.ENERGY_RECOVERY]: 1,
 	[SpecialStat.MAX_FOLLOWERS]: 2,
 	// Speeds
-    [SpecialStat.SPEED]: 1,
+	[SpecialStat.SPEED]: 1,
 	[SpecialStat.FIRE_SPEED]: 1,
 	[SpecialStat.WOOD_SPEED]: 1,
 	[SpecialStat.WATER_SPEED]: 1,
 	[SpecialStat.LIGHTNING_SPEED]: 1,
 	[SpecialStat.AIR_SPEED]: 1,
-	[SpecialStat.VOID_SPEED]: 1,
+	[SpecialStat.VOID_SPEED]: 1
 };
 
 export const getSpecialStat = (
@@ -197,7 +196,7 @@ export const getSpecialStat = (
 			percent: true,
 			multiplier: false,
 			// Clamp value between 30% and 100%
-			value: (value < 0.3 ? 0.3 : value)
+			value: value < 0.3 ? 0.3 : value
 		};
 	}
 
@@ -286,7 +285,7 @@ export const getSpecialStat = (
 		return {
 			name: 'fetidBreathDamage',
 			// Air / 2
-			value: Math.ceil(dinoz.nbrUpAir/ 2),
+			value: Math.ceil(dinoz.nbrUpAir / 2),
 			details: [
 				{
 					type: 'base',

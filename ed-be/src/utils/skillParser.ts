@@ -85,7 +85,16 @@ function deApplySkillFromDinoz(
 function applyUSkillEffect(
 	player: Pick<
 		Player,
-		'warLord' | 'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'
+		| 'warLord'
+		| 'leader'
+		| 'engineer'
+		| 'shopKeeper'
+		| 'cooker'
+		| 'merchant'
+		| 'priest'
+		| 'teacher'
+		| 'messie'
+		| 'matelasseur'
 	>,
 	skill: SkillDetails
 ) {

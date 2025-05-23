@@ -17,7 +17,11 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { DetailedFighter, FighterResultFiche, Status, StatusLength } from '@drpg/core/models/fight/DetailedFighter';
-import { DinozToGetFighter, FightConfiguration, TeamFightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import {
+	DinozToGetFighter,
+	FightConfiguration,
+	TeamFightConfiguration
+} from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -473,8 +477,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		turn += 1;
 	}
-
-	
 
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === 'monster' && fighter.name === monsterList[Monster.BAOBOB].name

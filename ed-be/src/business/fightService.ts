@@ -188,15 +188,10 @@ export function calculateFightVsMonsters(
 		dinozList: [],
 		monsterList: monsters ?? [],
 		[Skill.ELECTROLYSE]: 0,
-		[Skill.GARDE_FORESTIER]: 0,
+		[Skill.GARDE_FORESTIER]: 0
 	};
 
-	const fighters = getFighters(
-		attackTeam,
-		defenseTeam,
-		place,
-		rng
-	);
+	const fighters = getFighters(attackTeam, defenseTeam, place, rng);
 
 	const fightConfiguration: FightConfiguration = {
 		seed: rng_seed,
@@ -215,7 +210,7 @@ export function calculateFightVsMonsters(
 		},
 		defenderTeam: {
 			[Skill.ELECTROLYSE]: defenseTeam[Skill.ELECTROLYSE],
-			[Skill.GARDE_FORESTIER]: defenseTeam[Skill.GARDE_FORESTIER],
+			[Skill.GARDE_FORESTIER]: defenseTeam[Skill.GARDE_FORESTIER]
 		},
 
 		// Fighters
@@ -268,12 +263,7 @@ export function calculateFightBetweenPlayers(
 		[Skill.CHEF_DE_GUERRE]: playerB.warLord
 	};
 
-	const fighters = getFighters(
-		teamConfigA,
-		teamConfigB,
-		place,
-		rng
-	);
+	const fighters = getFighters(teamConfigA, teamConfigB, place, rng);
 
 	const initialDinozList = [...teamA, ...teamB];
 
