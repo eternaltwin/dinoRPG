@@ -1,12 +1,5 @@
-import { ModerationActionFront } from '../enums/ModerationActionFront.mjs';
+import { Moderation, Player } from '@drpg/prisma';
 
-export type BannedPlayerType = {
-	id: number;
-	name: string;
-	banCase: {
-		id: number;
-		sorted: ModerationActionFront | null;
-		banDate: Date | null;
-		banEndDate: Date | null;
-	} | null;
+export type BannedPlayerType = Pick<Player, 'id' | 'name'> & {
+	banCase: Pick<Moderation, 'id' | 'sorted' | 'banDate' | 'banEndDate' | 'reason'> | null;
 };

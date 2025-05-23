@@ -1,31 +1,12 @@
-import { PantheonMotif } from '../enums/PantheonMotif.mjs';
+import { Dinoz, Pantheon, Player } from '@drpg/prisma';
 
 export type PantheonDisplay =
-	| {
-			motif: PantheonMotif.RACE;
-			id: number;
-			playerId: string;
-			dinoz: {
-				id: number;
-				name: string;
-				raceId: number;
-				display: string;
-			};
-			indicator: number;
-			date: Date;
-			player: {
-				id: number;
-				name: string;
-			};
-	  }
-	| {
-			motif: PantheonMotif.EPIC;
-			id: number;
-			playerId: string;
-			player: {
-				id: number;
-				name: string;
-			};
-			indicator: number;
-			date: Date;
-	  };
+	| (Pick<Pantheon, 'id' | 'playerId' | 'indicator' | 'date'> & {
+			motif: "race";
+			dinoz: Pick<Dinoz, 'id' | 'name' | 'raceId' | 'display'>;
+			player: Pick<Player, 'id' | 'name'>;
+		})
+	| (Pick<Pantheon, 'id' | 'playerId' | 'indicator' | 'date'> & {
+			motif: "epic";
+			player: Pick<Player, 'id' | 'name'>;
+		});

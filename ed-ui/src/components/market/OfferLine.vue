@@ -44,7 +44,7 @@
 		<td class="bid">
 			<p>
 				<span>{{ $t('market.seller') }}:</span>
-				<DZUser :user="offer.seller" />
+				<DZUser :user="offer.seller" v-if="offer.seller" />
 			</p>
 			<p>
 				<span>{{ $t('market.timeLeft') }}:</span>
@@ -88,7 +88,7 @@
 			</div>
 		</td>
 	</tr>
-	<tr v-if="details" class="dinoz-details">
+	<tr v-if="details && offer.dinoz" class="dinoz-details">
 		<td>
 			<h2 v-html="offer.dinoz.name" />
 			<p class="race">{{ $t(`race.name.${getRace(offer.dinoz).name}`) }}</p>
@@ -184,7 +184,7 @@ export default defineComponent({
 			return this.offer.endDate.getTime() / 1000 <= this.now;
 		},
 		ownOffer() {
-			return this.offer.seller.id === this.playerStore.playerId;
+			return this.offer.seller?.id === this.playerStore.playerId;
 		},
 		getElementStat(element: AssaultElement) {
 			if (!this.offer.dinoz) return;

@@ -34,3 +34,8 @@ export type EnhancedOffer = Omit<OfferFromGetOffers, 'items'> & {
 		name: string;
 	}[];
 };
+
+export type OfferGetList = {
+	total: number;
+	offers: OfferFromGetOffers[];
+}

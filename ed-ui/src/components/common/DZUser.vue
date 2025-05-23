@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import PlayerMenu from '../modal/PlayerMenu.vue';
-import { Player } from '@drpg/core/models/player/Player';
+import { Player } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'DZUser',
@@ -103,10 +103,20 @@ export default defineComponent({
 		background-color: #7c3d34;
 	}
 	& > * {
+		animation: brightness 3s infinite;
 		-webkit-animation: brightness 3s infinite;
 	}
 }
 
+@keyframes brightness {
+	0%,
+	100% {
+		-webkit-filter: brightness(80%);
+	}
+	50% {
+		-webkit-filter: brightness(120%);
+	}
+}
 @-webkit-keyframes brightness {
 	0%,
 	100% {

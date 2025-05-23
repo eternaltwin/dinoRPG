@@ -2,7 +2,7 @@
 	<div class="container" ref="grid">
 		<template v-for="(cell, index) in levelUpGrid" :key="index">
 			<div class="box" :class="isSelected(index) && isSpinning ? 'active' : ''">
-				<img :src="getImgURL('elements', `elem_${cell}`)" :alt="cell" :id="index" />
+				<img :src="getImgURL('elements', `elem_${cell}`)" :alt="cell" :id="index.toString()" />
 				<div class="effect" v-if="isSelected(index) && isSpinOver">
 					<div></div>
 					<div></div>

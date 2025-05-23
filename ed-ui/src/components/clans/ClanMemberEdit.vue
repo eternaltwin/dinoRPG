@@ -46,7 +46,7 @@ export default defineComponent({
 				);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -58,7 +58,7 @@ export default defineComponent({
 				await ClanService.updateClanMember(Number(this.$route.params.id), this.clanMember);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},

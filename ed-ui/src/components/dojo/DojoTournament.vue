@@ -148,6 +148,8 @@ export default defineComponent({
 			});
 		},
 		async showFinal() {
+			if (typeof this.tournamentId !== 'string') return;
+
 			this.displayFinal = true;
 			try {
 				this.final = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.FINALS, 0);

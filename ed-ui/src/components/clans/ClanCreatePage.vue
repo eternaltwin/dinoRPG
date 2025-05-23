@@ -54,7 +54,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'ClanPage', params: { pageId: page.id } });
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -71,7 +71,7 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'ClanPage', params: { pageId: Number(this.$route.params.pageId) } });
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -91,7 +91,7 @@ export default defineComponent({
 				this.page = await ClanService.getClanPage(Number(this.$route.params.pageId));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

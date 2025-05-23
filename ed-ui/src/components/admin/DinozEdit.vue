@@ -104,15 +104,18 @@
 			<div>
 				<label class="title" for="dinozStatuses">Statuses :</label>
 				<div class="statuses">
-					<template v-for="(status, index) in dinoz.status" :key="index">
-						<Tippy theme="normal" v-if="statusList.displayed[status]">
-							<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
+					<template v-for="status in dinoz.status" :key="status.statusId">
+						<Tippy theme="normal" v-if="statusList.displayed[status.statusId]">
+							<img
+								:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
+								:alt="statusList.imgName[status.statusId]"
+							/>
 							<template #content>
-								<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
-								<p v-html="formatContent($t(`status.description.${status}`))"></p>
+								<h1 v-html="formatContent($t(`status.name.${status.statusId}`))"></h1>
+								<p v-html="formatContent($t(`status.description.${status.statusId}`))"></p>
 							</template>
 						</Tippy>
-						<p v-if="!statusList.displayed[status]" v-html="statusList.imgName[status]" />
+						<p v-if="!statusList.displayed[status.statusId]" v-html="statusList.imgName[status.statusId]" />
 					</template>
 				</div>
 				<div class="statuses">
@@ -147,9 +150,9 @@
 		<fieldset>
 			<legend>Skills</legend>
 			<div class="skills">
-				<template v-for="skillId in dinoz.skills" :key="skillId">
+				<template v-for="skill in dinoz.skills" :key="skill.skillId">
 					<div class="skills" />
-					{{ $t(`skill.name.${skillList[skillId].name}`) }}
+					{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
 				</template>
 			</div>
 			<div class="skills">
@@ -183,9 +186,9 @@
 		<fieldset>
 			<legend>Unlockable Skills</legend>
 			<div class="unlockable_skills">
-				<template v-for="skillId in dinoz.unlockableSkills" :key="skillId">
+				<template v-for="skill in dinoz.unlockableSkills" :key="skill.skillId">
 					<div class="skills" />
-					{{ $t(`skill.name.${skillList[skillId].name}`) }}
+					{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
 				</template>
 			</div>
 			<div class="unlockable_skills">
@@ -310,7 +313,7 @@ export default defineComponent({
 					);
 				}
 
-				const refresh: Array<DinozAdminFiche> = await AdminService.listAllDinozFromPlayer(this.playerId);
+				const refresh: Array<DinozAdminFiche> = await AdminService.listAllDinozFromPlayer(this.playerId.toString());
 				this.dinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id)!;
 			} catch (err) {
 				EventBus.emit('isLoading', false);
@@ -329,30 +332,34 @@ export default defineComponent({
 		},
 		filterSkillList(operation: string): void {
 			if (operation === 'add') {
-				this.skillListFiltered = Object.values(skillList).filter(skill => !this.dinoz.skills?.includes(skill.id));
+				this.skillListFiltered = Object.values(skillList).filter(
+					skill => !this.dinoz.skills?.some(s => s.skillId === skill.id)
+				);
 			} else {
-				this.skillListFiltered = Object.values(skillList).filter(skill => this.dinoz.skills?.includes(skill.id));
+				this.skillListFiltered = Object.values(skillList).filter(skill =>
+					this.dinoz.skills?.some(s => s.skillId === skill.id)
+				);
 			}
 		},
 		filterUnlockableSkillList(operation: string): void {
 			if (operation === 'add') {
 				this.unlockableSkillListFiltered = Object.values(skillList).filter(
-					skill => !this.dinoz.unlockableSkills?.includes(skill.id)
+					skill => !this.dinoz.unlockableSkills?.some(s => s.skillId === skill.id)
 				);
 			} else {
 				this.unlockableSkillListFiltered = Object.values(skillList).filter(skill =>
-					this.dinoz.unlockableSkills?.includes(skill.id)
+					this.dinoz.unlockableSkills?.some(s => s.skillId === skill.id)
 				);
 			}
 		},
 		filterStatusList(operation: string): void {
 			if (operation === 'add') {
 				this.statusListFiltered = Object.keys(statusList.imgName).filter(
-					statusId => !this.dinoz.status?.includes(parseInt(statusId))
+					statusId => !this.dinoz.status?.some(status => status.statusId === parseInt(statusId))
 				);
 			} else {
 				this.statusListFiltered = Object.keys(statusList.imgName).filter(statusId =>
-					this.dinoz.status?.includes(parseInt(statusId))
+					this.dinoz.status?.some(status => status.statusId === parseInt(statusId))
 				);
 			}
 		},

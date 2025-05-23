@@ -42,11 +42,12 @@ import { createNotification } from '../dao/notificationDao.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
 import TournamentManager from '../utils/tournamentManager.js';
 import { prisma } from '../prisma.js';
+import { OfferGetList } from '@drpg/core/returnTypes/Offer';
 
 /**
  * Get the list of current offers
  */
-export async function getOfferList(req: Request) {
+export async function getOfferList(req: Request): Promise<OfferGetList> {
 	const authed = await auth(req);
 
 	const filter = req.params.filter;

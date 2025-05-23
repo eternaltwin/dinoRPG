@@ -105,7 +105,7 @@ export default defineComponent({
 			}
 		},
 		formatCreatedDate(date: Date): string {
-			const options = { year: 'numeric', month: 'long', day: 'numeric' };
+			const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
 			return date.toLocaleDateString('fr-FR', options);
 		}
 	},

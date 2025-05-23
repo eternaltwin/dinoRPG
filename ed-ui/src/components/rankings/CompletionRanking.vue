@@ -20,7 +20,7 @@
 					:key="ranking.player.id"
 					class="select"
 					:class="(index + 1) % 2 === 0 ? 'even' : ''"
-					@click="goToAccount(ranking.player.id)"
+					@click="goToAccount(ranking.player)"
 				>
 					<td class="pos">
 						{{ (page - 1) * 20 + (index + 1) }}

@@ -11,10 +11,10 @@
 		<template v-for="player in listBanned" :key="player.id">
 			<tr>
 				<td><DZUser :user="player" /></td>
-				<td>{{ player.banCase.banDate }}</td>
-				<td>{{ player.banCase.banEndDate }}</td>
-				<td>{{ $t(`report.reason.${player.banCase.reason}`) }}</td>
-				<td>{{ $t(`report.reason.${player.banCase.sorted}`) }}</td>
+				<td>{{ player.banCase?.banDate }}</td>
+				<td>{{ player.banCase?.banEndDate }}</td>
+				<td>{{ $t(`report.reason.${player.banCase?.reason}`) }}</td>
+				<td>{{ $t(`report.reason.${player.banCase?.sorted}`) }}</td>
 				<td>
 					<select>
 						<option value="null">Update Ban</option>

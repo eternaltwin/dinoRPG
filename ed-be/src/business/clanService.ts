@@ -1,4 +1,13 @@
+import { CLAN_CREATE_MONEY, CLAN_JOIN_MONEY, CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
+import { ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
+import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { NotificationSeverity } from '@drpg/prisma';
 import { Request } from 'express';
+import { LOGGER } from '../context.js';
+import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 import {
 	acceptPlayerJoinRequest,
 	clanJoinRequest,
@@ -35,20 +44,12 @@ import {
 	updateClanTreasure,
 	upsertClanIngredients
 } from '../dao/clansDao.js';
-import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
-import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
-import { CLAN_CREATE_MONEY, CLAN_JOIN_MONEY, CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
-import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
-import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
-import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import translate from '../utils/translate.js';
-import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
-import { LOGGER } from '../context.js';
-import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { createNotification } from '../dao/notificationDao.js';
-import { NotificationSeverity } from '@drpg/prisma';
-import { ClanForList, ClanForSearch, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
+import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
+import translate from '../utils/translate.js';
+import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
+import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 
 /**
  * Get all the clans
@@ -56,7 +57,7 @@ import { ClanForList, ClanForSearch, PlayerClanJoinRequest } from '@drpg/core/mo
  * @param req.params.page {number} page number
  * @returns Array<Clan>
  */
-export async function getAllClans(req: Request): Promise<ClanForList[]> {
+export async function getAllClans(req: Request): Promise<ClanLite[]> {
 	await auth(req);
 	const page = +req.params.page;
 	const clans = await getAllClansRequest(page);
@@ -83,7 +84,7 @@ export async function getRankingClans(req: Request) {
  * @param req.params.name {string} clan name
  * @returns Array<Clan>
  */
-export async function searchClanByName(req: Request): Promise<ClanForList[]> {
+export async function searchClanByName(req: Request): Promise<ClanLite[]> {
 	await auth(req);
 
 	const clans = await searchClansByNameRequest(req.params.name, Number(req.params.page));
@@ -161,7 +162,7 @@ export async function createClan(req: Request) {
  * @param req.params.id {number} Clan id
  * @returns Clan
  */
-export async function joinClan(req: Request) {
+export async function joinClan(req: Request): Promise<JoinClanResponse> {
 	const authed = await auth(req);
 
 	const canCreate: boolean = await canJoinClan(req);
@@ -251,7 +252,7 @@ export async function getJoinRequest(req: Request): Promise<PlayerClanJoinReques
  * @param req.params.id {number} clan id
  * @returns Clan
  */
-export async function getJoinRequestslist(req: Request) {
+export async function getJoinRequestslist(req: Request): Promise<JoinRequestListResponse> {
 	await auth(req);
 
 	const deny = await getPlayerJoinListRequest(Number(req.params.id));

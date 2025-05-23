@@ -87,7 +87,13 @@ export const PlayerService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getTwinoSpecificItem(playerId: string, type: 'stat' | 'achiev', site: number): Promise<Array<SiteAchiev | SiteStat>> {
+	getTwinoSpecificStat(playerId: string, type: 'stat', site: number): Promise<Array<SiteStat>> {
+		return http()
+			.get(`/player/twinoStats/${playerId}/${type}/${site}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getTwinoSpecificAchiev(playerId: string, type: 'achiev', site: number): Promise<Array<SiteAchiev>> {
 		return http()
 			.get(`/player/twinoStats/${playerId}/${type}/${site}`)
 			.then(res => Promise.resolve(res.data))

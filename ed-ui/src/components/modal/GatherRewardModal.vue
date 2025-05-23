@@ -27,7 +27,7 @@
 				v-for="item in rewardList.item"
 				:key="item.id"
 				:src="getImgURL('item', `item_${itemList[item.id].name.toLowerCase()}`)"
-				:alt="item.name?.toLowerCase()"
+				:alt="itemList[item.id].name.toLowerCase()"
 			>
 				<template #content>
 					<h1 v-html="formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`))" />

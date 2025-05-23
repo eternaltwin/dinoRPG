@@ -70,7 +70,7 @@ export default defineComponent({
 					endDate: new Date(offer.endDate),
 					items: offer.items.map(item => ({
 						...item,
-						name: item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]
+						name: (item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]) ?? ''
 					}))
 				}))
 				.sort((a, b) => b.endDate.getTime() - a.endDate.getTime()); // Sort by endDate (descending)

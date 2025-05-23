@@ -100,7 +100,9 @@ export default defineComponent({
 			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
 			return typeof myDinoz.missionHUD?.target === 'string'
 				? myDinoz.missionHUD?.target
-				: myDinoz.missionHUD?.target[0].name || '';
+				: typeof myDinoz.missionHUD?.target[0] === 'string'
+					? myDinoz.missionHUD?.target[0]
+					: myDinoz.missionHUD?.target[0].name || '';
 		}
 	}
 });

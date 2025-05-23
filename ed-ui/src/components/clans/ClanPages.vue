@@ -57,7 +57,6 @@
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { ClanPage } from '@drpg/prisma';
-import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { playerStore } from '../../store/index.js';
@@ -65,6 +64,8 @@ import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import { CLAN_JOIN_MONEY } from '@drpg/core/constants';
 import { formatNumber } from '../../utils/formatText';
 import { formatText } from '../../utils/formatText.js';
+import { JoinClanResponse } from '@drpg/core/models/clan/clanJoinRequest';
+import axios from 'axios';
 
 export default defineComponent({
 	name: 'ClanPages',
@@ -74,7 +75,7 @@ export default defineComponent({
 			pages: [] as ClanPage[],
 			playerStore: playerStore(),
 			alreadyHasClan: true as boolean,
-			joinRequest: undefined as ClanJoinRequest | undefined,
+			joinRequest: undefined as JoinClanResponse | undefined,
 			hasPageManageRight: false as boolean,
 			homePageId: undefined as number | undefined,
 			joinClanTip: formatText(this.$t('clanPages.tip.join_clan', { money: formatNumber(CLAN_JOIN_MONEY, '.') }))
@@ -87,7 +88,7 @@ export default defineComponent({
 				this.joinRequest = await ClanService.joinClan(Number(this.$route.params.id));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -101,27 +102,31 @@ export default defineComponent({
 					.sort((a, b) => a.id - b.id);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
 		async getPlayerJoinRequest() {
 			try {
-				this.joinRequest = await ClanService.getSelfJoinRequest();
+				const selfJoinRequest = await ClanService.getSelfJoinRequest();
+				if (selfJoinRequest) {
+					this.joinRequest = selfJoinRequest;
+					return;
+				}
 			} catch (err) {
-				if (err?.response?.status != 404) {
-					errorHandler.handle(err, this.$toast, this.$t);
+				if (axios.isAxiosError(err) && err.response?.status != 404) {
+					errorHandler.handle(err, this.$toast);
 				}
 				return;
 			}
 		},
-		async cancelRequest(request: ClanJoinRequest) {
+		async cancelRequest(request: JoinClanResponse) {
 			try {
 				await ClanService.denyJoinClanRequest(request.id);
 				this.joinRequest = undefined;
 				EventBus.emit('refreshMoney', true);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -136,7 +141,7 @@ export default defineComponent({
 					await this.getClanPages();
 					this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 			}
@@ -148,7 +153,7 @@ export default defineComponent({
 					ClanMemberRight[ClanMemberRight.PAGE_MANAGE]
 				);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},

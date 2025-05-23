@@ -1,6 +1,6 @@
-// Get current domain
 import EventBus from '../events/index.js';
 
+// Get current domain
 const mainDomain = window.location.hostname.split('.').slice(-2).join('.');
 
 export const getCookie = (name: string) => {

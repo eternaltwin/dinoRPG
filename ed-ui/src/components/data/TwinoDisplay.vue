@@ -76,10 +76,10 @@ export default defineComponent({
 		async getSiteInfo(siteId: number, type: 'stat' | 'achiev'): Promise<void> {
 			const playerId = this.$route.params.id as string;
 			if (type === 'stat') {
-				this.stat = await PlayerService.getTwinoSpecificItem(parseInt(playerId), type, siteId);
+				this.stat = await PlayerService.getTwinoSpecificStat(playerId, type, siteId);
 				this.stat.sort((a, b) => b.score - a.score);
 			} else {
-				this.achiev = await PlayerService.getTwinoSpecificItem(parseInt(playerId), type, siteId);
+				this.achiev = await PlayerService.getTwinoSpecificAchiev(playerId, type, siteId);
 				this.achiev.sort((a, b) => b.quantity - a.quantity);
 			}
 			this.selectedSite = siteId;

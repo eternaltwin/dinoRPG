@@ -52,7 +52,7 @@
 			</div>
 			<p class="place-name">{{ $t(`place.name.${place}`) }}</p>
 		</div>
-		<DinozList :currentDinozId="currentDinozId()" :key="dinozStore"></DinozList>
+		<DinozList :currentDinozId="currentDinozId()"></DinozList>
 		<a v-if="hasPDA" class="overviewButton" @click="goToPage('ManageDinoz')">
 			<img :src="getImgURL('icons', `small_edit`)" alt="edit" />
 			<span>{{ $t('button.sortDinoz') }}</span>
@@ -126,9 +126,9 @@ export default defineComponent({
 			if (!place) return;
 			const today = this.changeTimezone(new Date(), 'GMT').getDay();
 			if (place === 'marais' && !(today === 1 || today === 2 || today === 5)) {
-				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url);
+				return new URL(`/src/assets/place/marais_fog.webp`, import.meta.url).toString();
 			}
-			return new URL(`/src/assets/place/${place}.webp`, import.meta.url);
+			return new URL(`/src/assets/place/${place}.webp`, import.meta.url).toString();
 		}
 	},
 	computed: {
@@ -136,9 +136,10 @@ export default defineComponent({
 			return this.playerStore.getMoney;
 		},
 		place(): string | null {
-			if (!this.currentDinozId()) return this.place;
+			const currentDinozId = this.currentDinozId();
+			if (!currentDinozId) return this.place;
 
-			const currentDinoz = this.dinozStore.getDinoz(this.currentDinozId()) as DinozFiche | undefined;
+			const currentDinoz = this.dinozStore.getDinoz(currentDinozId) as DinozFiche | undefined;
 			if (!currentDinoz) return this.place;
 
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);

@@ -2,6 +2,7 @@
 	<div class="elements_div">
 		<p>{{ $t('layout.elements') }}</p>
 		<Elements
+			v-if="dinozData"
 			:fire="dinozData.nbrUpFire"
 			:wood="dinozData.nbrUpWood"
 			:water="dinozData.nbrUpWater"
@@ -48,6 +49,7 @@ export default defineComponent({
 	border-color: #9f5841;
 	width: 100%;
 	height: fit-content;
+
 	//padding-right: 6px;
 	p {
 		color: white;
@@ -59,6 +61,7 @@ export default defineComponent({
 		font-weight: bold;
 	}
 }
+
 @media (max-width: 539px) {
 	.elements_div {
 		width: 100%;

@@ -4,9 +4,9 @@
 			<button class="modal-close" @click="dismiss">Close</button>
 			{{ $t(`error`) }}
 			<div class="details">
-				Code : {{ errorDisplay.response.status }}<br />
-				Description : {{ errorDisplay.response.data }}<br />
-				Tried Url : {{ errorDisplay.response.config.url }}
+				Code : {{ errorDisplay.response?.status }}<br />
+				Description : {{ errorDisplay.response?.data }}<br />
+				Tried Url : {{ errorDisplay.response?.config.url }}
 			</div>
 		</div>
 	</div>

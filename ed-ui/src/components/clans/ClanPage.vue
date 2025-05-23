@@ -26,7 +26,7 @@ export default defineComponent({
 				this.page = await ClanService.getClanPage(Number(this.$route.params.pageId));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -37,26 +37,8 @@ export default defineComponent({
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
-			}
-		},
-		async updateClanPage() {
-			if (this.updatedPage) {
-				EventBus.emit('isLoading', true);
-				try {
-					this.page = await ClanService.updateClanPage(
-						Number(this.$route.params.pageId),
-						this.updatedPage.name,
-						this.updatedPage.content,
-						this.updatedPage.public,
-						Number(this.$route.params.id)
-					);
-					EventBus.emit('isLoading', false);
-				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
-					return;
-				}
 			}
 		}
 	},

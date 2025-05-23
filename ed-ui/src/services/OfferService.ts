@@ -1,13 +1,14 @@
+import { OfferGetList } from '@drpg/core/returnTypes/Offer';
 import { http } from '../utils/index.js';
-import { Offer } from '@drpg/core/returnTypes/Offer';
+import { Player } from '@drpg/prisma';
 
 export const OfferService = {
 	getList(
 		filter: string,
-		sellerId: number | null = null,
-		bidderId: number | null = null,
+		sellerId: Player['id'] | null = null,
+		bidderId: Player['id'] | null = null,
 		expired: boolean = false,
-		page: number,
+		page: number = 1,
 		onlyMines: boolean = false
 	) {
 		return http()
@@ -20,7 +21,7 @@ export const OfferService = {
 					onlyMines
 				}
 			})
-			.then(res => Promise.resolve<Offer[]>(res.data))
+			.then(res => Promise.resolve<OfferGetList>(res.data))
 			.catch(err => Promise.reject(err));
 	},
 	createOffer(

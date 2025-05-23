@@ -116,7 +116,7 @@ export default defineComponent({
 			goTo,
 			now: Math.ceil(new Date().getTime() / 1000),
 			ownOffer: null as EnhancedOffer | null,
-			myExpiredOffers: null as EnhancedOffer | null,
+			myExpiredOffers: [] as EnhancedOffer[],
 			offers: [] as EnhancedOffer[],
 			wonOffers: [] as EnhancedOffer[]
 		};
@@ -130,7 +130,7 @@ export default defineComponent({
 				endDate: new Date(offer.endDate),
 				items: offer.items.map(item => ({
 					...item,
-					name: item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]
+					name: (item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]) ?? ''
 				}))
 			}));
 		},

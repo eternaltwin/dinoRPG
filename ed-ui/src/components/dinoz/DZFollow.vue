@@ -93,13 +93,23 @@ export default defineComponent({
 					return;
 				}
 
+				const targetDinoz = currentDinozList.find(dinoz => dinoz.id === targetId);
+				if (!targetDinoz) {
+					this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
+					return;
+				}
+
 				this.dinozStore.setDinozList(
 					orderDinozList(
 						currentDinozList.map(dinoz => {
 							if (dinoz.id === +this.$route.params.id) {
 								dinoz.leaderId = targetId;
 							} else if (dinoz.id === targetId) {
-								dinoz.followers.push(+this.$route.params.id);
+								dinoz.followers.push({
+									id: +this.$route.params.id,
+									fight: targetDinoz.fight,
+									remaining: targetDinoz.remaining
+								});
 							}
 							return dinoz;
 						})

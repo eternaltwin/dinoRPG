@@ -52,7 +52,7 @@ export default defineComponent({
 					EventBus.emit('isLoading', false);
 					this.$router.push({ name: 'ClansList' });
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 			}
@@ -64,7 +64,7 @@ export default defineComponent({
 					ClanMemberRight[ClanMemberRight.CLAN_EDIT_BANNER]
 				);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},

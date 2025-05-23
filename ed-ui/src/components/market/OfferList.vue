@@ -49,7 +49,7 @@ export default defineComponent({
 	data() {
 		return {
 			now: Math.ceil(new Date().getTime() / 1000),
-			offers: [] as OfferFromGetOffers[],
+			offers: [] as EnhancedOffer[],
 			filter: 'all',
 			currentPage: 1,
 			offersPerPage: 10,
@@ -66,7 +66,7 @@ export default defineComponent({
 				endDate: new Date(offer.endDate),
 				items: offer.items.map(item => ({
 					...item,
-					name: item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]
+					name: (item.isIngredient ? ingredientNameList[item.itemId] : itemNameList[item.itemId]) ?? ''
 				}))
 			}));
 		},
@@ -88,7 +88,7 @@ export default defineComponent({
 			this.currentPage = 1;
 			await this.fetchOffers();
 		},
-		updateOffer(offer: OfferFromGetOffers) {
+		updateOffer(offer: EnhancedOffer) {
 			this.offers = this.offers.map(o => (o.id === offer.id ? offer : o));
 		},
 		async previousPage() {

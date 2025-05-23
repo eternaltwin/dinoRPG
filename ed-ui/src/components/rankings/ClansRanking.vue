@@ -22,7 +22,7 @@
 				<tr
 					v-for="(clan, index) in clansList"
 					:key="clan.id"
-					@click="goToClan(clan.id)"
+					@click="goToClan(clan)"
 					class="select"
 					:class="{
 						even: (index + 1) % 2 === 0
@@ -82,7 +82,7 @@ export default defineComponent({
 				return;
 			}
 		},
-		goToClan(clan: { id: string; name: string }): void {
+		goToClan(clan: { id: number; name: string }): void {
 			this.$router.push({ name: 'Clan', params: { id: clan.id } });
 		},
 		changePage(i: number) {

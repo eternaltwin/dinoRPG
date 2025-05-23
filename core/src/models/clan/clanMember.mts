@@ -1,5 +1,4 @@
-import { Player } from '../player/Player.mjs';
-import { ClanLite } from './clan.mjs';
+import { Clan, Player } from '@drpg/prisma';
 
 export interface ClanMember {
 	id: number;
@@ -9,6 +8,6 @@ export interface ClanMember {
 	rights: string[];
 	donation: number;
 	playerId: string;
-	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: { id: number } };
-	clan: Pick<ClanLite, 'id'>;
+	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: Pick<Clan, 'id'> };
+	clan: Pick<Clan, 'id'>;
 }

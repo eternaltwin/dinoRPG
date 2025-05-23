@@ -56,7 +56,7 @@ export default defineComponent({
 					this.treasure.push({ name: ingredient.name, quantity: t.quantity, price: ingredient.price });
 				});
 			} catch (e) {
-				errorHandler.handle(e, this.$toast, this.$t);
+				errorHandler.handle(e, this.$toast);
 			}
 		}
 	},

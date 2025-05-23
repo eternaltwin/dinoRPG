@@ -84,7 +84,7 @@
 import { defineComponent } from 'vue';
 
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS } from '@drpg/core/constants';
-import { ClanForList, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import { ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { Clan } from '@drpg/prisma';
 import axios from 'axios';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
@@ -106,7 +106,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			clansList: [] as ClanForList[],
+			clansList: [] as ClanLite[],
 			page: 1 as number,
 			searchClanName: '' as string,
 			joinRequest: null as PlayerClanJoinRequest | null,

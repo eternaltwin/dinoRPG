@@ -1,5 +1,4 @@
-import { Player } from '../player/Player.mjs';
-import { ClanLite } from './clan.mjs';
+import { Clan, Player } from '@drpg/prisma';
 
 export interface ClanMessage {
 	id: number;
@@ -9,5 +8,5 @@ export interface ClanMessage {
 	authorId?: string;
 	author?: Pick<Player, 'id' | 'name'> | null;
 	authorName: string;
-	clan: Pick<ClanLite, 'leaderId'> | null;
+	clan: Pick<Clan, 'leaderId'> | null;
 }

@@ -35,7 +35,7 @@
 					{{ mod.sorted ? $t(`report.sorted.${mod.sorted}`) : $t(`report.sorted.open`) }}
 					<select>
 						<option value="null">Pick an action</option>
-						<option v-for="(action, index) in ActionTypes" :key="index" :value="action" @click="selectAction(action)">
+						<option v-for="action in ModerationActionFront" :key="action" :value="action" @click="selectAction(action)">
 							{{ action }}
 						</option>
 					</select>
@@ -57,17 +57,16 @@ import { ModerationReasonFront } from '@drpg/core/models/enums/ModerationReasonF
 import DZUser from '../common/DZUser.vue';
 import DZButton from '../common/DZButton.vue';
 import EventBus from '../../events/index.js';
-
-const ActionTypes = ['closed', 'warning', 'shortBan', 'mediumBan', 'longBan', 'infiniteBan'] as const;
+import { ModerationActionFront } from '@drpg/core/models/enums/ModerationActionFront';
 
 export default defineComponent({
 	components: { DZButton, DZUser },
 	data() {
 		return {
 			moderationLogs: [] as ModerationType[],
-			selectedAction: null as string | null,
+			selectedAction: null as ModerationActionFront | null,
 			page: 1,
-			ActionTypes
+			ModerationActionFront
 		};
 	},
 	methods: {
@@ -89,18 +88,23 @@ export default defineComponent({
 					return 'error';
 			}
 		},
-		selectAction(action: string) {
+		selectAction(action: ModerationActionFront) {
 			this.selectedAction = action;
 		},
 		async takeAction(modId: number) {
+			const selectedAction = this.selectedAction;
+			if (!selectedAction) {
+				this.$toast.open({ message: this.$t('popup.selectAction'), type: 'error' });
+				return;
+			}
 			const res: boolean = confirm(this.$t('popup.confirmBanAction'));
 			if (res) {
 				EventBus.emit('isLoading', true);
 				try {
-					await AdminService.takeAction(modId, this.selectedAction!);
+					await AdminService.takeAction(modId, selectedAction);
 					this.moderationLogs.forEach(l => {
 						if (l.id === modId) {
-							l.sorted = this.selectedAction!;
+							l.sorted = selectedAction;
 						}
 					});
 					EventBus.emit('isLoading', false);

@@ -38,7 +38,7 @@
 				<tr v-for="member in clanMembersList" :key="member.id" :class="(member.id + 1) % 2 === 0 ? 'even' : ''">
 					<td class="name-column">
 						<div class="name-container">
-							<div class="name"><DZUser :user="member.player" :leader="member.player.leaderOf?.id" /></div>
+							<div class="name"><DZUser :user="member.player" :leader="!!member.player.leaderOf?.id" /></div>
 							<div class="nickname">{{ member.nickname }}</div>
 						</div>
 					</td>
@@ -89,7 +89,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
 import EventBus from '../../events/index.js';
@@ -98,14 +97,15 @@ import { ClanService } from '../../services/ClanService.js';
 import { playerStore } from '../../store';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import DZUser from '../common/DZUser.vue';
+import { JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 
 export default defineComponent({
 	name: 'ClanMembers',
 	components: { DZUser },
 	data() {
 		return {
-			clanMembersList: {} as Array<ClanMember>,
-			joinRequestsList: {} as Array<ClanJoinRequest>,
+			clanMembersList: [] as Array<ClanMember>,
+			joinRequestsList: [] as JoinRequestListResponse,
 			playerStore: playerStore(),
 			hasEditRight: false as boolean,
 			hasExcludeRight: false as boolean,
@@ -140,7 +140,7 @@ export default defineComponent({
 				this.clanMembersList = await ClanService.getClanMembersList(Number(this.$route.params.id));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -150,7 +150,7 @@ export default defineComponent({
 				this.joinRequestsList = await ClanService.getJoinRequestslist(Number(this.$route.params.id));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -161,7 +161,7 @@ export default defineComponent({
 				await this.getJoinRequestsList();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -173,7 +173,7 @@ export default defineComponent({
 				EventBus.emit('refreshMoney', true);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -187,7 +187,7 @@ export default defineComponent({
 					await this.getJoinRequestsList();
 					EventBus.emit('isLoading', false);
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 			}
@@ -202,7 +202,7 @@ export default defineComponent({
 					EventBus.emit('isLoading', false);
 					this.$router.push({ name: 'Clan', params: { id: Number(this.$route.params.id) } });
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 			}

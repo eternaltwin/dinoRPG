@@ -13,6 +13,8 @@ export async function getAllClansRequest(page: number) {
 			id: true,
 			name: true,
 			creationDate: true,
+			leaderId: true,
+			treasureValue: true,
 			members: {
 				select: {
 					id: true
@@ -20,6 +22,7 @@ export async function getAllClansRequest(page: number) {
 			},
 			leader: {
 				select: {
+					id: true,
 					name: true
 				}
 			}
@@ -83,6 +86,8 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 		select: {
 			id: true,
 			name: true,
+			treasureValue: true,
+			leaderId: true,
 			members: {
 				select: {
 					id: true
@@ -91,6 +96,7 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 			creationDate: true,
 			leader: {
 				select: {
+					id: true,
 					name: true
 				}
 			}
@@ -369,7 +375,14 @@ export async function getPlayerJoinRequest(playerId: string) {
 			clan: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					leaderId: true,
+					members: {
+						select: {
+							playerId: true,
+							rights: true
+						}
+					}
 				}
 			}
 		}

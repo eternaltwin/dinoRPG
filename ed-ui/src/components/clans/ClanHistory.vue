@@ -63,7 +63,7 @@ export default defineComponent({
 				this.maxPage = Math.floor((historyCount.count + 19) / 20);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},

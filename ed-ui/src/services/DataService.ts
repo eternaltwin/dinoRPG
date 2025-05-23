@@ -1,5 +1,5 @@
+import { PantheonMotif } from '@drpg/prisma';
 import { http } from '../utils/index.js';
-import { PantheonMotif } from '@drpg/core/models/enums/PantheonMotif';
 import { PantheonDisplay } from '@drpg/core/models/pantheon/pantheonDisplay';
 
 export const DataService = {

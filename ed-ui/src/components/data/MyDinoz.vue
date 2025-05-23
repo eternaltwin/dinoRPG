@@ -80,14 +80,15 @@ export default defineComponent({
 			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 		},
 		updateSortedDinozList() {
-			this.sortedDinozList = this.accountData.dinoz.slice().sort((a, b) => {
-				if (a.isFrozen && !b.isFrozen) {
-					return 1;
-				} else if (!a.isFrozen && b.isFrozen) {
-					return -1;
-				}
-				return 0;
-			});
+			this.sortedDinozList =
+				this.accountData?.dinoz.slice().sort((a, b) => {
+					if (a.isFrozen && !b.isFrozen) {
+						return 1;
+					} else if (!a.isFrozen && b.isFrozen) {
+						return -1;
+					}
+					return 0;
+				}) ?? [];
 		}
 	},
 	computed: {

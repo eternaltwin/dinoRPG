@@ -1,6 +1,6 @@
 <template>
 	<div id="boxMap">
-		<WorldMap :dinozData="dinozData" :key="dinozData" />
+		<WorldMap :dinozData="dinozData" />
 		<p class="placeName">
 			{{ $t(`place.name.${getPlaceName(dinozData!.placeId)}`) }}
 		</p>

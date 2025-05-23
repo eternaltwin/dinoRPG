@@ -106,7 +106,7 @@ export default defineComponent({
 			}
 		},
 		changePage(i: number) {
-			this.$router.push({ name: this.$route.name, params: { pageLoaded: (this.page += i) } });
+			this.$router.push({ name: this.$route.name ?? '', params: { pageLoaded: (this.page += i) } });
 		}
 	},
 	async created(): Promise<void> {

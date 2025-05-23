@@ -120,7 +120,7 @@ export default defineComponent({
 			playerStore: playerStore(),
 			isEditOn: false as boolean,
 			customText: this.accountData?.customText as string | null,
-			customTextEdit: this.accountData?.customText as string | null,
+			customTextEdit: this.accountData?.customText ?? '',
 			playerPosition: null as number | null,
 			option: false as boolean,
 			localStore: localStore(),

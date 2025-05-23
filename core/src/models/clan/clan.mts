@@ -1,23 +1,15 @@
-import { Clan, ClanJoinRequest, ClanMember } from '@drpg/prisma';
-import { Player } from '../player/Player.mjs';
+import { Clan, ClanJoinRequest, ClanMember, Player } from '@drpg/prisma';
 
-export interface ClanLite {
-	id: number;
-	name: string;
-	treasureValue: number;
-	creationDate: Date;
-	leaderId: string;
-	leader: Pick<Player, 'id' | 'name'>;
-}
-
-export type ClanForList = Pick<Clan, 'id' | 'name' | 'creationDate'> & {
+export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDate' | 'leaderId'> & {
 	members: Pick<ClanMember, 'id'>[];
-	leader: Pick<Player, 'name'>;
+	leader: Pick<Player, 'id' | 'name'>;
 }
 
 export type ClanForSearch = Pick<Clan, 'id' | 'name'>;
 
 export type PlayerClanJoinRequest = Pick<ClanJoinRequest, 'id' | 'date'> & {
 	player: Pick<Player, 'id' | 'name'>;
-	clan: Pick<Clan, 'id' | 'name'>;
+	clan: Pick<Clan, 'id' | 'name' | 'leaderId'> & {
+		members: Pick<ClanMember, 'playerId' | 'rights'>[];
+	};
 }
