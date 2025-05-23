@@ -4729,7 +4729,7 @@ const checkDefensiveEffects = (
 		// Opponent has FORME_VAPOREUSE
 		hasSkill(target, Skill.FORME_ETHERALE) &&
 		// 6% chance
-		randomBetweenSeeded(fightData.rng, 0, 99) < 8
+		randomBetweenSeeded(fightData.rng, 0, 99) < 6
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
