@@ -16,7 +16,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	element: {
 		stepName: 'element',
 		condition: {
-			[ConditionEnum.MAXLEVEL]: 79
+			[ConditionEnum.MAXLEVEL]: 49
 		},
 		nextStep: ['fire', 'water', 'lightning', 'wood', 'air']
 	},
@@ -77,7 +77,7 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 	experience: {
 		stepName: 'experience',
 		condition: {
-			[ConditionEnum.MAXLEVEL]: 79
+			[ConditionEnum.MAXLEVEL]: 49
 		},
 		nextStep: ['maxExperience']
 	},
@@ -86,8 +86,8 @@ export const ALPHA: Readonly<Record<string, NpcData>> = {
 		nextStep: ['back'],
 		reward: [
 			{
-				rewardType: RewardEnum.MAXEXPERIENCE,
-				value: 1
+				rewardType: RewardEnum.EXPERIENCE,
+				value: 44756
 			}
 		]
 	},

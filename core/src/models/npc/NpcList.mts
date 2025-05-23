@@ -43,6 +43,15 @@ import { M_SKULLY } from './missions/skully.mjs';
 import { Npc } from './npc.mjs';
 
 export const npcList: Record<string, Npc> = {
+	ALPHA: {
+		name: 'alpha_test',
+		id: 0,
+		placeId: PlaceEnum.DINOVILLE,
+		data: ALPHA,
+		condition: undefined,
+		missions: undefined,
+		flashvars: undefined
+	},
 	// CRIEUR: {
 	// 	name: 'street_shouter',
 	// 	id: 1,
