@@ -4498,7 +4498,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.SOUFFLE_ETHERAL,
 		name: 'SouffleEtheral',
 		type: SkillType.A,
-		energy: Energy.E50,
+		energy: Energy.E60,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTree.VANILLA,
@@ -4506,7 +4506,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
-		probability: 15,
+		probability: 9,
 		visualEffect: SkillVisualEffect.CLOUD,
 		color: '0xDDDDDD'
 	},
