@@ -2711,7 +2711,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTree.VANILLA,
-		unlockedFrom: [Skill.ACUPUNCTURE],
+		unlockedFrom: [Skill.SANS_PITIE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
