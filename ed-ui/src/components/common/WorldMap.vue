@@ -3,8 +3,8 @@
 		<div
 			class="full_map"
 			:style="{
-				left: `${-left}px`,
-				top: `${-top}px`,
+				left: `${-(left ?? 0)}px`,
+				top: `${-(top ?? 0)}px`,
 				position: 'relative',
 				float: 'left',
 				transform: `translateX(${-translation.x}px)translateY(${-translation.y}px)`

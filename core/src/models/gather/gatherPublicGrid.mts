@@ -1,5 +1,5 @@
 export type GatherPublicGrid = {
-	grid: (-1 | 0)[][];
+	grid: number[][];
 	gatherTurn: number;
 	gatherType: string;
 };

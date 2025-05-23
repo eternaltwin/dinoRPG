@@ -4,7 +4,7 @@ import axios from 'axios';
 import { deleteCookie } from './cookies.js';
 
 export const errorHandler = {
-	handle(err: Error, ToastFunction: ToastPluginApi): void {
+	handle(err: unknown, ToastFunction: ToastPluginApi): void {
 		if (axios.isAxiosError(err) && err.response) {
 			ToastFunction.open({
 				message: err.response.data,

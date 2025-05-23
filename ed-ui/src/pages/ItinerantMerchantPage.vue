@@ -28,7 +28,7 @@
 						:id="ingredientNameList[ingredient.ingredientId]"
 						:key="ingredient.ingredientId"
 						:class="{
-							full: ingredient.quantity >= ingredient.maxQuantity,
+							full: (ingredient.quantity ?? 0) >= ingredient.maxQuantity,
 							even: (index + 1) % 2 == 0
 						}"
 						tag="tr"
@@ -74,7 +74,7 @@
 			<a
 				class="button"
 				v-html="formatContent($t('shop.item.sell', { gold: totalSell }))"
-				@click="sellIngredientPopinConfirmChoice(ingredient?.ingredientId, inputValues[ingredient?.ingredientId])"
+				@click="sellIngredientPopinConfirmChoice()"
 			/>
 		</div>
 	</div>
@@ -114,6 +114,15 @@ export default defineComponent({
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
 			const currentDinozId = this.dinozStore.currentDinozId;
+
+			if (typeof currentDinozId !== 'number') {
+				this.$toast.open({
+					message: this.$t(`toast.missingData`),
+					type: 'error'
+				});
+				return;
+			}
+
 			const sellingItems = this.inputValues
 				.filter(i => i.quantity > 0)
 				.filter(i => (this.ingredientList.find(a => a.ingredientId === i.itemId)?.quantity ?? 0) >= i.quantity);
@@ -161,6 +170,15 @@ export default defineComponent({
 		this.itinerantId = parseInt(this.$route.params.itinerantId as string);
 		try {
 			const currentDinozId = this.dinozStore.currentDinozId;
+
+			if (typeof currentDinozId !== 'number') {
+				this.$toast.open({
+					message: this.$t(`toast.missingData`),
+					type: 'error'
+				});
+				return;
+			}
+
 			this.ingredientList = await IngredientsService.getIngredientsFromIngredientsShop(currentDinozId);
 			const tempo: ShopDTO[] = this.ingredientList.map(i => {
 				return { itemId: i.ingredientId, quantity: 0 };

@@ -16,7 +16,7 @@
 				v-for="(ingredient, index) in ingredientList"
 				:key="ingredient.name"
 				:class="{
-					full: ingredient.quantity >= ingredient.maxQuantity,
+					full: (ingredient.quantity ?? 0) >= ingredient.maxQuantity,
 					even: (index + 1) % 2 == 0
 				}"
 			>
@@ -118,7 +118,7 @@ export default defineComponent({
 							})
 					);
 				} catch (err) {
-					errorHandler.handle(err, this.$toast, this.$t);
+					errorHandler.handle(err, this.$toast);
 					return;
 				}
 				await this.load();

@@ -1,36 +1,35 @@
-import { Clan } from '@drpg/core/models/clan/clan';
+import { ClanForList, ClanForSearch, ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { ClanJoinRequest } from '@drpg/core/models/clan/clanJoinRequest';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
-import { http } from '../utils/index.js';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
-import { ClanSearch } from 'src/components/data/SearchClan.vue';
+import { http } from '../utils/index.js';
 
 export const ClanService = {
-	getClansRanking(page: number): Promise<Array<Clan>> {
+	getClansRanking(page: number): Promise<Array<ClanLite>> {
 		return http()
 			.get(`/clan/ranking/${page}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getClansList(page: number): Promise<Array<Clan>> {
+	getClansList(page: number): Promise<ClanForList[]> {
 		return http()
 			.get(`/clan/all/${page}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	searchClansByName(name: string, page: number): Promise<Array<Clan>> {
+	searchClansByName(name: string, page: number): Promise<ClanForList[]> {
 		return http()
 			.get(`/clan/search/${name}/${page}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	searchClans(name: string): Promise<Array<ClanSearch>> {
+	searchClans(name: string): Promise<ClanForSearch[]> {
 		return http()
 			.get(`/clan/search/${name}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getClan(id: number): Promise<Clan> {
+	getClan(id: number): Promise<ClanLite> {
 		return http()
 			.get(`/clan/${id}`)
 			.then(res => Promise.resolve(res.data))
@@ -42,13 +41,13 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	createClan(name: string, description: string): Promise<Clan> {
+	createClan(name: string, description: string): Promise<ClanLite> {
 		return http()
 			.post(`/clan`, { name: name, description: description })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	deleteClan(id: number): Promise<Clan> {
+	deleteClan(id: number): Promise<ClanLite> {
 		return http()
 			.delete(`/clan/${id}`)
 			.then(res => Promise.resolve(res.data))
@@ -78,7 +77,7 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getSelfJoinRequest(): Promise<ClanJoinRequest> {
+	getSelfJoinRequest(): Promise<PlayerClanJoinRequest | null> {
 		return http()
 			.get(`/clan/request/self`)
 			.then(res => Promise.resolve(res.data))

@@ -144,6 +144,11 @@ const router = createRouter({
 					component: () => import('../pages/DinozMissions.vue')
 				},
 				{
+					path: '/skill-tree',
+					name: 'SkillTree',
+					component: () => import('../pages/SkillTree.vue')
+				},
+				{
 					path: '/market/:tab',
 					name: 'MarketPage',
 					component: () => import('../pages/MarketPage.vue')

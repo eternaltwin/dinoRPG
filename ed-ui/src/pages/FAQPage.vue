@@ -2,7 +2,7 @@
 	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t(`rightMenu.faq`)" />
 	<DZDisclaimer help round content="faq.intro" />
 	<div class="search">
-		<form @submit.prevent="searchQuestion">
+		<form @submit.prevent="e => e.preventDefault()">
 			<table>
 				<tbody>
 					<tr>

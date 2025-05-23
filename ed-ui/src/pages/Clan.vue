@@ -110,7 +110,7 @@ import ClanHeader from '../components/clans/ClanHeader.vue';
 import EventBus from '../events/index.js';
 import { ClanService } from '../services/ClanService.js';
 import { errorHandler } from '../utils/errorHandler.js';
-import { Clan } from '@drpg/core/models/clan/clan';
+import { ClanLite } from '@drpg/core/models/clan/clan';
 
 import { playerStore } from '../store/index.js';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
@@ -124,7 +124,7 @@ export default defineComponent({
 	data() {
 		return {
 			tabSelected: 1 as number,
-			clan: undefined as Clan | undefined,
+			clan: undefined as ClanLite | undefined,
 			playerStore: playerStore(),
 			isClanMember: false as boolean,
 			hasBannerEditRight: false as boolean
@@ -165,7 +165,7 @@ export default defineComponent({
 				this.clan = await ClanService.getClan(Number(this.$route.params.id));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -176,7 +176,7 @@ export default defineComponent({
 					ClanMemberRight[ClanMemberRight.CLAN_EDIT_BANNER]
 				);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

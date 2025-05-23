@@ -1,5 +1,5 @@
 import { Player } from '../player/Player.mjs';
-import { Clan } from './clan.mjs';
+import { ClanLite } from './clan.mjs';
 
 export interface ClanMember {
 	id: number;
@@ -10,5 +10,5 @@ export interface ClanMember {
 	donation: number;
 	playerId: string;
 	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: { id: number } };
-	clan: Pick<Clan, 'id'>;
+	clan: Pick<ClanLite, 'id'>;
 }

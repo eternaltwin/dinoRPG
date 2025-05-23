@@ -136,7 +136,7 @@ export default defineComponent({
 		}
 
 		// Fetch data
-		const list = await DinozService.getDinozToManage().catch(error => errorHandler.handle(error, this.$toast, this.$t));
+		const list = await DinozService.getDinozToManage().catch(error => errorHandler.handle(error, this.$toast));
 
 		if (!list) return;
 		// Add order if null

@@ -12,15 +12,14 @@ export async function getAllClansRequest(page: number) {
 		select: {
 			id: true,
 			name: true,
+			creationDate: true,
 			members: {
 				select: {
 					id: true
 				}
 			},
-			creationDate: true,
 			leader: {
 				select: {
-					id: true,
 					name: true
 				}
 			}
@@ -92,7 +91,6 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 			creationDate: true,
 			leader: {
 				select: {
-					id: true,
 					name: true
 				}
 			}

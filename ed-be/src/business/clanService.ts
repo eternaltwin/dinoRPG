@@ -48,6 +48,7 @@ import { LOGGER } from '../context.js';
 import { ingredientList } from '@drpg/core/models/ingredient/ingredientList';
 import { createNotification } from '../dao/notificationDao.js';
 import { NotificationSeverity } from '@drpg/prisma';
+import { ClanForList, ClanForSearch, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 
 /**
  * Get all the clans
@@ -55,7 +56,7 @@ import { NotificationSeverity } from '@drpg/prisma';
  * @param req.params.page {number} page number
  * @returns Array<Clan>
  */
-export async function getAllClans(req: Request) {
+export async function getAllClans(req: Request): Promise<ClanForList[]> {
 	await auth(req);
 	const page = +req.params.page;
 	const clans = await getAllClansRequest(page);
@@ -82,7 +83,7 @@ export async function getRankingClans(req: Request) {
  * @param req.params.name {string} clan name
  * @returns Array<Clan>
  */
-export async function searchClanByName(req: Request) {
+export async function searchClanByName(req: Request): Promise<ClanForList[]> {
 	await auth(req);
 
 	const clans = await searchClansByNameRequest(req.params.name, Number(req.params.page));
@@ -96,7 +97,7 @@ export async function searchClanByName(req: Request) {
  * @param req.params.name {string} clan name
  * @returns Array<Clan>
  */
-export async function searchClans(req: Request) {
+export async function searchClans(req: Request): Promise<ClanForSearch[]> {
 	await auth(req);
 
 	const clans = await searchClansByName(req.params.name);
@@ -236,7 +237,7 @@ export async function denyJoinRequest(req: Request) {
  * @param req
  * @returns Clan
  */
-export async function getJoinRequest(req: Request) {
+export async function getJoinRequest(req: Request): Promise<PlayerClanJoinRequest | null> {
 	const authed = await auth(req);
 
 	//pas besoin de playerId en param vu qu'on l'a dans requ.auth.playerId

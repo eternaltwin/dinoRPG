@@ -7,7 +7,12 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
 	name: 'DZInput',
-	props: {}
+	props: {
+		type: {
+			type: String,
+			default: 'text'
+		}
+	}
 });
 </script>
 

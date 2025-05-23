@@ -36,7 +36,7 @@
 						{{ clan.name }}
 					</td>
 					<td class="leader other">
-						{{ clan.leader.name }}
+						{{ clan.leader?.name }}
 					</td>
 					<td class="members other">
 						{{ clan.members.length }}
@@ -83,18 +83,19 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
-import { errorHandler } from '../utils/index.js';
-import { ClanService } from '../services/index.js';
-import { PlayerService } from '../services/index.js';
-import { Clan, ClanJoinRequest } from '@drpg/prisma';
-import { playerStore } from '../store';
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS } from '@drpg/core/constants';
-import { formatNumber } from '../utils/formatText';
-import { formatText } from '../utils/formatText.js';
+import { ClanForList, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
+import { Clan } from '@drpg/prisma';
+import axios from 'axios';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import SearchEntity from '../components/data/SearchEntity.vue';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import EventBus from '../events/index.js';
+import { ClanService, PlayerService } from '../services/index.js';
+import { playerStore } from '../store';
+import { formatNumber } from '../utils/formatText';
+import { formatText } from '../utils/formatText.js';
+import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
 	name: 'ClansList',
@@ -105,10 +106,10 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			clansList: {} as Array<Clan>,
+			clansList: [] as ClanForList[],
 			page: 1 as number,
 			searchClanName: '' as string,
-			joinRequest: undefined as ClanJoinRequest | undefined,
+			joinRequest: null as PlayerClanJoinRequest | null,
 			playerStore: playerStore(),
 			alreadyHasClan: true as boolean,
 			canCreateClan: false as boolean,
@@ -125,7 +126,7 @@ export default defineComponent({
 		goToClan(_id: number): void {
 			this.$router.push({ name: 'Clan', params: { id: _id } });
 		},
-		dateToString(date: string) {
+		dateToString(date: string | Date) {
 			return new Date(date).toLocaleString('fr-FR');
 		},
 		goToCreateClanPage() {
@@ -161,7 +162,7 @@ export default defineComponent({
 				this.clansList = await ClanService.getClansList(this.page);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -171,7 +172,7 @@ export default defineComponent({
 				this.clansList = await ClanService.searchClansByName(this.searchClanName, this.page);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		},
@@ -179,21 +180,21 @@ export default defineComponent({
 			try {
 				this.joinRequest = await ClanService.getSelfJoinRequest();
 			} catch (err) {
-				if (err?.response?.status != 404) {
-					errorHandler.handle(err, this.$toast, this.$t);
+				if (axios.isAxiosError(err) && err?.response?.status != 404) {
+					errorHandler.handle(err, this.$toast);
 				}
 				return;
 			}
 		},
-		async cancelRequest(request: ClanJoinRequest) {
+		async cancelRequest(request: PlayerClanJoinRequest) {
 			EventBus.emit('isLoading', true);
 			try {
 				await ClanService.denyJoinClanRequest(request.id);
-				this.joinRequest = undefined;
+				this.joinRequest = null;
 				EventBus.emit('refreshMoney', true);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
-				errorHandler.handle(err, this.$toast, this.$t);
+				errorHandler.handle(err, this.$toast);
 				return;
 			}
 		}

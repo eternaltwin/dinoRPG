@@ -2526,7 +2526,8 @@
 		"forum": "Dino-RPG [ Forums ]",
 		"admin": "Dino-RPG [ Admin Dashboard ]",
 		"event": "Dino-RPG [ Evénements ]",
-		"fb_tournament": "Dino-RPG [ Tournoi de Forcebrut ]"
+		"fb_tournament": "Dino-RPG [ Tournoi de Forcebrut ]",
+		"skillTree": "Dino-RPG [ Arbre de Compétences ]"
 	},
 	"gather": {
 		"action": {
@@ -5022,5 +5023,8 @@
 		"disclaimer": "Bienvenue au tournoi de Forcebrut, ici vous pourrez affronter les meilleurs dinoz créés par d'autres joueurs. Le premier palier est un dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître dinoz !",
 		"stage": "Palier {stage}",
 		"fight": "Combattre {opponent}"
+	},
+	"skillTree": {
+		"title": "Arbre de compétences"
 	}
 }

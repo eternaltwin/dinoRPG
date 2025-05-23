@@ -172,6 +172,9 @@ export default defineComponent({
 						case ItemEffect.QUEST:
 							message = this.$t(`quest.${toast.value}`);
 							break;
+						case ItemEffect.RESURRECT:
+							message = this.$t(`quest.${toast.category}`);
+							break;
 						default:
 							message = this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;
@@ -226,10 +229,10 @@ export default defineComponent({
 					this.allItemsData.sort((a, b) => b.price - a.price);
 					break;
 				case 'qtyAsc':
-					this.allItemsData.sort((a, b) => a.quantity - b.quantity);
+					this.allItemsData.sort((a, b) => (a.quantity ?? 0) - (b.quantity ?? 0));
 					break;
 				case 'qtyDesc':
-					this.allItemsData.sort((a, b) => b.quantity - a.quantity);
+					this.allItemsData.sort((a, b) => (b.quantity ?? 0) - (a.quantity ?? 0));
 					break;
 				default:
 					this.allItemsData.sort((a, b) => a.itemId - b.itemId);

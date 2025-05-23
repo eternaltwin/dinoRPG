@@ -11,13 +11,13 @@
 			<img :src="getImgURL('design', 'kabuk_hp')" alt="kabuki" class="dinoz" />
 		</div>
 		<div class="cards">
-			<TwinoidGoals :accountStats="accountData.stats" :key="accountData.stats"></TwinoidGoals>
+			<TwinoidGoals :accountStats="accountData.stats"></TwinoidGoals>
 			<div class="profilCard">
-				<Profile :accountData="accountData" :key="accountData"></Profile>
-				<EpicRewards :epicRewards="accountData.epicRewards" :key="accountData.epicRewards"></EpicRewards>
+				<Profile :accountData="accountData"></Profile>
+				<EpicRewards :epicRewards="accountData.epicRewards"></EpicRewards>
 			</div>
 		</div>
-		<MyDinoz :accountData="accountData" :key="accountData.dinoz"></MyDinoz>
+		<MyDinoz :accountData="accountData"></MyDinoz>
 		<!--			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />-->
 	</div>
 </template>

@@ -4,8 +4,8 @@ const pad = (n: number) => (n < 10 ? `0${n}` : n);
 
 export const mixin = {
 	methods: {
-		formatDate(date: string): string {
-			const dateObj = new Date(date);
+		formatDate(date: string | Date): string {
+			const dateObj = typeof date === 'string' ? new Date(date) : date;
 			const month = pad(dateObj.getMonth() + 1);
 			const day = pad(dateObj.getDate());
 			const hours = pad(dateObj.getHours());
@@ -16,11 +16,11 @@ export const mixin = {
 		formatContent(value: string): string {
 			return !value ? '' : formatText(value.toString());
 		},
-		getImgURL(path: string, imgName: string, pixel?: boolean): URL {
-			return new URL(`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`, import.meta.url);
+		getImgURL(path: string, imgName: string, pixel?: boolean): string {
+			return new URL(`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`, import.meta.url).toString();
 		},
-		getSWFUrl(path: string, imgName: string): URL {
-			return new URL(`/src/assets/${path}/${imgName}.swf`, import.meta.url);
+		getSWFUrl(path: string, imgName: string): string {
+			return new URL(`/src/assets/${path}/${imgName}.swf`, import.meta.url).toString();
 		}
 	}
 };

@@ -5,7 +5,8 @@ import { FightResult } from '@drpg/core/models/fight/FightResult';
 export const sessionStore = defineStore('sessionStore', {
 	state: (): StoreStateSession => ({
 		fight: undefined,
-		tab: 1
+		tab: 1,
+		fromFight: false
 	}),
 	getters: {
 		getFightResult: (state: StoreStateSession) => state.fight,

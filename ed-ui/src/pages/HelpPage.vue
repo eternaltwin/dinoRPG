@@ -58,6 +58,31 @@
 import { defineComponent } from 'vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 
+type HelpPageImage = {
+	path: string;
+	name: string;
+};
+
+type HelpPageListItem = {
+	imageUrl?: HelpPageImage;
+	text: string;
+};
+
+type HelpPageContentSection = {
+	name?: string;
+	texts?: string[];
+	ImageUrl?: HelpPageImage;
+	listItems?: HelpPageListItem[];
+};
+
+type HelpPageItem = {
+	name: string;
+	nameImageUrl?: HelpPageImage;
+	contentSections: HelpPageContentSection[];
+	nextItem?: number;
+	prevItem?: number;
+};
+
 export default defineComponent({
 	name: 'Help',
 	components: {
@@ -69,7 +94,7 @@ export default defineComponent({
 		};
 	},
 	computed: {
-		items() {
+		items(): HelpPageItem[] {
 			return [
 				{
 					name: this.$t('guide.sections.intro'),

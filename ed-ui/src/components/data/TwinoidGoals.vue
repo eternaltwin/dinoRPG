@@ -98,7 +98,7 @@
 							</Tippy>
 							<template v-if="isUnlock(stats)">
 								<Tippy theme="small" tag="li" v-for="won in getRewards(stats)" :key="won" class="name">
-									{{ won.title[language] }}
+									{{ won.title?.[language] }}
 									<template #content>
 										<p>
 											{{ $t(`achievements.reward`, { name: getStatDetails(stats, 'name'), quantity: won.count }) }}

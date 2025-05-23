@@ -16,9 +16,8 @@
 			:dinoz="dinozData"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
-			:key="dinozData"
 		/>
-		<TabPanel v-show="isReady" :dinozData="dinozData" :key="dinozData" />
+		<TabPanel v-show="isReady" :dinozData="dinozData" />
 		<!--		<div class="footer" />-->
 	</div>
 </template>

@@ -1,5 +1,5 @@
 import { Player } from '../player/Player.mjs';
-import { Clan } from './clan.mjs';
+import { ClanLite } from './clan.mjs';
 
 export interface ClanMessage {
 	id: number;
@@ -9,5 +9,5 @@ export interface ClanMessage {
 	authorId?: string;
 	author?: Pick<Player, 'id' | 'name'> | null;
 	authorName: string;
-	clan: Pick<Clan, 'leaderId'> | null;
+	clan: Pick<ClanLite, 'leaderId'> | null;
 }

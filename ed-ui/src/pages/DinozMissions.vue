@@ -9,55 +9,43 @@
 				<th class="see" />
 			</tr>
 
-			<tr v-for="dinoz in data as MissionsPageData" :key="dinoz.id">
+			<tr v-for="dinoz in dinozMissionsWithRewards" :key="dinoz.id">
 				<td class="dinoz">{{ dinoz.name }}</td>
 				<td class="missions">
 					<ul>
 						<Tippy tag="li" theme="normal" v-for="mission in dinoz.missions" :key="mission.npc">
 							<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 							<span>
-								{{ mission.missions.length }}/{{ npcMissions.find(npc => npc.name === mission.npc)?.missions.length }}
+								{{ mission.missions.length }}/{{
+									npcMissions.find(npc => npc.name === mission.npc)?.missions?.length ?? 0
+								}}
 								{{ $t(`npc.name.${mission.npc}`) }}
 							</span>
 							<template #content>
 								<h1 v-html="formatContent($t('dinozMissions.missionsFrom', { npc: mission.npc }))"></h1>
 								<ul class="missions-summary">
 									<li v-for="innerMission in mission.missions" :key="innerMission.id">
-										{{
-											void (rewards = npcMissions
-												.find(npc => npc.name === mission.npc)
-												?.missions.find(m => m.missionId === innerMission.id)?.rewards)
-										}}
 										<span class="center">
 											<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 											<span>{{ $t(`missions.name.${innerMission.name}`) }}</span>
 										</span>
-										<table v-if="rewards">
-											{{
-												void (xp = rewards.find(r => r.rewardType === RewardEnum.EXPERIENCE)?.value)
-											}}
-											{{
-												void (gold = rewards.find(r => r.rewardType === RewardEnum.GOLD)?.value)
-											}}
-											{{
-												void (items = rewards.filter(r => r.rewardType === RewardEnum.ITEM))
-											}}
+										<table v-if="innerMission.rewards">
 											<tbody>
 												<tr>
-													<td v-if="xp">
+													<td v-if="innerMission.xp">
 														<div class="center">
-															<span class="xp">{{ xp }}</span>
+															<span class="xp">{{ innerMission.xp }}</span>
 															<img :src="getImgURL('icons', 'small_xp')" alt="xp" />
 														</div>
 													</td>
-													<td v-if="gold">
+													<td v-if="innerMission.gold">
 														<div class="center">
-															<span class="gold">{{ gold }}</span>
-															<img :src="getImgURL('icons', 'small_gold')" alt="xp" />
+															<span class="gold">{{ innerMission.gold }}</span>
+															<img :src="getImgURL('icons', 'small_gold')" alt="gold" />
 														</div>
 													</td>
-													<td v-if="items.length">
-														<div class="center" v-for="item in items" :key="item.value">
+													<td v-if="innerMission.items.length">
+														<div class="center" v-for="item in innerMission.items" :key="item.value">
 															<span class="item">{{ item.quantity }}</span>
 															<img
 																:src="getImgURL('item', `item_${itemNameList[item.value]}`)"
@@ -122,6 +110,32 @@ export default defineComponent({
 			RewardEnum,
 			itemNameList
 		};
+	},
+	computed: {
+		dinozMissionsWithRewards() {
+			return this.data.map(dinoz => ({
+				...dinoz,
+				missions: dinoz.missions.map(mission => ({
+					...mission,
+					missions: mission.missions.map(innerMission => {
+						const rewards =
+							this.npcMissions
+								.find(npc => npc.name === mission.npc)
+								?.missions?.find(m => m.missionId === innerMission.id)?.rewards || [];
+						const xp = rewards.find(r => r.rewardType === this.RewardEnum.EXPERIENCE);
+						const gold = rewards.find(r => r.rewardType === this.RewardEnum.GOLD);
+						const items = rewards.filter(r => r.rewardType === this.RewardEnum.ITEM);
+						return {
+							...innerMission,
+							rewards,
+							xp: xp ? ('value' in xp ? xp.value : 0) : 0,
+							gold: gold ? ('value' in gold ? gold.value : 0) : 0,
+							items
+						};
+					})
+				}))
+			}));
+		}
 	},
 	async mounted(): Promise<void> {
 		// Redirect to last page if no PDA

@@ -160,7 +160,7 @@
 						<input type="number" v-model="selectedQuantity" />
 						<a
 							class="button"
-							v-if="isSelectedQuantityValid(parseFloat(selectedQuantity), resolveItem(selectedItem))"
+							v-if="isSelectedQuantityValid(selectedQuantity, resolveItem(selectedItem))"
 							@click="popinConfirmChoice(false)"
 						>
 							{{ $t(`shop.item.buy`) }}
@@ -221,7 +221,7 @@
 									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
 									selectedItem.quantity +
 									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									selectedItem.maxQuantity +
+									resolveItem(selectedItem).maxQuantity +
 									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
 								"
 							/>
@@ -232,7 +232,7 @@
 						<Tippy
 							theme="small"
 							tag="img"
-							v-if="selectedItem.canBeUsedNow"
+							v-if="resolveItem(selectedItem).canBeUsedNow"
 							:src="getImgURL('icons', 'small_use')"
 							alt="use"
 						>
@@ -248,7 +248,7 @@
 						<Tippy
 							theme="small"
 							tag="img"
-							v-if="selectedItem.canBeEquipped"
+							v-if="resolveItem(selectedItem).canBeEquipped"
 							:src="getImgURL('icons', 'small_equip')"
 							alt="equip"
 						>
@@ -267,7 +267,7 @@
 						<input type="number" v-model="selectedQuantity" />
 						<a
 							class="button"
-							v-if="selectedQuantity > 0 && selectedQuantity * selectedItem.price <= selectedItem.quantity"
+							v-if="selectedQuantity > 0 && selectedQuantity * selectedItem.price <= (selectedItem.quantity ?? 0)"
 							@click="popinConfirmChoice(false)"
 						>
 							{{ $t(`shop.item.buy`) }}
@@ -289,7 +289,7 @@
 						<div class="name">
 							{{ $t(`ingredients.name.${resolveIngredient(selectedItem).name}`) }}
 						</div>
-						<div v-if="selectedItem.itemType !== 'magical'" class="value">
+						<div v-if="resolveItem(selectedItem).itemType !== 'magical'" class="value">
 							<span class="money">
 								{{ resolveItem(selectedItem).price }} -> 1
 								<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
@@ -297,7 +297,7 @@
 						</div>
 					</div>
 					<div class="clear"></div>
-					<div v-if="selectedItem.itemType === 'magical'" class="objValue">
+					<div v-if="resolveItem(selectedItem).itemType === 'magical'" class="objValue">
 						{{ formatContent($t(`shop.item.price`)) }}
 						<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
 						{{ formatContent($t(`item.name.golden_napodino`)) }}
@@ -341,7 +341,7 @@ export default defineComponent({
 			fullItems: [] as ItemShopFiche[],
 			shopList: shopList,
 			selectedItem: undefined as ItemShopFiche | undefined,
-			selectedQuantity: 1 as number,
+			selectedQuantity: 1,
 			ItemShopType: ItemShopType
 		};
 	},
@@ -352,7 +352,7 @@ export default defineComponent({
 		// Check if the quantity select is valid:
 		// i.e a valid number or the player has enough room
 		isSelectedQuantityValid(): {
-			(selectedQuantity: number, selectedItem: ItemShop): boolean;
+			(selectedQuantity: number, selectedItem: ItemFiche): boolean;
 		} {
 			return (selectedQuantity: number, selectedItem: ItemFiche) => {
 				return (
@@ -411,7 +411,7 @@ export default defineComponent({
 			) {
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
-				this.selectedItem.quantity = this.selectedItem.quantity + quantity;
+				this.selectedItem.quantity = (this.selectedItem.quantity ?? 0) + quantity;
 				EventBus.emit('refreshMoney', true);
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
@@ -424,19 +424,19 @@ export default defineComponent({
 			let totalPrice;
 			if (this.selectedItem.type === ItemShopType.INGREDIENT) {
 				if (max) {
-					quantity = Math.floor(this.selectedItem.quantity / this.selectedItem.price);
+					quantity = Math.floor((this.selectedItem.quantity ?? 0) / this.selectedItem.price);
 				} else {
 					quantity = this.selectedQuantity;
 				}
-				if (quantity > this.selectedItem.quantity) {
-					quantity = Math.floor(this.selectedItem.quantity / this.selectedItem.price);
+				if (quantity > (this.selectedItem.quantity ?? 0)) {
+					quantity = Math.floor((this.selectedItem.quantity ?? 0) / this.selectedItem.price);
 				}
 
 				totalPrice = quantity * this.selectedItem.price;
 			} else {
 				const myGolds = this.playerStore.getMoney;
 				if (max) {
-					quantity = this.resolveItem(this.selectedItem).maxQuantity - this.selectedItem.quantity;
+					quantity = this.resolveItem(this.selectedItem).maxQuantity - (this.selectedItem.quantity ?? 0);
 				} else {
 					quantity = this.selectedQuantity;
 				}

@@ -6,11 +6,19 @@
 		<br />
 		<div>
 			<label>1ère lettre :</label>&nbsp;
-			<input type="text" :value="display[0]" @change="changeLetterDinozOne($event.target.value, 0)" />
+			<input
+				type="text"
+				:value="display[0]"
+				@change="changeLetterDinozOne(($event.target as HTMLInputElement).value, 0)"
+			/>
 		</div>
 		<div v-for="(letter, index) in display.slice(1)" :key="index">
 			<label>{{ index + 2 }}ème lettre: </label>&nbsp;
-			<input type="text" :value="display[index + 1]" @change="changeLetterDinozOne($event.target.value, index + 1)" />
+			<input
+				type="text"
+				:value="display[index + 1]"
+				@change="changeLetterDinozOne(($event.target as HTMLInputElement).value, index + 1)"
+			/>
 		</div>
 	</div>
 
@@ -21,11 +29,19 @@
 		<br />
 		<div>
 			<label>1ère lettre :</label>&nbsp;
-			<input type="text" :value="display2[0]" @change="changeLetterDinozTwo($event.target.value, 0)" />
+			<input
+				type="text"
+				:value="display2[0]"
+				@change="changeLetterDinozTwo(($event.target as HTMLInputElement).value, 0)"
+			/>
 		</div>
 		<div v-for="(letter, index) in display2.slice(1)" :key="index">
 			<label>{{ index + 2 }}ème lettre: </label>&nbsp;
-			<input type="text" :value="display2[index + 1]" @change="changeLetterDinozTwo($event.target.value, index + 1)" />
+			<input
+				type="text"
+				:value="display2[index + 1]"
+				@change="changeLetterDinozTwo(($event.target as HTMLInputElement).value, index + 1)"
+			/>
 		</div>
 	</div>
 	<button @click="reload()">Reload</button>

@@ -8,7 +8,7 @@
 		<div class="action_content">
 			<template v-for="didi in dinozFullParty" :key="didi">
 				<MissionHUDVue
-					v-if="didi.missionHUD"
+					v-if="didi.missionHUD && didi.missionId"
 					:missionId="didi.missionId"
 					:dinozName="didi.name"
 					:dinozId="didi.id"
@@ -43,38 +43,38 @@
 				@click="launch(action)"
 			>
 				<img :src="getImgURL('icons', action.imgName)" :alt="action.imgName" />
-				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop]}.name`) }}</p>
-				<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(action.prop)}`) }}</p>
-				<p v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION">
+				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${shopNameList[action.prop ?? '']}.name`) }}</p>
+				<p v-else-if="action.name === 'npc'">{{ $t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`) }}</p>
+				<p v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION">
 					{{ $t(`missions.actions.terminate`) }}
 				</p>
 				<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>
 				<p v-else>{{ $t(`action.name.${action.name}`) }}</p>
 				<template #content>
-					<h1 v-if="action.name === 'shop'" v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.name`))" />
-					<h1 v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.name.${npcDisplayName(action.prop)}`))" />
 					<h1
-						v-else-if="action.name === 'mission' && mission.actionType === MissionEnum.FINISH_MISSION"
+						v-if="action.name === 'shop'"
+						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.name`))"
+					/>
+					<h1
+						v-else-if="action.name === 'npc'"
+						v-html="formatContent($t(`npc.name.${npcDisplayName(+(action.prop ?? '0'))}`))"
+					/>
+					<h1
+						v-else-if="action.name === 'mission' && mission?.actionType === MissionEnum.FINISH_MISSION"
 						v-html="formatContent($t(`missions.actions.terminate`))"
 					/>
 					<h1 v-else-if="action.name === 'mission'" v-html="formatContent($t(`missions.npc.${action.prop}`))" />
-					<h1
-						v-else-if="action.name !== 'npc' && action.name !== 'shop'"
-						v-html="formatContent($t(`action.name.${action.name}`))"
-					/>
+					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
 					<p
 						v-if="action.name === 'shop'"
-						v-html="formatContent($t(`shop.item.${shopNameList[action.prop]}.description`))"
+						v-html="formatContent($t(`shop.item.${shopNameList[action.prop ?? '']}.description`))"
 					/>
 					<p v-else-if="action.name === 'npc'" v-html="formatContent($t(`npc.description`))" />
 					<p
 						v-else-if="action.name === 'mission'"
 						v-html="formatContent($t(`missions.tooltip`, { mission: $t(`missions.name.${missionName}`) }))"
 					/>
-					<p
-						v-else-if="action.name !== 'npc' && action.name !== 'shop'"
-						v-html="formatContent($t(`action.description.${action.name}`))"
-					/>
+					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
 			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />

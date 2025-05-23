@@ -55,7 +55,7 @@
 
 <script lang="ts">
 import { PropType, defineComponent } from 'vue';
-import { Clan } from '@drpg/core/models/clan/clan';
+import { ClanLite } from '@drpg/core/models/clan/clan';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import { API_BASE, utils } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
@@ -63,7 +63,7 @@ import DZUser from '../common/DZUser.vue';
 export default defineComponent({
 	name: 'ClanHeader',
 	props: {
-		clan: { type: Object as PropType<Clan>, required: true }
+		clan: { type: Object as PropType<ClanLite>, required: true }
 	},
 	data() {
 		return {
