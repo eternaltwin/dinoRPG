@@ -1538,7 +1538,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		effects: {
 			[Stat.SPEED]: ['x', 0.9],
-			[Stat.EVASION]: ['x', 0.9]
+			[Stat.EVASION]: ['x', 1.1]
 		}
 	},
 	[Skill.PRINTEMPS_PRECOCE]: {
