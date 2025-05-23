@@ -830,7 +830,6 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.WAIKIKIDO],
-		raceId: [],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
