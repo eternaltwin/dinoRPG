@@ -1581,6 +1581,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
+		raceId: [], // Hack to make skill unlockable
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
@@ -2677,7 +2678,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD, ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31311, 21309, 61119],
+		unlockedFrom: [31311, 21310, 61119],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3250,6 +3251,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
+		raceId: [], // Hack to make skill unlockable
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3530,7 +3532,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.LIGHTNING, ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [51302, 41305, 61119],
+		unlockedFrom: [51302, 41306, 61119],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -5109,7 +5111,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER, ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41305, 31404],
+		unlockedFrom: [41306, 31404],
 		raceId: [RaceList.WINKS, RaceList.WINKS_DEMON],
 		isBaseSkill: false,
 		isSphereSkill: false,
