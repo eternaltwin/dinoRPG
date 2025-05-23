@@ -348,11 +348,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			fighter.skillEnergyFactor *= 0.9;
 		}
 
-		// FORME_ETHERALE
-		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
-			addStatus(fightData, fighter, Status.INTANGIBLE);
-		}
-
 		// TORCHE
 		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
 			addStatus(fightData, fighter, Status.TORCHED);
