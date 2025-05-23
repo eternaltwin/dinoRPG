@@ -4941,7 +4941,11 @@ const checkAfterAttackEffects = (
 	}
 
 	// Revitalisation
-	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.REVITALISATION)) {
+	if (isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.REVITALISATION) &&
+		elements.find(element => element === ElementType.LIGHTNING)
+	) {
 		heal(fightData, attacker, 1, undefined, LifeEffect.Lightning);
 	}
 
