@@ -958,7 +958,6 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	for (let i = 0; i < tempestFighters.length; i++) {
 		const tempester = tempestFighters[i];
 		if (randomBetweenSeeded(fightData.rng, 0, 99) < 30) {
-			console.log(`Tempete!`);
 			fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
 			return null;
 		}
@@ -1365,13 +1364,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.CLONE_AQUEUX: {
 				// Go no further before checking the clone is not cancelled
 				const tempestFighters = getOpponents(fightData, fighter).filter(f => hasSkill(f, Skill.TEMPETE));
-
+				let tempestTriggered = false;
 				for (let i = 0; i < tempestFighters.length; i++) {
 					const tempester = tempestFighters[i];
 					if (randomBetweenSeeded(fightData.rng, 0, 99) < 30) {
 						fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
+						tempestTriggered = true;
 						break;
 					}
+				}
+				if (tempestTriggered) {
+					break;
 				}
 
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
