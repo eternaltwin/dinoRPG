@@ -1,4 +1,4 @@
-import { Player } from '../player/Player.mjs';
+import { Player } from "@drpg/prisma";
 
 export interface ThreadsBasic {
 	id: string;

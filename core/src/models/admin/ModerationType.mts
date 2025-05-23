@@ -1,7 +1,7 @@
-import { Player } from '../player/Player.mjs';
 import { DinozFiche } from '../dinoz/DinozFiche.mjs';
 import { ModerationReasonFront } from '../enums/ModerationReasonFront.mjs';
 import { ModerationActionFront } from '../enums/ModerationActionFront.mjs';
+import { Player } from '@drpg/prisma';
 
 export type ModerationType = {
 	id: number;

@@ -1,4 +1,4 @@
-import { Player } from './Player.mjs';
+import { Player } from "@drpg/prisma";
 
 export interface PlayerTypeToSend extends Player {
 	status: number[];
