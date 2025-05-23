@@ -2588,7 +2588,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			break;
 		}
-		case Skill.SOUFFLE_ETHERAL: {
+		case Skill.BROUILLARD_ETHERAL: {
 			const allies = getAllies(fightData, fighter);
 			allies.forEach(a => {
 				addStatus(fightData, a, Status.INTANGIBLE, StatusLength.SHORT);

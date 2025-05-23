@@ -281,7 +281,7 @@ export enum Skill {
 	MEDITATION_TRANSCENDANTALE = 51501,
 	DJINN = 51502,
 	HADES = 51503,
-	SOUFFLE_ETHERAL = 51504,
+	BROUILLARD_ETHERAL = 51504,
 	FORME_ETHERALE = 51601,
 	MAITRISE_CORPORELLE = 52101,
 	BLANC = 52201,
@@ -4494,9 +4494,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
-	[Skill.SOUFFLE_ETHERAL]: {
-		id: Skill.SOUFFLE_ETHERAL,
-		name: 'SouffleEtheral',
+	[Skill.BROUILLARD_ETHERAL]: {
+		id: Skill.BROUILLARD_ETHERAL,
+		name: 'BrouillardEtheral',
 		type: SkillType.A,
 		energy: Energy.E60,
 		element: [ElementType.AIR],
