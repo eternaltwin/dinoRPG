@@ -825,15 +825,13 @@ export async function softReset(req: Request) {
 			prisma.$executeRawUnsafe(`SET CONSTRAINTS ALL DEFERRED;`),
 
 			// TRUNCATE multiple tables in one statement
-			prisma.$executeRawUnsafe(`
-    TRUNCATE TABLE 
-      dojo, 
-      "FBTournament", 
-      "FightArchive", 
-      gamedinoz, 
-      dinoz_skill_unlockable 
-    CASCADE;
-  `),
+			prisma.$executeRawUnsafe(`TRUNCATE TABLE dojo CASCADE;`),
+
+			prisma.$executeRawUnsafe(`DELETE FROM "FBTournament";`),
+			prisma.$executeRawUnsafe(`TRUNCATE TABLE "FightArchive", "FightWatched", dinoz_skill_unlockable;`),
+			prisma.$executeRawUnsafe(`DELETE FROM dinoz_skill WHERE "gameDinozId" is not null ;`),
+			prisma.$executeRawUnsafe(`DELETE FROM dinoz_item WHERE "gameDinozId" is not null ;`),
+			prisma.$executeRawUnsafe(`DELETE FROM gamedinoz;`),
 
 			// DELETE with condition
 			prisma.$executeRawUnsafe(`
@@ -900,8 +898,35 @@ export async function softReset(req: Request) {
     END;
   `),
 
+			prisma.$executeRawUnsafe(`
+				UPDATE dinoz
+				SET 
+					"nbrUpFire" = CASE WHEN "raceId" IN (1, 2, 3, 4, 26, 28) THEN 2
+														 WHEN "raceId" IN (14, 19, 20, 27) THEN 1
+														 ELSE 0
+					END,
+					"nbrUpWood" = CASE WHEN "raceId" IN (15, 16, 23, 25, 28) THEN 2
+														 WHEN "raceId" IN (9, 14, 17, 18, 20, 24) THEN 1
+														 ELSE 0
+					END,
+					"nbrUpWater" = CASE WHEN "raceId" IN (13, 23, 26) THEN 2
+															WHEN "raceId" IN (5, 6, 14, 19, 20, 21, 22, 24 ) THEN 1
+															ELSE 0
+						END,
+					"nbrUpAir" = CASE WHEN "raceId" IN (19, 24, 27) THEN 2
+														WHEN "raceId" IN (9, 12, 14, 28) THEN 1
+														ELSE 0
+						END,
+					"nbrUpLightning" = CASE WHEN "raceId" IN (7, 25, 27) THEN 2
+																	WHEN "raceId" IN (5, 6, 10, 12, 14, 17, 18, 24, 28) THEN 1
+																	ELSE 0
+						END	;
+			`),
+
 			// Other updates
 			prisma.$executeRawUnsafe(`UPDATE dinoz SET level = 1, "placeId" = 5;`),
+
+			prisma.$executeRawUnsafe(`UPDATE ranking SET points = "dinozCount", average = 1, dojo = 0;`),
 
 			prisma.$executeRawUnsafe(`SET CONSTRAINTS ALL IMMEDIATE;`)
 		]);
