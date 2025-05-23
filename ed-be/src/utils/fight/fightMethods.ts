@@ -4522,7 +4522,11 @@ const attackTarget = (
 
 		// INTANGIBLE
 		if (hasStatus(target, Status.INTANGIBLE)) {
-			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
+			// Can be hit by assaults with special perk or water + perception or any air skill
+			if ((isAssault &&
+					(attacker.canHitIntangible || elements.some(e => e === ElementType.WATER && attacker.perception))
+				) ||
+				elements.some(e => e === ElementType.AIR)) {
 				damage = 1;
 				break_intangible = true;
 			} else {
