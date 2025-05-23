@@ -19,7 +19,7 @@ export const getAssaultStat = (
 	skills: Pick<SkillDetails, 'effects' | 'name' | 'element'>[],
 	elementName: AssaultElement,
 	WARLORD?: boolean,
-	power = 5,
+	power = 5
 ) => {
 	let element = 0;
 	switch (elementName) {

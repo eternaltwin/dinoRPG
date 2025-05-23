@@ -143,9 +143,9 @@ export interface FullFightStats {
 }
 
 export interface HitResult {
-	attacker: DetailedFighter,
-	target: DetailedFighter,
-	isAssault: boolean,
-	evasion: boolean,
-	hpLost: number
+	attacker: DetailedFighter;
+	target: DetailedFighter;
+	isAssault: boolean;
+	evasion: boolean;
+	hpLost: number;
 }

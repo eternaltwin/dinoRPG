@@ -256,7 +256,12 @@
 								<span v-if="detail.type === 'base'">
 									{{ detail.value }}{{ detail.percent ? '%' : '' }}
 									<span class="detail-name">
-										{{ (stat.name === SpecialStat.ACID_BLOOD_DAMAGE || stat.name === SpecialStat.FETID_BREATH_DAMAGE) ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
+										{{
+											stat.name === SpecialStat.ACID_BLOOD_DAMAGE || stat.name === SpecialStat.FETID_BREATH_DAMAGE
+												? '/ 2'
+												: ''
+										}}
+										({{ $t('details.baseValue') }})
 									</span>
 								</span>
 								<span v-else>

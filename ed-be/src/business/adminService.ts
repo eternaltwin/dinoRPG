@@ -855,70 +855,90 @@ export async function softReset(req: Request) {
 	}
 
 	try {
-		await prisma.$executeRaw`BEGIN;`;
+		await prisma.$transaction([
+			prisma.$executeRawUnsafe(`SET CONSTRAINTS ALL DEFERRED;`),
 
-		await prisma.$executeRaw`SET CONSTRAINTS ALL DEFERRED;`;
+			// TRUNCATE multiple tables in one statement
+			prisma.$executeRawUnsafe(`
+    TRUNCATE TABLE 
+      dojo, 
+      "FBTournament", 
+      "FightArchive", 
+      gamedinoz, 
+      dinoz_skill_unlockable 
+    CASCADE;
+  `),
 
-		await prisma.$executeRaw`TRUNCATE TABLE dojo CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "FBTournament" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE "FightArchive" CASCADE;`;
-		await prisma.$executeRaw`TRUNCATE TABLE gamedinoz CASCADE;`;
-		await prisma.$executeRaw`DELETE FROM dinoz_skill WHERE "skillId" NOT IN (61102, 61103, 61104, 61105, 61106, 61107, 61108, 61109, 61113, 61117);`;
-		await prisma.$executeRaw`TRUNCATE TABLE dinoz_skill_unlockable;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 100 WHERE level = 2;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 207 WHERE level = 3;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 322 WHERE level = 4;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 446 WHERE level = 5;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 579 WHERE level = 6;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 722 WHERE level = 7;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 876 WHERE level = 8;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1041 WHERE level = 9;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1219 WHERE level = 10;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1410 WHERE level = 11;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1616 WHERE level = 12;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 1837 WHERE level = 13;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2075 WHERE level = 14;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2331 WHERE level = 15;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2606 WHERE level = 16;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 2901 WHERE level = 17;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 3219 WHERE level = 18;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 3560 WHERE level = 19;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 3927 WHERE level = 20;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 4322 WHERE level = 21;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 4746 WHERE level = 22;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 5202 WHERE level = 23;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 5692 WHERE level = 24;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 6219 WHERE level = 25;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 6786 WHERE level = 26;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 7382 WHERE level = 27;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 8037 WHERE level = 28;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 8741 WHERE level = 29;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 9498 WHERE level = 30;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 10312 WHERE level = 31;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 11187 WHERE level = 32;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 12128 WHERE level = 33;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 13139 WHERE level = 34;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 14226 WHERE level = 35;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 15395 WHERE level = 36;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 16651 WHERE level = 37;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 18002 WHERE level = 38;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 19454 WHERE level = 39;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 21015 WHERE level = 40;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 22693 WHERE level = 41;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 24497 WHERE level = 42;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 26433 WHERE level = 43;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 28518 WHERE level = 44;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 30760 WHERE level = 45;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 33169 WHERE level = 46;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 35760 WHERE level = 47;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 38545 WHERE level = 48;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 41538 WHERE level = 49;`;
-		await prisma.$executeRaw`UPDATE dinoz SET experience = experience + 44756 WHERE level = 50;`;
-		await prisma.$executeRaw`UPDATE dinoz SET level = 1;`;
+			// DELETE with condition
+			prisma.$executeRawUnsafe(`
+    DELETE FROM dinoz_skill 
+    WHERE "skillId" NOT IN (
+      61102, 61103, 61104, 61105, 61106, 61107, 61108, 61109, 61113, 61117, 61122, 61201, 61301
+    );
+  `),
 
-		await prisma.$executeRaw`SET CONSTRAINTS ALL IMMEDIATE;`;
+			// Single UPDATE using CASE for each level
+			prisma.$executeRawUnsafe(`
+    UPDATE dinoz
+    SET experience = experience + CASE level
+      WHEN 2 THEN 100
+      WHEN 3 THEN 207
+      WHEN 4 THEN 322
+      WHEN 5 THEN 446
+      WHEN 6 THEN 579
+      WHEN 7 THEN 722
+      WHEN 8 THEN 876
+      WHEN 9 THEN 1041
+      WHEN 10 THEN 1219
+      WHEN 11 THEN 1410
+      WHEN 12 THEN 1616
+      WHEN 13 THEN 1837
+      WHEN 14 THEN 2075
+      WHEN 15 THEN 2331
+      WHEN 16 THEN 2606
+      WHEN 17 THEN 2901
+      WHEN 18 THEN 3219
+      WHEN 19 THEN 3560
+      WHEN 20 THEN 3927
+      WHEN 21 THEN 4322
+      WHEN 22 THEN 4746
+      WHEN 23 THEN 5202
+      WHEN 24 THEN 5692
+      WHEN 25 THEN 6219
+      WHEN 26 THEN 6786
+      WHEN 27 THEN 7382
+      WHEN 28 THEN 8037
+      WHEN 29 THEN 8741
+      WHEN 30 THEN 9498
+      WHEN 31 THEN 10312
+      WHEN 32 THEN 11187
+      WHEN 33 THEN 12128
+      WHEN 34 THEN 13139
+      WHEN 35 THEN 14226
+      WHEN 36 THEN 15395
+      WHEN 37 THEN 16651
+      WHEN 38 THEN 18002
+      WHEN 39 THEN 19454
+      WHEN 40 THEN 21015
+      WHEN 41 THEN 22693
+      WHEN 42 THEN 24497
+      WHEN 43 THEN 26433
+      WHEN 44 THEN 28518
+      WHEN 45 THEN 30760
+      WHEN 46 THEN 33169
+      WHEN 47 THEN 35760
+      WHEN 48 THEN 38545
+      WHEN 49 THEN 41538
+      WHEN 50 THEN 44756
+      ELSE 0
+    END;
+  `),
 
-		await prisma.$executeRaw`COMMIT;`;
+			// Other updates
+			prisma.$executeRawUnsafe(`UPDATE dinoz SET level = 1, "placeId" = 5;`),
+
+			prisma.$executeRawUnsafe(`SET CONSTRAINTS ALL IMMEDIATE;`)
+		]);
 
 		LOGGER.log('Remise à zéro du jeu effectuée');
 	} catch (error) {
