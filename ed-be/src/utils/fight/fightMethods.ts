@@ -4894,7 +4894,7 @@ const checkAfterAttackEffects = (
 
 	// Burn opponent if fighter has Skill.GRIFFES_INFERNALES and landed a hit with an assault that was not dodged
 	if (isCloseCombat && !isDodged && hasSkill(attacker, Skill.GRIFFES_INFERNALES)) {
-		const damage = attacker.stats.base[ElementType.FIRE];
+		const damage = target.stats.base[ElementType.FIRE];
 
 		target.burnedBy = {
 			id: attacker.id,
