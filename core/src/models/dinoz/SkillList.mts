@@ -2691,7 +2691,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	},
 	[Skill.BRANCHIES]: {
 		id: Skill.BRANCHIES,
-		name: 'branchies',
+		name: 'Branchies',
 		type: SkillType.P,
 		energy: Energy.NONE,
 		element: [ElementType.WATER],
@@ -3157,7 +3157,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	},
 	[Skill.REVITALISATION]: {
 		id: Skill.REVITALISATION,
-		name: 'Revitaliastion',
+		name: 'Revitalisation',
 		type: SkillType.C,
 		energy: Energy.NONE,
 		element: [ElementType.LIGHTNING],
