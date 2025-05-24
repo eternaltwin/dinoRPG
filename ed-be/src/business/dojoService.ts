@@ -294,7 +294,6 @@ export async function fightChallenge(req: Request) {
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const activeChallenge = player.Dojo.activeChallenge as Challenge;
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && fightResult.winner;
 

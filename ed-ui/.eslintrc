@@ -10,7 +10,7 @@
 		"ecmaVersion": 2022
 	},
 	"rules": {
-		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/no-non-null-assertion": "error",
 		"vue/multi-word-component-names": "off",
 		"vue/component-name-in-template-casing": ["error", "PascalCase"],
 		"vue/require-toggle-inside-transition": "off",
