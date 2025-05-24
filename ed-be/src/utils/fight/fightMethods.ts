@@ -4115,8 +4115,8 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
-const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
-	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
+const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect, step?: FightStep) => {
+	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx, step);
 };
 
 const loseHp = (
@@ -4124,7 +4124,7 @@ const loseHp = (
 	fighter: DetailedFighter,
 	damage: number,
 	fx: LifeEffect,
-	noStep?: boolean
+	step?: FightStep
 ) => {
 	// TODO: check for danger detector item
 	let hp_lost = damage;
@@ -4137,12 +4137,17 @@ const loseHp = (
 		hp_lost = initial_hp;
 	}
 
-	if (!noStep) {
+	if (!step) {
 		fightData.steps.push({
 			action: 'looseHp',
 			fid: fighter.id,
 			hp: hp_lost,
 			fx
+		});
+	} else {
+		(step as SkillActivateStep).targets.push({
+			tid: fighter.id,
+			damages: hp_lost
 		});
 	}
 
@@ -4488,7 +4493,7 @@ const attackTarget = (
 		// Check for assault dodge
 		if (
 			isAssault &&
-			!hasStatus(target, Status.PETRIFIED) &&
+			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
 			!attacker.cancelAssaultDodge &&
 			fightData.rng() < getFighterEvasion(target, power)
 		) {
@@ -4598,11 +4603,11 @@ const attackTarget = (
 		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
 
 		// Check for combo
-		if (canCombo) {
+		if (canCombo && attacker.hp > 0 && !(hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED))) {
 			if (fightData.rng() < getFighterMultihit(attacker)) {
 				// If target has riposte and succeeds its roll, interrupt the combo
-				if (
-					!hasStatus(target, Status.PETRIFIED) &&
+				if ( target.hp > 0 &&
+					!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
 					hasSkill(target, Skill.RIPOSTE) &&
 					randomBetweenSeeded(fightData.rng, 0, 99) < 50
 				) {
@@ -4653,7 +4658,9 @@ const attackTarget = (
 
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && counterAttack(fightData, target)) {
+		if (isAssault &&
+			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
+			counterAttack(fightData, target)) {
 			// Add counter step
 			fightData.steps.push({
 				action: 'counter',
@@ -5107,20 +5114,22 @@ const checkAfterDefenseEffects = (
 		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
 
-	// Decharge: close combat, hit landed, 3% chance to electrocute and stun
-	if (damage > 0 && hasSkill(target, Skill.DECHARGE) && randomBetweenSeeded(fightData.rng, 0, 99) < 3) {
+	// Decharge: hit landed, 5% chance to electrocute and stun
+	if (damage > 0 && hasSkill(target, Skill.DECHARGE) && randomBetweenSeeded(fightData.rng, 0, 99) < 5) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
 			skill: Skill.DECHARGE
 		});
-		fightData.steps.push({
+		const activate_step: SkillActivateStep  = {
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.DECHARGE,
-			targets: [{ tid: attacker.id, damages: balanceDamage(target.stats.special.dischargeDamage) }]
-		});
-		loseHp(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning, true);
+			targets: []
+		};
+		loseHpBalanced(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning, activate_step);
+		// Add step to history
+		fightData.steps.push(activate_step);
 		addStatus(fightData, attacker, Status.STUNNED, StatusLength.SUPER_SHORT);
 	}
 
@@ -5728,6 +5737,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		if (fightData.loser) {
 			return;
 		}
+	}
+
+	// If fighter gained any of those status after its event skill, its turn is interrupted
+	if (hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED)) {
+		return;
 	}
 
 	// Skill activation
