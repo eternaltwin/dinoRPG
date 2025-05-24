@@ -1285,8 +1285,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
-				if (hasStatus(fighter, Status.SHIELDED)) cancel();
-				addStatus(fightData, fighter, Status.SHIELDED, StatusLength.SHORT);
+				if (hasStatus(fighter, Status.SHIELDED)) return cancel();
+				addStatus(fightData, fighter, Status.SHIELDED, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.BENEDICTION: {
