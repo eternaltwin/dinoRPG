@@ -3928,7 +3928,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		id: Skill.ENVOL,
 		name: 'Envol',
 		type: SkillType.A,
-		energy: Energy.E20,
+		energy: Energy.E10,
 		element: [ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
