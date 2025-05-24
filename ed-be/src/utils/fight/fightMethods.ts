@@ -129,8 +129,8 @@ const chooseRandomFighterForAssault = (
 	const canHitIntangible =
 		attacker.canHitIntangible ||
 		(power
-			? power.some(val => val[0] === ElementType.AIR || (val[0] === ElementType.WATER && attacker.perception))
-			: attacker.element === ElementType.AIR || (attacker.element === ElementType.WATER && attacker.perception));
+			? power.some(val => val[0] === ElementType.AIR)
+			: attacker.element === ElementType.AIR);
 
 	// List all invalid opponents
 	const unreachable_opponents: DetailedFighter[] = [];
@@ -4531,10 +4531,7 @@ const attackTarget = (
 		// INTANGIBLE
 		if (hasStatus(target, Status.INTANGIBLE)) {
 			// Can be hit by assaults with special perk or water + perception or any air skill
-			if ((isAssault &&
-					(attacker.canHitIntangible || elements.some(e => e === ElementType.WATER && attacker.perception))
-				) ||
-				elements.some(e => e === ElementType.AIR)) {
+			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e === ElementType.AIR)) {
 				damage = 1;
 				break_intangible = true;
 			} else {
@@ -4738,8 +4735,9 @@ const checkDefensiveEffects = (
 	if (
 		// Opponent has FORME_VAPOREUSE
 		hasSkill(target, Skill.FORME_ETHERALE) &&
-		// 6% chance
-		randomBetweenSeeded(fightData.rng, 0, 99) < 6
+		!hasStatus(target, Status.INTANGIBLE) &&
+		// 8% chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 8
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -4766,21 +4764,21 @@ const checkDefensiveEffects = (
 		damage = Math.max(damage - 5, 0);
 	}
 
-	// DECOLLAGE D'URGENCE
-	if (
-		isCloseCombat &&
-		hasSkill(target, Skill.DECOLLAGE_D_URGENCE) &&
-		// 5 % chance
-		randomBetweenSeeded(fightData.rng, 0, 99) < 5
-	) {
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.DECOLLAGE_D_URGENCE
-		});
-		// Add FLYING
-		addStatus(fightData, target, Status.FLYING, StatusLength.SHORT);
-	}
+	// // DECOLLAGE D'URGENCE
+	// if (
+	// 	isCloseCombat &&
+	// 	hasSkill(target, Skill.DECOLLAGE_D_URGENCE) &&
+	// 	// 5 % chance
+	// 	randomBetweenSeeded(fightData.rng, 0, 99) < 5
+	// ) {
+	// 	fightData.steps.push({
+	// 		action: 'skillAnnounce',
+	// 		fid: target.id,
+	// 		skill: Skill.DECOLLAGE_D_URGENCE
+	// 	});
+	// 	// Add FLYING
+	// 	addStatus(fightData, target, Status.FLYING, StatusLength.SHORT);
+	// }
 
 	// Check for mud wall
 	if (target.mudWall) {
@@ -4885,7 +4883,7 @@ const checkAfterAttackEffects = (
 	}
 
 	// CONCENTRATION: save last target ID if it was an assault and the target is not the same as the original side of the attacker
-	if (isCloseCombat && attacker.attacker != target.attacker && hasSkill(attacker, Skill.CONCENTRATION)) {
+	if (isCloseCombat && attacker.attacker !== target.attacker && hasSkill(attacker, Skill.CONCENTRATION)) {
 		attacker.previousTarget = target.id;
 	}
 
