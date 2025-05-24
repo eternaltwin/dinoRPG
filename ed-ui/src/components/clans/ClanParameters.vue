@@ -70,16 +70,16 @@ export default defineComponent({
 		},
 		async onFileChanged() {
 			const form = new FormData();
-			const image = this.$refs.fileInput! as HTMLInputElement;
-			const file = image.files![0];
+			const image = this.$refs.fileInput as HTMLInputElement;
+			const file = image.files?.[0];
 			if (file) {
 				const reader = new FileReader();
 				reader.onload = e => {
-					this.filePreviewUrl = e.target!.result as string;
+					this.filePreviewUrl = e.target?.result as string;
 				};
 				reader.readAsDataURL(file);
 				form.delete('file');
-				form.append('file', image!.files![0]);
+				form.append('file', file);
 				await ClanService.updateClanBanner(Number(this.$route.params.id), form);
 			}
 		}

@@ -487,10 +487,10 @@ export default defineComponent({
 			}
 
 			// Epic rewards update
-			if (this.playerFields.rewards!.length > 0 && this.playerFields.epicOperation) {
+			if ((this.playerFields.rewards?.length ?? 0) > 0 && this.playerFields.epicOperation) {
 				await AdminService.givePlayerEpicRewards(
 					this.player.id,
-					this.playerFields.rewards!,
+					this.playerFields.rewards ?? [],
 					this.playerFields.epicOperation
 				);
 			}
@@ -541,7 +541,10 @@ export default defineComponent({
 			this.player = await AdminService.getplayerInformation(this.player.id);
 
 			this.playerFields.rewards = [];
-			this.filterEpicList(this.playerFields.epicOperation!);
+
+			if (this.playerFields.epicOperation) {
+				this.filterEpicList(this.playerFields.epicOperation);
+			}
 
 			this.playerFields.selectedItem = undefined;
 			this.playerFields.itemQuantity = 1;
@@ -557,7 +560,7 @@ export default defineComponent({
 			this.playerFields.progressionQuest = undefined;
 			this.playerFields.questOperation = '';
 		},
-		filterEpicList(operation: string): void {
+		filterEpicList(operation: string) {
 			if (operation === 'add') {
 				this.epicListFiltered = Object.keys(epicList.imgName).filter(
 					epicRewardId => !this.player.rewards.includes(parseInt(epicRewardId))

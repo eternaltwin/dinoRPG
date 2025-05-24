@@ -276,7 +276,7 @@ export default defineComponent({
 					this.dinozField.level ||
 					this.dinozField.placeId ||
 					this.dinozField.canChangeName !== undefined ||
-					this.dinozField.life! > -1 ||
+					(this.dinozField.life ?? 0) > -1 ||
 					this.dinozField.maxLife ||
 					this.dinozField.experience ||
 					this.dinozField.nbrUpFire ||
@@ -289,7 +289,7 @@ export default defineComponent({
 					(this.dinozField.unlockableSkillList.length > 0 && this.unlockableSkillOperation)
 				) {
 					await AdminService.updateDinoz(
-						this.dinoz.id!,
+						this.dinoz.id,
 						this.dinozField.name,
 						this.dinozField.unavailableReason,
 						this.unavailableReasonOperation,
@@ -314,7 +314,17 @@ export default defineComponent({
 				}
 
 				const refresh: Array<DinozAdminFiche> = await AdminService.listAllDinozFromPlayer(this.playerId.toString());
-				this.dinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id)!;
+				const refreshDinoz = refresh.find(dinoz => dinoz.id === this.dinozProp.id);
+
+				if (!refreshDinoz) {
+					this.$toast.open({
+						message: this.$t('toast.dinozNotFound'),
+						type: 'error'
+					});
+					EventBus.emit('isLoading', false);
+					return;
+				}
+				this.dinoz = refreshDinoz;
 			} catch (err) {
 				EventBus.emit('isLoading', false);
 				errorHandler.handle(err, this.$toast);

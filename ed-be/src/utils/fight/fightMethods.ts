@@ -754,7 +754,7 @@ const launchAssault = (
 
 	let realTarget = target;
 	// Check if a dinoz is protecting the opponent and replace the target with the protector
-	const protector = getOpponents(fightData, attacker).find(opponent => opponent.protecting === target!.id);
+	const protector = getOpponents(fightData, attacker).find(opponent => opponent.protecting === target.id);
 	if (protector) {
 		// Add moveTo step
 		fightData.steps.push({
@@ -2118,7 +2118,7 @@ export const addStatus = (
 	}
 
 	// Add status
-	let status_props = createStatus(status, length ?? StatusLength.INFINITE);
+	const status_props = createStatus(status, length ?? StatusLength.INFINITE);
 
 	// Update the next trigger of status accordingly
 	if (status_props.cycle && fightData.nextStatusTrigger > CYCLE) {
@@ -2224,7 +2224,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
 
-const activateSkill = (fightData: DetailedFight, skill: SkillDetails, seed?: string): boolean => {
+const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
 
@@ -4144,7 +4144,7 @@ const attackTarget = (
 		checkAfterAttackEffects(fightData, attacker, target, damage, elements, isAssault, isDodged);
 
 		// Check for after defense effects of the target
-		checkAfterDefenseEffects(fightData, attacker, target, damage, elements, isAssault, isDodged);
+		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
 
 		// Check for combo
 		if (canCombo) {
@@ -4426,9 +4426,7 @@ const checkAfterDefenseEffects = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
 	damage: number,
-	elements: ElementType[],
 	isCloseCombat: boolean,
-	isDodged: boolean
 ) => {
 	// Objet: voleur de vie
 	// TODO
@@ -4867,7 +4865,7 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	}
 };
 
-export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
+export const playFighterTurn = (fightData: DetailedFight) => {
 	const attacker = fightData.fighters[0];
 
 	// Calculate the elapsed time
@@ -5049,7 +5047,7 @@ export const playFighterTurn = (fightData: DetailedFight, seed?: string) => {
 	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(fightData, attacker);
 	if (possibleSkill) {
 		// End turn if skill activated
-		if (activateSkill(fightData, possibleSkill, seed)) {
+		if (activateSkill(fightData, possibleSkill)) {
 			endTurnChecks(fightData, attacker);
 			return;
 		}

@@ -67,7 +67,7 @@ export default defineComponent({
 	watch: {
 		// Reload page if player click on 'my account' button
 		'$route.params.id': async function () {
-			if (this.$router.currentRoute.value.params.id === this.playerStore.getPlayerId!.toString()) {
+			if (this.$router.currentRoute.value.params.id === this.playerStore.getPlayerId.toString()) {
 				const accountId = this.$route.params.id as string;
 				EventBus.emit('isLoading', true);
 				try {

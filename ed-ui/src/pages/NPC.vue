@@ -74,7 +74,7 @@ export default defineComponent({
 			}
 			EventBus.emit('isLoading', true);
 			try {
-				this.npcSpeech = await NPCService.talkTo(this.dinozId!, this.npcName!, choice);
+				this.npcSpeech = await NPCService.talkTo(this.dinozId, this.npcName ?? '', choice);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -84,7 +84,7 @@ export default defineComponent({
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
 						case ServiceEnum.CONCENTRATION:
-							await DinozService.concentration(this.dinozId!);
+							await DinozService.concentration(this.dinozId);
 							EventBus.emit('isLoading', false);
 							break;
 						case ServiceEnum.DINOZ:
@@ -114,7 +114,7 @@ export default defineComponent({
 			}
 		},
 		async stop(): Promise<void> {
-			await NPCService.talkTo(this.dinozId!, this.npcName!, 'begin', true);
+			await NPCService.talkTo(this.dinozId, this.npcName ?? '', 'begin', true);
 			this.dinozStore.clearNpc(this.dinozId);
 			this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 		}

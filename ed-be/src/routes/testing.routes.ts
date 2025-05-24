@@ -18,7 +18,7 @@ const commonPath: string = apiRoutes.testingRoute;
 	for (const objet of tableau) {
 		if (occurrences.has(objet)) {
 			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-			occurrences.set(objet, occurrences.get(objet)! + 1);
+			occurrences.set(objet, occurrences.get(objet) + 1);
 		} else {
 			occurrences.set(objet, 1);
 		}

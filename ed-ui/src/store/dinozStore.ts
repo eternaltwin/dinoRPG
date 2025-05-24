@@ -27,11 +27,11 @@ export const dinozStore = defineStore('dinozStore', {
 			this.dinozCount = dinozCount;
 		},
 		setDinoz(dinoz: DinozFiche): void {
-			const dinozToUpdate = this.dinozList!.findIndex(dinozs => dinozs.id === dinoz.id);
-			this.dinozList!.splice(dinozToUpdate, 1, dinoz);
+			const dinozToUpdate = this.dinozList.findIndex(dinozs => dinozs.id === dinoz.id);
+			this.dinozList.splice(dinozToUpdate, 1, dinoz);
 		},
 		setNpc(dinozId: number, speech: string, name: string): void {
-			const dinozToUpdate = this.dinozList?.find(dinozs => dinozs.id === dinozId);
+			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 			dinozToUpdate.npcAwait = {
 				npcSpeech: speech,
@@ -39,7 +39,7 @@ export const dinozStore = defineStore('dinozStore', {
 			};
 		},
 		clearNpc(dinozId: number): void {
-			const dinozToUpdate = this.dinozList?.find(dinozs => dinozs.id === dinozId);
+			const dinozToUpdate = this.dinozList.find(dinozs => dinozs.id === dinozId);
 			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
 			dinozToUpdate.npcAwait = undefined;
 		},

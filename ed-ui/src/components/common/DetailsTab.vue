@@ -358,7 +358,7 @@ export default defineComponent({
 			skill.state = !skill.state;
 		},
 		hasAmulst(): boolean {
-			return this.dinozData!.status!.some(s => s.statusId === statusList.id.amulst);
+			return this.dinozData?.status.some(s => s.statusId === statusList.id.amulst) ?? false;
 		},
 		sort(): void {
 			switch (this.selectedSort) {

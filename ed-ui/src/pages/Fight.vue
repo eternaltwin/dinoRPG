@@ -65,7 +65,7 @@ export default defineComponent({
 		}
 		if (fightResult) {
 			this.fight = fightResult;
-			this.playerStore.setMoney(this.playerStore.getMoney! + this.fight.goldEarned);
+			this.playerStore.setMoney(this.playerStore.getMoney + this.fight.goldEarned);
 		}
 
 		const fightSteps = fightResult.history as FightStep[];

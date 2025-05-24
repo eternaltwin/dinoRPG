@@ -128,10 +128,10 @@ export default defineComponent({
 			});
 		},
 		isFull(item: ItemFiche): boolean {
-			return item.quantity! >= item.maxQuantity!;
+			return (item.quantity ?? 0) >= (item.maxQuantity ?? 0);
 		},
 		async refreshDinozList(): Promise<void> {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 
 			const commonData: PlayerCommonData = await PlayerService.getLoggedInData();
 
@@ -142,7 +142,7 @@ export default defineComponent({
 			this.$router.push({ name: 'DinozPage', params: { id: newDinozList.find(x => !oldDinozList.includes(x)) } });
 		},
 		async useItem(item: ItemFiche): Promise<void> {
-			if (item.quantity! > 0) {
+			if ((item.quantity ?? 0) > 0) {
 				EventBus.emit('isLoading', true);
 				const dinozId = this.$route.params.id as string;
 				try {
@@ -191,7 +191,7 @@ export default defineComponent({
 			}
 		},
 		async equipItem(item: ItemFiche): Promise<void> {
-			if (item.quantity! > 0) {
+			if ((item.quantity ?? 0) > 0) {
 				EventBus.emit('isLoading', true);
 				const dinozId = parseInt(this.$route.params.id as string);
 				try {

@@ -42,7 +42,7 @@
 					<line :x1="line.x1" :y1="line.y1" :x2="line.x2" :y2="line.y2" :id="line.name" class="svgLine" />
 				</template>
 			</svg>
-			<img class="map-img" ref="carte" :src="getImgURL('map/map', getPlaceMap())" :alt="getPlaceMap()" />
+			<img class="map-img" ref="carte" :src="getImgURL('map/map', getPlaceMap() ?? '')" :alt="getPlaceMap()" />
 		</div>
 	</div>
 </template>
@@ -71,21 +71,26 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			placeMap: [] as Array<PlaceDisplayed>,
 			translation: {
-				x: 0 as number,
-				y: 0 as number
+				x: 0,
+				y: 0
 			},
-			left: undefined as number | undefined,
-			top: undefined as number | undefined,
+			left: 0,
+			top: 0,
 			svgLines: [] as Array<svgLines>,
 			svgSize: undefined as string | undefined
 		};
 	},
 	methods: {
 		parallax(e: MouseEvent) {
-			const rect: DOMRect = document.querySelector('.map_container')!.getBoundingClientRect(); //taille du wrapper (250*300)
-			const mapImage = document.querySelector('.full_map')!.getBoundingClientRect(); //taille de l'image de la map
-			const xFactor = placeList.find(place => place.placeId === this.dinozData!.placeId)!.xFactor;
-			const yFactor = placeList.find(place => place.placeId === this.dinozData!.placeId)!.yFactor;
+			const rect = document.querySelector('.map_container')?.getBoundingClientRect(); //taille du wrapper (250*300)
+			const mapImage = document.querySelector('.full_map')?.getBoundingClientRect(); //taille de l'image de la map
+
+			if (!rect || !mapImage) {
+				return;
+			}
+
+			const xFactor = placeList.find(place => place.placeId === this.dinozData?.placeId)?.xFactor ?? 1;
+			const yFactor = placeList.find(place => place.placeId === this.dinozData?.placeId)?.yFactor ?? 1;
 			const centerMapY = mapImage.height - rect.height;
 			const centerMapX = mapImage.width - rect.width;
 			const centerX = rect.width / 2;
@@ -96,23 +101,28 @@ export default defineComponent({
 			this.translation.y = Math.floor((-1 * (centerY - mouseY)) / yFactor);
 
 			// Protect the translation top overflow
-			if (this.top! + this.translation.y < 0) {
-				this.translation.y = -this.top!;
-			} else if (this.top! + this.translation.y > centerMapY) {
+			if (this.top + this.translation.y < 0) {
+				this.translation.y = -this.top;
+			} else if (this.top + this.translation.y > centerMapY) {
 				this.translation.y = 0;
 			}
 			// Protect the translation left overflow
-			if (this.left! + this.translation.x < 0) {
-				this.translation.x = -this.left!;
-			} else if (this.left! + this.translation.x > centerMapX) {
+			if (this.left + this.translation.x < 0) {
+				this.translation.x = -this.left;
+			} else if (this.left + this.translation.x > centerMapX) {
 				this.translation.x = 0;
 			}
 		},
-		getPlaceMap(): string {
-			return placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
+		getPlaceMap() {
+			return placeList.find(place => place.placeId === this.dinozData?.placeId)?.map;
 		},
 		centerPos(mapImage: DOMRect) {
-			const rect: DOMRect = document.querySelector('.map_container')!.getBoundingClientRect(); // taille du wrapper (250*300)
+			const rect = document.querySelector('.map_container')?.getBoundingClientRect(); // taille du wrapper (250*300)
+
+			if (!rect) {
+				return;
+			}
+
 			let centerMapY: number = mapImage.height - rect.height;
 			let centerMapX: number = mapImage.width - rect.width;
 			const boxMap = document.getElementById('boxMap') as HTMLDivElement;
@@ -127,10 +137,10 @@ export default defineComponent({
 
 			const centerX: number = rect.width / 2;
 			const centerY: number = rect.height / 2;
-			const actualPlace = placeList.find(place => place.placeId === this.dinozData!.placeId)!;
+			const actualPlace = placeList.find(place => place.placeId === this.dinozData?.placeId);
 
-			this.left = actualPlace.posLeft - centerX;
-			this.top = actualPlace.posTop - centerY;
+			this.left = (actualPlace?.posLeft ?? 0) - centerX;
+			this.top = (actualPlace?.posTop ?? 0) - centerY;
 			// Protect the initial top overflow
 			if (this.top + this.translation.y < 0) {
 				this.top = 0;
@@ -145,7 +155,7 @@ export default defineComponent({
 			}
 		},
 		async moveTo(placeId: number): Promise<void> {
-			if (!this.dinozData!.borderPlace?.includes(placeId)) {
+			if (!this.dinozData?.borderPlace?.includes(placeId)) {
 				return;
 			}
 			EventBus.emit('isLoading', true);
@@ -157,7 +167,7 @@ export default defineComponent({
 			}
 
 			try {
-				const moveTry = await DinozService.betaMove(this.dinozData!.id!, placeId);
+				const moveTry = await DinozService.betaMove(this.dinozData.id, placeId);
 				this.sessionStore.setFightResult(moveTry);
 				// Update Dinoz Place in the store if fight is win
 				const dinozId = this.dinozData?.id;
@@ -204,10 +214,10 @@ export default defineComponent({
 			}
 		},
 		myPos(placeId: number): boolean {
-			return placeId === this.dinozData!.placeId;
+			return placeId === this.dinozData?.placeId;
 		},
 		canGo(placeId: number): boolean {
-			return this.dinozData!.borderPlace!.includes(placeId);
+			return this.dinozData?.borderPlace?.includes(placeId) ?? false;
 		},
 		svgMagic(mapImage: DOMRect): void {
 			let mapX = 0;
@@ -222,22 +232,22 @@ export default defineComponent({
 				mapX = 100;
 			}
 			const actualPlace: PlaceDisplayed | undefined = placeList.find(
-				place => place.placeId === this.dinozData!.placeId
+				place => place.placeId === this.dinozData?.placeId
 			);
-			const x1 = ((actualPlace!.posLeft + 8.5) / mapImage.width) * mapX;
-			const y1 = ((actualPlace!.posTop + 8.5) / mapImage.height) * mapY;
+			const x1 = (((actualPlace?.posLeft ?? 0) + 8.5) / mapImage.width) * mapX;
+			const y1 = (((actualPlace?.posTop ?? 0) + 8.5) / mapImage.height) * mapY;
 
-			this.dinozData!.borderPlace!.forEach(closePlace => {
-				const place: PlaceDisplayed = placeList.find(place => place.placeId === closePlace)!;
-				const x2: number = ((place.posLeft! + 8.5) / mapImage.width) * mapX;
-				const y2: number = ((place.posTop! + 8.5) / mapImage.height) * mapY;
-				this.svgLines.push({ x1, y1, x2, y2, name: place.name });
+			this.dinozData?.borderPlace?.forEach(closePlace => {
+				const place = placeList.find(place => place.placeId === closePlace);
+				const x2: number = (((place?.posLeft ?? 0) + 8.5) / mapImage.width) * mapX;
+				const y2: number = (((place?.posTop ?? 0) + 8.5) / mapImage.height) * mapY;
+				this.svgLines.push({ x1, y1, x2, y2, name: place?.name ?? '' });
 			});
 		},
 		isHover(placeName: string, placeId: number, state: boolean): void {
 			const line: Element | null = document.querySelector(`#${placeName}`);
 			if (this.canGo(placeId)) {
-				state ? line!.classList.add('isHover') : line!.classList.remove('isHover');
+				state ? line?.classList.add('isHover') : line?.classList.remove('isHover');
 			}
 		},
 		waitForImageToLoad(): void {
@@ -253,13 +263,13 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		const map = placeList.find(place => place.placeId === this.dinozData!.placeId)!.map;
+		const map = placeList.find(place => place.placeId === this.dinozData?.placeId)?.map;
 		// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
 		this.placeMap = placeList.filter(
 			place =>
 				place.map === map &&
 				(!place.hidden ||
-					this.dinozData!.borderPlace!.includes(place.placeId) ||
+					this.dinozData?.borderPlace?.includes(place.placeId) ||
 					place.placeId === this.dinozData?.placeId)
 		);
 

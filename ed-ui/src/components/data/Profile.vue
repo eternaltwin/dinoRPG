@@ -139,7 +139,7 @@ export default defineComponent({
 	},
 	methods: {
 		hasPlume(): boolean {
-			return this.accountData!.epicRewards.includes(Reward.PLUME);
+			return this.accountData.epicRewards.includes(Reward.PLUME);
 		},
 		async resetAccount() {
 			const res: boolean = confirm(this.$t('popup.confirm'));
@@ -159,7 +159,7 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 		},
 		hasPMI(): boolean {
-			return this.accountData!.epicRewards.includes(Reward.PMI);
+			return this.accountData.epicRewards.includes(Reward.PMI);
 		},
 		isMyAccount(): boolean {
 			return this.playerStore.getPlayerId === (this.$route.params.id as string);

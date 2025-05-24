@@ -238,7 +238,7 @@ export default defineComponent({
 			return !!selectedDinoz?.followers.map(d => d.id).includes(dinoz.id);
 		},
 		getPlaceName(placeId: number): string {
-			return placeList.find(place => place.placeId === placeId)!.name;
+			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		}
 	},
 	watch: {

@@ -66,10 +66,12 @@ export default defineComponent({
 			try {
 				const dinozId = this.$route.params.id as string;
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-				dinozToUpdate.missionId = this.dinozData.missionId;
-				dinozToUpdate.missionHUD = this.dinozData.missionHUD;
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+				if (dinozToUpdate) {
+					dinozToUpdate.missionId = this.dinozData.missionId;
+					dinozToUpdate.missionHUD = this.dinozData.missionHUD;
+				}
 				this.dinozStore.setDinozList(dinozList);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -80,14 +82,14 @@ export default defineComponent({
 		async getFiche(): Promise<void> {
 			const dinozId = this.$route.params.id as string;
 			this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id!.toString() === dinozId);
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozToUpdate = dinozList.findIndex(dinoz => dinoz.id.toString() === dinozId);
 			if (dinozToUpdate === -1) {
 				this.dinozData = await DinozService.getDinozFiche(parseInt(dinozId));
 				dinozList.push(this.dinozData);
 			} else {
 				dinozList.splice(dinozToUpdate, 1, {
-					...dinozList.find(dinoz => dinoz.id!.toString() === dinozId),
+					...dinozList.find(dinoz => dinoz.id.toString() === dinozId),
 					...this.dinozData
 				});
 			}

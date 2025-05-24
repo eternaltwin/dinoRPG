@@ -117,7 +117,7 @@ export default defineComponent({
 			itinerantShopNameList: itinerantShopNameList,
 			resurect: false as boolean,
 			NPCModal: undefined as string | undefined,
-			// mission: dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.$route.params.id.toString())!
+			// mission: dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id.toString())
 			// 	.missionHUD,
 			npcName: undefined as string | undefined,
 			missionReward: undefined as Rewarder[] | undefined,
@@ -212,17 +212,24 @@ export default defineComponent({
 					this.resurect = true;
 					break;
 				case Action.MISSION:
+					if (typeof this.dinoz.missionId !== 'number') {
+						this.$toast.open({
+							message: this.$t('toast.missingData'),
+							type: 'error'
+						});
+						return;
+					}
 					if (this.mission && this.mission.actionType === ConditionEnum.FINISH_MISSION) {
 						this.missionReward = await MissionService.finishMission(
 							this.$route.params.id.toString(),
-							this.dinoz.missionId!
+							this.dinoz.missionId
 						);
 					} else if (this.mission && this.mission.actionType === ConditionEnum.LAUNCH_FIGHT) {
 						try {
 							this.npcName = action.prop as string;
 							const fight = await MissionService.startFightMission(
 								this.$route.params.id.toString(),
-								this.dinoz.missionId!,
+								this.dinoz.missionId,
 								action.prop as string
 							);
 							this.sessionStore.setFightResult(fight);
@@ -239,7 +246,7 @@ export default defineComponent({
 								const npcName = this.mission.npcName;
 								const dialog = await MissionService.interactMission(
 									this.$route.params.id.toString(),
-									this.dinoz.missionId!,
+									this.dinoz.missionId,
 									action.prop as string
 								);
 								this.$router.push({
@@ -251,7 +258,7 @@ export default defineComponent({
 								this.npcName = action.prop as string;
 								this.NPCModal = await MissionService.interactMission(
 									this.$route.params.id.toString(),
-									this.dinoz.missionId!,
+									this.dinoz.missionId,
 									action.prop as string
 								);
 							}
@@ -546,12 +553,12 @@ export default defineComponent({
 	computed: {
 		missionName() {
 			if (this.dinoz.missionId) {
-				return missionsList[this.dinoz.missionId!];
+				return missionsList[this.dinoz.missionId];
 			}
 			return undefined;
 		},
 		storeMission() {
-			return dinozStore().getDinozList!.find(dinoz => dinoz.id!.toString() === this.dinozId)?.missionHUD || null;
+			return dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.dinozId)?.missionHUD || null;
 		},
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
@@ -576,9 +583,7 @@ export default defineComponent({
 		if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 			await this.regenRate();
 		}
-		this.dinozFullParty = dinozStore().getDinozList!.filter(dinoz =>
-			this.dinoz?.followers.some(a => a.id === dinoz.id)
-		);
+		this.dinozFullParty = dinozStore().getDinozList.filter(dinoz => this.dinoz?.followers.some(a => a.id === dinoz.id));
 		this.dinozFullParty.push(this.dinoz);
 	}
 });
@@ -599,6 +604,7 @@ export default defineComponent({
 	font-size: 9pt;
 	align-self: stretch;
 }
+
 .actions {
 	background:
 		url('../../assets/background/banniere_left.webp') no-repeat,
@@ -619,6 +625,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	gap: 0.2rem;
+
 	.action {
 		display: flex;
 		flex-direction: row;
@@ -631,17 +638,21 @@ export default defineComponent({
 		line-height: 10.5pt;
 		font-weight: 700;
 		width: 100%;
+
 		&:hover {
 			background-color: #9a4029;
 			cursor: pointer;
+
 			img {
 				outline: 1px solid white;
 			}
 		}
 	}
+
 	.actions_top {
 		width: 185px;
 		height: 28px;
+
 		p {
 			color: white;
 			padding-left: 2px;
@@ -663,25 +674,30 @@ export default defineComponent({
 		padding-right: 5px;
 	}
 }
+
 @media (max-width: 539px) {
 	.actions {
 		width: 95%;
 		max-width: 100%;
+
 		.action_content {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
 			flex-wrap: wrap;
 			gap: 0.2rem;
+
 			.action {
 				width: 46%;
 			}
+
 			.follow {
 				width: 100%;
 			}
 		}
 	}
 }
+
 .selling {
 	margin-right: 1px;
 }

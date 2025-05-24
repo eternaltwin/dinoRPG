@@ -40,7 +40,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			items: undefined as undefined | Array<number>,
+			items: [] as number[],
 			dinozStore: dinozStore()
 		};
 	},
@@ -64,7 +64,7 @@ export default defineComponent({
 			try {
 				const backPack = await InventoryService.equipInventoryItem(dinozId, item, false);
 				this.items = new Array(this.dinozData.maxItems);
-				backPack.forEach((item, index) => (this.items![index] = item.itemId));
+				backPack.forEach((item, index) => (this.items[index] = item.itemId));
 
 				EventBus.emit('refreshInventory', {
 					event: 'unequip',
@@ -87,7 +87,7 @@ export default defineComponent({
 			return;
 		}
 		this.items = new Array(this.dinozData.maxItems);
-		this.dinozData.items?.forEach((item, index) => (this.items![index] = item));
+		this.dinozData.items?.forEach((item, index) => (this.items[index] = item));
 
 		EventBus.on('equipItem', e => {
 			if (!this.dinozData) {
@@ -95,7 +95,7 @@ export default defineComponent({
 				return;
 			}
 			this.items = new Array(this.dinozData.maxItems);
-			e.forEach((item, index) => (this.items![index] = item.itemId));
+			e.forEach((item, index) => (this.items[index] = item.itemId));
 		});
 	}
 });

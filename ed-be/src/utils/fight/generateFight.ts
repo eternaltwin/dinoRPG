@@ -434,7 +434,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 
 		// Play fighter turn
-		playFighterTurn(fightData, config.seed);
+		playFighterTurn(fightData);
 
 		// Check deaths
 		checkDeaths(fightData);

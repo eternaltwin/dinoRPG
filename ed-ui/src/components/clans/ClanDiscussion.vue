@@ -102,7 +102,7 @@ export default defineComponent({
 	},
 	methods: {
 		isLeader(msg: CreateClanMessage): boolean {
-			return msg.author?.id == msg.clan!.leaderId;
+			return msg.author?.id == msg.clan?.leaderId;
 		},
 		isSelf(msg: CreateClanMessage): boolean {
 			return msg.author?.id == this.playerStore.playerId;
@@ -111,7 +111,7 @@ export default defineComponent({
 			return new Date(date).toLocaleString('fr-FR');
 		},
 		canDeleteMessage(msg: CreateClanMessage): boolean {
-			return msg.author?.id == this.playerStore.playerId || msg.clan!.leaderId == this.playerStore.playerId;
+			return msg.author?.id == this.playerStore.playerId || msg.clan?.leaderId == this.playerStore.playerId;
 		},
 		goToPlayer(id: string) {
 			this.$router.push({ name: 'MyAccount', params: { id } });

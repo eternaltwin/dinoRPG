@@ -8,10 +8,10 @@
 					<a v-if="mission?.status === 'ongoing'" class="button" @click="updateMission('stop')">
 						{{ $t('missions.giveUp') }}
 					</a>
-					<a v-if="!dinoz.missionId && mission?.status === 'available'" class="button" @click="updateMission('start')">
+					<a v-if="!dinoz?.missionId && mission?.status === 'available'" class="button" @click="updateMission('start')">
 						{{ $t('missions.accept') }}
 					</a>
-					<p v-if="dinoz.missionId && dinoz.missionId !== mission?.missionId">
+					<p v-if="dinoz?.missionId && dinoz?.missionId !== mission?.missionId">
 						{{ $t('missions.already') }}
 					</p>
 				</div>
@@ -45,12 +45,20 @@ export default defineComponent({
 	methods: {
 		async updateMission(status: string) {
 			EventBus.emit('isLoading', true);
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const dinozToUpdate = dinozList.find(dinoz => dinoz.id === this.dinozId)!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozToUpdate = dinozList.find(dinoz => dinoz.id === this.dinozId);
 			try {
-				await MissionService.updateMissions(this.dinozId, this.mission!.missionId, status);
+				if (!this.mission || !dinozToUpdate) {
+					this.$toast.open({
+						message: this.$t('toast.missingData'),
+						type: 'error'
+					});
+					EventBus.emit('isLoading', false);
+					return;
+				}
+				await MissionService.updateMissions(this.dinozId, this.mission.missionId, status);
 				if (status === 'start') {
-					dinozToUpdate.missionId = this.mission!.missionId;
+					dinozToUpdate.missionId = this.mission.missionId;
 					this.$router.push({ name: 'DinozPage', params: { id: this.dinozId } });
 				} else {
 					dinozToUpdate.missionId = undefined;
@@ -66,11 +74,11 @@ export default defineComponent({
 	},
 	computed: {
 		missionName(): string {
-			return missionsList[this.mission!.missionId];
+			return missionsList[this.mission?.missionId ?? -1];
 		},
-		dinoz(): DinozFiche {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			return dinozList.find(dinozs => dinozs.id === this.dinozId)!;
+		dinoz(): DinozFiche | undefined {
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			return dinozList.find(dinozs => dinozs.id === this.dinozId);
 		}
 	}
 });

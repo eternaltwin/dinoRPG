@@ -77,10 +77,15 @@ export default defineComponent({
 			this.selectedBanUpdateAction = action;
 		},
 		async updateBan(playerId: string) {
+			if (!this.selectedBanUpdateAction) {
+				this.$toast.error(this.$t(`toast.missingData`));
+				return;
+			}
+
 			EventBus.emit('isLoading', true);
 			try {
 				// Only the action can be updated here
-				await AdminService.updateBan(playerId, this.selectedBanUpdateAction!, undefined, undefined, undefined);
+				await AdminService.updateBan(playerId, this.selectedBanUpdateAction, undefined, undefined, undefined);
 				await this.getBannedPlayers();
 				EventBus.emit('isLoading', false);
 			} catch (err) {

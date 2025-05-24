@@ -100,10 +100,13 @@ export default defineComponent({
 		async reload(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const dinozToUpdate = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-			dinozToUpdate.missionId = undefined;
-			dinozToUpdate.missionHUD = null;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const dinozToUpdate = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+
+			if (dinozToUpdate) {
+				dinozToUpdate.missionId = undefined;
+				dinozToUpdate.missionHUD = null;
+			}
 			this.information = !this.information;
 			this.$emit('abort');
 			EventBus.emit('isLoading', false);
@@ -119,7 +122,7 @@ export default defineComponent({
 			return missionsList[this.missionId];
 		},
 		missionDetail(): MissionHUD | null {
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 			const myDinoz = dinozList.find(dinoz => dinoz.id === this.dinozId);
 
 			if (!myDinoz) {

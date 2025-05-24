@@ -98,7 +98,7 @@ export default defineComponent({
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.rankings = await PlayerService.getPlayersRanking(this.sort!, this.page);
+				this.rankings = await PlayerService.getPlayersRanking(this.sort, this.page);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);

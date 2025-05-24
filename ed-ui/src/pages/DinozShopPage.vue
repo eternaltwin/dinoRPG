@@ -110,24 +110,24 @@ export default defineComponent({
 				}
 
 				// Update player's money
-				const newMoney = (this.playerStore.getMoney! - this.raceList[dinoz.race].price) as number;
+				const newMoney = (this.playerStore.getMoney - this.raceList[dinoz.race].price) as number;
 				this.playerStore.setMoney(newMoney);
 
 				const dinozStore = this.dinozStore.getDinozList;
 
-				dinozStore!.push(dinozCreated);
+				dinozStore.push(dinozCreated);
 
 				// Update dinoz list
-				this.dinozStore.setDinozList(dinozStore!);
+				this.dinozStore.setDinozList(dinozStore);
 
 				// Update dinoz count
-				this.dinozStore.setDinozCount(this.dinozStore.getDinozCount! + 1);
+				this.dinozStore.setDinozCount((this.dinozStore.getDinozCount ?? 0) + 1);
 
 				// Go to dinoz page
 				await this.$router.push({
 					name: 'DinozPage',
 					params: {
-						id: dinozCreated.id!
+						id: dinozCreated.id
 					}
 				});
 			}

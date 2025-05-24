@@ -117,7 +117,7 @@ export default defineComponent({
 			}
 			if (this.batchNews.find(news => news.title === this.newsEdit.title)) {
 				if (this.newSelect) {
-					await NewsService.updateNews(this.formData, this.newsEdit.title!);
+					await NewsService.updateNews(this.formData, this.newsEdit.title ?? '');
 					this.$router.go(0);
 				} else {
 					alert(
@@ -126,22 +126,22 @@ export default defineComponent({
 					return;
 				}
 			} else {
-				await NewsService.createNews(this.formData, this.newsEdit.title!);
+				await NewsService.createNews(this.formData, this.newsEdit.title ?? '');
 				this.$router.go(0);
 			}
 		},
 		upfile(): void {
-			const image = this.$refs.file! as HTMLInputElement;
-			const file = image.files![0];
+			const image = this.$refs.file as HTMLInputElement;
+			const file = image.files?.[0];
 
 			if (file) {
 				const reader = new FileReader();
 				reader.onload = e => {
-					this.filePreviewUrl = e.target!.result as string;
+					this.filePreviewUrl = e.target?.result as string;
 				};
 				reader.readAsDataURL(file);
 				this.formData.delete('file');
-				this.formData.append('file', image!.files![0]);
+				this.formData.append('file', file);
 			}
 		}
 	},

@@ -357,7 +357,7 @@ export default defineComponent({
 			return (selectedQuantity: number, selectedItem: ItemFiche) => {
 				return (
 					selectedQuantity > 0 &&
-					selectedQuantity <= selectedItem.maxQuantity! - selectedItem.quantity! &&
+					selectedQuantity <= selectedItem.maxQuantity - (selectedItem.quantity ?? 0) &&
 					Number.isInteger(selectedQuantity)
 				);
 			};
@@ -376,7 +376,7 @@ export default defineComponent({
 	},
 	methods: {
 		isFull(item: ItemShopFiche): boolean {
-			return this.resolveItem(item).quantity! >= this.resolveItem(item).maxQuantity!;
+			return (this.resolveItem(item).quantity ?? 0) >= this.resolveItem(item).maxQuantity;
 		},
 		// Buy n of the selected item
 		async buyItems(itemId: number, quantity: number): Promise<void> {
@@ -487,8 +487,8 @@ export default defineComponent({
 				quantity: item.quantity ?? 0,
 				maxQuantity:
 					this.playerStore.isShopkeeper && realItem?.itemType !== ItemType.MAGICAL
-						? Math.round(realItem!.maxQuantity * 1.5)
-						: realItem!.maxQuantity
+						? Math.round((realItem?.maxQuantity ?? 1) * 1.5)
+						: realItem?.maxQuantity
 			} as ItemFiche;
 		},
 		resolveIngredient(item: ItemShopFiche): IngredientFiche {

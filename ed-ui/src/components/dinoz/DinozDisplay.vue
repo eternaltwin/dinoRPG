@@ -72,7 +72,7 @@ export default defineComponent({
 	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	computed: {
 		dinozRace(): string {
-			return Object.entries(raceList).find(race => parseInt(race[0]) === this.dinozData!.race?.raceId)![1];
+			return Object.entries(raceList).find(race => parseInt(race[0]) === this.dinozData.race?.raceId)?.[1] ?? '';
 		}
 	},
 	methods: {

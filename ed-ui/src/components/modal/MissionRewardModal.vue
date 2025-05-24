@@ -89,20 +89,20 @@ export default defineComponent({
 	computed: {
 		missionName(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-			const missionId = myDinoz.missionId as number;
-			return missionsList[missionId];
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const myDinoz = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+			const missionId = myDinoz?.missionId;
+			return missionsList[missionId ?? -1];
 		},
 		validator(): string {
 			const dinozId = this.$route.params.id as string;
-			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-			const myDinoz = dinozList.find(dinoz => dinoz.id!.toString() === dinozId)!;
-			return typeof myDinoz.missionHUD?.target === 'string'
+			const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+			const myDinoz = dinozList.find(dinoz => dinoz.id.toString() === dinozId);
+			return typeof myDinoz?.missionHUD?.target === 'string'
 				? myDinoz.missionHUD?.target
-				: typeof myDinoz.missionHUD?.target[0] === 'string'
+				: typeof myDinoz?.missionHUD?.target[0] === 'string'
 					? myDinoz.missionHUD?.target[0]
-					: myDinoz.missionHUD?.target[0].name || '';
+					: myDinoz?.missionHUD?.target[0].name || '';
 		}
 	}
 });

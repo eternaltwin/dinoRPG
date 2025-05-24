@@ -57,7 +57,7 @@ export default defineComponent({
 			if (this.name) {
 				EventBus.emit('isLoading', true);
 				try {
-					await DinozService.setDinozName(this.dinozData!.id!, this.name!);
+					await DinozService.setDinozName(this.dinozData.id, this.name);
 					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
@@ -65,8 +65,17 @@ export default defineComponent({
 				}
 
 				// Update dinozList in store
-				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
-				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData!.id)!;
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
+				const dinozToUpdate = dinozList.find(dinoz => dinoz.id == this.dinozData.id);
+
+				if (!dinozToUpdate) {
+					this.$toast.open({
+						message: this.$t('toast.dinozNotFound'),
+						type: 'error'
+					});
+					return;
+				}
+
 				dinozToUpdate.name = this.name;
 
 				this.dinozStore.setDinozList(dinozList);

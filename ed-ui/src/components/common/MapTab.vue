@@ -1,12 +1,12 @@
 <template>
 	<div id="boxMap">
 		<WorldMap :dinozData="dinozData" />
-		<p class="placeName">
-			{{ $t(`place.name.${getPlaceName(dinozData!.placeId)}`) }}
+		<p class="placeName" v-if="dinozData">
+			{{ $t(`place.name.${getPlaceName(dinozData.placeId)}`) }}
 		</p>
 	</div>
-	<p class="placeDesc">
-		{{ $t(`place.description.${getPlaceName(dinozData!.placeId)}`) }}
+	<p class="placeDesc" v-if="dinozData">
+		{{ $t(`place.description.${getPlaceName(dinozData.placeId)}`) }}
 	</p>
 </template>
 

@@ -98,7 +98,7 @@ export default defineComponent({
 			return `width : ${width}px`;
 		},
 		getPlaceName(placeId: number): string {
-			return placeList.find(place => place.placeId === placeId)!.name;
+			return placeList.find(place => place.placeId === placeId)?.name ?? '';
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
 			if (!this.currentDinozId) return false;
@@ -140,7 +140,7 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
-		this.hasPDA = this.playerStore.getPlayerOptions!.hasPDA;
+		this.hasPDA = this.playerStore.getPlayerOptions.hasPDA;
 	}
 });
 </script>

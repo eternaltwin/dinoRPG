@@ -91,7 +91,7 @@ export default defineComponent({
 	methods: {
 		async getDinozInfo(): Promise<void> {
 			try {
-				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList!;
+				const dinozList: Array<DinozFiche> = this.dinozStore.getDinozList;
 				this.dinoz = dinozList.find(d => d.id === +this.dinozId);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

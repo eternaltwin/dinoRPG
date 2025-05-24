@@ -81,7 +81,7 @@ export default defineComponent({
 		this.url = this.type === 'dino' ? dinozSwf : sdinozSwf;
 
 		// Set flashVars
-		this.flashVars.data = this.display!;
+		this.flashVars.data = this.display ?? '';
 		this.flashVars.flip = this.flip ?? this.flashVars.flip;
 		if (this.isFrozen) this.flashVars.status = 'congel';
 

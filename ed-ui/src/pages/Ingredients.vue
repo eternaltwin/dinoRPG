@@ -108,13 +108,17 @@ export default defineComponent({
 				);
 			const res = confirm(this.$t(`ingredients.giveAway.confirm`, { gold: gold }));
 			if (res) {
+				if (!this.playerStore.getClanId) {
+					this.$toast.error(this.$t('toast.missingData'));
+					return;
+				}
 				try {
 					await ClanService.giveIngredient(
-						this.playerStore.getClanId!,
+						this.playerStore.getClanId,
 						this.giveAway
 							.filter(a => a.quantity && a.quantity > 0)
 							.map(i => {
-								return { itemId: i.ingredientId, quantity: i.quantity! };
+								return { itemId: i.ingredientId, quantity: i.quantity ?? 0 };
 							})
 					);
 				} catch (err) {
