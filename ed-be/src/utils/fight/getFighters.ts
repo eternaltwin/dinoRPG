@@ -351,7 +351,7 @@ export const initializeDinoz = (
 		invocations: 1,
 		initiallyCursed: dinoz.status.some(status => status.statusId === DinozStatusId.CURSED),
 		permanentStatusGained: [],
-		perception: false,
+		// perception: false,
 		canHitFlying: false,
 		canHitIntangible: false,
 		cancelArmor: false,
@@ -486,7 +486,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		initiallyCursed: false,
 		permanentStatusGained: [],
 		// Copy also special passives from original dinoz
-		perception: dinoz.perception,
+		// perception: dinoz.perception,
 		canHitFlying: dinoz.canHitFlying,
 		canHitIntangible: dinoz.canHitIntangible,
 		cancelArmor: dinoz.cancelArmor,
@@ -850,7 +850,7 @@ export const initializeMonster = (
 		invocations: 0,
 		initiallyCursed: false,
 		permanentStatusGained: [],
-		perception: false,
+		// perception: false,
 		canHitFlying: false,
 		canHitIntangible: false,
 		cancelArmor: false,
@@ -983,7 +983,7 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 
 	// WATER
 	if (fighterHas[Skill.PERCEPTION]) {
-		fighter.perception = true;
+		fighter.canHitIntangible = true;
 	}
 
 	if (fighterHas[Skill.KARATE_SOUS_MARIN]) {
