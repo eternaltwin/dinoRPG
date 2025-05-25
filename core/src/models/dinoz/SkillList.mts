@@ -1209,7 +1209,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PAYS_DE_CENDRE]: {
 		id: Skill.PAYS_DE_CENDRE,
 		name: 'PaysDeCendre',
-		type: SkillType.E,
+		type: SkillType.E, // All other environment skills are A, weird
 		energy: Energy.E35,
 		element: [ElementType.FIRE],
 		activatable: true,

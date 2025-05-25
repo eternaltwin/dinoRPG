@@ -214,7 +214,7 @@ const chooseRandomFighterForAssault = (
 	// Provocation overrides everything
 	const opponents_with_provocation = opponents.some(opponent => hasStatus(opponent, Status.TAUNT));
 	if (opponents_with_provocation) {
-		filtered_opponents = filtered_opponents.filter(opponent => hasStatus(opponent, Status.TAUNT));
+		filtered_opponents = opponents.filter(opponent => hasStatus(opponent, Status.TAUNT));
 	}
 
 	if (!filtered_opponents.length) {
@@ -423,12 +423,20 @@ export const setMaxEnergy = (fighter: DetailedFighter, newMax: number) => {
 	fighter.energy = Math.min(fighter.energy, fighter.maxEnergy);
 };
 
+/**
+ * Returns the items and skills that succeeded their rolls
+ * @param fightData General data about the fight, used to check for effects that may impact skill selection
+ * @param fighter Details of the fighter rolling for its items and skills
+ * @returns Array of items and skills that succeeded their rolls or null
+ */
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No event if NO_EVENT
 	if (hasStatus(fighter, Status.NO_EVENT)) return null;
 
 	// Check if a time manipulator is present
 	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
+
+	const rolledEvents: (SkillDetails | ItemFiche)[] = [];
 
 	// Check if a fighter has Item.TIME_MANIPULATOR
 	if (!fightData.timeManipulatorUsed) {
@@ -507,18 +515,24 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		}
 
 		if (randomBetweenSeeded(fightData.rng, 1, 100) < (event.probability ?? 0)) {
-			return event;
+			rolledEvents.push(event);
 		}
 	}
 
-	return null;
+	return rolledEvents;
 };
 
+/**
+ * Returns the skills that succeeded their rolls
+ * @param fightData General data about the fight, used to check for effects that may impact skill selection
+ * @param fighter Details of the fighter rolling for its skills
+ * @returns Array of skills that succeeded their rolls or null
+ */
 const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No skill if NO_SKILL
 	if (hasStatus(fighter, Status.NO_SKILL)) return null;
 
-	const skills = fighter.skills.filter(skill => skill.probability && skill.type === SkillType.A);
+	const skills = fighter.skills.filter(skill => skill.probability && (skill.type === SkillType.A || skill.type === SkillType.I));
 
 	if (!skills.length) return null;
 
@@ -536,7 +550,9 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		return fightData.rng() > 0.5 ? 1 : -1;
 	});
 
-	// Go through each event and roll the dice
+	const rolledSkills: SkillDetails[] = [];
+
+	// Go through each skill and roll, add skills if it succeeded
 	for (let i = 0; i < skills.length; i++) {
 		const skill = skills[i];
 
@@ -553,14 +569,14 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		if (randomBetweenSeeded(fightData.rng, 1, 100) < probability) {
 			// Check if NO_INVOCATION
 			if (skill.type === SkillType.I && hasStatus(fighter, Status.NO_INVOCATION)) {
-				return null;
+				continue;
 			}
 
-			return skill;
+			rolledSkills.push(skill);
 		}
 	}
 
-	return null;
+	return rolledSkills;
 };
 
 export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker'>) => {
@@ -1211,6 +1227,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.VENT_VIF: {
+				if (hasStatus(fighter, Status.QUICKENED)) return cancel();
 				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
 				break;
 			}
@@ -1255,33 +1272,30 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.DETONATION: {
-				// The fighter will not suicide with the skill, it just loses its roll
-				if (fighter.hp > 5) {
-					// Add step for fx
-					fightData.steps.push(activate_step);
-					loseHp(fightData, fighter, 5, LifeEffect.Burn);
-					// Increase the time of all other fighters to make it look like the caster "gained" time
-					getFighters(fightData).forEach(f => {
-						if (f.id !== fighter.id) {
-							f.time += 15 * TIME_FACTOR;
-						}
-					});
-					// Add fx for gain of init
-					fightData.steps.push({
-						action: 'notify',
-						fids: [fighter.id],
-						notification: NotificationList.InitUp
-					});
-				} else {
-					return cancel();
-				}
+				// The fighter will not suicide with the skill
+				if (fighter.hp <= 5) return cancel();
+
+				// Add step for fx
+				fightData.steps.push(activate_step);
+				loseHp(fightData, fighter, 5, LifeEffect.Burn);
+				// Increase the time of all other fighters to make it look like the caster "gained" time
+				getFighters(fightData).forEach(f => {
+					if (f.id !== fighter.id) {
+						f.time += 15 * TIME_FACTOR;
+					}
+				});
+				// Add fx for gain of init
+				fightData.steps.push({
+					action: 'notify',
+					fids: [fighter.id],
+					notification: NotificationList.InitUp
+				});
 				break;
 			}
 			case Skill.TORCHE: {
-				if (hasStatus(fighter, Status.TORCHED)) {
-					return cancel();
-				}
+				if (hasStatus(fighter, Status.TORCHED))	return cancel();
 				addStatus(fightData, fighter, Status.TORCHED);
+				break;
 			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
@@ -1302,9 +1316,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.REGENERESCENCE: {
-				if (hasStatus(fighter, Status.HEALING)) {
-					return cancel();
-				}
+				if (hasStatus(fighter, Status.HEALING)) return cancel();
 				addStatus(fightData, fighter, Status.HEALING, StatusLength.MEDIUM);
 				break;
 			}
@@ -1320,9 +1332,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.BRANCARDIER: {
 				const ally = getRandomAlly(fightData, fighter);
 
-				if (!ally) {
-					return cancel();
-				}
+				if (!ally) return cancel();
 
 				fightData.steps.push({
 					action: 'moveTo',
@@ -1510,8 +1520,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.PRINTEMPS_PRECOCE: {
+				const allies = getAllies(fightData, fighter);
+				if (allies.length === 1) return cancel();
+
 				// Heal all allies
-				getAllies(fightData, fighter).forEach(f => {
+				allies.forEach(f => {
 					// Skip self
 					if (f.id === fighter.id) return;
 
@@ -1530,9 +1543,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.PAYS_DE_CENDRE: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
 				break;
@@ -1541,9 +1552,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Get allies dinoz
 				const allies = getAllies(fightData, fighter, ['dinoz']);
 
-				if (allies.length < 2) {
-					return cancel();
-				}
+				if (allies.length < 2) return cancel();
 
 				// Get lowest HP ally
 				const lowestHpAlly = allies.reduce(
@@ -1673,9 +1682,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// TODO probably want to rework this so it's a passive skill and does not use up a skill slot
 				// TODO because the skill has high priority and high proba, but can only be used once so it uses a skill slot
 				// The fighter learns to cancel dodge.
-				if (fighter.cancelAssaultDodge) {
-					return cancel();
-				}
+				if (fighter.cancelAssaultDodge) return cancel();
 
 				fighter.cancelAssaultDodge = true;
 				break;
@@ -1705,17 +1712,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// MONSTER
 			case Skill.M_REGENERATION: {
-				if (fighter.hp >= fighter.startingHp) {
-					return cancel();
-				}
+				if (fighter.hp >= fighter.startingHp) return cancel();
 
 				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), undefined, LifeEffect.Heal);
 				break;
 			}
 			case Skill.M_IMMATERIAL: {
-				if (hasStatus(fighter, Status.INTANGIBLE)) {
-					return cancel();
-				}
+				if (hasStatus(fighter, Status.INTANGIBLE)) return cancel();
 
 				addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.SHORT);
 				break;
@@ -1900,9 +1903,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Item.GOBLIN_MERGUEZ: {
 				// Cancel if no HP lost
-				if (fighter.hp === fighter.startingHp) {
-					return cancel();
-				}
+				if (fighter.hp === fighter.startingHp) return cancel();
 
 				// -10% all defenses
 				fighter.stats.defense[ElementType.FIRE] -= fighter.stats.defense[ElementType.FIRE] * 0.1;
@@ -1929,9 +1930,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getOpponents(fightData, fighter).find(f => hasStatus(f, Status.FLYING));
 
 				// Never use the item if no opponent is flying
-				if (!opponent) {
-					return cancel();
-				}
+				if (!opponent) return cancel();
 
 				fighter.canHitFlying = true;
 				break;
@@ -1954,9 +1953,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Don't apply if the fighter has already one element
-				if (fighter.elements.length === 1) {
-					cancel();
-				}
+				if (fighter.elements.length === 1) return cancel();
 
 				// Get dinoz best element
 				const bestElement = fighter.elements.reduce((acc, element) => {
@@ -1977,14 +1974,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Item.FUCA_PILL: {
 				// Check if another FUCA was already used
-				if (fighter.itemsUsed.includes(Item.FUCA_PILL)) {
-					return cancel();
-				}
+				if (fighter.itemsUsed.includes(Item.FUCA_PILL)) return cancel();
 
 				// Cancel if speed is already x2
-				if (fighter.stats.speed.global < 0.51) {
-					return cancel();
-				}
+				if (fighter.stats.speed.global < 0.51) return cancel();
 
 				// Increase speed
 				fighter.stats.speed.global *= 0.75;
@@ -1995,17 +1988,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponents = getOpponents(fightData, fighter);
 
 				// Cancel if less than 2 opponents
-				if (opponents.length < 2) {
-					return cancel();
-				}
-
-				// Nothing happens if petrifed or stunned
-				if (hasStatus(fighter, Status.PETRIFIED) || hasStatus(fighter, Status.STUNNED)) {
-					break;
-				}
+				if (opponents.length < 2) return cancel();
 
 				// Get random opponent attacker
 				const opponentAttacker = getRandomOpponent(fightData, fighter);
+
+				// Nothing happens if petrifed, stunned or asleep
+				if (hasStatus(opponentAttacker, Status.PETRIFIED) || hasStatus(opponentAttacker, Status.STUNNED) || hasStatus(opponentAttacker, Status.ASLEEP)) {
+					break;
+				}
 
 				// Get other opponents
 				const opponentsWithoutAttacker = opponents.filter(opponent => opponent.id !== opponentAttacker.id);
@@ -2041,9 +2032,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Check if the team has BEER status
 				const hasBeer = allies.some(f => hasStatus(f, Status.BEER));
 
-				if (!hasBeer) {
-					return cancel();
-				}
+				if (!hasBeer) return cancel();
 
 				// TODO rework
 				// Remove BEER status
@@ -2058,45 +2047,35 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Item.AMAZON: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.AMAZONIE);
 				break;
 			}
 			case Item.LAND_OF_ASHES: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
 				break;
 			}
 			case Item.ABYSS: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.ABYSSE);
 				break;
 			}
 			case Item.ST_ELMAS_FIRE: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
 				break;
 			}
 			case Item.UVAVU: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.OURANOS);
 				break;
@@ -2552,9 +2531,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// TODO add rule to disable escape in fight (dojo, other)
 
 			// Does not work if there is only one fighter
-			if (getOpponents(fightData, fighter).length === 1) {
-				return cancel();
-			}
+			if (getOpponents(fightData, fighter).length === 1) return cancel();
 
 			const opponent = getRandomOpponent(fightData, fighter);
 
@@ -2602,17 +2579,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponents = getOpponents(fightData, fighter);
 
 			// Hypnose does not work if there is no opponent or just a single one, or if the fighter has already used it.
-			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
-				return cancel();
-			}
+			if (opponents.length <= 1 || fighter.hasUsedHypnose) return cancel();
 
 			// Get random opponent
 			const opponent = chooseRandomFighter(opponents, fightData.rng);
 
 			// Hypnose does not work if opponent is a boss
-			if (opponent.type == 'boss') {
-				return cancel();
-			}
+			if (opponent.type == 'boss') return cancel();
 
 			// Prevent if some opponent has CUZCUSSIAN_MASK
 			const opponentWithMask = getOpponents(fightData, fighter).find(opponent =>
@@ -2735,9 +2708,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Pick target
 			const target = getRandomOpponentForAssault(fightData, fighter);
 
-			if (target === null) {
-				return cancel();
-			}
+			if (target === null) return cancel();
 
 			// Add moveTo step
 			fightData.steps.push({
@@ -2826,9 +2797,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Get opponent for assault, the opponent can change in between the 5 hits
 				const opponent = getRandomOpponentForAssault(fightData, fighter);
 
-				if (opponent === null) {
-					break;
-				}
+				if (opponent === null) return cancel();
 
 				// For this skill, the move to and move back steps are handled outside of the launchAssault method
 				// Add moveTo step
@@ -2861,6 +2830,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.PARAFOUDRE: {
+			if (hasStatus(fighter, Status.THUNDERED)) return cancel();
+
 			// Add step for fx
 			activate_step.targets.push({ tid: fighter.id });
 			fightData.steps.push(activate_step);
@@ -2961,7 +2932,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.MOIGNONS_LIQUIDES: {
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// TODO simplify history: there is 3 steps added here just for the visual effects
 			// Add target
 			activate_step.targets.push({ tid: opponent.id });
 			// Add 2 steps for fx
@@ -3054,9 +3024,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					!hasStatus(f, Status.UNDEAD)
 			);
 
-			if (deadfighters.length === 0) {
-				return cancel();
-			}
+			if (deadfighters.length === 0) return cancel();
 
 			const random = randomBetweenSeeded(fightData.rng, 0, deadfighters.length - 1);
 			const dead = deadfighters[random];
@@ -3126,9 +3094,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.PROVOCATION: {
-			if (!hasStatus(fighter, Status.TAUNT)) {
-				return cancel();
-			}
+			if (!hasStatus(fighter, Status.TAUNT)) return cancel();
+
 			addStatus(fightData, fighter, Status.TAUNT, StatusLength.LONG);
 			// TODO need FX to show status instead like poison
 			// Add step for fx
@@ -3236,9 +3203,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponents = getOpponents(fightData, fighter, ['monster']);
 
 			// Cancel if no monster opponents
-			if (!opponents.length) {
-				return cancel();
-			}
+			if (!opponents.length) return cancel();
 
 			// Get random opponent
 			const monster = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
@@ -3283,9 +3248,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		// Invocations
 		case Skill.HERCOLUBUS: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3306,9 +3269,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.VULCAIN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3323,9 +3284,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ARMURE_DIFRIT: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3337,9 +3296,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SALAMANDRE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3354,9 +3311,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BALEINE_BLANCHE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3368,9 +3323,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.LEVIATHAN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3385,9 +3338,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ONDINE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3402,9 +3353,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.LOUP_GAROU: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3419,9 +3368,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BENEDICTION_DES_FEES: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3433,9 +3380,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.YGGDRASIL: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3447,9 +3392,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.RAIJIN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3464,9 +3407,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.GOLEM: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3478,9 +3419,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ROI_DES_SINGES: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3492,9 +3431,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.DJINN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3503,16 +3440,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.FUJIN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			// Cancel if an ally used FUJIN already
 			const allies = getAllies(fightData, fighter);
 
-			if (allies.some(ally => hasStatus(ally, Status.USED_FUJIN))) {
-				return cancel();
-			}
+			if (allies.some(ally => hasStatus(ally, Status.USED_FUJIN))) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3526,9 +3459,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.TOTEM_ANCESTRAL_AEROPORTE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3543,9 +3474,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BOUDDHA: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3562,9 +3491,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.HADES: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3579,9 +3506,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.REINE_DE_LA_RUCHE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3599,9 +3524,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.QUETZACOATL: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3616,9 +3539,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BIG_MAMA: {
 			// Cancel if no invocation left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3710,9 +3631,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.AMAZONIE: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.AMAZONIE);
 			break;
@@ -3739,9 +3658,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ABYSSE: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.ABYSSE);
 			break;
@@ -3788,18 +3705,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.FEU_DE_ST_ELME: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
 			break;
 		}
 		case Skill.OURANOS: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.OURANOS);
 			break;
@@ -3938,9 +3851,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.M_INSTANT_FLEE:
 		case Skill.M_FLEE: {
-			if (fighter.escaped || fighter.hp <= 0) {
-				return cancel();
-			}
+			if (fighter.escaped || fighter.hp <= 0) return cancel();
 
 			// Add leave step
 			fightData.steps.push({
@@ -4055,13 +3966,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		default:
-			console.warn('Unknown skill', skill.id);
+			sendJSONToDiscord('Error `No skill found` in `activateSkill`', {
+				fightData: fightData,
+				fighter: fighter
+			});
 			return cancel();
 	}
-
-	// Not working well to add the activate step for all skills at this point
-	// // Add step
-	// fightData.steps.push(activate_step);
 
 	setEnergy(fighter, Math.round(fighter.energy - skill.energy * fighter.skillEnergyFactor));
 
@@ -4093,7 +4003,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	}
 
 	// Reset next skill
-	if (skill.id === fighter.nextSkill?.id) {
+	if (fighter.nextSkill && skill.id === fighter.nextSkill.id) {
 		fighter.nextSkill = undefined;
 	}
 
@@ -5728,29 +5638,38 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Finally, go on with the figher's turn
 
 	// Event activation
-	const possibleEvent = randomlyGetEvent(fightData, attacker);
-	if (possibleEvent) {
-		activateEvent(fightData, possibleEvent);
-		checkDeaths(fightData);
-		if (fightData.loser) {
-			return;
+	const possibleEvents = randomlyGetEvent(fightData, attacker);
+	if (possibleEvents) {
+		for (let i = 0; i < possibleEvents.length; i++) {
+			// Activate, if event activated, then check deaths, interrupt if the fight is over or break out of loop.
+			if (activateEvent(fightData, possibleEvents[i])) {
+				checkDeaths(fightData);
+				if (fightData.loser) {
+					return;
+				}
+				break;
+			}
+			// Else, the event was cancelled, so try to activate the next event.
 		}
 	}
 
-	// If fighter gained any of those status after its event skill, its turn is interrupted
+	// If fighter gained any of those status after its event, its turn is interrupted
 	if (hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED)) {
 		return;
 	}
 
 	// Skill activation
 	// Unless specified, pick a random skill by default.
-	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(fightData, attacker);
-	if (possibleSkill) {
-		// End turn if skill activated
-		if (activateSkill(fightData, possibleSkill)) {
-			endTurnChecks(fightData, attacker);
-			return;
+	const possibleSkills = attacker.nextSkill ? [attacker.nextSkill] : randomlyGetSkill(fightData, attacker);
+	if (possibleSkills) {
+		for (let i = 0; i < possibleSkills.length; i++) {
+			// Activate, if skill activated, then perform end of turn checks and return.
+			if (activateSkill(fightData, possibleSkills[i])) {
+				endTurnChecks(fightData, attacker);
+				return;
+			}
 		}
+		// Else, the skill was cancelled, so try to activate the next skill.
 	}
 
 	// TODO rework
