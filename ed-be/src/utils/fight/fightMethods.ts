@@ -2473,10 +2473,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.ATTAQUE_PLONGEANTE: {
-			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.AIR];
+			fighter.allAssaultBonus += 3 * fighter.stats.base[ElementType.AIR];
 
 			// Attack opponent
 			launchAssault(fightData, fighter, true, Skill.ATTAQUE_PLONGEANTE);
+
+			fighter.allAssaultBonus -= 3 * fighter.stats.base[ElementType.AIR];
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
