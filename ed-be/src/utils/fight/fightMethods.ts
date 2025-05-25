@@ -2637,10 +2637,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 5), skill.id, activate_step);
 			break;
 		case Skill.CHARGE:
-			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.FIRE];
+			fighter.allAssaultBonus += 2 * fighter.stats.base[ElementType.FIRE];
 
 			// Attack opponent
 			launchAssault(fightData, fighter, true, Skill.CHARGE);
+
+			fighter.allAssaultBonus -= 2 * fighter.stats.base[ElementType.FIRE];
 			break;
 		case Skill.METEORES:
 			attackAllOpponents(
