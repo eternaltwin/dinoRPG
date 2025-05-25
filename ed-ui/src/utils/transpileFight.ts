@@ -112,10 +112,12 @@ export function resolveStatus(status: Status) {
 		case Status.SLOWED:
 			return StatusEffect.Slow;
 		case Status.QUICKENED:
+		case Status.THUNDERED: // TODO temporary
 			return StatusEffect.Quick;
 		case Status.PETRIFIED:
 			return StatusEffect.Stoned;
 		case Status.SHIELDED:
+		case Status.TAUNT: // TODO temporary
 			return StatusEffect.Shield;
 		case Status.BLESSED:
 			return StatusEffect.Bless;
