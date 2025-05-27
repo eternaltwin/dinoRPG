@@ -1812,7 +1812,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		type: SkillType.A,
 		energy: Energy.E20,
 		element: [ElementType.WOOD],
-		activatable: false,
+		activatable: true,
 		tree: SkillTree.VANILLA,
 		unlockedFrom: [Skill.INSTINCT_SAUVAGE],
 		isBaseSkill: false,
