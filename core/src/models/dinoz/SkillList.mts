@@ -4324,7 +4324,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 9
+		probability: 7
 	},
 	[Skill.HALEINE_FETIVE]: {
 		id: Skill.HALEINE_FETIVE,
@@ -4510,7 +4510,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 5,
-		probability: 9,
+		probability: 7,
 		visualEffect: SkillVisualEffect.CLOUD,
 		color: '0xDDDDDD'
 	},
