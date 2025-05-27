@@ -2758,8 +2758,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.BRASIER: {
-			// Summon FIRE/5 flams with FIRE/5 in FIRE element and torche
-			const number = Math.max(Math.floor(fighter.stats.base[ElementType.FIRE] / 5), 1);
+			// Summon FIRE/9 flams with FIRE/5 in FIRE element and torche
+			const number = Math.max(Math.floor(fighter.stats.base[ElementType.FIRE] / 9), 1);
 			for (let i = 0; i < number; i++) {
 				let flameche = createMonster(fightData, fighter, monsterList.FLAM);
 				if (flameche) {
