@@ -4975,21 +4975,17 @@ const checkAfterDefenseEffects = (
 		});
 	}
 
-	// Maitre des Ronces
-	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.MAITRE_DES_RONCES)) {
+	// Maitre des Ronces 1/2 chance
+	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.MAITRE_DES_RONCES) &&	randomBetweenSeeded(fightData.rng, 0, 1) === 0) {
 		attacker.time += 1 * TIME_FACTOR;
-		fightData.steps.push({
-			action: 'skillActivate',
-			fid: target.id,
-			skill: Skill.MAITRE_DES_RONCES,
-			targets: [{ tid: attacker.id }]
-		});
+		loseHpBalanced(fightData, attacker, target.stats.special.thornsDamage, LifeEffect.Wood);
 		// Add fx for loss of init
 		fightData.steps.push({
 			action: 'notify',
 			fids: [attacker.id],
 			notification: NotificationList.InitDown
 		});
+
 	}
 
 	// Zero absolu: hit landed

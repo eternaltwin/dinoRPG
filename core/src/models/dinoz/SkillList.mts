@@ -1879,10 +1879,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		effects: {
 			[Stat.ARMOR]: ['x', 1.1],
 			[Stat.WOOD_ELEMENT]: 1
-		},
-		visualEffect: SkillVisualEffect.AURA,
-		color: '0x964B00',
-		fxType: AuraFxType.Line
+		}
 	},
 	[Skill.ECORCE_CENTENAIRE]: {
 		id: Skill.ECORCE_CENTENAIRE,
