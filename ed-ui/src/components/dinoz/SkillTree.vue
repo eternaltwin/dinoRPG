@@ -3,7 +3,7 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { SkillTreeType } from '@drpg/core/models/enums/SkillTree';
+import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
 import { onMounted, Ref, ref } from 'vue';
 import SkillTooltip from './SkillTooltip.vue';
 
