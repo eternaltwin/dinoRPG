@@ -28,6 +28,7 @@ export enum Status {
 	HEALING = 'healing',
 	TAUNT = 'taunt',
 	THUNDERED = 'thundered',
+	RAGE = 'rage',
 	// Good & bad
 	LOCKED = 'locked',
 	// Skills
@@ -62,7 +63,8 @@ export const GoodStatus = [
 	Status.BLESSED,
 	Status.HEALING,
 	Status.TAUNT,
-	Status.THUNDERED
+	Status.THUNDERED,
+	Status.RAGE
 ];
 
 export const BadStatus = [
@@ -189,8 +191,8 @@ export interface DetailedFighter {
 	hypnotized?: number;
 	hasUsedHypnose: boolean;
 	hasUsedHyperventilation: boolean;
-	// Rage
-	hasRaged: boolean;
+	// // Rage
+	// hasRaged: boolean;
 	// Mud wall
 	mudWall?: number;
 	// Invocations

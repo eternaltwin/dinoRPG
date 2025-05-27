@@ -361,8 +361,8 @@ export const initializeDinoz = (
 		cancelAssaultDodge: false,
 		hasRock: false,
 		hasUsedHypnose: false,
-		hasUsedHyperventilation: false,
-		hasRaged: false
+		hasUsedHyperventilation: false
+		// hasRaged: false
 	};
 
 	handleSkills(random, team, fighter, place);
@@ -498,8 +498,8 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		// Cancel dodge is not copied
 		cancelAssaultDodge: false,
 		hasUsedHypnose: false,
-		hasUsedHyperventilation: false,
-		hasRaged: false
+		hasUsedHyperventilation: false
+		// hasRaged: false
 	};
 
 	// Redo the element ordering because the original dinoz may have altered elements
@@ -864,8 +864,8 @@ export const initializeMonster = (
 		cancelAssaultDodge: false,
 		hasRock: false,
 		hasUsedHypnose: false,
-		hasUsedHyperventilation: false,
-		hasRaged: false
+		hasUsedHyperventilation: false
+		// hasRaged: false
 	};
 
 	// Order skills by priority, random if equal

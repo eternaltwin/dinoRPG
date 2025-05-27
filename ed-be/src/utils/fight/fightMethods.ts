@@ -2258,6 +2258,12 @@ export const addStatus = (
 			fighter.element = ElementType.LIGHTNING;
 			break;
 		}
+		case Status.RAGE: {
+			fighter.allAssaultMultiplier *= 1.25;
+			fighter.stats.speed.global *= 0.8;
+			fighter.stats.counter.global *= 0.8;
+			break;
+		}
 		default: {
 			break;
 		}
@@ -2362,6 +2368,12 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 			case Status.THUNDERED: {
 				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 20;
 				fighter.skillElementalBonus[ElementType.LIGHTNING] -= 20;
+				break;
+			}
+			case Status.RAGE: {
+				fighter.allAssaultMultiplier /= 1.25;
+				fighter.stats.speed.global /= 0.8;
+				fighter.stats.counter.global /= 0.8;
 				break;
 			}
 			default: {
@@ -4937,7 +4949,21 @@ const checkAfterDefenseEffects = (
 	}
 
 	// RAGE
-	if (target.hp <= target.maxHp * 0.1 && !target.hasRaged && hasSkill(target, Skill.RAGE)) {
+	if (damage >= target.maxHp * 0.05 && !hasStatus(target, Status.RAGE) && hasSkill(target, Skill.RAGE)) {
+		// Then announce and fx
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.RAGE
+		});
+
+		addStatus(fightData, target, Status.RAGE, StatusLength.SHORT);
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.RAGE,
+			targets: [{ tid: target.id }]
+		});
 		// Remove all bad status
 		target.status.forEach(status => {
 			if (BadStatus.includes(status.type)) {
@@ -4945,33 +4971,27 @@ const checkAfterDefenseEffects = (
 			}
 		});
 		// Buff, gains initiative
-		target.hasRaged = true;
-		target.allAssaultMultiplier *= 1.25;
-		target.stats.speed.global *= 0.8;
-		target.stats.counter.global *= 1.2;
+		// target.hasRaged = true;
+		// target.allAssaultMultiplier *= 1.25;
+		// target.stats.speed.global *= 0.8;
+		// target.stats.counter.global *= 1.2;
 		target.energy = target.maxEnergy;
 		getFighters(fightData).forEach(f => {
 			if (f.id !== target.id) {
 				f.time += 15 * TIME_FACTOR;
 			}
 		});
-		// Then announce and fx
-		fightData.steps.push({
-			action: 'skillAnnounce',
-			fid: target.id,
-			skill: Skill.RAGE
-		});
-		fightData.steps.push({
-			action: 'skillActivate',
-			fid: target.id,
-			skill: Skill.RAGE,
-			targets: [{ tid: target.id }]
-		});
+
 		// Add fx for gain of init
 		fightData.steps.push({
 			action: 'notify',
 			fids: [target.id],
 			notification: NotificationList.InitUp
+		});
+		fightData.steps.push({
+			action: 'gainEnergy',
+			fighter: stepFighter(target),
+			energy: target.energy
 		});
 	}
 
