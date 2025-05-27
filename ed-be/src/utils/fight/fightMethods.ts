@@ -3084,7 +3084,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.GARDIEN_ARBORICOLE: {
-			let gardien = monsterList.GRDIEN;
+			let gardien = structuredClone(monsterList.GRDIEN);
 			// If fighter does not have COLOSSE_DES_FORETS, downgrade the gardien
 			if (!hasSkill(fighter, Skill.COLOSSE_DES_FORETS)) {
 				gardien.skills = gardien.skills!.filter(s => s !== Skill.M_COMET);
