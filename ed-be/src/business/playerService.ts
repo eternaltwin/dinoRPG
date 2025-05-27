@@ -117,13 +117,15 @@ export async function getCommonData(req: Request) {
 		playerOptions: {
 			hasPDA: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PDA),
 			hasPMI: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PMI),
+			hasPAC: playerCommonData.rewards.some(reward => reward.rewardId === Reward.PAC),
 			skipFight: playerCommonData.skipFight,
 			skipLevel: playerCommonData.skipLevel
 		},
 		admin: playerCommonData.role === AdminRole.ADMIN,
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper,
-		notifications: playerCommonData.notifications
+		notifications: playerCommonData.notifications,
+		discoveredSkills: playerCommonData.discoveredSkills,
 	};
 
 	// Order dinoz

@@ -103,10 +103,8 @@ routes.post(
 		}
 
 		try {
-			await claimOffer(req);
-			return res.status(200).send({
-				message: 'Bid placed'
-			});
+			const data = await claimOffer(req);
+			return res.status(200).send(data);
 		} catch (err) {
 			sendError(res, err);
 		}

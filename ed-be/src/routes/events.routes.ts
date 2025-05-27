@@ -1,7 +1,5 @@
 import { Request, Response, Router } from 'express';
-import { apiRoutes } from '../constants/index.js';
 import { body, param, validationResult } from 'express-validator';
-import sendError from '../utils/sendErrors.js';
 import {
 	createTournamentDinoz,
 	fightFBTournamentOpponent,
@@ -13,8 +11,9 @@ import {
 	readAllFightFromEventPool
 } from '../business/forceBruteService.js';
 import { getLearnableAndUnlockableSkills, learnSkill } from '../business/skillService.js';
+import { apiRoutes } from '../constants/index.js';
 import { allValuesAreNumber } from '../utils/helpers/ValidatorHelper.js';
-import { readAllFightFromPool, tournamentTargetInfo } from '../business/tournamentService.js';
+import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
@@ -102,7 +101,7 @@ routes.post(
 
 		try {
 			const response = await learnSkill(req, 'FBTournament');
-			return res.status(200).send(response.toString());
+			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
 		}

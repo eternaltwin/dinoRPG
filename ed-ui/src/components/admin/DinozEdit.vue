@@ -260,7 +260,7 @@ export default defineComponent({
 	},
 	props: {
 		dinozProp: { type: Object as PropType<DinozAdminFiche>, required: true },
-		playerId: { type: Number, required: true }
+		playerId: { type: String, required: true }
 	},
 	methods: {
 		mountedDinoz(): void {

@@ -178,7 +178,12 @@ export default defineComponent({
 		},
 		async reclaimOffer(offerId: number) {
 			try {
-				await OfferService.claimOffer(offerId);
+				const { discoveredSkills } = await OfferService.claimOffer(offerId);
+
+				if (discoveredSkills.length) {
+					this.playerStore.setDiscoveredSkills([...this.playerStore.getDiscoveredSkills, ...discoveredSkills]);
+				}
+
 				await this.fetchOffers();
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);

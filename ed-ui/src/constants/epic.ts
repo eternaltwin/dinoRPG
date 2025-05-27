@@ -224,6 +224,7 @@ export const epicList = {
 		222: 'eugene',
 		223: 'litter',
 		224: 'clover',
+		997: 'pac',
 		999: 'import'
 	},
 	id: {
@@ -451,6 +452,7 @@ export const epicList = {
 		eugene: 222,
 		litter: 223,
 		clover: 224,
+		pac: 997,
 		import: 999
 	}
 };

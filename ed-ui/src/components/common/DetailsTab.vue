@@ -1,5 +1,8 @@
 <template>
 	<div class="details">
+		<p class="wrapperMenu" @click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })">
+			{{ $t('skillTrees.title') }}
+		</p>
 		<p class="wrapperMenu" @click="hidden = !hidden">
 			{{ $t('details.sort.title') }}
 		</p>
@@ -301,6 +304,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
+import { goTo } from '../../utils/goTo.js';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -327,7 +331,8 @@ export default defineComponent({
 			SpecialStat: SpecialStat,
 			getSpecialStat,
 			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[],
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			goTo
 		};
 	},
 	methods: {
@@ -484,6 +489,7 @@ export default defineComponent({
 	font-size: 8pt;
 	border: 1px dashed rgba(0, 0, 0, 0.1);
 	text-align: center;
+	cursor: pointer;
 
 	&:hover {
 		background-color: #9a4029;

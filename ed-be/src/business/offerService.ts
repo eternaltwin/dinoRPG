@@ -28,7 +28,7 @@ import {
 } from '../dao/playerIngredientDao.js';
 import { $Enums, Dinoz, LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduleJob, scheduledJobs } from 'node-schedule';
-import { addMoney, auth, ownsDinoz } from '../dao/playerDao.js';
+import { addMoney, auth, getPlayerDiscoveredSkills, ownsDinoz, setPlayer } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -42,7 +42,7 @@ import { createNotification } from '../dao/notificationDao.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
 import TournamentManager from '../utils/tournamentManager.js';
 import { prisma } from '../prisma.js';
-import { OfferGetList } from '@drpg/core/returnTypes/Offer';
+import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
 
 /**
  * Get the list of current offers
@@ -58,7 +58,9 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 	const onlyMines = req.query.onlyMines ? req.query.onlyMines === 'true' : false;
 
 	// Get filtered offers
-	let { total, offers } = await getOffers(authed.id, filter, sellerId, bidderId, expired, page);
+	const getOffersResult = await getOffers(authed.id, filter, sellerId, bidderId, expired, page);
+	let { offers } = getOffersResult;
+	const { total } = getOffersResult;
 
 	if (onlyMines) {
 		offers = offers
@@ -407,7 +409,7 @@ export const expireOffer = async (offerId: number) => {
 /**
  * Claim an ENDED offer
  */
-export async function claimOffer(req: Request) {
+export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 	const offerId = +req.params.offerId;
 	const offer = await getOffer(offerId, OfferStatus.ENDED);
 	if (!offer || !offer.seller || !offer.sellerId) {
@@ -415,6 +417,9 @@ export async function claimOffer(req: Request) {
 	}
 	const authed = await auth(req);
 	const sellerId = offer.sellerId;
+	const result: ClaimOfferData = {
+		discoveredSkills: []
+	};
 
 	// Separate items and ingredients
 	const items = offer.items.filter(item => !item.isIngredient);
@@ -434,6 +439,19 @@ export async function claimOffer(req: Request) {
 				player: { connect: { id: winnerBid.userId } },
 				unavailableReason: null
 			});
+
+			// Update winner discovered skills
+			const { discoveredSkills } = await getPlayerDiscoveredSkills(winnerBid.userId);
+			const dinozSkills = offer.dinoz.skills.map(skill => skill.skillId);
+			const newSkills = dinozSkills.filter(skill => !discoveredSkills.some(s => s === skill));
+
+			if (newSkills.length) {
+				await setPlayer(winnerBid.userId, {
+					discoveredSkills: [...discoveredSkills, ...newSkills]
+				});
+
+				result.discoveredSkills = newSkills;
+			}
 
 			// Update seller ranking
 			await updateDinozCount(offer.seller.id, -1);
@@ -476,6 +494,8 @@ export async function claimOffer(req: Request) {
 	await updateOfferStatus(offerId, OfferStatus.CLAIMED);
 
 	await Promise.all(promises);
+
+	return result;
 }
 
 export async function checkRefund(

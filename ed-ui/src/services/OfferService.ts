@@ -1,4 +1,4 @@
-import { OfferGetList } from '@drpg/core/returnTypes/Offer';
+import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
 import { http } from '../utils/index.js';
 import { Player } from '@drpg/prisma';
 
@@ -57,7 +57,7 @@ export const OfferService = {
 	claimOffer(offerId: number) {
 		return http()
 			.post(`/offer/${offerId}/claim`)
-			.then(() => Promise.resolve())
+			.then(res => Promise.resolve<ClaimOfferData>(res.data))
 			.catch(err => Promise.reject(err));
 	}
 };

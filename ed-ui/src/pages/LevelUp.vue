@@ -198,7 +198,7 @@ import { errorHandler } from '../utils/index.js';
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { dinozPlacement } from '../constants/index.js';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { dinozStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
@@ -218,6 +218,7 @@ export default defineComponent({
 	data() {
 		return {
 			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			availableSkills: null as DinozSkillOwnAndUnlockable | null,
 			tryNumber: 1 as number,
 			skillList,
@@ -276,12 +277,22 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				if (!this.event) {
-					await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
+					const { discoveredSkill } = await DinozService.learnSkill(dinozId, skillIdList, this.tryNumber);
 					EventBus.emit('isLoading', false);
+
+					if (discoveredSkill) {
+						this.playerStore.setDiscoveredSkills(this.playerStore.getDiscoveredSkills.concat(discoveredSkill));
+					}
+
 					this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
 				} else {
-					await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
+					const { discoveredSkill } = await FBService.learnSkill(dinozId, skillIdList, this.tryNumber, this.event);
 					EventBus.emit('isLoading', false);
+
+					if (discoveredSkill) {
+						this.playerStore.setDiscoveredSkills(this.playerStore.getDiscoveredSkills.concat(discoveredSkill));
+					}
+
 					this.$router.push({ name: 'FBTournament', query: { id: this.eventId } });
 				}
 			} catch (err) {

@@ -31,6 +31,7 @@
 		"wronglogins": "Les identifiants Eternaltwin ne sont pas les bons.",
 		"noPDA": "Tu as besoin de la Pierre en Diamantite Agglomérée pour accéder à cette page.",
 		"noPMI": "Tu as besoin du Petit Missionnaire Illustré pour accéder à cette page.",
+		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
 		"dinozListMissing": "Liste des Dinoz manquante.",
 		"noFight": "Vous avez déjà visionné ce combat.",
 		"dinozDataMissing": "Données du Dinoz manquantes.",
@@ -204,7 +205,8 @@
 		"chose": "Choisir",
 		"generator": "Générateur de Dinoz",
 		"sortDinoz": "Gérer mes Dinoz",
-		"dinozMissions": "Missions de mes Dinoz"
+		"dinozMissions": "Missions de mes Dinoz",
+		"skills": "Compétences"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",
@@ -3908,6 +3910,7 @@
 			"eugene": "Votre créativité sans pareille vous a fait gagner cette magnifique médaille, seuls les maîtres Dinoz ayant une intelligence hors du commun se permettent de la porter. Certains disent que vous êtes un génie, d'autres que vous êtes un vrai tordu, le plus important c'est qu'ils parlent de vous !",
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe telle que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
+			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
 			"import": "Félicitations ! Vous avez importé votre compte sur DinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet Importasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},

@@ -1,3 +1,4 @@
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { Notification } from '@drpg/core/models/notifications/notification';
 import { PlayerOptions } from '@drpg/core/models/player/PlayerOptions';
 import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
@@ -20,7 +21,8 @@ export const playerStore = defineStore('playerStore', {
 		shopkeeper: false,
 		sortOption: 'default',
 		notificationCounter: 0,
-		notifications: []
+		notifications: [],
+		discoveredSkills: []
 	}),
 	getters: {
 		getMoney: (state: StorePlayer) => state.money,
@@ -33,7 +35,8 @@ export const playerStore = defineStore('playerStore', {
 		getSortOption: (state: StorePlayer) => state.sortOption,
 		isAdmin: (state: StorePlayer) => state.admin,
 		getNotificationsCounter: (state: StorePlayer) => state.notificationCounter,
-		getNotifications: (state: StorePlayer) => state.notifications
+		getNotifications: (state: StorePlayer) => state.notifications,
+		getDiscoveredSkills: (state: StorePlayer) => state.discoveredSkills
 	},
 	actions: {
 		setMoney(money: number): void {
@@ -71,6 +74,9 @@ export const playerStore = defineStore('playerStore', {
 		},
 		setNotifications(notif: Notification[]): void {
 			this.notifications = notif;
+		},
+		setDiscoveredSkills(skills: Skill[]): void {
+			this.discoveredSkills = skills;
 		}
 	},
 	persist: {

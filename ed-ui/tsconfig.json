@@ -2,11 +2,11 @@
   "compilerOptions": {
     "composite": true,
     "target": "esnext",
-    "module": "NodeNext",
+    "module": "ESNext",
     "strict": true,
     "jsx": "preserve",
     "importHelpers": true,
-    "moduleResolution": "NodeNext",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": false,
     "allowSyntheticDefaultImports": true,

@@ -610,6 +610,7 @@ export async function getDinozForLevelUp(dinozId: number) {
 			player: {
 				select: {
 					id: true,
+					discoveredSkills: true,
 					ranking: { select: { points: true, average: true, dinozCount: true } }
 				}
 			},
@@ -646,6 +647,7 @@ export async function getEventDinozForLevelUp(dinozId: number) {
 			player: {
 				select: {
 					id: true,
+					discoveredSkills: true,
 					ranking: { select: { points: true, average: true, dinozCount: true } }
 				}
 			},

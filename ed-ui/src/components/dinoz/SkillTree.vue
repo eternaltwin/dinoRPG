@@ -4,17 +4,21 @@ import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
-import { onMounted, Ref, ref } from 'vue';
+import { onMounted, Ref, ref, watch } from 'vue';
 import SkillTooltip from './SkillTooltip.vue';
+import { playerStore } from '../../store/playerStore';
+import { StorePlayer } from '@drpg/core/models/store/StorePlayer';
 
 type DisplayedSkill = SkillDetails & {
 	rowspan: number;
-	unlocked: boolean;
+	discovered: boolean;
+	learned: boolean;
 };
 
 type Tree = DisplayedSkill[][];
 
 const buildTree = (
+	store: StorePlayer,
 	tree: Tree,
 	row: number,
 	column: number,
@@ -45,7 +49,8 @@ const buildTree = (
 		const childSkill: DisplayedSkill = {
 			...child,
 			rowspan: 1,
-			unlocked: dinoz ? dinoz.skills.some(s => s.skillId === child.id) : true
+			discovered: store.discoveredSkills.includes(child.id),
+			learned: dinoz?.skills.some(s => s.skillId === child.id) || false
 		};
 
 		// Add skill to the tree
@@ -56,8 +61,8 @@ const buildTree = (
 		}
 
 		// Recursively build the tree for the child skill
-		if (childSkill.unlocked) {
-			buildTree(tree, targetRow, column + 1, [...parents, childSkill], maxLevel, dinoz);
+		if (childSkill.discovered) {
+			buildTree(store, tree, targetRow, column + 1, [...parents, childSkill], maxLevel, dinoz);
 		}
 
 		rowspan += childSkill.rowspan;
@@ -70,28 +75,31 @@ const buildTree = (
 };
 
 // Props
-const {
-	dinoz,
-	type,
-	treeType = SkillTreeType.VANILLA
-} = defineProps<{
-	dinoz?: Pick<DinozFiche, 'skills'>;
-	type: ElementType;
-	treeType?: SkillTreeType;
-}>();
+const props = withDefaults(
+	defineProps<{
+		dinoz?: Pick<DinozFiche, 'skills'>;
+		type: ElementType;
+		treeType?: SkillTreeType;
+	}>(),
+	{
+		treeType: SkillTreeType.VANILLA
+	}
+);
 
 // State
 const tree = ref<Tree>([]);
-const maxLevel = ref(0);
+const maxLevel = ref(1);
+const store = playerStore();
 
-// Hooks
-onMounted(() => {
-	// Find base skills for the given type
+const init = () => {
+	tree.value = [];
+	maxLevel.value = 1;
+
 	const baseSkills = Object.values(skillList).filter(
 		skill =>
-			skill.tree === treeType &&
+			skill.tree === props.treeType &&
 			!skill.isSphereSkill &&
-			skill.element.some(el => el === type) &&
+			skill.element.some(el => el === props.type) &&
 			!skill.unlockedFrom?.length
 	);
 
@@ -99,22 +107,34 @@ onMounted(() => {
 		const displayedSkill: DisplayedSkill = {
 			...skill,
 			rowspan: 1,
-			unlocked: dinoz ? dinoz.skills.some(s => s.skillId === skill.id) : true
+			discovered: store.discoveredSkills.includes(skill.id),
+			learned: props.dinoz?.skills.some(s => s.skillId === skill.id) || false
 		};
 
 		tree.value.push([displayedSkill]);
-		buildTree(tree.value, tree.value.length - 1, 0, [displayedSkill], maxLevel, dinoz);
+
+		if (displayedSkill.discovered) {
+			buildTree(store, tree.value, tree.value.length - 1, 0, [displayedSkill], maxLevel, props.dinoz);
+		}
 	});
 
 	// Filter empty cells
 	tree.value = tree.value.map(row => row.filter(skill => skill));
-});
+};
+
+// Hooks
+onMounted(init);
+
+watch(props, init, { deep: true });
 </script>
 
 <template>
-	<div :class="`wrapper element-${type}`">
+	<div :class="`wrapper element-${props.type}`">
 		<p class="element">
-			<img :src="getImgURL('elements', `elem_${ElementType[type].toLowerCase()}`)" :alt="ElementType[type]" />
+			<img
+				:src="getImgURL('elements', `elem_${ElementType[props.type].toLowerCase()}`)"
+				:alt="ElementType[props.type]"
+			/>
 		</p>
 		<table>
 			<thead>
@@ -130,9 +150,9 @@ onMounted(() => {
 						v-for="skill in row"
 						:key="skill.id"
 						:rowspan="skill.rowspan || 1"
-						:class="{ unlocked: skill.unlocked, base: !skill.unlockedFrom?.length }"
+						:class="{ learned: skill.learned, base: !skill.unlockedFrom?.length }"
 					>
-						<SkillTooltip v-if="skill.unlocked" :skill="skill.id">
+						<SkillTooltip v-if="skill.discovered" :skill="skill.id">
 							{{ $t(`skill.name.${skill.name}`) }}
 						</SkillTooltip>
 						<Tippy theme="normal" v-else>
@@ -204,10 +224,6 @@ onMounted(() => {
 		tr {
 			background-color: #e0b785;
 
-			&:nth-child(odd) {
-				background-color: #d39f63;
-			}
-
 			th {
 				border: 3px solid #793f1f;
 				background-color: #793f1f;
@@ -227,6 +243,10 @@ onMounted(() => {
 				font-weight: bold;
 				font-size: 8pt;
 				padding: 2px;
+
+				&.learned {
+					background-color: #d39f63;
+				}
 
 				&:not(.base) {
 					position: relative;

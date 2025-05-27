@@ -50,6 +50,11 @@ const router = createRouter({
 					component: () => import('../pages/Missions.vue')
 				},
 				{
+					path: '/dino/:id/skills',
+					name: 'DinozSkills',
+					component: () => import('../pages/SkillTrees.vue')
+				},
+				{
 					path: '/shop/:name',
 					name: 'ItemShopPage',
 					component: () => import('../pages/ItemShopPage.vue')

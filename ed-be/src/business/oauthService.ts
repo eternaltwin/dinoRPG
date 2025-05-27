@@ -6,7 +6,7 @@ import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { orderDinozList, toDinozFiche } from '@drpg/core/utils/DinozUtils';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { AdminRole, LogType } from '@drpg/prisma';
+import { LogType } from '@drpg/prisma';
 import { EternaltwinNodeClient } from '@eternaltwin/client-node';
 import { ErrorCode } from '@eternaltwin/client-node/error';
 import { AuthType } from '@eternaltwin/core/auth/auth-type';
@@ -126,7 +126,8 @@ export class OAuth {
 					clanId: player.ClanMember?.clanId,
 					playerOptions: {
 						hasPDA: false,
-						hasPMI: false
+						hasPMI: false,
+						hasPAC: false,
 					},
 					admin: false,
 					priest: false,
@@ -218,13 +219,15 @@ export class OAuth {
 				playerOptions: {
 					hasPDA: player.rewards.some(reward => reward.rewardId === Reward.PDA),
 					hasPMI: player.rewards.some(reward => reward.rewardId === Reward.PMI),
+					hasPAC: player.rewards.some(reward => reward.rewardId === Reward.PAC),
 					skipLevel: player.skipLevel,
 					skipFight: player.skipFight
 				},
 				admin: req?.auth?.isAdmin || false,
 				priest: player.priest,
 				shopkeeper: player.shopKeeper,
-				notifications: player.notifications
+				notifications: player.notifications,
+				discoveredSkills: player.discoveredSkills
 			};
 
 			// Order dinoz

@@ -24,6 +24,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 			skipFight: true,
 			skipLevel: true,
 			ClanMember: { select: { clanId: true } },
+			discoveredSkills: true,
 			notifications: {
 				select: { id: true, message: true, severity: true, link: true, date: true },
 				where: { read: false }
@@ -345,6 +346,7 @@ export async function getCommonDataRequest(playerId: string) {
 			ips: true,
 			skipFight: true,
 			skipLevel: true,
+			discoveredSkills: true,
 			ClanMember: { select: { clanId: true } },
 			notifications: {
 				select: { id: true, message: true, severity: true, link: true, date: true },
@@ -1198,4 +1200,20 @@ export async function updatePlayerLanguage(playerId: string, language: Lang) {
 	});
 
 	return updatedPlayer;
+}
+
+/**
+ * Get the player discovered skills.
+ * @param playerId - The ID of the player.
+ * @returns List of discovered skills.
+ */
+export async function getPlayerDiscoveredSkills(playerId: string) {
+	return await prisma.player.findUniqueOrThrow({
+		where: {
+			id: playerId
+		},
+		select: {
+			discoveredSkills: true
+		}
+	});
 }

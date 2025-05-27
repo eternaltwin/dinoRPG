@@ -3,6 +3,7 @@ import { FBOpponent, FBParticipation, PublicEvent, PublicFBTournament } from '@d
 import { DinozSkillOwnAndUnlockable } from '@drpg/core/models/dinoz/DinozSkillOwnAndUnlockable';
 import { PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { FightResult } from '@drpg/core/models/fight/FightResult';
+import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
 
 export const FBService = {
 	getCurrentTournament(id: string): Promise<PublicFBTournament | undefined> {
@@ -32,7 +33,7 @@ export const FBService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number, event: string): Promise<string> {
+	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number, event: string): Promise<LearnSkillData> {
 		return http()
 			.post(`/events/${event}/learnskill/${dinozId}`, {
 				skillIdList: skillIdList,

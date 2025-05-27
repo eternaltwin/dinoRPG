@@ -571,27 +571,18 @@ export default defineComponent({
 				);
 			}
 		},
-		filterQuestList(operation: string): void {
-			if (operation === 'update') {
-				this.questListFiltered = this.player.quests.find(q => q.questId === parseInt(quest.questId));
-			} else {
-				this.questListFiltered = Object.keys(epicList.imgName).filter(epicRewardId =>
-					this.player.rewards.includes(parseInt(epicRewardId))
-				);
-			}
-		},
 		sortItemsById(): void {
 			this.player.items.sort((a, b) => a.itemId - b.itemId);
 		},
 		sortIngredientsById(): void {
 			this.player.ingredients.sort((a, b) => a.ingredientId - b.ingredientId);
 		},
-		updateProgression(quest: unknown) {
-			const selectedQuestId = this.player.quests.find(q => q.questId === parseInt(quest.questId));
+		updateProgression(quest: { questId: number; progression: number }) {
+			const selectedQuestId = this.player.quests.find(q => q.questId === quest.questId);
 			if (selectedQuestId) {
 				quest.progression = selectedQuestId.progression;
 			} else {
-				quest.progression = '';
+				quest.progression = 0;
 			}
 		},
 		async banPlayer() {

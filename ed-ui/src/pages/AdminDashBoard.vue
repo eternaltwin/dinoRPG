@@ -85,7 +85,7 @@ import DebugFight from '../components/admin/DebugFight.vue';
 
 interface PlayerSearch {
 	name: string;
-	id: number;
+	id: string;
 }
 
 export default defineComponent({

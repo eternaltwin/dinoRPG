@@ -32,3 +32,8 @@ export type ManagePageData = {
 	order: number;
 	display: string;
 }[];
+
+export type LearnSkillData = {
+	newMaxExperience: number;
+	discoveredSkill: number;
+};

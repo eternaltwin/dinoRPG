@@ -19910,6 +19910,7 @@ export namespace Prisma {
     clanMemberId: number | null
     dailyGridRewards: number | null
     banCaseId: number | null
+    discoveredSkills: number | null
   }
 
   export type PlayerSumAggregateOutputType = {
@@ -19918,6 +19919,7 @@ export namespace Prisma {
     clanMemberId: number | null
     dailyGridRewards: number | null
     banCaseId: number | null
+    discoveredSkills: number[]
   }
 
   export type PlayerMinAggregateOutputType = {
@@ -20004,6 +20006,7 @@ export namespace Prisma {
     skipFight: number
     skipLevel: number
     banCaseId: number
+    discoveredSkills: number
     id: number
     ips: number
     _all: number
@@ -20016,6 +20019,7 @@ export namespace Prisma {
     clanMemberId?: true
     dailyGridRewards?: true
     banCaseId?: true
+    discoveredSkills?: true
   }
 
   export type PlayerSumAggregateInputType = {
@@ -20024,6 +20028,7 @@ export namespace Prisma {
     clanMemberId?: true
     dailyGridRewards?: true
     banCaseId?: true
+    discoveredSkills?: true
   }
 
   export type PlayerMinAggregateInputType = {
@@ -20110,6 +20115,7 @@ export namespace Prisma {
     skipFight?: true
     skipLevel?: true
     banCaseId?: true
+    discoveredSkills?: true
     id?: true
     ips?: true
     _all?: true
@@ -20227,6 +20233,7 @@ export namespace Prisma {
     skipFight: boolean
     skipLevel: boolean
     banCaseId: number | null
+    discoveredSkills: number[]
     id: string
     ips: string[]
     _count: PlayerCountAggregateOutputType | null
@@ -20276,6 +20283,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: boolean
+    discoveredSkills?: boolean
     id?: boolean
     ips?: boolean
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
@@ -20338,6 +20346,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: boolean
+    discoveredSkills?: boolean
     id?: boolean
     ips?: boolean
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
@@ -20369,6 +20378,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: boolean
+    discoveredSkills?: boolean
     id?: boolean
     ips?: boolean
     banCase?: boolean | Player$banCaseArgs<ExtArgs>
@@ -20400,11 +20410,12 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: boolean
+    discoveredSkills?: boolean
     id?: boolean
     ips?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "id" | "ips", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "discoveredSkills" | "id" | "ips", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -20507,6 +20518,7 @@ export namespace Prisma {
       skipFight: boolean
       skipLevel: boolean
       banCaseId: number | null
+      discoveredSkills: number[]
       id: string
       ips: string[]
     }, ExtArgs["result"]["player"]>
@@ -20988,6 +21000,7 @@ export namespace Prisma {
     readonly skipFight: FieldRef<"Player", 'Boolean'>
     readonly skipLevel: FieldRef<"Player", 'Boolean'>
     readonly banCaseId: FieldRef<"Player", 'Int'>
+    readonly discoveredSkills: FieldRef<"Player", 'Int[]'>
     readonly id: FieldRef<"Player", 'String'>
     readonly ips: FieldRef<"Player", 'String[]'>
   }
@@ -68601,6 +68614,7 @@ export namespace Prisma {
     skipFight: 'skipFight',
     skipLevel: 'skipLevel',
     banCaseId: 'banCaseId',
+    discoveredSkills: 'discoveredSkills',
     id: 'id',
     ips: 'ips'
   };
@@ -70232,6 +70246,7 @@ export namespace Prisma {
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
     banCaseId?: IntNullableFilter<"Player"> | number | null
+    discoveredSkills?: IntNullableListFilter<"Player">
     id?: UuidFilter<"Player"> | string
     ips?: StringNullableListFilter<"Player">
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
@@ -70293,6 +70308,7 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
+    discoveredSkills?: SortOrder
     id?: SortOrder
     ips?: SortOrder
     leaderOf?: ClanOrderByWithRelationInput
@@ -70358,6 +70374,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFilter<"Player"> | number
     skipFight?: BoolFilter<"Player"> | boolean
     skipLevel?: BoolFilter<"Player"> | boolean
+    discoveredSkills?: IntNullableListFilter<"Player">
     ips?: StringNullableListFilter<"Player">
     leaderOf?: XOR<ClanNullableScalarRelationFilter, ClanWhereInput> | null
     ClanHistory?: ClanHistoryListRelationFilter
@@ -70418,6 +70435,7 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     banCaseId?: SortOrderInput | SortOrder
+    discoveredSkills?: SortOrder
     id?: SortOrder
     ips?: SortOrder
     _count?: PlayerCountOrderByAggregateInput
@@ -70456,6 +70474,7 @@ export namespace Prisma {
     skipFight?: BoolWithAggregatesFilter<"Player"> | boolean
     skipLevel?: BoolWithAggregatesFilter<"Player"> | boolean
     banCaseId?: IntNullableWithAggregatesFilter<"Player"> | number | null
+    discoveredSkills?: IntNullableListFilter<"Player">
     id?: UuidWithAggregatesFilter<"Player"> | string
     ips?: StringNullableListFilter<"Player">
   }
@@ -73929,6 +73948,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -73990,6 +74010,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -74049,6 +74070,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -74110,6 +74132,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -74170,6 +74193,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
   }
@@ -74199,6 +74223,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
   }
@@ -74229,6 +74254,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
   }
@@ -77739,6 +77765,14 @@ export namespace Prisma {
     not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
   }
 
+  export type IntNullableListFilter<$PrismaModel = never> = {
+    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    has?: number | IntFieldRefInput<$PrismaModel> | null
+    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
+    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type StringNullableListFilter<$PrismaModel = never> = {
     equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     has?: string | StringFieldRefInput<$PrismaModel> | null
@@ -77983,6 +78017,7 @@ export namespace Prisma {
     skipFight?: SortOrder
     skipLevel?: SortOrder
     banCaseId?: SortOrder
+    discoveredSkills?: SortOrder
     id?: SortOrder
     ips?: SortOrder
   }
@@ -77993,6 +78028,7 @@ export namespace Prisma {
     clanMemberId?: SortOrder
     dailyGridRewards?: SortOrder
     banCaseId?: SortOrder
+    discoveredSkills?: SortOrder
   }
 
   export type PlayerMaxOrderByAggregateInput = {
@@ -78059,6 +78095,7 @@ export namespace Prisma {
     clanMemberId?: SortOrder
     dailyGridRewards?: SortOrder
     banCaseId?: SortOrder
+    discoveredSkills?: SortOrder
   }
 
   export type EnumAdminRoleWithAggregatesFilter<$PrismaModel = never> = {
@@ -78414,14 +78451,6 @@ export namespace Prisma {
   export type PlayerDinozShopSumOrderByAggregateInput = {
     id?: SortOrder
     raceId?: SortOrder
-  }
-
-  export type IntNullableListFilter<$PrismaModel = never> = {
-    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    has?: number | IntFieldRefInput<$PrismaModel> | null
-    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
-    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type PlayerGatherCountOrderByAggregateInput = {
@@ -81064,6 +81093,10 @@ export namespace Prisma {
     update?: XOR<XOR<DinozUpdateToOneWithWhereWithoutNpcsInput, DinozUpdateWithoutNpcsInput>, DinozUncheckedUpdateWithoutNpcsInput>
   }
 
+  export type PlayerCreatediscoveredSkillsInput = {
+    set: number[]
+  }
+
   export type PlayerCreateipsInput = {
     set: string[]
   }
@@ -81490,6 +81523,11 @@ export namespace Prisma {
 
   export type EnumLangFieldUpdateOperationsInput = {
     set?: $Enums.Lang
+  }
+
+  export type PlayerUpdatediscoveredSkillsInput = {
+    set?: number[]
+    push?: number | number[]
   }
 
   export type PlayerUpdateipsInput = {
@@ -85442,6 +85480,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -85502,6 +85541,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -86160,6 +86200,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -86220,6 +86261,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -90583,6 +90625,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -90643,6 +90686,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -90818,6 +90862,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -90878,6 +90923,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -91625,6 +91671,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -91685,6 +91732,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -91759,6 +91807,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -91819,6 +91868,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -91877,6 +91927,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -91937,6 +91988,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -92011,6 +92063,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -92071,6 +92124,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -92129,6 +92183,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -92189,6 +92244,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -92263,6 +92319,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -92323,6 +92380,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -92381,6 +92439,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -92441,6 +92500,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -92515,6 +92575,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -92575,6 +92636,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -92633,6 +92695,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -92693,6 +92756,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -92767,6 +92831,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -92827,6 +92892,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -92885,6 +92951,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -92945,6 +93012,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -93019,6 +93087,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -93079,6 +93148,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -93137,6 +93207,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -93197,6 +93268,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -93271,6 +93343,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -93331,6 +93404,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -93389,6 +93463,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -93449,6 +93524,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -93523,6 +93599,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -93583,6 +93660,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -93731,6 +93809,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -93791,6 +93870,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -93899,6 +93979,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -93959,6 +94040,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -94115,6 +94197,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -94175,6 +94258,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -94397,6 +94481,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -94457,6 +94542,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -94656,6 +94742,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -94716,6 +94803,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -94894,6 +94982,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -94954,6 +95043,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -95214,6 +95304,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -95274,6 +95365,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -95348,6 +95440,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -95408,6 +95501,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -95564,6 +95658,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -95624,6 +95719,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -95802,6 +95898,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -95862,6 +95959,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -95936,6 +96034,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
@@ -95996,6 +96095,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
@@ -96236,6 +96336,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
@@ -96296,6 +96397,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
@@ -96529,6 +96631,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -96589,6 +96692,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -96703,6 +96807,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -96763,6 +96868,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -96963,6 +97069,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -97023,6 +97130,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -97131,6 +97239,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97191,6 +97300,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -97289,6 +97399,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -97349,6 +97460,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -97457,6 +97569,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97517,6 +97630,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -97649,6 +97763,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -97709,6 +97824,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -97823,6 +97939,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -97883,6 +98000,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -98113,6 +98231,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -98173,6 +98292,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -98236,6 +98356,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -98296,6 +98417,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -98359,6 +98481,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -98418,6 +98541,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -98597,6 +98721,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -98657,6 +98782,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -98726,6 +98852,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -98786,6 +98913,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -98855,6 +98983,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -98914,6 +99043,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -98973,6 +99103,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -99033,6 +99164,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -99118,6 +99250,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -99178,6 +99311,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -99302,6 +99436,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -99362,6 +99497,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -99459,6 +99595,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -99519,6 +99656,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -99638,6 +99776,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -99698,6 +99837,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -99807,6 +99947,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -99867,6 +100008,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -99983,6 +100125,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -100043,6 +100186,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -100187,6 +100331,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -100247,6 +100392,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -100305,6 +100451,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -100365,6 +100512,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -100439,6 +100587,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -100499,6 +100648,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -100557,6 +100707,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -100617,6 +100768,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -100951,6 +101103,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -101011,6 +101164,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -101402,6 +101556,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -101462,6 +101617,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -101585,6 +101741,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -101645,6 +101802,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
@@ -102340,6 +102498,7 @@ export namespace Prisma {
     dailyGridRewards?: number
     skipFight?: boolean
     skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanCreateNestedOneWithoutLeaderInput
@@ -102400,6 +102559,7 @@ export namespace Prisma {
     skipFight?: boolean
     skipLevel?: boolean
     banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
     id: string
     ips?: PlayerCreateipsInput | string[]
     leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
@@ -102705,6 +102865,7 @@ export namespace Prisma {
     dailyGridRewards?: IntFieldUpdateOperationsInput | number
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
@@ -102765,6 +102926,7 @@ export namespace Prisma {
     skipFight?: BoolFieldUpdateOperationsInput | boolean
     skipLevel?: BoolFieldUpdateOperationsInput | boolean
     banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
     id?: StringFieldUpdateOperationsInput | string
     ips?: PlayerUpdateipsInput | string[]
     leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput

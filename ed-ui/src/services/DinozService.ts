@@ -6,7 +6,7 @@ import { GatherPublicGrid } from '@drpg/core/models/gather/gatherPublicGrid';
 import { GatherResult } from '@drpg/core/models/gather/gatherResult';
 import { ItemFeedBack } from '@drpg/core/models/item/feedBack';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { ManagePageData } from '@drpg/core/returnTypes/Dinoz';
+import { LearnSkillData, ManagePageData } from '@drpg/core/returnTypes/Dinoz';
 import { http } from '../utils/index.js';
 
 export const DinozService = {
@@ -58,7 +58,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number): Promise<string> {
+	learnSkill(dinozId: number, skillIdList: Array<number>, tryNumber: number): Promise<LearnSkillData> {
 		return http()
 			.post(`/level/learnskill/${dinozId}`, {
 				skillIdList: skillIdList,

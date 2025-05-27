@@ -61,6 +61,10 @@
 			<img :src="getImgURL('icons', `small_right`)" alt="missions" />
 			<span>{{ $t('button.dinozMissions') }}</span>
 		</a>
+		<a v-if="hasPAC" class="overviewButton" @click="goToPage('SkillTrees')">
+			<img :src="getImgURL('icons', `clipboard`)" alt="skills" />
+			<span>{{ $t('button.skills') }}</span>
+		</a>
 		<a class="button" @click="goToPage('DinozShopPage')">
 			{{ $t('button.buyDinoz') }}
 		</a>
@@ -153,6 +157,9 @@ export default defineComponent({
 		hasPMI(): boolean {
 			return this.playerStore.playerOptions.hasPMI;
 		},
+		hasPAC(): boolean {
+			return this.playerStore.playerOptions.hasPAC;
+		},
 		// Format money display (1000000 -> 1.000.000)
 		beautifulMoney(): string | undefined {
 			if (!this.money) {
@@ -165,10 +172,6 @@ export default defineComponent({
 		// Watch money in store. Each time money will change, the display will be updated
 		storeMoney: function (money: number) {
 			this.money = money;
-		},
-		// Watch current dinoz id in store. Each time current dinoz id will change, the selected dinoz will be updated
-		currentDinozId: function (dinozId: number) {
-			this.currentDinozId = dinozId;
 		},
 		'playerStore.getClanId': function (clanId: number) {
 			this.clanId = clanId;
@@ -216,7 +219,7 @@ export default defineComponent({
 		padding-right: 3px;
 	}
 	&:hover {
-		color: #fce3bc;
+		color: #d69e68;
 	}
 }
 #accountList {

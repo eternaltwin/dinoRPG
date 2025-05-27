@@ -45,6 +45,7 @@ import { prisma } from '../prisma.js';
 import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
 import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
+import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -106,10 +107,14 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
  *
  * @returns New max experience value
  */
-export async function learnSkill(req: Request, event?: GameDinozUsage) {
+export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<LearnSkillData> {
 	const authed = await auth(req);
 	const dinozId = +req.params.id;
 	const skillIdList = req.body.skillIdList as number[];
+	const result: LearnSkillData = {
+		newMaxExperience: 0,
+		discoveredSkill: 0,
+	};
 
 	let dinozSkills;
 	if (event) {
@@ -175,6 +180,15 @@ export async function learnSkill(req: Request, event?: GameDinozUsage) {
 		await applySkillEffect(dinozSkills, skill, authed.id, event);
 		await addSkillToDinoz(dinozId, skillIdList[0], event);
 
+		// Discover skill for player
+		if (!dinozSkills.player.discoveredSkills.includes(skill.id)) {
+			await setPlayer(dinozSkills.player.id, {
+				discoveredSkills: [...dinozSkills.player.discoveredSkills, skill.id]
+			});
+
+			result.discoveredSkill = skill.id;
+		}
+
 		// Get all new unlockables skills
 		// First filter : get skills that required skill send in body to be learn
 		// Second filter : Keep only skills that dinoz can learn (dinoz have every unlock condition)
@@ -211,7 +225,8 @@ export async function learnSkill(req: Request, event?: GameDinozUsage) {
 
 	if (event) {
 		await updateEventDinoz(newDinozData.id, newDinozData);
-		return 1;
+		result.newMaxExperience = 1;
+		return result;
 	}
 	await updateDinoz(newDinozData.id, newDinozData);
 
@@ -224,7 +239,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage) {
 
 	await createLog(LogType.LevelUp, dinozSkills.player.id, dinozSkills.id, newDinozData.level.toString());
 
-	const newMaxExperience = levelList.find(level => level.id === dinozSkills.level + 1)?.experience;
+	result.newMaxExperience = levelList.find(level => level.id === dinozSkills.level + 1)?.experience ?? 0;
 
 	// Update stat
 	await setSpecificStat(StatTracking.LVL_UP, dinozSkills.player.id, 1);
@@ -250,7 +265,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage) {
 
 	await checkFBCreation(dinozSkills.level + 1);
 
-	return newMaxExperience ?? 0;
+	return result;
 }
 
 function getDinozLearnableSkills(

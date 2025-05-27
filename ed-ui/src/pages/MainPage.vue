@@ -47,6 +47,7 @@ export default defineComponent({
 				this.playerStore.setPlayerName(commonData.name);
 				this.playerStore.setPlayerOptions(commonData.playerOptions);
 				this.playerStore.setAdmin(commonData.admin);
+				this.playerStore.setDiscoveredSkills(commonData.discoveredSkills);
 				this.loaded = true;
 				EventBus.emit('isLoading', false);
 			} catch (e) {
