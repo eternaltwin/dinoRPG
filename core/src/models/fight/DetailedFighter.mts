@@ -60,7 +60,9 @@ export const GoodStatus = [
 	Status.QUICKENED,
 	Status.SHIELDED,
 	Status.BLESSED,
-	Status.HEALING
+	Status.HEALING,
+	Status.TAUNT,
+	Status.THUNDERED
 ];
 
 export const BadStatus = [
