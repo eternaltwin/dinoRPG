@@ -1,4 +1,4 @@
-export enum SkillTree {
+export enum SkillTreeType {
 	VANILLA = 'Original',
 	ETHER = 'Ether'
 }

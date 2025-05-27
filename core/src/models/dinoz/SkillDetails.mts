@@ -1,7 +1,7 @@
 import { ElementType } from '../enums/ElementType.mjs';
 import { Energy } from '../enums/Energy.mjs';
 import { Stat } from '../enums/SkillStat.mjs';
-import { SkillTree } from '../enums/SkillTree.mjs';
+import { SkillTreeType } from '../enums/SkillTreeType.mjs';
 import { SkillType } from '../enums/SkillType.mjs';
 import { Skill } from './SkillList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
@@ -55,7 +55,7 @@ export interface SkillDetails {
 	element: ElementType[];
 	activatable: boolean;
 	state?: boolean;
-	tree?: SkillTree;
+	tree?: SkillTreeType;
 	unlockedFrom?: Skill[];
 	raceId?: number[]; // For specific race skill (ex : fly for Pteroz)
 	isBaseSkill: boolean; // If true : dinoz knows this skill when bought

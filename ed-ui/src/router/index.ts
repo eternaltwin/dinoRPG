@@ -144,9 +144,9 @@ const router = createRouter({
 					component: () => import('../pages/DinozMissions.vue')
 				},
 				{
-					path: '/skill-tree',
-					name: 'SkillTree',
-					component: () => import('../pages/SkillTree.vue')
+					path: '/skill-trees',
+					name: 'SkillTrees',
+					component: () => import('../pages/SkillTrees.vue')
 				},
 				{
 					path: '/market/:tab',

@@ -1732,6 +1732,8 @@
 		"energy": "Énergie : **{energy}**",
 		"probability": "Probabilité : **{probability}%**",
 		"priority": "Priorité : **{priority}**",
+		"unknown": "Inconnu",
+		"unknownDesc": "Vous n'avez pas encore découvert cette compétence.",
 		"name": {
 			"GriffesEnflammees": "Griffes Enflammées",
 			"Colere": "Colère",
@@ -2527,7 +2529,7 @@
 		"admin": "Dino-RPG [ Admin Dashboard ]",
 		"event": "Dino-RPG [ Evénements ]",
 		"fb_tournament": "Dino-RPG [ Tournoi de Forcebrut ]",
-		"skillTree": "Dino-RPG [ Arbre de Compétences ]"
+		"skillTrees": "Dino-RPG [ Arbres de Compétences ]"
 	},
 	"gather": {
 		"action": {
@@ -5024,7 +5026,8 @@
 		"stage": "Palier {stage}",
 		"fight": "Combattre {opponent}"
 	},
-	"skillTree": {
-		"title": "Arbre de compétences"
+	"skillTrees": {
+		"title": "Arbres de compétences",
+		"level": "Niv.{level}"
 	}
 }

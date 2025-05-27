@@ -5,7 +5,7 @@ import { raceList } from '@drpg/core/models/dinoz/RaceList';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { SkillTree } from '@drpg/core/models/enums/SkillTree';
+import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { $Enums, Dinoz, DinozItem, DinozSkill, DinozSkillUnlockable, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
@@ -496,7 +496,7 @@ function getUnlockableSkills(
 }
 
 function getTreeType(status: Pick<DinozStatus, 'statusId'>[]) {
-	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP) ? SkillTree.ETHER : SkillTree.VANILLA;
+	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP) ? SkillTreeType.ETHER : SkillTreeType.VANILLA;
 }
 
 // Get up chance for one element

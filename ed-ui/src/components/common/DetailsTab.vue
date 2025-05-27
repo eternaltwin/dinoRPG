@@ -36,7 +36,7 @@
 					:class="skill.state === false ? 'disabled' : ''"
 				>
 					<td class="name">
-						<Tippy theme="normal">
+						<SkillTooltip :skill="skill.id">
 							<img
 								v-for="(element, index) in skill.element"
 								:key="index"
@@ -44,23 +44,7 @@
 								:alt="ElementType[element]"
 							/>
 							<p>{{ $t(`skill.name.${skillList[skill.id].name}`) }}</p>
-							<template #content>
-								<h1 v-html="formatContent($t(`skill.name.${skillList[skill.id].name}`))" />
-								<p v-html="formatContent($t(`skill.description.${skillList[skill.id].name}`))" />
-								<hr class="demarcation" />
-								<div class="hidden-stats">
-									<p v-html="formatContent($t(`skill.energy`, { energy: skill.energy }))" />
-									<p
-										v-if="skill.priority !== undefined && skill.priority !== null"
-										v-html="formatContent($t(`skill.priority`, { priority: skill.priority }))"
-									/>
-									<p
-										v-if="skill.probability !== undefined && skill.probability !== null"
-										v-html="formatContent($t(`skill.probability`, { probability: skill.probability }))"
-									/>
-								</div>
-							</template>
-						</Tippy>
+						</SkillTooltip>
 					</td>
 					<td class="type">
 						<Tippy theme="normal">
@@ -273,8 +257,7 @@
 								</span>
 								<span v-else>
 									{{ detail.percent ? '' : detail.multiplier ? 'x' : detail.value < 0 ? '-' : '+' }}
-									{{ Math.abs(detail.value).toFixed(2) }}
-									{{ detail.percent ? '%' : '' }}
+									{{ Math.abs(detail.value).toFixed(2) }} {{ detail.percent ? '%' : '' }}
 								</span>
 								<span v-if="detail.type === 'skill'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
@@ -317,10 +300,14 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { formatText } from '../../utils/formatText.js';
+import SkillTooltip from '../dinoz/SkillTooltip.vue';
 
 export default defineComponent({
 	name: 'DetailsTab',
 	props: { dinozData: Object as PropType<DinozFiche> },
+	components: {
+		SkillTooltip
+	},
 	data() {
 		return {
 			dinozStore: dinozStore(),
@@ -330,8 +317,8 @@ export default defineComponent({
 			selectedSort: 'Default' as string,
 			picked: 'Ascendant' as string,
 			hidden: true as boolean,
-			ElementType: ElementType,
-			AssaultElement: AssaultElement,
+			ElementType,
+			AssaultElement,
 			getAssaultStat,
 			assaultStats: [] as ReturnType<typeof getAssaultStat>[],
 			DefenseElement: DefenseElement,
@@ -497,17 +484,21 @@ export default defineComponent({
 	font-size: 8pt;
 	border: 1px dashed rgba(0, 0, 0, 0.1);
 	text-align: center;
+
 	&:hover {
 		background-color: #9a4029;
 		color: #fce3bc;
 	}
 }
+
 .hidden {
 	max-height: 0;
 }
+
 .shown {
 	max-height: 54px;
 }
+
 .wrapper {
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
@@ -516,16 +507,20 @@ export default defineComponent({
 	margin-top: 5px;
 	margin-bottom: 5px;
 	font-size: 8pt;
+
 	select {
 		margin-bottom: 5px;
 	}
+
 	.label {
 		display: flex;
 		justify-content: space-around;
 	}
 }
+
 .details {
 	margin: 5px;
+
 	table {
 		width: 100%;
 		margin-bottom: 5px;
@@ -534,8 +529,10 @@ export default defineComponent({
 		background-color: #ecbd84;
 		border-collapse: separate;
 		border-spacing: 1px;
+
 		tr {
 			display: table-row;
+
 			th {
 				font-size: 8pt;
 				letter-spacing: 0pt;
@@ -556,16 +553,20 @@ export default defineComponent({
 				background-image: url('../../assets/background/table_header.webp');
 				background-position: left bottom;
 				max-width: 222px;
+
 				&.name {
 					width: 200px;
 				}
+
 				&.type {
 					max-width: 26px;
 				}
+
 				&.state {
 					max-width: 38px;
 				}
 			}
+
 			td {
 				font-size: 9pt;
 				padding-right: 5px;
@@ -574,14 +575,17 @@ export default defineComponent({
 				color: #710;
 				background-color: #f3ca92;
 				border: 1px solid #c88f44;
+
 				&.name {
 					background-image: url('../../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 15px;
 					max-width: 222px;
+
 					p {
 						padding-top: 4px;
 					}
+
 					img {
 						float: left;
 						position: relative;
@@ -589,6 +593,7 @@ export default defineComponent({
 						vertical-align: bottom;
 					}
 				}
+
 				&.type {
 					font-weight: bold;
 					text-align: center;
@@ -597,9 +602,11 @@ export default defineComponent({
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
+
 				&.state {
 					vertical-align: top;
 					max-width: 40px;
+
 					img {
 						float: left;
 						position: relative;
@@ -607,14 +614,17 @@ export default defineComponent({
 						top: 5px;
 						cursor: help;
 					}
+
 					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 				}
 			}
 		}
+
 		.disabled {
 			td {
 				opacity: 0.4;
+
 				&.state {
 					background-color: red;
 					background-image: none;
@@ -738,18 +748,5 @@ export default defineComponent({
 
 .ml-4 {
 	margin-left: 4px;
-}
-.demarcation {
-	border: 1px solid #fff;
-	margin-top: 7px;
-	margin-bottom: 7px;
-	width: 90%;
-}
-.hidden-stats {
-	display: flex;
-	flex-wrap: wrap;
-	& p {
-		font-size: 8.5pt !important;
-	}
 }
 </style>
