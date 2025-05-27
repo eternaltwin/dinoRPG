@@ -3522,7 +3522,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 6,
+		probability: 12,
 		visualEffect: SkillVisualEffect.LIGHTNING
 	},
 	[Skill.SURCHARGE]: {
