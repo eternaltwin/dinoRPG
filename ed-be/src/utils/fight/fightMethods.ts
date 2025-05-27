@@ -2500,16 +2500,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Remove x2 bonus
 			fighter.allAssaultMultiplier /= 2;
 
-			if (hit && hit.hpLost > 0) {
-				// Increase target time
-				hit.target.time += 6 * TIME_FACTOR;
-				// Add fx for loss of init
-				fightData.steps.push({
-					action: 'notify',
-					fids: [hit.target.id],
-					notification: NotificationList.InitDown
-				});
+			// Increase fighter time
+			fighter.time += 15 * TIME_FACTOR;
+			// Add fx for loss of init
+			fightData.steps.push({
+				action: 'notify',
+				fids: [fighter.id],
+				notification: NotificationList.InitDown
+			});
 
+			if (hit && hit.hpLost > 0) {
 				let goodStatusToRemove: Status[] = [];
 				hit.target.status.forEach(s => {
 					const isGood = GoodStatus.includes(s.type);
