@@ -15,6 +15,7 @@ export enum SpecialStat {
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+	THORNS_DAMAGE = 'thornsDamage',
 	DISCHARGE_DAMAGE = 'dischargeDamage',
 	FETID_BREATH_DAMAGE = 'fetidBreathDamage',
 	// Counters
@@ -140,6 +141,7 @@ export enum UniqueSpecialStatUsedInFights {
 	BUBBLE_RATE = 'bubbleRate',
 	TORCH_DAMAGE = 'torchDamage',
 	ACID_BLOOD_DAMAGE = 'acidBloodDamage',
+	THORNS_DAMAGE = 'thornsDamage',
 	DISCHARGE_DAMAGE = 'dischargeDamage',
 	FETID_BREATH_DAMAGE = 'fetidBreathDamage'
 }
@@ -246,6 +248,30 @@ export const getSpecialStat = (
 					multiplier: false,
 					elements: ['water'],
 					value: dinoz.nbrUpWater || 0
+				}
+			]
+		};
+	}
+
+	// Special case for ACID_BLOOD_DAMAGE (value not influenced by skills)
+	if (stat === SpecialStat.THORNS_DAMAGE) {
+		// Return null if no acid blood skill
+		if (!skills.some(skill => skill.id === Skill.MAITRE_DES_RONCES)) {
+			return null;
+		}
+
+		return {
+			name: 'thornsDamage',
+			// WOOD / 3
+			value: Math.ceil((dinoz.nbrUpWood || 0) / 3),
+			details: [
+				{
+					type: 'base',
+					name: 'base',
+					percent: false,
+					multiplier: false,
+					elements: ['wood'],
+					value: dinoz.nbrUpWood || 0
 				}
 			]
 		};

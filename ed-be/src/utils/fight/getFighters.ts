@@ -153,6 +153,9 @@ export const initializeDinoz = (
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ??
 					BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE],
+				[SpecialStat.THORNS_DAMAGE]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.THORNS_DAMAGE)?.value ??
+					BaseSpecialStats[SpecialStat.THORNS_DAMAGE],
 				[SpecialStat.DISCHARGE_DAMAGE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.DISCHARGE_DAMAGE)?.value ??
 					BaseSpecialStats[SpecialStat.DISCHARGE_DAMAGE],
@@ -455,6 +458,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
 				[SpecialStat.ACID_BLOOD_DAMAGE]: 0, // No acid blood for clones
+				[SpecialStat.THORNS_DAMAGE]: 0, // No thorns for clones
 				[SpecialStat.DISCHARGE_DAMAGE]: 0, // No discharge for clones
 				[SpecialStat.FETID_BREATH_DAMAGE]: 0 // No fetid breath for clones
 			},
@@ -649,6 +653,9 @@ export const initializeMonster = (
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.ACID_BLOOD_DAMAGE)?.value ??
 					BaseSpecialStats[SpecialStat.ACID_BLOOD_DAMAGE],
+				[SpecialStat.THORNS_DAMAGE]:
+					getSpecialStat(similiDinoz, [], skills, SpecialStat.THORNS_DAMAGE)?.value ??
+					BaseSpecialStats[SpecialStat.THORNS_DAMAGE],
 				[SpecialStat.DISCHARGE_DAMAGE]:
 					getSpecialStat(similiDinoz, [], skills, SpecialStat.DISCHARGE_DAMAGE)?.value ??
 					BaseSpecialStats[SpecialStat.DISCHARGE_DAMAGE],

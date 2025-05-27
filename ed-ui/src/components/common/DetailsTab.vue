@@ -263,7 +263,9 @@
 										{{
 											stat.name === SpecialStat.ACID_BLOOD_DAMAGE || stat.name === SpecialStat.FETID_BREATH_DAMAGE
 												? '/ 2'
-												: ''
+												: stat.name === SpecialStat.THORNS_DAMAGE
+													? '/ 3'
+													: ''
 										}}
 										({{ $t('details.baseValue') }})
 									</span>
