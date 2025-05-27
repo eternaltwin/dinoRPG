@@ -3268,10 +3268,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.PARATONNERRE],
 		isBaseSkill: false,
 		isSphereSkill: false,
+		effects: {
+			[Stat.MAX_HP]: 15
+		},
 		globalEffects: {
 			[Stat.WOOD_DEFENSE]: 3,
-			[Stat.LIGHTNING_DEFENSE]: 3,
-			[Stat.MAX_HP]: 15
+			[Stat.LIGHTNING_DEFENSE]: 3
 		}
 	},
 	[Skill.MEDECINE]: {
