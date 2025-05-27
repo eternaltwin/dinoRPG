@@ -5022,8 +5022,8 @@ const checkAfterDefenseEffects = (
 		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
 
-	// Decharge: hit landed, 5% chance to electrocute and stun
-	if (damage > 0 && hasSkill(target, Skill.DECHARGE) && randomBetweenSeeded(fightData.rng, 0, 99) < 5) {
+	// Decharge: hit landed, 10% chance to electrocute and stun
+	if (damage > 0 && hasSkill(target, Skill.DECHARGE) && randomBetweenSeeded(fightData.rng, 0, 99) < 10) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
