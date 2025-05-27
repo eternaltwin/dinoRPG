@@ -2204,7 +2204,27 @@ export const addStatus = (
 	}
 
 	// Negate if SELF_CONTROL
-	if (hasSkill(fighter, Skill.SELF_CONTROL) && (status === Status.STUNNED || status === Status.ASLEEP)) return false;
+	if (hasSkill(fighter, Skill.SELF_CONTROL) && (status === Status.STUNNED || status === Status.ASLEEP)) {
+		// Just activate and nothing happens
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: fighter.id,
+			skill: Skill.SELF_CONTROL
+		});
+		// Increase the time of all other fighters to make it look like the caster "gained" time
+		getFighters(fightData).forEach(f => {
+			if (f.id !== fighter.id) {
+				f.time += 3 * TIME_FACTOR;
+			}
+		});
+		// Add fx for gain of init
+		fightData.steps.push({
+			action: 'notify',
+			fids: [fighter.id],
+			notification: NotificationList.InitUp
+		});
+		return false
+	};
 
 	// Cancel SLOWED status
 	if (hasSkill(fighter, Skill.ENTRAINEMENT_SOUS_MARIN) && status === Status.SLOWED) return false;
