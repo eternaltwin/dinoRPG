@@ -118,6 +118,7 @@ export function resolveStatus(status: Status) {
 			return StatusEffect.Stoned;
 		case Status.SHIELDED:
 		case Status.TAUNT: // TODO temporary
+		case Status.RAGE: // TODO temporary
 			return StatusEffect.Shield;
 		case Status.BLESSED:
 			return StatusEffect.Bless;
@@ -283,7 +284,7 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fighter.id}`);
 					return;
 				}
-				myFighter.energy += step.energy;
+				myFighter.energy = step.energy;
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [{ fid: step.fighter.id, energy: step.energy }]
