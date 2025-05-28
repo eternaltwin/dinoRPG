@@ -2175,7 +2175,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 25,
+		probability: 20,
 		visualEffect: SkillVisualEffect.WATERCANON
 	},
 	[Skill.PERCEPTION]: {
@@ -2583,7 +2583,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 20,
+		probability: 15,
 		visualEffect: SkillVisualEffect.LEVITRAY
 	},
 	[Skill.MAGASINIER]: {
