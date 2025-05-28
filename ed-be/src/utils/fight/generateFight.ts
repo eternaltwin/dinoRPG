@@ -386,7 +386,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		// FORME VAPOREUSE
 		if (fighter.skills.some(skill => skill.id === Skill.FORME_VAPOREUSE)) {
-			addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.LONG);
+			addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.MEDIUM);
 		}
 
 		// M_INITIATIVE_RESET
