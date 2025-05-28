@@ -1220,8 +1220,6 @@ export const getFighterMultihit = (fighter: DetailedFighter, multiHitCounter?: n
 	// Remove 1 to recenter the value at 0.
 	const multihitTotal = (fighter.stats.multihit.global * fighter.stats.multihit[fighter.element] - 1) * multiHitFactor;
 
-	console.log(`${fighter.name}'s  combo chance: ${multihitTotal}`);
-
 	return Math.min(0.9, Math.max(0, multihitTotal));
 };
 
