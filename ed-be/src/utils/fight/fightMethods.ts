@@ -4677,9 +4677,9 @@ const checkDefensiveEffects = (
 		});
 	}
 
-	// FORME VAPOREUSE
+	// FORME ETHERALE
 	if (
-		// Opponent has FORME_VAPOREUSE
+		// Opponent has FORME ETHERALE
 		hasSkill(target, Skill.FORME_ETHERALE) &&
 		!hasStatus(target, Status.INTANGIBLE) &&
 		// 8% chance
