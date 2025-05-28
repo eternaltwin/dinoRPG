@@ -4351,21 +4351,21 @@ const attackTarget = (
 		};
 	}
 
-	// Note: combo counter seems to work weirdly, or may be not...
-	// Fighter passes its turn if it has reached max combo at this step
-	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
-		fightData.steps.push({
-			action: 'tired',
-			fighter: stepFighter(attacker)
-		});
-		return {
-			attacker: attacker,
-			target: target,
-			isAssault: isAssault,
-			evasion: false,
-			hpLost: 0
-		};
-	}
+	// // Note: combo counter seems to work weirdly, or may be not...
+	// // Fighter passes its turn if it has reached max combo at this step
+	// if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
+	// 	fightData.steps.push({
+	// 		action: 'tired',
+	// 		fighter: stepFighter(attacker)
+	// 	});
+	// 	return {
+	// 		attacker: attacker,
+	// 		target: target,
+	// 		isAssault: isAssault,
+	// 		evasion: false,
+	// 		hpLost: 0
+	// 	};
+	// }
 
 	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn
 	// Add teammates if Item.FRIENDLY_WHISTLE
@@ -4407,18 +4407,19 @@ const attackTarget = (
 	// TODO: rework multiple attackers (part of whistle rework)
 	// for (const attacker of attackers) {
 	// }
-	// NOTE: combo counter seems to work weirdly, or may be not
-	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+	// // NOTE: combo counter seems to work weirdly, or may be not
+	// while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+	while (true) {
 		// Initialize all variables here to avoid confusion between iterations of the loop
 		let isDodged = false;
 		let isSuperDodged = false;
 		let noDamage = false;
 		let break_intangible = false;
 
-		// Increment the attacker's combo counter
-		// Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
-		// Note: this would prevent infinite counter too...
-		attacker.comboCounter++;
+		// // Increment the attacker's combo counter
+		// // Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
+		// // Note: this would prevent infinite counter too...
+		// attacker.comboCounter++;
 
 		// Calculate armor
 		const armor = calculateArmor(attacker, target, power, isAssault);
