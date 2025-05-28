@@ -33,51 +33,11 @@ export const getElementalAttack = (fighter: DetailedFighter, element_type: Eleme
 
 // Calculates the attack power for multiple elements, the fighter and the power of the attack
 export const getMultiElementalAttack = (fighter: DetailedFighter, element_type_power: [ElementType, number][]) => {
-	// let air_attack = 0;
-	// let fire_attack = 0;
-	// let lightning_attack = 0;
-	// let water_attack = 0;
-	// let wood_attack = 0;
-	// let void_attack = 0;
-
-	// element_type_power.forEach(val => {
-	// 	let ele = val[0];
-	// 	let power = val[1];
-
-	// if (ele === ElementType.AIR) {
-	// 	air_attack = power * fighter.stats.base[ElementType.AIR];
-	// }
-	// else if (ele === ElementType.FIRE) {
-	// 	fire_attack = power * fighter.stats.base[ElementType.FIRE];
-	// }
-	// else if (ele === ElementType.LIGHTNING) {
-	// 	lightning_attack = power * fighter.stats.base[ElementType.LIGHTNING];
-	// }
-	// else if (ele === ElementType.WATER) {
-	// 	water_attack = power * fighter.stats.base[ElementType.WATER];
-	// }
-	// else if (ele === ElementType.WOOD) {
-	// 	wood_attack = power * fighter.stats.base[ElementType.WOOD];
-	// }
-	// else if (ele === ElementType.VOID) {
-	// 	void_attack = power * fighter.stats.base[ElementType.VOID];
-	// }
-	// });
-
 	return element_type_power.map(val => {
 		let ele = val[0];
 		let power = val[1];
 		return [ele, fighter.stats.base[ele] * power];
 	}) as [ElementType, number][];
-
-	// return {
-	// 	[ElementType.AIR]: air_attack,
-	// 	[ElementType.FIRE]: fire_attack,
-	// 	[ElementType.LIGHTNING]: lightning_attack,
-	// 	[ElementType.WATER]: water_attack,
-	// 	[ElementType.WOOD]: wood_attack,
-	// 	[ElementType.VOID]: void_attack,
-	// };
 };
 
 // Returns the attack and defense score for a given attack considering the various bonuses

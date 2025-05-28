@@ -1210,11 +1210,17 @@ export const getFighterCounter = (fighter: DetailedFighter) => {
 };
 
 // Determine the multihit chance of the fighter based on its current element.
+// Multi hit chance decreases by 2/3 per current multi hits
 // The value is recentered around 0.
 // Maximum is 0.9 and minimum is 0.
-export const getFighterMultihit = (fighter: DetailedFighter) => {
+export const getFighterMultihit = (fighter: DetailedFighter, multiHitCounter?: number) => {
+	// Reduce the combo chance by 1/2 for every combo.
+	const multiHitFactor = Math.pow(0.5, multiHitCounter ?? 0);
+
 	// Remove 1 to recenter the value at 0.
-	const multihitTotal = fighter.stats.multihit.global * fighter.stats.multihit[fighter.element] - 1;
+	const multihitTotal = (fighter.stats.multihit.global * fighter.stats.multihit[fighter.element] - 1) * multiHitFactor;
+
+	console.log(`${fighter.name}'s  combo chance: ${multihitTotal}`);
 
 	return Math.min(0.9, Math.max(0, multihitTotal));
 };
