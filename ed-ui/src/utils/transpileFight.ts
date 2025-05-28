@@ -345,8 +345,8 @@ export function transpileFight(
 					currentFighterCombo++;
 				} else if (currentFighterId === myFighter.id && currentFighterCombo > 0) {
 					// Subsequent assault combo of fighter whose turn it is
-					// Each combo increases the cost by 1, in other words the combo number
-					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST - currentFighterCombo);
+					// Each combo increases the cost by the base cost (1st hit is 2, 2nd is 4, etc.)
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST * currentFighterCombo);
 					currentFighterCombo++;
 				} else {
 					// It is a counter
@@ -355,8 +355,8 @@ export function transpileFight(
 						counteringFighterId = myFighter.id;
 						counteringFighterCombo = 0;
 					}
-					// Each combo increases the cost by 1, in other words the combo number
-					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST - counteringFighterCombo);
+					// Each combo increases the cost by the base cost (1st hit is 2, 2nd is 4, etc.), in other words the counter combo number
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST * counteringFighterCombo);
 					counteringFighterCombo++;
 				}
 				history.push({

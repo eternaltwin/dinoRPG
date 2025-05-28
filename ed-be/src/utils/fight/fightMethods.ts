@@ -4338,6 +4338,7 @@ const attackTarget = (
 	// Unless specified, the attack is considered not an assault and cannot combo by default
 	isAssault = isAssault ?? false;
 	let canCombo = isAssault ?? false;
+	let multiHitCounter = 0;
 
 	// Abort if fighter is dead
 	if (attacker.hp <= 0) {
@@ -4545,11 +4546,14 @@ const attackTarget = (
 		// Check for after defense effects of the target
 		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
 
-		// Check for combo
-		if (canCombo && attacker.hp > 0 && !(hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED))) {
-			if (fightData.rng() < getFighterMultihit(attacker)) {
+		// Check for combo: needs to be alive, not disabled, with enough energy
+		if (canCombo &&
+			attacker.hp > 0 &&
+			attacker.energy >= totalEnergyCost + energyCost + BASE_ENERGY_COST &&
+			!(hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED))) {
+			if (fightData.rng() < getFighterMultihit(attacker, multiHitCounter)) {
 				// If target has riposte and succeeds its roll, interrupt the combo
-				if ( target.hp > 0 &&
+				if (target.hp > 0 && target.energy >= BASE_ENERGY_COST &&
 					!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
 					hasSkill(target, Skill.RIPOSTE) &&
 					randomBetweenSeeded(fightData.rng, 0, 99) < 50
@@ -4568,7 +4572,8 @@ const attackTarget = (
 					break;
 				}
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
-				energyCost++;
+				energyCost += BASE_ENERGY_COST;
+				multiHitCounter++;
 				updateStat(fightData, attacker, 'multiHits', 1);
 				continue;
 			}
@@ -4602,6 +4607,7 @@ const attackTarget = (
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
 		if (isAssault &&
+			target.energy >= BASE_ENERGY_COST &&
 			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
 			counterAttack(fightData, target)) {
 			// Add counter step
