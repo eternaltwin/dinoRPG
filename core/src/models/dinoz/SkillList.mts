@@ -1633,7 +1633,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.SPEED]: ['x', 1.05],
+			[Stat.SPEED]: ['x', 0.95],
 			[Stat.WOOD_ELEMENT]: 1
 		}
 	},
