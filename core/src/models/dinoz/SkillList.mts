@@ -1571,7 +1571,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 			[Stat.MAX_FOLLOWERS]: 1
 		}
 	},
-	[Skill.RESISTANCE_A_LA_MAGIE]: {
+	/*	[Skill.RESISTANCE_A_LA_MAGIE]: {
 		id: Skill.RESISTANCE_A_LA_MAGIE,
 		name: 'ResistanceALaMagie',
 		type: SkillType.E,
@@ -1588,7 +1588,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xAAFF00',
 		fxType: AuraFxType.Line
-	},
+	},*/
 	[Skill.PLANIFICATEUR]: {
 		id: Skill.PLANIFICATEUR,
 		name: 'Planificateur',

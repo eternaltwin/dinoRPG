@@ -128,9 +128,7 @@ const chooseRandomFighterForAssault = (
 	// The attacker can hit intangible units if it has the capacity to, the attack deals non-zero air damage, or its current element is air.
 	const canHitIntangible =
 		attacker.canHitIntangible ||
-		(power
-			? power.some(val => val[0] === ElementType.AIR)
-			: attacker.element === ElementType.AIR);
+		(power ? power.some(val => val[0] === ElementType.AIR) : attacker.element === ElementType.AIR);
 
 	// List all invalid opponents
 	const unreachable_opponents: DetailedFighter[] = [];
@@ -532,7 +530,9 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	// No skill if NO_SKILL
 	if (hasStatus(fighter, Status.NO_SKILL)) return null;
 
-	const skills = fighter.skills.filter(skill => skill.probability && (skill.type === SkillType.A || skill.type === SkillType.I));
+	const skills = fighter.skills.filter(
+		skill => skill.probability && (skill.type === SkillType.A || skill.type === SkillType.I)
+	);
 
 	if (!skills.length) return null;
 
@@ -1293,7 +1293,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.TORCHE: {
-				if (hasStatus(fighter, Status.TORCHED))	return cancel();
+				if (hasStatus(fighter, Status.TORCHED)) return cancel();
 				addStatus(fightData, fighter, Status.TORCHED, StatusLength.LONG);
 				break;
 			}
@@ -1503,13 +1503,13 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
-			case Skill.RESISTANCE_A_LA_MAGIE: {
+			/*case Skill.RESISTANCE_A_LA_MAGIE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
 				// Remove all bad status
 				removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 				break;
-			}
+			}*/
 			case Skill.ETAT_PRIMAL: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
@@ -2005,7 +2005,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponentAttacker = getRandomOpponent(fightData, fighter);
 
 				// Nothing happens if petrifed, stunned or asleep
-				if (hasStatus(opponentAttacker, Status.PETRIFIED) || hasStatus(opponentAttacker, Status.STUNNED) || hasStatus(opponentAttacker, Status.ASLEEP)) {
+				if (
+					hasStatus(opponentAttacker, Status.PETRIFIED) ||
+					hasStatus(opponentAttacker, Status.STUNNED) ||
+					hasStatus(opponentAttacker, Status.ASLEEP)
+				) {
 					break;
 				}
 
@@ -2234,8 +2238,8 @@ export const addStatus = (
 			fids: [fighter.id],
 			notification: NotificationList.InitUp
 		});
-		return false
-	};
+		return false;
+	}
 
 	// Cancel SLOWED status
 	if (hasSkill(fighter, Skill.ENTRAINEMENT_SOUS_MARIN) && status === Status.SLOWED) return false;
@@ -4037,7 +4041,13 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
-const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect, step?: FightStep) => {
+const loseHpBalanced = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	damage: number,
+	fx: LifeEffect,
+	step?: FightStep
+) => {
 	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx, step);
 };
 
@@ -4524,14 +4534,26 @@ const attackTarget = (
 		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
 
 		// Check for combo: needs to be alive, not disabled, with enough energy
-		if (canCombo &&
+		if (
+			canCombo &&
 			attacker.hp > 0 &&
 			attacker.energy >= totalEnergyCost + energyCost + BASE_ENERGY_COST &&
-			!(hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED))) {
+			!(
+				hasStatus(attacker, Status.PETRIFIED) ||
+				hasStatus(attacker, Status.ASLEEP) ||
+				hasStatus(attacker, Status.STUNNED)
+			)
+		) {
 			if (fightData.rng() < getFighterMultihit(attacker, multiHitCounter)) {
 				// If target has riposte and succeeds its roll, interrupt the combo
-				if (target.hp > 0 && target.energy >= BASE_ENERGY_COST &&
-					!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
+				if (
+					target.hp > 0 &&
+					target.energy >= BASE_ENERGY_COST &&
+					!(
+						hasStatus(target, Status.PETRIFIED) ||
+						hasStatus(target, Status.ASLEEP) ||
+						hasStatus(target, Status.STUNNED)
+					) &&
 					hasSkill(target, Skill.RIPOSTE) &&
 					randomBetweenSeeded(fightData.rng, 0, 99) < 50
 				) {
@@ -4583,10 +4605,12 @@ const attackTarget = (
 
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
-		if (isAssault &&
+		if (
+			isAssault &&
 			target.energy >= BASE_ENERGY_COST &&
 			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
-			counterAttack(fightData, target)) {
+			counterAttack(fightData, target)
+		) {
 			// Add counter step
 			fightData.steps.push({
 				action: 'counter',
@@ -4882,7 +4906,8 @@ const checkAfterAttackEffects = (
 	}
 
 	// Revitalisation
-	if (isCloseCombat &&
+	if (
+		isCloseCombat &&
 		damage > 0 &&
 		hasSkill(attacker, Skill.REVITALISATION) &&
 		elements.find(element => element === ElementType.LIGHTNING)
@@ -4999,7 +5024,12 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Maitre des Ronces 1/2 chance
-	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.MAITRE_DES_RONCES) &&	randomBetweenSeeded(fightData.rng, 0, 1) === 0) {
+	if (
+		isCloseCombat &&
+		damage > 0 &&
+		hasSkill(target, Skill.MAITRE_DES_RONCES) &&
+		randomBetweenSeeded(fightData.rng, 0, 1) === 0
+	) {
 		attacker.time += 1 * TIME_FACTOR;
 		loseHpBalanced(fightData, attacker, target.stats.special.thornsDamage, LifeEffect.Wood);
 		// Add fx for loss of init
@@ -5008,7 +5038,6 @@ const checkAfterDefenseEffects = (
 			fids: [attacker.id],
 			notification: NotificationList.InitDown
 		});
-
 	}
 
 	// Zero absolu: hit landed
@@ -5052,7 +5081,7 @@ const checkAfterDefenseEffects = (
 			fid: target.id,
 			skill: Skill.DECHARGE
 		});
-		const activate_step: SkillActivateStep  = {
+		const activate_step: SkillActivateStep = {
 			action: 'skillActivate',
 			fid: target.id,
 			skill: Skill.DECHARGE,
@@ -5677,7 +5706,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	}
 
 	// If fighter gained any of those status after its event, its turn is interrupted
-	if (hasStatus(attacker, Status.PETRIFIED) || hasStatus(attacker, Status.ASLEEP) || hasStatus(attacker, Status.STUNNED)) {
+	if (
+		hasStatus(attacker, Status.PETRIFIED) ||
+		hasStatus(attacker, Status.ASLEEP) ||
+		hasStatus(attacker, Status.STUNNED)
+	) {
 		return;
 	}
 
