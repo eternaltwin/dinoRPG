@@ -1294,7 +1294,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.TORCHE: {
 				if (hasStatus(fighter, Status.TORCHED))	return cancel();
-				addStatus(fightData, fighter, Status.TORCHED);
+				addStatus(fightData, fighter, Status.TORCHED, StatusLength.LONG);
 				break;
 			}
 			// LIGHTNING

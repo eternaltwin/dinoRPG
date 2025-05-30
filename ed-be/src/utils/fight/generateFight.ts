@@ -348,11 +348,6 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			fighter.skillEnergyFactor *= 0.9;
 		}
 
-		// TORCHE
-		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
-			addStatus(fightData, fighter, Status.TORCHED);
-		}
-
 		// BRAVE
 		if (hasSkill(fighter, Skill.BRAVE)) {
 			const allies = getAllies(fightData, fighter).filter(f => f.id !== fighter.id);
