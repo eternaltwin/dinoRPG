@@ -2638,7 +2638,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31309],
+		unlockedFrom: [Skill.SUMO],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -2650,7 +2650,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [31312],
+		unlockedFrom: [Skill.GRIFFES_EMPOISONNEES],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
