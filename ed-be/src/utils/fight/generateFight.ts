@@ -357,6 +357,19 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				fighter.allAssaultMultiplier *= 1.2;
 				fighter.time -= 12 * TIME_FACTOR;
 			}
+
+			// Add skill step
+			fightData.steps.push({
+				action: 'skillAnnounce',
+				fid: fighter.id,
+				skill: Skill.BRAVE
+			});
+			// Add fx for gain of init
+			fightData.steps.push({
+				action: 'notify',
+				fids: [fighter.id],
+				notification: NotificationList.InitUp
+			});
 		}
 
 		// COUP FATAL: replaces coup sournois, so remove it
