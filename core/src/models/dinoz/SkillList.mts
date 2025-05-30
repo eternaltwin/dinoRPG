@@ -3510,8 +3510,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PARAFOUDRE]: {
 		id: Skill.PARAFOUDRE,
 		name: 'Parafoudre',
-		type: SkillType.A,
-		energy: Energy.E30,
+		type: SkillType.E,
+		energy: Energy.E50,
 		element: [ElementType.LIGHTNING],
 		activatable: true,
 		tree: SkillTree.VANILLA,

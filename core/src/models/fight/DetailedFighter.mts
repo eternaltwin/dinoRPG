@@ -27,7 +27,6 @@ export enum Status {
 	BLESSED = 'blessed',
 	HEALING = 'healing',
 	TAUNT = 'taunt',
-	THUNDERED = 'thundered',
 	RAGE = 'rage',
 	// Good & bad
 	LOCKED = 'locked',
@@ -63,7 +62,6 @@ export const GoodStatus = [
 	Status.BLESSED,
 	Status.HEALING,
 	Status.TAUNT,
-	Status.THUNDERED,
 	Status.RAGE
 ];
 
