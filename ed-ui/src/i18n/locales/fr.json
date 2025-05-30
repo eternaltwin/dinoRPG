@@ -2322,7 +2322,7 @@
 			"CloneAqueux": "Crée une copie du lanceur avec 1 PV. La copie hérite seulement des statistiques de bases du lanceur (attaque, défense, esquive, multi-coup, contre).",
 			"GriffesEmpoisonnees": "Si un des *assauts* Eau du Dinoz touche un ennemi, il est empoisonné pour une durée moyenne et le poison inflige des dégâts basés sur son élément Eau.",
 			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les Dinoz (non cumulable)",
-			"SangAcide": "Les ennemis attaquant le Dinoz en mêlée ont une chance sur deux de subir des dégâts relatifs à l'élément Eau du Dinoz (soumis à équilibrage)",
+			"SangAcide": "Les ennemis attaquant le Dinoz en mêlée ont une chance sur trois de subir des dégâts relatifs à l'élément Eau du Dinoz (soumis à équilibrage)",
 			"Decomposeur": "Si un assaut achève un opposant, regagne 10% des points de vie maximum de la cible. Note: ne fonctionne pas sur les clones.",
 			"Regenerescence": "Augmente de 2 les PV récupérés par heure lors du repos. Donne le statut soin pour une durée moyenne.",
 			"Revitalisation": "Chaque assaut Foudre rend 1 point de vie",
