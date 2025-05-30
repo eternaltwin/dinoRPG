@@ -4952,7 +4952,7 @@ const checkAfterDefenseEffects = (
 	}
 
 	// RAGE
-	if (damage >= target.maxHp * 0.05 && !hasStatus(target, Status.RAGE) && hasSkill(target, Skill.RAGE)) {
+	if (damage >= target.maxHp * 0.1 && !hasStatus(target, Status.RAGE) && hasSkill(target, Skill.RAGE)) {
 		// Then announce and fx
 		fightData.steps.push({
 			action: 'skillAnnounce',
@@ -4978,10 +4978,10 @@ const checkAfterDefenseEffects = (
 		// target.allAssaultMultiplier *= 1.25;
 		// target.stats.speed.global *= 0.8;
 		// target.stats.counter.global *= 1.2;
-		target.energy = target.maxEnergy;
+		setEnergy(target, target.energy + 10);
 		getFighters(fightData).forEach(f => {
 			if (f.id !== target.id) {
-				f.time += 15 * TIME_FACTOR;
+				f.time += 6 * TIME_FACTOR;
 			}
 		});
 
