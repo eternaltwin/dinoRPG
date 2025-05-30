@@ -1510,6 +1510,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 				break;
 			}*/
+			case Skill.ESPRIT_GORILLOZ: {
+				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
+
+				// Set intangible only if has GIANT skill
+				if (monster && hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+					addStatus(fightData, monster, Status.INTANGIBLE);
+				}
+				break;
+			}
 			case Skill.ETAT_PRIMAL: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
@@ -1524,32 +1533,24 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 				break;
 			}
+			case Skill.GARDIEN_ARBORICOLE: {
+				let gardien = structuredClone(monsterList.GRDIEN);
+				// If fighter does not have COLOSSE_DES_FORETS, downgrade the gardien
+				if (!hasSkill(fighter, Skill.COLOSSE_DES_FORETS)) {
+					gardien.skills = gardien.skills!.filter(s => s !== Skill.M_COMET);
+					gardien.bonus_attack = 5;
+					gardien.bonus_defense = 13;
+					gardien.hp = 40;
+					gardien.size = 50;
+				}
+				const monster = createMonster(fightData, fighter, gardien);
+				if (monster) monster.status = monster.status.filter(s => s.type !== Status.NO_ASSAULT);
+				break;
+			}
 			case Skill.GROSSE_BEIGNE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
 				fighter.nextAssaultMultiplier *= 2;
-				break;
-			}
-			case Skill.PRINTEMPS_PRECOCE: {
-				const allies = getAllies(fightData, fighter);
-				if (allies.length === 1) return cancel();
-
-				// Heal all allies
-				allies.forEach(f => {
-					// Skip self
-					if (f.id === fighter.id) return;
-
-					// Heal 1-wood HP
-					heal(
-						fightData,
-						f,
-						randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
-						activate_step
-					);
-				});
-
-				// Add step
-				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.PAYS_DE_CENDRE: {
@@ -3073,15 +3074,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		// WOOD
-		case Skill.ESPRIT_GORILLOZ: {
-			const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
-
-			// Set intangible only if has GIANT skill
-			if (monster && hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
-				addStatus(fightData, monster, Status.INTANGIBLE);
-			}
-			break;
-		}
 		case Skill.FORCEBRUTE: {
 			// Bonuses just for this attack
 			fighter.allAssaultBonus += 3 * fighter.stats.base[ElementType.WOOD];
@@ -3095,18 +3087,26 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fighter.stats.ignoreArmor.assault /= 2;
 			break;
 		}
-		case Skill.GARDIEN_ARBORICOLE: {
-			let gardien = structuredClone(monsterList.GRDIEN);
-			// If fighter does not have COLOSSE_DES_FORETS, downgrade the gardien
-			if (!hasSkill(fighter, Skill.COLOSSE_DES_FORETS)) {
-				gardien.skills = gardien.skills!.filter(s => s !== Skill.M_COMET);
-				gardien.bonus_attack = 5;
-				gardien.bonus_defense = 13;
-				gardien.hp = 40;
-				gardien.size = 50;
-			}
-			const monster = createMonster(fightData, fighter, gardien);
-			if (monster) monster.status = monster.status.filter(s => s.type !== Status.NO_ASSAULT);
+		case Skill.PRINTEMPS_PRECOCE: {
+			const allies = getAllies(fightData, fighter);
+			if (allies.length === 1) return cancel();
+
+			// Heal all allies
+			allies.forEach(f => {
+				// Skip self
+				if (f.id === fighter.id) return;
+
+				// Heal 1-wood HP
+				heal(
+					fightData,
+					f,
+					randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
+					activate_step
+				);
+			});
+
+			// Add step
+			fightData.steps.push(activate_step);
 			break;
 		}
 		case Skill.PROVOCATION: {
