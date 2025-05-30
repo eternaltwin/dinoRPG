@@ -1346,6 +1346,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 				break;
 			}
+			case Skill.PARAFOUDRE: {
+				if (hasStatus(fighter, Status.LOCKED)) return cancel();
+
+				// Add step for fx
+				activate_step.targets.push({ tid: fighter.id });
+				fightData.steps.push(activate_step);
+
+				fighter.element = ElementType.LIGHTNING;
+				addStatus(fightData, fighter, Status.LOCKED, StatusLength.SHORT);
+				break;
+			}
 			// WATER
 			case Skill.DOUCHE_ECOSSAISE: {
 				attackAllOpponents(
@@ -2272,12 +2283,6 @@ export const addStatus = (
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
-		case Status.THUNDERED: {
-			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 20;
-			fighter.skillElementalBonus[ElementType.LIGHTNING] += 20;
-			fighter.element = ElementType.LIGHTNING;
-			break;
-		}
 		case Status.RAGE: {
 			fighter.allAssaultMultiplier *= 1.25;
 			fighter.stats.speed.global *= 0.8;
@@ -2383,11 +2388,6 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				if (fighter.time < fightData.time) {
 					fighter.time = fightData.time;
 				}
-				break;
-			}
-			case Status.THUNDERED: {
-				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 20;
-				fighter.skillElementalBonus[ElementType.LIGHTNING] -= 20;
 				break;
 			}
 			case Status.RAGE: {
@@ -2863,30 +2863,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					fid: fighter.id
 				});
 			}
-			break;
-		}
-		case Skill.PARAFOUDRE: {
-			if (hasStatus(fighter, Status.THUNDERED)) return cancel();
-
-			// Add step for fx
-			activate_step.targets.push({ tid: fighter.id });
-			fightData.steps.push(activate_step);
-
-			addStatus(fightData, fighter, Status.THUNDERED, StatusLength.MEDIUM);
-			addStatus(fightData, fighter, Status.LOCKED, StatusLength.MEDIUM);
-
-			// Increase the time of all other fighters to make it look like the caster "gained" time
-			getFighters(fightData).forEach(f => {
-				if (f.id !== fighter.id) {
-					f.time += 12 * TIME_FACTOR;
-				}
-			});
-			// Add fx for gain of init
-			fightData.steps.push({
-				action: 'notify',
-				fids: [fighter.id],
-				notification: NotificationList.InitUp
-			});
 			break;
 		}
 		case Skill.ECLAIR_SINUEUX: {

@@ -2345,7 +2345,7 @@
 			"Marchand": "Diminue tous les prix de la boutique de Dinoland de 10% (non cumulable)",
 			"Reincarnation": "Permet au Dinoz de se réincarner une fois à partir du niveau 40 en mourant. Le Dinoz recommencera niveau 1, sans statut, compétence et missions mais recevra 5 points d'éléments supplémentaires répartis aléatoirement suivant ses affinités élémentaires.",
 			"Decharge": "Le Dinoz a 10% de chance de répliquer à toute source dégâts directes par une décharge électrique: la cible de la décharge subit des dégâts relatifs aux éléments Foudre et Air du Dinoz (soumis à équilibrage) et est étourdit pour une très courte durée",
-			"Parafoudre": "Le Dinoz obtient le pouvoir de la Foudre elle-même pour une durée moyenne: il gagne 12 points d'initiative, 20 en puissance des assauts Foudre et son élément est bloqué sur l'élément Foudre",
+			"Parafoudre": "Le Dinoz obtient le pouvoir de la Foudre elle-même pour une durée courte: son élément est bloqué sur l'élément Foudre",
 			"Saut": "Permet aux *assauts* de toucher les ennemis volants",
 			"DisqueVacuum": "Attaque un ennemi avec un pouvoir Air de 12",
 			"AttaquePlongeante": "Attaque avec un assaut possédant un bonus Air de 3",
