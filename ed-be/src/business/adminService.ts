@@ -958,7 +958,9 @@ export async function softReset(req: Request) {
 			`),
 
 			// Other updates
-			prisma.$executeRawUnsafe(`UPDATE dinoz SET level = 1, "placeId" = 5;`),
+			prisma.$executeRawUnsafe(
+				`UPDATE dinoz SET level = 1, "placeId" = 5, life = 100, "maxLife" = 100, fight = true, gather = true, remaining = 2, "FBTournamentStep" = 0, following = null;`
+			),
 
 			prisma.$executeRawUnsafe(`UPDATE ranking SET points = "dinozCount", average = 1, dojo = 0;`),
 
