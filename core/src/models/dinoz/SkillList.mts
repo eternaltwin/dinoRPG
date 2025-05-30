@@ -1544,8 +1544,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.PRINTEMPS_PRECOCE]: {
 		id: Skill.PRINTEMPS_PRECOCE,
 		name: 'PrintempsPrecoce',
-		type: SkillType.E,
-		energy: Energy.E20,
+		type: SkillType.A,
+		energy: Energy.E30,
 		element: [ElementType.WOOD],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
@@ -1657,7 +1657,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.ESPRIT_GORILLOZ]: {
 		id: Skill.ESPRIT_GORILLOZ,
 		name: 'EspritGorilloz',
-		type: SkillType.A,
+		type: SkillType.E,
 		energy: Energy.E30,
 		element: [ElementType.WOOD],
 		activatable: true,
@@ -1795,7 +1795,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.GARDIEN_ARBORICOLE]: {
 		id: Skill.GARDIEN_ARBORICOLE,
 		name: 'GardienArboricole',
-		type: SkillType.A,
+		type: SkillType.E,
 		energy: Energy.E60,
 		element: [ElementType.WOOD],
 		activatable: true,
