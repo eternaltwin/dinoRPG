@@ -2367,7 +2367,7 @@
 			"Rafale": "Augmente les chances de multi-coup Air de 30%",
 			"PaumeEjectable": "Attaque avec un assaut de puissance doublée (fonctionne aussi sur les combo), si la cible est touchée, elle perd 6 d'initiative et tout ses statuts positifs",
 			"VentVif": "Donne le statut accéléré (Augmente la vitesse de 50%)",
-			"FormeVaporeuse": "Le Dinoz apparaît avec le statut intangible pour une durée moyenne",
+			"FormeVaporeuse": "Le Dinoz apparaît avec le statut intangible pour une durée moyenne et augmente l'élément Air de 1",
 			"Professeur": "Augmente l'expérience gagnée par tous les Dinoz de 5% (non cumulable)",
 			"MeditationSolitaire": "Augmente la défense Air de 3 et l'esquive de 5%, diminue la vitesse des attaques Air de 50%",
 			"MeditationTranscendantale": "Augmente la défense Air de 6 et l'esquive de 10%, diminue la vitesse de 10%",
