@@ -1521,11 +1521,23 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}*/
 			case Skill.ESPRIT_GORILLOZ: {
-				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
+				let esprit = structuredClone(monsterList.GORILLOZ_SPIRIT);
+
+				// Increase all assauts  and HP for every 2 wood points
+				let bonus = Math.round(fighter.stats.base[ElementType.WOOD] / 2);
+
+				if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+					esprit.hp += bonus;
+				}
+
+				const monster = createMonster(fightData, fighter, esprit);
 
 				// Set intangible only if has GIANT skill
-				if (monster && hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
-					addStatus(fightData, monster, Status.INTANGIBLE);
+				if (monster) {
+					monster.allAssaultBonus += bonus;
+					if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+						addStatus(fightData, monster, Status.INTANGIBLE);
+					}
 				}
 				break;
 			}
