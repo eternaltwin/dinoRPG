@@ -1,4 +1,4 @@
-import { ConditionEnum } from '../models/enums/Parser.mjs';
+import { Comparator, ConditionEnum } from '../models/enums/Parser.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { PlayerForConditionCheck } from '../constants.mjs';
@@ -30,6 +30,8 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 	const CURRENT_MISSION = condition[ConditionEnum.CURRENT_MISSION];
 	const CURRENT_STEP = condition[ConditionEnum.CURRENT_STEP];
 	const DINOZ_COUNT = condition[ConditionEnum.DINOZ_COUNT];
+	const PLAYER_POINT = condition[ConditionEnum.PLAYER_POINT];
+	const POSSESS_INGREDIENT = condition[ConditionEnum.POSSESS_INGREDIENT];
 
 	const myDinoz = player.dinoz.find(d => d.id === activeDinoz);
 
@@ -156,6 +158,38 @@ export function conditionParser(condition: Condition, player: PlayerForCondition
 	} else if (HOUR) {
 		const hour = dayjs().hour();
 		result = hour === HOUR;
+	} else if (PLAYER_POINT) {
+		const totalPoints = player.ranking?.points ?? 0;
+		switch (PLAYER_POINT[0]) {
+			case Comparator.EQUAL:
+				return totalPoints === PLAYER_POINT[1];
+			case Comparator.GREATER:
+				return totalPoints > PLAYER_POINT[1];
+			case Comparator.GREATER_EQUAL:
+				return totalPoints >= PLAYER_POINT[1];
+			case Comparator.LESSER:
+				return totalPoints < PLAYER_POINT[1];
+			case Comparator.LESSER_EQUAL:
+				return totalPoints <= PLAYER_POINT[1];
+			default:
+				return false;
+		}
+	} else if (POSSESS_INGREDIENT) {
+		const ingredientQuantity = player.ingredients?.find(i => i.ingredientId === POSSESS_INGREDIENT[0])?.quantity ?? 0;
+		switch (POSSESS_INGREDIENT[1]) {
+			case Comparator.EQUAL:
+				return ingredientQuantity === POSSESS_INGREDIENT[2];
+			case Comparator.GREATER:
+				return ingredientQuantity > POSSESS_INGREDIENT[2];
+			case Comparator.GREATER_EQUAL:
+				return ingredientQuantity >= POSSESS_INGREDIENT[2];
+			case Comparator.LESSER:
+				return ingredientQuantity < POSSESS_INGREDIENT[2];
+			case Comparator.LESSER_EQUAL:
+				return ingredientQuantity <= POSSESS_INGREDIENT[2];
+			default:
+				return false;
+		}
 	} else {
 		result = false;
 	}

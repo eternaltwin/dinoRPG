@@ -40,7 +40,7 @@ export const toDinozFiche = (
 		items: Pick<PlayerItem, 'itemId' | 'quantity'>[];
 		rewards: Pick<PlayerReward, 'rewardId'>[];
 		quests: Pick<PlayerQuest, 'questId' | 'progression'>[];
-		ranking: Pick<Ranking, 'dinozCount'> | null;
+		ranking: Pick<Ranking, 'dinozCount' | 'points'> | null;
 		dinoz: (Pick<
 			Dinoz,
 			| 'id'

@@ -125,7 +125,7 @@ export async function getCommonData(req: Request) {
 		priest: playerCommonData.priest,
 		shopkeeper: playerCommonData.shopKeeper,
 		notifications: playerCommonData.notifications,
-		discoveredSkills: playerCommonData.discoveredSkills,
+		discoveredSkills: playerCommonData.discoveredSkills
 	};
 
 	// Order dinoz

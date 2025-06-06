@@ -2,11 +2,12 @@ import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { MissionID } from '../../missions/missionList.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { Scenario } from '../../enums/Scenario.mjs';
 
 export const HULOT: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
-		nextStep: ['welcome', 'sick', 'sickstatus'],
+		nextStep: ['welcome', 'sick', 'sickstatus', 'pac_kazka', 'pac_coq', 'pac_flam'],
 		initialStep: true
 	},
 	welcome: {
@@ -61,7 +62,7 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 	},
 	flora: {
 		stepName: 'flora',
-		nextStep: ['whynot', 'fauna', 'myst', 'missions', 'lowLevel']
+		nextStep: ['whynot', 'fauna', 'myst', 'missions', 'lowLevel', 'pac_shine']
 	},
 	fauna: {
 		stepName: 'fauna',
@@ -115,6 +116,69 @@ export const HULOT: Readonly<Record<string, NpcData>> = {
 		condition: {
 			[ConditionEnum.MAXLEVEL]: 19
 		}
+	},
+	pac_shine: {
+		stepName: 'pac_shine',
+		nextStep: ['pac_progress'],
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 4, '=']
+		}
+	},
+	pac_progress: {
+		stepName: 'pac_progress',
+		nextStep: [],
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 4, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 5
+			}
+		]
+	},
+	pac_kazka: {
+		stepName: 'pac_kazka',
+		nextStep: [],
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 6, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 7
+			}
+		]
+	},
+	pac_flam: {
+		stepName: 'pac_flam',
+		nextStep: [],
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 8, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 9
+			}
+		]
+	},
+	pac_coq: {
+		stepName: 'pac_coq',
+		nextStep: [],
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 10, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 11
+			}
+		]
 	},
 	stop: {
 		stepName: 'stop',

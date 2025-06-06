@@ -36,6 +36,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getPlayerQuestProgression, increaseQuestProgression, updateQuest } from '../dao/questsDao.js';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { scenarioChecker } from '../utils/scenarioChecker.js';
 
 /**
  * @summary Process a fight
@@ -444,21 +445,7 @@ export async function rewardFight(
 		}
 	}
 
-	const quest = await getPlayerQuestProgression(playerId, Scenario.MERGUEZ);
-	// Compter directement le nombre de GOBLIN_MERGUEZ utilisées
-	if (quest && (quest.progression === 1 || quest.progression === 3)) {
-		const merguezUsedCount = [...fightResult.attackers, ...fightResult.defenders]
-			.flatMap(fighter => fighter.itemsUsed)
-			.filter(item => item === Item.GOBLIN_MERGUEZ).length;
-
-		if (quest.tracking + merguezUsedCount >= 500 && quest.progression === 1) {
-			await updateQuest(playerId, Scenario.MERGUEZ, 2);
-		} else if (quest.tracking + merguezUsedCount >= 2000 && quest.progression === 3) {
-			await updateQuest(playerId, Scenario.MERGUEZ, 4);
-		} else if (merguezUsedCount > 0) {
-			await increaseQuestProgression(playerId, Scenario.MERGUEZ, 0, merguezUsedCount);
-		}
-	}
+	scenarioChecker(playerId, fightResult, monsters);
 
 	// Catches
 	for (const dinozCatch of fightResult.catches) {

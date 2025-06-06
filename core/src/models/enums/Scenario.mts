@@ -1,8 +1,9 @@
 export enum Scenario {
 	STAR = 1,
 	MERGUEZ = 2,
-	MAGNET = 3,
-	SMOG = 4
+	PAC = 3,
+	MAGNET = 4,
+	SMOG = 5
 }
 
 export type ScenarioType = {
@@ -21,6 +22,11 @@ export const ScenarioDetails: Readonly<Record<Scenario, ScenarioType>> = {
 		id: Scenario.MERGUEZ,
 		name: 'merguez',
 		totalStep: 5
+	},
+	[Scenario.PAC]: {
+		id: Scenario.PAC,
+		name: 'pac',
+		totalStep: 13
 	},
 	[Scenario.MAGNET]: {
 		id: Scenario.MAGNET,

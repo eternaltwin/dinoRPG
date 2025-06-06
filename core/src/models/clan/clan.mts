@@ -3,7 +3,7 @@ import { Clan, ClanJoinRequest, ClanMember, Player } from '@drpg/prisma';
 export type ClanLite = Pick<Clan, 'id' | 'name' | 'treasureValue' | 'creationDate' | 'leaderId'> & {
 	members: Pick<ClanMember, 'id'>[];
 	leader: Pick<Player, 'id' | 'name'>;
-}
+};
 
 export type ClanForSearch = Pick<Clan, 'id' | 'name'>;
 
@@ -12,4 +12,4 @@ export type PlayerClanJoinRequest = Pick<ClanJoinRequest, 'id' | 'date'> & {
 	clan: Pick<Clan, 'id' | 'name' | 'leaderId'> & {
 		members: Pick<ClanMember, 'playerId' | 'rights'>[];
 	};
-}
+};

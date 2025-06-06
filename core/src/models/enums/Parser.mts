@@ -36,7 +36,8 @@ export enum ConditionEnum {
 	DAY = 'day',
 	GIVE_ITEM = 'give_item',
 	CURRENT_STEP = 'current_step',
-	DINOZ_COUNT = 'dinoz_count'
+	DINOZ_COUNT = 'dinoz_count',
+	PLAYER_POINT = 'player_point'
 }
 
 export enum TriggerEnum {

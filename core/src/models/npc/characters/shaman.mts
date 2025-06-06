@@ -1,11 +1,14 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
-import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
+import { Comparator, ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { Scenario } from '../../enums/Scenario.mjs';
+import { Ingredient } from '../../ingredient/ingredientList.mjs';
+import { MissionID } from '../../missions/missionList.mjs';
 
 export const SHAMAN: Readonly<Record<string, NpcData>> = {
 	begin: {
 		stepName: 'begin',
-		nextStep: ['vener', 'souvenir', 'missions', 'charm'],
+		nextStep: ['vener', 'souvenir', 'missions', 'charm', 'pac_scroll', 'pac_root'],
 		initialStep: true
 	},
 	vener: {
@@ -74,6 +77,48 @@ export const SHAMAN: Readonly<Record<string, NpcData>> = {
 			}
 		],
 		nextStep: ['missions']
+	},
+	pac_scroll: {
+		stepName: 'pac_scroll',
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.SCENARIO]: [Scenario.PAC, 1, '='] },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_JOKE }
+			]
+		},
+		nextStep: ['pac_scroll2']
+	},
+	pac_scroll2: {
+		stepName: 'pac_scroll2',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 1, '=']
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 2
+			}
+		],
+		nextStep: []
+	},
+	pac_root: {
+		stepName: 'pac_root',
+		condition: {
+			[Operator.AND]: [
+				{ [ConditionEnum.POSSESS_INGREDIENT]: [Ingredient.RACINE_DE_FIGONICIA, Comparator.GREATER_EQUAL, 1] },
+				{ [ConditionEnum.SCENARIO]: [Scenario.PAC, 2, '='] },
+				{ [ConditionEnum.FINISHED_MISSION]: MissionID.SHAMAN_JOKE }
+			]
+		},
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 3
+			}
+		],
+		nextStep: []
 	},
 	stop: {
 		stepName: 'stop',

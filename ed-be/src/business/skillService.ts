@@ -113,7 +113,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 	const skillIdList = req.body.skillIdList as number[];
 	const result: LearnSkillData = {
 		newMaxExperience: 0,
-		discoveredSkill: 0,
+		discoveredSkill: 0
 	};
 
 	let dinozSkills;
@@ -511,7 +511,9 @@ function getUnlockableSkills(
 }
 
 function getTreeType(status: Pick<DinozStatus, 'statusId'>[]) {
-	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP) ? SkillTreeType.ETHER : SkillTreeType.VANILLA;
+	return status.some(status => status.statusId === DinozStatusId.ETHER_DROP)
+		? SkillTreeType.ETHER
+		: SkillTreeType.VANILLA;
 }
 
 // Get up chance for one element

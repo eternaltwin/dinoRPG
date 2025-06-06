@@ -127,7 +127,7 @@ export class OAuth {
 					playerOptions: {
 						hasPDA: false,
 						hasPMI: false,
-						hasPAC: false,
+						hasPAC: false
 					},
 					admin: false,
 					priest: false,

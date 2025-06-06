@@ -4426,7 +4426,7 @@ const checkAfterDefenseEffects = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
 	damage: number,
-	isCloseCombat: boolean,
+	isCloseCombat: boolean
 ) => {
 	// Objet: voleur de vie
 	// TODO

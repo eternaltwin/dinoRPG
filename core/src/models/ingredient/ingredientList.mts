@@ -1,4 +1,4 @@
-import { IngredientFiche } from '../ingredient/IngredientFiche.mjs';
+import { IngredientFiche } from './IngredientFiche.mjs';
 
 export enum Ingredient {
 	MEROU_LUJIDANE = 1,

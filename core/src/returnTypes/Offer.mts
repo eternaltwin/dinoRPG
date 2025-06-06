@@ -38,7 +38,7 @@ export type EnhancedOffer = Omit<OfferFromGetOffers, 'items'> & {
 export type OfferGetList = {
 	total: number;
 	offers: OfferFromGetOffers[];
-}
+};
 
 export type ClaimOfferData = {
 	discoveredSkills: number[];

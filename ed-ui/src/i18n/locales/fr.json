@@ -905,7 +905,11 @@
 				"gant": "Oh !! Le Gant des Zors !! C'est un objet bien rare que ton Dinoz a là ! On dit que le Gant des Zors a un rapport avec les Chutes Mutantes et qu'il permet d'accéder à la Forêt de Grumhel, mais on ne sait pas comment s'en servir...",
 				"stone": "Ohhhhhh !!! Mais voici quelque chose de très interessant, il me semble qu'il s'agit de.... uhmmuhu.... je ne suis pas sûr... (il regarde fixement la pierre)... Peux-tu me montrer cette Pierre, que je l'examine un peu ?",
 				"stone_yes": "Ooooooohhhhh !!! Oui.... C'est bien ce que je pensais.... Regarde ! (il nettoie délicatement la pierre)... c'est un Totem Ashpouk ! Ca a beaucoup de valeur tu sais... prends-en grand soin !",
-				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !"
+				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !",
+				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
+				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
+				"pac_scroll": "Ah, euh... Félicitations pour avoir créer cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de dinoz.",
+				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement opté pour arbre que racine...*"
 			},
 			"playerChoice": {
 				"talk": "Parler au Professeur Eugene",
@@ -929,7 +933,11 @@
 				"noquestion": "Rien de tout cela",
 				"menu": "Retour",
 				"stone_yes": "Bien sûr, la voilà.",
-				"stone_no": "Hé, là ! Pas touche ! Avant, j'aimerais savoir quelque chose..."
+				"stone_no": "Hé, là ! Pas touche ! Avant, j'aimerais savoir quelque chose...",
+				"pac_start": "C'est quoi ce parchemin ?",
+				"pac_go": "Arracher les yeux du professeur",
+				"pac_scroll": "Montrer le parchemin, l'encre et la plume",
+				"pac_end": "Suis-je assez puissant ?"
 			}
 		},
 		"sofia": {
@@ -1096,7 +1104,9 @@
 				"spirit": "Heu... oui c'est ça ! Spitri... péritel... spriti... ! Ho ils sont trop compliqués vos mots technologiques !",
 				"thanks": "Hooo tu t'en vas déja... Tu reviendras, hein ? À bientôt alors !",
 				"nothing": "Ah... mais ton Dinoz a déjà un Charme Bao ! Regarde, y'a encore de l'energie... tu vois ? Quand il ne marchera plus, je pourrai te le recharger.",
-				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*."
+				"no": "Ah bon ? Bon, ben tant pis pour toi alors... *boude*.",
+				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sur mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
+				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
 			},
 			"playerChoice": {
 				"ok": "Euh... oui",
@@ -1105,7 +1115,9 @@
 				"nothing": "Ok !",
 				"no": "Non Merci",
 				"spirit": "\"Spirituel\" tu veux dire ?",
-				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !"
+				"thanks": "Bon, je dois partir... merci beaucoup pour le Charme Bao !",
+				"pac_scroll": "Attend, tu saurais faire ça sur cette racine que le chaman a cramé avec son charme ?",
+				"pac_scroll2": "C'est normal la couleur ?"
 			}
 		},
 		"forgeron": {
@@ -1188,7 +1200,10 @@
 				"force": "Fort ? le gros dorogon Vener' là ?... bah ouais un peu... C'est la première cause de mortalité chez les touristes, juste devant les crises cardiaques causées par nos merguez... Ha la la, qué p'tites natures ces touristes...",
 				"merci": "Tchao mon pote... à la prochaine...",
 				"more": "Uhmm.... Si ton Dinoz accepte de remplir quelques missions pour moi, j'lui confierai mon Guide de Stratégie. C'est super pratique...",
-				"accept": "Marché conclu..."
+				"accept": "Marché conclu...",
+				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tout ces poissons qu'on a l'habitude de s'envoyer ?",
+				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheu était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô",
+				"pac_root": "Uhmm... ? Déjà ?... Bah... j'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rend ta racine, j'en avais déjà une vieille à utiliser."
 			},
 			"playerChoice": {
 				"vener": "Le Vénérable...",
@@ -1200,7 +1215,10 @@
 				"force": "Ah ? Et il est fort ?",
 				"merci": "Merci, je tiendrai compte de vos conseils !",
 				"more": "Et c'est tout ?",
-				"accept": "Accepter"
+				"accept": "Accepter",
+				"pac_scroll": "Vous avez collaboré avec le professeur ?",
+				"pac_scroll2": "Un parchemin pour les compétences",
+				"pac_root": "Donner la racine"
 			}
 		},
 		"gardien": {
@@ -1352,7 +1370,12 @@
 				"problem": "Euh... Bien le bonVour. Ne le prenez pas trop mal, mais Ve crois que les plantes que vous m'avez amené étaient comme dirait... eux toxViques... Ve crois bien que mon allervie aux plantes a pris une Fertaine ampleur... Vous pourriez peut être m'aider à Drouver un remède ? ...",
 				"sickstatus": "Alors, vous avez trouvé un rebède ?",
 				"better": "Le remède que vous m'avez amené a été très efficace !",
-				"lowLevel": "Oh mince... Tu n'es visiblement pas assez fort pour que je te confie des missions. Je ne voudrais pas que ton Dinoz se blesse. Revient me voir lorsque tu auras pris quelques niveaux de plus !"
+				"lowLevel": "Oh mince... Tu n'es visiblement pas assez fort pour que je te confie des missions. Je ne voudrais pas que ton Dinoz se blesse. Revient me voir lorsque tu auras pris quelques niveaux de plus !",
+				"pac_shine": "Euh... Vous avez réussi à obtenir une racine charmée tout seul ? C'est le professeur qui vous a dit quoi faire ? C'est très dangereux vous savez. Si vous arrivez à la réduire en parchemin vous pourrez utiliser une encre de compilation. Mais c'est très complexe à réaliser.",
+				"pac_progress": "Euh, comment dire... C'est... Oui c'est possible... Je m'occupe de vous faire le parchemin, ramenez moi dans un premier temps de l'encre de Kazkadine. Une cinquantaine devraient faire l'affaire",
+				"pac_kazka": "Très bien ! Passons à présent aux cendres de flamèches. Il m'en faut 42 unitées.&& Regarde comment j'ai bien avancé, le parchemin est en train de sécher.",
+				"pac_flam": "Ce fût rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu aille chercher une plume de Coqdur. Tu pense en être capable ?",
+				"pac_coq": "Voila, je ne peux rien faire de plus pour toi. Il faudrait que tu mène tes recherches pour comprendre comment l'utiliser."
 			},
 			"playerChoice": {
 				"welcome": "Lui parler",
@@ -1371,7 +1394,12 @@
 				"better": "Vous avez l'air d'aller bien mieux...",
 				"missions": "Consulter la liste des Missions",
 				"lowLevel": "Consulter la liste des Missions",
-				"curesearch": "Voyons voir ça..."
+				"curesearch": "Voyons voir ça...",
+				"pac_shine": "Et cette racine qui brille, un avis dessus ?",
+				"pac_progress": "Vous saurez m'aider ?",
+				"pac_kazka": "J'ai toute l'encre nécessaire !",
+				"pac_flam": "Voici les 42 unitées de cendres de flamèches !",
+				"pac_coq": "Montrer la plume"
 			}
 		},
 		"rodeur": {
@@ -4991,7 +5019,9 @@
 		"blockSender": "Bloquer l'expéditeur"
 	},
 	"scenario": {
-		"star": "L'être étrange"
+		"star": "L'être étrange",
+		"pac": "Parchemin étrange",
+		"merguez": "La merguez dorée"
 	},
 	"notification": {
 		"reasons": {

@@ -1,6 +1,7 @@
 import { DinozStatusId } from '../../dinoz/StatusList.mjs';
 import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { NpcData } from '../NpcData.mjs';
+import { Scenario } from '../../enums/Scenario.mjs';
 
 export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -38,7 +39,25 @@ export const BAOFAN: Readonly<Record<string, NpcData>> = {
 	},
 	spirit: {
 		stepName: 'spirit',
-		nextStep: ['thanks']
+		nextStep: ['thanks', 'pac_scroll']
+	},
+	pac_scroll: {
+		stepName: 'pac_scroll',
+		condition: {
+			[ConditionEnum.SCENARIO]: [Scenario.PAC, 3, '=']
+		},
+		nextStep: ['pac_scroll2']
+	},
+	pac_scroll2: {
+		stepName: 'pac_scroll2',
+		reward: [
+			{
+				rewardType: RewardEnum.SCENARIO,
+				value: Scenario.PAC,
+				step: 4
+			}
+		],
+		nextStep: []
 	},
 	thanks: {
 		stepName: 'thanks',

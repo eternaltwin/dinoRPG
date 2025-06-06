@@ -100,7 +100,7 @@ export async function getDinozItinerantShop(dinozId: number, playerId: string) {
 			items: { select: { itemId: true, quantity: true } },
 			rewards: { select: { rewardId: true } },
 			quests: { select: { questId: true, progression: true } },
-			ranking: { select: { dinozCount: true } },
+			ranking: { select: { dinozCount: true, points: true } },
 			dinoz: {
 				select: {
 					id: true,
@@ -252,7 +252,8 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 			},
 			quests: { select: { questId: true, progression: true } },
 			rewards: { select: { rewardId: true } },
-			ranking: { select: { dinozCount: true } },
+			ranking: { select: { dinozCount: true, points: true } },
+			ingredients: { select: { ingredientId: true, quantity: true } },
 			dinoz: {
 				select: {
 					id: true,
@@ -303,7 +304,7 @@ export async function getDinozMissionsInfo(dinozId: number, playerId: string) {
 			items: { select: { itemId: true, quantity: true } },
 			rewards: { select: { rewardId: true } },
 			quests: { select: { questId: true, progression: true } },
-			ranking: { select: { dinozCount: true } },
+			ranking: { select: { dinozCount: true, points: true } },
 			dinoz: {
 				select: {
 					id: true,
@@ -448,7 +449,8 @@ export async function getDinozFightDataRequest(dinozId: number, playerId: string
 			items: { select: { itemId: true, quantity: true } },
 			rewards: { select: { rewardId: true } },
 			quests: { select: { questId: true, progression: true } },
-			ranking: { select: { dinozCount: true } },
+			ranking: { select: { dinozCount: true, points: true } },
+			ingredients: { select: { ingredientId: true, quantity: true } },
 			teacher: true,
 			cooker: true,
 			dinoz: {
@@ -707,7 +709,7 @@ export async function getDinozGatherData(dinozId: number, playerId: string) {
 			rewards: { select: { rewardId: true } },
 			ingredients: true,
 			quests: { select: { questId: true, progression: true } },
-			ranking: { select: { dinozCount: true } },
+			ranking: { select: { dinozCount: true, points: true } },
 			dinoz: {
 				select: {
 					id: true,

@@ -2,6 +2,8 @@ import { Comparator, ConditionEnum, Operator } from '../enums/Parser.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { DayEnum } from '../enums/dayEnum.mjs';
 import { Scenario } from '../enums/Scenario.mjs';
+import { Ingredient } from '../ingredient/ingredientList.mjs';
+import { MissionID } from '../missions/missionList.mjs';
 
 // Choisis le type de value en fonction de l'enum utilisée
 export type Condition = {
@@ -10,7 +12,7 @@ export type Condition = {
 	[Operator.NOT]?: Condition;
 	[ConditionEnum.MINLEVEL]?: number;
 	[ConditionEnum.MAXLEVEL]?: number;
-	[ConditionEnum.FINISHED_MISSION]?: number;
+	[ConditionEnum.FINISHED_MISSION]?: MissionID;
 	[ConditionEnum.SKILL]?: number;
 	[ConditionEnum.POSSESS_OBJECT]?: number;
 	[ConditionEnum.COLLEC]?: number;
@@ -19,7 +21,7 @@ export type Condition = {
 	[ConditionEnum.DINOZ_LIFE]?: [Comparator, number];
 	[ConditionEnum.SCENARIO]?: [Scenario, number, '+' | '-' | '='];
 	[ConditionEnum.CURRENT_MISSION]?: number;
-	[ConditionEnum.POSSESS_INGREDIENT]?: string;
+	[ConditionEnum.POSSESS_INGREDIENT]?: [Ingredient, Comparator, number];
 	[ConditionEnum.ACTIVE]?: boolean;
 	[ConditionEnum.PLAYER_EPIC]?: number;
 	[ConditionEnum.HOUR]?: number;
@@ -44,4 +46,5 @@ export type Condition = {
 	[ConditionEnum.DAY]?: DayEnum;
 	[ConditionEnum.CURRENT_STEP]?: number;
 	[ConditionEnum.DINOZ_COUNT]?: [Comparator, number];
+	[ConditionEnum.PLAYER_POINT]?: [Comparator, number];
 };

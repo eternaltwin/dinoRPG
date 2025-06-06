@@ -457,5 +457,5 @@ export const rewardList: Readonly<Record<Reward, EpicReward>> = {
 	[Reward.CLOVER]: { id: Reward.CLOVER, name: 'clover', displayed: true, announced: false },
 	[Reward.TIK]: { id: Reward.TIK, name: 'tik', displayed: false, announced: false },
 	[Reward.BETA]: { id: Reward.BETA, name: 'beta', displayed: true, announced: false },
-	[Reward.PAC]: { id: Reward.PAC, name: 'pac', displayed: true, announced: true },
+	[Reward.PAC]: { id: Reward.PAC, name: 'pac', displayed: true, announced: true }
 };
