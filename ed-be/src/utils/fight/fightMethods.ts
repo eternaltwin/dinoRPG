@@ -1466,7 +1466,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// WOOD
 			case Skill.RENFORTS_KORGON: {
-				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+				let korgon = createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+
+				if (korgon) {
+					// Increase speed by 1% for each WOOD point
+					// Which translates to (100 - WOOD)/100
+					// For example with 15 wood, that gives:
+					// 100 - 15 = 85
+					// 86 /100 = 0.85 i.e 15% increase
+					// Should be impossible to get 100 WOOD and break the game with 0 speed. Just in case, set limit at 99%.
+					korgon.stats.speed.global *= Math.max(0.01, (100 - fighter.stats.base[ElementType.WOOD])/100);
+				}
 				break;
 			}
 			case Skill.VIGNES: {
