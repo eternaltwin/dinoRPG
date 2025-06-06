@@ -1562,11 +1562,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					gardien.skills = gardien.skills!.filter(s => s !== Skill.M_COMET);
 					gardien.bonus_attack = 5;
 					gardien.bonus_defense = 13;
-					gardien.hp = 40;
+					gardien.hp = 40 + fighter.stats.base[ElementType.WOOD];
 					gardien.size = 50;
 				}
 				const monster = createMonster(fightData, fighter, gardien);
-				if (monster) monster.status = monster.status.filter(s => s.type !== Status.NO_ASSAULT);
+				if (monster) {
+					monster.status = monster.status.filter(s => s.type !== Status.NO_ASSAULT);
+					monster.stats.armor.global *= (1 + fighter.stats.base[ElementType.WOOD]/100);
+				}
 				break;
 			}
 			case Skill.GROSSE_BEIGNE: {
