@@ -16,7 +16,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, LogType } from '@drpg/prisma';
+import { AdminRole, LogType, OfferStatus } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { GLOBAL, LOGGER } from '../context.js';
@@ -30,6 +30,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { applySkillToDinoz, deApplySkillFromDinoz } from '../utils/skillParser.js';
+import { Job, scheduledJobs } from 'node-schedule';
 
 /**
  * @summary Check if user can access the admin dashboard
@@ -805,4 +806,27 @@ async function getDinozToFight(dinozId: number) {
 		throw new Error("Dinoz doesn't exist");
 	}
 	return { ...dinoz, status: [], items: [], catches: [] };
+}
+
+export async function getJobs(req: Request) {
+	const rawJobs = Object.values(scheduledJobs).map(job => {
+		return {
+			name: job.name,
+			nextRun: job.nextInvocation()
+		};
+	});
+
+	/*const activeOffer = await prisma.offer.findMany({
+		where: {
+			status: OfferStatus.ONGOING
+		},
+		select: {
+			id: true,
+			seller: { select: { id: true, name: true } }
+		}
+	})
+
+
+	console.log(rawJobs)*/
+	return rawJobs;
 }

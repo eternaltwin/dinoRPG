@@ -6,6 +6,7 @@ import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReaso
 import { ModerationType } from '@drpg/core/models/admin/ModerationType';
 import { BannedPlayerType } from '@drpg/core/models/admin/BannedPlayerType';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
+import { Jobs } from '@drpg/core/models/admin/jobs';
 
 export const AdminService = {
 	getDashBoard(): Promise<boolean> {
@@ -227,6 +228,12 @@ export const AdminService = {
 	debugFight(dinoz1: number, dinoz2: number, seed: string, type: string): Promise<FightProcessResult> {
 		return http()
 			.get(`/admin/${dinoz1}/${dinoz2}/${seed}/${type}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	getScheduledJobs(): Promise<Jobs[]> {
+		return http()
+			.get(`/admin/jobs`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

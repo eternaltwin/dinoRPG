@@ -41,6 +41,9 @@
 		<li>
 			<a href="#" :class="tabSelected === 10 ? 'active' : ''" @click="setTab(10)"> Debug </a>
 		</li>
+		<li>
+			<a href="#" :class="tabSelected === 11 ? 'active' : ''" @click="setTab(11)"> Scheduled Jobs </a>
+		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
@@ -61,6 +64,7 @@
 	<Banned v-if="tabSelected === 8" />
 	<GameControl v-if="tabSelected === 9" />
 	<DebugFight v-if="tabSelected === 10" />
+	<ScheduledJobs v-if="tabSelected === 11" />
 </template>
 
 <script lang="ts">
@@ -82,6 +86,7 @@ import { Player } from '@drpg/core/models/player/Player';
 import { playerStore } from '../store/index.js';
 import GameControl from '../components/admin/GameControl.vue';
 import DebugFight from '../components/admin/DebugFight.vue';
+import ScheduledJobs from '../components/admin/ScheduledJobs.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -91,6 +96,7 @@ interface PlayerSearch {
 export default defineComponent({
 	name: 'AdminDashBoard',
 	components: {
+		ScheduledJobs,
 		DebugFight,
 		GameControl,
 		TitleHeader,
