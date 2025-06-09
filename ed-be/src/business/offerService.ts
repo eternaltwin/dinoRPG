@@ -222,7 +222,7 @@ export async function createOffer(req: Request) {
 
 	// Schedule offer expiration
 	scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
-	LOGGER.log(`Player ${authed.id} has set an offer for ${offer.total} ending at ${offer.endDate}`);
+	// LOGGER.log(`Player ${authed.id} has set an offer for ${offer.total} ending at ${offer.endDate}`);
 }
 
 /**
