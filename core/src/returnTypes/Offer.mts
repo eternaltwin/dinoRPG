@@ -21,8 +21,8 @@ export type OfferFromGetOffers = Offer & {
 		  })
 		| null;
 	items: Pick<OfferItem, 'itemId' | 'quantity' | 'isIngredient'>[];
-	bids: (Pick<OfferBid, 'value'> & {
-		user: Pick<Player, 'id' | 'name'>;
+	bids: (Pick<OfferBid, 'value' | 'userId'> & {
+		user: Pick<Player, 'id' | 'name'> | null;
 	})[];
 };
 

@@ -1,7 +1,11 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
-export const increaseItemQuantity = async (playerId: string, itemId: number, quantity: number) => {
+export const increaseItemQuantity = async (playerId: string | null, itemId: number, quantity: number) => {
+	if (!playerId) {
+		throw new ExpectedError(`No playerId for increaseItemQuantity`);
+	}
 	const item = await prisma.playerItem.upsert({
 		where: {
 			itemId_playerId: {

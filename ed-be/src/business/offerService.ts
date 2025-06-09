@@ -65,7 +65,7 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 	if (onlyMines) {
 		offers = offers
 			.filter(o => {
-				if (o.bids[0]) {
+				if (o.bids[0] && o.bids[0].user) {
 					return o.bids[0].user.id === authed.id;
 				} else {
 					return o.sellerId === authed.id;
@@ -282,6 +282,7 @@ export async function cancelOffer(req: Request) {
 	// Reimburse bidders
 	if (offer.bids.length > 0) {
 		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
+		if (!max.userId) throw new ExpectedError(`No max.userId`);
 		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
 	}
 
@@ -345,12 +346,13 @@ export async function bidOffer(req: Request) {
 	}
 
 	// Add bid
-	await addBid(offerId, authed.id, value);
+	await addBid(offerId, authed.id, value, authed.name);
 	await createLog(LogType.OfferBid, authed.id, undefined, offer.id, value);
 
 	// Repay previous bidder
 	if (offer.bids.length > 0) {
 		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
+		if (!max.userId) throw new ExpectedError(`No max.userId`);
 		await increaseItemQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value);
 	}
 
@@ -375,7 +377,7 @@ export const expireOffer = async (offerId: number) => {
 	}
 
 	const winnerBid = offer.bids[offer.bids.length - 1];
-	if (winnerBid) {
+	if (winnerBid && winnerBid.userId) {
 		// Send Discord notification
 		LOGGER.log(`Offer ${offerId} won by ${winnerBid.userId}`);
 		await createLog(LogType.OfferWon, offer.seller.id, undefined, offer.id, winnerBid.userId, winnerBid.value);
@@ -427,13 +429,13 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 	const winnerBid = offer.bids[offer.bids.length - 1];
 	const promises = [];
 
-	if (offer.bids.length) {
+	if (offer.bids.length && winnerBid.userId) {
 		const winner = await checkRefund(winnerBid.userId, ingredients, items, offer.dinoz, offerId);
 
 		if (typeof winner === 'string') {
 			throw new ExpectedError(translate(winner, authed));
 		}
-		if (offer.dinoz) {
+		if (offer.dinoz && winnerBid.userId) {
 			// Change Dinoz owner and set as not selling
 			updateDinoz(offer.dinoz.id, {
 				player: { connect: { id: winnerBid.userId } },

@@ -415,12 +415,13 @@ model OfferItem {
 }
 
 model OfferBid {
-  id      Int    @id @default(autoincrement())
-  offerId Int
-  value   Int
-  userId  String @db.Uuid
-  offer   Offer  @relation(fields: [offerId], references: [id])
-  user    Player @relation(fields: [userId], references: [id])
+  id       Int     @id @default(autoincrement())
+  offerId  Int
+  value    Int
+  userId   String? @db.Uuid
+  userName String
+  offer    Offer   @relation(fields: [offerId], references: [id])
+  user     Player? @relation(fields: [userId], references: [id], onDelete: SetNull)
 }
 
 model Offer {
@@ -681,7 +682,7 @@ model FightArchive {
 model FightWatched {
   id             String       @id() @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   fight          FightArchive @relation(fields: [fightArchiveId], references: [id])
-  player         Player       @relation(fields: [playerId], references: [id])
+  player         Player       @relation(fields: [playerId], references: [id], onDelete: Cascade)
   playerId       String       @db.Uuid
   favorite       Boolean
   fightArchiveId String       @db.Uuid

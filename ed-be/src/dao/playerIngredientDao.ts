@@ -1,5 +1,6 @@
 import { Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export const getAllIngredientsDataRequest = async (playerId: string) => {
 	const ingredients = await prisma.playerIngredient.findMany({
@@ -10,7 +11,10 @@ export const getAllIngredientsDataRequest = async (playerId: string) => {
 	return ingredients;
 };
 
-export const increaseIngredientQuantity = async (playerId: string, ingredientId: number, quantity: number) => {
+export const increaseIngredientQuantity = async (playerId: string | null, ingredientId: number, quantity: number) => {
+	if (!playerId) {
+		throw new ExpectedError(`No playerId for increaseIngredientQuantity`);
+	}
 	const ingredient = await prisma.playerIngredient.upsert({
 		where: {
 			ingredientId_playerId: {

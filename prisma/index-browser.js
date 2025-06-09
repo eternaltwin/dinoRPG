@@ -374,7 +374,8 @@ exports.Prisma.OfferBidScalarFieldEnum = {
   id: 'id',
   offerId: 'offerId',
   value: 'value',
-  userId: 'userId'
+  userId: 'userId',
+  userName: 'userName'
 };
 
 exports.Prisma.OfferScalarFieldEnum = {

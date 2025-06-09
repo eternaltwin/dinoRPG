@@ -124,7 +124,8 @@ export async function auth(request: Request, banByPass = false) {
 			id: true,
 			lang: true,
 			banCase: true,
-			connexionToken: true
+			connexionToken: true,
+			name: true
 		}
 	});
 

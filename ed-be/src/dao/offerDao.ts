@@ -74,7 +74,8 @@ export async function getOffers(
 			bids: {
 				select: {
 					value: true,
-					user: { select: { id: true, name: true } }
+					user: { select: { id: true, name: true } },
+					userId: true
 				},
 				orderBy: { value: 'desc' },
 				take: 1
@@ -220,12 +221,13 @@ export async function prepareRefund(playerId: string, ingredientList: number[], 
 	return player;
 }
 
-export async function addBid(offerId: number, userId: string, value: number) {
+export async function addBid(offerId: number, userId: string, value: number, userName: string) {
 	await prisma.offerBid.create({
 		data: {
 			offerId,
 			userId,
-			value
+			value,
+			userName
 		}
 	});
 }

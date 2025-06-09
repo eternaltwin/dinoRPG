@@ -37795,6 +37795,7 @@ export namespace Prisma {
     offerId: number | null
     value: number | null
     userId: string | null
+    userName: string | null
   }
 
   export type OfferBidMaxAggregateOutputType = {
@@ -37802,6 +37803,7 @@ export namespace Prisma {
     offerId: number | null
     value: number | null
     userId: string | null
+    userName: string | null
   }
 
   export type OfferBidCountAggregateOutputType = {
@@ -37809,6 +37811,7 @@ export namespace Prisma {
     offerId: number
     value: number
     userId: number
+    userName: number
     _all: number
   }
 
@@ -37830,6 +37833,7 @@ export namespace Prisma {
     offerId?: true
     value?: true
     userId?: true
+    userName?: true
   }
 
   export type OfferBidMaxAggregateInputType = {
@@ -37837,6 +37841,7 @@ export namespace Prisma {
     offerId?: true
     value?: true
     userId?: true
+    userName?: true
   }
 
   export type OfferBidCountAggregateInputType = {
@@ -37844,6 +37849,7 @@ export namespace Prisma {
     offerId?: true
     value?: true
     userId?: true
+    userName?: true
     _all?: true
   }
 
@@ -37937,7 +37943,8 @@ export namespace Prisma {
     id: number
     offerId: number
     value: number
-    userId: string
+    userId: string | null
+    userName: string
     _count: OfferBidCountAggregateOutputType | null
     _avg: OfferBidAvgAggregateOutputType | null
     _sum: OfferBidSumAggregateOutputType | null
@@ -37964,8 +37971,9 @@ export namespace Prisma {
     offerId?: boolean
     value?: boolean
     userId?: boolean
+    userName?: boolean
     offer?: boolean | OfferDefaultArgs<ExtArgs>
-    user?: boolean | PlayerDefaultArgs<ExtArgs>
+    user?: boolean | OfferBid$userArgs<ExtArgs>
   }, ExtArgs["result"]["offerBid"]>
 
   export type OfferBidSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -37973,8 +37981,9 @@ export namespace Prisma {
     offerId?: boolean
     value?: boolean
     userId?: boolean
+    userName?: boolean
     offer?: boolean | OfferDefaultArgs<ExtArgs>
-    user?: boolean | PlayerDefaultArgs<ExtArgs>
+    user?: boolean | OfferBid$userArgs<ExtArgs>
   }, ExtArgs["result"]["offerBid"]>
 
   export type OfferBidSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -37982,8 +37991,9 @@ export namespace Prisma {
     offerId?: boolean
     value?: boolean
     userId?: boolean
+    userName?: boolean
     offer?: boolean | OfferDefaultArgs<ExtArgs>
-    user?: boolean | PlayerDefaultArgs<ExtArgs>
+    user?: boolean | OfferBid$userArgs<ExtArgs>
   }, ExtArgs["result"]["offerBid"]>
 
   export type OfferBidSelectScalar = {
@@ -37991,33 +38001,35 @@ export namespace Prisma {
     offerId?: boolean
     value?: boolean
     userId?: boolean
+    userName?: boolean
   }
 
-  export type OfferBidOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "offerId" | "value" | "userId", ExtArgs["result"]["offerBid"]>
+  export type OfferBidOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "offerId" | "value" | "userId" | "userName", ExtArgs["result"]["offerBid"]>
   export type OfferBidInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     offer?: boolean | OfferDefaultArgs<ExtArgs>
-    user?: boolean | PlayerDefaultArgs<ExtArgs>
+    user?: boolean | OfferBid$userArgs<ExtArgs>
   }
   export type OfferBidIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     offer?: boolean | OfferDefaultArgs<ExtArgs>
-    user?: boolean | PlayerDefaultArgs<ExtArgs>
+    user?: boolean | OfferBid$userArgs<ExtArgs>
   }
   export type OfferBidIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     offer?: boolean | OfferDefaultArgs<ExtArgs>
-    user?: boolean | PlayerDefaultArgs<ExtArgs>
+    user?: boolean | OfferBid$userArgs<ExtArgs>
   }
 
   export type $OfferBidPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "OfferBid"
     objects: {
       offer: Prisma.$OfferPayload<ExtArgs>
-      user: Prisma.$PlayerPayload<ExtArgs>
+      user: Prisma.$PlayerPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       offerId: number
       value: number
-      userId: string
+      userId: string | null
+      userName: string
     }, ExtArgs["result"]["offerBid"]>
     composites: {}
   }
@@ -38413,7 +38425,7 @@ export namespace Prisma {
   export interface Prisma__OfferBidClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     offer<T extends OfferDefaultArgs<ExtArgs> = {}>(args?: Subset<T, OfferDefaultArgs<ExtArgs>>): Prisma__OfferClient<$Result.GetResult<Prisma.$OfferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    user<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends OfferBid$userArgs<ExtArgs> = {}>(args?: Subset<T, OfferBid$userArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -38447,6 +38459,7 @@ export namespace Prisma {
     readonly offerId: FieldRef<"OfferBid", 'Int'>
     readonly value: FieldRef<"OfferBid", 'Int'>
     readonly userId: FieldRef<"OfferBid", 'String'>
+    readonly userName: FieldRef<"OfferBid", 'String'>
   }
     
 
@@ -38849,6 +38862,25 @@ export namespace Prisma {
      * Limit how many OfferBids to delete.
      */
     limit?: number
+  }
+
+  /**
+   * OfferBid.user
+   */
+  export type OfferBid$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Player
+     */
+    select?: PlayerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Player
+     */
+    omit?: PlayerOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PlayerInclude<ExtArgs> | null
+    where?: PlayerWhereInput
   }
 
   /**
@@ -68776,7 +68808,8 @@ export namespace Prisma {
     id: 'id',
     offerId: 'offerId',
     value: 'value',
-    userId: 'userId'
+    userId: 'userId',
+    userName: 'userName'
   };
 
   export type OfferBidScalarFieldEnum = (typeof OfferBidScalarFieldEnum)[keyof typeof OfferBidScalarFieldEnum]
@@ -71283,16 +71316,18 @@ export namespace Prisma {
     id?: IntFilter<"OfferBid"> | number
     offerId?: IntFilter<"OfferBid"> | number
     value?: IntFilter<"OfferBid"> | number
-    userId?: UuidFilter<"OfferBid"> | string
+    userId?: UuidNullableFilter<"OfferBid"> | string | null
+    userName?: StringFilter<"OfferBid"> | string
     offer?: XOR<OfferScalarRelationFilter, OfferWhereInput>
-    user?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    user?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
 
   export type OfferBidOrderByWithRelationInput = {
     id?: SortOrder
     offerId?: SortOrder
     value?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    userName?: SortOrder
     offer?: OfferOrderByWithRelationInput
     user?: PlayerOrderByWithRelationInput
   }
@@ -71304,16 +71339,18 @@ export namespace Prisma {
     NOT?: OfferBidWhereInput | OfferBidWhereInput[]
     offerId?: IntFilter<"OfferBid"> | number
     value?: IntFilter<"OfferBid"> | number
-    userId?: UuidFilter<"OfferBid"> | string
+    userId?: UuidNullableFilter<"OfferBid"> | string | null
+    userName?: StringFilter<"OfferBid"> | string
     offer?: XOR<OfferScalarRelationFilter, OfferWhereInput>
-    user?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+    user?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
 
   export type OfferBidOrderByWithAggregationInput = {
     id?: SortOrder
     offerId?: SortOrder
     value?: SortOrder
-    userId?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    userName?: SortOrder
     _count?: OfferBidCountOrderByAggregateInput
     _avg?: OfferBidAvgOrderByAggregateInput
     _max?: OfferBidMaxOrderByAggregateInput
@@ -71328,7 +71365,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"OfferBid"> | number
     offerId?: IntWithAggregatesFilter<"OfferBid"> | number
     value?: IntWithAggregatesFilter<"OfferBid"> | number
-    userId?: UuidWithAggregatesFilter<"OfferBid"> | string
+    userId?: UuidNullableWithAggregatesFilter<"OfferBid"> | string | null
+    userName?: StringWithAggregatesFilter<"OfferBid"> | string
   }
 
   export type OfferWhereInput = {
@@ -74986,46 +75024,53 @@ export namespace Prisma {
 
   export type OfferBidCreateInput = {
     value: number
+    userName: string
     offer: OfferCreateNestedOneWithoutBidsInput
-    user: PlayerCreateNestedOneWithoutBidsInput
+    user?: PlayerCreateNestedOneWithoutBidsInput
   }
 
   export type OfferBidUncheckedCreateInput = {
     id?: number
     offerId: number
     value: number
-    userId: string
+    userId?: string | null
+    userName: string
   }
 
   export type OfferBidUpdateInput = {
     value?: IntFieldUpdateOperationsInput | number
+    userName?: StringFieldUpdateOperationsInput | string
     offer?: OfferUpdateOneRequiredWithoutBidsNestedInput
-    user?: PlayerUpdateOneRequiredWithoutBidsNestedInput
+    user?: PlayerUpdateOneWithoutBidsNestedInput
   }
 
   export type OfferBidUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     offerId?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferBidCreateManyInput = {
     id?: number
     offerId: number
     value: number
-    userId: string
+    userId?: string | null
+    userName: string
   }
 
   export type OfferBidUpdateManyMutationInput = {
     value?: IntFieldUpdateOperationsInput | number
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferBidUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     offerId?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferCreateInput = {
@@ -78752,6 +78797,7 @@ export namespace Prisma {
     offerId?: SortOrder
     value?: SortOrder
     userId?: SortOrder
+    userName?: SortOrder
   }
 
   export type OfferBidAvgOrderByAggregateInput = {
@@ -78765,6 +78811,7 @@ export namespace Prisma {
     offerId?: SortOrder
     value?: SortOrder
     userId?: SortOrder
+    userName?: SortOrder
   }
 
   export type OfferBidMinOrderByAggregateInput = {
@@ -78772,6 +78819,7 @@ export namespace Prisma {
     offerId?: SortOrder
     value?: SortOrder
     userId?: SortOrder
+    userName?: SortOrder
   }
 
   export type OfferBidSumOrderByAggregateInput = {
@@ -82746,10 +82794,12 @@ export namespace Prisma {
     update?: XOR<XOR<OfferUpdateToOneWithWhereWithoutBidsInput, OfferUpdateWithoutBidsInput>, OfferUncheckedUpdateWithoutBidsInput>
   }
 
-  export type PlayerUpdateOneRequiredWithoutBidsNestedInput = {
+  export type PlayerUpdateOneWithoutBidsNestedInput = {
     create?: XOR<PlayerCreateWithoutBidsInput, PlayerUncheckedCreateWithoutBidsInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutBidsInput
     upsert?: PlayerUpsertWithoutBidsInput
+    disconnect?: PlayerWhereInput | boolean
+    delete?: PlayerWhereInput | boolean
     connect?: PlayerWhereUniqueInput
     update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutBidsInput, PlayerUpdateWithoutBidsInput>, PlayerUncheckedUpdateWithoutBidsInput>
   }
@@ -89207,6 +89257,7 @@ export namespace Prisma {
 
   export type OfferBidCreateWithoutUserInput = {
     value: number
+    userName: string
     offer: OfferCreateNestedOneWithoutBidsInput
   }
 
@@ -89214,6 +89265,7 @@ export namespace Prisma {
     id?: number
     offerId: number
     value: number
+    userName: string
   }
 
   export type OfferBidCreateOrConnectWithoutUserInput = {
@@ -90098,7 +90150,8 @@ export namespace Prisma {
     id?: IntFilter<"OfferBid"> | number
     offerId?: IntFilter<"OfferBid"> | number
     value?: IntFilter<"OfferBid"> | number
-    userId?: UuidFilter<"OfferBid"> | string
+    userId?: UuidNullableFilter<"OfferBid"> | string | null
+    userName?: StringFilter<"OfferBid"> | string
   }
 
   export type PantheonUpsertWithWhereUniqueWithoutPlayerInput = {
@@ -94299,13 +94352,15 @@ export namespace Prisma {
 
   export type OfferBidCreateWithoutOfferInput = {
     value: number
-    user: PlayerCreateNestedOneWithoutBidsInput
+    userName: string
+    user?: PlayerCreateNestedOneWithoutBidsInput
   }
 
   export type OfferBidUncheckedCreateWithoutOfferInput = {
     id?: number
     value: number
-    userId: string
+    userId?: string | null
+    userName: string
   }
 
   export type OfferBidCreateOrConnectWithoutOfferInput = {
@@ -103957,6 +104012,7 @@ export namespace Prisma {
     id?: number
     offerId: number
     value: number
+    userName: string
   }
 
   export type PantheonCreateManyPlayerInput = {
@@ -104381,6 +104437,7 @@ export namespace Prisma {
 
   export type OfferBidUpdateWithoutUserInput = {
     value?: IntFieldUpdateOperationsInput | number
+    userName?: StringFieldUpdateOperationsInput | string
     offer?: OfferUpdateOneRequiredWithoutBidsNestedInput
   }
 
@@ -104388,12 +104445,14 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     offerId?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferBidUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
     offerId?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type PantheonUpdateWithoutPlayerInput = {
@@ -104976,7 +105035,8 @@ export namespace Prisma {
   export type OfferBidCreateManyOfferInput = {
     id?: number
     value: number
-    userId: string
+    userId?: string | null
+    userName: string
   }
 
   export type OfferItemCreateManyOfferInput = {
@@ -104988,19 +105048,22 @@ export namespace Prisma {
 
   export type OfferBidUpdateWithoutOfferInput = {
     value?: IntFieldUpdateOperationsInput | number
-    user?: PlayerUpdateOneRequiredWithoutBidsNestedInput
+    userName?: StringFieldUpdateOperationsInput | string
+    user?: PlayerUpdateOneWithoutBidsNestedInput
   }
 
   export type OfferBidUncheckedUpdateWithoutOfferInput = {
     id?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferBidUncheckedUpdateManyWithoutOfferInput = {
     id?: IntFieldUpdateOperationsInput | number
     value?: IntFieldUpdateOperationsInput | number
-    userId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    userName?: StringFieldUpdateOperationsInput | string
   }
 
   export type OfferItemUpdateWithoutOfferInput = {
