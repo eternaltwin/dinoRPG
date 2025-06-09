@@ -24,12 +24,13 @@
 					</div>
 
 					<template #content>
-						<img
-							v-for="status in dinoz.status"
-							:key="status.statusId"
-							:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
-							:alt="statusList.imgName[status.statusId]"
-						/>
+						<template v-for="status in dinoz.status" :key="status.statusId">
+							<img
+								v-if="statusList.displayed[status.statusId]"
+								:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
+								:alt="statusList.imgName[status.statusId]"
+							/>
+						</template>
 					</template>
 				</Tippy>
 				<td class="elements">
