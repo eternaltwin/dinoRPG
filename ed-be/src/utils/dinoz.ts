@@ -146,7 +146,8 @@ export const reincarnateDinoz = (race: DinozRace, display: string, seed: string)
 		display: fullDisplay.toString().replaceAll(',', ''),
 		maxLife: 100,
 		placeId: PlaceEnum.DINOVILLE,
-		life: 1
+		life: 1,
+		FBTournamentStep: 0
 	};
 };
 
