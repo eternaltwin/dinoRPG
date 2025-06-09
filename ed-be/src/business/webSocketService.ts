@@ -20,6 +20,7 @@ import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponse
 import { checkMessageCanBeDeleted } from './clanService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { LOGGER } from '../context.js';
 
 let activeTickets: WsTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
@@ -220,8 +221,14 @@ function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 	const channelData: [string, ChannelData[]] | undefined = [...channels.entries()].find(([_chanKey, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
+	LOGGER.error([...channels.entries()])
+	console.log([...channels.entries()])
 
-	if (channelData === undefined) throw new Error('The channel cannot be undefined');
+	if (channelData === undefined) {
+		LOGGER.error(`getChannelDetailsFromConnectionId error, wsId is ${wsId}`)
+		LOGGER.error([...channels.entries()])
+		throw new Error('The channel cannot be undefined');
+	}
 
 	const channelInfos: ChannelInfos = {
 		channelName: channelData[0],
