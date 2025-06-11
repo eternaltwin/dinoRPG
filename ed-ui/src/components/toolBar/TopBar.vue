@@ -65,7 +65,8 @@ export default defineComponent({
 			this.playerStore.setNotificationsCounter(backNotif.notifications.length);
 
 			if (backNotif.lastSeenVersion !== import.meta.env.VERSION) {
-				this.$router.go(0);
+				// this.$router.go(0);
+				console.log(backNotif.lastSeenVersion, import.meta.env.VERSION)
 			}
 		}
 	},
