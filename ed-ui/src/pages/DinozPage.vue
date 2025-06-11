@@ -125,7 +125,15 @@ export default defineComponent({
 	// Get dinoz data
 	async mounted(): Promise<void> {
 		EventBus.on('refreshDinoz', async e => {
-			if (e) await this.getFiche();
+			if (e) {
+				try {
+					await this.getFiche();
+					EventBus.emit('isLoading', false);
+				} catch (err) {
+					errorHandler.handle(err, this.$toast);
+					return;
+				}
+			}
 		});
 		EventBus.emit('isLoading', true);
 		try {
