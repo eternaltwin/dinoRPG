@@ -2,7 +2,7 @@ import { http } from '../utils/index.js';
 import { Notification } from '@drpg/core/models/notifications/notification';
 
 export const NotificationService = {
-	getNotifications(): Promise<{ lastSeenVersion: string; notifications: Notification[] }> {
+	getNotifications(): Promise<{ lastVersionSeen: string; notifications: Notification[] }> {
 		return http()
 			.get('/notifications/list')
 			.then(res => Promise.resolve(res.data))

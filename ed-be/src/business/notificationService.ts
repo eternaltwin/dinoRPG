@@ -5,7 +5,7 @@ import { getNotification, readAllNotification, readNotification } from '../dao/n
 export async function getNotifications(req: Request) {
 	const authed = await auth(req, true);
 	const notifications = await getNotification(authed.id);
-	return notifications; 
+	return notifications;
 }
 
 export async function setNotificationRead(req: Request) {

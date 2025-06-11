@@ -259,7 +259,7 @@ export async function auth(request: Request, banByPass = false) {
 			data: {
 				lastVersionSeen: VERSION
 			}
-		})
+		});
 	}
 
 	return user;
