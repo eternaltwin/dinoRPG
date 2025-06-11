@@ -258,6 +258,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   skipLevel: 'skipLevel',
   banCaseId: 'banCaseId',
   discoveredSkills: 'discoveredSkills',
+  lastVersionSeen: 'lastVersionSeen',
   id: 'id',
   ips: 'ips'
 };

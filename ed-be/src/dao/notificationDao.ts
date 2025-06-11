@@ -2,12 +2,19 @@ import { NotificationSeverity, Prisma } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
 export async function getNotification(playerId: string) {
-	const notification = await prisma.notification.findMany({
+	const notification = await prisma.player.findUnique({
 		where: {
-			playerId,
-			read: false
+			id: playerId
 		},
-		orderBy: { date: 'desc' }
+		select: {
+			lastVersionSeen: true,
+			notifications: {
+				where: {
+					read: false
+				},
+				orderBy: { date: 'desc' }
+			}
+		}
 	});
 
 	return notification;

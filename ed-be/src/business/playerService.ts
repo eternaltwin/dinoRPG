@@ -49,56 +49,6 @@ export async function getCommonData(req: Request) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
 
-	// Check if it's the first login of the day
-	if (!dayjs().isSame(playerCommonData.lastLogin, 'day')) {
-		// Add 1 daily ticket
-		await increaseItemQuantity(authed.id, Item.DAILY_TICKET, 1);
-
-		// Update completion
-		const completion = await calculatePlayerCompletion(playerCommonData.id);
-		try {
-			await updateCompletion(authed.id, completion);
-		} catch (e) {
-			LOGGER.error(`UpdateCompletion crash with id: ${authed.id} and completion score of ${completion}`);
-		}
-
-		// Update last login: refresh Labrute flag and daily grid reward limit
-		await setPlayer(authed.id, {
-			lastLogin: new Date(),
-			labruteDone: false,
-			dailyGridRewards: gameConfig.general.dailyGridRewards
-		});
-
-		// Tik bracelet regen (& alive)
-		const dinozWithTikBracelet = playerCommonData.dinoz.filter(
-			dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
-		);
-
-		for (const dinoz of dinozWithTikBracelet) {
-			// Regen 10 HP
-			const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
-			await updateDinoz(dinoz.id, { life: newHp });
-		}
-
-		if (currentEvents()[0] === GameEvent.CHRISTMAS) {
-			await increaseItemQuantity(authed.id, Item.CHRISTMAS_TICKET, 1);
-		}
-
-		// Give 2 action for active dinoz
-		const leaderWithVeilleuse = playerCommonData.dinoz.filter(d => d.skills.some(s => s.skillId === Skill.VEILLEUSE));
-		for (const dinoz of playerCommonData.dinoz) {
-			let remaning = 2;
-			if (playerCommonData.matelasseur) remaning++;
-			if (dinoz.skills.some(s => s.skillId === Skill.GROS_DORMEUR)) remaning++;
-			if (leaderWithVeilleuse.some(d => d.followers.some(di => di.id === dinoz.id))) remaning++;
-			await updateDinoz(dinoz.id, { remaining: remaning });
-		}
-
-		// Update stat
-		await setSpecificStat(StatTracking.P_DAYS, authed.id, 1);
-		await createLog(LogType.PlayerConnected, playerCommonData.id, undefined, playerCommonData.name.toString());
-	}
-
 	const dinoz = playerCommonData.dinoz.map(d => {
 		return { ...toDinozFiche(playerCommonData, d.id) };
 	});

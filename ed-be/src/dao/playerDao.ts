@@ -6,6 +6,18 @@ import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from
 import type { Request } from 'express';
 import { prisma } from '../prisma.js';
 import { createLog } from './logDao.js';
+import dayjs from 'dayjs';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import gameConfig from '../config/game.config.js';
+import { GLOBAL, LOGGER } from '../context.js';
+import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
+import { updateDinoz } from './dinozDao.js';
+import { increaseItemQuantity } from './playerItemDao.js';
+import { updateCompletion } from './rankingDao.js';
+import { setSpecificStat } from './trackingDao.js';
+import { VERSION } from '@drpg/core/version';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({
@@ -125,7 +137,10 @@ export async function auth(request: Request, banByPass = false) {
 			lang: true,
 			banCase: true,
 			connexionToken: true,
-			name: true
+			name: true,
+			lastLogin: true,
+			matelasseur: true,
+			lastVersionSeen: true
 		}
 	});
 
@@ -139,6 +154,112 @@ export async function auth(request: Request, banByPass = false) {
 
 	if (user.banCase && !banByPass) {
 		throw new ExpectedError('Action forbidden: you have been banned');
+	}
+
+	// Check if it's the first login of the day
+	if (!dayjs().isSame(user.lastLogin, 'day')) {
+		// Add 1 daily ticket
+		await increaseItemQuantity(user.id, Item.DAILY_TICKET, 1);
+
+		// Update completion
+		const completion = await calculatePlayerCompletion(user.id);
+		try {
+			await updateCompletion(user.id, completion);
+		} catch (e) {
+			LOGGER.error(`UpdateCompletion crash with id: ${user.id} and completion score of ${completion}`);
+		}
+
+		// Update last login: refresh Labrute flag and daily grid reward limit
+		await setPlayer(user.id, {
+			lastLogin: new Date(),
+			labruteDone: false,
+			dailyGridRewards: gameConfig.general.dailyGridRewards
+		});
+
+		const playerDinozData = await prisma.dinoz.findMany({
+			where: {
+				AND: [
+					{
+						OR: [
+							{ unavailableReason: null },
+							{ unavailableReason: { not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed] } } }
+						]
+					},
+					{ playerId: user.id }
+				]
+			},
+			select: {
+				id: true,
+				leaderId: true,
+				display: true,
+				name: true,
+				life: true,
+				maxLife: true,
+				experience: true,
+				placeId: true,
+				level: true,
+				order: true,
+				raceId: true,
+				unavailableReason: true,
+				missions: true,
+				nbrUpFire: true,
+				nbrUpWood: true,
+				nbrUpWater: true,
+				nbrUpLightning: true,
+				nbrUpAir: true,
+				remaining: true,
+				fight: true,
+				gather: true,
+				items: { select: { itemId: true } },
+				status: { select: { statusId: true } },
+				skills: { select: { skillId: true } },
+				followers: { select: { id: true, fight: true, remaining: true } },
+				TournamentTeam: { select: { tournamentId: true } },
+				concentration: true
+			},
+
+			orderBy: [{ order: 'asc' }, { name: 'asc' }]
+		});
+
+		// Tik bracelet regen (& alive)
+		const dinozWithTikBracelet = playerDinozData.filter(
+			dinoz => dinoz.items.some(item => item.itemId === Item.TIK_BRACELET) && dinoz.life > 0
+		);
+
+		for (const dinoz of dinozWithTikBracelet) {
+			// Regen 10 HP
+			const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
+			await updateDinoz(dinoz.id, { life: newHp });
+		}
+
+		if (currentEvents()[0] === GameEvent.CHRISTMAS) {
+			await increaseItemQuantity(user.id, Item.CHRISTMAS_TICKET, 1);
+		}
+
+		// Give 2 action for active dinoz
+		const leaderWithVeilleuse = playerDinozData.filter(d => d.skills.some(s => s.skillId === Skill.VEILLEUSE));
+		for (const dinoz of playerDinozData) {
+			let remaning = 2;
+			if (user.matelasseur) remaning++;
+			if (dinoz.skills.some(s => s.skillId === Skill.GROS_DORMEUR)) remaning++;
+			if (leaderWithVeilleuse.some(d => d.followers.some(di => di.id === dinoz.id))) remaning++;
+			await updateDinoz(dinoz.id, { remaining: remaning });
+		}
+
+		// Update stat
+		await setSpecificStat(StatTracking.P_DAYS, user.id, 1);
+		await createLog(LogType.PlayerConnected, user.id, undefined, user.name.toString());
+	}
+
+	if (user.lastVersionSeen !== VERSION) {
+		await prisma.player.update({
+			where: {
+				id: user.id
+			},
+			data: {
+				lastVersionSeen: VERSION
+			}
+		})
 	}
 
 	return user;

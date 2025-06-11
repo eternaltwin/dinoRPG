@@ -213,6 +213,7 @@ model Player {
   skipLevel            Boolean            @default(false)
   banCaseId            Int?               @unique
   discoveredSkills     Int[]              @default([])
+  lastVersionSeen      String             @default("0.16.3")
   id                   String             @id(map: "PK_65edadc946a7faf4b638d5e8885") @unique(map: "player_id_idx") @db.Uuid
   leaderOf             Clan?              @relation("leader")
   ClanHistory          ClanHistory[]

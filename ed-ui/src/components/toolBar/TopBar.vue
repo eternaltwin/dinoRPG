@@ -60,9 +60,13 @@ export default defineComponent({
 		async refreshNotif() {
 			if (!this.isLogged) return;
 
-			const notification = await NotificationService.getNotifications();
-			this.playerStore.setNotifications(notification);
-			this.playerStore.setNotificationsCounter(notification.length);
+			const backNotif = await NotificationService.getNotifications();
+			this.playerStore.setNotifications(backNotif.notifications);
+			this.playerStore.setNotificationsCounter(backNotif.notifications.length);
+
+			if (backNotif.lastSeenVersion !== import.meta.env.VERSION) {
+				this.$router.go(0);
+			}
 		}
 	},
 	watch: {
