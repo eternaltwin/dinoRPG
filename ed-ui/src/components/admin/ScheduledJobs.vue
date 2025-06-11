@@ -7,7 +7,7 @@
 		</tr>
 		<tr v-for="job in jobs" :key="job.name">
 			<td>{{ job.name }}</td>
-			<td> {{ new Date(job.nextRun).toLocaleString('fr-FR') }}</td>
+			<td>{{ new Date(job.nextRun).toLocaleString('fr-FR') }}</td>
 			<td>%</td>
 		</tr>
 	</DZTable>
@@ -26,11 +26,11 @@ export default defineComponent({
 	data() {
 		return {
 			jobs: [] as Jobs[]
-		}
+		};
 	},
 	async mounted() {
 		try {
-			this.jobs = await AdminService.getScheduledJobs()
+			this.jobs = await AdminService.getScheduledJobs();
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
@@ -38,6 +38,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

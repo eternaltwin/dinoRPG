@@ -1,6 +1,6 @@
 <template>
 	<div id="boxMap">
-		<WorldMap :dinozData="dinozData" />
+		<WorldMap :dinozData="dinozData" :key="dinozData.borderPlace[0]" />
 		<p class="placeName" v-if="dinozData">
 			{{ $t(`place.name.${getPlaceName(dinozData.placeId)}`) }}
 		</p>
@@ -18,7 +18,7 @@ import WorldMap from '../../components/common/WorldMap.vue';
 
 export default defineComponent({
 	name: 'MapTab',
-	props: { dinozData: Object as PropType<DinozFiche> },
+	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
 		WorldMap
 	},

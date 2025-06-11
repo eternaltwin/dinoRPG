@@ -27,7 +27,7 @@ import MapTab from '../../components/common/MapTab.vue';
 
 export default defineComponent({
 	name: 'TabPanel',
-	props: { dinozData: Object as PropType<DinozFiche> },
+	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
 		InventoryTab,
 		DetailsTab,
