@@ -87,7 +87,7 @@ export enum Skill {
 	PRINTEMPS_PRECOCE = 21307,
 	CHARISME = 21308,
 	ESPRIT_GORILLOZ = 21309,
-	//RESISTANCE_A_LA_MAGIE = 21309, //supprimé
+	//RESISTANCE_A_LA_MAGIE = 21309, // skill deleted
 	PLANIFICATEUR = 21310,
 	HERITAGE_FAROE = 21311,
 	EXPERT_EN_FOUILLE = 21312,
@@ -198,17 +198,17 @@ export enum Skill {
 	FISSION_ELEMENTAIRE = 41302,
 	VOIE_DE_KAOS = 41303,
 	FLASH = 41304,
-	ADRENALINE = 41305, //?
-	VOIE_DE_GAIA = 41306,
-	VOIE_D_OURANOS = 41307,
-	DANSE_FOUDROYANTE = 41308,
-	EMBUCHE = 41309,
-	PUREE_SALVATRICE = 41310,
-	AURA_HERMETIQUE = 41311,
-	CROCS_DIAMANT = 41312,
-	SURVIE = 41313,
-	BRANCARDIER = 41314,
-	REINCARNATION = 41315,
+	// ADRENALINE = 41305, // skill deleted
+	VOIE_DE_GAIA = 41305,
+	VOIE_D_OURANOS = 413056,
+	DANSE_FOUDROYANTE = 41307,
+	EMBUCHE = 41308,
+	PUREE_SALVATRICE = 41309,
+	AURA_HERMETIQUE = 41310,
+	CROCS_DIAMANT = 41311,
+	SURVIE = 41312,
+	BRANCARDIER = 41313,
+	REINCARNATION = 41314,
 	AUBE_FEUILLUE = 41401,
 	MEDECINE = 41402,
 	BENEDICTION = 41403,
@@ -1374,7 +1374,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [21Skill.CARAPACE01],
+		unlockedFrom: [Skill.CARAPACE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
@@ -3238,22 +3238,22 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
-	[Skill.ADRENALINE]: {
-		id: Skill.ADRENALINE,
-		name: 'Adrenaline',
-		type: SkillType.P,
-		energy: Energy.NONE,
-		element: [ElementType.LIGHTNING],
-		activatable: false,
-		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [],
-		raceId: [], // Hack to make skill unlockable
-		isBaseSkill: false,
-		isSphereSkill: false,
-		effects: {
-			[Stat.LIGHTNING_SPEED]: ['x', 0.5]
-		}
-	},
+	// [Skill.ADRENALINE]: {
+	// 	id: Skill.ADRENALINE,
+	// 	name: 'Adrenaline',
+	// 	type: SkillType.P,
+	// 	energy: Energy.NONE,
+	// 	element: [ElementType.LIGHTNING],
+	// 	activatable: false,
+	// 	tree: SkillTreeType.VANILLA,
+	// 	unlockedFrom: [],
+	// 	raceId: [], // Hack to make skill unlockable
+	// 	isBaseSkill: false,
+	// 	isSphereSkill: false,
+	// 	effects: {
+	// 		[Stat.LIGHTNING_SPEED]: ['x', 0.5]
+	// 	}
+	// },
 	[Skill.VOIE_DE_GAIA]: {
 		id: Skill.VOIE_DE_GAIA,
 		name: 'VoieDeGaia',
