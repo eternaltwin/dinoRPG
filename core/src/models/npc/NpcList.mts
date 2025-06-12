@@ -5,6 +5,7 @@ import { Scenario } from '../enums/Scenario.mjs';
 import { MissionID } from '../missions/missionList.mjs';
 import { Reward } from '../reward/RewardList.mjs';
 import { ALIEN } from './characters/alien.mjs';
+import { ALPHA } from './characters/alpha.mjs';
 import { ARCHISAGE } from './characters/archisage.mjs';
 import { BAOBABE } from './characters/baoBabe.mjs';
 import { BAOBOB } from './characters/baoBob.mjs';
