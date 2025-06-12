@@ -4569,7 +4569,7 @@ const attackTarget = (
 				hasStatus(attacker, Status.STUNNED)
 			)
 		) {
-			if (fightData.rng() < getFighterMultihit(attacker, multiHitCounter)) {
+			if (fightData.rng() < getFighterMultihit(attacker, multiHitCounter, elements[0])) {
 				// If target has riposte and succeeds its roll, interrupt the combo
 				if (
 					target.hp > 0 &&
