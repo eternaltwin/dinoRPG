@@ -1,6 +1,10 @@
 <template>
 	<div class="details">
-		<p class="wrapperMenu" @click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })">
+		<p
+			v-if="hasPAC()"
+			class="wrapperMenu"
+			@click="goTo($router, 'DinozSkills', { params: { id: dinozStore.currentDinozId } })"
+		>
 			{{ $t('skillTrees.title') }}
 		</p>
 		<p class="wrapperMenu" @click="hidden = !hidden">
@@ -351,6 +355,9 @@ export default defineComponent({
 		},
 		hasAmulst(): boolean {
 			return this.dinozData?.status.some(s => s.statusId === statusList.id.amulst) ?? false;
+		},
+		hasPAC(): boolean {
+			return this.playerStore.playerOptions.hasPAC;
 		},
 		sort(): void {
 			switch (this.selectedSort) {
