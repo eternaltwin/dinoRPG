@@ -2930,10 +2930,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			// If it hits, chance to remove % of max hp based on target armor
 			if (hit && hit.hpLost > 0 && hit.target.type !== 'boss') {
-				// 100% armor means 100% chance to land the hit, 5% armor means 5% chance to land the hit
-				if (randomBetweenSeeded(fightData.rng, 0, 99) < getFighterArmorRatio(hit.target, [])) {
-					// 5% max HP
-					const damage = Math.round(hit.target.hp * 0.05);
+				// 100% armor means 0% chance to land the hit, 5% armor means 95% chance to land the hit
+				if (randomBetweenSeeded(fightData.rng, 0, 99) > getFighterArmorRatio(hit.target, []) * 100) {
+					// 5% max HP, min 1
+					const damage = Math.max(Math.round(hit.target.maxHp * 0.05), 1);
 					loseHp(fightData, hit.target, damage, LifeEffect.Skull);
 				}
 			}
@@ -2968,10 +2968,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Destroy 10% armor
 				destroyArmor(fightData, hit.target, 0.1);
 
-				// 100% armor means 100% chance to land the hit, 5% armor means 5% chance to land the hit
-				if (randomBetweenSeeded(fightData.rng, 0, 99) < getFighterArmorRatio(hit.target, [])) {
-					// Remove 10% max HP
-					const damage = Math.round(hit.target.hp * 0.1);
+				// 100% armor means 0% chance to land the hit, 5% armor means 95% chance to land the hit
+				if (randomBetweenSeeded(fightData.rng, 0, 99) > getFighterArmorRatio(hit.target, []) * 100) {
+					// Remove 10% max HP, min 1
+					const damage = Math.max(Math.round(hit.target.maxHp * 0.1), 1);
 					loseHp(fightData, hit.target, damage, LifeEffect.Skull);
 				}
 			}
