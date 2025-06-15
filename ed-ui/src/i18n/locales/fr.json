@@ -2309,7 +2309,7 @@
 			"Perception": "Augmente la puissance de tous les *assauts* Eau de 4, et les assauts Eau permettent d'annuler le statut intangible.",
 			"CoupsSournois": "Attaque un ennemi avec un assaut. Puis si la cible est touchée, selon l'armure de la cible, peut infliger des dégâts supplémentaires égaux à 5% des PV max. Note : ne fonctionne pas sur les boss.",
 			"ApprentiPecheur": "Permet au Dinoz de pêcher de petits poissons à certains endroits. Augmente la défense en Eau de 3.",
-			"CoupFatal": "Remplace Coup Sournois. Attaque un ennemi avec un assaut. Puis si la cible est touchée, détruit 10% de l'armure puis selon l'armure restante de la cible, peut infliger des dégâts supplémentaires égaux à 5% des PV max. Note : ne fonctionne pas sur les boss.",
+			"CoupFatal": "Remplace Coup Sournois. Attaque un ennemi avec un assaut. Puis si la cible est touchée, détruit 10% de l'armure puis selon l'armure restante de la cible, peut infliger des dégâts supplémentaires égaux à 10% des PV max. Note : ne fonctionne pas sur les boss.",
 			"EntrainementSousMarin": "Augmente la défense en Eau de 3, les PV max de 10 et immunise au ralentissement",
 			"PecheurConfirme": "Permet au Dinoz de pêcher de gros poissons à certains endroits. Augmente l'élément Eau de 1 et les PV max de 10.",
 			"Marecage": "Ralentit tous les ennemis au sol de 50% pour une durée moyenne",
