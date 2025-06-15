@@ -866,71 +866,72 @@ export async function softReset(req: Request) {
 			prisma.$executeRawUnsafe(`DELETE FROM dinoz_skill WHERE "gameDinozId" is not null ;`),
 			prisma.$executeRawUnsafe(`DELETE FROM dinoz_item WHERE "gameDinozId" is not null ;`),
 			prisma.$executeRawUnsafe(`DELETE FROM gamedinoz;`),
+			prisma.$executeRawUnsafe(`UPDATE dinoz SET display = SUBSTRING(display FROM 1 for 1) || '0' || SUBSTRING(display FROM 3 FOR 14);`),
 
 			// DELETE with condition
 			prisma.$executeRawUnsafe(`
-    DELETE FROM dinoz_skill 
-    WHERE "skillId" NOT IN (
-      61102, 61103, 61104, 61105, 61106, 61107, 61108, 61109, 61113, 61117, 61122, 61201, 61301
-    );
-  `),
+				DELETE FROM dinoz_skill
+				WHERE "skillId" NOT IN (
+				61102, 61103, 61104, 61105, 61106, 61107, 61108, 61109, 61113, 61117, 61122, 61201, 61301
+				);
+			`),
 
-	// Single UPDATE using CASE for each level
-	prisma.$executeRawUnsafe(`
-    UPDATE dinoz
-    SET experience = experience + CASE level
-      WHEN 2 THEN 100
-      WHEN 3 THEN 207
-      WHEN 4 THEN 322
-      WHEN 5 THEN 446
-      WHEN 6 THEN 579
-      WHEN 7 THEN 722
-      WHEN 8 THEN 876
-      WHEN 9 THEN 1041
-      WHEN 10 THEN 1219
-      WHEN 11 THEN 1410
-      WHEN 12 THEN 1616
-      WHEN 13 THEN 1837
-      WHEN 14 THEN 2075
-      WHEN 15 THEN 2331
-      WHEN 16 THEN 2606
-      WHEN 17 THEN 2901
-      WHEN 18 THEN 3219
-      WHEN 19 THEN 3560
-      WHEN 20 THEN 3927
-      WHEN 21 THEN 4322
-      WHEN 22 THEN 4746
-      WHEN 23 THEN 5202
-      WHEN 24 THEN 5692
-      WHEN 25 THEN 6219
-      WHEN 26 THEN 6786
-      WHEN 27 THEN 7382
-      WHEN 28 THEN 8037
-      WHEN 29 THEN 8741
-      WHEN 30 THEN 9498
-      WHEN 31 THEN 10312
-      WHEN 32 THEN 11187
-      WHEN 33 THEN 12128
-      WHEN 34 THEN 13139
-      WHEN 35 THEN 14226
-      WHEN 36 THEN 15395
-      WHEN 37 THEN 16651
-      WHEN 38 THEN 18002
-      WHEN 39 THEN 19454
-      WHEN 40 THEN 21015
-      WHEN 41 THEN 22693
-      WHEN 42 THEN 24497
-      WHEN 43 THEN 26433
-      WHEN 44 THEN 28518
-      WHEN 45 THEN 30760
-      WHEN 46 THEN 33169
-      WHEN 47 THEN 35760
-      WHEN 48 THEN 38545
-      WHEN 49 THEN 41538
-      WHEN 50 THEN 44756
-      ELSE 0
-    END;
-  `),
+				// Single UPDATE using CASE for each level
+				prisma.$executeRawUnsafe(`
+				UPDATE dinoz
+				SET experience = experience + CASE level
+				WHEN 2 THEN 100
+				WHEN 3 THEN 207
+				WHEN 4 THEN 322
+				WHEN 5 THEN 446
+				WHEN 6 THEN 579
+				WHEN 7 THEN 722
+				WHEN 8 THEN 876
+				WHEN 9 THEN 1041
+				WHEN 10 THEN 1219
+				WHEN 11 THEN 1410
+				WHEN 12 THEN 1616
+				WHEN 13 THEN 1837
+				WHEN 14 THEN 2075
+				WHEN 15 THEN 2331
+				WHEN 16 THEN 2606
+				WHEN 17 THEN 2901
+				WHEN 18 THEN 3219
+				WHEN 19 THEN 3560
+				WHEN 20 THEN 3927
+				WHEN 21 THEN 4322
+				WHEN 22 THEN 4746
+				WHEN 23 THEN 5202
+				WHEN 24 THEN 5692
+				WHEN 25 THEN 6219
+				WHEN 26 THEN 6786
+				WHEN 27 THEN 7382
+				WHEN 28 THEN 8037
+				WHEN 29 THEN 8741
+				WHEN 30 THEN 9498
+				WHEN 31 THEN 10312
+				WHEN 32 THEN 11187
+				WHEN 33 THEN 12128
+				WHEN 34 THEN 13139
+				WHEN 35 THEN 14226
+				WHEN 36 THEN 15395
+				WHEN 37 THEN 16651
+				WHEN 38 THEN 18002
+				WHEN 39 THEN 19454
+				WHEN 40 THEN 21015
+				WHEN 41 THEN 22693
+				WHEN 42 THEN 24497
+				WHEN 43 THEN 26433
+				WHEN 44 THEN 28518
+				WHEN 45 THEN 30760
+				WHEN 46 THEN 33169
+				WHEN 47 THEN 35760
+				WHEN 48 THEN 38545
+				WHEN 49 THEN 41538
+				WHEN 50 THEN 44756
+				ELSE 0
+				END;
+			`),
 
 			prisma.$executeRawUnsafe(`
 				UPDATE dinoz
