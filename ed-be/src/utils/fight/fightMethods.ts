@@ -2859,11 +2859,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.DANSE_FOUDROYANTE: {
 			// Attack a random opponent 5 times with an lightning assault of power 3
 
+			// This check guarantess that if at least there is at least one opponent.
+			if (getRandomOpponentForAssault(fightData, fighter) === null) {
+				return cancel();
+			}
+
 			for (let i = 0; i < 5; i++) {
 				// Get opponent for assault, the opponent can change in between the 5 hits
 				const opponent = getRandomOpponentForAssault(fightData, fighter);
 
-				if (opponent === null) return cancel();
+				// If no more opponent is found, break out of loop and finish the skill.
+				if (opponent === null) break;
 
 				// For this skill, the move to and move back steps are handled outside of the launchAssault method
 				// Add moveTo step
