@@ -841,8 +841,8 @@ export async function softReset(req: Request) {
     );
   `),
 
-			// Single UPDATE using CASE for each level
-			prisma.$executeRawUnsafe(`
+	// Single UPDATE using CASE for each level
+	prisma.$executeRawUnsafe(`
     UPDATE dinoz
     SET experience = experience + CASE level
       WHEN 2 THEN 100
@@ -901,26 +901,32 @@ export async function softReset(req: Request) {
 			prisma.$executeRawUnsafe(`
 				UPDATE dinoz
 				SET 
-					"nbrUpFire" = CASE WHEN "raceId" IN (1, 2, 3, 4, 26, 28) THEN 2
-														 WHEN "raceId" IN (14, 19, 20, 27) THEN 1
-														 ELSE 0
+					"nbrUpFire" = CASE
+						WHEN "raceId" IN (1, 2, 3, 4, 26, 28) THEN 2
+						WHEN "raceId" IN (14, 19, 20, 27) THEN 1
+						ELSE 0
 					END,
-					"nbrUpWood" = CASE WHEN "raceId" IN (15, 16, 23, 25, 28) THEN 2
-														 WHEN "raceId" IN (9, 14, 17, 18, 20, 24) THEN 1
-														 ELSE 0
+					"nbrUpWood" = CASE
+						WHEN "raceId" IN (15, 16, 23, 25, 28) THEN 2
+						WHEN "raceId" IN (9, 14, 17, 18, 20, 24) THEN 1
+						ELSE 0
 					END,
-					"nbrUpWater" = CASE WHEN "raceId" IN (13, 23, 26) THEN 2
-															WHEN "raceId" IN (5, 6, 14, 19, 20, 21, 22, 24 ) THEN 1
-															ELSE 0
+					"nbrUpWater" = CASE
+						WHEN "raceId" IN (13, 23, 26) THEN 2
+						WHEN "raceId" IN (5, 6, 14, 19, 20, 21, 22, 24 ) THEN 1
+						ELSE 0
 						END,
-					"nbrUpAir" = CASE WHEN "raceId" IN (19, 24, 27) THEN 2
-														WHEN "raceId" IN (9, 12, 14, 28) THEN 1
-														ELSE 0
-						END,
-					"nbrUpLightning" = CASE WHEN "raceId" IN (7, 25, 27) THEN 2
-																	WHEN "raceId" IN (5, 6, 10, 12, 14, 17, 18, 24, 28) THEN 1
-																	ELSE 0
-						END	;
+					"nbrUpAir" = CASE
+						WHEN "raceId" IN (11) THEN 3
+						WHEN "raceId" IN (19, 24, 27) THEN 2
+						WHEN "raceId" IN (9, 12, 14, 28) THEN 1
+						ELSE 0
+					END,
+					"nbrUpLightning" = CASE
+						WHEN "raceId" IN (7, 25, 27) THEN 2
+						WHEN "raceId" IN (5, 6, 10, 12, 14, 17, 18, 24, 28) THEN 1
+						ELSE 0
+					END	;
 			`),
 
 			// Other updates
