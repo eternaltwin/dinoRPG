@@ -440,7 +440,9 @@ async function useSpecialItem(
 			await updateDinoz(dinoz.id, useRice(dinoz));
 			return { name: 'rice' };
 		case 'pampleboum':
+			const initialLife = dinoz.life;
 			const healed = heal(dinoz, 15 * (dinoz.player.cooker ? 1.1 : 1));
+			const lifeHealed = Math.max(0, healed.life - initialLife);
 			await updateDinoz(dinoz.id, healed);
 			const pamp = dinoz.player.items.find(item => item.itemId === itemList[Item.PAMPLEBOUM_PIT].itemId);
 			if (!pamp) await insertItem(dinoz.player.id, { itemId: Item.PAMPLEBOUM_PIT, quantity: 1 });
@@ -454,7 +456,7 @@ async function useSpecialItem(
 			}
 
 			//Update stats
-			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, healed.life);
+			await setSpecificStat(StatTracking.HEAL_PV, dinoz.player.id, lifeHealed);
 			return { name: 'pampleboum' };
 		case 'box':
 			if (!item.name) {
