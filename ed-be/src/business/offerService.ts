@@ -394,6 +394,8 @@ export const expireOffer = async (offerId: number) => {
 			JSON.stringify({ offer: offerId, value: winnerBid.value }),
 			NotificationSeverity.offerEnded
 		);
+		// Update stats tracking
+		await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
 	} else {
 		// Send seller notification for expired offer
 		await createNotification(offer.seller.id, JSON.stringify({ offer: offerId }), NotificationSeverity.offerExpired);
@@ -404,8 +406,6 @@ export const expireOffer = async (offerId: number) => {
 	}
 	// Update offer status
 	await updateOfferStatus(offerId, OfferStatus.ENDED);
-	// Update stats tracking
-	await setSpecificStat(StatTracking.MARKET, offer.seller.id, 1);
 };
 
 /**
