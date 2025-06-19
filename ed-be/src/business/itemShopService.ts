@@ -212,7 +212,7 @@ export async function buyItem(req: Request) {
 	);
 
 	//Update stats
-	await setSpecificStat(StatTracking.S_BUYER, authed.id, itemReference.quantity);
+	await setSpecificStat(StatTracking.S_BUYER, authed.id, quantityBought);
 
 	return {
 		itemId: itemReference.itemId,
