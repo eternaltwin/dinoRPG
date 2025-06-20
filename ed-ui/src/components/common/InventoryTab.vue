@@ -1,16 +1,18 @@
 <template>
 	<div class="inventory">
-		<div class="sort-menu">
-			<label for="sort">{{ $t('inventory.sortBy') }}</label>
-			<select id="sort" v-model="sortOption" @change="sortItems">
-				<option value="default">{{ $t('inventory.sort.default') }}</option>
-				<option value="nameAsc">{{ $t('inventory.sort.nameAsc') }}</option>
-				<option value="nameDesc">{{ $t('inventory.sort.nameDesc') }}</option>
-				<option value="priceAsc">{{ $t('inventory.sort.priceAsc') }}</option>
-				<option value="priceDesc">{{ $t('inventory.sort.priceDesc') }}</option>
-				<option value="qtyAsc">{{ $t('inventory.sort.qtyAsc') }}</option>
-				<option value="qtyDesc">{{ $t('inventory.sort.qtyDesc') }}</option>
-			</select>
+		<p class="wrapperMenu" @click="hidden = !hidden">{{ $t('inventory.sortBy') }}</p>
+		<div ref="butt" class="wrapper" :class="hidden ? 'hidden' : 'shown'">
+			<div class="label">
+				<select id="sort" v-model="sortOption" @change="sortItems()">
+					<option value="default">{{ $t('inventory.sort.default') }}</option>
+					<option value="nameAsc">{{ $t('inventory.sort.nameAsc') }}</option>
+					<option value="nameDesc">{{ $t('inventory.sort.nameDesc') }}</option>
+					<option value="priceAsc">{{ $t('inventory.sort.priceAsc') }}</option>
+					<option value="priceDesc">{{ $t('inventory.sort.priceDesc') }}</option>
+					<option value="qtyAsc">{{ $t('inventory.sort.qtyAsc') }}</option>
+					<option value="qtyDesc">{{ $t('inventory.sort.qtyDesc') }}</option>
+				</select>
+			</div>
 		</div>
 		<table>
 			<tbody>
@@ -117,7 +119,8 @@ export default defineComponent({
 			allItemsData: [] as Array<ItemFiche>,
 			itemNameList: itemNameList,
 			playerStore: playerStore(),
-			sortOption: playerStore().getSortOption
+			sortOption: playerStore().getSortOption,
+			hidden: true as boolean
 		};
 	},
 	methods: {
@@ -147,7 +150,7 @@ export default defineComponent({
 				const dinozId = this.$route.params.id as string;
 				try {
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
-
+					await this.resfreshInventory();
 					// EventBus.emit('isLoading', false);
 					if (toast.category === ItemEffect.EGG) {
 						await this.refreshDinozList();
@@ -274,25 +277,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .inventory {
 	width: 95%;
-	.sort-menu {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		gap: 5px;
-		font-size: 10pt;
-		label {
-			color: white;
-			font-weight: bold;
-		}
-		select {
-			background: #9f5841;
-			color: white;
-			border: 2px solid #9a4029;
-			padding: 3px 5px;
-			cursor: pointer;
-			font-size: 9pt;
-		}
-	}
 	table {
 		width: 100%;
 		margin-top: 10px;
@@ -317,6 +301,39 @@ export default defineComponent({
 			vertical-align: top;
 			height: 34.5px;
 		}
+	}
+}
+.wrapperMenu {
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 8pt;
+	border: 1px dashed rgba(0, 0, 0, 0.1);
+	text-align: center;
+	cursor: pointer;
+	&:hover {
+		background-color: #9a4029;
+		color: #fce3bc;
+	}
+}
+.hidden {
+	max-height: 0;
+}
+.shown {
+	max-height: 54px;
+}
+.wrapper {
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+	padding-left: 5px;
+	padding-right: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	font-size: 8pt;
+	.label {
+		display: flex;
+		justify-content: space-around;
 	}
 }
 .name {
