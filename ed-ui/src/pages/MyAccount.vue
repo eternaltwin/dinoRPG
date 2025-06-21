@@ -3,7 +3,6 @@
 		:title="`${$t('pageTitle.account')}`"
 		:header="`${$t('myAccount.title')} ${accountData.name}`"
 	></TitleHeader>
-
 	<div class="wrapper" v-if="dataLoaded">
 		<div class="filler">
 			<img :src="getImgURL('design', 'moueffeHp')" alt="moueffe" class="dinoz" />
@@ -18,7 +17,9 @@
 			</div>
 		</div>
 		<MyDinoz :accountData="accountData"></MyDinoz>
-		<!--			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" class="mandragore" />-->
+		<div class="mandragore">
+			<img :src="getImgURL('design', 'mandragore')" alt="Mandragore" />
+		</div>
 	</div>
 </template>
 
@@ -51,36 +52,28 @@ export default defineComponent({
 		EpicRewards,
 		TwinoidGoals
 	},
-	async created(): Promise<void> {
-		const accountId = this.$route.params.id as string;
-		EventBus.emit('isLoading', true);
-		try {
-			this.accountData = await PlayerService.getPlayerData(accountId);
-			this.accountData.stats.sort((a, b) => b.quantity - a.quantity);
-			this.dataLoaded = true;
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			errorHandler.handle(err, this.$toast);
-			return;
-		}
-	},
-	watch: {
-		// Reload page if player click on 'my account' button
-		'$route.params.id': async function () {
-			if (this.$router.currentRoute.value.params.id === this.playerStore.getPlayerId.toString()) {
-				const accountId = this.$route.params.id as string;
-				EventBus.emit('isLoading', true);
-				try {
-					this.accountData = await PlayerService.getPlayerData(accountId);
-					this.accountData.stats.sort((a, b) => b.quantity - a.quantity);
-					this.dataLoaded = true;
-					EventBus.emit('isLoading', false);
-				} catch (err) {
-					errorHandler.handle(err, this.$toast);
-					return;
-				}
+	methods: {
+		async checkAndLoadAccount(): Promise<void> {
+			const accountId = this.$route.params.id as string;
+			if (this.$route.name !== 'MyAccount' || typeof accountId !== 'string' || accountId.length < 10) return;
+			this.dataLoaded = false;
+			EventBus.emit('isLoading', true);
+			try {
+				const data = await PlayerService.getPlayerData(accountId);
+				this.accountData = data;
+				data.stats.sort((a, b) => b.quantity - a.quantity);
+				this.dataLoaded = true;
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
 			}
 		}
+	},
+	mounted() {
+		this.checkAndLoadAccount();
+	},
+	watch: {
+		'$route.params.id': 'checkAndLoadAccount'
 	}
 });
 </script>
@@ -109,16 +102,17 @@ export default defineComponent({
 }
 .wrapper {
 	display: flex;
-	//width: 620px;
 	justify-content: space-between;
 	gap: 10px;
 	flex-direction: column;
-	//flex-wrap: wrap;
-	height: 100%;
-	.mandragore {
-		position: absolute;
-		right: -180px;
-		bottom: 0;
+	max-height: max-content;
+	.filler {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-around;
+		img {
+			width: 70%;
+		}
 	}
 	.cards {
 		display: flex;
@@ -132,20 +126,28 @@ export default defineComponent({
 			flex-direction: column;
 		}
 	}
+	.mandragore {
+		align-self: flex-end;
+		margin-block-start: -420px;
+		margin-inline-end: -140px;
+		width: 30%;
+	}
 }
-.filler {
-	display: flex;
-	gap: 15px;
-	height: 200px;
-	width: 540px;
-	img {
-		object-fit: scale-down;
-		width: 75%;
+@media (max-width: 790px) {
+	.wrapper {
+		.mandragore {
+			display: none;
+		}
 	}
 }
 @media (max-width: 540px) {
-	.filler {
-		display: none;
+	.wrapper {
+		.filler {
+			display: none;
+		}
+		.mandragore {
+			display: none;
+		}
 	}
 }
 </style>
