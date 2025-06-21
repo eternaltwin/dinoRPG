@@ -203,7 +203,7 @@ export default defineComponent({
 	width: 95%;
 
 	.header {
-		background-image: url('../assets/background/home_dojo.webp');
+		background-image: url('../../assets/background/home_dojo.webp');
 		background-repeat: no-repeat;
 		align-items: center;
 

@@ -13,11 +13,11 @@ type Events = {
 	refreshMoney: boolean;
 	refreshInventory: boolean;
 	message: boolean;
-	report: number | undefined;
+	report: string | undefined;
 	equipItem: Array<DinozItems>;
 	twinoMenu: boolean;
 	dinozMenu: boolean;
-	messageToPlayer: { name: string; id: number };
+	messageToPlayer: { name: string; id: string };
 	refreshDojo: boolean;
 	connected: boolean;
 };

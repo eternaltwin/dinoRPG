@@ -1,23 +1,23 @@
 import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS, CLAN_JOIN_MONEY } from '@drpg/core/constants';
-import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { isUuid } from '@drpg/core/utils/isUuid';
-import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
-import type { Request } from 'express';
-import { prisma } from '../prisma.js';
-import { createLog } from './logDao.js';
-import dayjs from 'dayjs';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { Item, itemList } from '@drpg/core/models/item/ItemList';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { isUuid } from '@drpg/core/utils/isUuid';
+import { VERSION } from '@drpg/core/version';
+import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from '@drpg/prisma';
+import dayjs from 'dayjs';
+import type { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { GLOBAL, LOGGER } from '../context.js';
+import { LOGGER } from '../context.js';
+import { prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import { updateDinoz } from './dinozDao.js';
+import { createLog } from './logDao.js';
 import { increaseItemQuantity } from './playerItemDao.js';
 import { updateCompletion } from './rankingDao.js';
 import { setSpecificStat } from './trackingDao.js';
-import { VERSION } from '@drpg/core/version';
 
 export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 	const player = await prisma.player.create({

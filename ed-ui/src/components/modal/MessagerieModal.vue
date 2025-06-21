@@ -114,7 +114,6 @@
 
 <script lang="ts">
 import { FullThread, NewThread, ThreadsBasic } from '@drpg/core/models/messagerie/threadsBasic';
-import { Player } from '@drpg/core/models/player/Player';
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { MessagerieService } from '../../services/MessagerieService.js';
@@ -124,6 +123,7 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import Thread from '../message/Thread.vue';
 import SearchEntity from '../data/SearchEntity.vue';
+import { Player } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'messagerie',
@@ -230,7 +230,7 @@ export default defineComponent({
 			}
 			this.threads = await MessagerieService.getThreads();
 		});
-		EventBus.on('messageToPlayer', async (e: { name: string; id: number }) => {
+		EventBus.on('messageToPlayer', async (e: { name: string; id: string }) => {
 			this.creationMode = true;
 			this.threadSelected = true;
 			this.newThread.participants = [e];

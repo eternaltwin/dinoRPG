@@ -1,4 +1,4 @@
-import { LogType } from '@drpg/prisma';
+import { Log, LogType } from '@drpg/prisma';
 import { Request } from 'express';
 import { getLogList, getLogListAll, getLogListByDate } from '../dao/logDao.js';
 
@@ -38,7 +38,7 @@ const calculateDateDifference = (fromDate: Date | undefined, toDate: Date): numb
 };
 
 // Group the logs by period (day or hour)
-const calculateTotalsByPeriod = (logs: any[], diffDays: number): Record<string, number> => {
+const calculateTotalsByPeriod = (logs: Log[], diffDays: number): Record<string, number> => {
 	const totalsByPeriod: Record<string, number> = {};
 	logs.forEach(log => {
 		const logDate = new Date(log.createdAt);
@@ -65,7 +65,7 @@ const formatPeriod = (logDate: Date, diffDays: number): string => {
 };
 
 // Function to retrieve the values based on the log type
-const getLogTypeTotal = (type: LogType, values: any[]): number => {
+const getLogTypeTotal = (type: LogType, values: string[]): number => {
 	switch (type) {
 		case 'GoldWon':
 		case 'GoldLost':

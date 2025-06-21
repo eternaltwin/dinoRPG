@@ -82,11 +82,11 @@ import GameStats from '../components/admin/GameStats.vue';
 import Moderation from '../components/admin/Moderation.vue';
 import Banned from '../components/admin/Banned.vue';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { Player } from '@drpg/core/models/player/Player';
 import { playerStore } from '../store/index.js';
 import GameControl from '../components/admin/GameControl.vue';
 import DebugFight from '../components/admin/DebugFight.vue';
 import ScheduledJobs from '../components/admin/ScheduledJobs.vue';
+import { Player } from '@drpg/prisma';
 
 interface PlayerSearch {
 	name: string;

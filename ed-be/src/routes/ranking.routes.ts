@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
-import { getPlayerPosition, getRanking } from '../business/rankingService.js';
+import { getPlayerPosition, getRanking, getStatRankings } from '../business/rankingService.js';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
 
@@ -72,5 +72,18 @@ routes.get(
 		}
 	}
 );
+
+routes.get(`${commonPath}/stats`, [], async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const statRankings = await getStatRankings();
+		return res.status(200).send(statRankings);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 export default routes;

@@ -7,8 +7,7 @@ import { TwinoStat } from '@drpg/core/models/import/twinoStat';
 import { SiteAchiev } from '@drpg/core/models/import/siteAchiev';
 import { SiteStat } from '@drpg/core/models/import/siteStat';
 import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
-import { Player } from '@drpg/core/models/player/Player';
-import { Lang } from '@drpg/prisma';
+import { Lang, Player } from '@drpg/prisma';
 
 export const PlayerService = {
 	getLoggedInData(): Promise<PlayerCommonData> {

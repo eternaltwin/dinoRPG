@@ -6,7 +6,7 @@ import {
 	getPlayersDojoRanking,
 	getPlayersSumRanking
 } from '../dao/rankingDao.js';
-import { RankingGetResponse } from '@drpg/core/returnTypes/Ranking';
+import { getEveryStatTop3 } from '../dao/trackingDao.js';
 
 /**
  * @summary Get all the players from a specified page to display their ranking
@@ -57,4 +57,8 @@ export async function getPlayerPosition(req: Request) {
 	const playerPosition = await getPlayerPositionDAO(playerId);
 
 	return playerPosition;
+}
+
+export async function getStatRankings() {
+	return getEveryStatTop3();
 }

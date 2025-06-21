@@ -45,14 +45,21 @@
 				>{{ $t('tabs.pantheon') }}</RouterLink
 			>
 		</li>
+		<li>
+			<RouterLink
+				:to="{
+					name: 'StatRanking'
+				}"
+				>{{ $t('tabs.stats') }}</RouterLink
+			>
+		</li>
 	</ul>
 
 	<RouterView />
 </template>
 
 <script lang="ts">
-import { Player } from '@drpg/core/models/player/Player';
-import { Clan } from '@drpg/prisma';
+import { Clan, Player } from '@drpg/prisma';
 import { defineComponent } from 'vue';
 import { RouterView } from 'vue-router';
 import TitleHeader from '../components/utils/TitleHeader.vue';

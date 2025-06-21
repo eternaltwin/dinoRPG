@@ -396,11 +396,11 @@ import { epicList } from '../../constants/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
-import { Player } from '@drpg/core/models/player/Player';
 import { PlayerEdit } from '@drpg/core/models/player/PlayerEdit';
 import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
+import { Player } from '@drpg/prisma';
 
 const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName'];
 const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
@@ -437,7 +437,8 @@ export default defineComponent({
 			itemNameList: itemNameList,
 			ingredientNameList: ingredientNameList,
 			ScenarioDetails,
-			player: {} as Player,
+			// TODO: Fix this type, I have no idea what it's supposed to be
+			player: {} as any,
 			banReasons,
 			banActions
 		};
@@ -592,7 +593,7 @@ export default defineComponent({
 					await AdminService.banPlayer(
 						this.player.id,
 						this.banFields.reason,
-						this.banFields.sorted,
+						this.banFields.sorted ?? '',
 						this.banFields.comment,
 						this.banFields.dinozId
 					);

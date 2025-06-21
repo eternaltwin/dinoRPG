@@ -13,5 +13,6 @@ declare module 'vue' {
 		formatContent(value: string): string;
 		getImgURL(path: string, imgName: string, pixel?: boolean): string;
 		getSWFUrl(path: string, imgName: string): string;
+		$t: (key: string, options?: Record<string, unknown>) => string;
 	}
 }

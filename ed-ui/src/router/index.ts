@@ -120,6 +120,11 @@ const router = createRouter({
 							path: 'pantheon',
 							name: 'RankingPantheon',
 							component: () => import('../components/rankings/Pantheon.vue')
+						},
+						{
+							path: 'stats',
+							name: 'StatRanking',
+							component: () => import('../components/rankings/StatRanking.vue')
 						}
 					]
 				},

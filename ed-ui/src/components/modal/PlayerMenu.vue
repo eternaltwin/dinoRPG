@@ -34,10 +34,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Player } from '@drpg/core/models/player/Player';
 import { PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
+import { Player } from '@drpg/prisma';
 
 export default defineComponent({
 	name: 'PlayerMenu',
