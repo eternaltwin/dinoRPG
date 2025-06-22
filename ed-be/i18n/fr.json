@@ -1,13 +1,13 @@
 {
-	"tooManyActiveDinoz": "Vous avez déjà trop de dinoz actifs.",
+	"tooManyActiveDinoz": "Vous avez déjà trop de Dinoz actifs.",
 	"maxParticipantInThread": "Vous ne pouvez ajouter plus de 9 participants à une conversation.",
 	"notEnoughMoney": "Vous n'avez pas assez d'or.",
 	"notEnoughNapo": "Vous n'avez pas assez de Napodino.",
 	"OnlyLettersAndNumbers": "Nom incorrect ! Seulement entre 3 et 16 lettres et chiffres peuvent être utilisés.",
-	"notLeader": "Ce dinoz n'est pas le leader de son groupe.",
-	"concentration": "Votre dinoz se concentre et ne peut rien faire d'autre actuellement.",
+	"notLeader": "Ce Dinoz n'est pas le leader de son groupe.",
+	"concentration": "Votre Dinoz se concentre et ne peut rien faire d'autre actuellement.",
 	"missingIrma": "Vous avez besoin de potion d'Irma pour faire cette action.",
-	"dead": "Votre dinoz est mort.",
+	"dead": "Votre Dinoz est mort.",
 	"missingStatus": "L'un de vos Dinoz ne remplit pas les conditions pour faire cette action.",
 	"noMovement": "Aujourd'hui, le marais est complètement inondé ! Vous ne pouvez pas vous déplacer ici. Vous devez attendre demain pour sortir de ce bourbier.",
 	"shovelMine": "Vous n'allez quand même pas creuser à côté du mineur !?!",
@@ -18,7 +18,7 @@
 	"noFight": "Aujourd'hui, le marais est perdu dans la brume... Vous ne trouverez aucun monstre à combattre.",
 	"notEnoughItem": "Vous n'avez pas assez de cet objet.",
 	"backpackFull": "Vous n'avez plus d'emplacement d'équipement libre sur ce Dinoz.",
-	"NotCursed": "Votre dinoz n'est pas maudit.",
+	"NotCursed": "Votre Dinoz n'est pas maudit.",
 	"wrongQuantity": "Quantité invalide.",
 	"notEnoughStorage": "Vous n'avez pas assez de place.",
 	"invalidOffer": "Offre invalide.",
@@ -36,10 +36,10 @@
 	"tooManyMagicItemEquiped": "Votre Dinoz ne peut pas équiper plus d'objets magiques.",
 	"maxQuantityInventory": "Vous avez déjà trop de cet objet dans votre inventaire",
 	"cannotClaim": "Vous ne pouvez pas actuellement récupérez vos gains.",
-	"tooMuchDinoz": "Vous avez déjà atteint le maximum de dinoz actifs.",
+	"tooMuchDinoz": "Vous avez déjà atteint le maximum de Dinoz actifs.",
 	"tooMuchIngredient": "Vous avez un ingrédient risquant de dépasser la limite maximum.",
 	"tooMuchItem": "Vous avez un objet risquant de dépasser la limite maximum.",
-	"equipedItems": "Vous ne pouvez pas vendre un dinoz avec des objets équipés.",
+	"equipedItems": "Vous ne pouvez pas vendre un Dinoz avec des objets équipés.",
 	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
 	"AlreadySphere": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
@@ -47,12 +47,12 @@
 		"tooYoungAccount": "Votre compte est encore trop jeune.",
 		"noTournamentOngoing": "Aucun tournois n'est en cours.",
 		"notEnoughPoints": "Vous n'avez pas assez de points pour participer à ce tournois.",
-		"alreadyCreatedDinoz": "Vous avez déjà créé un dinoz aujourd'hui.",
-		"maxDinozReached": "Le nombre maximal de dinoz pour ce tournois est atteint."
+		"alreadyCreatedDinoz": "Vous avez déjà créé un Dinoz aujourd'hui.",
+		"maxDinozReached": "Le nombre maximal de Dinoz pour ce tournoi est atteint."
 	},
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
-		"dinozNotPlayer": "Ces Dinoz ne peuvent pas combattre",
+		"dinozNotPlayer": "Le nombre maximal de Dinoz pour ce tournoi est atteint.",
 		"alreadyFighted": "Ce Dinoz a déjà combattu",
 		"wrongDinozInTeam": "Votre équipe ne peut être constituée que de 5 à 10 Dinoz.",
 		"wrongDinozQuantity": "Votre équipe doit être formée de {qty} Dinoz.",
@@ -66,7 +66,7 @@
 		"poison": "Le poison est activé.",
 		"nopoison": "Le poison est désactivé.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
-		"newsCorpus": "Un nouveau TiD de type {{type}} a commencé !<br/><br/>Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>- {{rule3}}<br/><br/>- {{rule4}}<br/><br/>Les récompenses seront les suivantes:<br/>- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.<br/>- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.<br/>- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.<br/>- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.<br/>- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.<br/>- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.<br/><br/>N'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! <br/><br/>Bon tournois à tous ! "
+		"newsCorpus": "Un nouveau TiD de type {{type}} a commencé !<br/><br/>Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>- {{rule3}}<br/><br/>- {{rule4}}<br/><br/>Les récompenses seront les suivantes:<br/>- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.<br/>- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.<br/>- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.<br/>- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.<br/>- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.<br/>- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.<br/><br/>N'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! <br/><br/>Bon tournois à tous !"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -146,7 +146,7 @@
 		"demons": "uniquement les démons"
 	},
 	"announce": {
-		"dinoz": "Félicitation à {{player}} pour son dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
+		"dinoz": "Félicitation à {{player}} pour son Dinoz {{dinoz}} qui est le $t(position.{{position}}) $t(race.{{race}}) à atteindre le niveau {{level}} !",
 		"epic": "Félicitations à {{player}} qui est le $t(position.{{position}}) joueur à obtenir la récompense $t(reward.{{reward}}) !"
 	},
 	"UnavailableReason": {
