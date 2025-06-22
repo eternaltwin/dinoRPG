@@ -85,11 +85,23 @@ function deApplySkillFromDinoz(
 function applyUSkillEffect(
 	player: Pick<
 		Player,
-		'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'
+		| 'warLord'
+		| 'leader'
+		| 'engineer'
+		| 'shopKeeper'
+		| 'cooker'
+		| 'merchant'
+		| 'priest'
+		| 'teacher'
+		| 'messie'
+		| 'matelasseur'
 	>,
 	skill: SkillDetails
 ) {
 	switch (skill.id) {
+		case Skill.CHEF_DE_GUERRE:
+			if (!player.warLord) player.warLord = true;
+			break;
 		case Skill.LEADER:
 			if (!player.leader) player.leader = true;
 			break;

@@ -1,8 +1,9 @@
 import {
 	addStatus,
-	applyStrategy,
 	checkDeaths,
+	getAllies,
 	getLimitedRandomOpponent,
+	hasSkill,
 	hasStatus,
 	heal,
 	initStepFighter,
@@ -12,11 +13,15 @@ import {
 } from './fightMethods.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
-import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
+import { DetailedFighter, FighterResultFiche, Status, StatusLength } from '@drpg/core/models/fight/DetailedFighter';
+import {
+	DinozToGetFighter,
+	FightConfiguration,
+	TeamFightConfiguration
+} from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { Item } from '@drpg/core/models/item/ItemList';
@@ -24,6 +29,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
+import { SkillType } from '@drpg/core/models/enums/SkillType';
 
 export type DetailedFight = {
 	// Seeded random number generator, rng() generates a float between 0 and 1. Other methods exist to generate other types of numbers.
@@ -50,12 +56,8 @@ export type DetailedFight = {
 		turnsLeft: number;
 		timeout: number;
 	};
-	attackerData: {
-		hasCook: boolean;
-	};
-	defenderData: {
-		hasCook: boolean;
-	};
+	attackerData: TeamFightConfiguration;
+	defenderData: TeamFightConfiguration;
 	rules: {
 		canUseCapture: boolean;
 		enableStats: boolean;
@@ -106,12 +108,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		initialDinozList: [...config.initialDinozList],
 		fighters: config.fighters,
 		deads: [] as number[],
-		attackerData: {
-			hasCook: config.attackerHasCook
-		},
-		defenderData: {
-			hasCook: config.defenderHasCook
-		},
+		attackerData: config.attackerTeam,
+		defenderData: config.defenderTeam,
 		rules: {
 			canUseCapture: config.canUseCapture,
 			enableStats: config.enableStats
@@ -289,8 +287,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 					itemId: Item.CURSE_LOCKER
 				});
 
+				// TODO: not exactly if fighter has specialist
 				// Weakest element is the last in the array
 				opponent.element = opponent.elements[opponent.elements.length - 1];
+				opponent.currentElementIndex = opponent.elements.length - 1;
 				// Lock opponent for 4 cycles on that element
 				opponent.locked = 4 * CYCLE;
 
@@ -343,19 +343,58 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 			});
 		}
 
-		// FORME_ETHERALE
-		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
-			addStatus(fightData, fighter, Status.INTANGIBLE);
+		// STRATEGIE
+		if (hasSkill(fighter, Skill.STRATEGIE)) {
+			fighter.skillEnergyFactor *= 0.9;
 		}
 
-		// TORCHE
-		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
-			addStatus(fightData, fighter, Status.TORCHED);
+		// BRAVE
+		if (hasSkill(fighter, Skill.BRAVE)) {
+			const allies = getAllies(fightData, fighter).filter(f => f.id !== fighter.id);
+
+			if (allies.length === 0) {
+				fighter.stats.speed.global *= 0.85;
+				fighter.allAssaultMultiplier *= 1.2;
+				fighter.time -= 12 * TIME_FACTOR;
+
+				// Add skill step
+				fightData.steps.push({
+					action: 'skillAnnounce',
+					fid: fighter.id,
+					skill: Skill.BRAVE
+				});
+				// Add fx for gain of init
+				fightData.steps.push({
+					action: 'notify',
+					fids: [fighter.id],
+					notification: NotificationList.InitUp
+				});
+			}
+		}
+
+		// COUP FATAL: replaces coup sournois, so remove it
+		if (fighter.skills.some(skill => skill.id === Skill.COUP_FATAL)) {
+			fighter.skills = fighter.skills.filter(skill => skill.id !== Skill.COUP_SOURNOIS);
+		}
+
+		// SYMPATHIQUE
+		if (hasSkill(fighter, Skill.SYMPATIQUE)) {
+			fighter.skills.forEach(skill => {
+				const reinforcementSkills = [Skill.RENFORTS_KORGON, Skill.ESPRIT_GORILLOZ, Skill.GARDIEN_ARBORICOLE];
+				if (reinforcementSkills.includes(skill.id)) {
+					skill.probability! += 5; // SAFETY: those skills have to have a defined probability
+				}
+			});
 		}
 
 		// ACCUPUNCTURE
 		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
 			addStatus(fightData, fighter, Status.HEALING);
+		}
+
+		// FORME VAPOREUSE
+		if (fighter.skills.some(skill => skill.id === Skill.FORME_VAPOREUSE)) {
+			addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.MEDIUM);
 		}
 
 		// M_INITIATIVE_RESET
@@ -384,12 +423,12 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	let deadlyPoisonApplied = false;
 
-	// STRATEGIE
-	fightData.fighters.forEach(fighter => {
-		if (!fighter.skills.some(skill => skill.id === Skill.STRATEGIE)) return;
+	// // STRATEGIE
+	// fightData.fighters.forEach(fighter => {
+	// 	if (!fighter.skills.some(skill => skill.id === Skill.STRATEGIE)) return;
 
-		applyStrategy(fightData, fighter);
-	});
+	// 	applyStrategy(fightData, fighter);
+	// });
 
 	// Hack to not play dinoz turn if there are no ennemies (swamp)
 	if (fightData.fighters.filter(f => !f.attacker).length === 0) {
@@ -470,12 +509,21 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	const winner = fightData.loser === 'defenders';
 
-	// After fight regeneration
+	// After fight processing
 	fightData.fighters.forEach(fighter => {
 		// No heal if dead
 		if (fighter.hp <= 0) return;
 
-		if (fighter.skills.some(skill => skill.id === Skill.PREMIERS_SOINS)) {
+		if (hasStatus(fighter, Status.UNDEAD)) {
+			fightData.steps.push({
+				action: 'death',
+				fighter: stepFighter(fighter)
+			});
+			fightData.deads.push(fighter.id);
+			return;
+		}
+
+		if (fighter.skills.some(skill => skill.id === Skill.REVITALISATION)) {
 			// Heal 1HP
 			heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
 		}
@@ -524,28 +572,21 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}
 	}
 
-	// Place hypnotized fighters in the right teams
-	fightData.fighters.map(f => {
-		if (f.hypnotized && f.hypnotized > 0) {
-			f.attacker = !f.attacker;
-		}
-	});
-
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters
-		.filter(fighter => fighter.attacker && fighter.type === 'dinoz')
+		.filter(fighter => fighter.originalTeamSide && fighter.type === 'dinoz')
 		.map(dinoz => ({
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
 			itemsUsed: dinoz.itemsUsed,
 			goldLost: fightData.fighters
-				.filter(fighter => !fighter.attacker && fighter.goldStolen?.[dinoz.id])
+				.filter(fighter => !fighter.originalTeamSide && fighter.goldStolen?.[dinoz.id])
 				.reduce((acc, fighter) => acc + (fighter.goldStolen?.[dinoz.id] ?? 0), 0),
 			statusGained: dinoz.permanentStatusGained
 		}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters
-		.filter(fighter => !fighter.attacker && fighter.type === 'dinoz')
+		.filter(fighter => !fighter.originalTeamSide && fighter.type === 'dinoz')
 		.map(dinoz => ({
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
@@ -579,12 +620,13 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 				type: f.type,
 				name: f.name,
 				display: f.display,
-				attacker: f.attacker,
+				attacker: f.originalTeamSide,
 				maxHp: f.maxHp,
 				startingHp: f.startingHp,
-				energy: f.maxEnergy, // starting energy is same as max energy
+				energy: f.maxEnergy,
 				maxEnergy: f.maxEnergy,
-				energyRecovery: f.stats.special.energyRecovery ?? 1
+				energyRecovery: f.stats.special.energyRecovery,
+				skillEnergyFactor: f.skillEnergyFactor
 			};
 		})
 	};

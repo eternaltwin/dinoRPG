@@ -37,6 +37,8 @@ import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { getPlayerQuestProgression, increaseQuestProgression, updateQuest } from '../dao/questsDao.js';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { scenarioChecker } from '../utils/scenarioChecker.js';
+import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { hasSkill } from '../utils/fight/fightMethods.js';
 
 /**
  * @summary Process a fight
@@ -131,7 +133,7 @@ export async function processFight(req: Request) {
 export async function fightMonstersAtPlace(
 	team: (DinozToGetFighter & DinozToRewardFight & DinozToCheckMissionFight)[],
 	placeId: PlaceEnum,
-	player: Pick<Player, 'id' | 'teacher' | 'cooker'>
+	player: Pick<Player, 'id' | 'warLord' | 'teacher' | 'cooker'>
 ) {
 	const dayOfWeek = dayjs().day();
 	let monsters = generateMonsterList(team, placeId);
@@ -166,7 +168,7 @@ export async function fightMonstersAtPlace(
  **/
 export function calculateFightVsMonsters(
 	team: DinozToGetFighter[],
-	player: Pick<Player, 'cooker'>,
+	player: Pick<Player, 'warLord' | 'cooker'>,
 	place: PlaceEnum,
 	monsters?: MonsterFiche[],
 	seed?: string
@@ -174,18 +176,22 @@ export function calculateFightVsMonsters(
 	const rng_seed = seed ?? generateString(20);
 	const rng = seedrandom(rng_seed);
 
-	const fighters = getFighters(
-		{
-			dinozList: team,
-			monsterList: []
-		},
-		{
-			dinozList: [],
-			monsterList: monsters ?? []
-		},
-		place,
-		rng
-	);
+	// TODO add ember and beer if implementation is kept
+	const attackTeam = {
+		dinozList: team,
+		monsterList: [],
+		[Skill.ELECTROLYSE]: 0,
+		[Skill.GARDE_FORESTIER]: 0,
+		[Skill.CHEF_DE_GUERRE]: player.warLord
+	};
+	const defenseTeam = {
+		dinozList: [],
+		monsterList: monsters ?? [],
+		[Skill.ELECTROLYSE]: 0,
+		[Skill.GARDE_FORESTIER]: 0
+	};
+
+	const fighters = getFighters(attackTeam, defenseTeam, place, rng);
 
 	const fightConfiguration: FightConfiguration = {
 		seed: rng_seed,
@@ -196,8 +202,16 @@ export function calculateFightVsMonsters(
 		enableStats: false,
 
 		// Teams
-		attackerHasCook: player.cooker,
-		defenderHasCook: false,
+		attackerTeam: {
+			[Skill.ELECTROLYSE]: attackTeam[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: attackTeam[Skill.GARDE_FORESTIER],
+			[Skill.CUISINIER]: player.cooker,
+			[Skill.CHEF_DE_GUERRE]: player.warLord
+		},
+		defenderTeam: {
+			[Skill.ELECTROLYSE]: defenseTeam[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: defenseTeam[Skill.GARDE_FORESTIER]
+		},
 
 		// Fighters
 		initialDinozList: team,
@@ -223,9 +237,9 @@ export function calculateFightVsMonsters(
  **/
 export function calculateFightBetweenPlayers(
 	teamA: DinozToGetFighter[],
-	cookerA: boolean,
+	playerA: Pick<Player, 'warLord' | 'cooker'>,
 	teamB: DinozToGetFighter[],
-	cookerB: boolean,
+	playerB: Pick<Player, 'warLord' | 'cooker'>,
 	place: PlaceEnum,
 	timeout?: number,
 	seed?: string
@@ -233,18 +247,23 @@ export function calculateFightBetweenPlayers(
 	const rng_seed = seed ?? generateString(20);
 	const rng = seedrandom(rng_seed);
 
-	const fighters = getFighters(
-		{
-			dinozList: teamA,
-			monsterList: []
-		},
-		{
-			dinozList: teamB,
-			monsterList: []
-		},
-		place,
-		rng
-	);
+	// TODO add ember and beer if implementation is kept
+	const teamConfigA = {
+		dinozList: teamA,
+		monsterList: [],
+		[Skill.ELECTROLYSE]: 0, // Filled in by `getFighters` below
+		[Skill.GARDE_FORESTIER]: 0, // Filled in by `getFighters` below
+		[Skill.CHEF_DE_GUERRE]: playerA.warLord
+	};
+	const teamConfigB = {
+		dinozList: teamB,
+		monsterList: [],
+		[Skill.ELECTROLYSE]: 0, // Filled in by `getFighters` below
+		[Skill.GARDE_FORESTIER]: 0, // Filled in by `getFighters` below
+		[Skill.CHEF_DE_GUERRE]: playerB.warLord
+	};
+
+	const fighters = getFighters(teamConfigA, teamConfigB, place, rng);
 
 	const initialDinozList = [...teamA, ...teamB];
 
@@ -260,8 +279,18 @@ export function calculateFightBetweenPlayers(
 		enableStats: true,
 
 		// Teams
-		attackerHasCook: cookerA,
-		defenderHasCook: cookerB,
+		attackerTeam: {
+			[Skill.ELECTROLYSE]: teamConfigA[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: teamConfigA[Skill.GARDE_FORESTIER],
+			[Skill.CUISINIER]: playerA.cooker,
+			[Skill.CHEF_DE_GUERRE]: playerA.warLord
+		},
+		defenderTeam: {
+			[Skill.ELECTROLYSE]: teamConfigB[Skill.ELECTROLYSE],
+			[Skill.GARDE_FORESTIER]: teamConfigB[Skill.GARDE_FORESTIER],
+			[Skill.CUISINIER]: playerB.cooker,
+			[Skill.CHEF_DE_GUERRE]: playerB.warLord
+		},
 
 		// Fighters
 		initialDinozList,
@@ -492,6 +521,7 @@ export async function rewardFight(
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
+			skillEnergyFactor: f.skillEnergyFactor,
 			dark: f.type === 'boss' ? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined) : undefined,
 			size: f.type === 'boss' ? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined) : undefined
 		};

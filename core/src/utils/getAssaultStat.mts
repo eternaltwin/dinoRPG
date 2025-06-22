@@ -1,5 +1,6 @@
 import { DinozFiche } from '../models/dinoz/DinozFiche.mjs';
 import { SkillDetails } from '../models/dinoz/SkillDetails.mjs';
+import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ElementType } from '../models/enums/ElementType.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
@@ -17,6 +18,7 @@ export const getAssaultStat = (
 	statuses: DinozStatusId[],
 	skills: Pick<SkillDetails, 'effects' | 'name' | 'element'>[],
 	elementName: AssaultElement,
+	WARLORD?: boolean,
 	power = 5
 ) => {
 	let element = 0;
@@ -134,6 +136,16 @@ export const getAssaultStat = (
 			}
 		}
 	});
+
+	if (WARLORD) {
+		bonus += 2;
+		details.push({
+			type: 'skill',
+			name: skillList[Skill.CHEF_DE_GUERRE].name,
+			elements: [],
+			value: 2
+		});
+	}
 
 	const result = element * power + bonus;
 

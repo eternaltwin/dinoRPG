@@ -116,6 +116,8 @@ export function resolveStatus(status: Status) {
 		case Status.PETRIFIED:
 			return StatusEffect.Stoned;
 		case Status.SHIELDED:
+		case Status.TAUNT: // TODO temporary
+		case Status.RAGE: // TODO temporary
 			return StatusEffect.Shield;
 		case Status.BLESSED:
 			return StatusEffect.Bless;
@@ -146,7 +148,7 @@ export function transpileFight(
 ) {
 	const history: transpiled[] = [];
 	// Basic tracking of active fighters, this may not cover all cases.
-	const activeFighters: FighterRecap[] = [];
+	let activeFighters: FighterRecap[] = [];
 	// ID of the fighter whose turn it is
 	let currentFighterId = 0;
 	// Assault combo counter of the current fighter
@@ -194,15 +196,16 @@ export function transpileFight(
 								? myFighter.name
 								: resolveMonsterName(myFighter.name, t),
 						side: myFighter.attacker,
-						scale:
-							myFighter.type === 'dinoz' || myFighter.type === 'clone'
+						scale: step.scale
+							? step.scale / 100
+							: myFighter.type === 'dinoz' || myFighter.type === 'clone'
 								? myFighter.maxHp / 100
 								: myFighter.size
 									? myFighter.size / 100
 									: 1,
 						fid: myFighter.id,
 						gfx: myFighter.display,
-						entrance: EntranceEffect.JUMP // Actual default is stand, but it's way less classy
+						entrance: step.entrance ?? EntranceEffect.JUMP // MT's default is stand, but it's way less classy
 					}
 				});
 				// Initialize energy of fighter
@@ -257,7 +260,7 @@ export function transpileFight(
 					action: DinoAction.DEAD,
 					fid: step.fighter.id
 				});
-				activeFighters.filter(f => f.id != step.fighter.id);
+				activeFighters = activeFighters.filter(f => f.id !== step.fighter.id);
 				break;
 			case 'disabledItems':
 				break;
@@ -280,7 +283,7 @@ export function transpileFight(
 					console.warn(`Cannot find fighter ${step.fighter.id}`);
 					return;
 				}
-				myFighter.energy += step.energy;
+				myFighter.energy = step.energy;
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [{ fid: step.fighter.id, energy: step.energy }]
@@ -341,8 +344,8 @@ export function transpileFight(
 					currentFighterCombo++;
 				} else if (currentFighterId === myFighter.id && currentFighterCombo > 0) {
 					// Subsequent assault combo of fighter whose turn it is
-					// Each combo increases the cost by 1, in other words the combo number
-					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST - currentFighterCombo);
+					// Each combo increases the cost by the base cost (1st hit is 2, 2nd is 4, etc.)
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST * currentFighterCombo);
 					currentFighterCombo++;
 				} else {
 					// It is a counter
@@ -351,8 +354,8 @@ export function transpileFight(
 						counteringFighterId = myFighter.id;
 						counteringFighterCombo = 0;
 					}
-					// Each combo increases the cost by 1, in other words the combo number
-					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST - counteringFighterCombo);
+					// Each combo increases the cost by the base cost (1st hit is 2, 2nd is 4, etc.), in other words the counter combo number
+					setFighterEnergy(myFighter, myFighter.energy - BASE_ENERGY_COST * counteringFighterCombo);
 					counteringFighterCombo++;
 				}
 				history.push({
@@ -406,6 +409,12 @@ export function transpileFight(
 						tid: step.tid
 					});
 				}
+				break;
+			case 'flip':
+				history.push({
+					action: DinoAction.FLIP,
+					fid: step.fid
+				});
 				break;
 			case `statusTurn`:
 			case `newTurn`:
@@ -480,7 +489,10 @@ export function transpileFight(
 					message: resolveSkillName(step.skill, t)
 				});
 				// Update the energy
-				setFighterEnergy(myFighter, myFighter.energy - getSkillEnergy(step.skill));
+				setFighterEnergy(
+					myFighter,
+					Math.round(myFighter.energy - getSkillEnergy(step.skill) * myFighter.skillEnergyFactor)
+				);
 				history.push({
 					action: DinoAction.ENERGY,
 					fighters: [
@@ -513,8 +525,11 @@ export function transpileFight(
 								return { id: t.tid, life: t.damages };
 							}),
 							color: skill?.color,
+							radius: skill?.radius,
+							power: skill?.power,
 							type: skill?.fxType,
-							fx: skill?.fx
+							fx: skill?.fx,
+							anim: skill?.anim
 						}
 					});
 					// Play a second effect if specified
@@ -534,11 +549,13 @@ export function transpileFight(
 						});
 					}
 					// Remove energy per target hit
-					setFighterEnergy(myFighter, myFighter.energy - step.targets.length * BASE_ENERGY_COST);
-					history.push({
-						action: DinoAction.ENERGY,
-						fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
-					});
+					if (resolveSkillVisualEffect(step.skill) !== SkillVisualEffect.HEAL) {
+						setFighterEnergy(myFighter, myFighter.energy - step.targets.length * BASE_ENERGY_COST);
+						history.push({
+							action: DinoAction.ENERGY,
+							fighters: [{ fid: myFighter.id, energy: myFighter.energy }]
+						});
+					}
 					myFighter = undefined;
 				} else {
 					history.push({
@@ -549,13 +566,14 @@ export function transpileFight(
 							targets: [{ id: step.fid }],
 							color: skill?.color,
 							type: skill?.fxType,
-							fx: skill?.fx
+							fx: skill?.fx,
+							anim: skill?.anim
 						}
 					});
 				}
 				// Black hole and sylphide extract the fighter from the fight so extract it from the list of actives too
 				if (step.skill && (step.skill == Skill.TROU_NOIR || step.skill == Skill.SYLPHIDES)) {
-					activeFighters.filter(f => f.id != step.fid);
+					activeFighters = activeFighters.filter(f => f.id !== step.targets[0].tid);
 				}
 				myFighter = undefined;
 				break;
@@ -566,6 +584,28 @@ export function transpileFight(
 					action: DinoAction.NOTIFY,
 					fids: step.fids,
 					notification: step.notification
+				});
+				break;
+			}
+			case 'anim': {
+				history.push({
+					action: DinoAction.SKILL,
+					skill: SkillVisualEffect.ANIM,
+					details: {
+						fid: step.fid,
+						anim: step.anim
+					}
+				});
+				break;
+			}
+			case 'attach': {
+				history.push({
+					action: DinoAction.SKILL,
+					skill: SkillVisualEffect.ATTACH,
+					details: {
+						fid: step.fid,
+						fx: step.fx
+					}
 				});
 				break;
 			}

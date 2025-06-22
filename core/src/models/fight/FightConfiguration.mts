@@ -1,6 +1,8 @@
 import { Dinoz, DinozCatch, DinozItem, DinozSkill, DinozStatus } from '@drpg/prisma';
 import { DetailedFighter } from './DetailedFighter.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
+import { Skill } from '../dinoz/SkillList.mjs';
+import { Item } from '../item/ItemList.mjs';
 
 export type DinozToGetFighter = Pick<
 	Dinoz,
@@ -22,6 +24,15 @@ export type DinozToGetFighter = Pick<
 	catches: Pick<DinozCatch, 'id' | 'hp' | 'monsterId'>[];
 };
 
+export interface TeamFightConfiguration {
+	[Skill.ELECTROLYSE]: number;
+	[Skill.GARDE_FORESTIER]: number;
+	[Skill.CUISINIER]?: boolean;
+	[Skill.CHEF_DE_GUERRE]?: boolean;
+	[Item.EMBER]?: boolean;
+	[Item.BEER]?: boolean;
+}
+
 export interface FightConfiguration {
 	// Seed
 	seed: string;
@@ -35,8 +46,8 @@ export interface FightConfiguration {
 	enableStats: boolean;
 
 	// Teams
-	attackerHasCook: boolean;
-	defenderHasCook: boolean;
+	attackerTeam: TeamFightConfiguration;
+	defenderTeam: TeamFightConfiguration;
 
 	// Fighters
 	initialDinozList: DinozToGetFighter[];

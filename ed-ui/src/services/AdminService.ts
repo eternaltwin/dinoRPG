@@ -71,6 +71,7 @@ export const AdminService = {
 		customText?: string,
 		quetzuBought?: number,
 		dailyGridRewards?: number,
+		warLord?: boolean | null,
 		leader?: boolean | null,
 		engineer?: boolean | null,
 		cooker?: boolean | null,
@@ -87,6 +88,7 @@ export const AdminService = {
 				customText: customText,
 				quetzuBought: quetzuBought,
 				dailyGridRewards: dailyGridRewards,
+				warLord: warLord,
 				leader: leader,
 				engineer: engineer,
 				cooker: cooker,
@@ -234,6 +236,12 @@ export const AdminService = {
 	getScheduledJobs(): Promise<Jobs[]> {
 		return http()
 			.get(`/admin/jobs`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	softReset(): Promise<void> {
+		return http()
+			.patch(`/admin/softreset`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	}

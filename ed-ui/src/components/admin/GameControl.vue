@@ -1,5 +1,6 @@
 <template>
 	<DZButton @click="resetGame()">Reset le jeu</DZButton>
+	<DZButton @click="softReset()">Reset les dinoz</DZButton>
 </template>
 
 <script lang="ts">
@@ -15,6 +16,13 @@ export default defineComponent({
 		async resetGame() {
 			try {
 				await AdminService.resetGame();
+			} catch (e) {
+				errorHandler.handle(e, this.$toast);
+			}
+		},
+		async softReset() {
+			try {
+				await AdminService.softReset();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

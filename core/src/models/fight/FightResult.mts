@@ -1,5 +1,5 @@
 import { FightStep } from './FightStep.mjs';
-import { FighterResultFiche, FighterType } from './DetailedFighter.mjs';
+import { DetailedFighter, FighterResultFiche, FighterType } from './DetailedFighter.mjs';
 import { Monster } from './MonsterList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
@@ -39,6 +39,7 @@ export interface FighterRecap {
 	energy: number;
 	maxEnergy: number;
 	energyRecovery: number;
+	skillEnergyFactor: number;
 	dark?: boolean;
 	size?: number;
 }
@@ -139,4 +140,12 @@ export interface FightProcessResult {
 export interface FullFightStats {
 	attack: FightStats;
 	defense: FightStats;
+}
+
+export interface HitResult {
+	attacker: DetailedFighter;
+	target: DetailedFighter;
+	isAssault: boolean;
+	evasion: boolean;
+	hpLost: number;
 }

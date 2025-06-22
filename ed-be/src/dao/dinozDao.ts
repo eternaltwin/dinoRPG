@@ -451,6 +451,7 @@ export async function getDinozFightDataRequest(dinozId: number, playerId: string
 			quests: { select: { questId: true, progression: true } },
 			ranking: { select: { dinozCount: true, points: true } },
 			ingredients: { select: { ingredientId: true, quantity: true } },
+			warLord: true,
 			teacher: true,
 			cooker: true,
 			dinoz: {
@@ -521,6 +522,12 @@ export async function getDinozForDojoFight(dinozIds: number[]) {
 			status: {
 				select: {
 					statusId: true
+				}
+			},
+			player: {
+				select: {
+					warLord: true,
+					cooker: true
 				}
 			},
 			catches: { select: { id: true, hp: true, monsterId: true } }

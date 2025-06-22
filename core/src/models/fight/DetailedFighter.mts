@@ -1,4 +1,4 @@
-import { SpecialStatUsedInFights } from '../../utils/getSpecialStat.mjs';
+import { UniqueSpecialStatUsedInFights } from '../../utils/getSpecialStat.mjs';
 import { SkillDetails } from '../dinoz/SkillDetails.mjs';
 import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
@@ -15,9 +15,9 @@ export enum Status {
 	PETRIFIED = 'petrified',
 	POISONED = 'poisoned',
 	BURNED = 'burned',
-	LOCKED = 'locked',
 	DAZZLED = 'dazzled',
 	STUNNED = 'stunned',
+	NO_HEAL = 'hoHeal',
 	// Good
 	TORCHED = 'torched',
 	INTANGIBLE = 'intangible',
@@ -26,6 +26,10 @@ export enum Status {
 	SHIELDED = 'shielded',
 	BLESSED = 'blessed',
 	HEALING = 'healing',
+	TAUNT = 'taunt',
+	RAGE = 'rage',
+	// Good & bad
+	LOCKED = 'locked',
 	// Skills
 	COPY_HEAL = 'copyHeal',
 	NO_INVOCATION = 'noInvocation',
@@ -35,6 +39,7 @@ export enum Status {
 	NO_CURSE = 'noCurse',
 	KEEP_FLYING = 'keepFlying',
 	NO_DEATH = 'noDeath',
+	UNDEAD = 'undead',
 	// Items
 	CURED = 'cured',
 	BEER = 'beer',
@@ -42,6 +47,7 @@ export enum Status {
 	// Environments
 	NO_EVENT = 'noEvent',
 	NO_SKILL = 'noSkill',
+	ABYSSE = 'abysse',
 	WEAKENED = 'weakened',
 	LIGHTNING_STRUCK = 'lightningStruck',
 	AIR_SLOWED = 'airSlowed'
@@ -54,7 +60,9 @@ export const GoodStatus = [
 	Status.QUICKENED,
 	Status.SHIELDED,
 	Status.BLESSED,
-	Status.HEALING
+	Status.HEALING,
+	Status.TAUNT,
+	Status.RAGE
 ];
 
 export const BadStatus = [
@@ -63,12 +71,13 @@ export const BadStatus = [
 	Status.PETRIFIED,
 	Status.POISONED,
 	Status.BURNED,
-	Status.LOCKED,
 	Status.DAZZLED,
-	Status.STUNNED
+	Status.STUNNED,
+	Status.NO_HEAL
 ];
 
 export enum StatusLength {
+	SUPER_SHORT = 6,
 	SHORT = 15,
 	MEDIUM = 30,
 	LONG = 80,
@@ -95,6 +104,7 @@ export interface DetailedFighter {
 	master?: number;
 	// Team side
 	attacker: boolean;
+	originalTeamSide: boolean;
 	// If the fighter needs to use smoothed calculations
 	balanced: boolean;
 	escaped?: boolean;
@@ -107,13 +117,20 @@ export interface DetailedFighter {
 	hp: number;
 	energy: number;
 	maxEnergy: number;
+	skillEnergyFactor: number;
 	stats: {
 		base: Record<ElementType, number>;
 		// Assault elemental bonuses. This includes the "allAssaultBonus" from MT too, as it is just handled as a bonus for all assault elements.
 		assaultBonus: Record<ElementType, number>;
 		defense: Record<ElementType, number>;
-		special: Record<SpecialStatUsedInFights, number>;
+		special: Record<UniqueSpecialStatUsedInFights, number>;
+		armor: Record<ElementType | 'global', number>;
+		ignoreArmor: Record<ElementType | 'global' | 'assault', number>;
 		speed: Record<ElementType | 'global', number>;
+		multihit: Record<ElementType | 'global', number>;
+		evasion: Record<ElementType | 'global', number>;
+		superEvasion: Record<ElementType | 'global', number>;
+		counter: Record<ElementType | 'global', number>;
 	};
 	// Items
 	items: ItemFiche[];
@@ -137,14 +154,15 @@ export interface DetailedFighter {
 		damage: number;
 	};
 	// Elements
+	currentElementIndex: number;
 	elements: ElementType[];
 	element: ElementType;
 	locked?: number;
 	// Min damage
 	minDamage: number;
 	minAssaultDamage: number;
-	// Perception
-	perception: boolean;
+	// // Perception
+	// perception: boolean;
 	// Flying
 	canHitFlying: boolean;
 	// Intangible
@@ -155,6 +173,7 @@ export interface DetailedFighter {
 	skillElementalBonus: Record<ElementType, number>;
 	nextSkill?: SkillDetails;
 	// Assault bonuses
+	allAssaultBonus: number;
 	allAssaultMultiplier: number;
 	nextAssaultBonus: number;
 	nextAssaultMultiplier: number;
@@ -170,6 +189,8 @@ export interface DetailedFighter {
 	hypnotized?: number;
 	hasUsedHypnose: boolean;
 	hasUsedHyperventilation: boolean;
+	// // Rage
+	// hasRaged: boolean;
 	// Mud wall
 	mudWall?: number;
 	// Invocations

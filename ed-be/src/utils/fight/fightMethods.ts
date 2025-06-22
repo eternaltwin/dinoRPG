@@ -45,17 +45,28 @@ import {
 import { DetailedFight } from './generateFight.js';
 import {
 	applyBalanceDamage,
+	balanceDamage,
+	calculateArmor,
 	calculateDamage,
 	getAttackDefense,
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, initializeMonster } from './getFighters.js';
+import {
+	applyGlobalDefenseBonus,
+	cloneDinoz,
+	getFighterArmorRatio,
+	getFighterCounter,
+	getFighterEvasion,
+	getFighterMultihit,
+	getFighterSuperEvasion,
+	initializeMonster
+} from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { FightStats } from '@drpg/core/models/fight/FightResult';
+import { FightStats, HitResult } from '@drpg/core/models/fight/FightResult';
 import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
@@ -106,7 +117,7 @@ export const getOpponents = (fightData: DetailedFight, fighter: DetailedFighter,
 	return opponents;
 };
 
-const chooseRandomOpponentForAssault = (
+const chooseRandomFighterForAssault = (
 	attacker: DetailedFighter,
 	opponents: DetailedFighter[],
 	rng: seedrandom.PRNG,
@@ -198,6 +209,12 @@ const chooseRandomOpponentForAssault = (
 		}
 	}
 
+	// Provocation overrides everything
+	const opponents_with_provocation = opponents.some(opponent => hasStatus(opponent, Status.TAUNT));
+	if (opponents_with_provocation) {
+		filtered_opponents = opponents.filter(opponent => hasStatus(opponent, Status.TAUNT));
+	}
+
 	if (!filtered_opponents.length) {
 		sendJSONToDiscord('Error `No opponent left after applying filtering.', {
 			fighter: attacker,
@@ -214,7 +231,7 @@ const chooseRandomOpponentForAssault = (
 
 /// Choose a random opponent from a list
 /// No filtering is applied
-export const chooseRandomOpponent = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
+export const chooseRandomFighter = (opponents: DetailedFighter[], rng: seedrandom.PRNG) => {
 	const random = randomBetweenSeeded(rng, 0, opponents.length - 1);
 
 	return opponents[random];
@@ -227,7 +244,7 @@ export const getLimitedRandomOpponent = (
 ) => {
 	const opponents = getOpponents(fightData, fighter, limitTypes);
 
-	return chooseRandomOpponent(opponents, fightData.rng);
+	return chooseRandomFighter(opponents, fightData.rng);
 };
 
 export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFighter) => {
@@ -240,11 +257,11 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 		throw new Error('No opponent found');
 	}
 
-	const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
+	const randomOpponent = chooseRandomFighter(opponents, fightData.rng);
 
 	if (!randomOpponent) {
 		sendJSONToDiscord(
-			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
+			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomFighter` was called.',
 			{ fightData: fightData, fighter: fighter }
 		);
 		throw new Error('No random opponent found');
@@ -259,17 +276,30 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 		return null;
 	}
 
-	const randomOpponent = chooseRandomOpponentForAssault(fighter, opponents, fightData.rng);
+	const randomOpponent = chooseRandomFighterForAssault(fighter, opponents, fightData.rng);
 
 	if (!randomOpponent) {
 		sendJSONToDiscord(
-			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
+			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomFighter` was called.',
 			{ fightData: fightData, fighter: fighter }
 		);
 		throw new Error('No random opponent found');
 	}
 
 	return randomOpponent;
+};
+
+// This method can return null because its possible that the fighter is alone.
+export const getRandomAlly = (fightData: DetailedFight, fighter: DetailedFighter) => {
+	const allies = getAllies(fightData, fighter).filter(f => f.id !== fighter.id);
+
+	if (!allies.length) {
+		return null;
+	}
+
+	const randomAlly = chooseRandomFighter(allies, fightData.rng);
+
+	return randomAlly;
 };
 
 /**
@@ -391,12 +421,20 @@ export const setMaxEnergy = (fighter: DetailedFighter, newMax: number) => {
 	fighter.energy = Math.min(fighter.energy, fighter.maxEnergy);
 };
 
+/**
+ * Returns the items and skills that succeeded their rolls
+ * @param fightData General data about the fight, used to check for effects that may impact skill selection
+ * @param fighter Details of the fighter rolling for its items and skills
+ * @returns Array of items and skills that succeeded their rolls or null
+ */
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No event if NO_EVENT
 	if (hasStatus(fighter, Status.NO_EVENT)) return null;
 
 	// Check if a time manipulator is present
 	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
+
+	const rolledEvents: (SkillDetails | ItemFiche)[] = [];
 
 	// Check if a fighter has Item.TIME_MANIPULATOR
 	if (!fightData.timeManipulatorUsed) {
@@ -471,22 +509,30 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		// Check if event is a skill
 		if ('id' in event) {
 			// Skip if not enough energy
-			if (fighter.energy < event.energy) continue;
+			if (fighter.energy < event.energy * fighter.skillEnergyFactor) continue;
 		}
 
 		if (randomBetweenSeeded(fightData.rng, 1, 100) < (event.probability ?? 0)) {
-			return event;
+			rolledEvents.push(event);
 		}
 	}
 
-	return null;
+	return rolledEvents;
 };
 
+/**
+ * Returns the skills that succeeded their rolls
+ * @param fightData General data about the fight, used to check for effects that may impact skill selection
+ * @param fighter Details of the fighter rolling for its skills
+ * @returns Array of skills that succeeded their rolls or null
+ */
 const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No skill if NO_SKILL
 	if (hasStatus(fighter, Status.NO_SKILL)) return null;
 
-	const skills = fighter.skills.filter(skill => skill.probability && skill.type !== SkillType.E);
+	const skills = fighter.skills.filter(
+		skill => skill.probability && (skill.type === SkillType.A || skill.type === SkillType.I)
+	);
 
 	if (!skills.length) return null;
 
@@ -504,12 +550,14 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		return fightData.rng() > 0.5 ? 1 : -1;
 	});
 
-	// Go through each event and roll the dice
+	const rolledSkills: SkillDetails[] = [];
+
+	// Go through each skill and roll, add skills if it succeeded
 	for (let i = 0; i < skills.length; i++) {
 		const skill = skills[i];
 
 		// Skip if not enough energy
-		if (fighter.energy < skill.energy) continue;
+		if (fighter.energy < skill.energy * fighter.skillEnergyFactor) continue;
 
 		let probability = skill.probability ?? 0;
 
@@ -521,14 +569,14 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		if (randomBetweenSeeded(fightData.rng, 1, 100) < probability) {
 			// Check if NO_INVOCATION
 			if (skill.type === SkillType.I && hasStatus(fighter, Status.NO_INVOCATION)) {
-				return null;
+				continue;
 			}
 
-			return skill;
+			rolledSkills.push(skill);
 		}
 	}
 
-	return null;
+	return rolledSkills;
 };
 
 export const stepFighter = (fighter: Pick<DetailedFighter, 'id' | 'name' | 'type' | 'attacker'>) => {
@@ -837,10 +885,10 @@ const attackSingleOpponent = (
 	// Add target
 	(activate_step as SkillActivateStep).targets.push({ tid: realOpponent.id });
 
-	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, activate_step);
-
 	// Add step
 	fightData.steps.push(activate_step);
+
+	const result = attackTarget(fightData, fighter, realOpponent, false, element_attack, skill, activate_step);
 
 	if (goto) {
 		// Add moveTo step
@@ -883,6 +931,10 @@ const attackAllOpponents = (
 		}
 	}
 
+	// Add step
+	fightData.steps.push(activate_step);
+
+	let results: HitResult[] = [];
 	targets.forEach(target => {
 		let realTarget = target;
 		// Check if a dinoz is protecting the opponent and replace the target with the protector
@@ -900,7 +952,7 @@ const attackAllOpponents = (
 		// Add target
 		(activate_step as SkillActivateStep).targets.push({ tid: realTarget.id });
 
-		attackTarget(fightData, fighter, realTarget, false, element_attack, skill, activate_step);
+		results.push(attackTarget(fightData, fighter, realTarget, false, element_attack, skill, activate_step));
 
 		// TODO this moveBack should be after the activate step
 		if (protector && protector.hp > 0) {
@@ -912,11 +964,21 @@ const attackAllOpponents = (
 		}
 	});
 
-	// Add step
-	fightData.steps.push(activate_step);
+	return results;
 };
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
+	// Go no further before checking that the call of the monster is not cancelled
+	const tempestFighters = getOpponents(fightData, fighter).filter(f => hasSkill(f, Skill.TEMPETE));
+
+	for (let i = 0; i < tempestFighters.length; i++) {
+		const tempester = tempestFighters[i];
+		if (randomBetweenSeeded(fightData.rng, 0, 99) < 30) {
+			fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
+			return null;
+		}
+	}
+
 	// Count monsters
 	const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
 
@@ -939,6 +1001,25 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 
 	monster.master = fighter.id;
 
+	// Apply team bonuses
+	if (fighter.attacker) {
+		for (let i = 0; i < fightData.attackerData[Skill.GARDE_FORESTIER]; i++) {
+			applyGlobalDefenseBonus(monster, ElementType.WOOD, 3);
+			monster.stats.armor.global *= 1.05;
+		}
+		for (let i = 0; i < fightData.attackerData[Skill.ELECTROLYSE]; i++) {
+			monster.stats.speed.global *= 0.95;
+		}
+	} else {
+		for (let i = 0; i < fightData.defenderData[Skill.GARDE_FORESTIER]; i++) {
+			applyGlobalDefenseBonus(monster, ElementType.WOOD, 3);
+			monster.stats.armor.global *= 1.05;
+		}
+		for (let i = 0; i < fightData.defenderData[Skill.ELECTROLYSE]; i++) {
+			monster.stats.speed.global *= 0.95;
+		}
+	}
+
 	// Adjust time
 	monster.time = fighter.time + randomBetweenMaxExcludedSeeded(fightData.rng, 0, TIME_BASE) * TIME_FACTOR;
 
@@ -948,7 +1029,9 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Add arrive step
 	fightData.steps.push({
 		action: 'arrive',
-		fid: monster.id
+		fid: monster.id,
+		entrance: monsterData.entrance,
+		scale: monsterData.size
 	});
 
 	checkReinforcementBan(fightData, monster);
@@ -1023,7 +1106,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.WATER] < 10) {
 					// TODO: this probably needs rework as it applies a nextAssaultMultiplier = 0.75
-					addStatus(fightData, f, Status.WEAKENED);
+					addStatus(fightData, f, Status.ABYSSE);
 				}
 			});
 			break;
@@ -1080,7 +1163,7 @@ const cancelEnvironment = (fightData: DetailedFight) => {
 		case Skill.ABYSSE: {
 			// Remove WEAKENED from all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.WEAKENED);
+				removeStatus(fightData, f, Status.ABYSSE);
 			});
 			break;
 		}
@@ -1138,8 +1221,21 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 		switch (event.id) {
 			// AIR Vanilla
+			case Skill.TALON_DACHILLE: {
+				const opponent = getRandomOpponent(fightData, fighter);
+				addStatus(fightData, opponent, Status.WEAKENED, StatusLength.MEDIUM);
+				break;
+			}
 			case Skill.VENT_VIF: {
+				if (hasStatus(fighter, Status.QUICKENED)) return cancel();
 				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
+				break;
+			}
+			case Skill.MAITRE_LEVITATEUR: {
+				const allies = getAllies(fightData, fighter);
+				allies.forEach(a => {
+					addStatus(fightData, a, Status.FLYING, StatusLength.SHORT);
+				});
 				break;
 			}
 			case Skill.AIGUILLON: {
@@ -1176,32 +1272,35 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.DETONATION: {
-				// The fighter will not suicide with the skill, it just loses its roll
-				if (fighter.hp > 5) {
-					// Add step for fx
-					fightData.steps.push(activate_step);
-					loseHp(fightData, fighter, 5, LifeEffect.Burn);
-					// Increase the time of all other fighters to make it look like the caster "gained" time
-					getFighters(fightData).forEach(f => {
-						if (f.id !== fighter.id) {
-							f.time += 15 * TIME_FACTOR;
-						}
-					});
-					// Add fx for gain of init
-					fightData.steps.push({
-						action: 'notify',
-						fids: [fighter.id],
-						notification: NotificationList.InitUp
-					});
-				} else {
-					return cancel();
-				}
+				// The fighter will not suicide with the skill
+				if (fighter.hp <= 5) return cancel();
+
+				// Add step for fx
+				fightData.steps.push(activate_step);
+				loseHp(fightData, fighter, 5, LifeEffect.Burn);
+				// Increase the time of all other fighters to make it look like the caster "gained" time
+				getFighters(fightData).forEach(f => {
+					if (f.id !== fighter.id) {
+						f.time += 15 * TIME_FACTOR;
+					}
+				});
+				// Add fx for gain of init
+				fightData.steps.push({
+					action: 'notify',
+					fids: [fighter.id],
+					notification: NotificationList.InitUp
+				});
+				break;
+			}
+			case Skill.TORCHE: {
+				if (hasStatus(fighter, Status.TORCHED)) return cancel();
+				addStatus(fightData, fighter, Status.TORCHED, StatusLength.LONG);
 				break;
 			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
-				if (hasStatus(fighter, Status.SHIELDED)) cancel();
-				addStatus(fightData, fighter, Status.SHIELDED);
+				if (hasStatus(fighter, Status.SHIELDED)) return cancel();
+				addStatus(fightData, fighter, Status.SHIELDED, StatusLength.MEDIUM);
 				break;
 			}
 			case Skill.BENEDICTION: {
@@ -1216,6 +1315,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
+			case Skill.REGENERESCENCE: {
+				if (hasStatus(fighter, Status.HEALING)) return cancel();
+				addStatus(fightData, fighter, Status.HEALING, StatusLength.MEDIUM);
+				break;
+			}
 			case Skill.PUREE_SALVATRICE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
@@ -1223,6 +1327,34 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				getAllies(fightData, fighter).forEach(fighter => {
 					removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
 				});
+				break;
+			}
+			case Skill.BRANCARDIER: {
+				const ally = getRandomAlly(fightData, fighter);
+
+				if (!ally) return cancel();
+
+				fightData.steps.push({
+					action: 'moveTo',
+					fid: fighter.id,
+					tid: ally.id
+				});
+				heal(fightData, ally, 5, undefined, LifeEffect.Lightning);
+				fightData.steps.push({
+					action: 'moveBack',
+					fid: fighter.id
+				});
+				break;
+			}
+			case Skill.PARAFOUDRE: {
+				if (hasStatus(fighter, Status.LOCKED)) return cancel();
+
+				// Add step for fx
+				activate_step.targets.push({ tid: fighter.id });
+				fightData.steps.push(activate_step);
+
+				fighter.element = ElementType.LIGHTNING;
+				addStatus(fightData, fighter, Status.LOCKED, StatusLength.SHORT);
 				break;
 			}
 			// WATER
@@ -1244,11 +1376,28 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Slow opponents
 				opponents.forEach(opponent => {
-					addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
+					if (!hasStatus(opponent, Status.FLYING)) {
+						addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
+					}
 				});
 				break;
 			}
 			case Skill.CLONE_AQUEUX: {
+				// Go no further before checking the clone is not cancelled
+				const tempestFighters = getOpponents(fightData, fighter).filter(f => hasSkill(f, Skill.TEMPETE));
+				let tempestTriggered = false;
+				for (let i = 0; i < tempestFighters.length; i++) {
+					const tempester = tempestFighters[i];
+					if (randomBetweenSeeded(fightData.rng, 0, 99) < 30) {
+						fightData.steps.push({ action: 'skillAnnounce', fid: tempester.id, skill: Skill.TEMPETE });
+						tempestTriggered = true;
+						break;
+					}
+				}
+				if (tempestTriggered) {
+					break;
+				}
+
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
 				if (!initialDinoz) {
@@ -1317,7 +1466,17 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			// WOOD
 			case Skill.RENFORTS_KORGON: {
-				createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+				let korgon = createMonster(fightData, fighter, monsterList.KORGON_REINFORCEMENT);
+
+				if (korgon) {
+					// Increase speed by 1% for each WOOD point
+					// Which translates to (100 - WOOD)/100
+					// For example with 15 wood, that gives:
+					// 100 - 15 = 85
+					// 86 /100 = 0.85 i.e 15% increase
+					// Should be impossible to get 100 WOOD and break the game with 0 speed. Just in case, set limit at 99%.
+					korgon.stats.speed.global *= Math.max(0.01, (100 - fighter.stats.base[ElementType.WOOD])/100);
+				}
 				break;
 			}
 			case Skill.VIGNES: {
@@ -1329,7 +1488,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				if (!hasStatus(opponent, Status.FLYING)) {
 					// Increase the opponent's time
-					opponent.time += 15 * TIME_FACTOR;
+					opponent.time += 6 * TIME_FACTOR;
 					// Add fx for loss of init
 					fightData.steps.push({
 						action: 'notify',
@@ -1342,11 +1501,44 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				break;
 			}
-			case Skill.RESISTANCE_A_LA_MAGIE: {
+			case Skill.COCON: {
+				gainArmor(fightData, fighter, 0.05);
+				heal(
+					fightData,
+					fighter,
+					randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
+					activate_step
+				);
+				// Add step for fx
+				fightData.steps.push(activate_step);
+				break;
+			}
+			/*case Skill.RESISTANCE_A_LA_MAGIE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
 				// Remove all bad status
 				removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
+				break;
+			}*/
+			case Skill.ESPRIT_GORILLOZ: {
+				let esprit = structuredClone(monsterList.GORILLOZ_SPIRIT);
+
+				// Increase all assauts  and HP for every 2 wood points
+				let bonus = Math.round(fighter.stats.base[ElementType.WOOD] / 2);
+
+				if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+					esprit.hp += bonus;
+				}
+
+				const monster = createMonster(fightData, fighter, esprit);
+
+				// Set intangible only if has GIANT skill
+				if (monster) {
+					monster.allAssaultBonus += bonus;
+					if (hasSkill(fighter, Skill.GEANT_DES_FORETS)) {
+						addStatus(fightData, monster, Status.INTANGIBLE);
+					}
+				}
 				break;
 			}
 			case Skill.ETAT_PRIMAL: {
@@ -1363,43 +1555,32 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				});
 				break;
 			}
+			case Skill.GARDIEN_ARBORICOLE: {
+				let gardien = structuredClone(monsterList.GRDIEN);
+				// If fighter does not have COLOSSE_DES_FORETS, downgrade the gardien
+				if (!hasSkill(fighter, Skill.COLOSSE_DES_FORETS)) {
+					gardien.skills = gardien.skills!.filter(s => s !== Skill.M_COMET);
+					gardien.bonus_attack = 5;
+					gardien.bonus_defense = 13;
+					gardien.hp = 40 + fighter.stats.base[ElementType.WOOD];
+					gardien.size = 50;
+				}
+				const monster = createMonster(fightData, fighter, gardien);
+				if (monster) {
+					monster.status = monster.status.filter(s => s.type !== Status.NO_ASSAULT);
+					monster.stats.armor.global *= (1 + fighter.stats.base[ElementType.WOOD]/100);
+				}
+				break;
+			}
 			case Skill.GROSSE_BEIGNE: {
 				// Add step for fx
 				fightData.steps.push(activate_step);
 				fighter.nextAssaultMultiplier *= 2;
 				break;
 			}
-			case Skill.PRINTEMPS_PRECOCE: {
-				// Heal all allies
-				getAllies(fightData, fighter).forEach(f => {
-					// Skip self
-					if (f.id === fighter.id) return;
-
-					// Heal 1-wood HP
-					heal(
-						fightData,
-						f,
-						randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
-						activate_step
-					);
-				});
-
-				// Add step
-				fightData.steps.push(activate_step);
-				break;
-			}
-			case Skill.ESPRIT_GORILLOZ: {
-				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
-
-				// Set intangible
-				addStatus(fightData, monster, Status.INTANGIBLE);
-				break;
-			}
 			case Skill.PAYS_DE_CENDRE: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
 				break;
@@ -1408,9 +1589,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Get allies dinoz
 				const allies = getAllies(fightData, fighter, ['dinoz']);
 
-				if (allies.length < 2) {
-					return cancel();
-				}
+				if (allies.length < 2) return cancel();
 
 				// Get lowest HP ally
 				const lowestHpAlly = allies.reduce(
@@ -1454,6 +1633,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
+				// Add step for fx
+				fightData.steps.push(activate_step);
 
 				// Reduce max energy by 30%
 				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.7);
@@ -1485,6 +1666,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
+				// Add step for fx
+				fightData.steps.push(activate_step);
 
 				// Disable invocations
 				// TODO: see if this can be done differently as this may mess up with display
@@ -1509,6 +1692,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
+				// Add step for fx
+				fightData.steps.push(activate_step);
 
 				addStatus(fightData, opponent, Status.DAZZLED, StatusLength.MEDIUM);
 				break;
@@ -1534,9 +1719,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// TODO probably want to rework this so it's a passive skill and does not use up a skill slot
 				// TODO because the skill has high priority and high proba, but can only be used once so it uses a skill slot
 				// The fighter learns to cancel dodge.
-				if (fighter.cancelAssaultDodge) {
-					return cancel();
-				}
+				if (fighter.cancelAssaultDodge) return cancel();
 
 				fighter.cancelAssaultDodge = true;
 				break;
@@ -1560,21 +1743,19 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					addStatus(fightData, ally, Status.QUICKENED, StatusLength.MEDIUM);
 					activate_step.targets.push({ tid: ally.id });
 				});
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			// MONSTER
 			case Skill.M_REGENERATION: {
-				if (fighter.hp >= fighter.startingHp) {
-					return cancel();
-				}
+				if (fighter.hp >= fighter.startingHp) return cancel();
 
 				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), undefined, LifeEffect.Heal);
 				break;
 			}
 			case Skill.M_IMMATERIAL: {
-				if (hasStatus(fighter, Status.INTANGIBLE)) {
-					return cancel();
-				}
+				if (hasStatus(fighter, Status.INTANGIBLE)) return cancel();
 
 				addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.SHORT);
 				break;
@@ -1589,33 +1770,36 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				fighter.element = randomElement;
 				fighter.elements = [randomElement];
+				fighter.currentElementIndex = 0;
 				break;
 			}
 			case Skill.M_YAKUZI: {
 				const clone = createMonster(fightData, fighter, bossList.YAKUZI);
 
-				// Count monsters
-				const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
+				if (clone) {
+					// Count monsters
+					const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
 
-				clone.level = 1;
-				clone.hp = 1;
-				clone.type = 'clone';
-				clone.master = fighter.id;
-				clone.id = -monsterCount - 1;
+					clone.level = 1;
+					clone.hp = 1;
+					clone.type = 'clone';
+					clone.master = fighter.id;
+					clone.id = -monsterCount - 1;
 
-				applyStrategy(fightData, clone);
+					applyStrategy(fightData, clone);
 
-				// Set the clone's time to the fighter's time
-				clone.time = fighter.time;
+					// Set the clone's time to the fighter's time
+					clone.time = fighter.time;
 
-				// Add clone to fighters
-				fightData.fighters.push(clone);
+					// Add clone to fighters
+					fightData.fighters.push(clone);
 
-				// Add arrive step
-				fightData.steps.push({
-					action: 'arrive',
-					fid: clone.id
-				});
+					// Add arrive step
+					fightData.steps.push({
+						action: 'arrive',
+						fid: clone.id
+					});
+				}
 
 				break;
 			}
@@ -1673,6 +1857,8 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					ally.time -= 5 * TIME_FACTOR;
 					fighter.time += 3 * TIME_FACTOR;
 				});
+				// Add step for fx
+				fightData.steps.push(activate_step);
 				break;
 			}
 			case Skill.M_FRUKOPTER_FLIGHT: {
@@ -1695,8 +1881,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				return false;
 		}
 
-		// Consume energy
-		setEnergy(fighter, fighter.energy - event.energy);
+		setEnergy(fighter, Math.round(fighter.energy - event.energy * fighter.skillEnergyFactor));
 	} else {
 		// Event is an item
 
@@ -1733,7 +1918,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor += 1;
+				fighter.stats.armor.global *= 1.05;
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -1755,9 +1940,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Item.GOBLIN_MERGUEZ: {
 				// Cancel if no HP lost
-				if (fighter.hp === fighter.startingHp) {
-					return cancel();
-				}
+				if (fighter.hp === fighter.startingHp) return cancel();
 
 				// -10% all defenses
 				fighter.stats.defense[ElementType.FIRE] -= fighter.stats.defense[ElementType.FIRE] * 0.1;
@@ -1784,9 +1967,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponent = getOpponents(fightData, fighter).find(f => hasStatus(f, Status.FLYING));
 
 				// Never use the item if no opponent is flying
-				if (!opponent) {
-					return cancel();
-				}
+				if (!opponent) return cancel();
 
 				fighter.canHitFlying = true;
 				break;
@@ -1809,9 +1990,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				}
 
 				// Don't apply if the fighter has already one element
-				if (fighter.elements.length === 1) {
-					cancel();
-				}
+				if (fighter.elements.length === 1) return cancel();
 
 				// Get dinoz best element
 				const bestElement = fighter.elements.reduce((acc, element) => {
@@ -1827,18 +2006,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Set the element list to only the best element
 				fighter.elements = [bestElement];
+				fighter.currentElementIndex = 0;
 				break;
 			}
 			case Item.FUCA_PILL: {
 				// Check if another FUCA was already used
-				if (fighter.itemsUsed.includes(Item.FUCA_PILL)) {
-					return cancel();
-				}
+				if (fighter.itemsUsed.includes(Item.FUCA_PILL)) return cancel();
 
 				// Cancel if speed is already x2
-				if (fighter.stats.speed.global < 0.51) {
-					return cancel();
-				}
+				if (fighter.stats.speed.global < 0.51) return cancel();
 
 				// Increase speed
 				fighter.stats.speed.global *= 0.75;
@@ -1849,17 +2025,19 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const opponents = getOpponents(fightData, fighter);
 
 				// Cancel if less than 2 opponents
-				if (opponents.length < 2) {
-					return cancel();
-				}
-
-				// Nothing happens if petrifed or stunned
-				if (hasStatus(fighter, Status.PETRIFIED) || hasStatus(fighter, Status.STUNNED)) {
-					break;
-				}
+				if (opponents.length < 2) return cancel();
 
 				// Get random opponent attacker
 				const opponentAttacker = getRandomOpponent(fightData, fighter);
+
+				// Nothing happens if petrifed, stunned or asleep
+				if (
+					hasStatus(opponentAttacker, Status.PETRIFIED) ||
+					hasStatus(opponentAttacker, Status.STUNNED) ||
+					hasStatus(opponentAttacker, Status.ASLEEP)
+				) {
+					break;
+				}
 
 				// Get other opponents
 				const opponentsWithoutAttacker = opponents.filter(opponent => opponent.id !== opponentAttacker.id);
@@ -1895,9 +2073,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Check if the team has BEER status
 				const hasBeer = allies.some(f => hasStatus(f, Status.BEER));
 
-				if (!hasBeer) {
-					return cancel();
-				}
+				if (!hasBeer) return cancel();
 
 				// TODO rework
 				// Remove BEER status
@@ -1912,45 +2088,35 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Item.AMAZON: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.AMAZONIE);
 				break;
 			}
 			case Item.LAND_OF_ASHES: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
 				break;
 			}
 			case Item.ABYSS: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.ABYSSE);
 				break;
 			}
 			case Item.ST_ELMAS_FIRE: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
 				break;
 			}
 			case Item.UVAVU: {
 				// Only one environment active at a time
-				if (fightData.environment) {
-					return cancel();
-				}
+				if (fightData.environment) return cancel();
 
 				activateEnvironment(fightData, fighter, Skill.OURANOS);
 				break;
@@ -2067,8 +2233,42 @@ export const addStatus = (
 	// Bad status
 	const isBad = BadStatus.includes(status);
 
+	// Negate once if blessed
+	if (isBad && hasStatus(fighter, Status.BLESSED)) {
+		removeStatus(fightData, fighter, Status.BLESSED);
+		fightData.steps.push({
+			action: 'attach',
+			fid: fighter.id,
+			fx: 'fxBubble'
+		});
+		return false;
+	}
+
 	// Negate if SELF_CONTROL
-	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
+	if (hasSkill(fighter, Skill.SELF_CONTROL) && (status === Status.STUNNED || status === Status.ASLEEP)) {
+		// Just activate and nothing happens
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: fighter.id,
+			skill: Skill.SELF_CONTROL
+		});
+		// Increase the time of all other fighters to make it look like the caster "gained" time
+		getFighters(fightData).forEach(f => {
+			if (f.id !== fighter.id) {
+				f.time += 3 * TIME_FACTOR;
+			}
+		});
+		// Add fx for gain of init
+		fightData.steps.push({
+			action: 'notify',
+			fids: [fighter.id],
+			notification: NotificationList.InitUp
+		});
+		return false;
+	}
+
+	// Cancel SLOWED status
+	if (hasSkill(fighter, Skill.ENTRAINEMENT_SOUS_MARIN) && status === Status.SLOWED) return false;
 
 	// Handle the immediate effect of the status
 	switch (status) {
@@ -2093,24 +2293,31 @@ export const addStatus = (
 			break;
 		}
 		case Status.PETRIFIED: {
-			fighter.stats.special.armor += 5;
+			fighter.stats.armor.global *= 1.5;
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
+		case Status.TAUNT: {
+			fighter.stats.armor.global *= 1.3;
+			break;
+		}
 		case Status.SHIELDED: {
-			fighter.stats.special.armor += 5;
+			fighter.stats.armor.global *= 1.3;
 			break;
 		}
 		case Status.BLESSED: {
-			fighter.stats.assaultBonus[ElementType.AIR] += 3;
-			fighter.stats.assaultBonus[ElementType.FIRE] += 3;
-			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 3;
-			fighter.stats.assaultBonus[ElementType.WATER] += 3;
-			fighter.stats.assaultBonus[ElementType.WOOD] += 3;
+			fighter.allAssaultBonus += 10;
 			break;
 		}
 		case Status.STUNNED: {
 			fighter.time += FIGHT_INFINITE;
+			break;
+		}
+		case Status.RAGE: {
+			fighter.allAssaultMultiplier *= 1.25;
+			fighter.stats.speed.global *= 0.8;
+			fighter.stats.counter.global *= 0.8;
+			break;
 		}
 		default: {
 			break;
@@ -2185,7 +2392,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case Status.PETRIFIED: {
-				fighter.stats.special.armor -= 5;
+				fighter.stats.armor.global /= 1.5;
 				fighter.time -= FIGHT_INFINITE;
 				// Make sure the fighter's time is not in the past
 				if (fighter.time < fightData.time) {
@@ -2193,16 +2400,16 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				}
 				break;
 			}
+			case Status.TAUNT: {
+				fighter.stats.armor.global /= 1.3;
+				break;
+			}
 			case Status.SHIELDED: {
-				fighter.stats.special.armor -= 5;
+				fighter.stats.armor.global /= 1.3;
 				break;
 			}
 			case Status.BLESSED: {
-				fighter.stats.assaultBonus[ElementType.AIR] -= 3;
-				fighter.stats.assaultBonus[ElementType.FIRE] -= 3;
-				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 3;
-				fighter.stats.assaultBonus[ElementType.WATER] -= 3;
-				fighter.stats.assaultBonus[ElementType.WOOD] -= 3;
+				fighter.allAssaultBonus -= 10;
 				break;
 			}
 			case Status.STUNNED: {
@@ -2211,6 +2418,13 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				if (fighter.time < fightData.time) {
 					fighter.time = fightData.time;
 				}
+				break;
+			}
+			case Status.RAGE: {
+				fighter.allAssaultMultiplier /= 1.25;
+				fighter.stats.speed.global /= 0.8;
+				fighter.stats.counter.global /= 0.8;
+				break;
 			}
 			default: {
 				break;
@@ -2220,6 +2434,31 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 
 	// Remove status
 	fighter.status = fighter.status.filter(s => !statusList.includes(s.type));
+};
+
+/**
+ * Remove given quantity of armor from the opponent.
+ * It is a simple substraction.
+ * Armor cannot go below 0.
+ * @param {DetailedFight} fightData The data of the fight (to handle history and other)
+ * @param {DetailedFighter} fighter The fighter that receives the status
+ * @param {number} armorDestroyed Amount of armor destroyed, must be between 0 and 1.
+ */
+const destroyArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorDestroyed: number) => {
+	// TODO add FX
+	fighter.stats.armor.global = Math.max(fighter.stats.armor.global - armorDestroyed, 0);
+};
+
+/**
+ * Gain given quantity of armor from the opponent.
+ * Armor is gained multiplicatively.
+ * @param {DetailedFight} fightData The data of the fight (to handle history and other)
+ * @param {DetailedFighter} fighter The fighter that receives the status
+ * @param {number} armorDestroyed Amount of armor gained, must be between 0 and 1.
+ */
+const gainArmor = (fightData: DetailedFight, fighter: DetailedFighter, armorGained: number) => {
+	// TODO add FX
+	fighter.stats.armor.global *= 1 + armorGained;
 };
 
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
@@ -2280,14 +2519,28 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				removeStatus(fightData, opponent, Status.FLYING);
 			});
 
-			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, activate_step);
+			const results = attackAllOpponents(
+				fightData,
+				fighter,
+				getElementalAttack(fighter, ElementType.AIR, 10),
+				skill.id,
+				activate_step
+			);
+
+			results.forEach(r => {
+				if (r.target && r.hpLost > 0) {
+					addStatus(fightData, r.target, Status.STUNNED, StatusLength.SHORT);
+				}
+			});
 			break;
 		}
 		case Skill.ATTAQUE_PLONGEANTE: {
-			fighter.nextAssaultBonus += 2 * fighter.stats.base[ElementType.AIR];
+			fighter.allAssaultBonus += 3 * fighter.stats.base[ElementType.AIR];
 
 			// Attack opponent
 			launchAssault(fightData, fighter, true, Skill.ATTAQUE_PLONGEANTE);
+
+			fighter.allAssaultBonus -= 3 * fighter.stats.base[ElementType.AIR];
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
@@ -2300,26 +2553,49 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.PAUME_EJECTABLE: {
-			// x2 damage
-			fighter.nextAssaultMultiplier *= 2;
+			// x2 damage for the whole assault (for multihit and combo)
+			fighter.allAssaultMultiplier *= 2;
 
 			// Attack opponent
 			const hit = launchAssault(fightData, fighter, true, Skill.PAUME_EJECTABLE);
 
+			// Remove x2 bonus
+			fighter.allAssaultMultiplier /= 2;
+
+			// Increase fighter time
+			fighter.time += 15 * TIME_FACTOR;
+			// Add fx for loss of init
+			fightData.steps.push({
+				action: 'notify',
+				fids: [fighter.id],
+				notification: NotificationList.InitDown
+			});
+
 			if (hit && hit.hpLost > 0) {
-				// Increase time
-				fighter.time += 15 * TIME_FACTOR;
-				// Add fx for loss of init
-				fightData.steps.push({
-					action: 'notify',
-					fids: [fighter.id],
-					notification: NotificationList.InitDown
+				let goodStatusToRemove: Status[] = [];
+				hit.target.status.forEach(s => {
+					const isGood = GoodStatus.includes(s.type);
+					if (isGood) {
+						goodStatusToRemove.push(s.type);
+					}
 				});
+
+				if (goodStatusToRemove.length > 0) {
+					removeStatus(fightData, hit.target, ...goodStatusToRemove);
+					fightData.steps.push({
+						action: 'attach',
+						fid: hit.target.id,
+						fx: 'fxBubble'
+					});
+				}
 			}
 			break;
 		}
 		case Skill.TROU_NOIR: {
 			// TODO add rule to disable escape in fight (dojo, other)
+
+			// Does not work if there is only one fighter
+			if (getOpponents(fightData, fighter).length === 1) return cancel();
 
 			const opponent = getRandomOpponent(fightData, fighter);
 
@@ -2353,22 +2629,27 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			break;
 		}
+		case Skill.BROUILLARD_ETHERAL: {
+			const allies = getAllies(fightData, fighter);
+			allies.forEach(a => {
+				addStatus(fightData, a, Status.INTANGIBLE, StatusLength.SHORT);
+			});
+			// Add FX
+			fightData.steps.push(activate_step);
+			break;
+		}
 		case Skill.HYPNOSE: {
 			// Get opponents
 			const opponents = getOpponents(fightData, fighter);
 
 			// Hypnose does not work if there is no opponent or just a single one, or if the fighter has already used it.
-			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
-				return cancel();
-			}
+			if (opponents.length <= 1 || fighter.hasUsedHypnose) return cancel();
 
 			// Get random opponent
-			const opponent = chooseRandomOpponent(opponents, fightData.rng);
+			const opponent = chooseRandomFighter(opponents, fightData.rng);
 
 			// Hypnose does not work if opponent is a boss
-			if (opponent.type == 'boss') {
-				return cancel();
-			}
+			if (opponent.type == 'boss') return cancel();
 
 			// Prevent if some opponent has CUZCUSSIAN_MASK
 			const opponentWithMask = getOpponents(fightData, fighter).find(opponent =>
@@ -2390,6 +2671,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 					fighter: stepFighter(opponentWithMask),
 					itemId: Item.CUZCUSSIAN_MASK
 				});
+			} else if (hasSkill(opponent, Skill.SELF_CONTROL)) {
+				// Just activate and nothing happens
+				fightData.steps.push({
+					action: 'skillAnnounce',
+					fid: opponent.id,
+					skill: Skill.SELF_CONTROL
+				});
 			} else {
 				// Hypnotized for 4 cycles
 				opponent.hypnotized = 4 * CYCLE;
@@ -2409,6 +2697,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		// FIRE Vanila
 		case Skill.SOUFFLE_ARDENT:
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.FIRE, 5), skill.id, activate_step);
+			break;
+		case Skill.CHARGE:
+			fighter.allAssaultBonus += 2 * fighter.stats.base[ElementType.FIRE];
+
+			// Attack opponent
+			launchAssault(fightData, fighter, true, Skill.CHARGE);
+
+			fighter.allAssaultBonus -= 2 * fighter.stats.base[ElementType.FIRE];
 			break;
 		case Skill.METEORES:
 			attackAllOpponents(
@@ -2453,13 +2749,19 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Increase time of the attacker
 			fighter.time += 15 * TIME_FACTOR;
 			// This skill cannot combo but is an assault
-			launchAssault(
+			const hit = launchAssault(
 				fightData,
 				fighter,
 				false,
 				Skill.PAUME_CHALUMEAU,
 				getElementalAttack(fighter, ElementType.FIRE, 10)
 			);
+
+			// on hit, destroy 5% of armor of the target
+			if (hit && hit.hpLost > 0) {
+				destroyArmor(fightData, hit.target, 0.05);
+			}
+
 			// Add fx for loss of init
 			fightData.steps.push({
 				action: 'notify',
@@ -2469,19 +2771,68 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.KAMIKAZE: {
-			// This skill cannot combo but is an assault
-			launchAssault(fightData, fighter, false, Skill.KAMIKAZE, getElementalAttack(fighter, ElementType.FIRE, 15));
+			// Pick target
+			const target = getRandomOpponentForAssault(fightData, fighter);
 
-			// Loose 50% HP
-			loseHp(fightData, fighter, Math.round(fighter.hp / 2), LifeEffect.Fire);
+			if (target === null) return cancel();
+
+			// Add moveTo step
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: fighter.id,
+				tid: target.id,
+				skill: Skill.KAMIKAZE
+			});
+
+			// This skill cannot combo but is an assault
+			const hit = launchAssault(
+				fightData,
+				fighter,
+				false,
+				Skill.KAMIKAZE,
+				getElementalAttack(fighter, ElementType.FIRE, 15),
+				target,
+				false
+			);
+
+			// Loose 10% HP
+			loseHp(fightData, fighter, Math.round(fighter.maxHp * 0.1), LifeEffect.Explode);
+
+			if (hit && hit.hpLost > 0) {
+				addStatus(fightData, hit.target, Status.STUNNED, StatusLength.MEDIUM);
+			}
+
+			if (fighter.hp > 0) {
+				fightData.steps.push({
+					action: 'moveBack',
+					fid: fighter.id
+				});
+			}
+
 			break;
 		}
 		case Skill.SIESTE: {
 			// Heal 1-20 HP
-			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), undefined, LifeEffect.Heal);
+			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 10, 20), undefined, LifeEffect.Heal);
 
 			// Fall asleep
 			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
+			break;
+		}
+		case Skill.BRASIER: {
+			// Summon FIRE/9 flams with FIRE/5 in FIRE element and torche
+			const number = Math.max(Math.floor(fighter.stats.base[ElementType.FIRE] / 9), 1);
+			for (let i = 0; i < number; i++) {
+				let flameche = createMonster(fightData, fighter, monsterList.FLAM);
+				if (flameche) {
+					flameche.skills = [];
+					flameche.stats.base[ElementType.FIRE] = number;
+					flameche.stats.special.torchDamage = flameche.stats.base[ElementType.FIRE];
+					flameche.balanced = true;
+					applyGlobalDefenseBonus(flameche, ElementType.FIRE, number);
+					addStatus(fightData, flameche, Status.TORCHED);
+				}
+			}
 			break;
 		}
 
@@ -2497,7 +2848,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		case Skill.AUBE_FEUILLUE: {
 			// Heal each fighter of the caster's group
-			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 2 + fighter.stats.base[ElementType.WOOD] * 2;
+			const hpHealed = fighter.stats.base[ElementType.LIGHTNING] * 1 + fighter.stats.base[ElementType.WOOD] * 1;
 			getAllies(fightData, fighter).forEach(ally => {
 				heal(fightData, ally, randomBetweenSeeded(fightData.rng, 1, hpHealed), activate_step);
 			});
@@ -2508,13 +2859,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.DANSE_FOUDROYANTE: {
 			// Attack a random opponent 5 times with an lightning assault of power 3
 
+			// This check guarantess that if at least there is at least one opponent.
+			if (getRandomOpponentForAssault(fightData, fighter) === null) {
+				return cancel();
+			}
+
 			for (let i = 0; i < 5; i++) {
 				// Get opponent for assault, the opponent can change in between the 5 hits
 				const opponent = getRandomOpponentForAssault(fightData, fighter);
 
-				if (opponent === null) {
-					break;
-				}
+				// If no more opponent is found, break out of loop and finish the skill.
+				if (opponent === null) break;
 
 				// For this skill, the move to and move back steps are handled outside of the launchAssault method
 				// Add moveTo step
@@ -2570,19 +2925,17 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			);
 			break;
 		case Skill.COUP_SOURNOIS: {
-			// Get random opponent
+			// Launch normal assault
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit && hit.hpLost > 0) {
-				let damage = 0;
-
-				// Base damage of half the target hp if is does not know perception or is not a boss
-				if (!hit.target.perception && hit.target.type !== 'boss') {
-					// 50% HP otherwise
-					damage = applyBalanceDamage(hit.target, Math.round(hit.target.hp / 2));
+			// If it hits, chance to remove % of max hp based on target armor
+			if (hit && hit.hpLost > 0 && hit.target.type !== 'boss') {
+				// 100% armor means 0% chance to land the hit, 5% armor means 95% chance to land the hit
+				if (randomBetweenSeeded(fightData.rng, 0, 99) > getFighterArmorRatio(hit.target, []) * 100) {
+					// 5% max HP, min 1
+					const damage = Math.max(Math.round(hit.target.maxHp * 0.05), 1);
+					loseHp(fightData, hit.target, damage, LifeEffect.Skull);
 				}
-
-				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
 			}
 			break;
 		}
@@ -2596,32 +2949,37 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			);
 
 			if (result.target && !result.evasion) {
-				// Slow opponent
-				addStatus(fightData, result.target, Status.SLOWED, StatusLength.MEDIUM);
+				// Remove torche
+				if (hasStatus(result.target, Status.TORCHED)) {
+					removeStatus(fightData, result.target, Status.TORCHED);
+				} else {
+					// Slow opponent
+					addStatus(fightData, result.target, Status.SLOWED, StatusLength.MEDIUM);
+				}
 			}
 			break;
 		}
 		case Skill.COUP_FATAL: {
-			// Get random opponent
+			// Launch normal assault
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
-			if (hit && hit.hpLost > 0) {
-				let damage = 0;
+			// If it hits, destroy 10% armor, then chance to remove % of max hp based on target armor
+			if (hit && hit.hpLost > 0 && hit.target.type !== 'boss') {
+				// Destroy 10% armor
+				destroyArmor(fightData, hit.target, 0.1);
 
-				// Base damage of whole target hp if is does not know perception or is not a boss
-				if (!hit.target.perception && hit.target.type !== 'boss') {
-					// 100% current HP otherwise
-					damage = applyBalanceDamage(hit.target, hit.target.hp);
+				// 100% armor means 0% chance to land the hit, 5% armor means 95% chance to land the hit
+				if (randomBetweenSeeded(fightData.rng, 0, 99) > getFighterArmorRatio(hit.target, []) * 100) {
+					// Remove 10% max HP, min 1
+					const damage = Math.max(Math.round(hit.target.maxHp * 0.1), 1);
+					loseHp(fightData, hit.target, damage, LifeEffect.Skull);
 				}
-
-				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
 			}
 			break;
 		}
 		case Skill.MOIGNONS_LIQUIDES: {
 			const opponent = getRandomOpponent(fightData, fighter);
 
-			// TODO simplify history: there is 3 steps added here just for the visual effects
 			// Add target
 			activate_step.targets.push({ tid: opponent.id });
 			// Add 2 steps for fx
@@ -2641,9 +2999,6 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.PETRIFICATION: {
 			// Get random opponent
 			const opponent = getRandomOpponent(fightData, fighter);
-
-			// Add target
-			activate_step.targets.push({ tid: opponent.id });
 
 			// Petrification removes flying and intangible.
 			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
@@ -2683,31 +3038,117 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 			break;
 		}
-		case Skill.DELUGE:
-			{
-				attackAllOpponents(
-					fightData,
-					fighter,
-					getElementalAttack(fighter, ElementType.WATER, 10),
-					skill.id,
-					activate_step
-				);
-				// Increase time of all opponents by 8
-				const opponents = getOpponents(fightData, fighter);
-				const init_down_notify = {
-					action: 'notify',
-					fids: [],
-					notification: NotificationList.InitDown
-				} as NotifyStep;
-				opponents.forEach(opponent => {
-					opponent.time += 8 * TIME_FACTOR;
-					init_down_notify.fids.push(opponent.id);
+		case Skill.DELUGE: {
+			attackAllOpponents(
+				fightData,
+				fighter,
+				getElementalAttack(fighter, ElementType.WATER, 10),
+				skill.id,
+				activate_step
+			);
+			// Increase time of all opponents by 8
+			const opponents = getOpponents(fightData, fighter);
+			const init_down_notify = {
+				action: 'notify',
+				fids: [],
+				notification: NotificationList.InitDown
+			} as NotifyStep;
+			opponents.forEach(opponent => {
+				opponent.time += 8 * TIME_FACTOR;
+				init_down_notify.fids.push(opponent.id);
+			});
+			fightData.steps.push(init_down_notify);
+			break;
+		}
+		case Skill.NECROMANCIE: {
+			// Get all dead non espaced fighters, except clones, reinforcements and bosses
+			const limitTypes = ['dinoz', 'monster'];
+			const deadfighters = fightData.fighters.filter(
+				f =>
+					f.hp <= 0 &&
+					!f.escaped &&
+					limitTypes.includes(f.type) &&
+					!hasSkill(f, Skill.SELF_CONTROL) &&
+					!hasStatus(f, Status.UNDEAD)
+			);
+
+			if (deadfighters.length === 0) return cancel();
+
+			const random = randomBetweenSeeded(fightData.rng, 0, deadfighters.length - 1);
+			const dead = deadfighters[random];
+
+			// Reset status before anything
+			dead.status = [];
+			// Resurrect
+			heal(fightData, dead, 10, undefined, LifeEffect.Skull);
+			// Remove fighter from list of deads
+			fightData.deads = fightData.deads.filter(d => d !== dead.id);
+			// Reset energy to max
+			dead.energy = dead.maxEnergy;
+			// Set time to invoquer
+			dead.time = fighter.time;
+			// Mark as undead
+			addStatus(fightData, dead, Status.UNDEAD);
+
+			fightData.steps.push({
+				action: 'moveTo',
+				fid: dead.id,
+				tid: fighter.id
+			});
+			if (dead.attacker !== fighter.attacker) {
+				dead.attacker = !dead.attacker;
+				fightData.steps.push({
+					action: 'flip',
+					fid: dead.id
 				});
-				fightData.steps.push(init_down_notify);
-				break;
 			}
 			break;
+		}
 		// WOOD
+		case Skill.FORCEBRUTE: {
+			// Bonuses just for this attack
+			fighter.allAssaultBonus += 3 * fighter.stats.base[ElementType.WOOD];
+			fighter.stats.ignoreArmor.assault *= 2;
+
+			// Attack opponent
+			launchAssault(fightData, fighter, true, Skill.FORCEBRUTE);
+
+			// Remove bonuses once attack is done
+			fighter.allAssaultBonus -= 3 * fighter.stats.base[ElementType.WOOD];
+			fighter.stats.ignoreArmor.assault /= 2;
+			break;
+		}
+		case Skill.PRINTEMPS_PRECOCE: {
+			const allies = getAllies(fightData, fighter);
+			if (allies.length === 1) return cancel();
+
+			// Heal all allies
+			allies.forEach(f => {
+				// Skip self
+				if (f.id === fighter.id) return;
+
+				// Heal 1-wood HP
+				heal(
+					fightData,
+					f,
+					randomBetweenSeeded(fightData.rng, 1, fighter.stats.base[ElementType.WOOD]),
+					activate_step
+				);
+			});
+
+			// Add step
+			fightData.steps.push(activate_step);
+			break;
+		}
+		case Skill.PROVOCATION: {
+			if (hasStatus(fighter, Status.TAUNT)) return cancel();
+
+			addStatus(fightData, fighter, Status.TAUNT, StatusLength.LONG);
+			// TODO need FX to show status instead like poison
+			// Add step for fx
+			fightData.steps.push(activate_step);
+			break;
+		}
 		case Skill.LANCER_DE_ROCHE:
 			attackSingleOpponent(
 				fightData,
@@ -2809,9 +3250,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const opponents = getOpponents(fightData, fighter, ['monster']);
 
 			// Cancel if no monster opponents
-			if (!opponents.length) {
-				return cancel();
-			}
+			if (!opponents.length) return cancel();
 
 			// Get random opponent
 			const monster = opponents[randomBetweenSeeded(fightData.rng, 0, opponents.length - 1)];
@@ -2856,9 +3295,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		// Invocations
 		case Skill.HERCOLUBUS: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2879,9 +3316,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.VULCAIN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2896,9 +3331,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ARMURE_DIFRIT: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2910,9 +3343,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SALAMANDRE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2927,9 +3358,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BALEINE_BLANCHE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2941,9 +3370,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.LEVIATHAN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2958,9 +3385,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ONDINE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2975,9 +3400,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.LOUP_GAROU: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -2992,9 +3415,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BENEDICTION_DES_FEES: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3006,9 +3427,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.YGGDRASIL: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3020,9 +3439,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.RAIJIN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3037,9 +3454,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.GOLEM: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3051,23 +3466,19 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ROI_DES_SINGES: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
 			getAllies(fightData, fighter).forEach(ally => {
 				// Increase evasion
-				ally.stats.special.evasion *= 1.2;
+				ally.stats.evasion.global *= 1.2;
 			});
 			break;
 		}
 		case Skill.DJINN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3076,16 +3487,12 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.FUJIN: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			// Cancel if an ally used FUJIN already
 			const allies = getAllies(fightData, fighter);
 
-			if (allies.some(ally => hasStatus(ally, Status.USED_FUJIN))) {
-				return cancel();
-			}
+			if (allies.some(ally => hasStatus(ally, Status.USED_FUJIN))) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3099,9 +3506,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.TOTEM_ANCESTRAL_AEROPORTE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3116,9 +3521,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BOUDDHA: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3135,9 +3538,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.HADES: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3152,9 +3553,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.REINE_DE_LA_RUCHE: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3172,9 +3571,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.QUETZACOATL: {
 			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3189,9 +3586,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.BIG_MAMA: {
 			// Cancel if no invocation left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
+			if (fighter.invocations <= 0) return cancel();
 
 			fighter.invocations -= 1;
 
@@ -3283,9 +3678,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.AMAZONIE: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.AMAZONIE);
 			break;
@@ -3312,9 +3705,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ABYSSE: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.ABYSSE);
 			break;
@@ -3361,18 +3752,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.FEU_DE_ST_ELME: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
 			break;
 		}
 		case Skill.OURANOS: {
 			// Only one environment active at a time
-			if (fightData.environment) {
-				return cancel();
-			}
+			if (fightData.environment) return cancel();
 
 			activateEnvironment(fightData, fighter, Skill.OURANOS);
 			break;
@@ -3511,9 +3898,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.M_INSTANT_FLEE:
 		case Skill.M_FLEE: {
-			if (fighter.escaped || fighter.hp <= 0) {
-				return cancel();
-			}
+			if (fighter.escaped || fighter.hp <= 0) return cancel();
 
 			// Add leave step
 			fightData.steps.push({
@@ -3602,7 +3987,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, fighter.element, 8), skill.id, activate_step);
 
 			// Change element
-			fighter.element = fighter.elements[(fighter.elements.indexOf(fighter.element) + 1) % fighter.elements.length];
+			fighter.currentElementIndex = (fighter.currentElementIndex + 1) % fighter.elements.length;
+			fighter.element = fighter.elements[fighter.currentElementIndex];
 			break;
 		}
 		case Skill.M_DEMYOM_HEAL: {
@@ -3627,16 +4013,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		default:
-			console.warn('Unknown skill', skill.id);
+			sendJSONToDiscord('Error `No skill found` in `activateSkill`', {
+				fightData: fightData,
+				fighter: fighter
+			});
 			return cancel();
 	}
 
-	// Not working well to add the activate step for all skills at this point
-	// // Add step
-	// fightData.steps.push(activate_step);
-
-	// Consume energy
-	setEnergy(fighter, fighter.energy - skill.energy);
+	setEnergy(fighter, Math.round(fighter.energy - skill.energy * fighter.skillEnergyFactor));
 
 	if (fighter.type !== 'boss') {
 		// Get opponents with SHARIGNAN
@@ -3666,7 +4050,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	}
 
 	// Reset next skill
-	if (skill.id === fighter.nextSkill?.id) {
+	if (fighter.nextSkill && skill.id === fighter.nextSkill.id) {
 		fighter.nextSkill = undefined;
 	}
 
@@ -3678,7 +4062,7 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	if (opponent.hp <= 0) return false;
 
 	const random = fightData.rng();
-	const countered = random < opponent.stats.special.counter - 1;
+	const countered = random < getFighterCounter(opponent);
 
 	// Counter stat
 	if (countered) {
@@ -3688,11 +4072,23 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
-const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
-	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
+const loseHpBalanced = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	damage: number,
+	fx: LifeEffect,
+	step?: FightStep
+) => {
+	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx, step);
 };
 
-const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+const loseHp = (
+	fightData: DetailedFight,
+	fighter: DetailedFighter,
+	damage: number,
+	fx: LifeEffect,
+	step?: FightStep
+) => {
 	// TODO: check for danger detector item
 	let hp_lost = damage;
 	const initial_hp = fighter.hp;
@@ -3704,12 +4100,19 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 		hp_lost = initial_hp;
 	}
 
-	fightData.steps.push({
-		action: 'looseHp',
-		fid: fighter.id,
-		hp: hp_lost,
-		fx
-	});
+	if (!step) {
+		fightData.steps.push({
+			action: 'looseHp',
+			fid: fighter.id,
+			hp: hp_lost,
+			fx
+		});
+	} else {
+		(step as SkillActivateStep).targets.push({
+			tid: fighter.id,
+			damages: hp_lost
+		});
+	}
 
 	updateStat(fightData, fighter, 'hpLost', hp_lost);
 
@@ -3771,11 +4174,11 @@ const poison = (
 	let poisonDamage = 0;
 	switch (skill) {
 		case Skill.AURA_PUANTE: {
-			poisonDamage = 10;
+			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.AIR] / 4, 0.6)), 1);
 			break;
 		}
 		case Skill.GRIFFES_EMPOISONNEES: {
-			poisonDamage = 14;
+			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.WATER] / 2, 0.6)), 1);
 			break;
 		}
 		case Skill.HADES: {
@@ -3783,11 +4186,7 @@ const poison = (
 			break;
 		}
 		case Skill.NUAGE_TOXIQUE: {
-			poisonDamage = poisoner.stats.base[ElementType.AIR];
-			break;
-		}
-		case Skill.HALEINE_FETIVE: {
-			poisonDamage = poisoner.stats.base[ElementType.AIR];
+			poisonDamage = Math.max(Math.round(Math.pow(poisoner.stats.base[ElementType.AIR], 0.6)), 1);
 			break;
 		}
 		case Skill.M_STINGER: {
@@ -3833,7 +4232,16 @@ export const heal = (
 ) => {
 	// No heal if BEER
 	// TODO add fx for no healing
-	if (hasStatus(fighter, Status.BEER)) return;
+	if (hasStatus(fighter, Status.BEER) || hasStatus(fighter, Status.NO_HEAL) || hasStatus(fighter, Status.UNDEAD)) {
+		// Add FX
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: fighter.id,
+			skill: Skill.MALEDICTION_AQUEUSE,
+			targets: [{ tid: fighter.id }]
+		});
+		return;
+	}
 
 	const hpBeforeHeal = fighter.hp;
 
@@ -3841,11 +4249,15 @@ export const heal = (
 
 	// Apply cook bonus only to item healing
 	if (isItem) {
-		if (fighter.attacker && fightData.attackerData.hasCook) {
+		if (fighter.attacker && fightData.attackerData[Skill.CUISINIER]) {
 			healBonus *= 1.1;
-		} else if (!fighter.attacker && fightData.defenderData.hasCook) {
+		} else if (!fighter.attacker && fightData.defenderData[Skill.CUISINIER]) {
 			healBonus *= 1.1;
 		}
+	}
+
+	if (hasSkill(fighter, Skill.MEDECINE)) {
+		healBonus *= 2;
 	}
 
 	fighter.hp += Math.round(hp * healBonus);
@@ -3943,6 +4355,7 @@ const attackTarget = (
 	// Unless specified, the attack is considered not an assault and cannot combo by default
 	isAssault = isAssault ?? false;
 	let canCombo = isAssault ?? false;
+	let multiHitCounter = 0;
 
 	// Abort if fighter is dead
 	if (attacker.hp <= 0) {
@@ -3955,21 +4368,21 @@ const attackTarget = (
 		};
 	}
 
-	// Note: combo counter seems to work weirdly, or may be not...
-	// Fighter passes its turn if it has reached max combo at this step
-	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
-		fightData.steps.push({
-			action: 'tired',
-			fighter: stepFighter(attacker)
-		});
-		return {
-			attacker: attacker,
-			target: target,
-			isAssault: isAssault,
-			evasion: false,
-			hpLost: 0
-		};
-	}
+	// // Note: combo counter seems to work weirdly, or may be not...
+	// // Fighter passes its turn if it has reached max combo at this step
+	// if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
+	// 	fightData.steps.push({
+	// 		action: 'tired',
+	// 		fighter: stepFighter(attacker)
+	// 	});
+	// 	return {
+	// 		attacker: attacker,
+	// 		target: target,
+	// 		isAssault: isAssault,
+	// 		evasion: false,
+	// 		hpLost: 0
+	// 	};
+	// }
 
 	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn
 	// Add teammates if Item.FRIENDLY_WHISTLE
@@ -4011,21 +4424,25 @@ const attackTarget = (
 	// TODO: rework multiple attackers (part of whistle rework)
 	// for (const attacker of attackers) {
 	// }
-	// NOTE: combo counter seems to work weirdly, or may be not
-	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+	// // NOTE: combo counter seems to work weirdly, or may be not
+	// while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+	while (true) {
 		// Initialize all variables here to avoid confusion between iterations of the loop
 		let isDodged = false;
 		let isSuperDodged = false;
 		let noDamage = false;
 		let break_intangible = false;
 
-		// Increment the attacker's combo counter
-		// Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
-		// Note: this would prevent infinite counter too...
-		attacker.comboCounter++;
+		// // Increment the attacker's combo counter
+		// // Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
+		// // Note: this would prevent infinite counter too...
+		// attacker.comboCounter++;
+
+		// Calculate armor
+		const armor = calculateArmor(attacker, target, power, isAssault);
 
 		// Get damage
-		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, isAssault);
+		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, armor, isAssault);
 
 		// Apply defensive effects
 		damage = checkDefensiveEffects(
@@ -4035,15 +4452,15 @@ const attackTarget = (
 			damage,
 			elements,
 			isAssault,
-			skill ? skillList[skill].type !== SkillType.I : false
+			skill ? skillList[skill].type === SkillType.I : false
 		);
 
 		// Check for assault dodge
 		if (
 			isAssault &&
-			!hasStatus(target, Status.PETRIFIED) &&
+			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
 			!attacker.cancelAssaultDodge &&
-			fightData.rng() < target.stats.special.evasion - 1
+			fightData.rng() < getFighterEvasion(target, power)
 		) {
 			isDodged = true;
 		}
@@ -4057,7 +4474,7 @@ const attackTarget = (
 				hasStatus(target, Status.FLYING) ||
 				hasStatus(target, Status.STUNNED)
 			) &&
-			fightData.rng() < target.stats.special.superEvasion - 1
+			fightData.rng() < getFighterSuperEvasion(target, power)
 		) {
 			isSuperDodged = true;
 		}
@@ -4078,7 +4495,8 @@ const attackTarget = (
 
 		// INTANGIBLE
 		if (hasStatus(target, Status.INTANGIBLE)) {
-			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
+			// Can be hit by assaults with special perk or water + perception or any air skill
+			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e === ElementType.AIR)) {
 				damage = 1;
 				break_intangible = true;
 			} else {
@@ -4146,11 +4564,46 @@ const attackTarget = (
 		// Check for after defense effects of the target
 		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
 
-		// Check for combo
-		if (canCombo) {
-			if (fightData.rng() < attacker.stats.special.multihit - 1) {
+		// Check for combo: needs to be alive, not disabled, with enough energy
+		if (
+			canCombo &&
+			attacker.hp > 0 &&
+			attacker.energy >= totalEnergyCost + energyCost + BASE_ENERGY_COST &&
+			!(
+				hasStatus(attacker, Status.PETRIFIED) ||
+				hasStatus(attacker, Status.ASLEEP) ||
+				hasStatus(attacker, Status.STUNNED)
+			)
+		) {
+			if (fightData.rng() < getFighterMultihit(attacker, multiHitCounter, elements[0])) {
+				// If target has riposte and succeeds its roll, interrupt the combo
+				if (
+					target.hp > 0 &&
+					target.energy >= BASE_ENERGY_COST &&
+					!(
+						hasStatus(target, Status.PETRIFIED) ||
+						hasStatus(target, Status.ASLEEP) ||
+						hasStatus(target, Status.STUNNED)
+					) &&
+					hasSkill(target, Skill.RIPOSTE) &&
+					randomBetweenSeeded(fightData.rng, 0, 99) < 50
+				) {
+					fightData.steps.push({
+						action: 'anim',
+						fid: attacker.id,
+						anim: 'attack'
+					});
+					fightData.steps.push({
+						action: 'skillAnnounce',
+						fid: target.id,
+						skill: Skill.RIPOSTE
+					});
+					attackTarget(fightData, target, attacker, true);
+					break;
+				}
 				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
-				energyCost++;
+				energyCost += BASE_ENERGY_COST;
+				multiHitCounter++;
 				updateStat(fightData, attacker, 'multiHits', 1);
 				continue;
 			}
@@ -4183,7 +4636,12 @@ const attackTarget = (
 
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && counterAttack(fightData, target)) {
+		if (
+			isAssault &&
+			target.energy >= BASE_ENERGY_COST &&
+			!(hasStatus(target, Status.PETRIFIED) || hasStatus(target, Status.ASLEEP) || hasStatus(target, Status.STUNNED)) &&
+			counterAttack(fightData, target)
+		) {
 			// Add counter step
 			fightData.steps.push({
 				action: 'counter',
@@ -4193,16 +4651,36 @@ const attackTarget = (
 
 			// Opponent attacks fighter: the counter can combo
 			attackTarget(fightData, target, attacker, true);
+		} else {
+			const reinforcements = getAllies(fightData, attacker, ['reinforcement']).filter(r => r.master === attacker.id);
+			if (isAssault && totalDamage > 0 && reinforcements.length > 0 && hasSkill(attacker, Skill.CHARISME)) {
+				reinforcements.forEach(reinforcement => {
+					attackTarget(fightData, reinforcement, target, true);
+					fightData.steps.push({
+						action: 'moveBack',
+						fid: reinforcement.id
+					});
+				});
+			}
 		}
 	}
 
-	return {
+	// Post attack effets
+	if (target.hp <= 0) {
+		if (isAssault && hasSkill(attacker, Skill.DECOMPOSEUR) && target.type !== 'clone') {
+			heal(fightData, attacker, Math.round(target.maxHp * 0.1), undefined, LifeEffect.Skull);
+		}
+	}
+
+	const hit: HitResult = {
 		attacker: attacker,
 		target: target,
 		isAssault: isAssault,
 		evasion: evasion,
 		hpLost: totalDamage
 	};
+
+	return hit;
 };
 
 const checkDefensiveEffects = (
@@ -4217,7 +4695,7 @@ const checkDefensiveEffects = (
 	// Reduce damage by bulle percentage
 	if (
 		// Opponent has BULLE
-		target.stats.special.bubbleRate > 1 &&
+		hasSkill(target, Skill.BULLE) &&
 		// Don't trigger on assaults and invocations
 		!isCloseCombat &&
 		!isInvocation &&
@@ -4228,29 +4706,27 @@ const checkDefensiveEffects = (
 		// Don't trigger for VOID
 		!elements.includes(ElementType.VOID)
 	) {
-		damage = Math.round(damage * (target.stats.special.bubbleRate - 1));
+		damage = Math.round(damage * (1 - target.stats.special.bubbleRate));
 
-		// TODO add bubble effect post skill/hit
-		// if (actualDamage[opponent.id] < damage) {
-		// 	// Add resist step
-		// 	fightData.steps.push({
-		// 		action: 'resist',
-		// 		dinoz: stepFighter(opponent)
-		// 	});
-		// }
+		fightData.steps.push({
+			action: 'attach',
+			fid: target.id,
+			fx: 'fxBubble'
+		});
 	}
 
-	// FORME VAPOREUSE
+	// FORME ETHERALE
 	if (
-		// Opponent has FORME_VAPOREUSE
-		hasSkill(target, Skill.FORME_VAPOREUSE) &&
-		// 6% chance
-		randomBetweenSeeded(fightData.rng, 0, 99) < 6
+		// Opponent has FORME ETHERALE
+		hasSkill(target, Skill.FORME_ETHERALE) &&
+		!hasStatus(target, Status.INTANGIBLE) &&
+		// 8% chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 8
 	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
-			skill: Skill.FORME_VAPOREUSE
+			skill: Skill.FORME_ETHERALE
 		});
 		// Add INTANGIBLE
 		addStatus(fightData, target, Status.INTANGIBLE, StatusLength.SHORT);
@@ -4271,6 +4747,22 @@ const checkDefensiveEffects = (
 		// Reduce damage by 5
 		damage = Math.max(damage - 5, 0);
 	}
+
+	// // DECOLLAGE D'URGENCE
+	// if (
+	// 	isCloseCombat &&
+	// 	hasSkill(target, Skill.DECOLLAGE_D_URGENCE) &&
+	// 	// 5 % chance
+	// 	randomBetweenSeeded(fightData.rng, 0, 99) < 5
+	// ) {
+	// 	fightData.steps.push({
+	// 		action: 'skillAnnounce',
+	// 		fid: target.id,
+	// 		skill: Skill.DECOLLAGE_D_URGENCE
+	// 	});
+	// 	// Add FLYING
+	// 	addStatus(fightData, target, Status.FLYING, StatusLength.SHORT);
+	// }
 
 	// Check for mud wall
 	if (target.mudWall) {
@@ -4375,13 +4867,19 @@ const checkAfterAttackEffects = (
 	}
 
 	// CONCENTRATION: save last target ID if it was an assault and the target is not the same as the original side of the attacker
-	if (isCloseCombat && attacker.attacker != target.attacker && hasSkill(attacker, Skill.CONCENTRATION)) {
+	if (isCloseCombat && attacker.attacker !== target.attacker && hasSkill(attacker, Skill.CONCENTRATION)) {
 		attacker.previousTarget = target.id;
 	}
 
 	// Poison opponent if fighter has Skill.HALEINE_FETIVE and landed a hit with an assault
-	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.HALEINE_FETIVE)) {
-		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
+	if (
+		isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.HALEINE_FETIVE) &&
+		// 1/2 chance
+		randomBetweenSeeded(fightData.rng, 0, 1) === 0
+	) {
+		loseHpBalanced(fightData, target, attacker.stats.special.fetidBreathDamage, LifeEffect.Acid);
 	}
 
 	// TODO
@@ -4393,7 +4891,7 @@ const checkAfterAttackEffects = (
 
 	// Burn opponent if fighter has Skill.GRIFFES_INFERNALES and landed a hit with an assault that was not dodged
 	if (isCloseCombat && !isDodged && hasSkill(attacker, Skill.GRIFFES_INFERNALES)) {
-		const damage = attacker.stats.base[ElementType.FIRE];
+		const damage = target.stats.base[ElementType.FIRE];
 
 		target.burnedBy = {
 			id: attacker.id,
@@ -4413,6 +4911,49 @@ const checkAfterAttackEffects = (
 			setEnergy(target, 0);
 			setEnergy(attacker, attacker.energy + energyStolen);
 		}
+	}
+
+	// MALEDICTION AQUEUSE: 10% chance to apply NO_HEAL
+	if (
+		damage > 0 &&
+		elements.find(element => element === ElementType.WATER) &&
+		hasSkill(attacker, Skill.MALEDICTION_AQUEUSE) &&
+		randomBetweenSeeded(fightData.rng, 0, 99) < 10
+	) {
+		addStatus(fightData, target, Status.NO_HEAL, StatusLength.MEDIUM);
+		// Add FX
+		// TODO find better FX like the poison marker
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.MALEDICTION_AQUEUSE,
+			targets: []
+		});
+	}
+
+	// Onde de Vie
+	if (damage > 0 && elements.find(element => element === ElementType.WATER) && hasSkill(attacker, Skill.ONDE_DE_VIE)) {
+		heal(fightData, attacker, 1, undefined, LifeEffect.Water);
+	}
+
+	// Revitalisation
+	if (
+		isCloseCombat &&
+		damage > 0 &&
+		hasSkill(attacker, Skill.REVITALISATION) &&
+		elements.find(element => element === ElementType.LIGHTNING)
+	) {
+		heal(fightData, attacker, 1, undefined, LifeEffect.Lightning);
+	}
+
+	// Crocs Diamants
+	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.CROCS_DIAMANT)) {
+		destroyArmor(fightData, target, 0.01);
+	}
+
+	// Flash
+	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.FLASH) && randomBetweenSeeded(fightData.rng, 0, 99) < 5) {
+		addStatus(fightData, target, Status.DAZZLED, StatusLength.SHORT);
 	}
 
 	// Cancel FLYING
@@ -4449,6 +4990,105 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Skills:
+	// Furie: hit landed
+	if (
+		damage > 0 &&
+		// 20 % chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 20 &&
+		hasSkill(target, Skill.FURIE)
+	) {
+		target.nextAssaultBonus += 3;
+		// Add fx for gain of power
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.FURIE,
+			targets: [{ tid: target.id }]
+		});
+	}
+
+	// RAGE
+	if (damage >= target.maxHp * 0.1 && !hasStatus(target, Status.RAGE) && hasSkill(target, Skill.RAGE)) {
+		// Then announce and fx
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.RAGE
+		});
+
+		addStatus(fightData, target, Status.RAGE, StatusLength.SHORT);
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.RAGE,
+			targets: [{ tid: target.id }]
+		});
+		// Remove all bad status
+		target.status.forEach(status => {
+			if (BadStatus.includes(status.type)) {
+				removeStatus(fightData, target, status.type);
+			}
+		});
+		// Buff, gains initiative
+		// target.hasRaged = true;
+		// target.allAssaultMultiplier *= 1.25;
+		// target.stats.speed.global *= 0.8;
+		// target.stats.counter.global *= 1.2;
+		setEnergy(target, target.energy + 10);
+		getFighters(fightData).forEach(f => {
+			if (f.id !== target.id) {
+				f.time += 6 * TIME_FACTOR;
+			}
+		});
+
+		// Add fx for gain of init
+		fightData.steps.push({
+			action: 'notify',
+			fids: [target.id],
+			notification: NotificationList.InitUp
+		});
+		fightData.steps.push({
+			action: 'gainEnergy',
+			fighter: stepFighter(target),
+			energy: target.energy
+		});
+	}
+
+	// Maitre des Ronces 1/2 chance
+	if (
+		isCloseCombat &&
+		damage > 0 &&
+		hasSkill(target, Skill.MAITRE_DES_RONCES) &&
+		randomBetweenSeeded(fightData.rng, 0, 1) === 0
+	) {
+		attacker.time += 1 * TIME_FACTOR;
+		loseHpBalanced(fightData, attacker, target.stats.special.thornsDamage, LifeEffect.Wood);
+		// Add fx for loss of init
+		fightData.steps.push({
+			action: 'notify',
+			fids: [attacker.id],
+			notification: NotificationList.InitDown
+		});
+	}
+
+	// Zero absolu: hit landed
+	if (
+		isCloseCombat &&
+		damage > 0 &&
+		// 5 % chance
+		randomBetweenSeeded(fightData.rng, 0, 99) < 5 &&
+		hasSkill(target, Skill.ZERO_ABSOLU)
+	) {
+		// Add fx for freeze
+		fightData.steps.push({
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.ZERO_ABSOLU,
+			targets: [{ tid: attacker.id }]
+		});
+		addStatus(fightData, attacker, Status.SLOWED, StatusLength.SHORT);
+	}
+
 	// Accupuncture (*not* tied to the healing status): close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasSkill(target, Skill.ACUPUNCTURE)) {
 		loseHp(fightData, attacker, 1, LifeEffect.Normal);
@@ -4459,10 +5099,29 @@ const checkAfterDefenseEffects = (
 		isCloseCombat &&
 		damage > 0 &&
 		hasSkill(target, Skill.SANG_ACIDE) &&
-		// 1/2 chance
-		randomBetweenSeeded(fightData.rng, 0, 1) === 0
+		// 1/3 chance
+		randomBetweenSeeded(fightData.rng, 0, 2) === 0
 	) {
 		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
+	}
+
+	// Decharge: hit landed, 10% chance to electrocute and stun
+	if (damage > 0 && hasSkill(target, Skill.DECHARGE) && randomBetweenSeeded(fightData.rng, 0, 99) < 10) {
+		fightData.steps.push({
+			action: 'skillAnnounce',
+			fid: target.id,
+			skill: Skill.DECHARGE
+		});
+		const activate_step: SkillActivateStep = {
+			action: 'skillActivate',
+			fid: target.id,
+			skill: Skill.DECHARGE,
+			targets: []
+		};
+		loseHpBalanced(fightData, attacker, target.stats.special.dischargeDamage, LifeEffect.Lightning, activate_step);
+		// Add step to history
+		fightData.steps.push(activate_step);
+		addStatus(fightData, attacker, Status.STUNNED, StatusLength.SUPER_SHORT);
 	}
 
 	// Aura puante: close combat and hit landed, the attacker must not be poisoned
@@ -4472,7 +5131,7 @@ const checkAfterDefenseEffects = (
 			fid: target.id,
 			skill: Skill.AURA_PUANTE
 		});
-		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.MEDIUM);
+		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.SUPER_SHORT);
 	}
 
 	// TODO Bulle (add fx?)
@@ -4566,6 +5225,10 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 
 							// Register the hp lost from poison
 							const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
+
+							if (hasSkill(poisoner, Skill.SOUFFLE_DE_VIE)) {
+								heal(fightData, poisoner, 1, undefined, LifeEffect.Poison);
+							}
 
 							// Update stat
 							updateStat(fightData, poisoner, 'poison_damage', hp_lost);
@@ -4833,6 +5496,29 @@ export const checkDeaths = (fightData: DetailedFight) => {
 		}
 	}
 
+	// Cancel Hypnosis if no allies left for the hypnosed guys
+	const hypnosedFighters = getFighters(fightData).filter(f => f.hypnotized);
+	hypnosedFighters.forEach(hypnoF => {
+		if (hypnoF.hypnotized) {
+			const aliveAlliesCount = fightData.fighters.filter(
+				f => f.hp > 0 && !f.escaped && f.attacker === hypnoF.originalTeamSide
+			).length;
+			// Remove hypnotize if no more time left
+			if (aliveAlliesCount === 0) {
+				// Change team
+				hypnoF.attacker = !hypnoF.attacker;
+				hypnoF.hypnotized = undefined;
+
+				// Add hypnotize step
+				fightData.steps.push({
+					action: 'endHypnosis',
+					fighter: stepFighter(hypnoF),
+					ally: stepFighter(getAllies(fightData, hypnoF).filter(f => f.id != hypnoF.id)[0])
+				});
+			}
+		}
+	});
+
 	// Set loser if only one team is alive
 	if (attackersAlive === 0) {
 		fightData.loser = 'attackers';
@@ -4855,10 +5541,12 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 
 	// Change fighter element
 	if (!hasStatus(attacker, Status.LOCKED)) {
-		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
+		attacker.currentElementIndex = (attacker.currentElementIndex + 1) % attacker.elements.length;
+		attacker.element = attacker.elements[attacker.currentElementIndex];
 	}
 
 	// TODO any "onNextTurn" effets would go here
+
 	// Decrease turn left to environment if its caster just played
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		fightData.environment.turnsLeft--;
@@ -4938,7 +5626,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 					hypnoF.attacker = !hypnoF.attacker;
 					hypnoF.hypnotized = undefined;
 
-					// Add hypnotize step
+					// Add hypnotize step to move back to the its original side
 					fightData.steps.push({
 						action: 'endHypnosis',
 						fighter: stepFighter(hypnoF),
@@ -5033,24 +5721,42 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// Finally, go on with the figher's turn
 
 	// Event activation
-	const possibleEvent = randomlyGetEvent(fightData, attacker);
-	if (possibleEvent) {
-		activateEvent(fightData, possibleEvent);
-		checkDeaths(fightData);
-		if (fightData.loser) {
-			return;
+	const possibleEvents = randomlyGetEvent(fightData, attacker);
+	if (possibleEvents) {
+		for (let i = 0; i < possibleEvents.length; i++) {
+			// Activate, if event activated, then check deaths, interrupt if the fight is over or break out of loop.
+			if (activateEvent(fightData, possibleEvents[i])) {
+				checkDeaths(fightData);
+				if (fightData.loser) {
+					return;
+				}
+				break;
+			}
+			// Else, the event was cancelled, so try to activate the next event.
 		}
+	}
+
+	// If fighter gained any of those status after its event, its turn is interrupted
+	if (
+		hasStatus(attacker, Status.PETRIFIED) ||
+		hasStatus(attacker, Status.ASLEEP) ||
+		hasStatus(attacker, Status.STUNNED)
+	) {
+		return;
 	}
 
 	// Skill activation
 	// Unless specified, pick a random skill by default.
-	const possibleSkill = attacker.nextSkill ?? randomlyGetSkill(fightData, attacker);
-	if (possibleSkill) {
-		// End turn if skill activated
-		if (activateSkill(fightData, possibleSkill)) {
-			endTurnChecks(fightData, attacker);
-			return;
+	const possibleSkills = attacker.nextSkill ? [attacker.nextSkill] : randomlyGetSkill(fightData, attacker);
+	if (possibleSkills) {
+		for (let i = 0; i < possibleSkills.length; i++) {
+			// Activate, if skill activated, then perform end of turn checks and return.
+			if (activateSkill(fightData, possibleSkills[i])) {
+				endTurnChecks(fightData, attacker);
+				return;
+			}
 		}
+		// Else, the skill was cancelled, so try to activate the next skill.
 	}
 
 	// TODO rework

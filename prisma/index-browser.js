@@ -237,6 +237,7 @@ exports.Prisma.PlayerScalarFieldEnum = {
   connexionToken: 'connexionToken',
   money: 'money',
   quetzuBought: 'quetzuBought',
+  warLord: 'warLord',
   leader: 'leader',
   engineer: 'engineer',
   cooker: 'cooker',

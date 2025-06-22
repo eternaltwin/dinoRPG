@@ -7,6 +7,8 @@ import {
 	auth,
 	getAllInformationFromPlayer,
 	getEternalTwinId,
+	getPlayerDinozInformationForTeam,
+	getPlayerUSkills,
 	removeMoney,
 	setPlayer
 } from '../dao/playerDao.js';
@@ -439,6 +441,7 @@ export async function listAllDinozFromPlayer(req: Request) {
  * @param req.params.id {number} PlayerId
  * @param req.body.customText {string}
  * @param req.body.quetzuBought {number}
+ * @param req.body.warLord {boolean}
  * @param req.body.leader {boolean}
  * @param req.body.engineer {boolean}
  * @param req.body.cooker {boolean}
@@ -472,6 +475,7 @@ export async function editPlayer(req: Request) {
 		customText: req.body.customText,
 		quetzuBought: req.body.quetzuBought,
 		dailyGridRewards: req.body.dailyGridRewards,
+		warLord: req.body.warLord,
 		leader: req.body.leader,
 		engineer: req.body.engineer,
 		cooker: req.body.cooker,
@@ -508,6 +512,9 @@ export async function editPlayer(req: Request) {
 			'dailyGridRewards',
 			player.dailyGridRewards
 		);
+	}
+	if (typeof player.warLord !== 'undefined') {
+		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'warLord', player.warLord);
 	}
 	if (typeof player.leader !== 'undefined') {
 		await createLog(LogType.AdminUpdatePlayer, authed.id, undefined, req.params.id, 'leader', player.leader);
@@ -557,6 +564,7 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		money: player.money,
 		quetzuBought: player.quetzuBought,
 		dailyGridRewards: player.dailyGridRewards,
+		warLord: player.warLord,
 		leader: player.leader,
 		engineer: player.engineer,
 		cooker: player.cooker,
@@ -778,7 +786,13 @@ export async function debugFight(req: Request) {
 		calculateFightBetweenPlayers([dinoz1], false, [dinoz2], false, PlaceEnum.DOJO);
 	}
 	console.log('stop')*/
-	const fight = calculateFightBetweenPlayers(dinoz1, false, dinoz2, false, PlaceEnum.DOJO, timeout, seed);
+
+	const fakePlayer = {
+		cooker: false,
+		warLord: false
+	};
+
+	const fight = calculateFightBetweenPlayers(dinoz1, fakePlayer, dinoz2, fakePlayer, PlaceEnum.DOJO, timeout, seed);
 	return fight;
 }
 
@@ -797,6 +811,7 @@ async function getDinozToFight(dinozId: number) {
 			nbrUpWater: true,
 			nbrUpLightning: true,
 			nbrUpAir: true,
+			playerId: true,
 			skills: {
 				select: { skillId: true }
 			}
@@ -829,4 +844,150 @@ export async function getJobs(req: Request) {
 
 	console.log(rawJobs)*/
 	return rawJobs;
+}
+
+export async function softReset(req: Request) {
+	const authed = await auth(req);
+	const superAdmin = authed.id === GLOBAL.config.administrator;
+	if (!superAdmin) {
+		LOGGER.error(`${authed.id} attempted to truncate the game !`);
+		throw new ExpectedError(`Forbiden for you`);
+	}
+
+	try {
+		await prisma.$transaction([
+			prisma.$executeRawUnsafe(`SET CONSTRAINTS ALL DEFERRED;`),
+
+			// TRUNCATE multiple tables in one statement
+			prisma.$executeRawUnsafe(`TRUNCATE TABLE dojo CASCADE;`),
+
+			prisma.$executeRawUnsafe(`DELETE FROM "FBTournament";`),
+			prisma.$executeRawUnsafe(`TRUNCATE TABLE "FightArchive", "FightWatched", dinoz_skill_unlockable;`),
+			prisma.$executeRawUnsafe(`DELETE FROM dinoz_skill WHERE "gameDinozId" is not null ;`),
+			prisma.$executeRawUnsafe(`DELETE FROM dinoz_item WHERE "gameDinozId" is not null ;`),
+			prisma.$executeRawUnsafe(`DELETE FROM gamedinoz;`),
+			prisma.$executeRawUnsafe(`UPDATE dinoz SET display = SUBSTRING(display FROM 1 for 1) || '0' || SUBSTRING(display FROM 3 FOR 14);`),
+
+			// DELETE with condition
+			prisma.$executeRawUnsafe(`
+				DELETE FROM dinoz_skill
+				WHERE "skillId" NOT IN (
+				61102, 61103, 61104, 61105, 61106, 61107, 61108, 61109, 61113, 61117, 61122, 61201, 61301
+				);
+			`),
+
+				// Single UPDATE using CASE for each level
+				prisma.$executeRawUnsafe(`
+				UPDATE dinoz
+				SET experience = experience + CASE level
+				WHEN 2 THEN 100
+				WHEN 3 THEN 207
+				WHEN 4 THEN 322
+				WHEN 5 THEN 446
+				WHEN 6 THEN 579
+				WHEN 7 THEN 722
+				WHEN 8 THEN 876
+				WHEN 9 THEN 1041
+				WHEN 10 THEN 1219
+				WHEN 11 THEN 1410
+				WHEN 12 THEN 1616
+				WHEN 13 THEN 1837
+				WHEN 14 THEN 2075
+				WHEN 15 THEN 2331
+				WHEN 16 THEN 2606
+				WHEN 17 THEN 2901
+				WHEN 18 THEN 3219
+				WHEN 19 THEN 3560
+				WHEN 20 THEN 3927
+				WHEN 21 THEN 4322
+				WHEN 22 THEN 4746
+				WHEN 23 THEN 5202
+				WHEN 24 THEN 5692
+				WHEN 25 THEN 6219
+				WHEN 26 THEN 6786
+				WHEN 27 THEN 7382
+				WHEN 28 THEN 8037
+				WHEN 29 THEN 8741
+				WHEN 30 THEN 9498
+				WHEN 31 THEN 10312
+				WHEN 32 THEN 11187
+				WHEN 33 THEN 12128
+				WHEN 34 THEN 13139
+				WHEN 35 THEN 14226
+				WHEN 36 THEN 15395
+				WHEN 37 THEN 16651
+				WHEN 38 THEN 18002
+				WHEN 39 THEN 19454
+				WHEN 40 THEN 21015
+				WHEN 41 THEN 22693
+				WHEN 42 THEN 24497
+				WHEN 43 THEN 26433
+				WHEN 44 THEN 28518
+				WHEN 45 THEN 30760
+				WHEN 46 THEN 33169
+				WHEN 47 THEN 35760
+				WHEN 48 THEN 38545
+				WHEN 49 THEN 41538
+				WHEN 50 THEN 44756
+				ELSE 0
+				END;
+			`),
+
+			prisma.$executeRawUnsafe(`
+				UPDATE dinoz
+				SET 
+					"nbrUpFire" = CASE
+						WHEN "raceId" IN (1, 2, 3, 4, 26, 28) THEN 2
+						WHEN "raceId" IN (14, 19, 20, 27) THEN 1
+						ELSE 0
+					END,
+					"nbrUpWood" = CASE
+						WHEN "raceId" IN (15, 16, 23, 25, 28) THEN 2
+						WHEN "raceId" IN (9, 14, 17, 18, 20, 24) THEN 1
+						ELSE 0
+					END,
+					"nbrUpWater" = CASE
+						WHEN "raceId" IN (13, 23, 26) THEN 2
+						WHEN "raceId" IN (5, 6, 14, 19, 20, 21, 22, 24 ) THEN 1
+						ELSE 0
+						END,
+					"nbrUpAir" = CASE
+						WHEN "raceId" IN (11) THEN 3
+						WHEN "raceId" IN (19, 24, 27) THEN 2
+						WHEN "raceId" IN (9, 12, 14, 28) THEN 1
+						ELSE 0
+					END,
+					"nbrUpLightning" = CASE
+						WHEN "raceId" IN (7, 25, 27) THEN 2
+						WHEN "raceId" IN (5, 6, 10, 12, 14, 17, 18, 24, 28) THEN 1
+						ELSE 0
+					END	;
+			`),
+
+			// Other updates
+			prisma.$executeRawUnsafe(
+				`UPDATE dinoz SET level = 1, "placeId" = 5, life = 100, "maxLife" = 100, fight = true, gather = true, remaining = 2, "FBTournamentStep" = 0, following = null;`
+			),
+
+			prisma.$executeRawUnsafe(`UPDATE ranking SET points = "dinozCount", average = 1, dojo = 0;`),
+
+			prisma.$executeRawUnsafe(`SET CONSTRAINTS ALL IMMEDIATE;`)
+		]);
+
+		LOGGER.log('Remise à zéro du jeu effectuée');
+	} catch (error) {
+		console.error('Erreur lors de la suppression des données:', error);
+		try {
+			await prisma.$executeRaw`ROLLBACK;`;
+		} catch (rollbackError) {
+			console.error('Erreur lors du rollback:', rollbackError);
+		}
+	}
+
+	await prisma.ranking.updateMany({
+		data: {
+			points: 0,
+			average: 0
+		}
+	});
 }

@@ -2,7 +2,7 @@ import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { Status, FighterType } from './DetailedFighter.mjs';
-import { DamagesEffect, LifeEffect, NotificationList } from './transpiler.mjs';
+import { DamagesEffect, EntranceEffect, LifeEffect, NotificationList } from './transpiler.mjs';
 
 export interface StepFighter {
 	id: number;
@@ -38,6 +38,8 @@ export interface TimeLimitStep {
 export interface ArriveStep {
 	action: 'arrive';
 	fid: number;
+	entrance?: EntranceEffect;
+	scale?: number;
 }
 
 export interface LeaveStep {
@@ -88,6 +90,11 @@ export interface CounterStep {
 
 export interface MoveBackStep {
 	action: 'moveBack';
+	fid: number;
+}
+
+export interface FlipStep {
+	action: 'flip';
 	fid: number;
 }
 
@@ -251,6 +258,20 @@ export interface TiredStep {
 	fighter: StepFighter;
 }
 
+// The fighter performs the given animation (if supported)
+export interface AnimationStep {
+	action: 'anim';
+	fid: number;
+	anim: string;
+}
+
+// The given FX is "attached" (displayed) on the fighter.
+export interface AttachStep {
+	action: 'attach';
+	fid: number;
+	fx: string;
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| ArriveStep
@@ -287,4 +308,7 @@ export type FightStep =
 	| ReviveStep
 	| NewTurnStep
 	| StatusTurnStep
-	| TiredStep;
+	| TiredStep
+	| AnimationStep
+	| FlipStep
+	| AttachStep;

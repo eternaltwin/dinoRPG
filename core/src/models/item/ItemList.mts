@@ -470,7 +470,7 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 500, // TODO double check
 		display: 'fruit'
 	},
-	// SOS Helmet: increases armor by 1 in a fight
+	// SOS Helmet: increases armor by 5% in a fight
 	[Item.SOS_HELMET]: {
 		itemId: 10,
 		name: 'sos_helmet',

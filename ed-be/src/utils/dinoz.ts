@@ -59,7 +59,7 @@ export const getNumberOfGatheringTries = (
 			dinoz.skills.some(s => s.skillId === skillList[Skill.EXPERT_EN_FOUILLE].id) ? click++ : click;
 			dinoz.skills.some(s => s.skillId === skillList[Skill.PLANIFICATEUR].id) ? click++ : click;
 			dinoz.skills.some(s => s.skillId === skillList[Skill.CHAMPOLLION].id) ? click++ : click;
-			dinoz.skills.some(s => s.skillId === skillList[Skill.GRATTEUR].id) ? click++ : click;
+			dinoz.skills.some(s => s.skillId === skillList[Skill.GRIFFES_METALLIQUES].id) ? click++ : click;
 			break;
 		case GatherType.LABO:
 		case GatherType.PARTY:
@@ -159,23 +159,27 @@ export const learnNextSphereSkill = (
 ) => {
 	const sphereSkills = Object.values(skillList)
 		.filter(skill => skill.isSphereSkill)
-		.filter(skill => skill.element.some(el => el === element))
-		.sort((a, b) => a.id - b.id);
-	//Search last sphere skills from this element learnt
-	const lastKnownSphere = dinoz.skills
-		.filter(skill => sphereSkills.some(s => skill.skillId === s.id))
-		.map(skill => skill.skillId)
-		.sort()
-		.pop();
+		.filter(skill => skill.element.some(el => el === element));
 
-	if (!lastKnownSphere) {
-		return sphereSkills[0].id;
+	// Start with the first sphere skill, i.e the one that is unlocked from nothing
+	let sphereSkillToLearn = sphereSkills.find(skill => skill.unlockedFrom && skill.unlockedFrom.length === 0);
+
+	while (sphereSkillToLearn !== undefined) {
+		if (!dinoz.skills.some(skill => skill.skillId === sphereSkillToLearn?.id)) {
+			// SAFETY: sphereSkillToLearn is not undefined
+			// If dinoz does not have the skill, then it is the next skill to learn
+			break;
+		} else {
+			// Else the dinoz knows the skill already, so check the next skill that is unlocked from the current one
+			sphereSkillToLearn = sphereSkills.find(
+				skill => skill.unlockedFrom && skill.unlockedFrom.some(s => s === sphereSkillToLearn?.id)
+			); // SAFETY: sphereSkillToLearn is not undefined
+		}
 	}
 
-	const testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
-	if (!testSphereToLean) {
+	if (!sphereSkillToLearn) {
 		throw new ExpectedError(translate('AlreadySphere'));
 	}
 
-	return testSphereToLean.id;
+	return sphereSkillToLearn?.id; // SAFETY: sphereSkillToLearn is not undefined
 };

@@ -5,6 +5,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConstants';
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
+import { getFighterArmorRatio, getFighterIgnoreArmorRatio } from './getFighters.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -32,51 +33,11 @@ export const getElementalAttack = (fighter: DetailedFighter, element_type: Eleme
 
 // Calculates the attack power for multiple elements, the fighter and the power of the attack
 export const getMultiElementalAttack = (fighter: DetailedFighter, element_type_power: [ElementType, number][]) => {
-	// let air_attack = 0;
-	// let fire_attack = 0;
-	// let lightning_attack = 0;
-	// let water_attack = 0;
-	// let wood_attack = 0;
-	// let void_attack = 0;
-
-	// element_type_power.forEach(val => {
-	// 	let ele = val[0];
-	// 	let power = val[1];
-
-	// if (ele === ElementType.AIR) {
-	// 	air_attack = power * fighter.stats.base[ElementType.AIR];
-	// }
-	// else if (ele === ElementType.FIRE) {
-	// 	fire_attack = power * fighter.stats.base[ElementType.FIRE];
-	// }
-	// else if (ele === ElementType.LIGHTNING) {
-	// 	lightning_attack = power * fighter.stats.base[ElementType.LIGHTNING];
-	// }
-	// else if (ele === ElementType.WATER) {
-	// 	water_attack = power * fighter.stats.base[ElementType.WATER];
-	// }
-	// else if (ele === ElementType.WOOD) {
-	// 	wood_attack = power * fighter.stats.base[ElementType.WOOD];
-	// }
-	// else if (ele === ElementType.VOID) {
-	// 	void_attack = power * fighter.stats.base[ElementType.VOID];
-	// }
-	// });
-
 	return element_type_power.map(val => {
 		let ele = val[0];
 		let power = val[1];
 		return [ele, fighter.stats.base[ele] * power];
 	}) as [ElementType, number][];
-
-	// return {
-	// 	[ElementType.AIR]: air_attack,
-	// 	[ElementType.FIRE]: fire_attack,
-	// 	[ElementType.LIGHTNING]: lightning_attack,
-	// 	[ElementType.WATER]: water_attack,
-	// 	[ElementType.WOOD]: wood_attack,
-	// 	[ElementType.VOID]: void_attack,
-	// };
 };
 
 // Returns the attack and defense score for a given attack considering the various bonuses
@@ -85,25 +46,39 @@ export const getMultiElementalAttack = (fighter: DetailedFighter, element_type_p
 export const getAttackDefense = (
 	attacker: DetailedFighter,
 	target: DetailedFighter,
-	element_attack: [ElementType, number][],
+	elementAttack: [ElementType, number][],
 	isCloseCombat: boolean
 ) => {
 	let attack = BASE_ATTACK_VALUE;
 	let defense = BASE_DEFENSE_VALUE;
-	let sum_of_elements = 0;
+	let sumOfElements = 0;
 	let elements: ElementType[] = [];
 
 	// Go over all the elements of the attack
 	// Add the attacker's elemental attack and possible bonus to the attack score
 	// Add the target's elemental defense
-	element_attack.forEach(val => {
+	elementAttack.forEach(val => {
 		const ele = val[0];
 		const att = val[1];
 		elements.push(ele);
 		attack += att;
-		sum_of_elements += att;
+		sumOfElements += att;
 		if (att > 0) {
-			defense += target.stats.defense[ele] * att;
+			let defenseVal = target.stats.defense[ele];
+			// Only pick weakest defense if weakened
+			if (hasStatus(target, Status.WEAKENED)) {
+				// Sort defenses from lowest to biggest.
+				const defenses = [
+					target.stats.base[ElementType.FIRE],
+					target.stats.base[ElementType.WATER],
+					target.stats.base[ElementType.WOOD],
+					target.stats.base[ElementType.LIGHTNING],
+					target.stats.base[ElementType.AIR]
+				].sort((a, b) => a - b);
+				// Then pick loweest
+				defenseVal = defenses[0];
+			}
+			defense += defenseVal * att;
 			if (isCloseCombat) {
 				attack += attacker.stats.assaultBonus[ele];
 			} else {
@@ -114,7 +89,7 @@ export const getAttackDefense = (
 
 	// Add close combat specific bonuses
 	if (isCloseCombat) {
-		attack += attacker.nextAssaultBonus;
+		attack += attacker.nextAssaultBonus + attacker.allAssaultBonus;
 		attack *= attacker.nextAssaultMultiplier * attacker.allAssaultMultiplier;
 		attacker.nextAssaultBonus = 0;
 		attacker.nextAssaultMultiplier = 1;
@@ -122,18 +97,13 @@ export const getAttackDefense = (
 
 	// TODO this needs to be reworked, see Abysse
 	// -25% to attack score if attacker is WEAKENED
-	if (hasStatus(attacker, Status.WEAKENED)) {
+	if (hasStatus(attacker, Status.ABYSSE)) {
 		attack *= 0.75;
 	}
 
 	// Average the defense in case of multi-element attack
-	if (sum_of_elements > 0) {
-		defense /= sum_of_elements;
-	}
-
-	// Add armor to the defense unless the attacker cancels it
-	if (!attacker.cancelArmor) {
-		defense += target.stats.special.armor;
+	if (sumOfElements > 0) {
+		defense /= sumOfElements;
 	}
 
 	return {
@@ -141,6 +111,32 @@ export const getAttackDefense = (
 		defense,
 		elements
 	};
+};
+
+// Determine armor factor for a given target
+export const calculateArmor = (
+	attacker: DetailedFighter,
+	target: DetailedFighter,
+	power: [ElementType, number][],
+	isCloseCombat: boolean
+) => {
+	// Apply target's armor to the result unless the attacker cancels it
+	if (attacker.cancelArmor) {
+		return 0;
+	} else {
+		// Transform to 0 to 1 value
+		let effective_armor = getFighterArmorRatio(target, power);
+
+		// Remove armor ignore
+		effective_armor -= getFighterIgnoreArmorRatio(attacker, power, isCloseCombat);
+
+		// Minimum armor is 0
+		effective_armor = Math.max(effective_armor, 0);
+		// Max is 0.9
+		effective_armor = Math.min(effective_armor, 0.9);
+
+		return effective_armor;
+	}
 };
 
 // Applies final factors to the attack score:
@@ -153,6 +149,7 @@ export const calculateDamage = (
 	target: DetailedFighter,
 	attack: number,
 	defense: number,
+	armor: number,
 	isCloseCombat: boolean
 ) => {
 	// Apply random factor
@@ -163,6 +160,9 @@ export const calculateDamage = (
 	attack *= ATTACK_GLOBAL_FACTOR;
 
 	let damage = attack - defense;
+
+	// Apply target's armor to the result
+	damage *= 1 - armor;
 
 	// Apply balance effect if both fighters needs to be balanced
 	if (attacker.balanced && target.balanced) {

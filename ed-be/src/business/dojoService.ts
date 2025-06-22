@@ -168,13 +168,7 @@ export async function fightFriend(req: Request) {
 		d.life = d.maxLife;
 	});
 
-	const fightResult = calculateFightBetweenPlayers(
-		leftTeam,
-		leftPlayer.cooker,
-		rightTeam,
-		rightPlayer.cooker,
-		PlaceEnum.DOJO
-	);
+	const fightResult = calculateFightBetweenPlayers(leftTeam, leftPlayer, rightTeam, rightPlayer, PlaceEnum.DOJO);
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 	return { fight: fightArchive, stats: fightResult.stats };
@@ -290,7 +284,12 @@ export async function fightChallenge(req: Request) {
 		);
 	});
 
-	const fightResult = calculateFightBetweenPlayers(leftTeam, false, rightTeam, false, PlaceEnum.DOJO, 100);
+	const opponentPlayer = {
+		cooker: rightTeam[0].player.cooker,
+		warLord: rightTeam[0].player.warLord
+	};
+
+	const fightResult = calculateFightBetweenPlayers(leftTeam, player, rightTeam, opponentPlayer, PlaceEnum.DOJO, 100);
 
 	const fightArchive = await archiveFight(fightResult, authed.id);
 

@@ -1,6 +1,7 @@
 export enum Energy {
 	E80 = 80,
 	E75 = 75,
+	E70 = 70,
 	E65 = 65,
 	E60 = 60,
 	E55 = 55,

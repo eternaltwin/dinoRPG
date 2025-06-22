@@ -16,6 +16,7 @@ import {
 	modifyPlayerIngredients,
 	modifyPlayerItems,
 	setPlayerMoney,
+	softReset,
 	truncateAll,
 	updatePlayerQuestProgression
 } from '../business/adminService.js';
@@ -233,6 +234,7 @@ routes.put(
 		body('customText').default(undefined).optional().exists(),
 		body('quetzuBought').default(undefined).optional().exists().isNumeric(),
 		body('dailyGridRewards').default(undefined).optional().exists().isNumeric(),
+		body('warLord').default(undefined).optional().exists().toBoolean(),
 		body('leader').default(undefined).optional().exists().toBoolean(),
 		body('engineer').default(undefined).optional().exists().toBoolean(),
 		body('cooker').default(undefined).optional().exists().toBoolean(),
@@ -456,6 +458,7 @@ routes.get(`${commonPath}/:dinoz1/:dinoz2/:seed/:type`, checkIsAdmin, async (req
 	}
 });
 
+
 routes.get(`${commonPath}/jobs`, checkIsAdmin, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
 		return res.status(400).json({ errors: validationResult(req) });
@@ -464,6 +467,19 @@ routes.get(`${commonPath}/jobs`, checkIsAdmin, async (req: Request, res: Respons
 	try {
 		const response = await getJobs(req);
 		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+routes.patch(`${commonPath}/softreset`, checkIsAdmin, async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		await softReset(req);
+		return res.status(200).send();
 	} catch (err) {
 		sendError(res, err);
 	}

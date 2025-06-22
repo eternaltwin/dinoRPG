@@ -9,6 +9,7 @@ export interface StorePlayer {
 	playerOptions: PlayerOptions;
 	clanId: number | undefined;
 	admin: boolean;
+	warLord: boolean;
 	priest: boolean;
 	shopkeeper: boolean;
 	sortOption: string;

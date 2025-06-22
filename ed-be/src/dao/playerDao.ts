@@ -28,6 +28,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 			connexionToken: true,
 			money: true,
 			lang: true,
+			warLord: true,
 			engineer: true,
 			priest: true,
 			shopKeeper: true,
@@ -380,6 +381,7 @@ export async function getPlayerUSkills(playerId: string) {
 		},
 		select: {
 			id: true,
+			warLord: true,
 			leader: true,
 			engineer: true,
 			cooker: true,
@@ -461,6 +463,7 @@ export async function getCommonDataRequest(playerId: string) {
 			name: true,
 			money: true,
 			lang: true,
+			warLord: true,
 			engineer: true,
 			priest: true,
 			shopKeeper: true,
@@ -819,6 +822,7 @@ export async function getBoxHandlerInformations(playerId: string) {
 				}
 			},
 			rewards: true,
+			warLord: true,
 			cooker: true,
 			engineer: true,
 			leader: true,
@@ -1098,6 +1102,7 @@ export async function getDojoFightPreparationRequest(playerId: string) {
 		},
 		select: {
 			money: true,
+			warLord: true,
 			cooker: true,
 			dinoz: {
 				select: {
@@ -1117,6 +1122,8 @@ export async function getDojoChallengePreparationRequest(playerId: string) {
 		},
 		select: {
 			money: true,
+			warLord: true,
+			cooker: true,
 			dinoz: {
 				select: {
 					id: true,

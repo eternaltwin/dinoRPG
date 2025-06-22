@@ -248,14 +248,22 @@
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 								<img
-									v-if="detail.type === 'base' && detail.elements.length"
-									:src="getImgURL('elements', `elem_${detail.elements[0]}`)"
+									v-for="element in detail.elements"
+									:key="element"
+									:src="getImgURL('elements', `elem_${element}`)"
 									alt="info_button"
 								/>
 								<span v-if="detail.type === 'base'">
 									{{ detail.value }}{{ detail.percent ? '%' : '' }}
 									<span class="detail-name">
-										{{ stat.name === SpecialStat.ACID_BLOOD_DAMAGE ? '/ 2' : '' }} ({{ $t('details.baseValue') }})
+										{{
+											stat.name === SpecialStat.ACID_BLOOD_DAMAGE || stat.name === SpecialStat.FETID_BREATH_DAMAGE
+												? '/ 2'
+												: stat.name === SpecialStat.THORNS_DAMAGE
+													? '/ 3'
+													: ''
+										}}
+										({{ $t('details.baseValue') }})
 									</span>
 								</span>
 								<span v-else>
@@ -406,12 +414,15 @@ export default defineComponent({
 			}
 
 			// Get stats
+			const warlord = this.playerStore.isWarLord;
+
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
 				getAssaultStat(
 					data,
 					data.status.map(s => s.statusId),
 					this.dinozSkill,
-					stat as AssaultElement
+					stat as AssaultElement,
+					warlord
 				)
 			);
 
@@ -427,15 +438,40 @@ export default defineComponent({
 			const priest = this.playerStore.isPriest;
 
 			this.specialStats = Object.values(SpecialStat)
-				.map(stat =>
-					getSpecialStat(
+				.map(stat => {
+					let special = getSpecialStat(
 						data,
 						data.status.map(s => s.statusId),
 						this.dinozSkill,
 						stat as SpecialStat,
 						priest
-					)
-				)
+					);
+
+					// Add +1 to bubble for proper display
+					if (special && special.name.includes('bubble')) {
+						special.value += 1;
+					}
+
+					// Cut speed digits to 2
+					if (special && special.name.includes('speed')) {
+						special.value = Math.round(special.value * 100) / 100;
+					}
+
+					// Hide element speeds if equal to one
+					if (special && special.name.includes('Speed') && special.value === 1) {
+						special = null;
+					}
+
+					// Filter out stats with no details, with some exceptions
+					if (
+						special &&
+						((special.details && special.details.length > 0) || special.name === SpecialStat.BUBBLE_RATE)
+					) {
+						return special;
+					} else {
+						return null;
+					}
+				})
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 
 			// Refresh special stats on EventBus `refreshInventory`

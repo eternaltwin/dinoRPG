@@ -22,7 +22,7 @@ export const MEDIUM_BAN_DURATION_MS = 7 * 24 * 60 * 60 * 1000; // 1w
 export const LONG_BAN_DURATION_MS = 31 * 24 * 60 * 60 * 1000; // 1m
 
 /* Clan related constants */
-export const CLAN_MAX_MEMBERS_AMOUNT = 5;
+export const CLAN_MAX_MEMBERS_AMOUNT = 50;
 export const CLAN_JOIN_MONEY = 1000;
 export const CLAN_CREATE_MONEY = 20000;
 export const CLAN_CREATE_RANKING_POINTS = 15;

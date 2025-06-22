@@ -3,6 +3,7 @@ import { MapZone } from '../enums/MapZone.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GameEvent } from '../event/Events.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
+import { EntranceEffect } from './transpiler.mjs';
 
 export enum Monster {
 	GOUPIGNON = 'GOUPIGNON',
@@ -531,7 +532,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		skills: [Skill.M_COMET],
 		noMove: true,
-		display: 'grdien'
+		display: 'grdien',
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.WORM2]: {
 		id: Monster.WORM2,

@@ -19928,6 +19928,7 @@ export namespace Prisma {
     connexionToken: string | null
     money: number | null
     quetzuBought: number | null
+    warLord: boolean | null
     leader: boolean | null
     engineer: boolean | null
     cooker: boolean | null
@@ -19958,6 +19959,7 @@ export namespace Prisma {
     connexionToken: string | null
     money: number | null
     quetzuBought: number | null
+    warLord: boolean | null
     leader: boolean | null
     engineer: boolean | null
     cooker: boolean | null
@@ -19988,6 +19990,7 @@ export namespace Prisma {
     connexionToken: number
     money: number
     quetzuBought: number
+    warLord: number
     leader: number
     engineer: number
     cooker: number
@@ -20040,6 +20043,7 @@ export namespace Prisma {
     connexionToken?: true
     money?: true
     quetzuBought?: true
+    warLord?: true
     leader?: true
     engineer?: true
     cooker?: true
@@ -20070,6 +20074,7 @@ export namespace Prisma {
     connexionToken?: true
     money?: true
     quetzuBought?: true
+    warLord?: true
     leader?: true
     engineer?: true
     cooker?: true
@@ -20100,6 +20105,7 @@ export namespace Prisma {
     connexionToken?: true
     money?: true
     quetzuBought?: true
+    warLord?: true
     leader?: true
     engineer?: true
     cooker?: true
@@ -20219,6 +20225,7 @@ export namespace Prisma {
     connexionToken: string
     money: number
     quetzuBought: number
+    warLord: boolean
     leader: boolean
     engineer: boolean
     cooker: boolean
@@ -20270,6 +20277,7 @@ export namespace Prisma {
     connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -20334,6 +20342,7 @@ export namespace Prisma {
     connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -20367,6 +20376,7 @@ export namespace Prisma {
     connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -20400,6 +20410,7 @@ export namespace Prisma {
     connexionToken?: boolean
     money?: boolean
     quetzuBought?: boolean
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -20426,7 +20437,7 @@ export namespace Prisma {
     ips?: boolean
   }
 
-  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id" | "ips", ExtArgs["result"]["player"]>
+  export type PlayerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"customText" | "name" | "connexionToken" | "money" | "quetzuBought" | "warLord" | "leader" | "engineer" | "cooker" | "shopKeeper" | "merchant" | "priest" | "teacher" | "createdDate" | "updatedDate" | "lastLogin" | "clanMemberId" | "matelasseur" | "messie" | "labruteDone" | "role" | "lang" | "dailyGridRewards" | "skipFight" | "skipLevel" | "banCaseId" | "discoveredSkills" | "lastVersionSeen" | "id" | "ips", ExtArgs["result"]["player"]>
   export type PlayerInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     leaderOf?: boolean | Player$leaderOfArgs<ExtArgs>
     ClanHistory?: boolean | Player$ClanHistoryArgs<ExtArgs>
@@ -20509,6 +20520,7 @@ export namespace Prisma {
       connexionToken: string
       money: number
       quetzuBought: number
+      warLord: boolean
       leader: boolean
       engineer: boolean
       cooker: boolean
@@ -20992,6 +21004,7 @@ export namespace Prisma {
     readonly connexionToken: FieldRef<"Player", 'String'>
     readonly money: FieldRef<"Player", 'Int'>
     readonly quetzuBought: FieldRef<"Player", 'Int'>
+    readonly warLord: FieldRef<"Player", 'Boolean'>
     readonly leader: FieldRef<"Player", 'Boolean'>
     readonly engineer: FieldRef<"Player", 'Boolean'>
     readonly cooker: FieldRef<"Player", 'Boolean'>
@@ -68639,6 +68652,7 @@ export namespace Prisma {
     connexionToken: 'connexionToken',
     money: 'money',
     quetzuBought: 'quetzuBought',
+    warLord: 'warLord',
     leader: 'leader',
     engineer: 'engineer',
     cooker: 'cooker',
@@ -70273,6 +70287,7 @@ export namespace Prisma {
     connexionToken?: UuidFilter<"Player"> | string
     money?: IntFilter<"Player"> | number
     quetzuBought?: IntFilter<"Player"> | number
+    warLord?: BoolFilter<"Player"> | boolean
     leader?: BoolFilter<"Player"> | boolean
     engineer?: BoolFilter<"Player"> | boolean
     cooker?: BoolFilter<"Player"> | boolean
@@ -70336,6 +70351,7 @@ export namespace Prisma {
     connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    warLord?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -70405,6 +70421,7 @@ export namespace Prisma {
     connexionToken?: UuidFilter<"Player"> | string
     money?: IntFilter<"Player"> | number
     quetzuBought?: IntFilter<"Player"> | number
+    warLord?: BoolFilter<"Player"> | boolean
     leader?: BoolFilter<"Player"> | boolean
     engineer?: BoolFilter<"Player"> | boolean
     cooker?: BoolFilter<"Player"> | boolean
@@ -70465,6 +70482,7 @@ export namespace Prisma {
     connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    warLord?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -70505,6 +70523,7 @@ export namespace Prisma {
     connexionToken?: UuidWithAggregatesFilter<"Player"> | string
     money?: IntWithAggregatesFilter<"Player"> | number
     quetzuBought?: IntWithAggregatesFilter<"Player"> | number
+    warLord?: BoolWithAggregatesFilter<"Player"> | boolean
     leader?: BoolWithAggregatesFilter<"Player"> | boolean
     engineer?: BoolWithAggregatesFilter<"Player"> | boolean
     cooker?: BoolWithAggregatesFilter<"Player"> | boolean
@@ -73986,6 +74005,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -74048,6 +74068,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -74110,6 +74131,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -74172,6 +74194,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -74234,6 +74257,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -74266,6 +74290,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -74297,6 +74322,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -78068,6 +78094,7 @@ export namespace Prisma {
     connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    warLord?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -78109,6 +78136,7 @@ export namespace Prisma {
     connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    warLord?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -78139,6 +78167,7 @@ export namespace Prisma {
     connexionToken?: SortOrder
     money?: SortOrder
     quetzuBought?: SortOrder
+    warLord?: SortOrder
     leader?: SortOrder
     engineer?: SortOrder
     cooker?: SortOrder
@@ -85540,6 +85569,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -85601,6 +85631,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -86262,6 +86293,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -86323,6 +86355,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -90692,6 +90725,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -90753,6 +90787,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -90931,6 +90966,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -90992,6 +91028,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -91742,6 +91779,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -91803,6 +91841,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -91880,6 +91919,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -91941,6 +91981,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92002,6 +92043,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92063,6 +92105,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92140,6 +92183,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92201,6 +92245,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92262,6 +92307,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92323,6 +92369,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92400,6 +92447,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92461,6 +92509,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92522,6 +92571,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92583,6 +92633,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92660,6 +92711,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92721,6 +92773,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92782,6 +92835,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92843,6 +92897,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -92920,6 +92975,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -92981,6 +93037,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93042,6 +93099,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93103,6 +93161,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93180,6 +93239,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93241,6 +93301,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93302,6 +93363,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93363,6 +93425,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93440,6 +93503,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93501,6 +93565,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93562,6 +93627,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93623,6 +93689,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93700,6 +93767,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93761,6 +93829,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -93912,6 +93981,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -93973,6 +94043,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -94084,6 +94155,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -94145,6 +94217,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -94304,6 +94377,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -94365,6 +94439,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -94592,6 +94667,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -94653,6 +94729,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -94855,6 +94932,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -94916,6 +94994,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -95097,6 +95176,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -95158,6 +95238,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -95421,6 +95502,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -95482,6 +95564,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -95559,6 +95642,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -95620,6 +95704,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -95779,6 +95864,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -95840,6 +95926,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -96021,6 +96108,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -96082,6 +96170,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -96159,6 +96248,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -96220,6 +96310,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -96463,6 +96554,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -96524,6 +96616,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -96760,6 +96853,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -96821,6 +96915,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -96938,6 +97033,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -96999,6 +97095,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -97202,6 +97299,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -97263,6 +97361,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -97374,6 +97473,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -97435,6 +97535,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -97536,6 +97637,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -97597,6 +97699,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -97708,6 +97811,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -97769,6 +97873,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -97904,6 +98009,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -97965,6 +98071,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98082,6 +98189,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -98143,6 +98251,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -98376,6 +98485,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98437,6 +98547,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98503,6 +98614,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98564,6 +98676,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98630,6 +98743,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98691,6 +98805,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -98872,6 +98987,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -98933,6 +99049,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99005,6 +99122,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99066,6 +99184,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99138,6 +99257,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99199,6 +99319,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99260,6 +99381,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -99321,6 +99443,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -99409,6 +99532,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -99470,6 +99594,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -99597,6 +99722,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99658,6 +99784,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99758,6 +99885,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99819,6 +99947,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -99941,6 +100070,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100002,6 +100132,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100114,6 +100245,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -100175,6 +100307,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -100294,6 +100427,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100355,6 +100489,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100502,6 +100637,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -100563,6 +100699,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -100624,6 +100761,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100685,6 +100823,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100762,6 +100901,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -100823,6 +100963,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -100884,6 +101025,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -100945,6 +101087,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -101282,6 +101425,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -101343,6 +101487,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -101737,6 +101882,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -101798,6 +101944,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -101924,6 +102071,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -101985,6 +102133,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -102683,6 +102832,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -102744,6 +102894,7 @@ export namespace Prisma {
     connexionToken?: string
     money: number
     quetzuBought: number
+    warLord?: boolean
     leader?: boolean
     engineer?: boolean
     cooker?: boolean
@@ -103052,6 +103203,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean
@@ -103113,6 +103265,7 @@ export namespace Prisma {
     connexionToken?: StringFieldUpdateOperationsInput | string
     money?: IntFieldUpdateOperationsInput | number
     quetzuBought?: IntFieldUpdateOperationsInput | number
+    warLord?: BoolFieldUpdateOperationsInput | boolean
     leader?: BoolFieldUpdateOperationsInput | boolean
     engineer?: BoolFieldUpdateOperationsInput | boolean
     cooker?: BoolFieldUpdateOperationsInput | boolean

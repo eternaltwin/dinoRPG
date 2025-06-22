@@ -610,7 +610,8 @@ export async function fightFBTournamentOpponent(req: Request) {
 			player: {
 				select: {
 					cooker: true,
-					teacher: true
+					teacher: true,
+					warLord: true
 				}
 			}
 		}
@@ -693,9 +694,9 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	const fightResult = calculateFightBetweenPlayers(
 		[dinoz],
-		dinoz.player.cooker,
+		dinoz.player,
 		[{ ...opponentGameDinoz, catches: [] }],
-		false,
+		{ warLord: false, cooker: false },
 		PlaceEnum.FORCEBRUT
 	);
 
