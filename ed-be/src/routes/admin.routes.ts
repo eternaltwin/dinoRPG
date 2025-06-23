@@ -268,7 +268,7 @@ routes.get(
 		}
 
 		try {
-			const response: Partial<PlayerTypeToSend> = await listAllPlayerInformationForAdminDashboard(req);
+			const response = await listAllPlayerInformationForAdminDashboard(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

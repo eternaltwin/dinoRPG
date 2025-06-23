@@ -401,6 +401,7 @@ import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import DZButton from '../common/DZButton.vue';
 import { Player } from '@drpg/prisma';
+import { PlayerTypeToSend } from '@drpg/core/models/player/PlayerTypeToSend';
 
 const banReasons = ['multi', 'accountName', 'avatar', 'customText', 'dinozName'];
 const banActions = ['shortBan', 'mediumBan', 'longBan', 'infiniteBan'];
@@ -438,7 +439,7 @@ export default defineComponent({
 			ingredientNameList: ingredientNameList,
 			ScenarioDetails,
 			// TODO: Fix this type, I have no idea what it's supposed to be
-			player: {} as any,
+			player: {} as PlayerTypeToSend,
 			banReasons,
 			banActions
 		};
@@ -564,11 +565,11 @@ export default defineComponent({
 		filterEpicList(operation: string) {
 			if (operation === 'add') {
 				this.epicListFiltered = Object.keys(epicList.imgName).filter(
-					epicRewardId => !this.player.rewards.includes(parseInt(epicRewardId))
+					epicRewardId => !this.player.rewards.map(r => r.rewardId).includes(+epicRewardId)
 				);
 			} else {
 				this.epicListFiltered = Object.keys(epicList.imgName).filter(epicRewardId =>
-					this.player.rewards.includes(parseInt(epicRewardId))
+					this.player.rewards.map(r => r.rewardId).includes(+epicRewardId)
 				);
 			}
 		},

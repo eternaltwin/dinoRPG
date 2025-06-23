@@ -549,40 +549,7 @@ export async function listAllPlayerInformationForAdminDashboard(req: Request) {
 		throw new ExpectedError(`Player ${req.params.id} doesn't exist.`);
 	}
 
-	const playerToSend = {
-		id: player.id,
-		banCase: player.banCase as ModerationAdminType,
-		customText: player.customText,
-		name: player.name,
-		money: player.money,
-		quetzuBought: player.quetzuBought,
-		dailyGridRewards: player.dailyGridRewards,
-		leader: player.leader,
-		engineer: player.engineer,
-		cooker: player.cooker,
-		shopKeeper: player.shopKeeper,
-		merchant: player.merchant,
-		priest: player.priest,
-		teacher: player.teacher,
-		messie: player.messie,
-		matelasseur: player.matelasseur,
-		createdDate: player.createdDate,
-		rewards: player.rewards.map(reward => reward.rewardId),
-		items: player.items.map(item => ({
-			itemId: item.itemId,
-			quantity: item.quantity
-		})),
-		ingredients: player.ingredients.map(ing => ({
-			ingredientId: ing.ingredientId,
-			quantity: ing.quantity
-		})),
-		quests: player.quests.map(q => ({
-			questId: q.questId,
-			progression: q.progression
-		})),
-		role: player.role
-	};
-	return playerToSend;
+	return player;
 }
 
 /**
