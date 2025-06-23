@@ -905,10 +905,10 @@
 				"stone": "Ohhhhhh !!! Mais voici quelque chose de très interessant, il me semble qu'il s'agit de.... uhmmuhu.... je ne suis pas sûr... (il regarde fixement la pierre)... Peux-tu me montrer cette Pierre, que je l'examine un peu ?",
 				"stone_yes": "Ooooooohhhhh !!! Oui.... C'est bien ce que je pensais.... Regarde ! (il nettoie délicatement la pierre)... c'est un Totem Ashpouk ! Ca a beaucoup de valeur tu sais... prends-en grand soin !",
 				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !",
-				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
+				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
 				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
-				"pac_scroll": "Ah, euh... Félicitations pour avoir créer cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de dinoz.",
-				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement opté pour arbre que racine...*"
+				"pac_scroll": "Ah, euh... Félicitations pour avoir créer cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
+				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement opté pour arbre que racine...*"
 			},
 			"playerChoice": {
 				"talk": "Parler au Professeur Eugene",
@@ -4468,7 +4468,7 @@
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
-		"dailyReset": "Vouz êtes en êtes la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
+		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
 		"seeFight": "Voir le combat",
 		"deleteTeam": "Supprimer mon équipe",
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
@@ -5055,7 +5055,7 @@
 	},
 	"fb_tournament": {
 		"title": "Tournoi de Forcebrut",
-		"disclaimer": "Bienvenue au tournoi de Forcebrut, ici vous pourrez affronter les meilleurs dinoz créés par d'autres joueurs. Le premier palier est un dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître dinoz !",
+		"disclaimer": "Bienvenue au tournoi de Forcebrut, ici vous pourrez affronter les meilleurs Dinoz créés par d'autres joueurs. Le premier palier est un Dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître Dinoz !",
 		"stage": "Palier {stage}",
 		"fight": "Combattre {opponent}"
 	},

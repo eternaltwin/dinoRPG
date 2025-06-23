@@ -148,5 +148,15 @@
 	"announce": {
 		"dinoz": "¡Felicidades a {{player}} por su Dino {{dinoz}}, que es el $t(position.{{position}}) $t(race.{{race}}) en alcanzar el nivel {{level}}!",
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
+	},
+	"UnavailableReason": {
+		"frozen": "Votre Dinoz est congelé",
+		"sacrificed": "Votre Dinoz est sacrifié",
+		"selling": "Votre Dinoz est en vente",
+		"superdom": "Votre Dinoz est au superdom",
+		"resting": "Votre Dinoz se repose"
+	},
+	"fb_tournament": {
+		"noOpponent": "Il n'y a plus personne à combattre pour le moment."
 	}
 }

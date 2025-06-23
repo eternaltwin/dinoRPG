@@ -30,6 +30,7 @@
 		"wronglogins": "The provided Eternal-Twin credentials are incorrect.",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
+		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
 		"dinozListMissing": "Dinoz list missing.",
 		"noFight": "Today, the swamp is covered in fog... You will not find any monster to fight.",
 		"dinozDataMissing": "Dinoz data missing.",
@@ -157,7 +158,8 @@
 			"stop_rest": "Your Dinoz is resting. You can interrupt him in order to move and fight again.",
 			"itinerant_shop": "The Itinerant Merchant travels throughout Dinoland and buys *Ingredients* from Dinoz Masters: he pays well.",
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
-			"change_leader": "Your Dinoz can become the new leader of the group."
+			"change_leader": "Your Dinoz can become the new leader of the group.",
+			"fb_tournament": "Accéder au Tournoi de Forcebrut."
 		},
 		"name": {
 			"fight": "Fight",
@@ -189,7 +191,8 @@
 			"stop_rest": "Stop resting",
 			"itinerant_shop": "Travelling Merchant",
 			"reincarnation": "Reincarnate",
-			"change_leader": "Become Leader"
+			"change_leader": "Become Leader",
+			"fb_tournament": "Tournament"
 		}
 	},
 	"button": {
@@ -201,7 +204,8 @@
 		"chose": "Buy",
 		"generator": "Dinoz generator",
 		"sortDinoz": "Manage my Dinoz",
-		"dinozMissions": "My Dinoz missions"
+		"dinozMissions": "My Dinoz missions",
+		"skills": "Compétences"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -876,7 +880,8 @@
 			"alien": "Strange Creature",
 			"skully": "Skully",
 			"baobabe": "Bao Babe",
-			"mouldeur": "Moulder"
+			"mouldeur": "Moulder",
+			"fb_tournament": "Organisateur du Tournoi"
 		},
 		"professor": {
 			"speech": {
@@ -899,7 +904,11 @@
 				"gant": "The Zors Glove is a very rare item! People say that the Zors Glove must be used at the Mutant Falls to access to Grumhel Forest, but no one knows how to use it.",
 				"stone": "Ohhhhhhh !!! But here is something very interesting, it seems to me that it is.... uhmmuhu.... i'm not sure... (he stares at the stone)... Can you show me this Stone, that I examine it a little?",
 				"stone_yes": "Ooooooohhhhh!!! Yes ... It's exactly what I thought ... Look! (he delicately cleans the stone) ... it's an Ashpouk Totem! It's very valuable ... take care of it!",
-				"noquestion": "Ah well, too bad, don't hesitate to come back from time to time to find out more about the world of Dinoland!"
+				"noquestion": "Ah well, too bad, don't hesitate to come back from time to time to find out more about the world of Dinoland!",
+				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
+				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
+				"pac_scroll": "Ah, euh... Félicitations pour avoir créer cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
+				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement opté pour arbre que racine...*"
 			},
 			"playerChoice": {
 				"talk": "Professor Eugene",
@@ -923,7 +932,11 @@
 				"noquestion": "None of these",
 				"menu": "Back",
 				"stone_yes": "Of course, here it is.",
-				"stone_no": "Hey! Don't touch it! Before, I would like to know something..."
+				"stone_no": "Hey! Don't touch it! Before, I would like to know something...",
+				"pac_start": "C'est quoi ce parchemin ?",
+				"pac_go": "Arracher les yeux du professeur",
+				"pac_scroll": "Montrer le parchemin, l'encre et la plume",
+				"pac_end": "Suis-je assez puissant ?"
 			}
 		},
 		"sofia": {
@@ -1090,7 +1103,9 @@
 				"spirit": "Yeah, sorry, that's right. \"Spiritual\" Ah, these technological words are so difficult to pronounce!",
 				"thanks": "Oh no! You're leaving already, that's a shame. You have to come back again, hopefully I'll see you soon.",
 				"nothing": "It seems your Dinoz already has a Bao Charm! Look, it still has some energy left. When it runs out I can recharge it for you.",
-				"no": "Oh really? Well it's your loss. *sulk*."
+				"no": "Oh really? Well it's your loss. *sulk*.",
+				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sur mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
+				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
 			},
 			"playerChoice": {
 				"ok": "Uh...yes, I suppose",
@@ -1099,7 +1114,9 @@
 				"nothing": "Ok!",
 				"no": "No thanks",
 				"spirit": "Did you mean \"spiritual\"?",
-				"thanks": "Well, I have to go now. Thanks a lot for the Bao Charm, it was really kind of you!"
+				"thanks": "Well, I have to go now. Thanks a lot for the Bao Charm, it was really kind of you!",
+				"pac_scroll": "Attend, tu saurais faire ça sur cette racine que le chaman a cramé avec son charme ?",
+				"pac_scroll2": "C'est normal la couleur ?"
 			}
 		},
 		"forgeron": {
@@ -1149,14 +1166,26 @@
 				"thanks": "You're welcome, don't forget to tell all your friends!",
 				"begin_star": "Oh, I see that your Dinoz is carrying a cloud burger! Did you know that they're bad for your health? Unless you want your Dinoz to become a Sumo?!?",
 				"ok_star": "Throw away your nasty Burger and taste my merguez instead! Take this item as a sign of loyalty. I found it on the ground!",
-				"star": "Great! The merguez seller has given you one of the seven magic stars!"
+				"star": "Great! The merguez seller has given you one of the seven magic stars!",
+				"begin_merguez": "Ah tu veux une carte de fidélité ? Bien sur avec plaisir. Reviens me voir quand tu auras consommé 500 merguez, j'aurais quelque chose pour toi.",
+				"merguez_step_2": "500 !?! On s'est mal compris, c'est de 500 livraisons dont je parlais. Donc 2500 au total.&& Aller encore 2000 à manger !",
+				"merguez_step_1": "Je trouve que tu exagère. C'est pas autant que ça, et surtout c'est gratuit !",
+				"merguez_step_3": "Pense bien à macher surtout. Et hydrate-toi, elles peuvent piquer un peu.",
+				"merguez_step_4": "Féliciations ! Je te note dans mon carnet des plus fidèles consommateurs. Vu que je sais que tu aime les merguez je vais te les donner par paquet de 100 à présent.",
+				"merguez_card": "Ah mais oui c'est vrai que ce cher client est un grand amateur de merguez. Tenez, voici de quoi remplir votre stock !"
 			},
 			"playerChoice": {
 				"ah": "Oh...",
 				"ok": "Indeed...",
 				"thanks": "Thank you",
 				"ok_star": "...",
-				"star": "Ah?"
+				"star": "Ah?",
+				"begin_merguez": "Je compte revenir !",
+				"merguez_step_1": "500 ca fait quand même beaucoup.",
+				"merguez_step_2": "Ca y est, j'ai consommé les 500 merguez.",
+				"merguez_step_3": "2500 ca fait quand même beaucoup.",
+				"merguez_step_4": "Ca y est, j'ai consommé les 2500 merguez.",
+				"merguez_card": "Montrer la carte de fidélité."
 			}
 		},
 		"shaman": {
@@ -1170,7 +1199,10 @@
 				"force": "Strong? Who? The Venerable? Yeah he's strong. He's listed as the most common cause of death for tourists, just ahead of heart attacks caused by our Goblin Merguez ... Ha ha, these tourists are so delicate!",
 				"merci": "See y'a, buddy... next one...",
 				"more": "Uhmm.... If your Dinoz agrees to fulfill a few missions for me, I'll entrust him with my Strategy Guide. It's very useful...",
-				"accept": "Deal..."
+				"accept": "Deal...",
+				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tout ces poissons qu'on a l'habitude de s'envoyer ?",
+				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheu était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô",
+				"pac_root": "Uhmm... ? Déjà ?... Bah... j'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rend ta racine, j'en avais déjà une vieille à utiliser."
 			},
 			"playerChoice": {
 				"vener": "The Venerable...",
@@ -1182,7 +1214,10 @@
 				"force": "Oh? And is he strong?",
 				"merci": "Thanks, I'll take your advice into account!",
 				"more": "And that's it?",
-				"accept": "Confirm !"
+				"accept": "Confirm !",
+				"pac_scroll": "Vous avez collaboré avec le professeur ?",
+				"pac_scroll2": "Un parchemin pour les compétences",
+				"pac_root": "Donner la racine"
 			}
 		},
 		"gardien": {
@@ -1334,7 +1369,12 @@
 				"problem": "Ehmm ... Hellow. I don't meen two bwe roode, but I fink that the plwaants you have bwought were a bit... ehmm tofic ... I fink fhat my plwaant allergies are plwaying up ... Can you maybe felp me to fwind a rwemedy? ...",
 				"sickstatus": "So, have you fwound a rebedy?",
 				"better": "The remedy you gave me worked perfectly!",
-				"lowLevel": "Oh, dear... You're not strong enough to accomplish missions. I don't want your dinoz to get hurt. Come see me again when it will have gain a few more levels!"
+				"lowLevel": "Oh, dear... You're not strong enough to accomplish missions. I don't want your dinoz to get hurt. Come see me again when it will have gain a few more levels!",
+				"pac_shine": "Euh... Vous avez réussi à obtenir une racine charmée tout seul ? C'est le professeur qui vous a dit quoi faire ? C'est très dangereux vous savez. Si vous arrivez à la réduire en parchemin vous pourrez utiliser une encre de compilation. Mais c'est très complexe à réaliser.",
+				"pac_progress": "Euh, comment dire... C'est... Oui c'est possible... Je m'occupe de vous faire le parchemin, ramenez moi dans un premier temps de l'encre de Kazkadine. Une cinquantaine devraient faire l'affaire",
+				"pac_kazka": "Très bien ! Passons à présent aux cendres de flamèches. Il m'en faut 42 unitées.&& Regarde comment j'ai bien avancé, le parchemin est en train de sécher.",
+				"pac_flam": "Ce fût rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu aille chercher une plume de Coqdur. Tu pense en être capable ?",
+				"pac_coq": "Voila, je ne peux rien faire de plus pour toi. Il faudrait que tu mène tes recherches pour comprendre comment l'utiliser."
 			},
 			"playerChoice": {
 				"welcome": "Talk to him",
@@ -1353,7 +1393,12 @@
 				"better": "You seem to be much better...",
 				"missions": "Check the list of missions",
 				"lowLevel": "Check missions list",
-				"curesearch": "Let's see..."
+				"curesearch": "Let's see...",
+				"pac_shine": "Et cette racine qui brille, un avis dessus ?",
+				"pac_progress": "Vous saurez m'aider ?",
+				"pac_kazka": "J'ai toute l'encre nécessaire !",
+				"pac_flam": "Voici les 42 unitées de cendres de flamèches !",
+				"pac_coq": "Montrer la plume"
 			}
 		},
 		"rodeur": {
@@ -1619,6 +1664,19 @@
 				"exp": "(Expliquer toute l'histoire)",
 				"end": "Ce n'est vraiment rien..."
 			}
+		},
+		"fb_tournament": {
+			"speech": {
+				"begin": "Bonjour, ô Grand Maître Dinoz ! Le Grand Tournoi de Forcebrut est ouvert à tous ceux qui désirent mesurer leurs Dinoz à ceux des autres joueurs. Je vous y inscris ?",
+				"yes": "Malheureusement, comme le précise le règlement intérieur, paragraphe 15.48 alinéa H, l'accès au Tournoi est ouvert uniquement aux Dinoz ayant en leur possession une relique d'une civilisation ancienne. C'est l'unique condition pour participer... N'hésitez pas à revenir quand votre Dinoz en aura trouvé une. Bonne journée et bon séjour à Forcebrut !",
+				"ok": "Oh ! Je vois que votre Dinoz possède un {Totem Ashpouk} ! Très bien, je l'inscris donc sur la liste des participants au Tournoi, il pourra donc désormais y accéder directement. Bonne journée monsieur le Maître Dinoz !",
+				"no": "Très bien, vous n'êtes nullement obligé de vous inscrire, surtout si vos Dinoz ne sont pas prêts à se mesurer à de puissants adversaires. C'est vrai que le Tournoi peut être très dangereux pour les Dinoz inexpérimentés. Bonne journée et bon séjour à Forcebrut !"
+			},
+			"playerChoice": {
+				"yes": "Ho, bonne idée !",
+				"ok": "Oui, merci !",
+				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
+			}
 		}
 	},
 	"shop": {
@@ -1700,23 +1758,11 @@
 		}
 	},
 	"skill": {
-		"energy": {
-			"0": "**Energy Cost:** none.",
-			"5": "**Energy Cost:** low.",
-			"10": "**Energy Cost:** weak.",
-			"20": "**Energy Cost:** normal.",
-			"25": "**Energy Cost:** normal.",
-			"30": "**Energy Cost:** normal.",
-			"35": "**Energy Cost:** normal.",
-			"40": "**Energy Cost:** normal.",
-			"45": "**Energy Cost:** normal.",
-			"50": "**Energy Cost:** high.",
-			"55": "**Energy Cost:** high.",
-			"60": "**Energy Cost:** high.",
-			"65": "**Energy Cost:** high.",
-			"75": "**Energy Cost:** very high.",
-			"80": "**Energy Cost:** very high."
-		},
+		"energy": "Énergie : **{energy}**",
+		"probability": "Probabilité : **{probability}%**",
+		"priority": "Priorité : **{priority}**",
+		"unknown": "Inconnu",
+		"unknownDesc": "Vous n'avez pas encore découvert cette compétence.",
 		"name": {
 			"GriffesEnflammees": "Burning Claws",
 			"Colere": "Wrath",
@@ -2510,7 +2556,9 @@
 		"challengeFriend": "Dino-RPG [ Duel a Friend ]",
 		"forum": "Dino-RPG [ Forums ]",
 		"admin": "Dino-RPG [ Admin Dashboard ]",
-		"event": "Dino-RPG [ Evénements ]"
+		"event": "Dino-RPG [ Evénements ]",
+		"fb_tournament": "Dino-RPG [ Tournoi de Forcebrut ]",
+		"skillTrees": "Dino-RPG [ Arbres de Compétences ]"
 	},
 	"gather": {
 		"action": {
@@ -3676,6 +3724,7 @@
 			"eugene": "Prix Eugène de Physique",
 			"litter": "Prix de Littérature",
 			"clover": "DinoLoto Winner",
+			"pac": "Parchemin des Aptitudes Compilées",
 			"import": "Importosaurus bone"
 		},
 		"description": {
@@ -3889,6 +3938,7 @@
 			"eugene": "Your unparalleled creativity has earned you this magnificent medal, only Dinoz masters with extraordinary intelligence allow themselves to wear it. Some say you're a genius, others say you're a twisted mind, the most important thing is that they are talking about you!",
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe telle que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
 			"clover": "You have been awarded this prize for being the owner of the luckiest Dinoz in Dinoland (as selected by the DinoLoto draw)! Congratulations!",
+			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
 			"import": "Congratulations! You have imported your account to EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Maybe it's a mistake after all?"
 		}
 	},
@@ -3923,7 +3973,7 @@
 			"allLevel": "All levels",
 			"dinozName": "Nom du Dinoz: ",
 			"masterName": "Master: ",
-			"dinozLevel": "Niveau du Dinoz: ",
+			"dinozLevel": "Dinoz Level: ",
 			"date": "Date of entry: ",
 			"pickEpic": "Select a reward",
 			"dinoz": "Dinoz",
@@ -4337,7 +4387,8 @@
 		},
 		"historyView": {
 			"lastOffers": "Here are the latest sales that were completed by players:",
-			"yourBids": "Your bids"
+			"yourOwnOffers": "Your bids",
+			"yourOwnBids": "Your Purchases"
 		}
 	},
 	"hud": {
@@ -4399,6 +4450,7 @@
 	},
 	"dojo": {
 		"welcome": "Welcome to your Dojo",
+		"markAsRead": "Marquer comme vus",
 		"noTournament": "Il n'y a pas encore assez de Dinoz pour pouvoir faire un tournois, revenez plus tard une fois que vous aurez amené vos amis sur le jeu !",
 		"return": "Back",
 		"accessTournament": "Access tournament",
@@ -4416,7 +4468,7 @@
 		"build": "Build my Dojo",
 		"group": "Group {group}",
 		"seeFinal": "See the final",
-		"dailyReset": "Vous avez vaincu {qty} vagues de 5 ennemis.&&A chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
+		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
 		"seeFight": "See the fight",
 		"deleteTeam": "Supprimer mon équipe",
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
@@ -4442,9 +4494,9 @@
 			"water": "Dinoz eau",
 			"wood": "Dinoz bois",
 			"air": "Dinoz air",
-			"lightning": "Dinoz foudre",
+			"lightning": "Lightning Dinoz",
 			"ffa": "Free for All",
-			"demons": "Dinoz démoniaques"
+			"demons": "Demon Dinoz"
 		},
 		"history": {
 			"myDinoz": "My fighters",
@@ -4869,23 +4921,29 @@
 		"title": "Discover the next events of DinoRPG!",
 		"small": "Irma's Divination",
 		"strong": {
-			"title1": "Version 1.0.0 (Vanilla)",
-			"title2": "Version 1.1.0 (To the West)",
-			"title3": "2050 Roadmap"
+			"title1": "Version 1.0.0 (Bientôt)",
+			"title2": "Version 1.1.0",
+			"title3": "Version 1.2.0",
+			"title4": "2050 Roadmap"
 		},
 		"help": "Click on an update below to display more information!",
 		"disclaimer": "Given Madam Irma's divination is not accurate, no release date is available for any of those updates. Still each event will be announced properly through a public broadcast on the website at t",
 		"futurTitle": "Dinolandian Future",
 		"futureInfo1": {
 			"text1": "Access to maps: Dinoland, Big Hot, Grumhel Forest, Atlantean Islands.",
-			"text2": "Access to the original missions: Grandpa Joe, Bao Bob, Soft Shaman, Dian Korgsey, Forest Warden.",
-			"text3": "And many other features"
+			"text2": "Access to the original missions: Grandpa Joe, Bao Bob, Soft Shaman, Dian Korgsey, Forest Warden and Skully.",
+			"text3": "Accès au Tournoi de Forcebrut.",
+			"text4": "Access to the Dojo and its regular tournaments.",
+			"text5": "And many other features."
 		},
 		"futureInfo2": {
 			"text1": "Access to the West of Dinoland.",
-			"text2": "Access to the Elemental Master's missions."
+			"text2": "Access to missions of the Elemental Master and Madam X."
 		},
 		"futureInfo3": {
+			"text1": "Access the Magnetic Steppes."
+		},
+		"futureInfo4": {
 			"text1": "Coming soon..."
 		}
 	},
@@ -4895,16 +4953,16 @@
 		"eat_star_found": "After swallowing the Pie, your Dinoz sees something shining a few meters away... Congratulations! You have found one of the 7 magic stars!",
 		"dig_star_found": "At the first blow of the shovel, you hear a strange noise. By digging a little you find one of the 7 magic stars! Congratulations!",
 		"resurrect_star_found": "As it wakes up in Dinoville, your Dinoz realizes that someone has entrusted it with the last magic star! Its memories are blurred, but it remembers strange Dinoz, unknown until then, who looked like monkeys with multicolored fur... They are the ones who entrusted it with the 7th star, but who are they?!?",
-		"AAA_start": "Alors que votre Dinoz s'approche, certaines Anguilloz se rendent compte de sa présence et l'attaquent !",
-		"AAA_end": "Aprés la défaite des Anguilloz, vous observez des traces de pas qui s'éloignent en direction de l'ouest...",
-		"baiePira_start": "A peine vous entrez dans la baie que de nombreux Piranhoz se précipitent pour vous mordiller... Qui peut bien avoir envie de venir pêcher ici ???",
-		"baiePira_end": "Une fois les Piranhoz vaincus, vous regardez aux alentours. Si Mouldeur est venu pêcher ici, il est déjà reparti...",
-		"baraba_start": "Que le pouvoir du Bambooz soit avec moi ! Sus aux infidèles !",
-		"baraba_end": "Avant de s'écrouler, Barababor vous souffle les mots suivants : \"Nous avons capturé votre ami : il sera emmené en bateau dans nos steppes natales où il serra vendu comme esclave !\"",
-		"boat_start": "Que le pouvoir du Bambooz soit avec moi ! Je vengerais mon frère !!!",
-		"boat_end": "Après avoir vaincu les Bandits, vous libérez un homme ligoté dans le bateau...",
-		"korgon_start": "Kwwiiiiiiik !",
-		"korgon_end": "Vous avez capturé un Korgon bien gras... en espérant qu'il n'était pas destiné au diner de quelqu'un !"
+		"AAA_start": "As you are approaching, some Eeloz notice your Dinoz and attack!",
+		"AAA_end": "After defeating the Eeloz, you notice some steep tracks heading towards the west...",
+		"baiePira_start": "After entering the bay, many Piranhoz rush to bite you. Who would want to fish here???",
+		"baiePira_end": "Once you've defeated the Piranhoz, you take a look around. If Moulder was fishing here, he's certainly not here anymore.",
+		"baraba_start": "May the Bambooz power be with me! Come on!",
+		"baraba_end": "Before collapsing, Barababor whispers the following words: \"We've captured your friend: he will be taken to our native steppes by boat, where he will be sold into slavery!\"",
+		"boat_start": "May the Bambooz power be with me! I will avenge my brother!!!",
+		"boat_end": "After defeating the bandits, you free a hostage who was tied-up in the boat...",
+		"korgon_start": "Kwwiiiiiiik!",
+		"korgon_end": "You've captured a fatty Korgon. Let's hope it wasn't someone else's dinner!"
 	},
 	"report": {
 		"header": "Report inappropriate content",
@@ -4960,7 +5018,9 @@
 		"blockSender": "Block sender"
 	},
 	"scenario": {
-		"star": "The Strange Creature"
+		"star": "The Strange Creature",
+		"pac": "Strange Parchment",
+		"merguez": "The Golden Sausage"
 	},
 	"notification": {
 		"reasons": {
@@ -4977,20 +5037,30 @@
 		"reward": "You received {rewards}",
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "You made progress in the scenario **{scenario}**.",
-		"FBStarted": "Un nouvel événement est ouvert !",
-		"clanApply": "{name} souhaite rejoindre votre clan !"
+		"FBStarted": "A new event has started!",
+		"clanApply": "{name} would like to join your clan!"
 	},
 	"events": {
 		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
 		"disclaimerEnded": "Vous trouverez ici tout les événements communautaires terminés.",
-		"header": "Evenements en cours",
-		"date": "Date de création",
-		"level": "Niveau max",
-		"races": "Races autorisées",
+		"header": "Ongoing events",
+		"date": "Creation date",
+		"level": "Max level",
+		"races": "Authorized races",
 		"subscribed": "Registered",
 		"tournament": {
-			"disclaimer": "Un événement pour la sélection du champion du palier {level} pour le tournois de ForceBrute est en cours. Vous pouvez créer un Dinoz par jour durant les trois jours de qualification.&&Votre Dinoz peut monter jusqu'au niveau maximum du palier gratuitement. Seuls les 256 premiers au niveau maximum seront sélectionner.&& &&Bon courage maître Dinoz !",
-			"progress": "Actuellement {qty} Dinoz sont au niveau du tournois."
+			"disclaimer": "An event to select the champion of stage {level} for the Forcebrut tournament has started. You can create a Dinoz per day during the 3 days of qualifiers. You don't get to keep the Dinoz.&&Your Dinoz has to reach the maximum level of the stage to be counted. Only the 256 first to reach that level will be selected.&& &&Good luck Dinoz master!",
+			"progress": "Current {qty} Dinoz are at the level of the tournament."
 		}
+	},
+	"fb_tournament": {
+		"title": "Forcebrut Tournament",
+		"disclaimer": "Welcome to the Forcebrut tournament, here you can fight the best Dinoz create by the other players. The first stage is a level 10 Dinoz and each subsequent stage will increase in level. Each stage is represented by a different race.&&Good luck Dinoz master!",
+		"stage": "Stage {stage}",
+		"fight": "Fight {opponent}"
+	},
+	"skillTrees": {
+		"title": "Skills Tree",
+		"level": "Lv.{level}"
 	}
 }
