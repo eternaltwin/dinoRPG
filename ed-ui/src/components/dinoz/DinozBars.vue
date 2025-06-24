@@ -32,7 +32,7 @@
 					:style="getBarSize(dinozData.experience, dinozData.maxExperience)"
 				/>
 				<div>
-					{{ dinozData.experience > dinozData.maxExperience ? dinozData.maxExperience : dinozData.experience }} /
+					{{ dinozData.experience }} /
 					{{ dinozData.maxExperience }}
 				</div>
 			</div>
