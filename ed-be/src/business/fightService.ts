@@ -344,10 +344,14 @@ export async function rewardFight(
 
 		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf), player);
 		const max = getMaxXp(d);
-		if (d.experience + xp >= max) {
+		if (d.experience >= max) {
+			// No xp is the dinoz was already at max
 			levelup = true;
-			xp = max - d.experience;
-			if (xp < 0) xp = 0;
+			xp = 0;
+		}
+		else if (d.experience + xp >= max) {
+			// Else, allow xp overflow (should happen only) and raise levelup flag
+			levelup = true;
 		}
 		totalWinXP += xp;
 
