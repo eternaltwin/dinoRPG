@@ -163,9 +163,9 @@
 			<div class="notifications" v-if="notifications.length > 0">
 				<div class="section">
 					<span class="title">
-						<span>Notifications</span>
+						<span>{{ $t('rightMenu.notifications') }}</span>
 					</span>
-					<button @click="readAll()">Tout Lu</button>
+					<button @click="readAll()">{{ $t('rightMenu.readAll') }}</button>
 				</div>
 
 				<div
