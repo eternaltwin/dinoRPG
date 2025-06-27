@@ -72,7 +72,8 @@
 		"ingredientSold": "You sold your ingredients for a total of {value} :gold:.",
 		"needIngredientToSell": "You need to have the ingredients you want to sell.",
 		"finishGrid": "Congratulations! You have earned 1000 :gold: for having finished the grid!",
-		"dailyGridRewardsFinished": "You have reached the daily amount of completed grids."
+		"dailyGridRewardsFinished": "You have reached the daily amount of completed grids.",
+		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements."
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -2487,7 +2488,8 @@
 		"average": "Average",
 		"clans": "Clans",
 		"completion": "Completion",
-		"pantheon": "Pantheon"
+		"pantheon": "Pantheon",
+		"stats": "Stats"
 	},
 	"layout": {
 		"fx": "Statuses",
@@ -2725,7 +2727,7 @@
 			"rodlif": "Three Dark Dinoz from Caushemesh are waiting for you at the Mutant Falls. Go and defeat them and then return to receive your reward ... take my advice, don't try to defeat them alone, your Dinoz could die!",
 			"skully1": "Mouldeur a été touché par ma bonnédiction, alors que l'on faisait de vieux os ensemble, il m'a tout à coup oubliée et s'en est allé loin d'ici, le ruffian ! Il a sûrement dû donner des nouvelles à son neveu le ptit'joe… Va le voir et tiens moi au courant !",
 			"skully2": "\"Je t'attendrai sur le lieu de notre rencontre\" Oh oh oh oh ! Comme c'est roooomantique mon Mouldeur chéri ! J'espère en tout cas qu'il m'attend encore là-bas ! Vite, rends toi dans ce magnifique lieu aux douces odeurs de nénuphars où nous nous sommes rencontrés, et ramène-moi mon amour !",
-			"skully3": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau os retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce roblème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
+			"skully3": "Oh oh oh ! J'ai pensé à quelque chose de... problématique. Même si je retrouve Mouldeur, il va oublier à nouveau nos retrouvailles et repartir m'attendre quelque part. Il faut absolument que tu trouves une solution à ce problème avant d'aller voir Mouldeur. Va trouver cette chère Mademoiselle Bao, elle aura certainement une solution !",
 			"skully4": "\"Rejoins moi là où je t'ai déclaré ma flamme\" Oh oh oh oh ! Mon Mouldeur a vraiment un coeur en oooor ! Je n'oublierai jamais ce lieu délicieux où il nous avait emmenés, alors que nos os étaient encore tous jeunes... Et ce moment où il m'a tendu une merguez bien grillée et m'a demandé de l'épouser !",
 			"skully5": "Des \"Crevettes au Napalm\" ? Oh oh oh oh ! Quel doux souvenir que ce plat délicieux ! Bien, il va falloir que tu me rapportes un certain nombre d'ingrédients pour que je puisse préparer tout celà...",
 			"skully_end": "Ta mission touche à sa fin... Apporte ce plat de crevettes au Napalm auprès de mon cher Mouldeur. Il reconnaitra ma cuisine et reviendra à moi ! Oh oh oh !"

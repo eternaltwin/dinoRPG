@@ -72,7 +72,8 @@
 		"ingredientSold": "Du hast deine Zutaten zu einem Gesamtpreis von {value} :gold: verkauft.",
 		"needIngredientToSell": "Du benötigst die Zutaten, die du verkaufen möchtest.",
 		"finishGrid": "Glückwunsch! Du hast für das Freiräumen des Rasters 1000 Gold erhalten!",
-		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht."
+		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht.",
+		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten."
 	},
 	"dig": {
 		"gold": "Dein Dinoz hat {gold} :gold: ausgegraben.",
@@ -934,9 +935,9 @@
 				"stone_yes": "Klar, hier ist er.",
 				"stone_no": "Hey! Nicht anfassen! Erst würde ich gerne etwas wissen...",
 				"pac_start": "Was ist das für eine Schriftrolle?",
-				"pac_go": "Arracher les yeux du professeur",
-				"pac_scroll": "Montrer le parchemin, l'encre et la plume",
-				"pac_end": "Suis-je assez puissant ?"
+				"pac_go": "Dem Professor die Augen ausreißen",
+				"pac_scroll": "Pergament, Tinte und Feder zeigen",
+				"pac_end": "Bin ich stark genug?"
 			}
 		},
 		"sofia": {
@@ -1104,8 +1105,8 @@
 				"thanks": "Oooch, Ihr müsst schon wieder weg... Aber Ihr kommt ja wieder, oder? Dann bis bald!",
 				"nothing": "Oh... aber Euer Dinoz hat ja schon eine Bao-Verzauberung! Schaut her, da ist noch Energie übrig... seht Ihr? Wenn's nicht mehr geht, dann kann ich's für Euch wieder aufladen.",
 				"no": "Echt jetzt? Gut, dann eben Pech gehabt... *schmoll*",
-				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sur mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
-				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
+				"pac_scroll": "Auf diesem Stück Kohle?! Sicherlich, aber ich weiß nicht, was dir das nützen soll.&& && && && &&*Es scheint, als würde die Wurzel mit ihren beiden Anhängern leicht funkeln*",
+				"pac_scroll2": "Diese Fluoreszenz ist wirklich seltsam. Vielleicht solltest du einen Pflanzenexperten aufsuchen."
 			},
 			"playerChoice": {
 				"ok": "Äh... ja",
@@ -1115,8 +1116,8 @@
 				"no": "Nein, danke",
 				"spirit": "Meintest du „spirituelle“?",
 				"thanks": "Gut, ich muss los... vielen Dank für die Bao-Verzauberung!",
-				"pac_scroll": "Attend, tu saurais faire ça sur cette racine que le chaman a cramé avec son charme ?",
-				"pac_scroll2": "C'est normal la couleur ?"
+				"pac_scroll": "Warte mal, weißt du, was es mit der Wurzel auf sich hat, die der Schamane mit seinem Zauber abgefackelt hat?",
+				"pac_scroll2": "Ist es normal, dass sie diese Färbung hat?"
 			}
 		},
 		"forgeron": {
@@ -1167,12 +1168,12 @@
 				"begin_star": "Ohh! Wie ich sehe, hat dein Dinoz einen Wolkenburger dabei! Weißt du denn nicht, dass sie gesundheitsschädlich sind? Oder möchtest du etwa, dass dein Dinoz zum Sumoringer wird?!",
 				"ok_star": "Nimm bloß diesen abscheulichen Burger wieder mit und probier stattdessen lieber meine Merguez! Hier, dafür kriegst du auch dieses Ding, was hier auf dem Boden rumlag!",
 				"star": "Toll! Der Merguez-Verkäufer hat dir einen der sieben Zaubersterne überreicht!",
-				"begin_merguez": "Ah tu veux une carte de fidélité ? Bien sur avec plaisir. Reviens me voir quand tu auras consommé 500 merguez, j'aurais quelque chose pour toi.",
-				"merguez_step_2": "500 !?! On s'est mal compris, c'est de 500 livraisons dont je parlais. Donc 2500 au total.&& Aller encore 2000 à manger !",
-				"merguez_step_1": "Je trouve que tu exagère. C'est pas autant que ça, et surtout c'est gratuit !",
-				"merguez_step_3": "Pense bien à macher surtout. Et hydrate-toi, elles peuvent piquer un peu.",
-				"merguez_step_4": "Féliciations ! Je te note dans mon carnet des plus fidèles consommateurs. Vu que je sais que tu aime les merguez je vais te les donner par paquet de 100 à présent.",
-				"merguez_card": "Ah mais oui c'est vrai que ce cher client est un grand amateur de merguez. Tenez, voici de quoi remplir votre stock !"
+				"begin_merguez": "Ach, du möchtest eine Treuekarte haben? Klar, sehr gerne. Komm doch wieder, wenn du 500 Merguez verspeist hast, dann habe ich was für dich.",
+				"merguez_step_2": "500?! Da haben wir uns wohl missverstanden. Ich meinte 500 Bestellungen. Also insgesamt 2500.&&Los, du musst nur noch 2000 essen!",
+				"merguez_step_1": "Ich finde, du übertreibst. So viel ist das gar nicht und kostenlos ist es auch noch!",
+				"merguez_step_3": "Denk daran, gut zu kauen. Und trink etwas dazu, denn sie sind ein wenig pikant.",
+				"merguez_step_4": "Meinen Glückwunsch! Damit zählst du zu meinen treuesten Kunden. Da ich nun weiß, wie sehr du Merguez-Würstchen liebst, schenke ich sie dir ab jetzt in 100er-Packungen.",
+				"merguez_card": "Oh ja, ganz recht, dieser verehrte Kunde ist ein großer Merguez-Enthusiast. Hier ist etwas, um deinen Vorrat aufzufüllen!"
 			},
 			"playerChoice": {
 				"ah": "Äh...",
@@ -1180,12 +1181,12 @@
 				"thanks": "Danke",
 				"ok_star": "...",
 				"star": "Oh?",
-				"begin_merguez": "Je compte revenir !",
-				"merguez_step_1": "500 ca fait quand même beaucoup.",
-				"merguez_step_2": "Ca y est, j'ai consommé les 500 merguez.",
-				"merguez_step_3": "2500 ca fait quand même beaucoup.",
-				"merguez_step_4": "Ca y est, j'ai consommé les 2500 merguez.",
-				"merguez_card": "Montrer la carte de fidélité."
+				"begin_merguez": "Ich komme wieder!",
+				"merguez_step_1": "500 sind immer noch zu viele",
+				"merguez_step_2": "Das war's, ich hab' die 500 Merguez verspeist.",
+				"merguez_step_3": "2500 sind immer noch zu viele",
+				"merguez_step_4": "Das war's, ich hab' die 2500 Merguez verspeist.",
+				"merguez_card": "Treuekarte zeigen"
 			}
 		},
 		"shaman": {
@@ -1200,9 +1201,9 @@
 				"merci": "Tschau Kumpel... bis demnächst...",
 				"more": "Hmm... Wenn dein Dinoz ein paar Missionen für mich erledigt, dann kriegt er mein Strategiehandbuch. Es ist echt praktisch...",
 				"accept": "Abgemacht...",
-				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tout ces poissons qu'on a l'habitude de s'envoyer ?",
-				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheu était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô",
-				"pac_root": "Uhmm... ? Déjà ?... Bah... j'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rend ta racine, j'en avais déjà une vieille à utiliser."
+				"pac_scroll": "Kollabo... was?&&Ah, du meinst sicher die ganzen Fische, dir wir uns gegenseitig hin und her schicken, oder?",
+				"pac_scroll2": "Ach, stimmt ja... Der alte Griesgram war hergekommen und hatte mich gebeten, die //Wurzel einer Figonizie// mit einem Feuerzauber zu belegen. Was ein Witzbold.&& &&Komm mit deiner Wurzel wieder zu mir, wenn du willst, dass ich das Gleiche tue.&& && &&Also dann, tschauuuuu",
+				"pac_root": "Hää..? Jetzt schon? Pah... für dich mach ich's...&& && &&Waka waka jau jau, und tada!&& &&Andererseits hat der Zauber deine Wurzel aber ganz schön ausgetrocknet, also viel Erfolg dabei, irgendwas damit anzufagen. Hier hast du deine Wurzel zurück. Für mich hab' da noch eine alte, brauchbare."
 			},
 			"playerChoice": {
 				"vener": "Der Ehrwürdige...",
@@ -1215,9 +1216,9 @@
 				"merci": "Danke. Ich werde deine Ratschläge beherzigen!",
 				"more": "Und das war's?",
 				"accept": "Zustimmen",
-				"pac_scroll": "Vous avez collaboré avec le professeur ?",
-				"pac_scroll2": "Un parchemin pour les compétences",
-				"pac_root": "Donner la racine"
+				"pac_scroll": "Hattest du eine Kollaboration mit dem Professor?",
+				"pac_scroll2": "Eine Schriftrolle für Fähigkeiten",
+				"pac_root": "Wurzel geben"
 			}
 		},
 		"gardien": {
@@ -1370,11 +1371,11 @@
 				"sickstatus": "Hassu denn ein Hegemiddel aufdreiben könn?",
 				"better": "Das Gegenmittel, das du mir gebracht hast, war äußerst wirksam!",
 				"lowLevel": "Ach herrje... Du bist allem Anschein nach noch nicht stark genug für irgendwelche Aufträge. Ich möchte ja nicht, dass deine Dinoz verletzt werden. Schau wieder vorbei, sobald du ein paar mehr Stufen ansammelst!",
-				"pac_shine": "Euh... Vous avez réussi à obtenir une racine charmée tout seul ? C'est le professeur qui vous a dit quoi faire ? C'est très dangereux vous savez. Si vous arrivez à la réduire en parchemin vous pourrez utiliser une encre de compilation. Mais c'est très complexe à réaliser.",
-				"pac_progress": "Euh, comment dire... C'est... Oui c'est possible... Je m'occupe de vous faire le parchemin, ramenez moi dans un premier temps de l'encre de Kazkadine. Une cinquantaine devraient faire l'affaire",
-				"pac_kazka": "Très bien ! Passons à présent aux cendres de flamèches. Il m'en faut 42 unitées.&& Regarde comment j'ai bien avancé, le parchemin est en train de sécher.",
-				"pac_flam": "Ce fût rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu aille chercher une plume de Coqdur. Tu pense en être capable ?",
-				"pac_coq": "Voila, je ne peux rien faire de plus pour toi. Il faudrait que tu mène tes recherches pour comprendre comment l'utiliser."
+				"pac_shine": "Ähm... du hast es ganz alleine geschafft, eine verzauberte Wurzel zu besorgen? Hat der Professor dir gesagt, was zu tun ist? Sie ist echt gefährlich, weißt du. Aber wenn du sie zu Pergament verarbeitet kriegst, kannst du sie mit Auflistungstinte beschreiben. Aber das ist sehr aufwendig.",
+				"pac_progress": "Äh, wie soll ich sagen... Es ist... Ja, es ist möglich... Ich kann das Pergament für dich anfertigen, aber bring mir zunächst etwas Kazkadinen-Tinte. So um die fünfzig sollten reichen.",
+				"pac_kazka": "Sehr gut! Nun zur Flämmchenasche, und da bräuchte ich 42 Einheiten.&&Schau mal, wie gut ich das gemacht habe – das Pergament ist gerade am Trocknen.",
+				"pac_flam": "Das ging ja schnell! Und während ich deine Tinte herstelle, solltest du dir schon mal eine Harthuhnfeder besorgen. Glaubst du, du kriegst das hin?",
+				"pac_coq": "Na bitte. Sonst kann ich nichts mehr für dich tun. Da musst du selbst nachforschen, wenn du herausfinden willst, wie man alles verwendet."
 			},
 			"playerChoice": {
 				"welcome": "Ihn ansprechen",
@@ -1394,11 +1395,11 @@
 				"missions": "Missionsliste betrachten",
 				"lowLevel": "Missionsliste betrachten",
 				"curesearch": "Mal sehen...",
-				"pac_shine": "Et cette racine qui brille, un avis dessus ?",
-				"pac_progress": "Vous saurez m'aider ?",
-				"pac_kazka": "J'ai toute l'encre nécessaire !",
-				"pac_flam": "Voici les 42 unitées de cendres de flamèches !",
-				"pac_coq": "Montrer la plume"
+				"pac_shine": "Und was ist mir dieser funkelnden Wurzel, irgendwelche Meinungen?",
+				"pac_progress": "Können Sie mir helfen?",
+				"pac_kazka": "Das ist all die Tinte, die ich brauche!",
+				"pac_flam": "Hier sind 42 Einheiten Flämmchenasche!",
+				"pac_coq": "Feder zeigen"
 			}
 		},
 		"rodeur": {
@@ -1667,15 +1668,15 @@
 		},
 		"fb_tournament": {
 			"speech": {
-				"begin": "Bonjour, ô Grand Maître Dinoz ! Le Grand Tournoi de Forcebrut est ouvert à tous ceux qui désirent mesurer leurs Dinoz à ceux des autres joueurs. Je vous y inscris ?",
-				"yes": "Malheureusement, comme le précise le règlement intérieur, paragraphe 15.48 alinéa H, l'accès au Tournoi est ouvert uniquement aux Dinoz ayant en leur possession une relique d'une civilisation ancienne. C'est l'unique condition pour participer... N'hésitez pas à revenir quand votre Dinoz en aura trouvé une. Bonne journée et bon séjour à Forcebrut !",
-				"ok": "Oh ! Je vois que votre Dinoz possède un {Totem Ashpouk} ! Très bien, je l'inscris donc sur la liste des participants au Tournoi, il pourra donc désormais y accéder directement. Bonne journée monsieur le Maître Dinoz !",
-				"no": "Très bien, vous n'êtes nullement obligé de vous inscrire, surtout si vos Dinoz ne sont pas prêts à se mesurer à de puissants adversaires. C'est vrai que le Tournoi peut être très dangereux pour les Dinoz inexpérimentés. Bonne journée et bon séjour à Forcebrut !"
+				"begin": "Seid gegrüßt, o Großer Dinoz-Meister! Das Große Rohkraft-Turnier steht allen offen, die ihre Dinoz mit denen anderer Spieler messen möchten. Soll ich Euch anmelden?",
+				"yes": "Leider ist gemäß des internen Regelwerks, Artikel 15.48, Absatz H, der Zugang zum Turnier nur Dinoz gestattet, die im Besitz eines Relikts einer alten Zivilisation sind. Das ist die einzige Teilnahmebedingung… Zögert nicht, wiederzukommen, wenn Euer Dinoz eines gefunden hat. Wir wünschen Euch einen schönen Tag und einen angenehmen Aufenthalt in Rohkraft!",
+				"ok": "Oh! Ich sehe, Euer Dinoz hat ein {Totem Ashpouk}! Ausgezeichnet, ich füge ihn zur Teilnehmerliste des Turniers hinzu, und damit er nun auch direkten Zugang. Einen schönen Tag noch, werter Dinoz-Meister!",
+				"no": "Ausgezeichnet, Ihr seid keineswegs verpflichtet, Euch anzumelden, insbesondere wenn Euer Dinoz noch nicht bereit ist, sich mit starken Gegnern zu messen. Es ist wohl wahr, dass das Turnier für unerfahrene Dinoz sehr gefährlich sein kann. Wir wünschen Euch einen schönen Tag und einen angenehmen Aufenthalt in Rohkraft!"
 			},
 			"playerChoice": {
-				"yes": "Ho, bonne idée !",
-				"ok": "Oui, merci !",
-				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
+				"yes": "Oha, gute Idee!",
+				"ok": "Ja, danke!",
+				"no": "Ähm, ne, danke... Meine Dinoz könnten noch etwas Training gebrauchen."
 			}
 		}
 	},
@@ -1758,11 +1759,11 @@
 		}
 	},
 	"skill": {
-		"energy": "Énergie : **{energy}**",
-		"probability": "Probabilité : **{probability}%**",
-		"priority": "Priorité : **{priority}**",
-		"unknown": "Inconnu",
-		"unknownDesc": "Vous n'avez pas encore découvert cette compétence.",
+		"energy": "Energie: **{energy}**",
+		"probability": "Wahrscheinlichkeit: **{probability}%**",
+		"priority": "Priorität: **{priority}**",
+		"unknown": "Unbekannt",
+		"unknownDesc": "Du hast diese Fähigkeit noch nicht entdeckt.",
 		"name": {
 			"GriffesEnflammees": "Brennende Klauen",
 			"Colere": "Zorn",
@@ -2487,7 +2488,8 @@
 		"average": "Durchschnitt",
 		"clans": "Klane",
 		"completion": "Completion",
-		"pantheon": "Pantheon"
+		"pantheon": "Pantheon",
+		"stats": "Statistiken"
 	},
 	"layout": {
 		"fx": "Status",
@@ -3675,7 +3677,7 @@
 			"chkx2a": "Mog",
 			"chkx3b": "Magier",
 			"chkx3a": "Kaktor",
-			"chlx1b": "Arbalette de la Victoire",
+			"chlx1b": "Armbrust des Sieges",
 			"chlx1a": "Tell et Pomme",
 			"chlx2b": "Arc d'ombre",
 			"chlx2a": "Arc d'Apollon",
@@ -4387,8 +4389,8 @@
 		},
 		"historyView": {
 			"lastOffers": "Hier sind letzten Verkäufe, die von Spielern abgeschlossen wurden:",
-			"yourOwnOffers": "Vos mises",
-			"yourOwnBids": "Vos achats"
+			"yourOwnOffers": "Deine Gebote",
+			"yourOwnBids": "Deine Käufe"
 		}
 	},
 	"hud": {
@@ -4450,7 +4452,7 @@
 	},
 	"dojo": {
 		"welcome": "Willkommen in deinem Dojo",
-		"markAsRead": "Marquer comme vus",
+		"markAsRead": "Als gelesen markieren",
 		"noTournament": "Es sind nicht genug Dinoz da, um ein Turnier zu veranstalten. Komm später wieder, nachdem du deine Freunde zum Spiel mitgebracht hast!",
 		"return": "Zurück",
 		"accessTournament": "An Wettkampf teilnehmen",
@@ -4921,30 +4923,30 @@
 		"title": "Entdecke die kommenden Ereignisse in Dino-RPG!",
 		"small": "Irmas Vorhersage",
 		"strong": {
-			"title1": "Version 1.0.0 (Bientôt)",
+			"title1": "Version 1.0.0 (Bald)",
 			"title2": "Version 1.1.0",
 			"title3": "Version 1.2.0",
-			"title4": "Roadmap to 2050"
+			"title4": "Meilensteine bis 2050"
 		},
 		"help": "Klicke auf die obigen Erweiterungen, um mehr zu erfahren!",
 		"disclaimer": "Irmas Vorhersagen sind nicht unfehlbar, weshalb für die Neuerungen kein Veröffentlichungsdatum gewährt wird. Wenn es soweit ist, wird zu der jeweiligen Erneuerung eine offizielle Ankündigung auf der Webseite erscheinen.",
 		"futurTitle": "Dinoländische Zukunft",
 		"futureInfo1": {
 			"text1": "Zugang zu den Karten: Dinoland, Der Große Immerhitzus, Grumhel-Wald und die Atlantinischen Inseln.",
-			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret, et Skully.",
-			"text3": "Accès au Tournoi de Forcebrut.",
-			"text4": "Accès au Dojo et ses tournois réguliers.",
-			"text5": "Et plein d'autres fonctionnalités."
+			"text2": "Zugriff zu den Kernmissionen: Papy Joe, Bao Bob, Lässiger Schamane, Heinz Fielmann, Dian Korgsey, der Waldwächter und Skully.",
+			"text3": "Zugang zum Rohkraft-Turnier.",
+			"text4": "Zugriff zum Dojo und seinen regulären Wettkämpfen.",
+			"text5": "Und viele andere Funktionalitäten."
 		},
 		"futureInfo2": {
 			"text1": "Zugang zum Westen von Dinoville.",
-			"text2": "Accès aux missions du Maître Élémentaire, et de Madame X."
+			"text2": "Zugriff zu den Missionen vom Meister der Elemente und Madame X."
 		},
 		"futureInfo3": {
-			"text1": "Accès aux Steppes Magnétiques."
+			"text1": "Zugang zu den Magnetischen Steppen."
 		},
 		"futureInfo4": {
-			"text1": "À venir..."
+			"text1": "Demnächst..."
 		}
 	},
 	"quest": {
@@ -5019,8 +5021,8 @@
 	},
 	"scenario": {
 		"star": "Seltsames Wesen",
-		"pac": "Parchemin étrange",
-		"merguez": "La merguez dorée"
+		"pac": "Seltsame Schriftrolle",
+		"merguez": "Die Goldene Bratwurst"
 	},
 	"notification": {
 		"reasons": {
@@ -5054,13 +5056,13 @@
 		}
 	},
 	"fb_tournament": {
-		"title": "Tournoi de Forcebrut",
-		"disclaimer": "Bienvenue au tournoi de Forcebrut, ici vous pourrez affronter les meilleurs Dinoz créés par d'autres joueurs. Le premier palier est un Dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître Dinoz !",
-		"stage": "Palier {stage}",
-		"fight": "Combattre {opponent}"
+		"title": "Rohkraft-Turnier",
+		"disclaimer": "Willkommen beim Rohkraft-Turnier! Hier kannst du gegen die besten Dinoz anderer Spieler antreten. Die erste Etappe ist ein Dinoz der Stufe 10 und jede darauffolgende steigert deinen Gegner jeweils um eine weitere Stufe. Jede Etappe wird von einer anderen Rasse vertreten.&&Viel Glück, Dinoz-Meister!",
+		"stage": "Etappe {stage}",
+		"fight": "Gegen {opponent} kämpfen"
 	},
 	"skillTrees": {
-		"title": "Arbres de compétences",
-		"level": "Niv.{level}"
+		"title": "Baum der Fähigekeiten",
+		"level": "St. {level}"
 	}
 }

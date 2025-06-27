@@ -150,13 +150,13 @@
 		"epic": "Glückwunsch an {{player}}, der als $t(position.{{position}}) Spieler die Belohnung „$t(reward.{{reward}})“ erhalten hat!"
 	},
 	"UnavailableReason": {
-		"frozen": "Votre Dinoz est congelé",
-		"sacrificed": "Votre Dinoz est sacrifié",
-		"selling": "Votre Dinoz est en vente",
-		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Votre Dinoz se repose"
+		"frozen": "Dein Dinoz ist eingefroren.",
+		"sacrificed": "Dein Dinoz wurde geopfert.",
+		"selling": "Dein Dinoz wird verkauft.",
+		"superdom": "Dein Dinoz ist am SuperDom.",
+		"resting": "Dein Dinoz ruht sich aus."
 	},
 	"fb_tournament": {
-		"noOpponent": "Il n'y a plus personne à combattre pour le moment."
+		"noOpponent": "Es gibt derzeit keine Gegner mehr, gegen die du kämpfen könntest."
 	}
 }

@@ -72,7 +72,8 @@
 		"ingredientSold": "Vendiste tus ingredientes por un total de {value} :gold:.",
 		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
 		"finishGrid": "¡Felicidades! ¡Has ganado 1000 :gold: por completar el tablero!",
-		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados."
+		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados.",
+		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements."
 	},
 	"dig": {
 		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
@@ -2487,7 +2488,8 @@
 		"average": "Promedio",
 		"clans": "Clanes",
 		"completion": "Completado",
-		"pantheon": "Panteón"
+		"pantheon": "Panteón",
+		"stats": "Stats"
 	},
 	"layout": {
 		"fx": "Estatus",
