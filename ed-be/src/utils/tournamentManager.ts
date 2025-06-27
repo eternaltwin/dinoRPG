@@ -665,6 +665,8 @@ class TournamentManager {
 			germanText: translateTarget('dojo.newsCorpus', 'de', deTrad)
 		});
 
+		scheduleJob(this.tournamentId, endQualif, () => this.generateNextRound(prisma));
+
 		return new TournamentManager(this.tournamentId, new Date());
 	}
 
