@@ -16,6 +16,7 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import {
 	getDinozEquipItemRequest,
 	getDinozPlace,
+	getDinozPlaces,
 	isDinozInTournament,
 	isDinozSelling,
 	updateDinoz
@@ -49,6 +50,12 @@ import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
  */
 export async function getOfferList(req: Request): Promise<OfferGetList> {
 	const authed = await auth(req);
+
+	const player = await getDinozPlaces(authed.id);
+
+	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+		throw new ExpectedError(translate('noDinozAtMarket'));
+	}
 
 	const filter = req.params.filter;
 	const sellerId = req.query.sellerId ? (req.query.sellerId as string) : null;
@@ -92,6 +99,12 @@ export async function getOfferList(req: Request): Promise<OfferGetList> {
 export async function createOffer(req: Request) {
 	// Check if player is logged in
 	const authed = await auth(req);
+
+	const player = await getDinozPlaces(authed.id);
+
+	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+		throw new ExpectedError(translate('noDinozAtMarket'));
+	}
 
 	const dinozId = req.body.dinoz ? +req.body.dinoz : null;
 	const total = +req.body.total;
@@ -232,6 +245,13 @@ export async function cancelOffer(req: Request) {
 	// Check if player is logged in
 	const authed = await auth(req);
 
+
+	const player = await getDinozPlaces(authed.id);
+
+	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+		throw new ExpectedError(translate('noDinozAtMarket'));
+	}
+
 	const playerId = authed.id;
 	const offerId = +req.params.offerId;
 
@@ -299,6 +319,12 @@ export async function cancelOffer(req: Request) {
 export async function bidOffer(req: Request) {
 	// Check if player is logged in
 	const authed = await auth(req);
+
+	const player = await getDinozPlaces(authed.id);
+
+	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+		throw new ExpectedError(translate('noDinozAtMarket'));
+	}
 
 	const offerId = +req.params.offerId;
 	const value = +req.body.value;
@@ -418,6 +444,13 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 		throw new ExpectedError('Offer not found');
 	}
 	const authed = await auth(req);
+
+	const player = await getDinozPlaces(authed.id);
+
+	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {
+		throw new ExpectedError(translate('noDinozAtMarket'));
+	}
+
 	const sellerId = offer.sellerId;
 	const result: ClaimOfferData = {
 		discoveredSkills: []

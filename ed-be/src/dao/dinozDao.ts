@@ -333,6 +333,28 @@ export async function getDinozMissionsInfo(dinozId: number, playerId: string) {
 	return player;
 }
 
+/**
+ * Returns the list of Dinoz and their places for a given player
+ * @param playerId Id of the player
+ * @returns List of Dinoz with their places
+ */
+export async function getDinozPlaces(playerId: string) {
+	const player = await prisma.player.findUnique({
+		where: { id: playerId },
+		select: {
+			id: true,
+			dinoz: {
+				select: {
+					id: true,
+					placeId: true,
+				},
+			}
+		}
+	});
+
+	return player;
+}
+
 export async function getDinozConcentrationRequest(dinozId: number) {
 	const dinoz = await prisma.dinoz.findUnique({
 		where: { id: dinozId },

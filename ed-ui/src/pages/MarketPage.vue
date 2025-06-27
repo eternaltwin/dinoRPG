@@ -78,7 +78,7 @@ export default defineComponent({
 				return;
 			}
 			this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
-			goTo(this.$router, 'MainPage');
+			goTo(this.$router, 'News');
 			return;
 		}
 
@@ -86,25 +86,24 @@ export default defineComponent({
 		const currentDinoz = this.dinozStore.getDinoz(currentDinozId);
 		if (!currentDinoz) {
 			this.$toast.open({ message: formatText(this.$t(`toast.unknownDinoz`)), type: 'error' });
-			goTo(this.$router, 'MainPage');
+			goTo(this.$router, 'News');
 			return;
 		}
 
 		// Check if the dinoz is at the market
-
 		if (currentDinoz.placeId === PlaceEnum.PLACE_DU_MARCHE) {
 			EventBus.emit('isLoading', false);
 			return;
 		}
 		const dinozList = this.dinozStore.dinozList.filter(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE);
-		if (dinozList.length >= 0) {
+		if (dinozList.length > 0) {
 			this.dinozStore.setCurrentDinozId(dinozList[0].id);
 			EventBus.emit('isLoading', false);
 			return;
 		}
 
 		this.$toast.open({ message: formatText(this.$t(`toast.selectADinozAtMarketFirst`)), type: 'error' });
-		goTo(this.$router, 'MainPage');
+		goTo(this.$router, 'News');
 		return;
 	}
 });
