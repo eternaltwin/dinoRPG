@@ -67,9 +67,9 @@ export default defineComponent({
 		},
 		truncateUsername(name: string) {
 			if (name.length > 16) {
-				return name.slice(0, 14) + '...'
+				return name.slice(0, 14) + '...';
 			} else {
-				return name
+				return name;
 			}
 		}
 	}

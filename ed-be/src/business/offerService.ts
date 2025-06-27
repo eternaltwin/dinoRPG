@@ -245,7 +245,6 @@ export async function cancelOffer(req: Request) {
 	// Check if player is logged in
 	const authed = await auth(req);
 
-
 	const player = await getDinozPlaces(authed.id);
 
 	if (player && !player.dinoz.some(d => d.placeId === PlaceEnum.PLACE_DU_MARCHE)) {

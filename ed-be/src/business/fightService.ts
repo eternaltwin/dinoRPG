@@ -348,8 +348,7 @@ export async function rewardFight(
 			// No xp is the dinoz was already at max
 			levelup = true;
 			xp = 0;
-		}
-		else if (d.experience + xp >= max) {
+		} else if (d.experience + xp >= max) {
 			// Else, allow xp overflow (should happen only) and raise levelup flag
 			levelup = true;
 		}
