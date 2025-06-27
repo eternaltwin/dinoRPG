@@ -19,7 +19,7 @@
 					theme: 'small'
 				}"
 			/>
-			<span>{{ user.name }}</span>
+			<span>{{ truncateUsername(user.name) }}</span>
 		</span>
 		<PlayerMenu v-if="seePlayer" :playerId="user.id" />
 	</div>
@@ -64,6 +64,13 @@ export default defineComponent({
 		},
 		leave() {
 			this.seePlayer = false;
+		},
+		truncateUsername(name: string) {
+			if (name.length > 16) {
+				return name.slice(0, 14) + '...'
+			} else {
+				return name
+			}
 		}
 	}
 });
