@@ -481,6 +481,9 @@ export default defineComponent({
 	async mounted(): Promise<void> {
 		await this.loadComponent();
 	},
+	watch: {
+		'$route.params.id': 'loadComponent'
+	},
 	unmounted() {
 		EventBus.off('refreshInventory');
 	}
