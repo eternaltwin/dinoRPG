@@ -11,8 +11,9 @@ export const errorHandler = {
 				type: 'error'
 			});
 			if (err.response.data === 'Invalid user ID') {
-				deleteCookie('x-drpg-user');
-				deleteCookie('x-drpg-token');
+				const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+				deleteCookie(`x-drpg-${channel}-user`);
+				deleteCookie(`x-drpg-${channel}-token`);
 			}
 
 			EventBus.emit('isLoading', false);

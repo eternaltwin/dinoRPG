@@ -251,8 +251,9 @@ export default defineComponent({
 	},
 	methods: {
 		logOff(): void {
-			deleteCookie('x-drpg-token');
-			deleteCookie('x-drpg-user');
+			const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+			deleteCookie(`x-drpg-${channel}-token`);
+			deleteCookie(`x-drpg-${channel}-user`);
 			this.dinozStore.$reset();
 			this.playerStore.$reset();
 			this.menuCalled = false;

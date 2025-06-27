@@ -146,8 +146,9 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			if (res) {
 				try {
+					const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 					await PlayerService.resetAccount();
-					deleteCookie('x-drpg-token');
+					deleteCookie(`x-drpg-${channel}-token`);
 					this.dinozStore.$reset();
 					this.playerStore.$reset();
 					this.$router.go(0);

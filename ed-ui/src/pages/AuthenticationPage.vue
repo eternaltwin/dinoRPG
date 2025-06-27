@@ -33,8 +33,9 @@ export default defineComponent({
 			try {
 				const commonData = await OauthService.authenticateUser(this.$route.query.code as string);
 				// Set cookies
-				setCookie('x-drpg-user', commonData.id, 7);
-				setCookie('x-drpg-token', commonData.connexionToken, 7);
+				const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+				setCookie(`x-drpg-${channel}-user`, commonData.id, 7);
+				setCookie(`x-drpg-${channel}-token`, commonData.connexionToken, 7);
 				// Set data in sessionStore
 				this.playerStore.setMoney(commonData.money);
 				this.dinozStore.setDinozList(commonData.dinoz);

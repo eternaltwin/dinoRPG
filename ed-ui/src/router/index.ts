@@ -341,7 +341,8 @@ const router = createRouter({
 });
 
 router.beforeEach(to => {
-	const isLogged = getCookie('x-drpg-token') !== null;
+	const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+	const isLogged = getCookie(`x-drpg-${channel}-token`) !== null;
 	// route to AuthPage if not logged and going to any page
 	if (!isLogged && to.name !== 'AuthenticationPage') {
 		return { name: 'AuthenticationPage' };

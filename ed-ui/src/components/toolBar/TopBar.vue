@@ -75,7 +75,8 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		this.isLogged = getCookie('x-drpg-token') !== null;
+		const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
+		this.isLogged = getCookie(`x-drpg-${channel}-token`) !== null;
 		this.notification = this.playerStore.getNotificationsCounter;
 		EventBus.on('connected', async e => {
 			this.isLogged = e;
