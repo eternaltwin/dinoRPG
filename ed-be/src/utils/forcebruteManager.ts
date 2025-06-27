@@ -53,6 +53,7 @@ class ForceBruteManager {
 		LOGGER.log(
 			`Creation of the FBTournament ${newTournament.id} for the level ${this.level}. ${notifications} notifications sent.`
 		);
+		scheduleJob(newTournament.id, endCreation, () => this.generateNextRound(prisma));
 		return newTournament;
 	}
 
