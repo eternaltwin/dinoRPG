@@ -81,12 +81,12 @@
 		<Tippy
 			theme="normal"
 			tag="img"
-			:src="getImgURL('epicRewards', `collec_${epicRewards[rewardId - 1].name}`)"
-			:alt="epicRewards[rewardId - 1].name"
+			:src="getImgURL('epicRewards', `collec_${rewardList[rewardId].name}`)"
+			:alt="rewardList[rewardId].name"
 		>
 			<template #content>
-				<h1 v-html="formatContent($t(`rewards.name.${epicRewards[rewardId - 1].name}`))" />
-				<p v-html="formatContent($t(`rewards.description.${epicRewards[rewardId - 1].name}`))" />
+				<h1 v-html="formatContent($t(`rewards.name.${rewardList[rewardId].name}`))" />
+				<p v-html="formatContent($t(`rewards.description.${rewardList[rewardId].name}`))" />
 			</template>
 		</Tippy>
 		<table>
@@ -123,8 +123,9 @@ import { PantheonDisplay, PantheonMotif } from '@drpg/core/models/pantheon/panth
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
 import DZUser from '../common/DZUser.vue';
 import { localStore } from '../../store/index.js';
-import { rewardList } from '@drpg/core/models/reward/RewardList';
+import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import { EpicReward } from '@drpg/core/models/reward/EpicReward';
 
 export default defineComponent({
 	name: 'Pantheon',
@@ -137,7 +138,8 @@ export default defineComponent({
 			race: null,
 			level: null,
 			rewardId: null,
-			localStore: localStore()
+			localStore: localStore(),
+			rewardList: rewardList as Readonly<Record<Reward, EpicReward>>
 		};
 	},
 	methods: {
