@@ -26,6 +26,7 @@
 	"notEnoughTickets": "Du hast nicht genug Gutscheine.",
 	"tooShortMessage": "Deine Nachricht ist zu kurz.",
 	"existingNameClan": "Ein Klan mit diesem Namen existiert bereits.",
+	"noDinozAtMarket": "Vous n'avez aucun Dinoz au marché.",
 	"alreadyOffer": "Du hast bereits ein laufendes Angebot.",
 	"bidsOngoing": "Du hast noch laufende Angebote.",
 	"inClan": "Du gehörst bereits zu einem Klan.",
@@ -127,7 +128,8 @@
 		"dico1": "Wörterbuch",
 		"dicarb": "Arboreanisches Wörterbuch",
 		"caush": "Mandragor-Puppe",
-		"fmedal": "3-Augen-Medaillon"
+		"fmedal": "3-Augen-Medaillon",
+		"pac": "Parchemin des Aptitudes Compilées"
 	},
 	"tournament": {
 		"uncommon": "ungewöhnliche Rassen",

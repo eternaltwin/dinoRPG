@@ -26,6 +26,7 @@
 	"notEnoughTickets": "No tienes suficientes bonos.",
 	"tooShortMessage": "Tu mensaje es demasiado corto.",
 	"existingNameClan": "Ya existe un clan con este nombre.",
+	"noDinozAtMarket": "No tienes ningún Dino en el mercado.",
 	"alreadyOffer": "Ya tienes una oferta en curso.",
 	"bidsOngoing": "Aún tienes subastas en curso",
 	"inClan": "Todavía perteneces a un clan.",
@@ -127,7 +128,8 @@
 		"dico1": "Diccionario",
 		"dicarb": "Diccionario Arboris",
 		"caush": "Muñeco Mandrágora",
-		"fmedal": "Medallón de 3 ojos"
+		"fmedal": "Medallón de 3 ojos",
+		"pac": "Pergamino de Competencias Compiladas"
 	},
 	"tournament": {
 		"uncommon": "razas raras",
@@ -150,13 +152,13 @@
 		"epic": "¡Felicitaciones a {{player}}, que es el $t(position.{{position}}) jugador que obtuvo la recompensa $t(reward.{{reward}})!"
 	},
 	"UnavailableReason": {
-		"frozen": "Votre Dinoz est congelé",
-		"sacrificed": "Votre Dinoz est sacrifié",
-		"selling": "Votre Dinoz est en vente",
-		"superdom": "Votre Dinoz est au superdom",
-		"resting": "Votre Dinoz se repose"
+		"frozen": "Tu Dino está congelado",
+		"sacrificed": "Tu Dino está sacrificado",
+		"selling": "Tu Dino está en venta",
+		"superdom": "Tu Dino está en el domo de Sulaflota",
+		"resting": "Tu Dino está descansando"
 	},
 	"fb_tournament": {
-		"noOpponent": "Il n'y a plus personne à combattre pour le moment."
+		"noOpponent": "Ya no queda nadie con quien combatir por el momento."
 	}
 }

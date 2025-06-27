@@ -26,6 +26,7 @@
 	"notEnoughTickets": "You don't have enough tickets.",
 	"tooShortMessage": "Your message is too short.",
 	"existingNameClan": "An existing clan already has this name.",
+	"noDinozAtMarket": "Vous n'avez aucun Dinoz au marché.",
 	"alreadyOffer": "You already have an offer ongoing.",
 	"bidsOngoing": "You still have ongoing bids.",
 	"inClan": "You still belong to a clan.",
@@ -127,7 +128,8 @@
 		"dico1": "Dictionary",
 		"dicarb": "Arborian Dictionary",
 		"caush": "Mandragore Doll",
-		"fmedal": "3-Eyed Medallion"
+		"fmedal": "3-Eyed Medallion",
+		"pac": "Parchemin des Aptitudes Compilées"
 	},
 	"tournament": {
 		"uncommon": "uncommon races",

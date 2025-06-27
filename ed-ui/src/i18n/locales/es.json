@@ -11,6 +11,8 @@
 		"forum": "Foro",
 		"api": "API",
 		"logout": "Desconectarse",
+		"notifications": "Notificaciones",
+		"readAll": "Marcar todo como leído",
 		"guide": "Guía del Juego",
 		"faq": "Preguntas frecuentes",
 		"cinema": "Cine",
@@ -30,7 +32,7 @@
 		"wronglogins": "Los identificadores de Twinoid no son los correctos.",
 		"noPDA": "Necesitas la Piedra en Diamantito Aglomerado para acceder a esta página.",
 		"noPMI": "Necesitas el Pequeño Misionario Ilustrado para acceder a esta página.",
-		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
+		"noPAC": "Necesitas el Pergamino de Competencias Compiladas para acceder a esta página.",
 		"dinozListMissing": "Lista de Dinos que faltan",
 		"noFight": "Hoy la marea está perdida en la bruma... No encontrarás ningún monstruo a combatir.",
 		"dinozDataMissing": "Faltan datos de Dino",
@@ -73,7 +75,7 @@
 		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
 		"finishGrid": "¡Felicidades! ¡Has ganado 1000 :gold: por completar el tablero!",
 		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados.",
-		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements."
+		"errorFetchingRankings": "Se produjo un error al obtener la clasificación."
 	},
 	"dig": {
 		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
@@ -160,7 +162,7 @@
 			"itinerant_shop": "Puedes vender tus ingredientes al Mercader Ambulante.",
 			"reincarnation": "¡Tu Dino puede reencarnarse! Conservará el mismo destino de los elementos.",
 			"change_leader": "Tu Dino puede convertirse en el nuevo líder del grupo.",
-			"fb_tournament": "Accéder au Tournoi de Forcebrut."
+			"fb_tournament": "Acceder al Torneo de Fuerzabruta."
 		},
 		"name": {
 			"fight": "Combatir",
@@ -193,7 +195,7 @@
 			"itinerant_shop": "Mercader ambulante",
 			"reincarnation": "Reencarnación",
 			"change_leader": "Convertirse en líder",
-			"fb_tournament": "Tournoi"
+			"fb_tournament": "Torneo"
 		}
 	},
 	"button": {
@@ -206,7 +208,7 @@
 		"generator": "Generador de Dinos",
 		"sortDinoz": "Administrar mis Dinos",
 		"dinozMissions": "Misiones de mis Dinos",
-		"skills": "Compétences"
+		"skills": "Competencias"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -882,7 +884,7 @@
 			"skully": "Calaveri",
 			"baobabe": "Bao Babe",
 			"mouldeur": "Muldero",
-			"fb_tournament": "Organisateur du Tournoi"
+			"fb_tournament": "Organizador del Torneo"
 		},
 		"professor": {
 			"speech": {
@@ -906,10 +908,10 @@
 				"stone": "¡¡¡Ohhhhhh!!! Pero mira qué cosa más interesante, me parece que se trata de .... uhmmuhu.... no estoy seguro... (mira la piedra fijamente)... ¿Puedes enseñarme esta Piedra para examinarla?",
 				"stone_yes": "¡¡Ooooooohhhhh!! Sí.... es lo que pensaba.... ¡Mira! (limpia la piedra con delicadeza)... ¡es un Tótem Ashpuk! Esto tiene mucho valor... ¡cuídalo bien!",
 				"noquestion": "Ah bueno, qué lástima, no dudes en volver de vez en cuando para aprender más sobre el universo de Dinoland.",
-				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
-				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
-				"pac_scroll": "Ah, euh... Félicitations pour avoir créer cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
-				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement opté pour arbre que racine...*"
+				"pac_start": "Ahhhh, muy buena pregunta, joven aprendiz lleno de energía. Se trata de un pergamino relacionado con mis investigaciones sobre las competencias de los Dinos que nos rodean. ¿Sabías que pueden aprender una gran cantidad de competencias diferentes y que cada una de ellas puede desbloquear otras? Es como un sistema de cajones, donde dentro de cada cajón hay más cajones. He decidido llamarlo un mueble de competencias.&&En fin, todo esto para decir que he podido registrar qué competencias desbloquean a cuáles otras, ¡y eso es realmente muy útil! Pero, lamentablemente, el papel y la tinta utilizados son de fabricación científico-chamánica y solo mis ojos pueden descifrar lo que está escrito allí.",
+				"pac_go": "¿¡¡¡¡¡¡¡¿Estás loco?!!!!!!!&& &&¡Lárgate de aquí y no se te ocurra volver a hablarme de ese pergamino!",
+				"pac_scroll": "Ah, eh... Felicitaciones por haber creado esta maravilla también. Supongo que necesitas ayuda para usarlo? && && &&Vuelve a verme cuando tengas más experiencia en la crianza de Dinos.",
+				"pac_end": "Bien, bien, bien. Aquí está entonces el Pergamino de las Competencias Compiladas. && && &&Para usarlo es muy simple. A partir de ahora, cada vez que tus Dinos hayan aprendido un cierto número de veces una competencia, esta será visible en el árbol de competencias. *Sí, finalmente opté por árbol en lugar de un mueble...*"
 			},
 			"playerChoice": {
 				"talk": "Hablar con el Profesor Eugenio",
@@ -934,10 +936,10 @@
 				"menu": "Volver",
 				"stone_yes": "Sí claro, toma.",
 				"stone_no": "Oye, ¿pero qué dices? ¡Ni pensarlo! Antes me gustaría saber algo...",
-				"pac_start": "C'est quoi ce parchemin ?",
-				"pac_go": "Arracher les yeux du professeur",
-				"pac_scroll": "Montrer le parchemin, l'encre et la plume",
-				"pac_end": "Suis-je assez puissant ?"
+				"pac_start": "¿Qué es este pergamino?",
+				"pac_go": "Arrancarle los ojos al profesor",
+				"pac_scroll": "Mostrar el pergamino, la tinta y la pluma",
+				"pac_end": "¿Soy lo suficientemente poderoso?"
 			}
 		},
 		"sofia": {
@@ -1105,8 +1107,8 @@
 				"thanks": "Joooo ya te vas... ¿volverás, no? ¡Hasta pronto!",
 				"nothing": "Ah... ¡pero tu Dino ya tiene un Talismán Bao! Mira, sigue teniendo energía... ¿lo ves? Cuando deje de funcionar podré recargártelo.",
 				"no": "¿Ah? Bueno, pues peor para ti entonces... *refunfuño*.",
-				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sur mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
-				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
+				"pac_scroll": "¿¿¿En este pedazo de carbón??? ¡Sí, claro! Pero no sé para qué podría servirte.&& && && && &&*Parece que la raíz, con sus dos encantamientos, brilla ligeramente*",
+				"pac_scroll2": "Deberías ir a ver a un experto en plantas, es extraño que sea fluofosforescente."
 			},
 			"playerChoice": {
 				"ok": "Ehh... sí",
@@ -1116,8 +1118,8 @@
 				"no": "No, gracias",
 				"spirit": "¿Quieres decir \"Espiritual\"?",
 				"thanks": "Bueno, tengo que irme. ¡Gracias por el Talismán Bao!",
-				"pac_scroll": "Attend, tu saurais faire ça sur cette racine que le chaman a cramé avec son charme ?",
-				"pac_scroll2": "C'est normal la couleur ?"
+				"pac_scroll": "Espera, ¿sabrías hacer eso sobre esta raíz que el chamán quemó con su encantamiento?",
+				"pac_scroll2": "¿Es normal ese color?"
 			}
 		},
 		"forgeron": {
@@ -1168,12 +1170,12 @@
 				"begin_star": "Ooh, ¡veo que tu Dino transporta una nube-hamburguesa! ¿Sabías que es muy malo para la salud? A menos que quieras que tu Dino se ponga tan gordo como un luchador de Sumo...",
 				"ok_star": "Quítame esta nube-hamburguesa de la vista y cómete una de mis salchichas... toma, te doy este objeto que me encontré en el suelo como regalo de fidelidad.",
 				"star": "¡Genial! ¡El vendedor de salchichas te ha dado una de sus estrellas mágicas!",
-				"begin_merguez": "Ah tu veux une carte de fidélité ? Bien sur avec plaisir. Reviens me voir quand tu auras consommé 500 merguez, j'aurais quelque chose pour toi.",
-				"merguez_step_2": "500 !?! On s'est mal compris, c'est de 500 livraisons dont je parlais. Donc 2500 au total.&& Aller encore 2000 à manger !",
-				"merguez_step_1": "Je trouve que tu exagère. C'est pas autant que ça, et surtout c'est gratuit !",
-				"merguez_step_3": "Pense bien à macher surtout. Et hydrate-toi, elles peuvent piquer un peu.",
-				"merguez_step_4": "Féliciations ! Je te note dans mon carnet des plus fidèles consommateurs. Vu que je sais que tu aime les merguez je vais te les donner par paquet de 100 à présent.",
-				"merguez_card": "Ah mais oui c'est vrai que ce cher client est un grand amateur de merguez. Tenez, voici de quoi remplir votre stock !"
+				"begin_merguez": "¿Ah, quieres una tarjeta de fidelidad? Claro, con mucho gusto. Vuelve a verme cuando hayas consumido 500 salchichas y tendré algo para ti.",
+				"merguez_step_2": "¿¡500!? Hubo un malentendido. Hablaba de 500 entregas. O sea, 2500 en total.&&¡Vamos, solo te faltan 2000 más por comer!",
+				"merguez_step_1": "Creo que estás exagerando. ¡No es tanto, y sobre todo es gratis!",
+				"merguez_step_3": "Asegúrate de masticar bien. Y mantente hidratado, que pueden picar un poco.",
+				"merguez_step_4": "¡Felicitaciones! Te anoto en mi libreta de los consumidores más fieles. Como sé que te gustan las salchichas, te las daré en paquetes de 100 a partir de ahora.",
+				"merguez_card": "Ah, ¡pero claro! Es cierto que este querido cliente es un gran amante de las salchichas. ¡Tome, aquí tiene para reponer su stock!"
 			},
 			"playerChoice": {
 				"ah": "Ah....",
@@ -1181,12 +1183,12 @@
 				"thanks": "Gracias.",
 				"ok_star": "...",
 				"star": "¿Mmm?",
-				"begin_merguez": "Je compte revenir !",
-				"merguez_step_1": "500 ca fait quand même beaucoup.",
-				"merguez_step_2": "Ca y est, j'ai consommé les 500 merguez.",
-				"merguez_step_3": "2500 ca fait quand même beaucoup.",
-				"merguez_step_4": "Ca y est, j'ai consommé les 2500 merguez.",
-				"merguez_card": "Montrer la carte de fidélité."
+				"begin_merguez": "¡Tengo pensado volver!",
+				"merguez_step_1": "500 es bastante, ¿no?",
+				"merguez_step_2": "Listo, ya he consumido las 500 salchichas.",
+				"merguez_step_3": "2500 igual es demasiado.",
+				"merguez_step_4": "Listo, ya consumí las 2500 salchichas.",
+				"merguez_card": "Mostrar la tarjeta de fidelidad."
 			}
 		},
 		"shaman": {
@@ -1201,9 +1203,9 @@
 				"merci": "Chao coleguilla, hasta la próxima...",
 				"more": "Uhmm.... Si tu Dino acepta completar algunas misiones por mí, le confiaré mi Guía de Estrategia. C'est super pratique...",
 				"accept": "De acuerdo.",
-				"pac_scroll": "Collabo... Quoi ?&&Ah tu veux sans doute parler de tout ces poissons qu'on a l'habitude de s'envoyer ?",
-				"pac_scroll2": "Ah ouais, c'est vrai... Le vieux grincheu était venu me demander de lui poser un charme de feu sur une //racine de figonicia//. Quel drôle de bonhomme quand même.&& &&Reviens me voir avec ta racine si  tu veux que je fasse pareil.&& && && Aller, Tchôôôôô",
-				"pac_root": "Uhmm... ? Déjà ?... Bah... j'vais te le faire...&& && &&Waka waka ouais ouais et voilà !&& &&Bon par contre le charme a bien séché ta racine, bon courage pour en faire quoi que ce soit. Tiens et je te rend ta racine, j'en avais déjà une vieille à utiliser."
+				"pac_scroll": "¿Colabo... qué?&&¡Ah, sin duda te refieres a todos esos peces que solemos lanzarnos unos a otros!",
+				"pac_scroll2": "Ah sí, es verdad... El viejo gruñón vino a pedirme que le lanzara un hechizo de fuego a una //raíz de Figonicia//. Qué tipo más raro, la verdad.&& &&Vuelve a verme con tu raíz si quieres que haga lo mismo.&& && && ¡Bueno, chaooooooo!",
+				"pac_root": "Uhmm... ¿Ya? Bueno... te lo voy a hacer...&& && &&Waka waka, eh eh ¡y listo!&& &&Pero bueno, el hechizo ha secado bastante tu raíz, buena suerte haciendo algo con ella. Toma, te devuelvo la raíz, ya tenía una vieja para usar."
 			},
 			"playerChoice": {
 				"vener": "El Venerable...",
@@ -1216,9 +1218,9 @@
 				"merci": "Gracias, tendré en cuenta tus consejos.",
 				"more": "¿Eso es todo?",
 				"accept": "Confirmar",
-				"pac_scroll": "Vous avez collaboré avec le professeur ?",
-				"pac_scroll2": "Un parchemin pour les compétences",
-				"pac_root": "Donner la racine"
+				"pac_scroll": "¿Has colaborado con el profesor?",
+				"pac_scroll2": "Un pergamino para las competencias",
+				"pac_root": "Dar la raíz"
 			}
 		},
 		"gardien": {
@@ -1371,11 +1373,11 @@
 				"sickstatus": "Entoncef, ¿haf encontrado un remedio?",
 				"better": "¡El remedio que me has traído ha sido muy eficaz! ¡Oh, mil gracias!",
 				"lowLevel": "Oh, querido... No eres lo suficientemente fuerte para cumplir misiones. No quiero que tu Dino se lastime. ¡Ven a verme de nuevo cuando haya ganado algunos niveles más!",
-				"pac_shine": "Euh... Vous avez réussi à obtenir une racine charmée tout seul ? C'est le professeur qui vous a dit quoi faire ? C'est très dangereux vous savez. Si vous arrivez à la réduire en parchemin vous pourrez utiliser une encre de compilation. Mais c'est très complexe à réaliser.",
-				"pac_progress": "Euh, comment dire... C'est... Oui c'est possible... Je m'occupe de vous faire le parchemin, ramenez moi dans un premier temps de l'encre de Kazkadine. Une cinquantaine devraient faire l'affaire",
-				"pac_kazka": "Très bien ! Passons à présent aux cendres de flamèches. Il m'en faut 42 unitées.&& Regarde comment j'ai bien avancé, le parchemin est en train de sécher.",
-				"pac_flam": "Ce fût rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu aille chercher une plume de Coqdur. Tu pense en être capable ?",
-				"pac_coq": "Voila, je ne peux rien faire de plus pour toi. Il faudrait que tu mène tes recherches pour comprendre comment l'utiliser."
+				"pac_shine": "Eh... ¿Lograste conseguir una raíz encantada por tu cuenta? ¿Fue el profesor quien te dijo qué hacer? Es muy peligroso, ¿sabes? Si logras convertirla en pergamino podrás usar una tinta de compilación. Pero es algo muy complejo de hacer.",
+				"pac_progress": "Eh, cómo decirlo... Es... Sí, es posible... Me encargaré de hacerte el pergamino. Tráeme primero tinta de Kaskadino. Unos cincuenta deberían bastar",
+				"pac_kazka": "¡Muy bien! Ahora pasemos a las cenizas de flamachas. Necesito 42 unidades.&& Mira cómo he avanzado. El pergamino se está secando.",
+				"pac_flam": "¡Fue rápido! Mientras termino de prepararte la tinta, deberías ir a buscar una pluma de Cocdur. ¿Crees que podrás hacerlo?",
+				"pac_coq": "Aquí está. No puedo hacer nada más por ti. Tendrás que continuar tus investigaciones para entender cómo usarlo."
 			},
 			"playerChoice": {
 				"welcome": "Hablar con él",
@@ -1395,11 +1397,11 @@
 				"missions": "Consulta la lista de Misiones",
 				"lowLevel": "Consultar la lista de Misiones",
 				"curesearch": "Bueno, veamos...",
-				"pac_shine": "Et cette racine qui brille, un avis dessus ?",
-				"pac_progress": "Vous saurez m'aider ?",
-				"pac_kazka": "J'ai toute l'encre nécessaire !",
-				"pac_flam": "Voici les 42 unitées de cendres de flamèches !",
-				"pac_coq": "Montrer la plume"
+				"pac_shine": "¿Y esta raíz que brilla? ¿Alguna opinión al respecto?",
+				"pac_progress": "¿Podrías ayudarme?",
+				"pac_kazka": "¡Ya tengo toda la tinta necesaria!",
+				"pac_flam": "¡Aquí están las 42 unidades de cenizas de flamachas!",
+				"pac_coq": "Mostrar la pluma"
 			}
 		},
 		"rodeur": {
@@ -1668,15 +1670,15 @@
 		},
 		"fb_tournament": {
 			"speech": {
-				"begin": "Bonjour, ô Grand Maître Dinoz ! Le Grand Tournoi de Forcebrut est ouvert à tous ceux qui désirent mesurer leurs Dinoz à ceux des autres joueurs. Je vous y inscris ?",
-				"yes": "Malheureusement, comme le précise le règlement intérieur, paragraphe 15.48 alinéa H, l'accès au Tournoi est ouvert uniquement aux Dinoz ayant en leur possession une relique d'une civilisation ancienne. C'est l'unique condition pour participer... N'hésitez pas à revenir quand votre Dinoz en aura trouvé une. Bonne journée et bon séjour à Forcebrut !",
-				"ok": "Oh ! Je vois que votre Dinoz possède un {Totem Ashpouk} ! Très bien, je l'inscris donc sur la liste des participants au Tournoi, il pourra donc désormais y accéder directement. Bonne journée monsieur le Maître Dinoz !",
-				"no": "Très bien, vous n'êtes nullement obligé de vous inscrire, surtout si vos Dinoz ne sont pas prêts à se mesurer à de puissants adversaires. C'est vrai que le Tournoi peut être très dangereux pour les Dinoz inexpérimentés. Bonne journée et bon séjour à Forcebrut !"
+				"begin": "Hola, ¡oh, Gran Maestro Dino! El Gran Torneo de Fuerzabruta está abierto para todos aquellos que deseen medir sus Dinos contra los de otros jugadores. ¿Te inscribo?",
+				"yes": "Lamentablemente, como lo indica el reglamento interno, párrafo 15.48, inciso H, el acceso al Torneo está abierto únicamente a los Dinos que posean una reliquia de una civilización antigua. Esa es la única condición para participar... No dude en volver cuando su Dino haya encontrado una. ¡Buen día y disfrute su estadía en Fuerzabruta!",
+				"ok": "¡Oh! Veo que tu Dino posee un Tótem Ashpuk. Muy bien, te voy a inscribir ahora mismo en la lista de participantes del Torneo. A partir de ahora podrás acceder a este lugar directamente. ¡Que tengas un buen día señor Maestro de Dinos!",
+				"no": "Muy bien, no está obligado a inscribirse, especialmente si sus Dinos no están listos para enfrentarse a poderosos adversarios. Es cierto que el Torneo puede ser muy peligroso para Dinos inexpertos. ¡Buen día y disfrute su estadía en Fuerzabruta!"
 			},
 			"playerChoice": {
-				"yes": "Ho, bonne idée !",
-				"ok": "Oui, merci !",
-				"no": "Heu, non merci... Mes Dinoz ont encore besoin d'entrainement"
+				"yes": "¡Oh, buena idea!",
+				"ok": "Sí, ¡gracias!",
+				"no": "Eh, no gracias... Mis Dinos todavía necesitan entrenamiento"
 			}
 		}
 	},
@@ -1759,11 +1761,11 @@
 		}
 	},
 	"skill": {
-		"energy": "Énergie : **{energy}**",
-		"probability": "Probabilité : **{probability}%**",
-		"priority": "Priorité : **{priority}**",
-		"unknown": "Inconnu",
-		"unknownDesc": "Vous n'avez pas encore découvert cette compétence.",
+		"energy": "Energía: **{energy}**",
+		"probability": "Probabilidad: **{probability}%**",
+		"priority": "Prioridad: **{priority}**",
+		"unknown": "Desconocido",
+		"unknownDesc": "Aún no has desbloqueado esta competencia.",
 		"name": {
 			"GriffesEnflammees": "Garras en llamas",
 			"Colere": "Cólera",
@@ -2489,7 +2491,7 @@
 		"clans": "Clanes",
 		"completion": "Completado",
 		"pantheon": "Panteón",
-		"stats": "Stats"
+		"stats": "Estadísticas"
 	},
 	"layout": {
 		"fx": "Estatus",
@@ -2559,8 +2561,8 @@
 		"forum": "Dino-RPG [ Foro ]",
 		"admin": "Dino-RPG [ Panel de Admin ]",
 		"event": "Dino-RPG [ Eventos ]",
-		"fb_tournament": "Dino-RPG [ Tournoi de Forcebrut ]",
-		"skillTrees": "Dino-RPG [ Arbres de Compétences ]"
+		"fb_tournament": "Dino-RPG [ Torneo de Fuerzabruta ]",
+		"skillTrees": "Dino-RPG [ Árbol de Competencias ]"
 	},
 	"gather": {
 		"action": {
@@ -3726,7 +3728,7 @@
 			"eugene": "Premio Eu-Genio",
 			"litter": "Premio de Literatura",
 			"clover": "Ganador del DinoLoto",
-			"pac": "Parchemin des Aptitudes Compilées",
+			"pac": "Pergamino de Competencias Compiladas",
 			"import": "Huesos de Importosaurio"
 		},
 		"description": {
@@ -3940,7 +3942,7 @@
 			"eugene": "Tu creatividad sin igual te hace ganar esta medalla, sólo la llevan los Maestros dotados de una inteligencia fuera de serie. Mientras algunos dicen que eres un genio, otros dicen que estás chiflado, ¡lo que importa es que eres famoso!",
 			"litter": "Este premio de Literatura le es otorgado para reconocer su prosa que ha conmovido a miles de maestros Dinos. Continuará a través de los siglos mientras Dinoland no experimente una segunda catástrofe como el hundimiento de la isla de Jazz. No hace falta decir que no sucederá en mucho tiempo...",
 			"clover": "¡Recibe este premio por ser el Maestro de Dinos más suertudo en el sorteo del Dinoloto de Dinoland! ¡Enhorabuena!",
-			"pac": "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
+			"pac": "El Pergamino de Competencias Compiladas es un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada de sus talentos de un solo vistazo.",
 			"import": "¡Felicidades! Has importado tu cuenta a EternalDinoRPG. Estás listo para levantarte de nuevo como este importasaurios. ¿Quizás es un error después de todo?"
 		}
 	},
@@ -4389,8 +4391,8 @@
 		},
 		"historyView": {
 			"lastOffers": "Aquí están las últimas ventas que han realizado los jugadores:",
-			"yourOwnOffers": "Vos mises",
-			"yourOwnBids": "Vos achats"
+			"yourOwnOffers": "Tus ventas",
+			"yourOwnBids": "Tus compras"
 		}
 	},
 	"hud": {
@@ -4452,7 +4454,7 @@
 	},
 	"dojo": {
 		"welcome": "Bienvenido a tu Dojo",
-		"markAsRead": "Marquer comme vus",
+		"markAsRead": "Marcar como visto",
 		"noTournament": "Aún no hay suficientes Dinos para poder empezar un torneo, ¡vuelve más tarde una vez que hayas traído a tus amigos al juego!",
 		"return": "Regresar",
 		"accessTournament": "Accede al torneo",
@@ -4470,7 +4472,7 @@
 		"build": "Construir mi dojo",
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
-		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
+		"dailyReset": "Vas por la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de 10 oleadas por día.//",
 		"seeFight": "Ver el combate",
 		"deleteTeam": "Eliminar mi equipo",
 		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
@@ -4923,30 +4925,30 @@
 		"title": "¡Descubre los próximos acontecimientos en DinoRPG!",
 		"small": "Predicción de la Bruja Lola",
 		"strong": {
-			"title1": "Version 1.0.0 (Bientôt)",
-			"title2": "Version 1.1.0",
-			"title3": "Version 1.2.0",
-			"title4": "Roadmap to 2050"
+			"title1": "Versión 1.0.0 (Pronto)",
+			"title2": "Versión 1.1.0",
+			"title3": "Versión 1.2.0",
+			"title4": "Hoja de ruta para el 2050"
 		},
 		"help": "¡Haz clic arriba y descubre lo que viene próximamente!",
 		"disclaimer": "Las predicciones de la Bruja Lola no son infalibles. Conoceremos las fechas exactas cuando los eventos sean anunciados en las Novedades.",
 		"futurTitle": "Futuro de Dinoland",
 		"futureInfo1": {
 			"text1": "Acceso a los mapas: Dinoland, Gran Señor-Todo-Quema, Jungla de Grumhel, Islas Atlanteidas.",
-			"text2": "Accès aux missions originelles : Papy Joe, Bao Bob, Shaman Mou, Nicolas Mulot, Dian Korgsey, Gardien de la fôret, et Skully.",
-			"text3": "Accès au Tournoi de Forcebrut.",
-			"text4": "Accès au Dojo et ses tournois réguliers.",
-			"text5": "Et plein d'autres fonctionnalités."
+			"text2": "Acceso a las misiones originales: Papy Jose, Bao Bob, Chamán Lacio, Nicolás Mulot, Dian Korgsey, Guardián de la Jungla y Calaveri.",
+			"text3": "Acceso al Torneo de Fuerzabruta.",
+			"text4": "Acceso al Dojo y sus torneos regulares.",
+			"text5": "Y muchas otras funcionalidades."
 		},
 		"futureInfo2": {
 			"text1": "Acceso al oeste de Dinovilla.",
-			"text2": "Accès aux missions du Maître Élémentaire, et de Madame X."
+			"text2": "Acceso a las misiones del Maestro Elemental y de la Señora X."
 		},
 		"futureInfo3": {
-			"text1": "Accès aux Steppes Magnétiques."
+			"text1": "Acceso a las Estepas Magnéticas."
 		},
 		"futureInfo4": {
-			"text1": "À venir..."
+			"text1": "Próximamente..."
 		}
 	},
 	"quest": {
@@ -5021,8 +5023,8 @@
 	},
 	"scenario": {
 		"star": "El ser extraño",
-		"pac": "Parchemin étrange",
-		"merguez": "La merguez dorée"
+		"pac": "Pergamino extraño",
+		"merguez": "La salchicha dorada"
 	},
 	"notification": {
 		"reasons": {
@@ -5056,13 +5058,13 @@
 		}
 	},
 	"fb_tournament": {
-		"title": "Tournoi de Forcebrut",
-		"disclaimer": "Bienvenue au tournoi de Forcebrut, ici vous pourrez affronter les meilleurs Dinoz créés par d'autres joueurs. Le premier palier est un Dinoz de niveau 10 et chaque palier supérieur fait monter l'adversaire d'un niveau. Chaque palier est représenté par une race différente.&&Bon courage maître Dinoz !",
-		"stage": "Palier {stage}",
-		"fight": "Combattre {opponent}"
+		"title": "Torneo de Fuerzabruta",
+		"disclaimer": "Bienvenido al torneo de Fuerzabruta. Aquí podrás enfrentarte a los mejores Dinos creados por otros jugadores. La primera fase es un Dino de nivel 10 y cada fase superior hace que el oponente suba un nivel. Cada fase está representado por una raza diferente.\n&&¡Buena suerte, maestro Dino!",
+		"stage": "Fase {stage}",
+		"fight": "Combatir contra {opponent}"
 	},
 	"skillTrees": {
-		"title": "Arbres de compétences",
+		"title": "Árbol de competencias",
 		"level": "Niv.{level}"
 	}
 }
