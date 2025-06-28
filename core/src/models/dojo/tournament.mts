@@ -36,7 +36,7 @@ export interface TournamentState {
 	id: string;
 	phase: TournamentPhase;
 	round: number;
-	nextScheduledMatch?: Date;
+	nextScheduledMatch: Date;
 	schedule: TournamentSchedule;
 	cashPrice: number;
 	levelLimit: number;

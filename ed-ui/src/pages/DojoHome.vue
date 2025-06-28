@@ -105,6 +105,7 @@
 				<p>{{ $t('dojo.ranking') }} : {{ rank }}</p>
 			</div>
 		</div>
+		<DojoTimer v-if="tournamentState" :state="tournamentState" />
 	</div>
 	<RouterView />
 </template>
@@ -119,6 +120,7 @@ import { DojoService } from '../services/DojoService.js';
 import { errorHandler } from '../utils/index.js';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
+import DojoTimer from '../components/dojo/DojoTimer.vue';
 
 export default defineComponent({
 	name: 'DojoHome',
@@ -128,6 +130,7 @@ export default defineComponent({
 		}
 	},
 	components: {
+		DojoTimer,
 		TitleHeader
 	},
 	data() {

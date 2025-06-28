@@ -704,7 +704,8 @@ class TournamentManager {
 			...state,
 			schedule,
 			cashPrice: tournament.cashPrice,
-			levelLimit: tournament.levelLimit
+			levelLimit: tournament.levelLimit,
+			nextScheduledMatch: tournament.nextRound
 		};
 	}
 
