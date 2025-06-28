@@ -548,6 +548,14 @@ export default defineComponent({
 				.filter(Boolean) as NonNullable<ReturnType<typeof getSpecialStat>>[];
 			const regen = specialStats.find(s => s.name === SpecialStat.HP_REGEN);
 			regen ? (this.hpRegen = regen.value) : 1;
+		},
+		async loadComponent() {
+			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
+				await this.regenRate();
+			}
+			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz => this.dinoz?.followers.some(a => a.id === dinoz.id));
+			this.dinozFullParty.push(this.dinoz);
+			console.log(this.dinozFullParty)
 		}
 	},
 	computed: {
@@ -577,14 +585,13 @@ export default defineComponent({
 	watch: {
 		storeMission: function (mission: MissionHUD) {
 			this.mission = mission;
+		},
+		dinoz() {
+			this.loadComponent()
 		}
 	},
 	async mounted() {
-		if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
-			await this.regenRate();
-		}
-		this.dinozFullParty = dinozStore().getDinozList.filter(dinoz => this.dinoz?.followers.some(a => a.id === dinoz.id));
-		this.dinozFullParty.push(this.dinoz);
+		await this.loadComponent()
 	}
 });
 </script>
