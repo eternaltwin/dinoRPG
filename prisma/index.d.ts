@@ -432,6 +432,7 @@ export const NotificationSeverity: {
   offerEnded: 'offerEnded',
   ban: 'ban',
   reward: 'reward',
+  scenario: 'scenario',
   event: 'event',
   newClanApply: 'newClanApply'
 };

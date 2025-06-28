@@ -138,7 +138,7 @@ export async function rewarder(
 						await updateQuest(playerId, reward.value, reward.step);
 					}
 					if (notification) {
-						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
+						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.scenario);
 					}
 					break;
 				case RewardEnum.TELEPORT:

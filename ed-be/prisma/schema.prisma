@@ -903,6 +903,7 @@ enum NotificationSeverity {
   offerEnded
   ban
   reward
+  scenario
   event
   newClanApply
 }

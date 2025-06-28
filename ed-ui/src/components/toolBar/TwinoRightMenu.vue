@@ -372,6 +372,31 @@ export default defineComponent({
 						link: notification.link,
 						date: notification.date
 					};
+				case 'scenario':
+					// eslint-disable-next-line no-case-declarations
+					const scenario_reward = JSON.parse(notification.message) as Rewarder[];
+					// eslint-disable-next-line no-case-declarations
+					const scenario_text = scenario_reward.map(r => {
+						switch (r.rewardType) {
+							default:
+								return;
+							case RewardEnum.SCENARIO:
+								return (
+									' ' +
+									this.$t(`notification.rewardScenario`, {
+										scenario: ' ' + this.$t(`scenario.${ScenarioDetails[r.value].name.toLocaleLowerCase()}`)
+									})
+								);
+						}
+					});
+
+					return {
+						id: notification.id,
+						message: scenario_text.toString(),
+						severity: notification.severity,
+						link: null,
+						date: notification.date
+					};
 				case 'reward':
 					// eslint-disable-next-line no-case-declarations
 					const reward = JSON.parse(notification.message) as Rewarder[];
@@ -388,13 +413,6 @@ export default defineComponent({
 								);
 							case RewardEnum.GOLD:
 								return ' **' + this.$t(`notification.rewardGold`, { quantity: r.value }) + '**';
-							case RewardEnum.SCENARIO:
-								return (
-									' ' +
-									this.$t(`notification.rewardScenario`, {
-										scenario: ' ' + this.$t(`scenario.${ScenarioDetails[r.value].name.toLocaleLowerCase()}`)
-									})
-								);
 						}
 					});
 					return {
