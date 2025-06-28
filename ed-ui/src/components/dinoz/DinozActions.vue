@@ -553,9 +553,11 @@ export default defineComponent({
 			if (this.dinoz.actions?.some(a => a.name === Action.STOP_REST)) {
 				await this.regenRate();
 			}
-			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz => this.dinoz?.followers.some(a => a.id === dinoz.id));
+			this.dinozFullParty = dinozStore().getDinozList.filter(dinoz =>
+				this.dinoz?.followers.some(a => a.id === dinoz.id)
+			);
 			this.dinozFullParty.push(this.dinoz);
-			console.log(this.dinozFullParty)
+			console.log(this.dinozFullParty);
 		}
 	},
 	computed: {
@@ -587,11 +589,11 @@ export default defineComponent({
 			this.mission = mission;
 		},
 		dinoz() {
-			this.loadComponent()
+			this.loadComponent();
 		}
 	},
 	async mounted() {
-		await this.loadComponent()
+		await this.loadComponent();
 	}
 });
 </script>

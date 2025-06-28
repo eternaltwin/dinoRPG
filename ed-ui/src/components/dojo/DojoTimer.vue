@@ -1,5 +1,14 @@
 <template>
-	<DZDisclaimer round :content="$t(`dojo.timer.${state.phase}`, calculateTimeRemaining(state.nextScheduledMatch))" />
+	<DZDisclaimer
+		v-if="state.round === 8"
+		round
+		:content="$t(`dojo.timer.nextQualif`, calculateTimeRemaining(state.nextScheduledMatch))"
+	/>
+	<DZDisclaimer
+		v-else
+		round
+		:content="$t(`dojo.timer.${state.phase}`, calculateTimeRemaining(state.nextScheduledMatch))"
+	/>
 </template>
 
 <script lang="ts">

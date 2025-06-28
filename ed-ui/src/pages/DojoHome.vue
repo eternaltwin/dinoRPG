@@ -60,6 +60,7 @@
 					}"
 				/>
 				<RouterLink
+					v-if="tournamentState && tournamentState.phase === TournamentPhase.QUALIFICATION"
 					:to="{
 						name: 'TournamentInfo'
 					}"
