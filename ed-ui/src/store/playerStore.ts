@@ -13,6 +13,7 @@ export const playerStore = defineStore('playerStore', {
 		playerOptions: {
 			hasPDA: false,
 			hasPMI: false,
+			hasPAC: false,
 			skipFight: false,
 			skipLevel: false
 		},
