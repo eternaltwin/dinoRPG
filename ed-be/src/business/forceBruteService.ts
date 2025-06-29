@@ -718,8 +718,8 @@ export async function fightFBTournamentOpponent(req: Request) {
 	}
 
 	const lvlDiff = opponentGameDinoz.level - dinoz.level;
-	let xpf = 1.2 + 0.8 * (lvlDiff / opponentGameDinoz.level);
-	if (xpf < 1.0) xpf = 1.0;
+	let xpf = 1.2 + 0.8 * (lvlDiff / opponentGameDinoz.level) * 2.5;
+	if (xpf < 1.0) xpf = 2.5;
 	let xp = calculateXPBonus(dinoz, 50 * xpf, dinoz.player);
 	const max = getMaxXp(dinoz);
 	let levelup = false;
