@@ -34,6 +34,7 @@ import { NotificationSeverity } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -254,7 +255,7 @@ class TournamentManager {
 		return { fightId: fightArchive.id, winnerId };
 	}
 
-	private async getWinnersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
+	async getWinnersFromPreviousRound(round: number, prisma: PismaClientLocal): Promise<RawTournamentMatch[]> {
 		const previousMatches = await prisma.fightArchive.findMany({
 			where: {
 				tournamentId: this.tournamentId,
@@ -713,6 +714,63 @@ class TournamentManager {
 		return TournamentManager.getCurrentTournament(prisma);
 	}
 
+	static async getActiveTeams(prisma: PismaClientLocal) {
+		const currentTournament = await TournamentManager.getCurrentTournament(prisma);
+		let winners: { tournamentTeamId: string }[] = [];
+		if (!currentTournament) {
+			throw new ExpectedError('Invalid tournament');
+		}
+		if (currentTournament.round !== 0) {
+			const previousMatches = await prisma.fightArchive.findMany({
+				where: {
+					tournamentId: currentTournament.id,
+					tournamentStep: currentTournament.round - 1
+				},
+				select: {
+					tournamentTeamRightId: true,
+					tournamentTeamLeftId: true,
+					result: true
+				}
+			});
+
+			for (const match of previousMatches) {
+				if (match.tournamentTeamLeftId) {
+					if (!match.tournamentTeamRightId) {
+						winners.push({
+							tournamentTeamId: match.tournamentTeamLeftId
+						});
+					} else {
+						winners.push({
+							tournamentTeamId: match.result ? match.tournamentTeamLeftId : match.tournamentTeamRightId
+						});
+					}
+				}
+			}
+			return { winners, id: currentTournament.id };
+		} else {
+			const teamSize = await prisma.tournament.findUniqueOrThrow({
+				where: {
+					id: currentTournament.id
+				},
+				select: {
+					teamSize: true
+				}
+			});
+			winners = await prisma.$queryRaw`
+					SELECT d."tournamentTeamId"
+FROM dojo d
+         JOIN "TournamentTeam" tt ON d."tournamentTeamId" = tt.id
+         JOIN player p ON d."playerId" = p.id
+         JOIN ranking r ON p.id = r."playerId"
+WHERE tt."teamCount" = ${teamSize.teamSize}
+  AND d."tournamentTeamId" IS NOT NULL
+ORDER BY r.dojo DESC
+LIMIT ${64};`;
+
+			return { winners, id: currentTournament.id };
+		}
+	}
+
 	static async resume(prisma: PismaClientLocal): Promise<TournamentManager | null> {
 		const activeTournament = await prisma.tournament.findFirst({
 			orderBy: {
@@ -733,7 +791,6 @@ class TournamentManager {
 
 		// Vérifier si le tournoi est toujours en cours
 		const currentState = await manager.getCurrentState(prisma);
-		const schedule = manager.getSchedule();
 		if (currentState.nextScheduledMatch && currentState.round <= 7) {
 			if (currentState.nextScheduledMatch <= new Date()) {
 				await manager.generateNextRound(prisma);

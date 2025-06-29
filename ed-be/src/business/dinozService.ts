@@ -332,7 +332,7 @@ export async function getAvailableActions(
 
 	if (canLevelUp(dinoz, gameConfig)) {
 		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-		const dinozTournament = await isDinozInTournament(dinoz.id, tournament?.id);
+		const dinozTournament = await isDinozInTournament(dinoz.id);
 
 		const canLevelUp = !tournament || !dinozTournament || dinoz.level + 1 <= tournament.levelLimit;
 

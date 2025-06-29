@@ -73,7 +73,7 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-	const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
+	const dinozTournament = await isDinozInTournament(dinozId);
 
 	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
 	if (!canLevelUp) {
@@ -139,7 +139,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		canLevelUp = dinoz.level < dinoz.FBTournament.levelLimit;
 	} else {
 		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-		const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
+		const dinozTournament = await isDinozInTournament(dinozId);
 
 		canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
 	}

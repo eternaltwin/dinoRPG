@@ -140,8 +140,7 @@ export async function createOffer(req: Request) {
 			throw new ExpectedError(translate('equipedItems', authed));
 		}
 
-		const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-		const dinozTournament = await isDinozInTournament(dinozId, tournament?.id);
+		const dinozTournament = await isDinozInTournament(dinozId);
 		if (dinozTournament) {
 			throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
 		}
