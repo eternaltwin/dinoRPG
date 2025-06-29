@@ -4920,7 +4920,7 @@ const checkAfterAttackEffects = (
 		hasSkill(attacker, Skill.MALEDICTION_AQUEUSE) &&
 		randomBetweenSeeded(fightData.rng, 0, 99) < 10
 	) {
-		addStatus(fightData, target, Status.NO_HEAL, StatusLength.MEDIUM);
+		addStatus(fightData, target, Status.NO_HEAL, StatusLength.SHORT);
 		// Add FX
 		// TODO find better FX like the poison marker
 		fightData.steps.push({

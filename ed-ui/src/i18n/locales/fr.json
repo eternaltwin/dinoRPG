@@ -2303,7 +2303,7 @@
 			"Branchies": "Augmente l'élément Eau de 2",
 			"Petrification": "Pétrifie un ennemi pour une durée moyenne",
 			"Acupuncture": "Régénère 1 PV par tour, les assaillants en mêlée prennent 1 point de dégât.",
-			"MaledictionAqueuse": "Chaque assaut et pouvoir Eau qui touche sa cible a 10% de chance d'empêcher la cible d'être soignée pour une durée moyenne",
+			"MaledictionAqueuse": "Chaque assaut et pouvoir Eau qui touche sa cible a 10% de chance d'empêcher la cible d'être soignée pour une durée courte",
 			"RayonKaarSher": "Attaque tous les ennemis avec un pouvoir Eau de 7",
 			"Magasinier": "Augmente la capacité maximale de l'inventaire du joueur de 50% (non cumulable)",
 			"Perception": "Augmente la puissance de tous les *assauts* Eau de 4, et permet à tous les assauts d'annuler le statut intangible.",
