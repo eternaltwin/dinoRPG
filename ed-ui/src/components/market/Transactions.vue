@@ -152,7 +152,6 @@ export default defineComponent({
 				const { offers: wonOffers } = await OfferService.getList('all', null, userId, true, 1, true);
 				this.wonOffers = this.formatOffers(wonOffers);
 				const { offers: myExpiredOffers } = await OfferService.getList('all', userId, null, true, 1, true);
-				console.log('Offres expirées : ', myExpiredOffers);
 				this.myExpiredOffers = this.formatOffers(myExpiredOffers);
 			} catch (error) {
 				errorHandler.handle(error, this.$toast);

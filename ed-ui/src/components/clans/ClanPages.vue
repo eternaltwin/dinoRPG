@@ -135,7 +135,6 @@ export default defineComponent({
 			if (res) {
 				EventBus.emit('isLoading', true);
 				try {
-					console.log(Number(this.$route.params.pageId));
 					await ClanService.deleteClanPage(Number(this.$route.params.pageId), Number(this.$route.params.id));
 					EventBus.emit('isLoading', false);
 					await this.getClanPages();

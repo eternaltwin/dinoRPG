@@ -201,7 +201,6 @@ export default defineComponent({
 				}
 			}
 
-			console.log(this.selectedItems);
 			this.selectedItems[name].count = newCount;
 
 			// Update total value

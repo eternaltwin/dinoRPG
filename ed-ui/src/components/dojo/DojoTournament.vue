@@ -354,7 +354,6 @@ export default defineComponent({
 					.filter(d => d.round === maxRound)
 					.forEach(dinoz => {
 						if (maxRound === 0) {
-							console.log(dinoz.matchNumber);
 							if (dinoz.watched) {
 								this.pool[16 + dinoz.matchNumber] = dinoz;
 							} else {

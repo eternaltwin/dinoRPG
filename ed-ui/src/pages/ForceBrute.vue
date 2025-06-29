@@ -105,9 +105,6 @@ export default defineComponent({
 				const fighters = this.fight.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
 
-				console.log(fightSteps);
-
-				console.log(fighters);
 				const nexFight = transpileFight(
 					structuredClone(toRaw(fighters)),
 					fightSteps,

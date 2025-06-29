@@ -556,7 +556,6 @@ export default defineComponent({
 				this.dinoz?.followers.some(a => a.id === dinoz.id)
 			);
 			this.dinozFullParty.push(this.dinoz);
-			console.log(this.dinozFullParty);
 		}
 	},
 	computed: {

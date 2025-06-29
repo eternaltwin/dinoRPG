@@ -1060,7 +1060,6 @@ export async function gatherWithDinoz(req: Request) {
 				isMaxQuantity: isMaxQuantity
 			});
 		}
-		// console.log(returnGrid.ingredientsAtMaxQuantity)
 	}
 
 	if (!gatherPlace.special) {
