@@ -799,7 +799,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.FIRE, ElementType.LIGHTNING, ElementType.AIR],
 		activatable: true,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [41201, 11206, Skill.INVOCATEUR],
+		unlockedFrom: [Skill.CONCENTRATION, Skill.ARTS_MARTIAUX, Skill.INVOCATEUR],
 		raceId: [RaceList.HIPPOCLAMP],
 		isBaseSkill: false,
 		isSphereSkill: false,
@@ -2662,7 +2662,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WATER, ElementType.AIR],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.MALEDICTION_AQUEUSE, 51312, Skill.COMPETENCE_DOUBLE],
+		unlockedFrom: [Skill.MALEDICTION_AQUEUSE, Skill.FORME_VAPOREUSE, Skill.COMPETENCE_DOUBLE],
 		isBaseSkill: false,
 		isSphereSkill: false
 	},
@@ -5140,7 +5140,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [61122],
+		unlockedFrom: [Skill.GROS_DORMEUR],
 		isBaseSkill: false,
 		isSphereSkill: true
 	},
@@ -5152,7 +5152,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [61201],
+		unlockedFrom: [Skill.VEILLEUSE],
 		isBaseSkill: false,
 		isSphereSkill: true
 	},
