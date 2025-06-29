@@ -125,7 +125,6 @@ export default defineComponent({
 			dinozStore: dinozStore(),
 			MissionEnum: ConditionEnum,
 			digReward: undefined as Rewarder | undefined,
-			dinozId: this.$route.params.id.toString(),
 			Action,
 			hpRegen: 1,
 			itinerantName: '' as string,
@@ -188,7 +187,7 @@ export default defineComponent({
 					});
 					break;
 				case Action.NPC:
-					this.dinozStore.clearNpc(+this.dinozId);
+					this.dinozStore.clearNpc(+this.$route.params.id);
 					this.$router.push({
 						name: 'NPC',
 						params: { id: this.$route.params.id.toString(), npc: this.npcDisplayName(action.prop as number) }
@@ -493,7 +492,7 @@ export default defineComponent({
 				case Action.FB_TOURNAMENT:
 					this.$router.push({
 						name: 'Forcebrute',
-						query: { dinozId: +this.dinozId }
+						query: { dinozId: +this.$route.params.id }
 					});
 					break;
 				default:
@@ -523,7 +522,7 @@ export default defineComponent({
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
 		},
 		isSelling() {
-			const dinoz = this.dinozStore.getDinoz(+this.dinozId);
+			const dinoz = this.dinozStore.getDinoz(+this.$route.params.id);
 			if (!dinoz) return false;
 			return dinoz.unavailableReason === UnavailableReasonFront.selling;
 		},
@@ -533,7 +532,7 @@ export default defineComponent({
 		},
 		async regenRate() {
 			const data = this.dinoz;
-			const dinozSkill = await DinozService.getDinozSkill(+this.dinozId);
+			const dinozSkill = await DinozService.getDinozSkill(+this.$route.params.id);
 			const priest = this.playerStore.isPriest;
 			const specialStats = Object.values(SpecialStat)
 				.map(stat =>
@@ -568,7 +567,7 @@ export default defineComponent({
 			return undefined;
 		},
 		storeMission() {
-			return dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.dinozId)?.missionHUD || null;
+			return dinozStore().getDinozList.find(dinoz => dinoz.id.toString() === this.$route.params.id)?.missionHUD || null;
 		},
 		leaderDinoz() {
 			if (!this.dinoz.leaderId) return;
