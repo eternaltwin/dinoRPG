@@ -67,7 +67,7 @@ export const toDinozFiche = (
 			missions: DinozMission[];
 			items: Pick<DinozItem, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
-			skills: Pick<DinozSkill, 'skillId'>[];
+			skills: Pick<DinozSkill, 'skillId' | 'state'>[];
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
 			concentration: Concentration | null;
 		})[];
@@ -178,8 +178,8 @@ export const toDinozPublicFiche = (
 	};
 };
 
-export const toSkillDetails = (dinoz: { skills: Pick<DinozSkill, 'skillId' | 'state'>[] }): SkillDetails[] =>
-	dinoz.skills.map(skill => {
+export const toSkillDetails = (skills: Pick<DinozSkill, 'skillId' | 'state'>[]): SkillDetails[] =>
+	skills.map(skill => {
 		const skillFound = Object.values(skillList).find(skillDinoz => skillDinoz.id === skill.skillId);
 		if (!skillFound) {
 			throw new Error(`Skill ${skill.skillId} doesn't exist.`);

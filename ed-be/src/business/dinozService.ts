@@ -407,7 +407,7 @@ export async function getDinozSkill(req: Request) {
 		throw new ExpectedError(`Dinoz ${dinozSkillData.id} doesn't belong to player ${authed.id}`);
 	}
 
-	return toSkillDetails(dinozSkillData);
+	return toSkillDetails(dinozSkillData.skills);
 }
 
 /**

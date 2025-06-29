@@ -202,7 +202,7 @@ import { dinozStore, playerStore } from '../store/index.js';
 import LevelUpGrid from '../components/dinoz/LevelUpGrid.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import Elements from '../components/data/Elements.vue';
-import { skillList } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { FBService } from '../services/FBTournamentService.js';
 
@@ -248,7 +248,7 @@ export default defineComponent({
 			if (
 				confirm(
 					this.$t('levelup.confirmSkill', {
-						skill: this.$t(`skill.name.${skillList[skillId].name}`),
+						skill: this.$t(`skill.name.${skillList[skillId as Skill].name}`),
 						level: (this.availableSkills?.level ?? 0) + 1
 					})
 				)

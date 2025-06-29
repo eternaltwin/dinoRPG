@@ -23,7 +23,7 @@ export interface DinozFiche {
 	actions: ActionFiche[];
 	items: number[];
 	maxItems: number;
-	skills: Pick<DinozSkill, 'skillId'>[];
+	skills: Pick<DinozSkill, 'skillId' | 'state'>[];
 	status: Pick<DinozStatus, 'statusId'>[];
 	borderPlace: number[];
 	nbrUpFire: number;

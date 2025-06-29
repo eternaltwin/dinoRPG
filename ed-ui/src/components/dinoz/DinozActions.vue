@@ -92,7 +92,7 @@ import { ConditionEnum, RewardEnum } from '@drpg/core/models/enums/Parser';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import { npcList } from '@drpg/core/models/npc/NpcList';
 import { Rewarder } from '@drpg/core/models/reward/Rewarder';
-import { orderDinozList } from '@drpg/core/utils/DinozUtils';
+import { orderDinozList, toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import { getSpecialStat, SpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { defineComponent, PropType } from 'vue';
 import DZFollow from '../../components/dinoz/DZFollow.vue';
@@ -532,14 +532,14 @@ export default defineComponent({
 		},
 		async regenRate() {
 			const data = this.dinoz;
-			const dinozSkill = await DinozService.getDinozSkill(+this.$route.params.id);
+			const skills = toSkillDetails(data.skills);
 			const priest = this.playerStore.isPriest;
 			const specialStats = Object.values(SpecialStat)
 				.map(stat =>
 					getSpecialStat(
 						data,
 						data.status.map(s => s.statusId),
-						dinozSkill,
+						skills,
 						stat as SpecialStat,
 						priest
 					)

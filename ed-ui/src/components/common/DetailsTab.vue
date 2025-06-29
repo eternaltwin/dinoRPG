@@ -306,13 +306,13 @@ import { SpecialStat, getSpecialStat } from '@drpg/core/utils/getSpecialStat';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { dinozStore, playerStore } from '../../store/index.js';
-import { formatText } from '../../utils/formatText.js';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
+import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 
 export default defineComponent({
 	name: 'DetailsTab',
-	props: { dinozData: Object as PropType<DinozFiche> },
+	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
 		SkillTooltip
 	},
@@ -393,9 +393,9 @@ export default defineComponent({
 		},
 		async loadComponent(): Promise<void> {
 			EventBus.emit('isLoading', true);
+
 			try {
-				const dinozId = this.$route.params.id as string;
-				this.dinozSkill = await DinozService.getDinozSkill(+dinozId);
+				this.dinozSkill = toSkillDetails(this.dinozData.skills);
 				this.sort();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
@@ -403,20 +403,11 @@ export default defineComponent({
 				return;
 			}
 
-			const data = this.dinozData;
-			if (!data) {
-				this.$toast.open({
-					message: formatText(this.$t(`toast.dinozDataMissing`)),
-					type: 'error'
-				});
-				return;
-			}
-
 			// Get stats
 			this.assaultStats = Object.values(AssaultElement).map(stat =>
 				getAssaultStat(
-					data,
-					data.status.map(s => s.statusId),
+					this.dinozData,
+					this.dinozData.status.map(s => s.statusId),
 					this.dinozSkill,
 					stat as AssaultElement
 				)
@@ -424,8 +415,8 @@ export default defineComponent({
 
 			this.defenseStats = Object.values(DefenseElement).map(stat =>
 				getDefenseStat(
-					data,
-					data.status.map(s => s.statusId),
+					this.dinozData,
+					this.dinozData.status.map(s => s.statusId),
 					this.dinozSkill,
 					stat as DefenseElement
 				)
@@ -436,8 +427,8 @@ export default defineComponent({
 			this.specialStats = Object.values(SpecialStat)
 				.map(stat =>
 					getSpecialStat(
-						data,
-						data.status.map(s => s.statusId),
+						this.dinozData,
+						this.dinozData.status.map(s => s.statusId),
 						this.dinozSkill,
 						stat as SpecialStat,
 						priest
@@ -447,14 +438,6 @@ export default defineComponent({
 
 			// Refresh special stats on EventBus `refreshInventory`
 			EventBus.on('refreshInventory', async ({ event, item }: { event: string; item: number }) => {
-				if (!this.dinozData) {
-					this.$toast.open({
-						message: formatText(this.$t(`toast.dinozDataMissing`)),
-						type: 'error'
-					});
-					return;
-				}
-
 				// Remove torchDamage stat if last lighter was unequipped
 				if (event === 'unequip' && item === itemList[Item.ZIPPO].itemId) {
 					if (this.dinozData.items?.filter(i => i === item).length === 1) {
@@ -482,7 +465,10 @@ export default defineComponent({
 		await this.loadComponent();
 	},
 	watch: {
-		'$route.params.id': 'loadComponent'
+		'$route.params.id': 'loadComponent',
+		dinozData() {
+			this.loadComponent();
+		}
 	},
 	unmounted() {
 		EventBus.off('refreshInventory');
