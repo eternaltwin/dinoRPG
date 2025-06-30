@@ -661,8 +661,8 @@ class TournamentManager {
 			spanishTitle: translateTarget('dojo.newsTitle', 'es'),
 			germanTitle: translateTarget('dojo.newsTitle', 'de'),
 			frenchText: translateTarget('dojo.newsCorpus', 'fr', frTrad),
-			englishText: translateTarget('dojo.newsCorpus', 'en', esTrad),
-			spanishText: translateTarget('dojo.newsCorpus', 'es', enTrad),
+			englishText: translateTarget('dojo.newsCorpus', 'en', enTrad),
+			spanishText: translateTarget('dojo.newsCorpus', 'es', esTrad),
 			germanText: translateTarget('dojo.newsCorpus', 'de', deTrad)
 		});
 
