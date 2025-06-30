@@ -4095,7 +4095,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		unlockedFrom: [Skill.SAUT],
 		isBaseSkill: false,
 		isSphereSkill: false,
-		priority: 5,
+		priority: 3,
 		probability: 20,
 		lifeEffect: {
 			fx: LifeEffect.Air
