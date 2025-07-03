@@ -1,4 +1,4 @@
-simport { DISCORD, GLOBAL } from '../context.js';
+import { DISCORD, GLOBAL } from '../context.js';
 import { getDinozForAnnounce } from '../dao/dinozDao.js';
 import { PantheonMotif } from '@drpg/prisma';
 import { addDinozToPantheon, addPlayerToPantheon, getPantheonFromType } from '../dao/pantheonDao.js';
