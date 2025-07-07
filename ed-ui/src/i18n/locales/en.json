@@ -12,7 +12,7 @@
 		"api": "API",
 		"logout": "Log out",
 		"notifications": "Notifications",
-		"readAll": "Tout Lu",
+		"readAll": "Read All",
 		"guide": "Game Guide",
 		"faq": "FAQ",
 		"cinema": "Cinema",
@@ -32,11 +32,11 @@
 		"wronglogins": "The provided Eternal-Twin credentials are incorrect.",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
 		"noPMI": "You need the Illustrated Mission Guidebook to access this page.",
-		"noPAC": "Tu as besoin du Parchemin des Aptitudes Compilées pour accéder à cette page.",
+		"noPAC": "You need the Scroll of Compiled Abilities to access this page.",
 		"dinozListMissing": "Dinoz list missing.",
 		"noFight": "Today, the swamp is covered in fog... You will not find any monster to fight.",
 		"dinozDataMissing": "Dinoz data missing.",
-		"selectADinozAtMarketFirst": "Vous devez d'abord amener un Dinoz au marché.",
+		"selectADinozAtMarketFirst": "You must first bring a Dinoz to the market.",
 		"unknownDinoz": "Unknown dinoz.",
 		"noFollowers": "The Dinoz is not followed.",
 		"leaderChanged": "Your Dinoz is the new group leader.",
@@ -75,7 +75,7 @@
 		"needIngredientToSell": "You need to have the ingredients you want to sell.",
 		"finishGrid": "Congratulations! You have earned 1000 :gold: for having finished the grid!",
 		"dailyGridRewardsFinished": "You have reached the daily amount of completed grids.",
-		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements."
+		"errorFetchingRankings": "An error occurred when fetching the ranking data."
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -162,7 +162,7 @@
 			"itinerant_shop": "The Itinerant Merchant travels throughout Dinoland and buys *Ingredients* from Dinoz Masters: he pays well.",
 			"reincarnation": "Your Dinoz can be reincarnated! It will keep the same destiny of the elements.",
 			"change_leader": "Your Dinoz can become the new leader of the group.",
-			"fb_tournament": "Accéder au Tournoi de Forcebrut."
+			"fb_tournament": "Access the Bruteforce Tournament."
 		},
 		"name": {
 			"fight": "Fight",
@@ -208,7 +208,7 @@
 		"generator": "Dinoz generator",
 		"sortDinoz": "Manage my Dinoz",
 		"dinozMissions": "My Dinoz missions",
-		"skills": "Compétences"
+		"skills": "Skills"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -884,7 +884,7 @@
 			"skully": "Skully",
 			"baobabe": "Bao Babe",
 			"mouldeur": "Moulder",
-			"fb_tournament": "Organisateur du Tournoi"
+			"fb_tournament": "Tournament Organizer"
 		},
 		"professor": {
 			"speech": {
@@ -908,10 +908,10 @@
 				"stone": "Ohhhhhhh !!! But here is something very interesting, it seems to me that it is.... uhmmuhu.... i'm not sure... (he stares at the stone)... Can you show me this Stone, that I examine it a little?",
 				"stone_yes": "Ooooooohhhhh!!! Yes ... It's exactly what I thought ... Look! (he delicately cleans the stone) ... it's an Ashpouk Totem! It's very valuable ... take care of it!",
 				"noquestion": "Ah well, too bad, don't hesitate to come back from time to time to find out more about the world of Dinoland!",
-				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
-				"pac_go": "Es-tu fou !?!?!?!?!?!&& &&File d'ici et ne t'avise plus de me parler de ce parchemin !",
-				"pac_scroll": "Ah, euh... Félicitations pour avoir créer cette merveille toi aussi. Je suppose que tu as besoin d'aide pour t'en servir ?&& && &&Reviens me voir lorsque tu auras plus d'expérience dans l'élevage de Dinoz.",
-				"pac_end": "Bien bien bien. Voici donc le Parchemin des Aptitudes Compilées.&& && &&Pour t'en servir c'est très simple, à partir de maintenant dès que tes Dinoz auront appris un certain nombre de fois une compétence, elle sera visible sur l'arbre des compétences. *Oui j'ai finalement opté pour arbre que racine...*"
+				"pac_start": "Ahh, very good question from a young and passionate student. It is a scroll where I compile my research on the Dinoz that surround us. Did you know they can learn different aptitudes and that each of those allows them to unlock more potential? Like a system with drawers within drawers. I decided it to call it a furniture of skills.&&Anyway, I've put my notes in there and it's coming in very handy. But I don't want someone to steal my research that's why I'm using special ink and paper of shamanic and scientific craft that allow only my own eyes to decipher what I write.",
+				"pac_go": "Are you crazy!?!?!?!?!?!&& &&Get the hell out of here and don't ever mention again this scroll to me!",
+				"pac_scroll": "Ah, well... Congratulations!... You created this marvel all by yourself too... I suppose you need help to figure out how to use it?&& && &&Come back when you will have more experience raising Dinoz.",
+				"pac_end": "Well well well. Here's the Scroll of Compiled Abilities.&& &&It's very easy to use, when your Dinoz have learned a skill a certain number of times, this skill will be visible in the skill tree. *Yes, I did end up going for tree instead of root...*"
 			},
 			"playerChoice": {
 				"talk": "Professor Eugene",
@@ -936,10 +936,10 @@
 				"menu": "Back",
 				"stone_yes": "Of course, here it is.",
 				"stone_no": "Hey! Don't touch it! Before, I would like to know something...",
-				"pac_start": "C'est quoi ce parchemin ?",
-				"pac_go": "Arracher les yeux du professeur",
-				"pac_scroll": "Montrer le parchemin, l'encre et la plume",
-				"pac_end": "Suis-je assez puissant ?"
+				"pac_start": "What's this scroll?",
+				"pac_go": "Tear apart the professor's eyes",
+				"pac_scroll": "Show the scroll, the ink and the quill",
+				"pac_end": "Am I powerful enough?"
 			}
 		},
 		"sofia": {
@@ -1107,8 +1107,8 @@
 				"thanks": "Oh no! You're leaving already, that's a shame. You have to come back again, hopefully I'll see you soon.",
 				"nothing": "It seems your Dinoz already has a Bao Charm! Look, it still has some energy left. When it runs out I can recharge it for you.",
 				"no": "Oh really? Well it's your loss. *sulk*.",
-				"pac_scroll": "Sur ce morceau de charbon !?! Oui bien sur mais je ne sais pas à quoi ça pourrait te servir.&& && && && &&*Il semblerait que la racine avec ses deux charmes scintille légèrement*",
-				"pac_scroll2": "Vous devriez aller voir un expert en plante, c'est étrange qu'elle soit fluophosphorescente."
+				"pac_scroll": "On this piece of charcoal!?! Yes of course but to what end?&& && && && &&*The root sparkles slightly with its two charms*",
+				"pac_scroll2": "You should go see a plant expert, the fluophosphorescence is unusual."
 			},
 			"playerChoice": {
 				"ok": "Uh...yes, I suppose",
@@ -1118,8 +1118,8 @@
 				"no": "No thanks",
 				"spirit": "Did you mean \"spiritual\"?",
 				"thanks": "Well, I have to go now. Thanks a lot for the Bao Charm, it was really kind of you!",
-				"pac_scroll": "Attend, tu saurais faire ça sur cette racine que le chaman a cramé avec son charme ?",
-				"pac_scroll2": "C'est normal la couleur ?"
+				"pac_scroll": "Wait, could you do that on this piece of root that the shaman burnt with its charm?",
+				"pac_scroll2": "Is that color normal?"
 			}
 		},
 		"forgeron": {
@@ -4475,6 +4475,12 @@
 		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 10 vagues par jours au maximum.//",
 		"seeFight": "See the fight",
 		"deleteTeam": "Supprimer mon équipe",
+		"timer": {
+			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
+			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
+			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
+			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes."
+		},
 		"createTournamentTeam": "You do not have a team for the next tournament. The team must be made up of {team} Dinoz at maximum level {level}. Available Dinoz races are already filtered.",
 		"qualification": "You have until **{qualificationEnd}** to be amongst the 64 first players in the Dojo ranking in order to qualify for the group phase of the tournament. The group phase will start at {poolsStart}, get ready!&&The cash prize is currently {cashPrice}** :gold:.",
 		"pools": "The group stages are underway, and will finish on {finalsStart}. &&The cash price is now **{cashPrice}** :gold:.",

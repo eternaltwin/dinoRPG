@@ -4476,10 +4476,10 @@
 		"seeFight": "Voir le combat",
 		"deleteTeam": "Supprimer mon équipe",
 		"timer": {
-			"qualification": ":chrono: Il encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
-			"pools": ":chrono: Le prochain match au lieu dans {day} jours, {hours} heures et {minutes} minutes.",
-			"finals": ":chrono: Le prochain match au lieu dans {day} jours, {hours} heures et {minutes} minutes.",
-			"nextQualif": ":chrono: Les prochaines qualifications commencent dans {day} jours, {hours} heures et {minutes} minutes."
+			"qualification": ":chrono: Il reste encore {day} jours, {hours} heures et {minutes} minutes avant la fin des qualifications.",
+			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
+			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jours, {hours} heures et {minutes} minutes.",
+			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jours, {hours} heures et {minutes} minutes."
 		},
 		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de {team} Dinoz étant au maximum niveau {level}. Les races de Dinoz disponibles sont déjà filtrées.",
 		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojo afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash price est actuellement à **{cashPrice}** :gold:.",

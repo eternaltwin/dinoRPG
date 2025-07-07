@@ -135,7 +135,7 @@
 			"fight": "Suche an diesem Ort nach einem Monster, um dagegen zu kämpfen.",
 			"follow": "Dein Dinoz kann **einem anderen deiner Dinoz folgen**, wenn du das möchtest, dann bewegen sie sich gemeinsam und helfen sich im Kampf.",
 			"unfollow": "Dein Dinoz **folgt derzeit einem anderen Dinoz**. Klicke auf diese Aktion, um die Gruppe zu verlassen.",
-			"levelup": "Dein Dinoz hat genug Erfahrung gesammelt, um das nächste Level zu erreichen. Klicke auf diese Option, um die Stärke deines Dinoz zu erhöhen.",
+			"levelup": "Dein Dinoz hat genug Erfahrung gesammelt, um die nächste Stufe zu erreichen. Klicke auf diese Aktion, um deinen Dinoz stärker zu machen.",
 			"resurrect": "Dein Dinoz ist gestorben, also musst du ihn wiederbeleben, bevor er wieder kämpfen kann.",
 			"dig": "Dein Dinoz kann an diesem Ort **graben**, um vielleicht einen Schatz zu erbeuten.",
 			"cueille": "Dein Dinoz kann an diesem Ort hübsche Pflänzchen **pflücken**. Manche von ihnen sind noch unbekannt, daher sollte man sie lieber nicht essen!",
@@ -4475,6 +4475,12 @@
 		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu 10 Wellen pro Tag abschließen.//",
 		"seeFight": "Kampf ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
+		"timer": {
+			"qualification": ":chrono: Es bleiben noch {day} Tag(e), {hours} Stunde(n) und {minutes} Minute(n) bis zum Ende der Qualifikationen.",
+			"pools": ":chrono: Die nächste Runde der Gruppenphase wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
+			"finals": ":chrono: Die nächste Finalrunde wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden.",
+			"nextQualif": ":chrono: Die nächste Qualifikation wird in {day} Tag(en), {hours} Stunde(n) und {minutes} Minute(n) stattfinden."
+		},
 		"createTournamentTeam": "Du hast keine Mannschaft für das nächste Turnier. Das Team muss aus {team} Dinoz bestehen, die höchstens die Stufe {level} haben. Die verfügbaren Dinoz-Rassen sind bereits gefiltert.",
 		"qualification": "Du hast bis **{qualificationEnd}** Zeit, um einer der 64 Spitzenreiter der Dojo-Rangliste zu werden und dich somit für die Gruppenphase zu qualifizieren. Die Gruppenphase beginnt am **{poolsStart}**, also mach dich bereit!&&Das Preisgeld liegt derzeit bei **{cashPrice}** :gold:.",
 		"pools": "Die Gruppenphase hat begonnen und endet am {finalsStart}. &&Das Preisgeld liegt momentan bei **{cashPrice}** :gold:.",

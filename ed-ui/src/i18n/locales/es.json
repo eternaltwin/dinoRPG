@@ -1376,7 +1376,7 @@
 				"pac_shine": "Eh... ¿Lograste conseguir una raíz encantada por tu cuenta? ¿Fue el profesor quien te dijo qué hacer? Es muy peligroso, ¿sabes? Si logras convertirla en pergamino podrás usar una tinta de compilación. Pero es algo muy complejo de hacer.",
 				"pac_progress": "Eh, cómo decirlo... Es... Sí, es posible... Me encargaré de hacerte el pergamino. Tráeme primero tinta de Kaskadino. Unos cincuenta deberían bastar",
 				"pac_kazka": "¡Muy bien! Ahora pasemos a las cenizas de flamachas. Necesito 42 unidades.&& Mira cómo he avanzado. El pergamino se está secando.",
-				"pac_flam": "¡Fue rápido! Mientras termino de prepararte la tinta, deberías ir a buscar una pluma de Cocdur. ¿Crees que podrás hacerlo?",
+				"pac_flam": "¡Fue rápido! Mientras termino de prepararte la tinta, deberías ir a buscar una pluma de Coqdur. ¿Crees que podrás hacerlo?",
 				"pac_coq": "Aquí está. No puedo hacer nada más por ti. Tendrás que continuar tus investigaciones para entender cómo usarlo."
 			},
 			"playerChoice": {
@@ -4475,6 +4475,12 @@
 		"dailyReset": "Vas por la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de 10 oleadas por día.//",
 		"seeFight": "Ver el combate",
 		"deleteTeam": "Eliminar mi equipo",
+		"timer": {
+			"qualification": ":chrono: Aún quedan {day} días, {hours} horas y {minutes} minutos antes del fin de las clasificatorias.",
+			"pools": ":chrono: El siguiente combate de la fase de grupos tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
+			"finals": ":chrono: El siguiente combate de las fases finales tendrá lugar en {day} días, {hours} horas y {minutes} minutos.",
+			"nextQualif": ":chrono: Las próximas fases clasificatorias comenzarán en {day} días, {hours} horas y {minutes} minutos."
+		},
 		"createTournamentTeam": "No tienes un equipo para el próximo torneo. El equipo debe estar compuesto por {team} Dinos con un nivel máximo de {level}. Las razas de Dinos disponibles ya están filtradas.",
 		"qualification": "Tienes hasta **{qualificationEnd}** para estar entre los 64 primeros en el ranking del dojo para poder clasificar a la fase de grupos. La fase de grupos comenzará el **{poolsStart}**, ¡Prepárate! El premio en efectivo está actualmente en **{cashPrice}** :gold:.",
 		"pools": "Las fases de grupos están en curso y terminarán el {finalsStart}. &&El premio en oro ahora es de **{cashPrice}** :gold:.",
