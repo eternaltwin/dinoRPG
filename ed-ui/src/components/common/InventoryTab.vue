@@ -176,7 +176,7 @@ export default defineComponent({
 							message = this.$t(`quest.${toast.value}`);
 							break;
 						case ItemEffect.RESURRECT:
-							message = this.$t(`quest.${toast.category}`);
+							message = this.$t(`toast.${toast.category}`);
 							break;
 						default:
 							message = this.$t(`toast.${toast.category}`, { value: toast.value });
