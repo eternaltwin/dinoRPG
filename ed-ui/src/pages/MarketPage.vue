@@ -61,7 +61,7 @@ export default defineComponent({
 			this.tab = tab;
 		},
 		goBackToDinozPage(): void {
-			goTo(this.$router, 'DinozPage', { params: { id: this.playerStore.playerOptions.currentDinozId } });
+			goTo(this.$router, 'DinozPage', { params: { id: this.dinozStore.currentDinozId } });
 		}
 	},
 	async mounted(): Promise<void> {
