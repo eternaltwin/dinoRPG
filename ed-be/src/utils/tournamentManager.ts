@@ -718,7 +718,7 @@ class TournamentManager {
 		const currentTournament = await TournamentManager.getCurrentTournament(prisma);
 		let winners: { tournamentTeamId: string }[] = [];
 		if (!currentTournament) {
-			throw new ExpectedError('Invalid tournament');
+			return null;
 		}
 		if (currentTournament.round !== 0) {
 			const previousMatches = await prisma.fightArchive.findMany({

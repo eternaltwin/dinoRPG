@@ -203,19 +203,23 @@ export async function getDinozPlace(dinozId: number) {
 
 export async function isDinozInTournament(dinozId: number) {
 	const tournament = await TournamentManager.getActiveTeams(prisma);
-	const dinoz = await prisma.dinoz.findUnique({
-		where: { id: dinozId },
-		select: {
-			id: true,
-			TournamentTeam: { select: { tournamentId: true, id: true } }
+	if (tournament) {
+		const dinoz = await prisma.dinoz.findUnique({
+			where: { id: dinozId },
+			select: {
+				id: true,
+				TournamentTeam: { select: { tournamentId: true, id: true } }
+			}
+		});
+		if (!dinoz) {
+			throw new ExpectedError(`Cannot find dinoz`);
 		}
-	});
-	if (!dinoz) {
-		throw new ExpectedError(`Cannot find dinoz`);
-	}
 
-	const dinozTournamentTeam = dinoz.TournamentTeam.find(t => t.tournamentId === tournament.id);
-	return !!(dinozTournamentTeam && tournament.winners.some(t => t.tournamentTeamId === dinozTournamentTeam.id));
+		const dinozTournamentTeam = dinoz.TournamentTeam.find(t => t.tournamentId === tournament.id);
+		return !!(dinozTournamentTeam && tournament.winners.some(t => t.tournamentTeamId === dinozTournamentTeam.id));
+	} else {
+		return false;
+	}
 }
 
 export async function tournamentDinoz(dinozId: number) {
