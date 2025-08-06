@@ -72,6 +72,8 @@ Notons que le terme de saison n'est pas nécessaire, on peut simplement parler d
 
 Bref, le concept donne un cadre pour itérer aussi bien sur le contenu offert aux joueurs mais aussi sur l'équilibrage des combats. À partir des bases saines de la 1.0, les joueurs et développeurs savent que de futur équilibrages arriveront et la possiblité de rajouter du contenus est aussi attendues.
 
+Je vois mal un système de saison temporaire cependant, si de nouvelles compétences sont ajoutées, elles seraient alors définitives.
+
 # Notes techniques
 
 Afin de faciliter de futurs ou équilibrages courant il va falloir quelques ajouts pour aider les développeurs:
