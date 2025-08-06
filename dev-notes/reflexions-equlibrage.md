@@ -3,8 +3,8 @@ Version: 0.1
 Auteur: Jahaa
 
 - [Introduction](#introduction)
-  - [Expérimentation #1](#expérimentation-1)
-  - [Autre idée #1](#autre-idée-1)
+  - [Expérimentation 1](#expérimentation-1)
+  - [Autre idée 1](#autre-idée-1)
     - [Idées pour le futur](#idées-pour-le-futur)
 - [Notes techniques](#notes-techniques)
 
@@ -14,7 +14,7 @@ Cette note explore plusieurs approches pour équilibrer les compétences du jeu.
 
 Notons aussi la liste des réflexions pour équilibrer en général la génération des combats.
 
-## Expérimentation #1
+## Expérimentation 1
 
 L'[expérimentation #1](experimentation-equilibrage-1.md) est partie sur l'hypothèse d'avoir chaque arbre suit une forme spécifique. Ainsi chaque élément a le même nombre de compétences, ce qui en théorie, devrait aider pour l'équilibrage.
 
@@ -37,7 +37,7 @@ Points négatifs:
 - manque d'outils et de références pour mesurer et évaluer les impactes de compétences,
 - ajoute beaucoup de nouveautés d'un coup, ce qui freine ou empêche l'ajout de nouveaux contenus - mieux murement réfléchi - plus tard.
 
-## Autre idée #1
+## Autre idée 1
 
 La base de cette idée est de changer un minimum de choses: les arbres gardent leur forme (ou presque, des exceptions sont possibles), les compétences restent grossièrement les mêmes, seulement les compétences les plus problématiques ou délaissées sont équilibrées ou revues.
 
@@ -66,6 +66,7 @@ Une nouvelle saison c'est l'occasion de changer des choses:
 - nouvelle récompense de dojo (de quoi raviver la flamme des collectionneurs)
 - ajout de contenus (quêtes, objets, missions, pnj, compétences)
 - équilibrage des combats
+- autre (notre imagination est notre limite !)
 
 Notons que le terme de saison n'est pas nécessaire, on peut simplement parler de "mise à jour majeure".
 
