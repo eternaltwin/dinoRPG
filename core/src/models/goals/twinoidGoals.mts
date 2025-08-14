@@ -3065,5 +3065,29 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			de: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
 			es: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.' // TODO: No translation available
 		}
+	},
+	[StatTracking.PAC]: {
+		id: StatTracking.PAC,
+		name: {
+			en: 'Scroll of Compiled Abilities',
+			fr: 'Parchemin des Aptitudes Compilées',
+			de: 'Schriftrolle der Gesammelten Fähigkeiten',
+			es: 'Pergamino de Competencias Compiladas'
+		},
+		rare: 0,
+		hidden: true,
+		unlocks: [
+			{
+				count: 1,
+				points: 100,
+				icon: 'collec_pac.webp'
+			}
+		],
+		description: {
+			en: 'The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.',
+			fr: "Le Parchemin des Aptitudes Compilées est un artefact élégant qui répertorie instantanément l'ensemble des compétences maîtrisées par vos Dinoz, offrant un aperçu clair et détaillé de leurs talents en un seul regard.",
+			de: 'Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.',
+			es: 'El Pergamino de Competencias Compiladas es un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada de sus talentos de un solo vistazo.'
+		}
 	}
 };
