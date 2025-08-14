@@ -221,7 +221,7 @@
 									formatContent($t('tooltip.shop.buyMaxTopNote_part1')) +
 									selectedItem.quantity +
 									formatContent($t('tooltip.shop.buyMaxTopNote_part2')) +
-									resolveItem(selectedItem).maxQuantity +
+									resolveIngredient(selectedItem).maxQuantity +
 									formatContent($t('tooltip.shop.buyMaxTopNote_part3'))
 								"
 							/>
