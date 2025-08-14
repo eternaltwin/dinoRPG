@@ -10,12 +10,13 @@ export const getCookie = (name: string) => {
 	return null;
 };
 
+const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
 export const setCookie = (name: string, value: string, days: number) => {
-	if (name === 'x-drpg-token') EventBus.emit('connected', true);
+	if (name === `x-drpg-${channel}-token`) EventBus.emit('connected', true);
 	document.cookie = `${name}=${value}; path=/; domain=${mainDomain}; max-age=${days * 24 * 60 * 60}`;
 };
 
 export const deleteCookie = (name: string) => {
-	if (name === 'x-drpg-token') EventBus.emit('connected', false);
+	if (name === `x-drpg-${channel}-token`) EventBus.emit('connected', false);
 	document.cookie = `${name}=; path=/; domain=${mainDomain}; max-age=0`;
 };
