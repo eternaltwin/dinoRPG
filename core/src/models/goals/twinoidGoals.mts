@@ -3041,5 +3041,29 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			de: 'Your dinoz have evolved!',
 			es: '¡Tus dinos han evolucionado!'
 		}
+	},
+	[StatTracking.CARD]: {
+		id: StatTracking.CARD,
+		name: {
+			en: 'Merguez Deluxe Loyalty Card', // TODO: Translation pending review
+			fr: 'Carte de Fidélité Merguez Deluxe',
+			de: 'Merguez-Deluxe-Treuekarte', // TODO: Translation pending review
+			es: 'Tarjeta de Fidelidad Merguez Deluxe' // TODO: Translation pending review
+		},
+		rare: 0,
+		hidden: true,
+		unlocks: [
+			{
+				count: 1,
+				points: 100,
+				icon: 'collec_card.webp'
+			}
+		],
+		description: {
+			en: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
+			fr: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.',
+			de: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.', // TODO: No translation available
+			es: 'Grillée à la perfection et tamponnée par le Vendeur de Merguez lui-même, cette carte sacrée récompense les estomacs les plus endurants. Après avoir englouti un nombre indécent de merguez, vous voilà promu au rang de Grand Gourmand Officiel. Dorénavant, vos achats explosent les compteurs : x100 merguez d’un coup, parce que x5, c’est pour les amateurs.' // TODO: No translation available
+		}
 	}
 };

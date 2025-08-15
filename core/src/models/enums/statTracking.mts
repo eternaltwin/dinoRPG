@@ -51,5 +51,6 @@ export enum StatTracking {
 	MEDAL_3 = 'medbro',
 	MEDAL_4 = 'medpla',
 	LEVELUP_1 = 'lvlup1',
-	LEVELUP_2 = 'lvlup2'
+	LEVELUP_2 = 'lvlup2',
+	CARD = 'card'
 }
