@@ -224,6 +224,7 @@ export const epicList = {
 		222: 'eugene',
 		223: 'litter',
 		224: 'clover',
+		996: 'card',
 		997: 'pac',
 		999: 'import'
 	},
@@ -452,6 +453,7 @@ export const epicList = {
 		eugene: 222,
 		litter: 223,
 		clover: 224,
+		card: 996,
 		pac: 997,
 		import: 999
 	}

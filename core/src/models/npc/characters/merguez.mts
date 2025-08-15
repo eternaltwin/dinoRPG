@@ -2,6 +2,7 @@ import { ConditionEnum, Operator, RewardEnum } from '../../enums/Parser.mjs';
 import { Item, itemList } from '../../item/ItemList.mjs';
 import { NpcData } from '../NpcData.mjs';
 import { Scenario } from '../../enums/Scenario.mjs';
+import { Reward } from '../../reward/RewardList.mjs';
 
 export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 	begin: {
@@ -89,6 +90,10 @@ export const MERGUEZ: Readonly<Record<string, NpcData>> = {
 				rewardType: RewardEnum.SCENARIO,
 				value: Scenario.MERGUEZ,
 				step: 5
+			},
+			{
+				rewardType: RewardEnum.EPIC,
+				value: Reward.CARD
 			}
 		],
 		nextStep: []
