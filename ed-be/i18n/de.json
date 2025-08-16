@@ -45,11 +45,13 @@
 	"maxFollowers": "Du hast die Höchstanzahl einer Gruppe erreicht.",
 	"knownSphereSkill": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
 	"fb": {
-		"tooYoungAccount": "Dein Konto ist dafür zu frisch.",
-		"noTournamentOngoing": "Es ist kein Turnier im Gange.",
-		"notEnoughPoints": "Du hast nicht genügend Punkte, um an diesem Turnier teilzunehmen.",
-		"alreadyCreatedDinoz": "Du hast heute bereits einen Dinoz erstellt.",
-		"maxDinozReached": "Die Höchstanzahl an Dinoz für dieses Turnier ist erreicht."
+		"error": {
+			"tooYoungAccount": "Dein Konto ist dafür zu frisch.",
+			"noTournamentOngoing": "Es ist kein Turnier im Gange.",
+			"notEnoughPoints": "Du hast nicht genügend Punkte, um an diesem Turnier teilzunehmen.",
+			"alreadyCreatedDinoz": "Du hast heute bereits einen Dinoz erstellt.",
+			"maxDinozReached": "Die Höchstanzahl an Dinoz für dieses Turnier ist erreicht."
+		}
 	},
 	"dojo": {
 		"inexistantDojo": "Das ausgewählte Dojo existiert nicht",

@@ -45,11 +45,13 @@
 	"maxFollowers": "You reached the maximum number of Dinoz in the group",
 	"knownSphereSkill": "Your Dinoz has already learned all the spherical skills in that element.",
 	"fb": {
-		"tooYoungAccount": "Your account is still too young.",
-		"noTournamentOngoing": "There is no ongoing tournament.",
-		"notEnoughPoints": "You do not have enough points to participate in this tournament.",
-		"alreadyCreatedDinoz": "You have already created a Dinoz today.",
-		"maxDinozReached": "The maximum number of Dinoz for this tournament has been reached."
+		"error": {
+			"tooYoungAccount": "Your account is still too young.",
+			"noTournamentOngoing": "There is no ongoing tournament.",
+			"notEnoughPoints": "You do not have enough points to participate in this tournament.",
+			"alreadyCreatedDinoz": "You have already created a Dinoz today.",
+			"maxDinozReached": "The maximum number of Dinoz for this tournament has been reached."
+		}
 	},
 	"dojo": {
 		"inexistantDojo": "The selected dojo does not exist.",

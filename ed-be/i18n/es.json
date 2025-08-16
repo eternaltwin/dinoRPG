@@ -45,11 +45,13 @@
 	"maxFollowers": "Has alcanzado el máximo número de Dinos en el grupo",
 	"knownSphereSkill": "Tu Dino ya ha adquirido todas las habilidades esféricas de este elemento.",
 	"fb": {
-		"tooYoungAccount": "Tu cuenta aún es demasiado nueva.",
-		"noTournamentOngoing": "Ningún torneo está en curso.",
-		"notEnoughPoints": "No tienes suficientes puntos para participar en este torneo.",
-		"alreadyCreatedDinoz": "Ya has creado un Dino hoy.",
-		"maxDinozReached": "Se ha alcanzado el número máximo de Dinos para este torneo."
+		"error": {
+			"tooYoungAccount": "Tu cuenta aún es demasiado nueva.",
+			"noTournamentOngoing": "Ningún torneo está en curso.",
+			"notEnoughPoints": "No tienes suficientes puntos para participar en este torneo.",
+			"alreadyCreatedDinoz": "Ya has creado un Dino hoy.",
+			"maxDinozReached": "Se ha alcanzado el número máximo de Dinos para este torneo."
+		}
 	},
 	"dojo": {
 		"inexistantDojo": "El dojo seleccionado no existe.",

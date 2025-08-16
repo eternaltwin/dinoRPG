@@ -124,7 +124,7 @@ export async function getPlayerParticipation(req: Request) {
 		}
 	});
 	if (!activeTournament) {
-		throw new ExpectedError(translate('fb.noTournamentOngoing', authed));
+		throw new ExpectedError(translate('fb.error.noTournamentOngoing', authed));
 	}
 	const dinozList = await prisma.gameDinoz.findMany({
 		where: {
@@ -175,7 +175,7 @@ export async function createTournamentDinoz(req: Request) {
 		}
 	});
 	if (dayjs().diff(dayjs(player.createdDate), 'days') < 3) {
-		throw new ExpectedError(translate('fb.tooYoungAccount', authed));
+		throw new ExpectedError(translate('fb.error.tooYoungAccount', authed));
 	}
 	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
 		where: {
@@ -188,10 +188,10 @@ export async function createTournamentDinoz(req: Request) {
 		}
 	});
 	if (!activeTournament) {
-		throw new ExpectedError(translate('fb.noTournamentOngoing', authed));
+		throw new ExpectedError(translate('fb.error.noTournamentOngoing', authed));
 	}
 	if (player.ranking && player.ranking.points < activeTournament.levelLimit) {
-		throw new ExpectedError(translate('fb.notEnoughPoints', authed));
+		throw new ExpectedError(translate('fb.error.notEnoughPoints', authed));
 	}
 	const lastDinoz = await prisma.gameDinoz.findFirst({
 		where: {
@@ -208,7 +208,7 @@ export async function createTournamentDinoz(req: Request) {
 	});
 
 	if (lastDinoz && dayjs().isSame(lastDinoz.createdDate, 'day')) {
-		throw new ExpectedError(translate('fb.alreadyCreatedDinoz', authed));
+		throw new ExpectedError(translate('fb.error.alreadyCreatedDinoz', authed));
 	}
 
 	const dinozCount = await prisma.gameDinoz.count({
@@ -220,7 +220,7 @@ export async function createTournamentDinoz(req: Request) {
 	});
 
 	if (dinozCount >= 256) {
-		throw new ExpectedError(translate('fb.maxDinozReached', authed));
+		throw new ExpectedError(translate('fb.error.maxDinozReached', authed));
 	}
 
 	const seed = randomUUID();
@@ -548,13 +548,13 @@ export async function getFBTournamentOpponent(req: Request) {
 
 	const rng = seedrandom(opponentGameDinoz.seed);
 	const name =
-		getRandomEnumValue(TournamentNamePrefix, rng()) +
-		getRandomEnumValue(TournamentNameMiddle, rng()) +
-		getRandomEnumValue(TournamentNameSuffix, rng()) +
+		translate(`fb.name.prefix.${getRandomEnumValue(TournamentNamePrefix, rng())}`, authed) +
+		translate(`fb.name.middle.${getRandomEnumValue(TournamentNameMiddle, rng())}`, authed) +
+		translate(`fb.name.suffix.${getRandomEnumValue(TournamentNameSuffix, rng())}`, authed) +
 		' ' +
-		getRandomEnumValue(TournamentNameTitle, rng()) +
+		translate(`fb.name.title.${getRandomEnumValue(TournamentNameTitle, rng())}`, authed) +
 		' ' +
-		getRandomEnumValue(TournamentNameQuality, rng());
+		translate(`fb.name.quality.${getRandomEnumValue(TournamentNameQuality, rng())}`, authed);
 
 	return {
 		name: name,
@@ -628,7 +628,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 		throw new ExpectedError(translate('dead', authed));
 	}
 
-	//Forbid Black Hole, Hypnose and Sylphide skills
+	// Forbid Black Hole, Hypnose and Sylphide skills
 	dinoz.skills = dinoz.skills.filter(
 		s => s.skillId !== Skill.TROU_NOIR && s.skillId !== Skill.HYPNOSE && s.skillId !== Skill.SYLPHIDES
 	);
@@ -682,13 +682,13 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	const rng = seedrandom(opponentGameDinoz.seed);
 	opponentGameDinoz.name =
-		getRandomEnumValue(TournamentNamePrefix, rng()) +
-		getRandomEnumValue(TournamentNameMiddle, rng()) +
-		getRandomEnumValue(TournamentNameSuffix, rng()) +
+		translate(`fb.name.prefix.${getRandomEnumValue(TournamentNamePrefix, rng())}`, authed) +
+		translate(`fb.name.middle.${getRandomEnumValue(TournamentNameMiddle, rng())}`, authed) +
+		translate(`fb.name.suffix.${getRandomEnumValue(TournamentNameSuffix, rng())}`, authed) +
 		' ' +
-		getRandomEnumValue(TournamentNameTitle, rng()) +
+		translate(`fb.name.title.${getRandomEnumValue(TournamentNameTitle, rng())}`, authed) +
 		' ' +
-		getRandomEnumValue(TournamentNameQuality, rng());
+		translate(`fb.name.quality.${getRandomEnumValue(TournamentNameQuality, rng())}`, authed);
 	opponentGameDinoz.life = opponentGameDinoz.maxLife;
 
 	const fightResult = calculateFightBetweenPlayers(
