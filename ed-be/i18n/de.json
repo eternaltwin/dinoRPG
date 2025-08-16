@@ -43,7 +43,7 @@
 	"equipedItems": "Du kannst einen Dinoz mit ausgerüsteten Gegenständen nicht verkaufen.",
 	"offerInProgress": "Du kannst eine Auktion nicht abbrechen, wenn darauf mindestens ein Gebot besteht.",
 	"maxFollowers": "Du hast die Höchstanzahl einer Gruppe erreicht.",
-	"AlreadySphere": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
+	"knownSphereSkill": "Dein Dinoz hat bereits alle Sphärenfähigkeiten dieses Elements erlernt.",
 	"fb": {
 		"tooYoungAccount": "Dein Konto ist dafür zu frisch.",
 		"noTournamentOngoing": "Es ist kein Turnier im Gange.",

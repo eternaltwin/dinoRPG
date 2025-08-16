@@ -43,7 +43,7 @@
 	"equipedItems": "You cannot sell a Dinoz with equipped items.",
 	"offerInProgress": "You cannot cancel an offer with an ongoing offer.",
 	"maxFollowers": "You reached the maximum number of Dinoz in the group",
-	"AlreadySphere": "Your Dinoz has already learned all the spherical skills in that element.",
+	"knownSphereSkill": "Your Dinoz has already learned all the spherical skills in that element.",
 	"fb": {
 		"tooYoungAccount": "Your account is still too young.",
 		"noTournamentOngoing": "There is no ongoing tournament.",

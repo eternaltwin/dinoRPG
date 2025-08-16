@@ -43,7 +43,7 @@
 	"equipedItems": "No puede vender un Dino con objetos equipados.",
 	"offerInProgress": "No puedes cancelar una subasta que tenga al menos una oferta.",
 	"maxFollowers": "Has alcanzado el máximo número de Dinos en el grupo",
-	"AlreadySphere": "Tu Dino ya ha adquirido todas las habilidades esféricas de este elemento.",
+	"knownSphereSkill": "Tu Dino ya ha adquirido todas las habilidades esféricas de este elemento.",
 	"fb": {
 		"tooYoungAccount": "Tu cuenta aún es demasiado nueva.",
 		"noTournamentOngoing": "Ningún torneo está en curso.",

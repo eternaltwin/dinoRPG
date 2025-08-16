@@ -43,7 +43,9 @@
 	"equipedItems": "Vous ne pouvez pas vendre un Dinoz avec des objets équipés.",
 	"offerInProgress": "Vous ne pouvez pas annuler une enchère ayant au moins une offre.",
 	"maxFollowers": "Vous avez atteint le maximum de Dinoz dans le groupe",
-	"AlreadySphere": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
+	"knownSphereSkill": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
+	"playerNotFound": "Le joueur {id} n'a pas été trouvé.",
+	"dinozNotFound": "Le dinoz {id} n'a pas été trouvé.",
 	"fb": {
 		"tooYoungAccount": "Votre compte est encore trop jeune.",
 		"noTournamentOngoing": "Aucun tournois n'est en cours.",

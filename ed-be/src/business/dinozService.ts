@@ -369,11 +369,11 @@ export async function getDinozFiche(req: Request) {
 	const playerData = await getDinozFicheRequest(dinozId, authed.id);
 
 	if (!playerData) {
-		throw new ExpectedError(`No player found.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	if (playerData.dinoz.length === 0) {
-		throw new ExpectedError(`No dinoz found.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	const myDinoz = playerData.dinoz.find(d => d.id === dinozId);
@@ -400,7 +400,7 @@ export async function getDinozSkill(req: Request) {
 	const dinozId: number = parseInt(req.params.id);
 	const dinozSkillData = await getDinozSkillRequest(dinozId);
 	if (!dinozSkillData) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	if (!dinozSkillData.player || dinozSkillData.player.id !== authed.id) {
@@ -418,6 +418,7 @@ export async function getDinozSkill(req: Request) {
  */
 export async function buyDinoz(req: Request) {
 	const authed = await auth(req);
+	const dinozId = +req.params.id;
 
 	// Check if player can buy more dinoz
 	const dinozActive = await getActiveDinoz(authed.id);
@@ -426,7 +427,7 @@ export async function buyDinoz(req: Request) {
 		const player = dinozActive[0].player;
 
 		if (!player) {
-			throw new ExpectedError(`Missing player`);
+			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 		}
 
 		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
@@ -436,10 +437,10 @@ export async function buyDinoz(req: Request) {
 	}
 
 	// Get dinoz details thanks to his ID
-	const dinozShopData = await getDinozShopDetailsRequest(+req.params.id);
+	const dinozShopData = await getDinozShopDetailsRequest(dinozId);
 
 	if (!dinozShopData) {
-		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	const race = getRace(dinozShopData);
@@ -509,6 +510,7 @@ export async function buyDinoz(req: Request) {
  */
 export async function setDinozName(req: Request) {
 	// Retrieve player from dinozId
+	const dinozId = +req.params.id;
 	const dinoz = await getCanDinozChangeName(+req.params.id);
 	const regexName = /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/;
 	const name = req.body.newName;
@@ -516,7 +518,7 @@ export async function setDinozName(req: Request) {
 	const authed = await auth(req);
 
 	if (!dinoz) {
-		throw new ExpectedError(`Dinoz ${req.params.id} doesn't exist`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	// If authenticated player is different from player found, throw exception
@@ -555,7 +557,7 @@ export async function setSkillState(req: Request) {
 	const dinoz = await getDinozSkillAndStatusRequest(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 	const skill = Object.values(skillList).find(skill => skill.id === skillToUpdate);
 
@@ -601,12 +603,12 @@ export async function betaMove(req: Request) {
 	const player = await getDinozFightDataRequest(dinozId, authed.id);
 
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	const dinoz = player.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	if (dinoz.canChangeName) {
@@ -741,7 +743,7 @@ export async function resurrectDinoz(req: Request) {
 	const dinozData = await getDinozFicheLiteRequest(dinozId);
 
 	if (!dinozData) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	// If player found is different from player who do the request, throw exception
@@ -788,11 +790,11 @@ export async function digWithDinoz(req: Request) {
 	const player = await getDinozFicheRequest(dinozId, authed.id);
 
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	if (
@@ -843,11 +845,11 @@ export async function getGatherGrid(req: Request): Promise<GatherPublicGrid> {
 
 	const player = await getDinozGatherData(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	const place = actualPlace(dinozData);
@@ -911,11 +913,11 @@ export async function gatherWithDinoz(req: Request) {
 
 	const player = await getDinozGatherData(dinozId, authed.id);
 	if (!player) {
-		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 	const dinozData = player.dinoz.find(d => d.id === dinozId);
 	if (!dinozData) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	const place = actualPlace(dinozData);
@@ -1178,7 +1180,7 @@ export async function followDinoz(req: Request) {
 	const player_leader = await getDinozFicheRequest(dinozToFollowId, authed.id);
 
 	if (!player_dinoz || !player_leader) {
-		throw new ExpectedError('No player found');
+		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 	}
 
 	if (dinozId === dinozToFollowId) {
@@ -1411,7 +1413,7 @@ export async function unfrozeDinoz(req: Request) {
 		const player = dinozActive[0].player;
 
 		if (!player) {
-			throw new ExpectedError(`Missing player`);
+			throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
 		}
 
 		if (!player.leader && dinozActive.length >= gameConfig.dinoz.maxQuantity) {
@@ -1439,7 +1441,7 @@ export async function restDinoz(req: Request) {
 	const dinoz = await checkRestDinoz(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError('No dinoz found');
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	if (dinoz.unavailableReason === UnavailableReason.resting && start) {

@@ -174,7 +174,7 @@ export const learnNextSphereSkill = (
 
 	const testSphereToLean = sphereSkills.find(skill => skill.unlockedFrom?.some(s => s === lastKnownSphere));
 	if (!testSphereToLean) {
-		throw new ExpectedError(translate('AlreadySphere'));
+		throw new ExpectedError(translate('knownSphereSkill'));
 	}
 
 	return testSphereToLean.id;
