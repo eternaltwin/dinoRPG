@@ -60,7 +60,7 @@ import { resolveFightingPlace, transpileFight } from '../utils/transpileFight.js
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import EventBus from '../events/index.js';
 import FightBounce from '../components/fight/FightBounce.vue';
-import { dinozStore, playerStore } from '../store/index.js';
+import { dinozStore, localStore, playerStore, sessionStore } from '../store/index.js';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
@@ -81,8 +81,10 @@ export default defineComponent({
 			displayFight: undefined as undefined | DojoFightResume,
 			fight: undefined as undefined | FightResult,
 			dinoz: undefined as undefined | DinozFiche,
+			lang: localStore().getLanguage ?? 'fr',
 			fightEnded: false as boolean,
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			sessionStore: sessionStore()
 		};
 	},
 	props: {
@@ -101,6 +103,7 @@ export default defineComponent({
 			EventBus.emit('loading', true);
 			try {
 				this.fight = await FBService.fightOpponent(+this.dinozId);
+				this.sessionStore.setFightResult(this.fight);
 				const fightSteps = this.fight.history as FightStep[];
 				const fighters = this.fight.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
@@ -121,10 +124,9 @@ export default defineComponent({
 				const initPlace = resolveFightingPlace(PlaceEnum.FORCEBRUT);
 				this.fightTransformed = {
 					...initPlace,
-					history: nexFight.filter(n => n != undefined)
-					// lang: this.lang
+					history: nexFight.filter(n => n != undefined),
+					lang: this.lang
 				};
-				// this.loaded = true;
 				EventBus.emit('loading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

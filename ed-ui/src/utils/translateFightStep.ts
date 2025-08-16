@@ -17,10 +17,10 @@ const DISPLAYED_STATUSES = [...GoodStatus, ...BadStatus];
 const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 	const store = sessionStore().getFightResult;
 	let name = '';
-	if (!store) return name;
-	const fighters = store.fighters as FighterRecap[];
 	let attacker: boolean;
 	if (typeof fighter === 'number') {
+		if (!store) return name;
+		const fighters = store.fighters as FighterRecap[];
 		const tempo = fighters.find(f => f.id === fighter);
 		if (!tempo) return name;
 		if (tempo.type === 'dinoz' || tempo.type === 'clone') {
@@ -43,6 +43,7 @@ const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 		}
 		attacker = fighter.attacker;
 	}
+
 	return `${attacker ? ':attack:' : ':defense:'} ${name}`;
 };
 
@@ -54,6 +55,10 @@ const getTranslatedString = (fightStep: FightStep, t: TFunction) => {
 	}
 
 	switch (fightStep.action) {
+		case 'timeLimit':
+			return t(`fight.step.${fightStep.action}`, {
+				time: fightStep.time
+			});
 		case 'arrive':
 			return t(`fight.step.${fightStep.action}`, {
 				name: getFighterName(fightStep.fid, t)

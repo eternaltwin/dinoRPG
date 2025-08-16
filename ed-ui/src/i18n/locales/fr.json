@@ -4211,6 +4211,7 @@
 			"healing": "soigné"
 		},
 		"step": {
+			"timeLimit": "Le combat durera au maximum {time} unité de temps.",
 			"arrive": "**{name}** est arrivé !",
 			"resist": "**{dinoz}** a résisté et réduit les dégâts.",
 			"hit": "**{fighter}** a infligé **{damage}** {elements} dégâts à **{target}**.",
