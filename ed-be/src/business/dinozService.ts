@@ -1180,6 +1180,11 @@ export async function followDinoz(req: Request) {
 	if (!player_dinoz || !player_leader) {
 		throw new ExpectedError('No player found');
 	}
+
+	if (dinozId === dinozToFollowId) {
+		throw new ExpectedError('Cannot follow itself');
+	}
+
 	const dinoz = player_dinoz.dinoz.find(d => d.id === dinozId);
 	const leader = player_leader.dinoz.find(d => d.id === dinozToFollowId);
 
