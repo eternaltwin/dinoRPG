@@ -1,6 +1,7 @@
 <template>
 	<div class="map_container" ref="container" @mousemove="parallax($event)">
 		<div
+			v-if="mapReady"
 			class="full_map"
 			:style="{
 				left: `${-(left ?? 0)}px`,
@@ -77,7 +78,8 @@ export default defineComponent({
 			left: 0,
 			top: 0,
 			svgLines: [] as Array<svgLines>,
-			svgSize: undefined as string | undefined
+			svgSize: undefined as string | undefined,
+			mapReady: false as boolean
 		};
 	},
 	methods: {
@@ -249,24 +251,26 @@ export default defineComponent({
 			}
 		},
 		waitForImageToLoad(): void {
-			const map = placeList.find(place => place.placeId === this.dinozData.placeId)?.map;
-			// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
-			this.placeMap = placeList.filter(
-				place =>
-					place.map === map &&
-					(!place.hidden ||
-						this.dinozData.borderPlace?.includes(place.placeId) ||
-						place.placeId === this.dinozData.placeId)
-			);
-			setTimeout(() => {
-				const mapImage: DOMRect = (this.$refs.carte as Element).getBoundingClientRect();
-				if (mapImage.width < 300) {
-					this.waitForImageToLoad();
-				} else {
-					this.centerPos(mapImage);
-					this.svgMagic(mapImage);
-				}
-			}, 100);
+			const img = new Image();
+			const map = placeList.find(p => p.placeId === this.dinozData.placeId)?.map;
+			img.src = this.getImgURL('map/map', map ?? '');
+
+			img.onload = () => {
+				// We only keep places that belong to the current map and places that dinoz can reach (useful for hidden ones)
+				this.placeMap = placeList.filter(
+					place =>
+						place.map === map &&
+						(!place.hidden ||
+							this.dinozData.borderPlace?.includes(place.placeId) ||
+							place.placeId === this.dinozData.placeId)
+				);
+
+				const mapImage = { width: img.naturalWidth, height: img.naturalHeight } as DOMRect;
+
+				this.centerPos(mapImage);
+				this.svgMagic(mapImage);
+				this.mapReady = true;
+			};
 		}
 	},
 	mounted(): void {
