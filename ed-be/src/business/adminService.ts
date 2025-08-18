@@ -18,7 +18,6 @@ import { decreaseQuestProgression, increaseQuestProgression } from '../dao/quest
 import { createLog } from '../dao/logDao.js';
 import { AdminRole, LogType, OfferStatus } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { ModerationAdminType } from '@drpg/core/models/admin/ModerationType';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
 import { Reward } from '@drpg/core/models/reward/RewardList';
@@ -30,7 +29,7 @@ import { Item } from '@drpg/core/models/item/ItemList';
 import { addMultipleUnlockableSkills, removeUnlockableSkillsFromDinoz } from '../dao/dinozSkillUnlockableDao.js';
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { applySkillToDinoz, deApplySkillFromDinoz } from '../utils/skillParser.js';
-import { Job, scheduledJobs } from 'node-schedule';
+import { scheduledJobs } from 'node-schedule';
 
 /**
  * @summary Check if user can access the admin dashboard

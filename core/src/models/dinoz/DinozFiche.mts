@@ -47,42 +47,22 @@ export interface DinozFiche {
 export interface DinozAdminFiche {
 	id: number;
 	name: string;
-	display: string;
-	canChangeName: boolean;
 	unavailableReason: UnavailableReason | null;
 	level: number;
-	missionId: number | undefined | null;
-	missionHUD: MissionHUD | null;
+	canChangeName: boolean;
 	leaderId: number | null;
-	followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
 	life: number;
 	maxLife: number;
 	experience: number;
-	maxExperience: number;
-	race: DinozRace;
 	placeId: number;
-	actions: ActionFiche[];
-	items: number[];
-	maxItems: number;
-	skills: Pick<DinozSkill, 'skillId'>[];
-	unlockableSkills: Pick<DinozSkill, 'skillId'>[];
-	status: Pick<DinozStatus, 'statusId'>[];
-	borderPlace: number[];
 	nbrUpFire: number;
 	nbrUpWood: number;
 	nbrUpWater: number;
 	nbrUpLightning: number;
 	nbrUpAir: number;
-	order: number | null;
-	remaining: number;
-	fight: boolean;
-	gather: boolean;
-	missions: DinozMission[];
-	concentration: Concentration | null;
-	npcAwait?: {
-		npcSpeech: string;
-		npcName: string;
-	};
+	status: number[];
+	skills: number[];
+	unlockableSkills: number[];
 }
 
 export interface DinozPublicFiche {

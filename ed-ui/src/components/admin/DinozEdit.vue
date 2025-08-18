@@ -104,18 +104,15 @@
 			<div>
 				<label class="title" for="dinozStatuses">Statuses :</label>
 				<div class="statuses">
-					<template v-for="status in dinoz.status" :key="status.statusId">
-						<Tippy theme="normal" v-if="statusList.displayed[status.statusId]">
-							<img
-								:src="getImgURL('status', `fx_${statusList.imgName[status.statusId]}`)"
-								:alt="statusList.imgName[status.statusId]"
-							/>
+					<template v-for="status in dinoz.status" :key="status">
+						<Tippy theme="normal" v-if="statusList.displayed[status]">
+							<img :src="getImgURL('status', `fx_${statusList.imgName[status]}`)" :alt="statusList.imgName[status]" />
 							<template #content>
-								<h1 v-html="formatContent($t(`status.name.${status.statusId}`))"></h1>
-								<p v-html="formatContent($t(`status.description.${status.statusId}`))"></p>
+								<h1 v-html="formatContent($t(`status.name.${status}`))"></h1>
+								<p v-html="formatContent($t(`status.description.${status}`))"></p>
 							</template>
 						</Tippy>
-						<p v-if="!statusList.displayed[status.statusId]" v-html="statusList.imgName[status.statusId]" />
+						<p v-if="!statusList.displayed[status]" v-html="statusList.imgName[status]" />
 					</template>
 				</div>
 				<div class="statuses">
@@ -150,9 +147,12 @@
 		<fieldset>
 			<legend>Skills</legend>
 			<div class="skills">
-				<template v-for="skill in dinoz.skills" :key="skill.skillId">
+				<template v-for="skillId in dinoz.skills" :key="skillId">
 					<div class="skills" />
-					{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
+					<span v-if="skillList[skillId]">
+						{{ $t(`skill.name.${skillList[skillId].name}`) }}
+					</span>
+					<span v-else class="error-skill"> Unknown skill (ID: {{ skillId }}) </span>
 				</template>
 			</div>
 			<div class="skills">
@@ -186,9 +186,12 @@
 		<fieldset>
 			<legend>Unlockable Skills</legend>
 			<div class="unlockable_skills">
-				<template v-for="skill in dinoz.unlockableSkills" :key="skill.skillId">
+				<template v-for="skillId in dinoz.unlockableSkills" :key="skillId">
 					<div class="skills" />
-					{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}
+					<span v-if="skillList[skillId]">
+						{{ $t(`skill.name.${skillList[skillId].name}`) }}
+					</span>
+					<span v-else class="error-skill"> Unknown unlockable skill (ID: {{ skillId }}) </span>
 				</template>
 			</div>
 			<div class="unlockable_skills">
@@ -343,33 +346,31 @@ export default defineComponent({
 		filterSkillList(operation: string): void {
 			if (operation === 'add') {
 				this.skillListFiltered = Object.values(skillList).filter(
-					skill => !this.dinoz.skills?.some(s => s.skillId === skill.id)
+					skill => !this.dinoz.skills?.some(s => s === skill.id)
 				);
 			} else {
-				this.skillListFiltered = Object.values(skillList).filter(skill =>
-					this.dinoz.skills?.some(s => s.skillId === skill.id)
-				);
+				this.skillListFiltered = Object.values(skillList).filter(skill => this.dinoz.skills?.some(s => s === skill.id));
 			}
 		},
 		filterUnlockableSkillList(operation: string): void {
 			if (operation === 'add') {
 				this.unlockableSkillListFiltered = Object.values(skillList).filter(
-					skill => !this.dinoz.unlockableSkills?.some(s => s.skillId === skill.id)
+					skill => !this.dinoz.unlockableSkills?.some(s => s === skill.id)
 				);
 			} else {
 				this.unlockableSkillListFiltered = Object.values(skillList).filter(skill =>
-					this.dinoz.unlockableSkills?.some(s => s.skillId === skill.id)
+					this.dinoz.unlockableSkills?.some(s => s === skill.id)
 				);
 			}
 		},
 		filterStatusList(operation: string): void {
 			if (operation === 'add') {
 				this.statusListFiltered = Object.keys(statusList.imgName).filter(
-					statusId => !this.dinoz.status?.some(status => status.statusId === parseInt(statusId))
+					statusId => !this.dinoz.status?.some(status => status === parseInt(statusId))
 				);
 			} else {
 				this.statusListFiltered = Object.keys(statusList.imgName).filter(statusId =>
-					this.dinoz.status?.some(status => status.statusId === parseInt(statusId))
+					this.dinoz.status?.some(status => status === parseInt(statusId))
 				);
 			}
 		},

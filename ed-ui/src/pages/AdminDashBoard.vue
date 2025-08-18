@@ -81,7 +81,7 @@ import LogsView from '../components/admin/LogsView.vue';
 import GameStats from '../components/admin/GameStats.vue';
 import Moderation from '../components/admin/Moderation.vue';
 import Banned from '../components/admin/Banned.vue';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozAdminFiche }from '@drpg/core/models/dinoz/DinozFiche';
 import { playerStore } from '../store/index.js';
 import GameControl from '../components/admin/GameControl.vue';
 import DebugFight from '../components/admin/DebugFight.vue';
@@ -115,8 +115,8 @@ export default defineComponent({
 			playerList: [] as Array<PlayerSearch>,
 			player: {} as Player,
 			tabSelected: 1 as number,
-			dinozList: {} as Array<DinozFiche>,
-			selectedDinoz: null as DinozFiche | null,
+			dinozList: {} as Array<DinozAdminFiche>,
+			selectedDinoz: null as DinozAdminFiche | null,
 			awaitingSearch: false as boolean,
 			displayErrorMessage: false as boolean
 		};
