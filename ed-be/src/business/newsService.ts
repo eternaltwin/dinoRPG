@@ -1,12 +1,14 @@
 import { Request } from 'express';
-import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews, getNewsDate } from '../dao/newsDao.js';
+import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews, getNewsDate,
+	hasPlayerLikedNews,
+	likeNews,
+	unlikeNews } from '../dao/newsDao.js';
 import { auth, noStrictAuth } from '../dao/playerDao.js';
 import { CreatePollOption } from '@drpg/core/models/news/Polls';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { prisma } from '../prisma.js';
-import translate from '../utils/translate.js';
 import dayjs from 'dayjs';
-import { scheduledJobs, scheduleJob } from 'node-schedule';
+import { scheduleJob } from 'node-schedule';
 import { LOGGER } from '../context.js';
 
 /**
@@ -135,6 +137,7 @@ export async function schedulePollExpiration() {
  * @summary Retrieve a batch of new
  * @param req
  * @param req.params.page {string} Number of the page
+ * @param req.query.playerId {string} Player ID to check if the news is liked by the player
  * @param res
  */
 export async function getNews(req: Request) {
@@ -248,4 +251,10 @@ export async function selectPollOption(req: Request) {
 			pollOptionId: optionId
 		}
 	});
+}
+
+export async function toggleLikeNews(newsId: number, playerId: string) {
+	const hasLiked = await hasPlayerLikedNews(newsId, playerId);
+
+	return hasLiked ? unlikeNews(newsId, playerId) : likeNews(newsId, playerId);
 }

@@ -171,6 +171,7 @@ model News {
   createdDate  DateTime @default(now()) @db.Timestamp(6)
   updatedDate  DateTime @default(now()) @updatedAt @db.Timestamp(6)
   poll         Poll?
+  likedBy      NewsLike[]
 
   @@map("news")
 }
@@ -216,6 +217,18 @@ model PollVote {
   @@index([playerId])
   @@map("poll_votes")
 }
+
+model NewsLike {
+  newsId    Int
+  playerId  String   @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+
+  news      News     @relation(fields: [newsId], references: [id])
+
+  @@id([newsId, playerId])
+  @@index([newsId])
+}
+
 
 model NPC {
   id      Int    @id(map: "PK_f88acee050bfea2111b399ab49b") @default(autoincrement())

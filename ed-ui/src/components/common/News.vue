@@ -1,10 +1,18 @@
 <template>
 	<div :class="news.hide ? 'bloc hide' : 'bloc'" v-for="news in batch" :key="news.id" @click="news.hide = !news.hide">
-		<div class="newsTitle">
-			<img class="newsImg" :src="getImgURL('background', 'news_image')" alt="Logo News" />
-			<div class="newsContent">
-				<h1>{{ news.title }}</h1>
-				<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
+		<div class="news">
+			<div class="newsTitle">
+				<img class="newsImg" :src="getImgURL('background', 'news_image')" alt="Logo News" />
+				<div class="newsContent">
+					<h1>{{ news.title }}</h1>
+					<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
+				</div>
+			</div>
+			<div class="newsLike" @click.stop="toggleLike(news)">
+				<div class="newsCounter">
+					<img :src="getImgURL('icons', news.likedByMe ? 'miniIcon_on' : 'miniIcon_off')" alt="icon" />
+					<span class="newsCounter">{{ news.likes }}</span>
+				</div>
 			</div>
 		</div>
 		<img :src="`${API_BASE}/news/${news.id}/illustration`" :alt="news.title" onerror="this.style.display='none'" />
@@ -84,6 +92,16 @@ export default defineComponent({
 			const date = new Date(stringDate);
 			const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
 			return date.toLocaleDateString(this.localStore.getLanguage, options);
+		},
+		async toggleLike(news: DisplayedNews) {
+			try {
+				const result = await NewsService.toggleLike(news.id);
+				news.likes = result.likes;
+				// Updates whether the user has liked or not
+				news.likedByMe = result.likedByMe;
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+			}
 		}
 	},
 	async mounted() {
@@ -168,6 +186,63 @@ export default defineComponent({
 			padding: 0px;
 			font-size: 11pt;
 			font-weight: bold;
+	.news {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.newsTitle {
+			display: flex;
+			gap: 10px;
+			.newsImg {
+				height: 57px;
+				width: 48px;
+			}
+			.newsContent {
+				color: #ffee92;
+				display: flex;
+				flex-direction: column;
+				& h1 {
+					height: auto;
+					max-height: none;
+					text-align: left;
+					margin-bottom: 5px;
+					font-size: 20pt;
+					font-weight: bold;
+					line-height: 1em;
+					opacity: 0.8;
+					background: transparent;
+				}
+				& span {
+					font-size: 7.5pt;
+					margin-bottom: 6px;
+					opacity: 0.7;
+				}
+			}
+		}
+		.newsLike {
+			background-image: url('../../assets/design/marker.webp');
+			background-repeat: no-repeat;
+			display: flex;
+			align-items: center;
+			margin-top: -20px;
+			margin-right: -12px;
+			width: 130px;
+			height: 70px;
+			.newsCounter {
+				display: flex;
+				color: #ffee92;
+				cursor: pointer;
+				font-size: 16pt;
+				font-weight: bold;
+				margin-left: 25px;
+				& img {
+					height: 26px;
+					width: 26px;
+				}
+				& span {
+					margin-left: 6px;
+				}
+			}
 		}
 	}
 	.markdown {
@@ -613,7 +688,6 @@ export default defineComponent({
 		margin-right: auto;
 		margin-bottom: 20px;
 	}
-
 	p {
 		color: white;
 		background: transparent;

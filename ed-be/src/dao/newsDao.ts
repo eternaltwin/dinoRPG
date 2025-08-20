@@ -271,3 +271,36 @@ export const getNewsDate = async (id: number) => {
 
 	return news;
 };
+
+// Checks if the player has already liked the news
+export const hasPlayerLikedNews = async (newsId: number, playerId: string) => {
+	return prisma.newsLike.findUnique({
+		where: { newsId_playerId: { newsId, playerId } }
+	});
+};
+
+// Creates a like
+export const likeNews = async (newsId: number, playerId: string) => {
+	await prisma.newsLike.create({
+		data: { newsId, playerId }
+	});
+
+	const likes = await prisma.newsLike.count({
+		where: { newsId }
+	});
+
+	return { newsId, likes, likedByMe: true };
+};
+
+// Removes a like
+export const unlikeNews = async (newsId: number, playerId: string) => {
+	await prisma.newsLike.delete({
+		where: { newsId_playerId: { newsId, playerId } }
+	});
+
+	const likes = await prisma.newsLike.count({
+		where: { newsId }
+	});
+
+	return { newsId, likes, likedByMe: false };
+};

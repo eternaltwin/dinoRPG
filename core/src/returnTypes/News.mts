@@ -8,4 +8,6 @@ export type NewsGetResponse = {
 	hide: boolean;
 	poll?: PollPublic;
 	totalVote: number;
+	likes: number;
+	likedByMe: boolean;
 }[];
