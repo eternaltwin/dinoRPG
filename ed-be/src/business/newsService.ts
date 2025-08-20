@@ -1,5 +1,15 @@
 import { Request } from 'express';
-import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews, getNewsDate } from '../dao/newsDao.js';
+import {
+	createNews,
+	getBatchOfNews,
+	getNewsIllus,
+	updateAnyNews,
+	getNewsDate,
+	hasPlayerLikedNews,
+	likeNews,
+	unlikeNews
+} from '../dao/newsDao.js';
+import { auth } from '../dao/playerDao.js';
 
 /**
  * @summary Create a news
@@ -34,10 +44,12 @@ export async function postNews(req: Request) {
  * @summary Retrieve a batch of new
  * @param req
  * @param req.params.page {string} Number of the page
+ * @param req.query.playerId {string} Player ID to check if the news is liked by the player
  * @param res
  */
 export async function getNews(req: Request) {
-	const news = await getBatchOfNews(+req.params.page);
+	const player = await auth(req);
+	const news = await getBatchOfNews(+req.params.page, player.id);
 
 	return news;
 }
@@ -80,4 +92,10 @@ export async function getNewsCreatedDate(req: Request<{ id: string }>) {
 	const news = await getNewsDate(+req.params.id);
 
 	return news.createdDate;
+}
+
+export async function toggleLikeNews(newsId: number, playerId: string) {
+	const hasLiked = await hasPlayerLikedNews(newsId, playerId);
+
+	return hasLiked ? unlikeNews(newsId, playerId) : likeNews(newsId, playerId);
 }

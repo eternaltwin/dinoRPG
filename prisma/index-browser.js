@@ -224,6 +224,12 @@ exports.Prisma.NewsScalarFieldEnum = {
   updatedDate: 'updatedDate'
 };
 
+exports.Prisma.NewsLikeScalarFieldEnum = {
+  newsId: 'newsId',
+  playerId: 'playerId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.NPCScalarFieldEnum = {
   id: 'id',
   npcId: 'npcId',
@@ -790,6 +796,7 @@ exports.Prisma.ModelName = {
   DinozStatus: 'DinozStatus',
   migrations: 'migrations',
   News: 'News',
+  NewsLike: 'NewsLike',
   NPC: 'NPC',
   Player: 'Player',
   Dojo: 'Dojo',

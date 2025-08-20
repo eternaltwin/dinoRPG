@@ -64,6 +64,11 @@ export type migrations = $Result.DefaultSelection<Prisma.$migrationsPayload>
  */
 export type News = $Result.DefaultSelection<Prisma.$NewsPayload>
 /**
+ * Model NewsLike
+ * 
+ */
+export type NewsLike = $Result.DefaultSelection<Prisma.$NewsLikePayload>
+/**
  * Model NPC
  * 
  */
@@ -709,6 +714,16 @@ export class PrismaClient<
     * ```
     */
   get news(): Prisma.NewsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.newsLike`: Exposes CRUD operations for the **NewsLike** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more NewsLikes
+    * const newsLikes = await prisma.newsLike.findMany()
+    * ```
+    */
+  get newsLike(): Prisma.NewsLikeDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.nPC`: Exposes CRUD operations for the **NPC** model.
@@ -1579,6 +1594,7 @@ export namespace Prisma {
     DinozStatus: 'DinozStatus',
     migrations: 'migrations',
     News: 'News',
+    NewsLike: 'NewsLike',
     NPC: 'NPC',
     Player: 'Player',
     Dojo: 'Dojo',
@@ -1639,7 +1655,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "newsLike" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "serverState"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2380,6 +2396,80 @@ export namespace Prisma {
           count: {
             args: Prisma.NewsCountArgs<ExtArgs>
             result: $Utils.Optional<NewsCountAggregateOutputType> | number
+          }
+        }
+      }
+      NewsLike: {
+        payload: Prisma.$NewsLikePayload<ExtArgs>
+        fields: Prisma.NewsLikeFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NewsLikeFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NewsLikeFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>
+          }
+          findFirst: {
+            args: Prisma.NewsLikeFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NewsLikeFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>
+          }
+          findMany: {
+            args: Prisma.NewsLikeFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>[]
+          }
+          create: {
+            args: Prisma.NewsLikeCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>
+          }
+          createMany: {
+            args: Prisma.NewsLikeCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.NewsLikeCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>[]
+          }
+          delete: {
+            args: Prisma.NewsLikeDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>
+          }
+          update: {
+            args: Prisma.NewsLikeUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>
+          }
+          deleteMany: {
+            args: Prisma.NewsLikeDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NewsLikeUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.NewsLikeUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>[]
+          }
+          upsert: {
+            args: Prisma.NewsLikeUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NewsLikePayload>
+          }
+          aggregate: {
+            args: Prisma.NewsLikeAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNewsLike>
+          }
+          groupBy: {
+            args: Prisma.NewsLikeGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NewsLikeGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NewsLikeCountArgs<ExtArgs>
+            result: $Utils.Optional<NewsLikeCountAggregateOutputType> | number
           }
         }
       }
@@ -5585,6 +5675,7 @@ export namespace Prisma {
     dinozStatus?: DinozStatusOmit
     migrations?: migrationsOmit
     news?: NewsOmit
+    newsLike?: NewsLikeOmit
     nPC?: NPCOmit
     player?: PlayerOmit
     dojo?: DojoOmit
@@ -5941,6 +6032,37 @@ export namespace Prisma {
    */
   export type DinozItemCountOutputTypeCountDinozItemToDinozArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DinozItemToDinozWhereInput
+  }
+
+
+  /**
+   * Count Type NewsCountOutputType
+   */
+
+  export type NewsCountOutputType = {
+    likedBy: number
+  }
+
+  export type NewsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    likedBy?: boolean | NewsCountOutputTypeCountLikedByArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * NewsCountOutputType without action
+   */
+  export type NewsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsCountOutputType
+     */
+    select?: NewsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * NewsCountOutputType without action
+   */
+  export type NewsCountOutputTypeCountLikedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NewsLikeWhereInput
   }
 
 
@@ -17898,6 +18020,8 @@ export namespace Prisma {
     germanText?: boolean
     createdDate?: boolean
     updatedDate?: boolean
+    likedBy?: boolean | News$likedByArgs<ExtArgs>
+    _count?: boolean | NewsCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["news"]>
 
   export type NewsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17949,10 +18073,18 @@ export namespace Prisma {
   }
 
   export type NewsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "image" | "frenchTitle" | "frenchText" | "englishTitle" | "englishText" | "spanishTitle" | "spanishText" | "germanTitle" | "germanText" | "createdDate" | "updatedDate", ExtArgs["result"]["news"]>
+  export type NewsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    likedBy?: boolean | News$likedByArgs<ExtArgs>
+    _count?: boolean | NewsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type NewsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type NewsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $NewsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "News"
-    objects: {}
+    objects: {
+      likedBy: Prisma.$NewsLikePayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string | null
@@ -18361,6 +18493,7 @@ export namespace Prisma {
    */
   export interface Prisma__NewsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    likedBy<T extends News$likedByArgs<ExtArgs> = {}>(args?: Subset<T, News$likedByArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -18420,6 +18553,10 @@ export namespace Prisma {
      */
     omit?: NewsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+    /**
      * Filter, which News to fetch.
      */
     where: NewsWhereUniqueInput
@@ -18439,6 +18576,10 @@ export namespace Prisma {
      */
     omit?: NewsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+    /**
      * Filter, which News to fetch.
      */
     where: NewsWhereUniqueInput
@@ -18457,6 +18598,10 @@ export namespace Prisma {
      * Omit specific fields from the News
      */
     omit?: NewsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
     /**
      * Filter, which News to fetch.
      */
@@ -18507,6 +18652,10 @@ export namespace Prisma {
      */
     omit?: NewsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+    /**
      * Filter, which News to fetch.
      */
     where?: NewsWhereInput
@@ -18556,6 +18705,10 @@ export namespace Prisma {
      */
     omit?: NewsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+    /**
      * Filter, which News to fetch.
      */
     where?: NewsWhereInput
@@ -18599,6 +18752,10 @@ export namespace Prisma {
      * Omit specific fields from the News
      */
     omit?: NewsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
     /**
      * The data needed to create a News.
      */
@@ -18648,6 +18805,10 @@ export namespace Prisma {
      * Omit specific fields from the News
      */
     omit?: NewsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
     /**
      * The data needed to update a News.
      */
@@ -18716,6 +18877,10 @@ export namespace Prisma {
      */
     omit?: NewsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+    /**
      * The filter to search for the News to update in case it exists.
      */
     where: NewsWhereUniqueInput
@@ -18743,6 +18908,10 @@ export namespace Prisma {
      */
     omit?: NewsOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+    /**
      * Filter which News to delete.
      */
     where: NewsWhereUniqueInput
@@ -18764,6 +18933,30 @@ export namespace Prisma {
   }
 
   /**
+   * News.likedBy
+   */
+  export type News$likedByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    where?: NewsLikeWhereInput
+    orderBy?: NewsLikeOrderByWithRelationInput | NewsLikeOrderByWithRelationInput[]
+    cursor?: NewsLikeWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NewsLikeScalarFieldEnum | NewsLikeScalarFieldEnum[]
+  }
+
+  /**
    * News without action
    */
   export type NewsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -18775,6 +18968,1085 @@ export namespace Prisma {
      * Omit specific fields from the News
      */
     omit?: NewsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model NewsLike
+   */
+
+  export type AggregateNewsLike = {
+    _count: NewsLikeCountAggregateOutputType | null
+    _avg: NewsLikeAvgAggregateOutputType | null
+    _sum: NewsLikeSumAggregateOutputType | null
+    _min: NewsLikeMinAggregateOutputType | null
+    _max: NewsLikeMaxAggregateOutputType | null
+  }
+
+  export type NewsLikeAvgAggregateOutputType = {
+    newsId: number | null
+  }
+
+  export type NewsLikeSumAggregateOutputType = {
+    newsId: number | null
+  }
+
+  export type NewsLikeMinAggregateOutputType = {
+    newsId: number | null
+    playerId: string | null
+    createdAt: Date | null
+  }
+
+  export type NewsLikeMaxAggregateOutputType = {
+    newsId: number | null
+    playerId: string | null
+    createdAt: Date | null
+  }
+
+  export type NewsLikeCountAggregateOutputType = {
+    newsId: number
+    playerId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type NewsLikeAvgAggregateInputType = {
+    newsId?: true
+  }
+
+  export type NewsLikeSumAggregateInputType = {
+    newsId?: true
+  }
+
+  export type NewsLikeMinAggregateInputType = {
+    newsId?: true
+    playerId?: true
+    createdAt?: true
+  }
+
+  export type NewsLikeMaxAggregateInputType = {
+    newsId?: true
+    playerId?: true
+    createdAt?: true
+  }
+
+  export type NewsLikeCountAggregateInputType = {
+    newsId?: true
+    playerId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type NewsLikeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NewsLike to aggregate.
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NewsLikes to fetch.
+     */
+    orderBy?: NewsLikeOrderByWithRelationInput | NewsLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NewsLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NewsLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NewsLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned NewsLikes
+    **/
+    _count?: true | NewsLikeCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NewsLikeAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NewsLikeSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NewsLikeMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NewsLikeMaxAggregateInputType
+  }
+
+  export type GetNewsLikeAggregateType<T extends NewsLikeAggregateArgs> = {
+        [P in keyof T & keyof AggregateNewsLike]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNewsLike[P]>
+      : GetScalarType<T[P], AggregateNewsLike[P]>
+  }
+
+
+
+
+  export type NewsLikeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NewsLikeWhereInput
+    orderBy?: NewsLikeOrderByWithAggregationInput | NewsLikeOrderByWithAggregationInput[]
+    by: NewsLikeScalarFieldEnum[] | NewsLikeScalarFieldEnum
+    having?: NewsLikeScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NewsLikeCountAggregateInputType | true
+    _avg?: NewsLikeAvgAggregateInputType
+    _sum?: NewsLikeSumAggregateInputType
+    _min?: NewsLikeMinAggregateInputType
+    _max?: NewsLikeMaxAggregateInputType
+  }
+
+  export type NewsLikeGroupByOutputType = {
+    newsId: number
+    playerId: string
+    createdAt: Date
+    _count: NewsLikeCountAggregateOutputType | null
+    _avg: NewsLikeAvgAggregateOutputType | null
+    _sum: NewsLikeSumAggregateOutputType | null
+    _min: NewsLikeMinAggregateOutputType | null
+    _max: NewsLikeMaxAggregateOutputType | null
+  }
+
+  type GetNewsLikeGroupByPayload<T extends NewsLikeGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NewsLikeGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NewsLikeGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NewsLikeGroupByOutputType[P]>
+            : GetScalarType<T[P], NewsLikeGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NewsLikeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    newsId?: boolean
+    playerId?: boolean
+    createdAt?: boolean
+    news?: boolean | NewsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["newsLike"]>
+
+  export type NewsLikeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    newsId?: boolean
+    playerId?: boolean
+    createdAt?: boolean
+    news?: boolean | NewsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["newsLike"]>
+
+  export type NewsLikeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    newsId?: boolean
+    playerId?: boolean
+    createdAt?: boolean
+    news?: boolean | NewsDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["newsLike"]>
+
+  export type NewsLikeSelectScalar = {
+    newsId?: boolean
+    playerId?: boolean
+    createdAt?: boolean
+  }
+
+  export type NewsLikeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"newsId" | "playerId" | "createdAt", ExtArgs["result"]["newsLike"]>
+  export type NewsLikeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    news?: boolean | NewsDefaultArgs<ExtArgs>
+  }
+  export type NewsLikeIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    news?: boolean | NewsDefaultArgs<ExtArgs>
+  }
+  export type NewsLikeIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    news?: boolean | NewsDefaultArgs<ExtArgs>
+  }
+
+  export type $NewsLikePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "NewsLike"
+    objects: {
+      news: Prisma.$NewsPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      newsId: number
+      playerId: string
+      createdAt: Date
+    }, ExtArgs["result"]["newsLike"]>
+    composites: {}
+  }
+
+  type NewsLikeGetPayload<S extends boolean | null | undefined | NewsLikeDefaultArgs> = $Result.GetResult<Prisma.$NewsLikePayload, S>
+
+  type NewsLikeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<NewsLikeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: NewsLikeCountAggregateInputType | true
+    }
+
+  export interface NewsLikeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NewsLike'], meta: { name: 'NewsLike' } }
+    /**
+     * Find zero or one NewsLike that matches the filter.
+     * @param {NewsLikeFindUniqueArgs} args - Arguments to find a NewsLike
+     * @example
+     * // Get one NewsLike
+     * const newsLike = await prisma.newsLike.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NewsLikeFindUniqueArgs>(args: SelectSubset<T, NewsLikeFindUniqueArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one NewsLike that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {NewsLikeFindUniqueOrThrowArgs} args - Arguments to find a NewsLike
+     * @example
+     * // Get one NewsLike
+     * const newsLike = await prisma.newsLike.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NewsLikeFindUniqueOrThrowArgs>(args: SelectSubset<T, NewsLikeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NewsLike that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeFindFirstArgs} args - Arguments to find a NewsLike
+     * @example
+     * // Get one NewsLike
+     * const newsLike = await prisma.newsLike.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NewsLikeFindFirstArgs>(args?: SelectSubset<T, NewsLikeFindFirstArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first NewsLike that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeFindFirstOrThrowArgs} args - Arguments to find a NewsLike
+     * @example
+     * // Get one NewsLike
+     * const newsLike = await prisma.newsLike.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NewsLikeFindFirstOrThrowArgs>(args?: SelectSubset<T, NewsLikeFindFirstOrThrowArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more NewsLikes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all NewsLikes
+     * const newsLikes = await prisma.newsLike.findMany()
+     * 
+     * // Get first 10 NewsLikes
+     * const newsLikes = await prisma.newsLike.findMany({ take: 10 })
+     * 
+     * // Only select the `newsId`
+     * const newsLikeWithNewsIdOnly = await prisma.newsLike.findMany({ select: { newsId: true } })
+     * 
+     */
+    findMany<T extends NewsLikeFindManyArgs>(args?: SelectSubset<T, NewsLikeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a NewsLike.
+     * @param {NewsLikeCreateArgs} args - Arguments to create a NewsLike.
+     * @example
+     * // Create one NewsLike
+     * const NewsLike = await prisma.newsLike.create({
+     *   data: {
+     *     // ... data to create a NewsLike
+     *   }
+     * })
+     * 
+     */
+    create<T extends NewsLikeCreateArgs>(args: SelectSubset<T, NewsLikeCreateArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many NewsLikes.
+     * @param {NewsLikeCreateManyArgs} args - Arguments to create many NewsLikes.
+     * @example
+     * // Create many NewsLikes
+     * const newsLike = await prisma.newsLike.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NewsLikeCreateManyArgs>(args?: SelectSubset<T, NewsLikeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many NewsLikes and returns the data saved in the database.
+     * @param {NewsLikeCreateManyAndReturnArgs} args - Arguments to create many NewsLikes.
+     * @example
+     * // Create many NewsLikes
+     * const newsLike = await prisma.newsLike.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many NewsLikes and only return the `newsId`
+     * const newsLikeWithNewsIdOnly = await prisma.newsLike.createManyAndReturn({
+     *   select: { newsId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends NewsLikeCreateManyAndReturnArgs>(args?: SelectSubset<T, NewsLikeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a NewsLike.
+     * @param {NewsLikeDeleteArgs} args - Arguments to delete one NewsLike.
+     * @example
+     * // Delete one NewsLike
+     * const NewsLike = await prisma.newsLike.delete({
+     *   where: {
+     *     // ... filter to delete one NewsLike
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NewsLikeDeleteArgs>(args: SelectSubset<T, NewsLikeDeleteArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one NewsLike.
+     * @param {NewsLikeUpdateArgs} args - Arguments to update one NewsLike.
+     * @example
+     * // Update one NewsLike
+     * const newsLike = await prisma.newsLike.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NewsLikeUpdateArgs>(args: SelectSubset<T, NewsLikeUpdateArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more NewsLikes.
+     * @param {NewsLikeDeleteManyArgs} args - Arguments to filter NewsLikes to delete.
+     * @example
+     * // Delete a few NewsLikes
+     * const { count } = await prisma.newsLike.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NewsLikeDeleteManyArgs>(args?: SelectSubset<T, NewsLikeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NewsLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many NewsLikes
+     * const newsLike = await prisma.newsLike.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NewsLikeUpdateManyArgs>(args: SelectSubset<T, NewsLikeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NewsLikes and returns the data updated in the database.
+     * @param {NewsLikeUpdateManyAndReturnArgs} args - Arguments to update many NewsLikes.
+     * @example
+     * // Update many NewsLikes
+     * const newsLike = await prisma.newsLike.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more NewsLikes and only return the `newsId`
+     * const newsLikeWithNewsIdOnly = await prisma.newsLike.updateManyAndReturn({
+     *   select: { newsId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends NewsLikeUpdateManyAndReturnArgs>(args: SelectSubset<T, NewsLikeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one NewsLike.
+     * @param {NewsLikeUpsertArgs} args - Arguments to update or create a NewsLike.
+     * @example
+     * // Update or create a NewsLike
+     * const newsLike = await prisma.newsLike.upsert({
+     *   create: {
+     *     // ... data to create a NewsLike
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the NewsLike we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NewsLikeUpsertArgs>(args: SelectSubset<T, NewsLikeUpsertArgs<ExtArgs>>): Prisma__NewsLikeClient<$Result.GetResult<Prisma.$NewsLikePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of NewsLikes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeCountArgs} args - Arguments to filter NewsLikes to count.
+     * @example
+     * // Count the number of NewsLikes
+     * const count = await prisma.newsLike.count({
+     *   where: {
+     *     // ... the filter for the NewsLikes we want to count
+     *   }
+     * })
+    **/
+    count<T extends NewsLikeCountArgs>(
+      args?: Subset<T, NewsLikeCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NewsLikeCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a NewsLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NewsLikeAggregateArgs>(args: Subset<T, NewsLikeAggregateArgs>): Prisma.PrismaPromise<GetNewsLikeAggregateType<T>>
+
+    /**
+     * Group by NewsLike.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NewsLikeGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NewsLikeGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NewsLikeGroupByArgs['orderBy'] }
+        : { orderBy?: NewsLikeGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NewsLikeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNewsLikeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the NewsLike model
+   */
+  readonly fields: NewsLikeFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for NewsLike.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NewsLikeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    news<T extends NewsDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NewsDefaultArgs<ExtArgs>>): Prisma__NewsClient<$Result.GetResult<Prisma.$NewsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the NewsLike model
+   */ 
+  interface NewsLikeFieldRefs {
+    readonly newsId: FieldRef<"NewsLike", 'Int'>
+    readonly playerId: FieldRef<"NewsLike", 'String'>
+    readonly createdAt: FieldRef<"NewsLike", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * NewsLike findUnique
+   */
+  export type NewsLikeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which NewsLike to fetch.
+     */
+    where: NewsLikeWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike findUniqueOrThrow
+   */
+  export type NewsLikeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which NewsLike to fetch.
+     */
+    where: NewsLikeWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike findFirst
+   */
+  export type NewsLikeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which NewsLike to fetch.
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NewsLikes to fetch.
+     */
+    orderBy?: NewsLikeOrderByWithRelationInput | NewsLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NewsLikes.
+     */
+    cursor?: NewsLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NewsLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NewsLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NewsLikes.
+     */
+    distinct?: NewsLikeScalarFieldEnum | NewsLikeScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike findFirstOrThrow
+   */
+  export type NewsLikeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which NewsLike to fetch.
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NewsLikes to fetch.
+     */
+    orderBy?: NewsLikeOrderByWithRelationInput | NewsLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NewsLikes.
+     */
+    cursor?: NewsLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NewsLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NewsLikes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NewsLikes.
+     */
+    distinct?: NewsLikeScalarFieldEnum | NewsLikeScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike findMany
+   */
+  export type NewsLikeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * Filter, which NewsLikes to fetch.
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NewsLikes to fetch.
+     */
+    orderBy?: NewsLikeOrderByWithRelationInput | NewsLikeOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing NewsLikes.
+     */
+    cursor?: NewsLikeWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NewsLikes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NewsLikes.
+     */
+    skip?: number
+    distinct?: NewsLikeScalarFieldEnum | NewsLikeScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike create
+   */
+  export type NewsLikeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to create a NewsLike.
+     */
+    data: XOR<NewsLikeCreateInput, NewsLikeUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike createMany
+   */
+  export type NewsLikeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many NewsLikes.
+     */
+    data: NewsLikeCreateManyInput | NewsLikeCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NewsLike createManyAndReturn
+   */
+  export type NewsLikeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * The data used to create many NewsLikes.
+     */
+    data: NewsLikeCreateManyInput | NewsLikeCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NewsLike update
+   */
+  export type NewsLikeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * The data needed to update a NewsLike.
+     */
+    data: XOR<NewsLikeUpdateInput, NewsLikeUncheckedUpdateInput>
+    /**
+     * Choose, which NewsLike to update.
+     */
+    where: NewsLikeWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike updateMany
+   */
+  export type NewsLikeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update NewsLikes.
+     */
+    data: XOR<NewsLikeUpdateManyMutationInput, NewsLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which NewsLikes to update
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * Limit how many NewsLikes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * NewsLike updateManyAndReturn
+   */
+  export type NewsLikeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * The data used to update NewsLikes.
+     */
+    data: XOR<NewsLikeUpdateManyMutationInput, NewsLikeUncheckedUpdateManyInput>
+    /**
+     * Filter which NewsLikes to update
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * Limit how many NewsLikes to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * NewsLike upsert
+   */
+  export type NewsLikeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * The filter to search for the NewsLike to update in case it exists.
+     */
+    where: NewsLikeWhereUniqueInput
+    /**
+     * In case the NewsLike found by the `where` argument doesn't exist, create a new NewsLike with this data.
+     */
+    create: XOR<NewsLikeCreateInput, NewsLikeUncheckedCreateInput>
+    /**
+     * In case the NewsLike was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NewsLikeUpdateInput, NewsLikeUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike delete
+   */
+  export type NewsLikeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
+    /**
+     * Filter which NewsLike to delete.
+     */
+    where: NewsLikeWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * NewsLike deleteMany
+   */
+  export type NewsLikeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NewsLikes to delete
+     */
+    where?: NewsLikeWhereInput
+    /**
+     * Limit how many NewsLikes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * NewsLike without action
+   */
+  export type NewsLikeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NewsLike
+     */
+    select?: NewsLikeSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the NewsLike
+     */
+    omit?: NewsLikeOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NewsLikeInclude<ExtArgs> | null
   }
 
 
@@ -68624,6 +69896,15 @@ export namespace Prisma {
   export type NewsScalarFieldEnum = (typeof NewsScalarFieldEnum)[keyof typeof NewsScalarFieldEnum]
 
 
+  export const NewsLikeScalarFieldEnum: {
+    newsId: 'newsId',
+    playerId: 'playerId',
+    createdAt: 'createdAt'
+  };
+
+  export type NewsLikeScalarFieldEnum = (typeof NewsLikeScalarFieldEnum)[keyof typeof NewsLikeScalarFieldEnum]
+
+
   export const NPCScalarFieldEnum: {
     id: 'id',
     npcId: 'npcId',
@@ -70135,6 +71416,7 @@ export namespace Prisma {
     germanText?: StringNullableFilter<"News"> | string | null
     createdDate?: DateTimeFilter<"News"> | Date | string
     updatedDate?: DateTimeFilter<"News"> | Date | string
+    likedBy?: NewsLikeListRelationFilter
   }
 
   export type NewsOrderByWithRelationInput = {
@@ -70151,6 +71433,7 @@ export namespace Prisma {
     germanText?: SortOrderInput | SortOrder
     createdDate?: SortOrder
     updatedDate?: SortOrder
+    likedBy?: NewsLikeOrderByRelationAggregateInput
   }
 
   export type NewsWhereUniqueInput = Prisma.AtLeast<{
@@ -70170,6 +71453,7 @@ export namespace Prisma {
     germanText?: StringNullableFilter<"News"> | string | null
     createdDate?: DateTimeFilter<"News"> | Date | string
     updatedDate?: DateTimeFilter<"News"> | Date | string
+    likedBy?: NewsLikeListRelationFilter
   }, "id">
 
   export type NewsOrderByWithAggregationInput = {
@@ -70210,6 +71494,54 @@ export namespace Prisma {
     germanText?: StringNullableWithAggregatesFilter<"News"> | string | null
     createdDate?: DateTimeWithAggregatesFilter<"News"> | Date | string
     updatedDate?: DateTimeWithAggregatesFilter<"News"> | Date | string
+  }
+
+  export type NewsLikeWhereInput = {
+    AND?: NewsLikeWhereInput | NewsLikeWhereInput[]
+    OR?: NewsLikeWhereInput[]
+    NOT?: NewsLikeWhereInput | NewsLikeWhereInput[]
+    newsId?: IntFilter<"NewsLike"> | number
+    playerId?: UuidFilter<"NewsLike"> | string
+    createdAt?: DateTimeFilter<"NewsLike"> | Date | string
+    news?: XOR<NewsScalarRelationFilter, NewsWhereInput>
+  }
+
+  export type NewsLikeOrderByWithRelationInput = {
+    newsId?: SortOrder
+    playerId?: SortOrder
+    createdAt?: SortOrder
+    news?: NewsOrderByWithRelationInput
+  }
+
+  export type NewsLikeWhereUniqueInput = Prisma.AtLeast<{
+    newsId_playerId?: NewsLikeNewsIdPlayerIdCompoundUniqueInput
+    AND?: NewsLikeWhereInput | NewsLikeWhereInput[]
+    OR?: NewsLikeWhereInput[]
+    NOT?: NewsLikeWhereInput | NewsLikeWhereInput[]
+    newsId?: IntFilter<"NewsLike"> | number
+    playerId?: UuidFilter<"NewsLike"> | string
+    createdAt?: DateTimeFilter<"NewsLike"> | Date | string
+    news?: XOR<NewsScalarRelationFilter, NewsWhereInput>
+  }, "newsId_playerId">
+
+  export type NewsLikeOrderByWithAggregationInput = {
+    newsId?: SortOrder
+    playerId?: SortOrder
+    createdAt?: SortOrder
+    _count?: NewsLikeCountOrderByAggregateInput
+    _avg?: NewsLikeAvgOrderByAggregateInput
+    _max?: NewsLikeMaxOrderByAggregateInput
+    _min?: NewsLikeMinOrderByAggregateInput
+    _sum?: NewsLikeSumOrderByAggregateInput
+  }
+
+  export type NewsLikeScalarWhereWithAggregatesInput = {
+    AND?: NewsLikeScalarWhereWithAggregatesInput | NewsLikeScalarWhereWithAggregatesInput[]
+    OR?: NewsLikeScalarWhereWithAggregatesInput[]
+    NOT?: NewsLikeScalarWhereWithAggregatesInput | NewsLikeScalarWhereWithAggregatesInput[]
+    newsId?: IntWithAggregatesFilter<"NewsLike"> | number
+    playerId?: UuidWithAggregatesFilter<"NewsLike"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"NewsLike"> | Date | string
   }
 
   export type NPCWhereInput = {
@@ -73840,6 +75172,7 @@ export namespace Prisma {
     germanText?: string | null
     createdDate?: Date | string
     updatedDate?: Date | string
+    likedBy?: NewsLikeCreateNestedManyWithoutNewsInput
   }
 
   export type NewsUncheckedCreateInput = {
@@ -73856,6 +75189,7 @@ export namespace Prisma {
     germanText?: string | null
     createdDate?: Date | string
     updatedDate?: Date | string
+    likedBy?: NewsLikeUncheckedCreateNestedManyWithoutNewsInput
   }
 
   export type NewsUpdateInput = {
@@ -73871,6 +75205,7 @@ export namespace Prisma {
     germanText?: NullableStringFieldUpdateOperationsInput | string | null
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    likedBy?: NewsLikeUpdateManyWithoutNewsNestedInput
   }
 
   export type NewsUncheckedUpdateInput = {
@@ -73887,6 +75222,7 @@ export namespace Prisma {
     germanText?: NullableStringFieldUpdateOperationsInput | string | null
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    likedBy?: NewsLikeUncheckedUpdateManyWithoutNewsNestedInput
   }
 
   export type NewsCreateManyInput = {
@@ -73934,6 +75270,47 @@ export namespace Prisma {
     germanText?: NullableStringFieldUpdateOperationsInput | string | null
     createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NewsLikeCreateInput = {
+    playerId: string
+    createdAt?: Date | string
+    news: NewsCreateNestedOneWithoutLikedByInput
+  }
+
+  export type NewsLikeUncheckedCreateInput = {
+    newsId: number
+    playerId: string
+    createdAt?: Date | string
+  }
+
+  export type NewsLikeUpdateInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    news?: NewsUpdateOneRequiredWithoutLikedByNestedInput
+  }
+
+  export type NewsLikeUncheckedUpdateInput = {
+    newsId?: IntFieldUpdateOperationsInput | number
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NewsLikeCreateManyInput = {
+    newsId: number
+    playerId: string
+    createdAt?: Date | string
+  }
+
+  export type NewsLikeUpdateManyMutationInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NewsLikeUncheckedUpdateManyInput = {
+    newsId?: IntFieldUpdateOperationsInput | number
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type NPCCreateInput = {
@@ -77701,6 +79078,16 @@ export namespace Prisma {
     not?: NestedBytesNullableFilter<$PrismaModel> | Uint8Array | null
   }
 
+  export type NewsLikeListRelationFilter = {
+    every?: NewsLikeWhereInput
+    some?: NewsLikeWhereInput
+    none?: NewsLikeWhereInput
+  }
+
+  export type NewsLikeOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type NewsCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
@@ -77783,6 +79170,42 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBytesNullableFilter<$PrismaModel>
     _max?: NestedBytesNullableFilter<$PrismaModel>
+  }
+
+  export type NewsScalarRelationFilter = {
+    is?: NewsWhereInput
+    isNot?: NewsWhereInput
+  }
+
+  export type NewsLikeNewsIdPlayerIdCompoundUniqueInput = {
+    newsId: number
+    playerId: string
+  }
+
+  export type NewsLikeCountOrderByAggregateInput = {
+    newsId?: SortOrder
+    playerId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NewsLikeAvgOrderByAggregateInput = {
+    newsId?: SortOrder
+  }
+
+  export type NewsLikeMaxOrderByAggregateInput = {
+    newsId?: SortOrder
+    playerId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NewsLikeMinOrderByAggregateInput = {
+    newsId?: SortOrder
+    playerId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type NewsLikeSumOrderByAggregateInput = {
+    newsId?: SortOrder
   }
 
   export type NPCNpcIdDinozIdCompoundUniqueInput = {
@@ -81147,12 +82570,68 @@ export namespace Prisma {
     divide?: bigint | number
   }
 
+  export type NewsLikeCreateNestedManyWithoutNewsInput = {
+    create?: XOR<NewsLikeCreateWithoutNewsInput, NewsLikeUncheckedCreateWithoutNewsInput> | NewsLikeCreateWithoutNewsInput[] | NewsLikeUncheckedCreateWithoutNewsInput[]
+    connectOrCreate?: NewsLikeCreateOrConnectWithoutNewsInput | NewsLikeCreateOrConnectWithoutNewsInput[]
+    createMany?: NewsLikeCreateManyNewsInputEnvelope
+    connect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+  }
+
+  export type NewsLikeUncheckedCreateNestedManyWithoutNewsInput = {
+    create?: XOR<NewsLikeCreateWithoutNewsInput, NewsLikeUncheckedCreateWithoutNewsInput> | NewsLikeCreateWithoutNewsInput[] | NewsLikeUncheckedCreateWithoutNewsInput[]
+    connectOrCreate?: NewsLikeCreateOrConnectWithoutNewsInput | NewsLikeCreateOrConnectWithoutNewsInput[]
+    createMany?: NewsLikeCreateManyNewsInputEnvelope
+    connect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
   export type NullableBytesFieldUpdateOperationsInput = {
     set?: Uint8Array | null
+  }
+
+  export type NewsLikeUpdateManyWithoutNewsNestedInput = {
+    create?: XOR<NewsLikeCreateWithoutNewsInput, NewsLikeUncheckedCreateWithoutNewsInput> | NewsLikeCreateWithoutNewsInput[] | NewsLikeUncheckedCreateWithoutNewsInput[]
+    connectOrCreate?: NewsLikeCreateOrConnectWithoutNewsInput | NewsLikeCreateOrConnectWithoutNewsInput[]
+    upsert?: NewsLikeUpsertWithWhereUniqueWithoutNewsInput | NewsLikeUpsertWithWhereUniqueWithoutNewsInput[]
+    createMany?: NewsLikeCreateManyNewsInputEnvelope
+    set?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    disconnect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    delete?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    connect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    update?: NewsLikeUpdateWithWhereUniqueWithoutNewsInput | NewsLikeUpdateWithWhereUniqueWithoutNewsInput[]
+    updateMany?: NewsLikeUpdateManyWithWhereWithoutNewsInput | NewsLikeUpdateManyWithWhereWithoutNewsInput[]
+    deleteMany?: NewsLikeScalarWhereInput | NewsLikeScalarWhereInput[]
+  }
+
+  export type NewsLikeUncheckedUpdateManyWithoutNewsNestedInput = {
+    create?: XOR<NewsLikeCreateWithoutNewsInput, NewsLikeUncheckedCreateWithoutNewsInput> | NewsLikeCreateWithoutNewsInput[] | NewsLikeUncheckedCreateWithoutNewsInput[]
+    connectOrCreate?: NewsLikeCreateOrConnectWithoutNewsInput | NewsLikeCreateOrConnectWithoutNewsInput[]
+    upsert?: NewsLikeUpsertWithWhereUniqueWithoutNewsInput | NewsLikeUpsertWithWhereUniqueWithoutNewsInput[]
+    createMany?: NewsLikeCreateManyNewsInputEnvelope
+    set?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    disconnect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    delete?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    connect?: NewsLikeWhereUniqueInput | NewsLikeWhereUniqueInput[]
+    update?: NewsLikeUpdateWithWhereUniqueWithoutNewsInput | NewsLikeUpdateWithWhereUniqueWithoutNewsInput[]
+    updateMany?: NewsLikeUpdateManyWithWhereWithoutNewsInput | NewsLikeUpdateManyWithWhereWithoutNewsInput[]
+    deleteMany?: NewsLikeScalarWhereInput | NewsLikeScalarWhereInput[]
+  }
+
+  export type NewsCreateNestedOneWithoutLikedByInput = {
+    create?: XOR<NewsCreateWithoutLikedByInput, NewsUncheckedCreateWithoutLikedByInput>
+    connectOrCreate?: NewsCreateOrConnectWithoutLikedByInput
+    connect?: NewsWhereUniqueInput
+  }
+
+  export type NewsUpdateOneRequiredWithoutLikedByNestedInput = {
+    create?: XOR<NewsCreateWithoutLikedByInput, NewsUncheckedCreateWithoutLikedByInput>
+    connectOrCreate?: NewsCreateOrConnectWithoutLikedByInput
+    upsert?: NewsUpsertWithoutLikedByInput
+    connect?: NewsWhereUniqueInput
+    update?: XOR<XOR<NewsUpdateToOneWithWhereWithoutLikedByInput, NewsUpdateWithoutLikedByInput>, NewsUncheckedUpdateWithoutLikedByInput>
   }
 
   export type DinozCreateNestedOneWithoutNpcsInput = {
@@ -88739,6 +90218,129 @@ export namespace Prisma {
     unlockableSkills?: DinozSkillUnlockableUncheckedUpdateManyWithoutGameDinozNestedInput
     FightArchiveLeft?: FightArchiveUncheckedUpdateManyWithoutFBTournamentLeftNestedInput
     FightArchiveRight?: FightArchiveUncheckedUpdateManyWithoutFBTournamentRightNestedInput
+  }
+
+  export type NewsLikeCreateWithoutNewsInput = {
+    playerId: string
+    createdAt?: Date | string
+  }
+
+  export type NewsLikeUncheckedCreateWithoutNewsInput = {
+    playerId: string
+    createdAt?: Date | string
+  }
+
+  export type NewsLikeCreateOrConnectWithoutNewsInput = {
+    where: NewsLikeWhereUniqueInput
+    create: XOR<NewsLikeCreateWithoutNewsInput, NewsLikeUncheckedCreateWithoutNewsInput>
+  }
+
+  export type NewsLikeCreateManyNewsInputEnvelope = {
+    data: NewsLikeCreateManyNewsInput | NewsLikeCreateManyNewsInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type NewsLikeUpsertWithWhereUniqueWithoutNewsInput = {
+    where: NewsLikeWhereUniqueInput
+    update: XOR<NewsLikeUpdateWithoutNewsInput, NewsLikeUncheckedUpdateWithoutNewsInput>
+    create: XOR<NewsLikeCreateWithoutNewsInput, NewsLikeUncheckedCreateWithoutNewsInput>
+  }
+
+  export type NewsLikeUpdateWithWhereUniqueWithoutNewsInput = {
+    where: NewsLikeWhereUniqueInput
+    data: XOR<NewsLikeUpdateWithoutNewsInput, NewsLikeUncheckedUpdateWithoutNewsInput>
+  }
+
+  export type NewsLikeUpdateManyWithWhereWithoutNewsInput = {
+    where: NewsLikeScalarWhereInput
+    data: XOR<NewsLikeUpdateManyMutationInput, NewsLikeUncheckedUpdateManyWithoutNewsInput>
+  }
+
+  export type NewsLikeScalarWhereInput = {
+    AND?: NewsLikeScalarWhereInput | NewsLikeScalarWhereInput[]
+    OR?: NewsLikeScalarWhereInput[]
+    NOT?: NewsLikeScalarWhereInput | NewsLikeScalarWhereInput[]
+    newsId?: IntFilter<"NewsLike"> | number
+    playerId?: UuidFilter<"NewsLike"> | string
+    createdAt?: DateTimeFilter<"NewsLike"> | Date | string
+  }
+
+  export type NewsCreateWithoutLikedByInput = {
+    title?: string | null
+    image?: Uint8Array | null
+    frenchTitle?: string | null
+    frenchText?: string | null
+    englishTitle?: string | null
+    englishText?: string | null
+    spanishTitle?: string | null
+    spanishText?: string | null
+    germanTitle?: string | null
+    germanText?: string | null
+    createdDate?: Date | string
+    updatedDate?: Date | string
+  }
+
+  export type NewsUncheckedCreateWithoutLikedByInput = {
+    id?: number
+    title?: string | null
+    image?: Uint8Array | null
+    frenchTitle?: string | null
+    frenchText?: string | null
+    englishTitle?: string | null
+    englishText?: string | null
+    spanishTitle?: string | null
+    spanishText?: string | null
+    germanTitle?: string | null
+    germanText?: string | null
+    createdDate?: Date | string
+    updatedDate?: Date | string
+  }
+
+  export type NewsCreateOrConnectWithoutLikedByInput = {
+    where: NewsWhereUniqueInput
+    create: XOR<NewsCreateWithoutLikedByInput, NewsUncheckedCreateWithoutLikedByInput>
+  }
+
+  export type NewsUpsertWithoutLikedByInput = {
+    update: XOR<NewsUpdateWithoutLikedByInput, NewsUncheckedUpdateWithoutLikedByInput>
+    create: XOR<NewsCreateWithoutLikedByInput, NewsUncheckedCreateWithoutLikedByInput>
+    where?: NewsWhereInput
+  }
+
+  export type NewsUpdateToOneWithWhereWithoutLikedByInput = {
+    where?: NewsWhereInput
+    data: XOR<NewsUpdateWithoutLikedByInput, NewsUncheckedUpdateWithoutLikedByInput>
+  }
+
+  export type NewsUpdateWithoutLikedByInput = {
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    frenchText?: NullableStringFieldUpdateOperationsInput | string | null
+    englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    englishText?: NullableStringFieldUpdateOperationsInput | string | null
+    spanishTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    spanishText?: NullableStringFieldUpdateOperationsInput | string | null
+    germanTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    germanText?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NewsUncheckedUpdateWithoutLikedByInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    frenchText?: NullableStringFieldUpdateOperationsInput | string | null
+    englishTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    englishText?: NullableStringFieldUpdateOperationsInput | string | null
+    spanishTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    spanishText?: NullableStringFieldUpdateOperationsInput | string | null
+    germanTitle?: NullableStringFieldUpdateOperationsInput | string | null
+    germanText?: NullableStringFieldUpdateOperationsInput | string | null
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type DinozCreateWithoutNpcsInput = {
@@ -104074,6 +105676,26 @@ export namespace Prisma {
   export type DinozItemToDinozUncheckedUpdateManyWithoutDinoz_itemInput = {
     dinozId?: IntFieldUpdateOperationsInput | number
     gameDinozId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type NewsLikeCreateManyNewsInput = {
+    playerId: string
+    createdAt?: Date | string
+  }
+
+  export type NewsLikeUpdateWithoutNewsInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NewsLikeUncheckedUpdateWithoutNewsInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NewsLikeUncheckedUpdateManyWithoutNewsInput = {
+    playerId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ClanHistoryCreateManyAuthorInput = {

@@ -1,11 +1,12 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import multer from 'multer';
-import { getNews, getNewsIllustration, postNews, updateNews } from '../business/newsService.js';
+import { getNews, getNewsIllustration, postNews, updateNews, toggleLikeNews } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkIsAdmin } from '../utils/jwt.js';
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import sendError from '../utils/sendErrors.js';
+import { auth } from '../dao/playerDao.js';
 
 const routes: Router = Router();
 
@@ -236,5 +237,22 @@ routes.get(
 		}
 	}
 );
+
+routes.post(`${commonPath}/:id/like`, param('id').exists().toInt().isInt(), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	const newsId = parseInt(req.params.id);
+	const player = await auth(req);
+	const playerId = player.id;
+
+	try {
+		const result = await toggleLikeNews(newsId, playerId);
+		return res.status(200).send(result);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
 
 export default routes;

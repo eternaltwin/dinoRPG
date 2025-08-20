@@ -4,4 +4,6 @@ export interface DisplayedNews {
 	title: string;
 	text: string;
 	hide: boolean;
+	likes: number;
+	likedByMe: boolean;
 }

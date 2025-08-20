@@ -23,5 +23,11 @@ export const NewsService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async toggleLike(newsId: number): Promise<{ newsId: number; likes: number; likedByMe: boolean }> {
+		return http()
+			.post(`/news/${newsId}/like`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };
