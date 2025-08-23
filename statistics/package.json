@@ -1,0 +1,38 @@
+{
+  "name": "@drpg/statistics",
+  "version": "1.0.0",
+  "description": "Statistics module for DinoRPG",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "drpg-stats": "./dist/main.js"
+  },
+  "scripts": {
+    "build": "yarn tsc --build ./tsconfig.json",
+    "start": "node dist/main.js",
+    "dev:start": "yarn tsc --build ./tsconfig.json && node dist/main.js"
+  },
+  "release-it": {
+    "git": false
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin-ts": "^1.4.0",
+    "@types/eslint": "^9.6.1",
+    "@types/seedrandom": "^3.0.8",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "eslint": "^8.0.1",
+    "eslint-config-standard-with-typescript": "^40.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0 || ^16.0.0 ",
+    "eslint-plugin-promise": "^6.0.0",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@drpg/core": "workspace:*",
+    "csv-stringify": "^6.6.0",
+    "ed-be": "workspace:*"
+  }
+}

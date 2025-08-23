@@ -1,0 +1,1 @@
+export type { DetailedFight } from './utils/fight/generateFight.js'
