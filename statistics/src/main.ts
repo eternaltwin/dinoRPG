@@ -47,7 +47,7 @@ async function generateFightStatistics(group_size: number) {
 	const MAX_LEVEL = 50;
 	const RUN_COUNT = 1000;
 
-	let places = [{place: PlaceEnum.DINOVILLE, minLevel: 1}, {place: PlaceEnum.FOSSELAVE, minLevel: 5}, {place: PlaceEnum.ILE_WAIKIKI, minLevel: 5}, {place: PlaceEnum.CAMP_KORGON, minLevel: 5}];
+	let places = [{place: PlaceEnum.DINOVILLE, minLevel: 1}, {place: PlaceEnum.FOSSELAVE, minLevel: 5}, {place: PlaceEnum.ILE_WAIKIKI, minLevel: 5}, {place: PlaceEnum.CAMP_KORGON, minLevel: 7}];
 
 	for (const place of places) {
 
