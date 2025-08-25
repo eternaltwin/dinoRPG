@@ -315,7 +315,7 @@ export async function rewardFight(
 
 		/** Restrict the use of low level dinoz in order to make easy money **/
 		let gfact = 1.0;
-		if (d.experience >= getMaxXp(d) && d.level <= 5) gfact = 0.1;
+		if (d.experience >= getMaxXp(d) && d.level < gameConfig.dinoz.maxLevel) gfact = 0.1;
 		/** Dinoz with malediction not generating gold **/
 		if (d.status.some(status => status.statusId === DinozStatusId.CURSED)) {
 			gfact = 0.0;
