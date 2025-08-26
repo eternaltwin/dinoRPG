@@ -15,14 +15,14 @@ export const getAssaultValue = (fighter: DetailedFighter, element: ElementType, 
 	return fighter.stats.base[element] * (power || ASSAULT_POWER) + fighter.stats.assaultBonus[element];
 };
 
-// Balance the damage if the fighter (supposedly the target of the damage) requires balanced damage
-export const applyBalanceDamage = (fighter: DetailedFighter, damage: number) => {
-	return fighter.balanced ? balanceDamage(damage) : damage;
-};
+// Applies target resilience to damage (default in PVP is x^0.6, PVE is case by case)
+export const applyResilienceToDamage = (target: DetailedFighter, damage: number) => {
+	// Each point of resilience lowers the factor by 0.01
+	// Minimum is 0.5
+	// Maximum is 1.1
+	let factor = Math.max(Math.min(1 - target.resilience * 0.01, 1.1), 0.5);
 
-// Applies x^0.6 to damage to smooth it and obtain balanced results
-export const balanceDamage = (damage: number) => {
-	return Math.round(Math.pow(Math.max(damage, 0), 0.6));
+	return Math.round(Math.pow(Math.max(damage, 0), factor));
 };
 
 // Calculates the attack power for a given element, the fighter and the power of the attack
@@ -146,7 +146,6 @@ export const getAttackDefense = (
 // Applies final factors to the attack score:
 // - random bonus of up to 33%
 // - global factor
-// - balance if both fighters need balanced damage
 export const calculateDamage = (
 	random: seedrandom.PRNG,
 	attacker: DetailedFighter,
@@ -164,12 +163,15 @@ export const calculateDamage = (
 
 	let damage = attack - defense;
 
-	// Apply balance effect if both fighters needs to be balanced
-	if (attacker.balanced && target.balanced) {
-		damage = balanceDamage(damage);
+	// If the attacker or the target is a monster, apply the monster's resilience.
+	// Else, apply the target resilience by default.
+	if (attacker.type === 'monster') {
+		damage = applyResilienceToDamage(attacker, damage);
+	} else if (target.type === 'monster') {
+		damage = applyResilienceToDamage(target, damage);
+	} else {
+		damage = applyResilienceToDamage(target, damage);
 	}
-
-	damage = Math.round(damage);
 
 	// Check for global minimum damage
 	if (damage < attacker.minDamage) {

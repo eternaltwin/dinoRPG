@@ -16,8 +16,12 @@ export type MonsterFiche = {
 	bonus_attack?: number | undefined;
 	// bonus defense for monster
 	bonus_defense?: number | undefined;
-	// If the monster needs to use smoothed calculations
-	balanced: boolean;
+	// Resilience determines how much damage a fighter takes in.
+	// Damage formula is: damage^(1-resilience*0.01)
+	// So each point in resilience lowers the damage receive.
+	// PVP default is 40 points so 1 - 40*0.01 = 0.6 (the original number used by MT)
+	// PVE (aka monsters) is case by case
+	resilience: number;
 	groups?: groupMonster[];
 	xp?: number;
 	xpBonus?: number;

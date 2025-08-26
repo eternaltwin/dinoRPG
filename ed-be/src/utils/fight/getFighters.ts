@@ -104,7 +104,7 @@ export const initializeDinoz = (
 		hp: dinoz.life,
 		energy: 100,
 		maxEnergy: 100,
-		balanced: true,
+		resilience: 40,
 		comboCounter: 0,
 		stats: {
 			base: {
@@ -272,7 +272,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		hp: has_tear ? dinoz.maxHp * 0.1 : 1,
 		energy: 100, // Default for clone
 		maxEnergy: 100, // Default for clone
-		balanced: dinoz.balanced,
+		resilience: dinoz.resilience,
 		comboCounter: 0,
 		stats: {
 			base: dinoz.stats.base,
@@ -420,7 +420,7 @@ export const initializeMonster = (
 		hp: monster.hp,
 		energy: 100,
 		maxEnergy: 100,
-		balanced: monster.balanced,
+		resilience: monster.resilience,
 		comboCounter: 0,
 		stats: {
 			base: {

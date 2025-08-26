@@ -44,7 +44,7 @@ import {
 } from '@drpg/core/utils/fightConstants';
 import { DetailedFight } from './generateFight.js';
 import {
-	applyBalanceDamage,
+	applyResilienceToDamage,
 	calculateDamage,
 	getAttackDefense,
 	getElementalAttack,
@@ -1156,7 +1156,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.COMBUSTION:
 				const opponents = getOpponents(fightData, fighter);
 				opponents.forEach(opponent => {
-					loseHpBalanced(fightData, opponent, opponent.stats.base[ElementType.WOOD], LifeEffect.Fire);
+					loseHpwithResilience(fightData, opponent, opponent.stats.base[ElementType.WOOD], LifeEffect.Fire);
 				});
 				break;
 			case Skill.BRASERO: {
@@ -2579,10 +2579,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Base damage of half the target hp if is does not know perception or is not a boss
 				if (!hit.target.perception && hit.target.type !== 'boss') {
 					// 50% HP otherwise
-					damage = applyBalanceDamage(hit.target, Math.round(hit.target.hp / 2));
+					damage = Math.round(hit.target.hp / 2);
 				}
 
-				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
+				loseHpwithResilience(fightData, hit.target, damage, LifeEffect.Skull);
 			}
 			break;
 		}
@@ -2611,10 +2611,10 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				// Base damage of whole target hp if is does not know perception or is not a boss
 				if (!hit.target.perception && hit.target.type !== 'boss') {
 					// 100% current HP otherwise
-					damage = applyBalanceDamage(hit.target, hit.target.hp);
+					damage = hit.target.hp;
 				}
 
-				loseHpBalanced(fightData, hit.target, damage, LifeEffect.Skull);
+				loseHpwithResilience(fightData, hit.target, damage, LifeEffect.Skull);
 			}
 			break;
 		}
@@ -3688,10 +3688,12 @@ const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return countered;
 };
 
-const loseHpBalanced = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
-	return loseHp(fightData, fighter, applyBalanceDamage(fighter, damage), fx);
+// Have the fighter lose the given number of damage based on its resilience
+const loseHpwithResilience = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
+	return loseHp(fightData, fighter, applyResilienceToDamage(fighter, damage), fx);
 };
 
+// Have the figher lose the given number of damage
 const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: number, fx: LifeEffect) => {
 	// TODO: check for danger detector item
 	let hp_lost = damage;
@@ -4438,13 +4440,13 @@ const checkAfterDefenseEffects = (
 
 	// Torch: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
-		const hp_lost = loseHpBalanced(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
+		const hp_lost = loseHpwithResilience(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
 		updateStat(fightData, target, 'burn_damage', hp_lost);
 	}
 
 	// Burn: close combat and hit landed
 	if (isCloseCombat && damage > 0 && hasStatus(target, Status.BURNED)) {
-		loseHpBalanced(fightData, attacker, 1, LifeEffect.Fire);
+		loseHpwithResilience(fightData, attacker, 1, LifeEffect.Fire);
 		updateStat(fightData, target, 'burn_damage', 1);
 	}
 
@@ -4462,7 +4464,7 @@ const checkAfterDefenseEffects = (
 		// 1/2 chance
 		randomBetweenSeeded(fightData.rng, 0, 1) === 0
 	) {
-		loseHpBalanced(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
+		loseHpwithResilience(fightData, attacker, target.stats.special.acidBloodDamage, LifeEffect.Acid);
 	}
 
 	// Aura puante: close combat and hit landed, the attacker must not be poisoned
@@ -4985,7 +4987,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
-	// 4th - Active the active environment if it's its caster turn
+	// 4th - Activate the active environment if it's its caster turn
 	if (fightData.environment && attacker.id === fightData.environment.caster.id) {
 		// Decrease turns left
 		fightData.environment.turnsLeft--;

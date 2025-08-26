@@ -95,8 +95,12 @@ export interface DetailedFighter {
 	master?: number;
 	// Team side
 	attacker: boolean;
-	// If the fighter needs to use smoothed calculations
-	balanced: boolean;
+	// Resilience determines how much damage a fighter takes in.
+	// Damage formula is: damage^(1-resilience*0.01)
+	// So each point in resilience lowers the damage receive.
+	// PVP default is 40 points so 1 - 40*0.01 = 0.6 (the original number used by MT)
+	// PVE is case by case
+	resilience: number;
 	escaped?: boolean;
 	// Current counter of attacks performed in a row (assault and skills)
 	comboCounter: number;
