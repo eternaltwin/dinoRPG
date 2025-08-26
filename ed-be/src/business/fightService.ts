@@ -4,7 +4,7 @@ import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/F
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
+import { calculatePvExp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
@@ -297,7 +297,6 @@ export async function rewardFight(
 	// teamLevel += dinozData.level;
 
 	const goldFactor = 1.0;
-	const xpFactor = 1.0;
 	let totalWinXP = 0;
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
@@ -333,23 +332,16 @@ export async function rewardFight(
 			xp += monsterXp;
 		}
 
-		// Previous xp coef computation
-		const lvlDiff = gameConfig.dinoz.maxLevel - d.level;
-		let xpf = 1.2 + 0.8 * (lvlDiff / gameConfig.dinoz.maxLevel);
-		if (xpf < 1.0) xpf = 1.0;
+		xp = calculatePvExp(xp, d.level, gameConfig.dinoz.maxLevel, gameConfig.dinoz.initialMaxLevel);
 
-		// New one, applied if better
-		if (gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel > xpf)
-			xpf = gameConfig.dinoz.maxLevel / gameConfig.dinoz.initialMaxLevel;
-
-		xp = calculateXPBonus(d, Math.round(xp * xpFactor * xpf), player);
+		xp = calculateXPBonus(d, xp, player);
 		const max = getMaxXp(d);
 		if (d.experience >= max) {
-			// No xp is the dinoz was already at max
+			// No xp if the dinoz was already at max
 			levelup = true;
 			xp = 0;
 		} else if (d.experience + xp >= max) {
-			// Else, allow xp overflow (should happen only) and raise levelup flag
+			// Else, allow xp overflow (should happen only once) and raise levelup flag
 			levelup = true;
 		}
 		totalWinXP += xp;

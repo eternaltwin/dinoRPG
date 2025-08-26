@@ -81,7 +81,7 @@ import LogsView from '../components/admin/LogsView.vue';
 import GameStats from '../components/admin/GameStats.vue';
 import Moderation from '../components/admin/Moderation.vue';
 import Banned from '../components/admin/Banned.vue';
-import { DinozAdminFiche }from '@drpg/core/models/dinoz/DinozFiche';
+import { DinozAdminFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { playerStore } from '../store/index.js';
 import GameControl from '../components/admin/GameControl.vue';
 import DebugFight from '../components/admin/DebugFight.vue';

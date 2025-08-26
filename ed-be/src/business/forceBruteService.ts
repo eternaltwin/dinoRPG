@@ -27,7 +27,7 @@ import {
 } from '@drpg/core/models/enums/TournamentName';
 import { getRandomEnumValue } from '../utils/randomEnum.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
+import { calculatePvPxp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { calculateFightBetweenPlayers } from './fightService.js';
 import { updateDinoz } from '../dao/dinozDao.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
@@ -716,17 +716,17 @@ export async function fightFBTournamentOpponent(req: Request) {
 	if (fightResult.winner) {
 		await addMoney(authed.id, gold);
 	}
-
-	const lvlDiff = opponentGameDinoz.level - dinoz.level;
-	let xpf = 1.2 + 0.8 * (lvlDiff / opponentGameDinoz.level) * 2.5;
-	if (xpf < 1.0) xpf = 2.5;
-	let xp = calculateXPBonus(dinoz, 50 * xpf, dinoz.player);
+	let xp = calculatePvPxp(opponentGameDinoz.level, dinoz.level);
+	xp = calculateXPBonus(dinoz, xp, dinoz.player);
 	const max = getMaxXp(dinoz);
 	let levelup = false;
-	if (dinoz.experience + xp >= max) {
+	if (dinoz.experience >= max) {
+		// No xp if the dinoz was already at max
 		levelup = true;
-		xp = max - dinoz.experience;
-		if (xp < 0) xp = 0;
+		xp = 0;
+	} else if (dinoz.experience + xp >= max) {
+		// Else, allow xp overflow (should happen only once) and raise levelup flag
+		levelup = true;
 	}
 	await updateDinoz(dinoz.id, {
 		life: {
