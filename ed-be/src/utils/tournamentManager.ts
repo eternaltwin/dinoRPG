@@ -614,7 +614,7 @@ class TournamentManager {
 
 		const frTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'fr'),
-			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('fr').format('ddd DD MMMM HH:mm'),
 			rule1: translateTarget('dojo.teamSize', 'fr', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'fr', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
@@ -624,7 +624,7 @@ class TournamentManager {
 		};
 		const esTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
-			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('es').format('ddd DD MMMM HH:mm'),
 			rule1: translateTarget('dojo.teamSize', 'es', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'es', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'es'))
@@ -634,7 +634,7 @@ class TournamentManager {
 		};
 		const enTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
-			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('en').format('ddd DD MMMM HH:mm'),
 			rule1: translateTarget('dojo.teamSize', 'en', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'en', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'en'))
@@ -644,7 +644,7 @@ class TournamentManager {
 		};
 		const deTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
-			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM mm:hh'),
+			endQualif: dayjs(endQualif).locale('de').format('ddd DD MMMM HH:mm'),
 			rule1: translateTarget('dojo.teamSize', 'de', { nb: teamSize, races: raceMinimum }),
 			rule2: translateTarget('dojo.raceLimit', 'de', {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'de'))
