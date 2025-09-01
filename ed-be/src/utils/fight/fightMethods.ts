@@ -4899,7 +4899,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 
 		// Recover energy for all fighters except the current one
 		getFighters(fightData).forEach(f => {
-			if (f.id === attacker.id) return;
+			if (fightData.lastFighterId !== undefined && fightData.lastFighterId === attacker.id && f.id === attacker.id) return;
 			setEnergy(f, Math.round(f.energy + f.stats.special.energyRecovery * deltaTime * ENERGY_RECOVERY_BASE_FACTOR));
 		});
 
