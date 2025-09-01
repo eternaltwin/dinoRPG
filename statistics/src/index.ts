@@ -1,12 +1,7 @@
 // Import types and functions from core
-import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
-import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
-import { placeList } from '@drpg/core/models/place/PlaceList';
 import { calculateXPBonus, getMaxXp } from '@drpg/core/utils/DinozUtils';
-import { ASSAULT_POWER } from '@drpg/core/utils/fightConstants';
 import { generateMonsterList } from 'ed-be/business/fightService';
-import { DetailedFight } from 'ed-be/utils/fight/generateFight';
 import { getRandomNumber } from 'ed-be/utils/tools';
 
 export type SimplifiedMission = {

@@ -93,9 +93,10 @@ async function generateFightStatistics(group_size: number) {
 					return min;
 				}
 			}, Infinity);
+			xpMin /= group_size;
 
 			let totalXp = results.reduce((partialSum, value) => partialSum + value.xp, 0);
-			let xpMean = totalXp / RUN_COUNT;
+			let xpMean = (totalXp / RUN_COUNT) / group_size;
 
 			let xpMax = results.reduce((max, value) => {
 				if (value.xp > max) {
@@ -104,10 +105,12 @@ async function generateFightStatistics(group_size: number) {
 					return max;
 				}
 			}, 0);
+			xpMax /= group_size;
 
 
 			let totalGold = results.reduce((partialSum, value) => partialSum + value.gold, 0);
 			let goldMean = totalGold / RUN_COUNT;
+			goldMean /= group_size;
 
 			let goldMin = results.reduce((min, value) => {
 				if (value.gold < min) {
@@ -116,6 +119,7 @@ async function generateFightStatistics(group_size: number) {
 					return min;
 				}
 			}, Infinity);
+			goldMin /= group_size;
 
 			let goldMax = results.reduce((max, value) => {
 				if (value.gold > max) {
@@ -124,6 +128,7 @@ async function generateFightStatistics(group_size: number) {
 					return max;
 				}
 			}, 0);
+			goldMax /= group_size;
 
 
 			let monsterFightStats = {
@@ -144,12 +149,13 @@ async function generateFightStatistics(group_size: number) {
 	
 		let placeName = placeList[place.place].name;
 
-		saveMonsterFightStatsToCSV(stats, `test-size-${group_size}-place-${placeName}.csv`);
+		saveMonsterFightStatsToCSV(stats, `test-size-${group_size}-place-${placeName}-test5.csv`);
 	}
 }
 
 async function main() {
 	console.log('Starting DinoRPG Statistics...');
+	// generateFightStatistics(1);
 	generateFightStatistics(2);
 	generateFightStatistics(3);
 	generateFightStatistics(4);
