@@ -2,6 +2,7 @@
 // For a demon dinoz, the price is the number of demon tickets.
 
 import { DinozRace } from './DinozRace.mjs';
+import { Skill } from './SkillList.mjs';
 
 export enum RaceList {
 	MOUEFFE = 1,
@@ -72,7 +73,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 600,
 		swfLetter: '0A',
-		skillId: [61114] //FORCE_DE_LUMIERE
+		skillId: [Skill.FORCE_DE_LUMIERE]
 	},
 	[RaceList.PIGMOU]: {
 		raceId: RaceList.PIGMOU,
@@ -92,7 +93,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 20000,
 		swfLetter: '10',
-		skillId: [61103] //CHARGE_CORNUE
+		skillId: [Skill.CHARGE_CORNUE]
 	},
 	[RaceList.PIGMOU_DEMON]: {
 		raceId: RaceList.PIGMOU_DEMON,
@@ -112,7 +113,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 800,
 		swfLetter: '1A',
-		skillId: [61115] //CHARGE_PIGMOU
+		skillId: [Skill.CHARGE_PIGMOU]
 	},
 	[RaceList.WINKS]: {
 		raceId: RaceList.WINKS,
@@ -132,7 +133,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 20000,
 		swfLetter: '20',
-		skillId: [61102] //COQUE
+		skillId: [Skill.COQUE]
 	},
 	[RaceList.WINKS_DEMON]: {
 		raceId: RaceList.WINKS_DEMON,
@@ -152,7 +153,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 700,
 		swfLetter: '2A',
-		skillId: [61118] //DUR_A_CUIRE
+		skillId: [Skill.DUR_A_CUIRE]
 	},
 	[RaceList.PLANAILLE]: {
 		raceId: RaceList.PLANAILLE,
@@ -191,7 +192,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 700,
 		swfLetter: '3A',
-		skillId: [61116] //FORCE_DES_TENEBRES
+		skillId: [Skill.FORCE_DES_TENEBRES]
 	},
 	[RaceList.CASTIVORE]: {
 		raceId: RaceList.CASTIVORE,
@@ -230,7 +231,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 18000,
 		swfLetter: '50',
-		skillId: [61104] //ROCK
+		skillId: [Skill.ROCK]
 	},
 	[RaceList.PTEROZ]: {
 		raceId: RaceList.PTEROZ,
@@ -345,7 +346,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 700,
 		swfLetter: 'AA',
-		skillId: [61111] //GROS_COSTAUD
+		skillId: [Skill.GROS_COSTAUD]
 	},
 	[RaceList.WANWAN]: {
 		raceId: RaceList.WANWAN,
@@ -384,7 +385,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 900,
 		swfLetter: 'BA',
-		skillId: [61101] //FRENESIE_COLLECTIVE
+		skillId: [Skill.FRENESIE_COLLECTIVE]
 	},
 	[RaceList.SANTAZ]: {
 		raceId: RaceList.SANTAZ,
@@ -404,7 +405,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'C0',
-		skillId: [61105] //PIETINEMENT
+		skillId: [Skill.PIETINEMENT]
 	},
 	[RaceList.FEROSS]: {
 		raceId: RaceList.FEROSS,
@@ -424,7 +425,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'D0',
-		skillId: [61106] //CUIRASSE
+		skillId: [Skill.CUIRASSE]
 	},
 	[RaceList.KABUKI]: {
 		raceId: RaceList.KABUKI,
@@ -444,7 +445,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'E0',
-		skillId: [61107] //INSAISISSABLE
+		skillId: [Skill.INSAISISSABLE]
 	},
 	[RaceList.KABUKI_DEMON]: {
 		raceId: RaceList.KABUKI_DEMON,
@@ -464,7 +465,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 800,
 		swfLetter: 'EA',
-		skillId: [61107, 61112] // INSAISISSABLE & ORIGINE_CAUSHEMESHENNE
+		skillId: [Skill.INSAISISSABLE, Skill.ORIGINE_CAUSHEMESHENNE]
 	},
 	[RaceList.MAHAMUTI]: {
 		raceId: RaceList.MAHAMUTI,
@@ -484,7 +485,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'F0',
-		skillId: [61113] //ECRASEMENT
+		skillId: [Skill.ECRASEMENT]
 	},
 	[RaceList.SOUFFLET]: {
 		raceId: RaceList.SOUFFLET,
@@ -504,7 +505,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'G0',
-		skillId: [61109] //NAPOMAGICIEN
+		skillId: [Skill.NAPOMAGICIEN]
 	},
 	[RaceList.TOUFUFU]: {
 		raceId: RaceList.TOUFUFU,
@@ -524,7 +525,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'H0',
-		skillId: [61108] //DEPLACEMENT_INSTANTANE
+		skillId: [Skill.DEPLACEMENT_INSTANTANE]
 	},
 	[RaceList.QUETZU]: {
 		raceId: RaceList.QUETZU,
@@ -582,7 +583,7 @@ export const raceList: Record<RaceList, DinozRace> = {
 		},
 		price: 35000,
 		swfLetter: 'K0',
-		skillId: [61117] //BIGMAGNON
+		skillId: [Skill.BIGMAGNON]
 	}
 };
 
