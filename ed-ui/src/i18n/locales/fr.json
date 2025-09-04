@@ -293,7 +293,7 @@
 		"energyRecovery": "Récupération d'énergie",
 		"maxFollowers": "Nombre maximum de suiveurs",
 		"armor": "Armure",
-		"multihit": "Multi-coup",
+		"multihit": "Multi-coups",
 		"evasion": "Esquive",
 		"superEvasion": "Super Esquive",
 		"counter": "Contre",
@@ -905,7 +905,7 @@
 				"atlante": "Il y a de cela bien longtemps, il existait une île au sud de Dinoland. Elle avait été propulsée au sommet d'un pic de roche volcanique à plusieurs centaines de mètres au-dessus de l'océan suite à une éruption sous-marine. On l'appelait l'Île de Jazz...&& Cependant, petit à petit, les vagues de l'océan ont érodé le pic de roche et elle a fini par s'effondrer. Un gigantesque tsunami a englouti une bonne moitié de Dinoland, détruisant une grande partie des anciennes civilisations humaines. Aujourd'hui, après quelques centaines d'années, les choses commencent enfin à se réorganiser peu à peu, mais une grande partie de Dinoland reste sauvage et dangereuse.&& Pour en revenir au sujet principal, les Iles Atlantéinées sont les fragments de l'Île de Jazz après son effondrement. On dit que seul le Marais Collant n'a pas changé.",
 				"gtc": "Hé mon p'tit, tu vois le petit triangle noir là-bas au nord ? C'est un immense volcan qui se nomme le Grand Tout Chaud. Je te conseille d'aller y faire un tour, on y mange de très bonnes merguez, grillées à point.&& Quand j'étais plus jeune, j'ai beaucoup étudié les ruines des anciennes civilisations. Savais-tu par exemple qu'au sommet du Grand Tout Chaud, il existait il y a de cela des millénaires la civilisation Ashpouk ? Et puis un jour, boum ! Éruption volcanique : plus rien ! Tu trouves pas ça triste toi ?&& En tout cas, je te conseille d'aller faire des fouilles dans les ruines, on y trouve parfois d'anciennes reliques, et n'oublie pas de goûter les merguez.",
 				"gant": "Oh !! Le Gant des Zors !! C'est un objet bien rare que ton Dinoz a là ! On dit que le Gant des Zors a un rapport avec les Chutes Mutantes et qu'il permet d'accéder à la Forêt de Grumhel, mais on ne sait pas comment s'en servir...",
-				"stone": "Ohhhhhh !!! Mais voici quelque chose de très interessant, il me semble qu'il s'agit de.... uhmmuhu.... je ne suis pas sûr... (il regarde fixement la pierre)... Peux-tu me montrer cette Pierre, que je l'examine un peu ?",
+				"stone": "Ohhhhhh !!! Mais voici quelque chose de très intéressant, il me semble qu'il s'agit de.... uhmmuhu.... je ne suis pas sûr... (il regarde fixement la pierre)... Peux-tu me montrer cette Pierre, que je l'examine un peu ?",
 				"stone_yes": "Ooooooohhhhh !!! Oui.... C'est bien ce que je pensais.... Regarde ! (il nettoie délicatement la pierre)... c'est un Totem Ashpouk ! Ca a beaucoup de valeur tu sais... prends-en grand soin !",
 				"noquestion": "Ah bon, dommage, n'hésite pas à revenir de temps en temps pour en savoir plus sur l'univers de Dinoland !",
 				"pac_start": "Ahhhh très bonne question jeune élève plein de fougue. Il s'agit d'un parchemin concernant mes recherches sur les compétences des Dinoz qui nous entourent. Savais-tu qu'ils pouvaient apprendre tout plein de compétences différentes et que chacunes de ces compétences peut en débloquer d'autres ? Comme un système de tiroir avec à l'intérieur de chaque tiroir d'autres tiroir. J'ai décidé d'appeler un meuble de compétences.&&Bref tout ça pour dire que j'ai pu y consigner quelles compétences débloquent quelles compétences et c'est vraiment très utile. Mais malheuresement le papier et l'encre utilisés sont de fabrication scientifico-chamanique et seuls mes yeux peuvent déchiffrer ce qu'il y est écrit.",
@@ -1174,7 +1174,7 @@
 				"merguez_step_2": "500 !?! On s'est mal compris, c'est de 500 livraisons dont je parlais. Donc 2500 au total.&& Aller encore 2000 à manger !",
 				"merguez_step_1": "Je trouve que tu exagère. C'est pas autant que ça, et surtout c'est gratuit !",
 				"merguez_step_3": "Pense bien à macher surtout. Et hydrate-toi, elles peuvent piquer un peu.",
-				"merguez_step_4": "Féliciations ! Je te note dans mon carnet des plus fidèles consommateurs. Vu que je sais que tu aime les merguez je vais te les donner par paquet de 100 à présent.",
+				"merguez_step_4": "Félicitations ! Je te note dans mon carnet des plus fidèles consommateurs. Vu que je sais que tu aimes les merguez je vais te les donner par paquet de 100 à présent.",
 				"merguez_card": "Ah mais oui c'est vrai que ce cher client est un grand amateur de merguez. Tenez, voici de quoi remplir votre stock !"
 			},
 			"playerChoice": {
@@ -1195,7 +1195,7 @@
 			"speech": {
 				"begin": "B'jour jeune av'turier, bienv'nue à Fosselave... la capitale du Grand T'chaud... Hésite pô à admirer nos super sculptures en basalte. Y'a aussi les bains de magma, là bas... Ca va te relaxer, tu verras c'est coooool... Si t'as faim, t'peux goûter not' spécialité : les merguez de Gobelin... Ca te ravigore, youuuhouuu, tu peux pas imaginer...",
 				"vener": "Uhmm... ? Le V'nérable ?... Quel bourrin celui là... hier il a failli me bouffer... tout ça parce qu'il me trouve trop agité, et que ça l'empêche de dormir... Tu veux vraiment y aller ? Boah... c'est toi qui vois... Tourne à droite aux Forges, et c'est tout droit.",
-				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'interesse... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combats aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
+				"souvenir": "Des souv'nirs ?... Bah... j'ai bien ma pile de feuilles d'incantations en retard là, mais je sais pas si ça t'intéresses... J'peux te filer un autographe aussi, signé de mon vrai nom, Baston Labaf... non ? Ok tant pis... Sinon y'a des trucs de combat aux Forges... des équipements de combat, et tout ça là... Y'aura p'têt un truc cool pour toi.",
 				"charm": "Ah ouais, c'est vrai... y parait que j'dois t'aider... Tiens, un Charme de Feu... ça aidera bien ton Dinoz dans ses prochains combats.",
 				"boost": "Bouge pas, j'vais t'enchanter de la magie des Shamans... Oyééé, oyééé ! ZZZZzzzzzz... ... C'est bon, tu peux y'aller, t'es un balaise maintenant.",
 				"nothing": "Hey, essaye pas d'me rouler, ton Dinoz a déjà un charme... Reviens me voir plus tard.",
@@ -1288,7 +1288,7 @@
 				"trad": "Personne ici ne semble comprendre ce que dit Jovébozé. D'après les informations que vous avez recueillies, il s'agirait d'un dialecte local de Prêcheurs, voire d'un dialecte spécifique à Jovébozé...",
 				"sry": "Sité popré ven pa, sino mot'dan lobatou, k ?",
 				"go": "Jovébozé vous emmène en mer dans un coin que les bateaux semblent éviter... En vous approchant, vous voyez ce qui semble être un énorme Rascaphandre à quelques dizaines de mètres de la barque. Si vous continuez dans cette direction et si le Garde Atlante disait vrai, vous serez surement attaqué... Il faut faire vite !!!",
-				"attack_win": "Bien entendu, Jovébozé n'a rien compris a vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau a Rascaphandre qu'il a sculpté..."
+				"attack_win": "Bien entendu, Jovébozé n'a rien compris à vos instructions... Après votre fier combat, il vous ramène au Port de Prêche. Il n'a pas décroché un mot depuis l'attaque du Rascaphandre mais il vous observe du coin de l'oeil, l'air satisfait. Au moment de vous séparer, il vous serre la main vivement, en guise d'encouragement pour la suite de vos aventures. Il vous confie un Appeau à Rascaphandre qu'il a sculpté..."
 			},
 			"playerChoice": {
 				"sry": "... pardon ?!?",
@@ -1327,7 +1327,7 @@
 				"gant": "Oooh !!! C'est un Gant des Zors que tu as là ? GENIAL !!!",
 				"why": "Je vais t'expliquer... Le Gant des Zors a le pouvoir d'annuler le courant des Chutes, autour de toi. Ainsi, à l'aide d'une feuille de nénuphar, on peut contourner les Chutes et accéder à la Forêt de Grumhel qui se trouve au-delà.",
 				"super": "Bon, si tu me promets de me laisser utiliser ton Gant de temps en temps, je te prête les feuilles de nénuphar qui te permettront de passer les Chutes... marché conclu ?",
-				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fait attention, la Forêt au delà est très dangereuse !"
+				"ok": "Voilà, tu as les feuilles de nénuphar... Tu vas désormais pouvoir passer les Chutes, bon courage pour la suite de ton aventure ! Et fais attention, la Forêt au-delà est très dangereuse !"
 			},
 			"playerChoice": {
 				"hello": "Bonjour !",
@@ -1376,8 +1376,8 @@
 				"pac_shine": "Euh... Vous avez réussi à obtenir une racine charmée tout seul ? C'est le professeur qui vous a dit quoi faire ? C'est très dangereux vous savez. Si vous arrivez à la réduire en parchemin vous pourrez utiliser une encre de compilation. Mais c'est très complexe à réaliser.",
 				"pac_progress": "Euh, comment dire... C'est... Oui c'est possible... Je m'occupe de vous faire le parchemin, ramenez moi dans un premier temps de l'encre de Kazkadine. Une cinquantaine devraient faire l'affaire",
 				"pac_kazka": "Très bien ! Passons à présent aux cendres de flamèches. Il m'en faut 42 unitées.&& Regarde comment j'ai bien avancé, le parchemin est en train de sécher.",
-				"pac_flam": "Ce fût rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu aille chercher une plume de Coqdur. Tu pense en être capable ?",
-				"pac_coq": "Voila, je ne peux rien faire de plus pour toi. Il faudrait que tu mène tes recherches pour comprendre comment l'utiliser."
+				"pac_flam": "Ce fut rapide ! Pendant que je termine de te préparer l'encre il faudrait que tu ailles chercher une plume de Coqdur. Tu penses en être capable ?",
+				"pac_coq": "Voilà, je ne peux rien faire de plus pour toi. Il faudrait que tu mènes tes recherches pour comprendre comment l'utiliser."
 			},
 			"playerChoice": {
 				"welcome": "Lui parler",
@@ -2120,7 +2120,7 @@
 			"Celerite": "Augmente la vitesse du Dinoz de 15%",
 			"Concentration": "Les *assauts* ciblent toujours le même ennemi",
 			"AttaqueEclair": "Augmente la vitesse des attaques Foudre de 40%",
-			"CoupDouble": "Augmente les chances de multi-coup de 20%",
+			"CoupDouble": "Augmente les chances de multi-coups de 20%",
 			"Foudre": "Attaque un ennemi avec un pouvoir Foudre de 10",
 			"VoieDeKaos": "Augmente la puissance des *assauts* Feu et Foudre de 6",
 			"PlanDeCarriere": "Permet au Dinoz de retirer au sort l'élément à chaque changement de niveau. Limité à une fois par niveau.",
@@ -2128,7 +2128,7 @@
 			"VoieDeGaia": "Augmente les défenses Bois et Foudre de 3",
 			"DanseFoudroyante": "Attaque 5 fois avec un pouvoir Foudre de 3",
 			"Embuche": "Augmente l'initiative de 7",
-			"Surcharge": "Augmente les chances de multi-coup de 15%",
+			"Surcharge": "Augmente les chances de multi-coups de 15%",
 			"SoutienMoral": "Augmente l'endurance du Dinoz de 10%",
 			"Jaune": "Augmente la puissance de tous les *assauts* de 20 quand le Dinoz est aux steppes magnétiques",
 			"CrampeChronique": "Le Dinoz perd 10 points d'énergie, et diminue de 15% la capacité de récupération du lanceur",
@@ -2197,7 +2197,7 @@
 			"KarateSousMarin": "Augmente la puissance de tous les *assauts* et pouvoirs d'Eau de 10",
 			"Sumo": "Augmente les PV max de 100",
 			"SansPitie": "Les *assauts* ciblent l'ennemi avec le moins de PV",
-			"CloneAqueux": "Crée une copie du lanceur avec 1 PV. La copie hérite seulement des statistiques de bases du lanceur (attaque, défense, esquive, multi-coup, contre).",
+			"CloneAqueux": "Crée une copie du lanceur avec 1 PV. La copie hérite seulement des statistiques de bases du lanceur (attaque, défense, esquive, multi-coups, contre).",
 			"GriffesEmpoisonnees": "Si un des *assauts* d'Eau du Dinoz touche un ennemi, il est empoisonné pour une durée moyenne et le poison inflige 14 dégâts",
 			"Cuisinier": "Augmente le gain de PV des objets de 10% pour tous les Dinoz (non cumulable)",
 			"SangAcide": "Les ennemis attaquant le Dinoz en mêlée ont une chance de subir des dégâts relatifs à l'élément Eau du Dinoz (soumis à équilibrage)",
@@ -2280,7 +2280,7 @@
 			"GriffesInfernales": "Enflamme l'adversaire et lui inflige des dégâts de Feu à chaque tour, basés sur la valeur de son élément Feu",
 			"Rouge": "Augmente la puissance de tous les *assauts* de 20 lorsque le Dinoz se trouve au Grand-tout-chaud",
 			"CriDeGuerre": "Le Dinoz lancera sa compétence A la plus puissante au prochain tour",
-			"FievreBrulante": "Augmente les chances de multi-coup de 30%",
+			"FievreBrulante": "Augmente les chances de multi-coups de 30%",
 			"BenedictionDArtemis": "Permet de chasser dans une case supplémentaire",
 			"Joker": "Augmente ou diminue (50/50) la vitesse du Dinoz de 25% au début d'un combat",
 			"ArmureDeFeu": "Augmente la défense contre le Bois de 20",
@@ -4522,7 +4522,7 @@
 			"hpLost": "Quantité de points de vie perdus :pv:",
 			"hpHealed": "Quantité de points de vie gagnés",
 			"attacks": "Quantité d'attaques",
-			"multiHit": "Nombre de multi-coup",
+			"multiHit": "Nombre de multi-coups",
 			"assaults": "Nombre d'assauts",
 			"evasions": "Nombre d'esquives",
 			"counters": "Nombre de contres",
@@ -4559,7 +4559,7 @@
 				"takeRawDmg": "Remportez la victoire en encaissant au maximum {goal} points de vie.",
 				"takePrctDmg": "Remportez la victoire en encaissant tout au plus {goal}% de points de vie.",
 				"assault": "Remportez la victoire en réalisant au minimum {goal} assauts.",
-				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmis l'ensemble de vos attaques.",
+				"assaultPrct": "Remportez la victoire en réalisant au moins {goal}% d'assauts parmi l'ensemble de vos attaques.",
 				"maxDmg": "Remportez la victoire en ne faisant pas perdre plus de {goal} points de vie à votre adversaire.",
 				"minPrctDmg": "Remportez la victoire en faisant perdre au moins {goal}% de points de vie à votre adversaire.",
 				"counter": "Remportez la victoire en réalisant {goal} contre-attaque(s) ou plus.",

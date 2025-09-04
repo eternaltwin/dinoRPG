@@ -3729,6 +3729,7 @@
 			"litter": "Premio de Literatura",
 			"clover": "Ganador del DinoLoto",
 			"pac": "Pergamino de Competencias Compiladas",
+			"card": "Tarjeta de Fidelidad Salchichas Deluxe",
 			"import": "Huesos de Importosaurio"
 		},
 		"description": {
@@ -3943,6 +3944,7 @@
 			"litter": "Este premio de Literatura le es otorgado para reconocer su prosa que ha conmovido a miles de maestros Dinos. Continuará a través de los siglos mientras Dinoland no experimente una segunda catástrofe como el hundimiento de la isla de Jazz. No hace falta decir que no sucederá en mucho tiempo...",
 			"clover": "¡Recibe este premio por ser el Maestro de Dinos más suertudo en el sorteo del Dinoloto de Dinoland! ¡Enhorabuena!",
 			"pac": "El Pergamino de Competencias Compiladas es un artefacto elegante que registra instantáneamente todas las competencias dominadas por tus Dinos, ofreciendo una visión clara y detallada de sus talentos de un solo vistazo.",
+			"card": "Asada a la perfección y sellada por el **Vendedor de Salchichas** en persona. Esta carta sagrada recompensa a los estómagos más resistentes. Después de haber devorado una cantidad indecente de salchichas, ahora has sido ascendido al rango de **Gran Glotón Oficial**.",
 			"import": "¡Felicidades! Has importado tu cuenta a EternalDinoRPG. Estás listo para levantarte de nuevo como este importasaurios. ¿Quizás es un error después de todo?"
 		}
 	},
@@ -4209,6 +4211,7 @@
 			"healing": "curación"
 		},
 		"step": {
+			"timeLimit": "El combate durará como máximo {time} unidades de tiempo.",
 			"arrive": "**{name}** ¡ha llegado!",
 			"resist": "**{dinoz}** resistió y redujo el daño.",
 			"hit": "**{fighter}** infligió **{damage}** {elements} daño a **{target}**.",

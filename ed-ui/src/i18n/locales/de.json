@@ -2703,7 +2703,7 @@
 			"kfood": "Es gibt hier irgendwo in Grumhel eine seltene Baumart, die die Korgonen abgöttisch lieben: Die Aschfarbene Fikoia! Ich weiß nicht, wo man sie findet, aber wenn du mir was davon mitbringst, werde ich dich fürstlich dafür entlohnen!",
 			"poison": "Die Aschfarbene Fikoia, die du entdeckst hast, wird ziemlich schnell zu einem strategischen Punkt für die Korgonen aus dem Süden werden... Jetzt muss schnell gehandelt werden! Wir werden ein paar Äste dieses Baumes „präparieren“, um die Korgonen davon abzuhalten, sie zu fressen... Wir wissen natürlich Bescheid, welche Äste man besser nicht anfassen sollte... Hihihi!",
 			"init1": "Yo... Also, was das Strategiehandbuch angeht: Das musst du erstmal übersetzen... in den Aschpuckruinen. Das wirst du schon hinkriegen.",
-			"init2": "Ha, diese Merguez hatten's echt in sich! Wie ich sehe, hast du echt was drauf! Tue mir noch einen letzten kleinen Gefallen und ich überlasse dir mein Strategiehandbuch. Die Gegend um den Großen Immerhitzus ist ein idealer Lebensraum für Archelöwen jeglicher Größe... Wild, nicht ein Tropfen Feuchtigkeit und immerzu am Ausbrechen! Nichtsdestotrotz müssen wir sie von uns Fernhalten, wenn wir nicht als Mittagessen enden wollen... Ich möchte, dass du mir eine Art Vogelscheuche für Archelöwen anfertigst! Hierzu bräuchte ich Geschärfte Klauen.",
+			"init2": "Ha, diese Merguez hatten's echt in sich! Wie ich sehe, hast du echt was drauf! Tue mir noch einen letzten kleinen Gefallen und ich überlasse dir mein Strategiehandbuch. Die Gegend um den Großen Immerhitzus ist ein idealer Lebensraum für Archelöwen jeglicher Größe... Wild, nicht ein Tropfen Feuchtigkeit und immerzu am Ausbrechen! Nichtsdestotrotz müssen wir sie von uns fernhalten, wenn wir nicht als Mittagessen enden wollen... Ich möchte, dass du mir eine Art Vogelscheuche für Archelöwen anfertigst! Hierzu bräuchte ich geschärfte Klauen.",
 			"burn": "Wie du sicherlich schon bemerkt hast, ist die Gegend hier von einer unwahrscheinlich großen Anzahl an Flämmchen bevölkert... Auch wenn ihr Dasein für das große kosmische Gleichgewicht vonnöten ist, wächst ihre Anzahl viel zu schnell und muss wieder unter Kontrolle gebracht werden! Du musst schnell handeln! Begib dich zum Tunnel unter dem Ast, indem du am Krater entlangläufst. Ihre Präsenz dort unten ist wirklich kritisch geworden!",
 			"barbec": "Dieser Merguez-Verkäufer in den Aschpuckruinen benutzt einen speziellen Brennstoff, der für die zahlreichen Flämmchen in der Region verantwortlich ist... Dagegen muss etwas getan werden! Allerdings können wir diesen armen Teufel nicht daran hindern, seine Arbeit zu machen, also werden wir eine unauffälligere Lösung finden müssen. Du kannst schon mal damit anfangen, ein paar Zutaten einzusammeln: Einen getrockneten Ast, eine Drachenschuppe und ein Stück gelben Basalt. Zermahle alles, vermische es gut und schmeiß es dann in den Grill!",
 			"joke": "Zwischen dem Universitätsprofessor Eugen und meiner Wenigkeit läuft bereits seit Jahren eine Fehde... Egal um welches Thema es sich handelt, wir sind uns nie einig! Hilf mir doch mal, der alten Miesmuschel einen kleinen Streich zu spielen. Zunächst ein mal musst du ein paar übelriechende Sachen finden! Der Predigerhafen ist dafür der ideale Ort...",
@@ -2812,7 +2812,7 @@
 			"findPickPoint": "Einen Aussichtspunkt suchen",
 			"drawMap": "Eine Karte zeichnen",
 			"findBat": "Finde die Jägerflatter wieder",
-			"catchBat": "Sich dem Sog nähern",
+			"catchBat": "Jägerflatter fangen",
 			"bat": "Seltenes Färkel-Ei",
 			"launchRock": "Einen Stein werfen",
 			"pickNote": "Notizblock aufheben",
@@ -3729,6 +3729,7 @@
 			"litter": "Prix de Littérature",
 			"clover": "Gagnant de DinoLoto",
 			"pac": "Schriftrolle der Gesammelten Fähigkeiten",
+			"card": "Merguez-Treuekarte Deluxe",
 			"import": "Os D'importasaurus"
 		},
 		"description": {
@@ -3943,6 +3944,7 @@
 			"litter": "Ce prix de Littérature vous est remis pour saluer votre prose ayant ému des milliers de maîtres Dinoz. Elle continuera à traverser les âges tant que Dinoland ne connaîtra pas de deuxième catastrophe tel que l'effondrement de l'île de Jazz. Autant dire que ce ne sera pas avant longtemps...",
 			"clover": "Ce prix vous a été remis pour avoir été le maître Dinoz le plus chanceux de Dinoland lors d'un tirage du dinoLoto ! Félicitations !",
 			"pac": "Die Schriftrolle der Gesammelten Fähigkeiten ist ein elegantes Artefakt, das alle von deinen Dinoz beherrschten Fähigkeiten auflistet und dir auf einen Blick eine klare und detaillierte Übersicht über deren Talente verschafft.",
+			"card": "Bis zur Perfektion gegrillt und vom **Merguez-Verkäufer** höchstpersönlich abgestempelt, belohnt diese sagenumwobene Karte die ausdauerndsten Mägen. Nachdem du eine unerhörte Anzahl Merguez-Würstchen verschlungen hast, erhieltst du den Ehrentitel des **Offiziellen Grandiosen Gourmands**.",
 			"import": "Glückwunsch! Vous avez importé votre compte sur EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Peut-être est-ce une erreur finalement ?"
 		}
 	},
@@ -4209,6 +4211,7 @@
 			"healing": "heilend"
 		},
 		"step": {
+			"timeLimit": "Der Kampf kann bis zu {time} Zeiteinheiten andauern.",
 			"arrive": "**{name}** ist angekommen!",
 			"resist": "**{dinoz}** hat widerstanden und den Schaden reduziert.",
 			"hit": "**{fighter}** hat **{target}** **{damage}** {elements}-Schaden zugefügt.",

@@ -3729,6 +3729,7 @@
 			"litter": "Literature Prize",
 			"clover": "DinoLoto Winner",
 			"pac": "Scroll of Compiled Abilities",
+			"card": "Deluxe Merguez Loyalty Card",
 			"import": "Importosaurus bone"
 		},
 		"description": {
@@ -3943,6 +3944,7 @@
 			"litter": "This Literature Prize is awarded to you in recognition of your prose, which has moved thousands of Dinoz masters. It will continue to endure through the ages as long as Dinoland does not experience a second catastrophe like the collapse of Jazz Island. Suffice it to say, that won't be anytime soon...",
 			"clover": "You have been awarded this prize for being the owner of the luckiest Dinoz in Dinoland (as selected by the DinoLoto draw)! Congratulations!",
 			"pac": "The Scroll of Compiled Abilities is a sophisticated artifact that lists instantly all the skills mastered by your Dinoz. It gives a clear overview and a detailed breakdown of each talent in one look.",
+			"card": "Grilled to perfection and stamped by the **Merguez Seller** himself, this sacred card rewords the most enduring stomachs. After devouring a nasty amount of merguez, you are now promoted to **Official Grand Glutton**.",
 			"import": "Congratulations! You have imported your account to EternalDinoRPG. Vous êtes prêt à relever de nouveaux tout comme cet importasaurus. Maybe it's a mistake after all?"
 		}
 	},
@@ -4209,6 +4211,7 @@
 			"healing": "Healing"
 		},
 		"step": {
+			"timeLimit": "The fight will last at maximum {time} units of time.",
 			"arrive": "**{name}** has arrived !",
 			"resist": "**{dinoz}** resisted and reduced the damage.",
 			"hit": "**{fighter}** dealt **{damage}** {elements} damage to **{target}**.",
