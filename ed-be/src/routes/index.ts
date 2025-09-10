@@ -1,7 +1,5 @@
 import { Express } from 'express';
 import { Config } from '../config/config.js';
-import { PrismaClient } from '@drpg/prisma';
-import oauthRoutes from './oauth.routes.js';
 import adminRoutes from './admin.routes.js';
 import dinozRoutes from './dinoz.routes.js';
 import fightRoutes from './fight.routes.js';
@@ -17,7 +15,7 @@ import rankingRoutes from './ranking.routes.js';
 import offerRoutes from './offer.routes.js';
 import logRoutes from './log.routes.js';
 import eternaltwinRoutes from './eternaltwin.routes.js';
-import webSocketRoutes from './websockets.routes.js';
+import serverEventsRoutes from './serverEvents.routes.js';
 import testingRoutes from './testing.routes.js';
 import clanRoutes from './clan.routes.js';
 import moderationRoutes from './moderation.routes.js';
@@ -53,7 +51,7 @@ export default function initRoutes(app: Express, config: Config) {
 	app.use(offerRoutes);
 	app.use(logRoutes);
 	app.use(eternaltwinRoutes);
-	app.use(webSocketRoutes);
+	app.use(serverEventsRoutes);
 	app.use(clanRoutes);
 	app.use(pantheonRoutes);
 	app.use(moderationRoutes);

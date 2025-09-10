@@ -7,9 +7,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { DinozService } from '../../services/index.js';
-import { WebSocketService } from '../../services/WebSocketService.js';
-import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
+import { ServerEventsService } from '../../services/ServerEventsService';
+import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 
 export default defineComponent({
 	data() {
@@ -20,7 +19,7 @@ export default defineComponent({
 	},
 	methods: {
 		async getWsTicket(): Promise<void> {
-			const ticket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
+			const ticket = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
 			if (import.meta.env.MODE === 'development') {
 				this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${ticket}`);
 			} else {
@@ -30,10 +29,6 @@ export default defineComponent({
 		sendMessage(): void {
 			console.log(this.message);
 			this.webSocket.send(this.message);
-		},
-		async getDinozData(): Promise<void> {
-			const dinozData = await DinozService.getDinozFiche(4);
-			console.log(dinozData);
 		}
 	}
 });

@@ -1,4 +1,4 @@
-export interface WsTicket {
+export interface ServerEventTicket {
 	uuid: string;
 	channel: string;
 	userAgent: string;

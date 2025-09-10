@@ -70,16 +70,17 @@
 import { defineComponent } from 'vue';
 
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
-import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
-import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
-import { WsMsgRequestCreation } from '@drpg/core/models/webSocket/WsMsgRequestCreation';
-import { WsMsgRequestDeletion } from '@drpg/core/models/webSocket/WsMsgRequestDeletion';
-import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
+import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
+import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
+import { WsMsgRequestCreation } from '@drpg/core/models/serverEvents/WsMsgRequestCreation';
+import { WsMsgRequestDeletion } from '@drpg/core/models/serverEvents/WsMsgRequestDeletion';
+import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
+import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
 import EventBus from '../../events/index.js';
-import { ClanService } from '../../services/ClanService.js';
-import { WebSocketService } from '../../services/WebSocketService';
-import { playerStore } from '../../store/index.js';
-import { errorHandler } from '../../utils/index.js';
+import { ClanService } from '../../services';
+import { ServerEventsService } from '../../services/ServerEventsService';
+import { playerStore } from '../../store';
+import { errorHandler } from '../../utils';
 import Editor from '../common/Editor.vue';
 
 export default defineComponent({
@@ -140,11 +141,11 @@ export default defineComponent({
 			this.maxPage = Math.floor((messagesCount.count + 19) / 20);
 		},
 		async connectToWs(): Promise<void> {
-			const wsTicket = await WebSocketService.getWsTicket(WsChannel.CLAN_FORUM);
+			const wsTicket: ServerEventTicketDto = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
 			if (import.meta.env.MODE === 'development') {
-				this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${wsTicket}`);
+				this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${wsTicket.ticket}`);
 			} else {
-				this.webSocket = new WebSocket(`wss://${document.location.host}/ws?ticket=${wsTicket}`);
+				this.webSocket = new WebSocket(`wss://${document.location.host}/ws?ticket=${wsTicket.ticket}`);
 			}
 
 			this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);

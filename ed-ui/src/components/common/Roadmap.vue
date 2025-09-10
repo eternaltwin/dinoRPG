@@ -70,11 +70,13 @@
 			<p>{{ $t('roadmap.help') }}</p>
 		</div>
 		<DZDisclaimer content="roadmap.disclaimer" />
+		<button @click="connectSse()">Connect !</button>
 	</div>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZDisclaimer from './DZDisclaimer.vue';
+import { API_BASE } from '../../utils';
 
 export default defineComponent({
 	name: 'Roadmap',
@@ -127,10 +129,18 @@ export default defineComponent({
 				default:
 					this.futurInfoList = [];
 			}
+		},
+		connectSse(): void {
+			const eventSource = new EventSource(`${API_BASE}/sse/events`);
+
+			eventSource.onmessage = (event: Event) => {
+				console.log(event);
+			};
 		}
 	}
 });
 </script>
+
 <style lang="scss" scoped>
 .roadmap {
 	position: relative;

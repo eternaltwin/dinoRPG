@@ -22,8 +22,8 @@ import {
 	setConnectionToAlive
 } from './business/webSocketService.js';
 import { RawData, WebSocketServer } from 'ws';
-import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
-import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
+import { WebSocketCustom } from '@drpg/core/models/serverEvents/WebSocketCustom';
+import { WebSocketServerCustom } from '@drpg/core/models/serverEvents/WebSocketServerCustom';
 import { IncomingMessage } from 'http';
 import { checkBans } from './cron/checkBans.js';
 import TournamentManager from './utils/tournamentManager.js';
