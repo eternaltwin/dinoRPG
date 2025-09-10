@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { dino } from '@drpg/dino-animation';
+import { dino } from 'dinorpg_animations';
 
 export default defineComponent({
 	name: 'DinozWithoutFlash',

@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-import { Fight } from '@drpg/dino-animation';
+import { Fight } from 'dinorpg_animations';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 
 export default defineComponent({

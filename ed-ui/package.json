@@ -21,6 +21,7 @@
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
     "ckeditor5": "^45.0.0",
+    "dinorpg_animations": "^1.0.0",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",
@@ -35,7 +36,6 @@
   },
   "devDependencies": {
     "@drpg/core": "workspace:^",
-    "@drpg/dino-animation": "workspace:^",
     "@types/url-join": "^4.0.3",
     "@types/vue-i18n": "^7.0.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
