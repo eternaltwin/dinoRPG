@@ -16,7 +16,7 @@ export const apiRoutes = {
 	rankingRoutes: '/api/v1/ranking',
 	shopRoutes: '/api/v1/shop',
 	offerRoutes: '/api/v1/offer',
-	webSocketRoute: '/api/v1/websockets',
+	serverEventsRoute: '/api/v1/server-events',
 	testingRoute: '/api/v1/testing',
 	eternalTwinRoute: '/api/v1/eternaltwin',
 	clanRoutes: '/api/v1/clan',

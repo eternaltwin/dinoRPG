@@ -1,58 +1,56 @@
 import { Request } from 'express';
-import { WsTicket } from '@drpg/core/models/webSocket/WsTicket';
+import { ServerEventTicket } from '@drpg/core/models/serverEvents/ServerEventTicket';
+import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
 import { randomUUID } from 'crypto';
 import { IncomingMessage } from 'http';
 import { wsTicketMaxTime } from '../constants/index.js';
-import { WebSocketCustom } from '@drpg/core/models/webSocket/WebSocketCustom';
-import { WebSocketServerCustom } from '@drpg/core/models/webSocket/WebSocketServerCustom';
-import { ChannelData } from '@drpg/core/models/webSocket/ChannelData';
-import { ChannelInfos } from '@drpg/core/models/webSocket/ChannelInfos';
+import { WebSocketCustom } from '@drpg/core/models/serverEvents/WebSocketCustom';
+import { WebSocketServerCustom } from '@drpg/core/models/serverEvents/WebSocketServerCustom';
+import { ChannelData } from '@drpg/core/models/serverEvents/ChannelData';
+import { ChannelInfos } from '@drpg/core/models/serverEvents/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
-import { WsChannel } from '@drpg/core/models/webSocket/WsChannel';
+import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { auth, getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
 import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
-import { WsMsgRequest } from '@drpg/core/models/webSocket/WsMsgRequest';
-import { WsMessageAction } from '@drpg/core/models/webSocket/WsMessageAction';
-import { WsMsgResponse } from '@drpg/core/models/webSocket/WsMsgResponse';
-import { WsMsgResponseDeletion } from '@drpg/core/models/webSocket/WsMsgResponseDeletion';
-import { WsMsgResponseCreation } from '@drpg/core/models/webSocket/WsMsgResponseCreation';
+import { WsMsgRequest } from '@drpg/core/models/serverEvents/WsMsgRequest';
+import { WsMessageAction } from '@drpg/core/models/serverEvents/WsMessageAction';
+import { WsMsgResponse } from '@drpg/core/models/serverEvents/WsMsgResponse';
+import { WsMsgResponseDeletion } from '@drpg/core/models/serverEvents/WsMsgResponseDeletion';
+import { WsMsgResponseCreation } from '@drpg/core/models/serverEvents/WsMsgResponseCreation';
 import { checkMessageCanBeDeleted } from './clanService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LOGGER } from '../context.js';
+import { UUID } from 'node:crypto';
+import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
+import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 
-let activeTickets: WsTicket[] = [];
+let activeTickets: ServerEventTicket[] = [];
 const channels = new Map<string, ChannelData[]>();
 
-export async function authenticate(req: Request) {
-	doGenericVerificationsForWsAuthent(req);
-
-	await doSpecificVerificationsForWsAuthent(req);
-
-	const uuid = randomUUID();
-	const ip = getIpAddressFromRequest(req);
-	if (!ip) {
-		throw new ExpectedError('No IP found.');
-	}
-
-	const headers = req.headers['user-agent'];
-	if (!headers) {
-		throw new ExpectedError('No headers found.');
-	}
-
+export async function authenticate(req: Request, serverEventType: ServerEventType): Promise<ServerEventTicketDto> {
 	const authed = await auth(req);
+
+	const ip: string = getIpAddressFromRequest(req);
+	await doSpecificVerifications(req, authed, serverEventType);
+
+	const uuid: UUID = randomUUID();
+
+	const userAgent: string = getUserAgentFromRequest(req);
 
 	activeTickets.push({
 		uuid: uuid,
 		channel: req.body.channel,
-		userAgent: headers,
+		userAgent,
 		ipAddress: ip,
 		playerId: authed.id,
 		timestamp: Date.now()
 	});
 
-	return uuid;
+	return {
+		ticket: uuid
+	};
 }
 
 /**
@@ -61,20 +59,26 @@ export async function authenticate(req: Request) {
  * @param req -> Request data
  * @returns -> The player IP address
  */
-function getIpAddressFromRequest(req: Request | IncomingMessage): string | undefined {
-	return req.socket.remoteAddress ?? (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim();
+function getIpAddressFromRequest(req: Request | IncomingMessage): string {
+	const ip: string | undefined = req.socket.remoteAddress ?? (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim();
+	if (ip === undefined) {
+		throw new Error('The IP address was not found');
+	}
+	return ip;
 }
 
 /**
- * Check if the data sent by the client is valid, this check is done for all incoming requests.
+ * Get User-Agent from request data.
  *
- * @param req -> Express request
- * @throws {Error}
+ * @param req -> Request data
+ * @return -> The User Agent of the player
  */
-function doGenericVerificationsForWsAuthent(req: Request) {
-	if (getIpAddressFromRequest(req) === undefined) {
-		throw new Error('The IP address was not found');
+function getUserAgentFromRequest(req: Request | IncomingMessage): string {
+	const userAgent: string | undefined = req.headers['user-agent'];
+	if (userAgent === undefined) {
+		throw new ExpectedError('No headers found.');
 	}
+	return userAgent;
 }
 
 /**
@@ -84,13 +88,39 @@ function doGenericVerificationsForWsAuthent(req: Request) {
  *
  * @param req -> Express request
  */
-async function doSpecificVerificationsForWsAuthent(req: Request): Promise<void> {
-	const authed = await auth(req);
+// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+async function doSpecificVerifications(req: Request, authed: any, serverEventType: ServerEventType): Promise<void> {
+	if (serverEventType === ServerEventType.WEBSOCKET) {
+		await doSpecificVerificationsForWs(req, authed);
+		return;
+	}
+
+	await doSpecificVerificationsForSse(req, authed);
+}
+
+// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+async function doSpecificVerificationsForWs(req: Request, authed: any): Promise<void> {
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
-		const clanForPlayer = await getClanIdAndNameFromPlayerId(authed.id);
-		if (clanForPlayer.ClanMember === null) {
-			throw new Error(`The player is not in a clan.`);
-		}
+		await checkPlayerIsInClan(authed);
+	}
+}
+
+// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+async function doSpecificVerificationsForSse(req: Request, authed: any): Promise<void> {
+	if (req.body.channel === SseChannel.CLAN_FORUM) {
+		await checkPlayerIsInClan(authed);
+	}
+}
+
+// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+async function checkPlayerIsInClan(authed: any): Promise<void> {
+	const clanForPlayer = await getClanIdAndNameFromPlayerId(authed.id);
+	if (clanForPlayer.ClanMember === null) {
+		throw new Error(`The player is not in a clan.`);
 	}
 }
 
@@ -122,7 +152,7 @@ export async function connectUserToChannel(ws: WebSocketCustom, req: IncomingMes
  * @param ticketUuid -> unique identifier sent in params
  * @returns -> The ticket linked to the user
  */
-function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefined): WsTicket {
+function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefined): ServerEventTicket {
 	if (!ticketUuid) {
 		throw new Error('The ticket sent is not valid');
 	}
@@ -158,7 +188,7 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param ticket -> The ticket linked to the user
  * @param wsId -> Connection identifier
  */
-async function putUserInChannel(ticket: WsTicket, wsId: string): Promise<void> {
+async function putUserInChannel(ticket: ServerEventTicket, wsId: string): Promise<void> {
 	const channelName = await getChannelName(ticket);
 
 	const channel = channels.get(channelName);
@@ -170,7 +200,7 @@ async function putUserInChannel(ticket: WsTicket, wsId: string): Promise<void> {
 	}
 }
 
-async function getChannelName(ticket: WsTicket): Promise<string> {
+async function getChannelName(ticket: ServerEventTicket): Promise<string> {
 	if (ticket.channel === WsChannel.CLAN_FORUM) {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
 		if (!playerData.ClanMember)
@@ -186,7 +216,7 @@ async function getChannelName(ticket: WsTicket): Promise<string> {
  *
  * @param wss -> The WebSocket server
  * @param wsId -> The connection identifier
- * @param message -> The message sent by a user
+ * @param bufferedMessage -> The message sent by a user
  */
 export async function processIncomingMessage(
 	wss: WebSocketServerCustom,
@@ -228,12 +258,10 @@ function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 		throw new Error('The channel cannot be undefined');
 	}
 
-	const channelInfos: ChannelInfos = {
+	return {
 		channelName: channelData[0],
 		members: channelData[1]
 	};
-
-	return channelInfos;
 }
 
 /**
