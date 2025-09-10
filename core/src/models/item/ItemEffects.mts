@@ -1,6 +1,6 @@
 import { ItemEffect } from '../enums/ItemEffect.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
-import { RaceList } from '../dinoz/RaceList.mjs';
+import { RaceEnum } from '../enums/RaceEnum.mjs';
 
 export type ItemEffects =
 	| {
@@ -9,7 +9,7 @@ export type ItemEffects =
 	  }
 	| {
 			category: ItemEffect.EGG;
-			race: RaceList;
+			race: RaceEnum;
 	  }
 	| {
 			category: ItemEffect.SPHERE;

@@ -1,5 +1,6 @@
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { RaceList, raceList } from '@drpg/core/models/dinoz/RaceList';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { Reward } from '@drpg/core/models/reward/RewardList';
 import { Prisma } from '@drpg/prisma';
 import { Request } from 'express';
@@ -34,15 +35,15 @@ export async function getDinozFromDinozShop(req: Request) {
 		let randomRace: DinozRace;
 		let randomDisplay: string;
 		const availableRaces: DinozRace[] = [
-			raceList[RaceList.WINKS],
-			raceList[RaceList.SIRAIN],
-			raceList[RaceList.CASTIVORE],
-			raceList[RaceList.NUAGOZ],
-			raceList[RaceList.GORILLOZ],
-			raceList[RaceList.WANWAN],
-			raceList[RaceList.PLANAILLE],
-			raceList[RaceList.MOUEFFE],
-			raceList[RaceList.PIGMOU]
+			raceList[RaceEnum.WINKS],
+			raceList[RaceEnum.SIRAIN],
+			raceList[RaceEnum.CASTIVORE],
+			raceList[RaceEnum.NUAGOZ],
+			raceList[RaceEnum.GORILLOZ],
+			raceList[RaceEnum.WANWAN],
+			raceList[RaceEnum.PLANAILLE],
+			raceList[RaceEnum.MOUEFFE],
+			raceList[RaceEnum.PIGMOU]
 		];
 
 		// Check if player has Rocky, Pteroz, Hippoclamp or Quetzu trophy
@@ -54,16 +55,16 @@ export async function getDinozFromDinozShop(req: Request) {
 
 		player.rewards.forEach(playerReward => {
 			if (playerReward.rewardId === Reward.ROCKY) {
-				availableRaces.push(raceList[RaceList.ROCKY]);
+				availableRaces.push(raceList[RaceEnum.ROCKY]);
 			}
 			if (playerReward.rewardId === Reward.HIPPO) {
-				availableRaces.push(raceList[RaceList.HIPPOCLAMP]);
+				availableRaces.push(raceList[RaceEnum.HIPPOCLAMP]);
 			}
 			if (playerReward.rewardId === Reward.PTEROZ) {
-				availableRaces.push(raceList[RaceList.PTEROZ]);
+				availableRaces.push(raceList[RaceEnum.PTEROZ]);
 			}
 			if (playerReward.rewardId === Reward.QUETZU && player.quetzuBought < gameConfig.shop.buyableQuetzu) {
-				availableRaces.push(raceList[RaceList.QUETZU]);
+				availableRaces.push(raceList[RaceEnum.QUETZU]);
 			}
 		});
 

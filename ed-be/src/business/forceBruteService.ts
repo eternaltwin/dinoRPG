@@ -7,7 +7,8 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import dayjs from 'dayjs';
 import { getRandomUpElement } from '../utils/dinoz.js';
-import { RaceList, raceList } from '@drpg/core/models/dinoz/RaceList';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { randomUUID } from 'crypto';
 import { getLetter, getRandomNumber } from '../utils/index.js';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
@@ -224,54 +225,54 @@ export async function createTournamentDinoz(req: Request) {
 	}
 
 	const seed = randomUUID();
-	const currentRace = raceList[+activeTournament.teamRace as RaceList];
+	const currentRace = raceList[+activeTournament.teamRace as RaceEnum];
 
 	let display = generateDinozDisplay(currentRace, '0', '0', '0');
 	if (Math.random() * 100 <= 1) {
 		switch (currentRace.raceId) {
-			case RaceList.MOUEFFE:
-			case RaceList.MOUEFFE_DEMON:
-			case RaceList.WINKS:
-			case RaceList.WINKS_DEMON:
-			case RaceList.PLANAILLE:
-			case RaceList.PLANAILLE_DEMON:
-			case RaceList.GORILLOZ:
-			case RaceList.GORILLOZ_DEMON:
-			case RaceList.SANTAZ:
-			case RaceList.MAHAMUTI:
-			case RaceList.QUETZU:
-			case RaceList.TRICERAGNON:
-			case RaceList.PIGMOU:
-			case RaceList.PIGMOU_DEMON:
-			case RaceList.SIRAIN:
-			case RaceList.KABUKI:
-			case RaceList.KABUKI_DEMON:
+			case RaceEnum.MOUEFFE:
+			case RaceEnum.MOUEFFE_DEMON:
+			case RaceEnum.WINKS:
+			case RaceEnum.WINKS_DEMON:
+			case RaceEnum.PLANAILLE:
+			case RaceEnum.PLANAILLE_DEMON:
+			case RaceEnum.GORILLOZ:
+			case RaceEnum.GORILLOZ_DEMON:
+			case RaceEnum.SANTAZ:
+			case RaceEnum.MAHAMUTI:
+			case RaceEnum.QUETZU:
+			case RaceEnum.TRICERAGNON:
+			case RaceEnum.PIGMOU:
+			case RaceEnum.PIGMOU_DEMON:
+			case RaceEnum.SIRAIN:
+			case RaceEnum.KABUKI:
+			case RaceEnum.KABUKI_DEMON:
 				display = generateDinozDisplay(currentRace, '1', '1', '0');
 				break;
-			case RaceList.CASTIVORE:
+			case RaceEnum.CASTIVORE:
 				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
 				break;
-			case RaceList.ROCKY:
-			case RaceList.NUAGOZ:
-			case RaceList.SMOG:
+			case RaceEnum.ROCKY:
+			case RaceEnum.NUAGOZ:
+			case RaceEnum.SMOG:
 				display = generateDinozDisplay(currentRace, '1', '0', '0');
 				break;
-			case RaceList.WANWAN:
-			case RaceList.WANWAN_DEMON:
+			case RaceEnum.WANWAN:
+			case RaceEnum.WANWAN_DEMON:
 				display = generateDinozDisplay(currentRace, '2', '0', '0');
 				break;
-			case RaceList.FEROSS:
+			case RaceEnum.FEROSS:
 				display =
 					getRandomNumber(0, 1) === 0
 						? generateDinozDisplay(currentRace, '1', '1', '0')
 						: generateDinozDisplay(currentRace, '2', '2', '0');
 				break;
-			case RaceList.TOUFUFU:
+			case RaceEnum.TOUFUFU:
 				display = generateDinozDisplay(currentRace, '0', '1', '0');
 				break;
-			case RaceList.PTEROZ:
-			case RaceList.HIPPOCLAMP:
-			case RaceList.SOUFFLET:
+			case RaceEnum.PTEROZ:
+			case RaceEnum.HIPPOCLAMP:
+			case RaceEnum.SOUFFLET:
 			default:
 				break;
 		}

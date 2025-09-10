@@ -1,7 +1,7 @@
-import { RaceList } from './RaceList.mjs';
+import { RaceEnum } from '../enums/RaceEnum.mjs';
 
 export interface DinozRace {
-	raceId: RaceList;
+	raceId: RaceEnum;
 	isDemon: boolean;
 	name: string;
 	nbrFire: number;

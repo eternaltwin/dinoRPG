@@ -3,41 +3,12 @@
 
 import { DinozRace } from './DinozRace.mjs';
 import { Skill } from './SkillList.mjs';
+import { RaceEnum } from '../enums/RaceEnum.mjs'
 
-export enum RaceList {
-	MOUEFFE = 1,
-	MOUEFFE_DEMON,
-	PIGMOU,
-	PIGMOU_DEMON,
-	WINKS,
-	WINKS_DEMON,
-	PLANAILLE,
-	PLANAILLE_DEMON,
-	CASTIVORE,
-	ROCKY,
-	PTEROZ,
-	NUAGOZ,
-	SIRAIN,
-	HIPPOCLAMP,
-	GORILLOZ,
-	GORILLOZ_DEMON,
-	WANWAN,
-	WANWAN_DEMON,
-	SANTAZ,
-	FEROSS,
-	KABUKI,
-	KABUKI_DEMON,
-	MAHAMUTI,
-	SOUFFLET,
-	TOUFUFU,
-	QUETZU,
-	SMOG,
-	TRICERAGNON
-}
 
-export const raceList: Record<RaceList, DinozRace> = {
-	[RaceList.MOUEFFE]: {
-		raceId: RaceList.MOUEFFE,
+export const raceList: Record<RaceEnum, DinozRace> = {
+	[RaceEnum.MOUEFFE]: {
+		raceId: RaceEnum.MOUEFFE,
 		isDemon: false,
 		name: 'moueffe',
 		nbrFire: 2,
@@ -55,8 +26,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 16000,
 		swfLetter: '00'
 	},
-	[RaceList.MOUEFFE_DEMON]: {
-		raceId: RaceList.MOUEFFE_DEMON,
+	[RaceEnum.MOUEFFE_DEMON]: {
+		raceId: RaceEnum.MOUEFFE_DEMON,
 		isDemon: true,
 		name: 'moueffe_demon',
 		nbrFire: 2,
@@ -75,8 +46,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '0A',
 		skillId: [Skill.FORCE_DE_LUMIERE]
 	},
-	[RaceList.PIGMOU]: {
-		raceId: RaceList.PIGMOU,
+	[RaceEnum.PIGMOU]: {
+		raceId: RaceEnum.PIGMOU,
 		isDemon: false,
 		name: 'pigmou',
 		nbrFire: 2,
@@ -95,8 +66,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '10',
 		skillId: [Skill.CHARGE_CORNUE]
 	},
-	[RaceList.PIGMOU_DEMON]: {
-		raceId: RaceList.PIGMOU_DEMON,
+	[RaceEnum.PIGMOU_DEMON]: {
+		raceId: RaceEnum.PIGMOU_DEMON,
 		isDemon: true,
 		name: 'pigmou_demon',
 		nbrFire: 2,
@@ -115,8 +86,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '1A',
 		skillId: [Skill.CHARGE_PIGMOU]
 	},
-	[RaceList.WINKS]: {
-		raceId: RaceList.WINKS,
+	[RaceEnum.WINKS]: {
+		raceId: RaceEnum.WINKS,
 		isDemon: false,
 		name: 'winks',
 		nbrFire: 0,
@@ -135,8 +106,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '20',
 		skillId: [Skill.COQUE]
 	},
-	[RaceList.WINKS_DEMON]: {
-		raceId: RaceList.WINKS_DEMON,
+	[RaceEnum.WINKS_DEMON]: {
+		raceId: RaceEnum.WINKS_DEMON,
 		isDemon: true,
 		name: 'winks_demon',
 		nbrFire: 0,
@@ -155,8 +126,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '2A',
 		skillId: [Skill.DUR_A_CUIRE]
 	},
-	[RaceList.PLANAILLE]: {
-		raceId: RaceList.PLANAILLE,
+	[RaceEnum.PLANAILLE]: {
+		raceId: RaceEnum.PLANAILLE,
 		isDemon: false,
 		name: 'planaille',
 		nbrFire: 0,
@@ -174,8 +145,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 16000,
 		swfLetter: '30'
 	},
-	[RaceList.PLANAILLE_DEMON]: {
-		raceId: RaceList.PLANAILLE_DEMON,
+	[RaceEnum.PLANAILLE_DEMON]: {
+		raceId: RaceEnum.PLANAILLE_DEMON,
 		isDemon: true,
 		name: 'planaille_demon',
 		nbrFire: 0,
@@ -194,8 +165,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '3A',
 		skillId: [Skill.FORCE_DES_TENEBRES]
 	},
-	[RaceList.CASTIVORE]: {
-		raceId: RaceList.CASTIVORE,
+	[RaceEnum.CASTIVORE]: {
+		raceId: RaceEnum.CASTIVORE,
 		isDemon: false,
 		name: 'castivore',
 		nbrFire: 0,
@@ -213,8 +184,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 16000,
 		swfLetter: '40'
 	},
-	[RaceList.ROCKY]: {
-		raceId: RaceList.ROCKY,
+	[RaceEnum.ROCKY]: {
+		raceId: RaceEnum.ROCKY,
 		isDemon: false,
 		name: 'rocky',
 		nbrFire: 0,
@@ -233,8 +204,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: '50',
 		skillId: [Skill.ROCK]
 	},
-	[RaceList.PTEROZ]: {
-		raceId: RaceList.PTEROZ,
+	[RaceEnum.PTEROZ]: {
+		raceId: RaceEnum.PTEROZ,
 		isDemon: false,
 		name: 'pteroz',
 		nbrFire: 0,
@@ -252,8 +223,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 22000,
 		swfLetter: '60'
 	},
-	[RaceList.NUAGOZ]: {
-		raceId: RaceList.NUAGOZ,
+	[RaceEnum.NUAGOZ]: {
+		raceId: RaceEnum.NUAGOZ,
 		isDemon: false,
 		name: 'nuagoz',
 		nbrFire: 0,
@@ -271,8 +242,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 16000,
 		swfLetter: '70'
 	},
-	[RaceList.SIRAIN]: {
-		raceId: RaceList.SIRAIN,
+	[RaceEnum.SIRAIN]: {
+		raceId: RaceEnum.SIRAIN,
 		isDemon: false,
 		name: 'sirain',
 		nbrFire: 0,
@@ -290,8 +261,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 16000,
 		swfLetter: '80'
 	},
-	[RaceList.HIPPOCLAMP]: {
-		raceId: RaceList.HIPPOCLAMP,
+	[RaceEnum.HIPPOCLAMP]: {
+		raceId: RaceEnum.HIPPOCLAMP,
 		isDemon: false,
 		name: 'hippoclamp',
 		nbrFire: 1,
@@ -309,8 +280,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 28000,
 		swfLetter: '90'
 	},
-	[RaceList.GORILLOZ]: {
-		raceId: RaceList.GORILLOZ,
+	[RaceEnum.GORILLOZ]: {
+		raceId: RaceEnum.GORILLOZ,
 		isDemon: false,
 		name: 'gorilloz',
 		nbrFire: 0,
@@ -328,8 +299,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 16000,
 		swfLetter: 'A0'
 	},
-	[RaceList.GORILLOZ_DEMON]: {
-		raceId: RaceList.GORILLOZ_DEMON,
+	[RaceEnum.GORILLOZ_DEMON]: {
+		raceId: RaceEnum.GORILLOZ_DEMON,
 		isDemon: true,
 		name: 'gorilloz_demon',
 		nbrFire: 0,
@@ -348,8 +319,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'AA',
 		skillId: [Skill.GROS_COSTAUD]
 	},
-	[RaceList.WANWAN]: {
-		raceId: RaceList.WANWAN,
+	[RaceEnum.WANWAN]: {
+		raceId: RaceEnum.WANWAN,
 		isDemon: false,
 		name: 'wanwan',
 		nbrFire: 0,
@@ -367,8 +338,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 19000,
 		swfLetter: 'B0'
 	},
-	[RaceList.WANWAN_DEMON]: {
-		raceId: RaceList.WANWAN_DEMON,
+	[RaceEnum.WANWAN_DEMON]: {
+		raceId: RaceEnum.WANWAN_DEMON,
 		isDemon: true,
 		name: 'wanwan_demon',
 		nbrFire: 0,
@@ -387,8 +358,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'BA',
 		skillId: [Skill.FRENESIE_COLLECTIVE]
 	},
-	[RaceList.SANTAZ]: {
-		raceId: RaceList.SANTAZ,
+	[RaceEnum.SANTAZ]: {
+		raceId: RaceEnum.SANTAZ,
 		isDemon: false,
 		name: 'santaz',
 		nbrFire: 1,
@@ -407,8 +378,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'C0',
 		skillId: [Skill.PIETINEMENT]
 	},
-	[RaceList.FEROSS]: {
-		raceId: RaceList.FEROSS,
+	[RaceEnum.FEROSS]: {
+		raceId: RaceEnum.FEROSS,
 		isDemon: false,
 		name: 'feross',
 		nbrFire: 1,
@@ -427,8 +398,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'D0',
 		skillId: [Skill.CUIRASSE]
 	},
-	[RaceList.KABUKI]: {
-		raceId: RaceList.KABUKI,
+	[RaceEnum.KABUKI]: {
+		raceId: RaceEnum.KABUKI,
 		isDemon: false,
 		name: 'kabuki',
 		nbrFire: 0,
@@ -447,8 +418,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'E0',
 		skillId: [Skill.INSAISISSABLE]
 	},
-	[RaceList.KABUKI_DEMON]: {
-		raceId: RaceList.KABUKI_DEMON,
+	[RaceEnum.KABUKI_DEMON]: {
+		raceId: RaceEnum.KABUKI_DEMON,
 		isDemon: true,
 		name: 'kabuki_demon',
 		nbrFire: 0,
@@ -467,8 +438,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'EA',
 		skillId: [Skill.INSAISISSABLE, Skill.ORIGINE_CAUSHEMESHENNE]
 	},
-	[RaceList.MAHAMUTI]: {
-		raceId: RaceList.MAHAMUTI,
+	[RaceEnum.MAHAMUTI]: {
+		raceId: RaceEnum.MAHAMUTI,
 		isDemon: false,
 		name: 'mahamuti',
 		nbrFire: 0,
@@ -487,8 +458,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'F0',
 		skillId: [Skill.ECRASEMENT]
 	},
-	[RaceList.SOUFFLET]: {
-		raceId: RaceList.SOUFFLET,
+	[RaceEnum.SOUFFLET]: {
+		raceId: RaceEnum.SOUFFLET,
 		isDemon: false,
 		name: 'soufflet',
 		nbrFire: 0,
@@ -507,8 +478,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'G0',
 		skillId: [Skill.NAPOMAGICIEN]
 	},
-	[RaceList.TOUFUFU]: {
-		raceId: RaceList.TOUFUFU,
+	[RaceEnum.TOUFUFU]: {
+		raceId: RaceEnum.TOUFUFU,
 		isDemon: false,
 		name: 'toufufu',
 		nbrFire: 0,
@@ -527,8 +498,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		swfLetter: 'H0',
 		skillId: [Skill.DEPLACEMENT_INSTANTANE]
 	},
-	[RaceList.QUETZU]: {
-		raceId: RaceList.QUETZU,
+	[RaceEnum.QUETZU]: {
+		raceId: RaceEnum.QUETZU,
 		isDemon: false,
 		name: 'quetzu',
 		nbrFire: 2,
@@ -546,8 +517,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 35000,
 		swfLetter: 'I0'
 	},
-	[RaceList.SMOG]: {
-		raceId: RaceList.SMOG,
+	[RaceEnum.SMOG]: {
+		raceId: RaceEnum.SMOG,
 		isDemon: false,
 		name: 'smog',
 		nbrFire: 1,
@@ -565,8 +536,8 @@ export const raceList: Record<RaceList, DinozRace> = {
 		price: 35000,
 		swfLetter: 'J0'
 	},
-	[RaceList.TRICERAGNON]: {
-		raceId: RaceList.TRICERAGNON,
+	[RaceEnum.TRICERAGNON]: {
+		raceId: RaceEnum.TRICERAGNON,
 		isDemon: false,
 		name: 'triceragnon',
 		nbrFire: 2,

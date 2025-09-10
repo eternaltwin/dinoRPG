@@ -6,6 +6,7 @@ import { SkillType } from '../enums/SkillType.mjs';
 import { Skill } from './SkillList.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
 import { AuraFxType, SkillFxType, GotoEffect, LifeEffect, DamagesEffect } from '../fight/transpiler.mjs';
+import { RaceEnum } from '../enums/RaceEnum.mjs';
 
 type OtherAssaults<T> = Exclude<
 	Stat.FIRE_ASSAULT | Stat.WATER_ASSAULT | Stat.AIR_ASSAULT | Stat.LIGHTNING_ASSAULT | Stat.WOOD_ASSAULT,
@@ -57,7 +58,7 @@ export interface SkillDetails {
 	state?: boolean;
 	tree?: SkillTreeType;
 	unlockedFrom?: Skill[];
-	raceId?: number[]; // For specific race skill (ex : fly for Pteroz)
+	raceId?: RaceEnum[]; // For specific race skill (ex : fly for Pteroz)
 	isBaseSkill: boolean; // If true : dinoz knows this skill when bought
 	isSphereSkill: boolean; // true : the skill can only be learned with a sphere object
 	effects?: SkillEffects;

@@ -1,5 +1,6 @@
 import { DinozRace } from '@drpg/core/models/dinoz/DinozRace';
-import { raceList, RaceList } from '@drpg/core/models/dinoz/RaceList';
+import { raceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import { SkillDetails } from '@drpg/core/models/dinoz/SkillDetails';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
@@ -365,10 +366,10 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 		case itemList[Item.CHRISTMAS_EGG].itemId:
 			// MT is [0,3], we switched to [0,10] to increase trice rarity
 			if (getRandomNumber(0, 10) === 0) {
-				race = RaceList.TRICERAGNON;
+				race = RaceEnum.TRICERAGNON;
 				randomDisplay = generateDinozDisplay(raceList[race], '0', '0', '0');
 			} else {
-				race = RaceList.SANTAZ;
+				race = RaceEnum.SANTAZ;
 				randomDisplay = generateDinozDisplay(raceList[race], '0', getRandomLetter('1'), '0');
 			}
 			break;

@@ -8,7 +8,7 @@ import { getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
 import { UnavailableReason } from '@drpg/prisma';
 import { formatTID } from '@drpg/core/models/dojo/teamFormat';
-import { RaceList } from '@drpg/core/models/dinoz/RaceList';
+import { RaceEnum } from '@drpg/core/models/enums/RaceEnum';
 import dayjs from 'dayjs';
 import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
@@ -457,7 +457,7 @@ export async function createFirstTournament(prisma: PismaClientLocal) {
 	}
 }
 
-export async function getLevelLimits(races: RaceList[]) {
+export async function getLevelLimits(races: RaceEnum[]) {
 	let maxLevel = 0;
 	let currentLevel = 20;
 	while (currentLevel <= gameConfig.dinoz.maxLevel) {
