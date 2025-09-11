@@ -86,7 +86,14 @@
 		"login": "Connexion à Eternaltwin",
 		"homepage": {
 			"part1": "DinoRPG est actuellement en version alpha ouverte au public. Faites attention car le jeu est envahi de hargneux Goupignons. Lors de la fin de la version alpha, le progrès de tous sera remis à zéro.",
-			"part2": "Toutes les informations sont disponibles sur "
+			"part2": "Toutes les informations sont disponibles sur ",
+			"dialog": {
+				"message1": "Aaah, Dinoville, le joyaux de Dinoland, le point de départ de toute aventure qui se respecte.",
+				"message2": "Après un long périple, vous êtes enfin arrivé à votre destination, attiré par des rumeurs d'aventures palpitantes, de richesses, et de gloire.",
+				"message3": "C'est ici que vous pourrez recruter votre premier compagnon et...",
+				"message4": "Enfin !",
+				"message5": "Salut toi ! Prêt à rejoindre l'aventure ?"
+			}
 		},
 		"issue": "Merci de signaler les bugs rencontrés sur ",
 		"shop": "Afficher le Dinoz"

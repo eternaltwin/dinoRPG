@@ -11,6 +11,7 @@
 			<span class="time">{{ time }}</span>
 		</div>
 		<div class="boxRoot">
+			<LocaleChange />
 			<hr class="separator" />
 			<a v-if="!isLogged" class="connectLink" @click="getRedirectUri()">
 				<button class="connectBadge">Connexion</button>
@@ -25,13 +26,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { localStore, playerStore } from '../../store/index.js';
+import { localStore, playerStore } from '../../store';
 import EventBus from '../../events/index.js';
-import { NotificationService, OauthService } from '../../services/index.js';
-import { getCookie } from '../../utils/cookies.js';
+import { NotificationService, OauthService } from '../../services';
+import LocaleChange from '../utils/LocaleChange.vue';
 
 export default defineComponent({
 	name: 'TopBar',
+	components: { LocaleChange },
 	data() {
 		return {
 			isLogged: false as boolean,
@@ -167,11 +169,6 @@ export default defineComponent({
 	margin: 4px 8px 4px 0px;
 }
 .boxRoot {
-	position: sticky;
-	top: 0px;
-	left: 0px;
-	right: 0px;
-	z-index: 100;
 	height: 32px;
 	background-color: rgb(17, 19, 23);
 	box-shadow:
