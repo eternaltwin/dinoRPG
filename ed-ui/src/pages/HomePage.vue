@@ -11,7 +11,7 @@
 				</p>
 			</div>
 			<Suspense>
-				<FullFightAnimation :fight="fight" @animationEnded="autoLog = true" />
+				<FullFightAnimation :key="$i18n.locale" :fight="getFight()" @animationEnded="autoLog = true" />
 				<template #fallback> <Loading /> </template>
 			</Suspense>
 		</div>
@@ -38,166 +38,166 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			fight: {} as preFightLoader,
 			autoLog: false as boolean
 		};
 	},
-	mounted() {
-		this.fight = {
-			bg: 's_dnv',
-			top: 70,
-			bottom: 0,
-			ground: 0,
-			history: [
-				{
-					action: DinoAction.ADD,
-					fighter: {
-						props: [],
-						dino: true,
-						life: 100,
-						maxLife: 100,
-						name: 'Gerardufoin',
-						side: true,
-						scale: 1,
-						fid: 0,
-						gfx: '09T1Yt9wqq4Rx000',
-						entrance: EntranceEffect.GROW
-					}
-				},
-				{
-					action: DinoAction.ADD,
-					fighter: {
-						props: [],
-						dino: true,
-						life: 100,
-						maxLife: 100,
-						name: 'Biosha',
-						side: true,
-						scale: 1,
-						fid: 1,
-						gfx: '19CfWPseFa5gJ000',
-						entrance: EntranceEffect.JUMP
-					}
-				},
-				{
-					action: DinoAction.ADD,
-					fighter: {
-						props: [],
-						dino: true,
-						life: 100,
-						name: 'Zenoo',
-						maxLife: 100,
-						side: true,
-						scale: 1,
-						fid: 2,
-						gfx: '894ur5tfqXgmd010',
-						entrance: EntranceEffect.GROUND
-					}
-				},
-				{
-					action: DinoAction.ADD,
-					fighter: {
-						props: [],
-						dino: true,
-						life: 100,
-						maxLife: 100,
-						name: 'Jahaa',
-						side: true,
-						scale: 1,
-						fid: 3,
-						gfx: '29v1YPSSlNVjT000',
-						entrance: EntranceEffect.GROUND
-					}
-				},
-				{
-					action: DinoAction.ADD,
-					fighter: {
-						props: [],
-						dino: true,
-						life: 100,
-						maxLife: 100,
-						name: 'Jolu',
-						side: true,
-						scale: 1,
-						fid: 4,
-						gfx: '89XIW5r5kNoJF000',
-						entrance: EntranceEffect.GROUND
-					}
-				},
-				{
-					action: DinoAction.WAIT,
-					time: 1000
-				},
-				{
-					action: DinoAction.TEXT,
-					message: 'Aaah, Dinoville, le joyaux de Dinoland, le point de départ de toute aventure qui se respecte.'
-				},
-				{
-					action: DinoAction.TEXT,
-					message:
-						"Après un long périple, vous êtes enfin arrivé à votre destination, attiré par des rumeurs d'aventures palpitantes, de richesses, et de gloire."
-				},
-				{
-					action: DinoAction.TEXT,
-					message: "C'est ici que vous pourrez recruter votre premier compagnon et..."
-				},
-				{
-					action: DinoAction.SHAKE,
-					force: 20,
-					frict: 0.9
-				},
-				{
-					action: DinoAction.WAIT,
-					time: 500
-				},
-				{
-					action: DinoAction.EMOTE,
-					fids: [0, 1, 2],
-					emote: EmoteList.Question,
-					behaviour: EmoteBehaviour.Float
-				},
-				{
-					action: DinoAction.WAIT,
-					time: 1000
-				},
-				{
-					action: DinoAction.ADD,
-					fighter: {
-						props: [],
-						dino: false,
-						life: 100,
-						maxLife: 100,
-						name: 'Mandragore',
-						side: false,
-						scale: 1,
+	methods: {
+		getFight(): preFightLoader {
+			return {
+				bg: 's_dnv',
+				top: 70,
+				bottom: 0,
+				ground: 0,
+				history: [
+					{
+						action: DinoAction.ADD,
+						fighter: {
+							props: [],
+							dino: true,
+							life: 100,
+							maxLife: 100,
+							name: 'Gerardufoin',
+							side: true,
+							scale: 1,
+							fid: 0,
+							gfx: '09T1Yt9wqq4Rx000',
+							entrance: EntranceEffect.GROW
+						}
+					},
+					{
+						action: DinoAction.ADD,
+						fighter: {
+							props: [],
+							dino: true,
+							life: 100,
+							maxLife: 100,
+							name: 'Biosha',
+							side: true,
+							scale: 1,
+							fid: 1,
+							gfx: '19CfWPseFa5gJ000',
+							entrance: EntranceEffect.JUMP
+						}
+					},
+					{
+						action: DinoAction.ADD,
+						fighter: {
+							props: [],
+							dino: true,
+							life: 100,
+							name: 'Zenoo',
+							maxLife: 100,
+							side: true,
+							scale: 1,
+							fid: 2,
+							gfx: '894ur5tfqXgmd010',
+							entrance: EntranceEffect.GROUND
+						}
+					},
+					{
+						action: DinoAction.ADD,
+						fighter: {
+							props: [],
+							dino: true,
+							life: 100,
+							maxLife: 100,
+							name: 'Jahaa',
+							side: true,
+							scale: 1,
+							fid: 3,
+							gfx: '29v1YPSSlNVjT000',
+							entrance: EntranceEffect.GROUND
+						}
+					},
+					{
+						action: DinoAction.ADD,
+						fighter: {
+							props: [],
+							dino: true,
+							life: 100,
+							maxLife: 100,
+							name: 'Jolu',
+							side: true,
+							scale: 1,
+							fid: 4,
+							gfx: '89XIW5r5kNoJF000',
+							entrance: EntranceEffect.GROUND
+						}
+					},
+					{
+						action: DinoAction.WAIT,
+						time: 1000
+					},
+					{
+						action: DinoAction.TEXT,
+						message: this.$t('alpha.homepage.dialog.message1')
+					},
+					{
+						action: DinoAction.TEXT,
+						message: this.$t('alpha.homepage.dialog.message2')
+					},
+					{
+						action: DinoAction.TEXT,
+						message: this.$t('alpha.homepage.dialog.message3')
+					},
+					{
+						action: DinoAction.SHAKE,
+						force: 20,
+						frict: 0.9
+					},
+					{
+						action: DinoAction.WAIT,
+						time: 500
+					},
+					{
+						action: DinoAction.EMOTE,
+						fids: [0, 1, 2],
+						emote: EmoteList.Question,
+						behaviour: EmoteBehaviour.Float
+					},
+					{
+						action: DinoAction.WAIT,
+						time: 1000
+					},
+					{
+						action: DinoAction.ADD,
+						fighter: {
+							props: [],
+							dino: false,
+							life: 100,
+							maxLife: 100,
+							name: 'Mandragore',
+							side: false,
+							scale: 1,
+							fid: -1,
+							gfx: 'mandragore',
+							entrance: 1,
+							x: 325,
+							y: 260
+						}
+					},
+					{
+						action: DinoAction.TALK,
 						fid: -1,
-						gfx: 'mandragore',
-						entrance: 1,
-						x: 325,
-						y: 260
+						message: this.$t('alpha.homepage.dialog.message4')
+					},
+					{
+						action: DinoAction.TALK,
+						fid: -1,
+						message: this.$t('alpha.homepage.dialog.message5')
+					},
+					{
+						action: DinoAction.WAIT,
+						time: 300
+					},
+					{
+						action: DinoAction.FINISH,
+						left: FinishState.RUN,
+						right: FinishState.ESCAPE
 					}
-				},
-				{
-					action: DinoAction.TALK,
-					fid: -1,
-					message: 'Enfin !'
-				},
-				{
-					action: DinoAction.TALK,
-					fid: -1,
-					message: "Salut toi ! Prêt à rejoindre l'aventure ?"
-				},
-				{
-					action: DinoAction.WAIT,
-					time: 300
-				},
-				{
-					action: DinoAction.FINISH,
-					left: FinishState.RUN,
-					right: FinishState.ESCAPE
-				}
-			]
-		};
+				]
+			};
+		}
 	}
 });
 </script>
