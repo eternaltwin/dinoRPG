@@ -1,7 +1,7 @@
 <template>
 	<div id="topBar">
-		<div v-if="isLogged" class="boxRoot">
-			<a class="connectLink" @click="openDinoz()">
+		<div class="boxRoot">
+			<a v-if="playerStore.getPlayerId" class="connectLink" @click="openDinoz()">
 				<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddIcon">
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path>
 				</svg>
@@ -13,10 +13,10 @@
 		<div class="boxRoot">
 			<LocaleChange />
 			<hr class="separator" />
-			<a v-if="!isLogged" class="connectLink" @click="getRedirectUri()">
+			<a v-if="!playerStore.getPlayerId" class="connectLink" @click="getRedirectUri()">
 				<button class="connectBadge">Connexion</button>
 			</a>
-			<span v-if="isLogged" class="playerLogged">
+			<span v-else class="playerLogged">
 				<button @click="openMenu" class="playerBadge">Menu</button>
 				<span class="notifications" v-if="notification > 0">{{ notification }}</span>
 			</span>
@@ -36,7 +36,6 @@ export default defineComponent({
 	components: { LocaleChange },
 	data() {
 		return {
-			isLogged: false as boolean,
 			localStore: localStore(),
 			playerStore: playerStore(),
 			time: '' as string,
@@ -51,7 +50,8 @@ export default defineComponent({
 		},
 		getTime(): void {
 			const day = new Date();
-			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
+			// TODO Récupérer la locale en fonction de la langue ?
+			this.time = day.toLocaleTimeString('fr-FR', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
 		},
 		openMenu() {
 			EventBus.emit('twinoMenu', true);
@@ -60,7 +60,7 @@ export default defineComponent({
 			EventBus.emit('dinozMenu', true);
 		},
 		async refreshNotif() {
-			if (!this.isLogged) return;
+			if (!this.playerStore.getPlayerId) return;
 
 			const backNotif = await NotificationService.getNotifications();
 			this.playerStore.setNotifications(backNotif.notifications);
@@ -77,21 +77,13 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		const channel = import.meta.env.VITE_API_RELEASE_CHANNEL;
-		this.isLogged = getCookie(`x-drpg-${channel}-token`) !== null;
 		this.notification = this.playerStore.getNotificationsCounter;
-		EventBus.on('connected', async e => {
-			this.isLogged = e;
-		});
 		setInterval(() => {
 			this.getTime();
 		}, 1000);
 		setInterval(() => {
 			this.refreshNotif();
 		}, 60 * 1000);
-	},
-	unmounted() {
-		EventBus.off('connected');
 	}
 });
 </script>
