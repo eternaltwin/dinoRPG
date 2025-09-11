@@ -156,9 +156,6 @@
 						><span>{{ $t('rightMenu.logout') }}</span></RouterLink
 					>
 				</div>
-				<div class="language">
-					<LocaleChange />
-				</div>
 			</div>
 			<div class="notifications" v-if="notifications.length > 0">
 				<div class="section">
@@ -224,7 +221,6 @@
 import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { dinozStore, localStore, playerStore } from '../../store/index.js';
-import LocaleChange from '../utils/LocaleChange.vue';
 import { Notification, translatedNotification } from '@drpg/core/models/notifications/notification';
 import { NotificationService, PlayerService } from '../../services/index.js';
 import { errorHandler } from '../../utils/index.js';
@@ -237,7 +233,6 @@ import { deleteCookie } from '../../utils/cookies.js';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
-	components: { LocaleChange },
 	data() {
 		return {
 			menuCalled: false,
@@ -696,14 +691,6 @@ export default defineComponent({
 				}
 			}
 		}
-	}
-	.language {
-		display: flex;
-		-moz-box-pack: center;
-		justify-content: center;
-		flex-wrap: wrap;
-		gap: 8px;
-		padding-top: 8px;
 	}
 }
 .parameters {

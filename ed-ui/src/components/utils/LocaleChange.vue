@@ -11,15 +11,16 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Locales, LocalesEnum, loadLanguage } from '../../i18n/index.js';
-import { localStore } from '../../store/index.js';
-import { PlayerService } from '../../services/PlayerService';
+import { loadLanguage, Locales, LocalesEnum } from '../../i18n';
+import { localStore, playerStore } from '../../store';
+import { PlayerService } from '../../services';
 
 export default defineComponent({
 	name: 'LocaleChange',
 	data() {
 		return {
 			localStore: localStore(),
+			playerStore: playerStore(),
 			langs: Locales
 		};
 	},
@@ -28,7 +29,9 @@ export default defineComponent({
 			if (this.$i18n.locale !== locale) {
 				try {
 					// Mettre à jour la langue du joueur sur le backend
-					await PlayerService.updatePlayerLanguage(locale);
+					if (this.playerStore.getPlayerId) {
+						await PlayerService.updatePlayerLanguage(locale);
+					}
 					// Changer la langue localement
 					loadLanguage(locale);
 					this.localStore.setLanguage(locale);
