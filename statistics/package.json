@@ -11,6 +11,7 @@
   "scripts": {
     "build": "yarn tsc --build ./tsconfig.json",
     "start": "node dist/main.js",
+    "clean": "rimraf -g ./dist ./node_modules tsconfig.tsbuildinfo",
     "dev:start": "yarn tsc --build ./tsconfig.json && node dist/main.js"
   },
   "release-it": {

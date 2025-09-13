@@ -149,7 +149,7 @@ async function generateFightStatistics(group_size: number) {
 	
 		let placeName = placeList[place.place].name;
 
-		saveMonsterFightStatsToCSV(stats, `test-size-${group_size}-place-${placeName}-test5.csv`);
+		saveMonsterFightStatsToCSV(stats, `test-size-${group_size}-place-${placeName}-v2-2.csv`);
 	}
 }
 
@@ -157,9 +157,9 @@ async function main() {
 	console.log('Starting DinoRPG Statistics...');
 	// generateFightStatistics(1);
 	generateFightStatistics(2);
-	generateFightStatistics(3);
-	generateFightStatistics(4);
-	generateFightStatistics(5);
+	// generateFightStatistics(3);
+	// generateFightStatistics(4);
+	// generateFightStatistics(5);
 }
 
 // Run main function and handle errors

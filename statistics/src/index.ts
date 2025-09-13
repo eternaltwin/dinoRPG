@@ -57,6 +57,7 @@ export class StatisticsService {
 
     let fgold = 0;
     let levelup = false;
+    let gold = 0;
 
     for (const d of team) {
       //TODO escape
@@ -102,6 +103,7 @@ export class StatisticsService {
         levelup = true;
       }
       totalWinXP += xp;
+      gold += (getRandomNumber(0, 10) + 28) * 10;
     }
 
     const fprob = getRandomNumber(0, 100);
@@ -109,17 +111,16 @@ export class StatisticsService {
     if (fprob < 1) goldMultiplier = 10;
     else if (fprob < 11) goldMultiplier = 3;
 
-    let totalGold = (getRandomNumber(0, 10) + 28) * 10;
 
-    totalGold += Math.round(totalGold * goldMultiplier * fgold * goldFactor);
+    gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 
     if (monsters.length === 0) {
-      totalGold = 0;
+      gold = 0;
     }
 
     return {
       xp: totalWinXP,
-      gold: totalGold
+      gold: gold
     }
   }
 

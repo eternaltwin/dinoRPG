@@ -47,6 +47,7 @@
 		"build:back": "cd ed-be && yarn run build",
 		"build:front": "cd ed-ui && yarn run build",
 		"stats": "yarn workspace @drpg/statistics start",
+		"stats:clean": "yarn workspace @drpg/statistics clean",
 		"stats:dev": "yarn workspace @drpg/statistics dev:start",
 		"build:gitlab": "yarn run build:back && yarn run build:front",
 		"build": "yarn run build:back && yarn run build:front",
@@ -73,8 +74,8 @@
 			"ed-ui/",
 			"core/",
 			"prisma/",
-			"Eternaltwin/"
-			"statistics"
+			"Eternaltwin/",
+			"statistics/"
 		]
 	},
 	"packageManager": "yarn@4.2.2",

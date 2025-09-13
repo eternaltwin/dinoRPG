@@ -1845,7 +1845,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@drpg/core@workspace:^, @drpg/core@workspace:core":
+"@drpg/core@workspace:*, @drpg/core@workspace:^, @drpg/core@workspace:core":
   version: 0.0.0-use.local
   resolution: "@drpg/core@workspace:core"
   dependencies:
@@ -1870,6 +1870,30 @@ __metadata:
 "@drpg/prisma@workspace:prisma":
   version: 0.0.0-use.local
   resolution: "@drpg/prisma@workspace:prisma"
+  languageName: unknown
+  linkType: soft
+
+"@drpg/statistics@workspace:statistics":
+  version: 0.0.0-use.local
+  resolution: "@drpg/statistics@workspace:statistics"
+  dependencies:
+    "@drpg/core": "workspace:*"
+    "@stylistic/eslint-plugin-ts": "npm:^1.4.0"
+    "@types/eslint": "npm:^9.6.1"
+    "@types/seedrandom": "npm:^3.0.8"
+    "@typescript-eslint/eslint-plugin": "npm:^6.4.0"
+    "@typescript-eslint/parser": "npm:^6.11.0"
+    csv-stringify: "npm:^6.6.0"
+    ed-be: "workspace:*"
+    eslint: "npm:^8.0.1"
+    eslint-config-standard-with-typescript: "npm:^40.0.0"
+    eslint-plugin-import: "npm:^2.25.2"
+    eslint-plugin-n: "npm:^15.0.0 || ^16.0.0 "
+    eslint-plugin-promise: "npm:^6.0.0"
+    prettier: "npm:^3.4.2"
+    typescript: "npm:^5.7.2"
+  bin:
+    drpg-stats: ./dist/main.js
   languageName: unknown
   linkType: soft
 
@@ -13816,7 +13840,7 @@ __metadata:
 
 "typescript@patch:typescript@npm%3A^5.7.2#optional!builtin<compat/typescript>":
   version: 5.7.2
-  resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=b45daf"
+  resolution: "typescript@patch:typescript@npm%3A5.7.2#optional!builtin<compat/typescript>::version=5.7.2&hash=d69c25"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
