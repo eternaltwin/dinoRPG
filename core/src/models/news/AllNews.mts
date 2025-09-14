@@ -2,6 +2,8 @@ import { Image } from './Image.mjs';
 
 export interface AllNews {
 	title: string;
+	type: string;
+	subtype: string;
 	createdDate: Date;
 	image: Image;
 	frenchTitle: string;

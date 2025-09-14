@@ -7,7 +7,9 @@
 	>
 		<div class="news">
 			<div class="newsTitle">
-				<img class="newsImg" :src="getImgURL('background', 'news_image')" alt="Logo News" />
+				<div class="newsImg">
+					<img :src="getNewsImg(news)" :alt="news.title" />
+				</div>
 				<div class="newsContent">
 					<h1>{{ news.title }}</h1>
 					<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
@@ -61,51 +63,86 @@ export default defineComponent({
 			switch (this.localStore.getLanguage) {
 				case 'fr':
 					return news.map(news =>
-						this.getBatchData(news.id, news.frenchTitle, news.frenchText, news.createdDate, news.likes, news.likedByMe)
+						this.getBatchData(
+							news.id,
+							news.frenchTitle,
+							news.type,
+							news.frenchText,
+							news.createdDate,
+							news.likes,
+							news.likedByMe,
+							news.subtype
+						)
 					);
 				case 'en':
 					return news.map(news =>
 						this.getBatchData(
 							news.id,
 							news.englishTitle,
+							news.type,
 							news.englishText,
 							news.createdDate,
 							news.likes,
-							news.likedByMe
+							news.likedByMe,
+							news.subtype
 						)
 					);
 				case 'de':
 					return news.map(news =>
-						this.getBatchData(news.id, news.germanTitle, news.germanText, news.createdDate, news.likes, news.likedByMe)
+						this.getBatchData(
+							news.id,
+							news.germanTitle,
+							news.type,
+							news.germanText,
+							news.createdDate,
+							news.likes,
+							news.likedByMe,
+							news.subtype
+						)
 					);
 				case 'es':
 					return news.map(news =>
 						this.getBatchData(
 							news.id,
 							news.spanishTitle,
+							news.type,
 							news.spanishText,
 							news.createdDate,
 							news.likes,
-							news.likedByMe
+							news.likedByMe,
+							news.subtype
 						)
 					);
 				default:
 					return news.map(news =>
-						this.getBatchData(news.id, news.frenchTitle, news.frenchText, news.createdDate, news.likes, news.likedByMe)
+						this.getBatchData(
+							news.id,
+							news.frenchTitle,
+							news.type,
+							news.frenchText,
+							news.createdDate,
+							news.likes,
+							news.likedByMe,
+							news.subtype
+						)
 					);
 			}
 		},
 		getBatchData(
 			id: number,
 			title: string | null,
+			type: string,
 			text: string | null,
 			createdDate: Date,
 			likes: number,
-			likedByMe: boolean
+			likedByMe: boolean,
+			subtype?: string | null
 		): DisplayedNews {
 			return {
 				id,
 				title: title || '',
+				type: type,
+				subtype: subtype || null,
 				createdDate: createdDate ? new Date(createdDate) : new Date(),
 				text: text || '',
 				hide: true,
@@ -152,6 +189,12 @@ export default defineComponent({
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 			}
+		},
+		getNewsImg(news: DisplayedNews): string {
+			if (news.subtype) {
+				return this.getImgURL('news', `news_${news.type?.toLowerCase()}_${news.subtype.toLowerCase()}`);
+			}
+			return this.getImgURL('news', `news_${news.type?.toLowerCase()}`);
 		}
 	},
 	async mounted() {
@@ -188,7 +231,7 @@ export default defineComponent({
 	max-width: 496px;
 	background-repeat: repeat-y;
 	cursor: pointer;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 	border: 1px solid #ffee92;
 	outline: 1px solid #92471f;
 	transition: max-height 0.9s ease-out;
@@ -197,17 +240,26 @@ export default defineComponent({
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		border-bottom: 1px solid #e0a665;
 		.newsTitle {
 			display: flex;
 			gap: 10px;
 			.newsImg {
-				height: 57px;
-				width: 48px;
+				border: 1px solid #ffee92;
+				width: 80px;
+				height: 80px;
+				overflow: hidden;
+				& img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
 			}
 			.newsContent {
 				color: #ffee92;
 				display: flex;
 				flex-direction: column;
+				width: 280px;
 				& h1 {
 					height: auto;
 					max-height: none;
@@ -231,7 +283,7 @@ export default defineComponent({
 			background-repeat: no-repeat;
 			display: flex;
 			align-items: center;
-			margin-top: -20px;
+			margin-top: -22px;
 			margin-right: -12px;
 			width: 130px;
 			height: 70px;
@@ -239,14 +291,15 @@ export default defineComponent({
 				display: flex;
 				color: #ffee92;
 				cursor: pointer;
-				font-size: 16pt;
 				font-weight: bold;
 				margin-left: 25px;
 				& img {
-					height: 26px;
-					width: 26px;
+					height: 16px;
+					width: 20px;
+					object-fit: cover;
 				}
 				& span {
+					margin-top: -1px;
 					margin-left: 6px;
 				}
 			}

@@ -72,6 +72,8 @@ routes.put(
 	[
 		multer().single('file'),
 		param('title').exists().isString(),
+		body('type').exists().isString(),
+		body('subtype').default(null).optional({ nullable: true }).isString(),
 		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
 		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
 		body('spanishText').default(null).optional({ nullable: true }).exists().isString(),
@@ -194,6 +196,8 @@ routes.put(
 	[
 		multer().single('file'),
 		param('title').exists().isString(),
+		body('type').exists().isString(),
+		body('subtype').default(null).optional({ nullable: true }).isString(),
 		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
 		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
 		body('spanishText').default(null).optional({ nullable: true }).exists().isString(),

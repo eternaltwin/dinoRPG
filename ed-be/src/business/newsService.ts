@@ -15,6 +15,8 @@ import { auth } from '../dao/playerDao.js';
  * @summary Create a news
  * @param req
  * @param req.params.title {string} Title of the new
+ * @param req.params.type {string} Type of the new
+ * @param req.params.subtype {string} Subtype of the new
  * @param req.file.buffer {blob} Image of the new
  * @param req.body.frenchTitle {string} French title
  * @param req.body.englishTitle {string} English title
@@ -29,6 +31,8 @@ export async function postNews(req: Request) {
 	await createNews({
 		title: req.params.title,
 		image: req.file?.buffer,
+		type: req.body.type,
+		subtype: req.body.subtype,
 		frenchTitle: req.body.frenchTitle,
 		englishTitle: req.body.englishTitle,
 		spanishTitle: req.body.spanishTitle,
@@ -58,6 +62,8 @@ export async function getNews(req: Request) {
  * @summary Update a selected news
  * @param req
  * @param req.params.title {string} Title of the new
+ * @param req.params.type {string} Type of the new
+ * @param req.params.subtype {string} Subtype of the new
  * @param req.file.buffer {blob} Image of the new to update
  * @param req.body.frenchTitle {string} French title to update
  * @param req.body.englishTitle {string} English title to update
@@ -70,6 +76,8 @@ export async function getNews(req: Request) {
  */
 export async function updateNews(req: Request) {
 	await updateAnyNews(req.params.title, {
+		type: req.body.type,
+		subtype: req.body.subtype,
 		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
 		englishTitle: req.body.englishTitle,

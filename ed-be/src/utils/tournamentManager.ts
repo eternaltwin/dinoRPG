@@ -30,7 +30,7 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { NotificationSeverity } from '@drpg/prisma';
+import { NotificationSeverity, PrismaClient } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
@@ -656,6 +656,8 @@ class TournamentManager {
 		await createNews({
 			title: this.tournamentId,
 			// image: req.file?.buffer,
+			type: 'Tid',
+			subtype: 'Start',
 			frenchTitle: translateTarget('dojo.newsTitle', 'fr'),
 			englishTitle: translateTarget('dojo.newsTitle', 'en'),
 			spanishTitle: translateTarget('dojo.newsTitle', 'es'),

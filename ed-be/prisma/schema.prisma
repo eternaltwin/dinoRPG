@@ -159,6 +159,8 @@ model migrations {
 model News {
   id           Int      @id(map: "PK_39a43dfcb6007180f04aff2357e") @default(autoincrement())
   title        String?  @db.VarChar
+  type         NewsType @default(Update)
+  subtype      Subtype?
   image        Bytes?
   frenchTitle  String?  @db.VarChar
   frenchText   String?  @db.VarChar
@@ -919,4 +921,25 @@ enum NotificationSeverity {
   scenario
   event
   newClanApply
+}
+
+enum NewsType {
+  Update
+  Information
+  War
+  Championship
+  Tid
+  Event
+  Story
+}
+
+enum Subtype {
+  Christmas
+  Newyear
+  Halloween
+  Valentine
+  Easter
+  Summer
+  Start
+  End
 }

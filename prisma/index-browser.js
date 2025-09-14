@@ -211,6 +211,8 @@ exports.Prisma.MigrationsScalarFieldEnum = {
 exports.Prisma.NewsScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  type: 'type',
+  subtype: 'subtype',
   image: 'image',
   frenchTitle: 'frenchTitle',
   frenchText: 'frenchText',
@@ -662,6 +664,27 @@ exports.UnavailableReason = exports.$Enums.UnavailableReason = {
   selling: 'selling',
   superdom: 'superdom',
   resting: 'resting'
+};
+
+exports.NewsType = exports.$Enums.NewsType = {
+  Update: 'Update',
+  Information: 'Information',
+  War: 'War',
+  Championship: 'Championship',
+  Tid: 'Tid',
+  Event: 'Event',
+  Story: 'Story'
+};
+
+exports.Subtype = exports.$Enums.Subtype = {
+  Christmas: 'Christmas',
+  Newyear: 'Newyear',
+  Halloween: 'Halloween',
+  Valentine: 'Valentine',
+  Easter: 'Easter',
+  Summer: 'Summer',
+  Start: 'Start',
+  End: 'End'
 };
 
 exports.AdminRole = exports.$Enums.AdminRole = {

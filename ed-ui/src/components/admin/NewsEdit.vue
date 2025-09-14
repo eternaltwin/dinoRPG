@@ -9,6 +9,21 @@
 	<input id="createNews" v-model="newsEdit.title" type="text" />
 	<form @submit.prevent="submit()" v-if="newsEdit.title">
 		<fieldset>
+			<legend>Type News</legend>
+			<div>
+				<select id="newsType" v-model="newsEdit.type">
+					<option disabled value="">Select type</option>
+					<option v-for="type in newsTypes" :key="type" :value="type">{{ type }}</option>
+				</select>
+			</div>
+			<div>
+				<select id="newsSubtype" v-model="newsEdit.subtype" :disabled="newsSubtypes.length === 0">
+					<option disabled value="">Select subtype</option>
+					<option v-for="subtype in newsSubtypes" :key="subtype" :value="subtype">{{ subtype }}</option>
+				</select>
+			</div>
+		</fieldset>
+		<fieldset>
 			<legend>Title News</legend>
 			<div>
 				<label for="frenchTitle" class="title">French Title :</label>
@@ -69,6 +84,7 @@ import { AllNews } from '@drpg/core/models/news/AllNews';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
+import { NewsTypes, NewsTypeToSubtypes } from '@drpg/core/models/news/NewsType';
 
 export default defineComponent({
 	name: 'NewsEdit',
@@ -78,7 +94,9 @@ export default defineComponent({
 			batchNews: [] as NewsGetResponse,
 			formData: new FormData(),
 			newSelect: false as boolean,
-			filePreviewUrl: ''
+			filePreviewUrl: '',
+			newsTypes: NewsTypes,
+			newsSubtypes: [] as string[]
 		};
 	},
 	methods: {
@@ -114,6 +132,14 @@ export default defineComponent({
 			if (this.newsEdit.germanTitle) {
 				this.formData.delete('germanTitle');
 				this.formData.append('germanTitle', this.newsEdit.germanTitle);
+			}
+			if (this.newsEdit.type) {
+				this.formData.delete('type');
+				this.formData.append('type', this.newsEdit.type);
+			}
+			if (this.newsEdit.subtype) {
+				this.formData.delete('subtype');
+				this.formData.append('subtype', this.newsEdit.subtype);
 			}
 			if (this.batchNews.find(news => news.title === this.newsEdit.title)) {
 				if (this.newSelect) {
@@ -153,6 +179,14 @@ export default defineComponent({
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
 			return;
+		}
+	},
+	watch: {
+		'newsEdit.type'(newType: string) {
+			// reset le subtype si le type change
+			this.newsEdit.subtype = '';
+			// update les subtypes disponibles selon le type
+			this.newsSubtypes = NewsTypeToSubtypes[newType] || [];
 		}
 	}
 });

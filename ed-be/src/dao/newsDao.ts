@@ -20,6 +20,8 @@ export const getBatchOfNews = async (page: number, playerId: string) => {
 	return news.map(news => ({
 		id: news.id,
 		title: news.title,
+		type: news.type,
+		subtype: news.subtype,
 		frenchText: news.frenchText,
 		englishText: news.englishText,
 		spanishText: news.spanishText,
