@@ -46,11 +46,15 @@
 	"knownSphereSkill": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
 	"playerNotFound": "Le joueur {id} n'a pas été trouvé.",
 	"dinozNotFound": "Le dinoz {id} n'a pas été trouvé.",
+	"dinozCannotLvlUp": "Le Dinoz {id} ne peut pas monter de niveau car il est inscrit au TID.",
+	"reincarnationNotPossible": "La réincarnation du Dinoz {id} n'est possible qu'au niveau 40.",
+	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz {id} avec des objets équipés.",
+
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Votre compte est encore trop jeune.",
-			"noTournamentOngoing": "Aucun tournois n'est en cours.",
-			"notEnoughPoints": "Vous n'avez pas assez de points pour participer à ce tournois.",
+			"noTournamentOngoing": "Aucun tournoi n'est en cours.",
+			"notEnoughPoints": "Vous n'avez pas assez de points pour participer à ce tournoi.",
 			"alreadyCreatedDinoz": "Vous avez déjà créé un Dinoz aujourd'hui.",
 			"maxDinozReached": "Le nombre maximal de Dinoz pour ce tournoi est atteint."
 		},

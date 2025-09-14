@@ -1030,6 +1030,9 @@ export async function getDinozToReincarnate(dinozId: number) {
 			status: {
 				select: { statusId: true }
 			},
+			items: {
+				select: { itemId: true }
+			},
 			display: true,
 			id: true,
 			seed: true,

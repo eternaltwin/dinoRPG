@@ -46,6 +46,7 @@ import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
 import { checkFBCreation } from './forceBruteService.js';
 import GameDinozUsage = $Enums.GameDinozUsage;
 import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
+import translate from '../utils/translate.js';
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -70,14 +71,14 @@ export async function getLearnableAndUnlockableSkills(req: Request, event?: Game
 	}
 
 	if (!dinozSkills) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	const dinozTournament = await isDinozInTournament(dinozId);
 
 	const canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
 	if (!canLevelUp) {
-		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed, { id: dinozId }));
 	}
 
 	if (!dinozSkills.player || dinozSkills.player.id !== authed.id) {
@@ -124,7 +125,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 	}
 
 	if (!dinozSkills) {
-		throw new ExpectedError(`Dinoz ${dinozId} doesn't exist.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 	if (!dinozSkills.player || dinozSkills.player.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`);
@@ -144,7 +145,7 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		canLevelUp = !tournament || !dinozTournament || dinozSkills.level + 1 <= tournament.levelLimit;
 	}
 	if (!canLevelUp) {
-		throw new ExpectedError(`Dinoz ${dinozId} is in a tournament team`);
+		throw new ExpectedError(translate('dinozCannotLvlUp', authed, { id: dinozId }));
 	}
 
 	if (dinozSkills.canChangeName) {
@@ -588,7 +589,7 @@ export async function reincarnate(req: Request) {
 	const dinoz = await getDinozToReincarnate(dinozId);
 
 	if (!dinoz) {
-		throw new ExpectedError(`No dinoz found for reincarnation.`);
+		throw new ExpectedError(translate('dinozNotFound', authed, { id: dinozId }));
 	}
 
 	if (
@@ -596,7 +597,13 @@ export async function reincarnate(req: Request) {
 		dinoz.level < 40 ||
 		dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)
 	) {
-		throw new ExpectedError(`Dinoz cannot reincarnate`);
+		throw new ExpectedError(translate('reincarnationNotPossible', authed, { id: dinozId }));
+	}
+
+	// 🔎 Check if the dinoz has any equipped items before reincarnation and prevent reincarnation if it has any
+	const equippedItems = dinoz.items.filter(i => i.itemId);
+	if (equippedItems && equippedItems.length > 0) {
+		throw new ExpectedError(translate('reincarnationWithEquippedItems', authed, { id: dinozId }));
 	}
 
 	const race = getRace(dinoz);
