@@ -156,7 +156,7 @@ export async function createOffer(req: Request) {
 
 	itemsAndIngredients.push(
 		...ingredients.map(ingredient => {
-			const ingredientData = Object.entries(ingredientList).find(ing => ing[0] === ingredient.name.toLocaleUpperCase());
+			const ingredientData = Object.entries(ingredientList).find(ing => ing[1].name === ingredient.name.toLowerCase());
 
 			if (!ingredientData) {
 				throw new ExpectedError('Ingredient not found');
@@ -175,7 +175,7 @@ export async function createOffer(req: Request) {
 				throw new ExpectedError('Item not found');
 			}
 			if (itemData[1].sellable === false) {
-				throw new ExpectedError(`Item ${itemData[0]} cannot be sold`);
+				throw new ExpectedError(`Item ${itemData[1]} cannot be sold`);
 			}
 
 			return {

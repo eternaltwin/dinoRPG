@@ -2302,7 +2302,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@eternaltwin/dinorpg_animations@npm:^1.0.0, @eternaltwin/dinorpg_animations@npm:^1.0.1":
+"@eternaltwin/dinorpg_animations@npm:^1.0.1":
   version: 1.0.1
   resolution: "@eternaltwin/dinorpg_animations@npm:1.0.1"
   dependencies:
@@ -7109,7 +7109,7 @@ __metadata:
   dependencies:
     "@ckeditor/ckeditor5-vue": "npm:^7.3.0"
     "@drpg/core": "workspace:^"
-    "@eternaltwin/dinorpg_animations": "npm:^1.0.0"
+    "@eternaltwin/dinorpg_animations": "npm:^1.0.1"
     "@types/url-join": "npm:^4.0.3"
     "@types/vue-i18n": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"
