@@ -474,7 +474,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			if (fighter.energy < event.energy) continue;
 		}
 
-		if (randomBetweenSeeded(fightData.rng, 1, 100) < (event.probability ?? 0)) {
+		if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 100) < (event.probability ?? 0)) {
 			return event;
 		}
 	}
@@ -504,7 +504,7 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 		return fightData.rng() > 0.5 ? 1 : -1;
 	});
 
-	// Go through each event and roll the dice
+	// Go through each skill and roll the dice
 	for (let i = 0; i < skills.length; i++) {
 		const skill = skills[i];
 
@@ -518,7 +518,7 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 			probability *= 2;
 		}
 
-		if (randomBetweenSeeded(fightData.rng, 1, 100) < probability) {
+		if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 100) < probability) {
 			// Check if NO_INVOCATION
 			if (skill.type === SkillType.I && hasStatus(fighter, Status.NO_INVOCATION)) {
 				return null;
