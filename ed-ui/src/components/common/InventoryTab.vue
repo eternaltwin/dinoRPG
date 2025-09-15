@@ -104,12 +104,11 @@ import { errorHandler } from '../../utils/index.js';
 import EventBus from '../../events/index.js';
 import { ItemEffect } from '@drpg/core/models/enums/ItemEffect';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
-import { dinozStore } from '../../store/index.js';
+import { dinozStore, playerStore } from '../../store/index.js';
 import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
-import { playerStore } from '../../store/index.js';
 
 export default defineComponent({
 	name: 'InventoryTab',
@@ -179,7 +178,10 @@ export default defineComponent({
 							message = this.$t(`toast.${toast.category}`);
 							break;
 						default:
-							message = this.$t(`toast.${toast.category}`, { value: toast.value });
+							message =
+								typeof toast.value === 'number'
+									? this.$tc(`toast.${toast.category}`, toast.value, { value: toast.value })
+									: this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;
 					}
 

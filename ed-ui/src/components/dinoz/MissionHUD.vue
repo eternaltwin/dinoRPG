@@ -44,7 +44,7 @@
 					$t(`missions.actions.${missionDetail.actionType}`, {
 						progress: missionDetail.progress,
 						target: missionDetail.value,
-						targetName: $t(`missions.target.${missionDetail.target.join(':')}`)
+						targetName: $tc(`missions.target.${missionDetail.target.join(':')}`, missionDetail.value)
 					})
 				}}
 			</template>

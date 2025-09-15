@@ -171,7 +171,7 @@ export default defineComponent({
 				const irma = await PlayerService.getLBRewards();
 				EventBus.emit('isLoading', false);
 				this.$toast.open({
-					message: formatText(this.$t(`toast.labrute`, { quantity: irma.quantity })),
+					message: formatText(this.$tc(`toast.labrute`, irma.quantity, { quantity: irma.quantity })),
 					type: 'info'
 				});
 			} catch (err) {
