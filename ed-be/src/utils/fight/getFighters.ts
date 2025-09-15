@@ -220,8 +220,8 @@ export const initializeDinoz = (
 
 	// Deduct the time from the fighter's initial time
 	fighter.time -= initiative * TIME_FACTOR;
-	// Add a random amount of time between 0 and 10 to randomize the first fighter
-	fighter.time += Math.round(random() * TIME_BASE) * TIME_FACTOR;
+	// Add a random amount of time between 0 and 9 to randomize the first fighter
+	fighter.time += Math.floor(random() * TIME_BASE) * TIME_FACTOR;
 
 	// Energy
 	setMaxEnergy(fighter, fighter.stats.special.energy ?? 100);
