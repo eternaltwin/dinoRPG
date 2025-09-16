@@ -6,13 +6,14 @@ import { SkillLevel } from '@drpg/core/models/dinoz/SkillLevel';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillType } from '@drpg/core/models/enums/SkillType';
 import {
-	BadStatus,
+	AllFighterTypeExceptBoss,
+	BadFightStatus,
 	DetailedFighter,
-	FighterStatus,
+	FighterStatusData,
 	FighterType,
-	GoodStatus,
-	Status,
-	StatusLength
+	GoodFightStatus,
+	FightStatus,
+	FightStatusLength
 } from '@drpg/core/models/fight/DetailedFighter';
 import {
 	FightStep,
@@ -60,6 +61,7 @@ import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
+import { checkSkillCondition } from './skillFightConditionParser.js';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -113,7 +115,7 @@ const chooseRandomOpponentForAssault = (
 	power?: [ElementType, number][]
 ) => {
 	// The attacker can hit flying units if it is itself flying or it has the capacity to.
-	const canAttackFlying = attacker.canHitFlying || hasStatus(attacker, Status.FLYING);
+	const canAttackFlying = attacker.canHitFlying || hasStatus(attacker, FightStatus.FLYING);
 	// The attacker can hit intangible units if it has the capacity to, the attack deals non-zero air damage, or its current element is air.
 	const canHitIntangible =
 		attacker.canHitIntangible ||
@@ -123,11 +125,11 @@ const chooseRandomOpponentForAssault = (
 	const unreachable_opponents: DetailedFighter[] = [];
 	opponents.forEach(opponent => {
 		// Filter out flying opponents if unreachable
-		if (hasStatus(opponent, Status.FLYING) && !canAttackFlying) {
+		if (hasStatus(opponent, FightStatus.FLYING) && !canAttackFlying) {
 			unreachable_opponents.push(opponent);
 		}
 		// Filter out intangible opponents if unreachable
-		else if (hasStatus(opponent, Status.INTANGIBLE) && !canHitIntangible) {
+		else if (hasStatus(opponent, FightStatus.INTANGIBLE) && !canHitIntangible) {
 			unreachable_opponents.push(opponent);
 		}
 	});
@@ -393,7 +395,7 @@ export const setMaxEnergy = (fighter: DetailedFighter, newMax: number) => {
 
 const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No event if NO_EVENT
-	if (hasStatus(fighter, Status.NO_EVENT)) return null;
+	if (hasStatus(fighter, FightStatus.NO_EVENT)) return null;
 
 	// Check if a time manipulator is present
 	if (fightData.timeManipulatorUsed && !fightData.temporalStabilityUsed) return null;
@@ -468,6 +470,11 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	for (let i = 0; i < events.length; i++) {
 		const event = events[i];
 
+		// Check event condition, if condition is not met, skip the skill.
+		if (!checkSkillCondition(event.fightCondition, fightData, fighter)) {
+			continue;
+		}
+
 		// Check if event is a skill
 		if ('id' in event) {
 			// Skip if not enough energy
@@ -484,7 +491,7 @@ const randomlyGetEvent = (fightData: DetailedFight, fighter: DetailedFighter) =>
 
 const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	// No skill if NO_SKILL
-	if (hasStatus(fighter, Status.NO_SKILL)) return null;
+	if (hasStatus(fighter, FightStatus.NO_SKILL)) return null;
 
 	const skills = fighter.skills.filter(skill => skill.probability && skill.type !== SkillType.E);
 
@@ -508,6 +515,11 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 	for (let i = 0; i < skills.length; i++) {
 		const skill = skills[i];
 
+		// Check event condition, if condition is not met, skip the skill.
+		if (!checkSkillCondition(skill.fightCondition, fightData, fighter)) {
+			continue;
+		}
+
 		// Skip if not enough energy
 		if (fighter.energy < skill.energy) continue;
 
@@ -520,7 +532,7 @@ const randomlyGetSkill = (fightData: DetailedFight, fighter: DetailedFighter) =>
 
 		if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 100) < probability) {
 			// Check if NO_INVOCATION
-			if (skill.type === SkillType.I && hasStatus(fighter, Status.NO_INVOCATION)) {
+			if (skill.type === SkillType.I && hasStatus(fighter, FightStatus.NO_INVOCATION)) {
 				return null;
 			}
 
@@ -653,7 +665,7 @@ export const initStepFighter = (
 // 		if (
 // 			actualDamage[opponent.id] &&
 // 			opponent.hp < 20 &&
-// 			!hasStatus(opponent, Status.STOLE_LIFE) &&
+// 			!hasStatus(opponent, FightStatus.STOLE_LIFE) &&
 // 			opponent.items.some(item => item.itemId === Item.LIFE_STEALER)
 // 		) {
 // 			// Steal 30 HP from a random opponent
@@ -671,7 +683,7 @@ export const initStepFighter = (
 // 			heal(fightData, opponent, 30);
 
 // 			// Add status
-// 			addStatus(fightData, opponent, Status.STOLE_LIFE);
+// 			addStatus(fightData, opponent, FightStatus.STOLE_LIFE);
 // 		}
 
 // 		// Remove costume if fire damage
@@ -918,7 +930,7 @@ const attackAllOpponents = (
 
 const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monsterData: MonsterFiche) => {
 	// Count monsters
-	const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
+	const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
 	// Count monsters with M_RENFORT
 	const renfortApplied = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
@@ -1003,7 +1015,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			// Make all fighters with WOOD < 10 fall asleep
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.WOOD] < 10) {
-					addStatus(fightData, f, Status.ASLEEP);
+					addStatus(fightData, f, FightStatus.ASLEEP);
 				}
 			});
 			break;
@@ -1012,8 +1024,8 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			// Add NO_EVENT, NO_SKILL to all fighters with FIRE < 10
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.FIRE] < 10) {
-					addStatus(fightData, f, Status.NO_EVENT);
-					addStatus(fightData, f, Status.NO_SKILL);
+					addStatus(fightData, f, FightStatus.NO_EVENT);
+					addStatus(fightData, f, FightStatus.NO_SKILL);
 				}
 			});
 			break;
@@ -1023,7 +1035,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.WATER] < 10) {
 					// TODO: this probably needs rework as it applies a nextAssaultMultiplier = 0.75
-					addStatus(fightData, f, Status.WEAKENED);
+					addStatus(fightData, f, FightStatus.WEAKENED);
 				}
 			});
 			break;
@@ -1032,7 +1044,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			// Add LIGHTNING_STRUCK to all fighters with LIGHTNING < 10
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.LIGHTNING] < 10) {
-					addStatus(fightData, f, Status.LIGHTNING_STRUCK);
+					addStatus(fightData, f, FightStatus.LIGHTNING_STRUCK);
 				}
 			});
 			break;
@@ -1041,7 +1053,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			// Add AIR_SLOWED to all fighters with AIR < 10
 			getFighters(fightData).forEach(f => {
 				if (f.stats.base[ElementType.AIR] < 10) {
-					addStatus(fightData, f, Status.AIR_SLOWED);
+					addStatus(fightData, f, FightStatus.AIR_SLOWED);
 				}
 			});
 			break;
@@ -1066,35 +1078,35 @@ const cancelEnvironment = (fightData: DetailedFight) => {
 		case Skill.AMAZONIE: {
 			// Wake up all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.ASLEEP);
+				removeStatus(fightData, f, FightStatus.ASLEEP);
 			});
 			break;
 		}
 		case Skill.PAYS_DE_CENDRE: {
 			// Remove NO_EVENT, NO_SKILL from all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.NO_EVENT, Status.NO_SKILL);
+				removeStatus(fightData, f, FightStatus.NO_EVENT, FightStatus.NO_SKILL);
 			});
 			break;
 		}
 		case Skill.ABYSSE: {
 			// Remove WEAKENED from all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.WEAKENED);
+				removeStatus(fightData, f, FightStatus.WEAKENED);
 			});
 			break;
 		}
 		case Skill.FEU_DE_ST_ELME: {
 			// Remove LIGHTNING_STRUCK from all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.LIGHTNING_STRUCK);
+				removeStatus(fightData, f, FightStatus.LIGHTNING_STRUCK);
 			});
 			break;
 		}
 		case Skill.OURANOS: {
 			// Remove AIR_SLOWED from all fighters
 			getFighters(fightData).forEach(f => {
-				removeStatus(fightData, f, Status.AIR_SLOWED);
+				removeStatus(fightData, f, FightStatus.AIR_SLOWED);
 			});
 			break;
 		}
@@ -1112,6 +1124,7 @@ const cancelEnvironment = (fightData: DetailedFight) => {
 	fightData.environment = undefined;
 };
 
+// Skill conditions must be checked prior to calling this method
 const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
@@ -1139,7 +1152,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		switch (event.id) {
 			// AIR Vanilla
 			case Skill.VENT_VIF: {
-				addStatus(fightData, fighter, Status.QUICKENED, StatusLength.SHORT);
+				addStatus(fightData, fighter, FightStatus.QUICKENED, FightStatusLength.SHORT);
 				break;
 			}
 			case Skill.AIGUILLON: {
@@ -1176,37 +1189,48 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.DETONATION: {
-				// The fighter will not suicide with the skill, it just loses its roll
-				if (fighter.hp > 5) {
-					// Add step for fx
-					fightData.steps.push(activate_step);
-					loseHp(fightData, fighter, 5, LifeEffect.Burn);
-					// Increase the time of all other fighters to make it look like the caster "gained" time
-					getFighters(fightData).forEach(f => {
-						if (f.id !== fighter.id) {
-							f.time += 15 * TIME_FACTOR;
-						}
-					});
-					// Add fx for gain of init
-					fightData.steps.push({
-						action: 'notify',
-						fids: [fighter.id],
-						notification: NotificationList.InitUp
-					});
-				} else {
-					return cancel();
+				// Use condition checked prior and defined in skill details so the fighter does not suicide.
+				// Still check and throw an error just in case.
+				if (fighter.hp <= 5) {
+					sendJSONToDiscord('Error `Not enough HP` in `activateEvent`.', { fightData: fightData, skill: event });
+					throw new Error(`Fighter has not enough HP`);
 				}
+
+				// Add step for fx
+				fightData.steps.push(activate_step);
+				loseHp(fightData, fighter, 5, LifeEffect.Burn);
+				// Increase the time of all other fighters to make it look like the caster "gained" time
+				getFighters(fightData).forEach(f => {
+					if (f.id !== fighter.id) {
+						f.time += 15 * TIME_FACTOR;
+					}
+				});
+				// Add fx for gain of init
+				fightData.steps.push({
+					action: 'notify',
+					fids: [fighter.id],
+					notification: NotificationList.InitUp
+				});
 				break;
 			}
 			// LIGHTNING
 			case Skill.AURA_HERMETIQUE: {
-				if (hasStatus(fighter, Status.SHIELDED)) cancel();
-				addStatus(fightData, fighter, Status.SHIELDED);
+				// Use condition checked prior and defined in skill details so the skill is not used if the fighter already has the status.
+				// Still check and throw an error just in case.
+				if (hasStatus(fighter, FightStatus.SHIELDED)) {
+					sendJSONToDiscord('Error `Already has shielded status` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Fighter already has shielded status`);
+				}
+
+				addStatus(fightData, fighter, FightStatus.SHIELDED);
 				break;
 			}
 			case Skill.BENEDICTION: {
 				getAllies(fightData, fighter).forEach(fighter => {
-					addStatus(fightData, fighter, Status.BLESSED, StatusLength.MEDIUM);
+					addStatus(fightData, fighter, FightStatus.BLESSED, FightStatusLength.MEDIUM);
 				});
 				break;
 			}
@@ -1221,7 +1245,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				// Remove all the bad status of the group
 				getAllies(fightData, fighter).forEach(fighter => {
-					removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
+					removeStatus(
+						fightData,
+						fighter,
+						...fighter.status.filter(s => BadFightStatus.includes(s.type)).map(s => s.type)
+					);
 				});
 				break;
 			}
@@ -1244,7 +1272,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Slow opponents
 				opponents.forEach(opponent => {
-					addStatus(fightData, opponent, Status.SLOWED, StatusLength.MEDIUM);
+					addStatus(fightData, opponent, FightStatus.SLOWED, FightStatusLength.MEDIUM);
 				});
 				break;
 			}
@@ -1288,31 +1316,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 					fids: [opponent.id],
 					notification: NotificationList.MonoElt
 				});
-				addStatus(fightData, opponent, Status.LOCKED, StatusLength.MEDIUM);
-				break;
-			}
-			case Skill.HYPERVENTILATION: {
-				if (fighter.hasUsedHyperventilation) cancel();
-
-				fighter.hasUsedHyperventilation = true;
-
-				// Add step for fx
-				fightData.steps.push(activate_step);
-
-				const opponents = getOpponents(fightData, fighter);
-
-				opponents.forEach(opponent => {
-					// Reduce max energy by 20%
-					const newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
-
-					setMaxEnergy(opponent, newMaxEnergy);
-
-					// Add reduce energy step
-					fightData.steps.push({
-						action: 'reduceEnergy',
-						fighter: stepFighter(opponent)
-					});
-				});
+				addStatus(fightData, opponent, FightStatus.LOCKED, FightStatusLength.MEDIUM);
 				break;
 			}
 			// WOOD
@@ -1327,7 +1331,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
 
-				if (!hasStatus(opponent, Status.FLYING)) {
+				if (!hasStatus(opponent, FightStatus.FLYING)) {
 					// Increase the opponent's time
 					opponent.time += 15 * TIME_FACTOR;
 					// Add fx for loss of init
@@ -1346,7 +1350,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add step for fx
 				fightData.steps.push(activate_step);
 				// Remove all bad status
-				removeStatus(fightData, fighter, ...fighter.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
+				removeStatus(
+					fightData,
+					fighter,
+					...fighter.status.filter(s => BadFightStatus.includes(s.type)).map(s => s.type)
+				);
 				break;
 			}
 			case Skill.ETAT_PRIMAL: {
@@ -1355,10 +1363,10 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				getFighters(fightData).forEach(f => {
 					// Remove team bad status
 					if (f.attacker === fighter.attacker) {
-						removeStatus(fightData, f, ...f.status.filter(s => BadStatus.includes(s.type)).map(s => s.type));
+						removeStatus(fightData, f, ...f.status.filter(s => BadFightStatus.includes(s.type)).map(s => s.type));
 					} else {
 						// Remove opponent team good status
-						removeStatus(fightData, f, ...f.status.filter(s => GoodStatus.includes(s.type)).map(s => s.type));
+						removeStatus(fightData, f, ...f.status.filter(s => GoodFightStatus.includes(s.type)).map(s => s.type));
 					}
 				});
 				break;
@@ -1392,24 +1400,31 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const monster = createMonster(fightData, fighter, monsterList.GORILLOZ_SPIRIT);
 
 				// Set intangible
-				addStatus(fightData, monster, Status.INTANGIBLE);
+				addStatus(fightData, monster, FightStatus.INTANGIBLE);
 				break;
 			}
 			case Skill.PAYS_DE_CENDRE: {
-				// Only one environment active at a time
+				// Use condition checked prior and defined in skill details so there is not an environment already active.
+				// Check and throw an error.
 				if (fightData.environment) {
-					return cancel();
+					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`An environment is already active`);
 				}
-
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
 				break;
 			}
 			case Skill.BOUCLIER_DINOZ: {
 				// Get allies dinoz
-				const allies = getAllies(fightData, fighter, ['dinoz']);
+				const allies = getAllies(fightData, fighter, [FighterType.DINOZ]);
 
+				// Use condition checked prior and defined in skill details so there is at least another dinoz in the fighter's team.
+				// Check and throw an error.
 				if (allies.length < 2) {
-					return cancel();
+					sendJSONToDiscord('Error `Not enough Dinoz` in `activateEvent`.', { fightData: fightData, skill: event });
+					throw new Error(`Team has not enough Dinoz`);
 				}
 
 				// Get lowest HP ally
@@ -1488,7 +1503,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 				// Disable invocations
 				// TODO: see if this can be done differently as this may mess up with display
-				addStatus(fightData, opponent, Status.NO_INVOCATION);
+				addStatus(fightData, opponent, FightStatus.NO_INVOCATION);
 
 				// Add step for fx
 				fightData.steps.push({
@@ -1500,7 +1515,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.THERAPIE_DE_GROUPE: {
 				// TODO the effect needs to start next turn
-				addStatus(fightData, fighter, Status.COPY_HEAL);
+				addStatus(fightData, fighter, FightStatus.COPY_HEAL);
 				break;
 			}
 			case Skill.MORSURE_DU_SOLEIL: {
@@ -1510,7 +1525,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Add target
 				activate_step.targets.push({ tid: opponent.id });
 
-				addStatus(fightData, opponent, Status.DAZZLED, StatusLength.MEDIUM);
+				addStatus(fightData, opponent, FightStatus.DAZZLED, FightStatusLength.MEDIUM);
 				break;
 			}
 			case Skill.CRAMPE_CHRONIQUE: {
@@ -1531,19 +1546,22 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.MAINS_COLLANTES: {
-				// TODO probably want to rework this so it's a passive skill and does not use up a skill slot
-				// TODO because the skill has high priority and high proba, but can only be used once so it uses a skill slot
-				// The fighter learns to cancel dodge.
+				// Use condition checked prior and defined in skill details so the skill can only be use once.
+				// Still check but throw an error.
 				if (fighter.cancelAssaultDodge) {
-					return cancel();
+					sendJSONToDiscord('Error `Has already used main collantes` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Fighter has already used main collantes`);
 				}
-
+				// The fighter learns to cancel dodge.
 				fighter.cancelAssaultDodge = true;
 				break;
 			}
 			case Skill.MUTINERIE: {
 				// Get clones
-				const clones = getFighters(fightData, ['clone']);
+				const clones = getFighters(fightData, [FighterType.CLONE]);
 
 				clones.forEach(clone => {
 					// TODO add effect
@@ -1557,26 +1575,33 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fightData.steps.push(activate_step);
 				// TODO add speed effect on all allies
 				getAllies(fightData, fighter).forEach(ally => {
-					addStatus(fightData, ally, Status.QUICKENED, StatusLength.MEDIUM);
+					addStatus(fightData, ally, FightStatus.QUICKENED, FightStatusLength.MEDIUM);
 					activate_step.targets.push({ tid: ally.id });
 				});
 				break;
 			}
 			// MONSTER
 			case Skill.M_REGENERATION: {
-				if (fighter.hp >= fighter.startingHp) {
-					return cancel();
+				// Use condition checked prior and defined in skill details to make sure the fighter is not full life.
+				// Still check but throw an error.
+				if (fighter.hp === fighter.startingHp) {
+					sendJSONToDiscord('Error `Already full life` in `activateEvent`.', { fightData: fightData, skill: event });
+					throw new Error(`Fighter is already full life`);
 				}
-
 				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), undefined, LifeEffect.Heal);
 				break;
 			}
 			case Skill.M_IMMATERIAL: {
-				if (hasStatus(fighter, Status.INTANGIBLE)) {
-					return cancel();
+				// Use condition checked prior and defined in skill details to make sure the fighter is not already intangible.
+				// Still check but throw an error.
+				if (hasStatus(fighter, FightStatus.INTANGIBLE)) {
+					sendJSONToDiscord('Error `Is already intangible` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Fighter is already intangible`);
 				}
-
-				addStatus(fightData, fighter, Status.INTANGIBLE, StatusLength.SHORT);
+				addStatus(fightData, fighter, FightStatus.INTANGIBLE, FightStatusLength.SHORT);
 				break;
 			}
 			case Skill.M_ELEMENTAL: {
@@ -1595,11 +1620,11 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const clone = createMonster(fightData, fighter, bossList.YAKUZI);
 
 				// Count monsters
-				const monsterCount = fightData.fighters.filter(f => f.type !== 'dinoz').length;
+				const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
 				clone.level = 1;
 				clone.hp = 1;
-				clone.type = 'clone';
+				clone.type = FighterType.CLONE;
 				clone.master = fighter.id;
 				clone.id = -monsterCount - 1;
 
@@ -1622,7 +1647,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			case Skill.M_CURSED_WAND: {
 				// TODO rework
 				// // Get all opponent dinoz
-				// const opponents = getOpponents(fightData, fighter, ['dinoz']);
+				// const opponents = getOpponents(fightData, fighter, [FighterType.DINOZ]);
 
 				// attackMultipleOpponents(fightData, fighter, opponents, event, step);
 				break;
@@ -1654,14 +1679,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.M_UNTOUCHABLE: {
-				const tangibleAllies = getAllies(fightData, fighter).filter(f => !hasStatus(f, Status.INTANGIBLE));
+				const tangibleAllies = getAllies(fightData, fighter).filter(f => !hasStatus(f, FightStatus.INTANGIBLE));
 
 				if (tangibleAllies.length > 0) {
 					// Get random ally
 					const ally = tangibleAllies[randomBetweenSeeded(fightData.rng, 0, tangibleAllies.length - 1)];
 
 					// Add status
-					addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.MEDIUM);
+					addStatus(fightData, ally, FightStatus.INTANGIBLE, FightStatusLength.MEDIUM);
 				}
 				break;
 			}
@@ -1677,14 +1702,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 			}
 			case Skill.M_FRUKOPTER_FLIGHT: {
 				// Get non flying allies
-				const nonFlyingAllies = getAllies(fightData, fighter).filter(f => !hasStatus(f, Status.FLYING));
+				const nonFlyingAllies = getAllies(fightData, fighter).filter(f => !hasStatus(f, FightStatus.FLYING));
 
 				if (nonFlyingAllies.length > 0) {
 					// Get random ally
 					const ally = nonFlyingAllies[randomBetweenSeeded(fightData.rng, 0, nonFlyingAllies.length - 1)];
 
 					// Add status
-					addStatus(fightData, ally, Status.FLYING);
+					addStatus(fightData, ally, FightStatus.FLYING);
 				}
 				break;
 			}
@@ -1709,9 +1734,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 
 		switch (event.itemId) {
 			case Item.CLOUD_BURGER: {
-				// Cancel if HP requirement not met
+				// Use condition checked prior and defined in item fiche to make sure the item heal will be used properly.
+				// Check and throw error.
 				if (fighter.hp === fighter.startingHp || (fighter.hp > 15 && fighter.startingHp - fighter.hp < 10)) {
-					return cancel();
+					sendJSONToDiscord('Error `Healing conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Fighter does not meet healing conditions of cloud burger`);
 				}
 
 				// Heal 10 HP
@@ -1719,13 +1749,15 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.FIGHT_RATION: {
-				let hpDelta = 20 - (fighter.startingHp - fighter.hp);
-
-				if (hpDelta < 0) hpDelta = 0;
-
-				// Less chance to heal if lost HP is less than 20. Sure to heal if lost HP is 20+
-				if (fighter.hp === fighter.startingHp || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
-					return cancel();
+				// Use condition checked prior and defined in item ficheto make sure the item heal will be used properly.
+				// Check and throw error.
+				if (fighter.hp === fighter.startingHp) {
+					// Random condition cannot be checke again
+					sendJSONToDiscord('Error `Healing conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Fighter does not meet healing conditions of fight ration`);
 				}
 
 				// Heal 20 HP
@@ -1742,7 +1774,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.ZIPPO: {
-				addStatus(fightData, fighter, Status.TORCHED, StatusLength.LONG);
+				addStatus(fightData, fighter, FightStatus.TORCHED, FightStatusLength.LONG);
 				break;
 			}
 			case Item.SOS_FLAME: {
@@ -1754,11 +1786,12 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.GOBLIN_MERGUEZ: {
-				// Cancel if no HP lost
+				// Use condition checked prior and defined in item fiche to make sure the fighter is not full life.
+				// Still check but throw an error.
 				if (fighter.hp === fighter.startingHp) {
-					return cancel();
+					sendJSONToDiscord('Error `Already full life` in `activateEvent`.', { fightData: fightData, skill: event });
+					throw new Error(`Fighter is already full life`);
 				}
-
 				// -10% all defenses
 				fighter.stats.defense[ElementType.FIRE] -= fighter.stats.defense[ElementType.FIRE] * 0.1;
 				fighter.stats.defense[ElementType.WATER] -= fighter.stats.defense[ElementType.WATER] * 0.1;
@@ -1780,18 +1813,31 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.PORTABLE_LOVE: {
-				// Check if an opponent is flying
-				const opponent = getOpponents(fightData, fighter).find(f => hasStatus(f, Status.FLYING));
-
-				// Never use the item if no opponent is flying
-				if (!opponent) {
-					return cancel();
+				// Use condition checked prior and defined in item fiche so item is used only if an opponent is flying.
+				// Check and throw error.
+				const opponent = getOpponents(fightData, fighter).find(f => hasStatus(f, FightStatus.FLYING));
+				if (!opponent || fighter.canHitFlying) {
+					sendJSONToDiscord('Error `Portable love conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Portable love conditions not met`);
 				}
 
 				fighter.canHitFlying = true;
 				break;
 			}
 			case Item.MONOCHROMATIC: {
+				// Use condition checked prior and defined in item fiche to make sure the fighter has at least 2 elements in its wheel.
+				// Check and throw an error.
+				if (fighter.elements.length === 1) {
+					sendJSONToDiscord('Error `Monochromatic conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Monochromatic conditions not met`);
+				}
+
 				// Check if an opponent has an Antichromatic
 				const opponent = getOpponents(fightData, fighter).find(f =>
 					f.items.some(item => item.itemId === Item.ANTICHROMATIC)
@@ -1806,11 +1852,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 						itemId: Item.ANTICHROMATIC
 					});
 					break;
-				}
-
-				// Don't apply if the fighter has already one element
-				if (fighter.elements.length === 1) {
-					cancel();
 				}
 
 				// Get dinoz best element
@@ -1830,14 +1871,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.FUCA_PILL: {
-				// Check if another FUCA was already used
-				if (fighter.itemsUsed.includes(Item.FUCA_PILL)) {
-					return cancel();
-				}
-
-				// Cancel if speed is already x2
-				if (fighter.stats.speed.global < 0.51) {
-					return cancel();
+				// Use condition checked prior and defined in item fiche to make sure the fuca pill can be used.
+				// Check and throw error.
+				if (fighter.itemsUsed.includes(Item.FUCA_PILL) || fighter.stats.speed.global < 0.51) {
+					sendJSONToDiscord('Error `Fuca Pill conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Fuca Pill conditions not met`);
 				}
 
 				// Increase speed
@@ -1848,18 +1889,23 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Get opponents
 				const opponents = getOpponents(fightData, fighter);
 
-				// Cancel if less than 2 opponents
+				// Use condition checked prior and defined in item fiche, guarantee there is at least 2 opponents.
+				// Check and throw error.
 				if (opponents.length < 2) {
-					return cancel();
-				}
-
-				// Nothing happens if petrifed or stunned
-				if (hasStatus(fighter, Status.PETRIFIED) || hasStatus(fighter, Status.STUNNED)) {
-					break;
+					sendJSONToDiscord('Error `Loris Costume conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Loris Costume conditions not met`);
 				}
 
 				// Get random opponent attacker
 				const opponentAttacker = getRandomOpponent(fightData, fighter);
+
+				// Nothing happens if target is petrifed or stunned
+				if (hasStatus(opponentAttacker, FightStatus.PETRIFIED) || hasStatus(opponentAttacker, FightStatus.STUNNED)) {
+					break;
+				}
 
 				// Get other opponents
 				const opponentsWithoutAttacker = opponents.filter(opponent => opponent.id !== opponentAttacker.id);
@@ -1892,17 +1938,20 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Get allies
 				const allies = getAllies(fightData, fighter);
 
-				// Check if the team has BEER status
-				const hasBeer = allies.some(f => hasStatus(f, Status.BEER));
-
-				if (!hasBeer) {
-					return cancel();
+				// Use condition checked prior and defined in item fiche to make sure at least one ally has the beer status.
+				// Check and throw error.
+				if (!allies.some(f => hasStatus(f, FightStatus.BEER))) {
+					sendJSONToDiscord('Error `Strong Tea conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Strong Tea conditions not met`);
 				}
 
 				// TODO rework
 				// Remove BEER status
 				allies.forEach(f => {
-					removeStatus(fightData, f, Status.BEER);
+					removeStatus(fightData, f, FightStatus.BEER);
 				});
 				break;
 			}
@@ -1911,59 +1960,80 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.AMAZON: {
-				// Only one environment active at a time
+				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
+				// Check and throw an error.
 				if (fightData.environment) {
-					return cancel();
+					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`An environment is already active`);
 				}
-
 				activateEnvironment(fightData, fighter, Skill.AMAZONIE);
 				break;
 			}
 			case Item.LAND_OF_ASHES: {
-				// Only one environment active at a time
+				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
+				// Check and throw an error.
 				if (fightData.environment) {
-					return cancel();
+					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`An environment is already active`);
 				}
-
 				activateEnvironment(fightData, fighter, Skill.PAYS_DE_CENDRE);
 				break;
 			}
 			case Item.ABYSS: {
-				// Only one environment active at a time
+				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
+				// Check and throw an error.
 				if (fightData.environment) {
-					return cancel();
+					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`An environment is already active`);
 				}
-
 				activateEnvironment(fightData, fighter, Skill.ABYSSE);
 				break;
 			}
 			case Item.ST_ELMAS_FIRE: {
-				// Only one environment active at a time
+				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
+				// Check and throw an error.
 				if (fightData.environment) {
-					return cancel();
+					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`An environment is already active`);
 				}
-
 				activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
 				break;
 			}
 			case Item.UVAVU: {
-				// Only one environment active at a time
+				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
+				// Check and throw an error.
 				if (fightData.environment) {
-					return cancel();
+					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`An environment is already active`);
 				}
-
 				activateEnvironment(fightData, fighter, Skill.OURANOS);
 				break;
 			}
 			case Item.SURVIVING_RATION: {
-				let hpDelta = Math.round((50 - (fighter.startingHp - fighter.hp)) / 10);
-
-				if (hpDelta < 0) hpDelta = 0;
-
-				// Less chance to heal if lost HP is less than 50. Sure to heal if lost HP is 50+
-				// Will not heal if lost less than 10 HP.
-				if (fighter.startingHp - fighter.hp <= 10 || randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0) {
-					return cancel();
+				// Use condition checked prior and defined in item fiche to make sure the item heal is used appropriately.
+				// Check and throw error.
+				if (fighter.startingHp - fighter.hp <= 10) {
+					// Random condition cannot be checked again
+					sendJSONToDiscord('Error `Surviving ration conditions not met` in `activateEvent`.', {
+						fightData: fightData,
+						skill: event
+					});
+					throw new Error(`Surviving ration conditions not met`);
 				}
 
 				// Heal 40 HP
@@ -1985,7 +2055,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 		fighter.items.splice(itemIndex, 1);
 	}
 
-	if ('id' in event && fighter.type !== 'boss') {
+	if ('id' in event && fighter.type !== FighterType.BOSS) {
 		// Get opponents with SHARIGNAN
 		const opponentsWithSharingan = getOpponents(fightData, fighter).filter(opponent =>
 			opponent.skills.some(skill => skill.id === Skill.SHARIGNAN)
@@ -2016,14 +2086,14 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 	return true;
 };
 
-export const createStatus = (type: Status, length?: number): FighterStatus => {
+export const createStatus = (type: FightStatus, length?: number): FighterStatusData => {
 	let cycle = false;
 
 	switch (type) {
-		case Status.TORCHED:
-		case Status.BURNED:
-		case Status.POISONED:
-		case Status.HEALING: {
+		case FightStatus.TORCHED:
+		case FightStatus.BURNED:
+		case FightStatus.POISONED:
+		case FightStatus.HEALING: {
 			cycle = true;
 			break;
 		}
@@ -2034,7 +2104,7 @@ export const createStatus = (type: Status, length?: number): FighterStatus => {
 
 	return {
 		type,
-		time: (length ?? StatusLength.INFINITE) * TIME_FACTOR,
+		time: (length ?? FightStatusLength.INFINITE) * TIME_FACTOR,
 		timeSinceLastCycle: 0,
 		cycle
 	};
@@ -2046,62 +2116,62 @@ export const createStatus = (type: Status, length?: number): FighterStatus => {
  * @param status The status to check for
  * @returns bool true if the fighter has the status, false if it does not
  */
-export const hasStatus = (fighter: DetailedFighter, status: Status) => fighter.status.some(s => s.type === status);
+export const hasStatus = (fighter: DetailedFighter, status: FightStatus) => fighter.status.some(s => s.type === status);
 
 /**
  * Add a status to the fighter. The method checks if the fighter already has the status and also for immunities from skills and objects.
  * @param {DetailedFight} fightData The data of the fight (to handle history and other)
  * @param {DetailedFighter} fighter The fighter that receives the status
- * @param {Status} status The status to apply
+ * @param {FightStatus} status The status to apply
  * @returns {boolean} `true` if the status was applied, `false` if the fighter did not receive the status
  */
 export const addStatus = (
 	fightData: DetailedFight,
 	fighter: DetailedFighter,
-	status: Status,
-	length?: StatusLength
+	status: FightStatus,
+	length?: FightStatusLength
 ) => {
 	// Check if fighter already has the status
 	if (hasStatus(fighter, status)) return false;
 
 	// Bad status
-	const isBad = BadStatus.includes(status);
+	const isBad = BadFightStatus.includes(status);
 
 	// Negate if SELF_CONTROL
 	if (isBad && hasSkill(fighter, Skill.SELF_CONTROL)) return false;
 
 	// Handle the immediate effect of the status
 	switch (status) {
-		case Status.AIR_SLOWED: {
+		case FightStatus.AIR_SLOWED: {
 			fighter.stats.speed.global *= 2;
 			break;
 		}
-		case Status.ASLEEP: {
+		case FightStatus.ASLEEP: {
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
-		case Status.TORCHED: {
+		case FightStatus.TORCHED: {
 			fighter.stats.defense[ElementType.FIRE] += 10;
 			break;
 		}
-		case Status.SLOWED: {
+		case FightStatus.SLOWED: {
 			fighter.stats.speed.global *= 1.5;
 			break;
 		}
-		case Status.QUICKENED: {
+		case FightStatus.QUICKENED: {
 			fighter.stats.speed.global /= 1.5;
 			break;
 		}
-		case Status.PETRIFIED: {
+		case FightStatus.PETRIFIED: {
 			fighter.stats.special.armor += 5;
 			fighter.time += FIGHT_INFINITE;
 			break;
 		}
-		case Status.SHIELDED: {
+		case FightStatus.SHIELDED: {
 			fighter.stats.special.armor += 5;
 			break;
 		}
-		case Status.BLESSED: {
+		case FightStatus.BLESSED: {
 			fighter.stats.assaultBonus[ElementType.AIR] += 3;
 			fighter.stats.assaultBonus[ElementType.FIRE] += 3;
 			fighter.stats.assaultBonus[ElementType.LIGHTNING] += 3;
@@ -2109,7 +2179,7 @@ export const addStatus = (
 			fighter.stats.assaultBonus[ElementType.WOOD] += 3;
 			break;
 		}
-		case Status.STUNNED: {
+		case FightStatus.STUNNED: {
 			fighter.time += FIGHT_INFINITE;
 		}
 		default: {
@@ -2118,7 +2188,7 @@ export const addStatus = (
 	}
 
 	// Add status
-	const status_props = createStatus(status, length ?? StatusLength.INFINITE);
+	const status_props = createStatus(status, length ?? FightStatusLength.INFINITE);
 
 	// Update the next trigger of status accordingly
 	if (status_props.cycle && fightData.nextStatusTrigger > CYCLE) {
@@ -2143,15 +2213,15 @@ export const addStatus = (
  * Remove one or more statuses from a fighter.
  * @param {DetailedFight} fightData The data of the fight (to handle history and other)
  * @param {DetailedFighter} fighter The fighter that receives the status
- * @param {Status[]} statusList The list of status to remove
+ * @param {FightStatus[]} statusList The list of status to remove
  */
-const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...statusList: Status[]) => {
+const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...statusList: FightStatus[]) => {
 	statusList.forEach(status => {
 		// Check if fighter has the status
 		if (!hasStatus(fighter, status)) return;
 
 		// Dont' wake up if M_DISABLE
-		if (status === Status.ASLEEP && fighter.skills.some(skill => skill.id === Skill.M_DISABLE)) {
+		if (status === FightStatus.ASLEEP && fighter.skills.some(skill => skill.id === Skill.M_DISABLE)) {
 			return;
 		}
 
@@ -2164,27 +2234,27 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 
 		// Reverse the effect of the status
 		switch (status) {
-			case Status.AIR_SLOWED: {
+			case FightStatus.AIR_SLOWED: {
 				fighter.stats.speed.global /= 2;
 				break;
 			}
-			case Status.ASLEEP: {
+			case FightStatus.ASLEEP: {
 				fighter.time = fightData.time + randomBetweenSeeded(fightData.rng, 0, TIME_BASE * TIME_FACTOR);
 				break;
 			}
-			case Status.TORCHED: {
+			case FightStatus.TORCHED: {
 				fighter.stats.defense[ElementType.FIRE] -= 10;
 				break;
 			}
-			case Status.SLOWED: {
+			case FightStatus.SLOWED: {
 				fighter.stats.speed.global /= 1.5;
 				break;
 			}
-			case Status.QUICKENED: {
+			case FightStatus.QUICKENED: {
 				fighter.stats.speed.global *= 1.5;
 				break;
 			}
-			case Status.PETRIFIED: {
+			case FightStatus.PETRIFIED: {
 				fighter.stats.special.armor -= 5;
 				fighter.time -= FIGHT_INFINITE;
 				// Make sure the fighter's time is not in the past
@@ -2193,11 +2263,11 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				}
 				break;
 			}
-			case Status.SHIELDED: {
+			case FightStatus.SHIELDED: {
 				fighter.stats.special.armor -= 5;
 				break;
 			}
-			case Status.BLESSED: {
+			case FightStatus.BLESSED: {
 				fighter.stats.assaultBonus[ElementType.AIR] -= 3;
 				fighter.stats.assaultBonus[ElementType.FIRE] -= 3;
 				fighter.stats.assaultBonus[ElementType.LIGHTNING] -= 3;
@@ -2205,7 +2275,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				fighter.stats.assaultBonus[ElementType.WOOD] -= 3;
 				break;
 			}
-			case Status.STUNNED: {
+			case FightStatus.STUNNED: {
 				fighter.time -= FIGHT_INFINITE;
 				// Make sure the fighter's time is not in the past
 				if (fighter.time < fightData.time) {
@@ -2224,6 +2294,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 
 export const hasSkill = (fighter: DetailedFighter, skill: Skill) => fighter.skills.some(s => s.id === skill);
 
+// Skill conditions must be checked prior to calling this method
 const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean => {
 	// Get current fighter
 	const fighter = fightData.fighters[0];
@@ -2270,14 +2341,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			// Fighter starts flying if not dead after the assault
 			if (fighter.hp > 0) {
-				addStatus(fightData, fighter, Status.FLYING);
+				addStatus(fightData, fighter, FightStatus.FLYING);
 			}
 			break;
 		}
 		case Skill.TORNADE: {
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Cancel FLYING
-				removeStatus(fightData, opponent, Status.FLYING);
+				removeStatus(fightData, opponent, FightStatus.FLYING);
 			});
 
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 10), skill.id, activate_step);
@@ -2295,7 +2366,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			fightData.steps.push(activate_step);
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Poison
-				poison(fightData, opponent, fighter, Skill.NUAGE_TOXIQUE, StatusLength.MEDIUM);
+				poison(fightData, opponent, fighter, Skill.NUAGE_TOXIQUE, FightStatusLength.MEDIUM);
 			});
 			break;
 		}
@@ -2347,7 +2418,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			);
 
 			// If the target is not a boss or the skill was not evaded, remove the opponent
-			if (opponent.type !== 'boss' && !result.evasion) {
+			if (opponent.type !== FighterType.BOSS && !result.evasion) {
 				opponent.escaped = true;
 			}
 
@@ -2355,20 +2426,20 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.HYPNOSE: {
 			// Get opponents
-			const opponents = getOpponents(fightData, fighter);
+			const opponents = getOpponents(fightData, fighter, AllFighterTypeExceptBoss);
 
-			// Hypnose does not work if there is no opponent or just a single one, or if the fighter has already used it.
+			// Use condition checked prior and defined in skill details so the skill can only be use once, cannot target bosses and
+			// requires at least 2 opponents.
 			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
-				return cancel();
+				sendJSONToDiscord('Error `Hypnose conditions not met` in `activateEvent`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Hypnoseconditions not met`);
 			}
 
 			// Get random opponent
 			const opponent = chooseRandomOpponent(opponents, fightData.rng);
-
-			// Hypnose does not work if opponent is a boss
-			if (opponent.type == 'boss') {
-				return cancel();
-			}
 
 			// Prevent if some opponent has CUZCUSSIAN_MASK
 			const opponentWithMask = getOpponents(fightData, fighter).find(opponent =>
@@ -2481,7 +2552,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			heal(fightData, fighter, randomBetweenSeeded(fightData.rng, 1, 20), undefined, LifeEffect.Heal);
 
 			// Fall asleep
-			addStatus(fightData, fighter, Status.ASLEEP, StatusLength.SHORT);
+			addStatus(fightData, fighter, FightStatus.ASLEEP, FightStatusLength.SHORT);
 			break;
 		}
 
@@ -2577,7 +2648,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				let damage = 0;
 
 				// Base damage of half the target hp if is does not know perception or is not a boss
-				if (!hit.target.perception && hit.target.type !== 'boss') {
+				if (!hit.target.perception && hit.target.type !== FighterType.BOSS) {
 					// 50% HP otherwise
 					damage = Math.round(hit.target.hp / 2);
 				}
@@ -2597,7 +2668,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 			if (result.target && !result.evasion) {
 				// Slow opponent
-				addStatus(fightData, result.target, Status.SLOWED, StatusLength.MEDIUM);
+				addStatus(fightData, result.target, FightStatus.SLOWED, FightStatusLength.MEDIUM);
 			}
 			break;
 		}
@@ -2609,7 +2680,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				let damage = 0;
 
 				// Base damage of whole target hp if is does not know perception or is not a boss
-				if (!hit.target.perception && hit.target.type !== 'boss') {
+				if (!hit.target.perception && hit.target.type !== FighterType.BOSS) {
 					// 100% current HP otherwise
 					damage = hit.target.hp;
 				}
@@ -2646,16 +2717,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			activate_step.targets.push({ tid: opponent.id });
 
 			// Petrification removes flying and intangible.
-			removeStatus(fightData, opponent, Status.FLYING, Status.INTANGIBLE);
+			removeStatus(fightData, opponent, FightStatus.FLYING, FightStatus.INTANGIBLE);
 
 			// Apply petrification, increment stat if properly applied.
-			if (addStatus(fightData, opponent, Status.PETRIFIED, StatusLength.MEDIUM)) {
+			if (addStatus(fightData, opponent, FightStatus.PETRIFIED, FightStatusLength.MEDIUM)) {
 				updateStat(fightData, fighter, 'petrified', 1);
 			}
 
 			// Instantly cancel if boss
-			if (opponent.type === 'boss') {
-				removeStatus(fightData, opponent, Status.PETRIFIED);
+			if (opponent.type === FighterType.BOSS) {
+				removeStatus(fightData, opponent, FightStatus.PETRIFIED);
 			}
 			break;
 		}
@@ -2683,30 +2754,60 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			});
 			break;
 		}
-		case Skill.DELUGE:
-			{
-				attackAllOpponents(
-					fightData,
-					fighter,
-					getElementalAttack(fighter, ElementType.WATER, 10),
-					skill.id,
-					activate_step
-				);
-				// Increase time of all opponents by 8
-				const opponents = getOpponents(fightData, fighter);
-				const init_down_notify = {
-					action: 'notify',
-					fids: [],
-					notification: NotificationList.InitDown
-				} as NotifyStep;
-				opponents.forEach(opponent => {
-					opponent.time += 8 * TIME_FACTOR;
-					init_down_notify.fids.push(opponent.id);
-				});
-				fightData.steps.push(init_down_notify);
-				break;
-			}
+		case Skill.DELUGE: {
+			attackAllOpponents(
+				fightData,
+				fighter,
+				getElementalAttack(fighter, ElementType.WATER, 10),
+				skill.id,
+				activate_step
+			);
+			// Increase time of all opponents by 8
+			const opponents = getOpponents(fightData, fighter);
+			const init_down_notify = {
+				action: 'notify',
+				fids: [],
+				notification: NotificationList.InitDown
+			} as NotifyStep;
+			opponents.forEach(opponent => {
+				opponent.time += 8 * TIME_FACTOR;
+				init_down_notify.fids.push(opponent.id);
+			});
+			fightData.steps.push(init_down_notify);
 			break;
+		}
+		case Skill.HYPERVENTILATION: {
+			// Use condition checked prior and defined in skill details so the skill can only be use once.
+			// Still check but throw an error.
+			if (fighter.hasUsedHyperventilation) {
+				sendJSONToDiscord('Error `Has already used hyperventilation` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Fighter has already used hyperventilation`);
+			}
+
+			fighter.hasUsedHyperventilation = true;
+
+			// Add step for fx
+			fightData.steps.push(activate_step);
+
+			const opponents = getOpponents(fightData, fighter);
+
+			opponents.forEach(opponent => {
+				// Reduce max energy by 20%
+				const newMaxEnergy = Math.round(opponent.maxEnergy * 0.8);
+
+				setMaxEnergy(opponent, newMaxEnergy);
+
+				// Add reduce energy step
+				fightData.steps.push({
+					action: 'reduceEnergy',
+					fighter: stepFighter(opponent)
+				});
+			});
+			break;
+		}
 		// WOOD
 		case Skill.LANCER_DE_ROCHE:
 			attackSingleOpponent(
@@ -2806,11 +2907,13 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// TODO check the monster can be caught
 			// TODO can only save up to 3 monsters
 			// Get monster opponents
-			const opponents = getOpponents(fightData, fighter, ['monster']);
+			const opponents = getOpponents(fightData, fighter, [FighterType.MONSTER]);
 
-			// Cancel if no monster opponents
+			// Use condition checked prior and defined in skill details so there is at least one monster guaranteed.
+			// Check and throw an error.
 			if (!opponents.length) {
-				return cancel();
+				sendJSONToDiscord('Error `Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
+				throw new Error(`No monster found`);
 			}
 
 			// Get random opponent
@@ -2838,7 +2941,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		// Double
 		case Skill.SECOUSSE: {
 			// Get non flying enemies
-			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, Status.FLYING));
+			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, FightStatus.FLYING));
 			attackAllOpponents(
 				fightData,
 				fighter,
@@ -2855,9 +2958,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 		// Invocations
 		case Skill.HERCOLUBUS: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2878,9 +2986,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.VULCAIN: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2895,9 +3008,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.ARMURE_DIFRIT: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2909,9 +3027,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.SALAMANDRE: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2926,9 +3049,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.BALEINE_BLANCHE: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2940,9 +3068,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.LEVIATHAN: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2957,9 +3090,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.ONDINE: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2974,9 +3112,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.LOUP_GAROU: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -2991,9 +3134,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.BENEDICTION_DES_FEES: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3005,9 +3153,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.YGGDRASIL: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3019,9 +3172,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.RAIJIN: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3036,9 +3194,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.GOLEM: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3050,9 +3213,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.ROI_DES_SINGES: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3064,9 +3232,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.DJINN: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3075,16 +3248,16 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.FUJIN: {
-			// Cancel if no invocations left
-			if (fighter.invocations <= 0) {
-				return cancel();
-			}
-
-			// Cancel if an ally used FUJIN already
 			const allies = getAllies(fightData, fighter);
 
-			if (allies.some(ally => hasStatus(ally, Status.USED_FUJIN))) {
-				return cancel();
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
+			if (fighter.invocations <= 0 || allies.some(ally => hasStatus(ally, FightStatus.USED_FUJIN))) {
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3094,13 +3267,18 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				ally.stats.speed.global *= 0.5;
 			});
 
-			addStatus(fightData, fighter, Status.USED_FUJIN);
+			addStatus(fightData, fighter, FightStatus.USED_FUJIN);
 			break;
 		}
 		case Skill.TOTEM_ANCESTRAL_AEROPORTE: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3115,9 +3293,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.BOUDDHA: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3134,16 +3317,21 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.HADES: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
 
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Poison
-				poison(fightData, opponent, fighter, Skill.HADES, StatusLength.MEDIUM);
+				poison(fightData, opponent, fighter, Skill.HADES, FightStatusLength.MEDIUM);
 
 				// Slow
 				opponent.stats.speed.global *= 1.5;
@@ -3151,9 +3339,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.REINE_DE_LA_RUCHE: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3171,9 +3364,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.QUETZACOATL: {
-			// Cancel if no invocations left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3188,9 +3386,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.BIG_MAMA: {
-			// Cancel if no invocation left
+			// Use condition checked prior and defined in skill details so the invocation can be used.
+			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`Invocation requirements not met`);
 			}
 
 			fighter.invocations -= 1;
@@ -3201,8 +3404,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 
 				// Alter opponents statuses
 				if (f.attacker !== fighter.attacker) {
-					removeStatus(fightData, f, Status.FLYING, Status.INTANGIBLE);
-					addStatus(fightData, f, Status.STUNNED, StatusLength.MEDIUM);
+					removeStatus(fightData, f, FightStatus.FLYING, FightStatus.INTANGIBLE);
+					addStatus(fightData, f, FightStatus.STUNNED, FightStatusLength.MEDIUM);
 				}
 			});
 			break;
@@ -3282,9 +3485,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.AMAZONIE: {
-			// Only one environment active at a time
+			// Use condition checked prior and defined in skill details to make sure there is no active environment.
+			// Check and throw an error.
 			if (fightData.environment) {
-				return cancel();
+				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`An environment is already active`);
 			}
 
 			activateEnvironment(fightData, fighter, Skill.AMAZONIE);
@@ -3311,9 +3519,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.ABYSSE: {
-			// Only one environment active at a time
+			// Use condition checked prior and defined in skill details to make sure there is no active environment.
+			// Check and throw an error.
 			if (fightData.environment) {
-				return cancel();
+				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`An environment is already active`);
 			}
 
 			activateEnvironment(fightData, fighter, Skill.ABYSSE);
@@ -3360,18 +3573,27 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			break;
 		}
 		case Skill.FEU_DE_ST_ELME: {
-			// Only one environment active at a time
+			// Use condition checked prior and defined in skill details to make sure there is no active environment.
+			// Check and throw an error.
 			if (fightData.environment) {
-				return cancel();
+				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`An environment is already active`);
 			}
-
 			activateEnvironment(fightData, fighter, Skill.FEU_DE_ST_ELME);
 			break;
 		}
 		case Skill.OURANOS: {
-			// Only one environment active at a time
+			// Use condition checked prior and defined in skill details to make sure there is no active environment.
+			// Check and throw an error.
 			if (fightData.environment) {
-				return cancel();
+				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`An environment is already active`);
 			}
 
 			activateEnvironment(fightData, fighter, Skill.OURANOS);
@@ -3399,7 +3621,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.SYLPHIDES: {
 			// Get dinoz opponents
-			const opponents = getOpponents(fightData, fighter, ['dinoz']);
+			const opponents = getOpponents(fightData, fighter, [FighterType.DINOZ]);
 
 			if (opponents.length > 0) {
 				// Get random opponent
@@ -3428,8 +3650,8 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			const hit = launchAssault(fightData, fighter, true, skill.id);
 
 			if (hit && hit.hpLost > 0) {
-				if (hit.target.type !== 'boss') {
-					addStatus(fightData, hit.target, Status.STUNNED, StatusLength.MEDIUM);
+				if (hit.target.type !== FighterType.BOSS) {
+					addStatus(fightData, hit.target, FightStatus.STUNNED, FightStatusLength.MEDIUM);
 				}
 			}
 
@@ -3437,7 +3659,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.ECRASEMENT: {
 			// Get non flying opponents
-			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, Status.FLYING));
+			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, FightStatus.FLYING));
 
 			// Use a minimum power of 40
 			let power = fighter.stats.base[fighter.elements[0]] * 5;
@@ -3480,14 +3702,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// If not dead
 			if (fighter.hp > 0) {
 				// Add FLYING
-				addStatus(fightData, fighter, Status.FLYING);
+				addStatus(fightData, fighter, FightStatus.FLYING);
 			}
 			break;
 		}
 		case Skill.M_INVISIBILITY: {
 			getAllies(fightData, fighter).forEach(ally => {
 				// Add INTANGIBLE
-				addStatus(fightData, ally, Status.INTANGIBLE, StatusLength.SHORT);
+				addStatus(fightData, ally, FightStatus.INTANGIBLE, FightStatusLength.SHORT);
 			});
 			break;
 		}
@@ -3511,8 +3733,14 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.M_INSTANT_FLEE:
 		case Skill.M_FLEE: {
+			// Use condition checked prior and defined in skill details to make sure there fight has not escaped and is alive.
+			// Check and throw an error.
 			if (fighter.escaped || fighter.hp <= 0) {
-				return cancel();
+				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+					fightData: fightData,
+					skill: skill
+				});
+				throw new Error(`An environment is already active`);
 			}
 
 			// Add leave step
@@ -3578,7 +3806,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.M_ALL_FOR_ONE: {
 			// TODO corner case missing, check MT code
 			// Get all allies from the same race
-			const sameRace = getAllies(fightData, fighter, ['monster']).filter(
+			const sameRace = getAllies(fightData, fighter, [FighterType.MONSTER]).filter(
 				ally => ally.name === fighter.name && ally.time < Infinity
 			);
 
@@ -3594,7 +3822,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.M_LAST_BREATH: {
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Poison
-				poison(fightData, opponent, fighter, Skill.M_LAST_BREATH, StatusLength.MEDIUM);
+				poison(fightData, opponent, fighter, Skill.M_LAST_BREATH, FightStatusLength.MEDIUM);
 			});
 			break;
 		}
@@ -3612,7 +3840,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		}
 		case Skill.M_GROTOX: {
 			// Get non flying opponents
-			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, Status.FLYING));
+			const opponents = getOpponents(fightData, fighter).filter(opponent => !hasStatus(opponent, FightStatus.FLYING));
 
 			attackAllOpponents(fightData, fighter, [[ElementType.VOID, 60]], skill.id, activate_step, opponents);
 			break;
@@ -3620,7 +3848,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 		case Skill.M_TORNADO: {
 			getOpponents(fightData, fighter).forEach(opponent => {
 				// Remove FLYING
-				removeStatus(fightData, opponent, Status.FLYING);
+				removeStatus(fightData, opponent, FightStatus.FLYING);
 			});
 
 			attackAllOpponents(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 40), skill.id, activate_step);
@@ -3638,7 +3866,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	// Consume energy
 	setEnergy(fighter, fighter.energy - skill.energy);
 
-	if (fighter.type !== 'boss') {
+	if (fighter.type !== FighterType.BOSS) {
 		// Get opponents with SHARIGNAN
 		const opponentsWithSharingan = getOpponents(fightData, fighter).filter(opponent =>
 			opponent.skills.some(skill => skill.id === Skill.SHARIGNAN)
@@ -3723,16 +3951,16 @@ const poison = (
 	fighter: DetailedFighter,
 	poisoner: DetailedFighter,
 	skill: Skill,
-	duration = StatusLength.INFINITE
+	duration = FightStatusLength.INFINITE
 ) => {
 	// No poison if fighter is already poisoned
-	if (hasStatus(fighter, Status.POISONED)) return;
+	if (hasStatus(fighter, FightStatus.POISONED)) return;
 
 	// No poison if fighter is cured
-	if (hasStatus(fighter, Status.CURED)) return;
+	if (hasStatus(fighter, FightStatus.CURED)) return;
 
 	// No poison if fighter has NO_POISON
-	if (hasStatus(fighter, Status.NO_POISON)) return;
+	if (hasStatus(fighter, FightStatus.NO_POISON)) return;
 
 	// Check if fighter has Item.ANTIDOTE
 	if (fighter.items.some(item => item.itemId === Item.ANTIDOTE)) {
@@ -3744,7 +3972,7 @@ const poison = (
 		});
 
 		// Set CURED
-		addStatus(fightData, fighter, Status.CURED);
+		addStatus(fightData, fighter, FightStatus.CURED);
 		return;
 	}
 
@@ -3765,7 +3993,7 @@ const poison = (
 		});
 
 		// Set CURED
-		addStatus(fightData, fighter, Status.CURED);
+		addStatus(fightData, fighter, FightStatus.CURED);
 		return;
 	}
 
@@ -3815,10 +4043,10 @@ const poison = (
 		damage: poisonDamage
 	};
 
-	if (addStatus(fightData, fighter, Status.POISONED, duration)) {
+	if (addStatus(fightData, fighter, FightStatus.POISONED, duration)) {
 		// If the poison was properly applied, update stats.
 		updateStat(fightData, poisoner, 'poisoned', 1);
-		if (fighter.type === 'dinoz') {
+		if (fighter.type === FighterType.DINOZ) {
 			updateStat(fightData, fighter, 'times_poisoned', 1);
 		}
 	}
@@ -3835,7 +4063,7 @@ export const heal = (
 ) => {
 	// No heal if BEER
 	// TODO add fx for no healing
-	if (hasStatus(fighter, Status.BEER)) return;
+	if (hasStatus(fighter, FightStatus.BEER)) return;
 
 	const hpBeforeHeal = fighter.hp;
 
@@ -3882,14 +4110,14 @@ export const heal = (
 
 	// Group therapy
 	const opponentsWhoCanCopyHeal = getOpponents(fightData, fighter).filter(opponent =>
-		hasStatus(opponent, Status.COPY_HEAL)
+		hasStatus(opponent, FightStatus.COPY_HEAL)
 	);
 
 	opponentsWhoCanCopyHeal.forEach(opponent => {
 		// Heal opponent
 		heal(fightData, opponent, healAmount, undefined, LifeEffect.Heal);
 
-		removeStatus(fightData, opponent, Status.COPY_HEAL);
+		removeStatus(fightData, opponent, FightStatus.COPY_HEAL);
 	});
 };
 
@@ -4043,7 +4271,7 @@ const attackTarget = (
 		// Check for assault dodge
 		if (
 			isAssault &&
-			!hasStatus(target, Status.PETRIFIED) &&
+			!hasStatus(target, FightStatus.PETRIFIED) &&
 			!attacker.cancelAssaultDodge &&
 			fightData.rng() < target.stats.special.evasion - 1
 		) {
@@ -4054,10 +4282,10 @@ const attackTarget = (
 		if (
 			!isAssault &&
 			!(
-				hasStatus(target, Status.PETRIFIED) ||
-				hasStatus(target, Status.ASLEEP) ||
-				hasStatus(target, Status.FLYING) ||
-				hasStatus(target, Status.STUNNED)
+				hasStatus(target, FightStatus.PETRIFIED) ||
+				hasStatus(target, FightStatus.ASLEEP) ||
+				hasStatus(target, FightStatus.FLYING) ||
+				hasStatus(target, FightStatus.STUNNED)
 			) &&
 			fightData.rng() < target.stats.special.superEvasion - 1
 		) {
@@ -4069,9 +4297,9 @@ const attackTarget = (
 		if (
 			isAssault &&
 			// Opponent has FLYING
-			hasStatus(realOpponent, Status.FLYING) &&
+			hasStatus(realOpponent, FightStatus.FLYING) &&
 			// Attacker doesn't have FLYING
-			!hasStatus(attacker, Status.FLYING) &&
+			!hasStatus(attacker, FightStatus.FLYING) &&
 			// Attacker can't hit flying opponent
 			!attacker.canHitFlying
 		) {
@@ -4079,7 +4307,7 @@ const attackTarget = (
 		}
 
 		// INTANGIBLE
-		if (hasStatus(target, Status.INTANGIBLE)) {
+		if (hasStatus(target, FightStatus.INTANGIBLE)) {
 			if ((isAssault && attacker.canHitIntangible) || elements.some(e => e == ElementType.AIR)) {
 				damage = 1;
 				break_intangible = true;
@@ -4089,7 +4317,7 @@ const attackTarget = (
 		}
 
 		// DAZZLED
-		if (hasStatus(attacker, Status.DAZZLED)) {
+		if (hasStatus(attacker, FightStatus.DAZZLED)) {
 			if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 3) === 0) {
 				noDamage = true;
 				evasion = true;
@@ -4136,7 +4364,7 @@ const attackTarget = (
 
 		// Break intangible if conditions met
 		if (break_intangible) {
-			removeStatus(fightData, target, Status.INTANGIBLE);
+			removeStatus(fightData, target, FightStatus.INTANGIBLE);
 		}
 
 		// Update the total energy spent
@@ -4173,19 +4401,19 @@ const attackTarget = (
 	});
 	updateStat(fightData, target, 'hpLost', totalDamage);
 	updateStat(fightData, attacker, 'attacks', 1);
-	if (target.type === 'dinoz') {
+	if (target.type === FighterType.DINOZ) {
 		updateStat(fightData, target, 'times_attacked', 1);
 	}
 	if (isAssault) {
 		updateStat(fightData, attacker, 'assaults', 1);
-		if (target.type === 'dinoz') {
+		if (target.type === FighterType.DINOZ) {
 			updateStat(fightData, target, 'times_assaulted', 1);
 		}
 	}
 
 	// The target can counter if it's still alive and the attack was in close combat
 	if (target.hp > 0) {
-		if (isAssault && !hasStatus(target, Status.PETRIFIED) && counterAttack(fightData, target)) {
+		if (isAssault && !hasStatus(target, FightStatus.PETRIFIED) && counterAttack(fightData, target)) {
 			// Add counter step
 			fightData.steps.push({
 				action: 'counter',
@@ -4224,7 +4452,7 @@ const checkDefensiveEffects = (
 		!isCloseCombat &&
 		!isInvocation &&
 		// Don't trigger for bosses
-		attacker.type !== 'boss' &&
+		attacker.type !== FighterType.BOSS &&
 		// Don't trigger for WOOD
 		!elements.includes(ElementType.WOOD) &&
 		// Don't trigger for VOID
@@ -4255,7 +4483,7 @@ const checkDefensiveEffects = (
 			skill: Skill.FORME_VAPOREUSE
 		});
 		// Add INTANGIBLE
-		addStatus(fightData, target, Status.INTANGIBLE, StatusLength.SHORT);
+		addStatus(fightData, target, FightStatus.INTANGIBLE, FightStatusLength.SHORT);
 	}
 
 	// CUIRASSE
@@ -4373,7 +4601,7 @@ const checkAfterAttackEffects = (
 		elements.find(element => element === ElementType.WATER) &&
 		hasSkill(attacker, Skill.GRIFFES_EMPOISONNEES)
 	) {
-		poison(fightData, target, attacker, Skill.GRIFFES_EMPOISONNEES, StatusLength.MEDIUM);
+		poison(fightData, target, attacker, Skill.GRIFFES_EMPOISONNEES, FightStatusLength.MEDIUM);
 	}
 
 	// CONCENTRATION: save last target ID if it was an assault and the target is not the same as the original side of the attacker
@@ -4383,12 +4611,12 @@ const checkAfterAttackEffects = (
 
 	// Poison opponent if fighter has Skill.HALEINE_FETIVE and landed a hit with an assault
 	if (isCloseCombat && damage > 0 && hasSkill(attacker, Skill.HALEINE_FETIVE)) {
-		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, StatusLength.LONG);
+		poison(fightData, target, attacker, Skill.HALEINE_FETIVE, FightStatusLength.LONG);
 	}
 
 	// TODO
 	// "M_FEBREZ" skill for Valentine?
-	// 		if (realOpponent.type === 'dinoz' && hasSkill(attacker, Skill.M_FEBREZ)) {
+	// 		if (realOpponent.type === FighterType.DINOZ && hasSkill(attacker, Skill.M_FEBREZ)) {
 	// 			// Regen 5% HP
 	// 			heal(fightData, realOpponent, Math.round(realOpponent.maxHp * 0.05 + 0.5));
 	// 		}
@@ -4402,7 +4630,7 @@ const checkAfterAttackEffects = (
 			skill: Skill.GRIFFES_INFERNALES,
 			damage
 		};
-		addStatus(fightData, target, Status.BURNED, StatusLength.MEDIUM);
+		addStatus(fightData, target, FightStatus.BURNED, FightStatusLength.MEDIUM);
 	}
 
 	// 30% chance to steal all energy from target if fighter has Skill.QI_GONG and landed a hit with an assault
@@ -4418,8 +4646,8 @@ const checkAfterAttackEffects = (
 	}
 
 	// Cancel FLYING
-	if (!hasStatus(attacker, Status.KEEP_FLYING)) {
-		removeStatus(fightData, attacker, Status.FLYING);
+	if (!hasStatus(attacker, FightStatus.KEEP_FLYING)) {
+		removeStatus(fightData, attacker, FightStatus.FLYING);
 	}
 };
 
@@ -4439,13 +4667,13 @@ const checkAfterDefenseEffects = (
 	// Statuses: sleep, flames Torche (competence ou briqué), intangible, ...
 
 	// Torch: close combat and hit landed
-	if (isCloseCombat && damage > 0 && hasStatus(target, Status.TORCHED)) {
+	if (isCloseCombat && damage > 0 && hasStatus(target, FightStatus.TORCHED)) {
 		const hp_lost = loseHpwithResilience(fightData, attacker, target.stats.special.torchDamage, LifeEffect.Fire);
 		updateStat(fightData, target, 'burn_damage', hp_lost);
 	}
 
 	// Burn: close combat and hit landed
-	if (isCloseCombat && damage > 0 && hasStatus(target, Status.BURNED)) {
+	if (isCloseCombat && damage > 0 && hasStatus(target, FightStatus.BURNED)) {
 		loseHpwithResilience(fightData, attacker, 1, LifeEffect.Fire);
 		updateStat(fightData, target, 'burn_damage', 1);
 	}
@@ -4468,13 +4696,18 @@ const checkAfterDefenseEffects = (
 	}
 
 	// Aura puante: close combat and hit landed, the attacker must not be poisoned
-	if (isCloseCombat && damage > 0 && !hasStatus(attacker, Status.POISONED) && hasSkill(target, Skill.AURA_PUANTE)) {
+	if (
+		isCloseCombat &&
+		damage > 0 &&
+		!hasStatus(attacker, FightStatus.POISONED) &&
+		hasSkill(target, Skill.AURA_PUANTE)
+	) {
 		fightData.steps.push({
 			action: 'skillAnnounce',
 			fid: target.id,
 			skill: Skill.AURA_PUANTE
 		});
-		poison(fightData, attacker, target, Skill.AURA_PUANTE, StatusLength.MEDIUM);
+		poison(fightData, attacker, target, Skill.AURA_PUANTE, FightStatusLength.MEDIUM);
 	}
 
 	// TODO Bulle (add fx?)
@@ -4511,7 +4744,7 @@ const checkAfterDefenseEffects = (
 			fid: target.id,
 			skill: Skill.M_CONTAMINATION
 		});
-		poison(fightData, attacker, target, Skill.M_CONTAMINATION, StatusLength.SHORT);
+		poison(fightData, attacker, target, Skill.M_CONTAMINATION, FightStatusLength.SHORT);
 	}
 
 	// Repousse (garde végétox)
@@ -4529,7 +4762,7 @@ const checkAfterDefenseEffects = (
 		(fightData.environment?.type !== Skill.AMAZONIE && damage > 0) ||
 		(fightData.environment?.type === Skill.AMAZONIE && damage > 10)
 	) {
-		removeStatus(fightData, target, Status.ASLEEP);
+		removeStatus(fightData, target, FightStatus.ASLEEP);
 	}
 };
 
@@ -4550,7 +4783,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				// Execute the status if a cycle has elapsed
 				if (status.timeSinceLastCycle >= CYCLE) {
 					switch (status.type) {
-						case Status.POISONED: {
+						case FightStatus.POISONED: {
 							const poisonedBy = fighter.poisonedBy;
 
 							if (!poisonedBy) {
@@ -4573,7 +4806,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							updateStat(fightData, poisoner, 'poison_damage', hp_lost);
 							break;
 						}
-						case Status.BURNED: {
+						case FightStatus.BURNED: {
 							// Check if fighter is burned
 							const burnedBy = fighter.burnedBy;
 
@@ -4597,12 +4830,12 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							updateStat(fightData, burner, 'burn_damage', hp_lost);
 							break;
 						}
-						case Status.HEALING: {
+						case FightStatus.HEALING: {
 							// Heal 1 HP
 							heal(fightData, fighter, 1, undefined, LifeEffect.Heal);
 							break;
 						}
-						case Status.TORCHED: {
+						case FightStatus.TORCHED: {
 							loseHp(fightData, fighter, 1, LifeEffect.Fire);
 							break;
 						}
@@ -4691,7 +4924,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 			}
 
 			// NO_DEATH
-			if (hasStatus(fighter, Status.NO_DEATH)) {
+			if (hasStatus(fighter, FightStatus.NO_DEATH)) {
 				// Add leave step
 				fightData.steps.push({
 					action: 'leave',
@@ -4780,7 +5013,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 			// DEMYOM
 			if (fighter.skills.some(skill => skill.id === Skill.M_DEMYOM_ATTACK)) {
-				const opponentDinoz = getOpponents(fightData, fighter, ['dinoz']);
+				const opponentDinoz = getOpponents(fightData, fighter, [FighterType.DINOZ]);
 
 				// Curse dinoz
 				if (opponentDinoz.length) {
@@ -4856,7 +5089,7 @@ const endTurnChecks = (fightData: DetailedFight, attacker: DetailedFighter) => {
 	attacker.time += time;
 
 	// Change fighter element
-	if (!hasStatus(attacker, Status.LOCKED)) {
+	if (!hasStatus(attacker, FightStatus.LOCKED)) {
 		attacker.element = attacker.elements[(attacker.elements.indexOf(attacker.element) + 1) % attacker.elements.length];
 	}
 
@@ -4961,7 +5194,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 				// Remove curse if no more turns left
 				if (lockedF.locked <= 0) {
 					lockedF.locked = undefined;
-					removeStatus(fightData, lockedF, Status.LOCKED);
+					removeStatus(fightData, lockedF, FightStatus.LOCKED);
 				}
 			}
 		});
@@ -4998,7 +5231,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		if (fightData.environment.type === Skill.FEU_DE_ST_ELME) {
 			// Take 5% HP for LIGHTNING_STRUCK fighters
 			getFighters(fightData).forEach(f => {
-				if (hasStatus(f, Status.LIGHTNING_STRUCK)) {
+				if (hasStatus(f, FightStatus.LIGHTNING_STRUCK)) {
 					loseHp(fightData, attacker, Math.ceil(attacker.hp * 0.05), LifeEffect.Skull);
 				}
 			});
@@ -5065,7 +5298,7 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 	// }
 
 	// No assaults for NO_ASSAULT
-	if (hasStatus(attacker, Status.NO_ASSAULT)) {
+	if (hasStatus(attacker, FightStatus.NO_ASSAULT)) {
 		endTurnChecks(fightData, attacker);
 		return;
 	}

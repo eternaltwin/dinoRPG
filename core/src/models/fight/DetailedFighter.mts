@@ -8,7 +8,7 @@ import { MonsterFiche } from './MonsterFiche.mjs';
 import { DinozStatusId } from '../dinoz/StatusList.mjs';
 import { FIGHT_INFINITE } from '../../utils/fightConstants.mjs';
 
-export enum Status {
+export enum FightStatus {
 	// Bad
 	ASLEEP = 'asleep',
 	SLOWED = 'slowed',
@@ -47,42 +47,55 @@ export enum Status {
 	AIR_SLOWED = 'airSlowed'
 }
 
-export const GoodStatus = [
-	Status.TORCHED,
-	Status.INTANGIBLE,
-	Status.FLYING,
-	Status.QUICKENED,
-	Status.SHIELDED,
-	Status.BLESSED,
-	Status.HEALING
+export const GoodFightStatus = [
+	FightStatus.TORCHED,
+	FightStatus.INTANGIBLE,
+	FightStatus.FLYING,
+	FightStatus.QUICKENED,
+	FightStatus.SHIELDED,
+	FightStatus.BLESSED,
+	FightStatus.HEALING
 ];
 
-export const BadStatus = [
-	Status.ASLEEP,
-	Status.SLOWED,
-	Status.PETRIFIED,
-	Status.POISONED,
-	Status.BURNED,
-	Status.LOCKED,
-	Status.DAZZLED,
-	Status.STUNNED
+export const BadFightStatus = [
+	FightStatus.ASLEEP,
+	FightStatus.SLOWED,
+	FightStatus.PETRIFIED,
+	FightStatus.POISONED,
+	FightStatus.BURNED,
+	FightStatus.LOCKED,
+	FightStatus.DAZZLED,
+	FightStatus.STUNNED
 ];
 
-export enum StatusLength {
+export enum FightStatusLength {
 	SHORT = 15,
 	MEDIUM = 30,
 	LONG = 80,
 	INFINITE = FIGHT_INFINITE
 }
 
-export type FighterStatus = {
-	type: Status;
+export type FighterStatusData = {
+	type: FightStatus;
 	time: number;
 	timeSinceLastCycle: number;
 	cycle: boolean;
 };
 
-export type FighterType = 'dinoz' | 'monster' | 'boss' | 'clone' | 'reinforcement';
+export enum FighterType {
+	DINOZ = 'dinoz',
+	MONSTER = 'monster',
+	BOSS = 'boss',
+	CLONE = 'clone',
+	REINFORCEMENT = 'reinforcement'
+}
+
+export const AllFighterTypeExceptBoss = [
+	FighterType.DINOZ,
+	FighterType.MONSTER,
+	FighterType.CLONE,
+	FighterType.REINFORCEMENT
+];
 
 export interface DetailedFighter {
 	// Metadata
@@ -126,8 +139,8 @@ export interface DetailedFighter {
 	time: number;
 	// Available skills
 	skills: SkillDetails[];
-	// Current status
-	status: FighterStatus[];
+	// Current fight status
+	status: FighterStatusData[];
 	// Poisoned
 	poisonedBy?: {
 		id: number;

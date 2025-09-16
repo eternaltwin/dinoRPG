@@ -1,7 +1,5 @@
-import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
-import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
-import { Item } from '@drpg/core/models/item/ItemList';
+import { DetailedFighter, FighterType, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConstants';
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
@@ -122,7 +120,7 @@ export const getAttackDefense = (
 
 	// TODO this needs to be reworked, see Abysse
 	// -25% to attack score if attacker is WEAKENED
-	if (hasStatus(attacker, Status.WEAKENED)) {
+	if (hasStatus(attacker, FightStatus.WEAKENED)) {
 		attack *= 0.75;
 	}
 
@@ -165,9 +163,9 @@ export const calculateDamage = (
 
 	// If the attacker or the target is a monster, apply the monster's resilience.
 	// Else, apply the target resilience by default.
-	if (attacker.type === 'monster') {
+	if (attacker.type === FighterType.MONSTER) {
 		damage = applyResilienceToDamage(attacker, damage);
-	} else if (target.type === 'monster') {
+	} else if (target.type === FighterType.MONSTER) {
 		damage = applyResilienceToDamage(target, damage);
 	} else {
 		damage = applyResilienceToDamage(target, damage);
@@ -185,70 +183,3 @@ export const calculateDamage = (
 
 	return damage;
 };
-
-// TODO remove when all has been handled in the new methods
-// export const getDamage = (
-// 	attacker: DetailedFighter,
-// 	opponent: DetailedFighter,
-// 	skill?: Skill,
-// 	item?: Item,
-// 	power?: number
-// ) => {
-// 	let attack = BASE_ATTACK_VALUE;
-// 	let defense = BASE_DEFENSE_VALUE;
-// 	let attackElements: ElementType[] = [];
-
-// 	// Calculate the attacker's attack score
-// 	// From a skill
-// 	if (skill && !power) {
-// 		// Get the skill base damage relative to the skill power
-// 		switch (skill) {
-// 			// 50% of the opponent's HP
-// 			case Skill.M_CURSED_WAND: {
-// 				return {
-// 					damage: Math.round(opponent.hp * 0.5),
-// 					elements: [ElementType.VOID]
-// 				};
-// 			}
-// 			// M_DEMYOM_ATTACK
-// 			case Skill.M_DEMYOM_ATTACK: {
-// 				const power = attacker.stats.base[attacker.element] * 8;
-
-// 				attack += Math.max(power, 40);
-
-// 				break;
-// 			}
-// 			// M_GRIZOU
-// 			case Skill.M_GRIZOU: {
-// 				const power = attacker.stats.base[ElementType.VOID];
-
-// 				attack += power;
-
-// 				break;
-// 			}
-// 		// From an item
-// 	} else if (item) {
-// 		switch (item) {
-// 			case Item.SORCERERS_STICK: {
-// 				// 30% of the opponent's HP
-// 				attack = opponent.hp * 0.3;
-// 			}
-// 			default: {
-// 				console.warn(`Item ${item} not handled`);
-// 				break;
-// 			}
-// 		}
-// 		// From an assault (the assault can be triggered by a skill)
-// 	} else {
-// 		if (power && skill) {
-// 			attackElements = [...skillList[skill].element];
-// 		} else {
-// 			attackElements = [attacker.element];
-// 		}
-// 	}
-
-// 	return {
-// 		damage,
-// 		elements: attackElements
-// 	};
-// };

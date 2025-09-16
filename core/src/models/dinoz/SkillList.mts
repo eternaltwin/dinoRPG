@@ -7,6 +7,9 @@ import { SkillDetails } from './SkillDetails.mjs';
 import { SkillVisualEffect } from '../enums/SkillVisualEffect.mjs';
 import { AuraFxType, DamagesEffect, GotoEffect, LifeEffect, SkillFxType } from '../fight/transpiler.mjs';
 import { RaceEnum } from '../enums/RaceEnum.mjs';
+import { SkillFightConditionEnum } from './SkillFightCondition.mjs';
+import { AllFighterTypeExceptBoss, FighterType, FightStatus } from '../fight/DetailedFighter.mjs';
+import { Operator } from '../enums/Parser.mjs';
 
 export enum Skill {
 	GRIFFES_ENFLAMMEES = 11101,
@@ -537,6 +540,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: true,
 		priority: 1,
 		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.MIN_HP]: 6
+		},
 		visualEffect: SkillVisualEffect.AURA,
 		color: '0xFF0000',
 		fxType: AuraFxType.Detonate
@@ -769,7 +775,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.GRIFFES_INFERNALES]: {
 		id: Skill.GRIFFES_INFERNALES,
@@ -936,7 +945,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.VULCAIN]: {
 		id: Skill.VULCAIN,
@@ -951,7 +963,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.ARMURE_DIFRIT]: {
 		id: Skill.ARMURE_DIFRIT,
@@ -966,7 +981,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.BRAVE]: {
 		id: Skill.BRAVE,
@@ -1124,7 +1142,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	[Skill.RECEPTACLE_ROCHEUX]: {
 		id: Skill.RECEPTACLE_ROCHEUX,
@@ -1632,7 +1653,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.CHOC]: {
 		id: Skill.CHOC,
@@ -1663,7 +1687,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.COLOSSE]: {
 		id: Skill.COLOSSE,
@@ -1749,7 +1776,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 9,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.MIN_ALLIES]: [[FighterType.DINOZ], 2]
+		}
 	},
 	[Skill.ACIDE_LACTIQUE]: {
 		id: Skill.ACIDE_LACTIQUE,
@@ -1932,7 +1962,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	[Skill.RECEPTACLE_AQUEUX]: {
 		id: Skill.RECEPTACLE_AQUEUX,
@@ -2461,7 +2494,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.MAITRE_NAGEUR]: {
 		id: Skill.MAITRE_NAGEUR,
@@ -2491,7 +2527,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,
@@ -2637,7 +2676,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	[Skill.BANNI_DES_DIEUX]: {
 		id: Skill.BANNI_DES_DIEUX,
@@ -2681,7 +2723,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isSphereSkill: false,
 		priority: 8,
 		probability: 15,
-		visualEffect: SkillVisualEffect.RAFALE
+		visualEffect: SkillVisualEffect.RAFALE,
+		fightCondition: {
+			[SkillFightConditionEnum.HYPERVENTILATION]: true
+		}
 	},
 	[Skill.THERAPIE_DE_GROUPE]: {
 		id: Skill.THERAPIE_DE_GROUPE,
@@ -3040,7 +3085,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 30
+		probability: 30,
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.STATUS]: FightStatus.SHIELDED
+			}
+		}
 	},
 	[Skill.CROCS_DIAMANT]: {
 		id: Skill.CROCS_DIAMANT,
@@ -3195,7 +3245,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.RAIJIN]: {
 		id: Skill.RAIJIN,
@@ -3210,7 +3263,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.QUETZACOATL]: {
 		id: Skill.QUETZACOATL,
@@ -3225,7 +3281,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.ROI_DES_SINGES]: {
 		id: Skill.ROI_DES_SINGES,
@@ -3240,7 +3299,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.ARCHANGE_CORROSIF]: {
 		id: Skill.ARCHANGE_CORROSIF,
@@ -3437,7 +3499,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	[Skill.FORCE_DE_ZEUS]: {
 		id: Skill.FORCE_DE_ZEUS,
@@ -3840,7 +3905,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		visualEffect: SkillVisualEffect.AURA,
 		visualEffectBis: SkillVisualEffect.HYPNOSE,
 		color: '0x0000FF',
-		fxType: AuraFxType.Light
+		fxType: AuraFxType.Light,
+		fightCondition: {
+			[Operator.AND]: [
+				{ [SkillFightConditionEnum.HYPNOSIS]: true },
+				{ [SkillFightConditionEnum.MIN_OPPONENTS]: [AllFighterTypeExceptBoss, 2] }
+			]
+		}
 	},
 	[Skill.SECOUSSE]: {
 		id: Skill.SECOUSSE,
@@ -3951,7 +4022,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.FUJIN]: {
 		id: Skill.FUJIN,
@@ -3966,7 +4040,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[Operator.AND]: [
+				{ [SkillFightConditionEnum.INVOCATION]: true },
+				{ [Operator.NOT]: { [SkillFightConditionEnum.TEAM_STATUS]: FightStatus.USED_FUJIN } }
+			]
+		}
 	},
 	[Skill.MEDITATION_TRANSCENDANTALE]: {
 		id: Skill.MEDITATION_TRANSCENDANTALE,
@@ -3999,7 +4079,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.HADES]: {
 		id: Skill.HADES,
@@ -4014,7 +4097,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.FORME_ETHERALE]: {
 		id: Skill.FORME_ETHERALE,
@@ -4139,7 +4225,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 3,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	[Skill.TWINOID_500MG]: {
 		id: Skill.TWINOID_500MG,
@@ -4262,7 +4351,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 15
+		probability: 15,
+		fightCondition: {
+			[SkillFightConditionEnum.MAINS_COLLANTES]: true
+		}
 	},
 	[Skill.COMPETENCE_DOUBLE]: {
 		id: Skill.COMPETENCE_DOUBLE,
@@ -4565,7 +4657,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.REINE_DE_LA_RUCHE]: {
 		id: Skill.REINE_DE_LA_RUCHE,
@@ -4580,7 +4675,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.BIG_MAMA]: {
 		id: Skill.BIG_MAMA,
@@ -4595,7 +4693,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 6,
-		probability: 15
+		probability: 15,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.YGGDRASIL]: {
 		id: Skill.YGGDRASIL,
@@ -4610,7 +4711,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.BALEINE_BLANCHE]: {
 		id: Skill.BALEINE_BLANCHE,
@@ -4625,7 +4729,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 4,
-		probability: 10
+		probability: 10,
+		fightCondition: {
+			[SkillFightConditionEnum.INVOCATION]: true
+		}
 	},
 	[Skill.GROS_DORMEUR]: {
 		id: Skill.GROS_DORMEUR,
@@ -4700,7 +4807,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 60
+		probability: 60,
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.FULL_HP]: true
+			}
+		}
 	},
 	[Skill.M_ELECTROCUTION]: {
 		id: Skill.M_ELECTROCUTION,
@@ -4737,7 +4849,12 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 30
+		probability: 30,
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.STATUS]: FightStatus.INTANGIBLE
+			}
+		}
 	},
 	[Skill.M_RESISTANCE]: {
 		id: Skill.M_RESISTANCE,
@@ -4917,7 +5034,13 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 10,
-		probability: 20
+		probability: 20,
+		fightCondition: {
+			[Operator.AND]: [
+				{ [SkillFightConditionEnum.ALIVE]: true },
+				{ [Operator.NOT]: { [SkillFightConditionEnum.ESCAPED]: true } }
+			]
+		}
 	},
 	[Skill.M_STEAL]: {
 		id: Skill.M_STEAL,
@@ -5229,6 +5352,9 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 1,
-		probability: 5
+		probability: 5,
+		fightCondition: {
+			[SkillFightConditionEnum.MIN_OPPONENTS]: [[FighterType.MONSTER], 1]
+		}
 	}
 };

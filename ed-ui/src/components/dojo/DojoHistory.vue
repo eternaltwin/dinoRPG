@@ -8,12 +8,12 @@
 		</tr>
 		<tr v-for="fight in history" :key="fight.id">
 			<td>
-				<li v-for="dino in fight.fighters.filter(f => f.attacker && f.type === 'dinoz')" :key="dino.id">
+				<li v-for="dino in fight.fighters.filter(f => f.attacker && f.type === FighterType.DINOZ)" :key="dino.id">
 					{{ dino.name }}
 				</li>
 			</td>
 			<td>
-				<li v-for="dino in fight.fighters.filter(f => !f.attacker && f.type === 'dinoz')" :key="dino.id">
+				<li v-for="dino in fight.fighters.filter(f => !f.attacker && f.type === FighterType.DINOZ)" :key="dino.id">
 					{{ dino.name }}
 				</li>
 			</td>
@@ -57,6 +57,7 @@ import EventBus from '../../events/index.js';
 import { DojoService } from '../../services/DojoService.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import DZTable from '../common/DZTable.vue';
+import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 export default defineComponent({
 	name: 'DojoHistory',
@@ -68,7 +69,8 @@ export default defineComponent({
 		return {
 			currentPage: 1,
 			history: [] as { id: string; fighters: FighterRecap[] }[],
-			totalPages: 0
+			totalPages: 0,
+			FighterType
 		};
 	},
 	methods: {

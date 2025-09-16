@@ -4,7 +4,7 @@ import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
-import { DetailedFighter, FighterStatus, Status } from '@drpg/core/models/fight/DetailedFighter';
+import { DetailedFighter, FighterStatusData, FighterType, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
@@ -97,7 +97,7 @@ export const initializeDinoz = (
 		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
-		type: 'dinoz' as const,
+		type: FighterType.DINOZ,
 		attacker: teamIndex === 0,
 		maxHp: dinoz.maxLife,
 		startingHp: dinoz.life,
@@ -258,14 +258,14 @@ export const initializeDinoz = (
 
 export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => {
 	const has_tear = dinoz.items.some(item => item.itemId === Item.TEAR_OF_LIFE);
-	const clone_id = -1 - fightData.fighters.filter(f => f.type !== 'dinoz').length;
+	const clone_id = -1 - fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
 	const clone: DetailedFighter = {
 		id: clone_id,
 		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
-		type: 'clone' as const, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
+		type: FighterType.MONSTER, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
 		attacker: dinoz.attacker,
 		maxHp: dinoz.maxHp,
 		startingHp: has_tear ? dinoz.maxHp * 0.1 : 1,
@@ -393,10 +393,10 @@ export const initializeMonster = (
 		}) ?? [];
 
 	// Statuses
-	const status: FighterStatus[] = [];
+	const status: FighterStatusData[] = [];
 
 	if (monster.noMove) {
-		status.push(createStatus(Status.NO_ASSAULT));
+		status.push(createStatus(FightStatus.NO_ASSAULT));
 	}
 
 	const similiDinoz = {
@@ -413,7 +413,7 @@ export const initializeMonster = (
 		display: monster.display ?? '',
 		name: monster.name,
 		level: monster.level,
-		type: is_reinforcement ? 'reinforcement' : monster.boss ? 'boss' : ('monster' as const),
+		type: is_reinforcement ? FighterType.REINFORCEMENT : monster.boss ? FighterType.BOSS : FighterType.MONSTER,
 		attacker: teamIndex === 0,
 		maxHp: monster.hp,
 		startingHp: monster.hp,
@@ -697,8 +697,8 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	}
 
 	if (fighterHas[Skill.SOUFFLE_DE_VIE]) {
-		fighter.status.push(createStatus(Status.NO_POISON));
-		fighter.status.push(createStatus(Status.NO_CURSE));
+		fighter.status.push(createStatus(FightStatus.NO_POISON));
+		fighter.status.push(createStatus(FightStatus.NO_CURSE));
 	}
 
 	// Race
@@ -966,7 +966,7 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 			fighter.stats.assaultBonus[ElementType.FIRE] += getAssaultValue(fighter, ElementType.FIRE) * 0.3;
 		}
 		if (team1[Item.BEER] || team2[Item.BEER]) {
-			fighter.status.push(createStatus(Status.BEER));
+			fighter.status.push(createStatus(FightStatus.BEER));
 		}
 	});
 

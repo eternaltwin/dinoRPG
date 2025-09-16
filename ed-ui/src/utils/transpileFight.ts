@@ -11,7 +11,7 @@ import {
 	transpiled
 } from '@drpg/core/models/fight/transpiler';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
-import { Status } from '@drpg/core/models/fight/DetailedFighter';
+import { FighterType, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { TFunction } from './translateFightStep.js';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
@@ -97,37 +97,37 @@ export function resolveSkillVisualEffect(skillId: number) {
 	return Object.values(skillList).find(skill => skill.id === skillId)?.visualEffect ?? SkillVisualEffect.TODO; // Default to TODO
 }
 
-export function resolveStatus(status: Status) {
+export function resolveStatus(status: FightStatus) {
 	switch (status) {
-		case Status.ASLEEP:
+		case FightStatus.ASLEEP:
 			return StatusEffect.Sleep;
-		case Status.TORCHED:
+		case FightStatus.TORCHED:
 			return StatusEffect.Flames;
-		case Status.BURNED:
+		case FightStatus.BURNED:
 			return StatusEffect.Burn;
-		case Status.INTANGIBLE:
+		case FightStatus.INTANGIBLE:
 			return StatusEffect.Intang;
-		case Status.FLYING:
+		case FightStatus.FLYING:
 			return StatusEffect.Fly;
-		case Status.SLOWED:
+		case FightStatus.SLOWED:
 			return StatusEffect.Slow;
-		case Status.QUICKENED:
+		case FightStatus.QUICKENED:
 			return StatusEffect.Quick;
-		case Status.PETRIFIED:
+		case FightStatus.PETRIFIED:
 			return StatusEffect.Stoned;
-		case Status.SHIELDED:
+		case FightStatus.SHIELDED:
 			return StatusEffect.Shield;
-		case Status.BLESSED:
+		case FightStatus.BLESSED:
 			return StatusEffect.Bless;
-		case Status.POISONED:
+		case FightStatus.POISONED:
 			return StatusEffect.Poison;
-		case Status.HEALING:
+		case FightStatus.HEALING:
 			return StatusEffect.Heal;
-		case Status.LOCKED:
+		case FightStatus.LOCKED:
 			return StatusEffect.MonoElt;
-		case Status.DAZZLED:
+		case FightStatus.DAZZLED:
 			return StatusEffect.Dazzled;
-		case Status.STUNNED:
+		case FightStatus.STUNNED:
 			return StatusEffect.Stun;
 		default:
 			return -1;
@@ -185,17 +185,17 @@ export function transpileFight(
 				history.push({
 					action: DinoAction.ADD,
 					fighter: {
-						props: [myFighter.type === 'boss' ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
-						dino: myFighter.type === 'dinoz' || myFighter.type === 'clone',
+						props: [myFighter.type === FighterType.BOSS ? 'Boss' : null, myFighter.dark ? 'Dark' : null],
+						dino: myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE,
 						life: myFighter.startingHp,
 						maxLife: myFighter.maxHp,
 						name:
-							myFighter.type === 'dinoz' || myFighter.type === 'clone'
+							myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE
 								? myFighter.name
 								: resolveMonsterName(myFighter.name, t),
 						side: myFighter.attacker,
 						scale:
-							myFighter.type === 'dinoz' || myFighter.type === 'clone'
+							myFighter.type === FighterType.DINOZ || myFighter.type === FighterType.CLONE
 								? myFighter.maxHp / 100
 								: myFighter.size
 									? myFighter.size / 100

@@ -1,3 +1,4 @@
+import { SkillFightCondition } from '../dinoz/SkillFightCondition.mjs';
 import { ItemType } from '../enums/ItemType.mjs';
 import { ItemEffects } from './ItemEffects.mjs';
 import { Item } from './ItemList.mjs';
@@ -17,6 +18,7 @@ export interface ItemFiche {
 	probability?: number;
 	sellable: boolean;
 	display: string;
+	fightCondition?: SkillFightCondition;
 }
 
 export interface ItemFicheDTO {

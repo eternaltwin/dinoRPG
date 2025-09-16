@@ -35,6 +35,7 @@ import GameDinozUsage = $Enums.GameDinozUsage;
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { addStatusToDinoz } from '../dao/dinozStatusDao.js';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
+import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 export async function resumeTournaments() {
 	const ongoingTournament = await prisma.fBTournament.findMany({
@@ -387,11 +388,11 @@ export async function getTournamentFights(req: Request) {
 		return fights
 			.map(f => {
 				const fighters = JSON.parse(f.fighters) as FighterRecap[];
-				const left = fighters.find(f => f.type === 'dinoz');
+				const left = fighters.find(f => f.type === FighterType.DINOZ);
 				if (!left) {
 					throw new Error('Left fighter not found');
 				}
-				const right = fighters.find(f => f.type === 'dinoz' && f.id !== left.id);
+				const right = fighters.find(f => f.type === FighterType.DINOZ && f.id !== left.id);
 				if (!right) {
 					throw new Error('Right fighter not found');
 				}

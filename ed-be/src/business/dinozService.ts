@@ -99,6 +99,7 @@ import translate from '../utils/translate.js';
 import { fightMonstersAtPlace } from './fightService.js';
 import { getMissionAction } from './missionsService.js';
 import { movementListener } from './specialService.js';
+import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 /**
  * @summary Get available action from dinoz
@@ -730,7 +731,7 @@ export async function betaMove(req: Request) {
 
 	// Update player stats
 	await setSpecificStat(StatTracking.MOVES, player.id, team.length);
-	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === 'monster').length);
+	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === FighterType.MONSTER).length);
 
 	return fight;
 }

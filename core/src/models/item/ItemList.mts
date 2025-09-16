@@ -4,6 +4,9 @@ import { ItemEffect } from '../enums/ItemEffect.mjs';
 import { ItemType } from '../enums/ItemType.mjs';
 import { ItemFiche } from './ItemFiche.mjs';
 import { BoxType } from './boxOpening.mjs';
+import { SkillFightConditionEnum } from '../dinoz/SkillFightCondition.mjs';
+import { FightStatus } from '../fight/DetailedFighter.mjs';
+import { Operator } from '../enums/Parser.mjs';
 
 export enum Item {
 	POTION_IRMA = 1,
@@ -372,7 +375,19 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		probability: 50,
 		sellable: false,
-		display: 'burger'
+		display: 'burger',
+		fightCondition: {
+			[Operator.AND]: [
+				{
+					[Operator.NOT]: {
+						[SkillFightConditionEnum.FULL_HP]: true
+					}
+				},
+				{
+					[Operator.OR]: [{ [SkillFightConditionEnum.MAX_HP]: 15 }, { [SkillFightConditionEnum.LOST_HP_0]: 10 }]
+				}
+			]
+		}
 	},
 	// Authentic hot bread: heals 100
 	[Item.HOT_BREAD]: {
@@ -420,6 +435,12 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 500, // TODO double check
 		priority: 1,
 		probability: 50,
+		fightCondition: {
+			[Operator.AND]: [
+				{ [Operator.NOT]: { [SkillFightConditionEnum.FULL_HP]: true } },
+				{ [SkillFightConditionEnum.LOST_HP_1]: 20 }
+			]
+		},
 		sellable: false,
 		display: 'ration'
 	},
@@ -435,6 +456,9 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		price: 500, // TODO double check
 		priority: 1,
 		probability: 50,
+		fightCondition: {
+			[Operator.AND]: [{ [SkillFightConditionEnum.LOST_HP_0]: 11 }, { [SkillFightConditionEnum.LOST_HP_2]: 50 }]
+		},
 		sellable: false,
 		display: 'surviv'
 	},
@@ -451,7 +475,12 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		probability: 20,
 		sellable: false,
-		display: 'mergz'
+		display: 'mergz',
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.FULL_HP]: true
+			}
+		}
 	},
 	// Pampleboum: heals 15
 	[Item.PAMPLEBOUM]: {
@@ -558,7 +587,17 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 3,
 		sellable: true,
 		probability: 20,
-		display: 'fuca'
+		display: 'fuca',
+		fightCondition: {
+			[Operator.AND]: [
+				{
+					[Operator.NOT]: {
+						[SkillFightConditionEnum.ITEM_USED]: Item.FUCA_PILL
+					}
+				},
+				{ [SkillFightConditionEnum.MIN_SPEED]: 0.51 }
+			]
+		}
 	},
 	// Monochromatic: all standards assault hit of the highest element of the dino during a fight (but speed follows normal rotation)
 	[Item.MONOCHROMATIC]: {
@@ -573,7 +612,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 5,
 		sellable: true,
 		probability: 15,
-		display: 'monoch'
+		display: 'monoch',
+		fightCondition: {
+			[SkillFightConditionEnum.MIN_ELEMENTS]: 2
+		}
 	},
 	// Poisonite Shot: heals poison during a fight / prevents to be poisoned during a fight??
 	[Item.POISONITE_SHOT]: {
@@ -601,7 +643,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 4,
 		sellable: true,
 		probability: 30,
-		display: 'confus'
+		display: 'confus',
+		fightCondition: {
+			[SkillFightConditionEnum.MIN_OPPONENTS]: [[], 2]
+		}
 	},
 	// Vegetox Guard's Costume: Disguise a dino into a vegetox guard
 	[Item.VEGETOX_COSTUME]: {
@@ -657,7 +702,13 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 70,
-		display: 'amour'
+		display: 'amour',
+		fightCondition: {
+			[Operator.AND]: [
+				{ [SkillFightConditionEnum.OPPONENT_STATUS]: FightStatus.FLYING },
+				{ [Operator.NOT]: { [SkillFightConditionEnum.CAN_HIT_FLYING]: true } }
+			]
+		}
 	},
 	// Danger Detector: protects against an attack that inflicts more than 25 hp
 	[Item.DANGER_DETECTOR]: {
@@ -720,7 +771,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 100,
-		display: 'cendre'
+		display: 'cendre',
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	// Abyss: plunges the combat zone into an abyss.
 	// All Dinoz with a Water element of less than 10 points will see the strength
@@ -737,7 +791,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 100,
-		display: 'abysse'
+		display: 'abysse',
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	// Amazon: transports the combat zone into the middle of a tropical jungle.
 	// All Dinoz with a Wood element of less than 10 points will sleep for the
@@ -754,7 +811,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 100,
-		display: 'amazon'
+		display: 'amazon',
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	// St Elma's Fire: surrounds the combat zone with a powerful magnetic field.
 	// All Dinoz with a Lightning element of less than 10 points will lose 5% of
@@ -771,7 +831,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 100,
-		display: 'stelme'
+		display: 'stelme',
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	// Uvavu: plunges the combat zone into the middle of a devastating storm.
 	// All Dinoz with an Air element of less than 10 points will lose 50% of
@@ -788,7 +851,10 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 100,
-		display: 'ourano'
+		display: 'ourano',
+		fightCondition: {
+			[SkillFightConditionEnum.ENVIRONMENT]: true
+		}
 	},
 	// Strong Tea: allows you to cancel the effects of beer on the opposing team.
 	[Item.STRONG_TEA]: {
@@ -803,7 +869,12 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 		priority: 1,
 		sellable: true,
 		probability: 60,
-		display: 'cofee'
+		display: 'cofee',
+		fightCondition: {
+			[Operator.NOT]: {
+				[SkillFightConditionEnum.TEAM_STATUS]: FightStatus.BEER
+			}
+		}
 	},
 	// Temporal Stabiliser: ??
 	[Item.TEMPORAL_STABILISER]: {

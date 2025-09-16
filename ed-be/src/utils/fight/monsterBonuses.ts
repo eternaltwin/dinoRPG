@@ -1,7 +1,7 @@
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { Boss } from '@drpg/core/models/fight/BossList';
-import { DetailedFighter, Status } from '@drpg/core/models/fight/DetailedFighter';
+import { DetailedFighter, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { Monster } from '@drpg/core/models/fight/MonsterList';
 import { TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { createStatus } from './fightMethods.js';
@@ -14,13 +14,13 @@ const worm = (monster: DetailedFighter) => {
 
 const sentinel = (monster: DetailedFighter) => {
 	monster.stats.special.counter *= 1.9;
-	monster.status.push(createStatus(Status.NO_ASSAULT));
+	monster.status.push(createStatus(FightStatus.NO_ASSAULT));
 };
 
 const stinger = (monster: DetailedFighter) => {
 	monster.stats.special.evasion *= 1.6;
 	monster.stats.speed.global *= 1.5;
-	monster.status.push(createStatus(Status.NO_POISON));
+	monster.status.push(createStatus(FightStatus.NO_POISON));
 };
 
 const brig1 = (monster: DetailedFighter) => {
@@ -40,7 +40,7 @@ const brig3 = (monster: DetailedFighter) => {
 };
 
 const ggoupi = (monster: DetailedFighter) => {
-	monster.status.push(createStatus(Status.NO_POISON));
+	monster.status.push(createStatus(FightStatus.NO_POISON));
 };
 
 const singmu = (monster: DetailedFighter) => {
@@ -114,7 +114,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.TW_BIGBEASTLY_1]: monster => {
 		monster.time += 100000 * TIME_FACTOR;
-		monster.status.push(createStatus(Status.ASLEEP));
+		monster.status.push(createStatus(FightStatus.ASLEEP));
 	},
 	[Monster.SCORP]: monster => {
 		stinger(monster);
@@ -177,7 +177,7 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 	},
 	[Monster.FRUKOPTER]: monster => {
 		monster.time -= 15 * TIME_FACTOR;
-		monster.status.push(createStatus(Status.KEEP_FLYING));
+		monster.status.push(createStatus(FightStatus.KEEP_FLYING));
 	},
 	[Monster.DEMYOM]: monster => {
 		singmu(monster);
@@ -246,15 +246,15 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.assaultBonus[ElementType.LIGHTNING] += 25;
 		monster.stats.assaultBonus[ElementType.AIR] += 25;
 		monster.time -= 100 * TIME_FACTOR;
-		monster.status.push(createStatus(Status.NO_POISON));
+		monster.status.push(createStatus(FightStatus.NO_POISON));
 	},
 	[Boss.GROTOX]: monster => {
 		monster.stats.speed.global *= 0.4;
 	},
 	[Boss.BEHEMOUNT]: monster => {
-		monster.status.push(createStatus(Status.NO_DEATH));
+		monster.status.push(createStatus(FightStatus.NO_DEATH));
 	},
 	[Boss.SERPETHER_2]: monster => {
-		monster.status.push(createStatus(Status.NO_DEATH));
+		monster.status.push(createStatus(FightStatus.NO_DEATH));
 	}
 };

@@ -15,7 +15,7 @@ import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConsta
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { DetailedFighter, FighterResultFiche, Status } from '@drpg/core/models/fight/DetailedFighter';
+import { DetailedFighter, FighterResultFiche, FighterType, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
@@ -280,7 +280,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		// Curse locker
 		if (fighter.items.some(item => item.itemId === Item.CURSE_LOCKER)) {
-			const opponent = getLimitedRandomOpponent(fightData, fighter, ['dinoz']);
+			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
 
 			if (opponent) {
 				fightData.steps.push({
@@ -300,13 +300,13 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 					fids: [opponent.id],
 					notification: NotificationList.MonoElt
 				});
-				addStatus(fightData, opponent, Status.LOCKED);
+				addStatus(fightData, opponent, FightStatus.LOCKED);
 			}
 		}
 
 		// Cleptomania
 		if (fighter.skills.some(skill => skill.id === Skill.CLEPTOMANE)) {
-			const opponent = getLimitedRandomOpponent(fightData, fighter, ['dinoz']);
+			const opponent = getLimitedRandomOpponent(fightData, fighter, [FighterType.DINOZ]);
 
 			if (opponent) {
 				const nonMagicItems = opponent.items.filter(item => !item.isRare);
@@ -345,17 +345,17 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 		// FORME_ETHERALE
 		if (fighter.skills.some(skill => skill.id === Skill.FORME_ETHERALE)) {
-			addStatus(fightData, fighter, Status.INTANGIBLE);
+			addStatus(fightData, fighter, FightStatus.INTANGIBLE);
 		}
 
 		// TORCHE
 		if (fighter.skills.some(skill => skill.id === Skill.TORCHE)) {
-			addStatus(fightData, fighter, Status.TORCHED);
+			addStatus(fightData, fighter, FightStatus.TORCHED);
 		}
 
 		// ACCUPUNCTURE
 		if (fighter.skills.some(skill => skill.id === Skill.ACUPUNCTURE)) {
-			addStatus(fightData, fighter, Status.HEALING);
+			addStatus(fightData, fighter, FightStatus.HEALING);
 		}
 
 		// M_INITIATIVE_RESET
@@ -414,7 +414,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		// Poison fighters if turn > 1000
 		if (turn > 1000 && !deadlyPoisonApplied) {
 			fightData.fighters.forEach(fighter => {
-				addStatus(fightData, fighter, Status.POISONED);
+				addStatus(fightData, fighter, FightStatus.POISONED);
 
 				// eslint-disable-next-line no-param-reassign
 				fighter.poisonedBy = {
@@ -443,7 +443,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	}
 
 	const baoExists = fightData.fighters.some(
-		fighter => fighter.type === 'monster' && fighter.name === monsterList[Monster.BAOBOB].name
+		fighter => fighter.type === FighterType.MONSTER && fighter.name === monsterList[Monster.BAOBOB].name
 	);
 
 	// Total end of fight hp (before end of fight regeneration)
@@ -511,7 +511,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		if (fightData.fighters.some(fighter => fighter.skills.some(skill => skill.id === Skill.M_CURSED_WAND))) {
 			fightData.fighters.forEach(f => {
 				if (!f.attacker || f.initiallyCursed) return;
-				if (hasStatus(f, Status.NO_CURSE)) return;
+				if (hasStatus(f, FightStatus.NO_CURSE)) return;
 
 				f.permanentStatusGained.push(DinozStatusId.CURSED);
 
@@ -533,7 +533,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters
-		.filter(fighter => fighter.attacker && fighter.type === 'dinoz')
+		.filter(fighter => fighter.attacker && fighter.type === FighterType.DINOZ)
 		.map(dinoz => ({
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),
@@ -545,7 +545,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		}));
 
 	const defendersResults: FighterResultFiche[] = fightData.fighters
-		.filter(fighter => !fighter.attacker && fighter.type === 'dinoz')
+		.filter(fighter => !fighter.attacker && fighter.type === FighterType.DINOZ)
 		.map(dinoz => ({
 			dinozId: dinoz.id,
 			hpLost: dinoz.startingHp - Math.max(dinoz.hp, 0),

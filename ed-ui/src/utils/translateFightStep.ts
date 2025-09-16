@@ -1,7 +1,7 @@
 import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { FightStep, StepFighter } from '@drpg/core/models/fight/FightStep';
 import { formatText } from './formatText.js';
-import { BadStatus, GoodStatus } from '@drpg/core/models/fight/DetailedFighter';
+import { BadFightStatus, FighterType, GoodFightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import { FighterRecap } from '@drpg/core/models/fight/FightResult';
@@ -12,7 +12,7 @@ import { SkillVisualEffect } from '@drpg/core/models/enums/SkillVisualEffect';
 export type TFunction = (key: string, data?: Record<string, string | number>) => string;
 
 const IGNORE_STEPS = ['moveTo', 'moveBack', 'resist', 'notify'];
-const DISPLAYED_STATUSES = [...GoodStatus, ...BadStatus];
+const DISPLAYED_STATUSES = [...GoodFightStatus, ...BadFightStatus];
 
 const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 	const store = sessionStore().getFightResult;
@@ -23,7 +23,7 @@ const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 		const fighters = store.fighters as FighterRecap[];
 		const tempo = fighters.find(f => f.id === fighter);
 		if (!tempo) return name;
-		if (tempo.type === 'dinoz' || tempo.type === 'clone') {
+		if (tempo.type === FighterType.DINOZ || tempo.type === FighterType.CLONE) {
 			name = tempo.name;
 		} else {
 			name = t(`fight.monster.${tempo.name}`);
@@ -31,10 +31,10 @@ const getFighterName = (fighter: StepFighter | number, t: TFunction) => {
 		attacker = tempo.attacker;
 	} else {
 		switch (fighter.type) {
-			case 'dinoz':
+			case FighterType.DINOZ:
 				name = fighter.name;
 				break;
-			case 'clone':
+			case FighterType.CLONE:
 				name = `${fighter.name} (${t('fight.clone')})`;
 				break;
 			default:

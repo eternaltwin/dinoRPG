@@ -1,12 +1,19 @@
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
+import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
+import { Item } from '@drpg/core/models/item/ItemList';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { getActualStep } from '@drpg/core/utils/MissionUtils';
 import { calculatePvExp, calculateXPBonus, getMaxXp, isAlive } from '@drpg/core/utils/DinozUtils';
 import { Dinoz, DinozSkill, DinozStatus, LogType, Player } from '@drpg/prisma';
-import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import { getDinozFightDataRequest, updateDinoz } from '../dao/dinozDao.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../dao/dinozStatusDao.js';
@@ -16,25 +23,19 @@ import generateFight from '../utils/fight/generateFight.js';
 import getFighters from '../utils/fight/getFighters.js';
 import { generateString, getRandomNumber } from '../utils/index.js';
 import { checkMissionFight, DinozToCheckMissionFight } from './missionsService.js';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
 import { removeItemFromDinoz } from '../dao/dinozItemDao.js';
 import randomBetween from '../utils/fight/randomBetween.js';
 import { createCatch, removeCatch, updateCatch } from '../dao/dinozCatchDao.js';
-import { placeList } from '@drpg/core/models/place/PlaceList';
-import dayjs from 'dayjs';
 import weightedRandom from '../utils/fight/weightedRandom.js';
-import { getActualStep } from '@drpg/core/utils/MissionUtils';
-import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { setSpecificStat } from '../dao/trackingDao.js';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { movementListener } from './specialService.js';
-import { bossList } from '@drpg/core/models/fight/BossList';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
-import seedrandom from 'seedrandom';
-import { Item } from '@drpg/core/models/item/ItemList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { scenarioChecker } from '../utils/scenarioChecker.js';
+import { Request } from 'express';
+import dayjs from 'dayjs';
+import seedrandom from 'seedrandom';
+import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 
 /**
  * @summary Process a fight
@@ -112,7 +113,7 @@ export async function processFight(req: Request) {
 	}
 
 	// Update player stats
-	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === 'monster').length);
+	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === FighterType.MONSTER).length);
 
 	return fight;
 }
@@ -486,8 +487,8 @@ export async function rewardFight(
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
-			dark: f.type === 'boss' ? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined) : undefined,
-			size: f.type === 'boss' ? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined) : undefined
+			dark: f.type === FighterType.BOSS ? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined) : undefined,
+			size: f.type === FighterType.BOSS ? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined) : undefined
 		};
 	});
 	return {
