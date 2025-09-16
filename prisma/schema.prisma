@@ -482,6 +482,7 @@ model Pantheon {
   indicator  Int?
   playerId   String?       @db.Uuid
   playerName String
+  image      Bytes?
   dinoz      Dinoz?        @relation(fields: [dinozId], references: [id])
   player     Player?       @relation(fields: [playerId], references: [id])
 }

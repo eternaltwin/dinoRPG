@@ -6,7 +6,8 @@ import { translateAll } from './translate.js';
 import { getPlayerForAnnounce } from '../dao/playerDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 
-export async function checkAnnounce(type: PantheonMotif, id: string, rewardId?: number) {
+
+export async function checkAnnounce(type: PantheonMotif, id: string, extension: number | string) {
 	if (GLOBAL.config.eternaltwin.channel !== 'production') return;
 	const pantheon = await getPantheonFromType(type);
 	switch (type) {
@@ -25,16 +26,16 @@ export async function checkAnnounce(type: PantheonMotif, id: string, rewardId?: 
 						level: dinoz.level
 					})
 				);
-				await addDinozToPantheon(type, dinoz);
+				await addDinozToPantheon(type, dinoz, undefined);
 			}
 			break;
 		case PantheonMotif.epic:
 			const player = await getPlayerForAnnounce(id);
-			if (rewardId && player) {
-				const reward = rewardList[rewardId as Reward];
-				const rewardQuantityInPantheon = pantheon.filter(p => p.indicator === rewardId);
+			if (+extension && player) {
+				const reward = rewardList[+extension as Reward];
+				const rewardQuantityInPantheon = pantheon.filter(p => p.indicator === +extension);
 				if (reward.announced && rewardQuantityInPantheon.length <= 4) {
-					await addPlayerToPantheon(type, player, rewardId);
+					await addPlayerToPantheon(type, player, +extension);
 					DISCORD.sendNotification(
 						translateAll('announce.epic', {
 							player: player.name,

@@ -21,7 +21,7 @@
     "axios": "^1.6.0",
     "chart.js": "^4.4.2",
     "ckeditor5": "^45.0.0",
-    "dinorpg_animations": "^1.0.0",
+    "@eternaltwin/dinorpg_animations": "^1.0.1",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.0",

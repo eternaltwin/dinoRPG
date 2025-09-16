@@ -421,7 +421,8 @@ exports.Prisma.PantheonScalarFieldEnum = {
   date: 'date',
   indicator: 'indicator',
   playerId: 'playerId',
-  playerName: 'playerName'
+  playerName: 'playerName',
+  image: 'image'
 };
 
 exports.Prisma.ClanScalarFieldEnum = {

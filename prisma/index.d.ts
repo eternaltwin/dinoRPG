@@ -43561,6 +43561,7 @@ export namespace Prisma {
     indicator: number | null
     playerId: string | null
     playerName: string | null
+    image: Uint8Array | null
   }
 
   export type PantheonMaxAggregateOutputType = {
@@ -43571,6 +43572,7 @@ export namespace Prisma {
     indicator: number | null
     playerId: string | null
     playerName: string | null
+    image: Uint8Array | null
   }
 
   export type PantheonCountAggregateOutputType = {
@@ -43581,6 +43583,7 @@ export namespace Prisma {
     indicator: number
     playerId: number
     playerName: number
+    image: number
     _all: number
   }
 
@@ -43605,6 +43608,7 @@ export namespace Prisma {
     indicator?: true
     playerId?: true
     playerName?: true
+    image?: true
   }
 
   export type PantheonMaxAggregateInputType = {
@@ -43615,6 +43619,7 @@ export namespace Prisma {
     indicator?: true
     playerId?: true
     playerName?: true
+    image?: true
   }
 
   export type PantheonCountAggregateInputType = {
@@ -43625,6 +43630,7 @@ export namespace Prisma {
     indicator?: true
     playerId?: true
     playerName?: true
+    image?: true
     _all?: true
   }
 
@@ -43722,6 +43728,7 @@ export namespace Prisma {
     indicator: number | null
     playerId: string | null
     playerName: string
+    image: Uint8Array | null
     _count: PantheonCountAggregateOutputType | null
     _avg: PantheonAvgAggregateOutputType | null
     _sum: PantheonSumAggregateOutputType | null
@@ -43751,6 +43758,7 @@ export namespace Prisma {
     indicator?: boolean
     playerId?: boolean
     playerName?: boolean
+    image?: boolean
     dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
     player?: boolean | Pantheon$playerArgs<ExtArgs>
   }, ExtArgs["result"]["pantheon"]>
@@ -43763,6 +43771,7 @@ export namespace Prisma {
     indicator?: boolean
     playerId?: boolean
     playerName?: boolean
+    image?: boolean
     dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
     player?: boolean | Pantheon$playerArgs<ExtArgs>
   }, ExtArgs["result"]["pantheon"]>
@@ -43775,6 +43784,7 @@ export namespace Prisma {
     indicator?: boolean
     playerId?: boolean
     playerName?: boolean
+    image?: boolean
     dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
     player?: boolean | Pantheon$playerArgs<ExtArgs>
   }, ExtArgs["result"]["pantheon"]>
@@ -43787,9 +43797,10 @@ export namespace Prisma {
     indicator?: boolean
     playerId?: boolean
     playerName?: boolean
+    image?: boolean
   }
 
-  export type PantheonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "motif" | "dinozId" | "date" | "indicator" | "playerId" | "playerName", ExtArgs["result"]["pantheon"]>
+  export type PantheonOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "motif" | "dinozId" | "date" | "indicator" | "playerId" | "playerName" | "image", ExtArgs["result"]["pantheon"]>
   export type PantheonInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     dinoz?: boolean | Pantheon$dinozArgs<ExtArgs>
     player?: boolean | Pantheon$playerArgs<ExtArgs>
@@ -43817,6 +43828,7 @@ export namespace Prisma {
       indicator: number | null
       playerId: string | null
       playerName: string
+      image: Uint8Array | null
     }, ExtArgs["result"]["pantheon"]>
     composites: {}
   }
@@ -44249,6 +44261,7 @@ export namespace Prisma {
     readonly indicator: FieldRef<"Pantheon", 'Int'>
     readonly playerId: FieldRef<"Pantheon", 'String'>
     readonly playerName: FieldRef<"Pantheon", 'String'>
+    readonly image: FieldRef<"Pantheon", 'Bytes'>
   }
     
 
@@ -68884,7 +68897,8 @@ export namespace Prisma {
     date: 'date',
     indicator: 'indicator',
     playerId: 'playerId',
-    playerName: 'playerName'
+    playerName: 'playerName',
+    image: 'image'
   };
 
   export type PantheonScalarFieldEnum = (typeof PantheonScalarFieldEnum)[keyof typeof PantheonScalarFieldEnum]
@@ -71656,6 +71670,7 @@ export namespace Prisma {
     indicator?: IntNullableFilter<"Pantheon"> | number | null
     playerId?: UuidNullableFilter<"Pantheon"> | string | null
     playerName?: StringFilter<"Pantheon"> | string
+    image?: BytesNullableFilter<"Pantheon"> | Uint8Array | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }
@@ -71668,6 +71683,7 @@ export namespace Prisma {
     indicator?: SortOrderInput | SortOrder
     playerId?: SortOrderInput | SortOrder
     playerName?: SortOrder
+    image?: SortOrderInput | SortOrder
     dinoz?: DinozOrderByWithRelationInput
     player?: PlayerOrderByWithRelationInput
   }
@@ -71683,6 +71699,7 @@ export namespace Prisma {
     indicator?: IntNullableFilter<"Pantheon"> | number | null
     playerId?: UuidNullableFilter<"Pantheon"> | string | null
     playerName?: StringFilter<"Pantheon"> | string
+    image?: BytesNullableFilter<"Pantheon"> | Uint8Array | null
     dinoz?: XOR<DinozNullableScalarRelationFilter, DinozWhereInput> | null
     player?: XOR<PlayerNullableScalarRelationFilter, PlayerWhereInput> | null
   }, "id">
@@ -71695,6 +71712,7 @@ export namespace Prisma {
     indicator?: SortOrderInput | SortOrder
     playerId?: SortOrderInput | SortOrder
     playerName?: SortOrder
+    image?: SortOrderInput | SortOrder
     _count?: PantheonCountOrderByAggregateInput
     _avg?: PantheonAvgOrderByAggregateInput
     _max?: PantheonMaxOrderByAggregateInput
@@ -71713,6 +71731,7 @@ export namespace Prisma {
     indicator?: IntNullableWithAggregatesFilter<"Pantheon"> | number | null
     playerId?: UuidNullableWithAggregatesFilter<"Pantheon"> | string | null
     playerName?: StringWithAggregatesFilter<"Pantheon"> | string
+    image?: BytesNullableWithAggregatesFilter<"Pantheon"> | Uint8Array | null
   }
 
   export type ClanWhereInput = {
@@ -75340,6 +75359,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
+    image?: Uint8Array | null
     dinoz?: DinozCreateNestedOneWithoutPantheonInput
     player?: PlayerCreateNestedOneWithoutPantheonInput
   }
@@ -75352,6 +75372,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
+    image?: Uint8Array | null
   }
 
   export type PantheonUpdateInput = {
@@ -75359,6 +75380,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     dinoz?: DinozUpdateOneWithoutPantheonNestedInput
     player?: PlayerUpdateOneWithoutPantheonNestedInput
   }
@@ -75371,6 +75393,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type PantheonCreateManyInput = {
@@ -75381,6 +75404,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
+    image?: Uint8Array | null
   }
 
   export type PantheonUpdateManyMutationInput = {
@@ -75388,6 +75412,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type PantheonUncheckedUpdateManyInput = {
@@ -75398,6 +75423,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type ClanCreateInput = {
@@ -79069,6 +79095,7 @@ export namespace Prisma {
     indicator?: SortOrder
     playerId?: SortOrder
     playerName?: SortOrder
+    image?: SortOrder
   }
 
   export type PantheonAvgOrderByAggregateInput = {
@@ -79085,6 +79112,7 @@ export namespace Prisma {
     indicator?: SortOrder
     playerId?: SortOrder
     playerName?: SortOrder
+    image?: SortOrder
   }
 
   export type PantheonMinOrderByAggregateInput = {
@@ -79095,6 +79123,7 @@ export namespace Prisma {
     indicator?: SortOrder
     playerId?: SortOrder
     playerName?: SortOrder
+    image?: SortOrder
   }
 
   export type PantheonSumOrderByAggregateInput = {
@@ -85513,6 +85542,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
+    image?: Uint8Array | null
     player?: PlayerCreateNestedOneWithoutPantheonInput
   }
 
@@ -85523,6 +85553,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
+    image?: Uint8Array | null
   }
 
   export type PantheonCreateOrConnectWithoutDinozInput = {
@@ -86244,6 +86275,7 @@ export namespace Prisma {
     indicator?: IntNullableFilter<"Pantheon"> | number | null
     playerId?: UuidNullableFilter<"Pantheon"> | string | null
     playerName?: StringFilter<"Pantheon"> | string
+    image?: BytesNullableFilter<"Pantheon"> | Uint8Array | null
   }
 
   export type PlayerUpsertWithoutDinozInput = {
@@ -89317,6 +89349,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
+    image?: Uint8Array | null
     dinoz?: DinozCreateNestedOneWithoutPantheonInput
   }
 
@@ -89327,6 +89360,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
+    image?: Uint8Array | null
   }
 
   export type PantheonCreateOrConnectWithoutPlayerInput = {
@@ -103512,6 +103546,7 @@ export namespace Prisma {
     indicator?: number | null
     playerId?: string | null
     playerName: string
+    image?: Uint8Array | null
   }
 
   export type DinozCreateManyLeaderInput = {
@@ -103717,6 +103752,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     player?: PlayerUpdateOneWithoutPantheonNestedInput
   }
 
@@ -103727,6 +103763,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type PantheonUncheckedUpdateManyWithoutDinozInput = {
@@ -103736,6 +103773,7 @@ export namespace Prisma {
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerId?: NullableStringFieldUpdateOperationsInput | string | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type DinozUpdateWithoutLeaderInput = {
@@ -104176,6 +104214,7 @@ export namespace Prisma {
     date?: Date | string
     indicator?: number | null
     playerName: string
+    image?: Uint8Array | null
   }
 
   export type ParticipantsCreateManyPlayerInput = {
@@ -104614,6 +104653,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     dinoz?: DinozUpdateOneWithoutPantheonNestedInput
   }
 
@@ -104624,6 +104664,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type PantheonUncheckedUpdateManyWithoutPlayerInput = {
@@ -104633,6 +104674,7 @@ export namespace Prisma {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     indicator?: NullableIntFieldUpdateOperationsInput | number | null
     playerName?: StringFieldUpdateOperationsInput | string
+    image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
   }
 
   export type ParticipantsUpdateWithoutPlayerInput = {

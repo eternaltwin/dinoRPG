@@ -4,7 +4,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { sdino } from 'dinorpg_animations';
+import { sdino } from '@eternaltwin/dinorpg_animations';
 
 export default defineComponent({
 	name: 'DinozMini',

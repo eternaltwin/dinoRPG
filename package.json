@@ -86,6 +86,6 @@
 		"typescript": "^5.7.2"
 	},
 	"dependencies": {
-		"dinorpg_animations": "^1.0.0"
+		"@eternaltwin/dinorpg_animations": "^1.0.1"
 	}
 }

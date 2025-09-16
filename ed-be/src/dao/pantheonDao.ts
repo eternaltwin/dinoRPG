@@ -28,7 +28,8 @@ export async function getPantheonFromType(type: PantheonMotif) {
 
 export async function addDinozToPantheon(
 	type: PantheonMotif,
-	dinoz: Pick<Dinoz, 'playerId' | 'id' | 'level'> & { player: Pick<Player, 'id' | 'name'> }
+	dinoz: Pick<Dinoz, 'playerId' | 'id' | 'level'> & { player: Pick<Player, 'id' | 'name'> },
+	display: Buffer<ArrayBufferLike> | undefined
 ) {
 	await prisma.pantheon.create({
 		data: {
@@ -36,7 +37,8 @@ export async function addDinozToPantheon(
 			motif: type,
 			dinozId: dinoz.id,
 			indicator: dinoz.level,
-			playerName: dinoz.player.name
+			playerName: dinoz.player.name,
+			image: display
 		}
 	});
 }
