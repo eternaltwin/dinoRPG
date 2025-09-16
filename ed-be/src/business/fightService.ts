@@ -34,8 +34,6 @@ import translate from '../utils/translate.js';
 import seedrandom from 'seedrandom';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
-import { getPlayerQuestProgression, increaseQuestProgression, updateQuest } from '../dao/questsDao.js';
-import { Scenario } from '@drpg/core/models/enums/Scenario';
 import { scenarioChecker } from '../utils/scenarioChecker.js';
 
 /**
@@ -303,6 +301,7 @@ export async function rewardFight(
 
 	let fgold = 0;
 	let levelup = false;
+	let gold = 0;
 
 	for (const d of team) {
 		//TODO escape
@@ -383,14 +382,14 @@ export async function rewardFight(
 				}
 			}
 		}
+
+		gold += (getRandomNumber(0, 10) + 28) * 10;
 	}
 
 	const fprob = getRandomNumber(0, 100);
 	let goldMultiplier = 1;
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
-
-	let gold = (getRandomNumber(0, 10) + 28) * 10;
 
 	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
 
