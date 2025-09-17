@@ -157,7 +157,7 @@ export default defineComponent({
 					try {
 						const toast = await DinozService.useIrma(parseInt(this.$route.params.id.toString()));
 						if (toast.category === ItemEffect.ACTION && toast.value > 0) {
-							const message = this.$tc(`toast.${toast.category}`, toast.value, { value: toast.value });
+							const message = this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value);
 							this.$toast.open({
 								message: formatText(message),
 								type: 'info'

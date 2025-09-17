@@ -180,7 +180,7 @@ export default defineComponent({
 						default:
 							message =
 								typeof toast.value === 'number'
-									? this.$tc(`toast.${toast.category}`, toast.value, { value: toast.value })
+									? this.$t(`toast.${toast.category}`, { value: toast.value }, toast.value)
 									: this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;
 					}
