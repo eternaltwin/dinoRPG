@@ -76,6 +76,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import DZDisclaimer from './DZDisclaimer.vue';
+import { ServerEventsService } from '../../services/ServerEventsService';
+import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
 import { API_BASE } from '../../utils';
 
 export default defineComponent({
@@ -130,8 +133,10 @@ export default defineComponent({
 					this.futurInfoList = [];
 			}
 		},
-		connectSse(): void {
-			const eventSource = new EventSource(`${API_BASE}/sse/events`);
+		async connectSse(): Promise<void> {
+			const ticket: ServerEventTicketDto = await ServerEventsService.getSseTicket(SseChannel.CLAN_FORUM);
+
+			const eventSource = new EventSource(`${API_BASE}/sse/events?ticket=${ticket.ticket}`);
 
 			eventSource.onmessage = (event: Event) => {
 				console.log(event);

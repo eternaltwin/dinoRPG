@@ -1,4 +1,4 @@
-export interface ChannelData {
+export interface WsChannelData {
 	connectionId: string;
 	playerId: string;
 }

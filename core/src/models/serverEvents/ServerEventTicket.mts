@@ -1,3 +1,5 @@
+import { ServerEventType } from './ServerEventType.mjs';
+
 export interface ServerEventTicket {
 	uuid: string;
 	channel: string;
@@ -5,4 +7,5 @@ export interface ServerEventTicket {
 	ipAddress: string;
 	playerId: string;
 	timestamp: number;
+	type: ServerEventType;
 }

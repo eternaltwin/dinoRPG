@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { ServerEventTicket } from '@drpg/core/models/serverEvents/ServerEventTicket';
 import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
 import { randomUUID } from 'crypto';
@@ -6,7 +6,7 @@ import { IncomingMessage } from 'http';
 import { wsTicketMaxTime } from '../constants/index.js';
 import { WebSocketCustom } from '@drpg/core/models/serverEvents/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/serverEvents/WebSocketServerCustom';
-import { ChannelData } from '@drpg/core/models/serverEvents/ChannelData';
+import { WsChannelData } from '@drpg/core/models/serverEvents/WsChannelData';
 import { ChannelInfos } from '@drpg/core/models/serverEvents/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
@@ -25,9 +25,11 @@ import { LOGGER } from '../context.js';
 import { UUID } from 'node:crypto';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
 
 let activeTickets: ServerEventTicket[] = [];
-const channels = new Map<string, ChannelData[]>();
+const wsChannels = new Map<string, WsChannelData[]>();
+const sseChannels = new Map<string, SseChannelData[]>();
 
 export async function authenticate(req: Request, serverEventType: ServerEventType): Promise<ServerEventTicketDto> {
 	const authed = await auth(req);
@@ -45,7 +47,8 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		userAgent,
 		ipAddress: ip,
 		playerId: authed.id,
-		timestamp: Date.now()
+		timestamp: Date.now(),
+		type: serverEventType
 	});
 
 	return {
@@ -130,7 +133,7 @@ async function checkPlayerIsInClan(authed: any): Promise<void> {
  * @param ws -> The WebSocket connection
  * @param req -> The request incoming
  */
-export async function connectUserToChannel(ws: WebSocketCustom, req: IncomingMessage) {
+export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingMessage): Promise<void> {
 	const ticketUuid = req.url?.split('?ticket=')[1];
 
 	const ticket = checkTicketValidity(req, ticketUuid);
@@ -141,7 +144,7 @@ export async function connectUserToChannel(ws: WebSocketCustom, req: IncomingMes
 	// Remove the ticket in order to not use it twice
 	activeTickets = activeTickets.filter(ticket => ticket.uuid !== ticketUuid);
 
-	await putUserInChannel(ticket, ws.id);
+	await putUserInWsChannel(ticket, ws.id);
 }
 
 /**
@@ -188,20 +191,32 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
  * @param ticket -> The ticket linked to the user
  * @param wsId -> Connection identifier
  */
-async function putUserInChannel(ticket: ServerEventTicket, wsId: string): Promise<void> {
+async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Promise<void> {
 	const channelName = await getChannelName(ticket);
 
-	const channel = channels.get(channelName);
+	const channel: WsChannelData[] | undefined = wsChannels.get(channelName);
 
 	if (channel !== undefined) {
 		channel.push({ connectionId: wsId, playerId: ticket.playerId });
 	} else {
-		channels.set(channelName, [{ connectionId: wsId, playerId: ticket.playerId }]);
+		wsChannels.set(channelName, [{ connectionId: wsId, playerId: ticket.playerId }]);
+	}
+}
+
+async function putUserInSseChannel(ticket: ServerEventTicket, connectionId: UUID, res: Response): Promise<void> {
+	const channelName = await getChannelName(ticket);
+
+	const channel: SseChannelData[] | undefined = sseChannels.get(channelName);
+
+	if (channel !== undefined) {
+		channel.push({ connectionId, playerId: ticket.playerId, res });
+	} else {
+		sseChannels.set(channelName, [{ connectionId, playerId: ticket.playerId, res }]);
 	}
 }
 
 async function getChannelName(ticket: ServerEventTicket): Promise<string> {
-	if (ticket.channel === WsChannel.CLAN_FORUM) {
+	if ([WsChannel.CLAN_FORUM.toString(), SseChannel.CLAN_FORUM.toString()].includes(ticket.channel)) {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
@@ -247,14 +262,16 @@ export async function processIncomingMessage(
  * @returns -> The channel wanted and players connected in this channel
  */
 function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const channelData: [string, ChannelData[]] | undefined = [...channels.entries()].find(([_chanKey, chanValue]) =>
+	const channelData: [string, WsChannelData[]] | undefined = [...wsChannels.entries()].find(([, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
 
+	LOGGER.error([...wsChannels.entries()]);
+	console.log([...wsChannels.entries()]);
+
 	if (channelData === undefined) {
 		LOGGER.error(`getChannelDetailsFromConnectionId error, wsId is ${wsId}`);
-		LOGGER.error([...channels.entries()]);
+		LOGGER.error([...wsChannels.entries()]);
 		throw new Error('The channel cannot be undefined');
 	}
 
@@ -298,7 +315,7 @@ async function deleteMessage(channel: ChannelInfos, wsId: string, msgId: number)
  * @param wsId -> The connection identifier we want to retrieve data
  * @returns -> The player data
  */
-function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): ChannelData {
+function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): WsChannelData {
 	const channelData = channel.members.find(user => user.connectionId === wsId);
 
 	if (channelData === undefined) throw new Error('Ws data cannot be undefined');
@@ -329,10 +346,10 @@ function sendMessageToPeopleInChannel(wss: WebSocketServerCustom, channel: Chann
  *
  * @param ws -> The WebSocket connection
  */
-export function disconnectUser(ws: WebSocketCustom): void {
+export function disconnectWsUser(ws: WebSocketCustom): void {
 	const channel = getChannelDetailsFromConnectionId(ws.id);
 
-	removeUserFromChannel(channel, ws.id);
+	removeUserFromWsChannel(channel, ws.id);
 }
 
 /**
@@ -341,13 +358,13 @@ export function disconnectUser(ws: WebSocketCustom): void {
  * @param channel -> The channel that the player is leaving
  * @param wsId -> The connection identifier
  */
-function removeUserFromChannel(channel: ChannelInfos, wsId: string) {
+function removeUserFromWsChannel(channel: ChannelInfos, wsId: string) {
 	const usersInChannel = channel.members.filter(user => user.connectionId !== wsId);
 
 	if (usersInChannel.length === 0) {
-		channels.delete(channel.channelName);
+		wsChannels.delete(channel.channelName);
 	} else {
-		channels.set(channel.channelName, usersInChannel);
+		wsChannels.set(channel.channelName, usersInChannel);
 	}
 }
 
@@ -361,7 +378,7 @@ function removeUserFromChannel(channel: ChannelInfos, wsId: string) {
 export function checkIfClientsAreAlive(wss: WebSocketServerCustom): void {
 	wss.clients.forEach(ws => {
 		if (ws.isAlive === false) {
-			disconnectUser(ws);
+			disconnectWsUser(ws);
 			return ws.terminate();
 		}
 
@@ -377,4 +394,29 @@ export function checkIfClientsAreAlive(wss: WebSocketServerCustom): void {
  */
 export function setConnectionToAlive(ws: WebSocketCustom): void {
 	ws.isAlive = true;
+}
+
+/**
+ * Check the validity of a ticket and put the user into the channel that he wants.
+ *
+ * @param req -> The incoming request
+ * @param res -> The incoming response
+ */
+export async function connectUserToSseChannel(req: Request, res: Response): Promise<UUID> {
+	const ticketUuid = req.url?.split('?ticket=')[1];
+
+	const ticket = checkTicketValidity(req, ticketUuid);
+
+	const connectionId = randomUUID();
+
+	// Remove the ticket in order to not use it twice
+	activeTickets = activeTickets.filter(ticket => ticket.uuid !== ticketUuid);
+
+	await putUserInSseChannel(ticket, connectionId, res);
+
+	return connectionId;
+}
+
+export async function disconnectSseUser(connectionId: UUID): Promise<void> {
+	// TODO la prochaine fois : déconnecter l'utilisateur
 }

@@ -16,11 +16,11 @@ import './i18n.js';
 
 import {
 	checkIfClientsAreAlive,
-	connectUserToChannel,
-	disconnectUser,
+	connectUserToWsChannel,
+	disconnectWsUser,
 	processIncomingMessage,
 	setConnectionToAlive
-} from './business/webSocketService.js';
+} from './business/serverEventService.js';
 import { RawData, WebSocketServer } from 'ws';
 import { WebSocketCustom } from '@drpg/core/models/serverEvents/WebSocketCustom';
 import { WebSocketServerCustom } from '@drpg/core/models/serverEvents/WebSocketServerCustom';
@@ -109,7 +109,7 @@ export function mainWrapper() {
 function handleWsEvents(wss: WebSocketServer) {
 	wss.on('connection', async (ws: WebSocketCustom, req: IncomingMessage) => {
 		try {
-			await connectUserToChannel(ws, req);
+			await connectUserToWsChannel(ws, req);
 		} catch (err) {
 			ws.close();
 		}
@@ -119,14 +119,14 @@ function handleWsEvents(wss: WebSocketServer) {
 				await processIncomingMessage(wss as WebSocketServerCustom, ws.id, data);
 			} catch (err) {
 				console.error(err);
-				disconnectUser(ws);
+				disconnectWsUser(ws);
 				ws.close();
 			}
 		});
 
 		ws.on('close', () => {
 			try {
-				disconnectUser(ws);
+				disconnectWsUser(ws);
 			} catch (err) {
 				console.error('Cannot close ws connection.', err);
 			}
@@ -134,7 +134,7 @@ function handleWsEvents(wss: WebSocketServer) {
 
 		ws.on('pong', () => setConnectionToAlive(ws));
 
-		ws.on('error', () => disconnectUser(ws));
+		ws.on('error', () => disconnectWsUser(ws));
 	});
 
 	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
