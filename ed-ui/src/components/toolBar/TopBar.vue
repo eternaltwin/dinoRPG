@@ -8,7 +8,14 @@
 			</a>
 		</div>
 		<div class="boxRoot">
-			<span class="time">{{ time }}</span>
+			<span
+				class="time"
+				v-tippy="{
+					content: $t('tooltip.time'),
+					theme: 'small'
+				}"
+				>{{ time }}</span
+			>
 		</div>
 		<div class="boxRoot">
 			<LocaleChange />
@@ -50,8 +57,7 @@ export default defineComponent({
 		},
 		getTime(): void {
 			const day = new Date();
-			// TODO Récupérer la locale en fonction de la langue ?
-			this.time = day.toLocaleTimeString('fr-FR', { timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone });
+			this.time = day.toLocaleTimeString('fr-FR', { timeZone: 'GMT' });
 		},
 		openMenu() {
 			EventBus.emit('twinoMenu', true);
