@@ -224,6 +224,30 @@ exports.Prisma.NewsScalarFieldEnum = {
   updatedDate: 'updatedDate'
 };
 
+exports.Prisma.PollScalarFieldEnum = {
+  id: 'id',
+  newsId: 'newsId',
+  isActive: 'isActive',
+  createdDate: 'createdDate',
+  endDate: 'endDate'
+};
+
+exports.Prisma.PollOptionScalarFieldEnum = {
+  id: 'id',
+  pollId: 'pollId',
+  optionText: 'optionText',
+  orderIndex: 'orderIndex',
+  createdDate: 'createdDate'
+};
+
+exports.Prisma.PollVoteScalarFieldEnum = {
+  id: 'id',
+  pollId: 'pollId',
+  pollOptionId: 'pollOptionId',
+  playerId: 'playerId',
+  votedAt: 'votedAt'
+};
+
 exports.Prisma.NPCScalarFieldEnum = {
   id: 'id',
   npcId: 'npcId',
@@ -791,6 +815,9 @@ exports.Prisma.ModelName = {
   DinozStatus: 'DinozStatus',
   migrations: 'migrations',
   News: 'News',
+  Poll: 'Poll',
+  PollOption: 'PollOption',
+  PollVote: 'PollVote',
   NPC: 'NPC',
   Player: 'Player',
   Dojo: 'Dojo',

@@ -6,7 +6,6 @@ import { translateAll } from './translate.js';
 import { getPlayerForAnnounce } from '../dao/playerDao.js';
 import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 
-
 export async function checkAnnounce(type: PantheonMotif, id: string, extension: number | string) {
 	if (GLOBAL.config.eternaltwin.channel !== 'production') return;
 	const pantheon = await getPantheonFromType(type);

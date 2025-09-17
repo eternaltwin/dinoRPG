@@ -44,6 +44,9 @@
 		<li>
 			<a href="#" :class="tabSelected === 11 ? 'active' : ''" @click="setTab(11)"> Scheduled Jobs </a>
 		</li>
+		<li>
+			<a href="#" :class="tabSelected === 12 ? 'active' : ''" @click="setTab(12)"> Polls </a>
+		</li>
 	</ul>
 	<PlayerEdit v-if="player.name && tabSelected === 1" :playerProp="player" />
 	<div v-if="player.name && tabSelected === 2">
@@ -65,6 +68,7 @@
 	<GameControl v-if="tabSelected === 9" />
 	<DebugFight v-if="tabSelected === 10" />
 	<ScheduledJobs v-if="tabSelected === 11" />
+	<PollEdit v-if="tabSelected === 12" />
 </template>
 
 <script lang="ts">
@@ -87,6 +91,7 @@ import GameControl from '../components/admin/GameControl.vue';
 import DebugFight from '../components/admin/DebugFight.vue';
 import ScheduledJobs from '../components/admin/ScheduledJobs.vue';
 import { Player } from '@drpg/prisma';
+import PollEdit from '../components/admin/PollEdit.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -107,7 +112,8 @@ export default defineComponent({
 		LogsView,
 		GameStats,
 		Moderation,
-		Banned
+		Banned,
+		PollEdit
 	},
 	data() {
 		return {

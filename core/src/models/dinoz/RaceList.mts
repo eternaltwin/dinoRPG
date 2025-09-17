@@ -3,8 +3,7 @@
 
 import { DinozRace } from './DinozRace.mjs';
 import { Skill } from './SkillList.mjs';
-import { RaceEnum } from '../enums/RaceEnum.mjs'
-
+import { RaceEnum } from '../enums/RaceEnum.mjs';
 
 export const raceList: Record<RaceEnum, DinozRace> = {
 	[RaceEnum.MOUEFFE]: {

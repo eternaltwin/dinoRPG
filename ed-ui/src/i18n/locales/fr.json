@@ -5075,5 +5075,11 @@
 	"skillTrees": {
 		"title": "Arbres de compétences",
 		"level": "Niv.{level}"
+	},
+	"poll": {
+		"choose_option": "Votez pour votre choix :",
+		"choose_done": "Vote enregistré",
+		"select": "Voter",
+		"select_option": "Sélectionnez une option"
 	}
 }

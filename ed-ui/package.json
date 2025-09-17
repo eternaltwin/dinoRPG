@@ -32,7 +32,8 @@
     "vue-i18n": "^9.6.5",
     "vue-router": "^4.2.5",
     "vue-tippy": "^6.3.1",
-    "vue-toast-notification": "^3"
+    "vue-toast-notification": "^3",
+    "vue3-markdown-it": "^1.0.10"
   },
   "devDependencies": {
     "@drpg/core": "workspace:^",

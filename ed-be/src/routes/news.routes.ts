@@ -1,10 +1,16 @@
 import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import multer from 'multer';
-import { getNews, getNewsIllustration, postNews, updateNews } from '../business/newsService.js';
+import {
+	createPoll,
+	getNews,
+	getNewsIllustration,
+	postNews,
+	selectPollOption,
+	updateNews
+} from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkIsAdmin } from '../utils/jwt.js';
-import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
@@ -95,6 +101,36 @@ routes.put(
 	}
 );
 
+routes.put(
+	`${commonPath}/createPoll/:title`,
+	[
+		multer().single('file'),
+		param('title').exists().isString(),
+		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
+		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
+		body('spanishText').default(null).optional({ nullable: true }).exists().isString(),
+		body('germanText').default(null).optional({ nullable: true }).exists().isString(),
+		body('frenchTitle').default(null).optional({ nullable: true }).exists().isString(),
+		body('englishTitle').default(null).optional({ nullable: true }).exists().isString(),
+		body('spanishTitle').default(null).optional({ nullable: true }).exists().isString(),
+		body('germanTitle').default(null).optional({ nullable: true }).exists().isString(),
+		body('options').exists()
+	],
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await createPoll(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
 /**
  * @openapi
  * /api/v1/news/page/{page}:
@@ -126,7 +162,7 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 	}
 
 	try {
-		const response: NewsGetResponse = await getNews(req);
+		const response = await getNews(req);
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);
@@ -211,6 +247,23 @@ routes.put(
 		try {
 			await updateNews(req);
 			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+routes.put(
+	`${commonPath}/poll/:id/:option`,
+	[param('id').exists().toInt().isInt(), param('option').exists().toInt().isInt()],
+	async (req: Request<{ id: string }>, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await selectPollOption(req);
+			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);
 		}

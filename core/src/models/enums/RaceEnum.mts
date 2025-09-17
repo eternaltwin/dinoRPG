@@ -22,7 +22,7 @@ export enum RaceEnum {
 	KABUKI = 21,
 	KABUKI_DEMON = 22,
 	MAHAMUTI = 23,
-	SOUFFLET= 24,
+	SOUFFLET = 24,
 	TOUFUFU = 25,
 	QUETZU = 26,
 	SMOG = 27,

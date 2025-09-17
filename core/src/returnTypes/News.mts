@@ -1,3 +1,11 @@
-import { News } from '@drpg/prisma';
+import { PollPublic } from '../models/news/Polls.mjs';
 
-export type NewsGetResponse = Omit<News, 'image' | 'updatedDate'>[];
+export type NewsGetResponse = {
+	id: number;
+	title: string;
+	text: string;
+	createdDate: string;
+	hide: boolean;
+	poll?: PollPublic;
+	totalVote: number;
+}[];

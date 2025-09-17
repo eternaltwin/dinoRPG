@@ -23,5 +23,19 @@ export const NewsService = {
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
+	},
+	async createPoll(data: FormData, news: string): Promise<void> {
+		return http()
+			.put(`/news/createPoll/${news}`, data, {
+				headers: { 'Content-Type': 'multipart/form-data' }
+			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async votePoll(id: number, option: number): Promise<void> {
+		return http()
+			.put(`/news/poll/${id}/${option}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
 	}
 };

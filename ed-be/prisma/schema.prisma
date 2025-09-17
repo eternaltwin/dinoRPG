@@ -170,8 +170,51 @@ model News {
   germanText   String?  @db.VarChar
   createdDate  DateTime @default(now()) @db.Timestamp(6)
   updatedDate  DateTime @default(now()) @updatedAt @db.Timestamp(6)
+  poll         Poll?
 
   @@map("news")
+}
+
+model Poll {
+  id          Int          @id @default(autoincrement())
+  newsId      Int          @unique
+  isActive    Boolean      @default(true)
+  createdDate DateTime     @default(now()) @db.Timestamp(6)
+  endDate     DateTime     @db.Timestamp(6)
+  news        News         @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  options     PollOption[]
+  votes       PollVote[]
+
+  @@map("polls")
+}
+
+model PollOption {
+  id          Int        @id @default(autoincrement())
+  pollId      Int
+  optionText  String     @db.VarChar
+  orderIndex  Int        @default(0)
+  createdDate DateTime   @default(now()) @db.Timestamp(6)
+  poll        Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  votes       PollVote[]
+
+  @@index([pollId])
+  @@map("poll_options")
+}
+
+model PollVote {
+  id           Int        @id @default(autoincrement())
+  pollId       Int
+  pollOptionId Int
+  playerId     String     @db.Uuid
+  votedAt      DateTime   @default(now()) @db.Timestamp(6)
+  poll         Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollOption   PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  player       Player     @relation(fields: [playerId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, playerId], name: "unique_player_vote_per_poll")
+  @@index([pollId])
+  @@index([playerId])
+  @@map("poll_votes")
 }
 
 model NPC {
@@ -247,6 +290,7 @@ model Player {
   FightWatched         FightWatched[]
   GameDinoz            GameDinoz[]
   ips                  String[]           @db.Inet
+  pollVotes            PollVote[]
 
   @@map("player")
 }

@@ -438,7 +438,7 @@ export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
 	// Factor based on the level difference
 	const levelDiff = (opponentLevel - dinozLevel) / opponentLevel;
 	// XP result solely base on the level difference
-	const xpFactor = XP_BASE + XP_ADD * levelDiff ;
+	const xpFactor = XP_BASE + XP_ADD * levelDiff;
 	let xp;
 	if (xpFactor < 1) {
 		// If the experience  factor based on the level difference too low (i.e Dinoz level is higher than its opponents), then default to a formula based on the opponents level.
@@ -450,8 +450,7 @@ export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
 
 	// Set the minimum to the BASE PVP
 	return Math.max(xp, BASE_PVP_XP);
-}
-
+};
 
 /**
  * @summary Calculate the XP before bonus for a PvE fight
@@ -461,7 +460,12 @@ export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
  * @param initialMaxLevel First max level limit in the game
  * @returns The experience the Dinoz is entitled to receive before bonuses
  */
-export const calculatePvExp = (totalMonsterXp: number, dinozLevel: number, maxLevel: number, initialMaxLevel: number) => {
+export const calculatePvExp = (
+	totalMonsterXp: number,
+	dinozLevel: number,
+	maxLevel: number,
+	initialMaxLevel: number
+) => {
 	const XP_BASE: number = 1.2;
 	const XP_ADD: number = 0.8;
 	// Minimum factor applie to the total monster xp
@@ -479,4 +483,4 @@ export const calculatePvExp = (totalMonsterXp: number, dinozLevel: number, maxLe
 	if (maxLevel / initialMaxLevel > xpFactor) xpFactor = maxLevel / initialMaxLevel;
 
 	return totalMonsterXp * xpFactor * XP_MULTIPLICATOR;
-}
+};
