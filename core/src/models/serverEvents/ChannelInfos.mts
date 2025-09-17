@@ -1,6 +1,6 @@
-import { ChannelData } from './ChannelData.mjs';
+import { WsChannelData } from './WsChannelData.mjs';
 
 export interface ChannelInfos {
 	channelName: string;
-	members: ChannelData[];
+	members: WsChannelData[];
 }

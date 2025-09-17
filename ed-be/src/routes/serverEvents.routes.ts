@@ -1,11 +1,12 @@
 import { Request, Response, Router } from 'express';
 import { apiRoutes } from '../constants/index.js';
-import { authenticate } from '../business/webSocketService.js';
+import { authenticate, connectUserToSseChannel, disconnectSseUser } from '../business/serverEventService.js';
 import { body, header, validationResult } from 'express-validator';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType'
 import sendError from '../utils/sendErrors.js';
+import { UUID } from 'node:crypto';
 
 const routes: Router = Router();
 
@@ -42,6 +43,21 @@ routes.post(
 		}
 	}
 );
+
+routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
+	const connectionId: UUID = await connectUserToSseChannel(req, res);
+
+	res.setHeader('Content-Type', 'text/event-stream');
+	res.setHeader('Cache-Control', 'no-cache');
+	res.setHeader('Connection', 'keep-alive');
+
+	// To keep the connection alive
+	res.flushHeaders();
+
+	req.on('close', () => {
+		disconnectSseUser(connectionId);
+	})
+});
 
 /**
  * routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
