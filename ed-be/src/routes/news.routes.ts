@@ -7,8 +7,9 @@ import {
 	getNewsIllustration,
 	postNews,
 	selectPollOption,
-	updateNews
-, toggleLikeNews } from '../business/newsService.js';
+	updateNews,
+	toggleLikeNews
+} from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkIsAdmin } from '../utils/jwt.js';
 import sendError from '../utils/sendErrors.js';
@@ -295,12 +296,8 @@ routes.post(`${commonPath}/:id/like`, param('id').exists().toInt().isInt(), asyn
 		return res.status(400).json({ errors: validationResult(req) });
 	}
 
-	const newsId = parseInt(req.params.id);
-	const player = await auth(req);
-	const playerId = player.id;
-
 	try {
-		const result = await toggleLikeNews(newsId, playerId);
+		const result = await toggleLikeNews(req);
 		return res.status(200).send(result);
 	} catch (err) {
 		sendError(res, err);

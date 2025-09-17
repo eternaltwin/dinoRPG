@@ -248,6 +248,12 @@ exports.Prisma.PollVoteScalarFieldEnum = {
   votedAt: 'votedAt'
 };
 
+exports.Prisma.NewsLikeScalarFieldEnum = {
+  newsId: 'newsId',
+  playerId: 'playerId',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.NPCScalarFieldEnum = {
   id: 'id',
   npcId: 'npcId',
@@ -818,6 +824,7 @@ exports.Prisma.ModelName = {
   Poll: 'Poll',
   PollOption: 'PollOption',
   PollVote: 'PollVote',
+  NewsLike: 'NewsLike',
   NPC: 'NPC',
   Player: 'Player',
   Dojo: 'Dojo',

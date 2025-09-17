@@ -2,7 +2,7 @@ import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import { http } from '../utils/index.js';
 
 export const NewsService = {
-	async getNewsFromPage(page: number): Promise<NewsGetResponse> {
+	async getNewsFromPage(page: number): Promise<NewsGetResponse[]> {
 		return http()
 			.get(`/news/page/${page}`)
 			.then(res => Promise.resolve(res.data))

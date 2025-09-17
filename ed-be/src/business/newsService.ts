@@ -1,8 +1,14 @@
 import { Request } from 'express';
-import { createNews, getBatchOfNews, getNewsIllus, updateAnyNews, getNewsDate,
+import {
+	createNews,
+	getBatchOfNews,
+	getNewsIllus,
+	updateAnyNews,
+	getNewsDate,
 	hasPlayerLikedNews,
 	likeNews,
-	unlikeNews } from '../dao/newsDao.js';
+	unlikeNews
+} from '../dao/newsDao.js';
 import { auth, noStrictAuth } from '../dao/playerDao.js';
 import { CreatePollOption } from '@drpg/core/models/news/Polls';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
@@ -253,8 +259,9 @@ export async function selectPollOption(req: Request) {
 	});
 }
 
-export async function toggleLikeNews(newsId: number, playerId: string) {
-	const hasLiked = await hasPlayerLikedNews(newsId, playerId);
+export async function toggleLikeNews(req: Request) {
+	const authed = await auth(req);
+	const hasLiked = await hasPlayerLikedNews(+req.params.id, authed.id);
 
-	return hasLiked ? unlikeNews(newsId, playerId) : likeNews(newsId, playerId);
+	return hasLiked ? unlikeNews(+req.params.id, authed.id) : likeNews(+req.params.id, authed.id);
 }

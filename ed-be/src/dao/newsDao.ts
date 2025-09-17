@@ -45,6 +45,11 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 								}
 							}
 						}
+					},
+					likedBy: {
+						select: {
+							playerId: true
+						}
 					}
 				}
 			});
@@ -57,7 +62,9 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 					createdDate: n.createdDate,
 					title: n.frenchTitle,
 					text: n.frenchText,
-					poll: n.poll
+					poll: n.poll,
+					likes: n.likedBy.length,
+					likedByMe: n.likedBy.some(l => l.playerId === player?.id) ?? false
 				};
 			});
 		case 'en':
@@ -90,6 +97,11 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 								}
 							}
 						}
+					},
+					likedBy: {
+						select: {
+							playerId: true
+						}
 					}
 				}
 			});
@@ -102,7 +114,9 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 					createdDate: n.createdDate,
 					title: n.englishTitle,
 					text: n.englishText,
-					poll: n.poll
+					poll: n.poll,
+					likes: n.likedBy.length,
+					likedByMe: n.likedBy.some(l => l.playerId === player?.id) ?? false
 				};
 			});
 		case 'es':
@@ -135,6 +149,11 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 								}
 							}
 						}
+					},
+					likedBy: {
+						select: {
+							playerId: true
+						}
 					}
 				}
 			});
@@ -147,7 +166,9 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 					createdDate: n.createdDate,
 					title: n.spanishTitle,
 					text: n.spanishText,
-					poll: n.poll
+					poll: n.poll,
+					likes: n.likedBy.length,
+					likedByMe: n.likedBy.some(l => l.playerId === player?.id) ?? false
 				};
 			});
 		case 'de':
@@ -180,6 +201,11 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 								}
 							}
 						}
+					},
+					likedBy: {
+						select: {
+							playerId: true
+						}
 					}
 				}
 			});
@@ -192,7 +218,9 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 					createdDate: n.createdDate,
 					title: n.germanTitle,
 					text: n.germanText,
-					poll: n.poll
+					poll: n.poll,
+					likes: n.likedBy.length,
+					likedByMe: n.likedBy.some(l => l.playerId === player?.id) ?? false
 				};
 			});
 		default:
@@ -225,6 +253,11 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 								}
 							}
 						}
+					},
+					likedBy: {
+						select: {
+							playerId: true
+						}
 					}
 				}
 			});
@@ -237,7 +270,9 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 					createdDate: n.createdDate,
 					title: n.frenchTitle,
 					text: n.frenchText,
-					poll: n.poll
+					poll: n.poll,
+					likes: n.likedBy.length,
+					likedByMe: n.likedBy.some(l => l.playerId === player?.id) ?? false
 				};
 			});
 	}

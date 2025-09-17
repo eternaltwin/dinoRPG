@@ -21,9 +21,9 @@
 		</div>
 		<Poll v-if="news.poll" :poll="news.poll" :totalVote="news.totalVote" @voted="getFirstNews()" />
 		<div class="newsFooter">
-			<a class="counter">
-				<img :src="getImgURL('icons', 'miniIcon_off')" alt="icon" />
-				0
+			<a class="counter" @click.stop="toggleLike(news)">
+				<img :src="getImgURL('icons', news.likedByMe ? 'miniIcon_on' : 'miniIcon_off')" alt="icon" />
+				<span class="newsCounter">{{ news.likes }}</span>
 			</a>
 		</div>
 	</div>
@@ -52,7 +52,7 @@ export default defineComponent({
 	data() {
 		return {
 			localStore: localStore(),
-			batch: [] as NewsGetResponse,
+			batch: [] as NewsGetResponse[],
 			page: 1,
 			API_BASE
 		};
@@ -93,7 +93,7 @@ export default defineComponent({
 			const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
 			return date.toLocaleDateString(this.localStore.getLanguage, options);
 		},
-		async toggleLike(news: DisplayedNews) {
+		async toggleLike(news: NewsGetResponse) {
 			try {
 				const result = await NewsService.toggleLike(news.id);
 				news.likes = result.likes;
@@ -146,105 +146,7 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
-	.newsTitle {
-		display: grid;
-		grid-template-columns: 0.5fr 3fr;
-		.newsImg {
-			height: 57px;
-			width: 48px;
-			padding-right: 15px !important;
-		}
-		.newsContent {
-			color: #ffee92;
-			display: flex;
-			flex-direction: column;
-			& h1 {
-				height: auto;
-				max-height: none;
-				text-align: left;
-				margin-bottom: 5px;
-				font-size: 20pt;
-				font-weight: bold;
-				line-height: 1em;
-				opacity: 0.8;
-				background: transparent;
-			}
-			& span {
-				font-size: 7.5pt;
-				margin-bottom: 6px;
-				opacity: 0.7;
-			}
-		}
-	}
-	.newsFooter {
-		display: flex;
-		.counter {
-			color: #ffee92;
-			cursor: pointer;
-			display: flex;
-			gap: 5px;
-			padding: 0px;
-			font-size: 11pt;
-			font-weight: bold;
-	.news {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		.newsTitle {
-			display: flex;
-			gap: 10px;
-			.newsImg {
-				height: 57px;
-				width: 48px;
-			}
-			.newsContent {
-				color: #ffee92;
-				display: flex;
-				flex-direction: column;
-				& h1 {
-					height: auto;
-					max-height: none;
-					text-align: left;
-					margin-bottom: 5px;
-					font-size: 20pt;
-					font-weight: bold;
-					line-height: 1em;
-					opacity: 0.8;
-					background: transparent;
-				}
-				& span {
-					font-size: 7.5pt;
-					margin-bottom: 6px;
-					opacity: 0.7;
-				}
-			}
-		}
-		.newsLike {
-			background-image: url('../../assets/design/marker.webp');
-			background-repeat: no-repeat;
-			display: flex;
-			align-items: center;
-			margin-top: -20px;
-			margin-right: -12px;
-			width: 130px;
-			height: 70px;
-			.newsCounter {
-				display: flex;
-				color: #ffee92;
-				cursor: pointer;
-				font-size: 16pt;
-				font-weight: bold;
-				margin-left: 25px;
-				& img {
-					height: 26px;
-					width: 26px;
-				}
-				& span {
-					margin-left: 6px;
-				}
-			}
-		}
-	}
+
 	.markdown {
 		color: #f4e4bc;
 		line-height: 1.6;
@@ -681,16 +583,135 @@ export default defineComponent({
 			}
 		}
 	}
-	img {
-		max-width: 100%;
-		display: block;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 20px;
+
+	.newsTitle {
+		display: grid;
+		grid-template-columns: 0.5fr 3fr;
+
+		.newsImg {
+			height: 57px;
+			width: 48px;
+			padding-right: 15px !important;
+		}
+
+		.newsContent {
+			color: #ffee92;
+			display: flex;
+			flex-direction: column;
+
+			& h1 {
+				height: auto;
+				max-height: none;
+				text-align: left;
+				margin-bottom: 5px;
+				font-size: 20pt;
+				font-weight: bold;
+				line-height: 1em;
+				opacity: 0.8;
+				background: transparent;
+			}
+
+			& span {
+				font-size: 7.5pt;
+				margin-bottom: 6px;
+				opacity: 0.7;
+			}
+		}
 	}
-	p {
-		color: white;
-		background: transparent;
+
+	.news {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.newsTitle {
+			display: flex;
+			gap: 10px;
+
+			.newsImg {
+				height: 57px;
+				width: 48px;
+			}
+
+			.newsContent {
+				color: #ffee92;
+				display: flex;
+				flex-direction: column;
+
+				& h1 {
+					height: auto;
+					max-height: none;
+					text-align: left;
+					margin-bottom: 5px;
+					font-size: 20pt;
+					font-weight: bold;
+					line-height: 1em;
+					opacity: 0.8;
+					background: transparent;
+				}
+
+				& span {
+					font-size: 7.5pt;
+					margin-bottom: 6px;
+					opacity: 0.7;
+				}
+			}
+		}
+
+		.newsLike {
+			background-image: url('../../assets/design/marker.webp');
+			background-repeat: no-repeat;
+			display: flex;
+			align-items: center;
+			margin-top: -22px;
+			margin-right: -12px;
+			width: 130px;
+			height: 70px;
+			.newsCounter {
+				display: flex;
+				color: #ffee92;
+				cursor: pointer;
+				font-weight: bold;
+				margin-left: 25px;
+				//margin-bottom: 17px;
+				& img {
+					height: 16px;
+					width: 20px;
+					object-fit: cover;
+				}
+				& span {
+					margin-top: -1px;
+					margin-left: 6px;
+				}
+			}
+		}
+	}
+
+	.newsFooter {
+		display: flex;
+
+		.counter {
+			color: #ffee92;
+			cursor: pointer;
+			display: flex;
+			gap: 5px;
+			padding: 0px;
+			font-size: 11pt;
+			font-weight: bold;
+
+			img {
+				max-width: 100%;
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				margin-bottom: 20px;
+			}
+
+			p {
+				color: white;
+				background: transparent;
+			}
+		}
 	}
 }
 </style>
