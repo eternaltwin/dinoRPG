@@ -1,7 +1,7 @@
 {
 	"name": "@eternaltwin/dinorpg-monorepo",
 	"private": true,
-	"version": "0.16.8",
+	"version": "0.17.0",
 	"licenses": [
 		{
 			"type": "AGPL-3.0-or-later",
@@ -34,8 +34,7 @@
 					"ed-ui/package.json",
 					"core/package.json",
 					"prisma/package.json",
-					"Eternaltwin/package.json",
-					"dinoAnimation/package.json"
+					"Eternaltwin/package.json"
 				]
 			}
 		}
