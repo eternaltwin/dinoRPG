@@ -282,17 +282,17 @@
 	"tournament": {
 		"uncommon": "races non communes",
 		"common": "races communes",
-		"duo": "duo",
-		"anti_meta_4": "races non meta",
-		"anti_meta_5": "races non meta",
-		"all_in_5": "toutes les races",
-		"all_in_6": "toutes les races",
 		"fire": "races à dominance feu",
 		"water": "races à dominance eau",
 		"wood": "races à dominance bois",
 		"air": "races à dominance air",
 		"lightning": "races à dominance foudre",
 		"ffa": "toutes les races",
+		"bipede": "toutes les races bipèdes",
+		"quadrupede": "toutes les races quadrupèdes",
+		"flying": "toutes les races volantes ou rampantes",
+		"anti_poison": "toutes les races n'ayant pas d'affinités avec le poison",
+		"hippo": "uniquement les hippoclamps",
 		"demons": "uniquement les démons"
 	},
 	"announce": {

@@ -512,8 +512,8 @@ export async function getNewLevelLimits(races: RaceEnum[]) {
 			where: {
 				AND: [{ raceId: { in: races } }, { level: { gte: 45, lte: 50 } }]
 			}
-		}),
-	])
+		})
+	]);
 	const data = [
 		{ levelMax: 25, odds: under25 * COEF_UNDER25 },
 		{ levelMax: 30, odds: under30 * COEF_UNDER30 },
@@ -524,5 +524,5 @@ export async function getNewLevelLimits(races: RaceEnum[]) {
 	];
 	const total = data.reduce((acc, item) => acc + item.odds, 0);
 	const m = weightedRandom(data, total);
-	return m.levelMax
+	return m.levelMax;
 }

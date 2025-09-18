@@ -3,17 +3,17 @@ import { RaceEnum } from '../enums/RaceEnum.mjs';
 export enum formatName {
 	UNCOMMON,
 	COMMON,
-	DUO,
-	ANTI_META_4,
-	ANTI_META_5,
-	ALL_IN_5,
-	ALL_IN_6,
 	FIRE,
 	WATER,
 	AIR,
 	LIGHTNING,
 	WOOD,
 	FFA,
+	BIPEDE,
+	QUADRUPEDE,
+	FLYING,
+	ANTI_POISON,
+	HIPPO,
 	DEMONS
 }
 
@@ -64,179 +64,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.NUAGOZ,
 			RaceEnum.WINKS,
 			RaceEnum.CASTIVORE
-		]
-	},
-	[formatName.DUO]: {
-		name: 'duo',
-		teamSize: 2,
-		raceMinimum: 2,
-		poison: true,
-		//levelLimit: 50,
-		teamRace: [
-			RaceEnum.GORILLOZ,
-			RaceEnum.WANWAN,
-			RaceEnum.PIGMOU,
-			RaceEnum.PLANAILLE,
-			RaceEnum.SIRAIN,
-			RaceEnum.MOUEFFE,
-			RaceEnum.NUAGOZ,
-			RaceEnum.WINKS,
-			RaceEnum.CASTIVORE,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.WANWAN_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON,
-			RaceEnum.HIPPOCLAMP,
-			RaceEnum.PTEROZ,
-			RaceEnum.ROCKY,
-			RaceEnum.QUETZU,
-			RaceEnum.SANTAZ,
-			RaceEnum.FEROSS,
-			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
-			RaceEnum.TOUFUFU,
-			RaceEnum.MAHAMUTI,
-			RaceEnum.SOUFFLET,
-			RaceEnum.SMOG,
-			RaceEnum.TRICERAGNON
-		]
-	},
-	[formatName.ANTI_META_4]: {
-		name: 'anti_meta_4',
-		teamSize: 4,
-		raceMinimum: 4,
-		poison: true,
-		//levelLimit: 50,
-		teamRace: [
-			RaceEnum.GORILLOZ,
-			RaceEnum.PIGMOU,
-			RaceEnum.PLANAILLE,
-			RaceEnum.SIRAIN,
-			RaceEnum.MOUEFFE,
-			RaceEnum.NUAGOZ,
-			RaceEnum.WINKS,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON,
-			RaceEnum.HIPPOCLAMP,
-			RaceEnum.PTEROZ,
-			RaceEnum.ROCKY,
-			RaceEnum.QUETZU,
-			RaceEnum.SANTAZ,
-			RaceEnum.FEROSS,
-			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
-			RaceEnum.SOUFFLET,
-			RaceEnum.SMOG
-		]
-	},
-	[formatName.ANTI_META_5]: {
-		name: 'anti_meta_5',
-		teamSize: 5,
-		raceMinimum: 5,
-		poison: true,
-		//levelLimit: 50,
-		teamRace: [
-			RaceEnum.GORILLOZ,
-			RaceEnum.PIGMOU,
-			RaceEnum.PLANAILLE,
-			RaceEnum.SIRAIN,
-			RaceEnum.MOUEFFE,
-			RaceEnum.NUAGOZ,
-			RaceEnum.WINKS,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON,
-			RaceEnum.HIPPOCLAMP,
-			RaceEnum.PTEROZ,
-			RaceEnum.ROCKY,
-			RaceEnum.QUETZU,
-			RaceEnum.SANTAZ,
-			RaceEnum.FEROSS,
-			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
-			RaceEnum.SOUFFLET,
-			RaceEnum.SMOG
-		]
-	},
-	[formatName.ALL_IN_5]: {
-		name: 'all_in_5',
-		teamSize: 5,
-		raceMinimum: 5,
-		poison: true,
-		//levelLimit: 50,
-		teamRace: [
-			RaceEnum.GORILLOZ,
-			RaceEnum.WANWAN,
-			RaceEnum.PIGMOU,
-			RaceEnum.PLANAILLE,
-			RaceEnum.SIRAIN,
-			RaceEnum.MOUEFFE,
-			RaceEnum.NUAGOZ,
-			RaceEnum.WINKS,
-			RaceEnum.CASTIVORE,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.WANWAN_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON,
-			RaceEnum.HIPPOCLAMP,
-			RaceEnum.PTEROZ,
-			RaceEnum.ROCKY,
-			RaceEnum.QUETZU,
-			RaceEnum.SANTAZ,
-			RaceEnum.FEROSS,
-			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
-			RaceEnum.TOUFUFU,
-			RaceEnum.MAHAMUTI,
-			RaceEnum.SOUFFLET,
-			RaceEnum.SMOG,
-			RaceEnum.TRICERAGNON
-		]
-	},
-	[formatName.ALL_IN_6]: {
-		name: 'all_in_6',
-		teamSize: 6,
-		raceMinimum: 6,
-		poison: true,
-		//levelLimit: 50,
-		teamRace: [
-			RaceEnum.GORILLOZ,
-			RaceEnum.WANWAN,
-			RaceEnum.PIGMOU,
-			RaceEnum.PLANAILLE,
-			RaceEnum.SIRAIN,
-			RaceEnum.MOUEFFE,
-			RaceEnum.NUAGOZ,
-			RaceEnum.WINKS,
-			RaceEnum.CASTIVORE,
-			RaceEnum.GORILLOZ_DEMON,
-			RaceEnum.WANWAN_DEMON,
-			RaceEnum.PIGMOU_DEMON,
-			RaceEnum.PLANAILLE_DEMON,
-			RaceEnum.MOUEFFE_DEMON,
-			RaceEnum.WINKS_DEMON,
-			RaceEnum.HIPPOCLAMP,
-			RaceEnum.PTEROZ,
-			RaceEnum.ROCKY,
-			RaceEnum.QUETZU,
-			RaceEnum.SANTAZ,
-			RaceEnum.FEROSS,
-			RaceEnum.KABUKI,
-			RaceEnum.KABUKI_DEMON,
-			RaceEnum.TOUFUFU,
-			RaceEnum.MAHAMUTI,
-			RaceEnum.SOUFFLET,
-			RaceEnum.SMOG,
-			RaceEnum.TRICERAGNON
 		]
 	},
 	[formatName.FIRE]: {
@@ -338,7 +165,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 	},
 	[formatName.FFA]: {
 		name: 'ffa',
-		teamSize: 6,
+		raceMinimum: 2,
 		teamRace: [
 			RaceEnum.GORILLOZ,
 			RaceEnum.WANWAN,
@@ -368,6 +195,59 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.SOUFFLET,
 			RaceEnum.SMOG,
 			RaceEnum.TRICERAGNON
+		]
+	},
+	[formatName.BIPEDE]: {
+		name: 'bipede',
+		raceMinimum: 2,
+		teamRace: [RaceEnum.SIRAIN, RaceEnum.MOUEFFE, RaceEnum.ROCKY, RaceEnum.KABUKI, RaceEnum.TOUFUFU, RaceEnum.SMOG]
+	},
+	[formatName.QUADRUPEDE]: {
+		name: 'quadrupede',
+		raceMinimum: 2,
+		teamRace: [
+			RaceEnum.GORILLOZ,
+			RaceEnum.WANWAN,
+			RaceEnum.PIGMOU,
+			RaceEnum.WINKS,
+			RaceEnum.PTEROZ,
+			RaceEnum.SANTAZ,
+			RaceEnum.FEROSS,
+			RaceEnum.MAHAMUTI,
+			RaceEnum.TRICERAGNON
+		]
+	},
+	[formatName.FLYING]: {
+		name: 'flying',
+		raceMinimum: 2,
+		teamRace: [
+			RaceEnum.PLANAILLE,
+			RaceEnum.NUAGOZ,
+			RaceEnum.CASTIVORE,
+			RaceEnum.HIPPOCLAMP,
+			RaceEnum.PTEROZ,
+			RaceEnum.QUETZU
+		]
+	},
+	[formatName.ANTI_POISON]: {
+		name: 'anti_poison',
+		raceMinimum: 2,
+		teamRace: [
+			RaceEnum.GORILLOZ,
+			RaceEnum.WANWAN,
+			RaceEnum.PIGMOU,
+			RaceEnum.MOUEFFE,
+			RaceEnum.CASTIVORE,
+			RaceEnum.ROCKY,
+			RaceEnum.TOUFUFU,
+			RaceEnum.TRICERAGNON
+		]
+	},
+	[formatName.HIPPO]: {
+		name: 'hippo',
+		raceMinimum: 1,
+		teamRace: [
+			RaceEnum.HIPPOCLAMP
 		]
 	},
 	[formatName.DEMONS]: {

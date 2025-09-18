@@ -4498,17 +4498,17 @@
 		"tournamentFormats": {
 			"uncommon": "Dinoz non communs",
 			"common": "Dinoz communs",
-			"duo": "Duo de Dinoz",
-			"anti_meta_4": "Anti-Meta 4v4",
-			"anti_meta_5": "Anti-Meta 5v5",
-			"all_in_5": "Tout le monde en v5",
-			"all_in_6": "Tout le monde en v6",
 			"fire": "Dinoz feu",
 			"water": "Dinoz eau",
 			"wood": "Dinoz bois",
 			"air": "Dinoz air",
 			"lightning": "Dinoz foudre",
 			"ffa": "Free for All",
+			"bipede": "Bipèdes",
+			"quadrupede": "Quadrupèdes",
+			"flying": "Volants et rampants",
+			"anti_poison": "Anti poisons",
+			"hippo": "Hippoclamp",
 			"demons": "Dinoz démoniaques"
 		},
 		"history": {

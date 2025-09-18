@@ -588,9 +588,9 @@ class TournamentManager {
 			}
 		});
 
-		const tournamentFormat = formatTID[getRandomNumber(0, 12) as formatName];
+		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(3, 6);
+		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
