@@ -875,7 +875,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "windows",
+				"value": "debian-openssl-1.1.x",
         "native": true
       },
       {
