@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
+import weightedRandom from '../utils/fight/weightedRandom.js';
 
 export type selectedDojoType = Awaited<ReturnType<typeof getSelectedDojo>>;
 export async function getSelectedDojo(teamLimit: number, qualified: number) {
@@ -472,4 +473,56 @@ export async function getLevelLimits(races: RaceEnum[]) {
 		currentLevel += 5;
 	}
 	return maxLevel;
+}
+
+export async function getNewLevelLimits(races: RaceEnum[]) {
+	const COEF_UNDER25 = 1;
+	const COEF_UNDER30 = 2;
+	const COEF_UNDER35 = 2.5;
+	const COEF_UNDER40 = 3;
+	const COEF_UNDER45 = 3.5;
+	const COEF_UNDER50 = 4;
+	const [under25, under30, under35, under40, under45, under50] = await prisma.$transaction([
+		prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: 20, lte: 25 } }]
+			}
+		}),
+		prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: 25, lte: 30 } }]
+			}
+		}),
+		prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: 30, lte: 35 } }]
+			}
+		}),
+		prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: 35, lte: 40 } }]
+			}
+		}),
+		prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: 40, lte: 45 } }]
+			}
+		}),
+		prisma.dinoz.count({
+			where: {
+				AND: [{ raceId: { in: races } }, { level: { gte: 45, lte: 50 } }]
+			}
+		}),
+	])
+	const data = [
+		{ levelMax: 25, odds: under25 * COEF_UNDER25 },
+		{ levelMax: 30, odds: under30 * COEF_UNDER30 },
+		{ levelMax: 35, odds: under35 * COEF_UNDER35 },
+		{ levelMax: 40, odds: under40 * COEF_UNDER40 },
+		{ levelMax: 45, odds: under45 * COEF_UNDER45 },
+		{ levelMax: 50, odds: under50 * COEF_UNDER50 }
+	];
+	const total = data.reduce((acc, item) => acc + item.odds, 0);
+	const m = weightedRandom(data, total);
+	return m.levelMax
 }

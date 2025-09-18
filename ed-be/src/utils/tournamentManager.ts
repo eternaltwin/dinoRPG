@@ -1,7 +1,7 @@
 import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { createFirstTournament, getLevelLimits } from '../business/tournamentService.js';
+import { createFirstTournament, getLevelLimits, getNewLevelLimits } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
 import {
@@ -593,7 +593,7 @@ class TournamentManager {
 		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(3, 6);
 		const teamRace = tournamentFormat.teamRace;
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
-		const levelLimit = tournamentFormat.levelLimit ?? (await getLevelLimits(tournamentFormat.teamRace));
+		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
 
 		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
 		const newTournament = await prisma.tournament.create({
