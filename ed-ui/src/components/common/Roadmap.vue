@@ -136,7 +136,7 @@ export default defineComponent({
 		async connectSse(): Promise<void> {
 			const ticket: ServerEventTicketDto = await ServerEventsService.getSseTicket(SseChannel.CLAN_FORUM);
 
-			const eventSource = new EventSource(`${API_BASE}/sse/events?ticket=${ticket.ticket}`);
+			const eventSource = new EventSource(`${API_BASE}/server-events/events?ticket=${ticket.ticket}`);
 
 			eventSource.onmessage = (event: Event) => {
 				console.log(event);
