@@ -134,9 +134,9 @@ async function checkPlayerIsInClan(authed: any): Promise<void> {
  * @param req -> The request incoming
  */
 export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingMessage): Promise<void> {
-	const ticketUuid = req.url?.split('?ticket=')[1];
+	const ticketUuid: string = getTicketFromUrl(req);
 
-	const ticket = checkTicketValidity(req, ticketUuid);
+	const ticket: ServerEventTicket = checkTicketValidity(req, ticketUuid);
 
 	// Set a unique identifier for the connection
 	ws.id = randomUUID();
@@ -203,15 +203,15 @@ async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Prom
 	}
 }
 
-async function putUserInSseChannel(ticket: ServerEventTicket, connectionId: UUID, res: Response): Promise<void> {
+async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string, res: Response): Promise<void> {
 	const channelName = await getChannelName(ticket);
 
 	const channel: SseChannelData[] | undefined = sseChannels.get(channelName);
 
 	if (channel !== undefined) {
-		channel.push({ connectionId, playerId: ticket.playerId, res });
+		channel.push({ ticketUuid, playerId: ticket.playerId, res });
 	} else {
-		sseChannels.set(channelName, [{ connectionId, playerId: ticket.playerId, res }]);
+		sseChannels.set(channelName, [{ ticketUuid, playerId: ticket.playerId, res }]);
 	}
 }
 
@@ -402,21 +402,42 @@ export function setConnectionToAlive(ws: WebSocketCustom): void {
  * @param req -> The incoming request
  * @param res -> The incoming response
  */
-export async function connectUserToSseChannel(req: Request, res: Response): Promise<UUID> {
-	const ticketUuid = req.url?.split('?ticket=')[1];
+export async function connectUserToSseChannel(req: Request, res: Response): Promise<void> {
+	const ticketUuid: string = getTicketFromUrl(req);
 
-	const ticket = checkTicketValidity(req, ticketUuid);
-
-	const connectionId = randomUUID();
+	const ticket: ServerEventTicket = checkTicketValidity(req, ticketUuid);
 
 	// Remove the ticket in order to not use it twice
 	activeTickets = activeTickets.filter(ticket => ticket.uuid !== ticketUuid);
 
-	await putUserInSseChannel(ticket, connectionId, res);
-
-	return connectionId;
+	await putUserInSseChannel(ticket, ticketUuid, res);
 }
 
-export async function disconnectSseUser(connectionId: UUID): Promise<void> {
-	// TODO la prochaine fois : déconnecter l'utilisateur
+export async function disconnectSseUser(req: Request): Promise<void> {
+	const ticketUuid: string = getTicketFromUrl(req);
+
+	const channel = Array.from(sseChannels).find(([, sseChannelData]) => sseChannelData.find(player => player.ticketUuid === ticketUuid));
+
+	if (channel === undefined) {
+		throw new Error("User must be in a channel");
+	}
+
+	const [channelName, channelData] = channel;
+	const usersInChannel: SseChannelData[] = channelData.filter(player => player.ticketUuid !== ticketUuid);
+
+	if (channelData.length === 1) {
+		sseChannels.delete(channelName);
+	} else {
+		sseChannels.set(channelName, usersInChannel);
+	}
+}
+
+function getTicketFromUrl(req: Request | IncomingMessage): string {
+	const ticket: string | undefined = req.url?.split('?ticket=')[1];
+
+	if (ticket === undefined) {
+		throw new Error("The ticket must be send");
+	}
+
+	return ticket;
 }

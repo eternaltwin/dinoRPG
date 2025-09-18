@@ -1,8 +1,7 @@
-import { UUID } from 'node:crypto';
 import { Response } from 'express';
 
 export interface SseChannelData {
-	connectionId: UUID
+	ticketUuid: string
 	playerId: string
 	res: Response
 }

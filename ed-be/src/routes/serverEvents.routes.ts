@@ -45,7 +45,7 @@ routes.post(
 );
 
 routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
-	const connectionId: UUID = await connectUserToSseChannel(req, res);
+	await connectUserToSseChannel(req, res);
 
 	res.setHeader('Content-Type', 'text/event-stream');
 	res.setHeader('Cache-Control', 'no-cache');
@@ -55,7 +55,7 @@ routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
 	res.flushHeaders();
 
 	req.on('close', () => {
-		disconnectSseUser(connectionId);
+		disconnectSseUser(req);
 	})
 });
 
