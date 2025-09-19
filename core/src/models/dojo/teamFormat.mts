@@ -98,6 +98,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.WINKS,
 			RaceEnum.WINKS_DEMON,
 			RaceEnum.HIPPOCLAMP,
+			RaceEnum.FEROSS,
 			RaceEnum.QUETZU,
 			RaceEnum.KABUKI,
 			RaceEnum.KABUKI_DEMON,
@@ -226,7 +227,8 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.CASTIVORE,
 			RaceEnum.HIPPOCLAMP,
 			RaceEnum.PTEROZ,
-			RaceEnum.QUETZU
+			RaceEnum.QUETZU,
+			RaceEnum.SOUFFLET
 		]
 	},
 	[formatName.ANTI_POISON]: {
@@ -237,9 +239,7 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.WANWAN,
 			RaceEnum.PIGMOU,
 			RaceEnum.MOUEFFE,
-			RaceEnum.CASTIVORE,
 			RaceEnum.ROCKY,
-			RaceEnum.TOUFUFU,
 			RaceEnum.TRICERAGNON
 		]
 	},
