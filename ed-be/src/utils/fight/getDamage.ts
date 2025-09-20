@@ -161,13 +161,12 @@ export const calculateDamage = (
 
 	let damage = attack - defense;
 
-	// If the attacker or the target is a monster, apply the monster's resilience.
+	// If the attacker or target is a monster, reinforcement, or boss, apply the attacker's resilience.
 	// Else, apply the target resilience by default.
-	if (attacker.type === FighterType.MONSTER) {
+	if (attacker.type === FighterType.MONSTER || attacker.type === FighterType.REINFORCEMENT || attacker.type === FighterType.BOSS) {
 		damage = applyResilienceToDamage(attacker, damage);
-	} else if (target.type === FighterType.MONSTER) {
-		damage = applyResilienceToDamage(target, damage);
 	} else {
+		// This covers also the target being a monster, reinforcement or boss.
 		damage = applyResilienceToDamage(target, damage);
 	}
 
