@@ -1,6 +1,6 @@
 {
 	"name": "ed-be",
-	"version": "0.17.0",
+	"version": "0.17.1",
 	"description": "EternalDino API",
 	"scripts": {
 		"serve": "yarn tsc-watch --build ./tsconfig.json --onSuccess \"node dist/main.js\"",
@@ -52,6 +52,7 @@
 		"node-fetch": "^3.3.2",
 		"node-schedule": "^2.1.1",
 		"reflect-metadata": "^0.1.13",
+		"romans": "^3.1.0",
 		"swagger-jsdoc": "^6.2.8",
 		"swagger-ui-express": "^5.0.0",
 		"toml": "^3.0.0",

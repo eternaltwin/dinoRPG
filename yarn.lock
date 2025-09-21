@@ -7118,6 +7118,7 @@ __metadata:
     prettier: "npm:^3.4.2"
     prisma: "npm:^6.5.0"
     reflect-metadata: "npm:^0.1.13"
+    romans: "npm:^3.1.0"
     sanitize-html: "npm:^2.13.1"
     swagger-jsdoc: "npm:^6.2.8"
     swagger-ui-express: "npm:^5.0.0"
@@ -12433,6 +12434,13 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 10/9e39d54e23731a4c4067e9c02910cdf7479a0f9a7584796e2dc6efaa34bb1e5e015c062c87d1e64d96038baca76cefd47681ff22604fae5827147f54123dc6d0
+  languageName: node
+  linkType: hard
+
+"romans@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "romans@npm:3.1.0"
+  checksum: 10/0a2c1a05705a70d80d6896bc04dfeeea37a2ca058754117faa45008100765a96bc7980f27173250e3501b2a32cf5c972f0f557b792e2bf4e30b1bda566be12f4
   languageName: node
   linkType: hard
 

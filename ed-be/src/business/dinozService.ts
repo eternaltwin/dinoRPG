@@ -731,7 +731,11 @@ export async function betaMove(req: Request) {
 
 	// Update player stats
 	await setSpecificStat(StatTracking.MOVES, player.id, team.length);
-	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === FighterType.MONSTER).length);
+	await setSpecificStat(
+		StatTracking.KILL_M,
+		player.id,
+		fight.fighters.filter(f => f.type === FighterType.MONSTER).length
+	);
 
 	return fight;
 }

@@ -113,7 +113,11 @@ export async function processFight(req: Request) {
 	}
 
 	// Update player stats
-	await setSpecificStat(StatTracking.KILL_M, player.id, fight.fighters.filter(f => f.type === FighterType.MONSTER).length);
+	await setSpecificStat(
+		StatTracking.KILL_M,
+		player.id,
+		fight.fighters.filter(f => f.type === FighterType.MONSTER).length
+	);
 
 	return fight;
 }
@@ -487,8 +491,14 @@ export async function rewardFight(
 			energy: f.energy,
 			maxEnergy: f.maxEnergy,
 			energyRecovery: f.energyRecovery,
-			dark: f.type === FighterType.BOSS ? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined) : undefined,
-			size: f.type === FighterType.BOSS ? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined) : undefined
+			dark:
+				f.type === FighterType.BOSS
+					? (Object.values(bossList).find(b => b.name === f.name)?.dark ?? undefined)
+					: undefined,
+			size:
+				f.type === FighterType.BOSS
+					? (Object.values(bossList).find(b => b.name === f.name)?.size ?? undefined)
+					: undefined
 		};
 	});
 	return {
