@@ -1,7 +1,7 @@
 import { getDinozForDojoFight, selectDinozForDojoFight } from '../dao/dinozDao.js';
 import { calculateFightBetweenPlayers } from '../business/fightService.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { createFirstTournament, getLevelLimits, getNewLevelLimits } from '../business/tournamentService.js';
+import { createFirstTournament, getNewLevelLimits } from '../business/tournamentService.js';
 import { PismaClientLocal } from '../prisma.js';
 import { getRandomNumber, shuffle } from './tools.js';
 import {
@@ -30,11 +30,12 @@ import 'dayjs/locale/en.js';
 import { tournamentQualifRewards } from '@drpg/core/models/dojo/tournamentQualifRewards';
 import { rewarder, RewarderPromise } from './rewarder.js';
 import { createNotification } from '../dao/notificationDao.js';
-import { NotificationSeverity } from '@drpg/prisma';
+import { $Enums, NotificationSeverity } from '@drpg/prisma';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { formatName, formatTID } from '@drpg/core/models/dojo/teamFormat';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
+import { romans } from 'romans';
+import NewsType = $Enums.NewsType;
 
 class TournamentManager {
 	private readonly QUALIFIED_TEAMS = 64;
@@ -610,6 +611,7 @@ class TournamentManager {
 				id: true
 			}
 		});
+		const total = await prisma.tournament.count();
 		this.tournamentId = newTournament.id;
 
 		const frTrad = {
@@ -620,7 +622,8 @@ class TournamentManager {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'fr'))
 			}),
 			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'fr'),
-			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit })
+			rule4: translateTarget('dojo.levelLimit', 'fr', { level: levelLimit }),
+			number: romans.romanize(total)
 		};
 		const esTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'es'),
@@ -630,7 +633,8 @@ class TournamentManager {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'es'))
 			}),
 			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'es'),
-			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit })
+			rule4: translateTarget('dojo.levelLimit', 'es', { level: levelLimit }),
+			number: romans.romanize(total)
 		};
 		const enTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'en'),
@@ -640,7 +644,8 @@ class TournamentManager {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'en'))
 			}),
 			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'en'),
-			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit })
+			rule4: translateTarget('dojo.levelLimit', 'en', { level: levelLimit }),
+			number: romans.romanize(total)
 		};
 		const deTrad = {
 			type: translateTarget(`tournament.${tournamentFormat.name}`, 'de'),
@@ -650,12 +655,14 @@ class TournamentManager {
 				races: teamRace.map(r => ' ' + translateTarget(`race.${r}`, 'de'))
 			}),
 			rule3: translateTarget(tournamentFormat.poison ? 'dojo.poison' : 'dojo.nopoison', 'de'),
-			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit })
+			rule4: translateTarget('dojo.levelLimit', 'de', { level: levelLimit }),
+			number: romans.romanize(total)
 		};
 
 		await createNews({
 			title: this.tournamentId,
 			// image: req.file?.buffer,
+			type: NewsType.tid_start,
 			frenchTitle: translateTarget('dojo.newsTitle', 'fr'),
 			englishTitle: translateTarget('dojo.newsTitle', 'en'),
 			spanishTitle: translateTarget('dojo.newsTitle', 'es'),
