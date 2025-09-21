@@ -482,5 +482,5 @@ export const calculatePvExp = (
 	// Apply new factor when max level limit increases
 	if (maxLevel / initialMaxLevel > xpFactor) xpFactor = maxLevel / initialMaxLevel;
 
-	return totalMonsterXp * xpFactor * XP_MULTIPLICATOR;
+	return Math.round(totalMonsterXp * xpFactor * XP_MULTIPLICATOR);
 };
