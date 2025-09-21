@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { DISCORD } from '../context.js';
 import {
 	createNews,
 	getBatchOfNews,
@@ -44,6 +45,7 @@ export async function postNews(req: Request) {
 		spanishText: req.body.spanishText,
 		germanText: req.body.germanText
 	});
+	DISCORD.sendNewsNotification(req.body.frenchTitle, req.body.frenchText, req.file?.buffer);
 }
 
 export async function createPoll(req: Request) {
@@ -59,6 +61,8 @@ export async function createPoll(req: Request) {
 		spanishText: req.body.spanishText,
 		germanText: req.body.germanText
 	});
+	DISCORD.sendNewsNotification(req.body.frenchTitle, req.body.frenchText, req.file?.buffer);
+
 	const options: CreatePollOption[] = JSON.parse(req.body.options);
 
 	if (!options || options.length < 2) {

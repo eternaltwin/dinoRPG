@@ -102,9 +102,14 @@ export interface Config {
 	readonly administrator: string;
 
 	/**
-	 * Configuration for the Discord client used for tournament notifications (optional).
+	 * Configuration for the Discord client used for pantheon notifications (optional).
 	 */
-	readonly discordNotifications: DiscordConfig | null;
+	readonly discordPantheonNotifications: DiscordConfig | null;
+
+	/**
+	 * Configuration for the Discord client used for news notifications (optional).
+	 */
+	readonly discordNewsNotifications: DiscordConfig | null;
 
 	/**
 	 * Configuration for the Discord client used for logs (optional).
@@ -206,13 +211,24 @@ export function config(env: Record<string, string | undefined>): Config {
 		section: eternaltwinSection
 	};
 
-	const rawDiscordNotifId = env.DISCORD_WEBHOOK_ID;
-	const rawDiscordNotifToken = env.DISCORD_WEBHOOK_TOKEN;
-	let discordNotifications: DiscordConfig | null = null;
-	if (typeof rawDiscordNotifId === 'string' && typeof rawDiscordNotifToken === 'string') {
-		discordNotifications = {
-			webhookId: rawDiscordNotifId,
-			webhookToken: rawDiscordNotifToken
+	const rawDiscordPantheonNotifId = env.DISCORD_PANTHEON_WEBHOOK_ID;
+	const rawDiscordPantheonNotifToken = env.DISCORD_PANTHEON_WEBHOOK_TOKEN;
+	let discordPantheonNotifications: DiscordConfig | null = null;
+	if (typeof rawDiscordPantheonNotifId === 'string' && typeof rawDiscordPantheonNotifToken === 'string') {
+		discordPantheonNotifications = {
+			webhookId: rawDiscordPantheonNotifId,
+			webhookToken: rawDiscordPantheonNotifToken
+		};
+	}
+
+
+	const rawDiscordNewsNotifId = env.DISCORD_NEWS_WEBHOOK_ID;
+	const rawDiscordNewsNotifToken = env.DISCORD_NEWS_WEBHOOK_TOKEN;
+	let discordNewsNotifications: DiscordConfig | null = null;
+	if (typeof rawDiscordNewsNotifId === 'string' && typeof rawDiscordNewsNotifToken === 'string') {
+		discordNewsNotifications = {
+			webhookId: rawDiscordNewsNotifId,
+			webhookToken: rawDiscordNewsNotifToken
 		};
 	}
 
@@ -236,7 +252,8 @@ export function config(env: Record<string, string | undefined>): Config {
 		wssPort,
 		selfUrl,
 		eternaltwin,
-		discordNotifications,
+		discordPantheonNotifications,
+		discordNewsNotifications,
 		discordLogs,
 		administrator,
 		salt

@@ -16,7 +16,7 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 				.filter(p => p.dinoz?.raceId === dinoz.raceId)
 				.filter(p => p.indicator === dinoz.level);
 			if (raceAtThisLevel.length <= 4) {
-				DISCORD.sendNotification(
+				DISCORD.sendPantheonNotification(
 					translateAll('announce.dinoz', {
 						player: dinoz.player.name,
 						position: raceAtThisLevel.length + 1,
@@ -35,7 +35,7 @@ export async function checkAnnounce(type: PantheonMotif, id: string, extension: 
 				const rewardQuantityInPantheon = pantheon.filter(p => p.indicator === +extension);
 				if (reward.announced && rewardQuantityInPantheon.length <= 4) {
 					await addPlayerToPantheon(type, player, +extension);
-					DISCORD.sendNotification(
+					DISCORD.sendPantheonNotification(
 						translateAll('announce.epic', {
 							player: player.name,
 							position: rewardQuantityInPantheon.length + 1,

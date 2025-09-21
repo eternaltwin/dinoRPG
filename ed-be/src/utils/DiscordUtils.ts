@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { EmbedBuilder, WebhookClient } from 'discord.js';
+import { AttachmentBuilder, EmbedBuilder, WebhookClient } from 'discord.js';
 import type { Response } from 'express';
 import { Logger } from '../logger/index.js';
 
 const DEFAULT_TIMEOUT = 5000;
 // Maximum accepted length for the embed title
 const MAX_EMBED_TITLE_LENGTH = 256;
+// Maximum description length for embed
+const MAX_EMBED_DESCRIPTION = 4096;
 // Maximum accepted length for the main message content
 export const MAX_CONTENT_LENGTH = 2000;
 // Ellipsis character, used to indicate truncated content
@@ -29,10 +31,40 @@ function formatEmbedTitle(title: string) {
 	return shortTitle + ELLIPSIS;
 }
 
+
+/**
+ * Format the provided string as an embed description.
+ *
+ * If the string is too long, it will be truncated to fit.
+ */
+function formatMarkdownForEmbed(text: string): string {
+	let convertedText = text
+		// Convert # headers to **bold**
+		.replace(/^# (.+)$/gm, '**$1**')
+		// Convert ## headers to **bold**
+		.replace(/^## (.+)$/gm, '**$1**')
+		// Convert ### headers to **bold**
+		.replace(/^### (.+)$/gm, '**$1**')
+		// Convert #### headers to *italic*
+		.replace(/^#### (.+)$/gm, '*$1*')
+		// Convert ##### headers to *italic*
+		.replace(/^##### (.+)$/gm, '*$1*')
+		// Clean up multiple consecutive newlines
+		.replace(/\n{3,}/g, '\n\n');
+
+	if (convertedText.length <= MAX_EMBED_DESCRIPTION) {
+		return convertedText;
+	}
+	const shortText = convertedText.substring(0, MAX_EMBED_DESCRIPTION - ELLIPSIS.length);
+	return shortText + ELLIPSIS;
+}
+
+
 export interface DiscordClient {
 	sendError(error: Error, res?: Response): void;
 	sendMessage(message: string): Promise<void>;
-	sendNotification(message: string): Promise<void>;
+	sendPantheonNotification(message: string): Promise<void>;
+	sendNewsNotification(title: string, test: string, image: Uint8Array | undefined): Promise<void>;
 }
 
 export const NOOP_DISCORD_CLIENT: DiscordClient = {
@@ -40,14 +72,19 @@ export const NOOP_DISCORD_CLIENT: DiscordClient = {
 	sendMessage() {
 		return Promise.resolve();
 	},
-	sendNotification() {
+	sendPantheonNotification() {
+		return Promise.resolve();
+	},
+	sendNewsNotification() {
 		return Promise.resolve();
 	}
 };
 
 export interface NetworkDiscordClientOptions {
-	notificationWebhookId: string;
-	notificationWebhookToken: string;
+	pantheonWebhookId: string;
+	pantheonWebhookToken: string;
+	newsWebhookId: string;
+	newsWebhookToken: string;
 	logWebhookId: string;
 	logWebhookToken: string;
 	timeout?: number;
@@ -61,9 +98,14 @@ export class NetworkDiscordClient implements DiscordClient {
 	readonly #server: URL;
 
 	/**
-	 * Client used to send player's notifications
+	 * Client used to send pantheon notifications
 	 */
-	readonly #notificationClient: WebhookClient;
+	readonly #pantheonClient: WebhookClient;
+
+	/**
+	 * Client used to send news notifications
+	 */
+	readonly #newsClient: WebhookClient;
 
 	/**
 	 * Client used to send logs
@@ -81,10 +123,17 @@ export class NetworkDiscordClient implements DiscordClient {
 				timeout: options.timeout ?? DEFAULT_TIMEOUT
 			}
 		};
-		this.#notificationClient = new WebhookClient(
+		this.#pantheonClient = new WebhookClient(
 			{
-				id: options.notificationWebhookId,
-				token: options.notificationWebhookToken
+				id: options.pantheonWebhookId,
+				token: options.pantheonWebhookToken
+			},
+			clientOptions
+		);
+		this.#newsClient = new WebhookClient(
+			{
+				id: options.newsWebhookId,
+				token: options.newsWebhookToken
 			},
 			clientOptions
 		);
@@ -104,7 +153,7 @@ export class NetworkDiscordClient implements DiscordClient {
 			.setColor(0xff0000)
 			.setTitle(formatEmbedTitle(res ? res.req.url : error.message))
 			.setAuthor({
-				name: 'LaBrute',
+				name: 'DinoRPG',
 				iconURL: `${this.#server}favicon.png`
 			})
 			.setDescription(
@@ -160,13 +209,45 @@ ${error.stack}
 		await this.#logClient.send({ content });
 	}
 
-	public async sendNotification(message: string) {
+	public async sendPantheonNotification(message: string) {
 		let content = SEND_MESSAGE_PREFIX + message + SEND_MESSAGE_SUFFIX;
 		if (content.length > MAX_CONTENT_LENGTH) {
 			const shortLen = MAX_CONTENT_LENGTH - SEND_MESSAGE_PREFIX.length - SEND_MESSAGE_SUFFIX_TRUNCATED.length;
 			const short = message.substring(0, shortLen);
 			content = SEND_MESSAGE_PREFIX + short + SEND_MESSAGE_SUFFIX_TRUNCATED;
 		}
-		await this.#notificationClient.send({ content });
+		await this.#pantheonClient.send({ content });
+	}
+
+	public async sendNewsNotification(title: string, text: string, image: Uint8Array | undefined) {
+		const embed = new EmbedBuilder()
+			.setColor(0x8b4513)
+			.setTitle(formatEmbedTitle(title))
+			.setAuthor({
+				name: 'DinoRPG',
+				iconURL: `https://dinorpg.eternaltwin.org/favicon.ico` // Does not work, need a permalink to add the favicon
+			})
+			.setDescription(formatMarkdownForEmbed(text))
+			.setTimestamp();
+
+		const files: AttachmentBuilder[] = [];
+		if (image) {
+			const image_builder = new AttachmentBuilder(Buffer.from(image));
+			files.push(image_builder);
+		}
+
+		embed.addFields(
+			{ name: 'Consult the news in all languages ingame!', value: '[DinoRPG](https://dinorpg.eternaltwin.org/)'}
+		);
+
+		await this.#newsClient.send({ embeds: [embed], files: files });
+
+		// Example code to post the news as plain markdown
+		// let content = `**${title}**\n\n${text}`;
+		// if (content.length > MAX_CONTENT_LENGTH) {
+		// 	const short = content.substring(0, MAX_CONTENT_LENGTH);
+		// 	content = short;
+		// }
+		// await this.#newsClient.send({ content });
 	}
 }
