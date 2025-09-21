@@ -2,7 +2,9 @@
 	<div :class="news.hide ? 'bloc hide' : 'bloc'" v-for="news in batch" :key="news.id" @click="news.hide = !news.hide">
 		<div class="news">
 			<div class="newsTitle">
-				<img class="newsImg" :src="getImgURL('background', 'news_image')" alt="Logo News" />
+				<div class="newsImg">
+					<img :src="getImgURL('news', news.type)" :alt="news.title" />
+				</div>
 				<div class="newsContent">
 					<h1>{{ news.title }}</h1>
 					<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
@@ -584,41 +586,6 @@ export default defineComponent({
 		}
 	}
 
-	.newsTitle {
-		display: grid;
-		grid-template-columns: 0.5fr 3fr;
-
-		.newsImg {
-			height: 57px;
-			width: 48px;
-			padding-right: 15px !important;
-		}
-
-		.newsContent {
-			color: #ffee92;
-			display: flex;
-			flex-direction: column;
-
-			& h1 {
-				height: auto;
-				max-height: none;
-				text-align: left;
-				margin-bottom: 5px;
-				font-size: 20pt;
-				font-weight: bold;
-				line-height: 1em;
-				opacity: 0.8;
-				background: transparent;
-			}
-
-			& span {
-				font-size: 7.5pt;
-				margin-bottom: 6px;
-				opacity: 0.7;
-			}
-		}
-	}
-
 	.news {
 		display: flex;
 		justify-content: space-between;
@@ -627,17 +594,22 @@ export default defineComponent({
 		.newsTitle {
 			display: flex;
 			gap: 10px;
-
 			.newsImg {
-				height: 57px;
-				width: 48px;
+				border: 1px solid #ffee92;
+				width: 80px;
+				height: 80px;
+				overflow: hidden;
+				& img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
 			}
-
 			.newsContent {
 				color: #ffee92;
 				display: flex;
 				flex-direction: column;
-
+				width: 280px;
 				& h1 {
 					height: auto;
 					max-height: none;
@@ -649,7 +621,6 @@ export default defineComponent({
 					opacity: 0.8;
 					background: transparent;
 				}
-
 				& span {
 					font-size: 7.5pt;
 					margin-bottom: 6px;
@@ -672,8 +643,8 @@ export default defineComponent({
 				color: #ffee92;
 				cursor: pointer;
 				font-weight: bold;
+				margin-top: -15px;
 				margin-left: 25px;
-				//margin-bottom: 17px;
 				& img {
 					height: 16px;
 					width: 20px;

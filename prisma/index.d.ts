@@ -459,6 +459,22 @@ export const NotificationSeverity: {
 
 export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]
 
+
+export const NewsType: {
+  update: 'update',
+  information: 'information',
+  war: 'war',
+  war_mana: 'war_mana',
+  championship: 'championship',
+  tid_start: 'tid_start',
+  tid_end: 'tid_end',
+  event_christmas: 'event_christmas',
+  story: 'story',
+  announce: 'announce'
+};
+
+export type NewsType = (typeof NewsType)[keyof typeof NewsType]
+
 }
 
 export type ServerAction = $Enums.ServerAction
@@ -504,6 +520,10 @@ export const LogType: typeof $Enums.LogType
 export type NotificationSeverity = $Enums.NotificationSeverity
 
 export const NotificationSeverity: typeof $Enums.NotificationSeverity
+
+export type NewsType = $Enums.NewsType
+
+export const NewsType: typeof $Enums.NewsType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -18134,6 +18154,7 @@ export namespace Prisma {
   export type NewsMinAggregateOutputType = {
     id: number | null
     title: string | null
+    type: $Enums.NewsType | null
     image: Uint8Array | null
     frenchTitle: string | null
     frenchText: string | null
@@ -18150,6 +18171,7 @@ export namespace Prisma {
   export type NewsMaxAggregateOutputType = {
     id: number | null
     title: string | null
+    type: $Enums.NewsType | null
     image: Uint8Array | null
     frenchTitle: string | null
     frenchText: string | null
@@ -18166,6 +18188,7 @@ export namespace Prisma {
   export type NewsCountAggregateOutputType = {
     id: number
     title: number
+    type: number
     image: number
     frenchTitle: number
     frenchText: number
@@ -18192,6 +18215,7 @@ export namespace Prisma {
   export type NewsMinAggregateInputType = {
     id?: true
     title?: true
+    type?: true
     image?: true
     frenchTitle?: true
     frenchText?: true
@@ -18208,6 +18232,7 @@ export namespace Prisma {
   export type NewsMaxAggregateInputType = {
     id?: true
     title?: true
+    type?: true
     image?: true
     frenchTitle?: true
     frenchText?: true
@@ -18224,6 +18249,7 @@ export namespace Prisma {
   export type NewsCountAggregateInputType = {
     id?: true
     title?: true
+    type?: true
     image?: true
     frenchTitle?: true
     frenchText?: true
@@ -18327,6 +18353,7 @@ export namespace Prisma {
   export type NewsGroupByOutputType = {
     id: number
     title: string | null
+    type: $Enums.NewsType
     image: Uint8Array | null
     frenchTitle: string | null
     frenchText: string | null
@@ -18362,6 +18389,7 @@ export namespace Prisma {
   export type NewsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    type?: boolean
     image?: boolean
     frenchTitle?: boolean
     frenchText?: boolean
@@ -18381,6 +18409,7 @@ export namespace Prisma {
   export type NewsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    type?: boolean
     image?: boolean
     frenchTitle?: boolean
     frenchText?: boolean
@@ -18397,6 +18426,7 @@ export namespace Prisma {
   export type NewsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    type?: boolean
     image?: boolean
     frenchTitle?: boolean
     frenchText?: boolean
@@ -18413,6 +18443,7 @@ export namespace Prisma {
   export type NewsSelectScalar = {
     id?: boolean
     title?: boolean
+    type?: boolean
     image?: boolean
     frenchTitle?: boolean
     frenchText?: boolean
@@ -18426,7 +18457,7 @@ export namespace Prisma {
     updatedDate?: boolean
   }
 
-  export type NewsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "image" | "frenchTitle" | "frenchText" | "englishTitle" | "englishText" | "spanishTitle" | "spanishText" | "germanTitle" | "germanText" | "createdDate" | "updatedDate", ExtArgs["result"]["news"]>
+  export type NewsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "image" | "frenchTitle" | "frenchText" | "englishTitle" | "englishText" | "spanishTitle" | "spanishText" | "germanTitle" | "germanText" | "createdDate" | "updatedDate", ExtArgs["result"]["news"]>
   export type NewsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     poll?: boolean | News$pollArgs<ExtArgs>
     likedBy?: boolean | News$likedByArgs<ExtArgs>
@@ -18444,6 +18475,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string | null
+      type: $Enums.NewsType
       image: Uint8Array | null
       frenchTitle: string | null
       frenchText: string | null
@@ -18882,6 +18914,7 @@ export namespace Prisma {
   interface NewsFieldRefs {
     readonly id: FieldRef<"News", 'Int'>
     readonly title: FieldRef<"News", 'String'>
+    readonly type: FieldRef<"News", 'NewsType'>
     readonly image: FieldRef<"News", 'Bytes'>
     readonly frenchTitle: FieldRef<"News", 'String'>
     readonly frenchText: FieldRef<"News", 'String'>
@@ -73724,6 +73757,7 @@ export namespace Prisma {
   export const NewsScalarFieldEnum: {
     id: 'id',
     title: 'title',
+    type: 'type',
     image: 'image',
     frenchTitle: 'frenchTitle',
     frenchText: 'frenchText',
@@ -74430,6 +74464,20 @@ export namespace Prisma {
    * Reference to a field of type 'BigInt[]'
    */
   export type ListBigIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'BigInt[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'NewsType'
+   */
+  export type EnumNewsTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsType'>
+    
+
+
+  /**
+   * Reference to a field of type 'NewsType[]'
+   */
+  export type ListEnumNewsTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NewsType[]'>
     
 
 
@@ -75283,6 +75331,7 @@ export namespace Prisma {
     NOT?: NewsWhereInput | NewsWhereInput[]
     id?: IntFilter<"News"> | number
     title?: StringNullableFilter<"News"> | string | null
+    type?: EnumNewsTypeFilter<"News"> | $Enums.NewsType
     image?: BytesNullableFilter<"News"> | Uint8Array | null
     frenchTitle?: StringNullableFilter<"News"> | string | null
     frenchText?: StringNullableFilter<"News"> | string | null
@@ -75301,6 +75350,7 @@ export namespace Prisma {
   export type NewsOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrderInput | SortOrder
+    type?: SortOrder
     image?: SortOrderInput | SortOrder
     frenchTitle?: SortOrderInput | SortOrder
     frenchText?: SortOrderInput | SortOrder
@@ -75322,6 +75372,7 @@ export namespace Prisma {
     OR?: NewsWhereInput[]
     NOT?: NewsWhereInput | NewsWhereInput[]
     title?: StringNullableFilter<"News"> | string | null
+    type?: EnumNewsTypeFilter<"News"> | $Enums.NewsType
     image?: BytesNullableFilter<"News"> | Uint8Array | null
     frenchTitle?: StringNullableFilter<"News"> | string | null
     frenchText?: StringNullableFilter<"News"> | string | null
@@ -75340,6 +75391,7 @@ export namespace Prisma {
   export type NewsOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrderInput | SortOrder
+    type?: SortOrder
     image?: SortOrderInput | SortOrder
     frenchTitle?: SortOrderInput | SortOrder
     frenchText?: SortOrderInput | SortOrder
@@ -75364,6 +75416,7 @@ export namespace Prisma {
     NOT?: NewsScalarWhereWithAggregatesInput | NewsScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"News"> | number
     title?: StringNullableWithAggregatesFilter<"News"> | string | null
+    type?: EnumNewsTypeWithAggregatesFilter<"News"> | $Enums.NewsType
     image?: BytesNullableWithAggregatesFilter<"News"> | Uint8Array | null
     frenchTitle?: StringNullableWithAggregatesFilter<"News"> | string | null
     frenchText?: StringNullableWithAggregatesFilter<"News"> | string | null
@@ -79237,6 +79290,7 @@ export namespace Prisma {
 
   export type NewsCreateInput = {
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -79255,6 +79309,7 @@ export namespace Prisma {
   export type NewsUncheckedCreateInput = {
     id?: number
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -79272,6 +79327,7 @@ export namespace Prisma {
 
   export type NewsUpdateInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79290,6 +79346,7 @@ export namespace Prisma {
   export type NewsUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79308,6 +79365,7 @@ export namespace Prisma {
   export type NewsCreateManyInput = {
     id?: number
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -79323,6 +79381,7 @@ export namespace Prisma {
 
   export type NewsUpdateManyMutationInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -79339,6 +79398,7 @@ export namespace Prisma {
   export type NewsUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83328,6 +83388,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type EnumNewsTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsType | EnumNewsTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNewsTypeFilter<$PrismaModel> | $Enums.NewsType
+  }
+
   export type BytesNullableFilter<$PrismaModel = never> = {
     equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
     in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
@@ -83353,6 +83420,7 @@ export namespace Prisma {
   export type NewsCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    type?: SortOrder
     image?: SortOrder
     frenchTitle?: SortOrder
     frenchText?: SortOrder
@@ -83373,6 +83441,7 @@ export namespace Prisma {
   export type NewsMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    type?: SortOrder
     image?: SortOrder
     frenchTitle?: SortOrder
     frenchText?: SortOrder
@@ -83389,6 +83458,7 @@ export namespace Prisma {
   export type NewsMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    type?: SortOrder
     image?: SortOrder
     frenchTitle?: SortOrder
     frenchText?: SortOrder
@@ -83422,6 +83492,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type EnumNewsTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsType | EnumNewsTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNewsTypeWithAggregatesFilter<$PrismaModel> | $Enums.NewsType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNewsTypeFilter<$PrismaModel>
+    _max?: NestedEnumNewsTypeFilter<$PrismaModel>
   }
 
   export type BytesNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -87004,6 +87084,10 @@ export namespace Prisma {
 
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
+  }
+
+  export type EnumNewsTypeFieldUpdateOperationsInput = {
+    set?: $Enums.NewsType
   }
 
   export type NullableBytesFieldUpdateOperationsInput = {
@@ -91118,6 +91202,13 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
+  export type NestedEnumNewsTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsType | EnumNewsTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNewsTypeFilter<$PrismaModel> | $Enums.NewsType
+  }
+
   export type NestedBytesNullableFilter<$PrismaModel = never> = {
     equals?: Uint8Array | BytesFieldRefInput<$PrismaModel> | null
     in?: Uint8Array[] | ListBytesFieldRefInput<$PrismaModel> | null
@@ -91140,6 +91231,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumNewsTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.NewsType | EnumNewsTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.NewsType[] | ListEnumNewsTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumNewsTypeWithAggregatesFilter<$PrismaModel> | $Enums.NewsType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumNewsTypeFilter<$PrismaModel>
+    _max?: NestedEnumNewsTypeFilter<$PrismaModel>
   }
 
   export type NestedBytesNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -95000,6 +95101,7 @@ export namespace Prisma {
 
   export type NewsCreateWithoutPollInput = {
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -95017,6 +95119,7 @@ export namespace Prisma {
   export type NewsUncheckedCreateWithoutPollInput = {
     id?: number
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -95097,6 +95200,7 @@ export namespace Prisma {
 
   export type NewsUpdateWithoutPollInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -95114,6 +95218,7 @@ export namespace Prisma {
   export type NewsUncheckedUpdateWithoutPollInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -95633,6 +95738,7 @@ export namespace Prisma {
 
   export type NewsCreateWithoutLikedByInput = {
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -95650,6 +95756,7 @@ export namespace Prisma {
   export type NewsUncheckedCreateWithoutLikedByInput = {
     id?: number
     title?: string | null
+    type?: $Enums.NewsType
     image?: Uint8Array | null
     frenchTitle?: string | null
     frenchText?: string | null
@@ -95682,6 +95789,7 @@ export namespace Prisma {
 
   export type NewsUpdateWithoutLikedByInput = {
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null
@@ -95699,6 +95807,7 @@ export namespace Prisma {
   export type NewsUncheckedUpdateWithoutLikedByInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: EnumNewsTypeFieldUpdateOperationsInput | $Enums.NewsType
     image?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     frenchTitle?: NullableStringFieldUpdateOperationsInput | string | null
     frenchText?: NullableStringFieldUpdateOperationsInput | string | null

@@ -25,6 +25,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				select: {
 					id: true,
 					title: true,
+					type: true,
 					frenchText: true,
 					frenchTitle: true,
 					createdDate: true,
@@ -60,6 +61,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				return {
 					id: n.id,
 					createdDate: n.createdDate,
+					type: n.type,
 					title: n.frenchTitle,
 					text: n.frenchText,
 					poll: n.poll,
@@ -77,6 +79,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				select: {
 					id: true,
 					title: true,
+					type: true,
 					englishText: true,
 					englishTitle: true,
 					createdDate: true,
@@ -112,6 +115,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				return {
 					id: n.id,
 					createdDate: n.createdDate,
+					type: n.type,
 					title: n.englishTitle,
 					text: n.englishText,
 					poll: n.poll,
@@ -129,6 +133,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				select: {
 					id: true,
 					title: true,
+					type: true,
 					spanishText: true,
 					spanishTitle: true,
 					createdDate: true,
@@ -163,6 +168,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				}
 				return {
 					id: n.id,
+					type: n.type,
 					createdDate: n.createdDate,
 					title: n.spanishTitle,
 					text: n.spanishText,
@@ -181,6 +187,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				select: {
 					id: true,
 					title: true,
+					type: true,
 					germanText: true,
 					germanTitle: true,
 					createdDate: true,
@@ -215,6 +222,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				}
 				return {
 					id: n.id,
+					type: n.type,
 					createdDate: n.createdDate,
 					title: n.germanTitle,
 					text: n.germanText,
@@ -233,6 +241,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				select: {
 					id: true,
 					title: true,
+					type: true,
 					frenchText: true,
 					frenchTitle: true,
 					createdDate: true,
@@ -267,6 +276,7 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 				}
 				return {
 					id: n.id,
+					type: n.type,
 					createdDate: n.createdDate,
 					title: n.frenchTitle,
 					text: n.frenchText,
