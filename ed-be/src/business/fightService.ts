@@ -304,7 +304,6 @@ export async function rewardFight(
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
 
-	let fgold = 0;
 	let levelup = false;
 	let gold = 0;
 
@@ -315,6 +314,7 @@ export async function rewardFight(
 			continue;*/
 
 		let xp = 0;
+		let fgold = 0;
 		const cur = d.level / teamLevel;
 
 		/** Restrict the use of low level dinoz in order to make easy money **/
@@ -388,7 +388,7 @@ export async function rewardFight(
 			}
 		}
 
-		gold += (getRandomNumber(0, 10) + 28) * 10;
+		gold += (getRandomNumber(0, 10) + 28) * 10 * fgold;
 	}
 
 	const fprob = getRandomNumber(0, 100);
@@ -396,7 +396,7 @@ export async function rewardFight(
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
 
-	gold += Math.round(gold * goldMultiplier * fgold * goldFactor);
+	gold += Math.round(gold * goldMultiplier * goldFactor);
 
 	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
 	gold -= goldLost;
