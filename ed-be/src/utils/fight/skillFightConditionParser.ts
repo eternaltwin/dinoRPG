@@ -87,13 +87,13 @@ export const skillConditionParser = (
 		// 100% to be true if the fighter has lost as much or more than the condition value.
 		let hpDelta = LOST_HP_1 - (fighter.startingHp - fighter.hp);
 		if (hpDelta < 0) hpDelta = 0;
-		result = randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0;
+		result = randomBetweenSeeded(fightData.rng, 0, hpDelta) === 0;
 	} else if (LOST_HP_2) {
 		// The more HP lost, the more likely to be true.
 		// 100% to be true if the fighter has lost as much or more than the condition value.
 		let hpDelta = Math.round((LOST_HP_2 - (fighter.startingHp - fighter.hp)) / 10);
 		if (hpDelta < 0) hpDelta = 0;
-		result = randomBetweenSeeded(fightData.rng, 0, hpDelta) !== 0;
+		result = randomBetweenSeeded(fightData.rng, 0, hpDelta) === 0;
 	} else if (ALIVE) {
 		result = fighter.hp > 0;
 	} else if (ESCAPED) {
