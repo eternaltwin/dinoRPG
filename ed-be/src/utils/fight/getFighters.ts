@@ -265,7 +265,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
-		type: FighterType.MONSTER, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
+		type: FighterType.CLONE, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
 		attacker: dinoz.attacker,
 		maxHp: dinoz.maxHp,
 		startingHp: has_tear ? dinoz.maxHp * 0.1 : 1,
