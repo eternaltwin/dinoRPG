@@ -8,7 +8,7 @@ import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/F
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import { Item } from '@drpg/core/models/item/ItemList';
+import {Item} from '@drpg/core/models/item/ItemList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
@@ -36,6 +36,7 @@ import { Request } from 'express';
 import dayjs from 'dayjs';
 import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
+import {DinozItems} from "@drpg/core/models/item/DinozItems";
 
 /**
  * @summary Process a fight
@@ -282,6 +283,7 @@ export async function rewardFight(
 	team: (Pick<Dinoz, 'id' | 'level' | 'experience' | 'life' | 'placeId'> & {
 		status: Pick<DinozStatus, 'statusId'>[];
 		skills: Pick<DinozSkill, 'skillId'>[];
+		items: Pick<DinozItems, 'itemId'>[];
 	})[],
 	monsters: MonsterFiche[],
 	fightResult: FightProcessResult,
@@ -304,6 +306,7 @@ export async function rewardFight(
 
 	const teamLevel = team.reduce((acc, dinoz) => acc + dinoz.level, 0);
 
+	let fgold = 0;
 	let levelup = false;
 	let gold = 0;
 
@@ -314,7 +317,6 @@ export async function rewardFight(
 			continue;*/
 
 		let xp = 0;
-		let fgold = 0;
 		const cur = d.level / teamLevel;
 
 		/** Restrict the use of low level dinoz in order to make easy money **/
@@ -388,15 +390,18 @@ export async function rewardFight(
 			}
 		}
 
-		gold += (getRandomNumber(0, 10) + 28) * 10 * fgold;
+		gold += (getRandomNumber(0, 36) + 43) * 10;
 	}
 
-	const fprob = getRandomNumber(0, 100);
+	const napo = team.filter(d => d.items.some(i => i.itemId === Item.GOLDEN_NAPODINO)).length
+	const fprob = getRandomNumber(0, 100) - 10 * napo;
+	const teamSizeMalus = 0.95 - 0.05 * (team.length - 1);
 	let goldMultiplier = 1;
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
 
-	gold += Math.round(gold * goldMultiplier * goldFactor);
+	const malus = fgold > teamSizeMalus ? fgold * teamSizeMalus : teamSizeMalus;
+	gold = Math.round(gold * goldMultiplier * goldFactor * Math.max(malus, fgold));
 
 	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
 	gold -= goldLost;
