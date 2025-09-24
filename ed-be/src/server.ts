@@ -15,11 +15,11 @@ import lockMiddleware from './middleware/lock.js';
 import './i18n.js';
 
 import {
-	checkIfClientsAreAlive,
+	checkIfWsClientsAreAlive,
 	connectUserToWsChannel,
 	disconnectWsUser,
-	processIncomingMessage,
-	setConnectionToAlive
+	processWsIncomingMessage,
+	setWsConnectionToAlive
 } from './business/serverEventService.js';
 import { RawData, WebSocketServer } from 'ws';
 import { WebSocketCustom } from '@drpg/core/models/serverEvents/WebSocketCustom';
@@ -116,7 +116,7 @@ function handleWsEvents(wss: WebSocketServer) {
 
 		ws.on('message', async (data: RawData) => {
 			try {
-				await processIncomingMessage(wss as WebSocketServerCustom, ws.id, data);
+				await processWsIncomingMessage(wss as WebSocketServerCustom, ws.id, data);
 			} catch (err) {
 				console.error(err);
 				disconnectWsUser(ws);
@@ -132,12 +132,12 @@ function handleWsEvents(wss: WebSocketServer) {
 			}
 		});
 
-		ws.on('pong', () => setConnectionToAlive(ws));
+		ws.on('pong', () => setWsConnectionToAlive(ws));
 
 		ws.on('error', () => disconnectWsUser(ws));
 	});
 
-	const interval = setInterval(() => checkIfClientsAreAlive(wss as WebSocketServerCustom), 30000);
+	const interval = setInterval(() => checkIfWsClientsAreAlive(wss as WebSocketServerCustom), 30000);
 
 	wss.on('close', () => clearInterval(interval));
 }

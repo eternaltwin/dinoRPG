@@ -6,7 +6,6 @@ import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType'
 import sendError from '../utils/sendErrors.js';
-import { UUID } from 'node:crypto';
 
 const routes: Router = Router();
 
@@ -45,39 +44,22 @@ routes.post(
 );
 
 routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
-	await connectUserToSseChannel(req, res);
+	try {
+		await connectUserToSseChannel(req, res);
 
-	res.setHeader('Content-Type', 'text/event-stream');
-	res.setHeader('Cache-Control', 'no-cache');
-	res.setHeader('Connection', 'keep-alive');
+		res.setHeader('Content-Type', 'text/event-stream');
+		res.setHeader('Cache-Control', 'no-cache');
+		res.setHeader('Connection', 'keep-alive');
 
-	// To keep the connection alive
-	res.flushHeaders();
+		// To keep the connection alive
+		res.flushHeaders();
 
-	req.on('close', () => {
-		disconnectSseUser(req);
-	})
+		req.on('close', () => {
+			disconnectSseUser(req);
+		});
+	} catch (err) {
+		sendError(res, err);
+	}
 });
-
-/**
- * routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
- * 		res.setHeader('Content-Type', 'text/event-stream');
- * 		res.setHeader('Cache-Control', 'no-cache');
- * 		res.setHeader('Connection', 'keep-alive');
- *
- * 		try {
- * 			const authed = await auth(req);
- * 			const clanDetails = getClanIdAndNameFromPlayerId(authed.id);
- * 			console.log(clanDetails);
- * 		} catch (err) {
- * 			console.error(err);
- * 		}
- *
- * 		// Stop sending events when client closes connection
- * 		req.on('close', () => {
- * 			res.end();
- * 		});
- * });
- */
 
 export default routes;
