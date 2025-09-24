@@ -79,7 +79,7 @@ function getIpAddressFromRequest(req: Request | IncomingMessage): string {
 function getUserAgentFromRequest(req: Request | IncomingMessage): string {
 	const userAgent: string | undefined = req.headers['user-agent'];
 	if (userAgent === undefined) {
-		throw new ExpectedError('No headers found.');
+		throw new ExpectedError('No user-agent header found.');
 	}
 	return userAgent;
 }
@@ -148,8 +148,8 @@ export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingM
 }
 
 /**
- * Do some verifications to be sure that the client trying to upgrade the connection to WebSocket
- * is the same than before.
+ * Do some verifications to be sure that the client trying to connect to WS or SSE
+ * is the same as before.
  *
  * @param req -> Express request
  * @param ticketUuid -> unique identifier sent in params
@@ -203,6 +203,14 @@ async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Prom
 	}
 }
 
+/**
+ * In order to separate users, we put the user into a specific channel.
+ * Only players in this channel will get the server message.
+ *
+ * @param ticket -> The ticket linked to the user
+ * @param ticketUuid -> Ticket got from URL
+ * @param res -> The response from the incoming request. Kept alive while the connection is opened.
+ */
 async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string, res: Response): Promise<void> {
 	const channelName = await getChannelName(ticket);
 
@@ -227,31 +235,31 @@ async function getChannelName(ticket: ServerEventTicket): Promise<string> {
 }
 
 /**
- * When a message is received by the server, we do some actions like a regular service.
+ * When a WS message is received by the server, we do some actions like a regular service.
  *
  * @param wss -> The WebSocket server
  * @param wsId -> The connection identifier
  * @param bufferedMessage -> The message sent by a user
  */
-export async function processIncomingMessage(
+export async function processWsIncomingMessage(
 	wss: WebSocketServerCustom,
 	wsId: string,
 	bufferedMessage: RawData
 ): Promise<void> {
-	const channel = getChannelDetailsFromConnectionId(wsId);
+	const channel = getWsChannelDetailsFromConnectionId(wsId);
 
 	const message: WsMsgRequest = getMessageFromString(bufferedMessage);
 
 	if (message.action === WsMessageAction.CREATE) {
-		const dataSaved = await saveMessageInDatabase(channel, wsId, message.message);
+		const dataSaved = await saveWsMessageInDatabase(channel, wsId, message.message);
 		const msgResponse: WsMsgResponseCreation = { action: WsMessageAction.CREATE, payload: dataSaved };
-		sendMessageToPeopleInChannel(wss, channel, msgResponse);
+		sendMessageToPeopleInWsChannel(wss, channel, msgResponse);
 	} else if (message.action === WsMessageAction.DELETE) {
 		const playerId = getPlayerWsDataFromChannelData(channel, wsId).playerId;
 		await checkMessageCanBeDeleted(message.msgId, playerId);
-		await deleteMessage(channel, wsId, message.msgId);
+		await deleteWsMessage(channel, wsId, message.msgId);
 		const msgResponse: WsMsgResponseDeletion = { action: WsMessageAction.DELETE, msgId: message.msgId };
-		sendMessageToPeopleInChannel(wss, channel, msgResponse);
+		sendMessageToPeopleInWsChannel(wss, channel, msgResponse);
 	}
 }
 
@@ -261,7 +269,7 @@ export async function processIncomingMessage(
  * @param wsId -> Connection identifier
  * @returns -> The channel wanted and players connected in this channel
  */
-function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
+function getWsChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 	const channelData: [string, WsChannelData[]] | undefined = [...wsChannels.entries()].find(([, chanValue]) =>
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
@@ -270,7 +278,7 @@ function getChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 	console.log([...wsChannels.entries()]);
 
 	if (channelData === undefined) {
-		LOGGER.error(`getChannelDetailsFromConnectionId error, wsId is ${wsId}`);
+		LOGGER.error(`getWsChannelDetailsFromConnectionId error, wsId is ${wsId}`);
 		LOGGER.error([...wsChannels.entries()]);
 		throw new Error('The channel cannot be undefined');
 	}
@@ -293,8 +301,8 @@ function getMessageFromString(message: RawData): WsMsgRequest {
 	return JSON.parse(message.toString());
 }
 
-async function saveMessageInDatabase(channel: ChannelInfos, wsId: string, message: string): Promise<CreateClanMessage> {
-	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
+async function saveWsMessageInDatabase(channel: ChannelInfos, wsId: string, message: string): Promise<CreateClanMessage> {
+	const wsData: WsChannelData = getPlayerWsDataFromChannelData(channel, wsId);
 
 	const playerInfos = await getClanIdAndNameFromPlayerId(wsData.playerId);
 
@@ -302,7 +310,7 @@ async function saveMessageInDatabase(channel: ChannelInfos, wsId: string, messag
 	return await createClanMessageRequest(playerInfos.ClanMember.clan.id, wsData.playerId, message.toString());
 }
 
-async function deleteMessage(channel: ChannelInfos, wsId: string, msgId: number) {
+async function deleteWsMessage(channel: ChannelInfos, wsId: string, msgId: number) {
 	const wsData = getPlayerWsDataFromChannelData(channel, wsId);
 
 	deleteClanMessageRequest(msgId, wsData.playerId);
@@ -330,7 +338,7 @@ function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): Ws
  * @param channel -> The channel into we want to send a message
  * @param message -> The message we want to send
  */
-function sendMessageToPeopleInChannel(wss: WebSocketServerCustom, channel: ChannelInfos, message: WsMsgResponse): void {
+function sendMessageToPeopleInWsChannel(wss: WebSocketServerCustom, channel: ChannelInfos, message: WsMsgResponse): void {
 	wss.clients.forEach(client => {
 		const sendMessageToClient = channel.members.some(user => user.connectionId === client.id);
 		if (!sendMessageToClient || client.readyState !== WebSocket.OPEN) {
@@ -347,7 +355,7 @@ function sendMessageToPeopleInChannel(wss: WebSocketServerCustom, channel: Chann
  * @param ws -> The WebSocket connection
  */
 export function disconnectWsUser(ws: WebSocketCustom): void {
-	const channel = getChannelDetailsFromConnectionId(ws.id);
+	const channel = getWsChannelDetailsFromConnectionId(ws.id);
 
 	removeUserFromWsChannel(channel, ws.id);
 }
@@ -375,7 +383,7 @@ function removeUserFromWsChannel(channel: ChannelInfos, wsId: string) {
  *
  * @param wss -> The WebSocketServer
  */
-export function checkIfClientsAreAlive(wss: WebSocketServerCustom): void {
+export function checkIfWsClientsAreAlive(wss: WebSocketServerCustom): void {
 	wss.clients.forEach(ws => {
 		if (ws.isAlive === false) {
 			disconnectWsUser(ws);
@@ -392,7 +400,7 @@ export function checkIfClientsAreAlive(wss: WebSocketServerCustom): void {
  *
  * @param ws -> The WebSocket connection
  */
-export function setConnectionToAlive(ws: WebSocketCustom): void {
+export function setWsConnectionToAlive(ws: WebSocketCustom): void {
 	ws.isAlive = true;
 }
 
@@ -413,16 +421,30 @@ export async function connectUserToSseChannel(req: Request, res: Response): Prom
 	await putUserInSseChannel(ticket, ticketUuid, res);
 }
 
+/**
+ * Remove user from the SSE channel he wants to leave. Close the connection to prevent overflow.
+ *
+ * @param req -> The request used to open the SSE connection
+ */
 export async function disconnectSseUser(req: Request): Promise<void> {
 	const ticketUuid: string = getTicketFromUrl(req);
 
-	const channel = Array.from(sseChannels).find(([, sseChannelData]) => sseChannelData.find(player => player.ticketUuid === ticketUuid));
+	const channel = Array.from(sseChannels).find(([, sseChannelData]) =>
+		sseChannelData.some(player => player.ticketUuid === ticketUuid));
 
 	if (channel === undefined) {
 		throw new Error("User must be in a channel");
 	}
 
 	const [channelName, channelData] = channel;
+	const userInChannel: SseChannelData | undefined = channelData.find(player => player.ticketUuid === ticketUuid);
+
+	if (userInChannel === undefined) {
+		throw new Error("User not found in SSE channel.")
+	}
+
+	userInChannel.res.end();
+
 	const usersInChannel: SseChannelData[] = channelData.filter(player => player.ticketUuid !== ticketUuid);
 
 	if (channelData.length === 1) {
@@ -432,6 +454,11 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 	}
 }
 
+/**
+ * Retrieve ticket from URL for SSE and WS connection
+ *
+ * @param req -> The request used to open the SSE connection
+ */
 function getTicketFromUrl(req: Request | IncomingMessage): string {
 	const ticket: string | undefined = req.url?.split('?ticket=')[1];
 
