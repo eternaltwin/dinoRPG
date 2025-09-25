@@ -4,11 +4,48 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 
 export const createNews = async (allText: Prisma.NewsCreateInput) => {
 	const data = await prisma.news.create({
-		data: allText,
-		select: { id: true }
+		data: allText
 	});
-	return data.id;
+	return data;
 };
+
+export const getAllNewsFromDB = async () => {
+	const data = await prisma.news.findMany({
+		select: {
+			id: true,
+			title: true,
+		},
+		orderBy: {
+			id: 'desc'
+		}
+	});
+	return data;
+};
+
+export const getNewsDetails = async (id: number) => {
+	const data = await prisma.news.findUnique({
+		select: {
+			id: true,
+			title: true,
+			createdDate: true,
+			updatedDate: true,
+			englishTitle: true,
+			englishText: true,
+			frenchTitle: true,
+			frenchText: true,
+			germanTitle: true,
+			germanText: true,
+			spanishTitle: true,
+			spanishText: true,
+			image: true,
+			type: true
+			// poll: true // TODO
+		},
+		where: { id },
+	});
+	return data;
+};
+
 
 export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' | 'id'> | undefined) => {
 	const lang = player?.lang ?? 'fr';
@@ -289,10 +326,16 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 	}
 };
 
-export const updateAnyNews = async (title: string, newObject: Prisma.NewsUpdateInput) => {
+export const updateAnyNews = async (id: number, newObject: Prisma.NewsUpdateInput) => {
 	await prisma.news.updateMany({
-		where: { title },
+		where: { id },
 		data: newObject
+	});
+};
+
+export const deleteAnyNews = async (id: number) => {
+	await prisma.news.delete({
+		where: { id }
 	});
 };
 

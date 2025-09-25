@@ -8,7 +8,10 @@ import {
 	postNews,
 	selectPollOption,
 	updateNews,
-	toggleLikeNews
+	toggleLikeNews,
+	getAllNews,
+	deleteNews,
+	getNewsAdmin
 } from '../business/newsService.js';
 import { apiRoutes } from '../constants/index.js';
 import { checkIsAdmin } from '../utils/jwt.js';
@@ -94,8 +97,8 @@ routes.put(
 		}
 
 		try {
-			await postNews(req);
-			return res.status(200).send();
+			const news = await postNews(req);
+			return res.status(200).send(news);
 		} catch (err) {
 			sendError(res, err);
 		}
@@ -173,9 +176,74 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
 
 /**
  * @openapi
+ * /api/v1/news/all:
+ *   get:
+ *     summary: Get all news
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ * 	     - Admin
+ *       - News
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
+routes.get(`${commonPath}/all`, checkIsAdmin, async (req: Request, res: Response) => {
+	try {
+		const response = await getAllNews();
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+
+/**
+ * @openapi
+ * /api/v1/news/{id:
+ *   get:
+ *     summary: Get all info of a news
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - News
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
+routes.get(`${commonPath}/:id`, checkIsAdmin, param('id').exists().toInt().isInt(), async (req: Request, res: Response) => {
+	if (!validationResult(req).isEmpty()) {
+		return res.status(400).json({ errors: validationResult(req) });
+	}
+
+	try {
+		const response = await getNewsAdmin(req);
+		return res.status(200).send(response);
+	} catch (err) {
+		sendError(res, err);
+	}
+});
+
+
+/**
+ * @openapi
  * /api/v1/news/update/{title}:
  *   put:
- *     summary: Create a news
+ *     summary: Update a news
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -227,10 +295,10 @@ routes.get(`${commonPath}/page/:page`, param('page').exists().toInt().isInt(), a
  *         description: Error
  */
 routes.put(
-	`${commonPath}/update/:title`,
+	`${commonPath}/update/:id`,
 	[
 		multer().single('file'),
-		param('title').exists().isString(),
+		param('id').exists().toInt().isInt(),
 		body('frenchText').default(null).optional({ nullable: true }).exists().isString(),
 		body('englishText').default(null).optional({ nullable: true }).exists().isString(),
 		body('spanishText').default(null).optional({ nullable: true }).exists().isString(),
@@ -248,6 +316,50 @@ routes.put(
 
 		try {
 			await updateNews(req);
+			return res.status(200).send();
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/news/delete/:id
+ *   delete:
+ *     summary: Delete a news
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Admin
+ *       - News
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         type: string
+ *         required: true
+ *         description: ID of the news
+ *     responses:
+ *       200:
+ *         description: Successfull Operation
+ *       400:
+ *         description: Invalid arguments
+ *       500:
+ *         description: Error
+ */
+routes.delete(
+	`${commonPath}/delete/:id`,
+	param('id').exists().toInt().isInt(),
+	checkIsAdmin,
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			await deleteNews(req);
 			return res.status(200).send();
 		} catch (err) {
 			sendError(res, err);

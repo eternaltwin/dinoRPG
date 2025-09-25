@@ -6,7 +6,8 @@
 					<img :src="getImgURL('news', news.type)" :alt="news.title" />
 				</div>
 				<div class="newsContent">
-					<h1>{{ news.title }}</h1>
+					<h1 v-if="news.title">{{ news.title }}</h1>
+					<h1 v-else>{{ $t('news.noTranslation') }}</h1>
 					<span>{{ '' + formatCreatedDate(news.createdDate) }}</span>
 				</div>
 			</div>
@@ -20,6 +21,9 @@
 		<img :src="`${API_BASE}/news/${news.id}/illustration`" :alt="news.title" onerror="this.style.display='none'" />
 		<div class="markdown" v-if="news.text">
 			<Markdown :source="news.text" />
+		</div>
+		<div class="missingText" v-else>
+			{{ $t('news.noTranslation') }}
 		</div>
 		<Poll v-if="news.poll" :poll="news.poll" :totalVote="news.totalVote" @voted="getFirstNews()" />
 		<div class="newsFooter">
@@ -148,6 +152,36 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+
+	// To have untranslate news look like the markdown
+	.missingText {
+		color: #f4e4bc;
+		line-height: 1.6;
+		background: linear-gradient(145deg, #8b4513, #a0522d);
+		border-radius: 12px;
+		padding: 20px;
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+		border: 2px solid rgba(255, 215, 0, 0.3);
+		backdrop-filter: blur(10px);
+		position: relative;
+		overflow: hidden;
+
+		// Effet de brillance subtile
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: -100%;
+			width: 100%;
+			height: 100%;
+			background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+			transition: left 0.5s ease;
+		}
+
+		&:hover::before {
+			left: 100%;
+		}
+	}
 
 	.markdown {
 		color: #f4e4bc;

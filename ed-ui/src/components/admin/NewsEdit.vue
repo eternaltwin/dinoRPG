@@ -1,13 +1,23 @@
 <template>
 	<label for="news">Select a news to edit : </label>
-	<select id="news" v-model="newsEdit" @change="newSelect = true">
+	<select id="news" v-model="selectedNewsId" @change="selectNews()">
+		<option value="">-- Select a news --</option>
 		<template v-for="(news, index) in batchNews" :key="index">
-			<option :value="news">{{ news.title }}</option>
-		</template></select
-	><br />
+			<option :value="news.id">{{ news.title }} (id: {{ news.id }})</option>
+		</template>
+	</select>
 	<label for="createNews">Or type the name to create a news : </label>
-	<input id="createNews" v-model="newsEdit.title" type="text" />
+	<input id="createNews" v-model="newTitle" type="text" @change="reset()" />
 	<form @submit.prevent="submit()" v-if="newsEdit.title">
+		<fieldset>
+			<legend>Metadata</legend>
+			<div>
+				<label for="createdDate" class="title">Creation Date:</label>
+				<input type="text" id="createdDate" v-model="newsEdit.createdDate" disabled />
+				<label for="updatedDate" class="title">Last Update:</label>
+				<input type="text" id="updatedDate" v-model="newsEdit.updatedDate" disabled />
+			</div>
+		</fieldset>
 		<fieldset>
 			<legend>Title News</legend>
 			<div>
@@ -23,7 +33,7 @@
 				<textarea id="spanishTitle" v-model="newsEdit.spanishTitle" />
 			</div>
 			<div>
-				<label for="germanTitle" class="title">Spanish Title :</label>
+				<label for="germanTitle" class="title">German Title :</label>
 				<textarea id="germanTitle" v-model="newsEdit.germanTitle" />
 			</div>
 		</fieldset>
@@ -59,26 +69,31 @@
 			</div>
 		</fieldset>
 		<input type="submit" />
+
+		<div v-if="newsEdit.title">
+			<button type="button" @click="deleteNews()">Delete News</button>
+		</div>
 	</form>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { NewsService } from '../../services/index.js';
-import { AllNews } from '@drpg/core/models/news/AllNews';
+import { DetailedNews } from '@drpg/core/models/news/AllNews';
 import EventBus from '../../events/index.js';
 import { errorHandler } from '../../utils/index.js';
-import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 
 export default defineComponent({
 	name: 'NewsEdit',
 	data() {
 		return {
-			newsEdit: {} as Partial<AllNews>,
-			batchNews: [] as NewsGetResponse,
+			selectedNewsId: 0,
+			newsEdit: {} as Partial<DetailedNews>,
+			batchNews: [] as Partial<DetailedNews>[],
 			formData: new FormData(),
-			newSelect: false as boolean,
-			filePreviewUrl: ''
+			selectedNews: false as boolean,
+			filePreviewUrl: '',
+			newTitle: ''
 		};
 	},
 	methods: {
@@ -115,19 +130,39 @@ export default defineComponent({
 				this.formData.delete('germanTitle');
 				this.formData.append('germanTitle', this.newsEdit.germanTitle);
 			}
+			EventBus.emit('isLoading', true);
 			if (this.batchNews.find(news => news.title === this.newsEdit.title)) {
-				if (this.newSelect) {
-					await NewsService.updateNews(this.formData, this.newsEdit.title ?? '');
-					this.$router.go(0);
+				if (this.selectedNews && this.newsEdit.id) {
+					await NewsService.updateNews(this.formData, this.newsEdit.id);
 				} else {
 					alert(
 						'A recent news with this title already exist. If you wish to edit this existing news, please select it in the drop-down menu.'
 					);
+					EventBus.emit('isLoading', false);
 					return;
 				}
 			} else {
-				await NewsService.createNews(this.formData, this.newsEdit.title ?? '');
-				this.$router.go(0);
+				const news = await NewsService.createNews(this.formData, this.newsEdit.title ?? '');
+				this.batchNews.unshift(news);
+			}
+			EventBus.emit('isLoading', false);
+		},
+		async deleteNews(): Promise<void> {
+			if (this.newsEdit && this.newsEdit.id) {
+				try {
+					EventBus.emit('isLoading', true);
+					await NewsService.deleteNews(this.newsEdit.id);
+					this.batchNews = this.batchNews.filter(news => news.id !== this.newsEdit.id);
+					this.newsEdit = {
+						title: ''
+					};
+					this.selectedNews = false;
+					EventBus.emit('isLoading', false);
+				} catch (e) {
+					errorHandler.handle(e, this.$toast);
+				}
+			} else {
+				alert('Select a news to delete');
 			}
 		},
 		upfile(): void {
@@ -143,12 +178,27 @@ export default defineComponent({
 				this.formData.delete('file');
 				this.formData.append('file', file);
 			}
-		}
+		},
+		async selectNews(): Promise<void> {
+			this.selectedNews = true;
+			this.newTitle = '';
+			this.newsEdit = await NewsService.getNewsAdmin(this.selectedNewsId);
+		},
+
+		reset(): void {
+			this.newsEdit = {
+				title: this.newTitle
+			};
+			this.selectedNews = false;
+		},
+		async getAllNews(): Promise<void> {
+			this.batchNews = await NewsService.getAllNews();
+		},
 	},
 	async mounted(): Promise<void> {
-		EventBus.emit('isLoading', true);
 		try {
-			this.batchNews = await NewsService.getNewsFromPage(1);
+			EventBus.emit('isLoading', true);
+			await this.getAllNews();
 			EventBus.emit('isLoading', false);
 		} catch (err) {
 			errorHandler.handle(err, this.$toast);
@@ -210,6 +260,7 @@ form {
 		background-color: #f3ca92;
 		color: #710;
 	}
+	button,
 	input[type='submit'],
 	input[type='file'] {
 		margin-top: 20px;
@@ -223,6 +274,7 @@ form {
 }
 input[type='text'],
 select {
+	width: calc(100% - 20px);
 	padding: 5px;
 	margin-top: 5px;
 	margin-bottom: 10px;

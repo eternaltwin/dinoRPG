@@ -1,5 +1,6 @@
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import { http } from '../utils/index.js';
+import { DetailedNews } from '@drpg/core/models/news/AllNews';
 
 export const NewsService = {
 	async getNewsFromPage(page: number): Promise<NewsGetResponse[]> {
@@ -8,19 +9,37 @@ export const NewsService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	async updateNews(data: FormData, news: string): Promise<void> {
+	async getAllNews(): Promise<Partial<DetailedNews>[]> {
 		return http()
-			.put(`/news/update/${news}`, data, {
+			.get(`/news/all`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async getNewsAdmin(id: number): Promise<DetailedNews> {
+		return http()
+			.get(`/news/${id}`)
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async updateNews(data: FormData, id: number): Promise<void> {
+		return http()
+			.put(`/news/update/${id}`, data, {
 				headers: { 'Content-Type': 'multipart/form-data' }
 			})
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	async createNews(data: FormData, news: string): Promise<void> {
+	async createNews(data: FormData, news: string): Promise<DetailedNews> {
 		return http()
 			.put(`/news/create/${news}`, data, {
 				headers: { 'Content-Type': 'multipart/form-data' }
 			})
+			.then(res => Promise.resolve(res.data))
+			.catch(err => Promise.reject(err));
+	},
+	async deleteNews(id: number): Promise<void> {
+		return http()
+			.delete(`/news/delete/${id}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
