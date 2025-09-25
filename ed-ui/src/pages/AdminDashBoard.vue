@@ -198,6 +198,9 @@ export default defineComponent({
 .red {
 	color: red;
 }
+.tabs {
+	height: auto;
+}
 input[type='text'],
 select {
 	padding: 5px;

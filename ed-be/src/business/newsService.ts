@@ -8,7 +8,10 @@ import {
 	getNewsDate,
 	hasPlayerLikedNews,
 	likeNews,
-	unlikeNews
+	unlikeNews,
+	getAllNewsFromDB,
+	deleteAnyNews,
+	getNewsDetails
 } from '../dao/newsDao.js';
 import { auth, noStrictAuth } from '../dao/playerDao.js';
 import { CreatePollOption } from '@drpg/core/models/news/Polls';
@@ -33,7 +36,7 @@ import { LOGGER } from '../context.js';
  * @param req.body.germanText {string} German text
  *  */
 export async function postNews(req: Request) {
-	await createNews({
+	const news = await createNews({
 		title: req.params.title,
 		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
@@ -46,10 +49,11 @@ export async function postNews(req: Request) {
 		germanText: req.body.germanText
 	});
 	DISCORD.sendNewsNotification(req.body.frenchTitle, req.body.frenchText, req.file?.buffer);
+	return news;
 }
 
 export async function createPoll(req: Request) {
-	const newsId = await createNews({
+	const news = await createNews({
 		title: req.params.title,
 		image: req.file?.buffer,
 		frenchTitle: req.body.frenchTitle,
@@ -87,7 +91,7 @@ export async function createPoll(req: Request) {
 	const poll = await prisma.$transaction(async tx => {
 		const createdPoll = await tx.poll.create({
 			data: {
-				newsId: newsId,
+				newsId: news.id,
 				endDate
 			}
 		});
@@ -169,6 +173,57 @@ export async function getNews(req: Request) {
 }
 
 /**
+ * @summary Retrieve all news
+ */
+export async function getAllNews() {
+	const news = await getAllNewsFromDB();
+
+	return news;
+}
+
+
+/**
+ * @summary Retrieve all info of a news
+ * @param req.params.id {number} ID of the news
+ */
+export async function getNewsAdmin(req: Request) {
+	const newsId = +req.params.id;
+	const news = await getNewsDetails(newsId);
+
+	return news;
+}
+
+
+/**
+ * @summary Update a selected news
+ * @param req
+ * @param req.params.id {number} ID of the news
+ * @param req.file.buffer {blob} Image of the news to update
+ * @param req.body.frenchTitle {string} French title to update
+ * @param req.body.englishTitle {string} English title to update
+ * @param req.body.spanishTitle {string} Spanish title to update
+ * @param req.body.germanTitle {string} German title to update
+ * @param req.body.frenchText {string} French text to update
+ * @param req.body.englishText {string} English text to update
+ * @param req.body.spanishText {string} Spanish text to update
+ * @param req.body.germanText {string} German text to update
+ */
+export async function updateNews(req: Request) {
+	const newsId = +req.params.id;
+	await updateAnyNews(newsId, {
+		image: req.file?.buffer,
+		frenchTitle: req.body.frenchTitle,
+		englishTitle: req.body.englishTitle,
+		spanishTitle: req.body.spanishTitle,
+		germanTitle: req.body.germanTitle,
+		frenchText: req.body.frenchText,
+		englishText: req.body.englishText,
+		spanishText: req.body.spanishText,
+		germanText: req.body.germanText
+	});
+}
+
+/**
  * @summary Update a selected news
  * @param req
  * @param req.params.title {string} Title of the new
@@ -182,18 +237,9 @@ export async function getNews(req: Request) {
  * @param req.body.spanishText {string} Spanish text to update
  * @param req.body.germanText {string} German text to update
  */
-export async function updateNews(req: Request) {
-	await updateAnyNews(req.params.title, {
-		image: req.file?.buffer,
-		frenchTitle: req.body.frenchTitle,
-		englishTitle: req.body.englishTitle,
-		spanishTitle: req.body.spanishTitle,
-		germanTitle: req.body.germanTitle,
-		frenchText: req.body.frenchText,
-		englishText: req.body.englishText,
-		spanishText: req.body.spanishText,
-		germanText: req.body.germanText
-	});
+export async function deleteNews(req: Request) {
+	const newsId = +req.params.id;
+	await deleteAnyNews(newsId);
 }
 
 export async function getNewsIllustration(req: Request<{ id: string }>) {
