@@ -205,8 +205,9 @@
 	},
 	"dojo": {
 		"inexistantDojo": "Le dojo sélectionné n'existe pas.",
-		"dinozNotPlayer": "Le nombre maximal de Dinoz pour ce tournoi est atteint.",
+		"dinozNotPlayer": "Un des dinoz sélectionné n'appartient au(x) joueur(s).",
 		"alreadyFighted": "Ce Dinoz a déjà combattu",
+		"wrongRace": "Une des races sélectionnée n'est pas autorisée pour ce tournois.",
 		"wrongDinozInTeam": "Votre équipe ne peut être constituée que de 5 à 10 Dinoz.",
 		"wrongDinozQuantity": "Votre équipe doit être formée de {qty} Dinoz.",
 		"notEnoughGold": "Vous n'avez pas assez de pièce d'or pour ce combat",
