@@ -147,7 +147,7 @@ export async function createClan(req: Request) {
 
 	const canCreate: boolean = await canCreateClan(req);
 	if (!canCreate) {
-		throw new ExpectedError(`Player ${authed.id} doesn't fill conditions to create a clan`);
+		throw new ExpectedError(`Player ${authed.name} doesn't fill conditions to create a clan`);
 	}
 
 	await removeMoney(authed.id, CLAN_CREATE_MONEY);
@@ -167,7 +167,7 @@ export async function joinClan(req: Request): Promise<JoinClanResponse> {
 
 	const canCreate: boolean = await canJoinClan(req);
 	if (!canCreate) {
-		throw new ExpectedError(`Player ${authed.id} doesn't fill conditions to join a clan`);
+		throw new ExpectedError(`Player ${authed.name} doesn't fill conditions to join a clan`);
 	}
 
 	await removeMoney(authed.id, CLAN_JOIN_MONEY);
@@ -270,7 +270,7 @@ export async function deleteClan(req: Request) {
 
 	const isPlayerLeader: boolean = await isPlayerLeaderOfClan(req);
 	if (!isPlayerLeader) {
-		throw new ExpectedError(`Player ${authed.id} is not leader of clan ${req.params.id}`);
+		throw new ExpectedError(`Player ${authed.name} is not leader of clan ${req.params.id}`);
 	}
 
 	const clan = await deleteClanRequest(Number(req.params.id));
