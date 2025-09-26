@@ -85,7 +85,7 @@ export async function createTournamentTeam(req: Request) {
 
 	// Check if dinoz races are authorized for this tournament
 	if (!playerFilteredDinoz.every(d => authorizedRaces.includes(d.raceId))) {
-		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
+		throw new ExpectedError(translate('dojo.wrongRace', authed));
 	}
 
 	//Check if dinoz are under max level
@@ -93,9 +93,9 @@ export async function createTournamentTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.dinozTooHighLevel', authed));
 	}
 
-	// Check filtered dinoz is equal to asked dinoz
+	// Check filtered dinoz is equal to asked dinoz (shouldn't be possible)
 	if (playerFilteredDinoz.length !== teamIds.length) {
-		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
+		throw new ExpectedError("Filtered dinoz is not enought");
 	}
 
 	// Check if number of race is at least equal to the limit
