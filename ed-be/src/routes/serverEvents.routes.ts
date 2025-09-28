@@ -45,14 +45,14 @@ routes.post(
 
 routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
 	try {
-		await connectUserToSseChannel(req, res);
-
 		res.setHeader('Content-Type', 'text/event-stream');
 		res.setHeader('Cache-Control', 'no-cache');
 		res.setHeader('Connection', 'keep-alive');
 
 		// To keep the connection alive
 		res.flushHeaders();
+
+		await connectUserToSseChannel(req, res);
 
 		req.on('close', () => {
 			disconnectSseUser(req);

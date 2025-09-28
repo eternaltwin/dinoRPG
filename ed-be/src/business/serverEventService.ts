@@ -112,10 +112,10 @@ async function doSpecificVerificationsForWs(req: Request, authed: any): Promise<
 
 // TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
 /* eslint-disable  @typescript-eslint/no-explicit-any */
-async function doSpecificVerificationsForSse(req: Request, authed: any): Promise<void> {
-	if (req.body.channel === SseChannel.CLAN_FORUM) {
-		await checkPlayerIsInClan(authed);
-	}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+async function doSpecificVerificationsForSse(_req: Request, _authed: any): Promise<void> {
+	// Do nothing for now
+	// Remove eslint annotations when an implementation is done
 }
 
 // TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
@@ -224,7 +224,7 @@ async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string
 }
 
 async function getChannelName(ticket: ServerEventTicket): Promise<string> {
-	if ([WsChannel.CLAN_FORUM.toString(), SseChannel.CLAN_FORUM.toString()].includes(ticket.channel)) {
+	if (ticket.channel === WsChannel.CLAN_FORUM) {
 		const playerData = await getClanIdAndNameFromPlayerId(ticket.playerId);
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
@@ -246,7 +246,7 @@ export async function processWsIncomingMessage(
 	wsId: string,
 	bufferedMessage: RawData
 ): Promise<void> {
-	const channel = getWsChannelDetailsFromConnectionId(wsId);
+	const channel: ChannelInfos = getWsChannelDetailsFromConnectionId(wsId);
 
 	const message: WsMsgRequest = getMessageFromString(bufferedMessage);
 
@@ -307,6 +307,7 @@ async function saveWsMessageInDatabase(channel: ChannelInfos, wsId: string, mess
 	const playerInfos = await getClanIdAndNameFromPlayerId(wsData.playerId);
 
 	if (!playerInfos.ClanMember) throw new ExpectedError(`The player is not in a clan`);
+
 	return await createClanMessageRequest(playerInfos.ClanMember.clan.id, wsData.playerId, message.toString());
 }
 
