@@ -1,12 +1,36 @@
 <template>
-	<img
-		v-for="(lang, i) in langs"
-		:key="`Lang${i}`"
-		:src="getImgURL('design', `lang_${lang.short}`)"
-		@click="switchLocale(lang.short)"
-		:class="[$i18n.locale === lang.short ? 'selected' : '']"
-		class="flag"
-	/>
+	<div class="locale-wrapper">
+		<template v-if="!isMobile">
+			<img
+				v-for="(lang, i) in langs"
+				:key="`Lang${i}`"
+				:src="getImgURL('design', `lang_${lang.short}`)"
+				@click="switchLocale(lang.short)"
+				:class="[$i18n.locale === lang.short ? 'selected' : '']"
+				class="flag"
+			/>
+		</template>
+		<template v-else>
+			<button class="locale-btn" @click="isOpen = !isOpen">
+				<img :src="getImgURL('design', 'translate')" alt="" />
+			</button>
+			<div v-if="isOpen" class="locale-dropdown">
+				<div
+					v-for="(lang, i) in langs"
+					:key="`Lang${i}`"
+					class="flag-list"
+					:class="[$i18n.locale === lang.short ? 'selected' : '']"
+					@click="switchLocale(lang.short)"
+				>
+					<img
+						:src="getImgURL('design', `lang_${lang.short}`)"
+						:class="[$i18n.locale === lang.short ? 'selected' : '']"
+						class="flag"
+					/>
+				</div>
+			</div>
+		</template>
+	</div>
 </template>
 
 <script lang="ts">
@@ -21,10 +45,31 @@ export default defineComponent({
 		return {
 			localStore: localStore(),
 			playerStore: playerStore(),
-			langs: Locales
+			langs: Locales,
+			isMobile: window.innerWidth <= 1024,
+			isOpen: false
 		};
 	},
+	mounted() {
+		this.handleResize();
+		window.addEventListener('resize', this.handleResize);
+		document.addEventListener('click', this.handleClickOutside);
+	},
+	beforeUnmount() {
+		window.removeEventListener('resize', this.handleResize);
+		document.removeEventListener('click', this.handleClickOutside);
+	},
 	methods: {
+		handleResize() {
+			this.isMobile = window.innerWidth < 1024;
+			if (!this.isMobile) this.isOpen = false;
+		},
+		handleClickOutside(event: MouseEvent) {
+			const target = event.target as HTMLElement;
+			if (!target.closest('.locale-wrapper')) {
+				this.isOpen = false;
+			}
+		},
 		async switchLocale(locale: LocalesEnum): Promise<void> {
 			if (this.$i18n.locale !== locale) {
 				try {
@@ -54,8 +99,62 @@ export default defineComponent({
 	&:not(.selected):hover {
 		box-shadow: rgb(189, 61, 0) 0px 0px 8px;
 	}
+	&.selected {
+		box-shadow: rgb(189, 61, 0) 0px 0px 8px;
+	}
 }
-.selected {
-	box-shadow: rgb(189, 61, 0) 0px 0px 8px;
+.flag-list {
+	padding: 4px 12px;
+	&.selected {
+		background-color: rgb(193, 146, 12);
+	}
+}
+.locale-wrapper {
+	position: relative;
+	display: flex;
+	gap: 6px;
+}
+.locale-btn {
+	display: inline-flex;
+	-moz-box-align: center;
+	align-items: center;
+	-moz-box-pack: center;
+	justify-content: center;
+	box-sizing: border-box;
+	background-color: transparent;
+	cursor: pointer;
+	vertical-align: middle;
+	padding: 4px 10px;
+	border-radius: 4px;
+	transition:
+		background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+		box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+		border-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+		color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+	border: 1px solid rgba(2, 136, 209, 0.5);
+	color: rgb(2, 136, 209);
+	&:hover {
+		text-decoration: none;
+		background-color: rgba(2, 136, 209, 0.04);
+		border: 1px solid rgb(2, 136, 209);
+	}
+	& img {
+		width: 16px;
+		height: 16px;
+	}
+}
+.locale-dropdown {
+	position: fixed;
+	top: 40px;
+	background-color: rgb(17, 19, 23);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	box-shadow:
+		rgba(0, 0, 0, 0.2) 0px 8px 10px -5px,
+		rgba(0, 0, 0, 0.14) 0px 16px 24px 2px,
+		rgba(0, 0, 0, 0.12) 0px 6px 30px 5px;
+	z-index: 100;
+	flex-direction: column;
 }
 </style>
