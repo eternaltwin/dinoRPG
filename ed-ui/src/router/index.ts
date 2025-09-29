@@ -239,7 +239,7 @@ const router = createRouter({
 				{
 					path: '/clans',
 					name: 'ClansList',
-					component: () => import('../pages/ClansList.vue')
+					component: () => import('../pages/Clan/ClansList.vue')
 				},
 				{
 					path: '/forcebrute',
@@ -251,7 +251,7 @@ const router = createRouter({
 				},
 				{
 					path: '/clan/:id',
-					component: () => import('../pages/Clan.vue'),
+					component: () => import('../pages/Clan/Clan.vue'),
 					children: [
 						{
 							path: '',
@@ -260,6 +260,7 @@ const router = createRouter({
 						},
 						{
 							path: 'page',
+							name: 'ClanPages',
 							component: () => import('../components/clans/ClanPages.vue'),
 							children: [
 								{

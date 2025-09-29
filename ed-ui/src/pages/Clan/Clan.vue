@@ -1,12 +1,12 @@
 <template>
 	<TitleHeader
-		v-if="clan"
-		:title="`${$t('pageTitle.clan')}${clan.name} ]`"
-		:header="$t('clan.header.title', { name: clan.name })"
+		v-if="clanStore.getClan"
+		:title="`${$t('pageTitle.clan')}${clanStore.getClan.name} ]`"
+		:header="$t('clan.header.title', { name: clanStore.getClan.name })"
 	></TitleHeader>
 	<div class="wrapper">
 		<div class="filler">
-			<ClanHeader :clan="clan" v-if="clan"></ClanHeader>
+			<ClanHeader v-if="clanStore.getClan"></ClanHeader>
 		</div>
 	</div>
 
@@ -18,81 +18,81 @@
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" style="margin-left: 10px" />
 		</h3>
 		<div class="tabs-list">
-			<div
-				:class="tabSelected === 1 ? 'tab selected' : 'tab'"
-				@click="setTab(1)"
+			<RouterLink
+				class="tab"
+				:to="{ name: 'ClanPages', params: { id: clanStore.getClanId } }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.pages')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_sun')" alt="Pages du clan" />
-			</div>
-			<div
-				:class="tabSelected === 2 ? 'tab selected' : 'tab'"
-				@click="setTab(2)"
+			</RouterLink>
+			<RouterLink
+				class="tab"
+				:to="{ name: 'ClanMembers' }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.members')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_clan')" alt="Liste des membres" />
-			</div>
-			<div
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember"
-				:class="tabSelected === 3 ? 'tab selected' : 'tab'"
-				@click="setTab(3)"
+				class="tab"
+				:to="{ name: 'ClanTreasure' }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.treasure')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_treasure')" alt="Trésor de clan" />
-			</div>
-			<div
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember"
-				:class="tabSelected === 4 ? 'tab selected' : 'tab'"
-				@click="setTab(4)"
+				class="tab"
+				:to="{ name: 'ClanWar' }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.war')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_attack')" alt="Infos de guerre" />
-			</div>
-			<div
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember"
-				:class="tabSelected === 5 ? 'tab selected' : 'tab'"
-				@click="setTab(5)"
+				class="tab"
+				:to="{ name: 'ClanDiscussion' }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.discussion')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_talk')" alt="Fil de discussion" />
-			</div>
-			<div
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember"
-				:class="tabSelected === 6 ? 'tab selected' : 'tab'"
-				@click="setTab(6)"
+				class="tab"
+				:to="{ name: 'ClanHistory' }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.history')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_save')" alt="Historique du clan" />
-			</div>
-			<div
+			</RouterLink>
+			<RouterLink
 				v-if="isClanMember && hasBannerEditRight"
-				:class="tabSelected === 7 ? 'tab selected' : 'tab'"
-				@click="setTab(7)"
+				class="tab"
+				:to="{ name: 'ClanParameters' }"
 				v-tippy="{
 					content: formatContent($t('clan.tabs.parameters')),
 					theme: 'small'
 				}"
 			>
 				<img :src="getImgURL('icons', 'act_default')" alt="Paramètres du clan" />
-			</div>
+			</RouterLink>
 		</div>
 		<div class="clan-page">
 			<Router-view></Router-view>
@@ -103,17 +103,17 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
-import TitleHeader from '../components/utils/TitleHeader.vue';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
 
-import ClanHeader from '../components/clans/ClanHeader.vue';
+import ClanHeader from '../../components/clans/ClanHeader.vue';
 
-import EventBus from '../events/index.js';
-import { ClanService } from '../services/ClanService.js';
-import { errorHandler } from '../utils/errorHandler.js';
-import { ClanLite } from '@drpg/core/models/clan/clan';
+import EventBus from '../../events';
+import { ClanService } from '../../services/ClanService';
+import { errorHandler } from '../../utils/errorHandler';
 
-import { playerStore } from '../store/index.js';
+import { playerStore } from '../../store';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'Clan',
@@ -124,20 +124,20 @@ export default defineComponent({
 	data() {
 		return {
 			tabSelected: 1 as number,
-			clan: undefined as ClanLite | undefined,
 			playerStore: playerStore(),
+			clanStore: clanStore(),
 			isClanMember: false as boolean,
 			hasBannerEditRight: false as boolean
 		};
 	},
 	methods: {
 		setTab(value: number) {
-			if (!this.clan) return;
+			if (!this.clanStore.getClanId) return;
 			this.tabSelected = value;
 			//TODO: directement utiliser tabSelected = string, comme ça pas besoin du switch case, juste un router.push(selectedTab)
 			switch (value) {
 				case 1:
-					this.$router.push({ name: 'Clan', params: { id: this.clan.id } });
+					this.$router.push({ name: 'Clan', params: { id: this.clanStore.getClanId } });
 					break;
 				case 2:
 					this.$router.push({ name: 'ClanMembers' });
@@ -162,7 +162,7 @@ export default defineComponent({
 		async getClan(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.clan = await ClanService.getClan(Number(this.$route.params.id));
+				await this.clanStore.loadClan(Number(this.$route.params.id));
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -173,7 +173,7 @@ export default defineComponent({
 			try {
 				this.hasBannerEditRight = await ClanService.getPlayerHasRight(
 					Number(this.$route.params.id),
-					ClanMemberRight[ClanMemberRight.CLAN_EDIT_BANNER]
+					ClanMemberRight.CLAN_EDIT_BANNER
 				);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -225,9 +225,6 @@ export default defineComponent({
 	font-size: 14px;
 	.tab {
 		padding: 0 2px;
-		&:hover {
-			cursor: pointer;
-		}
 	}
 	img:hover {
 		filter: brightness(1.2);
@@ -236,7 +233,7 @@ export default defineComponent({
 		width: 32px;
 		height: 32px;
 	}
-	.selected {
+	.router-link-active {
 		background-color: #c97d49;
 		img {
 			filter: brightness(1.2);
@@ -246,11 +243,14 @@ export default defineComponent({
 }
 
 .pages {
-	background: url('../assets/background/desc_shop_top_left.webp'), url('../assets/background/desc_shop_top_right.webp'),
-		url('../assets/background/desc_shop_top_center.webp'), url('../assets/background/desc_shop_bottom_left.webp'),
-		url('../assets/background/desc_shop_bottom_right.webp'), url('../assets/background/desc_shop_bottom_center.webp'),
-		url('../assets/background/desc_shop_center_left.webp'), url('../assets/background/desc_shop_center_right.webp'),
-		url('../assets/background/desc_shop_center_center.webp');
+	background: url('../../assets/background/desc_shop_top_left.webp'),
+		url('../../assets/background/desc_shop_top_right.webp'), url('../../assets/background/desc_shop_top_center.webp'),
+		url('../../assets/background/desc_shop_bottom_left.webp'),
+		url('../../assets/background/desc_shop_bottom_right.webp'),
+		url('../../assets/background/desc_shop_bottom_center.webp'),
+		url('../../assets/background/desc_shop_center_left.webp'),
+		url('../../assets/background/desc_shop_center_right.webp'),
+		url('../../assets/background/desc_shop_center_center.webp');
 	background-position-x: left, right, center, left, right, center, left, right, center;
 	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
 	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;

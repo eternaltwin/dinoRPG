@@ -463,7 +463,8 @@ exports.Prisma.ClanScalarFieldEnum = {
   creationDate: 'creationDate',
   clanWarId: 'clanWarId',
   banner: 'banner',
-  leaderId: 'leaderId'
+  leaderId: 'leaderId',
+  lang: 'lang'
 };
 
 exports.Prisma.ClanJoinRequestScalarFieldEnum = {

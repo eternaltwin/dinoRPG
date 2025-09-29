@@ -3,6 +3,7 @@ import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/cla
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { http } from '../utils/index.js';
+import { LocalesEnum } from '../i18n';
 
 export const ClanService = {
 	getClansRanking(page: number): Promise<Array<ClanLite>> {
@@ -41,9 +42,9 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	createClan(name: string, description: string): Promise<ClanLite> {
+	createClan(name: string, description: string, language: LocalesEnum): Promise<ClanLite> {
 		return http()
-			.post(`/clan`, { name: name, description: description })
+			.post(`/clan`, { name, description, language })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
@@ -59,9 +60,9 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	getClanBanner(id: number): Promise<Buffer> {
+	updateClanLang(id: number, language: LocalesEnum): Promise<LocalesEnum> {
 		return http()
-			.get(`/clan/${id}/banner`)
+			.put(`/clan/${id}/edit/lang`, { language })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

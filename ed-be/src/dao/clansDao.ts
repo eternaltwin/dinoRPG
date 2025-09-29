@@ -6,6 +6,7 @@ import { setSpecificStat } from './trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { Lang } from '@drpg/prisma';
 
 export async function getAllClansRequest(page: number) {
 	const clans = await prisma.clan.findMany({
@@ -15,6 +16,7 @@ export async function getAllClansRequest(page: number) {
 			creationDate: true,
 			leaderId: true,
 			treasureValue: true,
+			lang: true,
 			members: {
 				select: {
 					id: true
@@ -39,7 +41,8 @@ export async function getRankingClansRequest(page: number) {
 		select: {
 			id: true,
 			name: true,
-			treasureValue: true
+			treasureValue: true,
+			lang: true
 		},
 		orderBy: [{ treasureValue: 'desc' }],
 		take: 20,
@@ -56,6 +59,7 @@ export async function getClanRequest(id: number) {
 		select: {
 			id: true,
 			name: true,
+			lang: true,
 			members: {
 				select: {
 					id: true
@@ -88,6 +92,7 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 			name: true,
 			treasureValue: true,
 			leaderId: true,
+			lang: true,
 			members: {
 				select: {
 					id: true
@@ -126,7 +131,7 @@ export async function searchClansByName(clanName: string) {
 	return clans;
 }
 
-export async function createClanRequest(clanName: string, clanDescription: string, playerId: string) {
+export async function createClanRequest(clanName: string, clanDescription: string, clanLang: Lang, playerId: string) {
 	const creator = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: { name: true }
@@ -138,6 +143,7 @@ export async function createClanRequest(clanName: string, clanDescription: strin
 	const clan = await prisma.clan.create({
 		data: {
 			name: clanName,
+			lang: clanLang,
 			leader: { connect: { id: playerId } }
 		},
 		select: { id: true }
@@ -277,7 +283,7 @@ export async function joinClanRequest(clanId: number, playerId: string) {
 						},
 						where: {
 							rights: {
-								has: ClanMemberRight[ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS]
+								has: ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS
 							}
 						}
 					}
@@ -434,6 +440,19 @@ export async function deleteClanRequest(clanId: number) {
 	return clan;
 }
 
+export async function updateClanLanguageRequest(clanId: number, lang: Lang) {
+	const clan = await prisma.clan.update({
+		data: {
+			lang
+		},
+		where: {
+			id: clanId
+		}
+	});
+
+	return clan;
+}
+
 export async function updateClanBannerRequest(clanId: number, banner: Buffer) {
 	const clan = await prisma.clan.update({
 		data: {
@@ -469,7 +488,7 @@ export async function playerHasRightRequest(clanId: number, playerId: string, ri
 					clanId,
 					playerId,
 					rights: {
-						has: ClanMemberRight[right]
+						has: right
 					}
 				},
 				{

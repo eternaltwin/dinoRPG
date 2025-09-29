@@ -1,13 +1,13 @@
 <template>
 	<div class="locale-wrapper">
 		<template v-if="!isMobile">
-			<img
+			<Flag
 				v-for="(lang, i) in langs"
 				:key="`Lang${i}`"
-				:src="getImgURL('design', `lang_${lang.short}`)"
-				@click="switchLocale(lang.short)"
+				:lang="lang.short"
 				:class="[$i18n.locale === lang.short ? 'selected' : '']"
 				class="flag"
+				@click="switchLocale(lang.short)"
 			/>
 		</template>
 		<template v-else>
@@ -22,8 +22,8 @@
 					:class="[$i18n.locale === lang.short ? 'selected' : '']"
 					@click="switchLocale(lang.short)"
 				>
-					<img
-						:src="getImgURL('design', `lang_${lang.short}`)"
+					<Flag
+						:lang="lang.short"
 						:class="[$i18n.locale === lang.short ? 'selected' : '']"
 						class="flag"
 					/>
@@ -38,9 +38,11 @@ import { defineComponent } from 'vue';
 import { loadLanguage, Locales, LocalesEnum } from '../../i18n';
 import { localStore, playerStore } from '../../store';
 import { PlayerService } from '../../services';
+import Flag from '../common/Flag.vue';
 
 export default defineComponent({
 	name: 'LocaleChange',
+	components: { Flag },
 	data() {
 		return {
 			localStore: localStore(),

@@ -4064,7 +4064,8 @@
 				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Peut accepter et refuser de nouveaux membres",
 				"MEMBER_EXCLUDE": "Peut renvoyer des membres",
 				"DISCUSSION_DELETE_MESSAGE": "Peut supprimer des messages du fil de discussion",
-				"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan"
+				"CLAN_EDIT_BANNER": "Peut changer la bannière du Clan",
+				"CLAN_EDIT_LANG": "Peut changer la langue du Clan"
 			},
 			"nickname": "Surnom du joueur :",
 			"save": "Enregistrer"
@@ -4145,6 +4146,7 @@
 		"title": "Créer un Clan",
 		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
 		"clan_name": "Nom du Clan",
+		"clan_lang": "Langue du Clan",
 		"clan_description": "Description du Clan",
 		"create_button": "Créer le Clan",
 		"go_back_button": "Retour à la liste"

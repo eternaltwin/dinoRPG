@@ -39,6 +39,7 @@ import {
 	searchClansByNameRequest,
 	updateClanBannerRequest,
 	updateClanContribution,
+	updateClanLanguageRequest,
 	updateClanMemberRequest,
 	updateClanPageRequest,
 	updateClanTreasure,
@@ -152,7 +153,7 @@ export async function createClan(req: Request) {
 
 	await removeMoney(authed.id, CLAN_CREATE_MONEY);
 
-	const clan = await createClanRequest(req.body.name, req.body.description, authed.id);
+	const clan = await createClanRequest(req.body.name, req.body.description, req.body.language, authed.id);
 	return clan;
 }
 
@@ -295,9 +296,7 @@ export async function updateClanBanner(req: Request) {
 	const hasRight = await playerHasRightRequest(clanId, authed.id, ClanMemberRight.CLAN_EDIT_BANNER);
 
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.CLAN_EDIT_BANNER]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.CLAN_EDIT_BANNER}`);
 	}
 
 	//TODO : set file size limit ?
@@ -305,6 +304,29 @@ export async function updateClanBanner(req: Request) {
 	await updateClanBannerRequest(clanId, req.file.buffer);
 
 	return 'clan';
+}
+
+/**
+ * Update clan language
+ * @param req
+ * @param req.params.id {number} clan id
+ * @param req.body.language new language
+ * @returns Clan
+ */
+export async function updateClanLanguage(req: Request) {
+	const authed = await auth(req);
+
+	const clanId = +req.params.id;
+
+	const hasRight = await playerHasRightRequest(clanId, authed.id, ClanMemberRight.CLAN_EDIT_LANG);
+
+	if (!hasRight) {
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.CLAN_EDIT_LANG}`);
+	}
+
+	const clan = await updateClanLanguageRequest(clanId, req.body.language);
+
+	return clan.lang;
 }
 
 /**
@@ -331,9 +353,7 @@ export async function getClanMember(req: Request) {
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EDIT);
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.MEMBER_EDIT]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.MEMBER_EDIT}`);
 	}
 
 	const member = await getClanMemberRequest(Number(req.params.memberId));
@@ -353,9 +373,7 @@ export async function updateClanMember(req: Request) {
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EDIT);
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.MEMBER_EDIT]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.MEMBER_EDIT}`);
 	}
 
 	const member = await updateClanMemberRequest(
@@ -380,9 +398,7 @@ export async function excludeClanMember(req: Request) {
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.MEMBER_EXCLUDE);
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.MEMBER_EXCLUDE]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.MEMBER_EXCLUDE}`);
 	}
 
 	const member = await excludeClanMemberRequest(+req.params.id, authed.id);
@@ -447,9 +463,7 @@ export async function createClanPage(req: Request) {
 
 	const hasRight = await playerHasRightRequest(Number(req.body.clanId), authed.id, ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.PAGE_MANAGE}`);
 	}
 
 	const page = await createClanPageRequest(Number(req.body.clanId), req.body.name, req.body.content, isPublic);
@@ -468,9 +482,7 @@ export async function deleteClanPage(req: Request) {
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.PAGE_MANAGE}`);
 	}
 
 	const page = await deleteClanPageRequest(Number(req.params.pageId));
@@ -492,9 +504,7 @@ export async function updateClanPage(req: Request) {
 
 	const hasRight = await playerHasRightRequest(Number(req.params.clanId), authed.id, ClanMemberRight.PAGE_MANAGE);
 	if (!hasRight) {
-		throw new ExpectedError(
-			`Member ${req.params.id} doesn't have the right ${ClanMemberRight[ClanMemberRight.PAGE_MANAGE]}`
-		);
+		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.PAGE_MANAGE}`);
 	}
 
 	const page = await updateClanPageRequest(Number(req.params.id), req.body.name, req.body.content, req.body.isPublic);

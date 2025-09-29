@@ -16,7 +16,7 @@
 						theme: 'small'
 					}"
 				/>
-				{{ clan?.members?.length }}/{{ maxMembers }}
+				{{ clanStore.getClan?.members?.length }}/{{ maxMembers }}
 			</div>
 			<div class="top-info-element">
 				<img
@@ -27,7 +27,7 @@
 						theme: 'small'
 					}"
 				/>
-				{{ moneyLint(clan?.treasureValue ?? 0) }}
+				{{ moneyLint(clanStore.getClan?.treasureValue ?? 0) }}
 			</div>
 			<div class="top-info-element">
 				<img
@@ -40,39 +40,44 @@
 				/>
 				Bronze
 			</div>
+			<div class="top-info-element">
+				<Flag :lang="clanStore.getClan?.lang" />
+			</div>
 		</div>
-		<div class="banner" v-if="clan && clan.id > 0">
-			<img class="banner-img" :src="`${API_BASE}/clan/${clan.id}/banner`" alt="banner" />
+		<div class="banner" v-if="clanStore.getClanId" :key="bannerName">
+			<img class="banner-img" :src="`${API_BASE}/clan/${clanStore.getClanId}/banner`" alt="banner" />
 		</div>
 		<div class="bottom-info">
-			<p class="creation-date">{{ $t('clan.header.creation_date', { date: DateToString(clan?.creationDate) }) }}</p>
+			<p class="creation-date">
+				{{ $t('clan.header.creation_date', { date: DateToString(clanStore.getClan!.creationDate) }) }}
+			</p>
 			<div class="leader-name">
-				<DZUser :user="clan.leader" leader />
+				<DZUser :user="clanStore.getClan!.leader" leader />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { PropType, defineComponent } from 'vue';
-import { ClanLite } from '@drpg/core/models/clan/clan';
+import { defineComponent } from 'vue';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import { API_BASE, utils } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
+import Flag from '../common/Flag.vue';
+import { clanStore } from '../../store/clanStore';
+import EventBus from '../../events';
 
 export default defineComponent({
 	name: 'ClanHeader',
-	props: {
-		clan: { type: Object as PropType<ClanLite>, required: true }
-	},
 	data() {
 		return {
 			API_BASE,
 			maxMembers: CLAN_MAX_MEMBERS_AMOUNT,
-			teeeest: ''
+			clanStore: clanStore(),
+			bannerName: ''
 		};
 	},
-	components: { DZUser },
+	components: { Flag, DZUser },
 	methods: {
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
@@ -80,6 +85,9 @@ export default defineComponent({
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
 		}
+	},
+	mounted() {
+		EventBus.on('clanBannerUpdated', name => (this.bannerName = name));
 	}
 });
 </script>

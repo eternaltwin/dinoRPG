@@ -16,6 +16,10 @@
 				{{ $t('clanSettings.banner.info') }}
 			</div>
 		</div>
+		<div v-if="hasLangEditRight">
+			Langue:
+			<LangSelector v-model="lang" @change="saveLang" style="height: min-content" />
+		</div>
 		<a class="button" @click="deleteClan()">{{ $t('clanSettings.action.delete') }}</a>
 		<!-- <input type="file" @change="onFileChanged($event)" accept="image/*" capture /> -->
 	</div>
@@ -28,26 +32,42 @@ import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { playerStore } from '../../store/playerStore.js';
 import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import LangSelector from './LangSelector.vue';
+import { LocalesEnum } from '../../i18n';
+import { clanStore } from '../../store/clanStore';
 
 export default defineComponent({
 	name: 'ClanParameters',
-	components: {},
+	components: { LangSelector },
 	data() {
 		return {
 			playerStore: playerStore(),
 			hasAccess: false as boolean,
 			banner_url: '' as string,
 			hasBannerEditRight: false as boolean,
-			filePreviewUrl: ''
+			hasLangEditRight: false as boolean,
+			filePreviewUrl: '',
+			clanStore: clanStore(),
+			lang: '' as LocalesEnum
 		};
 	},
 	methods: {
+		async saveLang(): Promise<void> {
+			EventBus.emit('isLoading', true);
+			try {
+				await this.clanStore.updateLang(this.clanStore.getClanId, this.lang);
+				EventBus.emit('isLoading', false);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+		},
 		async deleteClan(): Promise<void> {
 			const res: boolean = confirm(this.$t('popup.confirm'));
 			if (res) {
 				EventBus.emit('isLoading', true);
 				try {
-					await ClanService.deleteClan(Number(this.$route.params.id));
+					await ClanService.deleteClan(this.clanStore.getClanId);
 					this.playerStore.setClanId(undefined);
 					EventBus.emit('isLoading', false);
 					this.$router.push({ name: 'ClansList' });
@@ -60,8 +80,19 @@ export default defineComponent({
 		async getHasBannerEditRight() {
 			try {
 				this.hasBannerEditRight = await ClanService.getPlayerHasRight(
-					Number(this.$route.params.id),
-					ClanMemberRight[ClanMemberRight.CLAN_EDIT_BANNER]
+					this.clanStore.getClanId,
+					ClanMemberRight.CLAN_EDIT_BANNER
+				);
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
+		},
+		async getHasLangEditRight() {
+			try {
+				this.hasLangEditRight = await ClanService.getPlayerHasRight(
+					this.clanStore.getClanId,
+					ClanMemberRight.CLAN_EDIT_LANG
 				);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -80,19 +111,21 @@ export default defineComponent({
 				reader.readAsDataURL(file);
 				form.delete('file');
 				form.append('file', file);
-				await ClanService.updateClanBanner(Number(this.$route.params.id), form);
+				await ClanService.updateClanBanner(this.clanStore.getClanId, form);
+				EventBus.emit('clanBannerUpdated', file.name);
 			}
 		}
 	},
 	async mounted() {
-		this.hasAccess = this.playerStore.clanId == Number(this.$route.params.id);
+		this.hasAccess = this.playerStore.clanId == this.clanStore.getClanId;
 		if (!this.hasAccess) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
-		await this.getHasBannerEditRight();
-		if (!this.hasBannerEditRight) {
+		await Promise.all([this.getHasBannerEditRight(), this.getHasLangEditRight()]);
+		if (!this.hasBannerEditRight && !this.hasLangEditRight) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
+		this.lang = this.clanStore.getClan?.lang as LocalesEnum;
 	}
 });
 </script>

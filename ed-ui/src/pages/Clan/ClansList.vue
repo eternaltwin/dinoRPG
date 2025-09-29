@@ -34,6 +34,7 @@
 				>
 					<td class="name">
 						{{ clan.name }}
+						<Flag :lang="clan.lang" />
 					</td>
 					<td class="leader other">
 						{{ clan.leader?.name }}
@@ -87,19 +88,20 @@ import { CLAN_CREATE_MONEY, CLAN_CREATE_RANKING_POINTS } from '@drpg/core/consta
 import { ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { Clan } from '@drpg/prisma';
 import axios from 'axios';
-import DZDisclaimer from '../components/common/DZDisclaimer.vue';
-import SearchEntity from '../components/data/SearchEntity.vue';
-import TitleHeader from '../components/utils/TitleHeader.vue';
-import EventBus from '../events/index.js';
-import { ClanService, PlayerService } from '../services/index.js';
-import { playerStore } from '../store';
-import { formatNumber } from '../utils/formatText';
-import { formatText } from '../utils/formatText.js';
-import { errorHandler } from '../utils/index.js';
+import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
+import SearchEntity from '../../components/data/SearchEntity.vue';
+import TitleHeader from '../../components/utils/TitleHeader.vue';
+import EventBus from '../../events';
+import { ClanService, PlayerService } from '../../services';
+import { playerStore } from '../../store';
+import { formatNumber, formatText } from '../../utils/formatText';
+import { errorHandler } from '../../utils';
+import Flag from '../../components/common/Flag.vue';
 
 export default defineComponent({
 	name: 'ClansList',
 	components: {
+		Flag,
 		SearchEntity,
 		DZDisclaimer,
 		TitleHeader
@@ -242,7 +244,7 @@ export default defineComponent({
 				white-space: nowrap;
 				border: 1px solid #356847;
 				background-color: #c64e36;
-				background-image: url('../assets/background/table_header.webp');
+				background-image: url('../../assets/background/table_header.webp');
 				background-position: left bottom;
 				max-width: 222px;
 				&.name {
@@ -268,29 +270,29 @@ export default defineComponent({
 				border: 1px solid #c88f44;
 				cursor: pointer;
 				&.name {
-					background-image: url('../assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 1.2em;
 				}
 				&.pos {
-					background-image: url('../assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: 0px 0px;
 					padding-left: 1.2em;
 				}
 				&.other {
 					padding-left: 1em;
-					background-image: url('../assets/background/table_cell.webp');
+					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
 				}
 			}
 			&.even {
 				td.name {
-					background-image: url('../assets/background/table_cell_even.webp');
+					background-image: url('../../assets/background/table_cell_even.webp');
 					background-position: 0px 0px;
 				}
 				td.other {
-					background-image: url('../assets/background/table_cell_even.webp');
+					background-image: url('../../assets/background/table_cell_even.webp');
 					background-position: -10px 0px;
 				}
 			}
@@ -329,7 +331,7 @@ input {
 	font-size: 9pt;
 	font-weight: bold;
 	border: none;
-	background-image: url('../assets/design/form_field.webp');
+	background-image: url('../../assets/design/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
 }

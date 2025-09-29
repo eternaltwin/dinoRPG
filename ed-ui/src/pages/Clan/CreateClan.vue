@@ -7,6 +7,9 @@
 				<p>{{ $t('createClan.clan_name') }}</p>
 				<input class="name" type="text" v-model="name" />
 
+				<p>{{ $t('createClan.clan_lang') }}</p>
+				<LangSelector v-model="lang" />
+
 				<p>{{ $t('createClan.clan_description') }}</p>
 				<textarea class="description" type="text" v-model="description"></textarea>
 			</div>
@@ -34,16 +37,20 @@ import { CLAN_CREATE_MONEY } from '@drpg/core/constants';
 import { formatNumber } from '../../utils/formatText.js';
 import { playerStore } from '../../store/index.js';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
+import { LocalesEnum } from '../../i18n';
+import LangSelector from '../../components/clans/LangSelector.vue';
 
 export default defineComponent({
 	name: 'CreateClan',
 	components: {
+		LangSelector,
 		DZDisclaimer,
 		TitleHeader
 	},
 	data() {
 		return {
 			name: '' as string,
+			lang: '' as LocalesEnum,
 			description: '' as string,
 			canCreateClan: false as boolean,
 			creationCost: formatNumber(CLAN_CREATE_MONEY, '.'),
@@ -54,7 +61,7 @@ export default defineComponent({
 		async CreateClan(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				const clan = await ClanService.createClan(this.name, this.description);
+				const clan = await ClanService.createClan(this.name, this.description, this.lang);
 				this.playerStore.setClanId(clan.id);
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'Clan', params: { id: clan.id } });
@@ -66,6 +73,9 @@ export default defineComponent({
 		goToClanList(): void {
 			this.$router.push({ name: 'ClansList' });
 		}
+	},
+	mounted() {
+		this.lang = this.$i18n.locale as LocalesEnum;
 	}
 });
 </script>
@@ -118,6 +128,10 @@ export default defineComponent({
 		background-image: url('../../assets/design/form_field.webp');
 		background-repeat: no-repeat;
 		background-color: transparent;
+	}
+	select {
+		color: #ffee92;
+		background-color: #bc683c;
 	}
 	textarea {
 		grid-column: 2;
