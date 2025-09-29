@@ -2,37 +2,38 @@ import { Request, Response, Router } from 'express';
 import { body, param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import {
+	acceptJoinRequest,
 	createClan,
+	createClanPage,
 	deleteClan,
+	deleteClanPage,
+	denyJoinRequest,
+	excludeClanMember,
 	getAllClans,
 	getClan,
 	getClanBanner,
-	getClanMembers,
-	joinClan,
-	acceptJoinRequest,
-	denyJoinRequest,
-	updateClanBanner,
-	getJoinRequestslist,
-	getClanMember,
-	updateClanMember,
-	getClanPages,
-	getClanPage,
-	createClanPage,
-	getClanMessages,
 	getClanHistory,
-	excludeClanMember,
+	getClanHistoryCount,
+	getClanMember,
+	getClanMembers,
+	getClanMessages,
+	getClanMessagesCount,
+	getClanPage,
+	getClanPages,
+	getClanTreasureDetails,
 	getJoinRequest,
-	deleteClanPage,
-	updateClanPage,
+	getJoinRequestslist,
 	getPlayerHasRight,
+	getRankingClans,
+	giveClanIngredients,
+	joinClan,
 	leaveClanSelf,
 	searchClanByName,
-	getClanMessagesCount,
-	getClanHistoryCount,
-	giveClanIngredients,
-	getClanTreasureDetails,
-	getRankingClans,
-	searchClans
+	searchClans,
+	updateClanBanner,
+	updateClanLanguage,
+	updateClanMember,
+	updateClanPage
 } from '../business/clanService.js';
 import multer from 'multer';
 import sendError from '../utils/sendErrors.js';
@@ -250,10 +251,18 @@ routes.get(
  *           type: object
  *           required:
  *             - name
+ *             - description
+ *             - lang
  *           properties:
  *             name:
  *               type: string
  *               description: Name for the clan to create
+ *             description:
+ *               type: string
+ *               description: Description for the clan to create
+ *             language:
+ *               type: string
+ *               description: Language for the clan to create
  *     responses:
  *       201:
  *         description: Successfully created
@@ -262,7 +271,7 @@ routes.get(
  */
 routes.post(
 	`${commonPath}`,
-	[body('name').exists().isString(), body('description').exists().isString()],
+	[body('name').exists().isString(), body('description').exists().isString(), body('language').exists().isString()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -373,7 +382,7 @@ routes.delete(`${commonPath}/:id`, [param('id').exists().toInt().isNumeric()], a
 
 /**
  * @openapi
- * /api/v1/clan:
+ * /api/v1/clan/{id}/edit/banner:
  *   put:
  *     summary: Update clan banner by clan id
  *     security:
@@ -409,6 +418,51 @@ routes.put(
 
 		try {
 			const response = await updateClanBanner(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
+	}
+);
+
+/**
+ * @openapi
+ * /api/v1/clan/{id}/edit/lang:
+ *   put:
+ *     summary: Update clan lang by clan id
+ *     security:
+ *       - bearerAuth: []
+ *     tags:
+ *       - Clans
+ *     produces:
+ *       - application/json
+ * 	   parameters:
+ *       - in: body
+ *         name: body
+ *         schema:
+ *           type: object
+ *           required:
+ *             - language
+ *           properties:
+ *             language:
+ *               type: string
+ *               description: Language for the clan
+ *     responses:
+ *       200:
+ *         description: Successfully modified
+ *       500:
+ *         description: Error
+ */
+routes.put(
+	`${commonPath}/:id/edit/lang`,
+	[body('language').exists().isString()],
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
+
+		try {
+			const response = await updateClanLanguage(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

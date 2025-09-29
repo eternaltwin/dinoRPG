@@ -20,6 +20,7 @@ type Events = {
 	messageToPlayer: { name: string; id: string };
 	refreshDojo: boolean;
 	connected: boolean;
+	clanBannerUpdated: string;
 };
 
 type toast = {

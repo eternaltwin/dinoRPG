@@ -27,13 +27,14 @@ import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+
 export default defineComponent({
 	name: 'ClanMemberEdit',
 	components: { DZDisclaimer },
 	data() {
 		return {
 			clanMember: undefined as ClanMember | undefined,
-			rights: [] as { name: string; selected: boolean }[]
+			rights: [] as { name: ClanMemberRight; selected: boolean }[]
 		};
 	},
 	methods: {
@@ -65,13 +66,11 @@ export default defineComponent({
 		fillRights() {
 			this.rights = [];
 			if (!this.clanMember) return;
-			for (const right in ClanMemberRight) {
-				if (Number(right) || Number(right) == 0) {
-					this.rights.push({
-						name: ClanMemberRight[right],
-						selected: this.clanMember.rights.findIndex(r => r == ClanMemberRight[right]) != -1
-					});
-				}
+			for (const right of Object.values(ClanMemberRight)) {
+				this.rights.push({
+					name: right,
+					selected: this.clanMember.rights.findIndex(r => r == right) != -1
+				});
 			}
 		}
 	},

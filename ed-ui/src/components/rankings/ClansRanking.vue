@@ -33,6 +33,7 @@
 					</td>
 					<td class="other">
 						{{ clan.name }}
+						<Flag :lang="clan.lang" />
 					</td>
 					<td class="other">
 						<div class="flex items-center gap-2">
@@ -57,14 +58,14 @@ import { defineComponent } from 'vue';
 import EventBus from '../../events/index.js';
 import { ClanLite } from '@drpg/core/models/clan/clan';
 import { ClanService } from '../../services/index.js';
-import { utils } from '../../utils/index.js';
-import { errorHandler } from '../../utils/index.js';
+import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
+import Flag from '../common/Flag.vue';
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: { SearchEntity, DZDisclaimer },
+	components: { Flag, SearchEntity, DZDisclaimer },
 	data() {
 		return {
 			clansList: [] as Array<ClanLite>,

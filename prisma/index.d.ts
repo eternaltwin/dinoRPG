@@ -49892,6 +49892,7 @@ export namespace Prisma {
     clanWarId: number | null
     banner: Uint8Array | null
     leaderId: string | null
+    lang: $Enums.Lang | null
   }
 
   export type ClanMaxAggregateOutputType = {
@@ -49902,6 +49903,7 @@ export namespace Prisma {
     clanWarId: number | null
     banner: Uint8Array | null
     leaderId: string | null
+    lang: $Enums.Lang | null
   }
 
   export type ClanCountAggregateOutputType = {
@@ -49912,6 +49914,7 @@ export namespace Prisma {
     clanWarId: number
     banner: number
     leaderId: number
+    lang: number
     _all: number
   }
 
@@ -49936,6 +49939,7 @@ export namespace Prisma {
     clanWarId?: true
     banner?: true
     leaderId?: true
+    lang?: true
   }
 
   export type ClanMaxAggregateInputType = {
@@ -49946,6 +49950,7 @@ export namespace Prisma {
     clanWarId?: true
     banner?: true
     leaderId?: true
+    lang?: true
   }
 
   export type ClanCountAggregateInputType = {
@@ -49956,6 +49961,7 @@ export namespace Prisma {
     clanWarId?: true
     banner?: true
     leaderId?: true
+    lang?: true
     _all?: true
   }
 
@@ -50053,6 +50059,7 @@ export namespace Prisma {
     clanWarId: number | null
     banner: Uint8Array | null
     leaderId: string
+    lang: $Enums.Lang
     _count: ClanCountAggregateOutputType | null
     _avg: ClanAvgAggregateOutputType | null
     _sum: ClanSumAggregateOutputType | null
@@ -50082,6 +50089,7 @@ export namespace Prisma {
     clanWarId?: boolean
     banner?: boolean
     leaderId?: boolean
+    lang?: boolean
     war?: boolean | Clan$warArgs<ExtArgs>
     leader?: boolean | PlayerDefaultArgs<ExtArgs>
     history?: boolean | Clan$historyArgs<ExtArgs>
@@ -50101,6 +50109,7 @@ export namespace Prisma {
     clanWarId?: boolean
     banner?: boolean
     leaderId?: boolean
+    lang?: boolean
     war?: boolean | Clan$warArgs<ExtArgs>
     leader?: boolean | PlayerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clan"]>
@@ -50113,6 +50122,7 @@ export namespace Prisma {
     clanWarId?: boolean
     banner?: boolean
     leaderId?: boolean
+    lang?: boolean
     war?: boolean | Clan$warArgs<ExtArgs>
     leader?: boolean | PlayerDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["clan"]>
@@ -50125,9 +50135,10 @@ export namespace Prisma {
     clanWarId?: boolean
     banner?: boolean
     leaderId?: boolean
+    lang?: boolean
   }
 
-  export type ClanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "treasureValue" | "creationDate" | "clanWarId" | "banner" | "leaderId", ExtArgs["result"]["clan"]>
+  export type ClanOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "treasureValue" | "creationDate" | "clanWarId" | "banner" | "leaderId" | "lang", ExtArgs["result"]["clan"]>
   export type ClanInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     war?: boolean | Clan$warArgs<ExtArgs>
     leader?: boolean | PlayerDefaultArgs<ExtArgs>
@@ -50168,6 +50179,7 @@ export namespace Prisma {
       clanWarId: number | null
       banner: Uint8Array | null
       leaderId: string
+      lang: $Enums.Lang
     }, ExtArgs["result"]["clan"]>
     composites: {}
   }
@@ -50606,6 +50618,7 @@ export namespace Prisma {
     readonly clanWarId: FieldRef<"Clan", 'Int'>
     readonly banner: FieldRef<"Clan", 'Bytes'>
     readonly leaderId: FieldRef<"Clan", 'String'>
+    readonly lang: FieldRef<"Clan", 'Lang'>
   }
     
 
@@ -74091,7 +74104,8 @@ export namespace Prisma {
     creationDate: 'creationDate',
     clanWarId: 'clanWarId',
     banner: 'banner',
-    leaderId: 'leaderId'
+    leaderId: 'leaderId',
+    lang: 'lang'
   };
 
   export type ClanScalarFieldEnum = (typeof ClanScalarFieldEnum)[keyof typeof ClanScalarFieldEnum]
@@ -77188,6 +77202,7 @@ export namespace Prisma {
     clanWarId?: IntNullableFilter<"Clan"> | number | null
     banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
     leaderId?: UuidFilter<"Clan"> | string
+    lang?: EnumLangFilter<"Clan"> | $Enums.Lang
     war?: XOR<ClanWarNullableScalarRelationFilter, ClanWarWhereInput> | null
     leader?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     history?: ClanHistoryListRelationFilter
@@ -77206,6 +77221,7 @@ export namespace Prisma {
     clanWarId?: SortOrderInput | SortOrder
     banner?: SortOrderInput | SortOrder
     leaderId?: SortOrder
+    lang?: SortOrder
     war?: ClanWarOrderByWithRelationInput
     leader?: PlayerOrderByWithRelationInput
     history?: ClanHistoryOrderByRelationAggregateInput
@@ -77227,6 +77243,7 @@ export namespace Prisma {
     creationDate?: DateTimeFilter<"Clan"> | Date | string
     clanWarId?: IntNullableFilter<"Clan"> | number | null
     banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
+    lang?: EnumLangFilter<"Clan"> | $Enums.Lang
     war?: XOR<ClanWarNullableScalarRelationFilter, ClanWarWhereInput> | null
     leader?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
     history?: ClanHistoryListRelationFilter
@@ -77245,6 +77262,7 @@ export namespace Prisma {
     clanWarId?: SortOrderInput | SortOrder
     banner?: SortOrderInput | SortOrder
     leaderId?: SortOrder
+    lang?: SortOrder
     _count?: ClanCountOrderByAggregateInput
     _avg?: ClanAvgOrderByAggregateInput
     _max?: ClanMaxOrderByAggregateInput
@@ -77263,6 +77281,7 @@ export namespace Prisma {
     clanWarId?: IntNullableWithAggregatesFilter<"Clan"> | number | null
     banner?: BytesNullableWithAggregatesFilter<"Clan"> | Uint8Array | null
     leaderId?: UuidWithAggregatesFilter<"Clan"> | string
+    lang?: EnumLangWithAggregatesFilter<"Clan"> | $Enums.Lang
   }
 
   export type ClanJoinRequestWhereInput = {
@@ -81100,6 +81119,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -81118,6 +81138,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
@@ -81131,6 +81152,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -81149,6 +81171,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
@@ -81165,6 +81188,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
   }
 
   export type ClanUpdateManyMutationInput = {
@@ -81172,6 +81196,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
   }
 
   export type ClanUncheckedUpdateManyInput = {
@@ -81182,6 +81207,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
   }
 
   export type ClanJoinRequestCreateInput = {
@@ -85076,6 +85102,7 @@ export namespace Prisma {
     clanWarId?: SortOrder
     banner?: SortOrder
     leaderId?: SortOrder
+    lang?: SortOrder
   }
 
   export type ClanAvgOrderByAggregateInput = {
@@ -85092,6 +85119,7 @@ export namespace Prisma {
     clanWarId?: SortOrder
     banner?: SortOrder
     leaderId?: SortOrder
+    lang?: SortOrder
   }
 
   export type ClanMinOrderByAggregateInput = {
@@ -85102,6 +85130,7 @@ export namespace Prisma {
     clanWarId?: SortOrder
     banner?: SortOrder
     leaderId?: SortOrder
+    lang?: SortOrder
   }
 
   export type ClanSumOrderByAggregateInput = {
@@ -96030,6 +96059,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
@@ -96046,6 +96076,7 @@ export namespace Prisma {
     creationDate?: Date | string
     clanWarId?: number | null
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
@@ -96999,6 +97030,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
@@ -97015,6 +97047,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
@@ -103909,6 +103942,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -103926,6 +103960,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
@@ -104083,6 +104118,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -104100,6 +104136,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
@@ -104247,6 +104284,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
@@ -104263,6 +104301,7 @@ export namespace Prisma {
     creationDate?: Date | string
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
@@ -104308,6 +104347,7 @@ export namespace Prisma {
     clanWarId?: IntNullableFilter<"Clan"> | number | null
     banner?: BytesNullableFilter<"Clan"> | Uint8Array | null
     leaderId?: UuidFilter<"Clan"> | string
+    lang?: EnumLangFilter<"Clan"> | $Enums.Lang
   }
 
   export type ClanCreateWithoutIngredientsInput = {
@@ -104315,6 +104355,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -104332,6 +104373,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
@@ -104360,6 +104402,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -104377,6 +104420,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
@@ -104518,6 +104562,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -104535,6 +104580,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
@@ -104698,6 +104744,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -104715,6 +104762,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
@@ -104856,6 +104904,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     joinRequests?: ClanJoinRequestCreateNestedManyWithoutClanInput
@@ -104873,6 +104922,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
@@ -105036,6 +105086,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
@@ -105053,6 +105104,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
@@ -105065,6 +105117,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -105082,6 +105135,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     pages?: ClanPageUncheckedCreateNestedManyWithoutClanInput
@@ -105239,6 +105293,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -105256,6 +105311,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     pages?: ClanPageUncheckedUpdateManyWithoutClanNestedInput
@@ -105403,6 +105459,7 @@ export namespace Prisma {
     treasureValue?: number
     creationDate?: Date | string
     banner?: Uint8Array | null
+    lang?: $Enums.Lang
     war?: ClanWarCreateNestedOneWithoutClansInput
     leader: PlayerCreateNestedOneWithoutLeaderOfInput
     history?: ClanHistoryCreateNestedManyWithoutClanInput
@@ -105420,6 +105477,7 @@ export namespace Prisma {
     clanWarId?: number | null
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
     history?: ClanHistoryUncheckedCreateNestedManyWithoutClanInput
     joinRequests?: ClanJoinRequestUncheckedCreateNestedManyWithoutClanInput
     members?: ClanMemberUncheckedCreateNestedManyWithoutClanInput
@@ -105448,6 +105506,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     war?: ClanWarUpdateOneWithoutClansNestedInput
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
@@ -105465,6 +105524,7 @@ export namespace Prisma {
     clanWarId?: NullableIntFieldUpdateOperationsInput | number | null
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
@@ -112802,6 +112862,7 @@ export namespace Prisma {
     creationDate?: Date | string
     banner?: Uint8Array | null
     leaderId: string
+    lang?: $Enums.Lang
   }
 
   export type ClanUpdateWithoutWarInput = {
@@ -112809,6 +112870,7 @@ export namespace Prisma {
     treasureValue?: IntFieldUpdateOperationsInput | number
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     leader?: PlayerUpdateOneRequiredWithoutLeaderOfNestedInput
     history?: ClanHistoryUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUpdateManyWithoutClanNestedInput
@@ -112825,6 +112887,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
     history?: ClanHistoryUncheckedUpdateManyWithoutClanNestedInput
     joinRequests?: ClanJoinRequestUncheckedUpdateManyWithoutClanNestedInput
     members?: ClanMemberUncheckedUpdateManyWithoutClanNestedInput
@@ -112840,6 +112903,7 @@ export namespace Prisma {
     creationDate?: DateTimeFieldUpdateOperationsInput | Date | string
     banner?: NullableBytesFieldUpdateOperationsInput | Uint8Array | null
     leaderId?: StringFieldUpdateOperationsInput | string
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
   }
 
   export type MessageCreateManyConversationInput = {

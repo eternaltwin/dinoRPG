@@ -149,7 +149,7 @@ export default defineComponent({
 			try {
 				this.hasPageManageRight = await ClanService.getPlayerHasRight(
 					Number(this.$route.params.id),
-					ClanMemberRight[ClanMemberRight.PAGE_MANAGE]
+					ClanMemberRight.PAGE_MANAGE
 				);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
