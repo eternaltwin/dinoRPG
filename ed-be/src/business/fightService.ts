@@ -390,18 +390,26 @@ export async function rewardFight(
 			}
 		}
 
-		gold += (getRandomNumber(0, 36) + 43) * 10;
+		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
 	}
 
 	const napo = team.filter(d => d.items.some(i => i.itemId === Item.GOLDEN_NAPODINO)).length
 	const fprob = getRandomNumber(0, 100) - 10 * napo;
-	const teamSizeMalus = 0.95 - 0.05 * (team.length - 1);
+
 	let goldMultiplier = 1;
 	if (fprob < 1) goldMultiplier = 10;
 	else if (fprob < 11) goldMultiplier = 3;
+	// Gold multiplier average: 1.29
+	// Gold base * multiplier: 610 * 1.29 = 786.9
 
-	const malus = fgold > teamSizeMalus ? fgold * teamSizeMalus : teamSizeMalus;
-	gold = Math.round(gold * goldMultiplier * goldFactor * Math.max(malus, fgold));
+	// Malus based on size of team starting size 2
+	// Size 2: 0.5 - Size 3: 0.45 - Size 4: 0.445 - Size 5: 0.4445 etc.
+	let teamSizeMalus = 1;
+	for (let i = 2; i <= team.length; i++) {
+		teamSizeMalus -= 0.5 * Math.pow(0.1, i-2);
+	}
+	const malus = fgold >= 1 ? fgold * teamSizeMalus : fgold;
+	gold = Math.round(gold * goldMultiplier * goldFactor * malus);
 
 	const goldLost = fightResult.attackers.reduce((partialSum, a) => partialSum + a.goldLost, 0);
 	gold -= goldLost;
