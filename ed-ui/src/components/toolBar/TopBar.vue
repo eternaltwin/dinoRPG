@@ -11,7 +11,7 @@
 			<span
 				class="time"
 				v-tippy="{
-					content: $t('tooltip.time'),
+					content: $t('tooltip.serverTime'),
 					theme: 'small'
 				}"
 				>{{ time }}</span

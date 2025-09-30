@@ -2539,7 +2539,7 @@
 			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
 			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
 		},
-		"time": "Temps du serveur"
+		"serverTime": "Temps du serveur"
 	},
 	"pageTitle": {
 		"default": "Dino-RPG [ L'actualité de Dinoland ]",
