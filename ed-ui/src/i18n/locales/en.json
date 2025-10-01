@@ -24,10 +24,10 @@
 	"toast": {
 		"noFBTournament": "There are no qualifications yet the BrutForce tournament.",
 		"maxParticipantInThread": "You cannot add more than 9 participants to a conversation.",
-		"dinozAlreadySelling": "Your dinoz is already on sale.",
-		"DinozIsDead": "Your dinoz is dead and cannot be healed.",
-		"AlreadyAtMaxHealth": "Your dinoz cannot be healed anymore.",
-		"DinozNotDead": "Your dinoz is already alive.",
+		"dinozAlreadySelling": "Your Dinoz is already on sale.",
+		"DinozIsDead": "Your Dinoz is dead and cannot be healed.",
+		"AlreadyAtMaxHealth": "Your Dinoz cannot be healed anymore.",
+		"DinozNotDead": "Your Dinoz is already alive.",
 		"nocookie": "The cookie has expired or is invalid, please retry from the My Account page.",
 		"wronglogins": "The provided Eternal-Twin credentials are incorrect.",
 		"noPDA": "You need the Diamantite Pebble to access this page.",
@@ -37,13 +37,13 @@
 		"noFight": "Today, the swamp is covered in fog... You will not find any monster to fight.",
 		"dinozDataMissing": "Dinoz data missing.",
 		"selectADinozAtMarketFirst": "You must first bring a Dinoz to the market.",
-		"unknownDinoz": "Unknown dinoz.",
+		"unknownDinoz": "Unknown Dinoz.",
 		"noFollowers": "The Dinoz is not followed.",
 		"leaderChanged": "Your Dinoz is the new group leader.",
 		"missingUser": "Missing user.",
 		"missingData": "Missing data.",
 		"labrute": "You received {quantity} of Madam Irma's Potions.",
-		"reincarnation": "Your dinoz has been reincarnated.",
+		"reincarnation": "Your Dinoz has been reincarnated.",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
 			"tooManyItems": "You cannot sell more than {items} different items at a time.",
@@ -4498,17 +4498,17 @@
 		"tournamentFormats": {
 			"uncommon": "Uncommon Dinoz",
 			"common": "Common Dinoz",
-			"duo": "Duo de Dinoz",
-			"anti_meta_4": "Anti-Meta 4v4",
-			"anti_meta_5": "Anti-Meta 5v5",
-			"all_in_5": "All Dinoz 5v5",
-			"all_in_6": "All Dinoz 6v6",
 			"fire": "Fire Dinoz",
 			"water": "Water Dinoz",
 			"wood": "Wood Dinoz",
 			"air": "Air Dinoz",
 			"lightning": "Lightning Dinoz",
 			"ffa": "Free for All",
+			"bipede": "Biped",
+			"quadrupede": "Quadruped",
+			"flying": "Flying and crawling",
+			"anti_poison": "Anti poisons",
+			"hippo": "Hippoclamp",
 			"demons": "Demon Dinoz"
 		},
 		"history": {
@@ -5075,5 +5075,11 @@
 	"skillTrees": {
 		"title": "Skills Tree",
 		"level": "Lv.{level}"
+	},
+	"poll": {
+		"choose_option": "Vote for your choice:",
+		"choose_done": "Vote registered",
+		"select": "Vote",
+		"select_option": "Select an option"
 	}
 }
