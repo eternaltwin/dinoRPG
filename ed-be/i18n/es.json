@@ -74,7 +74,7 @@
 				"fou": "Fou",
 				"gro": "Gro",
 				"gla": "Gla",
-				"gent": "Genti",
+				"genti": "Genti",
 				"henri": "Henri",
 				"ippo": "Ippo",
 				"iva": "Iva",
@@ -218,7 +218,7 @@
 		"poison": "El veneno está activado.",
 		"nopoison": "El veneno está desactivado.",
 		"newsTitle": "Nuevo Torneo Inter-Dojo",
-		"newsCorpus": "¡Ha comenzado un nuevo TID de tipo {{type}}!<br/><br/>Las fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas para la creación de equipos son:<br/>- {{rule1}}<br/>- {{rule2}}<br/><br/>- {{rule3}}<br/><br/>- {{rule4}}<br/><br/>Las recompensas serán las siguientes:<br/>- Para el primero, un huevo de Tufufu raro, una caja legendaria y el 12% del premio en efectivo.<br/>- Para el segundo, tercero y cuarto, un huevo de Tufufu, una caja épica y el 6% del premio en efectivo para cada uno.<br/>- Para los puestos del 5º al 8º, una caja rara y el 3.75% del premio en efectivo para cada uno.<br/>- Para los puestos del 9º al 16º, una caja rara y el 1.875% del premio en efectivo para cada uno.<br/>- Para quienes obtuvieron solo una victoria, el 0.75% del premio en efectivo cada uno.<br/>- Para todos los demás clasificados a la fase de grupos, el 0.25% del premio en efectivo cada uno.<br/><br/>¡No olviden que hay recompensas para quienes alcancen los niveles de 500, 750, 1000, 1200, 1300 y 1400 puntos al final de las clasificatorias!<br/><br/>¡Buen torneo a todos!"
+		"newsCorpus": "# Torneo {{number}} \n ## Arquetipo {{type}} \n Las fases clasificatorias tendrán lugar hasta el {{endQualif}}. Las reglas de creación de equipos son:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Recompensas \n Las recompensas serán las siguientes:\n- Para el primero, un huevo de Toufufu raro, una caja legendaria y 12% del premio en oro.\n- Para el segundo, tercero y cuarto, un huevo de Toufufu, una caja épica y 6% del premio en oro cada uno.\n- Para los puestos del 5 al 8, una caja rara y 3.75% del premio en oro cada uno.\n- Para los puestos del 9 al 16, una caja rara y 1.875% del premio en oro cada uno.\n- Para aquellos que solo tengan una victoria, 0.75% del premio en oro cada uno.\n- Para todos los demás clasificados en fases de grupos, 0.25% del premio en oro cada uno.\n# Recompensas de clasificación\n¡No olviden que hay recompensas para las personas que alcancen los hitos de 500, 750, 1000, 1200, 1300 y 1400 puntos al final de las clasificatorias! \n¡Buen torneo a todos!"
 	},
 	"race": {
 		"1": "Moueffe",
@@ -234,7 +234,7 @@
 		"11": "Teroz",
 		"12": "Nubeis",
 		"13": "Sirain",
-		"14": "Jippoclamp",
+		"14": "Hippoclamp",
 		"15": "Gorilos",
 		"16": "Gorilos Demonio",
 		"17": "Wanwan",

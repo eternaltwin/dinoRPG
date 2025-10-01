@@ -46,10 +46,9 @@
 	"knownSphereSkill": "Votre Dinoz a déjà acquis toutes les compétences sphériques de cet élément.",
 	"playerNotFound": "Le joueur {id} n'a pas été trouvé.",
 	"dinozNotFound": "Le dinoz {id} n'a pas été trouvé.",
-	"dinozCannotLvlUp": "Le Dinoz {id} ne peut pas monter de niveau car il est inscrit au TID.",
-	"reincarnationNotPossible": "La réincarnation du Dinoz {id} n'est possible qu'au niveau 40.",
-	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz {id} avec des objets équipés.",
-
+	"dinozCannotLvlUp": "Le Dinoz ne peut pas monter de niveau car il est inscrit au TID.",
+	"reincarnationNotPossible": "La réincarnation du Dinoz n'est possible qu'à partir du niveau 40.",
+	"reincarnationWithEquippedItems": "Vous ne pouvez pas réincarner votre Dinoz avec des objets équipés.",
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Votre compte est encore trop jeune.",
@@ -75,7 +74,7 @@
 				"fou": "Fou",
 				"gro": "Gro",
 				"gla": "Gla",
-				"gent": "Genti",
+				"genti": "Genti",
 				"henri": "Henri",
 				"ippo": "Ippo",
 				"iva": "Iva",
@@ -220,7 +219,7 @@
 		"poison": "Le poison est activé.",
 		"nopoison": "Le poison est désactivé.",
 		"newsTitle": "Nouveau Tournoi inter Dojo",
-		"newsCorpus": "# Tournois {{number}} \n ## Archtype {{type}} \n Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n\n- {{rule3}}\n- {{rule4}}\n## RécompensesLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.\n- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.\n# Récompenses de qualifications\n'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! \nBon tournois à tous !"
+		"newsCorpus": "# Tournois {{number}} \n ## Archtype {{type}} \n Les phases qualificatives auront lieux jusqu'au {{endQualif}}. Les règles de créations d'équipes sont:\n- {{rule1}}\n- {{rule2}}\n- {{rule3}}\n- {{rule4}}\n## Récompenses\nLes récompenses seront les suivantes:\n- Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 12% du cash price.\n- Pour les deuxième, troisième et quatrième, un oeuf de Toufufu, une boîte épique et 6% du cash price chacun.\n- Pour les 5 à 8ème, une boîte rare et 3,75% du cash price chacun.\n- Pour les 9 à 16ème, une boîte rare  et 1,875% du cash price chacun.\n- Pour ceux n'ayant qu'une seule victoire, 0,75% du cash price chacun.\n- Pour tout les autres qualifiés en phases de poules, 0.25% du cash price chacun.\n# Récompenses de qualifications\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications! \nBon tournois à tous !"
 	},
 	"race": {
 		"1": "Moueffe",

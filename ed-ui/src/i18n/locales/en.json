@@ -83,7 +83,14 @@
 		"login": "Connect to Eternal-Twin",
 		"homepage": {
 			"part1": "DinoRPG is in alpha version open to public. Be careful because the game is invaded by Smashrooms.",
-			"part2": "All information are available on "
+			"part2": "All information are available on ",
+			"dialog": {
+				"message1": "At last, Dinotown, the wonder of Dinoland, the starting of all respectful adventures.",
+				"message2": "After a long journey, you finally arrived at your destination, attracted by the rumors of thrilling adventures, wealth and glory.",
+				"message3": "It's here that you will be able to hire your first companion and...",
+				"message4": "Finally!",
+				"message5": "Hey you! Ready to join the adventure?"
+			}
 		},
 		"issue": "Please report bugs found on ",
 		"shop": "Display the Dinoz"
@@ -2528,7 +2535,8 @@
 			"buyMaxBottomNote": "//Click here to fully stock up on this item.//",
 			"invalidQuantity": "Please enter a **valid** quantity.",
 			"invalidQuantity_foot": "//Make sure the number you've entered is correct and that you have space for it.//"
-		}
+		},
+		"serverTime": "Server Time"
 	},
 	"pageTitle": {
 		"default": "Dino-RPG [ Dinoland News ]",
@@ -3398,25 +3406,25 @@
 		},
 		"target": {
 			"goupignon:wolf": "Wolves and Smashrooms",
-			"wolf": "Wolf",
-			"goupignon": "Smashroom Pilferers",
-			"gluon": "Gluons",
-			"greeng": "Green Giants",
-			"coq": "Giant Chickens",
+			"wolf": "Wolf | Wolf | Wolves",
+			"goupignon": "Thieving Smashroom | Thieving Smashroom | Thieving Smashrooms",
+			"gluon": "Gluon | Gluon | Gluons",
+			"greeng": "Green Giant | Green Giant | Green Giants",
+			"coq": "Giant Chicken | Giant Chicken | Giant Chickens",
 			"pira": "Pirhanoz",
-			"kazka": "Kazkadines",
+			"kazka": "Kazkadine | Kazkadine | Kazkadines",
 			"anguil": "Eeloz",
-			"kazka:pira": "Atlanteid Island Monsters",
-			"korgon": "Korgons",
+			"kazka:pira": "Atlanteid Island monster | Atlanteid Island monster | Atlanteid Island monsters",
+			"korgon": "Korgon | Korgon | Korgons",
 			"korgon:ronciv": "Korgons or Allies",
-			"barche": "Baby Archelions",
-			"flam": "Flamelets",
-			"cobra": "Cobrazieros",
-			"goblin": "Goblins",
+			"barche": "Baby Archelion | Baby Archelion | Archelion Babies",
+			"flam": "Flamelet | Flamelet | Flamelets",
+			"cobra": "Cobraziero | Cobraziero | Cobrazieros",
+			"goblin": "Goblin | Goblin | Goblins",
 			"bat": "Tawny-Bats",
-			"ronciv": "Bramble Eaters",
-			"gardien": "Arboreal Guardians",
-			"any": "monsters"
+			"ronciv": "Bramble Eater | Bramble Eater | Bramble Eaters",
+			"gardien": "Arboreal Guardian | Arboreal Guardian | Arboreal Guardians",
+			"any": "monster | monster | monsters"
 		}
 	},
 	"myAccount": {
