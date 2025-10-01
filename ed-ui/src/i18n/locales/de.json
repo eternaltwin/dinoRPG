@@ -83,7 +83,14 @@
 		"login": "Bei Eternal-Twin anmelden",
 		"homepage": {
 			"part1": "Die Alpha-Version von DinoRPG ist nun öffentlich zugänglich. Nehmt euch also vor den knurrenden Kloppignons in Acht!",
-			"part2": "Alles Weitere findet ihr auf"
+			"part2": "Alles Weitere findet ihr auf",
+			"dialog": {
+				"message1": "Aaah, Dinoville, das Juwel des Dinolandes und Ort des Aufbruchs jener Abenteurer, die etwas auf sich halten.",
+				"message2": "Nach einer langen Reise bist du endlich am Ziel, angelockt durch Gerüchte von spannenden Abenteuern, Ruhm und Reichtum.",
+				"message3": "Es ist hier, wo du deinen ersten Begleiter rekrutieren kannst und dann...",
+				"message4": "Endlich!",
+				"message5": "Sei gegrüßt! Bereit, dich ins Abenteuer zu stürzen?"
+			}
 		},
 		"issue": "Bitte meldet gefundene Fehler unter ",
 		"shop": "Dinoz anzeigen"
@@ -2528,7 +2535,8 @@
 			"buyMaxBottomNote": "//Klicke hier, um diesen Gegenstand vollends aufzufüllen.//",
 			"invalidQuantity": "Es ist eine **gültige** Menge erforderlich.",
 			"invalidQuantity_foot": "//Prüfe, ob die Anzahl korrekt ist und ob du Platz dafür hast.//"
-		}
+		},
+		"serverTime": "Server-Zeit"
 	},
 	"pageTitle": {
 		"default": "Dino-RPG [ Dinoland-Nachrichten ]",
@@ -3398,25 +3406,25 @@
 		},
 		"target": {
 			"goupignon:wolf": "Wölfe und Kloppignons",
-			"wolf": "Wölfe",
-			"goupignon": "Kloppignon-Plünderer",
-			"gluon": "Gluons",
-			"greeng": "grüne Riesen",
-			"coq": "Harthühner",
+			"wolf": "Wölfe | Wolf | Wölfe",
+			"goupignon": "Kloppignon-Plünderer | Kloppignon-Plünderer | Kloppignon-Plünderer",
+			"gluon": "Gluons | Gluon | Gluons",
+			"greeng": "Grüne Riesen | Grüner Riese | Grüne Riesen",
+			"coq": "Harthühner | Harthuhn | Harthühner",
 			"pira": "Piranhsel",
-			"kazka": "Kazkadinen",
+			"kazka": "Kazkadinen | Kazkadine | Kazkadinen",
 			"anguil": "Aalos",
-			"kazka:pira": "Inselmonster",
-			"korgon": "Korgonen",
+			"kazka:pira": "Inselmonster | Inselmonster | Inselmonster",
+			"korgon": "Korgonen | Korgone | Korgonen",
 			"korgon:ronciv": "Korgonen oder Verbündete",
-			"barche": "Baby Archelöwen",
-			"flam": "Flämmchen",
-			"cobra": "Cobrazeros",
-			"goblin": "Goblins",
+			"barche": "Baby Archelöwen | Baby Archelöwe | Baby Archelöwen",
+			"flam": "Flämmchen | Flämmchen | Flämmchen",
+			"cobra": "Cobrazeros | Cobrazero | Cobrazeros",
+			"goblin": "Goblins | Goblin | Goblins",
 			"bat": "Jägerflattern",
-			"ronciv": "Dornenschlinger",
-			"gardien": "Baumkronwächter",
-			"any": "Monster"
+			"ronciv": "Dornenschlinger | Dornenschlinger | Dornenschlinger",
+			"gardien": "Baumkronwächter | Baumkronwächter | Baumkronwächter",
+			"any": "Monster | Monster | Monster"
 		}
 	},
 	"myAccount": {

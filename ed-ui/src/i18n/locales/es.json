@@ -83,7 +83,14 @@
 		"login": "Inicia sesión en Eternal-Twin",
 		"homepage": {
 			"part1": "DinoRPG está en una versión alpha abierta al público. Tened cuidado, el juego está repleto de Gupiñones. Al finalizar la versión alpha, el progreso de todos será reiniciado.",
-			"part2": "Toda la información está disponible en:"
+			"part2": "Toda la información está disponible en:",
+			"dialog": {
+				"message1": "Aaah, Dinovilla, la joya de Dinoland, el punto de partida de toda aventura que se respete.",
+				"message2": "Después de un largo viaje, por fin has llegado a tu destino, atraído por rumores de aventuras emocionantes, riquezas y gloria.",
+				"message3": "Aquí es donde podrás reclutar a tu primer compañero y...",
+				"message4": "¡Por fin!",
+				"message5": "¡Hola! ¿Listo para unirte a la aventura?"
+			}
 		},
 		"issue": "Por favor, informa de cualquier error que encuentres en ",
 		"shop": "Mostrar Dino"
@@ -2528,7 +2535,8 @@
 			"buyMaxBottomNote": "//Haga clic aquí para llenar el stock de este artículo.//",
 			"invalidQuantity": "Por favor, introduzca una cantidad **válida**.",
 			"invalidQuantity_foot": "//Comprueba si has introducido un número válido o si tienes suficiente espacio.//"
-		}
+		},
+		"serverTime": "Hora del servidor"
 	},
 	"pageTitle": {
 		"default": "Dino-RPG [ La actualidad en Dinoland ]",
@@ -2684,12 +2692,12 @@
 			"lettre": "Uhm... Esta vez trabajarás para mi, Papy José... Necesito que entregues URGENTEMENTE esta carta a cierta persona en Dinoville. ¡Rápido!",
 			"kilglu": "Un extraño monstruo ha aparecido en el Reino de Dinoville. Es bastante duro y puede hacer mucho daño durante una pelea. ¿Podrías matar a uno y traérmelo para que pueda estudiarlo?",
 			"kilgnt": "No sé si te diste cuenta, ¡pero el Reino de Dinovilla está siendo invadido por enormes gigantes verdes que no parecen comer nada más que vegetales! ¿Puedes exterminar a una docena lo antes posible? Esta es una orden del Rey, ¡así que debes actuar rápido!",
-			"kilcoq": "Uhm... Todavía tengo un partido de Golf planeado con el Rey el próximo mes, y adivina qué, él quiere escuchar sobre tus hazañas... ¿Qué tal si matamos a algunos Coqdur rápidamente? ¡Serás bien recompensado!",
+			"kilcoq": "Uhm... Todavía tengo un partido de Golf planeado con el Rey el próximo mes, y adivina qué, él quiere escuchar sobre tus hazañas... ¿Qué tal si matamos a algunos Cocdurs rápidamente? ¡Serás bien recompensado!",
 			"kilpir": "Pronto es el cumpleaños de la pequeña Sophie de la isla de Waikiki. Su plato favorito son las Pirañas del Pantano Pegajoso. ¿Puedes traerle algunas por mí?",
 			"troc": "Hay un gran mercado en las islas donde puedes comerciar lo que quieras. Me gustaría conseguir un perchero para este plátano, ¿puedes ocuparte de ello?",
 			"kilksk": "He recibido una llamada urgente desde Sulaflota. Los Atlanteidos se inquietan por la repentina aparición de un gran número de Kaskadinos provenientes de las Profundidades. ¿Podrías llevar a tu Dino para hacer un poco de limpieza? Cuidado con las descargas eléctricas.",
 			"kilang": "¿Conoces el plato tradicional de Anguilloz al vinagre? ¡Es realmente delicioso! ¿Puedes traer un poco de Anguilloz fresco y un poco de vinagre y luego llevárselo a mi amigo en el puerto de Santa Moria? ¡Es para un regalo!",
-			"bigpch": "Estoy un poco molesto. Le prometí al Archisabio del Domo de Sulaflota que exterminaría a 150 monstruos de las Islas Atlantes en solo diez días, pero me rompí el brazo y no puedo moverme demasiado. ¿Puedes encargarte de matar a treinta por mí? ¡Por lo demás, me las arreglaré!",
+			"bigpch": "Estoy un poco molesto. Prometí al Archisabio de Sulaflota que exterminaría 150 monstruos en las Islas Atlanteidas en apenas 10 días, pero me rompí el brazo y no puedo desplazarme. ¿Podrías matar 30 para mí? ¡Me las arreglaré solo para el resto!",
 			"rally1": "¡Participa en el Rally de la Sardina! ¡Llega al Puerto de Santa Moria lo más rápido posible!",
 			"rally2": "¡Participa en el Rally de Pescado! ¡Llega al Puerto de Santa Moria lo más rápido posible!",
 			"rally3": "¡Participa en el Rally del Tiburón! ¡Llega a las Minas de Coral lo más rápido posible!",
@@ -3398,25 +3406,25 @@
 		},
 		"target": {
 			"goupignon:wolf": "Lobos y Gupiones",
-			"wolf": "Lobos",
-			"goupignon": "Gupiones Ladronzuelos",
-			"gluon": "Gluons",
-			"greeng": "Gigantes verdes",
-			"coq": "Cocdur",
+			"wolf": "Lobo | Lobo | Lobos",
+			"goupignon": "Gupión ladronzuelo | Gupión ladronzuelo | Gupiones ladronzuelos",
+			"gluon": "Gluón | Gluón | Gluones",
+			"greeng": "Gigante verde | Gigante verde | Gigantes verdes",
+			"coq": "Cocdur | Cocdur | Cocdurs",
 			"pira": "Piranta",
-			"kazka": "Kaskadino",
+			"kazka": "Kaskadino | Kaskadino | Kaskadinos",
 			"anguil": "Anguilos",
-			"kazka:pira": "Monstruos de las islas",
-			"korgon": "Korgones",
+			"kazka:pira": "Monstruo de las islas | Monstruo de las islas | Monstruos de las islas",
+			"korgon": "Korgón | Korgón | Korgones",
 			"korgon:ronciv": "Roncivores o korgones",
-			"barche": "Bebé Arquelion",
-			"flam": "Flamachas",
-			"cobra": "Cobrasero",
-			"goblin": "Goblin",
+			"barche": "Bebé Arquelión | Bebé Arquelión | Bebés Arqueliones",
+			"flam": "Flamacha | Flamacha | Flamachas",
+			"cobra": "Cobrasero | Cobrasero | Cobraseros",
+			"goblin": "Goblin | Goblin | Goblins",
 			"bat": "Ratón Fiera",
-			"ronciv": "Roncívor",
-			"gardien": "Guardián Arbólico",
-			"any": "monstruos"
+			"ronciv": "Roncívor | Roncívor | Roncivores",
+			"gardien": "Guardián Arbólico | Guardián Arbólico | Guardianes Arbólicos",
+			"any": "monstruo | monstruo | monstruos"
 		}
 	},
 	"myAccount": {
