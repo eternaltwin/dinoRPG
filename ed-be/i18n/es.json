@@ -46,6 +46,9 @@
 	"knownSphereSkill": "Tu Dino ya ha adquirido todas las habilidades esféricas de este elemento.",
 	"playerNotFound": "El jugador {id} no ha sido encontrado.",
 	"dinozNotFound": "El Dino {id} no ha sido encontrado.",
+	"dinozCannotLvlUp": "El Dino no puede subir de nivel porque está inscrito en el TID.",
+	"reincarnationNotPossible": "La reencarnación del Dino solo es posible a partir del nivel 40.",
+	"reincarnationWithEquippedItems": "No puedes reencarnar a tu Dino con objetos equipados.",
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Tu cuenta aún es demasiado nueva.",
@@ -282,17 +285,17 @@
 	"tournament": {
 		"uncommon": "razas raras",
 		"common": "razas comunes",
-		"duo": "duo",
-		"anti_meta_4": "razas anti-meta",
-		"anti_meta_5": "razas anti-meta",
-		"all_in_5": "todas las razas",
-		"all_in_6": "todas las razas",
 		"fire": "razas con dominancia de fuego",
 		"water": "razas con dominancia de agua",
 		"wood": "razas con dominancia de madera",
 		"air": "razas con dominancia de aire",
 		"lightning": "razas con dominancia de rayo",
 		"ffa": "todas las razas",
+		"bipede": "todas las razas bípedas",
+		"quadrupede": "todas las razas cuadrúpedas",
+		"flying": "todas las razas voladoras o reptantes",
+		"anti_poison": "todas las razas que no tienen afinidad con el veneno",
+		"hippo": "únicamente los hippoclamps",
 		"demons": "únicamente demonios"
 	},
 	"announce": {

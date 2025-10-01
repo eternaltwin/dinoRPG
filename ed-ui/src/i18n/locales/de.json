@@ -4498,17 +4498,17 @@
 		"tournamentFormats": {
 			"uncommon": "Ungewöhnliche Dinoz",
 			"common": "Gewöhnliche Dinoz",
-			"duo": "Dinoz-Duo",
-			"anti_meta_4": "Anti-Meta 4v4",
-			"anti_meta_5": "Anti-Meta 5v5",
-			"all_in_5": "Alles gegen 5",
-			"all_in_6": "Alles gegen 6",
 			"fire": "Feuer-Dinoz",
 			"water": "Wasser-Dinoz",
 			"wood": "Holz-Dinoz",
 			"air": "Luft-Dinoz",
 			"lightning": "Blitz-Dinoz",
 			"ffa": "Frei für alle",
+			"bipede": "Zweibeiner",
+			"quadrupede": "Vierbeiner",
+			"flying": "Flieger und Kriecher",
+			"anti_poison": "Gegengiftler",
+			"hippo": "Hippoklampen",
 			"demons": "Dämonen-Dinoz"
 		},
 		"history": {
@@ -5075,5 +5075,11 @@
 	"skillTrees": {
 		"title": "Baum der Fähigekeiten",
 		"level": "St. {level}"
+	},
+	"poll": {
+		"choose_option": "Triff deine Wahl und stimm ab:",
+		"choose_done": "Stimme abgegeben",
+		"select": "Abstimmen",
+		"select_option": "Wähle eine Option"
 	}
 }

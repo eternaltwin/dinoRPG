@@ -46,11 +46,14 @@
 	"knownSphereSkill": "Your Dinoz has already learned all the spherical skills in that element.",
 	"playerNotFound": "The player {id} was not found.",
 	"dinozNotFound": "The Dinoz {id} was not found.",
+	"dinozCannotLvlUp": "The Dinoz cannot level up because it is registered to the Inter Dojo Tournament.",
+	"reincarnationNotPossible": "Dinoz needs to be level 40 or higher to reincarnate.",
+	"reincarnationWithEquippedItems": "You cannot reincarnate your Dinoz with equipped items.",
 	"fb": {
 		"error": {
 			"tooYoungAccount": "Your account is still too young.",
-			"noTournamentOngoing": "There is no ongoing tournament.",
-			"notEnoughPoints": "You do not have enough points to participate in this tournament.",
+			"noTournamentOngoing": "There is no active tournament.",
+			"notEnoughPoints": "You don't have enough points to participate in the tournament.",
 			"alreadyCreatedDinoz": "You have already created a Dinoz today.",
 			"maxDinozReached": "The maximum number of Dinoz for this tournament has been reached."
 		},
@@ -282,17 +285,17 @@
 	"tournament": {
 		"uncommon": "uncommon races",
 		"common": "common races",
-		"duo": "duo",
-		"anti_meta_4": "non-meta races",
-		"anti_meta_5": "non-meta races",
-		"all_in_5": "all races",
-		"all_in_6": "all races",
 		"fire": "fire prone races",
 		"water": "water prone races",
 		"wood": "wood prone races",
 		"air": "air prone races",
 		"lightning": "lightning races",
 		"ffa": "all races",
+		"bipede": "all biped races",
+		"quadrupede": "all quadruped races",
+		"flying": "all flying or crawling races",
+		"anti_poison": "all races without an affinity with poison",
+		"hippo": "only hippoclamps",
 		"demons": "only demons"
 	},
 	"announce": {
