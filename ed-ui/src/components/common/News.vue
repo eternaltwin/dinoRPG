@@ -596,7 +596,7 @@ export default defineComponent({
 			gap: 10px;
 			.newsImg {
 				border: 1px solid #ffee92;
-				width: 80px;
+				min-width: 80px;
 				height: 80px;
 				overflow: hidden;
 				& img {
@@ -609,7 +609,7 @@ export default defineComponent({
 				color: #ffee92;
 				display: flex;
 				flex-direction: column;
-				width: 280px;
+				max-width: 280px;
 				& h1 {
 					height: auto;
 					max-height: none;
@@ -636,7 +636,7 @@ export default defineComponent({
 			align-items: center;
 			margin-top: -22px;
 			margin-right: -12px;
-			width: 130px;
+			min-width: 130px;
 			height: 70px;
 			.newsCounter {
 				display: flex;
