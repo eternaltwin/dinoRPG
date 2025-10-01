@@ -4498,17 +4498,17 @@
 		"tournamentFormats": {
 			"uncommon": "Dinos raros",
 			"common": "Dinos comunes",
-			"duo": "Dúo de Dinos",
-			"anti_meta_4": "Anti-Meta 4 vs 4",
-			"anti_meta_5": "Anti-Meta 5 vs 5",
-			"all_in_5": "Todas las razas 5 vs 5",
-			"all_in_6": "Todas las razas 6 vs 6",
 			"fire": "Dinos Fuego",
 			"water": "Dinos Agua",
 			"wood": "Dinos Madera",
 			"air": "Dinos Aire",
 			"lightning": "Dinos Rayo",
 			"ffa": "Todos contra todos",
+			"bipede": "Bípedos",
+			"quadrupede": "Cuadrúpedos",
+			"flying": "Voladores y reptantes",
+			"anti_poison": "Anti veneno",
+			"hippo": "Hippoclamp",
 			"demons": "Dinos demonios"
 		},
 		"history": {
@@ -5075,5 +5075,11 @@
 	"skillTrees": {
 		"title": "Árbol de competencias",
 		"level": "Niv.{level}"
+	},
+	"poll": {
+		"choose_option": "Vote por su elección:",
+		"choose_done": "Voto registrado",
+		"select": "Votar",
+		"select_option": "Seleccione una opción"
 	}
 }
