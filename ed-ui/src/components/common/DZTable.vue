@@ -52,9 +52,8 @@ table {
 			font-size: 9pt;
 			font-family: 'Trebuchet MS', Arial, sans-serif;
 			color: #710;
-			background-color: #f3ca92;
+			background-color: #E7B577;
 			border: 1px solid #c88f44;
-			background-image: url('../../assets/background/table_cell.webp');
 			background-position: -10px 0px;
 			padding: 2px 4px;
 		}

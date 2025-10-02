@@ -102,17 +102,20 @@
 			</ul>
 		</td>
 		<td>
-			<ul class="skills">
-				<li v-for="skill in offer.dinoz.skills" :key="skill.skillId">
-					<img
-						v-for="element in skillList[skill.skillId].element"
-						:key="element"
-						:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
-						:alt="ElementNames[element]"
-					/>
-					<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
-				</li>
-			</ul>
+			<aside class="table-skills">
+				<div>{{ $t('button.skills') }}</div>
+				<ul class="skills">
+					<li v-for="skill in offer.dinoz.skills" :key="skill.skillId">
+						<img
+							v-for="element in skillList[skill.skillId].element"
+							:key="element"
+							:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
+							:alt="ElementNames[element]"
+						/>
+						<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
+					</li>
+				</ul>
+			</aside>
 		</td>
 		<td>
 			<template v-for="status in offer.dinoz.status.map(s => s.statusId)" :key="status">
@@ -265,6 +268,31 @@ export default defineComponent({
 		}
 	}
 }
+.dinoz-details td { vertical-align: auto; }
+.table-skills { 
+	margin-top: 10px;
+	display: flex; 
+	flex-direction: column;
+	justify-content: space-between;
+	div{
+		margin-left: 12px;
+		font-size: medium;
+		text-align: center;
+		padding: 4px 4px 12px 4px;
+		background-color: #c64e36;
+		background-image: url('../../assets/background/table_header.webp');
+		background-position: left bottom;
+		font-size: medium;
+    	text-shadow: 1px 1px 0px #356847;
+		color: #fffdba;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 1pt;
+		text-align: left;
+		white-space: nowrap;
+		border: 1px solid #356847;
+	}
+}
 .dinoz-details {
 	.race {
 		font-variant: small-caps;
@@ -322,16 +350,23 @@ export default defineComponent({
 	.skills {
 		list-style-type: none;
 		margin-left: 12px;
-		height: 150px;
+		margin-bottom: 10px;
+		height: max-content;
+		scrollbar-width: none;
 		overflow: scroll;
+		background: #bc683c;
+		padding:1px;
 		li {
+			padding: 4px 2px 4px 16px;
+			display: flex;
+			border: #C88F44 1px double;
+			background-color: #E7B577;
+			margin-bottom: 2px;
 			font-size: 9pt;
-			img {
-				margin-right: 2px;
-			}
-			span {
-				color: #710;
-			}
+			align-items: center;
+			gap: 4px;
+			background-image: url('../../assets/background/table_cell.webp');
+			
 		}
 	}
 }
