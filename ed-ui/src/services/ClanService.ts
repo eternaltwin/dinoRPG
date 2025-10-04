@@ -42,9 +42,9 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	createClan(name: string, description: string, language: LocalesEnum): Promise<ClanLite> {
+	createClan(name: string, description: string, languages: LocalesEnum[]): Promise<ClanLite> {
 		return http()
-			.post(`/clan`, { name, description, language })
+			.post(`/clan`, { name, description, languages })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
@@ -60,9 +60,9 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	updateClanLang(id: number, language: LocalesEnum): Promise<LocalesEnum> {
+	updateClanLangs(id: number, languages: LocalesEnum[]): Promise<LocalesEnum[]> {
 		return http()
-			.put(`/clan/${id}/edit/lang`, { language })
+			.put(`/clan/${id}/edit/langs`, { languages })
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

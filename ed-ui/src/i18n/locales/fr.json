@@ -4140,13 +4140,16 @@
 		"banner": {
 			"title": "Changer l'URL de la bannière du clan :",
 			"info": "La bannière a un ratio de 448px de large sur 100px de long."
+		},
+		"langs": {
+			"title": "Langues :"
 		}
 	},
 	"createClan": {
 		"title": "Créer un Clan",
 		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
 		"clan_name": "Nom du Clan",
-		"clan_lang": "Langue du Clan",
+		"clan_langs": "Langues du Clan",
 		"clan_description": "Description du Clan",
 		"create_button": "Créer le Clan",
 		"go_back_button": "Retour à la liste"

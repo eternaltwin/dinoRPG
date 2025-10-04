@@ -7,8 +7,8 @@
 				<p>{{ $t('createClan.clan_name') }}</p>
 				<input class="name" type="text" v-model="name" />
 
-				<p>{{ $t('createClan.clan_lang') }}</p>
-				<LangSelector v-model="lang" />
+				<p>{{ $t('createClan.clan_langs') }}</p>
+				<LangSelector v-model="langs" class="lang-selector" />
 
 				<p>{{ $t('createClan.clan_description') }}</p>
 				<textarea class="description" type="text" v-model="description"></textarea>
@@ -50,7 +50,7 @@ export default defineComponent({
 	data() {
 		return {
 			name: '' as string,
-			lang: '' as LocalesEnum,
+			langs: [] as LocalesEnum[],
 			description: '' as string,
 			canCreateClan: false as boolean,
 			creationCost: formatNumber(CLAN_CREATE_MONEY, '.'),
@@ -61,7 +61,7 @@ export default defineComponent({
 		async CreateClan(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				const clan = await ClanService.createClan(this.name, this.description, this.lang);
+				const clan = await ClanService.createClan(this.name, this.description, this.langs);
 				this.playerStore.setClanId(clan.id);
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'Clan', params: { id: clan.id } });
@@ -75,7 +75,7 @@ export default defineComponent({
 		}
 	},
 	mounted() {
-		this.lang = this.$i18n.locale as LocalesEnum;
+		this.langs = [this.$i18n.locale as LocalesEnum];
 	}
 });
 </script>
@@ -145,6 +145,13 @@ export default defineComponent({
 		width: 184px;
 		background-color: #bc683c;
 		resize: vertical;
+	}
+
+	.lang-selector {
+		display: flex;
+		width: 184px;
+		flex-wrap: wrap;
+		justify-content: space-around;
 	}
 }
 .middle-content {

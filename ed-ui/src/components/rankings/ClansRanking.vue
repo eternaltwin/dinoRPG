@@ -32,8 +32,8 @@
 						{{ (page - 1) * 20 + (index + 1) }}
 					</td>
 					<td class="other">
+						<Flags :langs="clan.langs" />
 						{{ clan.name }}
-						<Flag :lang="clan.lang" />
 					</td>
 					<td class="other">
 						<div class="flex items-center gap-2">
@@ -61,11 +61,11 @@ import { ClanService } from '../../services/index.js';
 import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
-import Flag from '../common/Flag.vue';
+import Flags from '../common/Flags.vue';
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: { Flag, SearchEntity, DZDisclaimer },
+	components: { Flags, SearchEntity, DZDisclaimer },
 	data() {
 		return {
 			clansList: [] as Array<ClanLite>,

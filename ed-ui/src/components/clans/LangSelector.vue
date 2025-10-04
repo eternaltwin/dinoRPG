@@ -1,7 +1,12 @@
 <template>
-	<select v-model="value">
-		<option v-for="locale of langs" :key="locale.short" :value="locale.short">{{ locale.caption }}</option>
-	</select>
+	<div>
+		<template v-for="locale of langs" :key="locale.short">
+			<div style="min-width: 77px">
+				<input type="checkbox" v-model="value" :value="locale.short" />
+				{{ locale.caption }}
+			</div>
+		</template>
+	</div>
 </template>
 
 <script lang="ts">

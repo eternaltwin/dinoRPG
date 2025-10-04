@@ -33,8 +33,8 @@
 					@click="goToClan(clan.id)"
 				>
 					<td class="name">
+						<Flags :langs="clan.langs" />
 						{{ clan.name }}
-						<Flag :lang="clan.lang" />
 					</td>
 					<td class="leader other">
 						{{ clan.leader?.name }}
@@ -96,12 +96,12 @@ import { ClanService, PlayerService } from '../../services';
 import { playerStore } from '../../store';
 import { formatNumber, formatText } from '../../utils/formatText';
 import { errorHandler } from '../../utils';
-import Flag from '../../components/common/Flag.vue';
+import Flags from '../../components/common/Flags.vue';
 
 export default defineComponent({
 	name: 'ClansList',
 	components: {
-		Flag,
+		Flags,
 		SearchEntity,
 		DZDisclaimer,
 		TitleHeader

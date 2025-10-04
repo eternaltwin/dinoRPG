@@ -1,4 +1,4 @@
-import { I18n, createI18n } from 'vue-i18n';
+import { createI18n, I18n } from 'vue-i18n';
 import { localStore } from '../store/localStore.js';
 
 let i18n: I18n;
@@ -29,12 +29,12 @@ export const Locales: Record<string, LangInfos> = {
 		short: LocalesEnum.EN
 	},
 	[LocalesEnum.ES]: {
-		caption: 'Spanish',
+		caption: 'Español',
 		icon: '/src/assets/design/lang_es.webp',
 		short: LocalesEnum.ES
 	},
 	[LocalesEnum.DE]: {
-		caption: 'German',
+		caption: 'Deutsch',
 		icon: '/src/assets/design/lang_de.webp',
 		short: LocalesEnum.DE
 	}
