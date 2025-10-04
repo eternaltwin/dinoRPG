@@ -15,9 +15,10 @@ export const clanStore = defineStore('clanStore', {
 		async loadClan(clanId: number) {
 			this.clan = await ClanService.getClan(clanId);
 		},
-		async updateLang(clanId: number, language: LocalesEnum) {
+		async updateLang(clanId: number, languages: LocalesEnum[]) {
 			if (this.clan) {
-				this.clan.lang = await ClanService.updateClanLang(clanId, language);
+				this.clan.langs.splice(0);
+				this.clan.langs.push(...(await ClanService.updateClanLangs(clanId, languages)));
 			}
 		}
 	},

@@ -39,7 +39,7 @@ import {
 	searchClansByNameRequest,
 	updateClanBannerRequest,
 	updateClanContribution,
-	updateClanLanguageRequest,
+	updateClanLanguagesRequest,
 	updateClanMemberRequest,
 	updateClanPageRequest,
 	updateClanTreasure,
@@ -153,7 +153,7 @@ export async function createClan(req: Request) {
 
 	await removeMoney(authed.id, CLAN_CREATE_MONEY);
 
-	const clan = await createClanRequest(req.body.name, req.body.description, req.body.language, authed.id);
+	const clan = await createClanRequest(req.body.name, req.body.description, req.body.languages, authed.id);
 	return clan;
 }
 
@@ -313,7 +313,7 @@ export async function updateClanBanner(req: Request) {
  * @param req.body.language new language
  * @returns Clan
  */
-export async function updateClanLanguage(req: Request) {
+export async function updateClanLanguages(req: Request) {
 	const authed = await auth(req);
 
 	const clanId = +req.params.id;
@@ -324,9 +324,9 @@ export async function updateClanLanguage(req: Request) {
 		throw new ExpectedError(`Member ${req.params.id} doesn't have the right ${ClanMemberRight.CLAN_EDIT_LANG}`);
 	}
 
-	const clan = await updateClanLanguageRequest(clanId, req.body.language);
+	const clan = await updateClanLanguagesRequest(clanId, req.body.languages);
 
-	return clan.lang;
+	return clan.langs;
 }
 
 /**

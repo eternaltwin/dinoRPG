@@ -31,7 +31,7 @@ import {
 	searchClanByName,
 	searchClans,
 	updateClanBanner,
-	updateClanLanguage,
+	updateClanLanguages,
 	updateClanMember,
 	updateClanPage
 } from '../business/clanService.js';
@@ -271,7 +271,7 @@ routes.get(
  */
 routes.post(
 	`${commonPath}`,
-	[body('name').exists().isString(), body('description').exists().isString(), body('language').exists().isString()],
+	[body('name').exists().isString(), body('description').exists().isString(), body('languages').exists().isArray()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
@@ -454,15 +454,15 @@ routes.put(
  *         description: Error
  */
 routes.put(
-	`${commonPath}/:id/edit/lang`,
-	[body('language').exists().isString()],
+	`${commonPath}/:id/edit/langs`,
+	[body('languages').exists().isArray()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });
 		}
 
 		try {
-			const response = await updateClanLanguage(req);
+			const response = await updateClanLanguages(req);
 			return res.status(200).send(response);
 		} catch (err) {
 			sendError(res, err);

@@ -41,7 +41,7 @@
 				Bronze
 			</div>
 			<div class="top-info-element">
-				<Flag :lang="clanStore.getClan?.lang" />
+				<Flags :langs="clanStore.getClan?.langs" />
 			</div>
 		</div>
 		<div class="banner" v-if="clanStore.getClanId" :key="bannerName">
@@ -63,9 +63,9 @@ import { defineComponent } from 'vue';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import { API_BASE, utils } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
-import Flag from '../common/Flag.vue';
 import { clanStore } from '../../store/clanStore';
 import EventBus from '../../events';
+import Flags from '../common/Flags.vue';
 
 export default defineComponent({
 	name: 'ClanHeader',
@@ -77,7 +77,7 @@ export default defineComponent({
 			bannerName: ''
 		};
 	},
-	components: { Flag, DZUser },
+	components: { Flags, DZUser },
 	methods: {
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());

@@ -16,9 +16,9 @@
 				{{ $t('clanSettings.banner.info') }}
 			</div>
 		</div>
-		<div v-if="hasLangEditRight">
-			Langue:
-			<LangSelector v-model="lang" @change="saveLang" style="height: min-content" />
+		<div v-if="hasLangEditRight" class="d-flex">
+			{{ $t('clanSettings.langs.title') }}
+			<LangSelector v-model="langs" @change="saveLangs" class="d-flex" />
 		</div>
 		<a class="button" @click="deleteClan()">{{ $t('clanSettings.action.delete') }}</a>
 		<!-- <input type="file" @change="onFileChanged($event)" accept="image/*" capture /> -->
@@ -48,14 +48,14 @@ export default defineComponent({
 			hasLangEditRight: false as boolean,
 			filePreviewUrl: '',
 			clanStore: clanStore(),
-			lang: '' as LocalesEnum
+			langs: [] as LocalesEnum[]
 		};
 	},
 	methods: {
-		async saveLang(): Promise<void> {
+		async saveLangs(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				await this.clanStore.updateLang(this.clanStore.getClanId, this.lang);
+				await this.clanStore.updateLang(this.clanStore.getClanId, this.langs);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -125,7 +125,7 @@ export default defineComponent({
 		if (!this.hasBannerEditRight && !this.hasLangEditRight) {
 			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
 		}
-		this.lang = this.clanStore.getClan?.lang as LocalesEnum;
+		this.langs = (this.clanStore.getClan?.langs as LocalesEnum[]) ?? [];
 	}
 });
 </script>
@@ -149,6 +149,10 @@ export default defineComponent({
 			}
 		}
 	}
+}
+
+.d-flex {
+	display: flex;
 }
 
 /*.disclaimer {

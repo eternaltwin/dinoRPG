@@ -1,2 +1,2 @@
 -- AlterTable
-ALTER TABLE "Clan" ADD COLUMN     "lang" "Lang" NOT NULL DEFAULT 'fr';
+ALTER TABLE "Clan" ADD COLUMN "langs" "Lang"[] NOT NULL DEFAULT '{fr}';

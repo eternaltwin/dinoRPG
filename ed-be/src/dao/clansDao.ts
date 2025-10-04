@@ -16,7 +16,7 @@ export async function getAllClansRequest(page: number) {
 			creationDate: true,
 			leaderId: true,
 			treasureValue: true,
-			lang: true,
+			langs: true,
 			members: {
 				select: {
 					id: true
@@ -42,7 +42,7 @@ export async function getRankingClansRequest(page: number) {
 			id: true,
 			name: true,
 			treasureValue: true,
-			lang: true
+			langs: true
 		},
 		orderBy: [{ treasureValue: 'desc' }],
 		take: 20,
@@ -59,7 +59,7 @@ export async function getClanRequest(id: number) {
 		select: {
 			id: true,
 			name: true,
-			lang: true,
+			langs: true,
 			members: {
 				select: {
 					id: true
@@ -92,7 +92,7 @@ export async function searchClansByNameRequest(clanName: string, page: number) {
 			name: true,
 			treasureValue: true,
 			leaderId: true,
-			lang: true,
+			langs: true,
 			members: {
 				select: {
 					id: true
@@ -131,7 +131,12 @@ export async function searchClansByName(clanName: string) {
 	return clans;
 }
 
-export async function createClanRequest(clanName: string, clanDescription: string, clanLang: Lang, playerId: string) {
+export async function createClanRequest(
+	clanName: string,
+	clanDescription: string,
+	clanLangs: Lang[],
+	playerId: string
+) {
 	const creator = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: { name: true }
@@ -143,7 +148,7 @@ export async function createClanRequest(clanName: string, clanDescription: strin
 	const clan = await prisma.clan.create({
 		data: {
 			name: clanName,
-			lang: clanLang,
+			langs: clanLangs,
 			leader: { connect: { id: playerId } }
 		},
 		select: { id: true }
@@ -440,10 +445,10 @@ export async function deleteClanRequest(clanId: number) {
 	return clan;
 }
 
-export async function updateClanLanguageRequest(clanId: number, lang: Lang) {
+export async function updateClanLanguagesRequest(clanId: number, langs: Lang[]) {
 	const clan = await prisma.clan.update({
 		data: {
-			lang
+			langs
 		},
 		where: {
 			id: clanId
