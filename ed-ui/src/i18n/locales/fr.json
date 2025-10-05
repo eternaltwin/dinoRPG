@@ -75,7 +75,9 @@
 		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
 		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
 		"dailyGridRewardsFinished": "Vous avez atteint le quota journalier de grilles terminées.",
-		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements."
+		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
+		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
+		"noDinozSelected": "Aucun Dinoz sélectionné"
 	},
 	"dig": {
 		"gold": "Votre Dinoz a trouvé {gold} :gold: en creusant ici.",
