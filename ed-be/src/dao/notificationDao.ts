@@ -1,4 +1,4 @@
-import { NotificationSeverity, Prisma } from '@drpg/prisma';
+import { NotificationSeverity } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 
 export async function getNotification(playerId: string) {
@@ -50,7 +50,7 @@ export async function readAllNotification(userId: string) {
 export async function createNotification(
 	userId: string,
 	message: string,
-	severity?: NotificationSeverity,
+	severity: NotificationSeverity,
 	link?: string
 ) {
 	await prisma.notification.create({

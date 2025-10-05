@@ -166,39 +166,6 @@ export async function getConversation(conversationId: string) {
 	});
 }
 
-/*export async function getMoreMessages(conversationId: string, page: number) {
-	const skip = (page - 1) * 10;
-	const take = 10;
-
-	return await prisma.conversation.findUniqueOrThrow({
-		where: {
-			id: conversationId
-		},
-		select: {
-			participants: {
-				select: {
-					playerId: true
-				}
-			},
-			messages: {
-				take: 10,
-				select: {
-					id: true,
-					content: true,
-					createdAt: true,
-					sender: {
-						select: {
-							id: true,
-							name: true
-						}
-					}
-				},
-				orderBy: [{ id: 'desc' }]
-			}
-		}
-	});
-}*/
-
 export async function getMoreMessages(conversationId: string, page: number) {
 	const skip = (page - 1) * 10;
 	const take = 10;

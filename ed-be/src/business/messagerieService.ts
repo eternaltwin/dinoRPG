@@ -11,6 +11,7 @@ import {
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import translate from '../utils/translate.js';
 import { createNotification, readNotificationFromMessages } from '../dao/notificationDao.js';
+import { NotificationSeverity } from '@drpg/prisma';
 
 export async function getMyConversation(req: Request) {
 	const authed = await auth(req);
@@ -28,7 +29,9 @@ export async function startConversation(req: Request) {
 	}
 
 	const conversation = await createConversation(authed.id, participants, title, message);
-	participants.filter((p: string) => p !== authed.id).forEach((p: string) => createNotification(p, conversation.id));
+	participants
+		.filter((p: string) => p !== authed.id)
+		.forEach((p: string) => createNotification(p, conversation.id, NotificationSeverity.message));
 	return conversation;
 }
 
@@ -66,7 +69,7 @@ export async function sendMessage(req: Request) {
 	conversation.participants
 		.filter(p => p.player && p.player.id !== authed.id)
 		.forEach(p => {
-			if (p.player) createNotification(p.player.id, conversation.id);
+			if (p.player) createNotification(p.player.id, conversation.id, NotificationSeverity.message);
 		});
 	return await addMessage(req.params.thread, req.body.content, authed.id);
 }
