@@ -1,5 +1,11 @@
 <template>
-	<div class="map_container" ref="container" @mousemove="parallax($event)">
+	<div
+		class="map_container"
+		ref="container"
+		@touchstart="touchStart($event)"
+		@touchmove="drag($event)"
+		@mousemove="parallax($event)"
+	>
 		<div
 			v-if="mapReady"
 			class="full_map"
@@ -79,7 +85,10 @@ export default defineComponent({
 			top: 0,
 			svgLines: [] as Array<svgLines>,
 			svgSize: undefined as string | undefined,
-			mapReady: false as boolean
+			mapReady: false as boolean,
+			lastTouch: { x: 0, y: 0 },
+			containerRect: undefined as DOMRect | undefined,
+			mapImageRect: undefined as DOMRect | undefined
 		};
 	},
 	methods: {
@@ -113,6 +122,32 @@ export default defineComponent({
 				this.translation.x = -this.left;
 			} else if (this.left + this.translation.x > centerMapX) {
 				this.translation.x = 0;
+			}
+		},
+		touchStart(e: TouchEvent) {
+			if (!this.mapImageRect) this.mapImageRect = document.querySelector('.full_map')?.getBoundingClientRect(); //taille de l'image de la map
+			this.lastTouch = { x: e.targetTouches[0].pageX, y: e.targetTouches[0].pageY };
+		},
+		drag(e: TouchEvent) {
+			if (this.mapImageRect && this.containerRect) {
+				e.preventDefault();
+				const newTouch = { x: e.targetTouches[0].pageX, y: e.targetTouches[0].pageY };
+				this.translation.x -= newTouch.x - this.lastTouch.x;
+				this.translation.y -= newTouch.y - this.lastTouch.y;
+				this.lastTouch = newTouch;
+
+				// Protect the translation top overflow
+				if (this.top + this.translation.y < 0) {
+					this.translation.y = -this.top;
+				} else if (this.mapImageRect.height - this.containerRect.height - this.top < this.translation.y) {
+					this.translation.y = this.mapImageRect.height - this.containerRect.height - this.top;
+				}
+				// Protect the translation left overflow
+				if (this.left + this.translation.x < 0) {
+					this.translation.x = -this.left;
+				} else if (this.mapImageRect.width - this.containerRect.width < this.translation.x) {
+					this.translation.x = this.mapImageRect.width - this.containerRect.width;
+				}
 			}
 		},
 		getPlaceMap() {
@@ -274,6 +309,8 @@ export default defineComponent({
 		}
 	},
 	mounted(): void {
+		this.containerRect = document.querySelector('.map_container')?.getBoundingClientRect(); //taille du wrapper (250*300)
+
 		this.waitForImageToLoad();
 	},
 	watch: {
