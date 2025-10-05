@@ -28,10 +28,12 @@
 					<div
 						:class="{
 							link: true
-							// notification:
 						}"
 						@click="messagerie()"
 					>
+						<span v-if="playerStore.getNotifications.filter(n => n.severity === 'message').length > 0" class="badge">
+							{{ playerStore.getNotifications.filter(n => n.severity === 'message').length }}
+						</span>
 						<svg class="svgLinkIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="PersonIcon">
 							<path
 								d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4-8 5-8-5V6l8 5 8-5z"
@@ -300,6 +302,14 @@ export default defineComponent({
 		},
 		translateNotification(notification: Notification): translatedNotification | null {
 			switch (notification.severity) {
+				case 'message':
+					return {
+						id: notification.id,
+						message: this.$t(`notification.message`),
+						severity: notification.severity,
+						link: notification.link,
+						date: notification.date
+					};
 				case 'offerExpired':
 					return {
 						id: notification.id,
@@ -476,6 +486,18 @@ export default defineComponent({
 	transform: scale(1) translate(50%, -50%);
 	transform-origin: 100% 0% 0px;
 }
+.badge {
+	position: absolute;
+	top: 5px;
+	right: 13px;
+	background: red;
+	color: white;
+	font-size: 10px;
+	font-weight: bold;
+	border-radius: 50%;
+	padding: 1.5px 6px;
+	text-align: center;
+}
 .notifications {
 	display: flex;
 	flex-direction: column;
@@ -643,6 +665,7 @@ export default defineComponent({
 		justify-content: center;
 		flex-wrap: wrap;
 		.link {
+			position: relative;
 			display: flex;
 			flex-direction: column;
 			-moz-box-pack: center;

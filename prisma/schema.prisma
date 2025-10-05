@@ -964,6 +964,7 @@ enum NotificationSeverity {
   scenario
   event
   newClanApply
+  message
 }
 
 enum NewsType {
