@@ -82,13 +82,19 @@ export default defineComponent({
 	data() {
 		return {
 			showFuturTable: false,
+			currentTableIndex: 0,
 			futurInfoList: [] as { imageUrl: { path: string; name: string }; text: string }[]
 		};
 	},
 	methods: {
 		showTable(tableIndex: number) {
-			this.showFuturTable = !this.showFuturTable;
-			this.updateFuturInfo(tableIndex);
+			this.showFuturTable = this.currentTableIndex !== tableIndex;
+			if (this.showFuturTable) {
+				this.updateFuturInfo(tableIndex);
+				this.currentTableIndex = tableIndex;
+			} else {
+				this.currentTableIndex = 0;
+			}
 		},
 		updateFuturInfo(tableIndex: number) {
 			// You can add logic here to update the futurInfoList based on the clicked link

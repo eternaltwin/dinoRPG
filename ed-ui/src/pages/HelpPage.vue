@@ -3,7 +3,12 @@
 	<div class="intro">
 		<div class="menu">
 			<ul class="list">
-				<li v-for="(item, index) in items" :key="index" @click="showContent(item)">
+				<li
+					v-for="(item, index) in items"
+					:key="index"
+					@click="showContent(item)"
+					:class="{ selected: selectedItemIndex === index }"
+				>
 					<img v-if="item.nameImageUrl" :src="getImgURL(item.nameImageUrl.path, item.nameImageUrl.name)" alt="Image" />
 					{{ item.name }}
 				</li>
@@ -39,11 +44,11 @@
 				</ul>
 			</div>
 			<button @click="showPrevItem" v-if="selectedItem.prevItem !== undefined" class="next">
-				<img :src="getImgURL('icons', 'small_page_down')" />
+				<img :src="getImgURL('icons', 'small_page_up')" />
 				{{ items[selectedItem.prevItem].name }}
 			</button>
 			<button @click="showNextItem" v-if="selectedItem.nextItem !== undefined" class="next">
-				<img :src="getImgURL('icons', 'small_page_up')" />
+				<img :src="getImgURL('icons', 'small_page_down')" />
 				{{ items[selectedItem.nextItem].name }}
 			</button>
 			<button @click="goToPage('News')" class="next">
@@ -570,7 +575,8 @@ export default defineComponent({
 			list-style: none;
 			margin-top: 6px;
 			margin-left: 6px;
-			& li:hover {
+			& li:hover,
+			& li.selected {
 				color: #fce3bc;
 				background-color: rgb(142, 62, 38);
 			}
