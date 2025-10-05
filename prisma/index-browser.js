@@ -807,7 +807,8 @@ exports.NotificationSeverity = exports.$Enums.NotificationSeverity = {
   reward: 'reward',
   scenario: 'scenario',
   event: 'event',
-  newClanApply: 'newClanApply'
+  newClanApply: 'newClanApply',
+  message: 'message'
 };
 
 exports.GameDinozUsage = exports.$Enums.GameDinozUsage = {

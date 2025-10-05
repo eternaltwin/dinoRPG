@@ -454,7 +454,8 @@ export const NotificationSeverity: {
   reward: 'reward',
   scenario: 'scenario',
   event: 'event',
-  newClanApply: 'newClanApply'
+  newClanApply: 'newClanApply',
+  message: 'message'
 };
 
 export type NotificationSeverity = (typeof NotificationSeverity)[keyof typeof NotificationSeverity]
