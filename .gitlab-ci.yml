@@ -48,7 +48,9 @@ update_staging_via_api:
         | jq -r '.content' | base64 -d)
     - |
       NEW_CONTENT=$(echo "$CURRENT_CONTENT" | jq --arg hash "$CI_COMMIT_SHA" \
-         '.release = $hash )
+         '.release = $hash')
+    - echo "Updating staging.json with commit $CI_COMMIT_SHA"
+    - echo "$NEW_CONTENT" | jq '.'
     - |
       curl --request PUT \
         --header "PRIVATE-TOKEN: ${CONFIG_REPO_TOKEN}" \
@@ -60,12 +62,13 @@ update_staging_via_api:
         }" \
         "https://gitlab.com/api/v4/projects/eternaltwin%2Fconfig/repository/files/pousty%2Fapps%2Fdinorpg%2Fchannels%2Fstaging.json"
   
-  only:
-    - main
-  #when: on_success
   variables:
     GIT_STRATEGY: none
-  when: manual
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'
+      when: on_success
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: manual
 
 #back-coverage:
 #  stage: test
