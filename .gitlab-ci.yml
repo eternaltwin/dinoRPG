@@ -1,6 +1,7 @@
 stages:
   - build
   - test
+  - update_release
 
 before_script:
   - "node --version"
@@ -34,6 +35,29 @@ front-lint:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
     - if: '$CI_COMMIT_BRANCH == "develop"'
+
+update_release_hash:
+  stage: update_release
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git jq curl
+  script:
+    - git clone https://oauth2:${TARGET_REPO_TOKEN}@gitlab.com:eternaltwin/config.git
+    - cd target-repo
+    - git config user.email "${GITLAB_USER_EMAIL}"
+    - git config user.name "${GITLAB_USER_NAME}"
+    - |
+      jq --arg hash "$CI_COMMIT_SHA" \
+         '.release = $hash \
+         release.json > release.json.tmp
+    - mv release.json.tmp release.json
+    - git add release.json
+    - git commit -m "[DRPG] Staging $CI_COMMIT_SHA [skip ci]"
+    - git push origin main
+  
+  only:
+    - main
+  when: on_success
 
 #back-coverage:
 #  stage: test
