@@ -568,11 +568,16 @@ export async function equipItem(req: Request): Promise<DinozItems[]> {
 	});
 }
 
-export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: number) => {
+export const heal = (
+	dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'> & {
+		player: Pick<Player, 'lang'> | null;
+	},
+	lifeToAdd: number
+) => {
 	const lifeMissing = dinoz.maxLife - dinoz.life; // Calculer la quantité de points de vie manquants
 	const lifeHealed = Math.min(lifeToAdd, lifeMissing); // Utiliser le plus petit des deux nombres
-	if (lifeHealed === 0) throw new ExpectedError('AlreadyAtMaxHealth');
-	if (dinoz.life === 0) throw new ExpectedError('DinozIsDead');
+	if (lifeHealed === 0) throw new ExpectedError(translate('AlreadyAtMaxHealth', dinoz.player));
+	if (dinoz.life === 0) throw new ExpectedError(translate('DinozIsDead', dinoz.player));
 	dinoz.life += Math.round(lifeHealed);
 	return {
 		id: dinoz.id,
@@ -580,9 +585,13 @@ export const heal = (dinoz: Pick<Dinoz, 'id' | 'life' | 'maxLife'>, lifeToAdd: n
 	};
 };
 
-export const resurrect = (dinoz: Pick<Dinoz, 'life' | 'id'>) => {
+export const resurrect = (
+	dinoz: Pick<Dinoz, 'life' | 'id'> & {
+		player: Pick<Player, 'lang'> | null;
+	}
+) => {
 	if (dinoz.life > 0) {
-		throw new ExpectedError('DinozNotDead');
+		throw new ExpectedError(translate('DinozNotDead', dinoz.player));
 	}
 	dinoz.life = 1;
 	return {
