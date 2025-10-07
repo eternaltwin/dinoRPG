@@ -18,6 +18,7 @@ export interface PollPublic {
 		optionText: string;
 	}[];
 	votes: { playerId: string; pollOptionId: number }[];
+	endDate: string;
 }
 
 export interface CreatePollResult {

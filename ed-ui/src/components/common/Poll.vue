@@ -1,6 +1,6 @@
 <template>
 	<div class="poll-container">
-		<div class="poll-title">{{ $t('poll.choose_option') }}</div>
+		<div class="poll-title">{{ $t('poll.choose_option', { date: formatCreatedDate(poll.endDate) }) }}</div>
 
 		<div
 			v-for="option in poll.options"
@@ -18,7 +18,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="poll-title">{{ $t('poll.total_participants', {qty: poll.votes.length}) }}</div>
+		<div class="poll-title">{{ $t('poll.total_participants', { qty: poll.votes.length }) }}</div>
 
 		<button v-if="poll.isActive" class="vote-button" :disabled="!selectedOption" @click.stop="submitVote">
 			{{ hasVoted ? $t('poll.choose_done') : selectedOption ? $t('poll.select') : $t('poll.select_option') }}
@@ -31,7 +31,7 @@ import { defineComponent, PropType } from 'vue';
 import { PollPublic } from '@drpg/core/models/news/Polls';
 import { NewsService } from '../../services';
 import { errorHandler } from '../../utils';
-import { playerStore } from '../../store';
+import { localStore, playerStore } from '../../store';
 
 export default defineComponent({
 	name: 'Poll',
@@ -48,7 +48,8 @@ export default defineComponent({
 	data() {
 		return {
 			selectedOption: undefined as number | undefined,
-			playerId: playerStore().getPlayerId
+			playerId: playerStore().getPlayerId,
+			localStore: localStore()
 		};
 	},
 	computed: {
@@ -59,6 +60,11 @@ export default defineComponent({
 	methods: {
 		selectOption(optionId: number) {
 			this.selectedOption = optionId;
+		},
+		formatCreatedDate(stringDate: string): string {
+			const date = new Date(stringDate);
+			const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
+			return date.toLocaleDateString(this.localStore.getLanguage, options);
 		},
 		getPercentage(optionId: number) {
 			return isNaN((this.poll.votes.filter(o => o.pollOptionId === optionId)?.length ?? 0) / this.totalVote)

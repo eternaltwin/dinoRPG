@@ -5085,7 +5085,7 @@
 		"level": "Niv.{level}"
 	},
 	"poll": {
-		"choose_option": "Votez pour votre choix :",
+		"choose_option": "Le sondage se termine le {date}, votez pour votre choix:",
 		"choose_done": "Vote enregistré",
 		"select": "Voter",
 		"select_option": "Sélectionnez une option",
