@@ -1,3 +1,3 @@
 export enum WsChannel {
-	CLAN_FORUM = 'clanForum'
+	CLAN_FORUM = 'WsClanForum'
 }

@@ -104,6 +104,7 @@ export async function getToolTipInfos(playerId: string) {
 	});
 }
 
+export type Auth = Awaited<ReturnType<typeof auth>>;
 export async function auth(request: Request, banByPass = false) {
 	const {
 		headers: { authorization }
