@@ -1,0 +1,274 @@
+
+# Main secret key. This key is used to derive all the secrets used to protect the tokens generated
+# by the website and encrypted database columns.
+
+# Main configuration for the backend system of Eternaltwin
+[backend]
+# HTTP port for the server backend (REST API and action handlers)
+listen = "127.0.0.1:50320"
+
+# Secret key used for encryption and signatures
+secret = "dev"
+
+# Clock implementation to use
+# - `System`: Use the system time.
+# - `Virtual`: Initialize the clock at `2020-01-01T00:00:00`. Time only moves
+#   forward through calls to `/dev/clock` API endpoint.
+clock = "System"
+
+# Mailer implementation to use
+# - `Network`: Send emails through the network. Further configuration is in
+#   the section `mailer`.
+# - `Mock`: Mock implementation sending keeping emails in memory.
+mailer = "Mock"
+
+# Data store implementation to use
+# - `Memory`: Keep all data in memory (RAM). Allows to start Eternaltwin without
+#   a database, but data is lost on restart.
+# - `Postgres`: Store data in a Postgres databse. Further configuration in the
+#   the section `postgres`.
+# `backend.store` expands to apply to all backend stores. You can also set
+# the implementation type for each store explicitly.
+store = "Postgres"
+
+# Data about applications: games and third-party websites.
+# app_store = "Memory"
+
+# Sessions, cookies, tokens
+# auth_store = "Memory"
+
+# Dinoparc archive
+# dinoparc_store = "Memory"
+
+# Forum sections, threads, posts, roles
+# forum_store = "Memory"
+
+# Hammerfest archive
+# hammerfest_store = "Memory"
+
+# Background job state
+# job_store = "Memory"
+
+# Links between users and external websites (archived profiles, Discord,
+# GitLab, etc.)
+# link_store = "Memory"
+
+# OAuth client details and sessions (used to manage app authentication)
+# oauth_provider_store = "Memory"
+
+# Twinoid archive
+# twinoid_store = "Memory"
+
+# Users, profiles
+# user_store = "Memory"
+
+# Oauth client implementation, Discord/GitLab
+# - `Network`: Real implementation using the network
+# - `Mock`: Mock OAuth requests. Can be controlled through the API.
+oauth_client = "Network"
+
+# Frontend configuration
+[frontend]
+# HTTP port for the frontend. This applies to the Node server performing Server
+# Side Rendering.
+# Setting it automatically updates `frontend.uri` to be
+# `http://localhost:{port}/`.
+port = 50321
+
+# External URL where Eternaltwin is accessible from.
+uri = "http://localhost:50321/"
+
+# Default number of posts to display in a forum thread page
+forum_posts_per_page = 10
+
+# Default number of threads to display in a forum section page
+forum_threads_per_page = 20
+
+# Postgres database configuration
+# Used by the `Postgres` stores configured in the `backend` section.
+[postgres]
+# Database service host
+host = "localhost"
+# Database service port
+port = 5432
+# Database name
+name = "eternaltwin.dev"
+# Database user (role) for regular runtime.
+user = "etwin.dev.write"
+# Password for the database user.
+password = "EternalDinoSQL"
+
+
+# Mailer configuration
+# Used by the `Network` implementation configured in `backend.mailer`
+[mailer]
+# SMTP server host
+host = "localhost"
+
+# SMTP server user
+username = "eternaltwin_mailer"
+
+# SMTP server password
+password = "dev"
+
+# Email to use for the `sender` field
+sender = "support@eternaltwin.localhost"
+
+# Extra headers to attach
+headers = [
+	# {name = "header_name", value = "header_value"}
+]
+
+# Configuration of the `scrypt` password hasher.
+[scrypt]
+# Max time to use when hashing a password
+max_time = "100ms"
+
+# Max memory to use when hashing a password, as a fraction of the total memory
+max_mem_frac = 0.05
+
+[opentelemetry]
+enabled = true
+# If non-null, enable grpc log proxying for clients
+# default: 4317
+# https://opentelemetry.io/docs/specs/otlp/#otlpgrpc-default-port
+grpc_proxy_port = 4317
+
+# Extra attributes to add
+[opentelemetry.attributes]
+
+# Opentelemetry exporters to register
+# - `type`: Exporter type. Supported: `Human`, `Jsonl`, `Grpc`
+# - `color`: not implemented yet (control console colors)
+# - `target`: not implemented yet (control console target)
+# - `endpoint`: GRPC endpoint
+# - `timeout`: GRPC request timeout
+# - `metadata`: GRPC request metadata
+[opentelemetry.exporter]
+[opentelemetry.exporter.stdout]
+type = "Human"
+color = "Auto"
+target = "eternaltwin://stdout"
+# [opentelemetry.exporter.uptrace]
+# type = "Grpc"
+# endpoint = "http://uptrace.localhost:50401/"
+# timeout = "5s"
+# metadata = {"uptrace-dsn" = "http://eternaltwin.dev@uptrace.localhost:50400?grpc=50401"}
+
+# Data added automatically to the system on start.
+# You can use `null` to clear a previously set collection.
+[seed]
+
+# Games and third-party applications to register.
+# - `display_name`: Human readable name of the app.
+# - `uri`: Homepage of the app
+# - `oauth_callback`: OAuth callback endpoint
+# - `secret`: Shared secret, used for oauth authentication
+[seed.app]
+
+[seed.app.emush_dev]
+display_name = "eMush"
+uri = "http://emush.localhost/"
+oauth_callback = "http://emush.localhost/oauth/callback"
+secret = "dev"
+
+[seed.app.eternalfest_dev]
+display_name = "Eternalfest"
+uri = "http://localhost:50313/"
+oauth_callback = "http://localhost:50313/oauth/callback"
+secret = "dev"
+
+[seed.app.kadokadeo_dev]
+display_name = "Kadokadeo"
+uri = "http://kadokadeo.localhost/"
+oauth_callback = "http://kadokadeo.localhost/oauth/callback"
+secret = "dev"
+
+[seed.app.kingdom_dev]
+display_name = "Kingdom"
+uri = "http://localhost:8000/"
+oauth_callback = "http://localhost:8000/oauth/callback"
+secret = "dev"
+
+[seed.app.myhordes_dev]
+display_name = "MyHordes"
+uri = "http://myhordes.localhost/"
+oauth_callback = "http://myhordes.localhost/twinoid"
+secret = "dev"
+
+[seed.app.neoparc_dev]
+display_name = "NeoParc"
+uri = "http://neoparc.localhost"
+oauth_callback = "http://neoparc.localhost/oauth/callback"
+secret = "dev"
+
+[seed.app.dinorpg]
+display_name = "DinoRPG"
+uri = "http://localhost:8080/"
+oauth_callback = "http://localhost:8080/authentication"
+secret = "dev_secret"
+
+# Default forum sections configuration
+# You can define any number of forum sections using `[seed.forum_section.<key>]` blocks (one block per
+# section), where `<key>` acts as a stable identifier for the section.
+[seed.forum_section.main_en]
+# Name of the section, as it should be displayed to users.
+display_name = "Main Forum (en-US)"
+# Locale for this section
+locale = "en-US"
+
+[seed.forum_section.main_fr]
+display_name = "Forum Général (fr-FR)"
+locale = "fr-FR"
+
+[seed.forum_section.main_es]
+display_name = "Foro principal (es-SP)"
+locale = "es-SP"
+
+[seed.forum_section.main_de]
+display_name = "Hauptforum (de-DE)"
+locale = "de-DE"
+
+[seed.forum_section.main_eo]
+display_name = "Ĉefa forumo (eo)"
+locale = "eo"
+
+[seed.forum_section.eternalfest_main]
+display_name = "[Eternalfest] Le Panthéon"
+locale = "fr-FR"
+
+[seed.forum_section.emush_main]
+display_name = "[eMush] Neron is watching you"
+locale = "fr-FR"
+
+[seed.forum_section.drpg_main]
+display_name = "[DinoRPG] Jurassic Park"
+locale = "fr-FR"
+
+[seed.forum_section.myhordes_main]
+display_name = "[Myhordes] Le Saloon"
+locale = "fr-FR"
+
+[seed.forum_section.kadokadeo_main]
+display_name = "[Kadokadeo] Café des palabres"
+locale = "fr-FR"
+
+[seed.forum_section.kingdom_main]
+display_name = "[Kingdom] La foire du trône"
+locale = "fr-FR"
+
+[seed.forum_section.na_main]
+display_name = "[Naturalchimie] Le laboratoire"
+locale = "fr-FR"
+
+[seed.forum_section.sq_main]
+display_name = "[Studioquiz] Le bar à questions"
+locale = "fr-FR"
+
+[seed.forum_section.ts_main]
+display_name = "[Teacher Story] La salle des profs"
+locale = "fr-FR"
+
+[seed.forum_section.popotamo_main]
+display_name = "[Popotamo] Le mot le plus long"
+locale = "fr-FR"
