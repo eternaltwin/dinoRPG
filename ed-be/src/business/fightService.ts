@@ -8,7 +8,7 @@ import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/F
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { monsterList } from '@drpg/core/models/fight/MonsterList';
-import {Item} from '@drpg/core/models/item/ItemList';
+import { Item } from '@drpg/core/models/item/ItemList';
 import { placeList } from '@drpg/core/models/place/PlaceList';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { getActualStep } from '@drpg/core/utils/MissionUtils';
@@ -36,7 +36,7 @@ import { Request } from 'express';
 import dayjs from 'dayjs';
 import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
-import {DinozItems} from "@drpg/core/models/item/DinozItems";
+import { DinozItems } from '@drpg/core/models/item/DinozItems';
 
 /**
  * @summary Process a fight
@@ -393,7 +393,7 @@ export async function rewardFight(
 		gold += (getRandomNumber(0, 36) + 43) * 10; // Gold base average: 610
 	}
 
-	const napo = team.filter(d => d.items.some(i => i.itemId === Item.GOLDEN_NAPODINO)).length
+	const napo = team.filter(d => d.items.some(i => i.itemId === Item.GOLDEN_NAPODINO)).length;
 	const fprob = getRandomNumber(0, 100) - 10 * napo;
 
 	let goldMultiplier = 1;
@@ -406,7 +406,7 @@ export async function rewardFight(
 	// Size 2: 0.5 - Size 3: 0.45 - Size 4: 0.445 - Size 5: 0.4445 etc.
 	let teamSizeMalus = 1;
 	for (let i = 2; i <= team.length; i++) {
-		teamSizeMalus -= 0.5 * Math.pow(0.1, i-2);
+		teamSizeMalus -= 0.5 * Math.pow(0.1, i - 2);
 	}
 	const malus = fgold >= 1 ? fgold * teamSizeMalus : fgold;
 	gold = Math.round(gold * goldMultiplier * goldFactor * malus);

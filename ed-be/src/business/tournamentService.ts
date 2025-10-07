@@ -95,7 +95,7 @@ export async function createTournamentTeam(req: Request) {
 
 	// Check filtered dinoz is equal to asked dinoz (shouldn't be possible)
 	if (playerFilteredDinoz.length !== teamIds.length) {
-		throw new ExpectedError("Filtered dinoz is not enought");
+		throw new ExpectedError('Filtered dinoz is not enought');
 	}
 
 	// Check if number of race is at least equal to the limit

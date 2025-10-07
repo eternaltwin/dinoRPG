@@ -68,7 +68,6 @@ export async function createPoll(req: Request) {
 	if (!options || options.length < 2) {
 		throw new ExpectedError('No enough options');
 	}
-	console.log(options);
 
 	const pollOptions = options.map((option, index) => ({
 		optionText: option.optionText.trim(),
@@ -79,11 +78,17 @@ export async function createPoll(req: Request) {
 		throw new ExpectedError('Some options are empty');
 	}
 
+	let endDate = req.body.endDate;
+	if (!endDate || !dayjs(endDate).isValid()) {
+		endDate = dayjs().add(1, 'week').startOf('day').toDate();
+	} else {
+		endDate = dayjs(endDate).startOf('day').toDate();
+	}
 	const poll = await prisma.$transaction(async tx => {
 		const createdPoll = await tx.poll.create({
 			data: {
 				newsId: newsId,
-				endDate: dayjs().add(1, 'week').startOf('day').toDate()
+				endDate
 			}
 		});
 
