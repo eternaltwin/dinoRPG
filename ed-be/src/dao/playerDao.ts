@@ -1218,6 +1218,59 @@ export async function archiveOldUsername(playerId: string, username: string) {
 	});
 }
 
+export async function updateUsernameOnRelatedTables(playerId: string, newUsername: string) {
+	await Promise.all([
+		prisma.pantheon.updateMany({
+			data: {
+				playerName: newUsername
+			},
+			where: {
+				playerId
+			}
+		}),
+		prisma.clanMessage.updateMany({
+			data: {
+				authorName: newUsername
+			},
+			where: {
+				authorId: playerId
+			}
+		}),
+		prisma.clanHistory.updateMany({
+			data: {
+				authorMessage: newUsername
+			},
+			where: {
+				authorId: playerId
+			}
+		}),
+		prisma.conversation.updateMany({
+			data: {
+				createdByName: newUsername
+			},
+			where: {
+				createdById: playerId
+			}
+		}),
+		prisma.participants.updateMany({
+			data: {
+				playerName: newUsername
+			},
+			where: {
+				playerId
+			}
+		}),
+		prisma.message.updateMany({
+			data: {
+				senderName: newUsername
+			},
+			where: {
+				senderId: playerId
+			}
+		})
+	]);
+}
+
 export async function getDojoFightPreparationRequest(playerId: string) {
 	const player = await prisma.player.findUniqueOrThrow({
 		where: {

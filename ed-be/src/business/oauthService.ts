@@ -20,7 +20,13 @@ import gameConfig from '../config/game.config.js';
 import { LOGGER } from '../context.js';
 import { getDinozTotalCount, updateDinoz } from '../dao/dinozDao.js';
 import { createLog } from '../dao/logDao.js';
-import { archiveOldUsername, createPlayer, getCommonDataRequest, setPlayer } from '../dao/playerDao.js';
+import {
+	archiveOldUsername,
+	createPlayer,
+	getCommonDataRequest,
+	setPlayer,
+	updateUsernameOnRelatedTables
+} from '../dao/playerDao.js';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
@@ -140,6 +146,7 @@ export class OAuth {
 			if (player && player.name !== etwinUser.displayName.current.value) {
 				await setPlayer(player.id, { name: etwinUser.displayName.current.value });
 				await archiveOldUsername(player.id, player.name);
+				await updateUsernameOnRelatedTables(player.id, etwinUser.displayName.current.value);
 			}
 
 			// Update ip address
