@@ -4,7 +4,7 @@
 		ref="container"
 		@touchstart="touchStart($event)"
 		@touchmove="drag($event)"
-		@mousemove="parallax($event)"
+		@mousemove="isMouseDevice ? parallax($event) : null"
 	>
 		<div
 			v-if="mapReady"
@@ -306,6 +306,11 @@ export default defineComponent({
 				this.svgMagic(mapImage);
 				this.mapReady = true;
 			};
+		}
+	},
+	computed: {
+		isMouseDevice() {
+			return window.matchMedia('(pointer:fine)').matches;
 		}
 	},
 	mounted(): void {
