@@ -70,6 +70,10 @@
 			<div class="poll-actions">
 				<DZButton @click="addOption" type="button"> Ajouter une option </DZButton>
 			</div>
+			<div>
+				<label class="title" for="endDate">Date de fin du sondage :</label>
+				<input type="date" id="endDate" v-model="form.endDate" required />
+			</div>
 		</fieldset>
 
 		<div class="form-actions">
@@ -108,6 +112,7 @@ interface NewsForm {
 	englishText?: string;
 	spanishText?: string;
 	germanText?: string;
+	endDate: Date;
 }
 
 export default defineComponent({
@@ -125,7 +130,8 @@ export default defineComponent({
 				frenchText: '',
 				englishText: '',
 				spanishText: '',
-				germanText: ''
+				germanText: '',
+				endDate: new Date()
 			} as NewsForm,
 			selectedImage: null as File | null,
 			imagePreview: null as string | null,
@@ -225,7 +231,8 @@ export default defineComponent({
 				frenchText: '',
 				englishText: '',
 				spanishText: '',
-				germanText: ''
+				germanText: '',
+				endDate: new Date()
 			};
 
 			this.pollOptions = [

@@ -31,7 +31,6 @@ function formatEmbedTitle(title: string) {
 	return shortTitle + ELLIPSIS;
 }
 
-
 /**
  * Format the provided string as an embed description.
  *
@@ -58,7 +57,6 @@ function formatMarkdownForEmbed(text: string): string {
 	const shortText = convertedText.substring(0, MAX_EMBED_DESCRIPTION - ELLIPSIS.length);
 	return shortText + ELLIPSIS;
 }
-
 
 export interface DiscordClient {
 	sendError(error: Error, res?: Response): void;
@@ -236,9 +234,10 @@ ${error.stack}
 			files.push(image_builder);
 		}
 
-		embed.addFields(
-			{ name: 'Consult the news in all languages ingame!', value: '[DinoRPG](https://dinorpg.eternaltwin.org/)'}
-		);
+		embed.addFields({
+			name: 'Consult the news in all languages ingame!',
+			value: '[DinoRPG](https://dinorpg.eternaltwin.org/)'
+		});
 
 		await this.#newsClient.send({ embeds: [embed], files: files });
 

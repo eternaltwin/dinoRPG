@@ -115,7 +115,8 @@ routes.put(
 		body('englishTitle').default(null).optional({ nullable: true }).exists().isString(),
 		body('spanishTitle').default(null).optional({ nullable: true }).exists().isString(),
 		body('germanTitle').default(null).optional({ nullable: true }).exists().isString(),
-		body('options').exists()
+		body('options').exists(),
+		body('endDate').default(null).optional({ nullable: true }).exists().isDate()
 	],
 	checkIsAdmin,
 	async (req: Request, res: Response) => {

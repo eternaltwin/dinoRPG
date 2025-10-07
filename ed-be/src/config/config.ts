@@ -221,7 +221,6 @@ export function config(env: Record<string, string | undefined>): Config {
 		};
 	}
 
-
 	const rawDiscordNewsNotifId = env.DISCORD_NEWS_WEBHOOK_ID;
 	const rawDiscordNewsNotifToken = env.DISCORD_NEWS_WEBHOOK_TOKEN;
 	let discordNewsNotifications: DiscordConfig | null = null;

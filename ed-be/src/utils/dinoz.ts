@@ -162,16 +162,18 @@ export const learnNextSphereSkill = (
 		.filter(skill => skill.element.some(el => el === element));
 
 	// Start with the first sphere skill, i.e the one that is unlocked from nothing
-	let sphereSkillToLearn = sphereSkills.find(skill => skill.unlockedFrom && (skill.unlockedFrom.length === 0));
+	let sphereSkillToLearn = sphereSkills.find(skill => skill.unlockedFrom && skill.unlockedFrom.length === 0);
 
-	while(sphereSkillToLearn !== undefined) {
-		if (!dinoz.skills.some(skill => skill.skillId === sphereSkillToLearn?.id)) { // SAFETY: sphereSkillToLearn is not undefined
+	while (sphereSkillToLearn !== undefined) {
+		if (!dinoz.skills.some(skill => skill.skillId === sphereSkillToLearn?.id)) {
+			// SAFETY: sphereSkillToLearn is not undefined
 			// If dinoz does not have the skill, then it is the next skill to learn
 			break;
-		}
-		else {
+		} else {
 			// Else the dinoz knows the skill already, so check the next skill that is unlocked from the current one
-			sphereSkillToLearn = sphereSkills.find(skill => skill.unlockedFrom && skill.unlockedFrom.some(s => s === sphereSkillToLearn?.id)) // SAFETY: sphereSkillToLearn is not undefined
+			sphereSkillToLearn = sphereSkills.find(
+				skill => skill.unlockedFrom && skill.unlockedFrom.some(s => s === sphereSkillToLearn?.id)
+			); // SAFETY: sphereSkillToLearn is not undefined
 		}
 	}
 
