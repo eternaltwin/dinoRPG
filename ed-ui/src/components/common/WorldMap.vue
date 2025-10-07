@@ -145,8 +145,8 @@ export default defineComponent({
 				// Protect the translation left overflow
 				if (this.left + this.translation.x < 0) {
 					this.translation.x = -this.left;
-				} else if (this.mapImageRect.width - this.containerRect.width < this.translation.x) {
-					this.translation.x = this.mapImageRect.width - this.containerRect.width;
+				} else if (this.mapImageRect.width - this.containerRect.width - this.left < this.translation.x) {
+					this.translation.x = this.mapImageRect.width - this.containerRect.width - this.left;
 				}
 			}
 		},
