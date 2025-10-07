@@ -44,7 +44,8 @@ export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' |
 									playerId: true,
 									pollOptionId: true
 								}
-							}
+							},
+							endDate: true
 						}
 					},
 					likedBy: {

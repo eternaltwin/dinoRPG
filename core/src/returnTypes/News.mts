@@ -12,4 +12,5 @@ export type NewsGetResponse = {
 	totalVote: number;
 	likes: number;
 	likedByMe: boolean;
+	endDate: string;
 };
