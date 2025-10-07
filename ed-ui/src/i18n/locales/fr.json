@@ -5088,6 +5088,7 @@
 		"choose_option": "Votez pour votre choix :",
 		"choose_done": "Vote enregistré",
 		"select": "Voter",
-		"select_option": "Sélectionnez une option"
+		"select_option": "Sélectionnez une option",
+		"total_participants": "{qty} votants"
 	}
 }

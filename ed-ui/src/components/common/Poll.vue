@@ -14,10 +14,11 @@
 				<div class="vote-icon"></div>
 				<div class="vote-text">{{ option.optionText }}</div>
 				<div class="vote-stats" v-if="!poll.isActive">
-					<span class="vote-count">{{ getPercentage(option.id) }}%</span>
+					<span class="vote-count">{{ getPercentage(option.id).toFixed(2) }} %</span>
 				</div>
 			</div>
 		</div>
+		<div class="poll-title">{{ $t('poll.total_participants', {qty: poll.votes.length}) }}</div>
 
 		<button v-if="poll.isActive" class="vote-button" :disabled="!selectedOption" @click.stop="submitVote">
 			{{ hasVoted ? $t('poll.choose_done') : selectedOption ? $t('poll.select') : $t('poll.select_option') }}
