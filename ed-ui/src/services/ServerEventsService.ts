@@ -20,6 +20,17 @@ export const ServerEventsService = {
 			return Promise.reject(err);
 		}
 	},
+	async connectToWs(ticket: ServerEventTicketDto): Promise<WebSocket> {
+		try {
+			if (import.meta.env.MODE === 'development') {
+				return new WebSocket(`ws://localhost:8082/ws?ticket=${ticket.ticket}`);
+			} else {
+				return new WebSocket(`wss://${document.location.host}/ws?ticket=${ticket.ticket}`);
+			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	},
 	async connectToSse(ticket: ServerEventTicketDto): Promise<EventSource> {
 		try {
 			return new EventSource(`${API_BASE}/server-events/events?ticket=${ticket.ticket}`);

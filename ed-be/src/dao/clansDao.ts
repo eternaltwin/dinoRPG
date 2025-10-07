@@ -488,6 +488,17 @@ export async function playerHasRightRequest(clanId: number, playerId: string, ri
 	return member > 0;
 }
 
+export const getClanBannerImage = async (id: number) => {
+	const image = await prisma.clan.findUnique({
+		where: { id },
+		select: { banner: true }
+	});
+
+	if (!image) throw new ExpectedError('Banner not found');
+
+	return image;
+};
+
 export async function updateClanMemberRequest(id: number, clanId: number, rights: string[], nickname: string) {
 	const member = await prisma.clanMember.update({
 		where: {

@@ -10,7 +10,7 @@ import { WsChannelData } from '@drpg/core/models/serverEvents/WsChannelData';
 import { ChannelInfos } from '@drpg/core/models/serverEvents/ChannelInfos';
 import { RawData, WebSocket } from 'ws';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
-import { auth, getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
+import { Auth, auth, getClanIdAndNameFromPlayerId } from '../dao/playerDao.js';
 import { createClanMessageRequest, deleteClanMessageRequest } from '../dao/clansDao.js';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WsMsgRequest } from '@drpg/core/models/serverEvents/WsMsgRequest';
@@ -51,6 +51,10 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		type: serverEventType
 	});
 
+	if (activeTickets.length > 100) {
+		console.log("There is too many active tickets ! Actual length : " + activeTickets.length);
+	}
+
 	return {
 		ticket: uuid
 	};
@@ -90,10 +94,10 @@ function getUserAgentFromRequest(req: Request | IncomingMessage): string {
  * that the player has a clan and etc...
  *
  * @param req -> Express request
+ * @param authed -> Player connection information
+ * @param serverEventType -> Ws or SSE
  */
-// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-async function doSpecificVerifications(req: Request, authed: any, serverEventType: ServerEventType): Promise<void> {
+async function doSpecificVerifications(req: Request, authed: Auth, serverEventType: ServerEventType): Promise<void> {
 	if (serverEventType === ServerEventType.WEBSOCKET) {
 		await doSpecificVerificationsForWs(req, authed);
 		return;
@@ -102,25 +106,19 @@ async function doSpecificVerifications(req: Request, authed: any, serverEventTyp
 	await doSpecificVerificationsForSse(req, authed);
 }
 
-// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-async function doSpecificVerificationsForWs(req: Request, authed: any): Promise<void> {
+async function doSpecificVerificationsForWs(req: Request, authed: Auth): Promise<void> {
 	if (req.body.channel === WsChannel.CLAN_FORUM) {
 		await checkPlayerIsInClan(authed);
 	}
 }
 
-// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function doSpecificVerificationsForSse(_req: Request, _authed: any): Promise<void> {
+async function doSpecificVerificationsForSse(_req: Request, _authed: Auth): Promise<void> {
 	// Do nothing for now
 	// Remove eslint annotations when an implementation is done
 }
 
-// TODO: A FIX ABSOLUMENT !!! LE AUTH N'A PAS DE TYPE !!!!!!
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-async function checkPlayerIsInClan(authed: any): Promise<void> {
+async function checkPlayerIsInClan(authed: Auth): Promise<void> {
 	const clanForPlayer = await getClanIdAndNameFromPlayerId(authed.id);
 	if (clanForPlayer.ClanMember === null) {
 		throw new Error(`The player is not in a clan.`);
@@ -446,12 +444,12 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 
 	userInChannel.res.end();
 
-	const usersInChannel: SseChannelData[] = channelData.filter(player => player.ticketUuid !== ticketUuid);
+	const usersLeftInChannel: SseChannelData[] = channelData.filter(player => player.ticketUuid !== ticketUuid);
 
-	if (channelData.length === 1) {
+	if (usersLeftInChannel.length === 0) {
 		sseChannels.delete(channelName);
 	} else {
-		sseChannels.set(channelName, usersInChannel);
+		sseChannels.set(channelName, usersLeftInChannel);
 	}
 }
 

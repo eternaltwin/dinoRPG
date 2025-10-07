@@ -9,6 +9,7 @@
 import { defineComponent } from 'vue';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
+import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEventTicketDto';
 
 export default defineComponent({
 	data() {
@@ -19,15 +20,10 @@ export default defineComponent({
 	},
 	methods: {
 		async getWsTicket(): Promise<void> {
-			const ticket = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
-			if (import.meta.env.MODE === 'development') {
-				this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${ticket}`);
-			} else {
-				this.webSocket = new WebSocket(`wss://${document.location.host}/ws?ticket=${ticket}`);
-			}
+			const ticket: ServerEventTicketDto = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
+			this.webSocket = await ServerEventsService.connectToWs(ticket);
 		},
 		sendMessage(): void {
-			console.log(this.message);
 			this.webSocket.send(this.message);
 		}
 	}
