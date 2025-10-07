@@ -272,9 +272,6 @@ function getWsChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 		chanValue.find(channel => channel.connectionId === wsId)
 	);
 
-	LOGGER.error([...wsChannels.entries()]);
-	console.log([...wsChannels.entries()]);
-
 	if (channelData === undefined) {
 		LOGGER.error(`getWsChannelDetailsFromConnectionId error, wsId is ${wsId}`);
 		LOGGER.error([...wsChannels.entries()]);
