@@ -82,7 +82,6 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.ROCKY,
 			RaceEnum.QUETZU,
 			RaceEnum.FEROSS,
-			RaceEnum.SMOG,
 			RaceEnum.TRICERAGNON
 		]
 	},
@@ -102,7 +101,8 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.QUETZU,
 			RaceEnum.KABUKI,
 			RaceEnum.KABUKI_DEMON,
-			RaceEnum.MAHAMUTI
+			RaceEnum.MAHAMUTI,
+			RaceEnum.SMOG
 		]
 	},
 	[formatName.AIR]: {
