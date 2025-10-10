@@ -3,12 +3,14 @@
 		<div v-if="isConnectionOk">
 			<Editor v-model="newMessage" />
 		</div>
+
 		<div v-if="isConnectionOk === false" class="msg-error">
-			<p>{{ $t('clan.forum.connectionFailed') }}</p>
-			<p>{{ $t('clan.forum.connectionFailed2') }}</p>
+			<p>{{ t('clan.forum.connectionFailed') }}</p>
+			<p>{{ t('clan.forum.connectionFailed2') }}</p>
 		</div>
+
 		<div class="button-land">
-			<a class="button" @click="createNewMessage()">{{ $t('clanDiscussion.action.create') }}</a>
+			<a class="button" @click="createNewMessage()">{{ t('clanDiscussion.action.create') }}</a>
 		</div>
 	</div>
 
@@ -23,10 +25,7 @@
 								src="\src\assets\icons\crown.png"
 								alt="rank"
 								v-if="isLeader(msg)"
-								v-tippy="{
-									content: $t('clan.icons.crown'),
-									theme: 'small'
-								}"
+								v-tippy="{ content: t('clan.icons.crown'), theme: 'small' }"
 							/>
 							<div
 								v-if="msg.author"
@@ -40,34 +39,40 @@
 								{{ msg.authorName }}
 							</div>
 						</div>
-						<div class="msg-date">{{ dateToString(msg.date) }}</div>
+						<div class="msg-date">
+							<span class="msg-time">{{ formatShortDate(msg.date, locale) }}</span>
+							<span>{{ getTopItem(msg.author.playerTracking) }}</span>
+						</div>
 					</div>
 					<button v-if="canDeleteMessage(msg)" @click="deleteMessage(msg)">X</button>
 				</div>
 				<div class="msg-content" style="white-space: pre-line" v-html="msg.content" />
 			</div>
 		</div>
+
 		<div class="switch-page-container">
 			<div class="arrow-button">
 				<img src="\src\assets\icons\left.webp" alt="left" @click="changePage(-1)" v-if="page > 1" />
 			</div>
 
-			<p>{{ $t('clanDiscussion.pagination.page') }} {{ page }} / {{ maxPage }}</p>
+			<p>{{ t('clanDiscussion.pagination.page') }} {{ page }} / {{ maxPage }}</p>
 
 			<div class="arrow-button">
 				<img src="\src\assets\icons\right.webp" alt="right" @click="changePage(1)" v-if="messages.length >= 20" />
 			</div>
 		</div>
 		<div class="page-selector">
-			<p>{{ $t('clanDiscussion.pagination.go_to') }}</p>
+			<p>{{ t('clanDiscussion.pagination.go_to') }}</p>
 			<input type="number" v-model="pageSelector" />
 			<button @click="goToSelectedPage()">Go !</button>
 		</div>
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
@@ -82,125 +87,176 @@ import { ServerEventsService } from '../../services/ServerEventsService';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
 import Editor from '../common/Editor.vue';
+import { ToastPluginApi } from 'vue-toast-notification';
+import { getGoal } from '@drpg/core/utils/twinoidGoals';
 
-export default defineComponent({
-	name: 'ClanDiscussion',
-	components: {
-		Editor
-	},
-	data() {
-		return {
-			webSocket: {} as WebSocket,
-			playerStore: playerStore(),
-			hasAccess: false,
-			messages: [] as CreateClanMessage[],
-			page: 1,
-			maxPage: 1,
-			pageSelector: 1,
-			isConnectionOk: undefined as boolean | undefined,
-			newMessage: ''
-		};
-	},
-	methods: {
-		isLeader(msg: CreateClanMessage): boolean {
-			return msg.author?.id == msg.clan?.leaderId;
-		},
-		isSelf(msg: CreateClanMessage): boolean {
-			return msg.author?.id == this.playerStore.playerId;
-		},
-		dateToString(date: Date): string {
-			return new Date(date).toLocaleString('fr-FR');
-		},
-		canDeleteMessage(msg: CreateClanMessage): boolean {
-			return msg.author?.id == this.playerStore.playerId || msg.clan?.leaderId == this.playerStore.playerId;
-		},
-		goToPlayer(id: string) {
-			this.$router.push({ name: 'MyAccount', params: { id } });
-		},
-		async createNewMessage(): Promise<void> {
-			if (!this.hasAccess || !this.newMessage) {
-				return;
-			}
-			this.page = 1;
-			const payload: WsMsgRequestCreation = { action: WsMessageAction.CREATE, message: this.newMessage };
-			this.webSocket.send(JSON.stringify(payload));
-			this.newMessage = '';
-		},
-		async deleteMessage(msg: CreateClanMessage): Promise<void> {
-			if (!this.canDeleteMessage(msg)) return;
+const { t, locale } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const instance = getCurrentInstance();
 
-			const res: boolean = confirm(this.$t('popup.confirm'));
-			if (!res) return;
+const webSocket = ref<WebSocket | null>(null);
+const store = playerStore();
 
-			const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };
-			this.webSocket.send(JSON.stringify(payload));
-		},
-		async getClanMessages(): Promise<void> {
-			this.messages = await ClanService.getClanMessages(Number(this.$route.params.id), this.page);
-			const messagesCount = await ClanService.getClanMessagesCount(Number(this.$route.params.id));
-			this.maxPage = Math.floor((messagesCount.count + 19) / 20);
-		},
-		async connectToWs(): Promise<void> {
-			const wsTicket: ServerEventTicketDto = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
-			if (import.meta.env.MODE === 'development') {
-				this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${wsTicket.ticket}`);
-			} else {
-				this.webSocket = new WebSocket(`wss://${document.location.host}/ws?ticket=${wsTicket.ticket}`);
-			}
+const hasAccess = ref<boolean>(false);
+const messages = ref<CreateClanMessage[]>([]);
+const page = ref<number>(1);
+const maxPage = ref<number>(1);
+const pageSelector = ref<number>(1);
+const isConnectionOk = ref<boolean | undefined>(undefined);
+const newMessage = ref<string>('');
 
-			this.webSocket.onmessage = (message: MessageEvent<WsMsgResponse>) => this.handleWsAction(message);
-			this.webSocket.onerror = () => (this.isConnectionOk = false);
-			this.webSocket.onclose = () => (this.isConnectionOk = false);
-			this.webSocket.onopen = () => (this.isConnectionOk = true);
-		},
-		async changePage(n: number) {
-			this.page += n;
-			await this.getClanMessages();
-		},
-		async goToSelectedPage() {
-			if (this.pageSelector <= this.maxPage && this.pageSelector > 0) {
-				this.page = this.pageSelector;
-				await this.getClanMessages();
-			}
-		},
-		handleWsAction(message: MessageEvent<WsMsgResponse>): void {
-			const msgData = JSON.parse(message.data.toString());
+const LOCALE_MAP: Record<string, string> = {
+	en: 'en-US',
+	fr: 'fr-FR',
+	es: 'es-ES',
+	de: 'de-DE'
+};
 
-			if (msgData.action === WsMessageAction.CREATE) {
-				this.updateMessages(msgData.payload);
-			} else if (msgData.action === WsMessageAction.DELETE) {
-				this.removeMsgFromMessages(msgData.msgId);
-			}
-		},
-		updateMessages(message: CreateClanMessage): void {
-			if (this.page !== 1) {
-				return;
-			}
+// helpers
+function isLeader(msg: CreateClanMessage): boolean {
+	return msg.author?.id == msg.clan?.leaderId;
+}
+function isSelf(msg: CreateClanMessage): boolean {
+	return msg.author?.id == store.playerId;
+}
+//function dateToString(date: Date): string {
+//	return new Date(date).toLocaleString('fr-FR');
+//}
+function canDeleteMessage(msg: CreateClanMessage): boolean {
+	return msg.author?.id == store.playerId || msg.clan?.leaderId == store.playerId;
+}
+function goToPlayer(id: string) {
+	router.push({ name: 'MyAccount', params: { id } });
+}
 
-			this.messages.unshift(message);
-		},
-		removeMsgFromMessages(msgId: number) {
-			this.messages = this.messages.filter(message => message.id !== msgId);
-		}
-	},
-	async mounted(): Promise<void> {
-		this.hasAccess = this.playerStore.clanId == Number(this.$route.params.id);
-		if (!this.hasAccess) {
-			this.$router.push({ name: 'Clan', params: { id: this.$route.params.id } });
-		}
+function getTopItem(arr){
+	const topItem = arr.reduce((a, b) => (b.quantity > a.quantity ? b : a)); 
+	const goal = getGoal(topItem.stat);
+	return goal.name[locale.value] + ' (' + topItem.quantity + ')';
+}
 
-		EventBus.emit('isLoading', true);
+async function createNewMessage(): Promise<void> {
+	if (!hasAccess.value || !newMessage.value) return;
+	page.value = 1;
+	const payload: WsMsgRequestCreation = { action: WsMessageAction.CREATE, message: newMessage.value };
+	webSocket.value?.send(JSON.stringify(payload));
+	newMessage.value = '';
+}
 
-		try {
-			await this.getClanMessages();
-			await this.connectToWs();
+async function deleteMessage(msg: CreateClanMessage): Promise<void> {
+	if (!canDeleteMessage(msg)) return;
+	const res = window.confirm(t('popup.confirm'));
+	if (!res) return;
+	const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };
+	webSocket.value?.send(JSON.stringify(payload));
+}
 
-			EventBus.emit('isLoading', false);
-		} catch (err) {
-			this.isConnectionOk = false;
-			errorHandler.handle(err as Error, this.$toast);
-			return;
-		}
+async function getClanMessages(): Promise<void> {
+	const clanId = Number(route.params.id);
+	messages.value = await ClanService.getClanMessages(clanId, page.value);
+	const messagesCount = await ClanService.getClanMessagesCount(clanId);
+	maxPage.value = Math.floor((messagesCount.count + 19) / 20);
+}
+
+async function connectToWs(): Promise<void> {
+	const wsTicket: ServerEventTicketDto = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
+	const url =
+		import.meta.env.MODE === 'development'
+			? `ws://localhost:8082/ws?ticket=${wsTicket.ticket}`
+			: `wss://${document.location.host}/ws?ticket=${wsTicket.ticket}`;
+
+	webSocket.value = new WebSocket(url);
+	webSocket.value.onmessage = (message: MessageEvent<WsMsgResponse>) => handleWsAction(message);
+	webSocket.value.onerror = () => (isConnectionOk.value = false);
+	webSocket.value.onclose = () => (isConnectionOk.value = false);
+	webSocket.value.onopen = () => (isConnectionOk.value = true);
+}
+
+async function changePage(n: number) {
+	page.value += n;
+	await getClanMessages();
+}
+
+async function goToSelectedPage() {
+	if (pageSelector.value <= maxPage.value && pageSelector.value > 0) {
+		page.value = pageSelector.value;
+		await getClanMessages();
+	}
+}
+
+function handleWsAction(message: MessageEvent<WsMsgResponse>): void {
+	const msgData = JSON.parse(message.data.toString());
+	if (msgData.action === WsMessageAction.CREATE) {
+		updateMessages(msgData.payload);
+	} else if (msgData.action === WsMessageAction.DELETE) {
+		removeMsgFromMessages(msgData.msgId);
+	}
+}
+
+function updateMessages(message: CreateClanMessage): void {
+	if (page.value !== 1) return;
+	messages.value.unshift(message);
+}
+
+function removeMsgFromMessages(msgId: number) {
+	messages.value = messages.value.filter(m => m.id !== msgId);
+}
+function formatShortDate(
+	iso: string | number | Date,
+	localeCode: string = 'en', // por ejemplo: i18n.locale.value
+	opts?: { timeZone?: string } // opcional: 'UTC', 'Europe/Berlin', etc.
+): string {
+	const date = iso instanceof Date ? iso : new Date(iso);
+	const locale = LOCALE_MAP[localeCode] ?? localeCode;
+
+	const dtf = new Intl.DateTimeFormat(locale, {
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: false, // 24h
+		...(opts?.timeZone ? { timeZone: opts.timeZone } : {})
+	});
+
+	// Usamos formatToParts para no heredar comas/puntos/espacios locales
+	const parts = dtf.formatToParts(date);
+	const get = (type: Intl.DateTimeFormatPartTypes) => parts.find(p => p.type === type)?.value ?? '';
+
+	const day = get('day').replace('.', ''); // algunos locales ponen punto
+	const month = get('month').replace('.', '').toLowerCase(); // 'Oct.' -> 'oct'
+	const year = get('year');
+	const hour = get('hour').padStart(2, '0');
+	const minute = get('minute').padStart(2, '0');
+
+	return `${day} ${month} ${year}, ${hour}:${minute}`;
+}
+
+onMounted(async () => {
+	hasAccess.value = store.clanId == Number(route.params.id);
+	if (!hasAccess.value) {
+		router.push({ name: 'Clan', params: { id: route.params.id } });
+		return;
+	}
+
+	EventBus.emit('isLoading', true);
+	try {
+		await getClanMessages();
+		await connectToWs();
+		EventBus.emit('isLoading', false);
+	} catch (err) {
+		isConnectionOk.value = false;
+		// $toast desde la instancia (si está registrado globalmente)
+		errorHandler.handle(err as Error, instance?.proxy?.$toast ?? ({} as ToastPluginApi));
+	}
+});
+
+onBeforeUnmount(() => {
+	try {
+		webSocket.value?.close();
+	} catch (e) {
+		// noop: safe to ignore on unmount
 	}
 });
 </script>
@@ -223,31 +279,41 @@ export default defineComponent({
 	gap: 8px;
 	padding-bottom: 16px;
 }
-
 .msg {
 	margin: 0 10px;
-	background-color: #d8b68a;
-	color: black;
+	background-color: #BC6733;
+	color: white;
+	border-radius: 12px;
 	.msg-header {
-		background-color: #ca9957;
+		padding: 4px;
+		background-color: #cb7c49;
 		display: flex;
 		justify-content: space-between;
 		gap: 4px;
-		height: 30px;
+		height: auto;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+		border: #ae6134 1px solid;
+		border-radius: 12px 12px 0 0;
 		.msg-info {
 			width: 100%;
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
+			justify-content: space-between;
 			.author-name {
 				display: flex;
-				align-items: baseline;
-				gap: 2px;
+				flex-direction: column;
+				justify-content: center;
+				align-items: start;
+				
+				text-transform: capitalize;
+				font-weight: 600;
+
 				img {
-					height: 50%;
+					height: 25%;
 				}
 			}
 			.msg-author {
-				font-size: 14px;
+				font-size: 1.4rem;
 				&.self {
 					color: white;
 				}
@@ -257,24 +323,39 @@ export default defineComponent({
 				}
 			}
 			.msg-date {
-				font-size: 10px;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-end;
+				justify-content: center;
+				font-size: 1.1rem;
+				padding-right: 4px;
+				color: #F8F5DD;
+				.msg-time {
+					color:#FCD4A4;
+				}
 			}
 		}
-
 		button {
 			float: right;
 			height: 18px;
 			font-size: 10px;
-			background-color: #e75c32;
-			color: #e0c49f;
-			border-color: #e0c49f;
+			background-color: #BF4F1E;
+			color: #FABD88;
+			border: #93441A 1px solid;
+			border-radius: 6px;
+			font-weight: 700;
 			&:hover {
 				cursor: pointer;
+				transform: rotateX('angle');
 			}
 		}
 	}
 }
-
+.msg-content {
+	padding: 16px 8px;
+	font-size: 1.2rem;
+	color: #F8F5DD;
+}
 .new-message-container {
 	padding: 10px 0;
 	display: flex;
@@ -299,7 +380,6 @@ export default defineComponent({
 		}
 	}
 }
-
 textarea {
 	padding-left: 8px;
 	padding-right: 8px;
@@ -312,7 +392,6 @@ textarea {
 	background-color: #bc683c;
 	resize: vertical;
 }
-
 .switch-page-container {
 	display: flex;
 	padding: 8px 16px;
@@ -351,7 +430,6 @@ textarea {
 		}
 	}
 }
-
 .msg-error {
 	color: #e75c32;
 }

@@ -760,7 +760,13 @@ export async function getClanMessagesRequest(playerId: string, clanId: number, p
 				author: {
 					select: {
 						id: true,
-						name: true
+						name: true,
+						playerTracking: {
+							select: {
+								stat: true,
+								quantity: true
+							}
+						}
 					}
 				},
 				clan: {
@@ -816,7 +822,8 @@ export async function createClanMessageRequest(
 			author: {
 				select: {
 					id: true,
-					name: true
+					name: true,
+					playerTracking: true
 				}
 			},
 			clan: {
