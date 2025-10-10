@@ -214,7 +214,9 @@
 		"generator": "Générateur de Dinoz",
 		"sortDinoz": "Gérer mes Dinoz",
 		"dinozMissions": "Missions de mes Dinoz",
-		"skills": "Compétences"
+		"skills": "Compétences",
+		"send": "Envoyer",
+		"close": "Fermer"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",

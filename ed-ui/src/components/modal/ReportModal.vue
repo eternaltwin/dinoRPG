@@ -29,8 +29,8 @@
 			</div>
 		</form>
 		<div class="buttons">
-			<DZButton @click="reports">Send</DZButton>
-			<DZButton @click="close">Close</DZButton>
+			<DZButton @click="reports">{{ $t(`button.send`) }}</DZButton>
+			<DZButton @click="close">{{ $t(`button.close`) }}</DZButton>
 		</div>
 	</dialog>
 </template>

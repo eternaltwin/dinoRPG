@@ -1,7 +1,7 @@
 <template>
 	<div v-if="enabled" class="modal-background">
 		<div class="modal-box">
-			<button class="modal-close" @click="$emit('close')">Close</button>
+			<button class="modal-close" @click="$emit('close')">{{ $t(`button.close`) }}</button>
 			<div class="details">
 				<div class="choice">
 					<div class="title">
