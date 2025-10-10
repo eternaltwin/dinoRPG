@@ -18,7 +18,7 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { addMoney } from '../dao/playerDao.js';
-import { LOGGER } from '../context.js';
+import { DISCORD, LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import dayjs from 'dayjs';
 import { createNews } from '../dao/newsDao.js';
@@ -659,7 +659,7 @@ class TournamentManager {
 			number: romanize(total + 1)
 		};
 
-		await createNews({
+		const news = await createNews({
 			title: this.tournamentId,
 			// image: req.file?.buffer,
 			type: NewsType.tid_start,
@@ -672,6 +672,11 @@ class TournamentManager {
 			spanishText: translateTarget('dojo.newsCorpus', 'es', esTrad),
 			germanText: translateTarget('dojo.newsCorpus', 'de', deTrad)
 		});
+		if (news.frenchTitle && news.frenchText) {
+			DISCORD.sendNewsNotification(news.frenchTitle, news.frenchText, undefined);
+		} else {
+			LOGGER.error(`Tournament News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
+		}
 
 		scheduleJob(this.tournamentId, endQualif, () => this.generateNextRound(prisma));
 
