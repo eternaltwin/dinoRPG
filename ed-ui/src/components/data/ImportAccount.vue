@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-background">
 		<div class="modal-box">
-			<button class="modal-close" @click="closePopin()">Close</button>
+			<button class="modal-close" @click="closePopin()">{{ $t(`button.close`) }}</button>
 			<span>
 				{{ $t(`import.disclaimer1`) }} <br /><br />
 				{{ $t(`import.disclaimer2`) }} <br /><br />
