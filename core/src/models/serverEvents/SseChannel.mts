@@ -1,2 +1,1 @@
-export enum SseChannel {
-}
+export enum SseChannel {}

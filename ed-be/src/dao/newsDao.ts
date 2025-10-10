@@ -13,7 +13,7 @@ export const getAllNewsFromDB = async () => {
 	const data = await prisma.news.findMany({
 		select: {
 			id: true,
-			title: true,
+			title: true
 		},
 		orderBy: {
 			id: 'desc'
@@ -41,11 +41,10 @@ export const getNewsDetails = async (id: number) => {
 			type: true
 			// poll: true // TODO
 		},
-		where: { id },
+		where: { id }
 	});
 	return data;
 };
-
 
 export const getBatchOfNews = async (page: number, player: Pick<Player, 'lang' | 'id'> | undefined) => {
 	const lang = player?.lang ?? 'fr';
