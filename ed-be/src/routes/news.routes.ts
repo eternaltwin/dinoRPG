@@ -203,7 +203,6 @@ routes.get(`${commonPath}/all`, checkIsAdmin, async (req: Request, res: Response
 	}
 });
 
-
 /**
  * @openapi
  * /api/v1/news/{id:
@@ -225,19 +224,23 @@ routes.get(`${commonPath}/all`, checkIsAdmin, async (req: Request, res: Response
  *       500:
  *         description: Error
  */
-routes.get(`${commonPath}/:id`, checkIsAdmin, param('id').exists().toInt().isInt(), async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
+routes.get(
+	`${commonPath}/:id`,
+	checkIsAdmin,
+	param('id').exists().toInt().isInt(),
+	async (req: Request, res: Response) => {
+		if (!validationResult(req).isEmpty()) {
+			return res.status(400).json({ errors: validationResult(req) });
+		}
 
-	try {
-		const response = await getNewsAdmin(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
+		try {
+			const response = await getNewsAdmin(req);
+			return res.status(200).send(response);
+		} catch (err) {
+			sendError(res, err);
+		}
 	}
-});
-
+);
 
 /**
  * @openapi

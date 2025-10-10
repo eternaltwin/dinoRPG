@@ -1,4 +1,4 @@
 export enum ServerEventType {
-	WEBSOCKET = "websocket",
-	SSE = "sse"
+	WEBSOCKET = 'websocket',
+	SSE = 'sse'
 }

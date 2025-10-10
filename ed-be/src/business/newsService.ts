@@ -181,7 +181,6 @@ export async function getAllNews() {
 	return news;
 }
 
-
 /**
  * @summary Retrieve all info of a news
  * @param req.params.id {number} ID of the news
@@ -192,7 +191,6 @@ export async function getNewsAdmin(req: Request) {
 
 	return news;
 }
-
 
 /**
  * @summary Update a selected news

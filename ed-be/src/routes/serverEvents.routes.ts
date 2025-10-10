@@ -4,7 +4,7 @@ import { authenticate, connectUserToSseChannel, disconnectSseUser } from '../bus
 import { body, header, validationResult } from 'express-validator';
 import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
-import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType'
+import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();

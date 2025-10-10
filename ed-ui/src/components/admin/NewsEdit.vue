@@ -193,7 +193,7 @@ export default defineComponent({
 		},
 		async getAllNews(): Promise<void> {
 			this.batchNews = await NewsService.getAllNews();
-		},
+		}
 	},
 	async mounted(): Promise<void> {
 		try {

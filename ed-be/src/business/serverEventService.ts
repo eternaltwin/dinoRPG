@@ -52,7 +52,7 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 	});
 
 	if (activeTickets.length > 100) {
-		console.log("There is too many active tickets ! Actual length : " + activeTickets.length);
+		console.log('There is too many active tickets ! Actual length : ' + activeTickets.length);
 	}
 
 	return {
@@ -67,7 +67,8 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
  * @returns -> The player IP address
  */
 function getIpAddressFromRequest(req: Request | IncomingMessage): string {
-	const ip: string | undefined = req.socket.remoteAddress ?? (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim();
+	const ip: string | undefined =
+		req.socket.remoteAddress ?? (req.headers['x-forwarded-for'] as string)?.split(',')[0].trim();
 	if (ip === undefined) {
 		throw new Error('The IP address was not found');
 	}
@@ -296,7 +297,11 @@ function getMessageFromString(message: RawData): WsMsgRequest {
 	return JSON.parse(message.toString());
 }
 
-async function saveWsMessageInDatabase(channel: ChannelInfos, wsId: string, message: string): Promise<CreateClanMessage> {
+async function saveWsMessageInDatabase(
+	channel: ChannelInfos,
+	wsId: string,
+	message: string
+): Promise<CreateClanMessage> {
 	const wsData: WsChannelData = getPlayerWsDataFromChannelData(channel, wsId);
 
 	const playerInfos = await getClanIdAndNameFromPlayerId(wsData.playerId);
@@ -334,7 +339,11 @@ function getPlayerWsDataFromChannelData(channel: ChannelInfos, wsId: string): Ws
  * @param channel -> The channel into we want to send a message
  * @param message -> The message we want to send
  */
-function sendMessageToPeopleInWsChannel(wss: WebSocketServerCustom, channel: ChannelInfos, message: WsMsgResponse): void {
+function sendMessageToPeopleInWsChannel(
+	wss: WebSocketServerCustom,
+	channel: ChannelInfos,
+	message: WsMsgResponse
+): void {
 	wss.clients.forEach(client => {
 		const sendMessageToClient = channel.members.some(user => user.connectionId === client.id);
 		if (!sendMessageToClient || client.readyState !== WebSocket.OPEN) {
@@ -426,17 +435,18 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 	const ticketUuid: string = getTicketFromUrl(req);
 
 	const channel = Array.from(sseChannels).find(([, sseChannelData]) =>
-		sseChannelData.some(player => player.ticketUuid === ticketUuid));
+		sseChannelData.some(player => player.ticketUuid === ticketUuid)
+	);
 
 	if (channel === undefined) {
-		throw new Error("User must be in a channel");
+		throw new Error('User must be in a channel');
 	}
 
 	const [channelName, channelData] = channel;
 	const userInChannel: SseChannelData | undefined = channelData.find(player => player.ticketUuid === ticketUuid);
 
 	if (userInChannel === undefined) {
-		throw new Error("User not found in SSE channel.")
+		throw new Error('User not found in SSE channel.');
 	}
 
 	userInChannel.res.end();
@@ -459,7 +469,7 @@ function getTicketFromUrl(req: Request | IncomingMessage): string {
 	const ticket: string | undefined = req.url?.split('?ticket=')[1];
 
 	if (ticket === undefined) {
-		throw new Error("The ticket must be send");
+		throw new Error('The ticket must be send');
 	}
 
 	return ticket;
