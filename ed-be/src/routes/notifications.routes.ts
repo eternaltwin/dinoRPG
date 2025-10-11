@@ -2,24 +2,11 @@ import { Request, Response, Router } from 'express';
 import { param, validationResult } from 'express-validator';
 import { apiRoutes } from '../constants/index.js';
 import sendError from '../utils/sendErrors.js';
-import { getNotifications, setAllNotificationRead, setNotificationRead } from '../business/notificationService.js';
+import { setAllNotificationRead, setNotificationRead } from '../business/notificationService.js';
 
 const routes: Router = Router();
 
 const commonPath: string = apiRoutes.notification;
-
-routes.get(`${commonPath}/list`, async (req: Request, res: Response) => {
-	if (!validationResult(req).isEmpty()) {
-		return res.status(400).json({ errors: validationResult(req) });
-	}
-
-	try {
-		const response = await getNotifications(req);
-		return res.status(200).send(response);
-	} catch (err) {
-		sendError(res, err);
-	}
-});
 
 routes.patch(`${commonPath}/all/read`, async (req: Request, res: Response) => {
 	if (!validationResult(req).isEmpty()) {
