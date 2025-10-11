@@ -252,7 +252,6 @@ export default defineComponent({
 				await NotificationService.readNotification(id);
 				const notifications = this.playerStore.getNotifications.filter(n => n.id !== id);
 				this.playerStore.setNotifications(notifications);
-				this.playerStore.setNotificationsCounter(this.notifications.length - 1);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -281,7 +280,6 @@ export default defineComponent({
 			try {
 				await NotificationService.readAllNotification();
 				this.playerStore.setNotifications([]);
-				this.playerStore.setNotificationsCounter(0);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}
@@ -424,8 +422,10 @@ export default defineComponent({
 		});
 	},
 	watch: {
-		'playerStore.getNotifications': function (notifications: Notification[]) {
-			this.notifications = notifications.map(notif => this.translateNotification(notif)).filter(n => n !== null);
+		'playerStore.getNotifications.length': function () {
+			this.notifications = this.playerStore.getNotifications
+				.map(notif => this.translateNotification(notif))
+				.filter(n => n !== null);
 		}
 	}
 });

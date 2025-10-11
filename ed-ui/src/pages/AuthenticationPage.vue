@@ -43,7 +43,6 @@ export default defineComponent({
 				this.playerStore.setClanId(commonData.clanId);
 				this.playerStore.setPriest(commonData.priest);
 				this.playerStore.setShopkeeper(commonData.shopkeeper);
-				this.playerStore.setNotificationsCounter(commonData.notifications.length);
 				this.playerStore.setNotifications(commonData.notifications);
 				this.playerStore.setPlayerId(commonData.id);
 				this.playerStore.setPlayerName(commonData.name);

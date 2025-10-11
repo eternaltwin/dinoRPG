@@ -4,17 +4,10 @@ import { ServerEventTicketDto } from '@drpg/core/models/serverEvents/ServerEvent
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 
 export const ServerEventsService = {
+	// WebSockets
 	async getWsTicket(channel: WsChannel): Promise<ServerEventTicketDto> {
 		try {
 			const res = await http().post('/server-events/websockets/authenticate', { channel });
-			return res.data;
-		} catch (err) {
-			return Promise.reject(err);
-		}
-	},
-	async getSseTicket(channel: SseChannel): Promise<ServerEventTicketDto> {
-		try {
-			const res = await http().post('/server-events/sse/authenticate', { channel });
 			return res.data;
 		} catch (err) {
 			return Promise.reject(err);
@@ -27,6 +20,15 @@ export const ServerEventsService = {
 			} else {
 				return new WebSocket(`wss://${document.location.host}/ws?ticket=${ticket.ticket}`);
 			}
+		} catch (err) {
+			return Promise.reject(err);
+		}
+	},
+	// SSE
+	async getSseTicket(channel: SseChannel): Promise<ServerEventTicketDto> {
+		try {
+			const res = await http().post('/server-events/sse/authenticate', { channel });
+			return res.data;
 		} catch (err) {
 			return Promise.reject(err);
 		}

@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { playerStore, dinozStore } from '../store/index.js';
+import { dinozStore, playerStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 import { PlayerService } from '../services/index.js';
 import EventBus from '../events/index.js';
@@ -41,7 +41,6 @@ export default defineComponent({
 				this.playerStore.setClanId(commonData.clanId);
 				this.playerStore.setPriest(commonData.priest);
 				this.playerStore.setShopkeeper(commonData.shopkeeper);
-				this.playerStore.setNotificationsCounter(commonData.notifications.length);
 				this.playerStore.setNotifications(commonData.notifications);
 				this.playerStore.setPlayerId(commonData.id);
 				this.playerStore.setPlayerName(commonData.name);

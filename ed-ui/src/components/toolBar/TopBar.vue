@@ -51,9 +51,11 @@
 import { defineComponent } from 'vue';
 import { localStore, playerStore } from '../../store';
 import EventBus from '../../events/index.js';
-import { NotificationService, OauthService } from '../../services';
+import { OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
 import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
+import { ServerEventsService } from '../../services/ServerEventsService';
+import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -63,7 +65,8 @@ export default defineComponent({
 			localStore: localStore(),
 			playerStore: playerStore(),
 			time: '' as string,
-			notification: 0 as number
+			notification: 0 as number,
+			eventSource: null as EventSource | null
 		};
 	},
 	computed: {
@@ -87,21 +90,24 @@ export default defineComponent({
 		openDinoz() {
 			EventBus.emit('dinozMenu', true);
 		},
-		async refreshNotif() {
-			if (!this.playerStore.getPlayerId) return;
-
-			const backNotif = await NotificationService.getNotifications();
-			this.playerStore.setNotifications(backNotif.notifications);
-			this.playerStore.setNotificationsCounter(backNotif.notifications.length);
-
-			if (backNotif.lastVersionSeen !== import.meta.env.VERSION) {
-				this.$router.go(0);
+		async startSseForNotification(): Promise<void> {
+			if (this.playerStore.getPlayerId) {
+				const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
+				this.eventSource = await ServerEventsService.connectToSse(ticket);
+				this.eventSource.onmessage = (message: MessageEvent<string>) => {
+					this.playerStore.addNotification(JSON.parse(message.data));
+				};
+			} else {
+				this.eventSource?.close();
 			}
 		}
 	},
 	watch: {
 		'playerStore.getNotificationsCounter': function (notification: number) {
 			this.notification = notification;
+		},
+		'playerStore.getPlayerId': function () {
+			this.startSseForNotification();
 		}
 	},
 	mounted() {
@@ -109,9 +115,7 @@ export default defineComponent({
 		setInterval(() => {
 			this.getTime();
 		}, 1000);
-		setInterval(() => {
-			this.refreshNotif();
-		}, 60 * 1000);
+		this.startSseForNotification();
 	}
 });
 </script>
