@@ -117,6 +117,7 @@ export default defineComponent({
 		this.selectedIndex = selectElement[Math.floor(Math.random() * selectElement.length)];
 		this.isSpinning = !this.isSpinning;
 		if (this.playerStore.getPlayerOptions.skipLevel) {
+			this.increment = this.selectedIndex;
 			this.isSpinning = false;
 			this.isSpinOver = true;
 			this.$emit('spinOver');
