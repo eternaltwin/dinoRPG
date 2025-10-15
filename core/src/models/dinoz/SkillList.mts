@@ -5358,3 +5358,18 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		}
 	}
 };
+
+export const uSkillsToPlayerFieldMap: Map<
+	Skill,
+	'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'
+> = new Map([
+	[Skill.LEADER, 'leader'],
+	[Skill.INGENIEUR, 'engineer'],
+	[Skill.MAGASINIER, 'shopKeeper'],
+	[Skill.CUISINIER, 'cooker'],
+	[Skill.MARCHAND, 'merchant'],
+	[Skill.PRETRE, 'priest'],
+	[Skill.PROFESSEUR, 'teacher'],
+	[Skill.MESSIE, 'messie'],
+	[Skill.MATELASSEUR, 'matelasseur']
+]);
