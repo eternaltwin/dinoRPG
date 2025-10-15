@@ -1,8 +1,7 @@
 import { SkillDetails, SkillEffects } from '@drpg/core/models/dinoz/SkillDetails';
 import { Stat } from '@drpg/core/models/enums/SkillStat';
-import { updateDinoz, updateEventDinoz } from '../dao/dinozDao.js';
 import { Dinoz, GameDinozUsage, Player } from '@drpg/prisma';
-import { Skill } from '@drpg/core/models/dinoz/SkillList';
+import { Skill, uSkillsToPlayerFieldMap } from '@drpg/core/models/dinoz/SkillList';
 
 function applySkillToDinoz(
 	effects: SkillEffects,
@@ -122,4 +121,16 @@ function applyUSkillEffect(
 	}
 }
 
-export { applyUSkillEffect, applySkillToDinoz, deApplySkillFromDinoz };
+function computeUSkillEffects(
+	player: Pick<
+		Player,
+		'leader' | 'engineer' | 'shopKeeper' | 'cooker' | 'merchant' | 'priest' | 'teacher' | 'messie' | 'matelasseur'
+	>,
+	skills: Skill[]
+) {
+	uSkillsToPlayerFieldMap.forEach((field, skill) => {
+		player[field] = Boolean(skills.find(s => s === skill));
+	});
+}
+
+export { applyUSkillEffect, applySkillToDinoz, computeUSkillEffects, deApplySkillFromDinoz };

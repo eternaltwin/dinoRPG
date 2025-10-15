@@ -28,7 +28,7 @@ import {
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
 import { $Enums, Dinoz, LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
-import { scheduleJob, scheduledJobs } from 'node-schedule';
+import { scheduledJobs, scheduleJob } from 'node-schedule';
 import { addMoney, auth, getPlayerDiscoveredSkills, ownsDinoz, setPlayer } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
@@ -40,10 +40,9 @@ import translate from '../utils/translate.js';
 import { createLog } from '../dao/logDao.js';
 import gameConfig from '../config/game.config.js';
 import { createNotification } from '../dao/notificationDao.js';
-import NotificationSeverity = $Enums.NotificationSeverity;
-import TournamentManager from '../utils/tournamentManager.js';
-import { prisma } from '../prisma.js';
 import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
+import { computeUSkillsForPlayer } from './skillService.js';
+import NotificationSeverity = $Enums.NotificationSeverity;
 
 /**
  * Get the list of current offers
@@ -489,10 +488,14 @@ export async function claimOffer(req: Request): Promise<ClaimOfferData> {
 			// Update seller ranking
 			await updateDinozCount(offer.seller.id, -1);
 			await updatePoints(offer.seller.id, -offer.dinoz.level);
+			// Recompute U skills of seller
+			await computeUSkillsForPlayer(offer.seller.id);
 
 			// Update winner ranking
 			await updateDinozCount(winnerBid.userId, 1);
 			await updatePoints(winnerBid.userId, offer.dinoz.level);
+			// Recompute U skills of winner
+			await computeUSkillsForPlayer(winnerBid.userId);
 
 			// await updateOfferDinoz(offerId, JSON.stringify(offer.dinoz));
 		}

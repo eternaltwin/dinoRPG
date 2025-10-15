@@ -7,10 +7,21 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { SkillTreeType } from '@drpg/core/models/enums/SkillTreeType';
 import { Item, itemList } from '@drpg/core/models/item/ItemList';
-import { $Enums, Dinoz, DinozItem, DinozSkill, DinozSkillUnlockable, DinozStatus, LogType, Player } from '@drpg/prisma';
+import {
+	$Enums,
+	Dinoz,
+	DinozItem,
+	DinozSkill,
+	DinozSkillUnlockable,
+	DinozStatus,
+	LogType,
+	PantheonMotif,
+	Player
+} from '@drpg/prisma';
 import { Request } from 'express';
 import gameConfig from '../config/game.config.js';
 import {
+	getAllDinozFromAccount,
 	getDinozForLevelUp,
 	getDinozSkillsLearnableAndUnlockable,
 	getDinozToReincarnate,
@@ -26,7 +37,7 @@ import {
 	removeAllUnlockableSkillsFromDinoz,
 	removeUnlockableSkillsFromDinoz
 } from '../dao/dinozSkillUnlockableDao.js';
-import { applySkillToDinoz, applyUSkillEffect, fromBase62 } from '../utils/index.js';
+import { applySkillToDinoz, applyUSkillEffect, computeUSkillEffects, fromBase62 } from '../utils/index.js';
 import { getMaxXp, getRace } from '@drpg/core/utils/DinozUtils';
 import { createLog } from '../dao/logDao.js';
 import { updatePoints } from '../dao/rankingDao.js';
@@ -39,14 +50,13 @@ import { addStatusToDinoz, removeAllStatusFromDinoz } from '../dao/dinozStatusDa
 import { removeAllMissionsFromDinoz } from '../dao/dinozMissionDao.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { checkAnnounce } from '../utils/announcer.js';
-import { PantheonMotif } from '@drpg/prisma';
 import TournamentManager from '../utils/tournamentManager.js';
 import { prisma } from '../prisma.js';
 import { getRandomUpElement, reincarnateDinoz } from '../utils/dinoz.js';
 import { checkFBCreation } from './forceBruteService.js';
-import GameDinozUsage = $Enums.GameDinozUsage;
 import { LearnSkillData } from '@drpg/core/returnTypes/Dinoz';
 import translate from '../utils/translate.js';
+import GameDinozUsage = $Enums.GameDinozUsage;
 
 /**
  * @summary Get all learnables and unlockables skills
@@ -582,6 +592,17 @@ export async function applySkillEffect(
 	}
 }
 
+export async function computeUSkillsForPlayer(playerId: string) {
+	const player = await getPlayerUSkills(playerId);
+	if (!player) {
+		throw new ExpectedError(`This player doesn't exist.`);
+	}
+	const dinozList = await getAllDinozFromAccount(playerId);
+	const skills = dinozList.flatMap(dinoz => dinoz.skills).map(skill => skill.skillId);
+	computeUSkillEffects(player, skills);
+	await setPlayer(playerId, player);
+}
+
 export async function reincarnate(req: Request) {
 	const dinozId: number = +req.params.id;
 	const authed = await auth(req);
@@ -623,6 +644,7 @@ export async function reincarnate(req: Request) {
 	promises.push(removeAllMissionsFromDinoz(dinoz.id));
 	promises.push(removeAllUnlockableSkillsFromDinoz(dinoz.id));
 	promises.push(updatePoints(authed.id, -dinoz.level));
+	promises.push(computeUSkillsForPlayer(authed.id));
 	await Promise.all(promises);
 
 	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
