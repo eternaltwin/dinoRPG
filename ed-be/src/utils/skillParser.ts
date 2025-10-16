@@ -121,6 +121,12 @@ function applyUSkillEffect(
 	}
 }
 
+/**
+ * Set player U skills based on given skills
+ *
+ * @param player the player to update
+ * @param skills the skills to compute U skills
+ */
 function computeUSkillEffects(
 	player: Pick<
 		Player,
