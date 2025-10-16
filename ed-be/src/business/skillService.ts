@@ -598,12 +598,15 @@ export async function applySkillEffect(
  * @param playerId the playerId to update
  */
 export async function computeUSkillsForPlayer(playerId: string) {
+	// Get player with its U skills
 	const player = await getPlayerUSkills(playerId);
 	if (!player) {
 		throw new ExpectedError(`This player doesn't exist.`);
 	}
+	// Get player dinoz list
 	const dinozList = await getAllDinozFromAccount(playerId);
 	const skills = dinozList.flatMap(dinoz => dinoz.skills).map(skill => skill.skillId);
+	// Compute player U skills using dinoz skills
 	computeUSkillEffects(player, skills);
 	await setPlayer(playerId, player);
 }
