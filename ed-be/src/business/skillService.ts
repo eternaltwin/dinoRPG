@@ -592,6 +592,11 @@ export async function applySkillEffect(
 	}
 }
 
+/**
+ * Update player U skills based on its dinoz skills
+ *
+ * @param playerId the playerId to update
+ */
 export async function computeUSkillsForPlayer(playerId: string) {
 	const player = await getPlayerUSkills(playerId);
 	if (!player) {
