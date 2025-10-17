@@ -59,7 +59,6 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 0
 		},
 		resilience: 0,
-		gold: 0,
 		xp: 40,
 		odds: 100,
 		level: 30,
@@ -130,7 +129,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 0
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 1.5,
 		xp: 50,
 		odds: 1,
 		level: 5,
@@ -151,7 +150,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 0
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 1.5,
 		xp: 50,
 		odds: 1,
 		level: 5,
@@ -172,7 +171,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 2
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 1.5,
 		xp: 100,
 		odds: 1,
 		level: 10,
@@ -193,7 +192,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 3
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 1.5,
 		xp: 100,
 		odds: 1,
 		level: 10,
@@ -214,7 +213,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 3
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 2,
 		xp: 50,
 		odds: 1,
 		level: 7,
@@ -236,7 +235,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 1
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 2,
 		xp: 50,
 		odds: 1,
 		level: 7,
@@ -258,7 +257,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 			air: 3
 		},
 		resilience: 0,
-		gold: 0,
+		gold: 2,
 		xp: 50,
 		odds: 1,
 		level: 12,
@@ -382,6 +381,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		boss: true,
 		name: 'vener',
 		level: 50,
+		gold: 5,
 		elements: {
 			fire: 0,
 			wood: 0,
@@ -960,6 +960,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		name: 'megawf',
 		display: 'wolf',
 		level: 10,
+		gold: 2,
 		elements: {
 			fire: 7,
 			wood: 7,
