@@ -16,6 +16,20 @@
 
 	<div class="page-content" v-if="hasAccess">
 		<div class="discussion" v-if="messages">
+			<ClanMessageItem
+				v-for="msg in messages"
+				:key="msg.id"
+				:author="msg.author"
+				:itsLeader="isLeader(msg)"
+				:contentHtml="msg.content"
+				:date="msg.date"
+				:topItem="getTopItem(msg.author?.playerTracking ?? [])"
+				:isSelf="isSelf(msg)"
+				:canDelete="canDeleteMessage(msg)"
+				@delete="deleteMessage(msg)"
+				@openProfile="goToPlayer(msg.author?.id ?? '1')"
+			/>
+			<!--<Editor v-model="newMessage" />
 			<div class="msg" v-for="msg in messages" :key="msg.id">
 				<div class="msg-header">
 					<img src="\src\assets\achievements\msg.webp" alt="Profile" />
@@ -48,6 +62,7 @@
 				</div>
 				<div class="msg-content" style="white-space: pre-line" v-html="msg.content" />
 			</div>
+			-->
 		</div>
 
 		<div class="switch-page-container">
@@ -89,6 +104,7 @@ import { errorHandler } from '../../utils';
 import Editor from '../common/Editor.vue';
 import { ToastPluginApi } from 'vue-toast-notification';
 import { getGoal } from '@drpg/core/utils/twinoidGoals';
+import ClanMessageItem from './ClanMessageItem.vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
@@ -105,13 +121,6 @@ const maxPage = ref<number>(1);
 const pageSelector = ref<number>(1);
 const isConnectionOk = ref<boolean | undefined>(undefined);
 const newMessage = ref<string>('');
-
-const LOCALE_MAP: Record<string, string> = {
-	en: 'en-US',
-	fr: 'fr-FR',
-	es: 'es-ES',
-	de: 'de-DE'
-};
 
 // helpers
 function isLeader(msg: CreateClanMessage): boolean {
@@ -130,8 +139,8 @@ function goToPlayer(id: string) {
 	router.push({ name: 'MyAccount', params: { id } });
 }
 
-function getTopItem(arr){
-	const topItem = arr.reduce((a, b) => (b.quantity > a.quantity ? b : a)); 
+function getTopItem(arr) {
+	const topItem = arr.reduce((a, b) => (b.quantity > a.quantity ? b : a));
 	const goal = getGoal(topItem.stat);
 	return goal.name[locale.value] + ' (' + topItem.quantity + ')';
 }
@@ -202,37 +211,8 @@ function updateMessages(message: CreateClanMessage): void {
 function removeMsgFromMessages(msgId: number) {
 	messages.value = messages.value.filter(m => m.id !== msgId);
 }
-function formatShortDate(
-	iso: string | number | Date,
-	localeCode: string = 'en', // por ejemplo: i18n.locale.value
-	opts?: { timeZone?: string } // opcional: 'UTC', 'Europe/Berlin', etc.
-): string {
-	const date = iso instanceof Date ? iso : new Date(iso);
-	const locale = LOCALE_MAP[localeCode] ?? localeCode;
-
-	const dtf = new Intl.DateTimeFormat(locale, {
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric',
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: false, // 24h
-		...(opts?.timeZone ? { timeZone: opts.timeZone } : {})
-	});
-
-	// Usamos formatToParts para no heredar comas/puntos/espacios locales
-	const parts = dtf.formatToParts(date);
-	const get = (type: Intl.DateTimeFormatPartTypes) => parts.find(p => p.type === type)?.value ?? '';
-
-	const day = get('day').replace('.', ''); // algunos locales ponen punto
-	const month = get('month').replace('.', '').toLowerCase(); // 'Oct.' -> 'oct'
-	const year = get('year');
-	const hour = get('hour').padStart(2, '0');
-	const minute = get('minute').padStart(2, '0');
-
-	return `${day} ${month} ${year}, ${hour}:${minute}`;
-}
-
+/*
+ */
 onMounted(async () => {
 	hasAccess.value = store.clanId == Number(route.params.id);
 	if (!hasAccess.value) {
@@ -278,10 +258,12 @@ onBeforeUnmount(() => {
 	flex-direction: column;
 	gap: 8px;
 	padding-bottom: 16px;
+	padding-left: 16px;
+	padding-right: 16px;
 }
 .msg {
 	margin: 0 10px;
-	background-color: #BC6733;
+	background-color: #bc6733;
 	color: white;
 	border-radius: 12px;
 	.msg-header {
@@ -304,7 +286,7 @@ onBeforeUnmount(() => {
 				flex-direction: column;
 				justify-content: center;
 				align-items: start;
-				
+
 				text-transform: capitalize;
 				font-weight: 600;
 
@@ -329,9 +311,9 @@ onBeforeUnmount(() => {
 				justify-content: center;
 				font-size: 1.1rem;
 				padding-right: 4px;
-				color: #F8F5DD;
+				color: #f8f5dd;
 				.msg-time {
-					color:#FCD4A4;
+					color: #fcd4a4;
 				}
 			}
 		}
@@ -339,9 +321,9 @@ onBeforeUnmount(() => {
 			float: right;
 			height: 18px;
 			font-size: 10px;
-			background-color: #BF4F1E;
-			color: #FABD88;
-			border: #93441A 1px solid;
+			background-color: #bf4f1e;
+			color: #fabd88;
+			border: #93441a 1px solid;
 			border-radius: 6px;
 			font-weight: 700;
 			&:hover {
@@ -354,7 +336,7 @@ onBeforeUnmount(() => {
 .msg-content {
 	padding: 16px 8px;
 	font-size: 1.2rem;
-	color: #F8F5DD;
+	color: #f8f5dd;
 }
 .new-message-container {
 	padding: 10px 0;
