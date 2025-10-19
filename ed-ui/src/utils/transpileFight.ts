@@ -520,8 +520,12 @@ export function transpileFight(
 								return { id: t.tid, life: t.damages };
 							}),
 							color: skill?.color,
+							speed: skill?.speed,
+							radius: skill?.radius,
+							power: skill?.power,
 							type: skill?.fxType,
-							fx: skill?.fx
+							fx: skill?.fx,
+							anim: skill?.anim
 						}
 					});
 					// Play a second effect if specified

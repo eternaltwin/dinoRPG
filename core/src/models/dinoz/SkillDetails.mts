@@ -69,6 +69,10 @@ export interface SkillDetails {
 	fightCondition?: SkillFightCondition;
 	visualEffect?: SkillVisualEffect; // Effect for Skill "activate" steps
 	color?: string; // Color for skill "activate" step
+	speed?: number; // Speed of skill, notably used for "Projectile" and "Rafale" effects
+	radius?: number; // Radius, notably used for "Generate" effect
+	power?: number; // Power, notably used for "Rafale" or "Generate" effect
+	anim?: string; // Animation to use for supported visual effects (ex: invocation)
 	visualEffectBis?: SkillVisualEffect; // Second effect for Skill "activate" steps
 	colorBis?: string; // Color for 2nd skill "activate" step
 	lifeEffect?: {
