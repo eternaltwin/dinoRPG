@@ -265,7 +265,8 @@ export function transpileFight(
 				history.push({
 					action: DinoAction.GOTO,
 					fid: step.fighter.id,
-					tid: step.ally.id
+					tid: step.ally.id,
+					saveStartPosition: false
 				});
 				history.push({
 					action: DinoAction.FLIP,
