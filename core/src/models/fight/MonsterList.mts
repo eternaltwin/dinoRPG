@@ -3,6 +3,7 @@ import { MapZone } from '../enums/MapZone.mjs';
 import { PlaceEnum } from '../enums/PlaceEnum.mjs';
 import { GameEvent } from '../event/Events.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
+import { EntranceEffect } from './transpiler.mjs';
 
 export enum Monster {
 	GOUPIGNON = 'GOUPIGNON',
@@ -201,7 +202,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
 		skills: [Skill.M_ABSORPTION],
-		display: 'gluon'
+		display: 'gluon',
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.GREEN_GIANT]: {
 		id: Monster.GREEN_GIANT,
@@ -242,7 +244,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 21,
 		zones: [MapZone.DINOLAND],
 		canBeCaptured: true,
-		display: 'coq'
+		display: 'coq',
+		entrance: EntranceEffect.RUN
 	},
 	[Monster.PIRASK]: {
 		id: Monster.PIRASK,
@@ -337,7 +340,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 15,
 		zones: [MapZone.GTOUTCHAUD],
 		canBeCaptured: true,
-		display: 'barche'
+		display: 'barche',
+		entrance: EntranceEffect.RUN
 	},
 	[Monster.COBRA]: {
 		id: Monster.COBRA,
@@ -355,7 +359,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.GTOUTCHAUD],
 		canBeCaptured: true,
-		display: 'cobra'
+		display: 'cobra',
+		entrance: EntranceEffect.GROW
 	},
 	[Monster.PIRA]: {
 		id: Monster.PIRA,
@@ -401,7 +406,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ILES],
 		canBeCaptured: true,
 		skills: [Skill.M_IMMATERIAL],
-		display: 'kazka'
+		display: 'kazka',
+		entrance: EntranceEffect.GROW
 	},
 	[Monster.ANGUIL]: {
 		id: Monster.ANGUIL,
@@ -442,7 +448,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.ILES],
 		skills: [Skill.M_RESISTANCE],
 		canBeCaptured: false,
-		display: 'borg'
+		display: 'borg',
+		entrance: EntranceEffect.GROW
 	},
 	[Monster.KORGON]: {
 		id: Monster.KORGON,
@@ -487,7 +494,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		skills: [Skill.M_PROTECTION],
 		noMove: true,
-		display: 'ronciv'
+		display: 'ronciv',
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.BAT]: {
 		id: Monster.BAT,
@@ -531,7 +539,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		canBeCaptured: true,
 		skills: [Skill.M_COMET],
 		noMove: true,
-		display: 'grdien'
+		display: 'grdien',
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.WORM2]: {
 		id: Monster.WORM2,
@@ -551,7 +560,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 20,
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
-		skills: [Skill.M_WORM_2]
+		skills: [Skill.M_WORM_2],
+		entrance: EntranceEffect.FALL
 	},
 	[Monster.WORM]: {
 		id: Monster.WORM,
@@ -570,7 +580,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		zones: [MapZone.STEPPE],
 		canBeCaptured: true,
 		skills: [Skill.M_WORM],
-		noMove: true
+		noMove: true,
+		entrance: EntranceEffect.FALL
 	},
 	[Monster.SCORP]: {
 		id: Monster.SCORP,
@@ -870,7 +881,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.CAMP_D_ELITE
 		],
 		skills: [Skill.VIGNES, Skill.M_VEGETOX_DEFENDER],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.VEGETOX_GUARD_2]: {
 		id: Monster.VEGETOX_GUARD_2,
@@ -890,7 +902,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 22,
 		zones: [],
 		skills: [Skill.M_VEGETOX_DEFENDER, Skill.M_INFINITE_REINFORCEMENTS],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.FRUTOX_DEFENDER]: {
 		id: Monster.FRUTOX_DEFENDER,
@@ -916,7 +929,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 			PlaceEnum.FORET_KAZE_KAMI
 		],
 		skills: [Skill.M_FASTER],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.GROW
 	},
 	[Monster.GORILLOZ_SPIRIT]: {
 		id: Monster.GORILLOZ_SPIRIT,
@@ -956,7 +970,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		level: 0,
 		zones: [MapZone.ALL],
 		canBeCaptured: true,
-		display: 'bamboo'
+		display: 'bamboo',
+		entrance: EntranceEffect.FALL
 	},
 	[Monster.PIGLOUNOU]: {
 		id: Monster.PIGLOUNOU,
@@ -1183,7 +1198,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 30,
 		xpBonus: 5,
-		canBeCaptured: false
+		canBeCaptured: false,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.AMENPENNE]: {
 		id: Monster.AMENPENNE,
@@ -1208,7 +1224,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		hp: 30,
 		xpBonus: 5,
-		canBeCaptured: false
+		canBeCaptured: false,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.WILL_O]: {
 		id: Monster.WILL_O,
@@ -1328,7 +1345,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.COQUE, Skill.M_ELECTROCUTION, Skill.M_WORM, Skill.EMBUCHE, Skill.M_WORM_CALL],
 		zones: [],
 		canBeCaptured: true,
-		noMove: true
+		noMove: true,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.EARTHWORM_BABY]: {
 		id: Monster.EARTHWORM_BABY,
@@ -1349,7 +1367,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.FOUDRE, Skill.M_WORM],
 		zones: [],
 		canBeCaptured: true,
-		noMove: true
+		noMove: true,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.GROULEM]: {
 		id: Monster.GROULEM,
@@ -1373,7 +1392,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		xp: 30,
 		skills: [Skill.M_ELECTROCUTION],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		entrance: EntranceEffect.GROUND
 	},
 	[Monster.TW_BIGBEASTLY_1]: {
 		id: Monster.TW_BIGBEASTLY_1,
@@ -1674,7 +1694,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_LAST_BREATH, Skill.M_HEAL_GROUP],
 		zones: [MapZone.ILEMONSTRE],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.RUN
 	},
 	[Monster.FRUKOPTER]: {
 		id: Monster.FRUKOPTER,
@@ -1694,7 +1715,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_FRUKOPTER_FLIGHT],
 		zones: [MapZone.ILEMONSTRE],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.RUN
 	},
 	[Monster.DEMYOM]: {
 		id: Monster.DEMYOM,
@@ -1715,8 +1737,11 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [],
 		zones: [],
 		places: [PlaceEnum.FORET_KAZE_KAMI, PlaceEnum.CAMP_D_ELITE],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.RUN
 	},
+	// Duplicated monster because odds vary depending on the place
+	// TODO: tie the odd to the place?
 	[Monster.DEMYOM_RUINS]: {
 		id: Monster.DEMYOM_RUINS,
 		name: 'singmu',
@@ -1736,7 +1761,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [],
 		zones: [],
 		places: [PlaceEnum.RUINES_DE_CUSCOUZ],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.RUN
 	},
 	[Monster.DEMYOM_2]: {
 		id: Monster.DEMYOM_2,
@@ -1757,7 +1783,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [],
 		zones: [],
 		places: [PlaceEnum.RUINES_DE_CUSCOUZ],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.RUN
 	},
 	[Monster.RAPACARAPACE]: {
 		id: Monster.RAPACARAPACE,
@@ -1777,7 +1804,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		skills: [Skill.M_TORNADO, Skill.M_AIR_BLADE],
 		zones: [],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.FALL
 	},
 	[Monster.RAPACARAPACE_2]: {
 		id: Monster.RAPACARAPACE_2,
@@ -1797,7 +1825,8 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		odds: 0,
 		skills: [Skill.M_TORNADO, Skill.M_AIR_BLADE],
 		zones: [],
-		canBeCaptured: true
+		canBeCaptured: true,
+		entrance: EntranceEffect.FALL
 	},
 	[Monster.BAOBOB]: {
 		id: Monster.BAOBOB,

@@ -960,7 +960,9 @@ const createMonster = (fightData: DetailedFight, fighter: DetailedFighter, monst
 	// Add arrive step
 	fightData.steps.push({
 		action: 'arrive',
-		fid: monster.id
+		fid: monster.id,
+		entrance: monsterData.entrance,
+		scale: monsterData.size
 	});
 
 	checkReinforcementBan(fightData, monster);
