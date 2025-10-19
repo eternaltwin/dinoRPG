@@ -587,6 +587,17 @@ export function transpileFight(
 				});
 				break;
 			}
+			case 'attach': {
+				history.push({
+					action: DinoAction.SKILL,
+					skill: SkillVisualEffect.ATTACH,
+					details: {
+						fid: step.fid,
+						fx: step.fx
+					}
+				});
+				break;
+			}
 			case 'stealGold':
 				break;
 			case 'survive':

@@ -4449,27 +4449,24 @@ const checkDefensiveEffects = (
 	// Reduce damage by bulle percentage
 	if (
 		// Opponent has BULLE
-		target.stats.special.bubbleRate > 1 &&
+		hasSkill(target, Skill.BULLE) &&
 		// Don't trigger on assaults and invocations
 		!isCloseCombat &&
 		!isInvocation &&
 		// Don't trigger for bosses
-		attacker.type !== FighterType.BOSS &&
+		attacker.type !== 'boss' &&
 		// Don't trigger for WOOD
 		!elements.includes(ElementType.WOOD) &&
 		// Don't trigger for VOID
 		!elements.includes(ElementType.VOID)
 	) {
-		damage = Math.round(damage * (target.stats.special.bubbleRate - 1));
+		damage = Math.round(damage * (1 - target.stats.special.bubbleRate));
 
-		// TODO add bubble effect post skill/hit
-		// if (actualDamage[opponent.id] < damage) {
-		// 	// Add resist step
-		// 	fightData.steps.push({
-		// 		action: 'resist',
-		// 		dinoz: stepFighter(opponent)
-		// 	});
-		// }
+		fightData.steps.push({
+			action: 'attach',
+			fid: target.id,
+			fx: 'fxBubble'
+		});
 	}
 
 	// FORME VAPOREUSE

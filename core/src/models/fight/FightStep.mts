@@ -265,6 +265,13 @@ export interface AnimationStep {
 	anim: string;
 }
 
+// The given FX is "attached" (displayed) on the fighter.
+export interface AttachStep {
+	action: 'attach';
+	fid: number;
+	fx: string;
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| ArriveStep
@@ -303,4 +310,5 @@ export type FightStep =
 	| StatusTurnStep
 	| TiredStep
 	| FlipStep
-	| AnimationStep;
+	| AnimationStep
+	| AttachStep;
