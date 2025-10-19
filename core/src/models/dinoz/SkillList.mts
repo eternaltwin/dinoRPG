@@ -778,7 +778,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'boudda'
 	},
 	[Skill.GRIFFES_INFERNALES]: {
 		id: Skill.GRIFFES_INFERNALES,
@@ -948,7 +949,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'salama'
 	},
 	[Skill.VULCAIN]: {
 		id: Skill.VULCAIN,
@@ -966,7 +968,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'vulcan'
 	},
 	[Skill.ARMURE_DIFRIT]: {
 		id: Skill.ARMURE_DIFRIT,
@@ -984,7 +987,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'ifrit'
 	},
 	[Skill.BRAVE]: {
 		id: Skill.BRAVE,
@@ -1074,7 +1078,11 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		priority: 7,
-		probability: 10
+		probability: 10,
+		visualEffect: SkillVisualEffect.GENERATE,
+		color: '0xFF0000',
+		radius: 1,
+		power: 2
 	},
 	[Skill.FIEVRE_BRULANTE]: {
 		id: Skill.FIEVRE_BRULANTE,
@@ -1656,7 +1664,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'fairy'
 	},
 	[Skill.CHOC]: {
 		id: Skill.CHOC,
@@ -1690,7 +1699,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'louga'
 	},
 	[Skill.COLOSSE]: {
 		id: Skill.COLOSSE,
@@ -2497,7 +2507,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'ondine'
 	},
 	[Skill.MAITRE_NAGEUR]: {
 		id: Skill.MAITRE_NAGEUR,
@@ -2530,7 +2541,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'leviat'
 	},
 	[Skill.EAU_DIVINE]: {
 		id: Skill.EAU_DIVINE,
@@ -2724,6 +2736,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		priority: 8,
 		probability: 15,
 		visualEffect: SkillVisualEffect.RAFALE,
+		speed: 2.5,
+		power: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.HYPERVENTILATION]: true
 		}
@@ -3248,7 +3262,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'golem'
 	},
 	[Skill.RAIJIN]: {
 		id: Skill.RAIJIN,
@@ -3266,7 +3281,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'raijin'
 	},
 	[Skill.QUETZACOATL]: {
 		id: Skill.QUETZACOATL,
@@ -3284,7 +3300,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'quetza'
 	},
 	[Skill.ROI_DES_SINGES]: {
 		id: Skill.ROI_DES_SINGES,
@@ -3302,7 +3319,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'goku'
 	},
 	[Skill.ARCHANGE_CORROSIF]: {
 		id: Skill.ARCHANGE_CORROSIF,
@@ -4025,7 +4043,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'totem'
 	},
 	[Skill.FUJIN]: {
 		id: Skill.FUJIN,
@@ -4046,7 +4065,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 				{ [SkillFightConditionEnum.INVOCATION]: true },
 				{ [Operator.NOT]: { [SkillFightConditionEnum.TEAM_STATUS]: FightStatus.USED_FUJIN } }
 			]
-		}
+		},
+		anim: 'fujin'
 	},
 	[Skill.MEDITATION_TRANSCENDANTALE]: {
 		id: Skill.MEDITATION_TRANSCENDANTALE,
@@ -4082,7 +4102,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'djinn'
 	},
 	[Skill.HADES]: {
 		id: Skill.HADES,
@@ -4100,7 +4121,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'hades'
 	},
 	[Skill.FORME_ETHERALE]: {
 		id: Skill.FORME_ETHERALE,
@@ -4660,7 +4682,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'herco'
 	},
 	[Skill.REINE_DE_LA_RUCHE]: {
 		id: Skill.REINE_DE_LA_RUCHE,
@@ -4678,7 +4701,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'reiruc'
 	},
 	[Skill.BIG_MAMA]: {
 		id: Skill.BIG_MAMA,
@@ -4696,7 +4720,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 15,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'bigma'
 	},
 	[Skill.YGGDRASIL]: {
 		id: Skill.YGGDRASIL,
@@ -4714,7 +4739,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'yggdra'
 	},
 	[Skill.BALEINE_BLANCHE]: {
 		id: Skill.BALEINE_BLANCHE,
@@ -4732,7 +4758,8 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		probability: 10,
 		fightCondition: {
 			[SkillFightConditionEnum.INVOCATION]: true
-		}
+		},
+		anim: 'bluewh'
 	},
 	[Skill.GROS_DORMEUR]: {
 		id: Skill.GROS_DORMEUR,
