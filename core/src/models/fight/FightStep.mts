@@ -258,6 +258,13 @@ export interface TiredStep {
 	fighter: StepFighter;
 }
 
+// The fighter performs the given animation (if supported)
+export interface AnimationStep {
+	action: 'anim';
+	fid: number;
+	anim: string;
+}
+
 export type FightStep =
 	| TimeLimitStep
 	| ArriveStep
@@ -295,4 +302,5 @@ export type FightStep =
 	| NewTurnStep
 	| StatusTurnStep
 	| TiredStep
-	| FlipStep;
+	| FlipStep
+	| AnimationStep;
