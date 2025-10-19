@@ -2,7 +2,7 @@ import { Skill } from '../dinoz/SkillList.mjs';
 import { ElementType } from '../enums/ElementType.mjs';
 import { Item } from '../item/ItemList.mjs';
 import { FightStatus, FighterType } from './DetailedFighter.mjs';
-import { LifeEffect, NotificationList } from './transpiler.mjs';
+import { EntranceEffect, LifeEffect, NotificationList } from './transpiler.mjs';
 
 export interface StepFighter {
 	id: number;
@@ -38,6 +38,8 @@ export interface TimeLimitStep {
 export interface ArriveStep {
 	action: 'arrive';
 	fid: number;
+	entrance?: EntranceEffect;
+	scale?: number;
 }
 
 export interface LeaveStep {

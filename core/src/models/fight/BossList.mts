@@ -1,11 +1,13 @@
 import { Skill } from '../dinoz/SkillList.mjs';
 import { MapZone } from '../enums/MapZone.mjs';
 import { MonsterFiche } from './MonsterFiche.mjs';
+import { EntranceEffect } from './transpiler.mjs';
 
 export enum Boss {
 	TOWER_GUARDIAN = 'TOWER_GUARDIAN',
 	SUMMIT_GUARDIAN = 'SUMMIT_GUARDIAN',
 	LOWER_GUARDIAN = 'LOWER_GUARDIAN',
+	STEEL_ALCHEMIST = 'STEEL_ALCHEMIST',
 	ELEMENTAIRE_FEU = 'ELEMENTAIRE_FEU',
 	ELEMENTAIRE_EAU = 'ELEMENTAIRE_EAU',
 	RASCAPHANDRE = 'RASCAPHANDRE',
@@ -30,6 +32,7 @@ export enum Boss {
 	BIO_METALIC_LEECH = 'BIO_METALIC_LEECH',
 	DEMYOM_DEFENDER = 'DEMYOM_DEFENDER',
 	GROTOX = 'GROTOX',
+	ANTRAXOV = 'ANTRAXOV',
 	BEHEMOUNT = 'BEHEMOUNT',
 	SERPETHER = 'SERPETHER',
 	SERPETHER_2 = 'SERPETHER_2',
@@ -64,7 +67,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 30,
 		zones: [],
 		canBeCaptured: false,
-		skills: [Skill.M_ELEMENTAL]
+		skills: [Skill.M_ELEMENTAL],
+		entrance: EntranceEffect.FALL
 	},
 	[Boss.SUMMIT_GUARDIAN]: {
 		id: Boss.SUMMIT_GUARDIAN,
@@ -89,7 +93,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		zones: [],
 		canBeCaptured: false,
-		skills: [Skill.M_ELEMENTAL]
+		skills: [Skill.M_ELEMENTAL],
+		entrance: EntranceEffect.FALL
 	},
 	[Boss.LOWER_GUARDIAN]: {
 		id: Boss.LOWER_GUARDIAN,
@@ -114,7 +119,36 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		zones: [],
 		canBeCaptured: false,
-		skills: [Skill.M_ELEMENTAL]
+		skills: [Skill.M_ELEMENTAL],
+		entrance: EntranceEffect.FALL
+	},
+	[Boss.STEEL_ALCHEMIST]: {
+		id: Boss.STEEL_ALCHEMIST,
+		boss: true,
+		name: 'fullgd',
+		level: 60,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 100,
+		resilience: 0,
+		groups: [
+			{ quantity: 0, odds: 1 },
+			{ quantity: 1, odds: 0 },
+			{ quantity: 2, odds: 0 }
+		],
+		hp: 1000,
+		xp: 60,
+		odds: 100,
+		zones: [],
+		canBeCaptured: false,
+		skills: [],
+		entrance: EntranceEffect.FALL
 	},
 	[Boss.ELEMENTAIRE_FEU]: {
 		id: Boss.ELEMENTAIRE_FEU,
@@ -135,7 +169,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 5,
 		zones: [MapZone.DARKWORLD],
 		canBeCaptured: false,
-		display: 'efire'
+		display: 'efire',
+		entrance: EntranceEffect.GROUND
 	},
 	[Boss.ELEMENTAIRE_EAU]: {
 		id: Boss.ELEMENTAIRE_EAU,
@@ -156,7 +191,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 5,
 		zones: [MapZone.DARKWORLD],
 		canBeCaptured: false,
-		display: 'ewater'
+		display: 'ewater',
+		entrance: EntranceEffect.GROUND
 	},
 	[Boss.RASCAPHANDRE]: {
 		id: Boss.RASCAPHANDRE,
@@ -177,7 +213,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 10,
 		zones: [MapZone.ILES],
 		canBeCaptured: false,
-		display: 'rasca'
+		display: 'rasca',
+		entrance: EntranceEffect.FALL
 	},
 	[Boss.ELEMENTAIRE_TERRE]: {
 		id: Boss.ELEMENTAIRE_TERRE,
@@ -198,7 +235,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		level: 10,
 		zones: [MapZone.ILES],
 		canBeCaptured: false,
-		display: 'eearth'
+		display: 'eearth',
+		entrance: EntranceEffect.GROUND
 	},
 	[Boss.PTEROZ]: {
 		id: Boss.PTEROZ,
@@ -399,7 +437,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		noMove: true,
-		display: 'vener'
+		display: 'vener',
+		entrance: EntranceEffect.STAND
 	},
 	[Boss.VENERABLE_2]: {
 		id: Boss.VENERABLE_2,
@@ -423,7 +462,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		noMove: true,
-		display: 'vener'
+		display: 'vener',
+		entrance: EntranceEffect.STAND
 	},
 	[Boss.VENERABLE_3]: {
 		id: Boss.VENERABLE_3,
@@ -448,7 +488,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		noMove: true,
-		display: 'vener'
+		display: 'vener',
+		entrance: EntranceEffect.STAND
 	},
 	[Boss.VENERABLE_4]: {
 		id: Boss.VENERABLE_4,
@@ -472,7 +513,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		zones: [],
 		canBeCaptured: false,
 		noMove: true,
-		display: 'vener'
+		display: 'vener',
+		entrance: EntranceEffect.STAND
 	},
 	[Boss.SCORPIOUS]: {
 		id: Boss.SCORPIOUS,
@@ -656,7 +698,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		xp: 50,
 		skills: [Skill.M_DEMYOM_ATTACK, Skill.M_DEMYOM_HEAL],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		entrance: EntranceEffect.FALL
 	},
 	[Boss.GROTOX]: {
 		// This boss has a weird patch in the source code
@@ -679,7 +722,30 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_GROTOX],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		entrance: EntranceEffect.FALL
+	},
+	[Boss.ANTRAXOV]: {
+		id: Boss.ANTRAXOV,
+		boss: true,
+		name: 'frking',
+		level: 30,
+		elements: {
+			fire: 0,
+			wood: 0,
+			water: 0,
+			lightning: 0,
+			air: 0
+		},
+		bonus_attack: 40,
+		bonus_defense: 30,
+		resilience: 40,
+		hp: 50,
+		odds: 100,
+		skills: [],
+		zones: [],
+		canBeCaptured: false,
+		entrance: EntranceEffect.GROUND
 	},
 	[Boss.BEHEMOUNT]: {
 		id: Boss.BEHEMOUNT,
@@ -724,6 +790,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU, Skill.CELERITE, Skill.COUP_DOUBLE, Skill.SOURCE_DE_VIE],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.SERPETHER_2]: {
 		id: Boss.SERPETHER_2,
@@ -746,6 +814,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.MORG]: {
 		id: Boss.MORG,
@@ -812,7 +882,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		noMove: true,
 		skills: [Skill.M_GRIZOU],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		entrance: EntranceEffect.FALL
 	},
 	[Boss.GRIZORG]: {
 		id: Boss.GRIZORG,
@@ -837,6 +908,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.GRIZOU]: {
 		id: Boss.GRIZOU,
@@ -861,6 +934,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.MUTATED_GRIZORG]: {
 		id: Boss.MUTATED_GRIZORG,
@@ -885,6 +960,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.ULTIMATE_GRIZORG]: {
 		id: Boss.ULTIMATE_GRIZORG,
@@ -909,6 +986,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.SOFIA]: {
 		id: Boss.SOFIA,
@@ -931,6 +1010,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		skills: [Skill.M_GRIZOU],
 		zones: [],
 		canBeCaptured: false
+		// TODO not implemented
+		//entrance: EntranceEffect.FIXED
 	},
 	[Boss.CHIEF_DOROGON]: {
 		id: Boss.CHIEF_DOROGON,
