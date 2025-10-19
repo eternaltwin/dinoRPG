@@ -230,6 +230,7 @@ export type transpiled =
 				col1?: number;
 				col2?: number;
 			};
+			saveStartPosition?: boolean;
 	  }
 	| {
 			action: DinoAction.ANNOUNCE;
