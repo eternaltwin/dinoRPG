@@ -10,7 +10,7 @@ import {
 	PlayerQuest,
 	PlayerReward,
 	Ranking,
-	Tournament
+	TournamentTeam
 } from '@drpg/prisma';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
@@ -28,7 +28,7 @@ import { PlayerForConditionCheck } from '../constants.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
-import { isNotNullish } from './helper.mjs';
+import { TournamentState } from '../models/dojo/tournament.mjs';
 
 type Config = {
 	dinoz: {
@@ -72,10 +72,11 @@ export const toDinozFiche = (
 			skills: Pick<DinozSkill, 'skillId' | 'state'>[];
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
 			concentration: Concentration | null;
-			TournamentTeam: { Tournament: Pick<Tournament, 'levelLimit'> | null }[];
+			TournamentTeam: Pick<TournamentTeam, 'tournamentId'>[];
 		})[];
 	},
-	activeDinoz: number
+	activeDinoz: number,
+	currentTournament: TournamentState | null
 ): DinozFiche => {
 	const playerForCondition = structuredClone(player);
 	const dinoz = player.dinoz.find(d => d.id === activeDinoz);
@@ -128,7 +129,9 @@ export const toDinozFiche = (
 		gather: dinoz.gather,
 		missions: dinoz.missions,
 		concentration: dinoz.concentration,
-		tournaments: dinoz.TournamentTeam.map(team => team.Tournament).filter(isNotNullish)
+		tournament: dinoz.TournamentTeam.find(team => team.tournamentId === currentTournament?.id)
+			? currentTournament
+			: null
 	};
 };
 

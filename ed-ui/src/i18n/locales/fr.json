@@ -4492,7 +4492,7 @@
 		"follow": "Le chef de groupe est {leader}.",
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
-		"dojoTeam": "Ce Dinoz est inscrit dans un TiD. Son niveau est bloqué à {max}.",
+		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
 		"unfreezeCountdown": "Votre dinoz est en train de se réveiller et sera disponible dans {time}"
 	},
 	"logs": {

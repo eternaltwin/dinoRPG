@@ -30,10 +30,11 @@ import {
 import { increaseItemQuantity } from '../dao/playerItemDao.js';
 import { addPlayerInRanking, updateCompletion } from '../dao/rankingDao.js';
 import { setSpecificStat } from '../dao/trackingDao.js';
-import { PismaClientLocal } from '../prisma.js';
+import { PismaClientLocal, prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import sendError from '../utils/sendErrors.js';
 import { getAvailableActions } from './dinozService.js';
+import TournamentManager from '../utils/tournamentManager.js';
 
 export class OAuth {
 	#oauthClient: RfcOauthClient;
@@ -208,8 +209,10 @@ export class OAuth {
 				await createLog(LogType.PlayerConnected, player.id, undefined, player.name.toString());
 			}
 
+			const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
+
 			const dinoz = player.dinoz.map(d => {
-				return { ...toDinozFiche(player, d.id) };
+				return { ...toDinozFiche(player, d.id, currentTournament) };
 			});
 			for (const d of dinoz) {
 				d.actions = await getAvailableActions(d, player);

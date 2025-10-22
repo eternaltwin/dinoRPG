@@ -1,15 +1,8 @@
-import {
-	Concentration,
-	Dinoz,
-	DinozMission,
-	DinozSkill,
-	DinozStatus,
-	Tournament,
-	UnavailableReason
-} from '@drpg/prisma';
+import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, UnavailableReason } from '@drpg/prisma';
 import { MissionHUD } from '../missions/missionHUD.mjs';
 import { ActionFiche } from './ActionList.mjs';
 import { DinozRace } from './DinozRace.mjs';
+import { TournamentState } from '../dojo/tournament.mjs';
 
 // This is the model to use to communicate with the front
 export interface DinozFiche {
@@ -45,7 +38,7 @@ export interface DinozFiche {
 	gather: boolean;
 	missions: DinozMission[];
 	concentration: Concentration | null;
-	tournaments: Pick<Tournament, 'levelLimit'>[];
+	tournament: Pick<TournamentState, 'id' | 'levelLimit'> | null;
 	npcAwait?: {
 		npcSpeech: string;
 		npcName: string;

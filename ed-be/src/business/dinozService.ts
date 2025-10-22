@@ -371,8 +371,7 @@ export async function getDinozFiche(req: Request) {
 	const authed = await auth(req);
 
 	// Retrieve player from dinozId
-	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
-	const playerData = await getDinozFicheRequest(dinozId, authed.id, tournament);
+	const playerData = await getDinozFicheRequest(dinozId, authed.id);
 
 	if (!playerData) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
@@ -389,8 +388,10 @@ export async function getDinozFiche(req: Request) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player ${authed.id}`);
 	}
 
+	const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
+
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId);
+	const ret = toDinozFiche(playerData, dinozId, currentTournament);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return ret;
@@ -506,7 +507,7 @@ export async function buyDinoz(req: Request) {
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
 
-	return toDinozFiche(newDinoz, dinozCreated.id);
+	return toDinozFiche(newDinoz, dinozCreated.id, null);
 }
 
 /**
@@ -1210,7 +1211,7 @@ export async function followDinoz(req: Request) {
 	}
 
 	//Check if leader is not at max followers
-	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id));
+	const max = getMaxFollowers(toDinozFiche(player_leader, leader.id, null));
 	if (leader.followers.length >= max) {
 		throw new ExpectedError(translate('maxFollowers', authed));
 	}
