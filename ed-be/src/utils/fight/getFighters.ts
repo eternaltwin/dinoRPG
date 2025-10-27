@@ -143,6 +143,12 @@ export const initializeDinoz = (
 				[SpecialStat.SUPER_EVASION]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
 				[SpecialStat.COUNTER]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.COUNTER)?.value ?? 0,
+				[SpecialStat.SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.SPEED)?.value ?? 0,
+				[SpecialStat.FIRE_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.FIRE_SPEED)?.value ?? 0,
+				[SpecialStat.WOOD_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.WOOD_SPEED)?.value ?? 0,
+				[SpecialStat.WATER_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.WATER_SPEED)?.value ?? 0,
+				[SpecialStat.LIGHTNING_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? 0,
+				[SpecialStat.AIR_SPEED]: getSpecialStat(dinozWithItems, [], skills, SpecialStat.AIR_SPEED)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
 				[SpecialStat.TORCH_DAMAGE]:
@@ -287,6 +293,12 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.EVASION]: dinoz.stats.special[SpecialStat.EVASION],
 				[SpecialStat.SUPER_EVASION]: dinoz.stats.special[SpecialStat.SUPER_EVASION],
 				[SpecialStat.COUNTER]: dinoz.stats.special[SpecialStat.COUNTER],
+				[SpecialStat.SPEED]: dinoz.stats.special[SpecialStat.SPEED],
+				[SpecialStat.FIRE_SPEED]: dinoz.stats.special[SpecialStat.FIRE_SPEED],
+				[SpecialStat.WOOD_SPEED]: dinoz.stats.special[SpecialStat.WOOD_SPEED],
+				[SpecialStat.WATER_SPEED]: dinoz.stats.special[SpecialStat.WATER_SPEED],
+				[SpecialStat.LIGHTNING_SPEED]: dinoz.stats.special[SpecialStat.LIGHTNING_SPEED],
+				[SpecialStat.AIR_SPEED]: dinoz.stats.special[SpecialStat.AIR_SPEED],
 				[SpecialStat.BUBBLE_RATE]: 0, // No bubble for clones
 				[SpecialStat.TORCH_DAMAGE]: 0, // No torch for clones
 				[SpecialStat.ACID_BLOOD_DAMAGE]: 0 // No acid blood for clones
@@ -462,6 +474,12 @@ export const initializeMonster = (
 				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? 0,
 				[SpecialStat.SUPER_EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
 				[SpecialStat.COUNTER]: getSpecialStat(similiDinoz, [], skills, SpecialStat.COUNTER)?.value ?? 0,
+				[SpecialStat.SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SPEED)?.value ?? 0,
+				[SpecialStat.FIRE_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.FIRE_SPEED)?.value ?? 0,
+				[SpecialStat.WOOD_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WOOD_SPEED)?.value ?? 0,
+				[SpecialStat.WATER_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.WATER_SPEED)?.value ?? 0,
+				[SpecialStat.LIGHTNING_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.LIGHTNING_SPEED)?.value ?? 0,
+				[SpecialStat.AIR_SPEED]: getSpecialStat(similiDinoz, [], skills, SpecialStat.AIR_SPEED)?.value ?? 0,
 				[SpecialStat.BUBBLE_RATE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.BUBBLE_RATE)?.value ?? 0,
 				[SpecialStat.TORCH_DAMAGE]: getSpecialStat(similiDinoz, [], skills, SpecialStat.TORCH_DAMAGE)?.value ?? 0,
 				[SpecialStat.ACID_BLOOD_DAMAGE]:
@@ -612,27 +630,6 @@ const handleSkills = (random: seedrandom.PRNG, team: Team | null, fighter: Detai
 	const fighterHas = fighter.skills.reduce(
 		(acc, skill) => {
 			acc[skill.id as Skill] = true;
-
-			// Process speed changes
-			if (skill.effects?.[Stat.SPEED]) {
-				fighter.stats.speed.global *= skill.effects[Stat.SPEED];
-			}
-			if (skill.effects?.[Stat.FIRE_SPEED]) {
-				fighter.stats.speed[ElementType.FIRE] *= skill.effects[Stat.FIRE_SPEED];
-			}
-			if (skill.effects?.[Stat.WATER_SPEED]) {
-				fighter.stats.speed[ElementType.WATER] *= skill.effects[Stat.WATER_SPEED];
-			}
-			if (skill.effects?.[Stat.WOOD_SPEED]) {
-				fighter.stats.speed[ElementType.WOOD] *= skill.effects[Stat.WOOD_SPEED];
-			}
-			if (skill.effects?.[Stat.LIGHTNING_SPEED]) {
-				fighter.stats.speed[ElementType.LIGHTNING] *= skill.effects[Stat.LIGHTNING_SPEED];
-			}
-			if (skill.effects?.[Stat.AIR_SPEED]) {
-				fighter.stats.speed[ElementType.AIR] *= skill.effects[Stat.AIR_SPEED];
-			}
-
 			return acc;
 		},
 		{} as Record<Skill, boolean>
