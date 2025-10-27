@@ -32,7 +32,7 @@
 				:content="$t('hud.restEnd')"
 				help
 			></DZDisclaimer>
-			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)"></DZFollow>
+			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :key="dinoz.id"></DZFollow>
 			<Tippy
 				tag="div"
 				theme="normal"
@@ -141,9 +141,12 @@ export default defineComponent({
 		DZFollow
 	},
 	props: {
-		updateActions: Function as PropType<(actions: Array<ActionFiche>) => void>,
 		dinoz: {
 			type: Object as PropType<DinozFiche>,
+			required: true
+		},
+		refreshDinoz: {
+			type: Function as PropType<() => Promise<void>>,
 			required: true
 		}
 	},
@@ -166,7 +169,7 @@ export default defineComponent({
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
-					EventBus.emit('refreshDinoz', true);
+					await this.refreshDinoz();
 					break;
 				case Action.LEVEL_UP:
 					this.$router.push({
@@ -296,7 +299,7 @@ export default defineComponent({
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
-					EventBus.emit('refreshDinoz', true);
+					await this.refreshDinoz();
 					break;
 				case Action.FISH:
 				case Action.CUEILLE:
@@ -319,7 +322,7 @@ export default defineComponent({
 					break;
 				case Action.CONCENTRATE:
 					await DinozService.cancelConcentration(parseInt(this.$route.params.id.toString()));
-					EventBus.emit('refreshDinoz', true);
+					await this.refreshDinoz();
 					break;
 				case Action.MARKET:
 					this.$router.push({
@@ -365,7 +368,7 @@ export default defineComponent({
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
-					EventBus.emit('refreshDinoz', true);
+					await this.refreshDinoz();
 					break;
 				}
 				case Action.DISBAND:
@@ -399,7 +402,7 @@ export default defineComponent({
 						});
 
 						this.dinozStore.setDinozList(orderDinozList(currentDinozList));
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -426,7 +429,7 @@ export default defineComponent({
 
 						this.$toast.open({ message: formatText(this.$t(`toast.leaderChanged`)), type: 'success' });
 
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -448,7 +451,7 @@ export default defineComponent({
 						}
 						currentDinozList[currentDinoz].unavailableReason = UnavailableReasonFront.frozen;
 						this.dinozStore.setDinozList(currentDinozList);
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -456,7 +459,7 @@ export default defineComponent({
 				case Action.STOP_CONGEL:
 					try {
 						await DinozService.unfrozeDinoz(+this.$route.params.id);
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -464,7 +467,7 @@ export default defineComponent({
 				case Action.REST:
 					try {
 						await DinozService.restDinoz(+this.$route.params.id, true);
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -472,7 +475,7 @@ export default defineComponent({
 				case Action.STOP_REST:
 					try {
 						await DinozService.restDinoz(+this.$route.params.id, false);
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -480,7 +483,7 @@ export default defineComponent({
 				case Action.REINCARNATION:
 					try {
 						await DinozService.reincarnate(+this.$route.params.id);
-						EventBus.emit('refreshDinoz', true);
+						await this.refreshDinoz();
 						this.$toast.open({
 							message: this.$t('toast.reincarnation'),
 							type: 'info'
@@ -513,9 +516,9 @@ export default defineComponent({
 			this.dinozStore.setDinoz(dinozToUpdate);
 			this.$emit('endMission');
 		},
-		validateMission() {
+		async validateMission() {
 			this.missionReward = undefined;
-			EventBus.emit('refreshDinoz', true);
+			await this.refreshDinoz();
 			EventBus.emit('refreshMoney', true);
 		},
 		npcDisplayName(npcId: number) {
