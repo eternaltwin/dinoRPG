@@ -12,8 +12,8 @@
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions
 			v-show="isReady"
-			:updateActions="updateActions"
 			:dinoz="dinozData"
+			:refresh-dinoz="refreshDinoz"
 			@continueMission="continueMission()"
 			@endMission="getFiche()"
 		/>
@@ -32,7 +32,6 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import ChooseDinozName from '../components/dinoz/ChooseDinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanel from '../components/common/TabPanel.vue';
-import { ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 
 export default defineComponent({
 	name: 'DinozPage',
@@ -118,21 +117,20 @@ export default defineComponent({
 			this.dinozStore.setCurrentDinozId(parseInt(dinozId));
 			this.isReady = true;
 		},
-		updateActions(actions: ActionFiche[]) {
-			this.dinozData.actions = actions;
+		async refreshDinoz() {
+			try {
+				await this.getFiche();
+			} catch (err) {
+				errorHandler.handle(err, this.$toast);
+				return;
+			}
 		}
 	},
 	// Get dinoz data
 	async mounted(): Promise<void> {
 		EventBus.on('refreshDinoz', async e => {
 			if (e) {
-				try {
-					await this.getFiche();
-					EventBus.emit('isLoading', false);
-				} catch (err) {
-					errorHandler.handle(err, this.$toast);
-					return;
-				}
+				await this.refreshDinoz();
 			}
 		});
 		EventBus.emit('isLoading', true);
