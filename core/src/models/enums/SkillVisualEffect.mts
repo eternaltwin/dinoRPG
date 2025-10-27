@@ -26,7 +26,7 @@ export enum SkillVisualEffect {
 	SYLFIDE,
 	RAFALE,
 	DELUGE,
-	ENV7,
+	ENV,
 	AURA,
 	SNOW,
 	SWAMP,
@@ -39,8 +39,10 @@ export enum SkillVisualEffect {
 	RAY,
 	SPEED,
 	HEADORTAIL,
-	LEAF,
+	RESURRECT,
 	MUDWALL,
 	BLINK,
-	GENERATE
+	GENERATE,
+	CORRUPTION,
+	DIVINE_LIGHT
 }

@@ -15,7 +15,7 @@ import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
 import { raceList } from '../models/dinoz/RaceList.mjs';
 import { Skill, skillList } from '../models/dinoz/SkillList.mjs';
-import { BaseStats, SpecialStat } from './getSpecialStat.mjs';
+import { BaseSpecialStats, SpecialStat } from './getSpecialStat.mjs';
 import { Stat } from '../models/enums/SkillStat.mjs';
 import { DinozStatusId } from '../models/dinoz/StatusList.mjs';
 import { ExpectedError } from './ExpectedError.mjs';
@@ -267,7 +267,7 @@ export const getFollowableDinoz = <
 };
 
 export const getMaxFollowers = (dinoz: Pick<DinozFiche, 'skills'>) => {
-	let max = BaseStats[SpecialStat.MAX_FOLLOWERS];
+	let max = BaseSpecialStats[SpecialStat.MAX_FOLLOWERS];
 
 	const skillsAffectingMaxFollowers = Object.values(skillList).filter(skill => skill.effects?.[Stat.MAX_FOLLOWERS]);
 
