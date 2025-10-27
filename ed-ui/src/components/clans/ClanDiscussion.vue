@@ -29,40 +29,6 @@
 				@delete="deleteMessage(msg)"
 				@openProfile="goToPlayer(msg.author?.id ?? '1')"
 			/>
-			<!--<Editor v-model="newMessage" />
-			<div class="msg" v-for="msg in messages" :key="msg.id">
-				<div class="msg-header">
-					<img src="\src\assets\achievements\msg.webp" alt="Profile" />
-					<div class="msg-info">
-						<div class="author-name">
-							<img
-								src="\src\assets\icons\crown.png"
-								alt="rank"
-								v-if="isLeader(msg)"
-								v-tippy="{ content: t('clan.icons.crown'), theme: 'small' }"
-							/>
-							<div
-								v-if="msg.author"
-								class="msg-author"
-								:class="{ self: isSelf(msg) }"
-								@click="goToPlayer(msg.author.id)"
-							>
-								{{ msg.author.name }}
-							</div>
-							<div v-else class="msg-author" :class="{ self: isSelf(msg) }">
-								{{ msg.authorName }}
-							</div>
-						</div>
-						<div class="msg-date">
-							<span class="msg-time">{{ formatShortDate(msg.date, locale) }}</span>
-							<span>{{ getTopItem(msg.author.playerTracking) }}</span>
-						</div>
-					</div>
-					<button v-if="canDeleteMessage(msg)" @click="deleteMessage(msg)">X</button>
-				</div>
-				<div class="msg-content" style="white-space: pre-line" v-html="msg.content" />
-			</div>
-			-->
 		</div>
 
 		<div class="switch-page-container">
@@ -129,9 +95,6 @@ function isLeader(msg: CreateClanMessage): boolean {
 function isSelf(msg: CreateClanMessage): boolean {
 	return msg.author?.id == store.playerId;
 }
-//function dateToString(date: Date): string {
-//	return new Date(date).toLocaleString('fr-FR');
-//}
 function canDeleteMessage(msg: CreateClanMessage): boolean {
 	return msg.author?.id == store.playerId || msg.clan?.leaderId == store.playerId;
 }
@@ -227,7 +190,7 @@ onMounted(async () => {
 		EventBus.emit('isLoading', false);
 	} catch (err) {
 		isConnectionOk.value = false;
-		// $toast desde la instancia (si está registrado globalmente)
+		// $toast from the app instance (if registered globally)
 		errorHandler.handle(err as Error, instance?.proxy?.$toast ?? ({} as ToastPluginApi));
 	}
 });

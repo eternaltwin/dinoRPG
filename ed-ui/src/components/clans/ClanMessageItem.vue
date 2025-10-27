@@ -44,7 +44,7 @@ type Author = { id: string; name: string; avatarUrl?: string; isLeader?: boolean
 const props = defineProps<{
 	author: Author;
 	itsLeader?: boolean;
-	contentHtml: string; // Sanitizado antes de llegar aquí
+	contentHtml: string;
 	date: string | Date;
 	isSelf?: boolean;
 	canDelete?: boolean;
@@ -67,8 +67,8 @@ const LOCALE_MAP: Record<string, string> = {
 
 function formatShortDate(
 	iso: string | number | Date,
-	localeCode: string = 'en', // por ejemplo: i18n.locale.value
-	opts?: { timeZone?: string } // opcional: 'UTC', 'Europe/Berlin', etc.
+	localeCode: string = 'en', 
+	opts?: { timeZone?: string }
 ): string {
 	const date = iso instanceof Date ? iso : new Date(iso);
 	const locale = LOCALE_MAP[localeCode] ?? localeCode;
@@ -79,16 +79,15 @@ function formatShortDate(
 		year: 'numeric',
 		hour: '2-digit',
 		minute: '2-digit',
-		hour12: false, // 24h
+		hour12: false,
 		...(opts?.timeZone ? { timeZone: opts.timeZone } : {})
 	});
 
-	// Usamos formatToParts para no heredar comas/puntos/espacios locales
 	const parts = dtf.formatToParts(date);
 	const get = (type: Intl.DateTimeFormatPartTypes) => parts.find(p => p.type === type)?.value ?? '';
 
-	const day = get('day').replace('.', ''); // algunos locales ponen punto
-	const month = get('month').replace('.', '').toLowerCase(); // 'Oct.' -> 'oct'
+	const day = get('day').replace('.', ''); 
+	const month = get('month').replace('.', '').toLowerCase();
 	const year = get('year');
 	const hour = get('hour').padStart(2, '0');
 	const minute = get('minute').padStart(2, '0');
