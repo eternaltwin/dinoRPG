@@ -26,7 +26,7 @@
 		"maxParticipantInThread": "Du kannst zu der Konversation nicht mehr als 9 Teilnehmer hinzufügen.",
 		"dinozAlreadySelling": "Dein Dinoz wird bereits zum Verkauf angeboten.",
 		"nocookie": "Das Cookie ist abgelaufen oder ist ungültig. Bitte versuche den Import von deinem Konto aus.",
-		"wronglogins": "Les identifiants twino ne sont pas les bons.",
+		"wronglogins": "Die Eternal-Twin-Anmeldedaten sind nicht gültig.",
 		"noPDA": "Du benötigst die Platte aus einer Diamantit-Ader, um auf diese Seite zugreifen zu können.",
 		"noPMI": "Du benötigst das Illustrierte Missionsbüchlein, um auf diese Seite zugreifen zu können.",
 		"noPAC": "Du benötigst die Schriftrolle der Gesammelten Fähigkeiten, um diese Seite zu betreten.",
@@ -72,7 +72,9 @@
 		"needIngredientToSell": "Du benötigst die Zutaten, die du verkaufen möchtest.",
 		"finishGrid": "Glückwunsch! Du hast für das Freiräumen des Rasters 1000 Gold erhalten!",
 		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht.",
-		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten."
+		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten.",
+		"maxDinozSelected": "Du hast bereits die Höchstanzahl an Dinoz ausgewählt.",
+		"noDinozSelected": "Keine Dinoz ausgewählt."
 	},
 	"dig": {
 		"gold": "Dein Dinoz hat {gold} :gold: ausgegraben.",
@@ -212,7 +214,9 @@
 		"generator": "Dinoz-Generator",
 		"sortDinoz": "Meine Dinoz verwalten",
 		"dinozMissions": "Missionen meiner Dinoz",
-		"skills": "Fähigkeiten"
+		"skills": "Fähigkeiten",
+		"send": "Senden",
+		"close": "Schließen"
 	},
 	"chooseDinoz": {
 		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -575,7 +579,8 @@
 	},
 	"news": {
 		"actualites": "Neuigkeiten aus dem Dinoland",
-		"overload": "Ältere Neuigkeiten anzeigen"
+		"overload": "Ältere Neuigkeiten anzeigen",
+		"noTranslation": "Diese Neuigkeiten haben keine Übersetzung – du müsstest entweder eine andere Sprache zurate ziehen oder aber warten bis eine Übersetzung veröffentlicht wird"
 	},
 	"place": {
 		"name": {
@@ -4060,7 +4065,8 @@
 				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Kann Beitrittsanfragen annehmen und ablehnen",
 				"MEMBER_EXCLUDE": "Kann Mitglieder ausschließen",
 				"DISCUSSION_DELETE_MESSAGE": "Kann Beiträge in Diskussionen löschen",
-				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern"
+				"CLAN_EDIT_BANNER": "Kann Klanbanner ändern",
+				"CLAN_EDIT_LANG": "Kann Klansprachen verwalten"
 			},
 			"nickname": "Spitzname des Spielers:",
 			"save": "Speichern"
@@ -4135,12 +4141,16 @@
 		"banner": {
 			"title": "URL des Klanbanners bearbeiten:",
 			"info": "Das Banner muss 448px breit und 100px hoch sein."
+		},
+		"langs": {
+			"title": "Sprachen:"
 		}
 	},
 	"createClan": {
 		"title": "Klan gründen",
 		"information": "Fülle bitte die Felder weiter unten aus, um deinen Klan zu gründen. Die Kosten für die Gründung des Klans belaufen sich auf **{cost}** :gold:",
 		"clan_name": "Name des Klans",
+		"clan_langs": "Klansprachen",
 		"clan_description": "Klanbeschreibung",
 		"create_button": "Klan gründen",
 		"go_back_button": "Zurück zur Liste"
@@ -5056,7 +5066,8 @@
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "Du hast im Szenario „**{scenario}**“ Fortschritt erzielt.",
 		"FBStarted": "Es ist ein neues Ereignis verfügbar!",
-		"clanApply": "{name} möchte deinem Klan beitreten!"
+		"clanApply": "{name} möchte deinem Klan beitreten!",
+		"message": "Du hast eine neue Nachricht erhalten."
 	},
 	"events": {
 		"disclaimer": "Hier findest du alle laufenden Gemeinschaftsereignisse.",
@@ -5082,9 +5093,10 @@
 		"level": "St. {level}"
 	},
 	"poll": {
-		"choose_option": "Triff deine Wahl und stimm ab:",
+		"choose_option": "Die Umfrage endet am {date}. Treffe deine Wahl:",
 		"choose_done": "Stimme abgegeben",
 		"select": "Abstimmen",
-		"select_option": "Wähle eine Option"
+		"select_option": "Wähle eine Option",
+		"total_participants": "{qty} Wähler"
 	}
 }

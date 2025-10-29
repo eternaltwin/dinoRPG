@@ -72,7 +72,9 @@
 		"needIngredientToSell": "You need to have the ingredients you want to sell.",
 		"finishGrid": "Congratulations! You have earned 1000 :gold: for having finished the grid!",
 		"dailyGridRewardsFinished": "You have reached the daily amount of completed grids.",
-		"errorFetchingRankings": "An error occurred when fetching the ranking data."
+		"errorFetchingRankings": "An error occurred when fetching the ranking data.",
+		"maxDinozSelected": "You have selected the maximum number of Dinoz allowed",
+		"noDinozSelected": "No Dinoz selected"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -212,7 +214,9 @@
 		"generator": "Dinoz generator",
 		"sortDinoz": "Manage my Dinoz",
 		"dinozMissions": "My Dinoz missions",
-		"skills": "Skills"
+		"skills": "Skills",
+		"send": "Send",
+		"close": "Close"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -575,7 +579,8 @@
 	},
 	"news": {
 		"actualites": "Dinoland's actuality",
-		"overload": "Show old updates"
+		"overload": "Show old updates",
+		"noTranslation": "This news has not been translated, please consult it in another language or wait for a translation to be published"
 	},
 	"place": {
 		"name": {
@@ -4060,7 +4065,8 @@
 				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Can accept or deny joining requests",
 				"MEMBER_EXCLUDE": "Can exclude members",
 				"DISCUSSION_DELETE_MESSAGE": "Can delete messages from discussion thread",
-				"CLAN_EDIT_BANNER": "Can change the clan banner"
+				"CLAN_EDIT_BANNER": "Can change the clan banner",
+				"CLAN_EDIT_LANG": "Can change the language of the Clan"
 			},
 			"nickname": "Player's nickname :",
 			"save": "Save"
@@ -4135,12 +4141,16 @@
 		"banner": {
 			"title": "Edit clan banner URL :",
 			"info": "Clan banner has a ratio of 448px large by 100px long."
+		},
+		"langs": {
+			"title": "Languages:"
 		}
 	},
 	"createClan": {
 		"title": "Create a clan",
 		"information": "Please fill out the information below to create your Clan. Creating a Clan will cost you **{cost}** :gold:",
 		"clan_name": "Clan name",
+		"clan_langs": "Clan Languages",
 		"clan_description": "Clan description",
 		"create_button": "Create clan",
 		"go_back_button": "Back to list"
@@ -5056,7 +5066,8 @@
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "You made progress in the scenario **{scenario}**.",
 		"FBStarted": "A new event has started!",
-		"clanApply": "{name} would like to join your clan!"
+		"clanApply": "{name} would like to join your clan!",
+		"message": "You have received a new message."
 	},
 	"events": {
 		"disclaimer": "Here you will find all ongoing community events.",
@@ -5082,9 +5093,10 @@
 		"level": "Lv.{level}"
 	},
 	"poll": {
-		"choose_option": "Vote for your choice:",
+		"choose_option": "The survey ends the {date}, vote for your choice:",
 		"choose_done": "Vote registered",
 		"select": "Vote",
-		"select_option": "Select an option"
+		"select_option": "Select an option",
+		"total_participants": "{qty} voters"
 	}
 }
