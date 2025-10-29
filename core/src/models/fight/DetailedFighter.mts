@@ -115,8 +115,6 @@ export interface DetailedFighter {
 	// PVE is case by case
 	resilience: number;
 	escaped?: boolean;
-	// Current counter of attacks performed in a row (assault and skills)
-	comboCounter: number;
 
 	// Raw stats
 	maxHp: number;

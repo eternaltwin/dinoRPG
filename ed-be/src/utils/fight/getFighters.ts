@@ -105,7 +105,6 @@ export const initializeDinoz = (
 		energy: 100,
 		maxEnergy: 100,
 		resilience: 40,
-		comboCounter: 0,
 		stats: {
 			base: {
 				[ElementType.AIR]: dinoz.nbrUpAir,
@@ -280,7 +279,6 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		energy: 100, // Default for clone
 		maxEnergy: 100, // Default for clone
 		resilience: dinoz.resilience,
-		comboCounter: 0,
 		stats: {
 			base: dinoz.stats.base,
 			assaultBonus: dinoz.stats.assaultBonus,
@@ -434,7 +432,6 @@ export const initializeMonster = (
 		energy: 100,
 		maxEnergy: 100,
 		resilience: monster.resilience,
-		comboCounter: 0,
 		stats: {
 			base: {
 				[ElementType.AIR]: monster.elements.air,

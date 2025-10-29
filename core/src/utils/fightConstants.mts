@@ -16,6 +16,4 @@ export const ATTACK_GLOBAL_FACTOR = 0.9;
 export const ASSAULT_POWER = 5;
 export const VOID_ASSAULT_POWER = 1;
 
-export const MAXIMUM_COMBO_COUNT = 10;
-
 export const FIGHT_INFINITE = 1000000 * TIME_FACTOR;
