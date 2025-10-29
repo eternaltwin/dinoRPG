@@ -36,7 +36,6 @@ import {
 	ENERGY_RECOVERY_BASE_FACTOR,
 	ENVIRONMENT_TIMEOUT,
 	FIGHT_INFINITE,
-	MAXIMUM_COMBO_COUNT,
 	MAXIMUM_MAX_ENERGY,
 	MINIMUM_ENERGY_TO_ACT,
 	TIME_BASE,
@@ -4187,22 +4186,6 @@ const attackTarget = (
 		};
 	}
 
-	// Note: combo counter seems to work weirdly, or may be not...
-	// Fighter passes its turn if it has reached max combo at this step
-	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT) {
-		fightData.steps.push({
-			action: 'tired',
-			fighter: stepFighter(attacker)
-		});
-		return {
-			attacker: attacker,
-			target: target,
-			isAssault: isAssault,
-			evasion: false,
-			hpLost: 0
-		};
-	}
-
 	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn
 	// Add teammates if Item.FRIENDLY_WHISTLE
 	// const attackers = [attacker];
@@ -4244,17 +4227,12 @@ const attackTarget = (
 	// for (const attacker of attackers) {
 	// }
 	// NOTE: combo counter seems to work weirdly, or may be not
-	while (attacker.comboCounter < MAXIMUM_COMBO_COUNT) {
+	while (true) {
 		// Initialize all variables here to avoid confusion between iterations of the loop
 		let isDodged = false;
 		let isSuperDodged = false;
 		let noDamage = false;
 		let break_intangible = false;
-
-		// Increment the attacker's combo counter
-		// Note: If we arrive here, the comboCounter is already at 1 due to turn initialization
-		// Note: this would prevent infinite counter too...
-		attacker.comboCounter++;
 
 		// Get damage
 		let damage = calculateDamage(fightData.rng, attacker, target, attack, defense, isAssault);
@@ -5242,21 +5220,11 @@ export const playFighterTurn = (fightData: DetailedFight) => {
 		}
 	}
 
-	// 5th - If the last fighter that played is different than the current fighter, reset both combo counts
-	if (fightData.lastFighterId !== undefined && fightData.lastFighterId !== attacker.id) {
-		const lastFighter = fightData.fighters.find(f => f.id === fightData.lastFighterId);
-		if (lastFighter) {
-			lastFighter.comboCounter = 0;
-		}
-		attacker.comboCounter = 0;
-	}
-
+	// 5th - Update last fighter ID
 	fightData.lastFighterId = attacker.id;
-	attacker.comboCounter++;
 
-	// Note: combo counter seems to work weirdly, or may be not
 	// 6th - Pass turn if the fighter exceeded the combo limit, or does not meet a minimum of energy
-	if (attacker.comboCounter >= MAXIMUM_COMBO_COUNT || attacker.energy < MINIMUM_ENERGY_TO_ACT) {
+	if (attacker.energy < MINIMUM_ENERGY_TO_ACT) {
 		fightData.steps.push({
 			action: 'tired',
 			fighter: stepFighter(attacker)
