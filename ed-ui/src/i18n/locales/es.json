@@ -72,7 +72,9 @@
 		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
 		"finishGrid": "¡Felicidades! ¡Has ganado 1000 :gold: por completar el tablero!",
 		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados.",
-		"errorFetchingRankings": "Se produjo un error al obtener la clasificación."
+		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
+		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
+		"noDinozSelected": "Ningún Dino seleccionado"
 	},
 	"dig": {
 		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
@@ -212,7 +214,9 @@
 		"generator": "Generador de Dinos",
 		"sortDinoz": "Administrar mis Dinos",
 		"dinozMissions": "Misiones de mis Dinos",
-		"skills": "Competencias"
+		"skills": "Competencias",
+		"send": "Enviar",
+		"close": "Cerrar"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -575,7 +579,8 @@
 	},
 	"news": {
 		"actualites": "La actualidad en Dinoland",
-		"overload": "Mostrar noticias antiguas"
+		"overload": "Mostrar noticias antiguas",
+		"noTranslation": "La noticia no ha sido traducida. Consulta las novedades en otro idioma o espera a que se publique una traducción"
 	},
 	"place": {
 		"name": {
@@ -4060,7 +4065,8 @@
 				"MEMBER_ACCEPT_AND_DENY_REQUESTS": "Puede aceptar y rechazar nuevos miembros",
 				"MEMBER_EXCLUDE": "Puede expulsar miembros",
 				"DISCUSSION_DELETE_MESSAGE": "Puede eliminar mensajes del hilo de discusión",
-				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan"
+				"CLAN_EDIT_BANNER": "Puede cambiar el banner del Clan",
+				"CLAN_EDIT_LANG": "Puede cambiar el idioma del Clan"
 			},
 			"nickname": "Apodo del jugador:",
 			"save": "Guardar"
@@ -4135,12 +4141,16 @@
 		"banner": {
 			"title": "Editar URL del banner del clan:",
 			"info": "El banner tiene un ratio de 448px de ancho por 100px de largo."
+		},
+		"langs": {
+			"title": "Idiomas:"
 		}
 	},
 	"createClan": {
 		"title": "Crear un clan",
 		"information": "Por favor completa la información a continuación para crear tu Clan. La creación de un Clan te costará **{cost}** :gold:",
 		"clan_name": "Nombre del clan",
+		"clan_langs": "Idiomas del Clan",
 		"clan_description": "Descripción del Clan",
 		"create_button": "Crear Clan",
 		"go_back_button": "Volver a la lista"
@@ -5056,7 +5066,8 @@
 		"rewardGold": "{quantity} :gold:",
 		"rewardScenario": "Has progresado en el escenario **{scenario}**.",
 		"FBStarted": "¡Un nuevo evento ha comenzado!",
-		"clanApply": "¡{name} quiere unirse a tu clan!"
+		"clanApply": "¡{name} quiere unirse a tu clan!",
+		"message": "Has recibido un nuevo mensaje."
 	},
 	"events": {
 		"disclaimer": "Aquí encontrará todos los eventos comunitarios en curso.",
@@ -5082,9 +5093,10 @@
 		"level": "Niv.{level}"
 	},
 	"poll": {
-		"choose_option": "Vote por su elección:",
+		"choose_option": "La encuesta termina el {date}. Vota por tu elección:",
 		"choose_done": "Voto registrado",
 		"select": "Votar",
-		"select_option": "Seleccione una opción"
+		"select_option": "Seleccione una opción",
+		"total_participants": "{qty} votantes"
 	}
 }
