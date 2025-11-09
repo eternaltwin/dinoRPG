@@ -5,7 +5,15 @@ import { EmotesTwinoidV1Enum, EmotesTwinoidV1Icons } from './emotes/EmotesTwinoi
 import { EmotesTwinoidV2Enum, EmotesTwinoidV2Icons } from './emotes/EmotesTwinoidV2Icons';
 import { EmotesTwinoidV3Enum, EmotesTwinoidV3Icons } from './emotes/EmotesTwinoidV3Icons';
 
-export type FormattingType = 'bold' | 'italic' | 'bolditalic' | 'strike' | 'highlight' | 'blockquote' | 'spoiler';
+export type FormattingType =
+	| 'bold'
+	| 'italic'
+	| 'bolditalic'
+	| 'strike'
+	| 'highlight'
+	| 'blockquote'
+	| 'spoiler'
+	| 'code';
 export type RichTextEditorButtonType = FormattingType;
 
 export interface RichTextEditorFormattingButtonConfig {
@@ -65,6 +73,13 @@ export const richTextEditorFormattingButtons: RichTextEditorFormattingButtonConf
 		title: 'richTextEditor.spoilerButtonDescription',
 		action: 'applyFormatting',
 		actionParam: 'spoiler'
+	},
+	{
+		type: 'code',
+		label: 'richTextEditor.codeButtonTitle',
+		title: 'richTextEditor.codeButtonDescription',
+		action: 'applyFormatting',
+		actionParam: 'code'
 	}
 ];
 

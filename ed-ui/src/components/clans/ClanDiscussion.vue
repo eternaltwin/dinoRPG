@@ -290,6 +290,27 @@ export default defineComponent({
 			color: inherit;
 			background-color: rgba(0, 0, 0, 0.1);
 		}
+		:deep(code) {
+			background-color: rgba(0, 0, 0, 0.1);
+			color: #222;
+			font-family: 'Cascadia Code', monospace;
+			font-size: 1.2rem;
+			padding: 2px 4px;
+			border-radius: 4px;
+		}
+		:deep(pre) {
+			background-color: #1e1e1e;
+			color: #f8f8f2;
+			padding: 8px;
+			border-radius: 6px;
+			overflow-x: auto;
+			font-family: monospace;
+		}
+		:deep(pre code) {
+			background: none;
+			color: inherit;
+			padding: 0;
+		}
 	}
 }
 .new-message-container {

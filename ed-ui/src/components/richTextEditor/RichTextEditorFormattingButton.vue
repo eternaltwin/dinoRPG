@@ -9,6 +9,7 @@
 				<img v-else-if="type === 'highlight'" :src="getImgURL('editor', 'highlight')" alt="highlight" />
 				<img v-else-if="type === 'blockquote'" :src="getImgURL('editor', 'blockquote')" alt="blockquote" />
 				<img v-else-if="type === 'spoiler'" :src="getImgURL('editor', 'spoiler')" alt="spoiler" />
+				<img v-else-if="type === 'code'" :src="getImgURL('editor', 'code')" alt="code" />
 				<div v-else v-html="label" />
 			</component>
 		</span>
@@ -24,7 +25,8 @@ export default defineComponent({
 		type: {
 			type: String,
 			required: true,
-			validator: (value: string) => ['bold', 'italic', 'bolditalic', 'strike', 'higlight', 'blockquote'].includes(value)
+			validator: (value: string) =>
+				['bold', 'italic', 'bolditalic', 'strike', 'higlight', 'blockquote', 'spoiler', 'code'].includes(value)
 		},
 		label: {
 			type: String,

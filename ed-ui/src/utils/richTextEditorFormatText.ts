@@ -38,10 +38,21 @@ export function formatText(text: string | null): string {
 		return `<blockquote>${content}</blockquote>`;
 	});
 
+	// Blocs de code (``` ... ```)
+	text = text.replace(/```([\s\S]*?)```/g, (_, code) => {
+		return `<pre><code>${code.trim()}</code></pre>`;
+	});
+
+	// Inline code (`...`)
+	text = text.replace(/`([^`]+)`/g, (_, code) => {
+		return `<code>${code}</code>`;
+	});
+
 	let formattedText = sanitizeHtml(text, {
-		allowedTags: ['strong', 'em', 'a', 'br', 'mark', 'blockquote'],
+		allowedTags: ['strong', 'em', 'a', 'br', 'mark', 'blockquote', 'code', 'pre', 's', 'span'],
 		allowedAttributes: {
-			a: ['href']
+			a: ['href'],
+			span: ['class']
 		}
 	});
 

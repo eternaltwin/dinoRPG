@@ -50,6 +50,9 @@ export function applyFormattingForType(text: string, type: FormattingType): stri
 				.join('\n');
 		case 'spoiler':
 			return `||${text}||`;
+		case 'code':
+			// Bloc si plusieurs lignes, sinon inline
+			return text.includes('\n') ? `\`\`\`\n${text}\n\`\`\`` : `\`${text}\``;
 		default:
 			return text;
 	}
@@ -65,6 +68,7 @@ export function getFormattingLengthForType(type: FormattingType): number {
 		case 'spoiler':
 			return 2;
 		case 'bolditalic':
+		case 'code':
 			return 3;
 		default:
 			return 0;

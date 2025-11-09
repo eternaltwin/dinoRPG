@@ -252,13 +252,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .editor {
 	display: flex;
-	width: 99%;
+	width: 100%;
 }
 .text-format-dialog {
 	background-color: #ae6139;
-	border: 1px solid #fff;
 	padding: 10px;
-	width: 97%;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
 	gap: 5px;
@@ -284,7 +283,7 @@ export default defineComponent({
 	gap: 10px;
 }
 .edit-area {
-	width: 98%;
+	max-width: 100%;
 	min-height: 90px;
 	padding: 8px;
 	border: 1px solid #fff;

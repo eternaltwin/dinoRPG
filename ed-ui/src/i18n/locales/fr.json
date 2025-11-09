@@ -5056,7 +5056,9 @@
 		"blockquoteButtonTitle": "\" \"",
 		"blockquoteButtonDescription": "Citation",
 		"spoilerButtonTitle": "SP",
-		"spoilerButtonDescription": "Text caché (spoiler)",
+		"spoilerButtonDescription": "Texte caché (spoiler)",
+		"codeButtonTitle": "< >",
+		"codeButtonDescription": "Code",
 		"cleanButtonDescription": "Supprimer le texte",
 		"buttonValidateAdvEditor": "Valider et envoyer le message"
 	},
