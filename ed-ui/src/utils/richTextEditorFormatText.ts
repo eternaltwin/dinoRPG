@@ -5,10 +5,12 @@ import { EmotesStatusIcons } from '../components/richTextEditor/emotes/EmotesSta
 import { EmotesAchievementsIcons } from '../components/richTextEditor/emotes/EmotesAchievementsIcons';
 import { EmotesTwinoidV1Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV1Icons';
 import { EmotesTwinoidV2Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV2Icons';
+import { EmotesTwinoidV3Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV3Icons';
 
 const emoteIconEnums = {
 	...EmotesTwinoidV1Icons,
 	...EmotesTwinoidV2Icons,
+	...EmotesTwinoidV3Icons,
 	...EmotesElementsIcons,
 	...EmotesStatusIcons,
 	...EmotesAchievementsIcons

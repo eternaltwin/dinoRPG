@@ -3,6 +3,7 @@ import { EmotesStatusEnum, EmotesStatusIcons } from './emotes/EmotesStatusIcons'
 import { EmotesAchievementsEnum, EmotesAchievementsIcons } from './emotes/EmotesAchievementsIcons';
 import { EmotesTwinoidV1Enum, EmotesTwinoidV1Icons } from './emotes/EmotesTwinoidV1Icons';
 import { EmotesTwinoidV2Enum, EmotesTwinoidV2Icons } from './emotes/EmotesTwinoidV2Icons';
+import { EmotesTwinoidV3Enum, EmotesTwinoidV3Icons } from './emotes/EmotesTwinoidV3Icons';
 
 export type FormattingType = 'bold' | 'italic' | 'bolditalic' | 'strike' | 'highlight' | 'blockquote' | 'spoiler';
 export type RichTextEditorButtonType = FormattingType;
@@ -83,6 +84,11 @@ export const richTextEditorEmoteButtons: RichTextEditorEmoteButtonConfig[] = [
 		icon: EmotesTwinoidV2Icons[EmotesTwinoidV2Enum.TWINOIDV2_SMILE],
 		emoteEnum: EmotesTwinoidV2Enum,
 		iconEnum: EmotesTwinoidV2Icons
+	},
+	{
+		icon: EmotesTwinoidV3Icons[EmotesTwinoidV3Enum.TWINOIDV3_COOL],
+		emoteEnum: EmotesTwinoidV3Enum,
+		iconEnum: EmotesTwinoidV3Icons
 	},
 	{
 		icon: EmotesElementsIcons[EmotesElementsEnum.ELEMENT_VOID],
