@@ -4,13 +4,14 @@
 			<DZUser :user="message.sender" />
 			<div class="date">{{ formatDate(message.createdAt.toString()) }}</div>
 		</div>
-		<div class="message msg-content" v-html="message.content" />
+		<div class="message msg-content" v-html="formatMessage(message.content)" />
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
 import DZUser from '../common/DZUser.vue';
+import { formatText } from '../../utils/richTextEditorFormatText';
 import { Message } from '@drpg/core/models/messagerie/threadsBasic';
 import { localStore } from '../../store/index.js';
 
@@ -26,6 +27,9 @@ export default defineComponent({
 	},
 	components: { DZUser },
 	methods: {
+		formatMessage(value: string): string {
+			return formatText(value.toString());
+		},
 		formatDate(dateString: string) {
 			const date = new Date(dateString);
 			const lang = this.localStore.getLanguage ?? 'fr';
@@ -75,6 +79,20 @@ export default defineComponent({
 		font-feature-settings: normal;
 		font-size: 16px;
 		font-variation-settings: normal;
+		:deep(.spoiler) {
+			background-color: #444;
+			color: transparent;
+			border-radius: 4px;
+			transition:
+				color 0.2s ease,
+				background-color 0.2s ease;
+			cursor: pointer;
+		}
+		:deep(.spoiler:hover),
+		:deep(.spoiler:active) {
+			color: inherit;
+			background-color: rgba(0, 0, 0, 0.1);
+		}
 	}
 }
 </style>

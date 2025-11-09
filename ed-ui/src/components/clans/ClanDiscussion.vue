@@ -1,7 +1,7 @@
 <template>
 	<div class="new-message-container" v-if="hasAccess">
 		<div v-if="isConnectionOk">
-			<Editor v-model="newMessage" />
+			<RichTextEditor v-model="newMessage" @send="createNewMessage" />
 		</div>
 		<div v-if="isConnectionOk === false" class="msg-error">
 			<p>{{ $t('clan.forum.connectionFailed') }}</p>
@@ -44,7 +44,7 @@
 					</div>
 					<button v-if="canDeleteMessage(msg)" @click="deleteMessage(msg)">X</button>
 				</div>
-				<div class="msg-content" style="white-space: pre-line" v-html="msg.content" />
+				<div class="msg-content" style="white-space: pre-line" v-html="formatMessage(msg.content)" />
 			</div>
 		</div>
 		<div class="switch-page-container">
@@ -81,12 +81,13 @@ import { ClanService } from '../../services';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { playerStore } from '../../store';
 import { errorHandler } from '../../utils';
-import Editor from '../common/Editor.vue';
+import RichTextEditor from '../richTextEditor/RichTextEditor.vue';
+import { formatText } from '../../utils/richTextEditorFormatText.js';
 
 export default defineComponent({
 	name: 'ClanDiscussion',
 	components: {
-		Editor
+		RichTextEditor
 	},
 	data() {
 		return {
@@ -116,6 +117,9 @@ export default defineComponent({
 		},
 		goToPlayer(id: string) {
 			this.$router.push({ name: 'MyAccount', params: { id } });
+		},
+		formatMessage(value: string): string {
+			return formatText(value.toString());
 		},
 		async createNewMessage(): Promise<void> {
 			if (!this.hasAccess || !this.newMessage) {
@@ -223,7 +227,6 @@ export default defineComponent({
 	gap: 8px;
 	padding-bottom: 16px;
 }
-
 .msg {
 	margin: 0 10px;
 	background-color: #d8b68a;
@@ -260,7 +263,6 @@ export default defineComponent({
 				font-size: 10px;
 			}
 		}
-
 		button {
 			float: right;
 			height: 18px;
@@ -273,8 +275,23 @@ export default defineComponent({
 			}
 		}
 	}
+	.msg-content {
+		:deep(.spoiler) {
+			background-color: #444;
+			color: transparent;
+			border-radius: 4px;
+			transition:
+				color 0.2s ease,
+				background-color 0.2s ease;
+			cursor: pointer;
+		}
+		:deep(.spoiler:hover),
+		:deep(.spoiler:active) {
+			color: inherit;
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
 }
-
 .new-message-container {
 	padding: 10px 0;
 	display: flex;
@@ -299,7 +316,6 @@ export default defineComponent({
 		}
 	}
 }
-
 textarea {
 	padding-left: 8px;
 	padding-right: 8px;
@@ -312,7 +328,6 @@ textarea {
 	background-color: #bc683c;
 	resize: vertical;
 }
-
 .switch-page-container {
 	display: flex;
 	padding: 8px 16px;
@@ -351,7 +366,6 @@ textarea {
 		}
 	}
 }
-
 .msg-error {
 	color: #e75c32;
 }

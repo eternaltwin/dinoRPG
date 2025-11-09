@@ -42,7 +42,7 @@
 	</div>
 	<div v-if="answerMode" class="answer">
 		<Editor v-model="answer" />
-		<DZButton @click="sendMessage()">{{ $t('messagerie.newMsgSend') }}</DZButton>
+		<RichTextEditor v-model="answer" @send="sendMessage($event)" />
 	</div>
 	<div v-if="myThread && myThread.pinnedMessage">
 		<Message :message="myThread.pinnedMessage" />
@@ -54,14 +54,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import DZButton from '../common/DZButton.vue';
 import { FullThread } from '@drpg/core/models/messagerie/threadsBasic';
 import { localStore } from '../../store/index.js';
 import Message from './Message.vue';
 import { MessagerieService } from '../../services/MessagerieService.js';
 import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
-import Editor from '../common/Editor.vue';
+import RichTextEditor from '../richTextEditor/RichTextEditor.vue';
 
 export default defineComponent({
 	name: 'Thread',
@@ -78,7 +77,7 @@ export default defineComponent({
 			showParticipants: false
 		};
 	},
-	components: { DZUser, Message, DZButton, Editor },
+	components: { DZUser, Message, RichTextEditor },
 	methods: {
 		async answerMsg() {
 			this.answerMode = true;
@@ -100,8 +99,8 @@ export default defineComponent({
 			const year = date.getFullYear();
 			return `${day} ${month} ${year}`;
 		},
-		async sendMessage() {
-			if (!this.answer || !this.myThread) return;
+		async sendMessage(answerFromEditor: string) {
+			if (!answerFromEditor || !this.myThread) return;
 			try {
 				const updatedThread = await MessagerieService.answerThread(this.myThread.id, this.answer);
 				this.myThread.messages = updatedThread.messages;
