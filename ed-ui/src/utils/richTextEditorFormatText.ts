@@ -4,9 +4,11 @@ import { EmotesElementsIcons } from '../components/richTextEditor/emotes/EmotesE
 import { EmotesStatusIcons } from '../components/richTextEditor/emotes/EmotesStatusIcons';
 import { EmotesAchievementsIcons } from '../components/richTextEditor/emotes/EmotesAchievementsIcons';
 import { EmotesTwinoidV1Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV1Icons';
+import { EmotesTwinoidV2Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV2Icons';
 
 const emoteIconEnums = {
 	...EmotesTwinoidV1Icons,
+	...EmotesTwinoidV2Icons,
 	...EmotesElementsIcons,
 	...EmotesStatusIcons,
 	...EmotesAchievementsIcons
