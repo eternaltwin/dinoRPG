@@ -1,6 +1,7 @@
 import { EmotesElementsEnum, EmotesElementsIcons } from './emotes/EmotesElementsIcons';
 import { EmotesStatusEnum, EmotesStatusIcons } from './emotes/EmotesStatusIcons';
 import { EmotesAchievementsEnum, EmotesAchievementsIcons } from './emotes/EmotesAchievementsIcons';
+import { EmotesTwinoidV1Enum, EmotesTwinoidV1Icons } from './emotes/EmotesTwinoidV1Icons';
 
 export type FormattingType = 'bold' | 'italic' | 'bolditalic' | 'strike' | 'highlight' | 'blockquote' | 'spoiler';
 export type RichTextEditorButtonType = FormattingType;
@@ -72,6 +73,11 @@ export interface RichTextEditorEmoteButtonConfig {
 }
 
 export const richTextEditorEmoteButtons: RichTextEditorEmoteButtonConfig[] = [
+	{
+		icon: EmotesTwinoidV1Icons[EmotesTwinoidV1Enum.TWINOIDV1_SMILE],
+		emoteEnum: EmotesTwinoidV1Enum,
+		iconEnum: EmotesTwinoidV1Icons
+	},
 	{
 		icon: EmotesElementsIcons[EmotesElementsEnum.ELEMENT_VOID],
 		emoteEnum: EmotesElementsEnum,

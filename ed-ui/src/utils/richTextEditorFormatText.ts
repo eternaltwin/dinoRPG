@@ -3,8 +3,10 @@ import sanitizeHtml from 'sanitize-html';
 import { EmotesElementsIcons } from '../components/richTextEditor/emotes/EmotesElementsIcons';
 import { EmotesStatusIcons } from '../components/richTextEditor/emotes/EmotesStatusIcons';
 import { EmotesAchievementsIcons } from '../components/richTextEditor/emotes/EmotesAchievementsIcons';
+import { EmotesTwinoidV1Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV1Icons';
 
 const emoteIconEnums = {
+	...EmotesTwinoidV1Icons,
 	...EmotesElementsIcons,
 	...EmotesStatusIcons,
 	...EmotesAchievementsIcons
