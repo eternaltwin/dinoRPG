@@ -1,6 +1,7 @@
 import { EmotesElementsEnum, EmotesElementsIcons } from './emotes/EmotesElementsIcons';
 import { EmotesStatusEnum, EmotesStatusIcons } from './emotes/EmotesStatusIcons';
 import { EmotesAchievementsEnum, EmotesAchievementsIcons } from './emotes/EmotesAchievementsIcons';
+import { EmotesResourcesEnum, EmotesResourcesIcons } from './emotes/EmotesResourcesIcons';
 import { EmotesTwinoidV1Enum, EmotesTwinoidV1Icons } from './emotes/EmotesTwinoidV1Icons';
 import { EmotesTwinoidV2Enum, EmotesTwinoidV2Icons } from './emotes/EmotesTwinoidV2Icons';
 import { EmotesTwinoidV3Enum, EmotesTwinoidV3Icons } from './emotes/EmotesTwinoidV3Icons';
@@ -114,6 +115,11 @@ export const richTextEditorEmoteButtons: RichTextEditorEmoteButtonConfig[] = [
 		icon: EmotesStatusIcons[EmotesStatusEnum.STATUS_CCARD],
 		emoteEnum: EmotesStatusEnum,
 		iconEnum: EmotesStatusIcons
+	},
+	{
+		icon: EmotesResourcesIcons[EmotesResourcesEnum.RESOURCES_POTION_IRMA],
+		emoteEnum: EmotesResourcesEnum,
+		iconEnum: EmotesResourcesIcons
 	},
 	{
 		icon: EmotesAchievementsIcons[EmotesAchievementsEnum.ACHIEVEMENT_TOUR],

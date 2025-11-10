@@ -3,6 +3,7 @@ import sanitizeHtml from 'sanitize-html';
 import { EmotesElementsIcons } from '../components/richTextEditor/emotes/EmotesElementsIcons';
 import { EmotesStatusIcons } from '../components/richTextEditor/emotes/EmotesStatusIcons';
 import { EmotesAchievementsIcons } from '../components/richTextEditor/emotes/EmotesAchievementsIcons';
+import { EmotesResourcesIcons } from '../components/richTextEditor/emotes/EmotesResourcesIcons';
 import { EmotesTwinoidV1Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV1Icons';
 import { EmotesTwinoidV2Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV2Icons';
 import { EmotesTwinoidV3Icons } from '../components/richTextEditor/emotes/EmotesTwinoidV3Icons';
@@ -13,6 +14,7 @@ const emoteIconEnums = {
 	...EmotesTwinoidV3Icons,
 	...EmotesElementsIcons,
 	...EmotesStatusIcons,
+	...EmotesResourcesIcons,
 	...EmotesAchievementsIcons
 };
 
@@ -22,7 +24,7 @@ function markdownSubstitution(substring: string, p1: string, p2: string, p3: str
 
 function emoteSubstitution(substring: string, p1: string): string {
 	if (p1 in emoteIconEnums) {
-		return `<img src='${emoteIconEnums[p1]}' alt='${substring}' height="16">`;
+		return `<img src='${emoteIconEnums[p1]}' alt='${substring}' height="20">`;
 	}
 	return substring;
 }
