@@ -74,7 +74,19 @@ export enum EmotesStatusEnum {
 	STATUS_UNTOUCHABLE = 'untouchable',
 	STATUS_VKILL = 'vkill',
 	STATUS_WCHARM = 'wcharm',
-	STATUS_WPURE = 'wpure'
+	STATUS_WPURE = 'wpure',
+	// Special stats
+	STATUS_ACID_BLOOD_DAMAGE = 'acid_blood_damage',
+	STATUS_ARMOR = 'armor',
+	STATUS_BUBBLE_RATE = 'bubble_rate',
+	STATUS_COUNTER = 'counter',
+	STATUS_ENERGY = 'st_energy',
+	STATUS_ENERGY_RECOVERY = 'energy_recovery',
+	STATUS_EVASION = 'evasion',
+	STATUS_HP_REGEN = 'hp_regen',
+	STATUS_INITIATIVE = 'initiative',
+	STATUS_MULTIHIT = 'multihit',
+	STATUS_SUPER_EVASION = 'super_evasion'
 }
 
 export const EmotesStatusAliases: { [index: string]: string } = {
@@ -151,7 +163,18 @@ export const EmotesStatusAliases: { [index: string]: string } = {
 	['untouchable']: EmotesStatusEnum.STATUS_UNTOUCHABLE,
 	['vkill']: EmotesStatusEnum.STATUS_VKILL,
 	['wcharm']: EmotesStatusEnum.STATUS_WCHARM,
-	['wpure']: EmotesStatusEnum.STATUS_WPURE
+	['wpure']: EmotesStatusEnum.STATUS_WPURE,
+	['acid_blood_damage']: EmotesStatusEnum.STATUS_ACID_BLOOD_DAMAGE,
+	['armor']: EmotesStatusEnum.STATUS_ARMOR,
+	['bubble_rate']: EmotesStatusEnum.STATUS_BUBBLE_RATE,
+	['counter']: EmotesStatusEnum.STATUS_COUNTER,
+	['st_energy']: EmotesStatusEnum.STATUS_ENERGY,
+	['energy_recovery']: EmotesStatusEnum.STATUS_ENERGY_RECOVERY,
+	['evasion']: EmotesStatusEnum.STATUS_EVASION,
+	['hp_regen']: EmotesStatusEnum.STATUS_HP_REGEN,
+	['initiative']: EmotesStatusEnum.STATUS_INITIATIVE,
+	['multihit']: EmotesStatusEnum.STATUS_MULTIHIT,
+	['super_evasion']: EmotesStatusEnum.STATUS_SUPER_EVASION
 };
 
 export const EmotesStatusIcons: { [index: string]: string } = {
@@ -228,5 +251,16 @@ export const EmotesStatusIcons: { [index: string]: string } = {
 	[EmotesStatusEnum.STATUS_UNTOUCHABLE]: getImgURL('guide', 'status_untouchable'),
 	[EmotesStatusEnum.STATUS_VKILL]: getImgURL('status', 'fx_vkill'),
 	[EmotesStatusEnum.STATUS_WCHARM]: getImgURL('status', 'fx_wcharm'),
-	[EmotesStatusEnum.STATUS_WPURE]: getImgURL('status', 'fx_wpure')
+	[EmotesStatusEnum.STATUS_WPURE]: getImgURL('status', 'fx_wpure'),
+	[EmotesStatusEnum.STATUS_ACID_BLOOD_DAMAGE]: getImgURL('specialStats', 'acidBloodDamage'),
+	[EmotesStatusEnum.STATUS_ARMOR]: getImgURL('specialStats', 'armor'),
+	[EmotesStatusEnum.STATUS_BUBBLE_RATE]: getImgURL('specialStats', 'bubbleRate'),
+	[EmotesStatusEnum.STATUS_COUNTER]: getImgURL('specialStats', 'counter'),
+	[EmotesStatusEnum.STATUS_ENERGY]: getImgURL('specialStats', 'energy'),
+	[EmotesStatusEnum.STATUS_ENERGY_RECOVERY]: getImgURL('specialStats', 'energyRecovery'),
+	[EmotesStatusEnum.STATUS_EVASION]: getImgURL('specialStats', 'evasion'),
+	[EmotesStatusEnum.STATUS_HP_REGEN]: getImgURL('specialStats', 'hpRegen'),
+	[EmotesStatusEnum.STATUS_INITIATIVE]: getImgURL('specialStats', 'initiative'),
+	[EmotesStatusEnum.STATUS_MULTIHIT]: getImgURL('specialStats', 'multihit'),
+	[EmotesStatusEnum.STATUS_SUPER_EVASION]: getImgURL('specialStats', 'superEvasion')
 };
