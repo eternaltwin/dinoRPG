@@ -215,8 +215,14 @@ export function transpileFight(
 					fighters: [{ fid: myFighter.id, energy: myFighter.maxEnergy }]
 				});
 				myFighter = undefined;
-				if (dialog && dialogBubble === false) {
-					if (i + 1 < fight.length && fight[i + 1].action !== 'arrive') {
+				if (dialog && !dialogBubble) {
+					// Check if this is the last "arrival" in a sequence of arrivals
+					// while ignoring intermediate passive effects or status updates
+					const remaining = fight.slice(i + 1);
+					const hasMoreArrivals = remaining.some(step => ['arrive'].includes(step.action));
+
+					// If no more "arrive" actions are expected, we can display the dialogue
+					if (!hasMoreArrivals) {
 						dialogBubble = true;
 						history.push({
 							action: DinoAction.TALK,
