@@ -217,11 +217,15 @@ export function transpileFight(
 				myFighter = undefined;
 				if (dialog && !dialogBubble) {
 					// Check if this is the last "arrival" in a sequence of arrivals
-					// while ignoring intermediate passive effects or status updates
 					const remaining = fight.slice(i + 1);
-					const hasMoreArrivals = remaining.some(step => ['arrive'].includes(step.action));
-
-					// If no more "arrive" actions are expected, we can display the dialogue
+					const hasMoreArrivals = remaining.some(step => {
+						if (step.action !== 'arrive') return false;
+						const f = fighters.find(f => f.id === step.fid);
+						if (!f) return false;
+						// Exclude CLONE and REINFORCEMENT
+						return f.type !== FighterType.CLONE && f.type !== FighterType.REINFORCEMENT;
+					});
+					// If no more main arrivals are expected, display the dialogue
 					if (!hasMoreArrivals) {
 						dialogBubble = true;
 						history.push({
