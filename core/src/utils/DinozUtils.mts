@@ -63,6 +63,7 @@ export const toDinozFiche = (
 			| 'remaining'
 			| 'fight'
 			| 'gather'
+			| 'unfreezeAt'
 		> & {
 			missions: DinozMission[];
 			items: Pick<DinozItem, 'itemId'>[];
@@ -124,7 +125,8 @@ export const toDinozFiche = (
 		fight: dinoz.fight,
 		gather: dinoz.gather,
 		missions: dinoz.missions,
-		concentration: dinoz.concentration
+		concentration: dinoz.concentration,
+		unfreezeAt: dinoz.unfreezeAt
 	};
 };
 
@@ -430,10 +432,10 @@ export const calculateXPBonus = (
  * @returns The experience the Dinoz is entitled to receive before bonuses
  */
 export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
-	const BASE_PVP_XP: number = 50;
-	const XP_BASE: number = 1.2;
-	const XP_ADD: number = 0.8;
-	const PVP_COEF: number = 2.5;
+	const BASE_PVP_XP = 50;
+	const XP_BASE = 1.2;
+	const XP_ADD = 0.8;
+	const PVP_COEF = 2.5;
 
 	// Factor based on the level difference
 	const levelDiff = (opponentLevel - dinozLevel) / opponentLevel;
@@ -466,12 +468,12 @@ export const calculatePvExp = (
 	maxLevel: number,
 	initialMaxLevel: number
 ) => {
-	const XP_BASE: number = 1.2;
-	const XP_ADD: number = 0.8;
+	const XP_BASE = 1.2;
+	const XP_ADD = 0.8;
 	// Minimum factor applie to the total monster xp
-	const MINIMUM_XP_FACTOR: number = 1.0;
+	const MINIMUM_XP_FACTOR = 1.0;
 	// Multiplicator constant to increase/decrease result as necessary
-	const XP_MULTIPLICATOR: number = 1.0;
+	const XP_MULTIPLICATOR = 1.0;
 
 	// Factor based on the level difference
 	const levelDiff = (maxLevel - dinozLevel) / maxLevel;

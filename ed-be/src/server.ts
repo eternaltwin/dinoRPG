@@ -31,6 +31,7 @@ import { prisma } from './prisma.js';
 import { resumeTournaments } from './business/forceBruteService.js';
 import { scheduleAtStart } from './business/scheduleService.js';
 import { schedulePollExpiration } from './business/newsService.js';
+import { unfreezeDinozCron } from './cron/unfreezeDinoz.js';
 
 // Surcharge les requêtes Express pour avoir le playerId dans le JWT
 declare global {
@@ -88,6 +89,7 @@ export function main(cx: ServerContext) {
 	healDinozFount().start();
 	itinerantMerchant().start();
 	checkBans().start();
+	unfreezeDinozCron().start();
 
 	scheduleOffersExpiration();
 	schedulePollExpiration();

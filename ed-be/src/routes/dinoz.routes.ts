@@ -630,8 +630,8 @@ routes.post(
 		}
 
 		try {
-			await unfrozeDinoz(req);
-			return res.status(200).send();
+			const result = await unfrozeDinoz(req);
+			return res.status(200).send({ unfreezeAt: result.unfreezeAt });
 		} catch (err) {
 			sendError(res, err);
 		}

@@ -1428,9 +1428,30 @@ export async function unfrozeDinoz(req: Request) {
 			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
 		}
 	}
+
+	const now = new Date();
+
+	// Case 1: unfreeze already started
+	if (dinoz.unfreezeAt) {
+		// If the 24-hour delay is over → unfreeze immediately
+		if (now >= dinoz.unfreezeAt) {
+			await updateDinoz(dinozId, {
+				unavailableReason: null,
+				unfreezeAt: null
+			});
+		}
+
+		return { unfreezeAt: dinoz.unfreezeAt };
+	}
+
+	// Case 2: start the 24-hour unfreeze timer
+	const unfreezeDate = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
 	await updateDinoz(dinozId, {
-		unavailableReason: null
+		unfreezeAt: unfreezeDate
 	});
+
+	return { unfreezeAt: unfreezeDate };
 }
 
 export async function restDinoz(req: Request) {

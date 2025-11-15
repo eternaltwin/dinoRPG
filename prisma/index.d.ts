@@ -8319,6 +8319,7 @@ export namespace Prisma {
     unavailableReason: $Enums.UnavailableReason | null
     seed: string | null
     playerId: string | null
+    unfreezeAt: Date | null
   }
 
   export type DinozMaxAggregateOutputType = {
@@ -8351,6 +8352,7 @@ export namespace Prisma {
     unavailableReason: $Enums.UnavailableReason | null
     seed: string | null
     playerId: string | null
+    unfreezeAt: Date | null
   }
 
   export type DinozCountAggregateOutputType = {
@@ -8383,6 +8385,7 @@ export namespace Prisma {
     unavailableReason: number
     seed: number
     playerId: number
+    unfreezeAt: number
     _all: number
   }
 
@@ -8461,6 +8464,7 @@ export namespace Prisma {
     unavailableReason?: true
     seed?: true
     playerId?: true
+    unfreezeAt?: true
   }
 
   export type DinozMaxAggregateInputType = {
@@ -8493,6 +8497,7 @@ export namespace Prisma {
     unavailableReason?: true
     seed?: true
     playerId?: true
+    unfreezeAt?: true
   }
 
   export type DinozCountAggregateInputType = {
@@ -8525,6 +8530,7 @@ export namespace Prisma {
     unavailableReason?: true
     seed?: true
     playerId?: true
+    unfreezeAt?: true
     _all?: true
   }
 
@@ -8644,6 +8650,7 @@ export namespace Prisma {
     unavailableReason: $Enums.UnavailableReason | null
     seed: string
     playerId: string
+    unfreezeAt: Date | null
     _count: DinozCountAggregateOutputType | null
     _avg: DinozAvgAggregateOutputType | null
     _sum: DinozSumAggregateOutputType | null
@@ -8695,6 +8702,7 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    unfreezeAt?: boolean
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
     Moderation?: boolean | Dinoz$ModerationArgs<ExtArgs>
@@ -8747,6 +8755,7 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    unfreezeAt?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -8782,6 +8791,7 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    unfreezeAt?: boolean
     player?: boolean | PlayerDefaultArgs<ExtArgs>
     concentration?: boolean | Dinoz$concentrationArgs<ExtArgs>
     leader?: boolean | Dinoz$leaderArgs<ExtArgs>
@@ -8817,9 +8827,10 @@ export namespace Prisma {
     unavailableReason?: boolean
     seed?: boolean
     playerId?: boolean
+    unfreezeAt?: boolean
   }
 
-  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "seed" | "playerId", ExtArgs["result"]["dinoz"]>
+  export type DinozOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "leaderId" | "name" | "raceId" | "level" | "nextUpElementId" | "nextUpAltElementId" | "placeId" | "canChangeName" | "display" | "life" | "maxLife" | "experience" | "nbrUpFire" | "nbrUpWood" | "nbrUpWater" | "nbrUpLightning" | "nbrUpAir" | "createdDate" | "updatedDate" | "order" | "concentrationId" | "fight" | "gather" | "remaining" | "FBTournamentStep" | "unavailableReason" | "seed" | "playerId" | "unfreezeAt", ExtArgs["result"]["dinoz"]>
   export type DinozInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     catches?: boolean | Dinoz$catchesArgs<ExtArgs>
     logs?: boolean | Dinoz$logsArgs<ExtArgs>
@@ -8906,6 +8917,7 @@ export namespace Prisma {
       unavailableReason: $Enums.UnavailableReason | null
       seed: string
       playerId: string
+      unfreezeAt: Date | null
     }, ExtArgs["result"]["dinoz"]>
     composites: {}
   }
@@ -9377,6 +9389,7 @@ export namespace Prisma {
     readonly unavailableReason: FieldRef<"Dinoz", 'UnavailableReason'>
     readonly seed: FieldRef<"Dinoz", 'String'>
     readonly playerId: FieldRef<"Dinoz", 'String'>
+    readonly unfreezeAt: FieldRef<"Dinoz", 'DateTime'>
   }
     
 
@@ -73687,7 +73700,8 @@ export namespace Prisma {
     FBTournamentStep: 'FBTournamentStep',
     unavailableReason: 'unavailableReason',
     seed: 'seed',
-    playerId: 'playerId'
+    playerId: 'playerId',
+    unfreezeAt: 'unfreezeAt'
   };
 
   export type DinozScalarFieldEnum = (typeof DinozScalarFieldEnum)[keyof typeof DinozScalarFieldEnum]
@@ -74747,6 +74761,7 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
+    unfreezeAt?: DateTimeNullableFilter<"Dinoz"> | Date | string | null
     catches?: DinozCatchListRelationFilter
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
@@ -74798,6 +74813,7 @@ export namespace Prisma {
     unavailableReason?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    unfreezeAt?: SortOrderInput | SortOrder
     catches?: DinozCatchOrderByRelationAggregateInput
     logs?: LogOrderByRelationAggregateInput
     Moderation?: ModerationOrderByRelationAggregateInput
@@ -74852,6 +74868,7 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
+    unfreezeAt?: DateTimeNullableFilter<"Dinoz"> | Date | string | null
     catches?: DinozCatchListRelationFilter
     logs?: LogListRelationFilter
     Moderation?: ModerationListRelationFilter
@@ -74903,6 +74920,7 @@ export namespace Prisma {
     unavailableReason?: SortOrderInput | SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    unfreezeAt?: SortOrderInput | SortOrder
     _count?: DinozCountOrderByAggregateInput
     _avg?: DinozAvgOrderByAggregateInput
     _max?: DinozMaxOrderByAggregateInput
@@ -74943,6 +74961,7 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableWithAggregatesFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringWithAggregatesFilter<"Dinoz"> | string
     playerId?: UuidWithAggregatesFilter<"Dinoz"> | string
+    unfreezeAt?: DateTimeNullableWithAggregatesFilter<"Dinoz"> | Date | string | null
   }
 
   export type DinozItemWhereInput = {
@@ -78723,6 +78742,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -78774,6 +78794,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -78818,6 +78839,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -78869,6 +78891,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -78917,6 +78940,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
   }
 
   export type DinozUpdateManyMutationInput = {
@@ -78945,6 +78969,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type DinozUncheckedUpdateManyInput = {
@@ -78977,6 +79002,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type DinozItemCreateInput = {
@@ -82686,6 +82712,17 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DinozCatchListRelationFilter = {
     every?: DinozCatchWhereInput
     some?: DinozCatchWhereInput
@@ -82886,6 +82923,7 @@ export namespace Prisma {
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    unfreezeAt?: SortOrder
   }
 
   export type DinozAvgOrderByAggregateInput = {
@@ -82940,6 +82978,7 @@ export namespace Prisma {
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    unfreezeAt?: SortOrder
   }
 
   export type DinozMinOrderByAggregateInput = {
@@ -82972,6 +83011,7 @@ export namespace Prisma {
     unavailableReason?: SortOrder
     seed?: SortOrder
     playerId?: SortOrder
+    unfreezeAt?: SortOrder
   }
 
   export type DinozSumOrderByAggregateInput = {
@@ -83075,6 +83115,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type GameDinozNullableScalarRelationFilter = {
@@ -84145,17 +84199,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type UuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -84245,20 +84288,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -86370,6 +86399,10 @@ export namespace Prisma {
 
   export type NullableEnumUnavailableReasonFieldUpdateOperationsInput = {
     set?: $Enums.UnavailableReason | null
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type DinozCatchUpdateManyWithoutDinozNestedInput = {
@@ -88748,10 +88781,6 @@ export namespace Prisma {
     connect?: DojoOpponentsWhereUniqueInput | DojoOpponentsWhereUniqueInput[]
   }
 
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
   export type PlayerUpdateOneRequiredWithoutDojoNestedInput = {
     create?: XOR<PlayerCreateWithoutDojoInput, PlayerUncheckedCreateWithoutDojoInput>
     connectOrCreate?: PlayerCreateOrConnectWithoutDojoInput
@@ -91099,6 +91128,17 @@ export namespace Prisma {
     not?: NestedUuidFilter<$PrismaModel> | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
@@ -91187,6 +91227,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
@@ -91328,17 +91382,6 @@ export namespace Prisma {
     _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
   export type NestedUuidNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -91371,20 +91414,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -91563,6 +91592,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -91612,6 +91642,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -91689,6 +91720,7 @@ export namespace Prisma {
     unavailableReason?: EnumUnavailableReasonNullableFilter<"Dinoz"> | $Enums.UnavailableReason | null
     seed?: StringFilter<"Dinoz"> | string
     playerId?: UuidFilter<"Dinoz"> | string
+    unfreezeAt?: DateTimeNullableFilter<"Dinoz"> | Date | string | null
   }
 
   export type DinozCatchCreateWithoutDinozInput = {
@@ -92002,6 +92034,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -92052,6 +92085,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -92100,6 +92134,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -92149,6 +92184,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -92739,6 +92775,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -92789,6 +92826,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -93111,6 +93149,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -93161,6 +93200,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -93304,6 +93344,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -93354,6 +93395,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -93483,6 +93525,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -93533,6 +93576,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -93674,6 +93718,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -93724,6 +93769,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -93861,6 +93907,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -93911,6 +93958,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -93970,6 +94018,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -94020,6 +94069,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -94063,6 +94113,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -94113,6 +94164,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -94236,6 +94288,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -94286,6 +94339,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -94399,6 +94453,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -94449,6 +94504,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -94572,6 +94628,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -94622,6 +94679,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -94735,6 +94793,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -94785,6 +94844,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -94908,6 +94968,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -94958,6 +95019,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -95889,6 +95951,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -95939,6 +96002,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -95998,6 +96062,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -96048,6 +96113,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -96558,6 +96624,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -96607,6 +96674,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -98367,6 +98435,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -98417,6 +98486,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -98511,6 +98581,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -98561,6 +98632,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -98633,6 +98705,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -98683,6 +98756,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -98777,6 +98851,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -98827,6 +98902,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -101434,6 +101510,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -101484,6 +101561,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -101718,6 +101796,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -101768,6 +101847,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -101989,6 +102069,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -102039,6 +102120,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -102227,6 +102309,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -102277,6 +102360,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -102455,6 +102539,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -102505,6 +102590,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -102564,6 +102650,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -102614,6 +102701,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -102921,6 +103009,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -102971,6 +103060,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -103159,6 +103249,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -103209,6 +103300,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -105569,6 +105661,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     offers?: OfferCreateNestedManyWithoutDinozInput
@@ -105619,6 +105712,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     offers?: OfferUncheckedCreateNestedManyWithoutDinozInput
@@ -106065,6 +106159,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     offers?: OfferUpdateManyWithoutDinozNestedInput
@@ -106115,6 +106210,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     offers?: OfferUncheckedUpdateManyWithoutDinozNestedInput
@@ -109516,6 +109612,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchCreateNestedManyWithoutDinozInput
     logs?: LogCreateNestedManyWithoutDinozInput
     Moderation?: ModerationCreateNestedManyWithoutDinozInput
@@ -109566,6 +109663,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
     catches?: DinozCatchUncheckedCreateNestedManyWithoutDinozInput
     logs?: LogUncheckedCreateNestedManyWithoutDinozInput
     Moderation?: ModerationUncheckedCreateNestedManyWithoutDinozInput
@@ -110657,6 +110755,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
   }
 
   export type DinozUpdateWithoutConcentrationInput = {
@@ -110685,6 +110784,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -110734,6 +110834,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -110781,6 +110882,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type DinozCatchCreateManyDinozInput = {
@@ -110858,6 +110960,7 @@ export namespace Prisma {
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
     playerId: string
+    unfreezeAt?: Date | string | null
   }
 
   export type DinozItemCreateManyDinozInput = {
@@ -111082,6 +111185,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -111131,6 +111235,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -111178,6 +111283,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type DinozItemUpdateWithoutDinozInput = {
@@ -111649,6 +111755,7 @@ export namespace Prisma {
     FBTournamentStep?: number
     unavailableReason?: $Enums.UnavailableReason | null
     seed?: string
+    unfreezeAt?: Date | string | null
   }
 
   export type PlayerTrackingCreateManyPlayerInput = {
@@ -112150,6 +112257,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -112199,6 +112307,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -112246,6 +112355,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type PlayerTrackingUpdateWithoutPlayerInput = {
@@ -113169,6 +113279,7 @@ export namespace Prisma {
     FBTournamentStep?: IntFieldUpdateOperationsInput | number
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUpdateManyWithoutDinozNestedInput
     logs?: LogUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUpdateManyWithoutDinozNestedInput
@@ -113219,6 +113330,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     catches?: DinozCatchUncheckedUpdateManyWithoutDinozNestedInput
     logs?: LogUncheckedUpdateManyWithoutDinozNestedInput
     Moderation?: ModerationUncheckedUpdateManyWithoutDinozNestedInput
@@ -113266,6 +113378,7 @@ export namespace Prisma {
     unavailableReason?: NullableEnumUnavailableReasonFieldUpdateOperationsInput | $Enums.UnavailableReason | null
     seed?: StringFieldUpdateOperationsInput | string
     playerId?: StringFieldUpdateOperationsInput | string
+    unfreezeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type FightArchiveUpdateWithoutTournamentTeamLeftInput = {

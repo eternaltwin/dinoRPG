@@ -41,6 +41,7 @@ export interface DinozFiche {
 		npcSpeech: string;
 		npcName: string;
 	};
+	unfreezeAt: Date | null;
 }
 
 // This is the model to use to communicate with the admin panel

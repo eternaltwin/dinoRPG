@@ -155,7 +155,8 @@ exports.Prisma.DinozScalarFieldEnum = {
   FBTournamentStep: 'FBTournamentStep',
   unavailableReason: 'unavailableReason',
   seed: 'seed',
-  playerId: 'playerId'
+  playerId: 'playerId',
+  unfreezeAt: 'unfreezeAt'
 };
 
 exports.Prisma.DinozItemScalarFieldEnum = {

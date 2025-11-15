@@ -158,7 +158,7 @@ export const DinozService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	unfrozeDinoz(dinozId: number): Promise<void> {
+	unfrozeDinoz(dinozId: number): Promise<{ unfreezeAt: string | null }> {
 		return http()
 			.post(`/dinoz/${dinozId}/unfroze`)
 			.then(res => Promise.resolve(res.data))

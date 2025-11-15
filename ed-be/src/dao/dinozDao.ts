@@ -292,7 +292,8 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 					missions: true,
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true } },
-					concentration: true
+					concentration: true,
+					unfreezeAt: true
 				},
 				where: {
 					OR: [{ id: dinozId }, { leaderId: dinozId }]
@@ -986,7 +987,8 @@ export async function checkFrozenDinoz(dinozId: number) {
 			unavailableReason: true,
 			followers: true,
 			leaderId: true,
-			player: true
+			player: true,
+			unfreezeAt: true
 		}
 	});
 }

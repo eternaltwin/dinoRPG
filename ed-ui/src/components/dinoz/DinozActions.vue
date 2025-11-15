@@ -6,6 +6,7 @@
 			<p>{{ $t('layout.action') }}</p>
 		</div>
 		<div class="action_content">
+			<!-- Mission HUD -->
 			<template v-for="didi in dinozFullParty" :key="didi">
 				<MissionHUDVue
 					v-if="didi.missionHUD && didi.missionId"
@@ -16,12 +17,20 @@
 				/>
 			</template>
 			<MissionRewardModal v-if="missionReward" :missionReward="missionReward" @close="validateMission()" />
+			<!-- Following -->
 			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
 				{{ $t('hud.following') }}
 				<template #content>
 					{{ $t(`hud.follow`, { leader: leaderDinoz.name }) }}
 				</template>
 			</Tippy>
+			<!-- Frozen countdowns -->
+			<DZDisclaimer
+				v-if="dinoz.actions?.some(a => a.name === Action.STOP_CONGEL) && (unfreezeCountdown ?? 0) > 0"
+				:content="$t('hud.unfreezeCountdown', { time: formattedCountdown })"
+				help
+			/>
+			<!-- Resting -->
 			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
@@ -32,7 +41,9 @@
 				:content="$t('hud.restEnd')"
 				help
 			></DZDisclaimer>
+			<!-- Following action -->
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :key="dinoz.id"></DZFollow>
+			<!-- Other actions -->
 			<Tippy
 				tag="div"
 				theme="normal"
@@ -83,6 +94,7 @@
 </template>
 
 <script lang="ts">
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { Action, ActionFiche } from '@drpg/core/models/dinoz/ActionList';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
@@ -129,7 +141,9 @@ export default defineComponent({
 			hpRegen: 1,
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			UnavailableReasonFront,
+			now: Date.now
 		};
 	},
 	components: {
@@ -149,6 +163,43 @@ export default defineComponent({
 			type: Function as PropType<() => Promise<void>>,
 			required: true
 		}
+	},
+	setup(props) {
+		const now = ref(Date.now());
+
+		let interval: ReturnType<typeof setInterval>;
+
+		onMounted(() => {
+			interval = setInterval(() => {
+				now.value = Date.now();
+			}, 1000);
+		});
+
+		onBeforeUnmount(() => {
+			clearInterval(interval);
+		});
+
+		const unfreezeCountdown = computed(() => {
+			if (!props.dinoz.unfreezeAt) return 0;
+
+			const unfreezeDate =
+				props.dinoz.unfreezeAt instanceof Date ? props.dinoz.unfreezeAt : new Date(props.dinoz.unfreezeAt);
+
+			const remaining = unfreezeDate.getTime() - now.value;
+			return remaining > 0 ? remaining : 0;
+		});
+
+		const formattedCountdown = computed(() => {
+			const totalSeconds = Math.floor(unfreezeCountdown.value / 1000);
+			const hours = Math.floor(totalSeconds / 3600);
+			const minutes = Math.floor((totalSeconds % 3600) / 60);
+			const seconds = totalSeconds % 60;
+			return `${hours.toString().padStart(2, '0')}:${minutes
+				.toString()
+				.padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+		});
+
+		return { unfreezeCountdown, formattedCountdown };
 	},
 	methods: {
 		async launch(action: ActionFiche) {

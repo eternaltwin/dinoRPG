@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { StoreDinoz } from '@drpg/core/models/store/StoreDinoz';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export const dinozStore = defineStore('dinozStore', {
 	state: (): StoreDinoz => ({
@@ -45,6 +46,12 @@ export const dinozStore = defineStore('dinozStore', {
 		},
 		setCurrentDinozId(dinozId: number): void {
 			this.currentDinozId = dinozId;
+		},
+		setUnfreeze(dinozId: number, unfreezeAt: Date | null) {
+			const dinozToUpdate = this.dinozList.find(d => d.id === dinozId);
+			if (!dinozToUpdate) throw Error("Dinoz doesn't exist in store.");
+			dinozToUpdate.unfreezeAt = unfreezeAt;
+			dinozToUpdate.unavailableReason = unfreezeAt ? UnavailableReasonFront.frozen : null;
 		}
 	},
 	persist: {

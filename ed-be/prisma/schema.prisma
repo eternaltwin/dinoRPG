@@ -66,6 +66,7 @@ model Dinoz {
   DojoOpponents      DojoOpponents[]
   DojoTeam           DojoTeam[]
   TournamentTeam     TournamentTeam[]
+  unfreezeAt         DateTime?              @db.Timestamp(6)
 
   @@index([playerId], map: "idx_playerId")
   @@map("dinoz")
