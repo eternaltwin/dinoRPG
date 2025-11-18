@@ -122,7 +122,8 @@ export const formatTID: Readonly<Record<formatName, formatTeam>> = {
 			RaceEnum.KABUKI,
 			RaceEnum.KABUKI_DEMON,
 			RaceEnum.SOUFFLET,
-			RaceEnum.SMOG
+			RaceEnum.SMOG,
+			RaceEnum.TOUFUFU
 		]
 	},
 	[formatName.LIGHTNING]: {
