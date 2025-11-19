@@ -156,8 +156,6 @@ export default defineComponent({
 	color: #774828;
 	cursor: pointer;
 	align-self: stretch;
-	margin-left: 10px;
-	margin-right: 10px;
 }
 .name {
 	font-variant: small-caps;
