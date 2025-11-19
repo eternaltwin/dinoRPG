@@ -269,7 +269,7 @@ export default defineComponent({
 			position: relative;
 			z-index: 1;
 			text-align: justify;
-			font-size: 1.1rem;
+			font-size: 1.2rem;
 			font-weight: 500;
 		}
 
@@ -312,6 +312,7 @@ export default defineComponent({
 			transition: all 0.3s ease;
 			list-style: none;
 			position: relative;
+			font-size: 1.2rem;
 
 			&:hover {
 				background: rgba(255, 215, 0, 0.1);
