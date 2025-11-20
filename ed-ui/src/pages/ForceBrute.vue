@@ -247,7 +247,7 @@ export default defineComponent({
 	border-radius: 10px;
 	padding-right: 5px;
 	gap: 10px;
-	height: 30px;
+	min-height: 30px;
 	cursor: pointer;
 	& span {
 		color: #fce3bc;
