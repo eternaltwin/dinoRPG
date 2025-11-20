@@ -1,4 +1,5 @@
 import { formatText } from '../utils/formatText.js';
+import { ConfirmOptions } from './confirmPlugin';
 
 const pad = (n: number) => (n < 10 ? `0${n}` : n);
 
@@ -21,6 +22,16 @@ export const mixin = {
 		},
 		getSWFUrl(path: string, imgName: string): string {
 			return new URL(`/src/assets/${path}/${imgName}.swf`, import.meta.url).toString();
+		},
+		$confirm(options: ConfirmOptions): Promise<boolean> {
+			if (this.$globalConfirm) {
+				return this.$globalConfirm(options);
+			}
+
+			console.error(
+				'Le service de confirmation ($globalConfirm) est introuvable. Assurez-vous que ConfirmPlugin est installé dans main.ts.'
+			);
+			return Promise.resolve(false);
 		}
 	}
 };

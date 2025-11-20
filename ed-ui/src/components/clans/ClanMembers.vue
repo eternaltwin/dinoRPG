@@ -178,7 +178,11 @@ export default defineComponent({
 			}
 		},
 		async excludeMember(id: number): Promise<void> {
-			const res: boolean = confirm(this.$t('popup.confirm'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (res) {
 				EventBus.emit('isLoading', true);
 				try {
@@ -193,7 +197,11 @@ export default defineComponent({
 			}
 		},
 		async leaveClan() {
-			const res: boolean = confirm(this.$t('popup.confirm'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (res) {
 				EventBus.emit('isLoading', true);
 				try {

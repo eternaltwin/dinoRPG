@@ -112,7 +112,11 @@ export default defineComponent({
 	},
 	methods: {
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
-			const res: boolean = confirm(this.$t('popup.confirm'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			const currentDinozId = this.dinozStore.currentDinozId;
 
 			if (typeof currentDinozId !== 'number') {

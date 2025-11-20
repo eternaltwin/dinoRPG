@@ -142,7 +142,11 @@ export default defineComponent({
 			return this.accountData.epicRewards.includes(Reward.PLUME);
 		},
 		async resetAccount() {
-			const res: boolean = confirm(this.$t('popup.confirm'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			EventBus.emit('isLoading', true);
 			if (res) {
 				try {

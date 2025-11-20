@@ -97,7 +97,11 @@ export default defineComponent({
 				this.$toast.open({ message: this.$t('popup.selectAction'), type: 'error' });
 				return;
 			}
-			const res: boolean = confirm(this.$t('popup.confirmBanAction'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirmBanAction'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (res) {
 				EventBus.emit('isLoading', true);
 				try {
