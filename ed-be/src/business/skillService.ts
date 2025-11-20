@@ -26,6 +26,7 @@ import {
 	getDinozSkillsLearnableAndUnlockable,
 	getDinozToReincarnate,
 	getEventDinozForLevelUp,
+	getFollowingDinoz,
 	isDinozInTournament,
 	tournamentDinoz,
 	updateDinoz,
@@ -190,6 +191,18 @@ export async function learnSkill(req: Request, event?: GameDinozUsage): Promise<
 		}
 		await applySkillEffect(dinozSkills, skill, authed.id, event);
 		await addSkillToDinoz(dinozId, skillIdList[0], event);
+
+		// Leave party if the skill is Brave
+		if (skill.id === Skill.BRAVE && !event) {
+			const dinoz = await getFollowingDinoz(dinozId);
+			if (dinoz && dinoz.followers.length > 0) {
+				for (const d of dinoz.followers) {
+					await updateDinoz(d.id, { leader: { disconnect: true } });
+				}
+			} else if (dinoz && dinoz.leaderId) {
+				await updateDinoz(dinozId, { leader: { disconnect: true } });
+			}
+		}
 
 		// Discover skill for player
 		if (!dinozSkills.player.discoveredSkills.includes(skill.id)) {
