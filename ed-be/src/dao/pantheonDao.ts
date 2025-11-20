@@ -18,7 +18,8 @@ export async function getPantheonFromType(type: PantheonMotif) {
 			},
 			dinoz: {
 				select: {
-					raceId: true
+					raceId: true,
+					id: true
 				}
 			},
 			indicator: true
