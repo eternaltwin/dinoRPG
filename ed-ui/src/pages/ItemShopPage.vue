@@ -473,7 +473,11 @@ export default defineComponent({
 						value: totalPrice
 					});
 			}
-			const res: boolean = confirm(text);
+			const res: boolean = await this.$confirm({
+				message: text,
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (res && quantity > 0) {
 				EventBus.emit('isLoading', true);
 				await this.buyItems(this.selectedItem.id, quantity);

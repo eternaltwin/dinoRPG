@@ -106,7 +106,11 @@ export default defineComponent({
 							(cur.quantity ?? 0),
 					0
 				);
-			const res = confirm(this.$t(`ingredients.giveAway.confirm`, { gold: gold }));
+			const res = await this.$confirm({
+				message: this.$t(`ingredients.giveAway.confirm`, { gold: gold }),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (res) {
 				if (!this.playerStore.getClanId) {
 					this.$toast.error(this.$t('toast.missingData'));

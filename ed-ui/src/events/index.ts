@@ -21,6 +21,7 @@ type Events = {
 	refreshDojo: boolean;
 	connected: boolean;
 	clanBannerUpdated: string;
+	confirmDialog: boolean;
 };
 
 type toast = {

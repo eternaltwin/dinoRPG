@@ -129,7 +129,11 @@ export default defineComponent({
 		async deleteMessage(msg: CreateClanMessage): Promise<void> {
 			if (!this.canDeleteMessage(msg)) return;
 
-			const res: boolean = confirm(this.$t('popup.confirm'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirm'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (!res) return;
 
 			const payload: WsMsgRequestDeletion = { action: WsMessageAction.DELETE, msgId: msg.id };

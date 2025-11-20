@@ -244,18 +244,23 @@ export default defineComponent({
 		spinOver(): void {
 			this.isSpinOver = true;
 		},
-		learnSkill(skillId: number): void {
-			if (
-				confirm(
-					this.$t('levelup.confirmSkill', {
+		async learnSkill(skillId: number): Promise<void> {
+			try {
+				const prompt = await this.$confirm({
+					message: this.$t('levelup.confirmSkill', {
 						skill: this.$t(`skill.name.${skillList[skillId as Skill].name}`),
 						level: (this.availableSkills?.level ?? 0) + 1
-					})
-				)
-			) {
-				const skillIdList: Array<number> = [skillId];
+					}),
+					header: 'Attention',
+					icon: 'pi pi-trash'
+				});
+				if (prompt) {
+					const skillIdList: Array<number> = [skillId];
 
-				this.learnSkillAndSetStore(skillIdList);
+					await this.learnSkillAndSetStore(skillIdList);
+				}
+			} catch (error) {
+				//Do nothing
 			}
 		},
 		unlockSkill(): void {

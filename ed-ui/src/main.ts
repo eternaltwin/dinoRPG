@@ -10,6 +10,7 @@ import { initI18n } from './i18n/index.js';
 import ToastPlugin from 'vue-toast-notification';
 import Loading from './components/utils/Loading.vue';
 import clickOutside from './directives/clickOutside.js';
+import ConfirmPlugin from './mixin/confirmPlugin';
 
 const vueTippyProps = {
 	directive: 'tippy',
@@ -35,6 +36,7 @@ const pnia = createPinia().use(piniaPluginPersistedstate);
 app.use(pnia);
 app.use(await initI18n());
 app.use(router);
+app.use(ConfirmPlugin);
 app.mixin(mixin);
 app.use(VueTippy, vueTippyProps);
 app.use(ToastPlugin, vueToastProps);

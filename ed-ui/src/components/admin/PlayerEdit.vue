@@ -588,7 +588,11 @@ export default defineComponent({
 			}
 		},
 		async banPlayer() {
-			const res: boolean = confirm(this.$t('popup.confirmBanAction'));
+			const res: boolean = await this.$confirm({
+				message: this.$t('popup.confirmBanAction'),
+				header: 'Attention',
+				icon: 'pi pi-trash'
+			});
 			if (res) {
 				try {
 					await AdminService.banPlayer(
