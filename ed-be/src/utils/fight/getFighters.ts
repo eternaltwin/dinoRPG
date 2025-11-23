@@ -968,4 +968,18 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 	return fighters;
 };
 
+
+/**
+ * Determine the counter chance of the fighter.
+ * The counter chance minimum is 0% and maximum is 90%.
+ * @param fighter The fighter to get the counter stat from.
+ * @returns number Returns the % chance of the fighter between 0 an 0.9.
+ */
+export const getFighterCounter = (fighter: DetailedFighter) => {
+	// Remove 1 to recenter the value at 0.
+	const counterTotal = fighter.stats.special.counter - 1;
+
+	return Math.min(0.9, Math.max(0, counterTotal));
+};
+
 export default getFighters;

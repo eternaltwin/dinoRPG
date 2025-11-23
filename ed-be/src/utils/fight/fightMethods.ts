@@ -13,7 +13,8 @@ import {
 	FighterType,
 	FightStatus,
 	FightStatusLength,
-	GoodFightStatus
+	GoodFightStatus,
+	IncapacitatingStatus
 } from '@drpg/core/models/fight/DetailedFighter';
 import {
 	FightStep,
@@ -50,7 +51,7 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, initializeMonster } from './getFighters.js';
+import { cloneDinoz, getFighterCounter, initializeMonster } from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -2123,6 +2124,13 @@ export const createStatus = (type: FightStatus, length?: number): FighterStatusD
 export const hasStatus = (fighter: DetailedFighter, status: FightStatus) => fighter.status.some(s => s.type === status);
 
 /**
+ * Check if a fighter has an incapacitating status
+ * @param fighter The fighter to check for
+ * @returns bool true if the fighter has an incapacitating status, false if it does not
+ */
+export const isIncapacitated = (fighter: DetailedFighter) => fighter.status.some(s => IncapacitatingStatus.includes(s.type));
+
+/**
  * Add a status to the fighter. The method checks if the fighter already has the status and also for immunities from skills and objects.
  * @param {DetailedFight} fightData The data of the fight (to handle history and other)
  * @param {DetailedFighter} fighter The fighter that receives the status
@@ -3905,12 +3913,15 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 	return true;
 };
 
-const counterAttack = (fightData: DetailedFight, opponent: DetailedFighter) => {
-	// No counter attack if opponent is dead
-	if (opponent.hp <= 0) return false;
-
+/**
+ * Test if a fighter succeeds a counter roll.
+ * @param fightData Fight data used for seeded random and stats.
+ * @param opponent The fighter to roll the counter for.
+ * @returns bool True if the fighter has succeeded its counter roll.
+ */
+const counterTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	const random = fightData.rng();
-	const countered = random < opponent.stats.special.counter - 1;
+	const countered = random < getFighterCounter(opponent);
 
 	// Counter stat
 	if (countered) {
@@ -4189,7 +4200,7 @@ const attackTarget = (
 		};
 	}
 
-	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn
+	// TODO: rework, friendly whistle effect takes place at the beginning of the next turn in MT's code
 	// Add teammates if Item.FRIENDLY_WHISTLE
 	// const attackers = [attacker];
 	// if (fighter.items.some(item => item.itemId === Item.FRIENDLY_WHISTLE)) {
@@ -4394,19 +4405,26 @@ const attackTarget = (
 		}
 	}
 
-	// The target can counter if it's still alive and the attack was in close combat
-	if (target.hp > 0) {
-		if (isAssault && !hasStatus(target, FightStatus.PETRIFIED) && counterAttack(fightData, target)) {
-			// Add counter step
-			fightData.steps.push({
-				action: 'counter',
-				fighter: stepFighter(target),
-				opponent: stepFighter(attacker)
-			});
+	// The target can attempt a counter with the following conditions:
+	// - the attack was in close combat
+	// - target is still alive
+	// - the target is not incapacitated
+	// - the target has enough energy
+	if (isAssault &&
+		target.hp > 0 &&
+		!isIncapacitated(target) &&
+		target.energy >= BASE_ENERGY_COST &&
+		counterTest(fightData, target)
+	) {
+		// Add counter step
+		fightData.steps.push({
+			action: 'counter',
+			fighter: stepFighter(target),
+			opponent: stepFighter(attacker)
+		});
 
-			// Opponent attacks fighter: the counter can combo
-			attackTarget(fightData, target, attacker, true);
-		}
+		// Opponent attacks fighter: the counter can combo
+		attackTarget(fightData, target, attacker, true);
 	}
 
 	return {
