@@ -104,6 +104,20 @@ export async function getToolTipInfos(playerId: string) {
 	});
 }
 
+export function extractIdFromAuthorization(request: Request) {
+	const {
+		headers: { authorization }
+	} = request;
+	if (authorization) {
+		const [playerId, token] = Buffer.from(authorization.split(' ')[1] || '', 'base64')
+			.toString()
+			.split(':');
+		return { playerId, token };
+	} else {
+		return { playerId: undefined, token: undefined };
+	}
+}
+
 export type Auth = Awaited<ReturnType<typeof auth>>;
 export async function auth(request: Request, banByPass = false) {
 	const {
@@ -113,25 +127,20 @@ export async function auth(request: Request, banByPass = false) {
 	if (!authorization) {
 		throw new ExpectedError('You are not logged in');
 	}
-	if (typeof authorization !== 'string') {
-		throw new ExpectedError('Invalid authorization header');
-	}
 
-	const [id, token] = Buffer.from(authorization.split(' ')[1] || '', 'base64')
-		.toString()
-		.split(':');
+	const { playerId, token } = extractIdFromAuthorization(request);
 
-	if (!id || !token || id === 'null' || token === 'null') {
+	if (!playerId || !token || playerId === 'null' || token === 'null') {
 		throw new ExpectedError('Invalid authorization header content');
 	}
 
-	if (!isUuid(id)) {
+	if (!isUuid(playerId)) {
 		throw new ExpectedError('Invalid user ID');
 	}
 
 	const user = await prisma.player.findFirst({
 		where: {
-			id
+			id: playerId
 		},
 		select: {
 			id: true,
@@ -277,17 +286,17 @@ export async function noStrictAuth(request: Request, banByPass = false) {
 	if (typeof authorization !== 'string') {
 		throw new ExpectedError('Invalid authorization header');
 	}
-	const [id, token] = Buffer.from(authorization.split(' ')[1] || '', 'base64')
-		.toString()
-		.split(':');
-	if (!id || !token || id === 'null' || token === 'null') {
+
+	const { playerId, token } = extractIdFromAuthorization(request);
+
+	if (!playerId || !token || playerId === 'null' || token === 'null') {
 		throw new ExpectedError('Invalid authorization header content');
 	}
-	if (!isUuid(id)) {
+	if (!isUuid(playerId)) {
 		throw new ExpectedError('Invalid user ID');
 	}
 	const user = await prisma.player.findFirst({
-		where: { id },
+		where: { id: playerId },
 		select: {
 			id: true,
 			lang: true,
@@ -1329,7 +1338,7 @@ export async function getDojoChallengePreparationRequest(playerId: string) {
 }
 
 export async function getDojoDataForRanking(playerId: string) {
-	return await prisma.dojo.findFirstOrThrow({
+	return prisma.dojo.findFirstOrThrow({
 		where: {
 			playerId
 		},
@@ -1341,7 +1350,7 @@ export async function getDojoDataForRanking(playerId: string) {
 }
 
 export async function increaseCashPrice(tournamentId: string, value: number) {
-	return await prisma.tournament.update({
+	return prisma.tournament.update({
 		where: {
 			id: tournamentId
 		},
@@ -1399,7 +1408,7 @@ export async function isPlayerLeaderOfClanRequest(playerId: string, clanId: numb
 }
 
 export async function getClanIdAndNameFromPlayerId(playerId: string) {
-	return await prisma.player.findUniqueOrThrow({
+	return prisma.player.findUniqueOrThrow({
 		select: {
 			ClanMember: {
 				select: {
@@ -1419,7 +1428,7 @@ export async function getClanIdAndNameFromPlayerId(playerId: string) {
 }
 
 export async function getPlayerBanInfo(playerId: string) {
-	return await prisma.player.findUnique({
+	return prisma.player.findUnique({
 		where: {
 			id: playerId
 		},
@@ -1432,7 +1441,7 @@ export async function getPlayerBanInfo(playerId: string) {
 }
 
 export async function getAllBannedPlayers() {
-	return await prisma.player.findMany({
+	return prisma.player.findMany({
 		where: {
 			NOT: {
 				banCase: null
@@ -1457,7 +1466,7 @@ export async function getBannedPlayers(page: number) {
 	const skip = (page - 1) * 20;
 	const take = 20;
 
-	return await prisma.player.findMany({
+	return prisma.player.findMany({
 		skip: skip,
 		take: take,
 		orderBy: {
@@ -1511,7 +1520,7 @@ export async function updatePlayerLanguage(playerId: string, language: Lang) {
  * @returns List of discovered skills.
  */
 export async function getPlayerDiscoveredSkills(playerId: string) {
-	return await prisma.player.findUniqueOrThrow({
+	return prisma.player.findUniqueOrThrow({
 		where: {
 			id: playerId
 		},
