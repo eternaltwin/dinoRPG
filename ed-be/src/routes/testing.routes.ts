@@ -6,8 +6,8 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { checkIsAdmin } from '../utils/jwt.js';
 import { calculateFightVsMonsters, generateMonsterList, rewardFight } from '../business/fightService.js';
 import { getDinozFightDataRequest } from '../dao/dinozDao.js';
-import { sendJSONToDiscord } from '../utils/discord.js';
 import sendError from '../utils/sendErrors.js';
+import { LOGGER } from '../context.js';
 
 const routes: Router = Router();
 
@@ -64,7 +64,7 @@ routes.get(`${commonPath}/generateMonster/:id`, checkIsAdmin, async (req: Reques
 			};
 			results.push(item);
 		}
-		sendJSONToDiscord('600 fight result', { fights: results });
+		LOGGER.error('600 fight result', { fights: results });
 		return res.status(200).send();
 	} catch (err) {
 		await sendError(res, err);

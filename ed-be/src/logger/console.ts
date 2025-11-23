@@ -9,24 +9,24 @@ export const CONSOLE: LogHandler = {
 		const formatted = formatLogRecord(record, false);
 		switch (record.level) {
 			case LogLevel.Debug: {
-				console.debug(formatted);
+				console.debug(formatted, record.data);
 				break;
 			}
 			case LogLevel.Log: {
-				console.log(formatted);
+				console.log(formatted, record.data);
 				break;
 			}
 			case LogLevel.Info: {
-				console.info(formatted);
+				console.info(formatted, record.data);
 				break;
 			}
 			case LogLevel.Warn: {
-				console.warn(formatted);
+				console.warn(formatted, record.data);
 				break;
 			}
 			case LogLevel.Error:
 			default: {
-				console.error(formatted);
+				console.error(formatted, record.data);
 				break;
 			}
 		}

@@ -2,6 +2,7 @@
 import { AttachmentBuilder, EmbedBuilder, WebhookClient } from 'discord.js';
 import type { Response } from 'express';
 import { Logger } from '../logger/index.js';
+import fs from 'fs';
 
 const DEFAULT_TIMEOUT = 5000;
 // Maximum accepted length for the embed title
@@ -37,7 +38,7 @@ function formatEmbedTitle(title: string) {
  * If the string is too long, it will be truncated to fit.
  */
 function formatMarkdownForEmbed(text: string): string {
-	let convertedText = text
+	const convertedText = text
 		// Convert # headers to **bold**
 		.replace(/^# (.+)$/gm, '**$1**')
 		// Convert ## headers to **bold**
@@ -60,7 +61,7 @@ function formatMarkdownForEmbed(text: string): string {
 
 export interface DiscordClient {
 	sendError(error: Error, res?: Response): void;
-	sendMessage(message: string): Promise<void>;
+	sendMessage(message: string, data: object[]): Promise<void>;
 	sendPantheonNotification(message: string): Promise<void>;
 	sendNewsNotification(title: string, test: string, image: Uint8Array | undefined): Promise<void>;
 }
@@ -171,6 +172,20 @@ ${error.stack}
 				{ name: 'Status', value: res.statusMessage || '', inline: true }
 			);
 
+			if (res.req.headers.authorization) {
+				const [playerId] = Buffer.from(res.req.headers.authorization.split(' ')[1] || '', 'base64')
+					.toString()
+					.split(':');
+				// Request auth
+				if (playerId) {
+					embed.addFields({
+						name: 'PlayerId',
+						value: playerId,
+						inline: true
+					});
+				}
+			}
+
 			// Request params
 			if (Object.keys(res.req.params as object).length) {
 				embed.addFields({
@@ -197,14 +212,30 @@ ${error.stack}
 		});
 	}
 
-	public async sendMessage(message: string) {
+	public async sendMessage(message: string, data: object[]) {
 		let content = SEND_MESSAGE_PREFIX + message + SEND_MESSAGE_SUFFIX;
 		if (content.length > MAX_CONTENT_LENGTH) {
 			const shortLen = MAX_CONTENT_LENGTH - SEND_MESSAGE_PREFIX.length - SEND_MESSAGE_SUFFIX_TRUNCATED.length;
 			const short = message.substring(0, shortLen);
 			content = SEND_MESSAGE_PREFIX + short + SEND_MESSAGE_SUFFIX_TRUNCATED;
 		}
-		await this.#logClient.send({ content });
+
+		const files: string[] = [];
+		data.forEach((item, index) => {
+			const fileName = `./error-${index}.json`;
+			fs.writeFileSync(fileName, JSON.stringify(item, null, 2));
+			files.push(fileName);
+		});
+		this.#logClient
+			.send({ content, files })
+			.catch(err => {
+				this.#logger.error(`Error trying to send a message: ${err}`);
+			})
+			.finally(() => {
+				files.forEach(file => {
+					fs.unlinkSync(file);
+				});
+			});
 	}
 
 	public async sendPantheonNotification(message: string) {

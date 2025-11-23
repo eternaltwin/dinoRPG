@@ -134,7 +134,10 @@ export class DiscordLogHandler implements LogHandler {
 	async #send(batch: readonly LogRecord[]) {
 		const message = format(batch);
 		try {
-			await this.#client.sendMessage(message);
+			await this.#client.sendMessage(
+				message,
+				batch.map(log => log.data).filter(data => !!data)
+			);
 		} catch (e) {
 			if (this.#errorHandler !== null && e instanceof Error) {
 				this.#errorHandler(e);

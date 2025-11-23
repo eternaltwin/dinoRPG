@@ -11,9 +11,9 @@ import {
 	DetailedFighter,
 	FighterStatusData,
 	FighterType,
-	GoodFightStatus,
 	FightStatus,
-	FightStatusLength
+	FightStatusLength,
+	GoodFightStatus
 } from '@drpg/core/models/fight/DetailedFighter';
 import {
 	FightStep,
@@ -56,11 +56,11 @@ import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { FightStats } from '@drpg/core/models/fight/FightResult';
-import { sendJSONToDiscord } from '../discord.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LifeEffect, NotificationList } from '@drpg/core/models/fight/transpiler';
 import seedrandom from 'seedrandom';
 import { checkSkillCondition } from './skillFightConditionParser.js';
+import { LOGGER } from '../../context.js';
 
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
@@ -200,7 +200,7 @@ const chooseRandomOpponentForAssault = (
 	}
 
 	if (!filtered_opponents.length) {
-		sendJSONToDiscord('Error `No opponent left after applying filtering.', {
+		LOGGER.error('`No opponent left after applying filtering`.', {
 			fighter: attacker,
 			opponents: opponents
 		});
@@ -234,7 +234,7 @@ export const getLimitedRandomOpponent = (
 export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFighter) => {
 	const opponents = getOpponents(fightData, fighter);
 	if (!opponents.length) {
-		sendJSONToDiscord('Error `No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
+		LOGGER.error('`No opponent found` in `getRandomOpponnent` after `getOpponents` was called.', {
 			fightData: fightData,
 			fighter: fighter
 		});
@@ -244,10 +244,10 @@ export const getRandomOpponent = (fightData: DetailedFight, fighter: DetailedFig
 	const randomOpponent = chooseRandomOpponent(opponents, fightData.rng);
 
 	if (!randomOpponent) {
-		sendJSONToDiscord(
-			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
-			{ fightData: fightData, fighter: fighter }
-		);
+		LOGGER.error('`No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.', {
+			fightData: fightData,
+			fighter: fighter
+		});
 		throw new Error('No random opponent found');
 	}
 
@@ -263,10 +263,10 @@ export const getRandomOpponentForAssault = (fightData: DetailedFight, fighter: D
 	const randomOpponent = chooseRandomOpponentForAssault(fighter, opponents, fightData.rng);
 
 	if (!randomOpponent) {
-		sendJSONToDiscord(
-			'Error `No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.',
-			{ fightData: fightData, fighter: fighter }
-		);
+		LOGGER.error('`No random opponent found` in `getRandomOpponnent` after `chooseRandomOpponent` was called.', {
+			fightData: fightData,
+			fighter: fighter
+		});
 		throw new Error('No random opponent found');
 	}
 
@@ -298,7 +298,7 @@ export const updateStat = (
 
 	if (stat === 'el.damage_dealt') {
 		if (!element) {
-			sendJSONToDiscord('Error `Element is required for damage stat` in `updateStat`.', {
+			LOGGER.error('`Element is required for damage stat` in `updateStat`.', {
 				fightData: fightData,
 				fighter: fighter,
 				stat: stat,
@@ -314,7 +314,7 @@ export const updateStat = (
 
 	if (stat === 'el.damage_received') {
 		if (!element) {
-			sendJSONToDiscord('Error `Element is required for damage stat` in `updateStat`.', {
+			LOGGER.error('`Element is required for damage stat` in `updateStat`.', {
 				fightData: fightData,
 				fighter: fighter,
 				stat: stat,
@@ -330,7 +330,7 @@ export const updateStat = (
 
 	if (stat === 'el.attacks') {
 		if (!element) {
-			sendJSONToDiscord('Error `Element is required for attacks stat` in `updateStat`.', {
+			LOGGER.error('`Element is required for attacks stat` in `updateStat`.', {
 				fightData: fightData,
 				fighter: fighter,
 				stat: stat,
@@ -346,7 +346,7 @@ export const updateStat = (
 
 	if (stat === 'el.defenses') {
 		if (!element) {
-			sendJSONToDiscord('Error `Element is required for defenses stat` in `updateStat`.', {
+			LOGGER.error('`Element is required for defenses stat` in `updateStat`.', {
 				fightData: fightData,
 				fighter: fighter,
 				stat: stat,
@@ -1060,7 +1060,7 @@ const activateEnvironment = (fightData: DetailedFight, caster: DetailedFighter, 
 			break;
 		}
 		default: {
-			sendJSONToDiscord('Error `Environment ${environment} not implemented` in `activateEnvironment`.', {
+			LOGGER.error('`Environment ${environment} not implemented` in `activateEnvironment`.', {
 				fightData: fightData,
 				caster: caster,
 				environment: environment
@@ -1193,7 +1193,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details so the fighter does not suicide.
 				// Still check and throw an error just in case.
 				if (fighter.hp <= 5) {
-					sendJSONToDiscord('Error `Not enough HP` in `activateEvent`.', { fightData: fightData, skill: event });
+					LOGGER.error('`Not enough HP` in `activateEvent`.', { fightData: fightData, skill: event });
 					throw new Error(`Fighter has not enough HP`);
 				}
 
@@ -1219,7 +1219,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details so the skill is not used if the fighter already has the status.
 				// Still check and throw an error just in case.
 				if (hasStatus(fighter, FightStatus.SHIELDED)) {
-					sendJSONToDiscord('Error `Already has shielded status` in `activateEvent`.', {
+					LOGGER.error('`Already has shielded status` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1281,7 +1281,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				const initialDinoz = fightData.initialDinozList.find(d => d.id === fighter.id);
 
 				if (!initialDinoz) {
-					sendJSONToDiscord('Error `No initial dinoz found` in `activateEvent`.', {
+					LOGGER.error('`No initial dinoz found` in `activateEvent`.', {
 						fightData: fightData,
 						event: event
 					});
@@ -1408,7 +1408,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details so there is not an environment already active.
 				// Check and throw an error.
 				if (fightData.environment) {
-					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+					LOGGER.error('`Environment already active` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1424,7 +1424,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details so there is at least another dinoz in the fighter's team.
 				// Check and throw an error.
 				if (allies.length < 2) {
-					sendJSONToDiscord('Error `Not enough Dinoz` in `activateEvent`.', { fightData: fightData, skill: event });
+					LOGGER.error('`Not enough Dinoz` in `activateEvent`.', { fightData: fightData, skill: event });
 					throw new Error(`Team has not enough Dinoz`);
 				}
 
@@ -1441,7 +1441,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				);
 
 				if (!lowestHpAlly) {
-					sendJSONToDiscord('Error `No lowest HP ally found` in `activateEvent`.', {
+					LOGGER.error('`No lowest HP ally found` in `activateEvent`.', {
 						fightData: fightData,
 						event: event
 					});
@@ -1550,7 +1550,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details so the skill can only be use once.
 				// Still check but throw an error.
 				if (fighter.cancelAssaultDodge) {
-					sendJSONToDiscord('Error `Has already used main collantes` in `activateEvent`.', {
+					LOGGER.error('`Has already used main collantes` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1586,7 +1586,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details to make sure the fighter is not full life.
 				// Still check but throw an error.
 				if (fighter.hp === fighter.startingHp) {
-					sendJSONToDiscord('Error `Already full life` in `activateEvent`.', { fightData: fightData, skill: event });
+					LOGGER.error('`Already full life` in `activateEvent`.', { fightData: fightData, skill: event });
 					throw new Error(`Fighter is already full life`);
 				}
 				heal(fightData, fighter, Math.round(fighter.startingHp * 0.1), undefined, LifeEffect.Heal);
@@ -1596,7 +1596,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in skill details to make sure the fighter is not already intangible.
 				// Still check but throw an error.
 				if (hasStatus(fighter, FightStatus.INTANGIBLE)) {
-					sendJSONToDiscord('Error `Is already intangible` in `activateEvent`.', {
+					LOGGER.error('`Is already intangible` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1738,7 +1738,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure the item heal will be used properly.
 				// Check and throw error.
 				if (fighter.hp === fighter.startingHp || (fighter.hp > 15 && fighter.startingHp - fighter.hp < 10)) {
-					sendJSONToDiscord('Error `Healing conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Healing conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1754,7 +1754,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Check and throw error.
 				if (fighter.hp === fighter.startingHp) {
 					// Random condition cannot be checke again
-					sendJSONToDiscord('Error `Healing conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Healing conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1790,7 +1790,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure the fighter is not full life.
 				// Still check but throw an error.
 				if (fighter.hp === fighter.startingHp) {
-					sendJSONToDiscord('Error `Already full life` in `activateEvent`.', { fightData: fightData, skill: event });
+					LOGGER.error('`Already full life` in `activateEvent`.', { fightData: fightData, skill: event });
 					throw new Error(`Fighter is already full life`);
 				}
 				// -10% all defenses
@@ -1818,7 +1818,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Check and throw error.
 				const opponent = getOpponents(fightData, fighter).find(f => hasStatus(f, FightStatus.FLYING));
 				if (!opponent || fighter.canHitFlying) {
-					sendJSONToDiscord('Error `Portable love conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Portable love conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1832,7 +1832,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure the fighter has at least 2 elements in its wheel.
 				// Check and throw an error.
 				if (fighter.elements.length === 1) {
-					sendJSONToDiscord('Error `Monochromatic conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Monochromatic conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1875,7 +1875,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure the fuca pill can be used.
 				// Check and throw error.
 				if (fighter.itemsUsed.includes(Item.FUCA_PILL) || fighter.stats.speed.global < 0.51) {
-					sendJSONToDiscord('Error `Fuca Pill conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Fuca Pill conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1893,7 +1893,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche, guarantee there is at least 2 opponents.
 				// Check and throw error.
 				if (opponents.length < 2) {
-					sendJSONToDiscord('Error `Loris Costume conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Loris Costume conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1942,7 +1942,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure at least one ally has the beer status.
 				// Check and throw error.
 				if (!allies.some(f => hasStatus(f, FightStatus.BEER))) {
-					sendJSONToDiscord('Error `Strong Tea conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Strong Tea conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1964,7 +1964,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
 				// Check and throw an error.
 				if (fightData.environment) {
-					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+					LOGGER.error('`Environment already active` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1977,7 +1977,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
 				// Check and throw an error.
 				if (fightData.environment) {
-					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+					LOGGER.error('`Environment already active` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -1990,7 +1990,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
 				// Check and throw an error.
 				if (fightData.environment) {
-					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+					LOGGER.error('`Environment already active` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -2003,7 +2003,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
 				// Check and throw an error.
 				if (fightData.environment) {
-					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+					LOGGER.error('`Environment already active` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -2016,7 +2016,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Use condition checked prior and defined in item fiche to make sure there is no active environment.
 				// Check and throw an error.
 				if (fightData.environment) {
-					sendJSONToDiscord('Error `Environment already active` in `activateEvent`.', {
+					LOGGER.error('`Environment already active` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -2030,7 +2030,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				// Check and throw error.
 				if (fighter.startingHp - fighter.hp <= 10) {
 					// Random condition cannot be checked again
-					sendJSONToDiscord('Error `Surviving ration conditions not met` in `activateEvent`.', {
+					LOGGER.error('`Surviving ration conditions not met` in `activateEvent`.', {
 						fightData: fightData,
 						skill: event
 					});
@@ -2432,7 +2432,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the skill can only be use once, cannot target bosses and
 			// requires at least 2 opponents.
 			if (opponents.length <= 1 || fighter.hasUsedHypnose) {
-				sendJSONToDiscord('Error `Hypnose conditions not met` in `activateEvent`.', {
+				LOGGER.error('`Hypnose conditions not met` in `activateEvent`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -2781,7 +2781,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the skill can only be use once.
 			// Still check but throw an error.
 			if (fighter.hasUsedHyperventilation) {
-				sendJSONToDiscord('Error `Has already used hyperventilation` in `activateSkill`.', {
+				LOGGER.error('`Has already used hyperventilation` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -2913,7 +2913,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so there is at least one monster guaranteed.
 			// Check and throw an error.
 			if (!opponents.length) {
-				sendJSONToDiscord('Error `Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
+				LOGGER.error('`Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
 				throw new Error(`No monster found`);
 			}
 
@@ -2962,7 +2962,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -2990,7 +2990,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3012,7 +3012,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3031,7 +3031,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3053,7 +3053,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3072,7 +3072,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3094,7 +3094,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3116,7 +3116,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3138,7 +3138,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3157,7 +3157,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3176,7 +3176,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3198,7 +3198,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3217,7 +3217,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3236,7 +3236,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3254,7 +3254,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0 || allies.some(ally => hasStatus(ally, FightStatus.USED_FUJIN))) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3275,7 +3275,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3297,7 +3297,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3321,7 +3321,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3343,7 +3343,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3368,7 +3368,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3390,7 +3390,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details so the invocation can be used.
 			// Check and throw an error.
 			if (fighter.invocations <= 0) {
-				sendJSONToDiscord('Error `Invocation requirements not met` in `activateSkill`.', {
+				LOGGER.error('`Invocation requirements not met` in `activateSkill`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3489,7 +3489,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details to make sure there is no active environment.
 			// Check and throw an error.
 			if (fightData.environment) {
-				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+				LOGGER.error('`Environment already active` in `activateSkillt`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3523,7 +3523,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details to make sure there is no active environment.
 			// Check and throw an error.
 			if (fightData.environment) {
-				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+				LOGGER.error('`Environment already active` in `activateSkillt`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3577,7 +3577,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details to make sure there is no active environment.
 			// Check and throw an error.
 			if (fightData.environment) {
-				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+				LOGGER.error('`Environment already active` in `activateSkillt`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3590,7 +3590,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details to make sure there is no active environment.
 			// Check and throw an error.
 			if (fightData.environment) {
-				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+				LOGGER.error('`Environment already active` in `activateSkillt`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -3680,7 +3680,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 				Object.values(bossList).find(boss => boss.name === fighter.name);
 
 			if (!monsterDetails) {
-				sendJSONToDiscord('Error `Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
+				LOGGER.error('`Monster not found` in `activateSkill`.', { fightData: fightData, skill: skill });
 				throw new Error(`Monster ${fighter.name} not found`);
 			}
 
@@ -3737,7 +3737,7 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			// Use condition checked prior and defined in skill details to make sure there fight has not escaped and is alive.
 			// Check and throw an error.
 			if (fighter.escaped || fighter.hp <= 0) {
-				sendJSONToDiscord('Error `Environment already active` in `activateSkillt`.', {
+				LOGGER.error('`Environment already active` in `activateSkillt`.', {
 					fightData: fightData,
 					skill: skill
 				});
@@ -4764,7 +4764,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							const poisonedBy = fighter.poisonedBy;
 
 							if (!poisonedBy) {
-								sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
+								LOGGER.error('`Missing poison data` in `playFighterTurn`.', { fightData: fightData });
 								throw new Error('Missing poisonedBy data');
 							}
 
@@ -4772,7 +4772,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							const poisoner = fightData.fighters.find(f => f.id === poisonedBy.id);
 
 							if (!poisoner) {
-								sendJSONToDiscord('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
+								LOGGER.error('`Missing poison data` in `playFighterTurn`.', { fightData: fightData });
 								throw new Error('Poisoner not found');
 							}
 
@@ -4788,7 +4788,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							const burnedBy = fighter.burnedBy;
 
 							if (!burnedBy) {
-								sendJSONToDiscord('Error `Missing burn data` in `playFighterTurn`.', { fightData: fightData });
+								LOGGER.error('`Missing burn data` in `playFighterTurn`.', { fightData: fightData });
 								throw new Error('Missing burnedBy data');
 							}
 
@@ -4796,7 +4796,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							const burner = fightData.fighters.find(f => f.id === burnedBy.id);
 
 							if (!burner) {
-								sendJSONToDiscord('Error `Burner not found` in `playFighterTurn`.', { fightData: fightData });
+								LOGGER.error('`Burner not found` in `playFighterTurn`.', { fightData: fightData });
 								throw new Error('Burner not found');
 							}
 
@@ -4962,7 +4962,7 @@ export const checkDeaths = (fightData: DetailedFight) => {
 				const monsterDetails = Object.values(monsterList).find(monster => monster.name === fighter.name);
 
 				if (!monsterDetails) {
-					sendJSONToDiscord('Error `Monster not found` in `checkDeath`.', { fightData: fightData });
+					LOGGER.error('`Monster not found` in `checkDeath`.', { fightData: fightData });
 					throw new Error(`Monster ${fighter.name} not found`);
 				}
 

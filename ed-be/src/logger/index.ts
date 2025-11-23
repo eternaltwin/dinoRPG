@@ -30,6 +30,7 @@ export interface LogRecord {
 	level: LogLevel;
 	message: string;
 	time: Date;
+	data?: object;
 }
 
 // Width of the `level` field in the log.
@@ -73,7 +74,7 @@ export interface LogHandler {
 	close(): Promise<void>;
 }
 
-export class Logger implements LogHandler {
+export class Logger {
 	#handlers: LogHandler[];
 
 	public constructor(handlers: readonly LogHandler[]) {
@@ -86,11 +87,12 @@ export class Logger implements LogHandler {
 		}
 	}
 
-	#emitMessage(level: LogLevel, message: unknown): void {
+	#emitMessage(level: LogLevel, message: unknown, data?: object): void {
 		this.emit({
 			level,
 			message: stringifyMessage(message),
-			time: new Date()
+			time: new Date(),
+			data
 		});
 	}
 
@@ -110,12 +112,8 @@ export class Logger implements LogHandler {
 		this.#emitMessage(LogLevel.Warn, message);
 	}
 
-	public error(message: unknown): void {
-		this.#emitMessage(LogLevel.Error, message);
-	}
-
-	public async flush(): Promise<void> {
-		await Promise.allSettled(this.#handlers.map(h => h.flush()));
+	public error(message: unknown, data?: object): void {
+		this.#emitMessage(LogLevel.Error, message, data);
 	}
 
 	public async close(): Promise<void> {

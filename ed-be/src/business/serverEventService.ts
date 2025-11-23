@@ -24,7 +24,6 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { LOGGER } from '../context.js';
 import { UUID } from 'node:crypto';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
-import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
 
 let activeTickets: ServerEventTicket[] = [];
@@ -274,8 +273,7 @@ function getWsChannelDetailsFromConnectionId(wsId: string): ChannelInfos {
 	);
 
 	if (channelData === undefined) {
-		LOGGER.error(`getWsChannelDetailsFromConnectionId error, wsId is ${wsId}`);
-		LOGGER.error([...wsChannels.entries()]);
+		LOGGER.error(`getWsChannelDetailsFromConnectionId error, wsId is ${wsId}`, [...wsChannels.entries()]);
 		throw new Error('The channel cannot be undefined');
 	}
 
