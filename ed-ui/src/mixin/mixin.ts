@@ -3,6 +3,12 @@ import { ConfirmOptions } from './confirmPlugin';
 
 const pad = (n: number) => (n < 10 ? `0${n}` : n);
 
+export function getImgURL(path: string, imgName: string, pixel?: boolean, animated?: boolean): string {
+	// Pour gérer aussi les emotes animées pour le rich text editor
+	const ext = animated ? 'gif' : pixel ? 'png' : 'webp';
+	return new URL(`/src/assets/${path}/${imgName}.${ext}`, import.meta.url).toString();
+}
+
 export const mixin = {
 	methods: {
 		formatDate(date: string | Date): string {
@@ -17,9 +23,7 @@ export const mixin = {
 		formatContent(value: string): string {
 			return !value ? '' : formatText(value.toString());
 		},
-		getImgURL(path: string, imgName: string, pixel?: boolean): string {
-			return new URL(`/src/assets/${path}/${imgName}.${pixel ? 'png' : 'webp'}`, import.meta.url).toString();
-		},
+		getImgURL,
 		getSWFUrl(path: string, imgName: string): string {
 			return new URL(`/src/assets/${path}/${imgName}.swf`, import.meta.url).toString();
 		},

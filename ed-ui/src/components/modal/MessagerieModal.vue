@@ -95,13 +95,7 @@
 							<DZUser :user="participant" />
 						</template>
 					</div>
-					<div class="message">
-						<label for="message">{{ $t('messagerie.newMsgMessage') }}</label>
-						<textarea id="message" v-model="newThread.message" :placeholder="$t('messagerie.message')" />
-					</div>
-					<div class="send">
-						<DZButton @click="sendMessage">{{ $t('messagerie.newMsgSend') }}</DZButton>
-					</div>
+					<RichTextEditor v-model="newThread.message" @send="sendMessage($event)" />
 				</div>
 				<template v-if="!creationMode && selectedThreadId && threadSelected">
 					<Thread :thread-id="selectedThreadId" />
@@ -124,10 +118,11 @@ import DZUser from '../common/DZUser.vue';
 import Thread from '../message/Thread.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import { Player } from '@drpg/prisma';
+import RichTextEditor from '../richTextEditor/RichTextEditor.vue';
 
 export default defineComponent({
 	name: 'messagerie',
-	components: { DZDisclaimer, DZUser, DZButton, Thread, SearchEntity },
+	components: { DZDisclaimer, DZUser, DZButton, Thread, SearchEntity, RichTextEditor },
 	data() {
 		return {
 			localStore: localStore(),
@@ -197,7 +192,8 @@ export default defineComponent({
 			const formattedTime = timeFormatter.format(date);
 			return `${formattedDate}, ${formattedTime}`;
 		},
-		async sendMessage() {
+		async sendMessage(messageContent: string) {
+			if (!messageContent) return;
 			try {
 				const participants = this.newThread.participants?.map(p => p.id);
 				const newThread = await MessagerieService.createThread(
