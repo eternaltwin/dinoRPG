@@ -638,7 +638,7 @@ export async function getCommonDataRequest(playerId: string) {
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true } },
-					TournamentTeam: { select: { tournamentId: true } },
+					TournamentTeam: { select: { tournamentId: true, Tournament: { select: { levelLimit: true } } } },
 					concentration: true
 				},
 				where: {

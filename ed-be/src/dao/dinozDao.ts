@@ -3,6 +3,7 @@ import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
+import { TournamentState } from '@drpg/core/models/dojo/tournament';
 
 // Getters
 
@@ -250,7 +251,7 @@ export async function isDinozSelling(dinozId: number, playerId: string) {
 	return dinoz?.some(t => t.dinozId === dinozId && t.status !== 'CLAIMED');
 }
 
-export async function getDinozFicheRequest(dinozId: number, playerId: string) {
+export async function getDinozFicheRequest(dinozId: number, playerId: string, tournament?: TournamentState | null) {
 	const player = await prisma.player.findUnique({
 		where: { id: playerId },
 		select: {
@@ -292,7 +293,19 @@ export async function getDinozFicheRequest(dinozId: number, playerId: string) {
 					missions: true,
 					skills: { select: { skillId: true, state: true } },
 					followers: { select: { id: true, fight: true, remaining: true } },
-					concentration: true
+					concentration: true,
+					TournamentTeam: {
+						select: {
+							Tournament: {
+								select: {
+									levelLimit: true
+								}
+							}
+						},
+						where: {
+							tournamentId: tournament?.id
+						}
+					}
 				},
 				where: {
 					OR: [{ id: dinozId }, { leaderId: dinozId }]

@@ -1,4 +1,12 @@
-import { Concentration, Dinoz, DinozMission, DinozSkill, DinozStatus, UnavailableReason } from '@drpg/prisma';
+import {
+	Concentration,
+	Dinoz,
+	DinozMission,
+	DinozSkill,
+	DinozStatus,
+	Tournament,
+	UnavailableReason
+} from '@drpg/prisma';
 import { MissionHUD } from '../missions/missionHUD.mjs';
 import { ActionFiche } from './ActionList.mjs';
 import { DinozRace } from './DinozRace.mjs';
@@ -37,6 +45,7 @@ export interface DinozFiche {
 	gather: boolean;
 	missions: DinozMission[];
 	concentration: Concentration | null;
+	tournaments: Pick<Tournament, 'levelLimit'>[];
 	npcAwait?: {
 		npcSpeech: string;
 		npcName: string;

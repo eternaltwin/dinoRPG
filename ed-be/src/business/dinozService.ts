@@ -367,7 +367,8 @@ export async function getDinozFiche(req: Request) {
 	const authed = await auth(req);
 
 	// Retrieve player from dinozId
-	const playerData = await getDinozFicheRequest(dinozId, authed.id);
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	const playerData = await getDinozFicheRequest(dinozId, authed.id, tournament);
 
 	if (!playerData) {
 		throw new ExpectedError(translate('playerNotFound', authed, { id: authed.id }));
@@ -481,7 +482,8 @@ export async function buyDinoz(req: Request) {
 				missions: [],
 				items: [],
 				followers: [],
-				concentration: null
+				concentration: null,
+				TournamentTeam: []
 			}
 		]
 	};

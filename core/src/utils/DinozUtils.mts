@@ -9,7 +9,8 @@ import {
 	PlayerItem,
 	PlayerQuest,
 	PlayerReward,
-	Ranking
+	Ranking,
+	Tournament
 } from '@drpg/prisma';
 import { DinozFiche, DinozPublicFiche } from '../models/dinoz/DinozFiche.mjs';
 import { levelList } from '../models/dinoz/DinozLevel.mjs';
@@ -27,6 +28,7 @@ import { PlayerForConditionCheck } from '../constants.mjs';
 import { Condition } from '../models/npc/NpcConditions.mjs';
 import { placeList } from '../models/place/PlaceList.mjs';
 import { UnavailableReasonFront } from '../models/dinoz/UnavailableReasonFront.mjs';
+import { isNotNullish } from './helper.mjs';
 
 type Config = {
 	dinoz: {
@@ -70,6 +72,7 @@ export const toDinozFiche = (
 			skills: Pick<DinozSkill, 'skillId' | 'state'>[];
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
 			concentration: Concentration | null;
+			TournamentTeam: { Tournament: Pick<Tournament, 'levelLimit'> | null }[];
 		})[];
 	},
 	activeDinoz: number
@@ -124,7 +127,8 @@ export const toDinozFiche = (
 		fight: dinoz.fight,
 		gather: dinoz.gather,
 		missions: dinoz.missions,
-		concentration: dinoz.concentration
+		concentration: dinoz.concentration,
+		tournaments: dinoz.TournamentTeam.map(team => team.Tournament).filter(isNotNullish)
 	};
 };
 
@@ -430,10 +434,10 @@ export const calculateXPBonus = (
  * @returns The experience the Dinoz is entitled to receive before bonuses
  */
 export const calculatePvPxp = (opponentLevel: number, dinozLevel: number) => {
-	const BASE_PVP_XP: number = 50;
-	const XP_BASE: number = 1.2;
-	const XP_ADD: number = 0.8;
-	const PVP_COEF: number = 2.5;
+	const BASE_PVP_XP = 50;
+	const XP_BASE = 1.2;
+	const XP_ADD = 0.8;
+	const PVP_COEF = 2.5;
 
 	// Factor based on the level difference
 	const levelDiff = (opponentLevel - dinozLevel) / opponentLevel;
@@ -466,12 +470,12 @@ export const calculatePvExp = (
 	maxLevel: number,
 	initialMaxLevel: number
 ) => {
-	const XP_BASE: number = 1.2;
-	const XP_ADD: number = 0.8;
+	const XP_BASE = 1.2;
+	const XP_ADD = 0.8;
 	// Minimum factor applie to the total monster xp
-	const MINIMUM_XP_FACTOR: number = 1.0;
+	const MINIMUM_XP_FACTOR = 1.0;
 	// Multiplicator constant to increase/decrease result as necessary
-	const XP_MULTIPLICATOR: number = 1.0;
+	const XP_MULTIPLICATOR = 1.0;
 
 	// Factor based on the level difference
 	const levelDiff = (maxLevel - dinozLevel) / maxLevel;
