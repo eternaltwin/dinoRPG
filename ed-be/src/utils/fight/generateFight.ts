@@ -2,6 +2,8 @@ import {
 	addStatus,
 	applyStrategy,
 	checkDeaths,
+	createStatus,
+	OVERTIME_ID,
 	getLimitedRandomOpponent,
 	hasStatus,
 	heal,
@@ -11,11 +13,17 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { randomBetweenSeeded } from './randomBetween.js';
-import { CYCLE, FIGHT_INFINITE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
+import { CYCLE, FIGHT_INFINITE, OVERTIME_THRESHOLD, TIME_BASE, TIME_FACTOR } from '@drpg/core/utils/fightConstants';
 import { Skill } from '@drpg/core/models/dinoz/SkillList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { DetailedFighter, FighterResultFiche, FighterType, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
+import {
+	DetailedFighter,
+	FighterResultFiche,
+	FighterType,
+	FightStatus,
+	FightStatusLength
+} from '@drpg/core/models/fight/DetailedFighter';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult, FightStats } from '@drpg/core/models/fight/FightResult';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
@@ -382,7 +390,7 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 	const firstFighterTime = fightData.fighters[0].time;
 	fightData.fighters.map(fighter => (fighter.time -= firstFighterTime));
 
-	let deadlyPoisonApplied = false;
+	let overtimePoisonDamage = 10;
 
 	// STRATEGIE
 	fightData.fighters.forEach(fighter => {
@@ -411,20 +419,42 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: seedra
 		// Order fighters by initiative (random if equal)
 		orderFighters(fightData);
 
-		// Poison fighters if turn > 1000
-		if (turn > 1000 && !deadlyPoisonApplied) {
+		// If fight is getting too long, poison all fighters with an overtime poison.
+		if (fightData.time > OVERTIME_THRESHOLD) {
 			fightData.fighters.forEach(fighter => {
-				addStatus(fightData, fighter, FightStatus.POISONED);
+				if (!hasStatus(fighter, FightStatus.OVERTIME_POISON)) {
+					// Custom addition of the poisoned status to all fighters to override some error checks
 
-				// eslint-disable-next-line no-param-reassign
-				fighter.poisonedBy = {
-					id: -666,
-					skill: 0 as Skill,
-					damage: 100
-				};
+					// eslint-disable-next-line no-param-reassign
+					fighter.poisonedBy = {
+						id: OVERTIME_ID,
+						skill: 0 as Skill,
+						damage: overtimePoisonDamage
+					};
+
+					// Add status
+					const status_props = createStatus(FightStatus.OVERTIME_POISON, FightStatusLength.SUPER_SHORT);
+
+					// Update the next trigger of status accordingly
+					if (status_props.cycle && fightData.nextStatusTrigger > CYCLE) {
+						fightData.nextStatusTrigger = CYCLE;
+					} else if (status_props.time < fightData.nextStatusTrigger) {
+						fightData.nextStatusTrigger = status_props.time;
+					}
+
+					fighter.status.push(status_props);
+
+					// Add status step
+					fightData.steps.push({
+						action: 'addStatus',
+						fighter: stepFighter(fighter),
+						status: FightStatus.OVERTIME_POISON
+					});
+				}
 			});
 
-			deadlyPoisonApplied = true;
+			// Increase overtime damage by 1 for each turn elapsed since overtime started.
+			overtimePoisonDamage += 1;
 		}
 
 		if (turn > 1200) {

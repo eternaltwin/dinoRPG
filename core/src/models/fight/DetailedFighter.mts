@@ -44,7 +44,10 @@ export enum FightStatus {
 	NO_SKILL = 'noSkill',
 	WEAKENED = 'weakened',
 	LIGHTNING_STRUCK = 'lightningStruck',
-	AIR_SLOWED = 'airSlowed'
+	AIR_SLOWED = 'airSlowed',
+	// Other
+	// Only used for when fights are too long
+	OVERTIME_POISON = 'overtime_poison'
 }
 
 export const GoodFightStatus = [
@@ -69,6 +72,7 @@ export const BadFightStatus = [
 ];
 
 export enum FightStatusLength {
+	SUPER_SHORT = 6,
 	SHORT = 15,
 	MEDIUM = 30,
 	LONG = 80,
