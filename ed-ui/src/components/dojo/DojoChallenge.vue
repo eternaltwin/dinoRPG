@@ -95,7 +95,6 @@ import { errorHandler } from '../../utils/index.js';
 import { Challenge, parseChallenge } from '@drpg/core/models/dojo/challenge';
 import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { dinozStore, playerStore } from '../../store/index.js';
-import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 import SelectDinoz from './SelectDinoz.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import { Dinoz, DojoOpponents, DojoTeam } from '@drpg/prisma';

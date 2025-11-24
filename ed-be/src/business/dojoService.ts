@@ -48,6 +48,14 @@ import { createNotification } from '../dao/notificationDao.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
 
+const DOJO_MAX_SERIES = 5;
+const DOJO_FIGHT_COST = 300;
+const DOJO_FIGHT_FRIENDS_DINOZ_COST = 50;
+const DOJO_OPPONENT_IN_SERIE = 5;
+const DOJO_REPUTATION_WIN = 4;
+const DOJO_REPUTATION_CHALLENGE = 4;
+const DOJO_MAX_DAILY_CHALLENGE = 5;
+
 export async function getDojo(req: Request) {
 	const authed = await auth(req);
 
@@ -89,7 +97,7 @@ export async function createMyTeam(req: Request) {
 		throw new ExpectedError(translate('dojo.dinozNotPlayer', authed));
 	}
 
-	// Fill 5 opponents
+	// Fill DOJO_OPPONENT_IN_SERIE (5) opponents
 	const team = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
 
 	if (team.some(d => d.level < 10)) {
@@ -113,7 +121,10 @@ export async function getMyTeam(req: Request) {
 		return myDojo;
 	}
 
-	if ((myDojo.DojoOpponents.length == 0 || myDojo.DojoOpponents.every(d => d.achieved)) && myDojo.dailyReset < 10) {
+	if (
+		(myDojo.DojoOpponents.length == 0 || myDojo.DojoOpponents.every(d => d.achieved)) &&
+		myDojo.dailyReset < DOJO_MAX_SERIES
+	) {
 		myDojo.team = await cleanCurrentOpponentTeam(myDojo.id);
 		myDojo.DojoOpponents = await createOpponentTeam(
 			myDojo.team.map(d => {
@@ -133,7 +144,7 @@ export async function fightFriend(req: Request) {
 	const left = req.body.left as number[];
 	const right = req.body.right as number[];
 	const rightId = req.body.rightId as string;
-	const fightCost = (left.length + right.length) * 50;
+	const fightCost = (left.length + right.length) * DOJO_FIGHT_FRIENDS_DINOZ_COST;
 
 	const authed = await auth(req);
 	const leftPlayer = await getDojoFightPreparationRequest(authed.id);
@@ -256,7 +267,7 @@ export async function fightChallenge(req: Request) {
 	if (!player.Dojo) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
 	}
-	if (player.money < 200) {
+	if (player.money < DOJO_FIGHT_COST) {
 		throw new ExpectedError(translate('dojo.notEnoughMoney', authed));
 	}
 	const myDinoz = player.Dojo.team.find(d => d.dinozId === myDinozId);
@@ -299,35 +310,25 @@ export async function fightChallenge(req: Request) {
 
 	const promises = [];
 
-	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length === 4) {
+	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
+		promises.push(
+			createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			)
+		);
 		promises.push(incrementDailyReset(player.Dojo.id));
 	}
-	promises.push(removeMoney(authed.id, 200));
-	promises.push(increaseCashPrice(tournament.id, 200));
-	promises.push(setFightedTeam(myDinozId, player.Dojo.id));
-	promises.push(setFightedOpponent(opponentId, player.Dojo.id, fightArchive.result));
 
-	const newChallenge = generateRandomChallenge();
-	promises.push(createChallengeRequest(authed.id, newChallenge));
-
-	// Reputation
-	const reputation = fightResult.winner ? 2 + (challengeWon ? 2 : 0) : 0;
-	promises.push(giveReputation(reputation, player.Dojo.id));
-	// DOJO challenge history
-	promises.push(
-		archiveChallenge(
-			myDinozId,
-			opponentId,
-			JSON.stringify(activeChallenge),
-			fightArchive.result,
-			challengeWon,
-			player.Dojo.id
-		)
-	);
-	const ranking = await getDojoDataForRanking(authed.id);
-	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
-	// Give a TREASURE_COUPON every 20 reputations points rather than every 5 fights
-	if (Math.trunc(ranking.reputation / 20) < Math.trunc((ranking.reputation + reputation) / 20)) {
+	if (challengeWon && player.Dojo.DojoChallengeHistory.filter(c => c.achieved).length < DOJO_MAX_DAILY_CHALLENGE) {
 		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
 		promises.push(
 			createNotification(
@@ -343,6 +344,31 @@ export async function fightChallenge(req: Request) {
 			)
 		);
 	}
+
+	promises.push(removeMoney(authed.id, DOJO_FIGHT_COST));
+	promises.push(increaseCashPrice(tournament.id, DOJO_FIGHT_COST));
+	promises.push(setFightedTeam(myDinozId, player.Dojo.id));
+	promises.push(setFightedOpponent(opponentId, player.Dojo.id, fightArchive.result));
+
+	const newChallenge = generateRandomChallenge();
+	promises.push(createChallengeRequest(authed.id, newChallenge));
+
+	// Reputation
+	const reputation = fightResult.winner ? DOJO_REPUTATION_WIN + (challengeWon ? DOJO_REPUTATION_CHALLENGE : 0) : 0;
+	promises.push(giveReputation(reputation, player.Dojo.id));
+	// DOJO challenge history
+	promises.push(
+		archiveChallenge(
+			myDinozId,
+			opponentId,
+			JSON.stringify(activeChallenge),
+			fightArchive.result,
+			challengeWon,
+			player.Dojo.id
+		)
+	);
+	const ranking = await getDojoDataForRanking(authed.id);
+	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
 	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
 	promises.push(updateDojoPoints(authed.id, Math.round(worth * (ranking.reputation + reputation))));
 	await Promise.all(promises);
@@ -365,7 +391,7 @@ export async function skipOpponent(req: Request) {
 	if (!player.Dojo) {
 		throw new ExpectedError(translate('dojo.inexistantDojo', authed));
 	}
-	if (player.money < 200) {
+	if (player.money < DOJO_FIGHT_COST) {
 		throw new ExpectedError(translate('dojo.notEnoughMoney', authed));
 	}
 
@@ -383,8 +409,8 @@ export async function skipOpponent(req: Request) {
 	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
 
 	const promises = [];
-	promises.push(removeMoney(authed.id, 200));
-	promises.push(increaseCashPrice(tournament.id, 200));
+	promises.push(removeMoney(authed.id, DOJO_FIGHT_COST));
+	promises.push(increaseCashPrice(tournament.id, DOJO_FIGHT_COST));
 	promises.push(setFightedOpponent(opponentId, player.Dojo.id, true));
 	promises.push(
 		archiveChallenge(1, opponentId, JSON.stringify(player.Dojo.activeChallenge), false, false, player.Dojo.id)
@@ -393,7 +419,21 @@ export async function skipOpponent(req: Request) {
 	await Promise.all(promises);
 
 	// If skip generate new batch of opponent
-	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === 5) {
+	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
+		promises.push(
+			createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			)
+		);
 		await incrementDailyReset(player.Dojo.id);
 	}
 }

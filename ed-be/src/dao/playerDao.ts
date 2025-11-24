@@ -1336,6 +1336,14 @@ export async function getDojoChallengePreparationRequest(playerId: string) {
 							fighted: true,
 							achieved: true
 						}
+					},
+					DojoChallengeHistory: {
+						select: {
+							achieved: true
+						},
+						where: {
+							archivedAt: new Date()
+						}
 					}
 				}
 			}
