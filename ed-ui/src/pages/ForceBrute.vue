@@ -100,7 +100,7 @@ export default defineComponent({
 			}
 		},
 		async launchFight() {
-			EventBus.emit('loading', true);
+			EventBus.emit('isLoading', true);
 			try {
 				this.fight = await FBService.fightOpponent(+this.dinozId);
 				this.sessionStore.setFightResult(this.fight);
@@ -127,7 +127,7 @@ export default defineComponent({
 					history: nexFight.filter(n => n != undefined),
 					lang: this.lang
 				};
-				EventBus.emit('loading', false);
+				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

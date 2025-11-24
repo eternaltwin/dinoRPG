@@ -78,12 +78,12 @@ export default defineComponent({
 			navigator.clipboard.writeText(`${window.location.origin}/dojo/share/${id}`);
 		},
 		async getHistory() {
-			EventBus.emit('loading', true);
+			EventBus.emit('isLoading', true);
 			try {
 				const archive = await DojoService.getMyHistory(this.currentPage);
 				this.history = archive.archive;
 				this.totalPages = Math.ceil(archive.quantity / 10);
-				EventBus.emit('loading', false);
+				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

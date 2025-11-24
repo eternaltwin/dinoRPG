@@ -57,12 +57,12 @@ export default defineComponent({
 	},
 	methods: {
 		async getHistory() {
-			EventBus.emit('loading', true);
+			EventBus.emit('isLoading', true);
 			try {
 				const archive = await DojoService.getTournamentHistory(this.currentPage);
 				this.history = archive.history;
 				this.totalPages = Math.ceil(archive.count / 10);
-				EventBus.emit('loading', false);
+				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

@@ -36,7 +36,7 @@ export default defineComponent({
 	methods: {},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
-		EventBus.emit('loading', true);
+		EventBus.emit('isLoading', true);
 		try {
 			const fightResult = await DojoService.getSharedFight(archiveId);
 			const fightSteps = fightResult.history as FightStep[];
@@ -63,7 +63,7 @@ export default defineComponent({
 				// lang: this.lang
 			};
 			this.loaded = true;
-			EventBus.emit('loading', false);
+			EventBus.emit('isLoading', false);
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}

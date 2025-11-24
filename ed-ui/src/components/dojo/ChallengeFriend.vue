@@ -154,11 +154,11 @@ export default defineComponent({
 					level: d.level
 				};
 			});
-		EventBus.emit('loading', true);
+		EventBus.emit('isLoading', true);
 		try {
 			this.clanMembers = await ClanService.getClanMembersList(myClan);
 			// this.clanMembers = this.clanMembers.filter(p => p.player.id !== this.playerStore.getPlayerId);
-			EventBus.emit('loading', false);
+			EventBus.emit('isLoading', false);
 		} catch (e) {
 			errorHandler.handle(e, this.$toast);
 		}
