@@ -52,12 +52,14 @@ update_staging_via_api:
     - echo "Updating staging.json with commit $CI_COMMIT_SHA"
     - echo "$NEW_CONTENT" | jq '.'
     - |
+    - CONTENT_BASE64=$(echo "$NEW_CONTENT" | base64 -w 0)
+    - |
       curl --request PUT \
         --header "PRIVATE-TOKEN: ${CONFIG_REPO_TOKEN}" \
         --header "Content-Type: application/json" \
         --data "{
           \"branch\": \"main\",
-          \"content\": $(echo "$NEW_CONTENT" | jq -Rs .),
+          \"content\": \"$CONTENT_BASE64\",
           \"commit_message\": \"[DRPG] Staging $CI_COMMIT_SHA\"
         }" \
         "https://gitlab.com/api/v4/projects/eternaltwin%2Fconfig/repository/files/pousty%2Fapps%2Fdinorpg%2Fchannels%2Fstaging.json"
