@@ -36,11 +36,11 @@ const confirm = (options: ConfirmOptions): Promise<boolean> => {
 
 		confirmationState.acceptCallback = () => {
 			closeDialog();
-			resolve(true); // Résoudre la Promesse
+			resolve(true);
 		};
 		confirmationState.rejectCallback = () => {
 			closeDialog();
-			reject(false); // Rejeter la Promesse
+			reject(false);
 		};
 
 		confirmationState.visible = true;
@@ -59,12 +59,8 @@ const ConfirmPlugin = {
 		document.body.appendChild(container);
 
 		const wrapper = {
-			// On utilise la Composition API pour accéder à l'état réactif
-			// Si vous n'avez pas accès à la Composition API dans le fichier de plugin,
-			// l'objet de rendu est le moyen le plus sûr.
 			render() {
 				return createVNode(confirmDialog, {
-					// Les props sont lues à partir de l'objet réactif à chaque fois
 					visible: confirmationState.visible,
 					message: confirmationState.message,
 					header: confirmationState.header,
