@@ -48,18 +48,13 @@ class TournamentManager {
 	) {}
 
 	private getSchedule(): TournamentSchedule {
-		const qualificationStart = dayjs(this.startDate).toDate();
+		const qualificationStart = dayjs(this.startDate).locale('fr').toDate();
 		// Qualif end the sunday night
-		const qualificationEnd = dayjs(this.startDate)
-			.add(6, 'days')
-			.set('hour', 23)
-			.set('minute', 59)
-			.set('second', 59)
-			.toDate();
+		const qualificationEnd = dayjs(this.startDate).endOf('week').toDate();
 
-		const poolsStart = dayjs(this.startDate).add(7, 'days').set('hour', 0).set('minute', 0).set('second', 0).toDate();
+		const poolsStart = dayjs(this.startDate).add(1, 'week').startOf('week').toDate();
 
-		const finalsStart = dayjs(this.startDate).add(11, 'days').set('hour', 0).set('minute', 0).set('second', 0).toDate();
+		const finalsStart = dayjs(this.startDate).add(11, 'days').startOf('day').toDate();
 
 		return {
 			qualificationStart,
@@ -135,7 +130,7 @@ class TournamentManager {
 
 		const nextMonday = dayjs(schedule.qualificationStart).add(2, 'week');
 		times.push({
-			time: nextMonday.set('hour', 0).set('minute', 0).set('second', 1).toDate(),
+			time: nextMonday.startOf('day').toDate(),
 			description: 'New tournament',
 			round: 8
 		});
@@ -572,6 +567,9 @@ class TournamentManager {
 	}
 
 	async initializeTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
+		LOGGER.log(`initializeTournament in progress, cleaning dojoOpponents, dojoTeam and dojoChallengeHistory.`);
+		const today = dayjs().locale('fr');
+		const newTournamentStartDate = today.startOf('week').toDate();
 		// Reset all dojo
 		await prisma.dojoOpponents.deleteMany();
 		await prisma.dojoTeam.deleteMany();
@@ -596,9 +594,10 @@ class TournamentManager {
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
 
-		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
+		const endQualif = today.endOf('week').toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
+				date: newTournamentStartDate,
 				formatName: tournamentFormat.name,
 				teamSize: teamSize,
 				raceMinimum: raceMinimum,
@@ -679,8 +678,9 @@ class TournamentManager {
 		}
 
 		scheduleJob(this.tournamentId, endQualif, () => this.generateNextRound(prisma));
+		LOGGER.log(`initializeTournament is over. GenerateNextRound for 1st round is planned for ${endQualif}.`);
 
-		return new TournamentManager(this.tournamentId, new Date());
+		return new TournamentManager(this.tournamentId, newTournamentStartDate);
 	}
 
 	static async getCurrentTournament(prisma: PismaClientLocal): Promise<TournamentState | null> {
