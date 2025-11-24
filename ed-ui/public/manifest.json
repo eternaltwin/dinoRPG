@@ -1,12 +1,12 @@
 {
   "background_color": "#ffffff",
-  "description": "EternalDinoRPG is the non-official successor of the famous DinoRPG. This game works without flash and will be smartphone friendly.",
+  "description": "DinoRPG is the non-official successor of the famous DinoRPG. This game works without flash and is smartphone friendly.",
   "dir": "ltr",
   "display": "standalone",
-  "name": "EternalDinoRPG",
+  "name": "DinoRPG",
   "orientation": "portrait",
   "scope": "https://dinorpg.eternaltwin.org/",
-  "short_name": "eDRPG",
+  "short_name": "DRPG",
   "start_url": "https://dinorpg.eternaltwin.org/",
   "theme_color": "#ffffff",
   "categories": [

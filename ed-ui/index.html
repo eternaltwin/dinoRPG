@@ -2,10 +2,21 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="./favicon.ico" />
-    <link rel="manifest" href="./manifest.json">
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Eternal Dino-RPG</title>
+		<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+		<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+		<title lang="fr">DinoRPG - Jeu d'élevage de dinoz virtuel: amitiées et combats au rendez-vous !</title>
+		<meta name="description" lang="fr" content="DinoRPG est la reprise par des fans du jeu originel par MotionTwin. Modèle économique entièrement gratuit, venez élevez des dinoz et devenez le plus grand maître de tout Dinoland !">
+		<meta property="og:title" lang="fr" content="DinoRPG - Jeu d'élevage de dinoz virtuel: amitiées et combats au rendez-vous !">
+		<meta property="og:description" lang="fr" content="DinoRPG est la reprise par des fans du jeu originel par MotionTwin. Modèle économique entièrement gratuit, venez élevez des dinoz et devenez le plus grand maître de tout Dinoland !">
+		<title lang="en">DinoRPG - Virtual dinoz breeding game: friendships and battles await!</title>
+		<meta name="description" lang="en" content="DinoRPG is a fan-made remake of the original game by MotionTwin. With a completely free-to-play model, come raise dinos and become the greatest master of all Dinoland!">
+		<meta property="og:title" lang="en" content="DinoRPG - Virtual dinoz breeding game: friendships and battles await!">
+		<meta property="og:description" lang="en" content="DinoRPG is a fan-made remake of the original game by MotionTwin. With a completely free-to-play model, come raise dinos and become the greatest master of all Dinoland!">
+		<meta name="twitter:card" content="summary">
+		<title>DinoRPG</title>
       <script defer async>
           function hasFlashSupport() {
               for (const plugin of navigator.plugins) {
@@ -38,7 +49,11 @@
           </script>
   </head>
   <body>
-    <div id="app"></div>
+	<noscript>
+		<strong>We're sorry but DinoRPG doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+	</noscript>
+
+	<div id="app"></div>
     <script type="module" src="./src/main.ts"></script>
   </body>
 </html>
