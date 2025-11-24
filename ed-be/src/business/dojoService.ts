@@ -300,20 +300,6 @@ export async function fightChallenge(req: Request) {
 	const promises = [];
 
 	if (fightArchive.result && player.Dojo.DojoOpponents.filter(o => o.achieved).length === 4) {
-		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
-		promises.push(
-			createNotification(
-				authed.id,
-				JSON.stringify([
-					{
-						rewardType: RewardEnum.ITEM,
-						value: Item.TREASURE_COUPON,
-						quantity: 1
-					}
-				]),
-				NotificationSeverity.reward
-			)
-		);
 		promises.push(incrementDailyReset(player.Dojo.id));
 	}
 	promises.push(removeMoney(authed.id, 200));
@@ -340,6 +326,23 @@ export async function fightChallenge(req: Request) {
 	);
 	const ranking = await getDojoDataForRanking(authed.id);
 	const victory = ranking.DojoChallengeHistory.filter(h => h.victory).length + (fightResult.winner ? 1 : 0);
+	// Give a TREASURE_COUPON every 20 reputations points rather than every 5 fights
+	if (Math.trunc(ranking.reputation / 20) < Math.trunc((ranking.reputation + reputation) / 20)) {
+		promises.push(increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1));
+		promises.push(
+			createNotification(
+				authed.id,
+				JSON.stringify([
+					{
+						rewardType: RewardEnum.ITEM,
+						value: Item.TREASURE_COUPON,
+						quantity: 1
+					}
+				]),
+				NotificationSeverity.reward
+			)
+		);
+	}
 	const worth = victory / (ranking.DojoChallengeHistory.length + 1);
 	promises.push(updateDojoPoints(authed.id, Math.round(worth * (ranking.reputation + reputation))));
 	await Promise.all(promises);
@@ -392,18 +395,6 @@ export async function skipOpponent(req: Request) {
 	// If skip generate new batch of opponent
 	if (player.Dojo.DojoOpponents.filter(d => d.achieved).length + 1 === 5) {
 		await incrementDailyReset(player.Dojo.id);
-		await increaseItemQuantity(authed.id, Item.TREASURE_COUPON, 1);
-		await createNotification(
-			authed.id,
-			JSON.stringify([
-				{
-					rewardType: RewardEnum.ITEM,
-					value: Item.TREASURE_COUPON,
-					quantity: 1
-				}
-			]),
-			NotificationSeverity.reward
-		);
 	}
 }
 
