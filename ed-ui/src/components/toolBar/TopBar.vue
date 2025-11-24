@@ -1,17 +1,33 @@
 <template>
 	<div id="topBar">
 		<div class="boxRoot">
-			<a v-if="playerStore.getPlayerId" class="connectLink" @click="openDinoz()">
+			<a v-if="playerStore.getPlayerId" class="connectLink" @click="openDinoz">
 				<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="AddIcon">
 					<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path>
 				</svg>
 			</a>
+			<Tippy
+				tag="a"
+				theme="normal"
+				v-for="game in eternaltwinGames"
+				:key="game.key"
+				:href="game.link"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="eternaltwinGame"
+			>
+				<img :src="game.icon" :alt="$t(`topBar.gamesMenu.eternaltwinGames.${game.key}.name`)" class="logo" />
+				<template #content>
+					<h1>{{ $t(`topBar.gamesMenu.eternaltwinGames.${game.key}.name`) }}</h1>
+					<p>{{ $t(`topBar.gamesMenu.eternaltwinGames.${game.key}.description`) }}</p>
+				</template>
+			</Tippy>
 		</div>
 		<div class="boxRoot">
 			<span
 				class="time"
 				v-tippy="{
-					content: $t('tooltip.serverTime'),
+					content: $t('topBar.serverTime'),
 					theme: 'small'
 				}"
 				>{{ time }}</span
@@ -21,10 +37,10 @@
 			<LocaleChange />
 			<hr class="separator" />
 			<a v-if="!playerStore.getPlayerId" class="connectLink" @click="getRedirectUri()">
-				<button class="connectBadge">Connexion</button>
+				<button class="connectBadge">{{ $t('topBar.connexion') }}</button>
 			</a>
 			<span v-else class="playerLogged">
-				<button @click="openMenu" class="playerBadge">Menu</button>
+				<button @click="openMenu" class="playerBadge">{{ $t('topBar.menu') }}</button>
 				<span class="notifications" v-if="notification > 0">{{ notification }}</span>
 			</span>
 		</div>
@@ -37,6 +53,7 @@ import { localStore, playerStore } from '../../store';
 import EventBus from '../../events/index.js';
 import { NotificationService, OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
+import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -48,6 +65,11 @@ export default defineComponent({
 			time: '' as string,
 			notification: 0 as number
 		};
+	},
+	computed: {
+		eternaltwinGames() {
+			return getEternaltwinGames().sort(() => Math.random() - 0.5);
+		}
 	},
 	methods: {
 		async getRedirectUri(): Promise<void> {
@@ -95,6 +117,7 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+$orange: #fe7d00;
 .notifications {
 	display: flex;
 	flex-flow: wrap;
@@ -182,6 +205,41 @@ export default defineComponent({
 	justify-content: space-between;
 	gap: 8px;
 	//overflow: hidden;
+	@media (max-width: 768px) {
+		gap: 4px;
+		flex: 0 1 auto;
+		max-width: 25%;
+		padding-right: 6px;
+
+		// Hide games from the 5th onwards on mobile
+		.eternaltwinGame:nth-child(n + 5) {
+			display: none;
+		}
+	}
+
+	.eternaltwinGame {
+		display: flex;
+		padding: 1px;
+		border-radius: 4px;
+		transition: background-color 0.2s ease;
+		flex-shrink: 0;
+
+		&:hover {
+			background-color: $orange;
+		}
+
+		@media (max-width: 768px) {
+			padding: 0;
+		}
+	}
+	.logo {
+		height: 16px;
+		width: auto;
+
+		@media (max-width: 768px) {
+			height: 14px;
+		}
+	}
 }
 .connectLink {
 	display: inline-flex;
@@ -218,6 +276,12 @@ export default defineComponent({
 	flex-shrink: 0;
 	transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1);
 	font-size: 2rem;
+}
+.games {
+	width: 1.6em;
+	height: 1.6em;
+	display: inline-block;
+	flex-shrink: 0;
 }
 .playerLogged {
 	position: relative;

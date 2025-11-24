@@ -18,23 +18,27 @@
 				<div class="shortCuts">
 					<RouterLink class="link" :to="`/shop/flying`">
 						<img :src="getImgURL('icons', 'act_boutique')" alt="shop" />
-						<span>Boutique</span>
+						<span>{{ $t('topBar.leftMenu.shop') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/shop/dinoz`">
 						<img :src="getImgURL('icons', 'act_treasure')" alt="shop" />
-						<span>Enclos</span>
+						<span>{{ $t('topBar.leftMenu.enclosure') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/dojo`">
 						<img :src="getImgURL('icons', 'act_dojo')" alt="dojo" />
-						<span>Dojo</span>
+						<span>{{ $t('topBar.leftMenu.dojo') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/manage`" v-if="playerStore.playerOptions.hasPDA">
 						<img :src="getImgURL('epicRewards', 'collec_pda')" alt="shop" />
-						<span>Ordonner</span>
+						<span>{{ $t('topBar.leftMenu.order') }}</span>
+					</RouterLink>
+					<RouterLink class="link" :to="`/skill-trees`" v-if="playerStore.playerOptions.hasPAC">
+						<img :src="getImgURL('epicRewards', 'collec_pac')" />
+						<span>{{ $t('topBar.leftMenu.skillTrees') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/missions`" v-if="playerStore.playerOptions.hasPMI">
 						<img :src="getImgURL('epicRewards', 'collec_pmi')" alt="shop" />
-						<span>Missions</span>
+						<span>{{ $t('topBar.leftMenu.missions') }}</span>
 					</RouterLink>
 				</div>
 			</div>
@@ -160,7 +164,6 @@
 			</div>
 		</div>
 	</Transition>
-	<!--	</div>-->
 </template>
 
 <script lang="ts">
@@ -247,21 +250,14 @@ export default defineComponent({
 				this.dinozList = orderDinozList(dinozList.filter(d => d.unavailableReason !== UnavailableReasonFront.frozen));
 			},
 			deep: true
-		},
-		currentDinozId: function (dinozId: number) {
-			this.currentDinozId = dinozId;
 		}
+		// Removed watcher for currentDinozId as it's a computed property and should not be assigned directly
 	},
 	mounted() {
 		EventBus.on('dinozMenu', async e => {
 			this.menuCalled = e;
 		});
 	}
-	/*watch: {
-		playerStore() {
-
-		}
-	}*/
 });
 </script>
 

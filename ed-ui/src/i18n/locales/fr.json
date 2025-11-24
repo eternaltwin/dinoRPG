@@ -1,25 +1,89 @@
 {
 	"error": "Merci de reporter cette erreur aux devs avec le détail de comment cela est arrivé.",
-	"rightMenu": {
-		"news": "Nouveautés",
-		"gazette": "Gazette",
-		"ranking": "Classement",
-		"clans": "Clans",
-		"ingredients": "Ingrédients",
-		"account": "Mon Compte",
-		"messagerie": "Messagerie",
-		"forum": "Forum",
-		"api": "API",
-		"logout": "Déconnexion",
-		"notifications": "Notifications",
-		"readAll": "Tout Lu",
-		"guide": "Guide du Jeu",
-		"faq": "FAQ",
-		"cinema": "Cinéma",
-		"events": "Evénements",
-		"system": "Réglages",
-		"skipFight": "Afficher directement le résultat de combat",
-		"skipLevel": "Passer l'animation de gain de niveau"
+	"topBar": {
+		"connexion": "Connexion",
+		"menu": "Menu",
+		"serverTime": "Temps du serveur",
+		"leftMenu": {
+			"shop": "Boutique",
+			"enclosure": "Enclos",
+			"dojo": "Dojo",
+			"order": "Ordonner",
+			"skillTrees": "Arbres de Compétences",
+			"missions": "Missions"
+		},
+		"gamesMenu": {
+			"title": "Jeux Eternaltwin",
+			"subtitle": "Retrouvez tous les jeux accessibles sur Eternaltwin",
+			"eternaltwinGames": {
+				"alphabounce": {
+					"name": "AlphaBounce",
+					"description": "AlphaBounce est un jeu de casse-briques dans lequel vous incarnez un prisonnier condamné à miner dans l'espace pour l'éternité. Mais peut-être arriverez-vous à rentrer chez vous ?"
+				},
+				"dinocard": {
+					"name": "Dinocard",
+					"description": "Dinocard Rebirth est une nouvelle version de Dinocard. Il y a déjà 150 cartes jouables !"
+				},
+				"emush": {
+					"name": "eMush",
+					"description": "Vous allez vous réveiller avec 15 autres joueurs dans le Daedalus. Comme vous, ils fuient le Mush, un champignon qui ravage la planète Terre et menace l'Humanité."
+				},
+				"directquiz": {
+					"name": "Directquiz",
+					"description": "Mettez votre culture à rude épreuve dans Direct Quiz, le jeu de quiz le plus déjanté du web !"
+				},
+				"epopotamo": {
+					"name": "ePopotamo",
+					"description": "Le jeu de mots relax jouable en toute situation !"
+				},
+				"eternalfest": {
+					"name": "Eternalfest",
+					"description": "Plus de 200 niveaux ! Une grande variété d'ennemis très très méchants !"
+				},
+				"kingdom": {
+					"name": "Eternal Kingdom",
+					"description": "Faites prospérer votre capitale. Recrutez des soldats et devenez... Empereur !"
+				},
+				"mybrute": {
+					"name": "LaBrute",
+					"description": "Règle tes comptes dans l'arène !"
+				},
+				"myhordes": {
+					"name": "MyHordes",
+					"description": "Le premier jeu de survie zombie gratuit se déroulant dans un monde hostile peuplé de morts-vivants !"
+				},
+				"neoparc": {
+					"name": "Neoparc",
+					"description": "Combattez d'autres Dinoz et gagnez ainsi petit à petit de l'expérience lors de combats sans merci !"
+				},
+				"pioupiouz": {
+					"name": "PiouPiouZ",
+					"description": "Ils se \"plurtchent\", ils explosent, ils se dilatent, ils se transforment, ils avancent tout droit sans réfléchir et seul vous pouvez les amener à la sortie salvatrice !"
+				}
+			}
+		},
+		"rightMenu": {
+			"news": "Nouveautés",
+			"gazette": "Gazette",
+			"ranking": "Classement",
+			"clan": "Mon Clan",
+			"clans": "Clans",
+			"ingredients": "Ingrédients",
+			"account": "Mon Compte",
+			"messagerie": "Messagerie",
+			"forum": "Forum",
+			"api": "API",
+			"logout": "Déconnexion",
+			"notifications": "Notifications",
+			"readAll": "Tout Lu",
+			"guide": "Guide du Jeu",
+			"faq": "FAQ",
+			"cinema": "Cinéma",
+			"events": "Evénements",
+			"system": "Réglages",
+			"skipFight": "Afficher directement le résultat de combat",
+			"skipLevel": "Passer l'animation de gain de niveau"
+		}
 	},
 	"toast": {
 		"noFBTournament": "Il n'y a pas encore de phase de qualification pour le tournois de ForceBrute.",
@@ -2546,8 +2610,7 @@
 			"buyMaxBottomNote": "//Cliquez ici pour remplir votre stock de cet objet.//",
 			"invalidQuantity": "Veuillez entrer une quantité **valide**.",
 			"invalidQuantity_foot": "//Vérifiez que vous avez bien entré un nombre ou que vous avez assez de place.//"
-		},
-		"serverTime": "Temps du serveur"
+		}
 	},
 	"pageTitle": {
 		"default": "Dino-RPG [ L'actualité de Dinoland ]",
