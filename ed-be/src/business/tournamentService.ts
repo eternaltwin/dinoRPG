@@ -15,37 +15,6 @@ import { LOGGER } from '../context.js';
 import { scheduleJob } from 'node-schedule';
 import weightedRandom from '../utils/fight/weightedRandom.js';
 
-export type selectedDojoType = Awaited<ReturnType<typeof getSelectedDojo>>;
-export async function getSelectedDojo(teamLimit: number, qualified: number) {
-	const topDojos = await prisma.dojo.findMany({
-		take: qualified,
-		where: {
-			TournamentTeam: {
-				teamCount: {
-					equals: teamLimit
-				}
-			}
-		},
-		select: {
-			tournamentTeamId: true,
-			player: {
-				include: {
-					ranking: true
-				}
-			}
-		},
-		orderBy: {
-			player: {
-				ranking: {
-					dojo: 'desc'
-				}
-			}
-		}
-	});
-
-	return topDojos;
-}
-
 export async function createTournamentTeam(req: Request) {
 	const authed = await auth(req);
 

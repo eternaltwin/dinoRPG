@@ -22,6 +22,9 @@
 					{{ $t(`hud.follow`, { leader: leaderDinoz.name }) }}
 				</template>
 			</Tippy>
+			<p class="follow" v-for="(tournament, index) in dinoz.tournaments" :key="index">
+				{{ $t('hud.dojoTeam', { max: tournament.levelLimit }) }}
+			</p>
 			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
