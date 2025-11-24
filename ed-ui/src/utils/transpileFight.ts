@@ -120,6 +120,7 @@ export function resolveStatus(status: FightStatus) {
 		case FightStatus.BLESSED:
 			return StatusEffect.Bless;
 		case FightStatus.POISONED:
+		case FightStatus.OVERTIME_POISON:
 			return StatusEffect.Poison;
 		case FightStatus.HEALING:
 			return StatusEffect.Heal;

@@ -1,5 +1,7 @@
 export const TIME_BASE = 10;
 export const TIME_FACTOR = 10;
+// Overtime set to 5000 times the base time increment.
+export const OVERTIME_THRESHOLD = 5000 * TIME_BASE * TIME_FACTOR;
 // Duration of a cycle
 export const CYCLE = 6 * TIME_FACTOR;
 // Environement timeout

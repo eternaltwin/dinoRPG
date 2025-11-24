@@ -62,6 +62,8 @@ import seedrandom from 'seedrandom';
 import { checkSkillCondition } from './skillFightConditionParser.js';
 import { LOGGER } from '../../context.js';
 
+export const OVERTIME_ID = -9999;
+
 export const getFighters = (fightData: DetailedFight, limitTypes?: FighterType[]) => {
 	let fighters = [];
 
@@ -2093,6 +2095,7 @@ export const createStatus = (type: FightStatus, length?: number): FighterStatusD
 	switch (type) {
 		case FightStatus.TORCHED:
 		case FightStatus.BURNED:
+		case FightStatus.OVERTIME_POISON:
 		case FightStatus.POISONED:
 		case FightStatus.HEALING: {
 			cycle = true;
@@ -4760,6 +4763,7 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 				// Execute the status if a cycle has elapsed
 				if (status.timeSinceLastCycle >= CYCLE) {
 					switch (status.type) {
+						case FightStatus.OVERTIME_POISON:
 						case FightStatus.POISONED: {
 							const poisonedBy = fighter.poisonedBy;
 
@@ -4779,8 +4783,16 @@ const updateAllStatus = (fightData: DetailedFight, deltaTime: number) => {
 							// Register the hp lost from poison
 							const hp_lost = loseHp(fightData, fighter, poisonedBy.damage, LifeEffect.Poison);
 
-							// Update stat
-							updateStat(fightData, poisoner, 'poison_damage', hp_lost);
+							if (poisoner) {
+								// Update stat for regular poisons
+								updateStat(fightData, poisoner, 'poison_damage', hp_lost);
+							} else if (poisonedBy.id !== OVERTIME_ID) {
+								// For non global poisons, throw an error
+								LOGGER.error('Error `Missing poison data` in `playFighterTurn`.', { fightData: fightData });
+								throw new Error('Poisoner not found');
+							}
+							// Else it's the overtime poison, nothing to do.
+
 							break;
 						}
 						case FightStatus.BURNED: {
