@@ -131,6 +131,10 @@ export async function getAvailableActions(
 
 	const dinozPlace = actualPlace(dinoz);
 
+	if (dinoz.unavailableReason === UnavailableReason.unfreezing) {
+		return [];
+	}
+
 	// Nothing else if dinoz is being sold
 	if (dinoz.unavailableReason === UnavailableReason.selling) {
 		return [actionList[Action.MARKET]];
@@ -1431,7 +1435,7 @@ export async function unfrozeDinoz(req: Request) {
 		}
 	}
 	await updateDinoz(dinozId, {
-		unavailableReason: null
+		unavailableReason: UnavailableReason.unfreezing
 	});
 }
 
