@@ -305,6 +305,12 @@
 		"evasion": "Esquiva",
 		"superEvasion": "Súper Evasión",
 		"counter": "Contra",
+		"speed": "Vitesse",
+		"fireSpeed": "Vitesse Feu",
+		"woodSpeed": "Vitesse Bois",
+		"waterSpeed": "Vitesse Eau",
+		"lightningSpeed": "Vitesse Foudre",
+		"airSpeed": "Vitesse Air",
 		"bubbleRate": "Porcentaje de Burbuja",
 		"torchDamage": "Daño de antorcha",
 		"acidBloodDamage": "Daño de sangre ácida",
@@ -4421,7 +4427,8 @@
 		"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
 		"follow": "El líder del grupo es {leader}.",
 		"followed": "Este Dino es el líder del grupo.",
-		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando."
+		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
+		"dojoTeam": "Ce Dinoz est inscrit dans un TiD. Son niveau est bloqué à {max}."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
