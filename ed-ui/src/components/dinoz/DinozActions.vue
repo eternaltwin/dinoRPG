@@ -26,6 +26,11 @@
 				{{ $t('hud.dojoTeam', { max: tournament.levelLimit }) }}
 			</p>
 			<DZDisclaimer
+				v-if="dinoz.unavailableReason === UnavailableReasonFront.unfreezing"
+				:content="$t('hud.unfreezeCountdown', { time: timeUntilMidnight })"
+				help
+			/>
+			<DZDisclaimer
 				v-if="dinoz.actions?.some(a => a.name === Action.STOP_REST) && dinoz.life < dinoz.maxLife / 2"
 				:content="$t('hud.resting', { hp: hpRegen, min: minutesBeforeHour })"
 				timer
@@ -132,7 +137,8 @@ export default defineComponent({
 			hpRegen: 1,
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			timeUntilMidnight: '' as string
 		};
 	},
 	components: {
@@ -154,6 +160,25 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		calculTimeUntilMidnight() {
+			const nowMs = new Date().getTime();
+			const now = new Date();
+			const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+			const midnightMs = midnight.getTime();
+			const timeRemainingMs = midnightMs - nowMs;
+
+			const totalSeconds = Math.floor(timeRemainingMs / 1000);
+			const safeSeconds = Math.max(0, totalSeconds);
+
+			const hours = Math.floor(safeSeconds / 3600);
+			const minutes = Math.floor((safeSeconds % 3600) / 60);
+			const seconds = safeSeconds % 60;
+			const h = hours.toString().padStart(2, '0');
+			const m = minutes.toString().padStart(2, '0');
+			const s = seconds.toString().padStart(2, '0');
+
+			this.timeUntilMidnight = `${h}:${m}:${s}`;
+		},
 		async launch(action: ActionFiche) {
 			EventBus.emit('isLoading', true);
 			switch (action.name) {
@@ -565,6 +590,9 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		UnavailableReasonFront() {
+			return UnavailableReasonFront;
+		},
 		missionName() {
 			if (this.dinoz.missionId) {
 				return missionsList[this.dinoz.missionId];
@@ -598,6 +626,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.loadComponent();
+		setInterval(() => this.calculTimeUntilMidnight(), 1000);
 	}
 });
 </script>

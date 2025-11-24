@@ -3,5 +3,6 @@ export enum UnavailableReasonFront {
 	sacrificed = 'sacrificed',
 	selling = 'selling',
 	superdom = 'superdom',
-	resting = 'resting'
+	resting = 'resting',
+	unfreezing = 'unfreezing'
 }

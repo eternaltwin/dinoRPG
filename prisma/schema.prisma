@@ -858,6 +858,7 @@ enum UnavailableReason {
   selling
   superdom
   resting
+  unfreezing
 }
 
 enum Lang {

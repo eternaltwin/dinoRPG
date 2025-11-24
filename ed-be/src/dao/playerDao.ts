@@ -673,7 +673,14 @@ export async function getPlayerDinozInformationForTeam(playerId: string) {
 						{ unavailableReason: null },
 						{
 							unavailableReason: {
-								not: { in: [UnavailableReason.frozen, UnavailableReason.sacrificed, UnavailableReason.selling] }
+								not: {
+									in: [
+										UnavailableReason.frozen,
+										UnavailableReason.sacrificed,
+										UnavailableReason.selling,
+										UnavailableReason.unfreezing
+									]
+								}
 							}
 						}
 					]
