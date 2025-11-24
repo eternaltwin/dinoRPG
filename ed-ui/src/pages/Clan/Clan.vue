@@ -279,7 +279,7 @@ export default defineComponent({
 		}
 	}
 	.clan-page {
-		background-color: #f4cb92;
+		background-color: #fce3bb;
 		margin: 3px;
 	}
 }
