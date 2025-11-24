@@ -305,6 +305,12 @@
 		"evasion": "Ausweichen",
 		"superEvasion": "Super-Ausweichen",
 		"counter": "Gegenangriff",
+		"speed": "Vitesse",
+		"fireSpeed": "Vitesse Feu",
+		"woodSpeed": "Vitesse Bois",
+		"waterSpeed": "Vitesse Eau",
+		"lightningSpeed": "Vitesse Foudre",
+		"airSpeed": "Vitesse Air",
 		"bubbleRate": "Rate der Lufthülle",
 		"torchDamage": "Feuerzeug",
 		"acidBloodDamage": "Schaden des säurehaltigen Blutes",
@@ -4421,7 +4427,8 @@
 		"remainingActions": "Deine Dinoz haben noch freie Aktionen übrig.",
 		"follow": "Der Gruppenführer ist {leader}.",
 		"followed": "Dieser Dinoz ist der Gruppenführer.",
-		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt."
+		"restEnd": "Dein Dinoz hat beim Ausruhen bereits das Maximum an Lebenspunkten wiederhergestellt.",
+		"dojoTeam": "Ce Dinoz est inscrit dans un TiD. Son niveau est bloqué à {max}."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** hat dem Dinoz {dinoz} ({dinozId}) den Status „{status}“ verliehen",

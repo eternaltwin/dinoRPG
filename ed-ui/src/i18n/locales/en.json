@@ -305,6 +305,12 @@
 		"evasion": "Evasion",
 		"superEvasion": "Super Evasion",
 		"counter": "Counter",
+		"speed": "Vitesse",
+		"fireSpeed": "Vitesse Feu",
+		"woodSpeed": "Vitesse Bois",
+		"waterSpeed": "Vitesse Eau",
+		"lightningSpeed": "Vitesse Foudre",
+		"airSpeed": "Vitesse Air",
 		"bubbleRate": "Bubble rate",
 		"torchDamage": "Torch damage",
 		"acidBloodDamage": "Acid blood damage",
@@ -4421,7 +4427,8 @@
 		"remainingActions": "Your Dinoz still has free actions left.",
 		"follow": "The group leader is {leader}.",
 		"followed": "This Dinoz leads a group.",
-		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting."
+		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
+		"dojoTeam": "Ce Dinoz est inscrit dans un TiD. Son niveau est bloqué à {max}."
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
