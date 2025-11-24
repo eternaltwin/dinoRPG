@@ -15,5 +15,6 @@ declare module 'vue' {
 		getSWFUrl(path: string, imgName: string): string;
 		$t: (key: string, options?: Record<string, unknown>) => string;
 		$globalConfirm: (options: ConfirmOptions) => Promise<boolean>;
+		$refreshGold(): Promise<void>;
 	}
 }

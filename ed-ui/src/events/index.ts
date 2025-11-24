@@ -10,7 +10,6 @@ type Events = {
 	resurrect: boolean;
 	toast: toast;
 	refreshDinoz: boolean;
-	refreshMoney: boolean;
 	refreshInventory: boolean;
 	message: boolean;
 	report: string | undefined;

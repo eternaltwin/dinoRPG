@@ -124,7 +124,7 @@ export default defineComponent({
 			try {
 				await ClanService.denyJoinClanRequest(request.id);
 				this.joinRequest = undefined;
-				EventBus.emit('refreshMoney', true);
+				await this.$refreshGold();
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				return;

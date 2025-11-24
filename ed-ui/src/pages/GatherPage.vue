@@ -110,7 +110,7 @@ export default defineComponent({
 				this.grid.grid = this.gatherResult.grid;
 				this.gatherOver = true;
 				EventBus.emit('isLoading', false);
-				EventBus.emit('refreshMoney', true);
+				await this.$refreshGold();
 			}
 		},
 		isSelected(row: number, box: number): boolean {

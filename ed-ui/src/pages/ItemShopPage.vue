@@ -412,7 +412,7 @@ export default defineComponent({
 				// Update the new quantity
 				// Both values are forced to number to avoid them somehow being treated as a string
 				this.selectedItem.quantity = (this.selectedItem.quantity ?? 0) + quantity;
-				EventBus.emit('refreshMoney', true);
+				await this.$refreshGold();
 			} else if (this.actualShop.type === ShopType.FILOU) {
 				this.selectedItem = undefined;
 				await this.loadPage();

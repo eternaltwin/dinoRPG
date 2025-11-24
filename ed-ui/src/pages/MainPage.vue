@@ -69,11 +69,6 @@ export default defineComponent({
 			errorHandler.handle(err, this.$toast);
 			return;
 		}
-		EventBus.on('refreshMoney', async e => {
-			if (!e) return;
-			const newMoney = await PlayerService.getPlayerMoney();
-			this.playerStore.setMoney(parseInt(newMoney));
-		});
 	}
 });
 </script>

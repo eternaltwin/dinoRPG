@@ -1,5 +1,7 @@
 import { formatText } from '../utils/formatText.js';
 import { ConfirmOptions } from './confirmPlugin';
+import { PlayerService } from '../services';
+import { playerStore } from '../store';
 
 const pad = (n: number) => (n < 10 ? `0${n}` : n);
 
@@ -32,6 +34,10 @@ export const mixin = {
 				'Le service de confirmation ($globalConfirm) est introuvable. Assurez-vous que ConfirmPlugin est installé dans main.ts.'
 			);
 			return Promise.resolve(false);
+		},
+		async $refreshGold(): Promise<void> {
+			const newMoney = await PlayerService.getPlayerMoney();
+			playerStore().setMoney(+newMoney);
 		}
 	}
 };

@@ -154,7 +154,7 @@ export default defineComponent({
 					if (toast.category === ItemEffect.EGG) {
 						await this.refreshDinozList();
 					} else if (toast.category === ItemEffect.GOLD) {
-						EventBus.emit('refreshMoney', true);
+						await this.$refreshGold();
 						EventBus.emit('isLoading', false);
 					} else {
 						EventBus.emit('refreshDinoz', true);

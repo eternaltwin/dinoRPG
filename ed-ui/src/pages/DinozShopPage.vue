@@ -107,15 +107,12 @@ export default defineComponent({
 				let dinozCreated: DinozFiche;
 				try {
 					dinozCreated = await DinozService.buyDinoz(parseInt(dinoz.id));
+					await this.$refreshGold();
 					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
 					return;
 				}
-
-				// Update player's money
-				const newMoney = (this.playerStore.getMoney - this.raceList[dinoz.race].price) as number;
-				this.playerStore.setMoney(newMoney);
 
 				const dinozStore = this.dinozStore.getDinozList;
 

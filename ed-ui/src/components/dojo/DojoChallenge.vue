@@ -217,6 +217,7 @@ export default defineComponent({
 					this.fightAnimationEnded = true;
 				}
 
+				await this.$refreshGold();
 				EventBus.emit('isLoading', false);
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);

@@ -547,7 +547,7 @@ export default defineComponent({
 		async validateMission() {
 			this.missionReward = undefined;
 			await this.refreshDinoz();
-			EventBus.emit('refreshMoney', true);
+			await this.$refreshGold();
 		},
 		npcDisplayName(npcId: number) {
 			return Object.values(npcList).find(npc => npc.id === npcId)?.name;
