@@ -4231,7 +4231,7 @@
 		"lose": "Vous avez **perdu**...",
 		"lvlup": "Un Dinoz a gagné un **niveau supplémentaire** !",
 		"continue": "Continuer",
-		"display": "Afficher le combat",
+		"display": "Afficher l'historique",
 		"resume": "Vous avez combattu un {enemy}",
 		"clone": "Clone",
 		"life": "Vie perdue",
