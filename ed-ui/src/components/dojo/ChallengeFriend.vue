@@ -124,7 +124,7 @@ export default defineComponent({
 				};
 				this.loaded = true;
 				this.shareLink = `${window.location.origin}/dojo/share/${fightResult.id}`;
-				await this.$refreshGold()
+				await this.$refreshGold();
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

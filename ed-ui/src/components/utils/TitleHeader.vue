@@ -33,6 +33,10 @@ export default defineComponent({
 	background-image: url('../../assets/design/title_h1.webp');
 	background-position: left bottom;
 	background-repeat: no-repeat;
+	// The background size is only there to make sure the image
+	// spans the whole width of the container.
+	// It can be safely removed once we have a wider image.
+	background-size: contain;
 	padding-bottom: 16px;
 	.titlePage {
 		color: #71b703;
