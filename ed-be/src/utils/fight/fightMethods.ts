@@ -51,7 +51,7 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, getFighterCounter, getFighterMultihit, initializeMonster } from './getFighters.js';
+import { cloneDinoz, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -3924,7 +3924,6 @@ const counterTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	return random < getFighterCounter(opponent);
 };
 
-
 /**
  * Test if a fighter succeeds a multihit roll.
  * @param fightData Fight data used for seeded random.
@@ -3932,9 +3931,31 @@ const counterTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
  * @param multiHitCounter Number of multihits
  * @returns {bool} True if the fighter has succeeded its multihit roll.
  */
-const multihitTest = (fightData: DetailedFight, opponent: DetailedFighter, multiHitCounter: number) => {
+const multiHitTest = (fightData: DetailedFight, opponent: DetailedFighter, multiHitCounter: number) => {
 	const random = fightData.rng();
 	return random < getFighterMultihit(opponent, multiHitCounter);
+};
+
+/**
+ * Test if a fighter succeeds an evasion roll.
+ * @param fightData Fight data used for seeded random.
+ * @param opponent The fighter to roll the evasion  for.
+ * @returns {bool} True if the fighter has succeeded its evasion roll.
+ */
+const evasionTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
+	const random = fightData.rng();
+	return random < getFighterEvasion(opponent);
+};
+
+/**
+ * Test if a fighter succeeds a super evasion roll.
+ * @param fightData Fight data used for seeded random.
+ * @param opponent The fighter to roll the super evasion  for.
+ * @returns {bool} True if the fighter has succeeded its super evasion roll.
+ */
+const superEvasionTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
+	const random = fightData.rng();
+	return random < getFighterSuperEvasion(opponent);
 };
 
 // Have the fighter lose the given number of damage based on its resilience
@@ -4272,9 +4293,9 @@ const attackTarget = (
 		// Check for assault dodge
 		if (
 			isAssault &&
-			!hasStatus(target, FightStatus.PETRIFIED) &&
+			!isIncapacitated(target) &&
 			!attacker.cancelAssaultDodge &&
-			fightData.rng() < target.stats.special.evasion - 1
+			evasionTest(fightData, target)
 		) {
 			isDodged = true;
 		}
@@ -4282,13 +4303,9 @@ const attackTarget = (
 		// Check for skill evasion
 		if (
 			!isAssault &&
-			!(
-				hasStatus(target, FightStatus.PETRIFIED) ||
-				hasStatus(target, FightStatus.ASLEEP) ||
-				hasStatus(target, FightStatus.FLYING) ||
-				hasStatus(target, FightStatus.STUNNED)
-			) &&
-			fightData.rng() < target.stats.special.superEvasion - 1
+			!hasStatus(target, FightStatus.FLYING) &&
+			!isIncapacitated(target) &&
+			superEvasionTest(fightData, target)
 		) {
 			isSuperDodged = true;
 		}
@@ -4317,7 +4334,7 @@ const attackTarget = (
 			}
 		}
 
-		// DAZZLED
+		// DAZZLED: 1/3 chance to miss
 		if (hasStatus(attacker, FightStatus.DAZZLED)) {
 			if (randomBetweenMaxExcludedSeeded(fightData.rng, 0, 3) === 0) {
 				noDamage = true;
@@ -4386,7 +4403,7 @@ const attackTarget = (
 			attacker.hp > 0 &&
 			!isIncapacitated(attacker) &&
 			attacker.energy > totalEnergyCost + energyCost + 1 &&
-			multihitTest(fightData, attacker, multiHitCounter)
+			multiHitTest(fightData, attacker, multiHitCounter)
 		) {
 			// If the fighter succeeds to multihit, increase the energy cost and repeat the loop
 			energyCost++;

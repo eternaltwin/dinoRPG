@@ -983,7 +983,7 @@ export const getFighterCounter = (fighter: DetailedFighter) => {
 };
 
 /**
- * Determine the multi-hit chance of the fighter.
+ * Determine the multihit chance of the fighter.
  * The multihit chance minimum is 0% and maximum is 90%.
  * The chance is reduced by half for each multihit previously landed in the same attack.
  * @param fighter The fighter to get the multihit stat from.
@@ -998,6 +998,32 @@ export const getFighterMultihit = (fighter: DetailedFighter, multiHitCounter?: n
 	const multihitTotal = (fighter.stats.special.multihit - 1) * multiHitFactor;
 
 	return Math.min(0.9, Math.max(0, multihitTotal));
+};
+
+/**
+ * Determine the evasion chance of the fighter.
+ * The evasion chance minimum is 0% and maximum is 90%.
+ * @param fighter The fighter to get the evasion stat from.
+ * @returns {number} Returns the % chance of the fighter to land an evasion between 0 an 0.9.
+ */
+export const getFighterEvasion = (fighter: DetailedFighter) => {
+	// Remove 1 to recenter the value at 0.
+	const evasionTotal = fighter.stats.special.evasion - 1;
+
+	return Math.min(0.9, Math.max(0, evasionTotal));
+};
+
+/**
+ * Determine the super evasion chance of the fighter.
+ * The super evasion chance minimum is 0% and maximum is 90%.
+ * @param fighter The fighter to get the super evasion stat from.
+ * @returns {number} Returns the % chance of the fighter to land a super evasion between 0 an 0.9.
+ */
+export const getFighterSuperEvasion = (fighter: DetailedFighter) => {
+	// Remove 1 to recenter the value at 0.
+	const superEvasionTotal = fighter.stats.special.superEvasion - 1;
+
+	return Math.min(0.9, Math.max(0, superEvasionTotal));
 };
 
 export default getFighters;
