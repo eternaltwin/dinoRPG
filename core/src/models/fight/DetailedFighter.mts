@@ -72,6 +72,7 @@ export const BadFightStatus = [
 ];
 
 export const IncapacitatingStatus = [
+	FightStatus.ASLEEP,
 	FightStatus.PETRIFIED,
 	FightStatus.STUNNED
 ];

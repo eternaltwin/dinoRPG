@@ -51,7 +51,7 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, getFighterCounter, initializeMonster } from './getFighters.js';
+import { cloneDinoz, getFighterCounter, getFighterMultihit, initializeMonster } from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -3917,18 +3917,24 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
  * Test if a fighter succeeds a counter roll.
  * @param fightData Fight data used for seeded random and stats.
  * @param opponent The fighter to roll the counter for.
- * @returns bool True if the fighter has succeeded its counter roll.
+ * @returns {bool} True if the fighter has succeeded its counter roll.
  */
 const counterTest = (fightData: DetailedFight, opponent: DetailedFighter) => {
 	const random = fightData.rng();
-	const countered = random < getFighterCounter(opponent);
+	return random < getFighterCounter(opponent);
+};
 
-	// Counter stat
-	if (countered) {
-		updateStat(fightData, opponent, 'counters', 1);
-	}
 
-	return countered;
+/**
+ * Test if a fighter succeeds a multihit roll.
+ * @param fightData Fight data used for seeded random.
+ * @param opponent The fighter to roll the multihit for.
+ * @param multiHitCounter Number of multihits
+ * @returns {bool} True if the fighter has succeeded its multihit roll.
+ */
+const multihitTest = (fightData: DetailedFight, opponent: DetailedFighter, multiHitCounter: number) => {
+	const random = fightData.rng();
+	return random < getFighterMultihit(opponent, multiHitCounter);
 };
 
 // Have the fighter lose the given number of damage based on its resilience
@@ -4187,7 +4193,7 @@ const attackTarget = (
 ) => {
 	// Unless specified, the attack is considered not an assault and cannot combo by default
 	isAssault = isAssault ?? false;
-	let canCombo = isAssault ?? false;
+	let canMultihit = isAssault ?? false;
 
 	// Abort if fighter is dead
 	if (attacker.hp <= 0) {
@@ -4217,6 +4223,7 @@ const attackTarget = (
 	const realOpponent = target;
 
 	let energyCost = BASE_ENERGY_COST;
+	let multiHitCounter = 0;
 
 	// If the power is not defined, default to a basic assault
 	if (!power) {
@@ -4228,7 +4235,7 @@ const attackTarget = (
 		);
 	} else {
 		// Any attack where the power was pre-defined cannot combo
-		canCombo = false;
+		canMultihit = false;
 	}
 
 	const { attack, defense, elements } = getAttackDefense(attacker, target, power, isAssault);
@@ -4370,14 +4377,22 @@ const attackTarget = (
 		// Check for after defense effects of the target
 		checkAfterDefenseEffects(fightData, attacker, target, damage, isAssault);
 
-		// Check for combo
-		if (canCombo) {
-			if (fightData.rng() < attacker.stats.special.multihit - 1) {
-				// If the fighter succeeds to combo, increase the energy cost and repeat the loop
-				energyCost++;
-				updateStat(fightData, attacker, 'multiHits', 1);
-				continue;
-			}
+		// The attacker can attempt a multihit with the following conditions:
+		// - attack can multihit
+		// - attacker is still alive
+		// - attacker is still not incapacitated
+		// - attacker has enough energy (previous energy total + cost of new multihit)
+		if (canMultihit &&
+			attacker.hp > 0 &&
+			!isIncapacitated(attacker) &&
+			attacker.energy > totalEnergyCost + energyCost + 1 &&
+			multihitTest(fightData, attacker, multiHitCounter)
+		) {
+			// If the fighter succeeds to multihit, increase the energy cost and repeat the loop
+			energyCost++;
+			multiHitCounter++;
+			updateStat(fightData, attacker, 'multiHits', 1);
+			continue;
 		}
 
 		break;
@@ -4422,6 +4437,7 @@ const attackTarget = (
 			fighter: stepFighter(target),
 			opponent: stepFighter(attacker)
 		});
+		updateStat(fightData, target, 'counters', 1)
 
 		// Opponent attacks fighter: the counter can combo
 		attackTarget(fightData, target, attacker, true);

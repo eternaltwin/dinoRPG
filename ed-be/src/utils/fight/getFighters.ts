@@ -973,13 +973,31 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
  * Determine the counter chance of the fighter.
  * The counter chance minimum is 0% and maximum is 90%.
  * @param fighter The fighter to get the counter stat from.
- * @returns number Returns the % chance of the fighter between 0 an 0.9.
+ * @returns {number} Returns the % chance of the fighter to counter between 0 an 0.9.
  */
 export const getFighterCounter = (fighter: DetailedFighter) => {
 	// Remove 1 to recenter the value at 0.
 	const counterTotal = fighter.stats.special.counter - 1;
 
 	return Math.min(0.9, Math.max(0, counterTotal));
+};
+
+/**
+ * Determine the multi-hit chance of the fighter.
+ * The multihit chance minimum is 0% and maximum is 90%.
+ * The chance is reduced by half for each multihit previously landed in the same attack.
+ * @param fighter The fighter to get the multihit stat from.
+ * @param multiHitCounter Optional argument to get the chance of multihit chance after a certain number of multihits. Do not provide to get base chance.
+ * @returns {number} Returns the % chance of the fighter to land a multihit between 0 an 0.9.
+ */
+export const getFighterMultihit = (fighter: DetailedFighter, multiHitCounter?: number) => {
+	// Reduce the combo chance by 1/2 for every combo.
+	const multiHitFactor = Math.pow(0.5, multiHitCounter ?? 0);
+
+	// Remove 1 to recenter the value at 0.
+	const multihitTotal = (fighter.stats.special.multihit - 1) * multiHitFactor;
+
+	return Math.min(0.9, Math.max(0, multihitTotal));
 };
 
 export default getFighters;
