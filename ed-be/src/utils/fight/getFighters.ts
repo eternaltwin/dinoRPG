@@ -137,6 +137,7 @@ export const initializeDinoz = (
 				[SpecialStat.ENERGY_RECOVERY]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
 				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
+				[SpecialStat.ARMOR_BREAK]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR_BREAK)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
 				[SpecialStat.SUPER_EVASION]:
@@ -288,6 +289,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 				[SpecialStat.ENERGY]: 0, // No energy recovery bonus for clones
 				[SpecialStat.ENERGY_RECOVERY]: 0, // No energy recovery bonus for clones
 				[SpecialStat.ARMOR]: dinoz.stats.special[SpecialStat.ARMOR],
+				[SpecialStat.ARMOR_BREAK]: dinoz.stats.special[SpecialStat.ARMOR_BREAK],
 				[SpecialStat.MULTIHIT]: dinoz.stats.special[SpecialStat.MULTIHIT],
 				[SpecialStat.EVASION]: dinoz.stats.special[SpecialStat.EVASION],
 				[SpecialStat.SUPER_EVASION]: dinoz.stats.special[SpecialStat.SUPER_EVASION],
@@ -468,6 +470,7 @@ export const initializeMonster = (
 				[SpecialStat.ENERGY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY)?.value ?? 0,
 				[SpecialStat.ENERGY_RECOVERY]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
 				[SpecialStat.ARMOR]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR)?.value ?? 0,
+				[SpecialStat.ARMOR_BREAK]: getSpecialStat(similiDinoz, [], skills, SpecialStat.ARMOR_BREAK)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(similiDinoz, [], skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.EVASION)?.value ?? 0,
 				[SpecialStat.SUPER_EVASION]: getSpecialStat(similiDinoz, [], skills, SpecialStat.SUPER_EVASION)?.value ?? 0,
@@ -1026,10 +1029,6 @@ export const getFighterSuperEvasion = (fighter: DetailedFighter) => {
 	return Math.min(0.9, Math.max(0, superEvasionTotal));
 };
 
-
-// Determine the armor ratio of the fighter based on the elements of the attack and if the attack is an assault or not.
-// The returned value is uncapped and recentered around 0
-
 /**
  * Determine the armor of the fighter.
  * The armor minimum is 0% and maximum is 90%.
@@ -1037,36 +1036,18 @@ export const getFighterSuperEvasion = (fighter: DetailedFighter) => {
  * @returns {number} Returns the armor of the fighter between 0 an 0.9.
  */
 export const getFighterArmor = (fighter: DetailedFighter) => {
-	let armor = Math.min(0.9, Math.max(0, fighter.stats.special.armor - 1));
-	return armor;
+	return Math.min(0.9, Math.max(0, fighter.stats.special.armor - 1));
 };
 
-// // Determine the armor ignore ratio of the fighter based on the elements of the attack and if the attack is an assault or not.
-// // The returned value is uncapped and recentered around 0
-// export const getFighterIgnoreArmorRatio = (
-// 	fighter: DetailedFighter,
-// 	elementAttack: [ElementType, number][],
-// 	isAssault: boolean
-// ) => {
-// 	let ignoreArmorRatio = fighter.stats.ignoreArmor.global;
 
-// 	// Prorate the ignore armor ratio base on the element
-// 	// Example: If the attack has 9 fire and 1 wood, 90% of the fire ignore armor will be applied and 10% of the wood ignore armor will be applied
-// 	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 0);
-
-// 	if (sumAtt > 0) {
-// 		elementAttack.forEach(val => {
-// 			const ele = val[0];
-// 			const att = val[1];
-// 			ignoreArmorRatio *= (fighter.stats.ignoreArmor[ele] * att) / sumAtt;
-// 		});
-// 	}
-
-// 	if (isAssault) {
-// 		ignoreArmorRatio *= fighter.stats.ignoreArmor.assault;
-// 	}
-
-// 	return ignoreArmorRatio - 1;
-// };
+/**
+ * Determine the armor break of the fighter.
+ * The armor break minimum is 0% and maximum is 90%.
+ * @param fighter The fighter to get the armor break stat from.
+ * @returns {number} Returns the armor break of the fighter between 0 an 0.9.
+ */
+export const getFighterArmorBreak = (fighter: DetailedFighter) => {
+	return Math.min(0.9, Math.max(0, fighter.stats.special.armorBreak - 1));
+}
 
 export default getFighters;

@@ -32,7 +32,7 @@ export enum SpecialStat {
 	// AIR_ARMOR = 'airArmor',
 	// VOID_ARMOR = 'voidArmor',
 	// Armor Ignores
-	// IGNORE_ARMOR = 'ignoreArmor',
+	ARMOR_BREAK = 'armorBreak',
 	// ASSAULT_IGNORE_ARMOR = 'assaultIgnoreArmor',
 	// FIRE_IGNORE_ARMOR = 'fireIgnoreArmor',
 	// WOOD_IGNORE_ARMOR = 'woodIgnoreArmor',
@@ -97,7 +97,7 @@ export enum SpecialStatAsPercent {
 	// AIR_ARMOR = 'airArmor',
 	// VOID_ARMOR = 'voidArmor',
 	// Armor Ignores
-	// IGNORE_ARMOR = 'ignoreArmor',
+	ARMOR_BREAK = 'armorBreak',
 	// ASSAULT_IGNORE_ARMOR = 'assaultIgnoreArmor',
 	// FIRE_IGNORE_ARMOR = 'fireIgnoreArmor',
 	// WOOD_IGNORE_ARMOR = 'woodIgnoreArmor',

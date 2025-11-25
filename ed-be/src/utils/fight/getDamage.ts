@@ -3,7 +3,7 @@ import { DetailedFighter, FighterType, FightStatus } from '@drpg/core/models/fig
 import { ASSAULT_POWER, ATTACK_GLOBAL_FACTOR } from '@drpg/core/utils/fightConstants';
 import { hasStatus } from './fightMethods.js';
 import seedrandom from 'seedrandom';
-import { getFighterArmor } from './getFighters.js';
+import { getFighterArmor, getFighterArmorBreak } from './getFighters.js';
 
 const BASE_ATTACK_VALUE = 2;
 const BASE_DEFENSE_VALUE = 0;
@@ -161,7 +161,8 @@ export const calculateDamage = (
 	// Apply target's armor to the attack unless the attacker cancels it
 	// E.g. 10% armor, means the attack is multiplied by 0,9
 	if (!attacker.cancelArmor) {
-		damage *= 1 - getFighterArmor(target);
+		// Armor break only counters armor
+		damage *= 1 - Math.max(0, (getFighterArmor(target) - getFighterArmorBreak(attacker)));
 	}
 
 	// Substract the defense

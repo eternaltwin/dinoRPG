@@ -64,7 +64,7 @@ export type SkillEffects = {
 	// [Stat.AIR_COUNTER]?: ['x', number];
 	// [Stat.VOID_COUNTER]?: ['x', number];
 	// Armor ignores
-	// [Stat.IGNORE_ARMOR]?: ['x', number];
+	[Stat.ARMOR_BREAK]?: ['x', number];
 	// [Stat.ASSAULT_IGNORE_ARMOR]?: ['x', number];
 	// [Stat.FIRE_IGNORE_ARMOR]?: ['x', number];
 	// [Stat.WATER_IGNORE_ARMOR]?: ['x', number];
