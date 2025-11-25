@@ -1026,4 +1026,47 @@ export const getFighterSuperEvasion = (fighter: DetailedFighter) => {
 	return Math.min(0.9, Math.max(0, superEvasionTotal));
 };
 
+
+// Determine the armor ratio of the fighter based on the elements of the attack and if the attack is an assault or not.
+// The returned value is uncapped and recentered around 0
+
+/**
+ * Determine the armor of the fighter.
+ * The armor minimum is 0% and maximum is 90%.
+ * @param fighter The fighter to get the armor stat from.
+ * @returns {number} Returns the armor of the fighter between 0 an 0.9.
+ */
+export const getFighterArmor = (fighter: DetailedFighter) => {
+	let armor = Math.min(0.9, Math.max(0, fighter.stats.special.armor - 1));
+	return armor;
+};
+
+// // Determine the armor ignore ratio of the fighter based on the elements of the attack and if the attack is an assault or not.
+// // The returned value is uncapped and recentered around 0
+// export const getFighterIgnoreArmorRatio = (
+// 	fighter: DetailedFighter,
+// 	elementAttack: [ElementType, number][],
+// 	isAssault: boolean
+// ) => {
+// 	let ignoreArmorRatio = fighter.stats.ignoreArmor.global;
+
+// 	// Prorate the ignore armor ratio base on the element
+// 	// Example: If the attack has 9 fire and 1 wood, 90% of the fire ignore armor will be applied and 10% of the wood ignore armor will be applied
+// 	let sumAtt = elementAttack.reduce((acc, val) => acc + val[1], 0);
+
+// 	if (sumAtt > 0) {
+// 		elementAttack.forEach(val => {
+// 			const ele = val[0];
+// 			const att = val[1];
+// 			ignoreArmorRatio *= (fighter.stats.ignoreArmor[ele] * att) / sumAtt;
+// 		});
+// 	}
+
+// 	if (isAssault) {
+// 		ignoreArmorRatio *= fighter.stats.ignoreArmor.assault;
+// 	}
+
+// 	return ignoreArmorRatio - 1;
+// };
+
 export default getFighters;
