@@ -64,7 +64,7 @@
 				<a id="gainsLink" :class="tab === 2 ? 'active-link' : ''" @click="tab = 2">{{
 					$t('myAccount.twinoidgoals.linkGains')
 				}}</a>
-				<div style="width: 100%" class="cadrelist_goals">
+				<div style="width: 100%" class="cadrelist_goals drpg-scrollbar">
 					<table style="width: 100%" class="list_goals" v-if="tab === 1">
 						<tbody>
 							<Tippy theme="small" tag="tr" class="list" v-for="(stats, index) in accountStats" :key="index">
