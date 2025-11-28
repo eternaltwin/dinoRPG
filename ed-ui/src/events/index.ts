@@ -10,7 +10,7 @@ type Events = {
 	resurrect: boolean;
 	toast: toast;
 	refreshDinoz: boolean;
-	refreshInventory: boolean;
+	refreshInventory: { event: string; item: number };
 	message: boolean;
 	report: string | undefined;
 	equipItem: Array<DinozItems>;

@@ -12,12 +12,7 @@
 		</p>
 		<div ref="butt" class="wrapper" :class="hidden ? 'hidden' : 'shown'">
 			<div class="label">
-				<select name="sort" v-model="selectedSort" @change="sort()">
-					<option value="Default">{{ $t('details.sort.default') }}</option>
-					<option value="Energy">{{ $t('details.sort.energy') }}</option>
-					<option value="Type">{{ $t('details.sort.type') }}</option>
-					<option value="State">{{ $t('details.sort.state') }}</option>
-				</select>
+				<DZSelect class="sort-select" id="sort" v-model="selectedSort" :options="sortOptions" @change="sort()" />
 			</div>
 			<div class="label">
 				<input type="radio" id="Ascendant" value="Ascendant" v-model="picked" @change="reverse()" />
@@ -310,12 +305,14 @@ import { dinozStore, playerStore } from '../../store/index.js';
 import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
+import DZSelect from './DZSelect.vue';
 
 export default defineComponent({
 	name: 'DetailsTab',
 	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
-		SkillTooltip
+		SkillTooltip,
+		DZSelect
 	},
 	data() {
 		return {
@@ -337,7 +334,13 @@ export default defineComponent({
 			getSpecialStat,
 			specialStats: [] as NonNullable<ReturnType<typeof getSpecialStat>>[],
 			playerStore: playerStore(),
-			goTo
+			goTo,
+			sortOptions: [
+				{ label: this.$t('details.sort.default'), value: 'Default' },
+				{ label: this.$t('details.sort.energy'), value: 'Energy' },
+				{ label: this.$t('details.sort.type'), value: 'Type' },
+				{ label: this.$t('details.sort.state'), value: 'State' }
+			]
 		};
 	},
 	methods: {
@@ -542,6 +545,15 @@ export default defineComponent({
 	.label {
 		display: flex;
 		justify-content: space-around;
+	}
+
+	.sort-select {
+		width: 100%;
+		margin-bottom: 8px;
+	}
+
+	&.shown {
+		overflow: visible;
 	}
 }
 
