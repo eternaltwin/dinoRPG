@@ -20,25 +20,29 @@
 						<img :src="getImgURL('icons', 'act_boutique')" alt="shop" />
 						<span>{{ $t('topBar.leftMenu.shop') }}</span>
 					</RouterLink>
-					<RouterLink class="link" :to="`/shop/dinoz`">
-						<img :src="getImgURL('icons', 'act_treasure')" alt="shop" />
-						<span>{{ $t('topBar.leftMenu.enclosure') }}</span>
-					</RouterLink>
 					<RouterLink class="link" :to="`/dojo`">
 						<img :src="getImgURL('icons', 'act_dojo')" alt="dojo" />
 						<span>{{ $t('topBar.leftMenu.dojo') }}</span>
 					</RouterLink>
+					<a class="link" :href="CINEMA_LINK" target="_blank">
+						<img :src="getImgURL('icons', 'act_historique')" alt="cine" />
+						<span>{{ $t('topBar.rightMenu.cinema') }}</span>
+					</a>
 					<RouterLink class="link" :to="`/manage`" v-if="playerStore.playerOptions.hasPDA">
-						<img :src="getImgURL('epicRewards', 'collec_pda')" alt="shop" />
+						<img :src="getImgURL('icons', 'act_pda')" alt="pda" />
 						<span>{{ $t('topBar.leftMenu.order') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/skill-trees`" v-if="playerStore.playerOptions.hasPAC">
-						<img :src="getImgURL('epicRewards', 'collec_pac')" />
-						<span>{{ $t('topBar.leftMenu.skillTrees') }}</span>
+						<img :src="getImgURL('icons', 'act_pac')" />
+						<span>{{ $t('button.skills') }}</span>
 					</RouterLink>
 					<RouterLink class="link" :to="`/missions`" v-if="playerStore.playerOptions.hasPMI">
-						<img :src="getImgURL('epicRewards', 'collec_pmi')" alt="shop" />
+						<img :src="getImgURL('icons', 'act_pmi')" alt="pmi" />
 						<span>{{ $t('topBar.leftMenu.missions') }}</span>
+					</RouterLink>
+					<RouterLink class="link" :to="`/shop/dinoz`">
+						<img :src="getImgURL('icons', 'act_treasure')" alt="enclosure" />
+						<span>{{ $t('topBar.leftMenu.enclosure') }}</span>
 					</RouterLink>
 				</div>
 			</div>
@@ -177,6 +181,7 @@ import DinozMini from '../dinoz/DinozMini.vue';
 import { utils } from '../../utils/index.js';
 import { Action } from '@drpg/core/models/dinoz/ActionList';
 import { placeList } from '../../constants/index.js';
+import { CINEMA_LINK } from '../../utils/goTo.js';
 
 export default defineComponent({
 	name: 'DinozLeftMenu',
@@ -187,7 +192,8 @@ export default defineComponent({
 			localStore: localStore(),
 			dinozStore: dinozStore(),
 			playerStore: playerStore(),
-			dinozList: dinozStore().getDinozList as Array<DinozFiche>
+			dinozList: dinozStore().getDinozList as Array<DinozFiche>,
+			CINEMA_LINK
 		};
 	},
 	computed: {

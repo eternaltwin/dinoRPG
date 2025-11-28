@@ -72,12 +72,13 @@
 </template>
 
 <script lang="ts">
+import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
+import { placeList } from '@drpg/core/models/place/PlaceList';
+import { CINEMA_LINK } from '../../utils/goTo.js';
 import { defineComponent } from 'vue';
+import DinozList from '../../components/dinoz/DinozList.vue';
 import { dinozStore, playerStore } from '../../store/index.js';
 import { utils } from '../../utils/index.js';
-import DinozList from '../../components/dinoz/DinozList.vue';
-import { placeList } from '@drpg/core/models/place/PlaceList';
-import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 
 export default defineComponent({
 	name: 'LeftPanel',
@@ -106,7 +107,7 @@ export default defineComponent({
 			this.$router.push({ name: pageName });
 		},
 		goToCine() {
-			window.open('https://gerardufoin.github.io/DinoRPG-Legacy-Paradino/', '_blank');
+			window.open(CINEMA_LINK, '_blank');
 		},
 		goToPageWithParam(pageName: string, param: string) {
 			this.$router.push({
