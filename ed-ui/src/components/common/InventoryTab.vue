@@ -3,15 +3,7 @@
 		<p class="wrapperMenu" @click="hidden = !hidden">{{ $t('inventory.sortBy') }}</p>
 		<div ref="butt" class="wrapper" :class="hidden ? 'hidden' : 'shown'">
 			<div class="label">
-				<select id="sort" v-model="sortOption" @change="sortItems()">
-					<option value="default">{{ $t('inventory.sort.default') }}</option>
-					<option value="nameAsc">{{ $t('inventory.sort.nameAsc') }}</option>
-					<option value="nameDesc">{{ $t('inventory.sort.nameDesc') }}</option>
-					<option value="priceAsc">{{ $t('inventory.sort.priceAsc') }}</option>
-					<option value="priceDesc">{{ $t('inventory.sort.priceDesc') }}</option>
-					<option value="qtyAsc">{{ $t('inventory.sort.qtyAsc') }}</option>
-					<option value="qtyDesc">{{ $t('inventory.sort.qtyDesc') }}</option>
-				</select>
+				<DZSelect class="sort-select" id="sort" v-model="sortOption" :options="sortOptions" @change="sortItems()" />
 			</div>
 		</div>
 		<table>
@@ -109,9 +101,13 @@ import { PlayerCommonData } from '@drpg/core/models/player/PlayerCommonData';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { formatText } from '../../utils/formatText.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
+import DZSelect from './DZSelect.vue';
 
 export default defineComponent({
 	name: 'InventoryTab',
+	components: {
+		DZSelect
+	},
 	data() {
 		return {
 			dinozStore: dinozStore(),
@@ -119,6 +115,10 @@ export default defineComponent({
 			itemNameList: itemNameList,
 			playerStore: playerStore(),
 			sortOption: playerStore().getSortOption,
+			sortOptions: ['default', 'nameAsc', 'nameDesc', 'priceAsc', 'priceDesc', 'qtyAsc', 'qtyDesc'].map(o => ({
+				value: o,
+				label: this.$t(`inventory.sort.${o}`)
+			})),
 			hidden: true as boolean
 		};
 	},
@@ -336,6 +336,14 @@ export default defineComponent({
 	.label {
 		display: flex;
 		justify-content: space-around;
+	}
+
+	&.shown {
+		overflow: visible;
+	}
+
+	.sort-select {
+		width: 100%;
 	}
 }
 .name {

@@ -138,7 +138,7 @@ export default defineComponent({
 			itinerantName: '' as string,
 			dinozFullParty: [] as DinozFiche[],
 			playerStore: playerStore(),
-			timeUntilMidnight: '' as string
+			timeUntilMidnight: ''
 		};
 	},
 	components: {
