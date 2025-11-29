@@ -15,12 +15,8 @@
 				<DZSelect class="sort-select" id="sort" v-model="selectedSort" :options="sortOptions" @change="sort()" />
 			</div>
 			<div class="label">
-				<input type="radio" id="Ascendant" value="Ascendant" v-model="picked" @change="reverse()" />
-				<input type="radio" id="Descendant" value="Descendant" v-model="picked" @change="reverse()" />
-			</div>
-			<div class="label">
-				<label for="Ascendant">Ascendant</label>
-				<label for="Descendant">Descendant</label>
+				<DZRadio id="asc" :label="$t('details.asc')" value="asc" v-model="picked" @change="reverse()" />
+				<DZRadio id="desc" :label="$t('details.desc')" value="desc" v-model="picked" @change="reverse()" />
 			</div>
 		</div>
 		<table>
@@ -306,13 +302,15 @@ import SkillTooltip from '../dinoz/SkillTooltip.vue';
 import { goTo } from '../../utils/goTo.js';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import DZSelect from './DZSelect.vue';
+import DZRadio from './DZRadio.vue';
 
 export default defineComponent({
 	name: 'DetailsTab',
 	props: { dinozData: { type: Object as PropType<DinozFiche>, required: true } },
 	components: {
 		SkillTooltip,
-		DZSelect
+		DZSelect,
+		DZRadio
 	},
 	data() {
 		return {
@@ -545,6 +543,10 @@ export default defineComponent({
 	.label {
 		display: flex;
 		justify-content: space-around;
+
+		label[for] {
+			cursor: pointer;
+		}
 	}
 
 	.sort-select {

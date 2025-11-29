@@ -304,6 +304,8 @@
 		}
 	},
 	"details": {
+		"asc": "Ascendant",
+		"desc": "Descendant",
 		"th": {
 			"comp": "Compétence",
 			"type": "Type",
