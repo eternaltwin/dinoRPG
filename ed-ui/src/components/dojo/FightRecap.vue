@@ -1,5 +1,5 @@
 <template>
-	<DZTable>
+	<DZTable class="small-icons">
 		<tr>
 			<th></th>
 			<th>Mon équipe</th>
@@ -155,4 +155,8 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.small-icons :deep(img) {
+	width: 7px;
+}
+</style>
