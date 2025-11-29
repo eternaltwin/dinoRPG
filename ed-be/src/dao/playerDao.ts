@@ -67,7 +67,7 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true } },
-					followers: { select: { id: true, fight: true, remaining: true } },
+					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					TournamentTeam: { select: { tournamentId: true } },
 					concentration: true
 				},
@@ -637,7 +637,7 @@ export async function getCommonDataRequest(playerId: string) {
 					items: { select: { itemId: true } },
 					status: { select: { statusId: true } },
 					skills: { select: { skillId: true, state: true } },
-					followers: { select: { id: true, fight: true, remaining: true } },
+					followers: { select: { id: true, fight: true, remaining: true, gather: true, name: true } },
 					TournamentTeam: { select: { tournamentId: true } },
 					concentration: true
 				},
