@@ -42,4 +42,9 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+#pixiCanvas :deep(canvas) {
+	border-top: 1px solid #874a16;
+	border-bottom: 1px solid #874a16;
+}
+</style>
