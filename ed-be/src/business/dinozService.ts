@@ -189,26 +189,6 @@ export async function getAvailableActions(
 				}
 				availableActions.push({ ...actionList[gatherFound.action], forDinoz: follower.id });
 			}
-
-			// Follower special Gather
-			if (
-				dinozPlace.specialGather !== undefined &&
-				checkCondition(
-					Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather)?.condition,
-					player,
-					follower.id
-				)
-			) {
-				const gatherFound = Object.values(gatherList).find(grid => grid.type === dinozPlace.specialGather);
-				if (!gatherFound) {
-					throw new ExpectedError(`Gather ${dinozPlace.specialGather} doesn't exist.`);
-				}
-				availableActions.push({
-					name: gatherFound.action,
-					imgName: 'act_gather',
-					forDinoz: follower.id
-				});
-			}
 		}
 	}
 
