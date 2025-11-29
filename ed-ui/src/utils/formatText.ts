@@ -48,17 +48,17 @@ export const helpers = {
 
 /**
  * Formats text with custom markup into HTML.
- * Note: This function only uses one regex pass to improve performance.
+ * Note: This function only uses one regex pass per textual format to improve performance.
  */
 export function formatText(text: string) {
 	// Combined pattern for all text formatting tokens:
 	//                      **bold**         //italic//       _underline_   &&   :icon:
 	const pattern = /(?:\*\*([^*]+)\*\*)|(?:\/\/([^/]+)\/\/)|(?:_([^_]+)_)|(&&)|:(\w+):/g;
 
-	return text.replace(pattern, (match, boldContent, emContent, italicContent, lineBreak, iconKey) => {
-		if (boldContent) return `<strong>${boldContent}</strong>`;
-		if (emContent) return `<em>${emContent}</em>`;
-		if (italicContent) return `<i>${italicContent}</i>`;
+	return text.replace(pattern, (match, boldContent, italicContent, emContent, lineBreak, iconKey) => {
+		if (boldContent) return `<strong>${formatText(boldContent)}</strong>`;
+		if (emContent) return `<em>${formatText(emContent)}</em>`;
+		if (italicContent) return `<i>${formatText(italicContent)}</i>`;
 		if (lineBreak) return '<br>';
 		if (iconKey) {
 			const validKeys = [

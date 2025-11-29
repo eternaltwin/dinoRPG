@@ -168,6 +168,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .fight {
+	padding-top: 6px;
+	box-sizing: border-box;
 	background-image: url('../../assets/icons/combat.webp');
 	width: 112px;
 	height: 59px;
@@ -178,8 +180,9 @@ export default defineComponent({
 	color: white;
 	text-transform: uppercase;
 	font-size: 13pt;
-	//color: #ffee92;
 	font-weight: bold;
+	text-shadow: 1px 1px 0px #000000;
+	gap: 4px;
 	&:hover {
 		filter: saturate(120%);
 	}

@@ -400,6 +400,8 @@ $b: 3px;
 		height: 59px;
 	}
 	.show {
+		padding-top: 6px;
+		box-sizing: border-box;
 		background-image: url('../../assets/icons/combat.webp');
 		background-repeat: no-repeat;
 		background-position: center;
