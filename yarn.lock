@@ -2291,7 +2291,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@eternaltwin/dinorpg-monorepo@workspace:."
   dependencies:
-    "@eternaltwin/dinorpg_animations": "npm:^1.0.1"
+    "@eternaltwin/dinorpg_animations": "npm:^1.0.2"
     "@release-it/bumper": "npm:^7.0.5"
     concurrently: "npm:^9.1.0"
     husky: "npm:^8.0.3"
@@ -2302,16 +2302,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@eternaltwin/dinorpg_animations@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "@eternaltwin/dinorpg_animations@npm:1.0.1"
+"@eternaltwin/dinorpg_animations@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@eternaltwin/dinorpg_animations@npm:1.0.2"
   dependencies:
     "@pixi/filter-drop-shadow": "npm:^5.2.0"
     "@pixi/filter-glow": "npm:^5.2.1"
     "@pixi/picture": "npm:^4.0.1"
     lz-string: "npm:^1.5.0"
     pixi.js: "npm:^7.3.0"
-  checksum: 10/ee5d2cdbe27d490610a6df56bb7d5584bd385dd2a68d72c20cde5ba70d4edd0a08f4418d0c66605afa044809eca95becbf18b2e2f49d73b4032aad0f4d01c8b6
+  checksum: 10/6920732b68200cb428b4db0dda2441853b1080d15a707909ee7cb0368146f613f008241802e8957680b1e2436335ea5e03234581749b2676861ee4ce3d90e574
   languageName: node
   linkType: hard
 
@@ -7137,7 +7137,7 @@ __metadata:
   dependencies:
     "@ckeditor/ckeditor5-vue": "npm:^7.3.0"
     "@drpg/core": "workspace:^"
-    "@eternaltwin/dinorpg_animations": "npm:^1.0.1"
+    "@eternaltwin/dinorpg_animations": "npm:^1.0.2"
     "@types/url-join": "npm:^4.0.3"
     "@types/vue-i18n": "npm:^7.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^6.10.0"
