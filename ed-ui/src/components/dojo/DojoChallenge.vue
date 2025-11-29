@@ -287,18 +287,16 @@ $b: 3px;
 	}
 }
 .debrief {
-	// position: absolute;
+	box-sizing: border-box;
 	display: flex;
 	align-self: center;
 	width: 100%;
 	flex-direction: column;
 	justify-content: space-around;
 	align-items: center;
-	//width: 377px;
 	height: 56px;
-	//margin-left: 66px;
-	//padding-left: 10px;
-	//padding-right: 10px;
+	padding: 4px 8px;
+	margin-top: 8px;
 	color: white;
 	background: url('../../assets/background/debriefing_left.webp'), url('../../assets/background/debriefing_right.webp'),
 		url('../../assets/background/debriefing_center.webp');
