@@ -1,37 +1,67 @@
 <template>
-	<input />
+	<input :type="type" :value="modelValue ?? value" @input="onInput" v-bind="$attrs" />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-	name: 'DZInput',
-	props: {
-		type: {
-			type: String,
-			default: 'text'
-		}
-	}
+<script setup lang="ts">
+defineOptions({
+	inheritAttrs: false
 });
+
+const props = defineProps<{
+	type?: string;
+	modelValue?: string | number;
+	value?: string | number;
+}>();
+
+const emit = defineEmits<{
+	'update:modelValue': [value: string | number];
+	input: [value: string | number];
+	change: [value: string | number];
+}>();
+
+const getValue = (input: HTMLInputElement): string | number => {
+	// For number inputs, use valueAsNumber if valid
+	if (props.type === 'number') {
+		const numVal = input.valueAsNumber;
+		return !isNaN(numVal) ? numVal : input.value;
+	}
+	return input.value;
+};
+
+const onInput = (e: Event) => {
+	const val = getValue(e.target as HTMLInputElement);
+	emit('update:modelValue', val);
+	emit('input', val);
+};
 </script>
 
 <style lang="scss" scoped>
 input {
-	width: 64px;
-	height: 20px;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-top: 2px;
+	box-sizing: border-box;
+	min-width: 80px;
+	height: 22px;
+	padding: 2px 8px 0 8px;
 	color: #ffee92;
 	font-size: 9pt;
 	font-weight: bold;
 	border: none;
-	background-image: url('../../assets/design/form_field_small.webp');
-	background-repeat: no-repeat;
+	background:
+		url('../../assets/design/form_field_right.webp') right top / auto 100% no-repeat,
+		url('../../assets/design/form_field_left.webp') left top / auto 100% no-repeat,
+		url('../../assets/design/form_field_middle.webp') left top / auto 100% repeat-x;
 	background-color: transparent;
+
 	&:focus {
-		background-image: url('../../assets/design/form_field_small_hover.webp');
+		outline: none;
+		background:
+			url('../../assets/design/form_field_right_hover.webp') right top / auto 100% no-repeat,
+			url('../../assets/design/form_field_left_hover.webp') left top / auto 100% no-repeat,
+			url('../../assets/design/form_field_middle_hover.webp') left top / auto 100% repeat-x;
+	}
+
+	&::placeholder {
+		color: #bc683c;
+		opacity: 0.7;
 	}
 }
 </style>

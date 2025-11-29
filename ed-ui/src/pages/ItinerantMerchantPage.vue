@@ -48,8 +48,7 @@
 						</td>
 						<td class="stock" v-else>--</td>
 						<td class="quantity">
-							<input
-								class="input"
+							<DZInput
 								type="number"
 								min="0"
 								:max="ingredient.quantity"
@@ -92,11 +91,13 @@ import { IngredientsService } from '../services/IngredientsService';
 import { dinozStore, playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
+import DZInput from '../components/common/DZInput.vue';
 
 export default defineComponent({
 	name: 'ItinerantMerchantPage',
 	components: {
-		TitleHeader
+		TitleHeader,
+		DZInput
 	},
 	data() {
 		return {
@@ -112,7 +113,7 @@ export default defineComponent({
 	},
 	methods: {
 		async sellIngredientPopinConfirmChoice(): Promise<void> {
-			const res: boolean = await this.$confirm({
+			const res = await this.$confirm({
 				message: this.$t('popup.confirm'),
 				header: 'Attention',
 				icon: 'pi pi-trash'
