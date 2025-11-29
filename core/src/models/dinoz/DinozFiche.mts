@@ -14,7 +14,7 @@ export interface DinozFiche {
 	missionId: number | undefined | null;
 	missionHUD: MissionHUD | null;
 	leaderId: number | null;
-	followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
+	followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 	life: number;
 	maxLife: number;
 	experience: number;

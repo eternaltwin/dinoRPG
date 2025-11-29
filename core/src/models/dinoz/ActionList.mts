@@ -1,5 +1,4 @@
 import { GatherType } from '../enums/GatherType.mjs';
-import { FB_TOURNAMENT } from '../npc/characters/tournois.mjs';
 
 export enum Action {
 	FIGHT = 'fight',
@@ -40,6 +39,7 @@ export interface ActionFiche {
 	imgName: string;
 	prop?: number | string;
 	special?: boolean;
+	forDinoz?: number;
 }
 
 export const actionList: Readonly<Record<Action, ActionFiche>> = {

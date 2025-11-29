@@ -57,7 +57,10 @@
 					{{ $t(`missions.actions.terminate`) }}
 				</p>
 				<p v-else-if="action.name === 'mission'">{{ $t(`missions.npc.${action.prop}`) }}</p>
-				<p v-else>{{ $t(`action.name.${action.name}`) }}</p>
+				<p v-else>
+					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
+					{{ $t(`action.name.${action.name}`) }}
+				</p>
 				<template #content>
 					<h1
 						v-if="action.name === 'shop'"
@@ -345,7 +348,10 @@ export default defineComponent({
 				case Action.DAILY:
 					this.$router.push({
 						name: 'Gather',
-						params: { dinozId: this.$route.params.id.toString(), type: action.name }
+						params: {
+							dinozId: action.forDinoz ? action.forDinoz.toString() : this.$route.params.id.toString(),
+							type: action.name
+						}
 					});
 					break;
 				case Action.CONCENTRATE:

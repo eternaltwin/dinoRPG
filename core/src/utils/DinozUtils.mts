@@ -70,7 +70,7 @@ export const toDinozFiche = (
 			items: Pick<DinozItem, 'itemId'>[];
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkill, 'skillId' | 'state'>[];
-			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining'>[];
+			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
 			concentration: Concentration | null;
 			TournamentTeam: Pick<TournamentTeam, 'tournamentId'>[];
 		})[];
