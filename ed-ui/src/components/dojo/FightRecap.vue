@@ -156,7 +156,12 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-.small-icons :deep(img) {
-	width: 7px;
+.small-icons {
+	:deep(tr) {
+		cursor: default !important;
+	}
+	:deep(img) {
+		width: 7px;
+	}
 }
 </style>
