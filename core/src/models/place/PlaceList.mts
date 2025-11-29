@@ -1004,7 +1004,8 @@ export const placeList: Record<
 		name: 'dojo',
 		borderPlace: [],
 		background: 'dojo_arene',
-		map: MapZone.ALL
+		map: MapZone.ALL,
+		top: 100
 	},
 	[PlaceEnum.DOJO_WINNER]: {
 		placeId: PlaceEnum.DOJO_WINNER,
