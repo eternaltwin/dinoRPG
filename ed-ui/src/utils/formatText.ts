@@ -38,39 +38,58 @@ export const helpers = {
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_pv')}" alt="pv">`;
 			case 'xp':
 				return `<img src="${mixin.methods.getImgURL('icons', 'small_xp')}" alt="xp">`;
+			case 'irma':
+				return `<img class="text-icon" src="${mixin.methods.getImgURL('item', 'item_irma')}" alt="irma">`;
 			default:
 				throw Error(`Unexpected key for replaced image: ${key}`);
 		}
 	}
 };
 
-export function formatText(text: string): string {
-	let formattedText = text;
-	formattedText = formattedText.replace(/\*\*(.[^*]*)\*\*/g, '<strong>$1</strong>');
-	formattedText = formattedText.replace(/\/\/(.[^*]*)\/\//g, '<em>$1</em>');
-	formattedText = formattedText.replace(/_(.*?)_/g, '<i>$1</i>');
-	formattedText = formattedText.replace(/&&/g, '<br>');
-	formattedText = formattedText.replace(/:feu:/g, helpers.computeImageHtml('feu'));
-	formattedText = formattedText.replace(/:fire:/g, helpers.computeImageHtml('fire'));
-	formattedText = formattedText.replace(/:bois:/g, helpers.computeImageHtml('bois'));
-	formattedText = formattedText.replace(/:wood:/g, helpers.computeImageHtml('wood'));
-	formattedText = formattedText.replace(/:eau:/g, helpers.computeImageHtml('eau'));
-	formattedText = formattedText.replace(/:water:/g, helpers.computeImageHtml('water'));
-	formattedText = formattedText.replace(/:foudre:/g, helpers.computeImageHtml('foudre'));
-	formattedText = formattedText.replace(/:lightning:/g, helpers.computeImageHtml('lightning'));
-	formattedText = formattedText.replace(/:air:/g, helpers.computeImageHtml('air'));
-	formattedText = formattedText.replace(/:neutre:/g, helpers.computeImageHtml('neutre'));
-	formattedText = formattedText.replace(/:void:/g, helpers.computeImageHtml('void'));
-	formattedText = formattedText.replace(/:right:/g, helpers.computeImageHtml('right'));
-	formattedText = formattedText.replace(/:gold:/g, helpers.computeImageHtml('gold'));
-	formattedText = formattedText.replace(/:ticket:/g, helpers.computeImageHtml('ticket'));
-	formattedText = formattedText.replace(/:chrono:/g, helpers.computeImageHtml('chrono'));
-	formattedText = formattedText.replace(/:attack:/g, helpers.computeImageHtml('attack'));
-	formattedText = formattedText.replace(/:defense:/g, helpers.computeImageHtml('defense'));
-	formattedText = formattedText.replace(/:hp:/g, helpers.computeImageHtml('hp'));
-	formattedText = formattedText.replace(/:pv:/g, helpers.computeImageHtml('pv'));
-	formattedText = formattedText.replace(/:xp:/g, helpers.computeImageHtml('xp'));
-	return formattedText;
+/**
+ * Formats text with custom markup into HTML.
+ * Note: This function only uses one regex pass to improve performance.
+ */
+export function formatText(text: string) {
+	// Combined pattern for all text formatting tokens:
+	//                      **bold**         //italic//       _underline_   &&   :icon:
+	const pattern = /(?:\*\*([^*]+)\*\*)|(?:\/\/([^/]+)\/\/)|(?:_([^_]+)_)|(&&)|:(\w+):/g;
+
+	return text.replace(pattern, (match, boldContent, emContent, italicContent, lineBreak, iconKey) => {
+		if (boldContent) return `<strong>${boldContent}</strong>`;
+		if (emContent) return `<em>${emContent}</em>`;
+		if (italicContent) return `<i>${italicContent}</i>`;
+		if (lineBreak) return '<br>';
+		if (iconKey) {
+			const validKeys = [
+				'feu',
+				'fire',
+				'bois',
+				'wood',
+				'eau',
+				'water',
+				'foudre',
+				'lightning',
+				'air',
+				'neutre',
+				'void',
+				'right',
+				'gold',
+				'ticket',
+				'chrono',
+				'attack',
+				'defense',
+				'hp',
+				'pv',
+				'xp',
+				'irma'
+			];
+			if (validKeys.includes(iconKey)) {
+				return helpers.computeImageHtml(iconKey);
+			}
+		}
+		return match; // fallback for unrecognized tokens
+	});
 }
 
 export function formatNumber(num: number, separator: string): string {

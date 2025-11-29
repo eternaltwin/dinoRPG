@@ -2,7 +2,7 @@
 @import './_general.scss';
 @import './tooltip';
 @import './emmet';
-@import "vue-toast-notification/dist/theme-bootstrap.css";
+@import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 /*.v-toast__item--success{background-color:#181a6c}
 .v-toast__item--info{background-color:#181a6c}
@@ -15,6 +15,11 @@
 }*/
 .v-toast__item .v-toast__text {
 	padding: 0; //1.5em 1em;
+
+	.text-icon {
+		width: 18px;
+		vertical-align: bottom;
+	}
 }
 .v-toast__item {
 	background: rgb(201, 124, 72);
@@ -59,20 +64,20 @@ html {
 
 #menu {
 	position: absolute;
-    z-index: 2;
-    margin-left: 764px;
-    margin-top: 90px;
-    width: 95px;
-    font-size: 8pt;
+	z-index: 2;
+	margin-left: 764px;
+	margin-top: 90px;
+	width: 95px;
+	font-size: 8pt;
 }
 
 #langs {
 	position: absolute;
-    z-index: 2;
-    margin-left: 764px;
-    margin-top: 90px;
-    width: 95px;
-    font-size: 8pt;
+	z-index: 2;
+	margin-left: 764px;
+	margin-top: 90px;
+	width: 95px;
+	font-size: 8pt;
 }
 
 p {
@@ -83,49 +88,42 @@ p:first-letter {
 	font-size: 115%;
 }
 
-
-
-
-
 .newsSection {
-
 	.tid_module {
-		color : white;
-		font-size : 14px;
+		color: white;
+		font-size: 14px;
 
 		li {
-			list-style : square;
+			list-style: square;
 		}
 
 		a {
-			color : #ffee92;
+			color: #ffee92;
 		}
 
 		.tid_safe_story {
 			// background-image : url("/img/design/bloc_news_twinoid.jpg");
-			background-repeat : repeat-y;
-			margin-bottom : 10px;
-			margin-right : 10px;
-			border : 1px solid #ffee92;
-			outline : 1px solid #92471F;
-			padding : 10px;
+			background-repeat: repeat-y;
+			margin-bottom: 10px;
+			margin-right: 10px;
+			border: 1px solid #ffee92;
+			outline: 1px solid #92471f;
+			padding: 10px;
 
 			.tid_safe_content {
 				.tid_h2 {
-					font-size : 110%;
-					color : #FFEE92;
-					text-transform : uppercase;
+					font-size: 110%;
+					color: #ffee92;
+					text-transform: uppercase;
 				}
 
 				.tid_h3 {
-					color : #FFEE92;
+					color: #ffee92;
 				}
 			}
 		}
 	}
 }
-
-
 
 .light {
 	object {
@@ -142,21 +140,21 @@ p:first-letter {
 		color: white;
 	}
 
-  &>span:first-letter {
-    color: white;
-  }
+	& > span:first-letter {
+		color: white;
+	}
 
 	&:hover {
 		color: white;
-		background-image: url("../assets/button/button_hover.webp");
+		background-image: url('../assets/button/button_hover.webp');
 		background-color: transparent;
 	}
 }
 
 .swf {
 	display: block;
-    font-size: 0pt;
-    line-height: 0pt;
+	font-size: 0pt;
+	line-height: 0pt;
 }
 .ck.ck-editor {
 	position: relative;

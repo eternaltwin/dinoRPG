@@ -103,7 +103,7 @@
 		"leaderChanged": "Votre Dinoz est le nouveau leader du groupe",
 		"missingUser": "Utilisateur manquant.",
 		"missingData": "Données manquantes.",
-		"labrute": "Vous avez obtenu {quantity} potion d'Irma. | Vous avez obtenu {quantity} potions d'Irma.",
+		"labrute": "Vous avez obtenu {quantity} :irma:.",
 		"reincarnation": "Votre Dinoz s'est réincarné.",
 		"market": {
 			"minimalValueError": "La valeur totale de votre offre n'atteint pas la valeur minimale.",
@@ -117,7 +117,7 @@
 		"heal": "Votre Dinoz s'est soigné de {value} :hp:.",
 		"gold": "Vous avez obtenu {value} :gold:.",
 		"sphere": "Votre Dinoz a appris la compétence {value}.",
-		"action": "Vous avez consommé {value} potion d'Irma et pouvez refaire des actions. | Vous avez consommé {value} potions d'Irma et pouvez refaire des actions.",
+		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
 		"resurrect": "Votre Dinoz est ressuscité.",
 		"egg": "Vous avez ouvert un œuf de {value}.",
 		"special": {
