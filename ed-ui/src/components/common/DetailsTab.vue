@@ -256,7 +256,7 @@
 								</span>
 								<span v-else>
 									{{ detail.percent ? '' : detail.multiplier ? 'x' : detail.value < 0 ? '-' : '+' }}
-									{{ Math.abs(detail.value).toFixed(2) }} {{ detail.percent ? '%' : '' }}
+									{{ Math.abs(detail.value) }} {{ detail.percent ? '%' : '' }}
 								</span>
 								<span v-if="detail.type === 'skill'" class="detail-name">
 									<span>{{ $t(`skill.name.${detail.name}`) }}</span>
