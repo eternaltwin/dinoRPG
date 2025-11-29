@@ -246,9 +246,6 @@ export default defineComponent({
 	flex-wrap: wrap;
 	margin-top: -4px;
 	max-width: 488px;
-}
-
-.bounce-enter-active {
 	animation: bounce2 1s;
 }
 @keyframes bounce2 {
