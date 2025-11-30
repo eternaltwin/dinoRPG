@@ -242,7 +242,7 @@ export async function auth(request: Request, banByPass = false) {
 			await updateDinoz(dinoz.id, { life: newHp });
 		}
 
-		if (currentEvents()[0] === GameEvent.CHRISTMAS) {
+		if (currentEvents()[0].name === GameEvent.CHRISTMAS) {
 			await increaseItemQuantity(user.id, Item.CHRISTMAS_TICKET, 1);
 		}
 
@@ -382,7 +382,7 @@ export async function noStrictAuth(request: Request, banByPass = false) {
 			const newHp = Math.min(dinoz.life + 10, dinoz.maxLife);
 			await updateDinoz(dinoz.id, { life: newHp });
 		}
-		if (currentEvents()[0] === GameEvent.CHRISTMAS) {
+		if (currentEvents()[0].name === GameEvent.CHRISTMAS) {
 			await increaseItemQuantity(user.id, Item.CHRISTMAS_TICKET, 1);
 		} // Give 2 action for active dinoz
 		const leaderWithVeilleuse = playerDinozData.filter(d => d.skills.some(s => s.skillId === Skill.VEILLEUSE));

@@ -51,7 +51,14 @@ import {
 	getElementalAttack,
 	getMultiElementalAttack
 } from './getDamage.js';
-import { cloneDinoz, getFighterCounter, getFighterEvasion, getFighterMultihit, getFighterSuperEvasion, initializeMonster } from './getFighters.js';
+import {
+	cloneDinoz,
+	getFighterCounter,
+	getFighterEvasion,
+	getFighterMultihit,
+	getFighterSuperEvasion,
+	initializeMonster
+} from './getFighters.js';
 import { randomBetweenMaxExcludedSeeded, randomBetweenSeeded } from './randomBetween.js';
 import weightedRandom from './weightedRandom.js';
 import { bossList } from '@drpg/core/models/fight/BossList';
@@ -2128,7 +2135,8 @@ export const hasStatus = (fighter: DetailedFighter, status: FightStatus) => figh
  * @param fighter The fighter to check for
  * @returns bool true if the fighter has an incapacitating status, false if it does not
  */
-export const isIncapacitated = (fighter: DetailedFighter) => fighter.status.some(s => IncapacitatingStatus.includes(s.type));
+export const isIncapacitated = (fighter: DetailedFighter) =>
+	fighter.status.some(s => IncapacitatingStatus.includes(s.type));
 
 /**
  * Add a status to the fighter. The method checks if the fighter already has the status and also for immunities from skills and objects.
@@ -4291,12 +4299,7 @@ const attackTarget = (
 		);
 
 		// Check for assault dodge
-		if (
-			isAssault &&
-			!isIncapacitated(target) &&
-			!attacker.cancelAssaultDodge &&
-			evasionTest(fightData, target)
-		) {
+		if (isAssault && !isIncapacitated(target) && !attacker.cancelAssaultDodge && evasionTest(fightData, target)) {
 			isDodged = true;
 		}
 
@@ -4399,7 +4402,8 @@ const attackTarget = (
 		// - attacker is still alive
 		// - attacker is still not incapacitated
 		// - attacker has enough energy (previous energy total + cost of new multihit)
-		if (canMultihit &&
+		if (
+			canMultihit &&
 			attacker.hp > 0 &&
 			!isIncapacitated(attacker) &&
 			attacker.energy > totalEnergyCost + energyCost + 1 &&
@@ -4442,7 +4446,8 @@ const attackTarget = (
 	// - target is still alive
 	// - the target is not incapacitated
 	// - the target has enough energy
-	if (isAssault &&
+	if (
+		isAssault &&
 		target.hp > 0 &&
 		!isIncapacitated(target) &&
 		target.energy >= BASE_ENERGY_COST &&
@@ -4454,7 +4459,7 @@ const attackTarget = (
 			fighter: stepFighter(target),
 			opponent: stepFighter(attacker)
 		});
-		updateStat(fightData, target, 'counters', 1)
+		updateStat(fightData, target, 'counters', 1);
 
 		// Opponent attacks fighter: the counter can combo
 		attackTarget(fightData, target, attacker, true);

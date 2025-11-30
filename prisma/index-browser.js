@@ -654,6 +654,13 @@ exports.Prisma.GameDinozScalarFieldEnum = {
   FBTournamentId: 'FBTournamentId'
 };
 
+exports.Prisma.EventsScalarFieldEnum = {
+  event: 'event',
+  playerId: 'playerId',
+  totalProgression: 'totalProgression',
+  dailyProgression: 'dailyProgression'
+};
+
 exports.Prisma.ServerStateScalarFieldEnum = {
   action: 'action',
   nextCheck: 'nextCheck'
@@ -817,6 +824,11 @@ exports.GameDinozUsage = exports.$Enums.GameDinozUsage = {
   FBTournament: 'FBTournament'
 };
 
+exports.EventType = exports.$Enums.EventType = {
+  CHRISTMAS: 'CHRISTMAS',
+  VALENTINE: 'VALENTINE'
+};
+
 exports.ServerAction = exports.$Enums.ServerAction = {
   checkBans: 'checkBans',
   dojoReset: 'dojoReset',
@@ -883,6 +895,7 @@ exports.Prisma.ModelName = {
   TournamentTeam: 'TournamentTeam',
   FBTournament: 'FBTournament',
   GameDinoz: 'GameDinoz',
+  Events: 'Events',
   ServerState: 'ServerState'
 };
 

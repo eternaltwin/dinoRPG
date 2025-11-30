@@ -162,7 +162,7 @@ export const calculateDamage = (
 	// E.g. 10% armor, means the attack is multiplied by 0,9
 	if (!attacker.cancelArmor) {
 		// Armor break only counters armor
-		damage *= 1 - Math.max(0, (getFighterArmor(target) - getFighterArmorBreak(attacker)));
+		damage *= 1 - Math.max(0, getFighterArmor(target) - getFighterArmorBreak(attacker));
 	}
 
 	// Substract the defense

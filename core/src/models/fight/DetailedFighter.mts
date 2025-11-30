@@ -71,11 +71,7 @@ export const BadFightStatus = [
 	FightStatus.STUNNED
 ];
 
-export const IncapacitatingStatus = [
-	FightStatus.ASLEEP,
-	FightStatus.PETRIFIED,
-	FightStatus.STUNNED
-];
+export const IncapacitatingStatus = [FightStatus.ASLEEP, FightStatus.PETRIFIED, FightStatus.STUNNED];
 
 export enum FightStatusLength {
 	SUPER_SHORT = 6,

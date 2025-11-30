@@ -304,6 +304,7 @@ model Player {
   GameDinoz            GameDinoz[]
   ips                  String[]           @db.Inet
   pollVotes            PollVote[]
+  Events               Events[]
 
   @@map("player")
 }
@@ -833,6 +834,16 @@ model GameDinoz {
   @@map("gamedinoz")
 }
 
+model Events {
+  event            EventType
+  playerId         String    @db.Uuid
+  player           Player    @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  totalProgression Int
+  dailyProgression Int
+
+  @@id([event, playerId])
+}
+
 model ServerState {
   action    ServerAction @id @unique
   nextCheck DateTime
@@ -980,4 +991,9 @@ enum NewsType {
   event_christmas
   story
   announce
+}
+
+enum EventType {
+  CHRISTMAS
+  VALENTINE
 }

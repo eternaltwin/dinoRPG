@@ -25,6 +25,11 @@ const midnightReset = async () => {
 				nextCheck: tommorow
 			}
 		});
+		await prisma.events.updateMany({
+			data: {
+				dailyProgression: 0
+			}
+		});
 		scheduleJob('midnightReset', tommorow, () => midnightReset());
 	} catch (err) {
 		LOGGER.error(`Cannot perform midnight actions: ${err}`);

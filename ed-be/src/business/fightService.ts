@@ -2,7 +2,7 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { currentEvents, EventDetails, GameEvent } from '@drpg/core/models/event/Events';
 import { bossList } from '@drpg/core/models/fight/BossList';
 import { DinozToGetFighter, FightConfiguration } from '@drpg/core/models/fight/FightConfiguration';
 import { FightProcessResult } from '@drpg/core/models/fight/FightResult';
@@ -37,6 +37,8 @@ import dayjs from 'dayjs';
 import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
+import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
+import { getCurrentEvents } from './forceBruteService.js';
 
 /**
  * @summary Process a fight
@@ -138,7 +140,7 @@ export async function fightMonstersAtPlace(
 	player: Pick<Player, 'id' | 'teacher' | 'cooker'>
 ) {
 	const dayOfWeek = dayjs().day();
-	let monsters = generateMonsterList(team, placeId);
+	let monsters = await generateMonsterList(team, placeId);
 
 	if ((dayOfWeek === 0 || dayOfWeek === 3) && placeId === PlaceEnum.MARAIS_COLLANT) {
 		monsters = [];
@@ -423,9 +425,10 @@ export async function rewardFight(
 
 	for (const m of eventMonsters) {
 		if (m.events && m.events.length > 0 && fightResult.winner) {
+			await increasePlayerEventProgression(playerId, m.events[0]);
 			switch (m.events[0]) {
 				case GameEvent.CHRISTMAS:
-					if (Math.floor(Math.random() * 100) <= 15) {
+					if (Math.floor(Math.random() * 100) <= 5) {
 						itemWon = Item.CHRISTMAS_TICKET;
 						await increaseItemQuantity(playerId, Item.CHRISTMAS_TICKET, 1);
 						await createLog(LogType.ItemFound, playerId, fightResult.attackers[0].dinozId, Item.CHRISTMAS_TICKET);
@@ -554,16 +557,39 @@ function monsterLevelProba(dinozLevel: number, p: number, monsterLvl: number): n
 	return Math.round((p * 1000) / (3 + delta));
 }
 
+function eventMonsterProba(
+	dinozLevel: number,
+	p: number,
+	monsterLvl: number,
+	event: EventDetails,
+	eventMonsterKilled: number
+) {
+	let eventFactor = 1;
+	if (eventMonsterKilled > event.softCap) {
+		eventFactor = 0.3 * Math.exp(-0.069 * (eventMonsterKilled - event.softCap));
+	}
+	let delta = dinozLevel - monsterLvl;
+	// If monster level is higher than dinoz level
+	if (delta < 0) {
+		// If monster is too high level p = 0
+		if (delta < -3) return 0;
+		delta = -delta * 3;
+	}
+	delta = Math.pow(delta, 1.5);
+	delta = Math.round((p * 1000) / (3 + delta));
+	return Math.round(delta * eventFactor);
+}
+
 /**
  * @summary Return a list of monsters to fight
  * @param team List of dinoz
  * @param placeOfFight Place of the fight
  * @returns List of monsters to fight
  */
-export function generateMonsterList(
+export async function generateMonsterList(
 	team: (Pick<Dinoz, 'level' | 'placeId'> & DinozToCheckMissionFight)[],
 	placeOfFight: PlaceEnum
-): MonsterFiche[] {
+): Promise<MonsterFiche[]> {
 	let teamPowerLevel = 0;
 	let greatestFighterLevel = 0;
 	for (const dinoz of team) {
@@ -579,6 +605,11 @@ export function generateMonsterList(
 		throw new ExpectedError(`This place doesn't exist.`);
 	}
 	const events = currentEvents();
+	let eventMonsterKilled = 0;
+	if (events) {
+		const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
+		eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
+	}
 	const monsters = Object.values(monsterList)
 		// Filter the possible monsters to fight
 		.filter(m => {
@@ -587,7 +618,7 @@ export function generateMonsterList(
 			// Filter event monsters
 			if (m.events && m.events.length > 0) {
 				if (events.length === 0) return false;
-				if (!m.events.some(event => events.includes(event))) return false;
+				if (!m.events.some(event => events.map(e => e.name).includes(event))) return false;
 			}
 			// Filter monsters by zones
 			return m.zones.includes(place.map);
@@ -615,7 +646,13 @@ export function generateMonsterList(
 					monster: m,
 					p: monsterLevelProba(greatestFighterLevel, display ? 100 : 0, m.level)
 				};
-				// 3 - Default case
+				// 3 - Event monsters (already filtered previously
+			} else if (m.events) {
+				return {
+					monster: m,
+					p: eventMonsterProba(greatestFighterLevel, m.odds, m.level, events[0], eventMonsterKilled)
+				};
+				// 4 - Default case
 			} else {
 				return {
 					monster: m,
@@ -646,10 +683,10 @@ export function generateMonsterList(
 	}
 
 	const mdelta = Math.max(Math.round(teamPowerLevel / 4), 2);
+	const ml = monsters.map(a => {
+		return { monster: a.monster, odds: a.p };
+	});
 	while (monsterLevel < teamPowerLevel) {
-		const ml = monsters.map(a => {
-			return { monster: a.monster, odds: a.p };
-		});
 		// Already calculted before
 		// const total = ml.reduce((acc, item) => acc + item.odds, 0);
 		const m = weightedRandom(ml, total).monster;

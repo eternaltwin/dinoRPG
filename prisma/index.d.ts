@@ -289,6 +289,11 @@ export type FBTournament = $Result.DefaultSelection<Prisma.$FBTournamentPayload>
  */
 export type GameDinoz = $Result.DefaultSelection<Prisma.$GameDinozPayload>
 /**
+ * Model Events
+ * 
+ */
+export type Events = $Result.DefaultSelection<Prisma.$EventsPayload>
+/**
  * Model ServerState
  * 
  */
@@ -477,6 +482,14 @@ export const NewsType: {
 
 export type NewsType = (typeof NewsType)[keyof typeof NewsType]
 
+
+export const EventType: {
+  CHRISTMAS: 'CHRISTMAS',
+  VALENTINE: 'VALENTINE'
+};
+
+export type EventType = (typeof EventType)[keyof typeof EventType]
+
 }
 
 export type ServerAction = $Enums.ServerAction
@@ -526,6 +539,10 @@ export const NotificationSeverity: typeof $Enums.NotificationSeverity
 export type NewsType = $Enums.NewsType
 
 export const NewsType: typeof $Enums.NewsType
+
+export type EventType = $Enums.EventType
+
+export const EventType: typeof $Enums.EventType
 
 /**
  * ##  Prisma Client ʲˢ
@@ -1203,6 +1220,16 @@ export class PrismaClient<
   get gameDinoz(): Prisma.GameDinozDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.events`: Exposes CRUD operations for the **Events** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Events
+    * const events = await prisma.events.findMany()
+    * ```
+    */
+  get events(): Prisma.EventsDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.serverState`: Exposes CRUD operations for the **ServerState** model.
     * Example usage:
     * ```ts
@@ -1706,6 +1733,7 @@ export namespace Prisma {
     TournamentTeam: 'TournamentTeam',
     FBTournament: 'FBTournament',
     GameDinoz: 'GameDinoz',
+    Events: 'Events',
     ServerState: 'ServerState'
   };
 
@@ -1725,7 +1753,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "serverState"
+      modelProps: "concentration" | "dinoz" | "dinozItem" | "dinozItemToDinoz" | "dinozMission" | "dinozSkill" | "dinozSkillUnlockable" | "dinozStatus" | "migrations" | "news" | "poll" | "pollOption" | "pollVote" | "newsLike" | "nPC" | "player" | "dojo" | "dojoTeam" | "dojoOpponents" | "dojoChallengeHistory" | "usernameHistory" | "playerDinozShop" | "playerGather" | "playerIngredient" | "playerItem" | "playerQuest" | "playerReward" | "ranking" | "secret" | "offerItem" | "offerBid" | "offer" | "log" | "dinozCatch" | "playerTracking" | "pantheon" | "clan" | "clanJoinRequest" | "clanWar" | "clanIngredient" | "clanMessage" | "clanHistory" | "clanMember" | "clanPage" | "moderation" | "conversation" | "participants" | "message" | "notification" | "fightArchive" | "fightWatched" | "tournament" | "tournamentTeam" | "fBTournament" | "gameDinoz" | "events" | "serverState"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5799,6 +5827,80 @@ export namespace Prisma {
           }
         }
       }
+      Events: {
+        payload: Prisma.$EventsPayload<ExtArgs>
+        fields: Prisma.EventsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.EventsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.EventsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>
+          }
+          findFirst: {
+            args: Prisma.EventsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.EventsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>
+          }
+          findMany: {
+            args: Prisma.EventsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>[]
+          }
+          create: {
+            args: Prisma.EventsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>
+          }
+          createMany: {
+            args: Prisma.EventsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.EventsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>[]
+          }
+          delete: {
+            args: Prisma.EventsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>
+          }
+          update: {
+            args: Prisma.EventsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>
+          }
+          deleteMany: {
+            args: Prisma.EventsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.EventsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.EventsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>[]
+          }
+          upsert: {
+            args: Prisma.EventsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$EventsPayload>
+          }
+          aggregate: {
+            args: Prisma.EventsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateEvents>
+          }
+          groupBy: {
+            args: Prisma.EventsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<EventsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.EventsCountArgs<ExtArgs>
+            result: $Utils.Optional<EventsCountAggregateOutputType> | number
+          }
+        }
+      }
       ServerState: {
         payload: Prisma.$ServerStatePayload<ExtArgs>
         fields: Prisma.ServerStateFieldRefs
@@ -6012,6 +6114,7 @@ export namespace Prisma {
     tournamentTeam?: TournamentTeamOmit
     fBTournament?: FBTournamentOmit
     gameDinoz?: GameDinozOmit
+    events?: EventsOmit
     serverState?: ServerStateOmit
   }
 
@@ -6463,6 +6566,7 @@ export namespace Prisma {
     FightWatched: number
     GameDinoz: number
     pollVotes: number
+    Events: number
   }
 
   export type PlayerCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6492,6 +6596,7 @@ export namespace Prisma {
     FightWatched?: boolean | PlayerCountOutputTypeCountFightWatchedArgs
     GameDinoz?: boolean | PlayerCountOutputTypeCountGameDinozArgs
     pollVotes?: boolean | PlayerCountOutputTypeCountPollVotesArgs
+    Events?: boolean | PlayerCountOutputTypeCountEventsArgs
   }
 
   // Custom InputTypes
@@ -6685,6 +6790,13 @@ export namespace Prisma {
    */
   export type PlayerCountOutputTypeCountPollVotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PollVoteWhereInput
+  }
+
+  /**
+   * PlayerCountOutputType without action
+   */
+  export type PlayerCountOutputTypeCountEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventsWhereInput
   }
 
 
@@ -25437,6 +25549,7 @@ export namespace Prisma {
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
+    Events?: boolean | Player$EventsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["player"]>
 
@@ -25572,6 +25685,7 @@ export namespace Prisma {
     FightWatched?: boolean | Player$FightWatchedArgs<ExtArgs>
     GameDinoz?: boolean | Player$GameDinozArgs<ExtArgs>
     pollVotes?: boolean | Player$pollVotesArgs<ExtArgs>
+    Events?: boolean | Player$EventsArgs<ExtArgs>
     _count?: boolean | PlayerCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type PlayerIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25616,6 +25730,7 @@ export namespace Prisma {
       FightWatched: Prisma.$FightWatchedPayload<ExtArgs>[]
       GameDinoz: Prisma.$GameDinozPayload<ExtArgs>[]
       pollVotes: Prisma.$PollVotePayload<ExtArgs>[]
+      Events: Prisma.$EventsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       customText: string | null
@@ -26073,6 +26188,7 @@ export namespace Prisma {
     FightWatched<T extends Player$FightWatchedArgs<ExtArgs> = {}>(args?: Subset<T, Player$FightWatchedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FightWatchedPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     GameDinoz<T extends Player$GameDinozArgs<ExtArgs> = {}>(args?: Subset<T, Player$GameDinozArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$GameDinozPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     pollVotes<T extends Player$pollVotesArgs<ExtArgs> = {}>(args?: Subset<T, Player$pollVotesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PollVotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    Events<T extends Player$EventsArgs<ExtArgs> = {}>(args?: Subset<T, Player$EventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27271,6 +27387,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PollVoteScalarFieldEnum | PollVoteScalarFieldEnum[]
+  }
+
+  /**
+   * Player.Events
+   */
+  export type Player$EventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    where?: EventsWhereInput
+    orderBy?: EventsOrderByWithRelationInput | EventsOrderByWithRelationInput[]
+    cursor?: EventsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: EventsScalarFieldEnum | EventsScalarFieldEnum[]
   }
 
   /**
@@ -72666,6 +72806,1098 @@ export namespace Prisma {
 
 
   /**
+   * Model Events
+   */
+
+  export type AggregateEvents = {
+    _count: EventsCountAggregateOutputType | null
+    _avg: EventsAvgAggregateOutputType | null
+    _sum: EventsSumAggregateOutputType | null
+    _min: EventsMinAggregateOutputType | null
+    _max: EventsMaxAggregateOutputType | null
+  }
+
+  export type EventsAvgAggregateOutputType = {
+    totalProgression: number | null
+    dailyProgression: number | null
+  }
+
+  export type EventsSumAggregateOutputType = {
+    totalProgression: number | null
+    dailyProgression: number | null
+  }
+
+  export type EventsMinAggregateOutputType = {
+    event: $Enums.EventType | null
+    playerId: string | null
+    totalProgression: number | null
+    dailyProgression: number | null
+  }
+
+  export type EventsMaxAggregateOutputType = {
+    event: $Enums.EventType | null
+    playerId: string | null
+    totalProgression: number | null
+    dailyProgression: number | null
+  }
+
+  export type EventsCountAggregateOutputType = {
+    event: number
+    playerId: number
+    totalProgression: number
+    dailyProgression: number
+    _all: number
+  }
+
+
+  export type EventsAvgAggregateInputType = {
+    totalProgression?: true
+    dailyProgression?: true
+  }
+
+  export type EventsSumAggregateInputType = {
+    totalProgression?: true
+    dailyProgression?: true
+  }
+
+  export type EventsMinAggregateInputType = {
+    event?: true
+    playerId?: true
+    totalProgression?: true
+    dailyProgression?: true
+  }
+
+  export type EventsMaxAggregateInputType = {
+    event?: true
+    playerId?: true
+    totalProgression?: true
+    dailyProgression?: true
+  }
+
+  export type EventsCountAggregateInputType = {
+    event?: true
+    playerId?: true
+    totalProgression?: true
+    dailyProgression?: true
+    _all?: true
+  }
+
+  export type EventsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Events to aggregate.
+     */
+    where?: EventsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventsOrderByWithRelationInput | EventsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: EventsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Events
+    **/
+    _count?: true | EventsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: EventsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: EventsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: EventsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: EventsMaxAggregateInputType
+  }
+
+  export type GetEventsAggregateType<T extends EventsAggregateArgs> = {
+        [P in keyof T & keyof AggregateEvents]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateEvents[P]>
+      : GetScalarType<T[P], AggregateEvents[P]>
+  }
+
+
+
+
+  export type EventsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: EventsWhereInput
+    orderBy?: EventsOrderByWithAggregationInput | EventsOrderByWithAggregationInput[]
+    by: EventsScalarFieldEnum[] | EventsScalarFieldEnum
+    having?: EventsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: EventsCountAggregateInputType | true
+    _avg?: EventsAvgAggregateInputType
+    _sum?: EventsSumAggregateInputType
+    _min?: EventsMinAggregateInputType
+    _max?: EventsMaxAggregateInputType
+  }
+
+  export type EventsGroupByOutputType = {
+    event: $Enums.EventType
+    playerId: string
+    totalProgression: number
+    dailyProgression: number
+    _count: EventsCountAggregateOutputType | null
+    _avg: EventsAvgAggregateOutputType | null
+    _sum: EventsSumAggregateOutputType | null
+    _min: EventsMinAggregateOutputType | null
+    _max: EventsMaxAggregateOutputType | null
+  }
+
+  type GetEventsGroupByPayload<T extends EventsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<EventsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof EventsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], EventsGroupByOutputType[P]>
+            : GetScalarType<T[P], EventsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type EventsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    event?: boolean
+    playerId?: boolean
+    totalProgression?: boolean
+    dailyProgression?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["events"]>
+
+  export type EventsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    event?: boolean
+    playerId?: boolean
+    totalProgression?: boolean
+    dailyProgression?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["events"]>
+
+  export type EventsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    event?: boolean
+    playerId?: boolean
+    totalProgression?: boolean
+    dailyProgression?: boolean
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["events"]>
+
+  export type EventsSelectScalar = {
+    event?: boolean
+    playerId?: boolean
+    totalProgression?: boolean
+    dailyProgression?: boolean
+  }
+
+  export type EventsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"event" | "playerId" | "totalProgression" | "dailyProgression", ExtArgs["result"]["events"]>
+  export type EventsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type EventsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+  export type EventsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    player?: boolean | PlayerDefaultArgs<ExtArgs>
+  }
+
+  export type $EventsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Events"
+    objects: {
+      player: Prisma.$PlayerPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      event: $Enums.EventType
+      playerId: string
+      totalProgression: number
+      dailyProgression: number
+    }, ExtArgs["result"]["events"]>
+    composites: {}
+  }
+
+  type EventsGetPayload<S extends boolean | null | undefined | EventsDefaultArgs> = $Result.GetResult<Prisma.$EventsPayload, S>
+
+  type EventsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<EventsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit' | 'relationLoadStrategy'> & {
+      select?: EventsCountAggregateInputType | true
+    }
+
+  export interface EventsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Events'], meta: { name: 'Events' } }
+    /**
+     * Find zero or one Events that matches the filter.
+     * @param {EventsFindUniqueArgs} args - Arguments to find a Events
+     * @example
+     * // Get one Events
+     * const events = await prisma.events.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends EventsFindUniqueArgs>(args: SelectSubset<T, EventsFindUniqueArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Events that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {EventsFindUniqueOrThrowArgs} args - Arguments to find a Events
+     * @example
+     * // Get one Events
+     * const events = await prisma.events.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends EventsFindUniqueOrThrowArgs>(args: SelectSubset<T, EventsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Events that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsFindFirstArgs} args - Arguments to find a Events
+     * @example
+     * // Get one Events
+     * const events = await prisma.events.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends EventsFindFirstArgs>(args?: SelectSubset<T, EventsFindFirstArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Events that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsFindFirstOrThrowArgs} args - Arguments to find a Events
+     * @example
+     * // Get one Events
+     * const events = await prisma.events.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends EventsFindFirstOrThrowArgs>(args?: SelectSubset<T, EventsFindFirstOrThrowArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Events that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Events
+     * const events = await prisma.events.findMany()
+     * 
+     * // Get first 10 Events
+     * const events = await prisma.events.findMany({ take: 10 })
+     * 
+     * // Only select the `playerId`
+     * const eventsWithPlayerIdOnly = await prisma.events.findMany({ select: { playerId: true } })
+     * 
+     */
+    findMany<T extends EventsFindManyArgs>(args?: SelectSubset<T, EventsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Events.
+     * @param {EventsCreateArgs} args - Arguments to create a Events.
+     * @example
+     * // Create one Events
+     * const Events = await prisma.events.create({
+     *   data: {
+     *     // ... data to create a Events
+     *   }
+     * })
+     * 
+     */
+    create<T extends EventsCreateArgs>(args: SelectSubset<T, EventsCreateArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Events.
+     * @param {EventsCreateManyArgs} args - Arguments to create many Events.
+     * @example
+     * // Create many Events
+     * const events = await prisma.events.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends EventsCreateManyArgs>(args?: SelectSubset<T, EventsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Events and returns the data saved in the database.
+     * @param {EventsCreateManyAndReturnArgs} args - Arguments to create many Events.
+     * @example
+     * // Create many Events
+     * const events = await prisma.events.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Events and only return the `playerId`
+     * const eventsWithPlayerIdOnly = await prisma.events.createManyAndReturn({
+     *   select: { playerId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends EventsCreateManyAndReturnArgs>(args?: SelectSubset<T, EventsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Events.
+     * @param {EventsDeleteArgs} args - Arguments to delete one Events.
+     * @example
+     * // Delete one Events
+     * const Events = await prisma.events.delete({
+     *   where: {
+     *     // ... filter to delete one Events
+     *   }
+     * })
+     * 
+     */
+    delete<T extends EventsDeleteArgs>(args: SelectSubset<T, EventsDeleteArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Events.
+     * @param {EventsUpdateArgs} args - Arguments to update one Events.
+     * @example
+     * // Update one Events
+     * const events = await prisma.events.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends EventsUpdateArgs>(args: SelectSubset<T, EventsUpdateArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Events.
+     * @param {EventsDeleteManyArgs} args - Arguments to filter Events to delete.
+     * @example
+     * // Delete a few Events
+     * const { count } = await prisma.events.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends EventsDeleteManyArgs>(args?: SelectSubset<T, EventsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Events
+     * const events = await prisma.events.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends EventsUpdateManyArgs>(args: SelectSubset<T, EventsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Events and returns the data updated in the database.
+     * @param {EventsUpdateManyAndReturnArgs} args - Arguments to update many Events.
+     * @example
+     * // Update many Events
+     * const events = await prisma.events.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Events and only return the `playerId`
+     * const eventsWithPlayerIdOnly = await prisma.events.updateManyAndReturn({
+     *   select: { playerId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends EventsUpdateManyAndReturnArgs>(args: SelectSubset<T, EventsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Events.
+     * @param {EventsUpsertArgs} args - Arguments to update or create a Events.
+     * @example
+     * // Update or create a Events
+     * const events = await prisma.events.upsert({
+     *   create: {
+     *     // ... data to create a Events
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Events we want to update
+     *   }
+     * })
+     */
+    upsert<T extends EventsUpsertArgs>(args: SelectSubset<T, EventsUpsertArgs<ExtArgs>>): Prisma__EventsClient<$Result.GetResult<Prisma.$EventsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsCountArgs} args - Arguments to filter Events to count.
+     * @example
+     * // Count the number of Events
+     * const count = await prisma.events.count({
+     *   where: {
+     *     // ... the filter for the Events we want to count
+     *   }
+     * })
+    **/
+    count<T extends EventsCountArgs>(
+      args?: Subset<T, EventsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], EventsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends EventsAggregateArgs>(args: Subset<T, EventsAggregateArgs>): Prisma.PrismaPromise<GetEventsAggregateType<T>>
+
+    /**
+     * Group by Events.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {EventsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends EventsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: EventsGroupByArgs['orderBy'] }
+        : { orderBy?: EventsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, EventsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetEventsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Events model
+   */
+  readonly fields: EventsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Events.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__EventsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    player<T extends PlayerDefaultArgs<ExtArgs> = {}>(args?: Subset<T, PlayerDefaultArgs<ExtArgs>>): Prisma__PlayerClient<$Result.GetResult<Prisma.$PlayerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Events model
+   */ 
+  interface EventsFieldRefs {
+    readonly event: FieldRef<"Events", 'EventType'>
+    readonly playerId: FieldRef<"Events", 'String'>
+    readonly totalProgression: FieldRef<"Events", 'Int'>
+    readonly dailyProgression: FieldRef<"Events", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Events findUnique
+   */
+  export type EventsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where: EventsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events findUniqueOrThrow
+   */
+  export type EventsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where: EventsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events findFirst
+   */
+  export type EventsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where?: EventsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventsOrderByWithRelationInput | EventsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Events.
+     */
+    cursor?: EventsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
+    distinct?: EventsScalarFieldEnum | EventsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events findFirstOrThrow
+   */
+  export type EventsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where?: EventsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventsOrderByWithRelationInput | EventsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Events.
+     */
+    cursor?: EventsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Events.
+     */
+    distinct?: EventsScalarFieldEnum | EventsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events findMany
+   */
+  export type EventsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * Filter, which Events to fetch.
+     */
+    where?: EventsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Events to fetch.
+     */
+    orderBy?: EventsOrderByWithRelationInput | EventsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Events.
+     */
+    cursor?: EventsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Events from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Events.
+     */
+    skip?: number
+    distinct?: EventsScalarFieldEnum | EventsScalarFieldEnum[]
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events create
+   */
+  export type EventsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Events.
+     */
+    data: XOR<EventsCreateInput, EventsUncheckedCreateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events createMany
+   */
+  export type EventsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Events.
+     */
+    data: EventsCreateManyInput | EventsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Events createManyAndReturn
+   */
+  export type EventsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * The data used to create many Events.
+     */
+    data: EventsCreateManyInput | EventsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Events update
+   */
+  export type EventsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Events.
+     */
+    data: XOR<EventsUpdateInput, EventsUncheckedUpdateInput>
+    /**
+     * Choose, which Events to update.
+     */
+    where: EventsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events updateMany
+   */
+  export type EventsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Events.
+     */
+    data: XOR<EventsUpdateManyMutationInput, EventsUncheckedUpdateManyInput>
+    /**
+     * Filter which Events to update
+     */
+    where?: EventsWhereInput
+    /**
+     * Limit how many Events to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Events updateManyAndReturn
+   */
+  export type EventsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * The data used to update Events.
+     */
+    data: XOR<EventsUpdateManyMutationInput, EventsUncheckedUpdateManyInput>
+    /**
+     * Filter which Events to update
+     */
+    where?: EventsWhereInput
+    /**
+     * Limit how many Events to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Events upsert
+   */
+  export type EventsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Events to update in case it exists.
+     */
+    where: EventsWhereUniqueInput
+    /**
+     * In case the Events found by the `where` argument doesn't exist, create a new Events with this data.
+     */
+    create: XOR<EventsCreateInput, EventsUncheckedCreateInput>
+    /**
+     * In case the Events was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<EventsUpdateInput, EventsUncheckedUpdateInput>
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events delete
+   */
+  export type EventsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+    /**
+     * Filter which Events to delete.
+     */
+    where: EventsWhereUniqueInput
+    relationLoadStrategy?: RelationLoadStrategy
+  }
+
+  /**
+   * Events deleteMany
+   */
+  export type EventsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Events to delete
+     */
+    where?: EventsWhereInput
+    /**
+     * Limit how many Events to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Events without action
+   */
+  export type EventsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Events
+     */
+    select?: EventsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Events
+     */
+    omit?: EventsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: EventsInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model ServerState
    */
 
@@ -74349,6 +75581,16 @@ export namespace Prisma {
   export type GameDinozScalarFieldEnum = (typeof GameDinozScalarFieldEnum)[keyof typeof GameDinozScalarFieldEnum]
 
 
+  export const EventsScalarFieldEnum: {
+    event: 'event',
+    playerId: 'playerId',
+    totalProgression: 'totalProgression',
+    dailyProgression: 'dailyProgression'
+  };
+
+  export type EventsScalarFieldEnum = (typeof EventsScalarFieldEnum)[keyof typeof EventsScalarFieldEnum]
+
+
   export const ServerStateScalarFieldEnum: {
     action: 'action',
     nextCheck: 'nextCheck'
@@ -74644,6 +75886,20 @@ export namespace Prisma {
    * Reference to a field of type 'GameDinozUsage[]'
    */
   export type ListEnumGameDinozUsageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'GameDinozUsage[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'EventType'
+   */
+  export type EnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventType'>
+    
+
+
+  /**
+   * Reference to a field of type 'EventType[]'
+   */
+  export type ListEnumEventTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventType[]'>
     
 
 
@@ -75795,6 +77051,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedListRelationFilter
     GameDinoz?: GameDinozListRelationFilter
     pollVotes?: PollVoteListRelationFilter
+    Events?: EventsListRelationFilter
   }
 
   export type PlayerOrderByWithRelationInput = {
@@ -75859,6 +77116,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedOrderByRelationAggregateInput
     GameDinoz?: GameDinozOrderByRelationAggregateInput
     pollVotes?: PollVoteOrderByRelationAggregateInput
+    Events?: EventsOrderByRelationAggregateInput
   }
 
   export type PlayerWhereUniqueInput = Prisma.AtLeast<{
@@ -75926,6 +77184,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedListRelationFilter
     GameDinoz?: GameDinozListRelationFilter
     pollVotes?: PollVoteListRelationFilter
+    Events?: EventsListRelationFilter
   }, "id" | "clanMemberId" | "banCaseId" | "id">
 
   export type PlayerOrderByWithAggregationInput = {
@@ -78631,6 +79890,59 @@ export namespace Prisma {
     FBTournamentId?: UuidNullableWithAggregatesFilter<"GameDinoz"> | string | null
   }
 
+  export type EventsWhereInput = {
+    AND?: EventsWhereInput | EventsWhereInput[]
+    OR?: EventsWhereInput[]
+    NOT?: EventsWhereInput | EventsWhereInput[]
+    event?: EnumEventTypeFilter<"Events"> | $Enums.EventType
+    playerId?: UuidFilter<"Events"> | string
+    totalProgression?: IntFilter<"Events"> | number
+    dailyProgression?: IntFilter<"Events"> | number
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }
+
+  export type EventsOrderByWithRelationInput = {
+    event?: SortOrder
+    playerId?: SortOrder
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+    player?: PlayerOrderByWithRelationInput
+  }
+
+  export type EventsWhereUniqueInput = Prisma.AtLeast<{
+    event_playerId?: EventsEventPlayerIdCompoundUniqueInput
+    AND?: EventsWhereInput | EventsWhereInput[]
+    OR?: EventsWhereInput[]
+    NOT?: EventsWhereInput | EventsWhereInput[]
+    event?: EnumEventTypeFilter<"Events"> | $Enums.EventType
+    playerId?: UuidFilter<"Events"> | string
+    totalProgression?: IntFilter<"Events"> | number
+    dailyProgression?: IntFilter<"Events"> | number
+    player?: XOR<PlayerScalarRelationFilter, PlayerWhereInput>
+  }, "event_playerId">
+
+  export type EventsOrderByWithAggregationInput = {
+    event?: SortOrder
+    playerId?: SortOrder
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+    _count?: EventsCountOrderByAggregateInput
+    _avg?: EventsAvgOrderByAggregateInput
+    _max?: EventsMaxOrderByAggregateInput
+    _min?: EventsMinOrderByAggregateInput
+    _sum?: EventsSumOrderByAggregateInput
+  }
+
+  export type EventsScalarWhereWithAggregatesInput = {
+    AND?: EventsScalarWhereWithAggregatesInput | EventsScalarWhereWithAggregatesInput[]
+    OR?: EventsScalarWhereWithAggregatesInput[]
+    NOT?: EventsScalarWhereWithAggregatesInput | EventsScalarWhereWithAggregatesInput[]
+    event?: EnumEventTypeWithAggregatesFilter<"Events"> | $Enums.EventType
+    playerId?: UuidWithAggregatesFilter<"Events"> | string
+    totalProgression?: IntWithAggregatesFilter<"Events"> | number
+    dailyProgression?: IntWithAggregatesFilter<"Events"> | number
+  }
+
   export type ServerStateWhereInput = {
     AND?: ServerStateWhereInput | ServerStateWhereInput[]
     OR?: ServerStateWhereInput[]
@@ -79742,6 +81054,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateInput = {
@@ -79805,6 +81118,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUpdateInput = {
@@ -79868,6 +81182,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateInput = {
@@ -79931,6 +81246,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateManyInput = {
@@ -82534,6 +83850,54 @@ export namespace Prisma {
     FBTournamentId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type EventsCreateInput = {
+    event: $Enums.EventType
+    totalProgression: number
+    dailyProgression: number
+    player: PlayerCreateNestedOneWithoutEventsInput
+  }
+
+  export type EventsUncheckedCreateInput = {
+    event: $Enums.EventType
+    playerId: string
+    totalProgression: number
+    dailyProgression: number
+  }
+
+  export type EventsUpdateInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
+    player?: PlayerUpdateOneRequiredWithoutEventsNestedInput
+  }
+
+  export type EventsUncheckedUpdateInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    playerId?: StringFieldUpdateOperationsInput | string
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EventsCreateManyInput = {
+    event: $Enums.EventType
+    playerId: string
+    totalProgression: number
+    dailyProgression: number
+  }
+
+  export type EventsUpdateManyMutationInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EventsUncheckedUpdateManyInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    playerId?: StringFieldUpdateOperationsInput | string
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
+  }
+
   export type ServerStateCreateInput = {
     action: $Enums.ServerAction
     nextCheck: Date | string
@@ -83921,6 +85285,12 @@ export namespace Prisma {
     none?: GameDinozWhereInput
   }
 
+  export type EventsListRelationFilter = {
+    every?: EventsWhereInput
+    some?: EventsWhereInput
+    none?: EventsWhereInput
+  }
+
   export type ClanHistoryOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -83990,6 +85360,10 @@ export namespace Prisma {
   }
 
   export type GameDinozOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type EventsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -86027,6 +87401,59 @@ export namespace Prisma {
     _max?: NestedEnumGameDinozUsageFilter<$PrismaModel>
   }
 
+  export type EnumEventTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeFilter<$PrismaModel> | $Enums.EventType
+  }
+
+  export type EventsEventPlayerIdCompoundUniqueInput = {
+    event: $Enums.EventType
+    playerId: string
+  }
+
+  export type EventsCountOrderByAggregateInput = {
+    event?: SortOrder
+    playerId?: SortOrder
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+  }
+
+  export type EventsAvgOrderByAggregateInput = {
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+  }
+
+  export type EventsMaxOrderByAggregateInput = {
+    event?: SortOrder
+    playerId?: SortOrder
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+  }
+
+  export type EventsMinOrderByAggregateInput = {
+    event?: SortOrder
+    playerId?: SortOrder
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+  }
+
+  export type EventsSumOrderByAggregateInput = {
+    totalProgression?: SortOrder
+    dailyProgression?: SortOrder
+  }
+
+  export type EnumEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.EventType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEventTypeFilter<$PrismaModel>
+    _max?: NestedEnumEventTypeFilter<$PrismaModel>
+  }
+
   export type EnumServerActionFilter<$PrismaModel = never> = {
     equals?: $Enums.ServerAction | EnumServerActionFieldRefInput<$PrismaModel>
     in?: $Enums.ServerAction[] | ListEnumServerActionFieldRefInput<$PrismaModel>
@@ -87627,6 +89054,13 @@ export namespace Prisma {
     connect?: PollVoteWhereUniqueInput | PollVoteWhereUniqueInput[]
   }
 
+  export type EventsCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<EventsCreateWithoutPlayerInput, EventsUncheckedCreateWithoutPlayerInput> | EventsCreateWithoutPlayerInput[] | EventsUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: EventsCreateOrConnectWithoutPlayerInput | EventsCreateOrConnectWithoutPlayerInput[]
+    createMany?: EventsCreateManyPlayerInputEnvelope
+    connect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+  }
+
   export type ClanUncheckedCreateNestedOneWithoutLeaderInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -87837,6 +89271,13 @@ export namespace Prisma {
     connectOrCreate?: PollVoteCreateOrConnectWithoutPlayerInput | PollVoteCreateOrConnectWithoutPlayerInput[]
     createMany?: PollVoteCreateManyPlayerInputEnvelope
     connect?: PollVoteWhereUniqueInput | PollVoteWhereUniqueInput[]
+  }
+
+  export type EventsUncheckedCreateNestedManyWithoutPlayerInput = {
+    create?: XOR<EventsCreateWithoutPlayerInput, EventsUncheckedCreateWithoutPlayerInput> | EventsCreateWithoutPlayerInput[] | EventsUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: EventsCreateOrConnectWithoutPlayerInput | EventsCreateOrConnectWithoutPlayerInput[]
+    createMany?: EventsCreateManyPlayerInputEnvelope
+    connect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
   }
 
   export type EnumAdminRoleFieldUpdateOperationsInput = {
@@ -88281,6 +89722,20 @@ export namespace Prisma {
     deleteMany?: PollVoteScalarWhereInput | PollVoteScalarWhereInput[]
   }
 
+  export type EventsUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<EventsCreateWithoutPlayerInput, EventsUncheckedCreateWithoutPlayerInput> | EventsCreateWithoutPlayerInput[] | EventsUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: EventsCreateOrConnectWithoutPlayerInput | EventsCreateOrConnectWithoutPlayerInput[]
+    upsert?: EventsUpsertWithWhereUniqueWithoutPlayerInput | EventsUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: EventsCreateManyPlayerInputEnvelope
+    set?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    disconnect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    delete?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    connect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    update?: EventsUpdateWithWhereUniqueWithoutPlayerInput | EventsUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: EventsUpdateManyWithWhereWithoutPlayerInput | EventsUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: EventsScalarWhereInput | EventsScalarWhereInput[]
+  }
+
   export type ClanUncheckedUpdateOneWithoutLeaderNestedInput = {
     create?: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
     connectOrCreate?: ClanCreateOrConnectWithoutLeaderInput
@@ -88693,6 +90148,20 @@ export namespace Prisma {
     update?: PollVoteUpdateWithWhereUniqueWithoutPlayerInput | PollVoteUpdateWithWhereUniqueWithoutPlayerInput[]
     updateMany?: PollVoteUpdateManyWithWhereWithoutPlayerInput | PollVoteUpdateManyWithWhereWithoutPlayerInput[]
     deleteMany?: PollVoteScalarWhereInput | PollVoteScalarWhereInput[]
+  }
+
+  export type EventsUncheckedUpdateManyWithoutPlayerNestedInput = {
+    create?: XOR<EventsCreateWithoutPlayerInput, EventsUncheckedCreateWithoutPlayerInput> | EventsCreateWithoutPlayerInput[] | EventsUncheckedCreateWithoutPlayerInput[]
+    connectOrCreate?: EventsCreateOrConnectWithoutPlayerInput | EventsCreateOrConnectWithoutPlayerInput[]
+    upsert?: EventsUpsertWithWhereUniqueWithoutPlayerInput | EventsUpsertWithWhereUniqueWithoutPlayerInput[]
+    createMany?: EventsCreateManyPlayerInputEnvelope
+    set?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    disconnect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    delete?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    connect?: EventsWhereUniqueInput | EventsWhereUniqueInput[]
+    update?: EventsUpdateWithWhereUniqueWithoutPlayerInput | EventsUpdateWithWhereUniqueWithoutPlayerInput[]
+    updateMany?: EventsUpdateManyWithWhereWithoutPlayerInput | EventsUpdateManyWithWhereWithoutPlayerInput[]
+    deleteMany?: EventsScalarWhereInput | EventsScalarWhereInput[]
   }
 
   export type PlayerCreateNestedOneWithoutDojoInput = {
@@ -90999,6 +92468,24 @@ export namespace Prisma {
     deleteMany?: FightArchiveScalarWhereInput | FightArchiveScalarWhereInput[]
   }
 
+  export type PlayerCreateNestedOneWithoutEventsInput = {
+    create?: XOR<PlayerCreateWithoutEventsInput, PlayerUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutEventsInput
+    connect?: PlayerWhereUniqueInput
+  }
+
+  export type EnumEventTypeFieldUpdateOperationsInput = {
+    set?: $Enums.EventType
+  }
+
+  export type PlayerUpdateOneRequiredWithoutEventsNestedInput = {
+    create?: XOR<PlayerCreateWithoutEventsInput, PlayerUncheckedCreateWithoutEventsInput>
+    connectOrCreate?: PlayerCreateOrConnectWithoutEventsInput
+    upsert?: PlayerUpsertWithoutEventsInput
+    connect?: PlayerWhereUniqueInput
+    update?: XOR<XOR<PlayerUpdateToOneWithWhereWithoutEventsInput, PlayerUpdateWithoutEventsInput>, PlayerUncheckedUpdateWithoutEventsInput>
+  }
+
   export type EnumServerActionFieldUpdateOperationsInput = {
     set?: $Enums.ServerAction
   }
@@ -91521,6 +93008,23 @@ export namespace Prisma {
     _max?: NestedEnumGameDinozUsageFilter<$PrismaModel>
   }
 
+  export type NestedEnumEventTypeFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeFilter<$PrismaModel> | $Enums.EventType
+  }
+
+  export type NestedEnumEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.EventType | EnumEventTypeFieldRefInput<$PrismaModel>
+    in?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    notIn?: $Enums.EventType[] | ListEnumEventTypeFieldRefInput<$PrismaModel>
+    not?: NestedEnumEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.EventType
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumEventTypeFilter<$PrismaModel>
+    _max?: NestedEnumEventTypeFilter<$PrismaModel>
+  }
+
   export type NestedEnumServerActionFilter<$PrismaModel = never> = {
     equals?: $Enums.ServerAction | EnumServerActionFieldRefInput<$PrismaModel>
     in?: $Enums.ServerAction[] | ListEnumServerActionFieldRefInput<$PrismaModel>
@@ -91895,6 +93399,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozInput = {
@@ -91957,6 +93462,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozInput = {
@@ -92620,6 +94126,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozInput = {
@@ -92682,6 +94189,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConcentrationUpsertWithoutDinozInput = {
@@ -95520,6 +97028,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPollVotesInput = {
@@ -95582,6 +97091,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPollVotesInput = {
@@ -95714,6 +97224,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPollVotesInput = {
@@ -95776,6 +97287,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type NewsCreateWithoutLikedByInput = {
@@ -97026,6 +98538,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type EventsCreateWithoutPlayerInput = {
+    event: $Enums.EventType
+    totalProgression: number
+    dailyProgression: number
+  }
+
+  export type EventsUncheckedCreateWithoutPlayerInput = {
+    event: $Enums.EventType
+    totalProgression: number
+    dailyProgression: number
+  }
+
+  export type EventsCreateOrConnectWithoutPlayerInput = {
+    where: EventsWhereUniqueInput
+    create: XOR<EventsCreateWithoutPlayerInput, EventsUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type EventsCreateManyPlayerInputEnvelope = {
+    data: EventsCreateManyPlayerInput | EventsCreateManyPlayerInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ClanUpsertWithoutLeaderInput = {
     update: XOR<ClanUpdateWithoutLeaderInput, ClanUncheckedUpdateWithoutLeaderInput>
     create: XOR<ClanCreateWithoutLeaderInput, ClanUncheckedCreateWithoutLeaderInput>
@@ -97855,6 +99389,32 @@ export namespace Prisma {
     data: XOR<PollVoteUpdateManyMutationInput, PollVoteUncheckedUpdateManyWithoutPlayerInput>
   }
 
+  export type EventsUpsertWithWhereUniqueWithoutPlayerInput = {
+    where: EventsWhereUniqueInput
+    update: XOR<EventsUpdateWithoutPlayerInput, EventsUncheckedUpdateWithoutPlayerInput>
+    create: XOR<EventsCreateWithoutPlayerInput, EventsUncheckedCreateWithoutPlayerInput>
+  }
+
+  export type EventsUpdateWithWhereUniqueWithoutPlayerInput = {
+    where: EventsWhereUniqueInput
+    data: XOR<EventsUpdateWithoutPlayerInput, EventsUncheckedUpdateWithoutPlayerInput>
+  }
+
+  export type EventsUpdateManyWithWhereWithoutPlayerInput = {
+    where: EventsScalarWhereInput
+    data: XOR<EventsUpdateManyMutationInput, EventsUncheckedUpdateManyWithoutPlayerInput>
+  }
+
+  export type EventsScalarWhereInput = {
+    AND?: EventsScalarWhereInput | EventsScalarWhereInput[]
+    OR?: EventsScalarWhereInput[]
+    NOT?: EventsScalarWhereInput | EventsScalarWhereInput[]
+    event?: EnumEventTypeFilter<"Events"> | $Enums.EventType
+    playerId?: UuidFilter<"Events"> | string
+    totalProgression?: IntFilter<"Events"> | number
+    dailyProgression?: IntFilter<"Events"> | number
+  }
+
   export type PlayerCreateWithoutDojoInput = {
     customText?: string | null
     name: string
@@ -97915,6 +99475,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDojoInput = {
@@ -97977,6 +99538,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDojoInput = {
@@ -98156,6 +99718,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDojoInput = {
@@ -98218,6 +99781,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DojoTeamUpsertWithWhereUniqueWithoutDojoInput = {
@@ -98969,6 +100533,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutUsernameHistoryInput = {
@@ -99031,6 +100596,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutUsernameHistoryInput = {
@@ -99109,6 +100675,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutUsernameHistoryInput = {
@@ -99171,6 +100738,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutDinozShopInput = {
@@ -99233,6 +100801,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutDinozShopInput = {
@@ -99295,6 +100864,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutDinozShopInput = {
@@ -99373,6 +100943,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutDinozShopInput = {
@@ -99435,6 +101006,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutGathersInput = {
@@ -99497,6 +101069,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGathersInput = {
@@ -99559,6 +101132,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGathersInput = {
@@ -99637,6 +101211,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGathersInput = {
@@ -99699,6 +101274,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutIngredientsInput = {
@@ -99761,6 +101337,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutIngredientsInput = {
@@ -99823,6 +101400,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutIngredientsInput = {
@@ -99901,6 +101479,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutIngredientsInput = {
@@ -99963,6 +101542,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutItemsInput = {
@@ -100025,6 +101605,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutItemsInput = {
@@ -100087,6 +101668,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutItemsInput = {
@@ -100165,6 +101747,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutItemsInput = {
@@ -100227,6 +101810,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutQuestsInput = {
@@ -100289,6 +101873,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutQuestsInput = {
@@ -100351,6 +101936,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutQuestsInput = {
@@ -100429,6 +102015,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutQuestsInput = {
@@ -100491,6 +102078,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRewardsInput = {
@@ -100553,6 +102141,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRewardsInput = {
@@ -100615,6 +102204,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRewardsInput = {
@@ -100693,6 +102283,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRewardsInput = {
@@ -100755,6 +102346,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutRankingInput = {
@@ -100817,6 +102409,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutRankingInput = {
@@ -100879,6 +102472,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutRankingInput = {
@@ -100957,6 +102551,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutRankingInput = {
@@ -101019,6 +102614,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferCreateWithoutItemsInput = {
@@ -101171,6 +102767,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBidsInput = {
@@ -101233,6 +102830,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBidsInput = {
@@ -101345,6 +102943,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBidsInput = {
@@ -101407,6 +103006,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutOffersInput = {
@@ -101567,6 +103167,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutOffersInput = {
@@ -101629,6 +103230,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutOffersInput = {
@@ -101857,6 +103459,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutOffersInput = {
@@ -101919,6 +103522,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type OfferBidUpsertWithWhereUniqueWithoutOfferInput = {
@@ -102122,6 +103726,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLogsInput = {
@@ -102184,6 +103789,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLogsInput = {
@@ -102366,6 +103972,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLogsInput = {
@@ -102428,6 +104035,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutCatchesInput = {
@@ -102692,6 +104300,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPlayerTrackingInput = {
@@ -102754,6 +104363,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPlayerTrackingInput = {
@@ -102832,6 +104442,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPlayerTrackingInput = {
@@ -102894,6 +104505,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateWithoutPantheonInput = {
@@ -103054,6 +104666,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutPantheonInput = {
@@ -103116,6 +104729,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutPantheonInput = {
@@ -103298,6 +104912,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutPantheonInput = {
@@ -103360,6 +104975,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanWarCreateWithoutClansInput = {
@@ -103438,6 +105054,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutLeaderOfInput = {
@@ -103500,6 +105117,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutLeaderOfInput = {
@@ -103744,6 +105362,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutLeaderOfInput = {
@@ -103806,6 +105425,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanHistoryUpsertWithWhereUniqueWithoutClanInput = {
@@ -104045,6 +105665,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanJoinRequestInput = {
@@ -104107,6 +105728,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanJoinRequestInput = {
@@ -104227,6 +105849,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanJoinRequestInput = {
@@ -104289,6 +105912,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutWarInput = {
@@ -104500,6 +106124,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMessageInput = {
@@ -104562,6 +106187,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMessageInput = {
@@ -104676,6 +106302,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMessageInput = {
@@ -104738,6 +106365,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutDiscussionInput = {
@@ -104842,6 +106470,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanHistoryInput = {
@@ -104904,6 +106533,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanHistoryInput = {
@@ -105018,6 +106648,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanHistoryInput = {
@@ -105080,6 +106711,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanUpsertWithoutHistoryInput = {
@@ -105220,6 +106852,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutClanMemberInput = {
@@ -105282,6 +106915,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutClanMemberInput = {
@@ -105402,6 +107036,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutClanMemberInput = {
@@ -105464,6 +107099,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ClanCreateWithoutPagesInput = {
@@ -105702,6 +107338,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutReportedCasesInput = {
@@ -105764,6 +107401,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutReportedCasesInput = {
@@ -105831,6 +107469,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutTargetedCasesInput = {
@@ -105893,6 +107532,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutTargetedCasesInput = {
@@ -105960,6 +107600,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutBanCaseInput = {
@@ -106022,6 +107663,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutBanCaseInput = {
@@ -106204,6 +107846,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutReportedCasesInput = {
@@ -106266,6 +107909,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutTargetedCasesInput = {
@@ -106339,6 +107983,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutTargetedCasesInput = {
@@ -106401,6 +108046,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUpsertWithoutBanCaseInput = {
@@ -106474,6 +108120,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutBanCaseInput = {
@@ -106536,6 +108183,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutCreatedConversationsInput = {
@@ -106598,6 +108246,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutCreatedConversationsInput = {
@@ -106660,6 +108309,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutCreatedConversationsInput = {
@@ -106749,6 +108399,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationInput = {
@@ -106811,6 +108462,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationInput = {
@@ -106939,6 +108591,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutCreatedConversationsInput = {
@@ -107001,6 +108654,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithoutPinnedInInput = {
@@ -107102,6 +108756,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationInput = {
@@ -107164,6 +108819,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -107287,6 +108943,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutConversationsInput = {
@@ -107349,6 +109006,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutConversationsInput = {
@@ -107462,6 +109120,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutConversationsInput = {
@@ -107524,6 +109183,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type ConversationCreateWithoutPinnedMessageInput = {
@@ -107644,6 +109304,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutMessagesInput = {
@@ -107706,6 +109367,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutMessagesInput = {
@@ -107854,6 +109516,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutMessagesInput = {
@@ -107916,6 +109579,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutNotificationsInput = {
@@ -107978,6 +109642,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutNotificationsInput = {
@@ -108040,6 +109705,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutNotificationsInput = {
@@ -108118,6 +109784,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutNotificationsInput = {
@@ -108180,6 +109847,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerCreateWithoutFightArchiveInput = {
@@ -108242,6 +109910,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightArchiveInput = {
@@ -108304,6 +109973,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightArchiveInput = {
@@ -108642,6 +110312,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightArchiveInput = {
@@ -108704,6 +110375,7 @@ export namespace Prisma {
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentUpsertWithoutFightsInput = {
@@ -109099,6 +110771,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutFightWatchedInput = {
@@ -109161,6 +110834,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutFightWatchedInput = {
@@ -109288,6 +110962,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutFightWatchedInput = {
@@ -109350,6 +111025,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type TournamentTeamCreateWithoutTournamentInput = {
@@ -110049,6 +111725,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+    Events?: EventsCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerUncheckedCreateWithoutGameDinozInput = {
@@ -110111,6 +111788,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
     FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
     pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+    Events?: EventsUncheckedCreateNestedManyWithoutPlayerInput
   }
 
   export type PlayerCreateOrConnectWithoutGameDinozInput = {
@@ -110420,6 +112098,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUpdateManyWithoutPlayerNestedInput
   }
 
   export type PlayerUncheckedUpdateWithoutGameDinozInput = {
@@ -110482,6 +112161,7 @@ export namespace Prisma {
     FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
     FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
     pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
+    Events?: EventsUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozItemUpsertWithWhereUniqueWithoutGameDinozInput = {
@@ -110627,6 +112307,274 @@ export namespace Prisma {
   export type FightArchiveUpdateManyWithWhereWithoutFBTournamentRightInput = {
     where: FightArchiveScalarWhereInput
     data: XOR<FightArchiveUpdateManyMutationInput, FightArchiveUncheckedUpdateManyWithoutFBTournamentRightInput>
+  }
+
+  export type PlayerCreateWithoutEventsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationCreateNestedManyWithoutPlayerInput
+    logs?: LogCreateNestedManyWithoutPlayerInput
+    messages?: MessageCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationCreateNestedManyWithoutTargetInput
+    notifications?: NotificationCreateNestedManyWithoutPlayerInput
+    offers?: OfferCreateNestedManyWithoutSellerInput
+    bids?: OfferBidCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozCreateNestedManyWithoutPlayerInput
+    banCase?: ModerationCreateNestedOneWithoutBannedUserInput
+    playerTracking?: PlayerTrackingCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardCreateNestedManyWithoutPlayerInput
+    ranking?: RankingCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveCreateNestedManyWithoutPlayerInput
+    FightWatched?: FightWatchedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerUncheckedCreateWithoutEventsInput = {
+    customText?: string | null
+    name: string
+    connexionToken?: string
+    money: number
+    quetzuBought: number
+    leader?: boolean
+    engineer?: boolean
+    cooker?: boolean
+    shopKeeper?: boolean
+    merchant?: boolean
+    priest?: boolean
+    teacher?: boolean
+    createdDate?: Date | string
+    updatedDate?: Date | string
+    lastLogin?: Date | string
+    clanMemberId?: number | null
+    matelasseur?: boolean
+    messie?: boolean
+    labruteDone?: boolean
+    role?: $Enums.AdminRole
+    lang?: $Enums.Lang
+    dailyGridRewards?: number
+    skipFight?: boolean
+    skipLevel?: boolean
+    banCaseId?: number | null
+    discoveredSkills?: PlayerCreatediscoveredSkillsInput | number[]
+    lastVersionSeen?: string
+    id: string
+    ips?: PlayerCreateipsInput | string[]
+    leaderOf?: ClanUncheckedCreateNestedOneWithoutLeaderInput
+    ClanHistory?: ClanHistoryUncheckedCreateNestedManyWithoutAuthorInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedCreateNestedOneWithoutPlayerInput
+    ClanMember?: ClanMemberUncheckedCreateNestedOneWithoutPlayerInput
+    createdConversations?: ConversationUncheckedCreateNestedManyWithoutCreatedByInput
+    Conversation?: ConversationUncheckedCreateNestedManyWithoutPlayerInput
+    logs?: LogUncheckedCreateNestedManyWithoutPlayerInput
+    messages?: MessageUncheckedCreateNestedManyWithoutSenderInput
+    reportedCases?: ModerationUncheckedCreateNestedManyWithoutReporterInput
+    targetedCases?: ModerationUncheckedCreateNestedManyWithoutTargetInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutPlayerInput
+    offers?: OfferUncheckedCreateNestedManyWithoutSellerInput
+    bids?: OfferBidUncheckedCreateNestedManyWithoutUserInput
+    Pantheon?: PantheonUncheckedCreateNestedManyWithoutPlayerInput
+    conversations?: ParticipantsUncheckedCreateNestedManyWithoutPlayerInput
+    usernameHistory?: UsernameHistoryUncheckedCreateNestedManyWithoutPlayerInput
+    ClanMessage?: ClanMessageUncheckedCreateNestedManyWithoutAuthorInput
+    dinoz?: DinozUncheckedCreateNestedManyWithoutPlayerInput
+    playerTracking?: PlayerTrackingUncheckedCreateNestedManyWithoutPlayerInput
+    dinozShop?: PlayerDinozShopUncheckedCreateNestedManyWithoutPlayerInput
+    gathers?: PlayerGatherUncheckedCreateNestedManyWithoutPlayerInput
+    ingredients?: PlayerIngredientUncheckedCreateNestedManyWithoutPlayerInput
+    items?: PlayerItemUncheckedCreateNestedManyWithoutPlayerInput
+    quests?: PlayerQuestUncheckedCreateNestedManyWithoutPlayerInput
+    rewards?: PlayerRewardUncheckedCreateNestedManyWithoutPlayerInput
+    ranking?: RankingUncheckedCreateNestedOneWithoutPlayerInput
+    Dojo?: DojoUncheckedCreateNestedOneWithoutPlayerInput
+    FightArchive?: FightArchiveUncheckedCreateNestedManyWithoutPlayerInput
+    FightWatched?: FightWatchedUncheckedCreateNestedManyWithoutPlayerInput
+    GameDinoz?: GameDinozUncheckedCreateNestedManyWithoutPlayerInput
+    pollVotes?: PollVoteUncheckedCreateNestedManyWithoutPlayerInput
+  }
+
+  export type PlayerCreateOrConnectWithoutEventsInput = {
+    where: PlayerWhereUniqueInput
+    create: XOR<PlayerCreateWithoutEventsInput, PlayerUncheckedCreateWithoutEventsInput>
+  }
+
+  export type PlayerUpsertWithoutEventsInput = {
+    update: XOR<PlayerUpdateWithoutEventsInput, PlayerUncheckedUpdateWithoutEventsInput>
+    create: XOR<PlayerCreateWithoutEventsInput, PlayerUncheckedCreateWithoutEventsInput>
+    where?: PlayerWhereInput
+  }
+
+  export type PlayerUpdateToOneWithWhereWithoutEventsInput = {
+    where?: PlayerWhereInput
+    data: XOR<PlayerUpdateWithoutEventsInput, PlayerUncheckedUpdateWithoutEventsInput>
+  }
+
+  export type PlayerUpdateWithoutEventsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUpdateManyWithoutPlayerNestedInput
+    logs?: LogUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUpdateManyWithoutPlayerNestedInput
+    banCase?: ModerationUpdateOneWithoutBannedUserNestedInput
+    playerTracking?: PlayerTrackingUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUpdateManyWithoutPlayerNestedInput
+    FightWatched?: FightWatchedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUpdateManyWithoutPlayerNestedInput
+  }
+
+  export type PlayerUncheckedUpdateWithoutEventsInput = {
+    customText?: NullableStringFieldUpdateOperationsInput | string | null
+    name?: StringFieldUpdateOperationsInput | string
+    connexionToken?: StringFieldUpdateOperationsInput | string
+    money?: IntFieldUpdateOperationsInput | number
+    quetzuBought?: IntFieldUpdateOperationsInput | number
+    leader?: BoolFieldUpdateOperationsInput | boolean
+    engineer?: BoolFieldUpdateOperationsInput | boolean
+    cooker?: BoolFieldUpdateOperationsInput | boolean
+    shopKeeper?: BoolFieldUpdateOperationsInput | boolean
+    merchant?: BoolFieldUpdateOperationsInput | boolean
+    priest?: BoolFieldUpdateOperationsInput | boolean
+    teacher?: BoolFieldUpdateOperationsInput | boolean
+    createdDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedDate?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastLogin?: DateTimeFieldUpdateOperationsInput | Date | string
+    clanMemberId?: NullableIntFieldUpdateOperationsInput | number | null
+    matelasseur?: BoolFieldUpdateOperationsInput | boolean
+    messie?: BoolFieldUpdateOperationsInput | boolean
+    labruteDone?: BoolFieldUpdateOperationsInput | boolean
+    role?: EnumAdminRoleFieldUpdateOperationsInput | $Enums.AdminRole
+    lang?: EnumLangFieldUpdateOperationsInput | $Enums.Lang
+    dailyGridRewards?: IntFieldUpdateOperationsInput | number
+    skipFight?: BoolFieldUpdateOperationsInput | boolean
+    skipLevel?: BoolFieldUpdateOperationsInput | boolean
+    banCaseId?: NullableIntFieldUpdateOperationsInput | number | null
+    discoveredSkills?: PlayerUpdatediscoveredSkillsInput | number[]
+    lastVersionSeen?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
+    ips?: PlayerUpdateipsInput | string[]
+    leaderOf?: ClanUncheckedUpdateOneWithoutLeaderNestedInput
+    ClanHistory?: ClanHistoryUncheckedUpdateManyWithoutAuthorNestedInput
+    ClanJoinRequest?: ClanJoinRequestUncheckedUpdateOneWithoutPlayerNestedInput
+    ClanMember?: ClanMemberUncheckedUpdateOneWithoutPlayerNestedInput
+    createdConversations?: ConversationUncheckedUpdateManyWithoutCreatedByNestedInput
+    Conversation?: ConversationUncheckedUpdateManyWithoutPlayerNestedInput
+    logs?: LogUncheckedUpdateManyWithoutPlayerNestedInput
+    messages?: MessageUncheckedUpdateManyWithoutSenderNestedInput
+    reportedCases?: ModerationUncheckedUpdateManyWithoutReporterNestedInput
+    targetedCases?: ModerationUncheckedUpdateManyWithoutTargetNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutPlayerNestedInput
+    offers?: OfferUncheckedUpdateManyWithoutSellerNestedInput
+    bids?: OfferBidUncheckedUpdateManyWithoutUserNestedInput
+    Pantheon?: PantheonUncheckedUpdateManyWithoutPlayerNestedInput
+    conversations?: ParticipantsUncheckedUpdateManyWithoutPlayerNestedInput
+    usernameHistory?: UsernameHistoryUncheckedUpdateManyWithoutPlayerNestedInput
+    ClanMessage?: ClanMessageUncheckedUpdateManyWithoutAuthorNestedInput
+    dinoz?: DinozUncheckedUpdateManyWithoutPlayerNestedInput
+    playerTracking?: PlayerTrackingUncheckedUpdateManyWithoutPlayerNestedInput
+    dinozShop?: PlayerDinozShopUncheckedUpdateManyWithoutPlayerNestedInput
+    gathers?: PlayerGatherUncheckedUpdateManyWithoutPlayerNestedInput
+    ingredients?: PlayerIngredientUncheckedUpdateManyWithoutPlayerNestedInput
+    items?: PlayerItemUncheckedUpdateManyWithoutPlayerNestedInput
+    quests?: PlayerQuestUncheckedUpdateManyWithoutPlayerNestedInput
+    rewards?: PlayerRewardUncheckedUpdateManyWithoutPlayerNestedInput
+    ranking?: RankingUncheckedUpdateOneWithoutPlayerNestedInput
+    Dojo?: DojoUncheckedUpdateOneWithoutPlayerNestedInput
+    FightArchive?: FightArchiveUncheckedUpdateManyWithoutPlayerNestedInput
+    FightWatched?: FightWatchedUncheckedUpdateManyWithoutPlayerNestedInput
+    GameDinoz?: GameDinozUncheckedUpdateManyWithoutPlayerNestedInput
+    pollVotes?: PollVoteUncheckedUpdateManyWithoutPlayerNestedInput
   }
 
   export type DinozCreateManyConcentrationInput = {
@@ -111749,6 +113697,12 @@ export namespace Prisma {
     votedAt?: Date | string
   }
 
+  export type EventsCreateManyPlayerInput = {
+    event: $Enums.EventType
+    totalProgression: number
+    dailyProgression: number
+  }
+
   export type ClanHistoryUpdateWithoutAuthorInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     type?: StringFieldUpdateOperationsInput | string
@@ -112545,6 +114499,24 @@ export namespace Prisma {
     pollId?: IntFieldUpdateOperationsInput | number
     pollOptionId?: IntFieldUpdateOperationsInput | number
     votedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type EventsUpdateWithoutPlayerInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EventsUncheckedUpdateWithoutPlayerInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type EventsUncheckedUpdateManyWithoutPlayerInput = {
+    event?: EnumEventTypeFieldUpdateOperationsInput | $Enums.EventType
+    totalProgression?: IntFieldUpdateOperationsInput | number
+    dailyProgression?: IntFieldUpdateOperationsInput | number
   }
 
   export type DojoTeamCreateManyDojoInput = {

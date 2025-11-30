@@ -137,7 +137,8 @@ export const initializeDinoz = (
 				[SpecialStat.ENERGY_RECOVERY]:
 					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ENERGY_RECOVERY)?.value ?? 0,
 				[SpecialStat.ARMOR]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR)?.value ?? 0,
-				[SpecialStat.ARMOR_BREAK]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR_BREAK)?.value ?? 0,
+				[SpecialStat.ARMOR_BREAK]:
+					getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.ARMOR_BREAK)?.value ?? 0,
 				[SpecialStat.MULTIHIT]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.MULTIHIT)?.value ?? 0,
 				[SpecialStat.EVASION]: getSpecialStat(dinozWithItems, dinozStatus, skills, SpecialStat.EVASION)?.value ?? 0,
 				[SpecialStat.SUPER_EVASION]:
@@ -971,7 +972,6 @@ const getFighters = (team1: Team, team2: Team, place: PlaceEnum, random: seedran
 	return fighters;
 };
 
-
 /**
  * Determine the counter chance of the fighter.
  * The counter chance minimum is 0% and maximum is 90%.
@@ -1039,7 +1039,6 @@ export const getFighterArmor = (fighter: DetailedFighter) => {
 	return Math.min(0.9, Math.max(0, fighter.stats.special.armor - 1));
 };
 
-
 /**
  * Determine the armor break of the fighter.
  * The armor break minimum is 0% and maximum is 90%.
@@ -1048,6 +1047,6 @@ export const getFighterArmor = (fighter: DetailedFighter) => {
  */
 export const getFighterArmorBreak = (fighter: DetailedFighter) => {
 	return Math.min(0.9, Math.max(0, fighter.stats.special.armorBreak - 1));
-}
+};
 
 export default getFighters;

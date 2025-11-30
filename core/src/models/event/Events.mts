@@ -13,6 +13,7 @@ export type EventDetails = {
 		month: number;
 		day: number;
 	};
+	softCap: number;
 };
 
 export const Events: Record<GameEvent, EventDetails> = {
@@ -25,7 +26,8 @@ export const Events: Record<GameEvent, EventDetails> = {
 		end: {
 			month: 12,
 			day: 26
-		}
+		},
+		softCap: 100
 	},
 	[GameEvent.VALENTINE]: {
 		name: GameEvent.VALENTINE,
@@ -36,7 +38,8 @@ export const Events: Record<GameEvent, EventDetails> = {
 		end: {
 			month: 2,
 			day: 15
-		}
+		},
+		softCap: 100
 	}
 };
 
@@ -45,28 +48,27 @@ export const currentEvents = () => {
 	const month = now.getMonth() + 1;
 	const day = now.getDate();
 
-	return Object.values(Events)
-		.filter(event => {
-			const start = event.start;
-			const end = event.end;
+	return Object.values(Events).filter(event => {
+		const start = event.start;
+		const end = event.end;
 
-			if (month > start.month && month < end.month) {
-				return true;
-			}
+		if (month > start.month && month < end.month) {
+			return true;
+		}
 
-			if (month === start.month && month === end.month) {
-				return day >= start.day && day <= end.day;
-			}
+		if (month === start.month && month === end.month) {
+			return day >= start.day && day <= end.day;
+		}
 
-			if (month === start.month) {
-				return day >= start.day;
-			}
+		if (month === start.month) {
+			return day >= start.day;
+		}
 
-			if (month === end.month) {
-				return day <= end.day;
-			}
+		if (month === end.month) {
+			return day <= end.day;
+		}
 
-			return false;
-		})
-		.map(event => event.name);
+		return false;
+	});
+	// .map(event => event.name);
 };
