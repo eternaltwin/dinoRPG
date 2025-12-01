@@ -80,7 +80,7 @@
 		</td>
 		<td class="bid-action">
 			<div v-if="!isExpired() && !ownOffer()">
-				<DZInput type="number" :value="bidValue" @input="bidValue = +$event.target.value" />
+				<DZInput type="number" v-model="bidValue" />
 				<DZButton size="small" @click="bid">
 					{{ $t('market.bid') }}
 					<img :src="getImgURL('icons', 'ticket', true)" />

@@ -106,7 +106,7 @@
 						:params="{ minValue: MARKET_MIN_VALUE }"
 					/>
 					<div class="total">
-						<DZInput type="number" :value="totalValue" @input="totalValue = +$event.target.value" />
+						<DZInput type="number" v-model="totalValue" />
 					</div>
 				</td>
 			</tr>

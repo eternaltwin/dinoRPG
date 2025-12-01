@@ -28,8 +28,7 @@
 				<td v-if="isClan" class="stock">
 					<DZInput
 						type="number"
-						:value="giveAway[index].quantity"
-						@input="giveAway[index].quantity = +$event.target.value"
+						v-model="giveAway[index].quantity"
 						:max="ingredient.quantity"
 						min="0"
 					/>
