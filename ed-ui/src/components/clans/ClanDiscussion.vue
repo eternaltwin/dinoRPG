@@ -51,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue';
+import { getCurrentInstance, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
@@ -137,10 +137,11 @@ async function getClanMessages(): Promise<void> {
 
 async function connectToWs(): Promise<void> {
 	const wsTicket: ServerEventTicketDto = await ServerEventsService.getWsTicket(WsChannel.CLAN_FORUM);
+	let url: string;
 	if (import.meta.env.MODE === 'development') {
-		this.webSocket = new WebSocket(`ws://localhost:8082/ws?ticket=${wsTicket.ticket}`);
+		url = `ws://localhost:8082/ws?ticket=${wsTicket.ticket}`;
 	} else {
-		this.webSocket = new WebSocket(`wss://${document.location.host}/ws?ticket=${wsTicket.ticket}`);
+		url = `wss://${document.location.host}/ws?ticket=${wsTicket.ticket}`;
 	}
 	webSocket.value = new WebSocket(url);
 	webSocket.value.onmessage = (message: MessageEvent<WsMsgResponse>) => handleWsAction(message);
@@ -191,11 +192,13 @@ onMounted(async () => {
 	try {
 		await getClanMessages();
 		await connectToWs();
-		EventBus.emit('isLoading', false);
 	} catch (err) {
+		console.error(err);
 		isConnectionOk.value = false;
 		// $toast from the app instance (if registered globally)
 		errorHandler.handle(err as Error, instance?.proxy?.$toast ?? ({} as ToastPluginApi));
+	} finally {
+		EventBus.emit('isLoading', false);
 	}
 });
 
