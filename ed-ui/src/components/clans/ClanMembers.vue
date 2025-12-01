@@ -44,7 +44,7 @@
 						</div>
 					</td>
 					<td v-if="eventInProgress" class="event other">
-						{{ member.player.Events[0].totalProgression }}
+						{{ member.player.Events[0]?.totalProgression ?? 0 }}
 					</td>
 					<td class="donations other">
 						{{ moneyLint(member.donation) }}

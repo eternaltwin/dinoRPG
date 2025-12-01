@@ -26,12 +26,7 @@
 				<td class="name">{{ $t(`ingredients.name.${ingredient.name}`) }}</td>
 				<td class="stock" v-if="ingredient.quantity !== 0">{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}</td>
 				<td v-if="isClan" class="stock">
-					<DZInput
-						type="number"
-						v-model="giveAway[index].quantity"
-						:max="ingredient.quantity"
-						min="0"
-					/>
+					<DZInput type="number" v-model="giveAway[index].quantity" :max="ingredient.quantity" min="0" />
 				</td>
 				<td class="stock" v-else>--</td>
 
