@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import 'reflect-metadata';
 import { resetDinozShopAtMidnight } from './cron/resetDinozShop.js';
-import { scheduleOffersExpiration } from './business/offerService.js';
+import { scheduleEndedOffersExpiration, scheduleOffersExpiration } from './business/offerService.js';
 import { healRestingDinoz } from './cron/healRestingDinoz.js';
 import { healDinozFount } from './cron/healDinozFount.js';
 import { itinerantMerchant } from './cron/itinerantMerchant.js';
@@ -90,6 +90,7 @@ export function main(cx: ServerContext) {
 	checkBans().start();
 
 	scheduleOffersExpiration();
+	scheduleEndedOffersExpiration();
 	schedulePollExpiration();
 	TournamentManager.resume(prisma);
 	resumeTournaments();

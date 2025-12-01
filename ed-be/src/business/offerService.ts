@@ -3,6 +3,8 @@ import {
 	addBid,
 	deleteOffer,
 	extendTimer,
+	getEndedOffers,
+	getEndedOffersType,
 	getOffer,
 	getOffers,
 	getOngoingOffers,
@@ -27,7 +29,7 @@ import {
 	getAllIngredientsDataRequest,
 	increaseIngredientQuantity
 } from '../dao/playerIngredientDao.js';
-import { $Enums, Dinoz, LogType, OfferStatus, UnavailableReason } from '@drpg/prisma';
+import { $Enums, Dinoz, LogType, Offer, OfferBid, OfferItem, OfferStatus, UnavailableReason } from '@drpg/prisma';
 import { scheduledJobs, scheduleJob } from 'node-schedule';
 import { addMoney, auth, getPlayerDiscoveredSkills, ownsDinoz, setPlayer } from '../dao/playerDao.js';
 import { updateDinozCount, updatePoints } from '../dao/rankingDao.js';
@@ -43,6 +45,7 @@ import { createNotification } from '../dao/notificationDao.js';
 import { ClaimOfferData, OfferGetList } from '@drpg/core/returnTypes/Offer';
 import { computeUSkillsForPlayer } from './skillService.js';
 import NotificationSeverity = $Enums.NotificationSeverity;
+import dayjs from 'dayjs';
 
 /**
  * Get the list of current offers
@@ -634,4 +637,50 @@ export const scheduleOffersExpiration = async () => {
 
 		scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
 	});
+};
+
+export const scheduleEndedOffersExpiration = async () => {
+	const endedOffers = await getEndedOffers();
+
+	const today = dayjs();
+	// Process outdated ended offers immediately
+	const offersToRefund = endedOffers.filter(offer => offer.endDate <= today.subtract(1, 'week').toDate());
+	const promises = offersToRefund.map(offer => refundEndedOffers(offer));
+
+	await Promise.all(promises);
+
+	// Schedule expiration for remaining offers
+	const remainingOffers = endedOffers.filter(offer => offer.endDate > today.subtract(1, 'week').toDate());
+
+	remainingOffers.forEach(offer => {
+		LOGGER.log(`Scheduling offer ${offer.id} cancellation at ${offer.endDate}`);
+
+		scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
+	});
+};
+
+export const refundEndedOffers = async (offer: Offer & { items: OfferItem[]; bids: OfferBid[] }) => {
+	const items = offer.items.filter(item => !item.isIngredient);
+	const ingredients = offer.items.filter(item => item.isIngredient);
+
+	const refundPromises = [];
+	if (offer.sellerId) {
+		refundPromises.push(...items.map(item => increaseItemQuantity(offer.sellerId, item.itemId, item.quantity)));
+		refundPromises.push(
+			...ingredients.map(item => increaseIngredientQuantity(offer.sellerId, item.itemId, item.quantity))
+		);
+		if (offer.dinozId) {
+			refundPromises.push(updateDinoz(offer.dinozId, { unavailableReason: null }));
+		}
+	}
+	if (offer.bids.length > 0) {
+		const max = offer.bids.reduce((prev, current) => (prev && prev.value > current.value ? prev : current));
+		if (max.userId) {
+			refundPromises.push(increaseIngredientQuantity(max.userId, itemList[Item.TREASURE_COUPON].itemId, max.value));
+		}
+	}
+	refundPromises.push(deleteOffer(offer.id));
+
+	await Promise.all(refundPromises);
+	LOGGER.log(`Cancelling offer ${offer.id}, it expired since ${offer.endDate}`);
 };

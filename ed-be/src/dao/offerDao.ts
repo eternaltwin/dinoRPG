@@ -274,3 +274,18 @@ export async function getOngoingOffers() {
 
 	return offers;
 }
+
+export type getEndedOffersType = Awaited<ReturnType<typeof getEndedOffers>>;
+export async function getEndedOffers() {
+	const offers = await prisma.offer.findMany({
+		where: {
+			status: OfferStatus.ENDED
+		},
+		include: {
+			items: true,
+			bids: true
+		}
+	});
+
+	return offers;
+}

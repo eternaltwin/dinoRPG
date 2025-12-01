@@ -470,7 +470,7 @@ model OfferItem {
   itemId       Int
   quantity     Int
   isIngredient Boolean
-  offer        Offer   @relation(fields: [offerId], references: [id])
+  offer        Offer   @relation(fields: [offerId], onDelete: Cascade, references: [id])
 }
 
 model OfferBid {
