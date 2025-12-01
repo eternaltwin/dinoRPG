@@ -150,12 +150,10 @@ export default defineComponent({
 				try {
 					const toast = await InventoryService.useInventoryItem(item.itemId, +dinozId);
 					await this.resfreshInventory();
-					// EventBus.emit('isLoading', false);
 					if (toast.category === ItemEffect.EGG) {
 						await this.refreshDinozList();
 					} else if (toast.category === ItemEffect.GOLD) {
 						await this.$refreshGold();
-						EventBus.emit('isLoading', false);
 					} else {
 						EventBus.emit('refreshDinoz', true);
 					}
@@ -184,12 +182,14 @@ export default defineComponent({
 									: this.$t(`toast.${toast.category}`, { value: toast.value });
 							break;
 					}
+					EventBus.emit('isLoading', false);
 
 					this.$toast.open({
 						message: formatText(message),
 						type: 'info'
 					});
 				} catch (error) {
+					EventBus.emit('isLoading', false);
 					errorHandler.handle(error, this.$toast);
 					return;
 				}
