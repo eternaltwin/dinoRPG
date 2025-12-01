@@ -163,11 +163,10 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		calculTimeUntilMidnight() {
-			const nowMs = new Date().getTime();
+		computeTimeUntilMidnight() {
 			const now = new Date();
-			const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-			const midnightMs = midnight.getTime();
+			const nowMs = now.getTime();
+			const midnightMs = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
 			const timeRemainingMs = midnightMs - nowMs;
 
 			const totalSeconds = Math.floor(timeRemainingMs / 1000);
@@ -632,7 +631,7 @@ export default defineComponent({
 	},
 	async mounted() {
 		await this.loadComponent();
-		setInterval(() => this.calculTimeUntilMidnight(), 1000);
+		setInterval(() => this.computeTimeUntilMidnight(), 1000);
 	}
 });
 </script>
