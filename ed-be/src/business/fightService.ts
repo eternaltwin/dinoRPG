@@ -606,7 +606,7 @@ export async function generateMonsterList(
 	}
 	const events = currentEvents();
 	let eventMonsterKilled = 0;
-	if (events) {
+	if (events.length > 0) {
 		const playerEvent = await getPlayerEventProgression(team[0].playerId, events[0].name);
 		eventMonsterKilled = playerEvent?.dailyProgression ?? 0;
 	}
