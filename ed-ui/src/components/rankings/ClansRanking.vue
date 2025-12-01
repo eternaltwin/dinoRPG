@@ -1,5 +1,6 @@
 <template>
-	<DZDisclaimer content="ranking.disclaimer.clans" />
+	<DZDisclaimer v-if="rankingType === ClanRankingType.TREASURE" content="ranking.disclaimer.clans" />
+	<DZDisclaimer v-if="rankingType === ClanRankingType.EVENT" content="ranking.disclaimer.clansEvent" />
 	<div class="wrapper">
 		<i18n-t keypath="ranking.disclaimer.clansCreation" tag="p" for="ranking.disclaimer.clansCreationLink">
 			<RouterLink :to="`/clans`">
@@ -7,12 +8,15 @@
 			</RouterLink>
 		</i18n-t>
 
+		<DZButton @click="switchRanking()">{{ $t(`ranking.button.${rankingType}`) }}</DZButton>
 		<table>
 			<tbody>
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
 					<th class="clans">{{ $t('ranking.th.clans') }}</th>
-					<th class="treasure">{{ $t('ranking.th.treasure') }}</th>
+					<th class="treasure">
+						{{ rankingType === ClanRankingType.TREASURE ? $t('ranking.th.treasure') : $t('ranking.th.event') }}
+					</th>
 				</tr>
 				<tr class="select" @click="changePage(-1)" v-if="page > 1">
 					<td class="pos" colspan="5" style="text-align: center">
@@ -37,8 +41,12 @@
 					</td>
 					<td class="other">
 						<div class="flex items-center gap-2">
-							{{ moneyLint(clan.treasureValue ?? 0) }}
-							<span v-html="formatContent(':gold:')" class="relative mt-[-2px]" />
+							{{ rankingType === ClanRankingType.TREASURE ? moneyLint(clan.treasureValue ?? 0) : clan.totalScore }}
+							<span
+								v-if="rankingType === ClanRankingType.TREASURE"
+								v-html="formatContent(':gold:')"
+								class="relative mt-[-2px]"
+							/>
 						</div>
 					</td>
 				</tr>
@@ -62,21 +70,24 @@ import { errorHandler, utils } from '../../utils/index.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import Flags from '../common/Flags.vue';
+import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'ClansRanking',
-	components: { Flags, SearchEntity, DZDisclaimer },
+	components: { DZButton, Flags, SearchEntity, DZDisclaimer },
 	data() {
 		return {
 			clansList: [] as Array<ClanLite>,
-			page: 1 as number
+			page: 1 as number,
+			rankingType: ClanRankingType.TREASURE as ClanRankingType
 		};
 	},
 	methods: {
 		async getClansRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				this.clansList = await ClanService.getClansRanking(this.page);
+				this.clansList = await ClanService.getClansRanking(this.page, this.rankingType);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -92,6 +103,19 @@ export default defineComponent({
 		},
 		moneyLint(quantity: number): string {
 			return utils.beautifulNumber(quantity.toString());
+		},
+		async switchRanking() {
+			if (this.rankingType === ClanRankingType.TREASURE) {
+				this.rankingType = ClanRankingType.EVENT;
+			} else {
+				this.rankingType = ClanRankingType.TREASURE;
+			}
+			await this.getClansRanking();
+		}
+	},
+	computed: {
+		ClanRankingType() {
+			return ClanRankingType;
 		}
 	},
 	async created(): Promise<void> {

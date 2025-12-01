@@ -31,7 +31,8 @@
 			<tbody>
 				<tr>
 					<th class="name">{{ $t('clansMembers.th.name') }}</th>
-					<th class="donation">{{ $t('clansMembers.th.donation') }}</th>
+					<th class="event" v-if="eventInProgress">{{ $t('clansMembers.th.event') }}</th>
+					<th class="donations">{{ $t('clansMembers.th.donation') }}</th>
 					<th class="stats" v-if="selfMember">{{ $t('clansMembers.th.stats') }}</th>
 					<th class="actions" v-if="selfMember">{{ $t('clansMembers.th.actions') }}</th>
 				</tr>
@@ -42,7 +43,10 @@
 							<div class="nickname">{{ member.nickname }}</div>
 						</div>
 					</td>
-					<td class="donation other">
+					<td v-if="eventInProgress" class="event other">
+						{{ member.player.Events[0].totalProgression }}
+					</td>
+					<td class="donations other">
 						{{ moneyLint(member.donation) }}
 						<img
 							:src="getImgURL('icons', 'small_gold')"
@@ -98,6 +102,7 @@ import { playerStore } from '../../store';
 import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import DZUser from '../common/DZUser.vue';
 import { JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
+import { currentEvents } from '@drpg/core/models/event/Events';
 
 export default defineComponent({
 	name: 'ClanMembers',
@@ -216,6 +221,11 @@ export default defineComponent({
 			}
 		}
 	},
+	computed: {
+		eventInProgress() {
+			return currentEvents().length > 0;
+		}
+	},
 	async mounted(): Promise<void> {
 		await this.getClanMembersList();
 		this.hasEditRight = this.getHasRight(ClanMemberRight.MEMBER_EDIT);
@@ -268,6 +278,9 @@ export default defineComponent({
 				&.donations {
 					width: 15%;
 				}
+				&.event {
+					width: 15%;
+				}
 				&.stats {
 					width: 10%;
 				}
@@ -308,6 +321,7 @@ export default defineComponent({
 					background-image: url('../../assets/background/table_cell.webp');
 					background-position: -10px 0px;
 					max-width: 4px;
+					text-align: right;
 				}
 				&.actions {
 					.buttons {

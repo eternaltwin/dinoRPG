@@ -4040,7 +4040,8 @@
 			"average": "Moy.",
 			"completion": "Comp.",
 			"clans": "Clans",
-			"treasure": "Trésor du Clan"
+			"treasure": "Trésor du Clan",
+			"event": "Score d'événement"
 		},
 		"disclaimer": {
 			"classic": "Le Classement des joueurs est mis à jour en temps réél et est calculé à partir de la somme des niveaux de tous les Dinoz du joueur.",
@@ -4049,7 +4050,8 @@
 			"pantheon": "Vous pouvez retrouvez ici quels joueurs et quels Dinoz sont parvenus les premiers à accomplir des hauts faits.",
 			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan.",
 			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
-			"clansCreationLink": "page de recherche des clans"
+			"clansCreationLink": "page de recherche des clans",
+			"clansEvent": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
 		},
 		"page": {
 			"previous": "Page précedente",
@@ -4071,6 +4073,10 @@
 		"placeholder": {
 			"searchPlayer": "Rechercher un joueur",
 			"searchClan": "Rechercher un clan"
+		},
+		"button": {
+			"event": "Classement de trésor",
+			"treasure": "Classement d'événement"
 		}
 	},
 	"clan": {
@@ -4128,7 +4134,8 @@
 			"name": "Nom",
 			"donation": "Dons",
 			"stats": "Stats",
-			"actions": "Actions"
+			"actions": "Actions",
+			"event": "Score d'événement"
 		},
 		"edit": {
 			"disclaimer": "Cette page vous permet de modifier les droits du joueur <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> dans le Clan.",

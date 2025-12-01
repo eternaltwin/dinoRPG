@@ -1,4 +1,4 @@
-import { Clan, Player } from '@drpg/prisma';
+import { Clan, Events, Player } from '@drpg/prisma';
 
 export interface ClanMember {
 	id: number;
@@ -8,6 +8,8 @@ export interface ClanMember {
 	rights: string[];
 	donation: number;
 	playerId: string;
-	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: Pick<Clan, 'id'> };
+	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: Pick<Clan, 'id'> } & {
+		Events: Pick<Events, 'totalProgression'>[];
+	};
 	clan: Pick<Clan, 'id'>;
 }

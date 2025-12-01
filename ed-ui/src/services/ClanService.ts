@@ -4,11 +4,12 @@ import { ClanMember } from '@drpg/core/models/clan/clanMember';
 import { ShopDTO } from '@drpg/core/models/shop/shopDTO';
 import { http } from '../utils/index.js';
 import { LocalesEnum } from '../i18n';
+import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 
 export const ClanService = {
-	getClansRanking(page: number): Promise<Array<ClanLite>> {
+	getClansRanking(page: number, type: ClanRankingType): Promise<Array<ClanLite>> {
 		return http()
-			.get(`/clan/ranking/${page}`)
+			.get(`/clan/ranking/${type}/${page}`)
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},

@@ -6,7 +6,9 @@ import { setSpecificStat } from './trackingDao.js';
 import { StatTracking } from '@drpg/core/models/enums/statTracking';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
-import { Lang } from '@drpg/prisma';
+import { $Enums, Lang } from '@drpg/prisma';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import EventType = $Enums.EventType;
 
 export async function getAllClansRequest(page: number) {
 	const clans = await prisma.clan.findMany({
@@ -49,6 +51,29 @@ export async function getRankingClansRequest(page: number) {
 		skip: (page - 1) * 20
 	});
 	return clans;
+}
+
+export async function getEventRankingClansRequest(page: number, event: EventType) {
+	const topClans = await prisma.$queryRaw`
+    SELECT
+      c.id,
+      c.name,
+      c."treasureValue",
+      c.langs,
+      SUM(e."totalProgression") as "totalScore"
+    FROM "Clan" c
+    INNER JOIN "ClanMember" cm ON c.id = cm."clanId"
+    INNER JOIN "Events" e ON cm."playerId" = e."playerId"
+    WHERE e.event = ${event}::"EventType"
+    GROUP BY c.id, c.name
+    ORDER BY "totalScore" DESC
+    LIMIT 20
+    OFFSET ${(page - 1) * 20};
+  `;
+	return (topClans as any[]).map(clan => ({
+		...clan,
+		totalScore: Number(clan.totalScore)
+	}));
 }
 
 export async function getClanRequest(id: number) {
@@ -232,6 +257,7 @@ export async function getClanMemberRequest(id: number) {
 }
 
 export async function getClanMembersListRequest(clanId: number) {
+	const event = currentEvents()[0];
 	const members = await prisma.clanMember.findMany({
 		where: {
 			clanId
@@ -251,7 +277,15 @@ export async function getClanMembersListRequest(clanId: number) {
 							id: true
 						}
 					},
-					lastLogin: true
+					lastLogin: true,
+					Events: {
+						select: {
+							totalProgression: true
+						},
+						where: {
+							event: event.name
+						}
+					}
 				}
 			},
 			clan: {

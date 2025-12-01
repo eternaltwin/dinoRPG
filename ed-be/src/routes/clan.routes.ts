@@ -84,7 +84,7 @@ routes.get(
 
 /**
  * @openapi
- * /api/v1/clan/ranking/{page}:
+ * /api/v1/clan/ranking/{type}/{page}:
  *   get:
  *     summary: Get ranking page of clan
  *     security:
@@ -99,6 +99,11 @@ routes.get(
  *         type: string
  *         required: true
  *         description: Number of the page to display
+ *       - in: path
+ *         name: type
+ *         type: string
+ *         required: true
+ *         description: Kind of clan ranking needed
  *     responses:
  *       200:
  *         description: Successfull Operation
@@ -106,8 +111,8 @@ routes.get(
  *         description: Error
  */
 routes.get(
-	`${commonPath}/ranking/:page`,
-	[param('page').exists().toInt().isNumeric()],
+	`${commonPath}/ranking/:type/:page`,
+	[param('page').exists().toInt().isNumeric(), param('type').exists()],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

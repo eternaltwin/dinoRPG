@@ -28,6 +28,7 @@ import {
 	getClanPageRequest,
 	getClanPagesListRequest,
 	getClanRequest,
+	getEventRankingClansRequest,
 	getFullClanTreasure,
 	getPlayerJoinListRequest,
 	getPlayerJoinRequest,
@@ -51,6 +52,9 @@ import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao
 import translate from '../utils/translate.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
+import { getCurrentEvents } from './forceBruteService.js';
+import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 
 /**
  * Get all the clans
@@ -74,8 +78,13 @@ export async function getAllClans(req: Request): Promise<ClanLite[]> {
 export async function getRankingClans(req: Request) {
 	await auth(req);
 	const page = +req.params.page;
-	const clans = await getRankingClansRequest(page);
-	return clans;
+	if (req.params.type === ClanRankingType.TREASURE) {
+		return await getRankingClansRequest(page);
+	} else if (req.params.type === ClanRankingType.EVENT) {
+		const event = currentEvents();
+		return await getEventRankingClansRequest(page, event[0].name);
+	}
+	return await getRankingClansRequest(page);
 }
 
 /**
