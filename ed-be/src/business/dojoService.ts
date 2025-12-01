@@ -47,14 +47,15 @@ import { Item, itemList } from '@drpg/core/models/item/ItemList';
 import { createNotification } from '../dao/notificationDao.js';
 import { RewardEnum } from '@drpg/core/models/enums/Parser';
 import { ItemType } from '@drpg/core/models/enums/ItemType';
-
-const DOJO_MAX_SERIES = 5;
-const DOJO_FIGHT_COST = 300;
-const DOJO_FIGHT_FRIENDS_DINOZ_COST = 50;
-const DOJO_OPPONENT_IN_SERIE = 5;
-const DOJO_REPUTATION_WIN = 4;
-const DOJO_REPUTATION_CHALLENGE = 4;
-const DOJO_MAX_DAILY_CHALLENGE = 5;
+import {
+	DOJO_MAX_SERIES,
+	DOJO_FIGHT_FRIENDS_DINOZ_COST,
+	DOJO_FIGHT_COST,
+	DOJO_OPPONENT_IN_SERIE,
+	DOJO_MAX_DAILY_CHALLENGE,
+	DOJO_REPUTATION_WIN,
+	DOJO_REPUTATION_CHALLENGE
+} from '@drpg/core/utils/dojoConstants';
 
 export async function getDojo(req: Request) {
 	const authed = await auth(req);

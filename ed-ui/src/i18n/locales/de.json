@@ -4490,7 +4490,7 @@
 		"build": "Dojo erbauen",
 		"group": "Gruppe {group}",
 		"seeFinal": "Finale ansehen",
-		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu 10 Wellen pro Tag abschließen.//",
+		"dailyReset": "Du hast bei den Herausforderungen Welle {qty} erreicht.&&Für jede abgeschlossene Welle erhältst du ein :ticket:.&&//Du kannst maximal bis zu 5 Wellen pro Tag abschließen.//",
 		"seeFight": "Kampf ansehen",
 		"deleteTeam": "Meine Mannschaft entfernen",
 		"timer": {

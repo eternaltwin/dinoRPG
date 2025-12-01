@@ -4490,7 +4490,7 @@
 		"build": "Build my Dojo",
 		"group": "Group {group}",
 		"seeFinal": "See the final",
-		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to 10 waves per day maximum.//",
+		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to 5 waves per day maximum.//",
 		"seeFight": "See the fight",
 		"deleteTeam": "Delete my team",
 		"timer": {

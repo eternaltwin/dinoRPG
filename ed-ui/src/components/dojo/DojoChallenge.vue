@@ -33,11 +33,10 @@
 			</div>
 		</div>
 		<template v-if="!fightTransformed">
-			<Tippy theme="small" tag="progress" :value="dailyReset" max="10">
+			<Tippy theme="small" tag="progress" :value="dailyReset" max="dojoMaxSeries">
 				<template #content>
 					<div v-html="formatContent($t('dojo.dailyReset', { qty: dailyReset }))" />
 				</template>
-				{{ $t(`shop.item.buy`) }}
 			</Tippy>
 			<!--			<progress ></progress>-->
 			<CarousselDinoz
@@ -104,6 +103,7 @@ import FightRecap from './FightRecap.vue';
 import { preFightLoader } from '@drpg/core/models/fight/transpiler';
 import { FightStep } from '@drpg/core/models/fight/FightStep';
 import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResult';
+import DOJO_MAX_SERIES from '@drpg/core/utils/dojoConstants';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import DZButton from '../common/DZButton.vue';
 
@@ -138,7 +138,8 @@ export default defineComponent({
 			victory: false,
 			fightAnimationEnded: false,
 			dailyReset: 0,
-			playerStore: playerStore()
+			playerStore: playerStore(),
+			dojoMaxSeries: DOJO_MAX_SERIES
 		};
 	},
 	methods: {
