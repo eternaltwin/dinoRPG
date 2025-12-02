@@ -1,7 +1,7 @@
 <template>
 	<Transition>
-		<div v-if="text" class="modal-background">
-			<div class="box">
+		<div v-if="text" class="modal-background" @click="$emit('close')">
+			<div class="box" @click.stop>
 				<p class="name">{{ $t(`missions.npc.${npcName}`) }} :</p>
 				<div class="content">
 					<span class="dialog">
@@ -45,7 +45,8 @@ export default defineComponent({
 	.box {
 		cursor: pointer;
 		background-repeat: repeat-y;
-		max-width: 70%;
+		max-width: 500px;
+		width: 90%;
 		min-height: 75px;
 		//background-image: url('../../assets/background/dialog_bg_pix.webp');
 		background: url('../../assets/background/dialog_bg_top_left.webp'),
@@ -78,24 +79,14 @@ export default defineComponent({
 			display: flex;
 			justify-content: space-between;
 			gap: 15px;
-			.portrait {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				gap: 5px;
-				width: fit-content;
-			}
 
 			.dialog {
-				width: fit-content;
-				float: left;
 				position: relative;
 				margin-bottom: 10px;
 				margin-left: 10px;
 				color: #fff3b3;
 				font-size: 10pt;
 				font-style: italic;
-				overflow: hidden;
 			}
 		}
 	}
