@@ -835,7 +835,7 @@ export async function searchPlayersByNameOrId(search: string) {
 	const sanitizedSearch = `%${search.replace(/%/g, '\\%').replace(/_/g, '\\_')}%`;
 
 	const players = await prisma.$queryRaw<{ id: string; name: string }[]>`
-		SELECT id, name, lang
+		SELECT id, name
 		FROM "player"
 		WHERE name ILIKE ${`%${sanitizedSearch}%`} OR id::text ILIKE ${`%${sanitizedSearch}%`}
 		ORDER BY name ASC
