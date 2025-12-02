@@ -17,17 +17,17 @@ const midnightReset = async () => {
 				unavailableReason: null
 			}
 		});
+		await prisma.events.updateMany({
+			data: {
+				dailyProgression: 0
+			}
+		});
 		await prisma.serverState.update({
 			where: {
 				action: ServerAction.midnightReset
 			},
 			data: {
 				nextCheck: tommorow
-			}
-		});
-		await prisma.events.updateMany({
-			data: {
-				dailyProgression: 0
 			}
 		});
 		scheduleJob('midnightReset', tommorow, () => midnightReset());
