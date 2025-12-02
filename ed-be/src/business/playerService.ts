@@ -19,7 +19,7 @@ import {
 	getToolTipInfos,
 	isPlayerLeaderOfClanRequest,
 	resetUser,
-	searchPlayersByName,
+	searchPlayersByNameOrId,
 	setPlayer
 } from '../dao/playerDao.js';
 import translate from '../utils/translate.js';
@@ -162,11 +162,11 @@ export async function setCustomText(req: Request) {
 /**
  * @summary Fetch a list of player based on a string
  * @param req
- * @param req.params.id {string}
+ * @param req.params.search {string}
  * @return Array<Player>
  */
 export async function searchPlayers(req: Request) {
-	const playerList = await searchPlayersByName(req.params.name);
+	const playerList = await searchPlayersByNameOrId(req.params.search);
 
 	return playerList;
 }

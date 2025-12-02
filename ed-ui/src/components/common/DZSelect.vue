@@ -1,5 +1,5 @@
 <template>
-	<div class="dz-select" :class="{ open }">
+	<div class="dz-select" :class="{ open, searchable: !!search }">
 		<button
 			ref="triggerRef"
 			type="button"
@@ -15,46 +15,85 @@
 			<span class="arrow" />
 		</button>
 
-		<ul v-if="open" class="panel drpg-scrollbar" role="listbox" :aria-labelledby="id">
-			<li
-				v-for="(option, i) in options"
-				:key="String(option.value)"
-				:class="['opt', { selected: isSelected(option.value), focused: i === focusedIndex }]"
-				@mouseenter="focusedIndex = i"
-				@mouseleave="focusedIndex = -1"
-				@mousedown.prevent="select(option.value, $event)"
-				role="option"
-				:aria-selected="isSelected(option.value)"
-			>
-				{{ option.label }}
-			</li>
-		</ul>
+		<div v-if="open" class="panel drpg-scrollbar">
+			<DZInput
+				v-if="search"
+				v-model="searchQuery"
+				type="text"
+				class="search-input"
+				:placeholder="$t('button.search')"
+				@keydown.down.prevent="focusNext()"
+				@keydown.up.prevent="focusPrev()"
+				@keydown.enter.prevent="commitFocused()"
+				@keydown.esc.prevent="close"
+				@input="onSearchInput"
+			/>
+			<ul class="options-list" role="listbox" :aria-labelledby="id">
+				<li v-if="loading" class="opt loading">{{ $t('button.loading') }}</li>
+				<li v-else-if="filteredOptions.length === 0" class="opt empty">{{ $t('button.noResults') }}</li>
+				<li
+					v-else
+					v-for="(option, i) in filteredOptions"
+					:key="String(option.value)"
+					:class="['opt', { selected: isSelected(option.value), focused: i === focusedIndex }]"
+					@mouseenter="focusedIndex = i"
+					@mouseleave="focusedIndex = -1"
+					@mousedown.prevent="select(option.value, $event)"
+					role="option"
+					:aria-selected="isSelected(option.value)"
+				>
+					{{ option.label }}
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>
 
 <script setup lang="ts" generic="T extends string | number">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, shallowRef } from 'vue';
+import DZInput from './DZInput.vue';
 
 export type SelectOption<T extends string | number> = {
 	value: T;
 	label: string;
 };
 
-const props = defineProps<{
-	id: string;
-	modelValue?: T;
-	options: SelectOption<T>[];
-}>();
+const props = withDefaults(
+	defineProps<{
+		id: string;
+		modelValue?: T;
+		options?: SelectOption<T>[];
+		search?: (query: string) => Promise<SelectOption<T>[]>;
+		debounceMs?: number;
+	}>(),
+	{
+		debounceMs: 300
+	}
+);
 
 const emit = defineEmits<{ 'update:modelValue': [value: T]; change: [] }>();
 
 const open = ref(false);
 const focusedIndex = ref(-1);
 const triggerRef = ref<HTMLButtonElement>();
+const searchQuery = ref('');
+const loading = ref(false);
+const fetchedOptions = shallowRef<SelectOption<T>[]>([]);
+let debounceTimer: ReturnType<typeof setTimeout> | null = null;
 
 const currentLabel = computed(() => {
-	const found = props.options.find(o => o.value === props.modelValue);
+	const data = props.search ? fetchedOptions.value : (props.options ?? []);
+	const found = data.find(o => o.value === props.modelValue);
 	return found ? found.label : '';
+});
+
+const filteredOptions = computed(() => {
+	// If search function is provided, use fetched options
+	if (props.search) {
+		return fetchedOptions.value;
+	}
+
+	return props.options ?? [];
 });
 
 const isSelected = (v: T) => {
@@ -76,18 +115,25 @@ const toggle = () => {
 	}
 
 	open.value = true;
+
 	alignFocused();
 };
 
 const close = () => {
 	open.value = false;
 	focusedIndex.value = -1;
-	// Drop focus when closing
+	loading.value = false;
+
+	if (debounceTimer) {
+		clearTimeout(debounceTimer);
+		debounceTimer = null;
+	}
+
 	triggerRef.value?.blur();
 };
 
 const alignFocused = () => {
-	const idx = props.options.findIndex(o => o.value === props.modelValue);
+	const idx = filteredOptions.value.findIndex(o => o.value === props.modelValue);
 	focusedIndex.value = idx >= 0 ? idx : 0;
 };
 
@@ -97,7 +143,8 @@ const focusNext = () => {
 		alignFocused();
 		return;
 	}
-	focusedIndex.value = (focusedIndex.value + 1) % props.options.length;
+	if (filteredOptions.value.length === 0) return;
+	focusedIndex.value = (focusedIndex.value + 1) % filteredOptions.value.length;
 };
 
 const focusPrev = () => {
@@ -106,13 +153,42 @@ const focusPrev = () => {
 		alignFocused();
 		return;
 	}
-	focusedIndex.value = (focusedIndex.value - 1 + props.options.length) % props.options.length;
+	if (filteredOptions.value.length === 0) return;
+	focusedIndex.value = (focusedIndex.value - 1 + filteredOptions.value.length) % filteredOptions.value.length;
 };
 
 const commitFocused = () => {
-	if (open.value && focusedIndex.value >= 0) {
-		select(props.options[focusedIndex.value].value);
+	if (open.value && focusedIndex.value >= 0 && filteredOptions.value.length > 0) {
+		select(filteredOptions.value[focusedIndex.value].value);
 	}
+};
+
+const fetchOptions = async (query: string) => {
+	if (!props.search) return;
+
+	loading.value = true;
+	try {
+		const results = await props.search(query);
+		fetchedOptions.value = results;
+		focusedIndex.value = 0;
+	} catch (error) {
+		console.error('Error fetching options:', error);
+		fetchedOptions.value = [];
+	} finally {
+		loading.value = false;
+	}
+};
+
+const onSearchInput = () => {
+	if (!props.search) return;
+
+	if (debounceTimer) {
+		clearTimeout(debounceTimer);
+	}
+
+	debounceTimer = setTimeout(() => {
+		fetchOptions(searchQuery.value);
+	}, props.debounceMs);
 };
 
 const handleClickOutside = (e: MouseEvent) => {
@@ -120,13 +196,17 @@ const handleClickOutside = (e: MouseEvent) => {
 	if (!(e.target instanceof Node)) return;
 	if (e.button !== 0) return;
 
-	// Quick containment check:
 	const container = document.getElementById(props.id)?.parentElement;
 	if (container && !container.contains(e.target)) close();
 };
 
 onMounted(() => document.addEventListener('mousedown', handleClickOutside));
-onBeforeUnmount(() => document.removeEventListener('mousedown', handleClickOutside));
+onBeforeUnmount(() => {
+	document.removeEventListener('mousedown', handleClickOutside);
+	if (debounceTimer) {
+		clearTimeout(debounceTimer);
+	}
+});
 </script>
 
 <style scoped lang="scss">
@@ -185,11 +265,15 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', handleClickOutsi
 		top: calc(100% + 2px);
 		min-width: 100%;
 		max-height: 200px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+	}
+
+	.options-list {
+		max-height: 200px;
 		overflow-y: auto;
 		padding: 0;
 		margin: 0;
 		list-style: none;
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
 	}
 
 	.opt {
@@ -205,6 +289,12 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', handleClickOutsi
 		cursor: pointer;
 		white-space: nowrap;
 		color: #bc683c;
+
+		&.loading,
+		&.empty {
+			cursor: default;
+			font-style: italic;
+		}
 
 		// Darkening overlay
 		&::before {
@@ -224,10 +314,10 @@ onBeforeUnmount(() => document.removeEventListener('mousedown', handleClickOutsi
 				background: rgba(0, 0, 0, 0.1);
 			}
 		}
-		&.focused:not(.selected)::before {
+		&.focused:not(.selected):not(.loading):not(.empty)::before {
 			background: rgba(0, 0, 0, 0.1);
 		}
-		&:active::before {
+		&:active:not(.loading):not(.empty)::before {
 			background: rgba(0, 0, 0, 0.1);
 		}
 	}

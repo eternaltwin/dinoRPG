@@ -280,7 +280,10 @@
 		"dinozMissions": "Missions de mes Dinoz",
 		"skills": "Compétences",
 		"send": "Envoyer",
-		"close": "Fermer"
+		"close": "Fermer",
+		"search": "Rechercher",
+		"loading": "Chargement...",
+		"noResults": "Aucun résultat"
 	},
 	"chooseDinoz": {
 		"information": "Avant de pouvoir contrôler ce Dinoz, il vous faut d'abord lui donner un nom.",

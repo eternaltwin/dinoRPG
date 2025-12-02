@@ -198,9 +198,9 @@ routes.put(`${commonPath}/customText`, [body('message').exists()], async (req: R
 
 /**
  * @openapi
- * /api/v1/player/search/{name}:
+ * /api/v1/player/search/{search}:
  *   get:
- *     summary: Search a player by its PlayerName
+ *     summary: Search a player by its PlayerName (or id)
  *     security:
  *       - bearerAuth: []
  *     tags:
@@ -209,7 +209,7 @@ routes.put(`${commonPath}/customText`, [body('message').exists()], async (req: R
  *       - application/json
  *     parameters:
  *       - in: path
- *         name: name
+ *         name: search
  *         type: string
  *         required: true
  *         description: String to research
@@ -222,8 +222,8 @@ routes.put(`${commonPath}/customText`, [body('message').exists()], async (req: R
  *         description: Error
  */
 routes.get(
-	`${commonPath}/search/:name`,
-	[param('name').exists().isString().isLength({ min: 3 })],
+	`${commonPath}/search/:search`,
+	[param('search').exists().isString().isLength({ min: 3 })],
 	async (req: Request, res: Response) => {
 		if (!validationResult(req).isEmpty()) {
 			return res.status(400).json({ errors: validationResult(req) });

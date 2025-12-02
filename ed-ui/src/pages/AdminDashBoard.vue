@@ -1,13 +1,8 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.admin')"></TitleHeader>
 	<div class="search">
-		<input type="text" placeholder="Search Player" v-model="searchValue" list="players" @keyup.enter="getPlayer()" />
-		<datalist id="players">
-			<option v-for="(players, index) in playerList" :key="index">
-				{{ players.name }}
-			</option>
-		</datalist>
-		<input type="submit" @click="getPlayer()" />
+		<DZSelect id="player-search" v-model="searchedPlayerId" :search="searchPlayer" />
+		<DZButton @click="getPlayer">Edit</DZButton>
 	</div>
 	<div v-if="displayErrorMessage" class="red">This player doesn't exist</div>
 	<ul class="tabs" style="margin-top: 10px">
@@ -92,6 +87,8 @@ import DebugFight from '../components/admin/DebugFight.vue';
 import ScheduledJobs from '../components/admin/ScheduledJobs.vue';
 import { Player } from '@drpg/prisma';
 import PollEdit from '../components/admin/PollEdit.vue';
+import DZSelect from '../components/common/DZSelect.vue';
+import DZButton from '../components/common/DZButton.vue';
 
 interface PlayerSearch {
 	name: string;
@@ -113,7 +110,9 @@ export default defineComponent({
 		GameStats,
 		Moderation,
 		Banned,
-		PollEdit
+		PollEdit,
+		DZSelect,
+		DZButton
 	},
 	data() {
 		return {
@@ -124,7 +123,8 @@ export default defineComponent({
 			dinozList: {} as Array<DinozAdminFiche>,
 			selectedDinoz: null as DinozAdminFiche | null,
 			awaitingSearch: false as boolean,
-			displayErrorMessage: false as boolean
+			displayErrorMessage: false as boolean,
+			searchedPlayerId: ''
 		};
 	},
 	watch: {
@@ -139,6 +139,16 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		async searchPlayer(query: string): Promise<Array<{ value: string; label: string }>> {
+			if (query.length < 3) {
+				return [];
+			}
+			const results = await PlayerService.searchPlayers(query);
+			return results.map(player => ({
+				value: player.id,
+				label: `${player.name} (${player.id.slice(0, 6)})`
+			}));
+		},
 		async setTab(value: number): Promise<void> {
 			this.tabSelected = value;
 		},
@@ -149,19 +159,13 @@ export default defineComponent({
 		},
 		async getPlayer(): Promise<void> {
 			this.displayErrorMessage = false;
-			const playerId: string | undefined = this.playerList.find(player => player.name === this.searchValue)?.id;
-
-			if (playerId === undefined) {
-				this.displayErrorMessage = true;
-				return;
-			}
 
 			EventBus.emit('isLoading', true);
 
 			try {
 				[this.player, this.dinozList] = await Promise.all([
-					AdminService.getplayerInformation(playerId),
-					AdminService.listAllDinozFromPlayer(playerId)
+					AdminService.getplayerInformation(this.searchedPlayerId),
+					AdminService.listAllDinozFromPlayer(this.searchedPlayerId)
 				]);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -190,6 +194,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.search {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
 .active {
 	background-color: #f3ca92;
 	color: #710;

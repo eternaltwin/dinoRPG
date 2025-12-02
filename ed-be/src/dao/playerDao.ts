@@ -831,19 +831,16 @@ export async function prepareConcentration(playerId: string) {
 	return player;
 }
 
-export async function searchPlayersByName(playerName: string) {
-	const players = await prisma.player.findMany({
-		where: {
-			name: {
-				contains: playerName,
-				mode: 'insensitive'
-			}
-		},
-		select: {
-			id: true,
-			name: true
-		}
-	});
+export async function searchPlayersByNameOrId(search: string) {
+	const sanitizedSearch = `%${search.replace(/%/g, '\\%').replace(/_/g, '\\_')}%`;
+
+	const players = await prisma.$queryRaw<{ id: string; name: string }[]>`
+		SELECT id, name, lang
+		FROM "player"
+		WHERE name ILIKE ${`%${sanitizedSearch}%`} OR id::text ILIKE ${`%${sanitizedSearch}%`}
+		ORDER BY name ASC
+		LIMIT 10;
+	`;
 
 	return players;
 }
