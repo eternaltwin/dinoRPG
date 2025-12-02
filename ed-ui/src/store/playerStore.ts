@@ -70,13 +70,11 @@ export const playerStore = defineStore('playerStore', {
 		setClanId(clanId: number | undefined): void {
 			this.clanId = clanId;
 		},
-		setNotifications(notifs: Notification[]): void {
-			this.notifications = notifs;
-			this.notificationCounter = notifs.length;
+		setNotificationsCounter(notif: number): void {
+			this.notificationCounter = notif;
 		},
-		addNotification(notif: Notification): void {
-			this.notifications.push(notif);
-			this.notificationCounter++;
+		setNotifications(notif: Notification[]): void {
+			this.notifications = notif;
 		},
 		setDiscoveredSkills(skills: Skill[]): void {
 			this.discoveredSkills = skills;

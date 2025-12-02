@@ -1,7 +1,24 @@
 import { NotificationSeverity } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
-import { sendSseMessageToUserInChannel } from '../business/serverEventService.js';
-import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+
+export async function getNotification(playerId: string) {
+	const notification = await prisma.player.findUnique({
+		where: {
+			id: playerId
+		},
+		select: {
+			lastVersionSeen: true,
+			notifications: {
+				where: {
+					read: false
+				},
+				orderBy: { date: 'desc' }
+			}
+		}
+	});
+
+	return notification;
+}
 
 export async function readNotificationFromMessages(playerId: string, thread: string) {
 	await prisma.notification.updateMany({
@@ -36,7 +53,7 @@ export async function createNotification(
 	severity: NotificationSeverity,
 	link?: string
 ) {
-	const notif = await prisma.notification.create({
+	await prisma.notification.create({
 		data: {
 			player: { connect: { id: userId } },
 			message: message,
@@ -44,8 +61,6 @@ export async function createNotification(
 			link: link
 		}
 	});
-
-	sendSseMessageToUserInChannel(userId, SseChannel.NOTIFICATION, notif);
 }
 
 //clan: { connect: { id: member.clanId } },

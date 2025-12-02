@@ -25,7 +25,6 @@ import { LOGGER } from '../context.js';
 import { UUID } from 'node:crypto';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
-import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 
 let activeTickets: ServerEventTicket[] = [];
 const wsChannels = new Map<string, WsChannelData[]>();
@@ -52,7 +51,7 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 	});
 
 	if (activeTickets.length > 100) {
-		LOGGER.info('There are too many active tickets ! Actual length : ' + activeTickets.length);
+		console.log('There is too many active tickets ! Actual length : ' + activeTickets.length);
 	}
 
 	return {
@@ -228,8 +227,6 @@ async function getChannelName(ticket: ServerEventTicket): Promise<string> {
 		if (!playerData.ClanMember)
 			throw new ExpectedError(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
 		return `${ticket.channel}.${playerData.ClanMember.clan.name}`;
-	} else if (ticket.channel === SseChannel.NOTIFICATION) {
-		return ticket.channel;
 	}
 
 	throw new Error(`The channel name is not correct. Ticket channel : ${ticket.channel}`);
@@ -462,37 +459,6 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 }
 
 /**
- * Send message to user from the SSE channel
- *
- * @param playerId the player to send the message to
- * @param channelName the channel that should contain the user
- * @param message the message to send
- */
-export async function sendSseMessageToUserInChannel(
-	playerId: string,
-	channelName: SseChannel,
-	message: object
-): Promise<void> {
-	// Get channel
-	const channel = sseChannels.get(channelName);
-
-	if (channel === undefined) {
-		LOGGER.info(`No user in channel ${channelName}`);
-		return;
-	}
-
-	// Get user in channel
-	const player = channel.find(c => c.playerId === playerId);
-	if (!player) {
-		LOGGER.info(`User ${playerId} is not in channel ${channelName}`);
-		return;
-	}
-
-	// Send message
-	player.res.write(`data: ${JSON.stringify(message)}\n\n`);
-}
-
-/**
  * Retrieve ticket from URL for SSE and WS connection
  *
  * @param req -> The request used to open the SSE connection
@@ -501,7 +467,7 @@ function getTicketFromUrl(req: Request | IncomingMessage): string {
 	const ticket: string | undefined = req.url?.split('?ticket=')[1];
 
 	if (ticket === undefined) {
-		throw new Error('The ticket must be sent');
+		throw new Error('The ticket must be send');
 	}
 
 	return ticket;

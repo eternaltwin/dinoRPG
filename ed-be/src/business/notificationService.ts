@@ -1,6 +1,12 @@
 import { Request } from 'express';
 import { auth } from '../dao/playerDao.js';
-import { readAllNotification, readNotification } from '../dao/notificationDao.js';
+import { getNotification, readAllNotification, readNotification } from '../dao/notificationDao.js';
+
+export async function getNotifications(req: Request) {
+	const authed = await auth(req, true);
+	const notifications = await getNotification(authed.id);
+	return notifications;
+}
 
 export async function setNotificationRead(req: Request) {
 	const authed = await auth(req);

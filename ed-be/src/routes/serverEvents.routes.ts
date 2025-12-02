@@ -49,6 +49,9 @@ routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
 		res.setHeader('Cache-Control', 'no-cache');
 		res.setHeader('Connection', 'keep-alive');
 
+		// To keep the connection alive
+		res.flushHeaders();
+
 		await connectUserToSseChannel(req, res);
 
 		req.on('close', () => {

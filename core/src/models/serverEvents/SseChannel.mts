@@ -1,3 +1,1 @@
-export enum SseChannel {
-	NOTIFICATION = 'Notification'
-}
+export enum SseChannel {}
