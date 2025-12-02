@@ -55,6 +55,10 @@
 		<template #content>
 			<h1>{{ $t(`missions.name.${missionName}`) }}</h1>
 			<p v-html="formatContent($t(`missions.description.${missionName}`))" />
+			<div v-if="previousDialog" class="previous-step">
+				<h2>{{ $t('missions.lastDialog') }}</h2>
+				<p v-html="$t(`missions.dialog.${missionName}.${previousDialog}`)" />
+			</div>
 		</template>
 	</Tippy>
 	<MissionInformationModal
@@ -77,6 +81,7 @@ import { ConditionEnum } from '@drpg/core/models/enums/Parser';
 import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { MissionHUD } from '@drpg/core/models/missions/missionHUD';
 import MissionInformationModal from '../../components/modal/MissionInformationModal.vue';
+import { npcList } from '@drpg/core/models/npc/NpcList';
 
 export default defineComponent({
 	name: 'MissionHUD',
@@ -132,6 +137,27 @@ export default defineComponent({
 		},
 		mission(): MissionList {
 			return { missionId: this.missionId, status: MissionsStatus.ONGOING };
+		},
+		// Show previous dialog if we have to find a place
+		previousDialog() {
+			if (this.missionDetail?.actionType !== ConditionEnum.HIDE_PLACE) {
+				return null;
+			}
+
+			// Check if we even have a previous step
+			const mission = npcList[this.missionDetail.npc]?.missions?.find(m => m.missionId === this.missionId);
+
+			if (!mission) {
+				return null;
+			}
+
+			const previousStep = mission.steps.find(step => step.stepId === (this.missionDetail?.currentStep ?? 0) - 1);
+
+			if (!previousStep) {
+				return null;
+			}
+
+			return previousStep.displayedText;
 		}
 	}
 });
@@ -167,6 +193,23 @@ export default defineComponent({
 	color: #fce3bc;
 	font-size: 9pt;
 }
+
+.previous-step {
+	margin-top: 8px;
+
+	h2 {
+		text-align: left;
+		padding-left: 8px;
+	}
+
+	p {
+		font-size: 9pt !important;
+		line-height: 10.5pt !important;
+		font-style: italic;
+		color: #fdf1c4;
+	}
+}
+
 @media (max-width: 539px) {
 	.mission {
 		width: 100%;

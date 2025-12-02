@@ -2700,6 +2700,7 @@
 		"continue": "Continuer",
 		"accept": "Accepter la Mission",
 		"already": "Votre Dinoz a déjà une mission en cours et ne peut pas accepter plus d'une mission à la fois.",
+		"lastDialog": "Dernier dialogue",
 		"status": {
 			"available": "",
 			"unavailable": "",

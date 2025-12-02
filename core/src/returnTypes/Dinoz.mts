@@ -1,12 +1,12 @@
 import { MissionID } from '../models/missions/missionList.mjs';
-import { npcList } from '../models/npc/NpcList.mjs';
+import { NpcName } from '../models/npc/npc.mjs';
 
 export type MissionsPageData = {
 	id: number;
 	name: string;
 	display: string;
 	missions: {
-		npc: (typeof npcList)[keyof typeof npcList]['name'];
+		npc: NpcName;
 		missions: {
 			id: MissionID;
 			name: string;

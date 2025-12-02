@@ -881,7 +881,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/jeremyg/IdeaProjects/dinorpg/prisma",
+      "value": "C:\\Users\\perso\\Documents\\GitHub\\dinorpg\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -890,7 +890,7 @@ const config = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       },
       {
@@ -906,7 +906,7 @@ const config = {
       "nativeDistinct",
       "relationJoins"
     ],
-    "sourceFilePath": "/home/jeremyg/IdeaProjects/dinorpg/ed-be/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\perso\\Documents\\GitHub\\dinorpg\\ed-be\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
