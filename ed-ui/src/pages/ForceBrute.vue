@@ -271,8 +271,6 @@ export default defineComponent({
 	}
 }
 .wrapper {
-	display: flex;
 	align-self: center;
-	flex-direction: column;
 }
 </style>
