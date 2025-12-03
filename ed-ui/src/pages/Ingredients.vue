@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`rightMenu.ingredients`)" />
+	<TitleHeader :title="$t('pageTitle.ingredients')" :header="$t(`topBar.rightMenuingredients`)" />
 	<DZDisclaimer help round content="ingredients.disclaimer" />
 	<table>
 		<tbody>
@@ -102,7 +102,9 @@ export default defineComponent({
 				);
 			const res = await this.$confirm({
 				message: this.$t(`ingredients.giveAway.confirm`, { gold: gold }),
-				header: 'Attention',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popop.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res) {

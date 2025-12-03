@@ -251,7 +251,9 @@ export default defineComponent({
 						skill: this.$t(`skill.name.${skillList[skillId as Skill].name}`),
 						level: (this.availableSkills?.level ?? 0) + 1
 					}),
-					header: 'Attention',
+					header: this.$t('popup.attention'),
+					acceptLabel: this.$t('popup.accept'),
+					rejectLabel: this.$t('popop.reject'),
 					icon: 'pi pi-trash'
 				});
 				if (prompt) {

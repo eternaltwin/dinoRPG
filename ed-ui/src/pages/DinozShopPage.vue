@@ -99,7 +99,9 @@ export default defineComponent({
 		async openPopinConfirmChoice(dinoz: DinozShopFicheLite): Promise<void> {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
-				header: 'Attention',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popop.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res) {

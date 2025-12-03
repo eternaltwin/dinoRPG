@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t(`rightMenu.faq`)" />
+	<TitleHeader :title="`${$t('pageTitle.faq')}`" :header="$t(`topBar.rightMenu.faq`)" />
 	<DZDisclaimer help round content="faq.intro" />
 	<div class="search">
 		<form @submit.prevent="e => e.preventDefault()">

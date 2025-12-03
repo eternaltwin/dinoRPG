@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t(`rightMenu.guide`)" />
+	<TitleHeader :title="`${$t('pageTitle.guide')}`" :header="$t(`topBar.rightMenuguide`)" />
 	<div class="intro">
 		<div class="menu">
 			<ul class="list">

@@ -99,7 +99,9 @@ export default defineComponent({
 			}
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirmBanAction'),
-				header: 'Attention',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popop.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res) {

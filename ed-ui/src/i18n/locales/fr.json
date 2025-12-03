@@ -2588,6 +2588,10 @@
 	},
 	"popup": {
 		"confirm": "Confirmer cette action ?",
+		"confirmBanAction": "Confirmer ce ban ?",
+		"attention": "Attention",
+		"accept": "Oui",
+		"reject": "Non",
 		"shop": {
 			"buyMaxConfirm_part1": "Voulez-vous vraiment acheter ",
 			"buyMaxConfirm_part2": " exemplaire(s) de cet objet pour un total de ",

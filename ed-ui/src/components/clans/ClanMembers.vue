@@ -185,7 +185,9 @@ export default defineComponent({
 		async excludeMember(id: number): Promise<void> {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
-				header: 'Attention',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popop.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res) {
@@ -204,7 +206,9 @@ export default defineComponent({
 		async leaveClan() {
 			const res: boolean = await this.$confirm({
 				message: this.$t('popup.confirm'),
-				header: 'Attention',
+				header: this.$t('popup.attention'),
+				acceptLabel: this.$t('popup.accept'),
+				rejectLabel: this.$t('popop.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res) {
