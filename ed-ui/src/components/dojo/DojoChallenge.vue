@@ -33,9 +33,9 @@
 			</div>
 		</div>
 		<template v-if="!fightTransformed">
-			<Tippy theme="small" tag="progress" :value="dailyReset" max="dojoMaxSeries">
+			<Tippy theme="small" tag="progress" :value="dailyReset" :max="dojoMaxSeries">
 				<template #content>
-					<div v-html="formatContent($t('dojo.dailyReset', { qty: dailyReset }))" />
+					<div v-html="formatContent($t('dojo.dailyReset', { qty: dailyReset, max: dojoMaxSeries }))" />
 				</template>
 			</Tippy>
 			<!--			<progress ></progress>-->
