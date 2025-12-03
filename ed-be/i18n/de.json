@@ -204,7 +204,7 @@
 	},
 	"dojo": {
 		"inexistantDojo": "Das ausgewählte Dojo existiert nicht",
-		"dinozNotPlayer": "Die Höchstanzahl an Dinoz für dieses Turnier ist erreicht.",
+		"dinozNotPlayer": "Ein Dinoz gehört nicht zum Spieler.",
 		"alreadyFighted": "Dieser Dinoz hat bereits gekämpft",
 		"wrongDinozInTeam": "Deine Mannschaft muss aus 5-10 Dinoz bestehen",
 		"wrongDinozQuantity": "Deine Mannschaft muss aus {qty} Dinoz bestehen.",

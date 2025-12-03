@@ -1,25 +1,89 @@
 {
 	"error": "Por favor, informa de este error a los desarrolladores con los detalles de cómo ha ocurrido.",
-	"rightMenu": {
-		"news": "Novedades",
-		"gazette": "Periodino",
-		"ranking": "Clasificación",
-		"clans": "Clanes",
-		"ingredients": "Ingredientes",
-		"account": "Mi Cuenta",
-		"messagerie": "Mensajería",
-		"forum": "Foro",
-		"api": "API",
-		"logout": "Desconectarse",
-		"notifications": "Notificaciones",
-		"readAll": "Marcar todo como leído",
-		"guide": "Guía del Juego",
-		"faq": "Preguntas frecuentes",
-		"cinema": "Cine",
-		"events": "Eventos",
-		"system": "Ajustes",
-		"skipFight": "Mostrar directamente el resultado del combate",
-		"skipLevel": "Saltar la animación de subida de nivel"
+	"topBar": {
+		"connexion": "Connexion",
+		"menu": "Menu",
+		"serverTime": "Hora del servidor",
+		"leftMenu": {
+			"shop": "Boutique",
+			"enclosure": "Enclos",
+			"dojo": "Dojo",
+			"order": "Ordonner",
+			"skillTrees": "Arbres de Compétences",
+			"missions": "Missions"
+		},
+		"gamesMenu": {
+			"title": "Jeux Eternaltwin",
+			"subtitle": "Retrouvez tous les jeux accessibles sur Eternaltwin",
+			"eternaltwinGames": {
+				"alphabounce": {
+					"name": "AlphaBounce",
+					"description": "AlphaBounce est un jeu de casse-briques dans lequel vous incarnez un prisonnier condamné à miner dans l'espace pour l'éternité. Mais peut-être arriverez-vous à rentrer chez vous ?"
+				},
+				"dinocard": {
+					"name": "Dinocard",
+					"description": "Dinocard Rebirth est une nouvelle version de Dinocard. Il y a déjà 150 cartes jouables !"
+				},
+				"emush": {
+					"name": "eMush",
+					"description": "Vous allez vous réveiller avec 15 autres joueurs dans le Daedalus. Comme vous, ils fuient le Mush, un champignon qui ravage la planète Terre et menace l'Humanité."
+				},
+				"directquiz": {
+					"name": "Directquiz",
+					"description": "Mettez votre culture à rude épreuve dans Direct Quiz, le jeu de quiz le plus déjanté du web !"
+				},
+				"epopotamo": {
+					"name": "ePopotamo",
+					"description": "Le jeu de mots relax jouable en toute situation !"
+				},
+				"eternalfest": {
+					"name": "Eternalfest",
+					"description": "Plus de 200 niveaux ! Une grande variété d'ennemis très très méchants !"
+				},
+				"kingdom": {
+					"name": "Eternal Kingdom",
+					"description": "Faites prospérer votre capitale. Recrutez des soldats et devenez... Empereur !"
+				},
+				"mybrute": {
+					"name": "LaBrute",
+					"description": "Règle tes comptes dans l'arène !"
+				},
+				"myhordes": {
+					"name": "MyHordes",
+					"description": "Le premier jeu de survie zombie gratuit se déroulant dans un monde hostile peuplé de morts-vivants !"
+				},
+				"neoparc": {
+					"name": "Neoparc",
+					"description": "Combattez d'autres Dinoz et gagnez ainsi petit à petit de l'expérience lors de combats sans merci !"
+				},
+				"pioupiouz": {
+					"name": "PiouPiouZ",
+					"description": "Ils se \"plurtchent\", ils explosent, ils se dilatent, ils se transforment, ils avancent tout droit sans réfléchir et seul vous pouvez les amener à la sortie salvatrice !"
+				}
+			}
+		},
+		"rightMenu": {
+			"news": "Novedades",
+			"gazette": "Periodino",
+			"ranking": "Posición",
+			"clan": "Mi Clan",
+			"clans": "Clanes",
+			"ingredients": "Ingredientes",
+			"account": "Mi Cuenta",
+			"messagerie": "Mensajería",
+			"forum": "Foro",
+			"api": "API",
+			"logout": "Déconnexion",
+			"notifications": "Notifications",
+			"readAll": "Tout Lu",
+			"guide": "Guide du Jeu",
+			"faq": "FAQ",
+			"cinema": "Cinéma",
+			"events": "Événements",
+			"system": "Réglages",
+			"skipFight": "Afficher directement le résultat de combat",
+			"skipLevel": "Passer l'animation de gain de niveau"
+		}
 	},
 	"toast": {
 		"noFBTournament": "Todavía no hay fase de clasificación para el torneo de Fuerzabruta.",
@@ -39,7 +103,7 @@
 		"leaderChanged": "Tu Dino es el nuevo líder del grupo",
 		"missingUser": "Usuario perdido",
 		"missingData": "Datos perdidos",
-		"labrute": "Has obtenido {quantity} pociones de la Bruja Lola.",
+		"labrute": "Recibiste {quantity} :irma:.",
 		"reincarnation": "Tu Dino ha sido reencarnado.",
 		"market": {
 			"minimalValueError": "El valor total de su oferta no alcanza el valor mínimo.",
@@ -53,7 +117,7 @@
 		"heal": "Tu Dino ha recuperado {value} :hp:",
 		"gold": "Recibiste {value} :gold:",
 		"sphere": "Tu Dino ha aprendido la competencia {value}.",
-		"action": "Has consumido {value} pociones de la Bruja Lola y puedes efectuar más acciones.",
+		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
 		"resurrect": "Tu Dino ha resucitado.",
 		"egg": "Has abierto un huevo de {value}.",
 		"special": {
@@ -240,6 +304,8 @@
 		}
 	},
 	"details": {
+		"asc": "Ascendant",
+		"desc": "Descendant",
 		"th": {
 			"comp": "Competencia",
 			"type": "Tipo",
@@ -301,10 +367,17 @@
 		"energyRecovery": "Recuperación de Energía",
 		"maxFollowers": "Número máximo de seguidores",
 		"armor": "Armadura",
+		"armorBreak": "Perforation",
 		"multihit": "Multi-golpe",
 		"evasion": "Esquiva",
 		"superEvasion": "Súper Evasión",
 		"counter": "Contra",
+		"speed": "Velocidad",
+		"fireSpeed": "Velocidad Fuego",
+		"woodSpeed": "Velocidad Madera",
+		"waterSpeed": "Velocidad Agua",
+		"lightningSpeed": "Velocidad Rayo",
+		"airSpeed": "Velocidad Aire",
 		"bubbleRate": "Porcentaje de Burbuja",
 		"torchDamage": "Daño de antorcha",
 		"acidBloodDamage": "Daño de sangre ácida",
@@ -454,7 +527,7 @@
 			"surviving_ration": "En caso de heridas graves, recuperarás *entre 10 y 40 puntos de vida* durante un combate.",
 			"goblin_merguez": "La especialidad de la región del Gran Señor-Todo-Quema. A consumir con mucha moderación.",
 			"pampleboum": "¡Un fruto bello y apetitoso capaz de darte 15 puntos de vida con un solo mordisco!",
-			"sos_helmet": "Aumenta la armadura de tu Dino en 1 punto cuando es utilizado.",
+			"sos_helmet": "Augmente l'armure de votre Dinoz de 10% quand il est utilisé.",
 			"little_pepper": "Aumenta en 10 puntos el próximo asalto de tu Dino.",
 			"zippo": "¡Tu Dino quema!",
 			"sos_flame": "Nada mejor que una Flamacha de Socorro para ayudarte durante un combate.",
@@ -2099,7 +2172,7 @@
 			"ProteinesDinozienne": "Aumenta la resistencia del Dino en 30%",
 			"Extenuation": "Disminuye en 25% la capacidad de recuperación de un enemigo",
 			"CarapaceDeMagma": "Aumenta el máximo de puntos de vida en 30 y la potencia de los *asaltos* Fuego en 5",
-			"Carapace": "Aumenta la armadura en 1",
+			"Carapace": "Augmente l'armure de 10%",
 			"Sauvagerie": "Aumenta el poder de los *asaltos* de Madera en 5",
 			"Endurance": "Aumenta la defensa contra Madera en 2",
 			"Vignes": "Disminuye la iniciativa de un enemigo en 15",
@@ -2169,7 +2242,7 @@
 			"SelfControl": "Evita todos los estatus negativos y disminuye la iniciativa del Dino en 3",
 			"Brave": "El Dino no podrá formar parte de un Grupo. Aumenta el elemento Fuego en 6, el máximo de puntos de vida en 50 y la velocidad del Dino en 15%",
 			"Planificateur": "Permite al Dino excavar una casilla adicional",
-			"HeritageFaroe": "Aumenta la potencia de los *asaltos* de Madera en 12 y la armadura en 1",
+			"HeritageFaroe": "Augmente la puissance des *assauts* Bois de 12 et l'armure de 10%",
 			"PrintempsPrecoce": "Todos los otros Dinos del Grupo ganan hasta tantos puntos de vida como el elemento Madera del Dino que lo lanza",
 			"EspritGorilloz": "Llama un Espíritu Gorilos para ayudar en el combate",
 			"GardeForestier": "Aumenta la defensa contra Madera de todos los Dinos del Grupo en 3",
@@ -2188,7 +2261,7 @@
 			"Gel": "Ataca a un enemigo con un poder de Agua 5. El enemigo es ralentizado",
 			"DoucheEcossaise": "Ataca a todos los enemigos con un poder de Agua 2",
 			"ZeroAbsolu": "Aumenta la defensa contra Fuego en 25",
-			"Petrification": "Petrifica a un enemigo",
+			"Petrification": "Pétrifie un ennemi pour une durée moyenne, il ne peut plus agir mais son armure augmente de 50%",
 			"Acupuncture": "Da el estatus Curación. Si uno de los ataques toca al Dino, el enemigo pierde 1 punto de vida",
 			"Sapeur": "Aumenta las posibilidades de usar objetos en combate en 50%",
 			"RayonKaarSher": "Ataca a todos los enemigos con un poder de Agua 7",
@@ -2213,7 +2286,7 @@
 			"Regenerescence": "Aumenta la velocidad de recuperación de puntos de vida durante el descanso",
 			"PremiersSoins": "Permite al Dino recuperar un punto de vida al final de un combate si pierde vida",
 			"PureeSalvatrice": "Anula todos los estatus negativos del Grupo",
-			"AuraHermetique": "Da el estatus Escudo",
+			"AuraHermetique": "Le Dinoz se donne le statut bouclier (augmente l'armure de 50%)",
 			"CrepusculeFlambloyant": "Ataca a todos los enemigos con un poder Fuego 6 + Rayo 6",
 			"AubeFeuillue": "Regenera a todos los Dinos del Grupo hasta Rayo 2 + Madera 2 en puntos de vida",
 			"Benediction": "Da el estatus Bendición a todos los Dinos del Grupo",
@@ -2274,8 +2347,8 @@
 			"Electrolyse": "Aumenta la velocidad de todos los Dinos del grupo en 5%",
 			"MaitreElementaire": "Aumenta los elementos Fuego y Agua en 2",
 			"Increvable": "Aumenta todas las defensas en 2",
-			"ArmureDeBasalte": "Aumenta la armadura en 3",
-			"Coque": "Aumenta la armadura en 1",
+			"ArmureDeBasalte": "Augmente l'armure de 30%",
+			"Coque": "Augmente l'armure de 10%",
 			"ChargeCornue": "Aumenta la potencia del primer asalto en 20%",
 			"Rock": "El Dino se vuelve objetivo principal de los enemigos",
 			"Pietinement": "Elimina la armadura de los enemigos",
@@ -2283,7 +2356,7 @@
 			"Insaisissable": "Aumenta las posibilidades de esquivar en 10%",
 			"DeplacementInstantane": "Aumenta las posibilidades de esquivar ataques a distancia y de tipo A en 15%",
 			"Napomagicien": "Permite al Dino equiparse 2 objetos mágicos diferentes al mismo tiempo",
-			"EcaillesLuminescentes": "Aumenta la armadura en 2",
+			"EcaillesLuminescentes": "Augmente l'armure de 20%",
 			"PeauDeSerpent": "Aumenta la posibilidad de esquivar en 10%. Disminuye la velocidad de los ataques de Agua en 15%",
 			"PropulsionDivine": "Aumenta la velocidad de los ataques de Fuego en 30%. Disminuye el elemento Fuego en 2",
 			"GriffesInfernales": "Ataca con Fuego continuo a un enemigo",
@@ -2310,7 +2383,7 @@
 			"RadiationsGamma": "Aumenta la potencia de todos los *asaltos* en 5 y el máximo de puntos de vida en 30. Disminuye la iniciativa del Dino en 10",
 			"Bleu": "Aumenta el poder de todos los *asaltos* en 20 cuando el Dino se encuentra en las Islas Atlanteidas",
 			"MueAcqueuse": "Aumenta la defensa contra Rayo en 20",
-			"CarapaceBlindee": "Aumenta la armadura en 10 y disminuye la velocidad en 20%",
+			"CarapaceBlindee": "Augmente l'armure de 100%, réduit la vitesse de 20%",
 			"DieteChromatique": "Aplica el estado de mono-elemento a un adversario (bloquea su elemento actual)",
 			"EffluveAphrodisiaque": "El Dino puede ser seguido por un Dino adicional",
 			"Nemo": "Permite al Dino pescar una casilla adicional",
@@ -2545,33 +2618,33 @@
 	},
 	"pageTitle": {
 		"default": "DinoRPG [ La actualidad en Dinoland ]",
-		"dinoz": "DinoRPG [ Ficha de ",
-		"shop": "DinoRPG [ Marchand : Boutique volante de Dinoland ]",
-		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
-		"account": "DinoRPG [ Información personal ]",
-		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",
-		"ingredients": "DinoRPG [ Ingredientes ]",
-		"levelup": "Nivel suplementario para ",
-		"npc": "Personaje : ",
-		"missions": "DinoRPG [ Lista de Misiones ]",
-		"dinozNaming": "DinoRPG [ Elegir nombre ]",
-		"fight": "DinoRPG [ ¡Combate! ]",
+		"dinoz": "DinoRPG [ Fiche de ",
+		"shop": "DinoRPG [ Marchand : ",
+		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
+		"account": "DinoRPG [ Informations personnelles ]",
+		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
+		"ingredients": "DinoRPG [ Ingrédients ]",
+		"levelup": "DinoRPG [ Niveau supplémentaire pour ",
+		"npc": "DinoRPG [ Personnage : ",
+		"missions": "DinoRPG [ Liste des Missions ]",
+		"dinozNaming": "DinoRPG [ Choix du Nom ]",
+		"fight": "DinoRPG [ Combat ! ]",
 		"gather": "DinoRPG [ ",
-		"dinozMissions": "DinoRPG [Misión de mi Dino]",
-		"manageDinoz": "DinoRPG [ Gestión de mi Dino ]",
-		"market": "DinoRPG [ Mercado de los Maestros ]",
+		"dinozMissions": "DinoRPG [ Missions de mes Dinoz ]",
+		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
+		"market": "DinoRPG [ Marché des Éleveurs ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"guide": "DinoRPG [ Guía del Juego ]",
-		"itinerant": "DinoRPG [ Mercader Ambulante ]",
-		"faq": "DinoRPG [ Preguntas y respuestas ]",
+		"guide": "DinoRPG [ Guide du Jeu ]",
+		"itinerant": "DinoRPG [ Marchand Ambulant ]",
+		"faq": "DinoRPG [ FAQ ]",
 		"clan": "DinoRPG [ Clan : ",
-		"clansList": "DinoRPG [ Lista de Clanes ]",
-		"createClan": "DinoRPG [ Crear Clan ]",
-		"challengeFriend": "DinoRPG [ Enfrentar a un amigo ]",
-		"forum": "DinoRPG [ Foro ]",
-		"admin": "DinoRPG [ Panel de Admin ]",
-		"event": "DinoRPG [ Eventos ]",
-		"fb_tournament": "DinoRPG [ Torneo de Fuerzabruta ]",
+		"clansList": "DinoRPG [ Liste des Clans ]",
+		"createClan": "DinoRPG [ Créer un Clan ]",
+		"challengeFriend": "DinoRPG [ Affronte un ami ]",
+		"forum": "DinoRPG [ Forums ]",
+		"admin": "DinoRPG [ Admin Dashboard ]",
+		"event": "DinoRPG [ Événements ]",
+		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"skillTrees": "DinoRPG [ Árbol de Competencias ]"
 	},
 	"gather": {
@@ -3967,7 +4040,8 @@
 			"average": "Med.",
 			"completion": "Comp.",
 			"clans": "Clanes",
-			"treasure": "Tesoro del Clan"
+			"treasure": "Tesoro del Clan",
+			"event": "Score d'événement"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -3976,7 +4050,8 @@
 			"pantheon": "Aquí podrás encontrar qué jugadores y qué Dinos fueron los primeros en lograr hitos.",
 			"clans": "La Clasificación de clanes se actualiza en tiempo real y se calculan a partir del valor del Tesoro del Clan.",
 			"clansCreation": "Puedes consultar la {0} para ver los clanes recién creados.",
-			"clansCreationLink": "página de búsqueda de clanes"
+			"clansCreationLink": "página de búsqueda de clanes",
+			"clansEvent": "Le Classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
 		},
 		"page": {
 			"previous": "Página anterior",
@@ -3998,6 +4073,10 @@
 		"placeholder": {
 			"searchPlayer": "Buscar un Maestro",
 			"searchClan": "Buscar un Clan"
+		},
+		"button": {
+			"event": "Classement de trésor",
+			"treasure": "Classement d'événement"
 		}
 	},
 	"clan": {
@@ -4055,7 +4134,8 @@
 			"name": "Nombre",
 			"donation": "Donaciones",
 			"stats": "Estadísticas",
-			"actions": "Acciones"
+			"actions": "Acciones",
+			"event": "Score d'événement"
 		},
 		"edit": {
 			"disclaimer": "Esta página le permite modificar los derechos del jugador <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> en el Clan.",
@@ -4161,7 +4241,10 @@
 		"lose": "Has **perdido**...",
 		"lvlup": "¡Un Dino ganó un **nivel adicional**!",
 		"continue": "Continuar",
-		"display": "Mostrar el combate",
+		"history": {
+			"display": "Afficher l'historique",
+			"hide": "Masquer l'historique"
+		},
 		"resume": "Luchaste contra un {enemy}",
 		"clone": "Clon",
 		"life": "Vida perdida",
@@ -4421,7 +4504,9 @@
 		"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
 		"follow": "El líder del grupo es {leader}.",
 		"followed": "Este Dino es el líder del grupo.",
-		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando."
+		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
+		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
@@ -4490,7 +4575,7 @@
 		"build": "Construir mi dojo",
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
-		"dailyReset": "Vas por la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de 5 oleadas por día.//",
+		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jours au maximum.//",
 		"seeFight": "Ver el combate",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {

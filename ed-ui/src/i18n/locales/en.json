@@ -1,25 +1,89 @@
 {
 	"error": "Please report this error to the devs, with details on how it happened.",
-	"rightMenu": {
-		"news": "News",
-		"gazette": "Newsletter",
-		"ranking": "Ranking",
-		"clans": "Clans",
-		"ingredients": "Ingredients",
-		"account": "My Account",
-		"messagerie": "Messaging",
-		"forum": "Forum",
-		"api": "API",
-		"logout": "Log out",
-		"notifications": "Notifications",
-		"readAll": "Read All",
-		"guide": "Game Guide",
-		"faq": "FAQ",
-		"cinema": "Cinema",
-		"events": "Events",
-		"system": "Settings",
-		"skipFight": "Display immediately the outcome of fights",
-		"skipLevel": "Skip level up animation"
+	"topBar": {
+		"connexion": "Sign In",
+		"menu": "Menu",
+		"serverTime": "Server Time",
+		"leftMenu": {
+			"shop": "Shop",
+			"enclosure": "Enclosure",
+			"dojo": "Dojo",
+			"order": "Order",
+			"skillTrees": "Skill Trees",
+			"missions": "Missions"
+		},
+		"gamesMenu": {
+			"title": "Eternaltwin Games",
+			"subtitle": "Find all the available games on Eternaltwin",
+			"eternaltwinGames": {
+				"alphabounce": {
+					"name": "AlphaBounce",
+					"description": "AlphaBounce est un jeu de casse-briques dans lequel vous incarnez un prisonnier condamné à miner dans l'espace pour l'éternité. Mais peut-être arriverez-vous à rentrer chez vous ?"
+				},
+				"dinocard": {
+					"name": "Dinocard",
+					"description": "Dinocard Rebirth est une nouvelle version de Dinocard. Il y a déjà 150 cartes jouables !"
+				},
+				"emush": {
+					"name": "eMush",
+					"description": "Vous allez vous réveiller avec 15 autres joueurs dans le Daedalus. Comme vous, ils fuient le Mush, un champignon qui ravage la planète Terre et menace l'Humanité."
+				},
+				"directquiz": {
+					"name": "Directquiz",
+					"description": "Mettez votre culture à rude épreuve dans Direct Quiz, le jeu de quiz le plus déjanté du web !"
+				},
+				"epopotamo": {
+					"name": "ePopotamo",
+					"description": "Le jeu de mots relax jouable en toute situation !"
+				},
+				"eternalfest": {
+					"name": "Eternalfest",
+					"description": "Plus de 200 niveaux ! Une grande variété d'ennemis très très méchants !"
+				},
+				"kingdom": {
+					"name": "Eternal Kingdom",
+					"description": "Faites prospérer votre capitale. Recrutez des soldats et devenez... Empereur !"
+				},
+				"mybrute": {
+					"name": "LaBrute",
+					"description": "Règle tes comptes dans l'arène !"
+				},
+				"myhordes": {
+					"name": "MyHordes",
+					"description": "Le premier jeu de survie zombie gratuit se déroulant dans un monde hostile peuplé de morts-vivants !"
+				},
+				"neoparc": {
+					"name": "Neoparc",
+					"description": "Combattez d'autres Dinoz et gagnez ainsi petit à petit de l'expérience lors de combats sans merci !"
+				},
+				"pioupiouz": {
+					"name": "PiouPiouZ",
+					"description": "Ils se \"plurtchent\", ils explosent, ils se dilatent, ils se transforment, ils avancent tout droit sans réfléchir et seul vous pouvez les amener à la sortie salvatrice !"
+				}
+			}
+		},
+		"rightMenu": {
+			"news": "News",
+			"gazette": "Newsletter",
+			"ranking": "Ranking",
+			"clan": "My Clan",
+			"clans": "Clans",
+			"ingredients": "Ingredients",
+			"account": "My Account",
+			"messagerie": "Messaging",
+			"forum": "Forum",
+			"api": "API",
+			"logout": "Déconnexion",
+			"notifications": "Notifications",
+			"readAll": "Tout Lu",
+			"guide": "Guide du Jeu",
+			"faq": "FAQ",
+			"cinema": "Cinéma",
+			"events": "Événements",
+			"system": "Réglages",
+			"skipFight": "Afficher directement le résultat de combat",
+			"skipLevel": "Passer l'animation de gain de niveau"
+		}
 	},
 	"toast": {
 		"noFBTournament": "There are no qualifications yet the BrutForce tournament.",
@@ -39,7 +103,7 @@
 		"leaderChanged": "Your Dinoz is the new group leader.",
 		"missingUser": "Missing user.",
 		"missingData": "Missing data.",
-		"labrute": "You received {quantity} of Madam Irma's Potions.",
+		"labrute": "You received {quantity} :irma:.",
 		"reincarnation": "Your Dinoz has been reincarnated.",
 		"market": {
 			"minimalValueError": "Your offer total value doesn't reach the minimal value.",
@@ -53,7 +117,7 @@
 		"heal": "Your dinoz has received {value} :hp:.",
 		"gold": "You received {value} :gold:.",
 		"sphere": "Your dinoz has learned the {value} skill.",
-		"action": "You consumed {value} of Madame Irma's Potions and may take further action.",
+		"action": "You consumed {value} :irma: and may take further action.",
 		"resurrect": "Your dinoz is resurrected.",
 		"egg": "You opened a {value}'s Egg.",
 		"special": {
@@ -240,6 +304,8 @@
 		}
 	},
 	"details": {
+		"asc": "Ascendant",
+		"desc": "Descendant",
 		"th": {
 			"comp": "Skill",
 			"type": "Type",
@@ -301,10 +367,17 @@
 		"energyRecovery": "Energy recovery",
 		"maxFollowers": "Maximum followers",
 		"armor": "Armor",
+		"armorBreak": "Perforation",
 		"multihit": "Multi-hit",
 		"evasion": "Evasion",
 		"superEvasion": "Super Evasion",
 		"counter": "Counter",
+		"speed": "Speed",
+		"fireSpeed": "Fire Speed",
+		"woodSpeed": "Wood Speed",
+		"waterSpeed": "Water Speed",
+		"lightningSpeed": "Thunder Speed",
+		"airSpeed": "Air Speed",
 		"bubbleRate": "Bubble rate",
 		"torchDamage": "Torch damage",
 		"acidBloodDamage": "Acid blood damage",
@@ -454,7 +527,7 @@
 			"surviving_ration": "Keep a Battle Ration in hand during a fight as when things get tough, you will recover up to 20 health points.",
 			"goblin_merguez": "A specialty of Big All-Hot mountain. Consume in moderation!",
 			"pampleboum": "A bite of this nice and appetizing fruit will restore 15 health points!",
-			"sos_helmet": "Increases your Dinoz' armor by 1 point.",
+			"sos_helmet": "Increases your Dinoz' armor by 10% when used.",
 			"little_pepper": "Increases the value of your Dinoz' next assault by 10 points.",
 			"zippo": "Your Dinoz goes up in flames!",
 			"sos_flame": "Nothing better than a Rescue Flamelet to help you during a fight.",
@@ -2099,7 +2172,7 @@
 			"ProteinesDinozienne": "Increase endurance by 30%",
 			"Extenuation": "Reduce the enemy's ability to recover energy by 25%",
 			"CarapaceDeMagma": "Increase max HP by 30 and Fire *assaults* by 5",
-			"Carapace": "Increase armor by 1",
+			"Carapace": "Increase armor by 10%",
 			"Sauvagerie": "Increase the strength of Wood *assaults* by 5",
 			"Endurance": "Increase Wood defense by 2",
 			"Vignes": "Decrease initiative of an enemy on the ground by 15",
@@ -2169,7 +2242,7 @@
 			"SelfControl": "Prevent all negative status and decrease the initiative by 3",
 			"Brave": "The Dinoz won't be able to be part of a Group anymore. Increase the Fire element by 6, maximum life by 50 and speed by 15%.",
 			"Planificateur": "Enable the Dinoz to search an additional square during an excavation",
-			"HeritageFaroe": "Increase the strength of Wood *assaults* by 12 and the armor by 1",
+			"HeritageFaroe": "Increase the strength of Wood *assaults* by 12 and the armor by 10%",
 			"PrintempsPrecoce": "All the other Dinoz in the Group recover health points up to the Wood element of the Dinoz",
 			"EspritGorilloz": "Call a Gorilloz spirit to help in fight",
 			"GardeForestier": "Increase the Wood defense of all Dinoz in the Group by 3",
@@ -2188,7 +2261,7 @@
 			"Gel": "Attacks one enemy with Water at a strength of 5. The enemy's speed is reduced",
 			"DoucheEcossaise": "Attack all enemies with Water at a strength of 2",
 			"ZeroAbsolu": "Increase defense against Fire by 25",
-			"Petrification": "Petrify one enemy for a medium duration",
+			"Petrification": "Petrify an opponent for a medium duration, it cannot act but its armor increases by 50%",
 			"Acupuncture": "Give recovery status. If an opponent hits the Dinoz in melee, it will lose 1 health point.",
 			"Sapeur": "Increase the probability of using combat gear by 50%",
 			"RayonKaarSher": "Attack all the enemies with Water at a strength of 7",
@@ -2213,7 +2286,7 @@
 			"Regenerescence": "Increase speed of health points recovery when resting",
 			"PremiersSoins": "Dinoz will recover one health point at the end of the fight if he has lost some life",
 			"PureeSalvatrice": "Cancel all Negative Status of the Group",
-			"AuraHermetique": "Gain the shield status that increases armor by 5.",
+			"AuraHermetique": "Gain the shield status (increases armor by 50%)",
 			"CrepusculeFlambloyant": "Attack all enemies with Fire at a strength of 6 + Lightning at a strength of 6",
 			"AubeFeuillue": "Regenerate all Dinoz in the Group up to Lightning 2 + Wood 2 health points",
 			"Benediction": "Give the status Blessed to a group",
@@ -2274,8 +2347,8 @@
 			"Electrolyse": "Increase speed of all Dinoz of the Group by 5%",
 			"MaitreElementaire": "Increase Water and Fire elements by 2",
 			"Increvable": "Increase all defenses by 2",
-			"ArmureDeBasalte": "Increase armor by 3",
-			"Coque": "Increase armor by 1",
+			"ArmureDeBasalte": "Increase armor by 30%",
+			"Coque": "Increase armor by 10%",
 			"ChargeCornue": "Increase strength of first assault by 20%",
 			"Rock": "Whenever an opponent picks a target for an assault, the Dinoz has 50% chance to become this target.",
 			"Pietinement": "Ignore the armor of opponents when attacking them",
@@ -2283,7 +2356,7 @@
 			"Insaisissable": "Increase evasion chances by 10%",
 			"DeplacementInstantane": "Increase the chances of avoiding offensive skills by 15%",
 			"Napomagicien": "The Dinoz can equip 2 magic objects at the same time",
-			"EcaillesLuminescentes": "Increase armor by 2",
+			"EcaillesLuminescentes": "Increase armor by 20%",
 			"PeauDeSerpent": "Increase evasion by 10% and decrease Water attack speed by 15%",
 			"PropulsionDivine": "Increase speed of Fire attack by 30% and decrease Fire element by 2",
 			"GriffesInfernales": "Whenever the Dinoz hits an opponent with an **assault**, it burns it. The burn deals damage every cycle based on the opponent's Fire element.",
@@ -2310,7 +2383,7 @@
 			"RadiationsGamma": "Increase all **assaults** strength by 5, health points by 30 and decrease initiative by 10",
 			"Bleu": "Increase all **assaults** strength by 20 when the Dinoz is at the Atlantean Islands",
 			"MueAcqueuse": "Increase defense against Lightning by 20",
-			"CarapaceBlindee": "Increase armor by 10 and reduces speed by 20%",
+			"CarapaceBlindee": "Increase armor by 100% and reduce speed by 20%",
 			"DieteChromatique": "Lock an opponent on their current element",
 			"EffluveAphrodisiaque": "The Dinoz can be followed by an additional Dinoz",
 			"Nemo": "Whilst fishing, this allows the Dinoz to fish an additional square",
@@ -2545,33 +2618,33 @@
 	},
 	"pageTitle": {
 		"default": "DinoRPG [ Dinoland News ]",
-		"dinoz": "DinoRPG [ Profile of ",
-		"shop": "DinoRPG [ Merchant: ",
-		"dinozShop": "DinoRPG [ Dinoz Enclosure ]",
-		"account": "DinoRPG [ Personal Information ]",
-		"ranking": "DinoRPG [ Great Hall of Glory ]",
-		"ingredients": "DinoRPG [ Ingredients ]",
-		"levelup": "DinoRPG [ Level-up of: ",
-		"npc": "DinoRPG [ Character: ",
-		"missions": "DinoRPG [ List of Missions ]",
-		"dinozNaming": "DinoRPG [ Choose Name ]",
-		"fight": "DinoRPG [ Fight! ]",
+		"dinoz": "DinoRPG [ Fiche de ",
+		"shop": "DinoRPG [ Marchand : ",
+		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
+		"account": "DinoRPG [ Informations personnelles ]",
+		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
+		"ingredients": "DinoRPG [ Ingrédients ]",
+		"levelup": "DinoRPG [ Niveau supplémentaire pour ",
+		"npc": "DinoRPG [ Personnage : ",
+		"missions": "DinoRPG [ Liste des Missions ]",
+		"dinozNaming": "DinoRPG [ Choix du Nom ]",
+		"fight": "DinoRPG [ Combat ! ]",
 		"gather": "DinoRPG [ ",
-		"dinozMissions": "DinoRPG [ My Dinoz' Missions ]",
-		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
-		"market": "DinoRPG [ Tamer Market ]",
+		"dinozMissions": "DinoRPG [ Missions de mes Dinoz ]",
+		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
+		"market": "DinoRPG [ Marché des Éleveurs ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"guide": "DinoRPG [ Game Guide ]",
-		"itinerant": "DinoRPG [ Travelling Merchant ]",
+		"guide": "DinoRPG [ Guide du Jeu ]",
+		"itinerant": "DinoRPG [ Marchand Ambulant ]",
 		"faq": "DinoRPG [ FAQ ]",
 		"clan": "DinoRPG [ Clan : ",
-		"clansList": "DinoRPG [ Clans List ]",
-		"createClan": "DinoRPG [ Create a Clan ]",
-		"challengeFriend": "DinoRPG [ Duel a Friend ]",
+		"clansList": "DinoRPG [ Liste des Clans ]",
+		"createClan": "DinoRPG [ Créer un Clan ]",
+		"challengeFriend": "DinoRPG [ Affronte un ami ]",
 		"forum": "DinoRPG [ Forums ]",
 		"admin": "DinoRPG [ Admin Dashboard ]",
-		"event": "DinoRPG [ Events ]",
-		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
+		"event": "DinoRPG [ Événements ]",
+		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"skillTrees": "DinoRPG [ Skill Trees ]"
 	},
 	"gather": {
@@ -3967,7 +4040,8 @@
 			"average": "Avg.",
 			"completion": "Comp.",
 			"clans": "Clans",
-			"treasure": "Clan Treasure"
+			"treasure": "Clan Treasure",
+			"event": "Event Score"
 		},
 		"disclaimer": {
 			"classic": "The rankings are updated in real time. The rankings take into account the level of all Dinoz.",
@@ -3976,7 +4050,8 @@
 			"pantheon": "Here you can find which players and Dinoz were the first to accomplish feats and challenges.",
 			"clans": "The clan ranking is updated in real time and based on the treasure value of the clan.",
 			"clansCreation": "You can consult the {0} in order to see newly created clans.",
-			"clansCreationLink": "clan research page"
+			"clansCreationLink": "clan research page",
+			"clansEvent": "Le Classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
 		},
 		"page": {
 			"previous": "Previous page",
@@ -3998,6 +4073,10 @@
 		"placeholder": {
 			"searchPlayer": "Search a player",
 			"searchClan": "Search a clan"
+		},
+		"button": {
+			"event": "Classement de trésor",
+			"treasure": "Classement d'événement"
 		}
 	},
 	"clan": {
@@ -4055,7 +4134,8 @@
 			"name": "Name",
 			"donation": "Donations",
 			"stats": "Stats",
-			"actions": "Actions"
+			"actions": "Actions",
+			"event": "Event Score"
 		},
 		"edit": {
 			"disclaimer": "This page allows you to edit the rights of clan member <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
@@ -4161,7 +4241,10 @@
 		"lose": "You have **lost**...",
 		"lvlup": "A dinoz earned an **extra level**!",
 		"continue": "Continue",
-		"display": "Show the battle",
+		"history": {
+			"display": "Display History",
+			"hide": "Hide History"
+		},
 		"resume": "You fought an {enemy}",
 		"clone": "Clone",
 		"life": "Lost life",
@@ -4421,7 +4504,9 @@
 		"remainingActions": "Your Dinoz still has free actions left.",
 		"follow": "The group leader is {leader}.",
 		"followed": "This Dinoz leads a group.",
-		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting."
+		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
+		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
+		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}"
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** added the status {status} to Dinoz {dinoz} ({dinozId})",
@@ -4490,7 +4575,7 @@
 		"build": "Build my Dojo",
 		"group": "Group {group}",
 		"seeFinal": "See the final",
-		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to 5 waves per day maximum.//",
+		"dailyReset": "You are at the challenge wave {qty}.&&For each wave finished, you win a :ticket:.&&//You can finish up to {max} waves per day maximum.//",
 		"seeFight": "See the fight",
 		"deleteTeam": "Delete my team",
 		"timer": {

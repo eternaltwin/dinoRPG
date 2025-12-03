@@ -204,7 +204,7 @@
 	},
 	"dojo": {
 		"inexistantDojo": "El dojo seleccionado no existe.",
-		"dinozNotPlayer": "Estos Dinos no pueden combatir",
+		"dinozNotPlayer": "Un Dinoz n'appartient pas au joueur.",
 		"alreadyFighted": "Este Dino ya ha combatido",
 		"wrongDinozInTeam": "Tu equipo solo puede estar formado por una cantidad de Dinos entre 5 y 10.",
 		"wrongDinozQuantity": "Tu equipo debe estar formado por {qty} Dinos.",

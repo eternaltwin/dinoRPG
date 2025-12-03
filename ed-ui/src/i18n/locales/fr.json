@@ -79,7 +79,7 @@
 			"guide": "Guide du Jeu",
 			"faq": "FAQ",
 			"cinema": "Cinéma",
-			"events": "Evénements",
+			"events": "Événements",
 			"system": "Réglages",
 			"skipFight": "Afficher directement le résultat de combat",
 			"skipLevel": "Passer l'animation de gain de niveau"
@@ -2643,7 +2643,7 @@
 		"challengeFriend": "DinoRPG [ Affronte un ami ]",
 		"forum": "DinoRPG [ Forums ]",
 		"admin": "DinoRPG [ Admin Dashboard ]",
-		"event": "DinoRPG [ Evénements ]",
+		"event": "DinoRPG [ Événements ]",
 		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
 		"skillTrees": "DinoRPG [ Arbres de Compétences ]"
 	},
@@ -4051,7 +4051,7 @@
 			"clans": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du Trésor du Clan.",
 			"clansCreation": "Vous pouvez consulter la {0} afin de voir les clans nouvellement créés.",
 			"clansCreationLink": "page de recherche des clans",
-			"clansEvent": "Le Classement des clans est mis à jour en temps réél et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
+			"clansEvent": "Le Classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
 		},
 		"page": {
 			"previous": "Page précedente",
@@ -4506,7 +4506,7 @@
 		"followed": "Ce Dinoz est chef de groupe.",
 		"restEnd": "Votre Dinoz a déjà récupéré le maximum de point de vie en se reposant.",
 		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre dinoz est en train de se réveiller et sera disponible dans {time}"
+		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** a ajouté le status {status} au Dinoz {dinoz} ({dinozId})",
@@ -4575,7 +4575,7 @@
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
-		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer 5 vagues par jours au maximum.//",
+		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jours au maximum.//",
 		"seeFight": "Voir le combat",
 		"deleteTeam": "Supprimer mon équipe",
 		"timer": {
@@ -4731,7 +4731,7 @@
 			"fight2": "Les monstres et votre Dinoz attaquent au tout à tour, en fonction de leur **initiative**, de leur **vitesse**, et de leur **énergie**. À chaque coup, l'adversaire perd des **points de vie** qui sont affichés. Il faut que votre Dinoz tue tous les monstres pour pouvoir remporter le combat. && && Lors de son tour, votre Dinoz peut effectuer une ou plusieurs des actions suivantes suivant son énergie :",
 			"fight2-1": "Lancer un **assaut**, c'est-à-dire une attaque normale",
 			"fight2-2": "Effectuer une **attaque spéciale**, qui remplace alors l'assaut",
-			"fight2-3": "Utiliser une compétence de type **évènement**",
+			"fight2-3": "Utiliser une compétence de type **événement**",
 			"fight2-4": "Utiliser un **équipement de combat**",
 			"fight3": "Les Éléments",
 			"fight3-1": "Un Dinoz possède 5 valeurs d'**éléments** qui sont indiqués sur sa fiche :",
@@ -4799,7 +4799,7 @@
 			"status": "En complétant différentes **Missions / Quêtes**, votre Dinoz va pouvoir obtenir de nombreux **statuts** qui seront répertoriés sur sa fiche. Placez la souris sur une de ces statuts pour obtenir de l'aide sur son effet. && && En général, les statuts sont permanents. Cela veut dire qu'une fois obtenus, vous ne pourrez pas les perdre. Cependant, certains statuts sont temporaires et peuvent donc être perdus. && && Les statuts sont affichés quand vous consultez les Dinozs d'un autre joueur : saurez-vous en consulter le maximum ?",
 			"equipment": "Sur sa fiche, votre Dinoz d'un certain nombre d'emplacements disponibles pour des **équipements de combat**. Certains peuvent en effet être **équipés** dans un de ces emplacements et ils seront alors utilisables en combat. && && Pour équiper un objet de combat, utilisez l'onglet **Inventaire**. L'action **équiper** n'est disponible que pour certains objets. Une fois un objet équipé, vous pouvez à tout moment l'enlever en cliquant sur son emplacement dans l'équipement. Voici un exemple :",
 			"equipment2": "La plupart des objets de combat ne sont utilisables qu'une seule fois. Cela veut dire que lorsque votre Dinoz l'utilisera lors d'un combat, il sera détruit et un nouvel objet pourra alors être équipé à sa place. && && Les équipements de combat permettent d'adapter votre **stratégie** en fonction des monstres que vous rencontrez, faites-en bon usage.",
-			"epic": "Sur votre fiche de Maître Dinoz, accessible à partir du lien **Mon Compte** dans le menu de droite, vous pouvez retrouver la liste de vos récompenses épiques. && && Ces objets peuvent être récupérés de différentes façons, soit par l'accomplissement de **Quêtes**, soit par la participation à des **évènements** qui rythment la vie du site. Vous ne pouvez en posséder qu'un seul exemplaire de chaque et ils sont visibles par les autres joueurs de DinoRPG.",
+			"epic": "Sur votre fiche de Maître Dinoz, accessible à partir du lien **Mon Compte** dans le menu de droite, vous pouvez retrouver la liste de vos récompenses épiques. && && Ces objets peuvent être récupérés de différentes façons, soit par l'accomplissement de **Quêtes**, soit par la participation à des **événements** qui rythment la vie du site. Vous ne pouvez en posséder qu'un seul exemplaire de chaque et ils sont visibles par les autres joueurs de DinoRPG.",
 			"group": "Lorsque vous avez plusieurs Dinoz, il est possible de les faire se déplacer et combattre en **groupe**. Pour cela, amenez d'abord vos deux Dinoz sur le même lieu et utilisez l'action **Suivre** sur l'un des deux. && && Une fois votre groupe constitué, vous pouvez vous déplacer et combattre ensemble :",
 			"group2": "Cependant, certains déplacements nécessitant des statuts particuliers, les Dinoz ne les possédant pas seront automatiquement détachés du groupe lors d'un déplacement. && && Un groupe peut contenir jusqu'à 3 Dinoz, mais certaines compétences ou objets permettent d'augmenter ce nombre. && && Vous pouvez à tout moment arrêter de suivre un Dinoz en utilisant l'action correspondante.",
 			"ingredient": "Certaines compétences permettent à votre Dinoz de **collecter des ingrédients** dans les différents lieux de Dinoland. && && Quand vous avez une de ces compétences et que vous êtes sur le bon lieu, une action de collecte apparaît parmi les actions de votre Dinoz. Lorsque vous effectuez cette action, une grille s'affiche :",
@@ -5031,7 +5031,7 @@
 		"contact": "Ce joueur ne fait pas partie de vos contacts."
 	},
 	"roadmap": {
-		"title": "Découvrez les prochains évènements sur DinoRPG !",
+		"title": "Découvrez les prochains événements sur DinoRPG !",
 		"small": "Prédiction d'Irma",
 		"strong": {
 			"title1": "Version 1.0.0 (Bientôt)",
@@ -5155,9 +5155,9 @@
 		"message": "Vous avez reçu un nouveau message."
 	},
 	"events": {
-		"disclaimer": "Vous trouverez ici tout les événements communautaires en cours.",
-		"disclaimerEnded": "Vous trouverez ici tout les événements communautaires terminés.",
-		"header": "Evenements en cours",
+		"disclaimer": "Vous trouverez ici tous les événements communautaires en cours.",
+		"disclaimerEnded": "Vous trouverez ici tous les événements communautaires terminés.",
+		"header": "Événements en cours",
 		"date": "Date de création",
 		"level": "Niveau max",
 		"races": "Races autorisées",
