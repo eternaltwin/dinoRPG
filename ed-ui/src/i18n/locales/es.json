@@ -1,19 +1,19 @@
 {
 	"error": "Por favor, informa de este error a los desarrolladores con los detalles de cómo ha ocurrido.",
 	"topBar": {
-		"connexion": "Connexion",
-		"menu": "Menu",
+		"connexion": "Acceder",
+		"menu": "Menú",
 		"serverTime": "Hora del servidor",
 		"leftMenu": {
-			"shop": "Boutique",
-			"enclosure": "Enclos",
+			"shop": "Tienda",
+			"enclosure": "Tienda de Dinos",
 			"dojo": "Dojo",
-			"order": "Ordonner",
-			"skillTrees": "Arbres de Compétences",
-			"missions": "Missions"
+			"order": "Ordenar",
+			"skillTrees": "Árbol de Competencias",
+			"missions": "Misiones"
 		},
 		"gamesMenu": {
-			"title": "Jeux Eternaltwin",
+			"title": "Juegos de Eternaltwin",
 			"subtitle": "Retrouvez tous les jeux accessibles sur Eternaltwin",
 			"eternaltwinGames": {
 				"alphabounce": {
@@ -45,11 +45,11 @@
 					"description": "Faites prospérer votre capitale. Recrutez des soldats et devenez... Empereur !"
 				},
 				"mybrute": {
-					"name": "LaBrute",
+					"name": "ElBruto",
 					"description": "Règle tes comptes dans l'arène !"
 				},
 				"myhordes": {
-					"name": "MyHordes",
+					"name": "Zombinoia",
 					"description": "Le premier jeu de survie zombie gratuit se déroulant dans un monde hostile peuplé de morts-vivants !"
 				},
 				"neoparc": {
@@ -65,7 +65,7 @@
 		"rightMenu": {
 			"news": "Novedades",
 			"gazette": "Periodino",
-			"ranking": "Posición",
+			"ranking": "Clasificación",
 			"clan": "Mi Clan",
 			"clans": "Clanes",
 			"ingredients": "Ingredientes",
@@ -73,16 +73,16 @@
 			"messagerie": "Mensajería",
 			"forum": "Foro",
 			"api": "API",
-			"logout": "Déconnexion",
-			"notifications": "Notifications",
-			"readAll": "Tout Lu",
-			"guide": "Guide du Jeu",
+			"logout": "Desconectarse",
+			"notifications": "Notificaciones",
+			"readAll": "Marcar todo como leído",
+			"guide": "Guía del Juego",
 			"faq": "FAQ",
-			"cinema": "Cinéma",
-			"events": "Événements",
-			"system": "Réglages",
-			"skipFight": "Afficher directement le résultat de combat",
-			"skipLevel": "Passer l'animation de gain de niveau"
+			"cinema": "Cine",
+			"events": "Eventos",
+			"system": "Ajustes",
+			"skipFight": "Mostrar directamente el resultado del combate",
+			"skipLevel": "Saltar la animación de subida de nivel"
 		}
 	},
 	"toast": {
@@ -117,7 +117,7 @@
 		"heal": "Tu Dino ha recuperado {value} :hp:",
 		"gold": "Recibiste {value} :gold:",
 		"sphere": "Tu Dino ha aprendido la competencia {value}.",
-		"action": "Vous avez consommé {value} :irma: et pouvez refaire des actions.",
+		"action": "Has consumido {value} :irma: y puedes realizar acciones de nuevo.",
 		"resurrect": "Tu Dino ha resucitado.",
 		"egg": "Has abierto un huevo de {value}.",
 		"special": {
@@ -280,7 +280,10 @@
 		"dinozMissions": "Misiones de mis Dinos",
 		"skills": "Competencias",
 		"send": "Enviar",
-		"close": "Cerrar"
+		"close": "Cerrar",
+		"search": "Buscar",
+		"loading": "Cargando...",
+		"noResults": "No hay resultados"
 	},
 	"chooseDinoz": {
 		"information": "Antes de poder controlar este Dino, tienes que darle un nombre.",
@@ -304,8 +307,8 @@
 		}
 	},
 	"details": {
-		"asc": "Ascendant",
-		"desc": "Descendant",
+		"asc": "Creciente",
+		"desc": "Decreciente",
 		"th": {
 			"comp": "Competencia",
 			"type": "Tipo",
@@ -527,7 +530,7 @@
 			"surviving_ration": "En caso de heridas graves, recuperarás *entre 10 y 40 puntos de vida* durante un combate.",
 			"goblin_merguez": "La especialidad de la región del Gran Señor-Todo-Quema. A consumir con mucha moderación.",
 			"pampleboum": "¡Un fruto bello y apetitoso capaz de darte 15 puntos de vida con un solo mordisco!",
-			"sos_helmet": "Augmente l'armure de votre Dinoz de 10% quand il est utilisé.",
+			"sos_helmet": "Aumenta la armadura de tu Dino en 10% cuando se utiliza.",
 			"little_pepper": "Aumenta en 10 puntos el próximo asalto de tu Dino.",
 			"zippo": "¡Tu Dino quema!",
 			"sos_flame": "Nada mejor que una Flamacha de Socorro para ayudarte durante un combate.",
@@ -1639,7 +1642,6 @@
 				"give": "El Ser Raro corre hacia una pequeña casa, y en un pequeño destello, esta desaparece. No quedan más que rastros quemados en el suelo y una columna de humo que se eleva muy alto en el cielo... te ha dejado un \"Napodino de Oro\" así como un extraño objeto de colección..."
 			},
 			"playerChoice": {
-				"begin": ". . . . . yo . . . perdido . . . . . sin potencia . . estrella . . . . nunca . . . . poder volver a casa . . . . ayuda",
 				"no": "Ni lo sueñes",
 				"yes": "Mmmm... vale, te ayudaré.",
 				"nothing": "De nada...",
@@ -1676,13 +1678,6 @@
 				"help": "¿¿DE VERDAD?? ¡¡OH OH OH OH OH!! ¿Harías eso por míiiiii? Pero va a ser complicado para ti, y cada vez que nos encontremos no te acordarás de casi nada. ¿Estás seguro de que me quieres ayudar?",
 				"accept": "¡¡OH OH OH OH OH!! Entonces, ¡porfi Señor Maestro de Dinos! ¡Ayúdame a encontrar a Muldero y te recompensaré como te mereces!",
 				"missions": "El esqueleto te mira partir con decepción. Si te volvieras verías que está llorando, pero\ncontinúas corriendo lo más rápido que puedes. Seguro que haces bien.",
-				"you": "Sí. ¡Encantado! ¿Sabías que en estas ruinas se pueden encontrar marcas de extraños círculos quemados? Estudio este fenómeno desde hace tiempo, y he llegado a la conclusión de que existen 2 explicaciones sobre estas marcas...",
-				"explain": "Todo parece apuntar a que se trata de unas criaturas extrañas provenientes del espacio exterior. Cuando vienen a estudiar a los humanos, se posan en lugares discretos... Como sus naves escupen fuego, al partir de nuevo a su planeta de origen, dejan estas extrañas marcas. Y por supuesto, el Rey esconde estas informaciones y conspira con ellas. ¿No te parece extraordinario?",
-				"other": "¿Ah? ... uhm... la otra explicación me parece mucho más verosímil. Según el vendedor de salchichas, se trata de marcas de fuego dejadas por los turistas que visitan las ruinas.",
-				"ok": "¡Uhm! ¡Qué suculentas estas Gambas al Napalm! ¡Y saber que no veré nunca más a mi encantadora esposa! Oh, ¡cuánto nos amábamos! Por desgracia, está muy muerta mi querida.",
-				"ok2": "¿Qué? ¿No estarás bromeando? Sigo en mi juventud... mira qué lisos están mis huesos: ¡ni una arruga!",
-				"skully": "¿Cómo? ¡¿Conoces a Calaveri?!",
-				"exp": "............. ¡Gracias! Esto quiere decir que mi intuición no me engañaba y que he hecho bien en no buscar a otra mujer para reemplazarla. ¡Oooh! ¡Gracias! ¡Mil gracias por tu ayuda!",
 				"end": "¡Sí! ¡¡¡Es una auténtica hazaña!!! Acompáñame hasta mi mujer, ¡qué ganas de volver a verla con mis propios ojos!",
 				"bye": "El esqueleto te mira partir con decepción. Si te volvieras verías que está llorando, pero\ncontinúas corriendo lo más rápido que puedes. Seguro que haces bien.",
 				"begin_memory": "¡¡oh oh Oh Oh OH!! ¡La bonedicción se ha levantado! ¡Ahora me ayudarás a encontrar a Muldero!",
@@ -2172,7 +2167,7 @@
 			"ProteinesDinozienne": "Aumenta la resistencia del Dino en 30%",
 			"Extenuation": "Disminuye en 25% la capacidad de recuperación de un enemigo",
 			"CarapaceDeMagma": "Aumenta el máximo de puntos de vida en 30 y la potencia de los *asaltos* Fuego en 5",
-			"Carapace": "Augmente l'armure de 10%",
+			"Carapace": "Aumenta la armadura en 10%",
 			"Sauvagerie": "Aumenta el poder de los *asaltos* de Madera en 5",
 			"Endurance": "Aumenta la defensa contra Madera en 2",
 			"Vignes": "Disminuye la iniciativa de un enemigo en 15",
@@ -2242,7 +2237,7 @@
 			"SelfControl": "Evita todos los estatus negativos y disminuye la iniciativa del Dino en 3",
 			"Brave": "El Dino no podrá formar parte de un Grupo. Aumenta el elemento Fuego en 6, el máximo de puntos de vida en 50 y la velocidad del Dino en 15%",
 			"Planificateur": "Permite al Dino excavar una casilla adicional",
-			"HeritageFaroe": "Augmente la puissance des *assauts* Bois de 12 et l'armure de 10%",
+			"HeritageFaroe": "Aumenta la potencia de los *asaltos* de Madera en 12 y la armadura en 10%",
 			"PrintempsPrecoce": "Todos los otros Dinos del Grupo ganan hasta tantos puntos de vida como el elemento Madera del Dino que lo lanza",
 			"EspritGorilloz": "Llama un Espíritu Gorilos para ayudar en el combate",
 			"GardeForestier": "Aumenta la defensa contra Madera de todos los Dinos del Grupo en 3",
@@ -2261,7 +2256,7 @@
 			"Gel": "Ataca a un enemigo con un poder de Agua 5. El enemigo es ralentizado",
 			"DoucheEcossaise": "Ataca a todos los enemigos con un poder de Agua 2",
 			"ZeroAbsolu": "Aumenta la defensa contra Fuego en 25",
-			"Petrification": "Pétrifie un ennemi pour une durée moyenne, il ne peut plus agir mais son armure augmente de 50%",
+			"Petrification": "Petrifica a un enemigo durante un tiempo medio. El enemigo no puede moverse, pero su armadura aumenta un 50%",
 			"Acupuncture": "Da el estatus Curación. Si uno de los ataques toca al Dino, el enemigo pierde 1 punto de vida",
 			"Sapeur": "Aumenta las posibilidades de usar objetos en combate en 50%",
 			"RayonKaarSher": "Ataca a todos los enemigos con un poder de Agua 7",
@@ -2286,7 +2281,7 @@
 			"Regenerescence": "Aumenta la velocidad de recuperación de puntos de vida durante el descanso",
 			"PremiersSoins": "Permite al Dino recuperar un punto de vida al final de un combate si pierde vida",
 			"PureeSalvatrice": "Anula todos los estatus negativos del Grupo",
-			"AuraHermetique": "Le Dinoz se donne le statut bouclier (augmente l'armure de 50%)",
+			"AuraHermetique": "El Dino obtiene el estado de escudo (aumenta la armadura en 50%)",
 			"CrepusculeFlambloyant": "Ataca a todos los enemigos con un poder Fuego 6 + Rayo 6",
 			"AubeFeuillue": "Regenera a todos los Dinos del Grupo hasta Rayo 2 + Madera 2 en puntos de vida",
 			"Benediction": "Da el estatus Bendición a todos los Dinos del Grupo",
@@ -2347,8 +2342,8 @@
 			"Electrolyse": "Aumenta la velocidad de todos los Dinos del grupo en 5%",
 			"MaitreElementaire": "Aumenta los elementos Fuego y Agua en 2",
 			"Increvable": "Aumenta todas las defensas en 2",
-			"ArmureDeBasalte": "Augmente l'armure de 30%",
-			"Coque": "Augmente l'armure de 10%",
+			"ArmureDeBasalte": "Aumenta la armadura en 30%",
+			"Coque": "Aumenta la armadura en 10%",
 			"ChargeCornue": "Aumenta la potencia del primer asalto en 20%",
 			"Rock": "El Dino se vuelve objetivo principal de los enemigos",
 			"Pietinement": "Elimina la armadura de los enemigos",
@@ -2356,7 +2351,7 @@
 			"Insaisissable": "Aumenta las posibilidades de esquivar en 10%",
 			"DeplacementInstantane": "Aumenta las posibilidades de esquivar ataques a distancia y de tipo A en 15%",
 			"Napomagicien": "Permite al Dino equiparse 2 objetos mágicos diferentes al mismo tiempo",
-			"EcaillesLuminescentes": "Augmente l'armure de 20%",
+			"EcaillesLuminescentes": "Aumenta la armadura en 20%",
 			"PeauDeSerpent": "Aumenta la posibilidad de esquivar en 10%. Disminuye la velocidad de los ataques de Agua en 15%",
 			"PropulsionDivine": "Aumenta la velocidad de los ataques de Fuego en 30%. Disminuye el elemento Fuego en 2",
 			"GriffesInfernales": "Ataca con Fuego continuo a un enemigo",
@@ -2383,7 +2378,7 @@
 			"RadiationsGamma": "Aumenta la potencia de todos los *asaltos* en 5 y el máximo de puntos de vida en 30. Disminuye la iniciativa del Dino en 10",
 			"Bleu": "Aumenta el poder de todos los *asaltos* en 20 cuando el Dino se encuentra en las Islas Atlanteidas",
 			"MueAcqueuse": "Aumenta la defensa contra Rayo en 20",
-			"CarapaceBlindee": "Augmente l'armure de 100%, réduit la vitesse de 20%",
+			"CarapaceBlindee": "Aumenta la armadura en 100%, reduce la velocidad en 20%",
 			"DieteChromatique": "Aplica el estado de mono-elemento a un adversario (bloquea su elemento actual)",
 			"EffluveAphrodisiaque": "El Dino puede ser seguido por un Dino adicional",
 			"Nemo": "Permite al Dino pescar una casilla adicional",
@@ -2588,6 +2583,10 @@
 	},
 	"popup": {
 		"confirm": "¿Confirmas esta acción?",
+		"confirmBanAction": "¿Confirmas este baneo?",
+		"attention": "Atención",
+		"accept": "Sí",
+		"reject": "No",
 		"shop": {
 			"buyMaxConfirm_part1": "¿Realmente deseas comprar la cantidad de",
 			"buyMaxConfirm_part2": " pieza(s) de este artículo por un costo de ",
@@ -2618,33 +2617,33 @@
 	},
 	"pageTitle": {
 		"default": "DinoRPG [ La actualidad en Dinoland ]",
-		"dinoz": "DinoRPG [ Fiche de ",
-		"shop": "DinoRPG [ Marchand : ",
-		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
-		"account": "DinoRPG [ Informations personnelles ]",
-		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
-		"ingredients": "DinoRPG [ Ingrédients ]",
-		"levelup": "DinoRPG [ Niveau supplémentaire pour ",
-		"npc": "DinoRPG [ Personnage : ",
-		"missions": "DinoRPG [ Liste des Missions ]",
-		"dinozNaming": "DinoRPG [ Choix du Nom ]",
-		"fight": "DinoRPG [ Combat ! ]",
-		"gather": "DinoRPG [ ",
-		"dinozMissions": "DinoRPG [ Missions de mes Dinoz ]",
-		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
-		"market": "DinoRPG [ Marché des Éleveurs ]",
+		"dinoz": "DinoRPG [ Ficha de {dinoz} ]",
+		"shop": "DinoRPG [ Tienda : {shop} ]",
+		"dinozShop": "DinoRPG [ Tienda de Dinos ]",
+		"account": "DinoRPG [ Información personal ]",
+		"ranking": "DinoRPG [ Gran Hall de la Gloria ]",
+		"ingredients": "DinoRPG [ Ingredientes ]",
+		"levelup": "DinoRPG [ Subida de nivel para {dinoz} ]",
+		"npc": "DinoRPG [ Personaje : {npc} ]",
+		"missions": "DinoRPG [ Lista de Misiones ]",
+		"dinozNaming": "DinoRPG [ Elegir nombre ]",
+		"fight": "DinoRPG [ ¡Combate! ]",
+		"gather": "DinoRPG [ {type} ]",
+		"dinozMissions": "DinoRPG [ Misión de mi Dino ]",
+		"manageDinoz": "DinoRPG [ Gestión de mi Dino ]",
+		"market": "DinoRPG [ Mercado de los Maestros ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"guide": "DinoRPG [ Guide du Jeu ]",
-		"itinerant": "DinoRPG [ Marchand Ambulant ]",
-		"faq": "DinoRPG [ FAQ ]",
-		"clan": "DinoRPG [ Clan : ",
-		"clansList": "DinoRPG [ Liste des Clans ]",
-		"createClan": "DinoRPG [ Créer un Clan ]",
-		"challengeFriend": "DinoRPG [ Affronte un ami ]",
-		"forum": "DinoRPG [ Forums ]",
-		"admin": "DinoRPG [ Admin Dashboard ]",
-		"event": "DinoRPG [ Événements ]",
-		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
+		"guide": "DinoRPG [ Guía del Juego ]",
+		"itinerant": "DinoRPG [ Mercader Ambulante ]",
+		"faq": "DinoRPG [ Preguntas y respuestas ]",
+		"clan": "DinoRPG [ Clan: {clan} ]",
+		"clansList": "DinoRPG [ Lista de Clanes ]",
+		"createClan": "DinoRPG [ Crear Clan ]",
+		"challengeFriend": "DinoRPG [ Enfrentar a un amigo ]",
+		"forum": "DinoRPG [ Foro ]",
+		"admin": "DinoRPG [ Panel de Admin ]",
+		"event": "DinoRPG [ Eventos ]",
+		"fb_tournament": "DinoRPG [ Torneo de Fuerzabruta ]",
 		"skillTrees": "DinoRPG [ Árbol de Competencias ]"
 	},
 	"gather": {
@@ -2693,6 +2692,7 @@
 		"continue": "Continuar",
 		"accept": "Aceptar la misión",
 		"already": "Tu Dino tiene una misión en curso y no puede aceptar más de una misión a la vez.",
+		"lastDialog": "Diálogo final",
 		"status": {
 			"available": "",
 			"unavailable": "",
@@ -4041,7 +4041,7 @@
 			"completion": "Comp.",
 			"clans": "Clanes",
 			"treasure": "Tesoro del Clan",
-			"event": "Score d'événement"
+			"event": "Puntos del evento"
 		},
 		"disclaimer": {
 			"classic": "La Clasificación de los jugadores se actualiza en tiempo real y es calculada a partir de la suma de los niveles de todos los Dinos del jugador.",
@@ -4051,7 +4051,7 @@
 			"clans": "La Clasificación de clanes se actualiza en tiempo real y se calculan a partir del valor del Tesoro del Clan.",
 			"clansCreation": "Puedes consultar la {0} para ver los clanes recién creados.",
 			"clansCreationLink": "página de búsqueda de clanes",
-			"clansEvent": "Le Classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
+			"clansEvent": "El ranking de los clanes se actualiza en tiempo real y se calcula a partir del valor del puntaje del Clan en el evento en curso."
 		},
 		"page": {
 			"previous": "Página anterior",
@@ -4075,8 +4075,8 @@
 			"searchClan": "Buscar un Clan"
 		},
 		"button": {
-			"event": "Classement de trésor",
-			"treasure": "Classement d'événement"
+			"clanEvent": "Classement de trésor",
+			"clanTreasure": "Classement d'événement"
 		}
 	},
 	"clan": {
@@ -4135,7 +4135,7 @@
 			"donation": "Donaciones",
 			"stats": "Estadísticas",
 			"actions": "Acciones",
-			"event": "Score d'événement"
+			"event": "Puntos del evento"
 		},
 		"edit": {
 			"disclaimer": "Esta página le permite modificar los derechos del jugador <a style=\"color: #ffee92; cursor: pointer;\">{name}</a> en el Clan.",
@@ -4242,8 +4242,8 @@
 		"lvlup": "¡Un Dino ganó un **nivel adicional**!",
 		"continue": "Continuar",
 		"history": {
-			"display": "Afficher l'historique",
-			"hide": "Masquer l'historique"
+			"display": "Mostrar el historial",
+			"hide": "Ocultar el historial"
 		},
 		"resume": "Luchaste contra un {enemy}",
 		"clone": "Clon",
@@ -4500,13 +4500,13 @@
 		"following": "Este Dino sigue a su líder de grupo.",
 		"gather": "Este Dino puede recolectar en este lugar.",
 		"rest": "Este Dino está descansando.",
-		"resting": "Tu Dino está actualmente descansando. Regenera {hp} :pv: cada {min} minutos.",
+		"resting": "Tu Dino está actualmente descansando. Recuperará {hp} :pv: en {min} minutos.",
 		"remainingActions": "Tu Dino aún puede realizar acciones gratuitas.",
 		"follow": "El líder del grupo es {leader}.",
 		"followed": "Este Dino es el líder del grupo.",
 		"restEnd": "Tu Dino ya ha recuperado la máxima cantidad de puntos de vida descansando.",
-		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
-		"unfreezeCountdown": "Votre Dinoz est en train de se réveiller et sera disponible dans {time}"
+		"dojoTeam": "Este Dino está inscrito en un Torneo Inter-Dojo. No puede superar el nivel {max} mientras el torneo en curso no haya terminado.",
+		"unfreezeCountdown": "Tu Dino se está descongelando y estará disponible en {time}"
 	},
 	"logs": {
 		"AdminAddStatus": "**Admin ({playerId})** ha añadido el estado {status} al Dino {dinoz} ({dinozId})",
@@ -4575,7 +4575,7 @@
 		"build": "Construir mi dojo",
 		"group": "Grupo {group}.",
 		"seeFinal": "Ver la final",
-		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jours au maximum.//",
+		"dailyReset": "Estás en la oleada {qty} de desafíos.&&Por cada oleada completada, ganas un :ticket:.&&//Puedes completar un máximo de {max} oleadas por día.//",
 		"seeFight": "Ver el combate",
 		"deleteTeam": "Eliminar mi equipo",
 		"timer": {

@@ -9,7 +9,7 @@
 			"enclosure": "Gehege",
 			"dojo": "Dojo",
 			"order": "Anordnen",
-			"skillTrees": "Baum der Fähigekeiten",
+			"skillTrees": "Baum der Fähigkeiten",
 			"missions": "Missionen"
 		},
 		"gamesMenu": {
@@ -247,7 +247,7 @@
 			"seek": "Schürfen",
 			"energy": "Energie anziehen",
 			"anniv": "Sandburg",
-			"xmas": "Schneepflugspiel",
+			"xmas": "Schneetzeljagd",
 			"tictac": "Der Schatz von Papy Joe",
 			"labo": "Labor des Erzdorogon",
 			"party": "Feierliches Feuerwerk",
@@ -280,7 +280,10 @@
 		"dinozMissions": "Missionen meiner Dinoz",
 		"skills": "Fähigkeiten",
 		"send": "Senden",
-		"close": "Schließen"
+		"close": "Schließen",
+		"search": "Suche",
+		"loading": "Wird geladen...",
+		"noResults": "Keine Ergebnisse"
 	},
 	"chooseDinoz": {
 		"information": "Bevor der Dinoz dir zur Verfügung steht, musst du ihm zunächst einen Namen geben.",
@@ -1639,7 +1642,6 @@
 				"give": "Das Seltsame Wesen rennt in eine Art kleines Haus hinein, woraufhin alles von einem grellen Blitz erleuchtet wird und schon ist das Haus verschwunden. Es ist kaum was übrig außer Brandflecken im Boden und einer riesigen Rauchsäule, die hoch in den Himmel emporsteigt... Das Wesen hat dir einen „Goldenen Napodino“ hinterlassen und irgendein eigenartiges Sammlerlstück..."
 			},
 			"playerChoice": {
-				"begin": ". . . . . ich. . . verirrt . . . . . kraftlos . . Sterne . . . . nie . . . . nach Hause zurückkehren . . . . hilf mir?",
 				"no": "Kommt nicht in Frage",
 				"yes": "Ähm... ja?",
 				"nothing": "Keine Ursache...",
@@ -1676,13 +1678,6 @@
 				"help": "WIIRKLIIICHHH?! OH OH OH OH OH! Das würdest du für miiich tun?!! Aber das wird für dich etwas schwierig werden, und jedes Mal, wenn wir uns begegnen, wirst du dich an nichts oder fast nichts mehr erinnern können! Bist du dir wirklich sicher, dass du mir helfen willst???",
 				"accept": "OH OH OH OH OH! Also bitte, lieber Herr Dinoz-Meister! Hilf mir, Moulder wiederzufinden und ich werde dich so belohnen wie es sich gehört!",
 				"missions": "Das furchteinflößende Skelett schaut dir traurig hinterher, als du es wieder verlässt. Wenn du dich umdrehen würdest, könntest du es fast weinen sehen, aber du läufst so weit weg wie möglich und dafür hast du sicherlich gute Gründe.",
-				"you": "So ist es. Hocherfreut! Wusstest du, dass man in diesen Ruinen seltsame verbrannte Kreise finden kann? Ich beschäftige mich schon seit einiger Zeit mit diesen Phänomenen und ich bin zu dem Schluss gekommen, dass es zwei Erklärungen für diese komischen Brandzeichen gibt...",
-				"explain": "Alles deutet darauf, dass es sich um fremde Wesen handelt, die aus dem All gekommen sind, um die Menschen zu erforschen. Diese halten sich an unauffälligen Orten auf... Und wenn sie bei der Rückkehr zu ihrem Heimatplaneten Zündflammen ausstoßen, hinterlassen sie diese verbrannten Kreise! Selbstverständlich hält der König diese Informationen unter Verschluss, denn er steckt mit ihnen unter einer Decke! Außergewöhnlich, nicht wahr?",
-				"other": "Wie? ... Ähm... die andere Erklärung erscheint mir weitaus weniger plausibel, aber laut dem Würstchenverkäufer könnte es sich um Lagerfeuerstellen handeln, die von den Touristen stammen, die die Ruinen besuchen...",
-				"ok": "Mmh! Saftig, diese Napalm-Garnelen! Kaum zu glauben, dass ich meine bezaubernde Frau nie wiedersehen werde! Oh, wie sehr wir uns geliebt haben... die niedlichen Schreieanfälle, in die sie jedes mal verfiel, wenn ich vom Saufen mit meinen Kollegen nach Hause kam, die fehlen mir so... Kaum vorstellbar, dass sie mit Sicherheit tot ist...",
-				"ok2": "Wie bitte? Du scherzt doch hoffentlich. Ich bin noch im besten Alter! Schau doch mal, wie glatt meine Knochen sind: Nicht eine einzige Falte! Ah ha ha ha ha!",
-				"skully": "Was? Du kennst Skully?!!",
-				"exp": ".............danke! Das heißt, dass meine Intuition mich nicht getäuscht hat und es richtig von mir war, keine andere Frau zu suchen, um sie zu ersetzen! Oooohh! Danke! Tausend Dank für deine Hilfe!",
 				"end": "Doch, das ist wahrlich eine Heldentat!!! Bring mich bitte bis zu meiner Frau. Ich kann es kaum erwarten, sie von Angesicht zu Angesicht zu sehen!",
 				"bye": "Das furchteinflößende Skelett schaut dir traurig hinterher, als du es wieder verlässt. Wenn du dich umdrehen würdest, könntest du es fast weinen sehen, aber du läufst so weit weg wie möglich und dafür hast du sicherlich gute Gründe.",
 				"begin_memory": "oh oh Oh Oh OH!!! Der Unfluch ist aufgehoben! Jetzt wirst du mir tatsächlich helfen können, Moulder wiederzufinden!",
@@ -2572,7 +2567,7 @@
 		"average": "Durchschnitt",
 		"clans": "Klane",
 		"completion": "Completion",
-		"pantheon": "Pantheon",
+		"pantheon": "Ruhmeshalle",
 		"stats": "Statistiken"
 	},
 	"layout": {
@@ -2588,6 +2583,10 @@
 	},
 	"popup": {
 		"confirm": "Diese Aktion bestätigen?",
+		"confirmBanAction": "Wirklich bannen?",
+		"attention": "Achtung",
+		"accept": "Ja",
+		"reject": "Nein",
 		"shop": {
 			"buyMaxConfirm_part1": "Möchtest du wirklich ",
 			"buyMaxConfirm_part2": " Stück von diesem Gegenstand für einen Gesamtpreis von ",
@@ -2618,33 +2617,33 @@
 	},
 	"pageTitle": {
 		"default": "DinoRPG [ Dinoland-Nachrichten ]",
-		"dinoz": "Dino-RPG [ Profil von ",
-		"shop": "Dino-RPG [ Händler: ",
-		"dinozShop": "Dino-RPG [ Dinoz-Gehege ]",
-		"account": "Dino-RPG [ Persönliche Informationen ]",
-		"ranking": "Dino-RPG [ Die Große Ruhmeshalle ]",
-		"ingredients": "Dino-RPG [ Zutaten ]",
-		"levelup": "Dino-RPG [ Neue Stufe für ",
-		"npc": "Dino-RPG [ Charakter: ",
-		"missions": "Dino-RPG [ Missionsliste ]",
-		"dinozNaming": "Dino-RPG [ Namen wählen ]",
-		"fight": "Dino-RPG [ Kampf! ]",
-		"gather": "Dino-RPG [ ",
-		"dinozMissions": "Dino-RPG [ Missionen meiner Dinoz ]",
-		"manageDinoz": "Dino-RPG [ Dinoz verwalten ]",
-		"market": "Dino-RPG [ Züchtermarkt ]",
-		"dojo": "Dino-RPG [ Dojo ]",
-		"guide": "Dino-RPG [ Spielhandbuch ]",
-		"itinerant": "Dino-RPG [ Der Fliegende Händler ]",
-		"faq": "Dino-RPG [ FAQ ]",
-		"clan": "Dino-RPG [ Klan: ",
-		"clansList": "Dino-RPG [ Liste der Klane ]",
+		"dinoz": "DinoRPG [ Profil von {dinoz} ]",
+		"shop": "DinoRPG [ Händler: {shop} ]",
+		"dinozShop": "DinoRPG [ Dinoz-Gehege ]",
+		"account": "DinoRPG [ Persönliche Informationen ]",
+		"ranking": "DinoRPG [ Die Große Ruhmeshalle ]",
+		"ingredients": "DinoRPG [ Zutaten ]",
+		"levelup": "DinoRPG [ Neue Stufe für {dinoz} ]",
+		"npc": "DinoRPG [ Charakter: {npc} ]",
+		"missions": "DinoRPG [ Missionsliste ]",
+		"dinozNaming": "DinoRPG [ Namen wählen ]",
+		"fight": "DinoRPG [ Kampf! ]",
+		"gather": "DinoRPG [ {type} ]",
+		"dinozMissions": "DinoRPG [ Missionen meiner Dinoz ]",
+		"manageDinoz": "DinoRPG [ Dinoz verwalten ]",
+		"market": "DinoRPG [ Züchtermarkt ]",
+		"dojo": "DinoRPG [ Dojo ]",
+		"guide": "DinoRPG [ Spielhandbuch ]",
+		"itinerant": "DinoRPG [ Der Fliegende Händler ]",
+		"faq": "DinoRPG [ FAQ ]",
+		"clan": "DinoRPG [ Klan: {clan} ]",
+		"clansList": "DinoRPG [ Liste der Klane ]",
 		"createClan": "Dino-RPG [ Klan gründen ]",
 		"challengeFriend": "Dino-RPG [ Freundschaftsscharmützel ]",
-		"forum": "Dino-RPG [ Foren ]",
-		"admin": "Dino-RPG [ Administrationsseite ]",
-		"event": "Dino-RPG [ Ereignisse ]",
-		"fb_tournament": "Dino-RPG [ Rohkraft-Turnier ]",
+		"forum": "DinoRPG [ Foren ]",
+		"admin": "DinoRPG [ Administrationsseite ]",
+		"event": "DinoRPG [ Ereignisse ]",
+		"fb_tournament": "DinoRPG [ Rohkraft-Turnier ]",
 		"skillTrees": "DinoRPG [ Baum der Fähigkeiten ]"
 	},
 	"gather": {
@@ -2693,6 +2692,7 @@
 		"continue": "Weiter",
 		"accept": "Mission annehmen",
 		"already": "Dein Dinoz ist bereits auf einer Mission und kann derzeit keine weitere annehmen.",
+		"lastDialog": "Letzter Dialog",
 		"status": {
 			"available": "",
 			"unavailable": "",
@@ -3523,7 +3523,7 @@
 			"linkGains": "Auszeichnungen",
 			"help": {
 				"question": "Was bedeuten diese Werte?",
-				"response": "Diese Werte steigen durch die Ausführung bestimmter Aktionen in Dino-RPG. &&**Beim Erreichen einer bestimmten Anzahl, erhältst du Symbole, Titel und Punkte.**&&Die **goldenen** Werte repräsentieren seltene Auszeichnungen oder solche, die schwer zu erzielen sind!"
+				"response": "Diese Werte steigen durch die Ausführung bestimmter Aktionen in DinoRPG. &&**Beim Erreichen einer bestimmten Anzahl, erhältst du Symbole, Titel und Punkte.**&&Die **goldenen** Werte repräsentieren seltene Auszeichnungen oder solche, die schwer zu erzielen sind!"
 			}
 		},
 		"dinoz": "Dinoz",
@@ -3540,7 +3540,7 @@
 		"import": "Konto importieren",
 		"stat": {
 			"name": "Statistik",
-			"2": "Dino-RPG",
+			"2": "DinoRPG",
 			"3": "DinoRPG",
 			"5": "DinoRPG",
 			"6": "Hordes",
@@ -4075,8 +4075,8 @@
 			"searchClan": "Klansuche"
 		},
 		"button": {
-			"event": "Schatzkammer-Rangliste",
-			"treasure": "Ereignis-Rangliste"
+			"clanEvent": "Schatzkammer-Rangliste",
+			"clanTreasure": "Ereignis-Rangliste"
 		}
 	},
 	"clan": {
@@ -4712,8 +4712,8 @@
 		},
 		"text": {
 			"stop": "Handbuch schließen",
-			"intro": "Willkommen in **Dino-RPG**!&& &&Auf dieser Seite spielst du einen **Meisterzüchter** und kannst einen oder mehrere kleine wilde Kreaturen namens **Dinoz** adoptieren. Du kannst die Welt von Dinoland bereisen, deine Dinoz kämpfen und weiterentwickeln lassen, Missionen erfüllen und zahlreiche Aufgaben abschließen, die du während deiner Abenteuer erhalten wirst.&& &&Falls du Hilfe benötigst, kannst du jederzeit auf dieses **Spielhandbuch** zugreifen, indem du auf der rechten Seite die Schaltfläche im Menü anklickst.&& &&Um den Rest des Handbuchs zu entdecken, klicke bitte auf die Schaltfläche weiter unten.",
-			"adopt": "Als Erstes solltest du in Dino-RPG einen Dinoz adoptieren. Hierfür hast du bei der Kontoerstellung **200.000** :gold: (Goldmünzen) erhalten.&& &&Klicke links im Menü auf **Kaufe Dinoz!**, um das Dinoz-Gehege zu betreten. Jeder Dinoz ist einzigartig und jeden Tag wird im Gehege eine neue Auswahl an Dinoz angeboten, aus der du aussuchen kannst was dir am besten gefällt.&& &&Jeder Dinoz wird wie folgt dargestellt:",
+			"intro": "Willkommen in **DinoRPG**!&& &&Auf dieser Seite spielst du einen **Meisterzüchter** und kannst einen oder mehrere kleine wilde Kreaturen namens **Dinoz** adoptieren. Du kannst die Welt von Dinoland bereisen, deine Dinoz kämpfen und weiterentwickeln lassen, Missionen erfüllen und zahlreiche Aufgaben abschließen, die du während deiner Abenteuer erhalten wirst.&& &&Falls du Hilfe benötigst, kannst du jederzeit auf dieses **Spielhandbuch** zugreifen, indem du auf der rechten Seite die Schaltfläche im Menü anklickst.&& &&Um den Rest des Handbuchs zu entdecken, klicke bitte auf die Schaltfläche weiter unten.",
+			"adopt": "Als Erstes solltest du in DinoRPG einen Dinoz adoptieren. Hierfür hast du bei der Kontoerstellung **200.000** :gold: (Goldmünzen) erhalten.&& &&Klicke links im Menü auf **Kaufe Dinoz!**, um das Dinoz-Gehege zu betreten. Jeder Dinoz ist einzigartig und jeden Tag wird im Gehege eine neue Auswahl an Dinoz angeboten, aus der du aussuchen kannst was dir am besten gefällt.&& &&Jeder Dinoz wird wie folgt dargestellt:",
 			"adopt2": "Der Dinoz hat ein Aussehen, eine **Rasse** und einen Preis. Es gibt unterschiedliche Rassen von Dinoz, die jeweils über eigene Besonderheiten verfügen. Vor allem die Verteilung der **5 Elemente** hängt beim Kauf von der Rasse des Dinoz ab und manche Rassen verfügen sogar über eine **zusätzliche Fähigkeit**. Beide Aspekte haben Einfluss auf den **Kampf**, worauf später eingegangen wird. Auch der Preis kann von Dinoz zu Dinoz variieren, denn seltenere Rassen sind teurer.&& &&Suche zunächst einen passenen Dinoz aus und dann kannst du ihn kaufen.",
 			"name": "Sobald du deinen Dinoz gekauft hast, musst du ihm einen Namen geben, wie das folgende Beispiel zeigt:",
 			"name2": "Sobald du für deinen Dinoz einen passenden Namen ausgesucht hast, wird er links zum Menü hinzugefügt. Klicke ihn an, um auf sein **Profil** zuzugreifen.",
@@ -4799,12 +4799,12 @@
 			"status": "Durch das Abschließen verschiedener **Missionen/Aufträge** können deine Dinoz zahlreiche **Status** erlangen, welche dann in ihrem Profil aufgeführt werden. Fahre mit der Maus über einen Status, um Details zu seinen Auswirkungen zu erhalten.&& &&Im Normalfall sind Status permanent. Sobald ein solcher Status also erlangt wurde, kann er nicht mehr verlorengehen. Einige Status sind jedoch temporär und können wieder verschwinden.&& &&Beim Begutachten der Dinoz anderer Spieler werden die Status ebenfalls angezeigt: Ob sie jemals alle sichtbar werden?",
 			"equipment": "Auf seinem Profil steht deinem Dinoz eine bestimmte Anzahl an Plätzen für **Kampfausrüstung** zur Verfügung. In diese können manche Gegenstände **ausgerüstet** werden und sind dann im Kampf einsetzbar.&& &&Um einen Kampfgegenstand auszurüsten, verwende den Reiter **„Inventar“**. Das **Ausrüsten** ist nur bei bestimmten Gegenständen möglich. Wenn ein Gegenstand ausgerüstet ist, kannst du ihn jederzeit wieder entfernen, indem du ihn anklickst. Hier ist ein Beispiel:",
 			"equipment2": "Die meisten Kampfgegenstände sind nur einmalig verwendbar. Wenn dein Dinoz also einen davon im Kampf benutzt, wird er zerstört und an seiner Stelle kann etwas anderes ausgerüstet werden.&& &&Kampfgegenstände ermöglichen dir, deine **Strategie** nach den Monstern, denen du begegnest, auszurichten. Setze sie also sinnvoll ein.",
-			"epic": "Auf deinem Dinoz-Meister-Profil, das du rechts im Menü über **„Mein Konto“** erreichen kannst, ist eine Liste epischer Belohnungen zu finden.&& &&Diese Gegenstände sind auf unterschiedliche Arten erhältlich wie beispielsweise beim Abschließen von **Aufträgen** oder durch Teilnahme an **Ereignissen**, die gelegentlich das Leben der Webseite zieren. Solche Belohnungen sind nur einmalig erhältlich und sind für andere Spieler von Dino-RPG sichtbar.",
+			"epic": "Auf deinem Dinoz-Meister-Profil, das du rechts im Menü über **„Mein Konto“** erreichen kannst, ist eine Liste epischer Belohnungen zu finden.&& &&Diese Gegenstände sind auf unterschiedliche Arten erhältlich wie beispielsweise beim Abschließen von **Aufträgen** oder durch Teilnahme an **Ereignissen**, die gelegentlich das Leben der Webseite zieren. Solche Belohnungen sind nur einmalig erhältlich und sind für andere Spieler von DinoRPG sichtbar.",
 			"group": "Wenn du mehrere Dinoz hast, können sie sich als **Gruppe** bewegen und zusammen kämpfen. Hierzu musst du zwei Dinoz zunächst zum gleichen Ort bringen und dann bei einem von ihnen die Aktion **„Folgen“** benutzen.&& &&Sobald deine Dinoz-Gruppe gebildet ist, können sie sich gemeinsam bewegen und kämpfen:",
 			"group2": "Allerdings ist zu beachten, dass für manche Fortbewegung bestimmte Status benötigt werden und sollten Dinoz diese nicht besitzen, werden sie beim Bewegen automatisch von der Gruppe gelöst.&& &&Eine Gruppe kann aus bis zu drei Dinoz bestehen, aber manche Fähigkeiten und Gegenstände können diese Beschränkung erhöhen.&& &&Du kannst einen Dinoz jederzeit anweisen, einem anderen nicht mehr zu folgen, indem du die dazugehörige Aktion nutzt.",
 			"ingredient": "Manche Fähigkeiten ermöglichen es deinen Dinoz, an verschiedenen Orten des Dinolandes **Zutaten zu sammeln**.&& &&Wenn du über eine solche Fähigkeit verfügst und dich am richtigen Ort befindest, taucht bei den Aktionen deines Dinoz eine zum Sammeln auf. Bei Benutzung erscheint dann ein Raster:",
 			"ingredient2": "Hier geht es darum, Kästchen zu selektieren, die untersucht werden sollen. Mit etwas Glück findest du viele Zutaten, von denen die seltensten mehrere tausend Goldmünzen einbringen können.&& &&Um deine Zutaten zu verkaufen, musst du den **Fliegenden Händler** ausfindig machen, der sich jede Woche an einem anderen Ort aufhält. Abhängig vom **Wochentag** kann er dir verschiedene Arten von Zutaten zu einem sehr guten Preis abkaufen. Sei also auf der Hut!&& &&Da die Menge an Zutaten, die du transportieren kannst, begrenzt ist, ist es empfehlenswert, diese regelmäßig zu verkaufen.",
-			"clans": "**Klane** sind Gemeinschaften von Dino-RPG-Spielern. Als Teil eines Klans kann man sich mit anderen Mitgliedern unterhalten, Techniken und Tipps austauschen und sich gegenseitig helfen. Du kannst einem Klan beitreten oder über **„Klane“** rechts im Menü einen eigenen Klan erstellen.",
+			"clans": "**Klane** sind Gemeinschaften von DinoRPG-Spielern. Als Teil eines Klans kann man sich mit anderen Mitgliedern unterhalten, Techniken und Tipps austauschen und sich gegenseitig helfen. Du kannst einem Klan beitreten oder über **„Klane“** rechts im Menü einen eigenen Klan erstellen.",
 			"clans1": "Klanbeitritt",
 			"clans1-1": "Zunächst musst du wissen, dass man gleichzeitig nur einem Klan angehören kann.&& &&Um einem Klan beizutreten, müsst du zunächst einen finden, der zu dir passt. Ob Beschreibung des Klangründers, Präsenz von Freunden im Klan oder Ruf des Klans bei anderen Spielern... all das kann bei der Auswahl weiterhelfen.&& &&Sobald du einen Klan ausgesucht hast, kannst du eine Mitgliedschaftsanfrage einreichen. Um unseriöse Anfragen zu vermeiden, kostet diese Aktion **1.000** Goldmünzen :gold:. Sollte die Anfrage vom Klangründer akzeptiert werden, gehen diese Münzen verloren, während sie dir beim Abbruch oder einer Ablehnung zurückerstattet werden.&& &&Du kannst deine Anfrage jederzeit widerrufen, um beispielsweise einen neuen Mitgliedschaftsantrag bei einem anderen Klan einreichen zu können.",
 			"clans2": "Klan erstellen und verwalten",
@@ -4815,10 +4815,10 @@
 			"dojos1": "Ein Dojo kreieren",
 			"dojos1-1": "Um dein Dojo erstellen zu können, musst du Meister Zenit treffen, der sich am häufigsten in Rohkraft aufhält. Er wird dir erklären, wie du dein Dojo bauen kannst und wie es funktioniert. Du musst einen Ort auswählen und links im Menü die Schaltfläche „Dojo“ anklicken. Sobald das Dojo gebaut ist, kannst du von überall darauf zugreifen.",
 			"dojos2": "Herausforderungen",
-			"dojos2-1": "Herausforderungen sind Kämpfe, in denen du gegen Dinoz anderer Dino-RPG-Spieler kämpfen musst. Du wirst aufgefordert, einen bestimmten Gegner zu besiegen, unabhängig davon, ob du versuchst, ein zuvor festgelegtes Ziel zu erreichen.",
+			"dojos2-1": "Herausforderungen sind Kämpfe, in denen du gegen Dinoz anderer DinoRPG-Spieler kämpfen musst. Du wirst aufgefordert, einen bestimmten Gegner zu besiegen, unabhängig davon, ob du versuchst, ein zuvor festgelegtes Ziel zu erreichen.",
 			"dojos2-2": "Über diese Schaltfläche gelangst du zu den Dojo-Herausforderungen. Suche dir aus der Liste der angebotenen Herausforderungen einen Gegner aus! Wähle dann den Dinoz aus, der deiner Meinung nach für einen Sieg am besten geeignet ist, während dabei das entsprechende Ziel erreicht wird.",
 			"dojos3": "Das Inter-Dojo Turnier",
-			"dojos3-1": "Das Turnier ist eine monatliche Veranstaltung in Dino-RPG, bei der 256 in 16 Gruppen aufgeteilte Dojos zusammenkommen, die sich zuvor in der Ausscheidungsphase qualifiziert haben. Sie treten im Kampf gegeneinander an bis der beste Dojo-Meister des Dinolandes feststeht!",
+			"dojos3-1": "Das Turnier ist eine monatliche Veranstaltung in DinoRPG, bei der 256 in 16 Gruppen aufgeteilte Dojos zusammenkommen, die sich zuvor in der Ausscheidungsphase qualifiziert haben. Sie treten im Kampf gegeneinander an bis der beste Dojo-Meister des Dinolandes feststeht!",
 			"dojos3-2": "Mit dieser Schaltfläche gelangst du zur Turnierseite. Eine Woche lang treten 16 Gruppen mit je 16 Spielern gegeneinander an. Sobald die erste Runde abgeschlossen ist, finden sich die 16 Finalisten in der Endrunde wieder. Sodann wird in diesen Kämpfen der beste Dinoz-Meister bestimmt. _Wie auch bei den Herausforderungen verlieren die Dinoz in den letzten Phasen keine Lebenspunkte. Aber diesmal sind die Kämpfe abwechslungsreicher: Mit oder ohne magische Gegenstände, eins gegen eins oder als Mannschaft, sowie drei gegen drei und fünf gegen fünf. Das kann sich je nach Ausgabe ändern!_",
 			"dojos3-3": "Auf der Turnierseite kannst du die Dinoz auswählen, die am Turnier teilnehmen sollen. Diese kannst du zwischen den Kämpfen der Endrunde nicht mehr ändern. Das Turnier beginnt nach Abschluss der Ausscheidungsphasen.&& &&Spieler, die sich für ein Turnier qualifiziert haben, können am nächsten Turnier nicht teilnehmen. Sie können ihr Glück jedoch in der übernächsten Ausgabe wieder versuchen.",
 			"dojos4": "Kampfverlauf",
@@ -4860,11 +4860,11 @@
 			"cdc4": "Kämpfe",
 			"cdc4-1": "Wenn ein Dinoz versucht, sich auf ein von einem gegnerischen Dinoz besetztes Feld zu bewegen, wird ein Kampf ausgelöst. Alle Dinoz, die sich auf den zehn an die beiden Kämpfer angrenzenden Feldern befinden, nehmen gemäß dem folgenden Schema am Kampf teil:",
 			"cdc4-2": "Die Positionierung der Dinoz ist daher äußerst wichtig, wenn man im Kampf nicht zahlenmäßig unterlegen sein möchte.&& &&Wenn ein Dinoz einen Gegner von hinten angreift, führt dies zum Einzelkampf, denn der Gegner wird überrascht und kann keine Verstärkung herbeirufen. Der Kampf findet in diesem Fall eins gegen eins statt.&& &&Wenn ein Dinoz während eines Kampfes stirbt, zieht er sich aus der Schlacht zurück und kann nicht mehr daran teilnehmen. Ein Dinoz kann die Schlacht auch freiwillig verlassen, indem er an die Anfangslinie seines Klans zurückkehrt. In dem Fall kann er geheilt werden und dann die Schlacht wiederaufnehmen.",
-			"questions": "Falls du Fragen, Probleme oder Vorschläge für das Dino-RPG-Team hast, nimm dir bitte erst die Zeit, um die folgenden Antworten durchzulesen:",
-			"questions1": "**Wer hat Dino-RPG erschaffen?** Motion Twin! Ein Indie-Studio, das 2001 gegründet wurde und über 150 Web-Spiele gemacht hat. Heute verdankt Motion Twin sein Wiederaufleben Dead Cells, ein Spiel, das 2017 auf PC, Konsolen und mobilen Geräten erschienen ist.",
+			"questions": "Falls du Fragen, Probleme oder Vorschläge für das DinoRPG-Team hast, nimm dir bitte erst die Zeit, um die folgenden Antworten durchzulesen:",
+			"questions1": "**Wer hat DinoRPG erschaffen?** Motion Twin! Ein Indie-Studio, das 2001 gegründet wurde und über 150 Web-Spiele gemacht hat. Heute verdankt Motion Twin sein Wiederaufleben Dead Cells, ein Spiel, das 2017 auf PC, Konsolen und mobilen Geräten erschienen ist.",
 			"questions2": "**Warum wurde das Spiel von Motion Twin eingestellt?** Motion Twin stellte die Entwicklung seiner Online-Spiele ein, als Adobe im Jahr 2020 die Aktualisierung des Flash Players einstellte. Im November 2023 schaltete dann Motion Twin endgültig alle seine Web- und Twinoid-Spiele ab.",
-			"questions3": "**Gibt es Dino-RPG etwa immer noch?** Ja, dank Eternaltwin. Dieses Projekt ist von Spielern ins Leben gerufen worden, die beschlossen hatten, diese Art von Spielen zu retten und das vollständige Verschwinden dieses gemeinsamen Videospielerbes zu verhindern.",
-			"questions4": "**Ist Dino-RPG kostenlos?** Ja, Dino-RPG ist ein kostenloses Spiel.",
+			"questions3": "**Gibt es DinoRPG etwa immer noch?** Ja, dank Eternaltwin. Dieses Projekt ist von Spielern ins Leben gerufen worden, die beschlossen hatten, diese Art von Spielen zu retten und das vollständige Verschwinden dieses gemeinsamen Videospielerbes zu verhindern.",
+			"questions4": "**Ist DinoRPG kostenlos?** Ja, DinoRPG ist ein kostenloses Spiel.",
 			"questions5": "**Wie erhalte ich mehr Goldmünzen?** Dein Dinoz erhält jeden Tag Goldmünzen, indem er kämpft oder seine Missionen erfüllt. Darüber hinaus erhältst du jeden Tag einen Täglichen Gutschein, mit dem du Gold oder Schatztruhen mit diversen Gegenständen und Dinoz-Eiern erbeuten kannst. Oder aber du verkaufst einfach deine Zutaten beim Fliegenden Händler.",
 			"questions6": "**Wie starte ich das Spiel neu?** Falls etwas schiefgeht, kannst du das Spiel von vorne beginnen. Gehe dazu einfach auf **Mein Konto** und dort auf **Meine Daten ändern**, um dein Konto zurückzusetzen.",
 			"questions7": "Bei Problemen, Fehlern oder Vorschlägen kontaktiere uns bitte im Eternaltwin-Discord.",
@@ -5017,9 +5017,9 @@
 		"reward": "{name} x {quantity}"
 	},
 	"playerMenu": {
-		"title": "Zum Dino-RPG Profil von {player}",
+		"title": "Zum DinoRPG Profil von {player}",
 		"gridMenu": {
-			"pDRPG": "Dino-RPG Profil",
+			"pDRPG": "DinoRPG Profil",
 			"pEternal": "Eternaltwin Profil",
 			"addContact": "Kontakt hinzufügen",
 			"sendMSG": "Nachricht senden"
@@ -5031,7 +5031,7 @@
 		"contact": "Dieser Spieler gehört nicht zu deinen Kontakten."
 	},
 	"roadmap": {
-		"title": "Entdecke die kommenden Ereignisse in Dino-RPG!",
+		"title": "Entdecke die kommenden Ereignisse in DinoRPG!",
 		"small": "Irmas Vorhersage",
 		"strong": {
 			"title1": "Version 1.0.0 (Bald)",

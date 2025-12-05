@@ -18,47 +18,47 @@
 			"eternaltwinGames": {
 				"alphabounce": {
 					"name": "AlphaBounce",
-					"description": "AlphaBounce est un jeu de casse-briques dans lequel vous incarnez un prisonnier condamné à miner dans l'espace pour l'éternité. Mais peut-être arriverez-vous à rentrer chez vous ?"
+					"description": "AlphaBounce is a brick game where you are a prisoner sentenced to mine in the space forever. Maybe you could get home?"
 				},
 				"dinocard": {
 					"name": "Dinocard",
-					"description": "Dinocard Rebirth est une nouvelle version de Dinocard. Il y a déjà 150 cartes jouables !"
+					"description": "Dinocard Rebirth is a reimplementation of Dinocard. There is more than 250 playable cards!"
 				},
 				"emush": {
 					"name": "eMush",
-					"description": "Vous allez vous réveiller avec 15 autres joueurs dans le Daedalus. Comme vous, ils fuient le Mush, un champignon qui ravage la planète Terre et menace l'Humanité."
+					"description": "You wake up with 15 other players onboard the Daedalus. Like you, they are running away from the Mush, a mushroom that wrecks havoc on Earth and threatens Mankind."
 				},
 				"directquiz": {
 					"name": "Directquiz",
-					"description": "Mettez votre culture à rude épreuve dans Direct Quiz, le jeu de quiz le plus déjanté du web !"
+					"description": "Challenge your knowledge in Directquiz, the most unhinged quiz game on the web!"
 				},
 				"epopotamo": {
 					"name": "ePopotamo",
-					"description": "Le jeu de mots relax jouable en toute situation !"
+					"description": "A relaxing word-game playable in all setups!"
 				},
 				"eternalfest": {
 					"name": "Eternalfest",
-					"description": "Plus de 200 niveaux ! Une grande variété d'ennemis très très méchants !"
+					"description": "More than 200 levels! With a wide variety of very very mean enemies!"
 				},
 				"kingdom": {
 					"name": "Eternal Kingdom",
-					"description": "Faites prospérer votre capitale. Recrutez des soldats et devenez... Empereur !"
+					"description": "Grow your capital. Hire soldiers and become... Emperor!"
 				},
 				"mybrute": {
-					"name": "LaBrute",
-					"description": "Règle tes comptes dans l'arène !"
+					"name": "MyBrute",
+					"description": "Settle your quarrels in the arena!"
 				},
 				"myhordes": {
 					"name": "MyHordes",
-					"description": "Le premier jeu de survie zombie gratuit se déroulant dans un monde hostile peuplé de morts-vivants !"
+					"description": "The first free zombie survival game that happens in a hostile world full of undeads!"
 				},
 				"neoparc": {
 					"name": "Neoparc",
-					"description": "Combattez d'autres Dinoz et gagnez ainsi petit à petit de l'expérience lors de combats sans merci !"
+					"description": "Fight other Dinoz and win little by little experience through merciless battles!"
 				},
 				"pioupiouz": {
 					"name": "PiouPiouZ",
-					"description": "Ils se \"plurtchent\", ils explosent, ils se dilatent, ils se transforment, ils avancent tout droit sans réfléchir et seul vous pouvez les amener à la sortie salvatrice !"
+					"description": "They \"plurch\", they explode, they grow, they transform, they go forward without thinking and only you can bring them to a saving grace!"
 				}
 			}
 		},
@@ -73,16 +73,16 @@
 			"messagerie": "Messaging",
 			"forum": "Forum",
 			"api": "API",
-			"logout": "Déconnexion",
+			"logout": "Log out",
 			"notifications": "Notifications",
-			"readAll": "Tout Lu",
-			"guide": "Guide du Jeu",
+			"readAll": "Read All",
+			"guide": "Game Guide",
 			"faq": "FAQ",
-			"cinema": "Cinéma",
-			"events": "Événements",
-			"system": "Réglages",
-			"skipFight": "Afficher directement le résultat de combat",
-			"skipLevel": "Passer l'animation de gain de niveau"
+			"cinema": "Theater",
+			"events": "Events",
+			"system": "Settings",
+			"skipFight": "Display immediately the outcome of fights",
+			"skipLevel": "Skip level up animation"
 		}
 	},
 	"toast": {
@@ -280,7 +280,10 @@
 		"dinozMissions": "My Dinoz missions",
 		"skills": "Skills",
 		"send": "Send",
-		"close": "Close"
+		"close": "Close",
+		"search": "Search",
+		"loading": "Loading...",
+		"noResults": "No result"
 	},
 	"chooseDinoz": {
 		"information": "Before taking control of your Dinoz, you must first give it a name.",
@@ -304,8 +307,8 @@
 		}
 	},
 	"details": {
-		"asc": "Ascendant",
-		"desc": "Descendant",
+		"asc": "Ascending",
+		"desc": "Descending",
 		"th": {
 			"comp": "Skill",
 			"type": "Type",
@@ -1639,7 +1642,6 @@
 				"give": "The Strange Being runs to some kind of small house, then a big lightning strikes before the house disappears. All that remains are burned traces on the ground and a column of smoke rising far up into the sky... He left you one \"Gold Napodino\" and a strange collectible item..."
 			},
 			"playerChoice": {
-				"begin": ". . . . . me . . . lost . . . . . without power . . stars . . . . never . . . . be able to go .... home . . . . help me?",
 				"no": "No way",
 				"yes": "Um... yes?",
 				"nothing": "Please, don't mention it...",
@@ -1676,13 +1678,6 @@
 				"help": "Really!? You would do that for me? It's not going to be easy, and every time you see me you'll forget our meeting instantly! Are you sure you want to help me???",
 				"accept": "Help me find Moulder and I'll handsomely reward you!",
 				"missions": "The scary skeleton looks at you disapprovingly. You turn back and see that she is close to tears, but you continue to run away as far away as possible.",
-				"you": "Yes I am! Pleased to meet you! Did you know that there are strange burned circles in the ruins? I've studied these phenomenons for a long time and have arrived at a conclusion: there are two explanations for these strange marks...",
-				"explain": "They may have been made by strange creatures from outer space who landed in remote places to study the human kind. It could be that they create these strange burned circles when they return to their own planet! The King may be hiding this information because he is plotting with them! Amazing, isn't it?",
-				"other": "Mmmmm, the other explanation seems to be far less plausible, but according to the Merguez Seller, the strange burned circles may be caused by tourists who set campfires when they visit the ruins. I know! Crazy idea, isn't it?",
-				"ok": "Mmmm....these Napalm Shrimp are delicious! They instantly remind me of my wife! We were so in love ... I miss her so much, it hurts even more knowing that she's dead...",
-				"ok2": "What? I hope you're joking. I'm still in my youth! Look how smooth my bones are: no wrinkles! Ah ah ah ah ah!",
-				"skully": "What? You know Skully?",
-				"exp": "............ Thanks! That means that my suspicions of her cheating were wrong! I've been right not to look for another woman even after all these years! I can't thank you enough, you have no idea what this means to me!",
 				"end": "Don't be stupid! This would never have happened if it wasn't for you! Come with me to meet my wife again. I'm longing to see her again, I can't wait to look into her beautiful eyes!",
 				"bye": "The scary skeleton looks at you disapprovingly. You turn back and see that she is close to tears, but you continue to run away as far away as possible.",
 				"begin_memory": "Aha! My curse has disappeared! Can you now help me find Moulder!",
@@ -2588,6 +2583,10 @@
 	},
 	"popup": {
 		"confirm": "Confirm this action?",
+		"confirmBanAction": "Confirm this ban?",
+		"attention": "Attention",
+		"accept": "Yes",
+		"reject": "No",
 		"shop": {
 			"buyMaxConfirm_part1": "Do you really want to buy",
 			"buyMaxConfirm_part2": " copies of this item for a total of ",
@@ -2618,33 +2617,33 @@
 	},
 	"pageTitle": {
 		"default": "DinoRPG [ Dinoland News ]",
-		"dinoz": "DinoRPG [ Fiche de ",
-		"shop": "DinoRPG [ Marchand : ",
-		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
-		"account": "DinoRPG [ Informations personnelles ]",
-		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
-		"ingredients": "DinoRPG [ Ingrédients ]",
-		"levelup": "DinoRPG [ Niveau supplémentaire pour ",
-		"npc": "DinoRPG [ Personnage : ",
-		"missions": "DinoRPG [ Liste des Missions ]",
-		"dinozNaming": "DinoRPG [ Choix du Nom ]",
-		"fight": "DinoRPG [ Combat ! ]",
-		"gather": "DinoRPG [ ",
-		"dinozMissions": "DinoRPG [ Missions de mes Dinoz ]",
-		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
-		"market": "DinoRPG [ Marché des Éleveurs ]",
+		"dinoz": "DinoRPG [ Profile of {dinoz} ]",
+		"shop": "DinoRPG [ Merchant: {shop} ]",
+		"dinozShop": "DinoRPG [ Dinoz Enclosure ]",
+		"account": "DinoRPG [ Personal Information ]",
+		"ranking": "DinoRPG [ Great Hall of Glory ]",
+		"ingredients": "DinoRPG [ Ingredients ]",
+		"levelup": "DinoRPG [ Level-up of {dinoz} ]",
+		"npc": "DinoRPG [ Character: {npc} ]",
+		"missions": "DinoRPG [ List of Missions ]",
+		"dinozNaming": "DinoRPG [ Choose Name ]",
+		"fight": "DinoRPG [ Fight! ]",
+		"gather": "DinoRPG [ {type} ]",
+		"dinozMissions": "DinoRPG [ My Dinoz' Missions ]",
+		"manageDinoz": "DinoRPG [ Manage my Dinoz ]",
+		"market": "DinoRPG [ Tamer Market ]",
 		"dojo": "DinoRPG [ Dojo ]",
-		"guide": "DinoRPG [ Guide du Jeu ]",
-		"itinerant": "DinoRPG [ Marchand Ambulant ]",
+		"guide": "DinoRPG [ Game Guide ]",
+		"itinerant": "DinoRPG [ Travelling Merchant ]",
 		"faq": "DinoRPG [ FAQ ]",
-		"clan": "DinoRPG [ Clan : ",
-		"clansList": "DinoRPG [ Liste des Clans ]",
-		"createClan": "DinoRPG [ Créer un Clan ]",
-		"challengeFriend": "DinoRPG [ Affronte un ami ]",
+		"clan": "DinoRPG [ Clan: {clan} ]",
+		"clansList": "DinoRPG [ Clans List ]",
+		"createClan": "DinoRPG [ Create a Clan ]",
+		"challengeFriend": "DinoRPG [ Duel a Friend ]",
 		"forum": "DinoRPG [ Forums ]",
 		"admin": "DinoRPG [ Admin Dashboard ]",
-		"event": "DinoRPG [ Événements ]",
-		"fb_tournament": "DinoRPG [ Tournoi de Forcebrut ]",
+		"event": "DinoRPG [ Events ]",
+		"fb_tournament": "DinoRPG [ BrutForce Tournament ]",
 		"skillTrees": "DinoRPG [ Skill Trees ]"
 	},
 	"gather": {
@@ -2693,6 +2692,7 @@
 		"continue": "Continue",
 		"accept": "Accept the Mission",
 		"already": "Your Dinoz already has a mission in progress and cannot accept more than one mission at a time.",
+		"lastDialog": "Last dialog",
 		"status": {
 			"available": "",
 			"unavailable": "",
@@ -4051,7 +4051,7 @@
 			"clans": "The clan ranking is updated in real time and based on the treasure value of the clan.",
 			"clansCreation": "You can consult the {0} in order to see newly created clans.",
 			"clansCreationLink": "clan research page",
-			"clansEvent": "Le Classement des clans est mis à jour en temps réel et est calculé à partir de la valeur du score du Clan sur l'événement en cours."
+			"clansEvent": "The clan ranking is updated in real time and based on the score of the score for the current event."
 		},
 		"page": {
 			"previous": "Previous page",
@@ -4075,8 +4075,8 @@
 			"searchClan": "Search a clan"
 		},
 		"button": {
-			"event": "Classement de trésor",
-			"treasure": "Classement d'événement"
+			"clanEvent": "Treasury Ranking",
+			"clanTreasure": "Event Ranking"
 		}
 	},
 	"clan": {
@@ -4505,7 +4505,7 @@
 		"follow": "The group leader is {leader}.",
 		"followed": "This Dinoz leads a group.",
 		"restEnd": "This Dinoz has recovered the maximum amount of life it could through resting.",
-		"dojoTeam": "Ce Dinoz est inscrit dans un tournoi. Il ne peut dépasser le niveau {max} tant que le tournoi en cours n'est pas terminé.",
+		"dojoTeam": "This Dinoz is registered to a tournament. It cannot surpass the level {max} until this tournament is finished.",
 		"unfreezeCountdown": "This Dinoz is waking up and will be available in {time}"
 	},
 	"logs": {

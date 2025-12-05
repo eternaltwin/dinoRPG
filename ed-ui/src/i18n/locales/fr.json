@@ -1642,7 +1642,6 @@
 				"give": "L'Être Etrange court dans une sorte de petite maison, puis un grand éclair se produit et la maison disparait, il ne reste plus que des traces de brulé au sol et une colonne de fumée qui s'élève très haut dans le ciel... Il vous a laissé un \"Napodino d'Or\" ainsi qu'un étrange objet de collection..."
 			},
 			"playerChoice": {
-				"begin": ". . . . . moi . . . perdu . . . . . sans puissance . . étoiles . . . . jamais . . . . pouvoir rentrer maison . . . . aider moi ?",
 				"no": "Pas question",
 				"yes": "Euh... oui ?",
 				"nothing": "De rien...",
@@ -1679,13 +1678,6 @@
 				"help": "VRAIIMMMEENTTT ?? OH OH OH OH OH !! Tu ferais ça pour moooaa ?!! Mais ca va être difficile pour toi, et à chacune de nos rencontres tu ne te souviendras de rien ou presque ! Es-tu vraiment certain de vouloir m'aider ???",
 				"accept": "OH OH OH OH OH !! Alors, s'il te plait Monsieur le Maître Dinoz ! Aide-moi à retrouver Moulder et je te récompenserai comme il se doit !!",
 				"missions": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
-				"you": "C'est exact, enchanté ! Saviez-vous que dans ces ruines on peut trouver d'étranges cercles brulés ? J'étudie ces phénomènes depuis longtemps, et je suis arrivé à la conclusion qu'il existe deux explications quand à ces étranges marques...",
-				"explain": "Tout laisse à penser qu'il pourrait s'agir de créatures étranges venues de l'espace et qui, en venant étudier les humains, se posent dans des endroits discrets... Comme elles crachent le feu, elles laisseraient ces étranges cercles de brulé en repartant vers leur planète natale ! Et bien entendu, le Roi cache ces informations car il conspire avec elles ! Extraordinaire non ?",
-				"other": "Ah ? ... uhm... L'autre explication me semble beaucoup moins plausible, mais d'après le vendeur de merguez, il s'agirait des traces de feu de camp laissées par les touristes visitant les ruines...",
-				"ok": "Uhm ! Succulentes ces Crevettes au Napalm ! Et dire que je ne reverrai jamais ma charmante femme ! Oh combien nous nous aimions... les petits cris qu'elle poussait quand je revenais d'un apéro bien arrosé avec mes collègues me manquent... Et dire qu'elle est certainement morte...",
-				"ok2": "Quoi ? Nous mais vous rigolez j'espère. Je suis encore dans ma prime jeunesse ! Regardez comme mes os sont lisses : pas une ride ! Ah ah ah ah ah !",
-				"skully": "Quoi ? Vous connaissez Skully ?!?",
-				"exp": "............. Merci ! Cela veut dire que mon intuition ne me trompais pas et que j'ai bien fait de ne jamais chercher une autre femme pour la remplacer ! Oooohh ! Merci ! Mille fois merci de nous avoir aidé !",
 				"end": "Si ! C'est un véritable exploit !!! Accompagnez-moi jusqu'à ma femme je vous en prie, il me tarde tellement de pouvoir la contempler yeux-dans-les-yeux !!",
 				"bye": "L'effrayante squelette vous regarde partir l'air déçue. Si vous vous retourniez vous pourriez presque la voir pleurer, mais vous continuez à courir le plus loin possible, et vous avez sûrement raison.",
 				"begin_memory": "oh oh Oh Oh OH !! La bonnédiction est levée ! Tu vas maintenant pouvoir m'aider à trouver Mouldeur !",
@@ -2625,18 +2617,18 @@
 	},
 	"pageTitle": {
 		"default": "DinoRPG [ L'actualité de Dinoland ]",
-		"dinoz": "DinoRPG [ Fiche de ",
-		"shop": "DinoRPG [ Marchand : ",
+		"dinoz": "DinoRPG [ Fiche de {dinoz} ]",
+		"shop": "DinoRPG [ Marchand : {shop} ]",
 		"dinozShop": "DinoRPG [ Enclos des Dinoz ]",
 		"account": "DinoRPG [ Informations personnelles ]",
 		"ranking": "DinoRPG [ Grand Hall de la Gloire ]",
 		"ingredients": "DinoRPG [ Ingrédients ]",
-		"levelup": "DinoRPG [ Niveau supplémentaire pour ",
-		"npc": "DinoRPG [ Personnage : ",
+		"levelup": "DinoRPG [ Niveau supplémentaire pour {dinoz} ]",
+		"npc": "DinoRPG [ Personnage : {npc} ]",
 		"missions": "DinoRPG [ Liste des Missions ]",
 		"dinozNaming": "DinoRPG [ Choix du Nom ]",
 		"fight": "DinoRPG [ Combat ! ]",
-		"gather": "DinoRPG [ ",
+		"gather": "DinoRPG [ {type} ]",
 		"dinozMissions": "DinoRPG [ Missions de mes Dinoz ]",
 		"manageDinoz": "DinoRPG [ Gestion de mes Dinoz ]",
 		"market": "DinoRPG [ Marché des Éleveurs ]",
@@ -2644,7 +2636,7 @@
 		"guide": "DinoRPG [ Guide du Jeu ]",
 		"itinerant": "DinoRPG [ Marchand Ambulant ]",
 		"faq": "DinoRPG [ FAQ ]",
-		"clan": "DinoRPG [ Clan : ",
+		"clan": "DinoRPG [ Clan : {clan} ]",
 		"clansList": "DinoRPG [ Liste des Clans ]",
 		"createClan": "DinoRPG [ Créer un Clan ]",
 		"challengeFriend": "DinoRPG [ Affronte un ami ]",
@@ -4083,8 +4075,8 @@
 			"searchClan": "Rechercher un clan"
 		},
 		"button": {
-			"event": "Classement de trésor",
-			"treasure": "Classement d'événement"
+			"clanEvent": "Classement de trésor",
+			"clanTreasure": "Classement d'événement"
 		}
 	},
 	"clan": {
