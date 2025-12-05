@@ -242,12 +242,6 @@
 							</li>
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('design', 'info_button')" alt="info_button" />
-								<img
-									v-for="element in detail.elements"
-									:key="element"
-									:src="getImgURL('elements', `elem_${element}`)"
-									alt="info_button"
-								/>
 								<span v-if="detail.type === 'base'">
 									{{ detail.value }}{{ detail.percent ? '%' : '' }}
 									<span class="detail-name">
@@ -255,7 +249,7 @@
 									</span>
 								</span>
 								<span v-else>
-									{{ detail.percent ? '' : detail.multiplier ? 'x' : detail.value < 0 ? '-' : '+' }}
+									{{ detail.multiplier ? 'x' : detail.value < 0 ? '-' : '+' }}
 									{{ Math.abs(detail.value) }} {{ detail.percent ? '%' : '' }}
 								</span>
 								<span v-if="detail.type === 'skill'" class="detail-name">
@@ -303,6 +297,7 @@ import { goTo } from '../../utils/goTo.js';
 import { toSkillDetails } from '@drpg/core/utils/DinozUtils';
 import DZSelect from './DZSelect.vue';
 import DZRadio from './DZRadio.vue';
+import { TIME_BASE } from '@drpg/core/utils/fightConstants';
 
 export default defineComponent({
 	name: 'DetailsTab',
@@ -425,6 +420,20 @@ export default defineComponent({
 
 			const priest = this.playerStore.isPriest;
 
+			// Find global speed value to compute it with elemental speed
+			const global_speed_special = getSpecialStat(
+				this.dinozData,
+				this.dinozData.status.map(s => s.statusId),
+				this.dinozSkill,
+				SpecialStat.SPEED,
+				priest
+			);
+
+			let global_speed = 1;
+			if (global_speed_special) {
+				global_speed = global_speed_special.value;
+			}
+
 			this.specialStats = Object.values(SpecialStat)
 				.map(stat => {
 					let special = getSpecialStat(
@@ -440,13 +449,44 @@ export default defineComponent({
 						special.value += 1;
 					}
 
-					// Cut speed digits to 2
-					if (special && special.name.includes('speed')) {
-						special.value = Math.round(special.value * 100) / 100;
+					// Transform speed into the duration of a turn
+					if (special && special.name.toLowerCase().includes('speed')) {
+						special.percent = false;
+						// Specific handling for elemental speed
+						if (!special.name.startsWith('speed')) {
+							if (special.value === 1) {
+								// Hide element speeds if they are only at the base value
+								special = null;
+							} else {
+								// Multiply by global speed
+								special.value = Math.round(100 * TIME_BASE * special.value * global_speed) / 100;
+								// Set base as global speed
+								if (special.details) {
+									special.details.map(detail => {
+										detail.percent = false;
+										if (detail.type === 'base') {
+											detail.value = Math.round(global_speed * TIME_BASE * 100) / 100;
+										}
+										return detail;
+									});
+								}
+							}
+						} else {
+							special.value = Math.round(TIME_BASE * special.value * 100) / 100;
+							if (special.details) {
+								special.details.map(detail => {
+									detail.percent = false;
+									if (detail.type === 'base') {
+										detail.value = TIME_BASE;
+									}
+									return detail;
+								});
+							}
+						}
 					}
 
-					// Hide element speeds if equal to one
-					if (special && special.name.includes('Speed') && special.value === 1) {
+					// Filter out other special stats that are at default value
+					if (special && !special.name.startsWith('speed') && special.value === 100) {
 						special = null;
 					}
 
