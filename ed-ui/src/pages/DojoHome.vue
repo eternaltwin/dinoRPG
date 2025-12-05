@@ -103,7 +103,7 @@
 					{{ $t('dojo.reputation') }} : {{ myDojo.reputation }} {{ $t('dojo.points') }} - {{ $t('dojo.worth') }} :
 					{{ worth }}%
 				</p>
-				<p>{{ $t('dojo.ranking') }} : {{ rank }}</p>
+				<p>{{ $t('dojo.position') }} : {{ rank }}</p>
 			</div>
 		</div>
 		<DojoTimer v-if="tournamentState" :state="tournamentState" />
