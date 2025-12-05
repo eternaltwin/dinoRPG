@@ -104,7 +104,7 @@ export default defineComponent({
 				message: this.$t(`ingredients.giveAway.confirm`, { gold: gold }),
 				header: this.$t('popup.attention'),
 				acceptLabel: this.$t('popup.accept'),
-				rejectLabel: this.$t('popop.reject'),
+				rejectLabel: this.$t('popup.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res) {

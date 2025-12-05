@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader
-		:title="`${$t('pageTitle.npc')}${$t(`npc.name.${npcName}`)}]`"
+		:title="$t('pageTitle.npc', { npc: $t(`npc.name.${npcName}`) })"
 		:header="formatContent($t(`npc.header.character`))"
 		:subHeader="formatContent($t(`npc.name.${npcName}`))"
 	></TitleHeader>

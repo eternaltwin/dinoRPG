@@ -1,6 +1,6 @@
 <template>
 	<TitleHeader
-		:title="$t('pageTitle.gather') + $t(`gather.action.${gatherType}`) + ` ]`"
+		:title="$t('pageTitle.gather', { type: $t(`gather.action.${gatherType}`) })"
 		:header="$t(`gather.action.${gatherType}`)"
 	/>
 	<DZDisclaimer

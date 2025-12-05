@@ -1,6 +1,6 @@
 <template>
 	<div class="dinoz">
-		<TitleHeader :title="`${$t('pageTitle.dinoz')}${dinozData.name}]`"></TitleHeader>
+		<TitleHeader :title="$t('pageTitle.dinoz', { dinoz: dinozData.name })"></TitleHeader>
 		<div class="navigation">
 			<router-link v-if="getDinozId(-1)" :to="{ name: 'DinozPage', params: { id: getDinozId(-1) } }" class="see-button">
 				<img :src="getImgURL('icons', 'left')" />

@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader
 		v-if="clanStore.getClan"
-		:title="`${$t('pageTitle.clan')}${clanStore.getClan.name} ]`"
+		:title="$t('pageTitle.clan', { clan: clanStore.getClan.name })"
 		:header="$t('clan.header.title', { name: clanStore.getClan.name })"
 	></TitleHeader>
 	<div class="wrapper">

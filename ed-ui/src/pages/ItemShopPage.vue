@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader
 		v-if="actualShop"
-		:title="$t('pageTitle.shop') + $t(`shop.item.${actualShop.name}.name`) + ` ]`"
+		:title="$t('pageTitle.shop', { shop: $t(`shop.item.${actualShop.name}.name`) })"
 		:header="formatContent($t(`shop.item.title`))"
 		:subHeader="formatContent($t(`shop.item.${actualShop.name}.name`))"
 	/>
@@ -477,7 +477,7 @@ export default defineComponent({
 				message: text,
 				header: this.$t('popup.attention'),
 				acceptLabel: this.$t('popup.accept'),
-				rejectLabel: this.$t('popop.reject'),
+				rejectLabel: this.$t('popup.reject'),
 				icon: 'pi pi-trash'
 			});
 			if (res && quantity > 0) {

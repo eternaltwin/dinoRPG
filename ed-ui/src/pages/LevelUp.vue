@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader
 		v-if="availableSkills"
-		:title="`${$t('pageTitle.levelup')}${availableSkills.name} ]`"
+		:title="`${$t('pageTitle.levelup', { dinoz: availableSkills.name })}`"
 		:header="$t(`levelup.title`, { name: availableSkills.name })"
 	></TitleHeader>
 	<div class="levelUp">
@@ -253,7 +253,7 @@ export default defineComponent({
 					}),
 					header: this.$t('popup.attention'),
 					acceptLabel: this.$t('popup.accept'),
-					rejectLabel: this.$t('popop.reject'),
+					rejectLabel: this.$t('popup.reject'),
 					icon: 'pi pi-trash'
 				});
 				if (prompt) {
