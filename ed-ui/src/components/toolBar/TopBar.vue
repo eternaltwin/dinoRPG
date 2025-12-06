@@ -91,15 +91,19 @@ export default defineComponent({
 			EventBus.emit('dinozMenu', true);
 		},
 		async startSseForNotification(): Promise<void> {
-			if (this.playerStore.getPlayerId) {
-				const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
-				this.eventSource = await ServerEventsService.connectToSse(ticket);
-				this.eventSource.onmessage = (message: MessageEvent<string>) => {
-					this.playerStore.addNotification(JSON.parse(message.data));
-				};
-			} else {
+			if (!this.playerStore.getPlayerId) {
 				this.eventSource?.close();
 			}
+
+			const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
+			this.eventSource = await ServerEventsService.connectToSse(ticket);
+			this.eventSource.onmessage = (message: MessageEvent<string>) => {
+				this.playerStore.addNotification(JSON.parse(message.data));
+			};
+			this.eventSource.onerror = () => {
+				this.eventSource?.close();
+				this.startSseForNotification();
+			};
 		}
 	},
 	watch: {
