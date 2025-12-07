@@ -2,9 +2,9 @@
 	<Transition>
 		<div v-if="displayToast" class="snackbar" @click="displayToast = !displayToast">
 			<template v-if="type === 'error'">{{ $t(`toast.${message}`, params) }}</template>
-			<template v-if="type === 'success'">{{ $t(`toast.${message}`, params) }}</template>
-			<p v-if="type === 'notif'" v-html="formatContent(message)" />
-			<p v-if="type === 'reward'" v-html="message" />
+			<template v-else-if="type === 'success'">{{ $t(`toast.${message}`, params) }}</template>
+			<p v-else-if="type === 'notif'" v-html="formatContent(message)" />
+			<p v-else-if="type === 'reward'" v-html="message" />
 		</div>
 	</Transition>
 </template>
@@ -31,7 +31,7 @@ export default defineComponent({
 		EventBus.on('toast', e => {
 			this.message = e.message;
 			this.type = e.type;
-			this.params = e.params;
+			this.params = e.params ?? {};
 			this.displayToast = true;
 			this.value = e.value;
 			this.effect = e.effect;

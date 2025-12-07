@@ -25,8 +25,10 @@ type Events = {
 
 type toast = {
 	message: string;
-	type: 'error' | 'reward';
+	type: 'error' | 'reward' | 'success' | 'notif';
 	params?: Record<string, unknown>;
+	value?: string;
+	effect?: string;
 };
 
 const EventBus = mitt<Events>();

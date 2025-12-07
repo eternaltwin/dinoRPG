@@ -13,14 +13,6 @@
 /*.v-toast__text {
 	margin: 1em;
 }*/
-.v-toast__item .v-toast__text {
-	padding: 0; //1.5em 1em;
-
-	.text-icon {
-		width: 18px;
-		vertical-align: bottom;
-	}
-}
 .v-toast__item {
 	background: rgb(201, 124, 72);
 	background: linear-gradient(0deg, rgba(201, 124, 72, 1) 15%, rgba(178, 96, 58, 1) 100%);
@@ -33,6 +25,32 @@
 	padding-left: 1em;
 	padding-right: 1em;
 	gap: 1em;
+
+	.v-toast__icon {
+		background: url("../assets/icons/small_edit.webp") no-repeat;
+		width: 12px;
+    min-width: auto;
+    height: 12px;
+    background-size: 12px;
+    margin-left: 0;
+	}
+
+	.v-toast__text {
+		padding: 0; //1.5em 1em;
+
+		.text-icon {
+			width: 18px;
+			vertical-align: bottom;
+		}
+	}
+
+	&.v-toast__item--error .v-toast__icon {
+		background: url("../assets/icons/small_delete.webp") no-repeat;
+	}
+
+	&.v-toast__item--success .v-toast__icon {
+		background: url("../assets/icons/small_missDone.webp") no-repeat;
+	}
 }
 
 @font-face {
