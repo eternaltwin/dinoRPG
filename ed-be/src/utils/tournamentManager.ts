@@ -50,11 +50,11 @@ class TournamentManager {
 	private getSchedule(): TournamentSchedule {
 		const qualificationStart = dayjs(this.startDate).locale('fr').toDate();
 		// Qualif end the sunday night
-		const qualificationEnd = dayjs(this.startDate).endOf('week').toDate();
+		const qualificationEnd = dayjs(this.startDate).locale('fr').endOf('week').endOf('day').toDate();
 
-		const poolsStart = dayjs(this.startDate).add(1, 'week').startOf('week').toDate();
+		const poolsStart = dayjs(this.startDate).locale('fr').add(1, 'week').startOf('week').toDate();
 
-		const finalsStart = dayjs(this.startDate).add(11, 'days').startOf('day').toDate();
+		const finalsStart = dayjs(this.startDate).locale('fr').add(11, 'days').startOf('day').toDate();
 
 		return {
 			qualificationStart,
@@ -594,7 +594,7 @@ class TournamentManager {
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
 
-		const endQualif = today.endOf('week').toDate();
+		const endQualif = today.endOf('week').endOf('day').toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
 				date: newTournamentStartDate,
