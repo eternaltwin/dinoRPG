@@ -1,7 +1,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.itinerant')" :header="formatContent($t(`shop.item.merchant.name`))" />
 	<div class="shop">
-		<div class="shopDesc">
+		<div class="dz-box shopDesc">
 			<h3 class="shopName">
 				<img :src="getImgURL('design', 'info_button')" alt="info_button" />
 				{{ $t(`shop.item.merchant.name`) }}
@@ -230,14 +230,6 @@ export default defineComponent({
 		grid-template-rows: 17px auto;
 		grid-template-columns: 180px auto;
 		grid-template-areas: 'top top ' 'left center';
-		background: url('../assets/background/desc_shop_top_left.webp'),
-			url('../assets/background/desc_shop_top_right.webp'), url('../assets/background/desc_shop_top_center.webp'),
-			url('../assets/background/desc_shop_bottom_left.webp'), url('../assets/background/desc_shop_bottom_right.webp'),
-			url('../assets/background/desc_shop_bottom_center.webp'), url('../assets/background/desc_shop_center_left.webp'),
-			url('../assets/background/desc_shop_center_right.webp'), url('../assets/background/desc_shop_center_center.webp');
-		background-position-x: left, right, center, left, right, center, left, right, center;
-		background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
-		background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
 
 		min-height: 160px;
 		max-width: 95%;

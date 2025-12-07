@@ -1,9 +1,8 @@
 <template>
-	<div class="player-menu" v-if="loadedPlayer">
+	<div class="dz-box player-menu" v-if="loadedPlayer">
 		<RouterLink class="playerLink" :to="`/player/${loadedPlayer.id}`">
 			{{ $t('playerMenu.title', { player: loadedPlayer.name }) }}
 		</RouterLink>
-		<span class="dashed"></span>
 		<div class="grid-menu">
 			<a class="link-block" :href="`https://eternaltwin.org/users/${loadedPlayer.id}`" target="_blank">
 				<img :src="getImgURL('icons', 'small_eternaltwin')" alt="eternaltwinProfile" /><br />
@@ -79,7 +78,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .player-menu {
-	background-color: #bc683c;
 	font-size: 10px;
 	font-weight: 700;
 	border: 1px solid #845a45;
@@ -87,6 +85,7 @@ export default defineComponent({
 	border-radius: 4px;
 	color: #f1e8e6;
 	padding: 10px;
+	padding-top: 4px;
 	position: absolute;
 	top: 100%;
 	left: 0;
@@ -173,17 +172,17 @@ export default defineComponent({
 }
 
 .playerLink {
-	margin: 0 -10px;
-	padding: 1px 10px;
+	padding: 2px 4px;
+	margin-left: 12px;
 	text-decoration: none;
 	font-size: 10px;
 	font-weight: 700;
-	color: #f1e8e6;
-	width: 100%;
+	color: #ffee92;
 	display: block;
 	text-align: start;
 	&:hover {
-		background-color: #79432b;
+		background-color: transparent;
+		color: #ffe031;
 	}
 }
 .player-desc {

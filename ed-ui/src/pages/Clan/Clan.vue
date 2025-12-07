@@ -11,7 +11,7 @@
 	</div>
 
 	<!-- Pages du clan (à faire dans un composant à part)-->
-	<div class="pages topspace">
+	<div class="dz-box pages topspace">
 		<h3>
 			<img :src="getImgURL('design', 'info_button')" alt="info_button" style="margin-right: 10px" />
 			{{ $t('clan.tabs.pages') }}
@@ -243,17 +243,6 @@ export default defineComponent({
 }
 
 .pages {
-	background: url('../../assets/background/desc_shop_top_left.webp'),
-		url('../../assets/background/desc_shop_top_right.webp'), url('../../assets/background/desc_shop_top_center.webp'),
-		url('../../assets/background/desc_shop_bottom_left.webp'),
-		url('../../assets/background/desc_shop_bottom_right.webp'),
-		url('../../assets/background/desc_shop_bottom_center.webp'),
-		url('../../assets/background/desc_shop_center_left.webp'),
-		url('../../assets/background/desc_shop_center_right.webp'),
-		url('../../assets/background/desc_shop_center_center.webp');
-	background-position-x: left, right, center, left, right, center, left, right, center;
-	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
-	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
 	width: 95%;
 	align-self: center;
 	height: auto;

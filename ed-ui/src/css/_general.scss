@@ -243,3 +243,17 @@ strong {
 	scrollbar-width: thin;
 	scrollbar-color: #fce3bb #9a4029;
 }
+
+.dz-box {
+	background: url('../assets/background/desc_shop_top_left.webp'),
+		url('../assets/background/desc_shop_top_right.webp'), url('../assets/background/desc_shop_top_center.webp'),
+		url('../assets/background/desc_shop_bottom_left.webp'),
+		url('../assets/background/desc_shop_bottom_right.webp'),
+		url('../assets/background/desc_shop_bottom_center.webp'),
+		url('../assets/background/desc_shop_center_left.webp'),
+		url('../assets/background/desc_shop_center_right.webp'),
+		url('../assets/background/desc_shop_center_center.webp');
+	background-position-x: left, right, center, left, right, center, left, right, center;
+	background-position-y: top, top, top, bottom, bottom, bottom, 35px, 35px, 35px;
+	background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y, repeat-y, repeat;
+}
