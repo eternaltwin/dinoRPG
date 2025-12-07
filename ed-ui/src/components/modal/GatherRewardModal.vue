@@ -17,30 +17,35 @@
 						<p v-html="formatContent($t(`ingredients.description.${ingredient.name?.toLowerCase()}`))" />
 					</template>
 				</Tippy>
-				<div :class="{ 'max-quantity-info': true, 'is-max': isMaxQuantity(ingredient.ingredientId).isMaxQuantity }">
-					<span :style="isMaxQuantity(ingredient.ingredientId).isMaxQuantity ? 'color: red;' : 'color: white;'">
+				<div :class="{ 'name-info': true, 'is-max': isMaxQuantity(ingredient.ingredientId) }">
+					<span v-if="ingredient.quantity && ingredient.quantity > 1">x{{ ingredient.quantity }} </span>
+					<span>
 						{{ formatContent($t(`ingredients.name.${ingredient.name}`)) }}
-						({{ isMaxQuantity(ingredient.ingredientId).quantity }})
 					</span>
 				</div>
 			</div>
-			<Tippy
-				theme="normal"
-				tag="img"
-				v-for="item in rewardList.item"
-				:key="item.id"
-				:src="getImgURL('item', `item_${itemList[item.id].name.toLowerCase()}`)"
-				:alt="itemList[item.id].name.toLowerCase()"
-			>
-				<template #content>
-					<h1 v-html="formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`))" />
-					<p
-						v-html="
-							formatContent($t(`item.description.${itemList[item.id].name.toLowerCase()}`, { quantity: item.price }))
-						"
-					/>
-				</template>
-			</Tippy>
+			<div v-for="item in rewardList.item" :key="item.id" class="item-container">
+				<Tippy
+					theme="normal"
+					tag="img"
+					:src="getImgURL('item', `item_${itemList[item.id].name.toLowerCase()}`)"
+					:alt="itemList[item.id].name.toLowerCase()"
+				>
+					<template #content>
+						<h1 v-html="formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`))" />
+						<p
+							v-html="
+								formatContent($t(`item.description.${itemList[item.id].name.toLowerCase()}`, { quantity: item.price }))
+							"
+						/>
+					</template>
+				</Tippy>
+				<div class="name-info">
+					<span v-if="item.quantity && item.quantity > 1">x{{ item.quantity }}{{ ' ' }}</span>
+					<span v-if="itemList[item.id].name === 'gold'">{{ item.price }}{{ ' ' }}</span>
+					<span>{{ formatContent($t(`item.name.${itemList[item.id].name}`)) }}</span>
+				</div>
+			</div>
 			<a class="button" @click="$emit('close')">
 				{{ $t('missions.continue') }}
 			</a>
@@ -93,12 +98,9 @@ export default defineComponent({
 		isMaxQuantity(ingredientId: number) {
 			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);
 			if (ingredient) {
-				return {
-					isMaxQuantity: ingredient.isMaxQuantity,
-					quantity: ingredient.quantity
-				};
+				return ingredient.isMaxQuantity;
 			}
-			return { isMaxQuantity: false, quantity: 0 };
+			return false;
 		}
 	}
 });
@@ -129,19 +131,25 @@ export default defineComponent({
 		color: white;
 	}
 }
-.ingredient-container {
+.ingredient-container,
+.item-container {
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	width: 50%;
 }
-.max-quantity-info {
+.name-info {
 	margin-top: 15px;
 	font-size: 14px;
-	color: white;
-}
-.is-max {
-	color: red;
+
+	span {
+		color: white;
+	}
+
+	&.is-max {
+		span {
+			color: red;
+		}
+	}
 }
 
 .v-enter-active {
