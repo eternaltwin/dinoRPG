@@ -5,7 +5,10 @@
 		:header="$t(`levelup.title`, { name: availableSkills.name })"
 	></TitleHeader>
 	<div class="levelUp">
-		<DZDisclaimer content="levelup.disclaimer" />
+		<DZDisclaimer
+			content="levelup.disclaimer"
+			:params="{ name: availableSkills?.name, level: (availableSkills?.level ?? 0) + 1 }"
+		/>
 		<div class="wrapper border" v-if="availableSkills">
 			<LevelUpGrid
 				v-if="availableSkills.upChance && availableSkills.element"

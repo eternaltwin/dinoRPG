@@ -3575,7 +3575,7 @@
 		}
 	},
 	"levelup": {
-		"disclaimer": "Vous pouvez à présent lancer l'animation afin de savoir avec quel élément votre Dinoz évolue.",
+		"disclaimer": "{name} a atteint le niveau {level} ! Quel élément va-t-il améliorer ?",
 		"title": "Niveau supplémentaire pour {name}",
 		"helper": "Choisissez une compétence à apprendre :",
 		"fire": "Gagne +1 en :feu: Feu",
