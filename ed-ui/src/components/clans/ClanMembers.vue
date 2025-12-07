@@ -109,7 +109,7 @@ export default defineComponent({
 	components: { DZUser },
 	data() {
 		return {
-			clanMembersList: [] as Array<ClanMember>,
+			clanMembersList: [] as ClanMember[],
 			joinRequestsList: [] as JoinRequestListResponse,
 			playerStore: playerStore(),
 			hasEditRight: false as boolean,
@@ -136,8 +136,8 @@ export default defineComponent({
 				(member.rights.includes(ClanMemberRight[right]) || member.player.leaderOf?.id == +this.$route.params.id)
 			);
 		},
-		dateToString(date: Date) {
-			return date.toLocaleString('fr-FR');
+		dateToString(date: Date | string) {
+			return new Date(date).toLocaleString('fr-FR');
 		},
 		async getClanMembersList(): Promise<void> {
 			EventBus.emit('isLoading', true);
