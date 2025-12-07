@@ -1,5 +1,5 @@
 <template>
-	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t(`topBar.rightMenuranking`)"></TitleHeader>
+	<TitleHeader :title="`${$t('pageTitle.ranking')}`" :header="$t(`topBar.rightMenu.ranking`)"></TitleHeader>
 	<ul class="onglets">
 		<li>
 			<RouterLink
