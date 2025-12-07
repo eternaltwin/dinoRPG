@@ -1,6 +1,9 @@
 <template>
 	<Transition>
 		<div class="modal-background">
+			<div v-if="rewardList.ingredients.length === 0 && rewardList.item.length === 0">
+				<span class="nothing">{{ $t('gather.nothing') }}</span>
+			</div>
 			<div v-for="ingredient in rewardList.ingredients" :key="ingredient.ingredientId" class="ingredient-container">
 				<Tippy
 					theme="normal"
@@ -58,13 +61,12 @@ export default defineComponent({
 		ingredientsAtMaxQuantity: {
 			type: Array as PropType<{ ingredientId: number; quantity: number; isMaxQuantity: boolean }[]>,
 			required: true
-		},
-		size: Number
+		}
 	},
 	data() {
 		return {
 			playerStore: playerStore(),
-			rewardList: {} as GatherRewards,
+			rewardList: { item: [], ingredients: [] } satisfies GatherRewards as GatherRewards,
 			itemList: itemList
 		};
 	},
@@ -105,8 +107,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .modal-background {
 	position: absolute;
-	width: v-bind(size);
-	height: v-bind(size);
 	background: transparentize(#09092d, 0.4);
 	top: 0;
 	right: 0;
@@ -123,6 +123,10 @@ export default defineComponent({
 	}
 	.button {
 		margin-top: 25px;
+	}
+
+	.nothing {
+		color: white;
 	}
 }
 .ingredient-container {
