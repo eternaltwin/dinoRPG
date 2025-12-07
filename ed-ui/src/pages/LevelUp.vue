@@ -67,63 +67,65 @@
 							<th class="type">{{ $t('levelup.level') }}</th>
 							<th class="type"></th>
 						</tr>
-						<tr
-							v-for="skill in availableSkills.learnableSkills"
-							:key="skill.skillId"
-							@click="learnSkill(skill.skillId)"
-						>
-							<td class="name">
-								<div class="skillName">
-									<img
-										v-for="element in skill.element"
-										:key="element"
-										:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
-										alt="elementUp"
-									/>
-									<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
+						<tr v-for="skill in availableSkills.learnableSkills" :key="skill.skillId">
+							<Tippy theme="normal" tag="td" class="name">
+								<div>
+									<div class="skillName">
+										<img
+											v-for="element in skill.element"
+											:key="element"
+											:src="getImgURL('elements', `elem_${ElementType[element].toLowerCase()}`)"
+											alt="elementUp"
+										/>
+										<p>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</p>
+									</div>
+									<p class="desc">
+										{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
+									</p>
 								</div>
-								<p class="desc">
-									{{ $t(`skill.description.${skillList[skill.skillId].name}`) }}
-								</p>
-								<hr class="demarcation" />
-								<div class="hidden-stats">
-									<p
-										class="desc"
-										v-html="
-											formatContent(
-												$t(`skill.energy`, {
-													energy: skillList[skill.skillId].energy
-												})
-											)
-										"
-									/>
-									<p
-										class="desc"
-										v-if="skillList[skill.skillId].priority !== undefined && skillList[skill.skillId].priority !== null"
-										v-html="
-											formatContent(
-												$t(`skill.priority`, {
-													priority: skillList[skill.skillId].priority
-												})
-											)
-										"
-									/>
-									<p
-										class="desc"
-										v-if="
-											skillList[skill.skillId].probability !== undefined &&
-											skillList[skill.skillId].probability !== null
-										"
-										v-html="
-											formatContent(
-												$t(`skill.probability`, {
-													probability: skillList[skill.skillId].probability
-												})
-											)
-										"
-									/>
-								</div>
-							</td>
+								<template #content>
+									<h1>&nbsp;</h1>
+									<div class="hidden-stats">
+										<p
+											class="desc"
+											v-html="
+												formatContent(
+													$t(`skill.energy`, {
+														energy: skillList[skill.skillId].energy
+													})
+												)
+											"
+										/>
+										<p
+											class="desc"
+											v-if="
+												skillList[skill.skillId].priority !== undefined && skillList[skill.skillId].priority !== null
+											"
+											v-html="
+												formatContent(
+													$t(`skill.priority`, {
+														priority: skillList[skill.skillId].priority
+													})
+												)
+											"
+										/>
+										<p
+											class="desc"
+											v-if="
+												skillList[skill.skillId].probability !== undefined &&
+												skillList[skill.skillId].probability !== null
+											"
+											v-html="
+												formatContent(
+													$t(`skill.probability`, {
+														probability: skillList[skill.skillId].probability
+													})
+												)
+											"
+										/>
+									</div>
+								</template>
+							</Tippy>
 							<Tippy theme="normal" tag="td" class="type">
 								{{ skill.type }}
 								<template #content>
@@ -135,12 +137,15 @@
 								{{ String(skill.skillId)[2] }}
 							</td>
 							<td class="learn">
-								<img :src="getImgURL('icons', 'small_right')" alt="right" />{{ $t('levelup.learn') }}
+								<DZButton @click="learnSkill(skill.skillId)" class="learnSkill">
+									<img :src="getImgURL('icons', 'small_right')" alt="right" />
+									{{ $t('levelup.learn') }}
+								</DZButton>
 							</td>
 						</tr>
 						<template v-if="availableSkills.unlockableSkills">
 							<tr v-if="availableSkills.unlockableSkills.length > 0" @click="unlockSkill()">
-								<td class="name" colspan="4">
+								<td class="name unlockable" colspan="4">
 									<div class="skillName">
 										<img :src="getImgURL('icons', 'small_right')" alt="right" />
 										{{ $t(`levelup.unlock1`) }}
@@ -208,6 +213,7 @@ import Elements from '../components/data/Elements.vue';
 import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import DZDisclaimer from '../components/common/DZDisclaimer.vue';
 import { FBService } from '../services/FBTournamentService.js';
+import DZButton from '../components/common/DZButton.vue';
 
 export default defineComponent({
 	name: 'LevelUp',
@@ -216,7 +222,8 @@ export default defineComponent({
 		LevelUpGrid,
 		TitleHeader,
 		Elements,
-		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue'))
+		DinozWithoutFlash: defineAsyncComponent(() => import('../components/dinoz/DinozWithoutFlash.vue')),
+		DZButton
 	},
 	data() {
 		return {
@@ -474,7 +481,7 @@ export default defineComponent({
 	margin-bottom: 10px;
 	width: 92%;
 }
-.hidden-stats {
+:deep(.hidden-stats) {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 5px;
@@ -492,9 +499,6 @@ export default defineComponent({
 }
 :deep(strong) {
 	color: #710;
-}
-:deep(.name:hover strong) {
-	color: #fff;
 }
 .elements {
 	display: flex;
@@ -589,6 +593,7 @@ export default defineComponent({
 					max-width: 4px;
 				}
 				&.learn {
+					padding: 5px;
 					font-weight: bold;
 					text-align: center;
 					color: #bc683c;
@@ -597,12 +602,13 @@ export default defineComponent({
 					text-decoration: underline;
 					background-repeat: no-repeat;
 				}
-			}
-			&:hover {
-				td {
-					outline: 1px solid #9a4029;
-					color: white !important;
+				&.unlockable {
 					cursor: pointer;
+
+					&:hover {
+						outline: 1px solid #9a4029;
+						color: white !important;
+					}
 				}
 			}
 		}
