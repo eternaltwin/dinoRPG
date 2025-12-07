@@ -2,10 +2,10 @@
 	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)" />
 	<div v-show="loaded" class="content">
 		<Suspense>
-			<FullFightAnimation :fight="fightTransformed" @animationEnded="fightEnded = true" />
+			<FullFightAnimation :fight="fightTransformed" @animationEnded="onFightEnd" />
 			<template #fallback> <Loading /> </template>
 		</Suspense>
-		<FightBounce v-if="fightEnded" :fight="fight" :dinozId="dinozId" />
+		<FightBounce v-if="fight && fightEnded" :fight="fight" :dinozId="dinozId" />
 	</div>
 </template>
 
@@ -39,16 +39,26 @@ export default defineComponent({
 			playerStore: playerStore(),
 			dinozStore: dinozStore(),
 			sessionStore: sessionStore(),
-			fight: {} as FightResult,
-			dinozId: +this.$route.params.dinozId as number,
+			fight: null as FightResult | null,
+			dinozId: +this.$route.params.dinozId,
 			lang: localStore().getLanguage ?? 'fr',
-			fightEnded: false as boolean,
-			fightTransformed: {} as preFightLoader,
-			loaded: false as boolean
+			fightEnded: false,
+			fightTransformed: {} satisfies preFightLoader as preFightLoader,
+			loaded: false,
+			moneyGiven: false
 		};
 	},
 	props: {
 		display: { type: Object as PropType<FightResult>, required: false }
+	},
+	methods: {
+		onFightEnd() {
+			this.fightEnded = true;
+			if (this.fight) {
+				this.playerStore.setMoney(this.playerStore.getMoney + this.fight.goldEarned);
+				this.moneyGiven = true;
+			}
+		}
 	},
 	created(): void {
 		const fightResult = this.sessionStore.getFightResult;
@@ -65,7 +75,6 @@ export default defineComponent({
 		}
 		if (fightResult) {
 			this.fight = fightResult;
-			this.playerStore.setMoney(this.playerStore.getMoney + this.fight.goldEarned);
 		}
 
 		const fightSteps = fightResult.history as FightStep[];
@@ -84,20 +93,28 @@ export default defineComponent({
 		if (!nexFight) {
 			return;
 		}
-		const initPlace = resolveFightingPlace(this.fight.place);
-		this.fightTransformed = {
-			...initPlace,
-			history: nexFight.filter(n => n != undefined),
-			lang: this.lang
-		};
+		if (this.fight) {
+			const initPlace = resolveFightingPlace(this.fight.place);
+			this.fightTransformed = {
+				...initPlace,
+				history: nexFight.filter(n => n != undefined),
+				lang: this.lang
+			};
+		}
 
 		this.loaded = true;
 		if (this.playerStore.getPlayerOptions.skipFight) {
-			this.fightEnded = true;
+			this.onFightEnd();
 		}
 		EventBus.emit('isLoading', false);
 	},
 	unmounted(): void {
+		// Give money if not given yet
+		if (this.fight && !this.moneyGiven) {
+			this.playerStore.setMoney(this.playerStore.getMoney + this.fight.goldEarned);
+			this.moneyGiven = true;
+		}
+
 		// Comment this to replay fight with refresh
 		this.loaded = false;
 		const dinozList = this.dinozStore.getDinozList;
@@ -114,7 +131,7 @@ export default defineComponent({
 			dinozList.map(dinoz => {
 				if (dinoz.id === this.dinozId || dinoz.leaderId === this.dinozId) {
 					// Update dinoz HP
-					dinoz.life -= this.fight.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
+					dinoz.life -= this.fight?.hpLost.find(hpLost => hpLost.id === dinoz.id)?.hpLost || 0;
 				}
 				return dinoz;
 			})
