@@ -125,6 +125,9 @@ export default defineComponent({
 			position: absolute;
 			right: 3px;
 			top: 3px;
+			background: #90452c;
+			padding: 4px;
+			border-radius: 50%;
 
 			&:hover {
 				filter: brightness(120%);
