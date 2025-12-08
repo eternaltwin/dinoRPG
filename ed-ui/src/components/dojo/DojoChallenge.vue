@@ -106,6 +106,7 @@ import { FighterRecap, FullFightStats } from '@drpg/core/models/fight/FightResul
 import DOJO_MAX_SERIES from '@drpg/core/utils/dojoConstants';
 import { resolveFightingPlace, transpileFight } from '../../utils/transpileFight.js';
 import DZButton from '../common/DZButton.vue';
+import { UnavailableReasonFront } from '@drpg/core/models/dinoz/UnavailableReasonFront';
 
 export default defineComponent({
 	name: 'DojoChallenge',
@@ -231,7 +232,7 @@ export default defineComponent({
 				if (dojo.team.length === 0) {
 					this.composeTeam = true;
 					this.myDinoz = this.dinozStore.getDinozList
-						.filter(d => d.unavailableReason === null)
+						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReasonFront.resting)
 						.filter(d => d.level >= 10)
 						.map(d => {
 							return {
