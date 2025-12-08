@@ -1,4 +1,4 @@
 export enum ClanRankingType {
-	TREASURE = 'treasure',
-	EVENT = 'event'
+	TREASURE = 'clanTreasure',
+	EVENT = 'clanEvent'
 }
