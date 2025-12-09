@@ -54,7 +54,8 @@
 					class="dinoz"
 					:class="{
 						selected: currentDinozId() ? dinoz.id === currentDinozId() : dinoz.id === pageId,
-						group: getLeaderGroup(dinoz)
+						group: getLeaderGroup(dinoz),
+						exhausted: dinoz.remaining === 0 && !dinoz.fight
 					}"
 				>
 					<DinozMini class="display" :display="dinoz.display" :key="dinoz.display" />
@@ -505,6 +506,10 @@ export default defineComponent({
 		}
 		.lead {
 			place-self: center;
+		}
+
+		&.exhausted .tinyBar {
+			opacity: 0.5;
 		}
 	}
 

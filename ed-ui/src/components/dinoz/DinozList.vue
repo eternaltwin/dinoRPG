@@ -7,7 +7,8 @@
 				dead: dinoz.life === 0,
 				selected: currentDinozId ? dinoz.id === currentDinozId : dinoz.id === pageId,
 				light: true,
-				group: getLeaderGroup(dinoz)
+				group: getLeaderGroup(dinoz),
+				exhausted: dinoz.remaining === 0 && !dinoz.fight
 			}"
 		>
 			<a @click="goToDinozPage(dinoz.id)">
@@ -281,6 +282,10 @@ ul {
 
 		&.group {
 			background-color: #f2ca8e;
+		}
+
+		&.exhausted .tinyBar {
+			opacity: 0.5;
 		}
 	}
 }
