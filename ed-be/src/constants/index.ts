@@ -27,7 +27,7 @@ export const apiRoutes = {
 	dojo: '/api/v1/dojo',
 	forum: '/api/v1/forum',
 	events: '/api/v1/events'
-};
+} as const;
 
 export const regex = {
 	DINOZ_NAME: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/

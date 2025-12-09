@@ -108,10 +108,13 @@ export default defineComponent({
 	max-height: max-content;
 	.filler {
 		display: flex;
-		align-items: flex-start;
+		align-items: center;
 		justify-content: space-around;
+
 		img {
-			width: 70%;
+			flex: 1;
+			max-width: 33%;
+			height: auto;
 		}
 	}
 	.cards {

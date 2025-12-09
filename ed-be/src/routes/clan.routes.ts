@@ -40,7 +40,7 @@ import sendError from '../utils/sendErrors.js';
 
 const routes: Router = Router();
 
-const commonPath: string = apiRoutes.clanRoutes;
+const commonPath = apiRoutes.clanRoutes;
 
 /**
  * @openapi
