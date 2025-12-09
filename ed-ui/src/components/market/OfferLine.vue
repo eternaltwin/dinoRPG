@@ -398,6 +398,7 @@ export default defineComponent({
 .bid-action {
 	text-align: center;
 	input {
+		max-width: 80px;
 		display: inline-block;
 		margin-bottom: 5px;
 	}
