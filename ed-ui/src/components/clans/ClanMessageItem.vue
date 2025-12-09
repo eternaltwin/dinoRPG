@@ -1,23 +1,23 @@
 <template>
 	<article class="msg-card" :class="{ 'is-self': isSelf }">
 		<header class="msg-card__header">
-			<button class="avatar" @click="emit('openProfile', author.id)">
-				<img v-if="author.avatarUrl" :src="author.avatarUrl" alt="avatar" />
-				<span v-else class="avatar--stub">{{ author.name?.[0]?.toUpperCase() }}</span>
+			<button class="avatar" @click="author ? emit('openProfile', author.id) : undefined">
+				<img v-if="author?.avatarUrl" :src="author.avatarUrl" alt="avatar" />
+				<span v-else class="avatar--stub">{{ author?.name?.[0]?.toUpperCase() ?? 'Unknown' }}</span>
 			</button>
 
 			<div class="meta">
 				<div class="name-row">
-					<button class="author" @click="emit('openProfile', author.id)">
+					<button class="author" @click="author ? emit('openProfile', author.id) : undefined">
 						<img
 							src="\src\assets\icons\crown.png"
 							alt="rank"
 							v-if="props.itsLeader"
 							v-tippy="{ content: t('clan.icons.crown'), theme: 'small' }"
 						/>
-						{{ author.name }}
+						{{ author?.name ?? 'Unknown' }}
 					</button>
-					<span v-if="author.isLeader" class="badge badge--leader">{{ t('clan.icons.crown') }}</span>
+					<span v-if="author?.isLeader" class="badge badge--leader">{{ t('clan.icons.crown') }}</span>
 					<span class="badge">{{ topItem }}</span>
 				</div>
 				<div class="date">{{ formatShortDate(date, locale) }}</div>
@@ -42,7 +42,7 @@ import { useI18n } from 'vue-i18n';
 type Author = { id: string; name: string; avatarUrl?: string; isLeader?: boolean };
 
 const props = defineProps<{
-	author: Author;
+	author?: Author | null;
 	itsLeader?: boolean;
 	contentHtml: string;
 	date: string | Date;

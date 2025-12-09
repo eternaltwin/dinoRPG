@@ -26,7 +26,7 @@ const confirmationState: ConfirmationState = reactive({
 	rejectCallback: null
 });
 
-const confirm = (options: ConfirmOptions): Promise<boolean> => {
+export const confirm = (options: ConfirmOptions): Promise<boolean> => {
 	return new Promise((resolve: (value: boolean) => void, reject: (reason: boolean) => void) => {
 		confirmationState.message = options.message;
 		confirmationState.header = options.header ?? 'Confirmation';

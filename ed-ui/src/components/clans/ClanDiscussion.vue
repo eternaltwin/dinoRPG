@@ -44,8 +44,8 @@
 		</div>
 		<div class="page-selector">
 			<p>{{ t('clanDiscussion.pagination.go_to') }}</p>
-			<input type="number" v-model="pageSelector" />
-			<button @click="goToSelectedPage()">Go !</button>
+			<DZInput type="number" v-model="pageSelector" />
+			<DZButton @click="goToSelectedPage()">Go !</DZButton>
 		</div>
 	</div>
 </template>
@@ -71,6 +71,9 @@ import Editor from '../common/Editor.vue';
 import { ToastPluginApi } from 'vue-toast-notification';
 import { getGoal } from '@drpg/core/utils/twinoidGoals';
 import ClanMessageItem from './ClanMessageItem.vue';
+import { confirm } from '../../mixin/confirmPlugin.js';
+import DZInput from '../common/DZInput.vue';
+import DZButton from '../common/DZButton.vue';
 
 const { t, locale } = useI18n();
 const route = useRoute();
@@ -118,11 +121,11 @@ async function createNewMessage(): Promise<void> {
 
 async function deleteMessage(msg: CreateClanMessage): Promise<void> {
 	if (!canDeleteMessage(msg)) return;
-	const res: boolean = await this.$confirm({
-		message: this.$t('popup.confirm'),
-		header: this.$t('popup.attention'),
-		acceptLabel: this.$t('popup.accept'),
-		rejectLabel: this.$t('popup.reject'),
+	const res = await confirm({
+		message: t('popup.confirm'),
+		header: t('popup.attention'),
+		acceptLabel: t('popup.accept'),
+		rejectLabel: t('popup.reject'),
 		icon: 'pi pi-trash'
 	});
 	if (!res) return;

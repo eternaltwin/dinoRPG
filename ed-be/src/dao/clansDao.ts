@@ -1,13 +1,13 @@
 import { prisma } from '../prisma.js';
 
-import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
-import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
-import { setSpecificStat } from './trackingDao.js';
-import { StatTracking } from '@drpg/core/models/enums/statTracking';
-import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { CreateClanMessage } from '@drpg/core/models/clan/CreateClanMessage';
+import { ClanHistoryType } from '@drpg/core/models/enums/ClanHistoryType';
+import { ClanMemberRight } from '@drpg/core/models/enums/ClanMemberRight';
+import { StatTracking } from '@drpg/core/models/enums/statTracking';
+import { currentEvents } from '@drpg/core/models/event/Events';
+import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { $Enums, Lang } from '@drpg/prisma';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { setSpecificStat } from './trackingDao.js';
 import EventType = $Enums.EventType;
 
 export async function getAllClansRequest(page: number) {
@@ -54,7 +54,13 @@ export async function getRankingClansRequest(page: number) {
 }
 
 export async function getEventRankingClansRequest(page: number, event: EventType) {
-	const topClans = await prisma.$queryRaw`
+	const topClans: {
+		id: number;
+		name: string;
+		treasureValue: number;
+		langs: Lang[];
+		totalScore: bigint;
+	}[] = await prisma.$queryRaw`
     SELECT
       c.id,
       c.name,
@@ -70,7 +76,7 @@ export async function getEventRankingClansRequest(page: number, event: EventType
     LIMIT 20
     OFFSET ${(page - 1) * 20};
   `;
-	return (topClans as any[]).map(clan => ({
+	return topClans.map(clan => ({
 		...clan,
 		totalScore: Number(clan.totalScore)
 	}));
