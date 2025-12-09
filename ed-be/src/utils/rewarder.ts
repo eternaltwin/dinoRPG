@@ -18,6 +18,7 @@ import { checkAnnounce } from './announcer.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { LOGGER } from '../context.js';
 import { Scenario } from '@drpg/core/models/enums/Scenario';
+import { Reward, rewardList } from '@drpg/core/models/reward/RewardList';
 
 export type RewarderPromise = ReturnType<typeof rewarder>;
 export async function rewarder(
@@ -116,18 +117,22 @@ export async function rewarder(
 					}
 					break;
 				case RewardEnum.EPIC:
-					const testRewards = await getPlayerRewardsRequest(playerId);
-					if (!testRewards) {
+					const playerRewards = await getPlayerRewardsRequest(playerId);
+					if (!playerRewards) {
 						throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 					}
-					if (!testRewards.rewards.some(r => r.rewardId === reward.value)) {
+					let rewardDetails = rewardList[reward.value as Reward];
+					if (!rewardDetails) {
+						throw new ExpectedError(`Reward ${reward.value} doesn't exist.`);
+					}
+					if (!playerRewards.rewards.some(r => r.rewardId === rewardDetails.id)) {
 						await addRewardToPlayer({
 							rewardId: reward.value,
 							player: { connect: { id: playerId } }
 						});
 						await checkAnnounce(PantheonMotif.epic, playerId, reward.value);
 					}
-					if (notification) {
+					if (notification && rewardDetails.announced) {
 						await createNotification(playerId, JSON.stringify([reward]), NotificationSeverity.reward);
 					}
 					break;
