@@ -1,16 +1,7 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.clansList')" :header="$t('clansList.title')"></TitleHeader>
 	<DZDisclaimer help round :content="$t('clansList.disclaimer.text')" />
-	<div class="disclaimer" v-if="joinRequest">
-		<p>
-			{{ $t('clanPages.request.info') }}
-			<a @click="goToClan(joinRequest.clan.id)" class="clan-name">{{ joinRequest.clan.name }}</a
-			>.
-		</p>
-		<p>
-			<a @click="cancelRequest(joinRequest)">{{ $t('clanPages.request.cancel') }}</a>
-		</p>
-	</div>
+	<ClanJoinRequest :joinRequest="joinRequest" @cancel="cancelRequest" />
 	<div class="wrapper">
 		<table>
 			<tbody>
@@ -89,14 +80,15 @@ import { ClanLite, PlayerClanJoinRequest } from '@drpg/core/models/clan/clan';
 import { Clan } from '@drpg/prisma';
 import axios from 'axios';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
+import Flags from '../../components/common/Flags.vue';
 import SearchEntity from '../../components/data/SearchEntity.vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import EventBus from '../../events';
 import { ClanService, PlayerService } from '../../services';
 import { playerStore } from '../../store';
-import { formatNumber, formatText } from '../../utils/formatText';
 import { errorHandler } from '../../utils';
-import Flags from '../../components/common/Flags.vue';
+import { formatNumber, formatText } from '../../utils/formatText';
+import ClanJoinRequest from './ClanJoinRequest.vue';
 
 export default defineComponent({
 	name: 'ClansList',
@@ -104,7 +96,8 @@ export default defineComponent({
 		Flags,
 		SearchEntity,
 		DZDisclaimer,
-		TitleHeader
+		TitleHeader,
+		ClanJoinRequest
 	},
 	data() {
 		return {
@@ -188,17 +181,8 @@ export default defineComponent({
 				return;
 			}
 		},
-		async cancelRequest(request: PlayerClanJoinRequest) {
-			EventBus.emit('isLoading', true);
-			try {
-				await ClanService.denyJoinClanRequest(request.id);
-				this.joinRequest = null;
-				await this.$refreshGold();
-				EventBus.emit('isLoading', false);
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
+		async cancelRequest() {
+			this.joinRequest = null;
 		}
 	},
 	async created(): Promise<void> {
@@ -334,23 +318,6 @@ input {
 	background-image: url('../../assets/design/form_field.webp');
 	background-repeat: no-repeat;
 	background-color: transparent;
-}
-.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px;
-	padding-left: 5px;
-	padding-left: 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-	a {
-		color: #fff192;
-		cursor: pointer;
-		text-decoration: underline;
-	}
 }
 .hidden {
 	display: none !important;

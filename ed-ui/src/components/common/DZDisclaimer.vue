@@ -2,37 +2,25 @@
 	<div :class="['disclaimer', { round }]">
 		<img v-if="help" :src="getImgURL('icons', 'question', true)" class="icon" />
 		<img v-if="timer" :src="getImgURL('design', 'small_chrono')" class="icon" />
-		<div v-html="formatContent($t(content, params))" />
+		<div v-if="content" v-html="formatContent($t(content, params))" />
+		<slot v-else />
 	</div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+type Props = {
+	content?: string;
+	params?: Record<string, unknown>;
+	help?: boolean;
+	timer?: boolean;
+	round?: boolean;
+};
 
-export default defineComponent({
-	name: 'DZDisclaimer',
-	props: {
-		content: {
-			type: String,
-			required: true
-		},
-		params: {
-			type: Object,
-			default: () => ({})
-		},
-		help: {
-			type: Boolean,
-			default: false
-		},
-		timer: {
-			type: Boolean,
-			default: false
-		},
-		round: {
-			type: Boolean,
-			default: false
-		}
-	}
+withDefaults(defineProps<Props>(), {
+	params: () => ({}),
+	help: false,
+	timer: false,
+	round: false
 });
 </script>
 

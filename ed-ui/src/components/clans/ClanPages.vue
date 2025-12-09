@@ -40,16 +40,7 @@
 				{{ $t('clanPages.button.join_clan') }}
 			</a>
 		</div>
-		<div class="disclaimer" v-if="joinRequest">
-			<p>
-				{{ $t('clanPages.request.info') }}
-				<a @click="goToClan(joinRequest.clan.id)" class="clan-name">{{ joinRequest.clan.name }}</a
-				>.
-			</p>
-			<p>
-				<a @click="cancelRequest(joinRequest)">{{ $t('clanPages.request.cancel') }}</a>
-			</p>
-		</div>
+		<ClanJoinRequest :joinRequest="joinRequest" @cancel="cancelRequest" />
 	</div>
 </template>
 
@@ -66,10 +57,13 @@ import { formatNumber } from '../../utils/formatText';
 import { formatText } from '../../utils/formatText.js';
 import { JoinClanResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import axios from 'axios';
+import ClanJoinRequest from '../../pages/Clan/ClanJoinRequest.vue';
 
 export default defineComponent({
 	name: 'ClanPages',
-	components: {},
+	components: {
+		ClanJoinRequest
+	},
 	data() {
 		return {
 			pages: [] as ClanPage[],
@@ -120,15 +114,8 @@ export default defineComponent({
 				return;
 			}
 		},
-		async cancelRequest(request: JoinClanResponse) {
-			try {
-				await ClanService.denyJoinClanRequest(request.id);
-				this.joinRequest = undefined;
-				await this.$refreshGold();
-			} catch (err) {
-				errorHandler.handle(err, this.$toast);
-				return;
-			}
+		async cancelRequest() {
+			this.joinRequest = undefined;
 		},
 		async deleteClanPage() {
 			const res: boolean = await this.$confirm({

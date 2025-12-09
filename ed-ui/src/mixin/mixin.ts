@@ -5,6 +5,11 @@ import { playerStore } from '../store';
 
 const pad = (n: number) => (n < 10 ? `0${n}` : n);
 
+export const refreshGold = async () => {
+	const newMoney = await PlayerService.getPlayerMoney();
+	playerStore().setMoney(+newMoney);
+};
+
 export const mixin = {
 	methods: {
 		formatDate(date: string | Date): string {
@@ -35,9 +40,6 @@ export const mixin = {
 			);
 			return Promise.resolve(false);
 		},
-		async $refreshGold(): Promise<void> {
-			const newMoney = await PlayerService.getPlayerMoney();
-			playerStore().setMoney(+newMoney);
-		}
+		refreshGold
 	}
 };
