@@ -18,9 +18,13 @@
 					</template>
 				</Tippy>
 				<div :class="{ 'name-info': true, 'is-max': isMaxQuantity(ingredient.ingredientId) }">
-					<span v-if="ingredient.quantity && ingredient.quantity > 1">x{{ ingredient.quantity }} </span>
+					<span v-if="ingredient.quantity && ingredient.quantity > 1">x{{ ingredient.quantity }}{{ ' ' }}</span>
 					<span>
 						{{ formatContent($t(`ingredients.name.${ingredient.name}`)) }}
+						{{ ' ' }}
+					</span>
+					<span class="ingredient-count">
+						({{ getIngredientCount(ingredient.ingredientId) }} / {{ ingredient.maxQuantity }})
 					</span>
 				</div>
 			</div>
@@ -101,6 +105,13 @@ export default defineComponent({
 				return ingredient.isMaxQuantity;
 			}
 			return false;
+		},
+		getIngredientCount(ingredientId: number) {
+			const ingredient = this.ingredientsAtMaxQuantity.find(ingre => ingre.ingredientId === ingredientId);
+			if (ingredient) {
+				return ingredient.quantity;
+			}
+			return 0;
 		}
 	}
 });
@@ -149,6 +160,11 @@ export default defineComponent({
 		span {
 			color: red;
 		}
+	}
+
+	.ingredient-count {
+		font-size: 12px;
+		color: #cccccc;
 	}
 }
 

@@ -2674,7 +2674,7 @@
 			"daily": "récompenses quotidiennes"
 		},
 		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}",
-		"nothing": "Votre Dinoz n' a rien trouvé..."
+		"nothing": "Votre Dinoz n'a rien trouvé..."
 	},
 	"missions": {
 		"header": "Liste des Missions",
