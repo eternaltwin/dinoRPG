@@ -44,8 +44,8 @@
 				<Flags :langs="clanStore.getClan?.langs" />
 			</div>
 		</div>
-		<div class="banner" v-if="clanStore.getClanId" :key="bannerName">
-			<img class="banner-img" :src="`${API_BASE}/clan/${clanStore.getClanId}/banner`" alt="banner" />
+		<div class="banner" v-if="bannerDataUrl">
+			<img class="banner-img" :src="bannerDataUrl" alt="banner" />
 		</div>
 		<div class="bottom-info">
 			<p class="creation-date">
@@ -74,7 +74,7 @@ export default defineComponent({
 			API_BASE,
 			maxMembers: CLAN_MAX_MEMBERS_AMOUNT,
 			clanStore: clanStore(),
-			bannerName: ''
+			bannerDataUrl: null as string | null
 		};
 	},
 	components: { Flags, DZUser },
@@ -84,10 +84,32 @@ export default defineComponent({
 		},
 		DateToString(date: Date): string {
 			return new Date(date).toLocaleString('fr-FR');
+		},
+		loadBanner() {
+			const bannerImg = new Image();
+			bannerImg.crossOrigin = 'anonymous'; // To prevent tainted canvas issues
+			bannerImg.src = `${API_BASE}/clan/${this.clanStore.getClanId}/banner`;
+
+			bannerImg.onload = () => {
+				const canvas = document.createElement('canvas');
+				canvas.width = bannerImg.width;
+				canvas.height = bannerImg.height;
+				const ctx = canvas.getContext('2d');
+				ctx?.drawImage(bannerImg, 0, 0);
+				this.bannerDataUrl = canvas.toDataURL();
+				canvas.remove();
+			};
+
+			bannerImg.onerror = () => {
+				this.bannerDataUrl = null;
+			};
 		}
 	},
 	mounted() {
-		EventBus.on('clanBannerUpdated', name => (this.bannerName = name));
+		this.loadBanner();
+		EventBus.on('clanBannerUpdated', (dataUrl: string) => {
+			this.bannerDataUrl = dataUrl;
+		});
 	}
 });
 </script>

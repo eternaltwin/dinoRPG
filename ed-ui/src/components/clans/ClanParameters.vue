@@ -113,12 +113,12 @@ export default defineComponent({
 				const reader = new FileReader();
 				reader.onload = e => {
 					this.filePreviewUrl = e.target?.result as string;
+					EventBus.emit('clanBannerUpdated', this.filePreviewUrl);
 				};
 				reader.readAsDataURL(file);
 				form.delete('file');
 				form.append('file', file);
 				await ClanService.updateClanBanner(this.clanStore.getClanId, form);
-				EventBus.emit('clanBannerUpdated', file.name);
 			}
 		}
 	},
