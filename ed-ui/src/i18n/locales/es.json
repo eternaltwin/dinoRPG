@@ -370,7 +370,7 @@
 		"energyRecovery": "Recuperación de Energía",
 		"maxFollowers": "Número máximo de seguidores",
 		"armor": "Armadura",
-		"armorBreak": "Perforation",
+		"armorBreak": "Perforación",
 		"multihit": "Multi-golpe",
 		"evasion": "Esquiva",
 		"superEvasion": "Súper Evasión",
@@ -2673,7 +2673,8 @@
 			"party": "regalos fabulosos",
 			"daily": "recompensas diarias"
 		},
-		"disclaimer": "Haz clic en {number} casilla(s) del tablero para encontrar {search}"
+		"disclaimer": "Haz clic en {number} casilla(s) del tablero para encontrar {search}",
+		"nothing": "Votre Dinoz n' a rien trouvé..."
 	},
 	"missions": {
 		"header": "Lista de misiones",
@@ -3575,7 +3576,7 @@
 		}
 	},
 	"levelup": {
-		"disclaimer": "Ahora puede iniciar la animación para saber en qué elemento sube de nivel tu Dino.",
+		"disclaimer": "{name} a atteint le niveau {level} ! Quel élément va-t-il améliorer ?",
 		"title": "Nivel suplementario para {name}",
 		"helper": "Elige la competencia que quieres que tu Dino aprenda:",
 		"fire": "Gana +1 en :feu: Fuego",
@@ -4075,8 +4076,8 @@
 			"searchClan": "Buscar un Clan"
 		},
 		"button": {
-			"clanEvent": "Classement de trésor",
-			"clanTreasure": "Classement d'événement"
+			"clanEvent": "Clasificación del evento",
+			"clanTreasure": "Clasificación del tesoro"
 		}
 	},
 	"clan": {
@@ -4567,6 +4568,7 @@
 		"points": "Puntos",
 		"worth": "Mérito",
 		"ranking": "Posición",
+		"position": "Posición",
 		"accessChallenges": "Accede a los desafíos",
 		"testDinoz": "Pon a prueba tu Dino",
 		"fightHistory": "Historial de combates",

@@ -2673,7 +2673,8 @@
 			"party": "fabulous treasures",
 			"daily": "daily rewards"
 		},
-		"disclaimer": "Click on {number} grid box(es) to search for {search}"
+		"disclaimer": "Click on {number} grid box(es) to search for {search}",
+		"nothing": "Your Dinoz did not find anything..."
 	},
 	"missions": {
 		"header": "Missions list",
@@ -3575,7 +3576,7 @@
 		}
 	},
 	"levelup": {
-		"disclaimer": "You can now start the animation to find out which element your dinoz is evolving with.",
+		"disclaimer": "{name} reached level {level}! What element will it improve?",
 		"title": "Additional level for {name}",
 		"helper": "Choose a skill to learn:",
 		"fire": "Gains +1 :feu: Fire",
@@ -4075,8 +4076,8 @@
 			"searchClan": "Search a clan"
 		},
 		"button": {
-			"clanEvent": "Treasury Ranking",
-			"clanTreasure": "Event Ranking"
+			"clanEvent": "Event Ranking",
+			"clanTreasure": "Treasury Ranking"
 		}
 	},
 	"clan": {
@@ -4567,6 +4568,7 @@
 		"points": "Points",
 		"worth": "Worth",
 		"ranking": "Ranking",
+		"position": "Rank",
 		"accessChallenges": "Access challenges",
 		"testDinoz": "Test your dinoz",
 		"fightHistory": "Fight history",

@@ -127,7 +127,7 @@
 			"box_legendary": "Die legendäre Box enthielt {qty} {value}!",
 			"devil_ointment": "Du hast den Status „Verflucht“ von deinem Dinoz aufgehoben.",
 			"amnesic_rice": "Dein Dinoz erinnert sich nicht mehr an seinen Namen und außerdem hat er all seine :xp: verloren!",
-			"pampleboum": "Autsch! Dieser Granatapfel enthielt einen Kern!"
+			"pampleboum": "Autsch! Dieser Granatenapfel enthielt einen Kern!"
 		},
 		"notEnoughQuantity": "Du hast nicht genug Zutaten.",
 		"itemBought": "Du hast {quantity} {itemName} gekauft.",
@@ -214,7 +214,7 @@
 			"hunt": "Der Dinoz kann in der Umgebung **wilde Tiere** jagen, um so an wertvolle Zutaten zu gelangen.",
 			"seek": "Dein Dinoz kann an diesem Ort nach **uralten Artefakten** in der Erde schürfen. Sie sind selten aber an Wert nicht zu überbieten!",
 			"energy": "Ermöglicht dem Dinoz, an bestimmten Stellen alle Arten von elementarer Energie zu absorbieren.",
-			"xmas": "Mit deinen Weihnachtsgutscheinen kannst du das Schneepflugspiel spielen und zahlreiche Geschenke gewinnen!",
+			"xmas": "Mit deinen Weihnachtsgutscheinen kannst du bei der Schneetzeljagd mitmachen und zahlreiche Geschenke gewinnen!",
 			"tictac": "Verwende deine Tack-Tickets, um vielleicht einen sehr seltenen Schatz zu finden!",
 			"labo": "Suche im Labor des Erzdorogon nach einem Gegengift, um den Ehrwürdigen zu heilen.",
 			"party": "Verwende deine Zauberknaller, um ein großes Feuerwerk zu zünden und Dutzende Schätze zu gewinnen!",
@@ -397,7 +397,7 @@
 			"fight_ration": "Kampfration",
 			"surviving_ration": "TODO",
 			"goblin_merguez": "Goblin-Merguez",
-			"pampleboum": "Granatapfel",
+			"pampleboum": "Granatenapfel",
 			"sos_helmet": "Rettungshelm",
 			"little_pepper": "Kleine Paprika",
 			"zippo": "Feuerzeug",
@@ -637,7 +637,7 @@
 			"golden_napodino": "Napodinos sind massive Goldmünzen, die von einer prä-dinoländischen Zivilisation verwendet wurden. Sie haben unter Sammlern großen Wert und man erzählt sich, dass sie den Dinoz, die sie bei sich tragen, Glück bringen würden.",
 			"bamboo_friend": "Ein Bambooz-Freund kommt deinem Dinoz im Kampf zur Hilfe!",
 			"candle_card": "TODO",
-			"christmas_ticket": "Ermöglicht es, das Schneepflugspiel zu spielen, um 1.000 Gold, 5.000 Gold oder einen Santas zu gewinnen.",
+			"christmas_ticket": "Ermöglicht es, an der Schneetzeljagd teilzunehmen, um 1.000 Gold, 5.000 Gold oder einen Santas zu gewinnen.",
 			"tictac_ticket": "Mit den Tack-Tickets kannst du in Papy Joes Garten graben und versuchen, den verlorenen Schatz seines Urgroßvaters zu finden.",
 			"anniversary_ticket": "TODO",
 			"easter_egg": "Ein Ei von Madame Urma kann einen der zahllosen Gegenstände enthalten, die es im Dinoland gibt. Ob es ein seltener oder ein gewöhnlicher wird, bestimmt allein das Schicksal. Wird das Glück dir hold sein?",
@@ -2654,7 +2654,7 @@
 			"seek": "Schürfen",
 			"energy": "Energie anziehen",
 			"anniv": "Jubiläum",
-			"xmas": "Schneepflugspiel",
+			"xmas": "Schneetzeljagd",
 			"tictac": "Der Schatz von Papy Joe",
 			"labo": "Labor des Erzdorogon",
 			"party": "Feuerwerk",
@@ -2673,7 +2673,8 @@
 			"party": "sagenhaften Schätzen",
 			"daily": "täglichen Belohnungen"
 		},
-		"disclaimer": "Klicke auf {number} Feld(er) auf dem Raster, um nach {search} zu suchen"
+		"disclaimer": "Klicke auf {number} Feld(er) auf dem Raster, um nach {search} zu suchen",
+		"nothing": "Dein Dinoz hat nichts gefunden..."
 	},
 	"missions": {
 		"header": "Liste der Missionen",
@@ -3575,7 +3576,7 @@
 		}
 	},
 	"levelup": {
-		"disclaimer": "Du kannst jetzt die Animation starten, um herauszufinden mit welchem Element dein Dinoz sich weiterentwickelt.",
+		"disclaimer": "{name} hat die Stufe {level} erreicht! Mit welchem Element er sich wohl weiterentwickelt?",
 		"title": "Neue Stufe für ",
 		"helper": "Wähle eine Fähigkeit zum Erlernen:",
 		"fire": "Erhält +1 :feu: Feuer",
@@ -4041,7 +4042,7 @@
 			"completion": "Vollst.",
 			"clans": "Klane",
 			"treasure": "Schatzkammer des Klans",
-			"event": "Ereignis-Punktestand"
+			"event": "Ereignispunkte"
 		},
 		"disclaimer": {
 			"classic": "Die Spielerplatzierung wird in Echtzeit aktualisiert und aus der Summe der Stufe aller Dinoz errechnet.",
@@ -4075,8 +4076,8 @@
 			"searchClan": "Klansuche"
 		},
 		"button": {
-			"clanEvent": "Schatzkammer-Rangliste",
-			"clanTreasure": "Ereignis-Rangliste"
+			"clanEvent": "Ereignis-Rangliste",
+			"clanTreasure": "Schatzkammer-Rangliste"
 		}
 	},
 	"clan": {
@@ -4567,6 +4568,7 @@
 		"points": "Punkte",
 		"worth": "Kompetenz",
 		"ranking": "Platzierung",
+		"position": "Platz",
 		"accessChallenges": "Herausforderungen ansehen",
 		"testDinoz": "Probekampf",
 		"fightHistory": "Kampfverlauf",

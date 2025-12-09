@@ -2674,7 +2674,7 @@
 			"daily": "récompenses quotidiennes"
 		},
 		"disclaimer": "Cliquez sur {number} case(s) de la grille pour trouver des {search}",
-		"nothing": "Rien ..."
+		"nothing": "Votre Dinoz n' a rien trouvé..."
 	},
 	"missions": {
 		"header": "Liste des Missions",
@@ -4076,8 +4076,8 @@
 			"searchClan": "Rechercher un clan"
 		},
 		"button": {
-			"clanEvent": "Classement de trésor",
-			"clanTreasure": "Classement d'événement"
+			"clanEvent": "Classement d'événement",
+			"clanTreasure": "Classement de trésor"
 		}
 	},
 	"clan": {
