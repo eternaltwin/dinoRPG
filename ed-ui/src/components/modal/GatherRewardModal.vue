@@ -43,7 +43,7 @@
 				<div class="name-info">
 					<span v-if="item.quantity && item.quantity > 1">x{{ item.quantity }}{{ ' ' }}</span>
 					<span v-if="itemList[item.id].name === 'gold'">{{ item.price }}{{ ' ' }}</span>
-					<span>{{ formatContent($t(`item.name.${itemList[item.id].name}`)) }}</span>
+					<span>{{ formatContent($t(`item.name.${itemList[item.id].name.toLowerCase()}`)) }}</span>
 				</div>
 			</div>
 			<a class="button" @click="$emit('close')">
