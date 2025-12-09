@@ -8,7 +8,12 @@
 			</RouterLink>
 		</i18n-t>
 
-		<DZButton @click="switchRanking()">{{ $t(`ranking.button.${rankingType}`) }}</DZButton>
+		<DZButton v-if="rankingType === ClanRankingType.TREASURE" @click="switchRanking()">{{
+			$t(`ranking.button.clanEvent`)
+		}}</DZButton>
+		<DZButton v-if="rankingType === ClanRankingType.EVENT" @click="switchRanking()">{{
+			$t(`ranking.button.clanTreasure`)
+		}}</DZButton>
 		<table>
 			<tbody>
 				<tr>
