@@ -87,6 +87,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapper {
 	margin: 15px;
+	padding: 8px 0;
 	.history-container {
 		background-color: #fbd7a2;
 		border-radius: 5px;
