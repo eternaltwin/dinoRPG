@@ -78,21 +78,24 @@ export default defineComponent({
 	padding-bottom: 2px;
 	justify-content: space-evenly;
 	div {
+		box-sizing: border-box;
 		display: flex;
+		justify-content: space-between;
 		font-weight: bold;
-		gap: 5px;
 		width: 43px;
 		align-items: flex-end;
 		background: url('../../assets/icons/element_bg.webp') no-repeat;
 		background-position-y: 6px;
 		background-position-x: 7px;
+		padding-right: 4px;
+
 		cursor: help;
 		span {
 			color: white;
 			font-size: 13.3px;
 			text-align: left;
-			padding-right: 7px;
 			letter-spacing: -0.2pt;
+			margin-bottom: 2px;
 			&.max {
 				color: yellow;
 			}
