@@ -314,6 +314,7 @@ export default defineComponent({
 				color: #ffee92;
 				cursor: pointer;
 				margin-right: 5px;
+				padding: 3px;
 			}
 			.cadrelist_goals {
 				background-color: #9a4029;
@@ -388,7 +389,6 @@ export default defineComponent({
 		color: #ffee92;
 		background-color: #9a4029;
 		border-radius: 3px;
-		padding: 3px;
 	}
 	.achievements {
 		height: 14px;
