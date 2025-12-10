@@ -133,7 +133,7 @@ select {
 	width: 50px;
 }
 .items-header {
-	//width: 187px;
+	width: 194px;
 }
 .bid-action-header {
 	width: 80px;

@@ -17,7 +17,7 @@
 		<td v-else />
 		<td class="items-td">
 			<div class="items">
-				<div v-for="item in offer.items" :key="item.itemId">
+				<div v-for="item in offer.items" :key="item.itemId" class="dz-golden-box">
 					<Tippy
 						tag="img"
 						theme="normal"
@@ -35,7 +35,7 @@
 					<span v-else>&nbsp;</span>
 				</div>
 				<!-- Fill with empty items if less than 5 -->
-				<div v-for="i in 5 - offer.items.length" :key="i">
+				<div v-for="i in 5 - offer.items.length" :key="i" class="dz-golden-box">
 					<img :src="getImgURL('item', 'item_empty')" alt="empty" />
 					<span>&nbsp;</span>
 				</div>
@@ -345,7 +345,6 @@ export default defineComponent({
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		background-color: #bc683c;
 		margin: 1px;
 		padding: 1px;
 		img {

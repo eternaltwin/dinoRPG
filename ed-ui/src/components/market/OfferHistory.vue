@@ -144,7 +144,7 @@ select {
 	width: 50px;
 }
 .items-header {
-	width: 187px;
+	width: 194px;
 }
 .pagination-controls {
 	margin-top: 10px;

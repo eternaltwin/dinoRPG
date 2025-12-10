@@ -1,5 +1,5 @@
 <template>
-	<div class="user-container">
+	<div class="user-container" v-if="user">
 		<span
 			:class="{
 				'user-component': true,
@@ -37,7 +37,7 @@ export default defineComponent({
 	},
 	props: {
 		user: {
-			type: Object as PropType<Pick<Player, 'id' | 'name'>>,
+			type: Object as PropType<Pick<Player, 'id' | 'name'> | null>,
 			required: true
 		},
 		me: {

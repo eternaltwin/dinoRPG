@@ -276,7 +276,7 @@ table {
 }
 
 :deep(.items-td) {
-	width: 187px;
+	width: 194px;
 }
 
 :deep(.bid-action) {
