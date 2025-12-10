@@ -40,6 +40,8 @@ export const mixin = {
 			);
 			return Promise.resolve(false);
 		},
-		refreshGold
+		$refreshGold() {
+			return refreshGold();
+		}
 	}
 };
