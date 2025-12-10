@@ -237,6 +237,8 @@ export default defineComponent({
 	background-position-y: top, bottom;
 	width: 305px;
 	margin-bottom: 10px;
+	text-shadow: 1px 1px 1px #383522;
+
 	h3 {
 		display: flex;
 		justify-content: space-evenly;

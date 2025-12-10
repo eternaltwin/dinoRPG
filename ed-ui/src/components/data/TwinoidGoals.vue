@@ -77,7 +77,7 @@
 								<td v-else class="name">
 									{{ getStatDetails(stats, 'name') }}
 								</td>
-								<td class="x">X</td>
+								<td class="x">x</td>
 								<td class="numb">{{ stats.quantity }}</td>
 								<template #content>
 									<p>{{ getStatDetails(stats, 'description') }}</p>
@@ -87,7 +87,7 @@
 					</table>
 					<template v-if="tab === 2">
 						<ul style="width: 100%" class="list_gains" v-for="(stats, index) in accountStats" :key="index">
-							<Tippy theme="small" tag="li" style="color: #ffee92">
+							<Tippy theme="small" tag="li" class="stat-name">
 								<img class="achievements" :src="getImgURL('achievements', `${stats.stat}`)" alt="achievements" />
 								{{ getStatDetails(stats, 'name') }}
 								<template #content>
@@ -232,6 +232,8 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	text-shadow: 1px 1px 1px #383522;
+
 	.headProfil {
 		flex-shrink: 0;
 		width: 125px;
@@ -315,6 +317,7 @@ export default defineComponent({
 				cursor: pointer;
 				margin-right: 5px;
 				padding: 3px;
+				font-size: 14px;
 			}
 			.cadrelist_goals {
 				background-color: #9a4029;
@@ -341,26 +344,38 @@ export default defineComponent({
 						.name {
 							color: #fce3bb;
 							min-width: 182px;
+							font-size: 12px;
 						}
 						.x {
 							color: #fce3bb;
-							width: 12px;
+							width: 10px;
+							font-size: 12px;
 						}
 						.numb {
 							color: #fce3bb;
 							width: 50px;
+							font-size: 12px;
 						}
 					}
 				}
 				.list_gains {
 					list-style: none;
+					font-size: 12px;
+
+					&:not(:first-child) {
+						margin-top: 4px;
+					}
+
+					.stat-name {
+						color: #ffee92;
+					}
 					.icon {
 						width: 20px;
 					}
 					.name {
 						color: #fce3bb;
 						min-width: 200px;
-						margin-left: 20px;
+						margin-left: 18px;
 					}
 					.x {
 						color: #fce3bb;
