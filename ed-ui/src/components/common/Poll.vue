@@ -32,6 +32,7 @@ import { PollPublic } from '@drpg/core/models/news/Polls';
 import { NewsService } from '../../services';
 import { errorHandler } from '../../utils';
 import { localStore, playerStore } from '../../store';
+import { returnCode } from '@drpg/core/models/enums/returnCode';
 
 export default defineComponent({
 	name: 'Poll',
@@ -74,8 +75,12 @@ export default defineComponent({
 		async submitVote() {
 			if (!this.selectedOption) return;
 			try {
-				await NewsService.votePoll(this.poll.id, this.selectedOption);
-				this.$emit('voted');
+				const vote = await NewsService.votePoll(this.poll.id, this.selectedOption);
+				if (vote.code === returnCode.OK) {
+					this.$emit('voted');
+				} else {
+					this.$toast.error(this.$t(`toast.basicError`));
+				}
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
 			}

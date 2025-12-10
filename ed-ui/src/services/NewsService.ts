@@ -1,6 +1,7 @@
 import { NewsGetResponse } from '@drpg/core/returnTypes/News';
 import { http } from '../utils/index.js';
 import { DetailedNews } from '@drpg/core/models/news/AllNews';
+import { returnType } from '@drpg/core/models/enums/returnCode';
 
 export const NewsService = {
 	async getNewsFromPage(page: number): Promise<NewsGetResponse[]> {
@@ -51,7 +52,7 @@ export const NewsService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	async votePoll(id: number, option: number): Promise<void> {
+	async votePoll(id: number, option: number): Promise<returnType> {
 		return http()
 			.put(`/news/poll/${id}/${option}`)
 			.then(res => Promise.resolve(res.data))

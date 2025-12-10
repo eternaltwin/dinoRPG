@@ -20,6 +20,7 @@ import { prisma } from '../prisma.js';
 import dayjs from 'dayjs';
 import { scheduleJob } from 'node-schedule';
 import { LOGGER } from '../context.js';
+import { returnCode } from '@drpg/core/models/enums/returnCode';
 
 /**
  * @summary Create a news
@@ -310,6 +311,7 @@ export async function selectPollOption(req: Request) {
 			pollOptionId: optionId
 		}
 	});
+	return { code: returnCode.OK };
 }
 
 export async function toggleLikeNews(req: Request) {

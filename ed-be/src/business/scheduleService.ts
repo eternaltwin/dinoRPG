@@ -3,7 +3,7 @@ import { ServerAction } from '@drpg/prisma';
 import { scheduleJob } from 'node-schedule';
 import { dojoResets } from '../cron/dojoResets.js';
 import dayjs from 'dayjs';
-import {midnightReset} from "../cron/midnightReset.js";
+import { midnightReset } from '../cron/midnightReset.js';
 
 export async function scheduleAtStart() {
 	const actions = await prisma.serverState.findMany();
@@ -22,7 +22,7 @@ export async function scheduleAtStart() {
 				} else {
 					scheduleJob(action.action, dayjs().add(1, 'day').startOf('day').toDate(), () => midnightReset());
 				}
-				break
+				break;
 			default:
 				//TODO all other ServerAction
 				break;
