@@ -216,6 +216,7 @@ model PollVote {
   @@unique([pollId, playerId], name: "unique_player_vote_per_poll")
   @@index([pollId])
   @@index([playerId])
+  @@index([pollId, playerId])
   @@map("poll_votes")
 }
 

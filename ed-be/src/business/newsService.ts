@@ -275,6 +275,9 @@ export async function selectPollOption(req: Request) {
 					pollId: true,
 					pollOptionId: true,
 					playerId: true
+				},
+				where: {
+					playerId: authed.id
 				}
 			}
 		}
@@ -291,7 +294,7 @@ export async function selectPollOption(req: Request) {
 	}
 	const playerVote = poll.votes.find(v => v.playerId);
 	if (playerVote && playerVote.pollOptionId === optionId) {
-		return;
+		return { code: returnCode.OK };
 	}
 
 	await prisma.pollVote.upsert({
