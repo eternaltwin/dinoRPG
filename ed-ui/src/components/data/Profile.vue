@@ -59,8 +59,10 @@
 				<a v-if="hasPlume() && isEditOn" @click="setCustomText(customTextEdit)" class="tinybutton">OK</a>
 				<a v-if="hasPlume() && !isEditOn" @click="isEditOn = true" class="tinybutton">{{ $t(`myAccount.edit`) }}</a>
 				<DZButton @click="option = true">{{ $t(`myAccount.editAccount`) }}</DZButton>
-				<DZButton v-if="hasPMI()">{{ $t(`myAccount.quest`) }}</DZButton>
-				<DZButton @click="goLB()">{{ $t(`myAccount.labrute`) }}</DZButton>
+				<DZButton v-if="hasPMI()" @click="goPMI">{{ $t(`myAccount.quest`) }}</DZButton>
+				<Tippy class="lb-button" theme="small" placement="top" :content="formatContent($t('myAccount.labruteTooltip'))">
+					<DZButton @click="goLB">{{ $t(`myAccount.labrute`) }}</DZButton>
+				</Tippy>
 			</div>
 		</div>
 		<div class="profil" v-else>
@@ -112,6 +114,7 @@ import { Reward } from '@drpg/core/models/reward/RewardList';
 import { formatText } from '../../utils/formatText.js';
 import DZUser from '../common/DZUser.vue';
 import { deleteCookie } from '../../utils/cookies.js';
+import { Tippy } from 'vue-tippy';
 
 export default defineComponent({
 	name: 'Profile',
@@ -129,7 +132,8 @@ export default defineComponent({
 	},
 	components: {
 		DZUser,
-		DZButton
+		DZButton,
+		Tippy
 	},
 	props: {
 		accountData: {
@@ -184,6 +188,9 @@ export default defineComponent({
 				errorHandler.handle(err, this.$toast);
 				return;
 			}
+		},
+		async goPMI() {
+			this.$router.push({ name: 'DinozMissions' });
 		},
 		async setCustomText(message: string): Promise<void> {
 			EventBus.emit('isLoading', true);
@@ -337,6 +344,14 @@ export default defineComponent({
 	margin-bottom: 5px;
 	* {
 		margin-bottom: 5px;
+	}
+
+	.lb-button {
+		display: flex;
+		a {
+			margin-bottom: 0;
+			width: 100%;
+		}
 	}
 }
 .smallbutton {

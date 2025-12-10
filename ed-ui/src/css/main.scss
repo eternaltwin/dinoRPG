@@ -37,11 +37,6 @@
 
 	.v-toast__text {
 		padding: 0; //1.5em 1em;
-
-		.text-icon {
-			width: 18px;
-			vertical-align: bottom;
-		}
 	}
 
 	&.v-toast__item--error .v-toast__icon {
@@ -51,6 +46,11 @@
 	&.v-toast__item--success .v-toast__icon {
 		background: url("../assets/icons/small_missDone.webp") no-repeat;
 	}
+}
+
+.text-icon {
+	width: 18px;
+	vertical-align: bottom;
 }
 
 @font-face {

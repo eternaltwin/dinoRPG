@@ -3509,7 +3509,8 @@
 	},
 	"myAccount": {
 		"title": "Joueur :",
-		"labrute": "La Brute",
+		"labrute": "Récompenses La Brute",
+		"labruteTooltip": "Vous pouvez récupérer 1x :irma: par 3 Dinoz tous les jours en finissant tous vos combats sur La Brute.",
 		"profil": "Profil DinoRPG",
 		"options": {
 			"title": "Options du compte",
