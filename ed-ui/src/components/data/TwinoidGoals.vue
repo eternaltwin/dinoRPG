@@ -10,8 +10,8 @@
 			<div class="userGoals_points">{{ achievementsPoints + ' ' + $t(`myAccount.twinoidgoals.points`) }}</div>
 			<div class="userGoals_top" v-if="topStats.length > 0">
 				<template v-for="(stat, index) in topStats" :key="index">
-					<div class="top_goals">
-						<div class="top_countWrapper">
+					<div class="top_goals dz-golden-box">
+						<div class="top_countWrapper dz-golden-box">
 							<span class="top_points">{{ stat.quantity }}</span>
 						</div>
 						<div class="top_desc">
@@ -29,8 +29,8 @@
 				</template>
 			</div>
 			<div class="userGoals_top" v-else>
-				<div class="top_goals">
-					<div class="top_countWrapper">
+				<div class="top_goals dz-golden-box">
+					<div class="top_countWrapper dz-golden-box">
 						<span class="top_points">...</span>
 					</div>
 					<div class="top_desc">
@@ -276,8 +276,6 @@ export default defineComponent({
 			justify-content: space-evenly;
 			margin-bottom: 15px;
 			.top_goals {
-				background-color: #9a4029;
-				border: 3px solid #ffee92;
 				position: relative;
 				height: 92px;
 				width: 85px;
@@ -285,13 +283,12 @@ export default defineComponent({
 				.top_countWrapper {
 					font-size-adjust: none;
 					text-align: center;
-					background-color: #9a4029;
-					border: 3px solid #ffee92;
 					z-index: 1;
 					width: 66px;
 					position: absolute;
 					top: -10px;
-					left: 7px;
+					left: 50%;
+					transform: translateX(-50%);
 					overflow: hidden;
 					white-space: nowrap;
 					text-overflow: ellipsis;
