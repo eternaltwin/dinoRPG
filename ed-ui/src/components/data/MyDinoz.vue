@@ -116,7 +116,6 @@ export default defineComponent({
 	flex-wrap: wrap;
 	.dinoz {
 		width: 170px;
-		height: 160px;
 		background-color: #fbdba8;
 		cursor: default;
 		border: 1px solid #fce3bc;
@@ -136,7 +135,6 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #52646b;
 	background-color: transparent;
-	margin-top: -25px;
 }
 .dinozInfo {
 	text-align: center;
@@ -144,6 +142,7 @@ export default defineComponent({
 	line-height: 10pt;
 	color: #bc683c;
 	width: 170px;
+	margin-bottom: 8px;
 }
 .link:hover {
 	text-decoration: underline;
