@@ -66,7 +66,7 @@
 				<span>
 					<span class="bid-value">{{ offer.bids[offer.bids.length - 1].value }}</span>
 					<img :src="getImgURL('icons', 'ticket', true)" />
-					<span>{{ $t('market.by') }}</span>
+					<span>{{ $t('market.by') }}{{ ' ' }}</span>
 					<DZUser :user="offer.bids[offer.bids.length - 1].user" />
 				</span>
 			</p>
