@@ -24,7 +24,7 @@
 						{{ ' ' }}
 					</span>
 					<span class="ingredient-count">
-						({{ getIngredientCount(ingredient.ingredientId) }} / {{ ingredient.maxQuantity }})
+						({{ `${getIngredientCount(ingredient.ingredientId)}/${ingredient.maxQuantity}` }})
 					</span>
 				</div>
 			</div>
@@ -149,8 +149,12 @@ export default defineComponent({
 	display: flex;
 	align-items: center;
 	gap: 10px;
+	margin: 0 6px;
 }
 .name-info {
+	display: flex;
+	align-items: center;
+	gap: 4px;
 	margin-top: 15px;
 	font-size: 14px;
 
