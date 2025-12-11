@@ -139,6 +139,8 @@ export default defineComponent({
 	}
 
 	.nothing {
+		display: block;
+		text-align: center;
 		color: white;
 	}
 }
