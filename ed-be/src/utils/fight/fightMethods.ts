@@ -1776,7 +1776,7 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Item.SOS_HELMET: {
-				fighter.stats.special.armor *= 1.1;
+				fighter.stats.special.armor *= 1.05;
 				break;
 			}
 			case Item.PAMPLEBOUM_PIT:
@@ -2188,7 +2188,7 @@ export const addStatus = (
 			break;
 		}
 		case FightStatus.SHIELDED: {
-			fighter.stats.special.armor *= 1.5;
+			fighter.stats.special.armor *= 1.2;
 			break;
 		}
 		case FightStatus.BLESSED: {
@@ -2284,7 +2284,7 @@ const removeStatus = (fightData: DetailedFight, fighter: DetailedFighter, ...sta
 				break;
 			}
 			case FightStatus.SHIELDED: {
-				fighter.stats.special.armor /= 1.5;
+				fighter.stats.special.armor /= 1.2;
 				break;
 			}
 			case FightStatus.BLESSED: {

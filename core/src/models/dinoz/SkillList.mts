@@ -914,7 +914,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: ['x', 1.3]
+			[Stat.ARMOR]: ['x', 1.15]
 		}
 	},
 	[Skill.MAITRE_ELEMENTAIRE]: {
@@ -1223,7 +1223,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: ['x', 1.1]
+			[Stat.ARMOR]: ['x', 1.05]
 		}
 	},
 	[Skill.SAUVAGERIE]: {
@@ -2158,7 +2158,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: ['x', 1.2]
+			[Stat.ARMOR]: ['x', 1.1]
 		}
 	},
 	[Skill.MOIGNONS_LIQUIDES]: {
@@ -2619,7 +2619,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: ['x', 2],
+			[Stat.ARMOR]: ['x', 1.5],
 			[Stat.SPEED]: ['x', 1.2]
 		}
 	},
@@ -4441,7 +4441,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		isBaseSkill: true,
 		isSphereSkill: false,
 		effects: {
-			[Stat.ARMOR]: ['x', 1.1]
+			[Stat.ARMOR]: ['x', 1.05]
 		}
 	},
 	[Skill.CHARGE_CORNUE]: {
