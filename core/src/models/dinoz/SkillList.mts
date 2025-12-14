@@ -4631,10 +4631,10 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.BIGMAGNON]: {
 		id: Skill.BIGMAGNON,
 		name: 'Bigmagnon',
-		type: SkillType.S,
+		type: SkillType.A,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
-		activatable: false,
+		activatable: true,
 		tree: SkillTreeType.VANILLA,
 		raceId: [RaceEnum.TRICERAGNON],
 		isBaseSkill: true,
