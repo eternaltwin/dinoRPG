@@ -195,7 +195,7 @@ $orange: #fe7d00;
 	height: auto;
 	align-self: stretch;
 	border-color: rgb(59, 65, 81);
-	margin: 4px 8px 4px 0px;
+	margin: 4px 0px 4px 0px;
 }
 .boxRoot {
 	height: 32px;
@@ -216,7 +216,6 @@ $orange: #fe7d00;
 	@media (max-width: 768px) {
 		gap: 4px;
 		flex: 0 1 auto;
-		max-width: 25%;
 		padding-right: 6px;
 
 		// Hide games from the 5th onwards on mobile
