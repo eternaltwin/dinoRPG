@@ -1,31 +1,42 @@
 <template>
 	<div class="wrapper">
 		<div class="requests-container" v-if="joinRequestsList && joinRequestsList.length > 0 && selfMember">
-			<h4>{{ $t('clansMembers.request.title') }}</h4>
-			<h5 v-if="clanMembersList.length >= maxMembers">
-				{{ $t('clansMembers.request.maximum') }}
-			</h5>
-			<div class="request-line" v-for="request in joinRequestsList" :key="request.id">
-				<div class="request-date">{{ new Date(request.date).toLocaleString('fr-FR') }}</div>
-				<img :src="getImgURL('icons', 'small_follow')" alt="info_button" style="margin-right: 2px" />
-				<div>
-					<span class="player-name"><DZUser :user="request.player" /></span>
-
-					{{ $t('clansMembers.request.line') }}
-				</div>
-				<div class="request-buttons">
-					<button
-						class="accept"
-						@click="acceptRequest(request.id)"
-						v-if="hasAcceptAndDenyRequestsRight && clanMembersList.length < maxMembers"
-					>
-						{{ $t('clansMembers.request.accept') }}
-					</button>
-					<button class="deny" @click="denyRequest(request.id)" v-if="hasAcceptAndDenyRequestsRight">
-						{{ $t('clansMembers.request.deny') }}
-					</button>
-				</div>
-			</div>
+			<table class="request-table">
+				<tbody>
+					<tr>
+						<th colspan="4">
+							<span>{{ $t('clansMembers.request.title') }}</span>
+							<DZDisclaimer v-if="clanMembersList.length >= maxMembers">
+								{{ $t('clansMembers.request.maximum') }}
+							</DZDisclaimer>
+						</th>
+					</tr>
+					<tr v-for="request in joinRequestsList" :key="request.id" :class="(request.id + 1) % 2 === 0 ? 'even' : ''">
+						<td>
+							{{ new Date(request.date).toLocaleString('fr-FR') }}
+						</td>
+						<td>
+							<DZUser :user="request.player" />
+						</td>
+						<td>
+							<DZButton
+								class="accept"
+								@click="acceptRequest(request.id)"
+								v-if="hasAcceptAndDenyRequestsRight && clanMembersList.length < maxMembers"
+							>
+								<img :src="getImgURL('icons', 'small_follow')" alt="accept_icon" />
+								{{ $t('clansMembers.request.accept') }}
+							</DZButton>
+						</td>
+						<td>
+							<DZButton class="deny" @click="denyRequest(request.id)" v-if="hasAcceptAndDenyRequestsRight">
+								<img :src="getImgURL('icons', 'small_delete')" alt="deny_icon" />
+								{{ $t('clansMembers.request.deny') }}
+							</DZButton>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<table>
 			<tbody>
@@ -103,10 +114,12 @@ import { CLAN_MAX_MEMBERS_AMOUNT } from '@drpg/core/constants';
 import DZUser from '../common/DZUser.vue';
 import { JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
 import { currentEvents } from '@drpg/core/models/event/Events';
+import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZButton from '../common/DZButton.vue';
 
 export default defineComponent({
 	name: 'ClanMembers',
-	components: { DZUser },
+	components: { DZUser, DZDisclaimer, DZButton },
 	data() {
 		return {
 			clanMembersList: [] as ClanMember[],
@@ -369,48 +382,26 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	gap: 4px;
-	h4 {
-		margin: 0;
-	}
-	h5 {
-		margin: 0;
-		font-weight: 100;
-		font-size: 12px;
-		font-style: italic;
-		color: grey;
-	}
-	.request-line {
-		display: flex;
-		align-items: center;
-		.request-date {
-			padding-right: 8px;
-		}
-		.player-name {
-			font-weight: bold;
-			color: #383522;
-			&:hover {
-				color: #fff798;
-				cursor: pointer;
-			}
-		}
-		.request-buttons {
-			display: flex;
-			gap: 8px;
-			padding: 0 8px;
-			button {
-				border: none;
+
+	.request-table {
+		tr {
+			td {
 				padding: 4px 8px;
-				border-radius: 8px;
-				&.accept {
-					background-color: green;
+				text-align: center;
+				background-image: url('../../assets/background/table_cell_even.webp');
+				background-position: -10px 0px;
+
+				&:first-child {
+					background-position: 0px 0px;
 				}
-				&.deny {
-					background-color: red;
-				}
-				&:hover {
-					filter: brightness(120%);
-					color: white;
-					cursor: pointer;
+
+				.accept,
+				.deny {
+					&:deep(.content) {
+						display: inline-flex;
+						align-items: center;
+						gap: 4px;
+					}
 				}
 			}
 		}
