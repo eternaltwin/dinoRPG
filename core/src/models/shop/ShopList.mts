@@ -87,13 +87,15 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			}
 		]
 	},
-	// Magic Shop, price is in golden napodino instead of gold
-	MAGIC_SHOP: {
-		shopId: 3,
-		name: 'magic',
-		placeId: PlaceEnum.DINOVILLE,
-		type: ShopType.MAGICAL,
-		listItemsSold: [
+	// Notes:
+	// - disabled until magic items are reworked	
+	// - price is in golden napodino instead of gold
+	// MAGIC_SHOP: {
+	// 	shopId: 3,
+	// 	name: 'magic',
+	// 	placeId: PlaceEnum.DINOVILLE,
+	// 	type: ShopType.MAGICAL,
+	// 	listItemsSold: [
 			// {
 			// 	id: itemList[Item.BANISHMENT].itemId,
 			// 	price: 3,
@@ -194,11 +196,11 @@ export const shopList: Readonly<Record<string, ShopFiche>> = {
 			// 	price: 8,
 			// 	type: ItemShopType.ITEM
 			// }
-		],
-		condition: {
-			[ConditionEnum.POSSESS_OBJECT]: itemList[Item.GOLDEN_NAPODINO].itemId
-		}
-	},
+		// ],
+		// condition: {
+		// 	[ConditionEnum.POSSESS_OBJECT]: itemList[Item.GOLDEN_NAPODINO].itemId
+		// }
+	// },
 	// Cursed Shop, only accessible by cursed dinoz
 	CURSED_SHOP: {
 		shopId: 4,
