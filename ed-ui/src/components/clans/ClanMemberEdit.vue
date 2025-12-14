@@ -13,7 +13,7 @@
 		</div>
 		<div class="nickname-container" v-if="clanMember">
 			<label for="nickname">{{ $t('clansMembers.edit.nickname') }}</label>
-			<input id="nickname" type="text" v-model="clanMember.nickname" />
+			<DZInput id="nickname" type="text" v-model="clanMember.nickname" />
 		</div>
 		<a class="button" @click="updateClanMember()">{{ $t('clansMembers.edit.save') }}</a>
 	</div>
@@ -27,10 +27,14 @@ import EventBus from '../../events/index.js';
 import { ClanService } from '../../services/ClanService.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
+import DZInput from '../../components/common/DZInput.vue';
 
 export default defineComponent({
 	name: 'ClanMemberEdit',
-	components: { DZDisclaimer },
+	components: {
+		DZDisclaimer,
+		DZInput
+	 },
 	data() {
 		return {
 			clanMember: undefined as ClanMember | undefined,

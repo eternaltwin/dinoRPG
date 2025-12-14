@@ -37,9 +37,9 @@ import { CLAN_CREATE_MONEY } from '@drpg/core/constants';
 import { formatNumber } from '../../utils/formatText.js';
 import { playerStore } from '../../store/index.js';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
-import { LocalesEnum } from '../../i18n';
-import LangSelector from '../../components/clans/LangSelector.vue';
 import DZInput from '../../components/common/DZInput.vue';
+import LangSelector from '../../components/clans/LangSelector.vue';
+import { LocalesEnum } from '../../i18n';
 
 export default defineComponent({
 	name: 'CreateClan',
