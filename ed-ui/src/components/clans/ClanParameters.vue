@@ -1,7 +1,7 @@
 <template>
 	<div v-if="hasAccess" class="wrapper">
-		<div class="banner-panel" v-if="hasBannerEditRight">
-			<p>{{ $t('clanSettings.banner.title') }}</p>
+		<div class="banner-panel dz-box" v-if="hasBannerEditRight">
+			<h3>{{ $t('clanSettings.banner.title') }}</h3>
 			<div class="action">
 				<input ref="fileInput" type="file" @change="onFileChanged()" />
 				<img
@@ -16,9 +16,9 @@
 				{{ $t('clanSettings.banner.info') }}
 			</div>
 		</div>
-		<div v-if="hasLangEditRight" class="d-flex">
+		<div v-if="hasLangEditRight" class="df">
 			{{ $t('clanSettings.langs.title') }}
-			<LangSelector v-model="langs" @change="saveLangs" class="d-flex" />
+			<LangSelector v-model="langs" @change="saveLangs" class="df" />
 		</div>
 		<a class="button" @click="deleteClan()">{{ $t('clanSettings.action.delete') }}</a>
 		<!-- <input type="file" @change="onFileChanged($event)" accept="image/*" capture /> -->
@@ -143,9 +143,12 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	.banner-panel {
+		margin: 8px 0;
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+		color: #fce3bb;
+		padding: 0 8px 8px 8px;
 		.action {
 			display: flex;
 			justify-content: space-between;
@@ -154,23 +157,10 @@ export default defineComponent({
 				width: 75%;
 			}
 		}
+		.disclaimer {
+			font-style: italic;
+			font-size: 12px;
+		}
 	}
 }
-
-.d-flex {
-	display: flex;
-}
-
-/*.disclaimer {
-	margin-top: 10px;
-	margin-bottom: 10px;
-	padding: 5px;
-	padding-left: 5px;
-	padding-left: 20px;
-	color: #fce3bc;
-	font-size: 10pt;
-	background-color: #bc683c;
-	background-position: 5px 8px;
-	background-repeat: no-repeat;
-}*/
 </style>

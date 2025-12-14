@@ -132,24 +132,6 @@ export default defineComponent({
 	flex-direction: column;
 	align-items: center;
 	gap: 2px;
-	h3 {
-		display: flex;
-		justify-content: center;
-		padding-top: 3px;
-		font-family: Arial, sans-serif;
-		font-size: 10pt;
-		font-style: normal;
-		font-variant-caps: small-caps;
-		font-weight: 400;
-		text-align: center;
-		color: #ffee92; //!important;
-		text-shadow: 1px 1px 1px #383522;
-		img {
-			height: 7px;
-			width: 7px;
-			padding-top: 5px;
-		}
-	}
 }
 
 .banner {

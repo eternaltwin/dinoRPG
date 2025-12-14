@@ -250,22 +250,7 @@ export default defineComponent({
 			grid-area: top;
 			justify-self: stretch;
 			align-self: center;
-			display: flex;
 			justify-content: space-evenly;
-			padding-top: 3px;
-			font-family: Arial, sans-serif;
-			font-size: 10pt;
-			font-style: normal;
-			font-variant-caps: small-caps;
-			font-weight: 400;
-			text-align: center;
-			color: #ffee92; //!important;
-			text-shadow: 1px 1px 1px #383522;
-			img {
-				height: 7px;
-				width: 7px;
-				padding-top: 5px;
-			}
 		}
 	}
 	.list {
