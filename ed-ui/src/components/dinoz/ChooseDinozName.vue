@@ -15,7 +15,7 @@
 		</div>
 		<div class="naming">
 			<p class="name">{{ $t('chooseDinoz.nomDuDinoz') }}</p>
-			<input type="text" v-model="name" />
+			<DZInput type="text" v-model="dinozName" />
 			<DZButton @click="nameDinoz()">{{ $t('button.name') }}</DZButton>
 		</div>
 	</div>
@@ -31,19 +31,21 @@ import { DinozFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZButton from '../common/DZButton.vue';
+import DZInput from '../../components/common/DZInput.vue';
 
 export default defineComponent({
 	name: 'ChooseDinozName',
 	components: {
 		DZButton,
 		DZDisclaimer,
+		DZInput,
 		TitleHeader,
 		DinozWithoutFlash: defineAsyncComponent(() => import('../../components/dinoz/DinozWithoutFlash.vue'))
 	},
 	data() {
 		return {
 			dinozStore: dinozStore(),
-			name: undefined as string | undefined,
+			dinozName: undefined as string | undefined,
 			regexName: /^[a-zA-Z0-9éèêëÉÈÊËîïÎÏôÔûÛ\-']{3,16}$/
 		};
 	},
@@ -54,10 +56,10 @@ export default defineComponent({
 	methods: {
 		async nameDinoz(): Promise<void> {
 			// Check if dinoz name matches regex
-			if (this.name) {
+			if (this.dinozName) {
 				EventBus.emit('isLoading', true);
 				try {
-					await DinozService.setDinozName(this.dinozData.id, this.name);
+					await DinozService.setDinozName(this.dinozData.id, this.dinozName);
 					EventBus.emit('isLoading', false);
 				} catch (err) {
 					errorHandler.handle(err, this.$toast);
@@ -76,12 +78,12 @@ export default defineComponent({
 					return;
 				}
 
-				dinozToUpdate.name = this.name;
+				dinozToUpdate.name = this.dinozName;
 
 				this.dinozStore.setDinozList(dinozList);
 
 				// Set parent's data to display dinoz page
-				this.$emit('setNameChoosen', this.name);
+				this.$emit('setNameChoosen', this.dinozName);
 			}
 		}
 	},
@@ -120,20 +122,7 @@ export default defineComponent({
 	grid-row: 1;
 }
 input {
-	width: 184px;
-	height: 20px;
-	padding-left: 8px;
-	padding-right: 8px;
-	padding-top: 2px;
-	color: #ffee92;
-	font-size: 9pt;
-	font-weight: bold;
-	border: none;
-	background-image: url('../../assets/design/form_field.webp');
-	background-repeat: no-repeat;
-	background-color: transparent;
-	grid-column: 2 / 4;
-	grid-row: 1;
+	width: 200px;
 }
 .button {
 	grid-row: 2;
