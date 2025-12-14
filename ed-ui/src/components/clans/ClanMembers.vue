@@ -186,6 +186,7 @@ export default defineComponent({
 			try {
 				await ClanService.acceptJoinClanRequest(id);
 				await this.getJoinRequestsList();
+				await this.getClanMembersList();
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
