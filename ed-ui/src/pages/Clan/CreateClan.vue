@@ -5,7 +5,7 @@
 		<div class="middle-content">
 			<div class="grid">
 				<p>{{ $t('createClan.clan_name') }}</p>
-				<input class="name" type="text" v-model="name" />
+				<DZInput type="text" v-model="clanName" />
 
 				<p>{{ $t('createClan.clan_langs') }}</p>
 				<LangSelector v-model="langs" class="lang-selector" />
@@ -39,17 +39,19 @@ import { playerStore } from '../../store/index.js';
 import DZDisclaimer from '../../components/common/DZDisclaimer.vue';
 import { LocalesEnum } from '../../i18n';
 import LangSelector from '../../components/clans/LangSelector.vue';
+import DZInput from '../../components/common/DZInput.vue';
 
 export default defineComponent({
 	name: 'CreateClan',
 	components: {
 		LangSelector,
 		DZDisclaimer,
-		TitleHeader
+		TitleHeader,
+		DZInput
 	},
 	data() {
 		return {
-			name: '' as string,
+			clanName: '' as string,
 			langs: [] as LocalesEnum[],
 			description: '' as string,
 			canCreateClan: false as boolean,
@@ -61,7 +63,7 @@ export default defineComponent({
 		async CreateClan(): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				const clan = await ClanService.createClan(this.name, this.description, this.langs);
+				const clan = await ClanService.createClan(this.clanName, this.description, this.langs);
 				this.playerStore.setClanId(clan.id);
 				EventBus.emit('isLoading', false);
 				this.$router.push({ name: 'Clan', params: { id: clan.id } });
@@ -114,20 +116,6 @@ export default defineComponent({
 		background-color: #e4aa69;
 		border-radius: 10px;
 		-webkit-border-radius: 10px;
-	}
-	input {
-		grid-column: 2;
-		padding-left: 8px;
-		padding-right: 8px;
-		color: #ffee92;
-		font-size: 9pt;
-		font-weight: bold;
-		border: none;
-		width: 184px;
-		height: 20px;
-		background-image: url('../../assets/design/form_field.webp');
-		background-repeat: no-repeat;
-		background-color: transparent;
 	}
 	select {
 		color: #ffee92;
