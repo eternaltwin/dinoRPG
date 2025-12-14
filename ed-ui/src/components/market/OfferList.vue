@@ -9,11 +9,16 @@
 				{{ $t('market.yourTreasuryNotes') }}
 			</template>
 		</Tippy>
-		<select :placeholder="$t('market.filter')" @change="changeFilter">
-			<option value="all">{{ $t('market.all') }}</option>
-			<option value="dinoz">{{ $t('market.dinoz') }}</option>
-			<option value="items">{{ $t('market.items') }}</option>
-		</select>
+		<DZSelect
+			id="offer-filter-select"
+			v-model="filter"
+			:options="[
+				{ label: $t('market.all'), value: 'all' },
+				{ label: $t('market.dinoz'), value: 'dinoz' },
+				{ label: $t('market.items'), value: 'items' }
+			]"
+			@change="changeFilter"
+		/>
 	</div>
 	<DZTable>
 		<tr>
@@ -57,6 +62,7 @@ import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameL
 import { InventoryService } from '../../services';
 import { Item } from '@drpg/core/models/item/ItemList';
 import { Tippy } from 'vue-tippy';
+import DZSelect from '../common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -75,7 +81,7 @@ export default defineComponent({
 			treasuryNotes: 0
 		};
 	},
-	components: { DZButton, DZTable, DZDisclaimer, OfferLine, Tippy },
+	components: { DZButton, DZTable, DZDisclaimer, OfferLine, Tippy, DZSelect },
 	methods: {
 		// Transform endDate to Date type and add item names
 		formatOffers(offers: OfferFromGetOffers[]): EnhancedOffer[] {
@@ -101,8 +107,7 @@ export default defineComponent({
 				return;
 			}
 		},
-		async changeFilter(event: Event) {
-			this.filter = (event.target as HTMLSelectElement).value;
+		async changeFilter() {
 			this.currentPage = 1;
 			await this.fetchOffers();
 		},
