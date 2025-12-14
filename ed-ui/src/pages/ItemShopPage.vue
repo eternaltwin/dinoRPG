@@ -157,7 +157,7 @@
 					</div>
 					<div class="infos">
 						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
-						<input type="number" v-model="selectedQuantity" />
+						<DZInput type="number" v-model="selectedQuantity" :max="resolveItem(selectedItem).maxQuantity" min="0" />
 						<a
 							class="button"
 							v-if="isSelectedQuantityValid(selectedQuantity, resolveItem(selectedItem))"
@@ -228,43 +228,9 @@
 							<div v-html="formatContent($t('tooltip.shop.buyMaxBottomNote'))" />
 						</template>
 					</Tippy>
-					<div class="type">
-						<Tippy
-							theme="small"
-							tag="img"
-							v-if="resolveItem(selectedItem).canBeUsedNow"
-							:src="getImgURL('icons', 'small_use')"
-							alt="use"
-						>
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.use'))" />
-							</template>
-						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_use_off')" alt="no use">
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.useOff'))" />
-							</template>
-						</Tippy>
-						<Tippy
-							theme="small"
-							tag="img"
-							v-if="resolveItem(selectedItem).canBeEquipped"
-							:src="getImgURL('icons', 'small_equip')"
-							alt="equip"
-						>
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.equip'))" />
-							</template>
-						</Tippy>
-						<Tippy theme="small" tag="img" v-else :src="getImgURL('icons', 'small_equip_off')" alt="un-equip">
-							<template #content>
-								<p v-html="formatContent($t('tooltip.item.equipOff'))" />
-							</template>
-						</Tippy>
-					</div>
 					<div class="infos">
 						<label for="field_1">{{ $t('shop.item.quantity') }}</label>
-						<input type="number" v-model="selectedQuantity" />
+						<DZInput type="number" v-model="selectedQuantity" :max="selectedItem.quantity" min="0" />
 						<a
 							class="button"
 							v-if="selectedQuantity > 0 && selectedQuantity * selectedItem.price <= (selectedItem.quantity ?? 0)"
@@ -329,6 +295,7 @@ import { ItemShopService } from '../services/index.js';
 import { dinozStore, playerStore } from '../store/index.js';
 import { formatText } from '../utils/formatText.js';
 import { errorHandler } from '../utils/index.js';
+import DZInput from '../components/common/DZInput.vue';
 
 export default defineComponent({
 	name: 'ItemShopPage',
@@ -346,7 +313,8 @@ export default defineComponent({
 		};
 	},
 	components: {
-		TitleHeader
+		TitleHeader,
+		DZInput
 	},
 	computed: {
 		// Check if the quantity select is valid:
@@ -731,21 +699,6 @@ export default defineComponent({
 				justify-content: space-between;
 				input {
 					align-self: center;
-					width: 64px;
-					height: 20px;
-					padding-left: 8px;
-					padding-right: 8px;
-					padding-top: 2px;
-					color: #ffee92;
-					font-size: 9pt;
-					font-weight: bold;
-					border: none;
-					background-image: url('../assets/design/form_field_small.webp');
-					background-repeat: no-repeat;
-					background-color: transparent;
-					&:focus {
-						background-image: url('../assets/design/form_field_small_hover.webp');
-					}
 				}
 			}
 			.stock {
@@ -924,21 +877,6 @@ export default defineComponent({
 				justify-content: space-between;
 				input {
 					align-self: center;
-					width: 64px;
-					height: 20px;
-					padding-left: 8px;
-					padding-right: 8px;
-					padding-top: 2px;
-					color: #ffee92;
-					font-size: 9pt;
-					font-weight: bold;
-					border: none;
-					background-image: url('../assets/design/form_field_small.webp');
-					background-repeat: no-repeat;
-					background-color: transparent;
-					&:focus {
-						background-image: url('../assets/design/form_field_small_hover.webp');
-					}
 				}
 			}
 			.stock {
