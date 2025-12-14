@@ -52,9 +52,9 @@ import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao
 import translate from '../utils/translate.js';
 import { canCreateClan, canJoinClan, isPlayerLeaderOfClan } from './playerService.js';
 import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/clan/clanJoinRequest';
-import { getCurrentEvents } from './forceBruteService.js';
-import { currentEvents, GameEvent } from '@drpg/core/models/event/Events';
+import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
+import { ClanMember } from '@drpg/core/models/clan/clanMember';
 
 /**
  * Get all the clans
@@ -202,7 +202,7 @@ export async function joinClan(req: Request): Promise<JoinClanResponse> {
  * @param req.params.requestId {string} Description for request
  * @returns Clan
  */
-export async function acceptJoinRequest(req: Request) {
+export async function acceptJoinRequest(req: Request): Promise<ClanMember> {
 	const authed = await auth(req);
 
 	const fullClanRequest = await clanJoinRequest(+req.params.id);
@@ -225,7 +225,15 @@ export async function acceptJoinRequest(req: Request) {
 	}
 
 	const join = await acceptPlayerJoinRequest(+req.params.id, authed.id);
-	return join;
+	return {
+		id: join.id,
+		dateJoin: join.dateJoin,
+		nickname: null,
+		rights: join.rights,
+		donation: join.donation,
+		player: join.player,
+		clan: join.clan
+	} satisfies ClanMember;
 }
 
 /**
@@ -250,8 +258,6 @@ export async function denyJoinRequest(req: Request) {
  */
 export async function getJoinRequest(req: Request): Promise<PlayerClanJoinRequest | null> {
 	const authed = await auth(req);
-
-	//pas besoin de playerId en param vu qu'on l'a dans requ.auth.playerId
 	const joinRequest = await getPlayerJoinRequest(authed.id);
 	return joinRequest;
 }

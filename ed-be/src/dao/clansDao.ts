@@ -361,13 +361,42 @@ export async function acceptPlayerJoinRequest(requestId: number, acceptorId: str
 		data: {
 			clan: { connect: { id: joinRequest.clanId } },
 			player: { connect: { id: joinRequest.playerId } }
-		}
+		},
+		select: {
+			id: true,
+			nickname: true,
+			dateJoin: true,
+			rights: true,
+			donation: true,
+			player: {
+			  select: {
+				id: true,
+				name: true,
+				lastLogin: true,
+				leaderOf: {
+				  select: {
+					id: true
+				  }
+				},
+				Events: {
+				  select: {
+					totalProgression: true
+				  }
+				}
+			  }
+			},
+			clan: {
+				select: {
+					id: true
+				}
+			}
+		  }
 	});
 
 	await prisma.clanHistory.create({
 		data: {
-			clan: { connect: { id: clanMember.clanId } },
-			author: { connect: { id: clanMember.playerId } },
+			clan: { connect: { id: clanMember.clan.id } },
+			author: { connect: { id: clanMember.player.id } },
 			type: ClanHistoryType[ClanHistoryType.PLAYER_JOIN],
 			authorMessage: creator.name
 		},

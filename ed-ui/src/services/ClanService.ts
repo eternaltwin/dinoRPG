@@ -85,7 +85,7 @@ export const ClanService = {
 			.then(res => Promise.resolve(res.data))
 			.catch(err => Promise.reject(err));
 	},
-	acceptJoinClanRequest(id: number) {
+	acceptJoinClanRequest(id: number): Promise<ClanMember> {
 		return http()
 			.post(`/clan/request/${id}`)
 			.then(res => Promise.resolve(res.data))

@@ -557,7 +557,7 @@ routes.delete(
  *       - application/json
  *     responses:
  *       200:
- *         description: Successfully denied
+ *         description: Successfully found request
  *       500:
  *         description: Error
  */

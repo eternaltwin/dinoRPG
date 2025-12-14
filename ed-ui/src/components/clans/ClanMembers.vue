@@ -149,13 +149,13 @@ export default defineComponent({
 			this.$router.push({ name: 'ClanMemberEdit', params: { memberId: _id } });
 		},
 		getHasRight(right: ClanMemberRight) {
-			const member = this.clanMembersList.find(m => m.player.id == this.playerStore.playerId);
+			const member = this.clanMembersList.find(m => m.player.id === this.playerStore.playerId);
 			if (!member) {
 				return false;
 			}
 			return (
-				member.clan.id == +this.$route.params.id &&
-				(member.rights.includes(ClanMemberRight[right]) || member.player.leaderOf?.id == +this.$route.params.id)
+				member.clan.id === +this.$route.params.id &&
+				(member.rights.includes(ClanMemberRight[right]) || member.player.leaderOf?.id === +this.$route.params.id)
 			);
 		},
 		dateToString(date: Date | string) {
@@ -184,9 +184,9 @@ export default defineComponent({
 		async acceptRequest(id: number): Promise<void> {
 			EventBus.emit('isLoading', true);
 			try {
-				await ClanService.acceptJoinClanRequest(id);
-				await this.getJoinRequestsList();
-				await this.getClanMembersList();
+				const newMember = await ClanService.acceptJoinClanRequest(id);
+				this.addClanMember(newMember);
+				this.removeRequest(id);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -197,8 +197,7 @@ export default defineComponent({
 			EventBus.emit('isLoading', true);
 			try {
 				await ClanService.denyJoinClanRequest(id);
-				await this.getJoinRequestsList();
-				await this.$refreshGold();
+				this.removeRequest(id);
 				EventBus.emit('isLoading', false);
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
@@ -217,7 +216,8 @@ export default defineComponent({
 				EventBus.emit('isLoading', true);
 				try {
 					await ClanService.excludeClanMember(Number(this.$route.params.id), id);
-					await this.getClanMembersList();
+					this.removeMemberFromClan(id);
+					// There's a spot available, refresh the join list.
 					await this.getJoinRequestsList();
 					EventBus.emit('isLoading', false);
 				} catch (err) {
@@ -246,6 +246,18 @@ export default defineComponent({
 					return;
 				}
 			}
+		},
+		removeMemberFromClan(memberId: number) {
+			// Helper to remove a player from `clanMembersList`
+			this.clanMembersList = this.clanMembersList.filter(member => member.id !== memberId);
+		},
+		removeRequest(requestId: number) {
+			// Helper to remove a request from `joinRequestsList`
+			this.joinRequestsList = this.joinRequestsList.filter(request => request.id !== requestId);
+		},
+		addClanMember(member: ClanMember) {
+			// Helper to add a player to `clanMembersList`
+			this.clanMembersList.push(member);
 		}
 	},
 	computed: {
@@ -258,7 +270,7 @@ export default defineComponent({
 		this.hasEditRight = this.getHasRight(ClanMemberRight.MEMBER_EDIT);
 		this.hasExcludeRight = this.getHasRight(ClanMemberRight.MEMBER_EXCLUDE);
 		this.hasAcceptAndDenyRequestsRight = this.getHasRight(ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS);
-		this.selfMember = this.clanMembersList.find(member => member.player.id == this.playerStore.playerId);
+		this.selfMember = this.clanMembersList.find(member => member.player.id === this.playerStore.playerId);
 		await this.getJoinRequestsList();
 	}
 });

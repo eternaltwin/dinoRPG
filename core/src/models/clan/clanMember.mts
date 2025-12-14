@@ -2,13 +2,11 @@ import { Clan, Events, Player } from '@drpg/prisma';
 
 export interface ClanMember {
 	id: number;
-	clanId: number;
 	dateJoin: Date;
-	nickname?: string;
+	nickname: string | null;
 	rights: string[];
 	donation: number;
-	playerId: string;
-	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf?: Pick<Clan, 'id'> } & {
+	player: Pick<Player, 'id' | 'name' | 'lastLogin'> & { leaderOf: Pick<Clan, 'id'> | null } & {
 		Events: Pick<Events, 'totalProgression'>[];
 	};
 	clan: Pick<Clan, 'id'>;
