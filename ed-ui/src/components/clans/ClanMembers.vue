@@ -80,16 +80,25 @@
 					</td>
 					<td class="actions other" v-if="selfMember">
 						<div class="buttons">
-							<button class="edit" v-if="hasEditRight" @click="goToMemberEdit(member.id)">
-								{{ $t('clansMembers.action.edit') }}
-							</button>
-							<button
-								class="exclude"
+							<img
+								:src="getImgURL('icons', 'edit')"
+								alt="edit"
+								@click="goToMemberEdit(member.id)"
+								v-tippy="{
+									content: $t('clansMembers.action.edit'),
+									theme: 'small'
+								}"
+							/>
+							<img
+								:src="getImgURL('icons', 'small_delete')"
+								alt="exclude"
 								v-if="hasExcludeRight && !member.player?.leaderOf?.id"
 								@click="excludeMember(member.id)"
-							>
-								{{ $t('clansMembers.action.exclude') }}
-							</button>
+								v-tippy="{
+									content: $t('clansMembers.action.exclude'),
+									theme: 'small'
+								}"
+							/>
 						</div>
 					</td>
 				</tr>
@@ -344,21 +353,11 @@ export default defineComponent({
 					.buttons {
 						display: flex;
 						flex-wrap: wrap;
+						align-items: center;
 						gap: 4px;
-						button {
-							border: none;
-							padding: 2px 8px;
-							border-radius: 8px;
-							&.edit {
-								background-color: rgb(228, 228, 228);
-							}
-							&.exclude {
-								background-color: red;
-							}
-							&:hover {
-								filter: brightness(80%);
-								cursor: pointer;
-							}
+
+						img {
+							cursor: pointer;
 						}
 					}
 				}
