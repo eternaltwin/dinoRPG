@@ -162,6 +162,7 @@ export default defineComponent({
 			required: true
 		}
 	},
+	emits: ['bid'],
 	data() {
 		return {
 			playerStore: playerStore(),
@@ -226,6 +227,11 @@ export default defineComponent({
 							}
 						}
 					]
+				});
+
+				this.$emit('bid', {
+					offerId: this.offer.id,
+					bidValue: this.bidValue
 				});
 
 				// Increment bidValue

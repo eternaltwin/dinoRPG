@@ -1,7 +1,14 @@
 <template>
 	<DZDisclaimer help content="market.disclaimer" />
-	<div class="df jcsb center">
+	<div class="header df aic jcsb center">
 		<DZButton @click="changeTab(2)">{{ $t('market.makeAnOffer') }}</DZButton>
+		<Tippy theme="small" tag="div" class="treasury-notes dz-golden-box no-shadow df aic g4 p2-4">
+			<span>{{ treasuryNotes }}</span>
+			<img :src="getImgURL('icons', 'ticket', true)" :alt="$t('item.name.treasure_coupon')" />
+			<template #content>
+				{{ $t('market.yourTreasuryNotes') }}
+			</template>
+		</Tippy>
 		<select :placeholder="$t('market.filter')" @change="changeFilter">
 			<option value="all">{{ $t('market.all') }}</option>
 			<option value="dinoz">{{ $t('market.dinoz') }}</option>
@@ -15,7 +22,14 @@
 			<th>{{ $t('market.details') }}</th>
 			<th class="bid-action-header"></th>
 		</tr>
-		<OfferLine v-for="offer in offers" :key="offer.id" :offer="offer" :now="now" :updateOffer="updateOffer" />
+		<OfferLine
+			v-for="offer in offers"
+			:key="offer.id"
+			:offer="offer"
+			:now="now"
+			:updateOffer="updateOffer"
+			@bid="onBid"
+		/>
 	</DZTable>
 	<tr class="pagination-controls">
 		<button @click="previousPage" :disabled="currentPage === 1">
@@ -40,6 +54,9 @@ import OfferLine from './OfferLine.vue';
 import { EnhancedOffer, OfferFromGetOffers } from '@drpg/core/returnTypes/Offer';
 import { itemNameList } from '@drpg/core/models/item/ItemNameList';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import { InventoryService } from '../../services';
+import { Item } from '@drpg/core/models/item/ItemList';
+import { Tippy } from 'vue-tippy';
 
 export default defineComponent({
 	name: 'OfferList',
@@ -54,10 +71,11 @@ export default defineComponent({
 			currentPage: 1,
 			offersPerPage: 10,
 			totalOffer: 0,
-			totalPages: 0
+			totalPages: 0,
+			treasuryNotes: 0
 		};
 	},
-	components: { DZButton, DZTable, DZDisclaimer, OfferLine },
+	components: { DZButton, DZTable, DZDisclaimer, OfferLine, Tippy },
 	methods: {
 		// Transform endDate to Date type and add item names
 		formatOffers(offers: OfferFromGetOffers[]): EnhancedOffer[] {
@@ -110,10 +128,20 @@ export default defineComponent({
 					errorHandler.handle(err, this.$toast);
 				}
 			}
+		},
+		async onBid(payload: { offerId: number; bidValue: number }) {
+			// Update treasury notes
+			this.treasuryNotes -= payload.bidValue;
 		}
 	},
 	async mounted() {
 		await this.fetchOffers();
+
+		// Get player's treasury notes
+		const items = await InventoryService.getAllItemsData();
+		const treasuryNoteItem = items.find(i => i.id === Item.TREASURE_COUPON);
+		this.treasuryNotes = treasuryNoteItem ? treasuryNoteItem.quantity : 0;
+
 		// Update time every second
 		setInterval(() => {
 			this.now = Math.ceil(new Date().getTime() / 1000);
@@ -123,6 +151,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.treasury-notes {
+	color: #fce3bc;
+}
 select {
 	background-color: #bc683c;
 	border: none;
