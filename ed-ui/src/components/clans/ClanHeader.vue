@@ -110,6 +110,13 @@ export default defineComponent({
 		EventBus.on('clanBannerUpdated', (dataUrl: string) => {
 			this.bannerDataUrl = dataUrl;
 		});
+	},
+	watch: {
+		'clanStore.getClanId'(newVal: number | null) {
+			if (newVal) {
+				this.loadBanner();
+			}
+		}
 	}
 });
 </script>
