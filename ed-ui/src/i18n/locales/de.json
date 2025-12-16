@@ -138,7 +138,8 @@
 		"dailyGridRewardsFinished": "Du hast die tägliche Obergrenze an freigeräumten Rastern erreicht.",
 		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten.",
 		"maxDinozSelected": "Du hast bereits die Höchstanzahl an Dinoz ausgewählt.",
-		"noDinozSelected": "Keine Dinoz ausgewählt."
+		"noDinozSelected": "Keine Dinoz ausgewählt.",
+		"basicError": "Ein Fehler ist aufgetreten"
 	},
 	"dig": {
 		"gold": "Dein Dinoz hat {gold} :gold: ausgegraben.",
@@ -2566,7 +2567,7 @@
 		"players": "Spieler",
 		"average": "Durchschnitt",
 		"clans": "Klane",
-		"completion": "Completion",
+		"completion": "Vollständigkeit",
 		"pantheon": "Ruhmeshalle",
 		"stats": "Statistiken"
 	},
@@ -4136,7 +4137,7 @@
 			"donation": "Spenden",
 			"stats": "Statistiken",
 			"actions": "Aktionen",
-			"event": "Ereignis-Punktestand"
+			"event": "Ereignispunkte"
 		},
 		"edit": {
 			"disclaimer": "Diese Seite ermöglicht es, die Rechte von Klanmitgliedern zu berarbeiten <a style=\"color: #ffee92; cursor: pointer;\">{name}</a>.",
@@ -4154,7 +4155,6 @@
 		},
 		"request": {
 			"title": "Wartende Anfragen",
-			"line": "möchte gerne dem Klan beitreten!",
 			"accept": "Annehmen",
 			"deny": "Ablehnen",
 			"maximum": "Der Klan ist voll und du kannst keine neuen Anfragen annehmen."

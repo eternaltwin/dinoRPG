@@ -14,51 +14,51 @@
 		},
 		"gamesMenu": {
 			"title": "Juegos de Eternaltwin",
-			"subtitle": "Retrouvez tous les jeux accessibles sur Eternaltwin",
+			"subtitle": "Encuentra todos los juegos disponibles en Eternaltwin",
 			"eternaltwinGames": {
 				"alphabounce": {
 					"name": "AlphaBounce",
-					"description": "AlphaBounce est un jeu de casse-briques dans lequel vous incarnez un prisonnier condamné à miner dans l'espace pour l'éternité. Mais peut-être arriverez-vous à rentrer chez vous ?"
+					"description": "AlphaBounce es un juego de romper ladrillos en el que encarnas a un prisionero condenado a minar en el espacio por la eternidad. ¿Podrás lograr volver a casa?"
 				},
 				"dinocard": {
 					"name": "Dinocard",
-					"description": "Dinocard Rebirth est une nouvelle version de Dinocard. Il y a déjà 150 cartes jouables !"
+					"description": "Dinocard Rebirth es una nueva versión de Dinocard. ¡Ya hay 150 cartas jugables!"
 				},
 				"emush": {
 					"name": "eMush",
-					"description": "Vous allez vous réveiller avec 15 autres joueurs dans le Daedalus. Comme vous, ils fuient le Mush, un champignon qui ravage la planète Terre et menace l'Humanité."
+					"description": "Vas a despertarte con otros 15 jugadores en el Daedalus. Al igual que tú, huyen del Mush, un hongo que arrasa el planeta Tierra y amenaza a la Humanidad."
 				},
 				"directquiz": {
 					"name": "Directquiz",
-					"description": "Mettez votre culture à rude épreuve dans Direct Quiz, le jeu de quiz le plus déjanté du web !"
+					"description": "Pon a prueba tus conocimientos en Direct Quiz, ¡el juego de preguntas más loco de la web!"
 				},
 				"epopotamo": {
 					"name": "ePopotamo",
-					"description": "Le jeu de mots relax jouable en toute situation !"
+					"description": "¡Un relajante juego de palabras que se puede jugar en cualquier situación!"
 				},
 				"eternalfest": {
 					"name": "Eternalfest",
-					"description": "Plus de 200 niveaux ! Une grande variété d'ennemis très très méchants !"
+					"description": "¡Más de 200 niveles! ¡Una gran variedad de enemigos muy, muy malvados!"
 				},
 				"kingdom": {
 					"name": "Eternal Kingdom",
-					"description": "Faites prospérer votre capitale. Recrutez des soldats et devenez... Empereur !"
+					"description": "Haz prosperar tu capital. Recluta soldados y conviértete en… ¡Emperador!"
 				},
 				"mybrute": {
 					"name": "ElBruto",
-					"description": "Règle tes comptes dans l'arène !"
+					"description": "¡Ajusta cuentas en la arena!"
 				},
 				"myhordes": {
 					"name": "Zombinoia",
-					"description": "Le premier jeu de survie zombie gratuit se déroulant dans un monde hostile peuplé de morts-vivants !"
+					"description": "¡El primer juego de supervivencia zombi gratuito que tiene lugar en un mundo hostil poblado de muertos vivientes!"
 				},
 				"neoparc": {
 					"name": "Neoparc",
-					"description": "Combattez d'autres Dinoz et gagnez ainsi petit à petit de l'expérience lors de combats sans merci !"
+					"description": "¡Combate contra otros Dinos y gana poco a poco experiencia en luchas despiadadas!"
 				},
 				"pioupiouz": {
 					"name": "PiouPiouZ",
-					"description": "Ils se \"plurtchent\", ils explosent, ils se dilatent, ils se transforment, ils avancent tout droit sans réfléchir et seul vous pouvez les amener à la sortie salvatrice !"
+					"description": "Se “apapachan”, explotan, se dilatan, se transforman, avanzan en línea recta sin pensar… ¡Y solo tú puedes guiarlos hasta la salida salvadora!"
 				}
 			}
 		},
@@ -138,7 +138,8 @@
 		"dailyGridRewardsFinished": "Has alcanzado la cuota diaria de tableros completados.",
 		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
 		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
-		"noDinozSelected": "Ningún Dino seleccionado"
+		"noDinozSelected": "Ningún Dino seleccionado",
+		"basicError": "Se ha producido un error"
 	},
 	"dig": {
 		"gold": "Tu Dino encontró {gold} :gold: mientras cavaba aquí.",
@@ -2674,7 +2675,7 @@
 			"daily": "recompensas diarias"
 		},
 		"disclaimer": "Haz clic en {number} casilla(s) del tablero para encontrar {search}",
-		"nothing": "Votre Dinoz n' a rien trouvé..."
+		"nothing": "Tu Dino no ha encontrado nada..."
 	},
 	"missions": {
 		"header": "Lista de misiones",
@@ -3576,7 +3577,7 @@
 		}
 	},
 	"levelup": {
-		"disclaimer": "{name} a atteint le niveau {level} ! Quel élément va-t-il améliorer ?",
+		"disclaimer": "¡{name} ha alcanzado el nivel {level}! ¿Qué elemento va a mejorar?",
 		"title": "Nivel suplementario para {name}",
 		"helper": "Elige la competencia que quieres que tu Dino aprenda:",
 		"fire": "Gana +1 en :feu: Fuego",
@@ -4154,7 +4155,6 @@
 		},
 		"request": {
 			"title": "Solicitudes pendientes",
-			"line": "quiere unirse al Clan",
 			"accept": "Aceptar",
 			"deny": "Rechazar",
 			"maximum": "El clan está lleno, no puedes aceptar nuevas solicitudes."

@@ -4156,7 +4156,6 @@
 		},
 		"request": {
 			"title": "Adhésions en attente",
-			"line": "souhaite rejoindre le Clan !",
 			"accept": "Accepter",
 			"deny": "Refuser",
 			"maximum": "Le clan est plein, vous ne pouvez pas accepter de nouvelles demandes."

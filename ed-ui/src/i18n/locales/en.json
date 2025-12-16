@@ -138,7 +138,8 @@
 		"dailyGridRewardsFinished": "You have reached the daily amount of completed grids.",
 		"errorFetchingRankings": "An error occurred when fetching the ranking data.",
 		"maxDinozSelected": "You have selected the maximum number of Dinoz allowed",
-		"noDinozSelected": "No Dinoz selected"
+		"noDinozSelected": "No Dinoz selected",
+		"basicError": "An error occurred"
 	},
 	"dig": {
 		"gold": "Your dinoz found {gold} :gold: by digging here.",
@@ -4154,7 +4155,6 @@
 		},
 		"request": {
 			"title": "Waiting requests",
-			"line": "would like to join the clan !",
 			"accept": "Accept",
 			"deny": "Deny",
 			"maximum": "Clan is full, you cannot accept more requests."
