@@ -24,8 +24,6 @@ import {
 } from '../dao/playerDao.js';
 import translate from '../utils/translate.js';
 import { getAvailableActions } from './dinozService.js';
-import TournamentManager from '../utils/tournamentManager.js';
-import { prisma } from '../prisma.js';
 
 /**
  * @summary Get data from player on login
@@ -38,10 +36,9 @@ export async function getCommonData(req: Request) {
 	if (!playerCommonData) {
 		throw new ExpectedError(`Player ${authed.id} doesn't exist.`);
 	}
-	const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
 
 	const dinoz = playerCommonData.dinoz.map(d => {
-		return { ...toDinozFiche(playerCommonData, d.id, currentTournament) };
+		return { ...toDinozFiche(playerCommonData, d.id, null) };
 	});
 	for (const d of dinoz) {
 		d.actions = await getAvailableActions(d, playerCommonData);

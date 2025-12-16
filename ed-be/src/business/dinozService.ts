@@ -409,8 +409,9 @@ export async function getDinozFiche(req: Request) {
 
 	const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
 
+	const isInTournament = await isDinozInTournament(dinozId);
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId, currentTournament);
+	const ret = toDinozFiche(playerData, dinozId, isInTournament ? currentTournament : null);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 
 	return ret;
