@@ -13,7 +13,7 @@
 
 			<footer class="simple-confirm-dialog-footer">
 				<button class="btn btn-reject" @click="rejectDialog">{{ rejectLabel }}</button>
-				<button class="btn btn-accept" @click="acceptDialog">{{ acceptLabel }}</button>
+				<button class="btn btn-accept" @click="acceptDialog" @keydown.enter="acceptDialog">{{ acceptLabel }}</button>
 			</footer>
 		</div>
 	</div>
