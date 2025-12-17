@@ -11,7 +11,7 @@
 				exhausted: dinoz.remaining === 0 && !dinoz.fight
 			}"
 		>
-			<a @click="goToDinozPage(dinoz.id)">
+			<RouterLink :to="`/dino/${dinoz.id}`">
 				<span class="icon">
 					<span class="tinyBar">
 						<span class="life" :style="getBarWidth(dinoz.life, dinoz.maxLife)"></span>
@@ -63,7 +63,7 @@
 					<span>{{ dinoz.name }}</span>
 				</span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
-			</a>
+		</RouterLink>
 		</li>
 	</ul>
 </template>
@@ -90,9 +90,6 @@ export default defineComponent({
 		};
 	},
 	methods: {
-		goToDinozPage(dinozId: number): void {
-			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
-		},
 		getBarWidth(actual: number, max: number): string {
 			if (actual > max) actual = max;
 			const width: number = Math.round((actual / max) * 36);
