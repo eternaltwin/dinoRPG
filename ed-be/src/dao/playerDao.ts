@@ -766,7 +766,8 @@ export async function getPlayerDataRequest(playerId: string) {
 					raceId: true,
 					life: true,
 					unavailableReason: true,
-					status: { select: { statusId: true } }
+					status: { select: { statusId: true } },
+					order: true
 				},
 				where: {
 					OR: [{ unavailableReason: null }, { unavailableReason: { not: UnavailableReason.sacrificed } }]

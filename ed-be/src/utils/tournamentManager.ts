@@ -812,7 +812,9 @@ LIMIT ${64};`;
 				`Reprise du tournoi ${activeTournament.id} à la phase ${currentState.phase}, round ${currentState.round} prévu pour ${currentState.nextScheduledMatch}`
 			);
 			// manager.generateNextRound(prisma);
-			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () => manager.generateNextRound(prisma));
+			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () =>
+				manager.generateNextRound(prisma)
+			);
 			return manager;
 		} else if (currentState.nextScheduledMatch && currentState.round === 8) {
 			if (currentState.nextScheduledMatch <= new Date()) {
@@ -820,7 +822,9 @@ LIMIT ${64};`;
 				return manager;
 			}
 			LOGGER.log(`Création du prochain tournois prévu pour ${currentState.nextScheduledMatch}`);
-			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () => manager.initializeTournament(prisma));
+			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () =>
+				manager.initializeTournament(prisma)
+			);
 			return manager;
 		} else {
 			LOGGER.log(`Le tournoi ${activeTournament.id} est déjà terminé, création d'un nouveau.`);

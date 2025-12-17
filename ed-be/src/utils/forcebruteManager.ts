@@ -284,7 +284,9 @@ class ForceBruteManager {
 			}
 		} else {
 			// LOGGER.log(`Scheduled FB ${currentState.tournamentId} for ${currentState.nextRound}`);
-			scheduleJob(`FBTournament_${currentState.tournamentId}`, currentState.nextRound, () => this.generateNextRound(prisma));
+			scheduleJob(`FBTournament_${currentState.tournamentId}`, currentState.nextRound, () =>
+				this.generateNextRound(prisma)
+			);
 		}
 	}
 
@@ -451,7 +453,9 @@ class ForceBruteManager {
 					nextRound: nextPhase.toDate()
 				}
 			});
-			scheduleJob(`FBTournament_${currentState.tournamentId}`, nextPhase.toDate(), () => this.generateNextRound(prisma));
+			scheduleJob(`FBTournament_${currentState.tournamentId}`, nextPhase.toDate(), () =>
+				this.generateNextRound(prisma)
+			);
 			return;
 		}
 

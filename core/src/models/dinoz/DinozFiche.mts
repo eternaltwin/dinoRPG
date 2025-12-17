@@ -76,6 +76,7 @@ export interface DinozPublicFiche {
 	level: number;
 	race: DinozRace;
 	status: number[];
+	order: number | null;
 }
 
 export interface DinozDojoFiche {

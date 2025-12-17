@@ -80,14 +80,28 @@ export default defineComponent({
 		},
 		updateSortedDinozList() {
 			this.sortedDinozList =
-				this.accountData?.dinoz.slice().sort((a, b) => {
-					if (a.isFrozen && !b.isFrozen) {
-						return 1;
-					} else if (!a.isFrozen && b.isFrozen) {
-						return -1;
-					}
-					return 0;
-				}) ?? [];
+				this.accountData?.dinoz
+					.slice()
+					.sort((a, b) => {
+						if (a.order === null) {
+							a.order = a.id;
+						}
+						if (b.order === null) {
+							b.order = b.id;
+						}
+						if (a.order === b.order) {
+							return a.name.localeCompare(b.name);
+						}
+						return a.order - b.order;
+					})
+					.sort((a, b) => {
+						if (a.isFrozen && !b.isFrozen) {
+							return 1;
+						} else if (!a.isFrozen && b.isFrozen) {
+							return -1;
+						}
+						return 0;
+					}) ?? [];
 		}
 	},
 	computed: {

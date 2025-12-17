@@ -655,7 +655,9 @@ export const scheduleEndedOffersExpiration = async () => {
 	remainingOffers.forEach(offer => {
 		LOGGER.log(`Scheduling offer ${offer.id} cancellation at ${offer.endDate}`);
 
-		scheduleJob(`offerEnded_${offer.id.toString()}`, dayjs(offer.endDate).add(1, 'week').toDate(), () => expireOffer(offer.id));
+		scheduleJob(`offerEnded_${offer.id.toString()}`, dayjs(offer.endDate).add(1, 'week').toDate(), () =>
+			expireOffer(offer.id)
+		);
 	});
 };
 
