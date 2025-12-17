@@ -53,7 +53,7 @@ class ForceBruteManager {
 		LOGGER.log(
 			`Creation of the FBTournament ${newTournament.id} for the level ${this.level}. ${notifications} notifications sent.`
 		);
-		scheduleJob(newTournament.id, endCreation, () => this.generateNextRound(prisma));
+		scheduleJob(`create_FBTournament_${newTournament.id}`, endCreation, () => this.generateNextRound(prisma));
 		return newTournament;
 	}
 
@@ -131,7 +131,7 @@ class ForceBruteManager {
 						nextRound: postPoned
 					}
 				});
-				scheduleJob(tournament.id, postPoned, () => this.generateNextRound(prisma));
+				scheduleJob(`postponed_FBTournament_${tournament.id}`, postPoned, () => this.generateNextRound(prisma));
 			}
 		}
 
@@ -284,7 +284,7 @@ class ForceBruteManager {
 			}
 		} else {
 			// LOGGER.log(`Scheduled FB ${currentState.tournamentId} for ${currentState.nextRound}`);
-			scheduleJob(currentState.tournamentId, currentState.nextRound, () => this.generateNextRound(prisma));
+			scheduleJob(`FBTournament_${currentState.tournamentId}`, currentState.nextRound, () => this.generateNextRound(prisma));
 		}
 	}
 
@@ -451,7 +451,7 @@ class ForceBruteManager {
 					nextRound: nextPhase.toDate()
 				}
 			});
-			scheduleJob(currentState.tournamentId, nextPhase.toDate(), () => this.generateNextRound(prisma));
+			scheduleJob(`FBTournament_${currentState.tournamentId}`, nextPhase.toDate(), () => this.generateNextRound(prisma));
 			return;
 		}
 

@@ -677,7 +677,7 @@ class TournamentManager {
 			LOGGER.error(`Tournament News is missing French title (${news.frenchTitle}) and/or text (${news.frenchText})`);
 		}
 
-		scheduleJob(this.tournamentId, endQualif, () => this.generateNextRound(prisma));
+		scheduleJob(`tournament_${this.tournamentId}`, endQualif, () => this.generateNextRound(prisma));
 		LOGGER.log(`initializeTournament is over. GenerateNextRound for 1st round is planned for ${endQualif}.`);
 
 		return new TournamentManager(this.tournamentId, newTournamentStartDate);
@@ -812,7 +812,7 @@ LIMIT ${64};`;
 				`Reprise du tournoi ${activeTournament.id} à la phase ${currentState.phase}, round ${currentState.round} prévu pour ${currentState.nextScheduledMatch}`
 			);
 			// manager.generateNextRound(prisma);
-			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.generateNextRound(prisma));
+			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () => manager.generateNextRound(prisma));
 			return manager;
 		} else if (currentState.nextScheduledMatch && currentState.round === 8) {
 			if (currentState.nextScheduledMatch <= new Date()) {
@@ -820,7 +820,7 @@ LIMIT ${64};`;
 				return manager;
 			}
 			LOGGER.log(`Création du prochain tournois prévu pour ${currentState.nextScheduledMatch}`);
-			scheduleJob(activeTournament.id, currentState.nextScheduledMatch, () => manager.initializeTournament(prisma));
+			scheduleJob(`tournament_${activeTournament.id}`, currentState.nextScheduledMatch, () => manager.initializeTournament(prisma));
 			return manager;
 		} else {
 			LOGGER.log(`Le tournoi ${activeTournament.id} est déjà terminé, création d'un nouveau.`);
@@ -1132,7 +1132,7 @@ LIMIT ${this.QUALIFIED_TEAMS};`;
 			await this.generateNextRound(prisma);
 		}
 
-		scheduleJob(this.tournamentId, nextPlannedMatch.time, () => this.generateNextRound(prisma));
+		scheduleJob(`tournament_${this.tournamentId}`, nextPlannedMatch.time, () => this.generateNextRound(prisma));
 	}
 
 	async rewardQualification(prisma: PismaClientLocal): Promise<void> {

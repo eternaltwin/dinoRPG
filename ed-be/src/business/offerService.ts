@@ -235,7 +235,7 @@ export async function createOffer(req: Request) {
 	await Promise.all(promises);
 
 	// Schedule offer expiration
-	scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
+	scheduleJob(`offer_${offer.id.toString()}`, offer.endDate, () => expireOffer(offer.id));
 	// LOGGER.log(`Player ${authed.id} has set an offer for ${offer.total} ending at ${offer.endDate}`);
 }
 
@@ -635,7 +635,7 @@ export const scheduleOffersExpiration = async () => {
 	remainingOffers.forEach(offer => {
 		LOGGER.log(`Scheduling offer ${offer.id} expiration at ${offer.endDate}`);
 
-		scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
+		scheduleJob(`offer_${offer.id.toString()}`, offer.endDate, () => expireOffer(offer.id));
 	});
 };
 
@@ -650,12 +650,12 @@ export const scheduleEndedOffersExpiration = async () => {
 	await Promise.all(promises);
 
 	// Schedule expiration for remaining offers
-	const remainingOffers = endedOffers.filter(offer => offer.endDate > today.subtract(1, 'week').toDate());
+	const remainingOffers = endedOffers.filter(offer => offer.endDate > today.add(1, 'week').toDate());
 
 	remainingOffers.forEach(offer => {
 		LOGGER.log(`Scheduling offer ${offer.id} cancellation at ${offer.endDate}`);
 
-		scheduleJob(offer.id.toString(), offer.endDate, () => expireOffer(offer.id));
+		scheduleJob(`offerEnded_${offer.id.toString()}`, dayjs(offer.endDate).add(1, 'week').toDate(), () => expireOffer(offer.id));
 	});
 };
 
