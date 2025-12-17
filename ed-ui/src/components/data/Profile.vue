@@ -38,7 +38,7 @@
 					{{ $t(`myAccount.inscription`) }}
 				</dt>
 				<dd>
-					{{ accountData.subscribeAt }}
+					{{ getFormattedSubscribe() }}
 				</dd>
 				<dt v-if="accountData.clan">
 					{{ $t(`myAccount.clan`) }}
@@ -142,6 +142,12 @@ export default defineComponent({
 		}
 	},
 	methods: {
+		getFormattedSubscribe() {
+			const date = new Date(this.accountData.subscribedAt).toLocaleString().split(',')[0].split('/');
+			const formatter = new Intl.DateTimeFormat(this.localStore.getLanguage ?? 'fr', { month: 'long' });
+			const month = formatter.format(new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1])));
+			return `${date[1]} ${month} ${date[2]}`;
+		},
 		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);
 		},

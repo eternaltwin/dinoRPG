@@ -85,12 +85,6 @@ export async function getAccountData(req: Request) {
 		throw new ExpectedError(`Player ${playerId} doesn't exist.`);
 	}
 
-	// Subscription date
-	const date = playerInfo.createdDate.toLocaleString().split(',')[0].split('/');
-	const formatter = new Intl.DateTimeFormat('fr', { month: 'long' });
-	const month = formatter.format(new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1])));
-	const subscribe = `${date[1]} ${month} ${date[2]}`;
-
 	// Clan TODO
 	const clan:
 		| {
@@ -106,7 +100,7 @@ export async function getAccountData(req: Request) {
 	const infoToSend: PlayerInfo = {
 		dinozCount: playerInfo.ranking.dinozCount,
 		pointCount: playerInfo.ranking.points,
-		subscribeAt: subscribe,
+		subscribedAt: playerInfo.createdDate.toISOString(),
 		clan: clan,
 		name: playerInfo.name,
 		id: playerInfo.id,
