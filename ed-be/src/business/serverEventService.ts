@@ -30,6 +30,7 @@ import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 let activeTickets: ServerEventTicket[] = [];
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
+const ticketToChannelMap = new Map<string, string>();
 
 export async function authenticate(req: Request, serverEventType: ServerEventType): Promise<ServerEventTicketDto> {
 	const authed = await auth(req);
@@ -213,13 +214,11 @@ async function putUserInWsChannel(ticket: ServerEventTicket, wsId: string): Prom
 async function putUserInSseChannel(ticket: ServerEventTicket, ticketUuid: string, res: Response): Promise<void> {
 	const channelName = await getChannelName(ticket);
 
-	const channel: SseChannelData[] | undefined = sseChannels.get(channelName);
+	ticketToChannelMap.set(ticketUuid, channelName);
 
-	if (channel !== undefined) {
-		channel.push({ ticketUuid, playerId: ticket.playerId, res });
-	} else {
-		sseChannels.set(channelName, [{ ticketUuid, playerId: ticket.playerId, res }]);
-	}
+	const channel = sseChannels.get(channelName) || [];
+	channel.push({ ticketUuid, playerId: ticket.playerId, res });
+	sseChannels.set(channelName, channel);
 }
 
 async function getChannelName(ticket: ServerEventTicket): Promise<string> {
@@ -434,31 +433,25 @@ export async function connectUserToSseChannel(req: Request, res: Response): Prom
  */
 export async function disconnectSseUser(req: Request): Promise<void> {
 	const ticketUuid: string = getTicketFromUrl(req);
+	const channelName = ticketToChannelMap.get(ticketUuid);
 
-	const channel = Array.from(sseChannels).find(([, sseChannelData]) =>
-		sseChannelData.some(player => player.ticketUuid === ticketUuid)
-	);
-
-	if (channel === undefined) {
-		throw new Error('User must be in a channel');
+	if (!channelName) {
+		LOGGER.warn(`[SSE] Tentative de déconnexion d'un ticket inexistant: ${ticketUuid}`);
+		return;
 	}
 
-	const [channelName, channelData] = channel;
-	const userInChannel: SseChannelData | undefined = channelData.find(player => player.ticketUuid === ticketUuid);
+	const channelData = sseChannels.get(channelName);
+	if (channelData) {
+		const usersLeftInChannel = channelData.filter(player => player.ticketUuid !== ticketUuid);
 
-	if (userInChannel === undefined) {
-		throw new Error('User not found in SSE channel.');
+		if (usersLeftInChannel.length === 0) {
+			sseChannels.delete(channelName);
+		} else {
+			sseChannels.set(channelName, usersLeftInChannel);
+		}
 	}
 
-	userInChannel.res.end();
-
-	const usersLeftInChannel: SseChannelData[] = channelData.filter(player => player.ticketUuid !== ticketUuid);
-
-	if (usersLeftInChannel.length === 0) {
-		sseChannels.delete(channelName);
-	} else {
-		sseChannels.set(channelName, usersLeftInChannel);
-	}
+	ticketToChannelMap.delete(ticketUuid);
 }
 
 /**
