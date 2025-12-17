@@ -34,7 +34,7 @@ export default defineComponent({
 	components: {
 		DZDisclaimer,
 		DZInput
-	 },
+	},
 	data() {
 		return {
 			clanMember: undefined as ClanMember | undefined,

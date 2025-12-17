@@ -369,28 +369,28 @@ export async function acceptPlayerJoinRequest(requestId: number, acceptorId: str
 			rights: true,
 			donation: true,
 			player: {
-			  select: {
-				id: true,
-				name: true,
-				lastLogin: true,
-				leaderOf: {
-				  select: {
-					id: true
-				  }
-				},
-				Events: {
-				  select: {
-					totalProgression: true
-				  }
+				select: {
+					id: true,
+					name: true,
+					lastLogin: true,
+					leaderOf: {
+						select: {
+							id: true
+						}
+					},
+					Events: {
+						select: {
+							totalProgression: true
+						}
+					}
 				}
-			  }
 			},
 			clan: {
 				select: {
 					id: true
 				}
 			}
-		  }
+		}
 	});
 
 	await prisma.clanHistory.create({

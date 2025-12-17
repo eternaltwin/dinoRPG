@@ -1414,7 +1414,8 @@ export async function frozeDinoz(req: Request) {
 	}
 
 	await updateDinoz(dinozId, {
-		unavailableReason: UnavailableReason.frozen
+		unavailableReason: UnavailableReason.frozen,
+		remaining: 0
 	});
 }
 
