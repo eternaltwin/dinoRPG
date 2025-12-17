@@ -63,7 +63,7 @@
 					<span>{{ dinoz.name }}</span>
 				</span>
 				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
-		</RouterLink>
+			</RouterLink>
 		</li>
 	</ul>
 </template>

@@ -7,6 +7,10 @@ const sendError = (res: Response, error: unknown) => {
 	if (!(error instanceof Error)) {
 		throw error;
 	}
+	// Hack to avoid node crash with SSE errors
+	if (res.headersSent) {
+		return res.end();
+	}
 	res.status(500);
 	if (error instanceof Prisma.PrismaClientKnownRequestError) {
 		switch (error.code) {

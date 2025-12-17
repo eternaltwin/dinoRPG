@@ -44,20 +44,29 @@ routes.post(
 );
 
 routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
+	res.setHeader('Content-Type', 'text/event-stream');
+	res.setHeader('Cache-Control', 'no-cache');
+	res.setHeader('Connection', 'keep-alive');
+	// To keep the connection alive
+	res.flushHeaders();
+
+	// Basic heartbeat implementation
+	// Should be enhanced with data (remove the :)
+	const keepAlive = setInterval(() => {
+		if (!res.writableEnded) {
+			res.write(': keep-alive\n\n');
+		}
+	}, 30000);
+
 	try {
-		res.setHeader('Content-Type', 'text/event-stream');
-		res.setHeader('Cache-Control', 'no-cache');
-		res.setHeader('Connection', 'keep-alive');
-
-		// To keep the connection alive
-		res.flushHeaders();
-
 		await connectUserToSseChannel(req, res);
 
 		req.on('close', () => {
+			clearInterval(keepAlive);
 			disconnectSseUser(req);
 		});
 	} catch (err) {
+		clearInterval(keepAlive);
 		sendError(res, err);
 	}
 });
