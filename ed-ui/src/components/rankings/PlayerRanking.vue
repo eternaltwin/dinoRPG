@@ -7,7 +7,7 @@
 				<tr>
 					<th class="pos">{{ $t('ranking.th.pos') }}</th>
 					<th class="player">{{ $t('ranking.th.player') }}</th>
-					<th class="dinoz">Dinoz</th>
+					<th class="dinoz">{{ $t('ranking.th.dinoz') }}</th>
 					<th class="points">{{ $t('ranking.th.points') }}</th>
 					<th class="points">{{ $t('ranking.th.average') }}</th>
 				</tr>
