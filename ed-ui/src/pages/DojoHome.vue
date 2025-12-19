@@ -55,7 +55,7 @@
 					@click="goToPage('TournamentHistory')"
 					:src="getImgURL('design', 'dojo_history')"
 					v-tippy="{
-						content: formatContent($t('dojo.fightHistory')),
+						content: formatContent($t('dojo.tournamentHistory')),
 						theme: 'small'
 					}"
 				/>
