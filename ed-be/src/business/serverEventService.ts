@@ -27,10 +27,40 @@ import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType'
 import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 
-let activeTickets: ServerEventTicket[] = [];
+const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
+
+// Tickets garbage collector
+setInterval(() => {
+	const now = Date.now();
+	const TIMEOUT = 60 * 1000;
+
+	for (const [uuid, ticket] of activeTickets.entries()) {
+		if (now - ticket.timestamp > TIMEOUT) {
+			activeTickets.delete(uuid);
+		}
+	}
+	if (activeTickets.size > 100) {
+		LOGGER.warn(`[SSE] Attention: ${activeTickets.size} tickets toujours en attente.`);
+	}
+
+	for (const [channelName, users] of sseChannels.entries()) {
+		const activeUsers = users.filter(user => {
+			if (user.res.writableEnded || !user.res.socket || user.res.socket.destroyed) {
+				return false;
+			}
+			return true;
+		});
+
+		if (activeUsers.length === 0) {
+			sseChannels.delete(channelName);
+		} else if (activeUsers.length !== users.length) {
+			sseChannels.set(channelName, activeUsers);
+		}
+	}
+}, 60000);
 
 export async function authenticate(req: Request, serverEventType: ServerEventType): Promise<ServerEventTicketDto> {
 	const authed = await auth(req);
@@ -42,7 +72,7 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 
 	const userAgent: string = getUserAgentFromRequest(req);
 
-	activeTickets.push({
+	activeTickets.set(uuid, {
 		uuid: uuid,
 		channel: req.body.channel,
 		userAgent,
@@ -52,8 +82,8 @@ export async function authenticate(req: Request, serverEventType: ServerEventTyp
 		type: serverEventType
 	});
 
-	if (activeTickets.length > 100) {
-		LOGGER.info('There are too many active tickets ! Actual length : ' + activeTickets.length);
+	if (activeTickets.size > 100) {
+		LOGGER.info('There are too many active tickets ! Actual length : ' + activeTickets.size);
 	}
 
 	return {
@@ -142,7 +172,7 @@ export async function connectUserToWsChannel(ws: WebSocketCustom, req: IncomingM
 	ws.id = randomUUID();
 	ws.isAlive = true;
 	// Remove the ticket in order to not use it twice
-	activeTickets = activeTickets.filter(ticket => ticket.uuid !== ticketUuid);
+	activeTickets.delete(ticketUuid);
 
 	await putUserInWsChannel(ticket, ws.id);
 }
@@ -160,7 +190,7 @@ function checkTicketValidity(req: IncomingMessage, ticketUuid: string | undefine
 		throw new Error('The ticket sent is not valid');
 	}
 
-	const ticketFound = activeTickets.find(activeTicket => activeTicket.uuid === ticketUuid);
+	const ticketFound = activeTickets.get(ticketUuid);
 	if (!ticketFound) {
 		throw new Error("The ticket doesn't exist");
 	}
@@ -421,7 +451,7 @@ export async function connectUserToSseChannel(req: Request, res: Response): Prom
 	const ticket: ServerEventTicket = checkTicketValidity(req, ticketUuid);
 
 	// Remove the ticket in order to not use it twice
-	activeTickets = activeTickets.filter(ticket => ticket.uuid !== ticketUuid);
+	activeTickets.delete(ticketUuid);
 
 	await putUserInSseChannel(ticket, ticketUuid, res);
 }
