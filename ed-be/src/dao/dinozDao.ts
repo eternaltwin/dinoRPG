@@ -3,6 +3,7 @@ import { Dinoz, LogType, Prisma, UnavailableReason } from '@drpg/prisma';
 import { prisma } from '../prisma.js';
 import { createLog, createLogForMultipleDinoz } from './logDao.js';
 import TournamentManager from '../utils/tournamentManager.js';
+import { GLOBAL } from '../context.js';
 
 // Getters
 
@@ -776,6 +777,8 @@ export async function createDinoz(dinoz: Prisma.DinozCreateInput) {
 	});
 
 	await createLog(LogType.CreateDinoz, dinoz.player.connect.id, newDinoz.id);
+
+	GLOBAL.liveStats.incrementDinoz();
 
 	return newDinoz;
 }
