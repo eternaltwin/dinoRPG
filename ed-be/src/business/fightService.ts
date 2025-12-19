@@ -38,7 +38,6 @@ import seedrandom from 'seedrandom';
 import { FighterType } from '@drpg/core/models/fight/DetailedFighter';
 import { DinozItems } from '@drpg/core/models/item/DinozItems';
 import { getPlayerEventProgression, increasePlayerEventProgression } from '../dao/eventsDao.js';
-import { getCurrentEvents } from './forceBruteService.js';
 
 /**
  * @summary Process a fight
@@ -119,7 +118,7 @@ export async function processFight(req: Request) {
 	await setSpecificStat(
 		StatTracking.KILL_M,
 		player.id,
-		fight.fighters.filter(f => f.type === FighterType.MONSTER).length
+		fight?.fighters.filter(f => f.type === FighterType.MONSTER).length ?? 0
 	);
 
 	return fight;
@@ -454,10 +453,23 @@ export async function rewardFight(
 	}
 
 	// Items used
+	const merguezPerPlayer: Record<string, number> = {};
 	for (const fighter of [...fightResult.attackers, ...fightResult.defenders]) {
 		for (const itemUsed of fighter.itemsUsed) {
 			await removeItemFromDinoz(fighter.dinozId, itemUsed);
+
+			if (fighter.playerId && itemUsed === Item.GOBLIN_MERGUEZ) {
+				if (!merguezPerPlayer[fighter.playerId]) {
+					merguezPerPlayer[fighter.playerId] = 0;
+				}
+				merguezPerPlayer[fighter.playerId]++;
+			}
 		}
+	}
+
+	// Handle goblin merguez
+	for (const [playerId, merguezUsed] of Object.entries(merguezPerPlayer)) {
+		await setSpecificStat(StatTracking.MERGUEZ, playerId, merguezUsed);
 	}
 
 	scenarioChecker(playerId, fightResult, monsters);

@@ -16,7 +16,7 @@ import { Skill, skillList } from '@drpg/core/models/dinoz/SkillList';
 import { addMultipleSkillToDinoz } from '../dao/dinozSkillDao.js';
 import { PublicMetada, PublicTournament, TournamentPhase } from '@drpg/core/models/dojo/tournament';
 import { archiveFight, getViewedTournamentFight, viewFight } from '../dao/archiveDao.js';
-import { FighterRecap, FightResult } from '@drpg/core/models/fight/FightResult';
+import { FighterRecap } from '@drpg/core/models/fight/FightResult';
 import { generateDinozDisplay } from './inventoryService.js';
 import seedrandom from 'seedrandom';
 import {
@@ -98,9 +98,9 @@ export async function getCurrentTournament(req: Request) {
 	}
 }
 
-export async function getCurrentEvents(req: Request) {
+export async function getCurrentEvents() {
 	const activeEvents = await prisma.$queryRaw`
-  SELECT 
+  SELECT
     t.id,
     t."levelLimit",
     t."teamRace",
@@ -583,6 +583,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 			FBTournamentStep: true,
 			placeId: true,
 			id: true,
+			playerId: true,
 			display: true,
 			name: true,
 			level: true,
@@ -656,6 +657,7 @@ export async function fightFBTournamentOpponent(req: Request) {
 			display: true,
 			level: true,
 			id: true,
+			playerId: true,
 			name: true,
 			life: true,
 			maxLife: true,

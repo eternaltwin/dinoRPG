@@ -16,7 +16,7 @@ import { decreaseItemQuantity, increaseItemQuantity, setMultipleItem } from '../
 import { decreaseIngredientQuantity, increaseIngredientQuantity } from '../dao/playerIngredientDao.js';
 import { decreaseQuestProgression, increaseQuestProgression } from '../dao/questsDao.js';
 import { createLog } from '../dao/logDao.js';
-import { AdminRole, LogType, OfferStatus } from '@drpg/prisma';
+import { AdminRole, LogType } from '@drpg/prisma';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
@@ -753,6 +753,7 @@ async function getDinozToFight(dinozId: number) {
 		where: { id: dinozId },
 		select: {
 			id: true,
+			playerId: true,
 			display: true,
 			name: true,
 			level: true,
@@ -774,7 +775,7 @@ async function getDinozToFight(dinozId: number) {
 	return { ...dinoz, status: [], items: [], catches: [] };
 }
 
-export async function getJobs(req: Request) {
+export async function getJobs() {
 	const rawJobs = Object.values(scheduledJobs).map(job => {
 		return {
 			name: job.name,

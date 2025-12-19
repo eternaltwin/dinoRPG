@@ -3,7 +3,6 @@ import { DinozStatusId } from '@drpg/core/models/dinoz/StatusList';
 import { ElementType } from '@drpg/core/models/enums/ElementType';
 import { MapZone } from '@drpg/core/models/enums/MapZone';
 import { PlaceEnum } from '@drpg/core/models/enums/PlaceEnum';
-import { Stat } from '@drpg/core/models/enums/SkillStat';
 import { DetailedFighter, FighterStatusData, FighterType, FightStatus } from '@drpg/core/models/fight/DetailedFighter';
 import { MonsterFiche } from '@drpg/core/models/fight/MonsterFiche';
 import { Monster, monsterList } from '@drpg/core/models/fight/MonsterList';
@@ -94,6 +93,7 @@ export const initializeDinoz = (
 
 	const fighter: DetailedFighter = {
 		id: dinoz.id,
+		playerId: dinoz.playerId,
 		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
@@ -270,6 +270,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 
 	const clone: DetailedFighter = {
 		id: clone_id,
+		playerId: dinoz.playerId,
 		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
@@ -424,6 +425,7 @@ export const initializeMonster = (
 
 	const fighter: DetailedFighter = {
 		id: -memory.existingMonsters,
+		playerId: null,
 		display: monster.display ?? '',
 		name: monster.name,
 		level: monster.level,
@@ -551,7 +553,7 @@ export const initializeMonster = (
 	});
 
 	// Time
-	let initiative = fighter.stats.special.initiative;
+	const { initiative } = fighter.stats.special;
 
 	// Deduct the time from the fighter's initial time
 	fighter.time -= initiative * TIME_FACTOR;

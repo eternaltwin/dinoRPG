@@ -114,7 +114,7 @@ routes.get(`${commonPath}/list`, async (req: Request, res: Response) => {
 	}
 
 	try {
-		const response = await getCurrentEvents(req);
+		const response = await getCurrentEvents();
 		return res.status(200).send(response);
 	} catch (err) {
 		sendError(res, err);

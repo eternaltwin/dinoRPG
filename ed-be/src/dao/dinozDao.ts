@@ -533,6 +533,7 @@ export async function getDinozForDojoFight(dinozIds: number[]) {
 		where: { id: { in: dinozIds } },
 		select: {
 			id: true,
+			playerId: true,
 			display: true,
 			name: true,
 			level: true,

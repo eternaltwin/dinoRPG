@@ -105,6 +105,7 @@ export const AllFighterTypeExceptBoss = [
 
 export interface DetailedFighter {
 	// Metadata
+	playerId: string | null;
 	id: number;
 	name: string;
 	level: number;
@@ -214,6 +215,7 @@ export interface DetailedFighter {
 }
 
 export interface FighterResultFiche {
+	playerId: string | null;
 	dinozId: number;
 	hpLost: number;
 	itemsUsed: Item[];
