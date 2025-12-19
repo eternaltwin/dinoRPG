@@ -89,7 +89,7 @@
 		</td>
 	</tr>
 	<tr v-if="details && offer.dinoz" class="dinoz-details">
-		<td>
+		<td class="dinoz-name-race">
 			<h2 v-html="offer.dinoz.name" />
 			<p class="race">{{ $t(`race.name.${getRace(offer.dinoz).name}`) }}</p>
 		</td>
@@ -103,15 +103,17 @@
 		</td>
 		<td>
 			<ul class="skills">
-				<li v-for="skill in offer.dinoz.skills" :key="skill.skillId">
-					<img
-						v-for="element in skillList[skill.skillId].element"
-						:key="element"
-						:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
-						:alt="ElementNames[element]"
-					/>
-					<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
-				</li>
+				<SkillTooltip v-for="skill in offer.dinoz.skills" :key="skill.skillId" :skill="skillList[skill.skillId].id">
+					<li>
+						<img
+							v-for="element in skillList[skill.skillId].element"
+							:key="element"
+							:src="getImgURL('elements', `elem_${ElementNames[element]}`)"
+							:alt="ElementNames[element]"
+						/>
+						<span>{{ $t(`skill.name.${skillList[skill.skillId].name}`) }}</span>
+					</li>
+				</SkillTooltip>
 			</ul>
 		</td>
 		<td>
@@ -145,6 +147,7 @@ import { skillList } from '@drpg/core/models/dinoz/SkillList';
 import { ElementNames } from '@drpg/core/models/enums/ElementType';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { ingredientNameList } from '@drpg/core/models/ingredient/IngredientNameList';
+import SkillTooltip from '../dinoz/SkillTooltip.vue';
 
 export default defineComponent({
 	name: 'OfferLine',
@@ -179,7 +182,7 @@ export default defineComponent({
 			details: false
 		};
 	},
-	components: { DinozMini, DZButton, DZUser, DZInput },
+	components: { DinozMini, DZButton, DZUser, DZInput, SkillTooltip },
 	methods: {
 		isExpired() {
 			return this.offer.endDate.getTime() / 1000 <= this.now;
@@ -272,8 +275,12 @@ export default defineComponent({
 	}
 }
 .dinoz-details {
-	.race {
-		font-variant: small-caps;
+	.dinoz-name-race {
+		text-align: center;
+
+		.race {
+			font-variant: small-caps;
+		}
 	}
 	.status {
 		list-style-type: none;
@@ -329,11 +336,13 @@ export default defineComponent({
 		list-style-type: none;
 		margin-left: 12px;
 		height: 150px;
-		overflow: scroll;
+		overflow-y: auto;
 		li {
+			display: flex;
+			gap: 2px;
 			font-size: 9pt;
 			img {
-				margin-right: 2px;
+				width: 13px;
 			}
 			span {
 				color: #710;
