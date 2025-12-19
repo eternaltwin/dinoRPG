@@ -2838,7 +2838,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'Merguez consumed',
 			fr: 'Merguez consommées',
 			de: 'Verzehrte Merguez',
-			es: 'Merguez consumidas'
+			es: 'Salchichas consumidas'
 		},
 		rare: 2,
 		unlocks: [],
@@ -2846,7 +2846,7 @@ export const twinoidGoals: Record<StatTracking, Goal> = {
 			en: 'Number of merguez sausages consumed',
 			fr: 'Nombre de merguez consommées',
 			de: 'Anzahl der verzehrten Merguez',
-			es: 'Cantidad de salchichas merguez consumidas'
+			es: 'Cantidad de salchichas consumidas'
 		}
 	},
 	[StatTracking.MEDAL_1]: {
