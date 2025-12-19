@@ -248,7 +248,7 @@ export default defineComponent({
 	mounted() {
 		this.bidValue = Math.max(
 			Math.ceil(this.offer.total / 1000),
-			this.offer.bids.length > 0 ? this.offer.bids[this.offer.bids.length - 1].value : 0
+			this.offer.bids.length > 0 ? this.offer.bids[this.offer.bids.length - 1].value + 1 : 0
 		);
 	}
 });
