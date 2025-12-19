@@ -16,8 +16,8 @@
 				{{ $t('clanSettings.banner.info') }}
 			</div>
 		</div>
-		<div v-if="hasLangEditRight" class="df">
-			{{ $t('clanSettings.langs.title') }}
+		<div v-if="hasLangEditRight" class="language-panel dz-box">
+			<h3>{{ $t('clanSettings.langs.title') }}</h3>
 			<LangSelector v-model="langs" @change="saveLangs" class="df" />
 		</div>
 		<a class="button" @click="deleteClan()">{{ $t('clanSettings.action.delete') }}</a>
@@ -139,9 +139,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 .wrapper {
 	margin: 5px;
+	margin-right: 10px;
 	width: auto;
 	display: flex;
 	flex-direction: column;
+	width: calc(100% - 11px) !important;
+	box-sizing: border-box;
 	.banner-panel {
 		margin: 8px 0;
 		display: flex;
@@ -161,6 +164,12 @@ export default defineComponent({
 			font-style: italic;
 			font-size: 12px;
 		}
+	}
+	.language-panel {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		padding: 0 8px 8px 8px;
 	}
 }
 </style>
