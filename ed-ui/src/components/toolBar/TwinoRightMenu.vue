@@ -199,6 +199,7 @@
 				</div>
 			</div>
 			<PlayerOptions v-if="playerStore.getPlayerId" />
+			<LiveStats />
 		</div>
 	</Transition>
 </template>
@@ -218,10 +219,11 @@ import { ScenarioDetails } from '@drpg/core/models/enums/Scenario';
 import { deleteCookie } from '../../utils/cookies.js';
 import PlayerOptions from './PlayerOptions.vue';
 import { CINEMA_LINK } from '../../utils/goTo.js';
+import LiveStats from './LiveStats.vue';
 
 export default defineComponent({
 	name: 'TwinoRightMenu',
-	components: { PlayerOptions },
+	components: { LiveStats, PlayerOptions },
 	data() {
 		return {
 			menuCalled: false,

@@ -81,8 +81,12 @@
 			"cinema": "Cinéma",
 			"events": "Événements",
 			"system": "Réglages",
+			"stats": "Statistiques en direct",
 			"skipFight": "Afficher directement le résultat de combat",
-			"skipLevel": "Passer l'animation de gain de niveau"
+			"skipLevel": "Passer l'animation de gain de niveau",
+			"connectedPlayers": "Joueurs connectés",
+			"totalDinoz": "Nombre total de dinoz",
+			"totalPlayers": "Nombre total de joueurs"
 		}
 	},
 	"toast": {

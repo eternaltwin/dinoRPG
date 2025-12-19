@@ -49,13 +49,14 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { localStore, playerStore } from '../../store';
+import { localStore, playerStore, sessionStore } from '../../store';
 import EventBus from '../../events/index.js';
 import { OauthService } from '../../services';
 import LocaleChange from '../utils/LocaleChange.vue';
 import { getEternaltwinGames } from '@drpg/core/models/games/eternaltwinGames';
 import { ServerEventsService } from '../../services/ServerEventsService';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
+import { SseData, SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 
 export default defineComponent({
 	name: 'TopBar',
@@ -64,6 +65,7 @@ export default defineComponent({
 		return {
 			localStore: localStore(),
 			playerStore: playerStore(),
+			sessionStore: sessionStore(),
 			time: '' as string,
 			notification: 0 as number,
 			eventSource: null as EventSource | null
@@ -98,7 +100,21 @@ export default defineComponent({
 			const ticket = await ServerEventsService.getSseTicket(SseChannel.NOTIFICATION);
 			this.eventSource = await ServerEventsService.connectToSse(ticket);
 			this.eventSource.onmessage = (message: MessageEvent<string>) => {
-				this.playerStore.addNotification(JSON.parse(message.data));
+				const data = JSON.parse(message.data) as SseData;
+				switch (data.type) {
+					case SseDataEnum.LIVE_STATS:
+						this.sessionStore.setLiveStats(data.live_stats);
+						break;
+					case SseDataEnum.NOTIFICATIONS:
+						this.playerStore.addNotification(data.notifications);
+						break;
+					default:
+						console.log(data);
+						console.error('Not handled SSE data type');
+						break;
+				}
+
+				//
 			};
 			this.eventSource.onerror = () => {
 				this.eventSource?.close();

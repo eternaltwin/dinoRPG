@@ -10,7 +10,7 @@ import { AdminRole, Lang, LogType, OfferStatus, Prisma, UnavailableReason } from
 import dayjs from 'dayjs';
 import type { Request } from 'express';
 import gameConfig from '../config/game.config.js';
-import { LOGGER } from '../context.js';
+import { GLOBAL, LOGGER } from '../context.js';
 import { prisma } from '../prisma.js';
 import { calculatePlayerCompletion } from '../utils/boxesLogic.js';
 import { updateDinoz } from './dinozDao.js';
@@ -87,6 +87,8 @@ export async function createPlayer(newPlayer: Prisma.PlayerCreateInput) {
 			role: true
 		}
 	});
+
+	GLOBAL.liveStats.incrementTotalPlayers();
 
 	return player;
 }
@@ -409,6 +411,7 @@ export async function resetUser(playerId: string) {
 			id: playerId
 		}
 	});
+	GLOBAL.liveStats.decrementTotalPlayers();
 }
 
 export async function getPlayerInfoToReport(playerId: string) {

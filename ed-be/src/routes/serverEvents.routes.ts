@@ -6,6 +6,8 @@ import { WsChannel } from '@drpg/core/models/serverEvents/WsChannel';
 import { SseChannel } from '@drpg/core/models/serverEvents/SseChannel';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import sendError from '../utils/sendErrors.js';
+import { GLOBAL } from '../context.js';
+import { SseDataEnum } from '@drpg/core/models/serverEvents/SseData';
 
 const routes: Router = Router();
 
@@ -50,13 +52,17 @@ routes.get(`${commonPath}/events`, async (req: Request, res: Response) => {
 	// To keep the connection alive
 	res.flushHeaders();
 
-	// Basic heartbeat implementation
-	// Should be enhanced with data (remove the :)
-	const keepAlive = setInterval(() => {
+	const sendUpdate = () => {
 		if (!res.writableEnded) {
-			res.write(': keep-alive\n\n');
+			const data = JSON.stringify({ type: SseDataEnum.LIVE_STATS, live_stats: GLOBAL.liveStats.summary });
+			res.write(`data: ${data}\n\n`);
 		}
-	}, 30000);
+	};
+
+	sendUpdate();
+
+	// Heartbeat / Update périodique (toutes les 30s)
+	const keepAlive = setInterval(sendUpdate, 30000);
 
 	try {
 		await connectUserToSseChannel(req, res);

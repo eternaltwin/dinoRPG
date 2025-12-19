@@ -21,7 +21,7 @@ import { WsMsgResponseCreation } from '@drpg/core/models/serverEvents/WsMsgRespo
 import { checkMessageCanBeDeleted } from './clanService.js';
 import { isJson } from '../utils/helpers/ValidatorHelper.js';
 import { ExpectedError } from '@drpg/core/utils/ExpectedError';
-import { LOGGER } from '../context.js';
+import { GLOBAL, LOGGER } from '../context.js';
 import { UUID } from 'node:crypto';
 import { ServerEventType } from '@drpg/core/models/serverEvents/ServerEventType';
 import { SseChannelData } from '@drpg/core/models/serverEvents/SseChannelData';
@@ -31,6 +31,7 @@ const activeTickets = new Map<string, ServerEventTicket>();
 const wsChannels = new Map<string, WsChannelData[]>();
 const sseChannels = new Map<string, SseChannelData[]>();
 const ticketToChannelMap = new Map<string, string>();
+const connectionCounts = new Map<string, number>();
 
 // Tickets garbage collector
 setInterval(() => {
@@ -450,6 +451,12 @@ export async function connectUserToSseChannel(req: Request, res: Response): Prom
 
 	const ticket: ServerEventTicket = checkTicketValidity(req, ticketUuid);
 
+	const count = connectionCounts.get(ticket.playerId) || 0;
+	if (count === 0) {
+		GLOBAL.liveStats.incrementConnectedPlayers(); // Premier onglet !
+	}
+	connectionCounts.set(ticket.playerId, count + 1);
+
 	// Remove the ticket in order to not use it twice
 	activeTickets.delete(ticketUuid);
 
@@ -472,12 +479,24 @@ export async function disconnectSseUser(req: Request): Promise<void> {
 
 	const channelData = sseChannels.get(channelName);
 	if (channelData) {
+		const departingPlayer = channelData.find(p => p.ticketUuid === ticketUuid);
+
 		const usersLeftInChannel = channelData.filter(player => player.ticketUuid !== ticketUuid);
 
 		if (usersLeftInChannel.length === 0) {
 			sseChannels.delete(channelName);
 		} else {
 			sseChannels.set(channelName, usersLeftInChannel);
+		}
+
+		if (departingPlayer) {
+			const isStillConnectedElsewhere = Array.from(sseChannels.values()).some(channel =>
+				channel.some(p => p.playerId === departingPlayer.playerId)
+			);
+
+			if (!isStillConnectedElsewhere) {
+				GLOBAL.liveStats.decrementConnectedPlayers();
+			}
 		}
 	}
 

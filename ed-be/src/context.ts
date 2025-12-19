@@ -7,6 +7,7 @@ import { Logger } from './logger/index.js';
 import { PARENT_PORT } from './logger/parent-port.js';
 import { DiscordClient, NetworkDiscordClient, NOOP_DISCORD_CLIENT } from './utils/DiscordUtils.js';
 import { ASYNC_DISPOSE } from './utils/dispose.js';
+import { LiveStats } from './liveStats.js';
 
 const DEBUG_QUERIES = false;
 
@@ -18,6 +19,8 @@ export class ServerContext {
 	public readonly logger: Logger;
 
 	public readonly prisma: PrismaClient;
+
+	public liveStats: LiveStats;
 
 	public constructor(config: Config) {
 		const fallbackLogger: Logger = new Logger([isMainThread ? CONSOLE : PARENT_PORT]);
@@ -99,6 +102,16 @@ export class ServerContext {
 
 	public async [ASYNC_DISPOSE](): Promise<void> {
 		await this.close();
+	}
+
+	public async init(): Promise<void> {
+		const totalPlayers = await this.prisma.player.count();
+		const totalDinoz = await this.prisma.dinoz.count();
+		this.liveStats = new LiveStats({
+			totalDinoz: totalDinoz,
+			totalPlayers: totalPlayers,
+			connectedPlayers: 0
+		});
 	}
 }
 
