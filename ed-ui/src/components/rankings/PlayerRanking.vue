@@ -64,6 +64,7 @@ import DZUser from '../common/DZUser.vue';
 import PlayerMenu from '../modal/PlayerMenu.vue';
 import DZDisclaimer from '../common/DZDisclaimer.vue';
 import SearchEntity from '../data/SearchEntity.vue';
+import { SelectOption } from '../common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'PlayerRanking',
@@ -92,8 +93,8 @@ export default defineComponent({
 		leave() {
 			this.seePlayer = false;
 		},
-		goToAccount(player: { id: string; name: string }) {
-			this.$router.push({ name: 'MyAccount', params: { id: player.id } });
+		goToAccount(player: SelectOption<string>) {
+			this.$router.push({ name: 'MyAccount', params: { id: player.value } });
 		},
 		async getRanking(): Promise<void> {
 			EventBus.emit('isLoading', true);

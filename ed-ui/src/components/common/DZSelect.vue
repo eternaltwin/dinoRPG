@@ -21,7 +21,7 @@
 				v-model="searchQuery"
 				type="text"
 				class="search-input"
-				:placeholder="$t('button.search')"
+				:placeholder="placeholder ?? $t('button.search')"
 				@keydown.down.prevent="focusNext()"
 				@keydown.up.prevent="focusPrev()"
 				@keydown.enter.prevent="commitFocused()"
@@ -65,13 +65,14 @@ const props = withDefaults(
 		options?: SelectOption<T>[];
 		search?: (query: string) => Promise<SelectOption<T>[]>;
 		debounceMs?: number;
+		placeholder?: string;
 	}>(),
 	{
 		debounceMs: 300
 	}
 );
 
-const emit = defineEmits<{ 'update:modelValue': [value: T]; change: [] }>();
+const emit = defineEmits<{ 'update:modelValue': [value: T]; change: [option: SelectOption<T> | undefined] }>();
 
 const open = ref(false);
 const focusedIndex = ref(-1);
@@ -104,7 +105,10 @@ const select = (v: T, e?: MouseEvent) => {
 	if (e && e.button !== 0) return; // Only left click
 
 	emit('update:modelValue', v);
-	emit('change');
+	emit(
+		'change',
+		filteredOptions.value.find(o => o.value === v)
+	);
 	close();
 };
 

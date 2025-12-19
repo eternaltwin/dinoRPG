@@ -60,7 +60,7 @@ input {
 	}
 
 	&::placeholder {
-		color: #bc683c;
+		color: #ffee92;
 		opacity: 0.7;
 	}
 }

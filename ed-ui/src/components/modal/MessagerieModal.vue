@@ -123,7 +123,7 @@ import DZDisclaimer from '../common/DZDisclaimer.vue';
 import DZUser from '../common/DZUser.vue';
 import Thread from '../message/Thread.vue';
 import SearchEntity from '../data/SearchEntity.vue';
-import { Player } from '@drpg/prisma';
+import { SelectOption } from '../common/DZSelect.vue';
 
 export default defineComponent({
 	name: 'messagerie',
@@ -157,11 +157,18 @@ export default defineComponent({
 			this.creationMode = false;
 			this.newThread = {} as NewThread;
 		},
-		participantThead(p: Pick<Player, 'id' | 'name'>) {
+		participantThead(p: SelectOption<string>) {
+			const participant = {
+				id: p.value,
+				name: p.label
+			};
 			if (!this.newThread.participants) {
-				this.newThread.participants = [p];
-			} else if (!this.newThread.participants.some(e => e.id === p.id) && this.newThread.participants.length < 9) {
-				this.newThread.participants.push(p);
+				this.newThread.participants = [participant];
+			} else if (
+				!this.newThread.participants.some(e => e.id === participant.id) &&
+				this.newThread.participants.length < 9
+			) {
+				this.newThread.participants.push(participant);
 			}
 		},
 		close(): void {
