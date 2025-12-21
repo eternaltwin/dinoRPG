@@ -40,7 +40,7 @@ import DZButton from '../components/common/DZButton.vue';
 import TitleHeader from '../components/utils/TitleHeader.vue';
 import EventBus from '../events/index.js';
 import { DinozService, NPCService, PlayerService } from '../services/index.js';
-import { dinozStore, sessionStore } from '../store/index.js';
+import { dinozStore, playerStore, sessionStore } from '../store/index.js';
 import { errorHandler } from '../utils/index.js';
 
 export default defineComponent({
@@ -52,6 +52,7 @@ export default defineComponent({
 			npcSpeech: {} as NpcTalk,
 			loaded: false as boolean,
 			dinozStore: dinozStore(),
+			playerStore: playerStore(),
 			sessionStore: sessionStore(),
 			swfName: undefined as string | undefined
 		};
@@ -93,6 +94,10 @@ export default defineComponent({
 							break;
 						case ServiceEnum.REFRESH_DINOZLIST:
 							this.dinozStore.setDinozList(await PlayerService.getDinozList());
+							EventBus.emit('isLoading', false);
+							break;
+						case ServiceEnum.REFRESH_PLAYER:
+							await this.playerStore.update();
 							EventBus.emit('isLoading', false);
 							break;
 						case ServiceEnum.FIGHT:

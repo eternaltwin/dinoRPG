@@ -15,6 +15,7 @@ import { rewarder } from '../utils/rewarder.js';
 import translate from '../utils/translate.js';
 import { calculateFightVsMonsters, rewardFight } from './fightService.js';
 import { Npc } from '@drpg/core/models/npc/npc';
+import { NpcData } from '@drpg/core/models/npc/NpcData';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
@@ -190,9 +191,17 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		name: npcName,
 		speech: nextStepWantedData.stepName,
 		playerChoice: playerChoices,
-		flashvars: pnj.flashvars
+		flashvars: pnj.flashvars,
+		service: nextStepServices(nextStepWantedData)
 	};
 }
+
+/**
+ * Get services to call after the NPC talk
+ */
+const nextStepServices = (data: NpcData) => {
+	return data.reward?.filter(r => 'service' in r).map(r => 'service' in r ? r.service : []).reduce((acc, curr) => curr ? acc?.concat(curr) : acc, [])
+};
 
 function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {
 	// Send redirection request if there is one as a rewards
