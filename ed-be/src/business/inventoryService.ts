@@ -41,6 +41,25 @@ import { getLetter, getRandomLetter, getRandomNumber } from '../utils/index.js';
 import translate from '../utils/translate.js';
 import { applySkillEffect } from './skillService.js';
 import UnavailableReason = $Enums.UnavailableReason;
+import { Reward } from '@drpg/core/models/reward/RewardList';
+
+export const getItemMaxQuantity = (playerInventoryData: NonNullable<Awaited<ReturnType<typeof getPlayerInventoryDataRequest>>>, item: ItemFiche) => {
+	if (item.itemId === Item.GOBLIN_MERGUEZ) {
+		if (playerInventoryData.rewards.some(r => r.rewardId === Reward.CARD)) {
+			if (playerInventoryData.shopKeeper) {
+				return 150;
+			}
+
+			return 100;
+		}
+	}
+
+	if (playerInventoryData.shopKeeper && item.itemType !== ItemType.MAGICAL) {
+		return Math.round(item.maxQuantity * 1.5);
+	}
+
+	return item.maxQuantity;
+};
 
 /**
  * @summary Get all items from the inventory of a player
@@ -66,27 +85,12 @@ export async function getAllItemsData(req: Request) {
 			throw new ExpectedError(`Item ${i.itemId} doesn't exist.`);
 		}
 
-		if (
-			theItem.itemId === Item.GOBLIN_MERGUEZ &&
-			playerInventoryData.quests.some(q => q.questId === Scenario.MERGUEZ && q.progression === 5)
-		) {
-			return {
-				id: theItem.itemId,
-				price: theItem.price,
-				quantity: playerInventoryData ? i.quantity : 0,
-				maxQuantity: 100
-			};
-		}
-
 		// Push a new item object with its properties accordingly to the player's unique skills and data
 		return {
 			id: theItem.itemId,
 			price: theItem.price,
 			quantity: playerInventoryData ? i.quantity : 0,
-			maxQuantity:
-				playerInventoryData.shopKeeper && theItem.itemType !== ItemType.MAGICAL
-					? Math.round(theItem.maxQuantity * 1.5)
-					: theItem.maxQuantity
+			maxQuantity: getItemMaxQuantity(playerInventoryData, theItem),
 		};
 	});
 
