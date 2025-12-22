@@ -309,7 +309,7 @@ export async function cancelOffer(req: Request) {
 	// Delete offer
 	await deleteOffer(offerId);
 	await createLog(LogType.OfferCancelled, playerId, undefined, offerId);
-	const job = scheduledJobs[offerId.toString()];
+	const job = scheduledJobs[`offer_${offerId.toString()}`];
 	job.cancel();
 }
 
@@ -387,7 +387,7 @@ export async function bidOffer(req: Request) {
 
 	// Add 30s to offer
 	const rescheduled = await extendTimer(offer);
-	const job = scheduledJobs[offerId.toString()];
+	const job = scheduledJobs[`offer_${offerId.toString()}`];
 	job.cancel();
 	job.schedule(rescheduled.endDate);
 }
