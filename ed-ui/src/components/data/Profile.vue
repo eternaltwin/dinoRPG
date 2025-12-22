@@ -115,6 +115,7 @@ import { formatText } from '../../utils/formatText.js';
 import DZUser from '../common/DZUser.vue';
 import { deleteCookie } from '../../utils/cookies.js';
 import { Tippy } from 'vue-tippy';
+import { formatDate } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'Profile',
@@ -143,10 +144,7 @@ export default defineComponent({
 	},
 	methods: {
 		getFormattedSubscribe() {
-			const date = new Date(this.accountData.subscribedAt).toLocaleString().split(',')[0].split('/');
-			const formatter = new Intl.DateTimeFormat(this.localStore.getLanguage ?? 'fr', { month: 'long' });
-			const month = formatter.format(new Date(parseInt(date[2]), parseInt(date[0]) - 1, parseInt(date[1])));
-			return `${date[1]} ${month} ${date[2]}`;
+			return formatDate(this.accountData.subscribedAt);
 		},
 		hasPlume(): boolean {
 			return this.accountData.epicRewards.includes(Reward.PLUME);

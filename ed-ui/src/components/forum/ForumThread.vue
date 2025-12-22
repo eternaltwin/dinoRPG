@@ -30,6 +30,7 @@ import DZUser from '../common/DZUser.vue';
 import { localStore } from '../../store/index.js';
 import TitleHeader from '../utils/TitleHeader.vue';
 import DZButton from '../common/DZButton.vue';
+import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'ForumThread',
@@ -49,24 +50,7 @@ export default defineComponent({
 			this.$router.push({ name: 'Forum' });
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage ?? 'fr';
-
-			// Formatter pour la date (jour, mois, année)
-			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
-			const formattedDate = dateFormatter.format(date);
-
-			// Formatter pour l'heure (heure, minute, seconde)
-			const timeFormatter = new Intl.DateTimeFormat(lang, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-
-			// Combinaison date + heure
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(dateString);
 		},
 		async readThread() {
 			const id = this.$route.params.threadId as string;

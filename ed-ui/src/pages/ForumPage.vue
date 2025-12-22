@@ -27,6 +27,7 @@ import { errorHandler } from '../utils/index.js';
 import { DatedThread, Thread } from '@drpg/core/models/forum/Forum';
 import { localStore } from '../store/index.js';
 import TitleHeader from '../components/utils/TitleHeader.vue';
+import { formatDate } from '../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'ForumPage',
@@ -41,21 +42,7 @@ export default defineComponent({
 	},
 	methods: {
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage;
-			const dateFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
-				day: '2-digit',
-				month: 'long',
-				year: 'numeric'
-			});
-			const formattedDate = dateFormatter.format(date);
-			/*const timeFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
-				hour: '2-digit',
-				minute: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);*/
-			return `${formattedDate}`;
+			return formatDate(dateString);
 		},
 		lastPoster(thread: Thread) {
 			return thread.posts;

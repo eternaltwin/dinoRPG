@@ -55,6 +55,7 @@ import { DinozDojoFiche } from '@drpg/core/models/dinoz/DinozFiche';
 import { TournamentPhase, TournamentState } from '@drpg/core/models/dojo/tournament';
 import DZButton from '../common/DZButton.vue';
 import DinozWithoutFlash from '../dinoz/DinozWithoutFlash.vue';
+import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'TournamentInfo',
@@ -155,24 +156,7 @@ export default defineComponent({
 			}
 		},
 		formatDate(oldDate: Date) {
-			const date = new Date(oldDate.toString());
-			const lang = this.localStore.getLanguage ?? 'fr';
-
-			// Formatter pour la date (jour, mois, année)
-			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
-			const formattedDate = dateFormatter.format(date);
-
-			// Formatter pour l'heure (heure, minute, seconde)
-			const timeFormatter = new Intl.DateTimeFormat(lang, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-
-			// Combinaison date + heure
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(oldDate.toString());
 		}
 	},
 	async mounted() {

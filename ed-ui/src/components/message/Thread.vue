@@ -62,6 +62,7 @@ import { MessagerieService } from '../../services/MessagerieService.js';
 import { errorHandler } from '../../utils/index.js';
 import DZUser from '../common/DZUser.vue';
 import Editor from '../common/Editor.vue';
+import { formatDate } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'Thread',
@@ -92,13 +93,7 @@ export default defineComponent({
 			}
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage;
-			const formatter = new Intl.DateTimeFormat(lang ?? 'fr', { month: 'long' });
-			const day = String(date.getDate()).padStart(2, '0'); // Ajoute un '0' si nécessaire
-			const month = formatter.format(date);
-			const year = date.getFullYear();
-			return `${day} ${month} ${year}`;
+			return formatDate(dateString);
 		},
 		async sendMessage() {
 			if (!this.answer || !this.myThread) return;

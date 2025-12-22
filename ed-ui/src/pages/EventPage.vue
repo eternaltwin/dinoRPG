@@ -47,6 +47,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZTable from '../components/common/DZTable.vue';
 import { localStore } from '../store/index.js';
 import { raceList } from '../constants/index.js';
+import { formatDateTime } from '../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'EventPage',
@@ -69,24 +70,7 @@ export default defineComponent({
 			}
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage ?? 'fr';
-
-			// Formatter pour la date (jour, mois, année)
-			const dateFormatter = new Intl.DateTimeFormat(lang, { day: '2-digit', month: 'short', year: 'numeric' });
-			const formattedDate = dateFormatter.format(date);
-
-			// Formatter pour l'heure (heure, minute, seconde)
-			const timeFormatter = new Intl.DateTimeFormat(lang, {
-				hour: '2-digit',
-				minute: '2-digit',
-				second: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-
-			// Combinaison date + heure
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(dateString);
 		},
 		goToTournament(id: string) {
 			this.$router.push({ name: 'FBTournament', query: { id: id } });

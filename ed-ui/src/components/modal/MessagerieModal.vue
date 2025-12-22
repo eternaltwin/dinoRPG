@@ -124,6 +124,7 @@ import DZUser from '../common/DZUser.vue';
 import Thread from '../message/Thread.vue';
 import SearchEntity from '../data/SearchEntity.vue';
 import { Player } from '@drpg/prisma';
+import { formatDateTime } from '../../utils/formatDateTime';
 
 export default defineComponent({
 	name: 'messagerie',
@@ -181,21 +182,7 @@ export default defineComponent({
 			this.notifiedThreads = this.notifiedThreads.filter(t => t !== id);
 		},
 		formatDate(dateString: string) {
-			const date = new Date(dateString);
-			const lang = this.localStore.getLanguage;
-			const dateFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
-				day: '2-digit',
-				month: 'long',
-				year: 'numeric'
-			});
-			const formattedDate = dateFormatter.format(date);
-			const timeFormatter = new Intl.DateTimeFormat(lang ?? 'fr', {
-				hour: '2-digit',
-				minute: '2-digit',
-				hour12: false
-			});
-			const formattedTime = timeFormatter.format(date);
-			return `${formattedDate}, ${formattedTime}`;
+			return formatDateTime(dateString);
 		},
 		async sendMessage() {
 			try {
