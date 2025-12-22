@@ -28,12 +28,11 @@ import { sessionStore } from '../../store';
 
 export default defineComponent({
 	name: 'LiveStats',
-	data() {
-		return {
-			liveStats: sessionStore().getLiveStats
-		};
-	},
-	watch: {}
+	computed: {
+		liveStats() {
+			return sessionStore().getLiveStats
+		}
+	}
 });
 </script>
 
