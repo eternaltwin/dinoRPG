@@ -153,6 +153,7 @@ export default defineComponent({
 			this.displayFinal = true;
 			try {
 				this.final = await DojoService.getTournamentFights(this.tournamentId, TournamentPhase.FINALS, 0);
+				console.log(`final = ${this.final}`);
 				this.dinozInFights = this.final.reduce((acc, fight) => {
 					const d1 = {
 						...fight.tournamentTeamLeft,
