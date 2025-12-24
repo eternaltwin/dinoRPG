@@ -232,7 +232,7 @@ export async function getAllArchivedFight(req: Request) {
  * Generate a random challenge
  * @returns {Challenge}
  */
-function generateRandomChallenge(): Challenge {
+export function generateRandomChallenge(): Challenge {
 	// Get all challenge types from the enum
 	const challengeTypes = Object.values(ChallengeType); // Filter out reverse mappings
 

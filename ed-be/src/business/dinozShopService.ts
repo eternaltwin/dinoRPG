@@ -21,7 +21,7 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 // TODO: Refaire cette fonction en construisant un objet de retour
 export async function getDinozFromDinozShop(req: Request) {
 	const authed = await auth(req);
-
+	
 	// Retrieve player with dinoz shop info
 	const playerData = await getPlayerDinozShopRequest(authed.id);
 

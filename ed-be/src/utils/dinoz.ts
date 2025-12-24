@@ -79,7 +79,7 @@ export const initializeDinoz = (
 ): Prisma.DinozCreateInput => {
 	seed = seed ?? randomUUID();
 	return {
-		name: '?',
+		name: 'Test',
 		unavailableReason: null,
 		raceId: race.raceId,
 		level: 1,

@@ -7,6 +7,10 @@ import { ExpectedError } from '@drpg/core/utils/ExpectedError';
 import { NotificationSeverity } from '@drpg/prisma';
 import { Request } from 'express';
 import { LOGGER } from '../context.js';
+import fetch from 'node-fetch';
+import { hatchEgg } from '../business/inventoryService.js';
+import { itemList } from '@drpg/core/models/item/ItemList';
+import { addPlayerInRanking } from '../dao/rankingDao.js';
 import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
 import {
 	acceptPlayerJoinRequest,
@@ -55,7 +59,24 @@ import { JoinClanResponse, JoinRequestListResponse } from '@drpg/core/models/cla
 import { currentEvents } from '@drpg/core/models/event/Events';
 import { ClanRankingType } from '@drpg/core/models/rankings/clanRanking';
 import { ClanMember } from '@drpg/core/models/clan/clanMember';
-
+import gameConfig from '../config/game.config.js';
+import {
+	createPlayer,
+	getTestUsers,
+} from '../dao/playerDao.js';
+import {
+	getAllDinozFromAccount
+} from '../dao/dinozDao.js';
+import { updateDojoPoints } from '../dao/rankingDao.js';
+import {
+	simplifyCreateTournamentTeam
+} from '../business/tournamentService.js';
+import {
+	createMyDojo,
+} from '../dao/dojoDao.js';
+import {
+	generateRandomChallenge
+} from '../business/dojoService.js';
 /**
  * Get all the clans
  * @param req
@@ -599,6 +620,53 @@ export async function getClanHistoryCount(req: Request) {
 	return { count };
 }
 
+interface UserResponse {
+  id: string;
+}
+
+
+async function createTestUsers() {
+	const url = 'http://localhost:50320/api/v1/users';
+
+	for (let i = 2; i <= 100; i++) {
+		const name = `test${i}`;
+		const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536'});
+		const response = await fetch(url, {method: 'POST', headers: {
+			'Content-Type': 'application/json', // Indicate the body content type
+			'Accept': 'application/json' // Tell the server you expect JSON in response
+		}, body: body});
+
+		if (!response.ok) {
+			const errorData = await response.text();
+			console.error(`Request failed while creating ${name} with status ${response.status} ${errorData}`);
+		} else {
+			const data = (await response.json()) as UserResponse;
+
+			const user_id = data.id;
+			const user_name = name;
+			const player = await createPlayer({
+				id: user_id,
+				name: user_name,
+				money: gameConfig.general.initialMoney,
+				quetzuBought: 0
+			});
+			await addPlayerInRanking(player.id);
+			await createMyDojo(player.id, generateRandomChallenge());
+
+			const egg = Object.values(itemList).find(item => item.itemId === 68);
+			if (egg === undefined) {
+				throw new ExpectedError('Could not found egg');
+			}
+			await hatchEgg(egg, {id: player.id, lang: 'es'});
+			await hatchEgg(egg, {id: player.id, lang: 'es'});
+		}
+
+	
+	}
+
+
+}
+
 /**
  * Give clan a set of ingredients
  * @param req
@@ -610,6 +678,17 @@ export async function giveClanIngredients(req: Request) {
 	const authed = await auth(req);
 	const clanId = +req.params.id;
 	const clan = await getClanMembersListRequest(clanId);
+
+	// await createTestUsers();
+	const players = await getTestUsers();
+
+	for (const player of players) {
+		await updateDojoPoints(player.id, 2);
+		const dinoz = await getAllDinozFromAccount(player.id);
+		console.log(`player ${player.name} has ${dinoz.length} dinos`);
+		await simplifyCreateTournamentTeam(player.id, dinoz.map(dino => dino.id));
+	}
+
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
 		throw new ExpectedError(`Player is not in the clan`);

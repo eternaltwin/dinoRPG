@@ -96,6 +96,83 @@ export async function createTournamentTeam(req: Request) {
 	return;
 }
 
+export async function simplifyCreateTournamentTeam(playerId: string, teamIds: number[]) {
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError(translate('dojo.qualificationOver', {"lang": "es"}));
+	}
+
+	const latestTournament = await prisma.tournament.findFirst({
+		orderBy: {
+			date: 'desc'
+		}
+	});
+
+	// This shouldn't happen
+	if (!latestTournament) {
+		throw new Error('No tournament found.');
+	}
+
+	// Check if player select the right number of dinoz
+	if (teamIds.length !== latestTournament.teamSize) {
+		throw new ExpectedError(translate('dojo.wrongDinozQuantity', {"lang": "es"}, { qty: latestTournament.teamSize }));
+	}
+
+	const playerDinoz = await getPlayerDinozInformationForTeam(playerId);
+
+	// Check if player possess all the selected dinoz
+	if (!teamIds.every(id => playerDinoz.dinoz.map(d => d.id).includes(id))) {
+		throw new ExpectedError(translate('dojo.dinozNotPlayer', {"lang": "es"}));
+	}
+
+	const playerFilteredDinoz = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
+
+	const authorizedRaces = latestTournament.teamRace.split(',').map(r => parseInt(r)) as number[];
+
+	// Check if dinoz races are authorized for this tournament
+	if (!playerFilteredDinoz.every(d => authorizedRaces.includes(d.raceId))) {
+		throw new ExpectedError(translate('dojo.wrongRace', {"lang": "es"}));
+	}
+
+	//Check if dinoz are under max level
+	if (playerFilteredDinoz.some(d => d.level > latestTournament.levelLimit)) {
+		throw new ExpectedError(translate('dojo.dinozTooHighLevel', {"lang": "es"}));
+	}
+
+	// Check filtered dinoz is equal to asked dinoz (shouldn't be possible)
+	if (playerFilteredDinoz.length !== teamIds.length) {
+		throw new ExpectedError('Filtered dinoz is not enought');
+	}
+
+	// Check if number of race is at least equal to the limit
+	const playerRaces = new Set<number>();
+	playerFilteredDinoz.forEach(d => playerRaces.add(d.raceId));
+	if (playerRaces.size < latestTournament.raceMinimum) {
+		throw new ExpectedError(translate('dojo.notEnoughDiversity', {"lang": "es"}));
+	}
+
+	await prisma.tournamentTeam.create({
+		data: {
+			dinoz: {
+				connect: teamIds.map(id => ({ id: id }))
+			},
+			Tournament: {
+				connect: { id: latestTournament.id }
+			},
+			dojo: {
+				connect: { id: playerDinoz.Dojo?.id }
+			},
+			dojoId: playerDinoz.Dojo?.id,
+			teamCount: teamIds.length
+		},
+		include: {
+			dinoz: true
+		}
+	});
+
+	return;
+}
+
 export async function deleteTournamentTeam(req: Request) {
 	const authed = await auth(req);
 
@@ -394,14 +471,14 @@ export async function createFirstTournament(prisma: PismaClientLocal) {
 		}
 	});
 
-	if (dinozCount > 5000) {
+	if (dinozCount > 2) {
 		const tournamentFormat = formatTID[1];
-		const teamSize = 4;
+		const teamSize = 2;
 		const teamRace = tournamentFormat.teamRace;
-		const raceMinimum = 4;
+		const raceMinimum = 1;
 		const levelLimit = await getLevelLimits(tournamentFormat.teamRace);
 
-		const endQualif = dayjs().add(6, 'days').set('hour', 23).set('minute', 59).set('second', 59).toDate();
+		const endQualif = dayjs().add(5, 'minutes').toDate();
 		await prisma.tournament.create({
 			data: {
 				formatName: tournamentFormat.name,
@@ -441,7 +518,7 @@ export async function getLevelLimits(races: RaceEnum[]) {
 		}
 		currentLevel += 5;
 	}
-	return maxLevel;
+	return 50;
 }
 
 export async function getNewLevelLimits(races: RaceEnum[]) {

@@ -179,7 +179,7 @@ export async function useItem(req: Request) {
 			await createLog(LogType.Revive, dinoz.player.id, dinoz.id, itemData.itemId.toString(), '1');
 			break;
 		case ItemEffect.EGG:
-			const race = await hatchEgg(item, authed);
+			const [race, other] = await hatchEgg(item, authed);
 			feedback = {
 				category: ItemEffect.EGG,
 				value: raceList[race].name
@@ -227,27 +227,11 @@ export async function useItem(req: Request) {
 	return feedback;
 }
 
-async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
+export async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>): Promise<[RaceEnum, number]> {
 	if (!item || !item.effect || item.effect.category != ItemEffect.EGG) {
 		throw new ExpectedError('Missing item, egg effect or item is not an egg');
 	}
 	let race = item.effect.race;
-
-	//Check if player can hatch dinoz
-	const dinozActive = await getActiveDinoz(authed.id);
-
-	const player = dinozActive[0].player;
-
-	if (!player) {
-		throw new ExpectedError(`Player missing`);
-	}
-
-	if (dinozActive.length > 0) {
-		const maxDinoz = gameConfig.dinoz.maxQuantity + (player.leader ? 3 : 0) + (player.messie ? 3 : 0);
-		if (dinozActive.length >= maxDinoz) {
-			throw new ExpectedError(translate('tooManyActiveDinoz', authed));
-		}
-	}
 
 	let randomDisplay = '0';
 
@@ -394,7 +378,7 @@ async function hatchEgg(item: ItemFiche, authed: Pick<Player, 'id' | 'lang'>) {
 	);
 	await updateDinozCount(authed.id, 1);
 	await updatePoints(authed.id, 1);
-	return race;
+	return [race, dinozCreated.id];
 }
 
 export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: string, rare_2: string) {

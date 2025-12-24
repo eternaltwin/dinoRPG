@@ -414,6 +414,16 @@ export async function resetUser(playerId: string) {
 	GLOBAL.liveStats.decrementTotalPlayers();
 }
 
+export async function getTestUsers() {
+	return await prisma.player.findMany({
+		where: {
+			name: {
+				contains: 'test',
+			}
+		}
+	});
+}
+
 export async function getPlayerInfoToReport(playerId: string) {
 	return await prisma.player.findUnique({
 		where: {

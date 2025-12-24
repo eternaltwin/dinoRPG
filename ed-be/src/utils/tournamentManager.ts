@@ -50,11 +50,11 @@ class TournamentManager {
 	private getSchedule(): TournamentSchedule {
 		const qualificationStart = dayjs(this.startDate).locale('fr').toDate();
 		// Qualif end the sunday night
-		const qualificationEnd = dayjs(this.startDate).locale('fr').endOf('week').endOf('day').toDate();
+		const qualificationEnd = dayjs(this.startDate).add(5, 'minutes').toDate();
 
-		const poolsStart = dayjs(this.startDate).locale('fr').add(1, 'week').startOf('week').toDate();
+		const poolsStart = dayjs(qualificationEnd).add(5, 'minutes').toDate();
 
-		const finalsStart = dayjs(this.startDate).locale('fr').add(11, 'days').startOf('day').toDate();
+		const finalsStart = dayjs(qualificationEnd).add(25, 'minutes').toDate();
 
 		return {
 			qualificationStart,
@@ -69,68 +69,65 @@ class TournamentManager {
 		const times: { time: Date; description: string; round: number }[] = [];
 
 		// Mardi (Poules Round 1 & 2)
-		const tuesday = dayjs(schedule.poolsStart).add(1, 'days');
+		const tuesday = dayjs(schedule.poolsStart);
 		times.push(
 			{
-				time: tuesday.set('hour', 12).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(5, 'minutes').toDate(),
 				description: 'Pools - Huitièmes de finales',
 				round: 0
 			},
 			{
-				time: tuesday.set('hour', 21).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(10, 'minutes').toDate(),
 				description: 'Pools - Quarts de finales',
 				round: 1
 			}
 		);
 
 		// Mercredi (Demis et Finales)
-		const wednesday = dayjs(schedule.poolsStart).add(2, 'days');
 		times.push(
 			{
-				time: wednesday.set('hour', 12).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(15, 'minutes').toDate(),
 				description: 'Pools - Demis-finales',
 				round: 2
 			},
 			{
-				time: wednesday.set('hour', 21).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(20, 'minutes').toDate(),
 				description: 'Pools - Finales',
 				round: 3
 			}
 		);
 
 		// Vendredi (Début des finales)
-		const friday = dayjs(schedule.finalsStart);
 		times.push(
 			{
-				time: friday.set('hour', 12).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(25, 'minutes').toDate(),
 				description: 'Finales - Premiers matchs',
 				round: 4
 			},
 			{
-				time: friday.set('hour', 21).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(30, 'minutes').toDate(),
 				description: 'Finales - Winners/Losers',
 				round: 5
 			}
 		);
 
 		// Samedi (Finales)
-		const saturday = dayjs(schedule.finalsStart).add(1, 'days');
 		times.push(
 			{
-				time: saturday.set('hour', 12).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(35, 'minutes').toDate(),
 				description: 'Finales - Repêchage',
 				round: 6
 			},
 			{
-				time: saturday.set('hour', 21).set('minute', 0).set('second', 0).toDate(),
+				time: tuesday.add(40, 'minutes').toDate(),
 				description: 'Grande Finale',
 				round: 7
 			}
 		);
 
-		const nextMonday = dayjs(schedule.qualificationStart).add(2, 'week');
+		const nextMonday = tuesday.add(45, 'minutes');
 		times.push({
-			time: nextMonday.startOf('day').toDate(),
+			time: nextMonday.toDate(),
 			description: 'New tournament',
 			round: 8
 		});
@@ -792,8 +789,7 @@ LIMIT ${64};`;
 
 		if (!activeTournament) {
 			const today = dayjs();
-			const daysUntilNextMonday = (1 + 7 - today.day()) % 7;
-			const nextMonday = today.add(daysUntilNextMonday, 'day').startOf('day');
+			const nextMonday = today.add(30, 'seconds');
 			LOGGER.error(`No tournament found, schedule a creation for ${nextMonday}.`);
 			scheduleJob('createFirstTournament', nextMonday.toDate(), () => createFirstTournament(prisma));
 			return null;
