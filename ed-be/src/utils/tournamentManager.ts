@@ -100,12 +100,12 @@ class TournamentManager {
 		// Vendredi (Début des finales)
 		times.push(
 			{
-				time: tuesday.add(4, 'minutes').toDate(),
+				time: tuesday.add(15, 'minutes').toDate(),
 				description: 'Finales - Premiers matchs',
 				round: 4
 			},
 			{
-				time: tuesday.add(5, 'minutes').toDate(),
+				time: tuesday.add(20, 'minutes').toDate(),
 				description: 'Finales - Winners/Losers',
 				round: 5
 			}
@@ -114,18 +114,18 @@ class TournamentManager {
 		// Samedi (Finales)
 		times.push(
 			{
-				time: tuesday.add(6, 'minutes').toDate(),
+				time: tuesday.add(25, 'minutes').toDate(),
 				description: 'Finales - Repêchage',
 				round: 6
 			},
 			{
-				time: tuesday.add(7, 'minutes').toDate(),
+				time: tuesday.add(30, 'minutes').toDate(),
 				description: 'Grande Finale',
 				round: 7
 			}
 		);
 
-		const nextMonday = tuesday.add(8, 'minutes');
+		const nextMonday = tuesday.add(35, 'minutes');
 		times.push({
 			time: nextMonday.toDate(),
 			description: 'New tournament',
