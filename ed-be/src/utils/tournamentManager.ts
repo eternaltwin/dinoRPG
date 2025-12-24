@@ -52,9 +52,9 @@ class TournamentManager {
 		// Qualif end the sunday night
 		const qualificationEnd = dayjs(this.startDate).add(5, 'minutes').toDate();
 
-		const poolsStart = dayjs(qualificationEnd).add(5, 'minutes').toDate();
+		const poolsStart = dayjs(qualificationEnd).add(1, 'minutes').toDate();
 
-		const finalsStart = dayjs(qualificationEnd).add(25, 'minutes').toDate();
+		const finalsStart = dayjs(qualificationEnd).add(5, 'minutes').toDate();
 
 		return {
 			qualificationStart,
@@ -72,12 +72,12 @@ class TournamentManager {
 		const tuesday = dayjs(schedule.poolsStart);
 		times.push(
 			{
-				time: tuesday.add(5, 'minutes').toDate(),
+				time: tuesday.add(0, 'minutes').toDate(),
 				description: 'Pools - Huitièmes de finales',
 				round: 0
 			},
 			{
-				time: tuesday.add(10, 'minutes').toDate(),
+				time: tuesday.add(1, 'minutes').toDate(),
 				description: 'Pools - Quarts de finales',
 				round: 1
 			}
@@ -86,12 +86,12 @@ class TournamentManager {
 		// Mercredi (Demis et Finales)
 		times.push(
 			{
-				time: tuesday.add(15, 'minutes').toDate(),
+				time: tuesday.add(2, 'minutes').toDate(),
 				description: 'Pools - Demis-finales',
 				round: 2
 			},
 			{
-				time: tuesday.add(20, 'minutes').toDate(),
+				time: tuesday.add(3, 'minutes').toDate(),
 				description: 'Pools - Finales',
 				round: 3
 			}
@@ -100,12 +100,12 @@ class TournamentManager {
 		// Vendredi (Début des finales)
 		times.push(
 			{
-				time: tuesday.add(25, 'minutes').toDate(),
+				time: tuesday.add(4, 'minutes').toDate(),
 				description: 'Finales - Premiers matchs',
 				round: 4
 			},
 			{
-				time: tuesday.add(30, 'minutes').toDate(),
+				time: tuesday.add(5, 'minutes').toDate(),
 				description: 'Finales - Winners/Losers',
 				round: 5
 			}
@@ -114,18 +114,18 @@ class TournamentManager {
 		// Samedi (Finales)
 		times.push(
 			{
-				time: tuesday.add(35, 'minutes').toDate(),
+				time: tuesday.add(6, 'minutes').toDate(),
 				description: 'Finales - Repêchage',
 				round: 6
 			},
 			{
-				time: tuesday.add(40, 'minutes').toDate(),
+				time: tuesday.add(7, 'minutes').toDate(),
 				description: 'Grande Finale',
 				round: 7
 			}
 		);
 
-		const nextMonday = tuesday.add(45, 'minutes');
+		const nextMonday = tuesday.add(8, 'minutes');
 		times.push({
 			time: nextMonday.toDate(),
 			description: 'New tournament',
