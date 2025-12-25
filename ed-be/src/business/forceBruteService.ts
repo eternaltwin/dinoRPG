@@ -318,6 +318,126 @@ export async function createTournamentDinoz(req: Request) {
 	);
 }
 
+export async function createTournamentTestDinoz(playerId: string, name: string, tournamentId: string) {
+	const activeTournament = await prisma.fBTournament.findFirstOrThrow({
+		where: {
+			id: tournamentId
+		},
+		select: {
+			levelLimit: true,
+			teamRace: true,
+			id: true
+		}
+	});
+	if (!activeTournament) {
+		throw new ExpectedError(translate('fb.error.noTournamentOngoing', {"lang": "es"}));
+	}
+
+	const dinozCount = await prisma.gameDinoz.count({
+		where: {
+			FBTournamentId: activeTournament.id,
+			usage: GameDinozUsage.FBTournament,
+			level: activeTournament.levelLimit
+		}
+	});
+
+	if (dinozCount >= 256) {
+		throw new ExpectedError(translate('fb.error.maxDinozReached', {"lang": "es"}));
+	}
+
+	const seed = randomUUID();
+	const currentRace = raceList[+activeTournament.teamRace as RaceEnum];
+
+	let display = generateDinozDisplay(currentRace, '0', '0', '0');
+	if (Math.random() * 100 <= 1) {
+		switch (currentRace.raceId) {
+			case RaceEnum.MOUEFFE:
+			case RaceEnum.MOUEFFE_DEMON:
+			case RaceEnum.WINKS:
+			case RaceEnum.WINKS_DEMON:
+			case RaceEnum.PLANAILLE:
+			case RaceEnum.PLANAILLE_DEMON:
+			case RaceEnum.GORILLOZ:
+			case RaceEnum.GORILLOZ_DEMON:
+			case RaceEnum.SANTAZ:
+			case RaceEnum.MAHAMUTI:
+			case RaceEnum.QUETZU:
+			case RaceEnum.TRICERAGNON:
+			case RaceEnum.PIGMOU:
+			case RaceEnum.PIGMOU_DEMON:
+			case RaceEnum.SIRAIN:
+			case RaceEnum.KABUKI:
+			case RaceEnum.KABUKI_DEMON:
+				display = generateDinozDisplay(currentRace, '1', '1', '0');
+				break;
+			case RaceEnum.CASTIVORE:
+				display = generateDinozDisplay(currentRace, '1', getLetter(1 + getRandomNumber(0, 2)), '0');
+				break;
+			case RaceEnum.ROCKY:
+			case RaceEnum.NUAGOZ:
+			case RaceEnum.SMOG:
+				display = generateDinozDisplay(currentRace, '1', '0', '0');
+				break;
+			case RaceEnum.WANWAN:
+			case RaceEnum.WANWAN_DEMON:
+				display = generateDinozDisplay(currentRace, '2', '0', '0');
+				break;
+			case RaceEnum.FEROSS:
+				display =
+					getRandomNumber(0, 1) === 0
+						? generateDinozDisplay(currentRace, '1', '1', '0')
+						: generateDinozDisplay(currentRace, '2', '2', '0');
+				break;
+			case RaceEnum.TOUFUFU:
+				display = generateDinozDisplay(currentRace, '0', '1', '0');
+				break;
+			case RaceEnum.PTEROZ:
+			case RaceEnum.HIPPOCLAMP:
+			case RaceEnum.SOUFFLET:
+			default:
+				break;
+		}
+	}
+	//TODO add a chance to get rare display (1%)
+
+	const newDinoz: Prisma.GameDinozCreateInput = {
+		name: name,
+		raceId: currentRace.raceId,
+		level: activeTournament.levelLimit,
+		nextUpElementId: getRandomUpElement(currentRace.upChance, seed),
+		nextUpAltElementId: getRandomUpElement(currentRace.upChance, seed),
+		display: display,
+		life: 100,
+		maxLife: 100,
+		experience: 0,
+		nbrUpFire: currentRace.nbrFire,
+		nbrUpWood: currentRace.nbrWood,
+		nbrUpWater: currentRace.nbrWater,
+		nbrUpLightning: currentRace.nbrLightning,
+		nbrUpAir: currentRace.nbrAir,
+		seed: seed,
+		usage: 'FBTournament',
+		player: { connect: { id: playerId} },
+		FBTournament: { connect: { id: activeTournament.id } }
+	};
+
+	const dinoz = await prisma.gameDinoz.create({
+		data: newDinoz,
+		select: {
+			id: true
+		}
+	});
+
+	const skillsToAdd: SkillDetails[] = Object.values(skillList).filter(
+		skill => skill.raceId?.some(raceId => raceId === currentRace.raceId) && skill.isBaseSkill
+	);
+	await addMultipleSkillToDinoz(
+		dinoz.id,
+		skillsToAdd.map(skill => skill.id),
+		'FBTournament'
+	);
+}
+
 export async function getTournamentFights(req: Request) {
 	const authed = await auth(req);
 	const tournamentId = req.params.id as string;

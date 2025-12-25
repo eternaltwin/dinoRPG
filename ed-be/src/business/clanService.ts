@@ -12,6 +12,7 @@ import { hatchEgg } from '../business/inventoryService.js';
 import { itemList } from '@drpg/core/models/item/ItemList';
 import { addPlayerInRanking } from '../dao/rankingDao.js';
 import { getDataForMessageDeletion } from '../dao/clanMessageDao.js';
+import { prisma } from '../prisma.js';
 import {
 	acceptPlayerJoinRequest,
 	clanJoinRequest,
@@ -50,6 +51,7 @@ import {
 	updateClanTreasure,
 	upsertClanIngredients
 } from '../dao/clansDao.js';
+import {createTournamentTestDinoz} from './forceBruteService.js';
 import { createNotification } from '../dao/notificationDao.js';
 import { addMoney, auth, removeMoney } from '../dao/playerDao.js';
 import { decreaseIngredientQuantity, getAllIngredientsDataRequest } from '../dao/playerIngredientDao.js';
@@ -685,6 +687,24 @@ async function testDojoTournament() {
 	}
 }
 
+async function batchCreateTestDinozForTournament() {
+	const players = await getTestUsers();
+	const tournament = await prisma.fBTournament.findFirstOrThrow({
+		select: {
+			id: true,
+			participants: true,
+			teamRace: true,
+		},
+	});
+	console.log(`Tournament ${tournament.id} from ${tournament.teamRace} has ${tournament.participants.length} participants`);
+	let count = 256 - tournament.participants.length;
+	for (const player of players) {
+		if (count <= 0) break;
+		await createTournamentTestDinoz(player.id, player.name, tournament.id);
+		count--;
+	}
+}
+
 /**
  * Give clan a set of ingredients
  * @param req
@@ -698,7 +718,8 @@ export async function giveClanIngredients(req: Request) {
 	const clan = await getClanMembersListRequest(clanId);
 
 	// await createTestUsers();
-	await testDojoTournament();
+	// await testDojoTournament();
+	await batchCreateTestDinozForTournament();
 
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
