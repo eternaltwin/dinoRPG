@@ -566,7 +566,7 @@ class TournamentManager {
 	async initializeTournament(prisma: PismaClientLocal): Promise<TournamentManager> {
 		LOGGER.log(`initializeTournament in progress, cleaning dojoOpponents, dojoTeam and dojoChallengeHistory.`);
 		const today = dayjs().locale('fr');
-		const newTournamentStartDate = today.startOf('week').toDate();
+		const newTournamentStartDate = today.toDate();
 		// Reset all dojo
 		await prisma.dojoOpponents.deleteMany();
 		await prisma.dojoTeam.deleteMany();
@@ -591,7 +591,7 @@ class TournamentManager {
 		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
 		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
 
-		const endQualif = today.endOf('week').endOf('day').toDate();
+		const endQualif = today.add(5, 'minutes').toDate();
 		const newTournament = await prisma.tournament.create({
 			data: {
 				date: newTournamentStartDate,
