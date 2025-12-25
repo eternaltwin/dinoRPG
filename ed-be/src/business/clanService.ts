@@ -65,7 +65,8 @@ import {
 	getTestUsers,
 } from '../dao/playerDao.js';
 import {
-	getAllDinozFromAccount
+	getAllDinozFromAccount,
+	updateDinoz,
 } from '../dao/dinozDao.js';
 import { updateDojoPoints } from '../dao/rankingDao.js';
 import {
@@ -628,7 +629,7 @@ interface UserResponse {
 async function createTestUsers() {
 	const url = 'http://localhost:50320/api/v1/users';
 
-	for (let i = 2; i <= 100; i++) {
+	for (let i = 1; i <= 256; i++) {
 		const name = `test${i}`;
 		const body = JSON.stringify({ username: name, display_name: name, password: '74657374313233343536'});
 		const response = await fetch(url, {method: 'POST', headers: {
@@ -659,12 +660,29 @@ async function createTestUsers() {
 			}
 			await hatchEgg(egg, {id: player.id, lang: 'es'});
 			await hatchEgg(egg, {id: player.id, lang: 'es'});
-		}
 
-	
+			const dinoz = await getAllDinozFromAccount(player.id);
+			for (const dino of dinoz) {
+				await updateDinoz(dino.id, {
+					name: 'test',
+					canChangeName: false
+				});
+			}
+		}
 	}
 
 
+}
+
+async function testDojoTournament() {
+	const players = await getTestUsers();
+
+	for (const player of players) {
+		await updateDojoPoints(player.id, 2);
+		const dinoz = await getAllDinozFromAccount(player.id);
+		console.log(`player ${player.name} has ${dinoz.length} dinos`);
+		await simplifyCreateTournamentTeam(player.id, dinoz.map(dino => dino.id));
+	}
 }
 
 /**
@@ -680,14 +698,7 @@ export async function giveClanIngredients(req: Request) {
 	const clan = await getClanMembersListRequest(clanId);
 
 	// await createTestUsers();
-	const players = await getTestUsers();
-
-	for (const player of players) {
-		await updateDojoPoints(player.id, 2);
-		const dinoz = await getAllDinozFromAccount(player.id);
-		console.log(`player ${player.name} has ${dinoz.length} dinos`);
-		await simplifyCreateTournamentTeam(player.id, dinoz.map(dino => dino.id));
-	}
+	await testDojoTournament();
 
 
 	if (!clan || !clan.some(p => p.player.id === authed.id)) {
