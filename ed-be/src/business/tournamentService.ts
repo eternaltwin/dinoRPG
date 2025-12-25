@@ -570,5 +570,8 @@ export async function getNewLevelLimits(races: RaceEnum[]) {
 	];
 	const total = data.reduce((acc, item) => acc + item.odds, 0);
 	const m = weightedRandom(data, total);
+	if (m === undefined) {
+		return 0;
+	}
 	return m.levelMax;
 }
