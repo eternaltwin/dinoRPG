@@ -9,7 +9,7 @@ import { GLOBAL } from '../context.js';
 
 export async function getRandomDinozFromLevel(level: number, team: number[], playerId: string) {
 	let leveldifference = 1;
-	const MAX_LEVEL_DIFFERENCE = 5;
+	const MAX_LEVEL_DIFFERENCE = 50;
 	while (leveldifference <= MAX_LEVEL_DIFFERENCE) {
 		const condition = {
 			AND: [

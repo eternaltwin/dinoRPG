@@ -233,7 +233,7 @@ export default defineComponent({
 					this.composeTeam = true;
 					this.myDinoz = this.dinozStore.getDinozList
 						.filter(d => d.unavailableReason === null || d.unavailableReason === UnavailableReasonFront.resting)
-						.filter(d => d.level >= 10)
+						//.filter(d => d.level >= 10)
 						.map(d => {
 							return {
 								id: d.id,

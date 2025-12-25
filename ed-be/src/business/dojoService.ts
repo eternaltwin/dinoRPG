@@ -101,9 +101,9 @@ export async function createMyTeam(req: Request) {
 	// Fill DOJO_OPPONENT_IN_SERIE (5) opponents
 	const team = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
 
-	if (team.some(d => d.level < 10)) {
+	/*if (team.some(d => d.level < 10)) {
 		throw new ExpectedError(translate('dojo.dinozTooLowLevel', authed));
-	}
+	}*/
 	await createOpponentTeam(team, myDojo);
 
 	return await createMyTeamDao(teamIds, myDojo.id);
@@ -445,6 +445,7 @@ async function createOpponentTeam(team: { id: number; level: number }[], myDojo:
 	const parsedId = opponentLevels.map(o => o.id);
 	for (const dinoz of opponentLevels) {
 		const ennemi = await getRandomDinozFromLevel(dinoz.level, parsedId, myDojo.playerId);
+		console.log(`ennemi = ${ennemi}`);
 		if (ennemi === null) {
 			// Incomplete opponent teams won't be created
 			return [];
