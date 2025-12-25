@@ -16,6 +16,7 @@ import translate from '../utils/translate.js';
 import { calculateFightVsMonsters, rewardFight } from './fightService.js';
 import { Npc } from '@drpg/core/models/npc/npc';
 import { NpcData } from '@drpg/core/models/npc/NpcData';
+import { Item } from '@drpg/core/models/item/ItemList';
 
 export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 	const dinozId = +req.params.dinozId;
@@ -192,7 +193,8 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
 		speech: nextStepWantedData.stepName,
 		playerChoice: playerChoices,
 		flashvars: pnj.flashvars,
-		service: nextStepServices(nextStepWantedData)
+		service: nextStepServices(nextStepWantedData),
+		rewards: getSpeechItemRewards(nextStepWantedData)
 	};
 }
 
@@ -201,6 +203,17 @@ export async function getNpcSpeech(req: Request): Promise<NpcTalk> {
  */
 const nextStepServices = (data: NpcData) => {
 	return data.reward?.filter(r => 'service' in r).map(r => 'service' in r ? r.service : []).reduce((acc, curr) => curr ? acc?.concat(curr) : acc, [])
+};
+
+/**
+ * Get item rewards after the NPC talk
+ */
+const getSpeechItemRewards = (data: NpcData) => {
+	return data.reward?.reduce((acc, curr) => {
+		if (curr.rewardType !== RewardEnum.ITEM) return acc;
+		acc[curr.value as Item] = (acc[curr.value as Item] ?? 0) + curr.quantity;
+		return acc;
+	}, {} as Partial<Record<Item, number>>);
 };
 
 function checkRedirect(reward: Rewarder[], npcName: string, stepName: string) {

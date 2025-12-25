@@ -80,7 +80,19 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 			EventBus.emit('isLoading', false);
-			if (this.npcSpeech.service) {
+
+			if (this.npcSpeech.rewards) {
+				for (const [item, quantity] of Object.entries(this.npcSpeech.rewards)) {
+					this.$toast.open({
+						message: this.$t('notification.reward', {
+							rewards: `${quantity} ${this.formatContent(`:item_${item}:`)}`
+						}).toString(),
+						type: 'info'
+					});
+				}
+			}
+
+			if (this.npcSpeech.service && this.npcSpeech.service.length > 0) {
 				EventBus.emit('isLoading', true);
 				for (const service of this.npcSpeech.service) {
 					switch (service) {
