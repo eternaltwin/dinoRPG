@@ -1675,7 +1675,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.WOOD, ElementType.LIGHTNING],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.GRATTEUR, Skill.VOIE_DE_GAIA, Skill.COMPETENCE_DOUBLE],
+		unlockedFrom: [Skill.ETAT_PRIMAL, Skill.VOIE_DE_GAIA, Skill.COMPETENCE_DOUBLE],
 		isBaseSkill: false,
 		isSphereSkill: false,
 		effects: {
