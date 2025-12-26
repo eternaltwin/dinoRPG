@@ -52,9 +52,9 @@ class TournamentManager {
 		// Qualif end the sunday night
 		const qualificationEnd = dayjs(this.startDate).add(5, 'minutes').toDate();
 
-		const poolsStart = dayjs(qualificationEnd).add(1, 'minutes').toDate();
+		const poolsStart = dayjs(qualificationEnd).add(1, 'seconds').toDate();
 
-		const finalsStart = dayjs(qualificationEnd).add(5, 'minutes').toDate();
+		const finalsStart = dayjs(qualificationEnd).add(6, 'minutes').toDate();
 
 		return {
 			qualificationStart,
@@ -845,6 +845,7 @@ LIMIT ${64};`;
 
 		const currentDate = new Date();
 		const schedule = this.getSchedule();
+		console.log(`schedule = ${JSON.stringify(schedule)}`);
 
 		let phase: TournamentPhase;
 		if (currentDate <= schedule.qualificationEnd) {
@@ -929,6 +930,7 @@ LIMIT ${64};`;
 		let matches = 0;
 
 		// Logique spécifique selon la phase
+		console.log(`currentState = ${currentState.phase}`);
 		switch (currentState.phase) {
 			case TournamentPhase.QUALIFICATION:
 				return; // Pas de matchs à générer pendant la qualification
@@ -962,6 +964,7 @@ WHERE tt."teamCount" = ${teamSize.teamSize}
   AND d."tournamentTeamId" IS NOT NULL
 ORDER BY r.dojo DESC
 LIMIT ${this.QUALIFIED_TEAMS};`;
+					console.log(`qualifieds = ${qualifiedTeams.length}`);
 					const pools = await this.createPools(qualifiedTeams.map(t => t.tournamentTeamId));
 					pools.forEach((pool, poolIndex) => {
 						pool.forEach((team, teamIndex) => {
