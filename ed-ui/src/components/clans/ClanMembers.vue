@@ -83,6 +83,7 @@
 							<img
 								:src="getImgURL('icons', 'edit')"
 								alt="edit"
+								v-if="hasEditRight && !member.player?.leaderOf?.id"
 								@click="goToMemberEdit(member.id)"
 								v-tippy="{
 									content: $t('clansMembers.action.edit'),
