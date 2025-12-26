@@ -584,12 +584,12 @@ class TournamentManager {
 			}
 		});
 
-		const tournamentFormat = formatTID[getRandomNumber(0, 13) as formatName];
+		const tournamentFormat = formatTID[1];
 
-		const teamSize = tournamentFormat.teamSize ?? getRandomNumber(2, 6);
+		const teamSize = 2;
 		const teamRace = tournamentFormat.teamRace;
-		const raceMinimum = tournamentFormat.raceMinimum ?? getRandomNumber(2, teamSize);
-		const levelLimit = tournamentFormat.levelLimit ?? (await getNewLevelLimits(tournamentFormat.teamRace));
+		const raceMinimum = 1;
+		const levelLimit = 50;
 
 		const endQualif = today.add(5, 'minutes').toDate();
 		const newTournament = await prisma.tournament.create({
