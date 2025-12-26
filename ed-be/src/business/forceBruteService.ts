@@ -562,7 +562,7 @@ export async function getFBTournamentOpponent(req: Request) {
 		name: name,
 		display: opponentGameDinoz.display,
 		level: opponentGameDinoz.level,
-		stage: dinoz.FBTournamentStep + 1
+		stage: dinoz.FBTournamentStep
 	};
 }
 
@@ -717,6 +717,10 @@ export async function fightFBTournamentOpponent(req: Request) {
 
 	gold += Math.round(gold * goldMultiplier);
 
+	// Temp
+	fightResult.winner = true;
+	attacker.hpLost = 0;
+
 	if (fightResult.winner) {
 		await addMoney(authed.id, gold);
 	}
@@ -753,8 +757,8 @@ export async function fightFBTournamentOpponent(req: Request) {
 		}
 	}
 
-	if (fightResult.winner && (dinoz.FBTournamentStep + 1) % 10 === 0) {
-		switch ((dinoz.FBTournamentStep + 1) / 10) {
+	if (fightResult.winner && dinoz.FBTournamentStep % 10 === 0) {
+		switch (dinoz.FBTournamentStep / 10) {
 			case 1:
 				await addStatusToDinoz(dinoz.id, DinozStatusId.BRONZE_MEDAL_FORCEBRUT);
 				break;
